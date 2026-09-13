@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailGoroTakemuraHandsUnclean,
-  boxTopperRetailSaburoArasakaStubbornPatriarch,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
   welcomeToNightCityRetailChromeReverie,
   welcomeToNightCityRetailCorpoSecurity,
 } from "@tcg/cyberpunk-cards";
@@ -59,8 +59,8 @@ describe("Chrome Reverie", () => {
         eddies: 5,
         gigArea: [{ dieType: "d4", faceValue: 1 }],
         legendArea: [
-          { card: boxTopperRetailSaburoArasakaStubbornPatriarch, faceDown: true },
-          { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
+          { card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, faceDown: true },
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
         ],
       },
       {
@@ -68,7 +68,7 @@ describe("Chrome Reverie", () => {
       },
     );
 
-    engine.callLegend(boxTopperRetailSaburoArasakaStubbornPatriarch, { as: P1 });
+    engine.callLegend(embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, { as: P1 });
     engine.playCard(welcomeToNightCityRetailChromeReverie, { as: P1 });
     engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P1 });
 
@@ -79,6 +79,8 @@ describe("Chrome Reverie", () => {
     expect(skippedLog ? formatActionLog(skippedLog, enMessages) : "").toBe(
       "Chrome Reverie skipped calling a Legend because a Legend was already called this turn.",
     );
-    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
+    expect(
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean).meta.faceDown,
+    ).toBe(true);
   });
 });

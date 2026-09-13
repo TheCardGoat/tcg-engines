@@ -309,6 +309,14 @@ function resolveVisibleCard(
       definition = cardDefLookup.getDefinition(definitionId);
     }
   }
+  const definitionOverride = meta?.definitionOverride;
+  if (
+    definitionOverride &&
+    typeof definitionOverride === "object" &&
+    "type" in definitionOverride
+  ) {
+    definition = definitionOverride as Card;
+  }
 
   return makeVisibleCard(cardId, definition, definitionId, meta, ownerId, controllerId, zoneKey);
 }

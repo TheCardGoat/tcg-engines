@@ -6,12 +6,14 @@ export interface TabletopCounterBadgeProps extends HTMLAttributes<HTMLDivElement
   label: string;
   value: string | number;
   variant?: "circle" | "compact" | "pill";
+  mono?: boolean;
 }
 
 export function TabletopCounterBadge({
   label,
   value,
   variant = "pill",
+  mono = false,
   className,
   "aria-label": ariaLabel,
   ...props
@@ -20,7 +22,8 @@ export function TabletopCounterBadge({
     <div
       {...props}
       className={cx(
-        "tabletop-counter-badge",
+        "tabletop-counter-badge w-fit",
+        mono && "font-mono tabular-nums",
         variant === "circle" &&
           "grid aspect-square w-[clamp(66px,6.5vw,88px)] place-items-center rounded-full border-[3px] border-white/70 bg-[radial-gradient(circle_at_50%_42%,rgb(255_255_255_/_18%),transparent_36%),var(--game-accent)] text-white shadow-lg",
         variant === "compact" &&

@@ -42,5 +42,6 @@ describe("OP13-112 Vegapunk", () => {
     );
     expect(pendingBlockerPrompt(withCostAreaDon)).toBeUndefined();
     expect(withCostAreaDon.getState().capabilityHistory).toEqual([]);
+    expect(withCostAreaDon.getView("south").prompts).toHaveLength(0);
   });
 });

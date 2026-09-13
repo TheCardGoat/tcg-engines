@@ -29,5 +29,7 @@ describe("OP12-093 Morley", () => {
       inert.getView("south").players.south.characters.find((card) => card?.instanceId === inertId)
         ?.cost,
     ).toBe(op12Morley093.cost);
+    expect(inert.getView("south").prompts).toHaveLength(0);
+    expect(inert.getState().capabilityHistory).toHaveLength(0);
   });
 });

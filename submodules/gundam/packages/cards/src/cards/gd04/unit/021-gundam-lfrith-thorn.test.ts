@@ -49,10 +49,12 @@ describe("Gundam Lfrith Thorn (GD04-021)", () => {
     const commandId = p1.getHand()[0]!;
 
     expectSuccess(p1.playCommand(gd04IndiscriminateViolence106, { targets: [thornId] }));
-    expect(p1.getBoardView().pendingChoice?.kind).toBe("optional");
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-    expect(p1.getBoardView().pendingChoice?.kind).toBe("targetSelection");
-    expectSuccess(p1.resolveEffect({ targets: [thornId] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      optionalDirectiveIndex: 0,
+      legalTargetIds: [thornId],
+    });
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true }, targets: [thornId] }));
 
     expect(p1.getPilotId(thornId)).toBe(commandId);
     expect(p1.getCardsInZone("battleArea")).toContain(commandId);

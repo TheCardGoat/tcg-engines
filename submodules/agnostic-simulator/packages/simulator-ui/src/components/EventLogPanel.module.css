@@ -61,6 +61,7 @@
   align-items: center;
   gap: 6px;
   min-width: 0;
+  margin-inline-start: auto;
 }
 
 .controlsButton {
@@ -336,8 +337,12 @@
 .turnGroup {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   min-width: 0;
+  padding: 4px;
+  border: 1px solid var(--log-turn-border, oklch(0.58 0.04 245 / 0.28));
+  border-radius: 6px;
+  background: var(--log-turn-container-bg, oklch(0.19 0.028 245 / 0.34));
 }
 
 .turnHeader {
@@ -349,9 +354,10 @@
   width: 100%;
   min-height: 28px;
   padding: 5px 7px;
-  border: 1px solid var(--log-turn-border, oklch(0.58 0.04 245 / 0.28));
-  border-radius: 5px;
-  background: var(--log-turn-bg, oklch(0.2 0.03 245 / 0.52));
+  border: 0;
+  border-bottom: 1px solid var(--log-turn-border, oklch(0.58 0.04 245 / 0.28));
+  border-radius: 3px 3px 1px 1px;
+  background: var(--log-turn-bg, oklch(0.2 0.03 245 / 0.32));
   color: var(--board-text, oklch(0.965 0.012 235));
   cursor: pointer;
   font: inherit;
@@ -430,9 +436,8 @@
 }
 
 .entry {
-  appearance: none;
   display: grid;
-  grid-template-columns: 22px minmax(0, 1fr);
+  grid-template-columns: 22px minmax(0, 1fr) auto;
   align-items: start;
   gap: 7px;
   width: 100%;
@@ -442,7 +447,6 @@
   border-radius: 5px;
   background: var(--log-entry-bg, oklch(0.21 0.028 245 / 0.3));
   color: var(--board-text, oklch(0.965 0.012 235));
-  cursor: pointer;
   font: inherit;
   font-size: 12px;
   text-align: left;
@@ -452,23 +456,16 @@
 }
 
 .panelEmbedded .entry {
-  grid-template-columns: 20px minmax(0, 1fr);
+  grid-template-columns: 20px minmax(0, 1fr) auto;
   gap: 6px;
   min-height: 25px;
   padding: 4px 5px;
   font-size: 11px;
 }
 
-.entry:hover,
-.entry:focus-visible {
+.entry[data-interactive="true"]:hover {
   border-color: var(--log-entry-hover-border, oklch(0.66 0.045 245 / 0.32));
   background: var(--log-entry-hover-bg, oklch(0.28 0.035 245 / 0.42));
-  outline: none;
-}
-
-.entry:focus-visible {
-  outline: 2px solid var(--log-focus-ring, oklch(0.76 0.115 250 / 0.2));
-  outline-offset: 1px;
 }
 
 .entryHighlighted {
@@ -505,6 +502,27 @@
   background: var(--log-section-bg, oklch(0.22 0.03 245 / 0.38));
 }
 
+/* Child procedures remain inside their owning activity. Indentation and one
+   quiet rule communicate hierarchy without turning the child into a card
+   nested inside another card. */
+.sectionGroup[data-section-depth]:not([data-section-depth="0"]) {
+  margin: 0;
+  padding: 5px 1px 4px;
+  border: 0;
+  border-top: 1px solid var(--log-section-border, oklch(0.62 0.045 245 / 0.22));
+  border-radius: 0;
+  background: transparent;
+}
+
+.sectionGroup[data-section-tone="stack"] > .sectionEntries {
+  gap: 0;
+}
+
+.sectionGroup[data-section-depth]:not([data-section-depth="0"]) .sectionHeaderButton,
+.sectionGroup[data-section-depth]:not([data-section-depth="0"]) .sectionHeader {
+  padding-block: 1px 2px;
+}
+
 .sectionGroup[data-section-tone="attack"] {
   --log-section-accent: var(--log-section-attack, oklch(0.84 0.16 95));
   --log-section-bg: var(--log-section-attack-bg, oklch(0.31 0.07 94 / 0.18));
@@ -535,6 +553,29 @@
   --log-section-border: var(--log-section-effect-border, oklch(0.73 0.11 292 / 0.34));
 }
 
+.sectionGroup[data-section-tone="stack"] {
+  --log-section-accent: var(--log-section-stack, oklch(0.84 0.11 252));
+  --log-section-bg: var(--log-section-stack-bg, oklch(0.27 0.065 255 / 0.24));
+  --log-section-border: var(--log-section-stack-border, oklch(0.72 0.1 252 / 0.42));
+}
+
+.sectionGroup[data-section-tone="stack-layer"] {
+  --log-section-accent: var(--log-section-effect, oklch(0.82 0.12 292));
+  --log-section-border: var(--log-section-stack-layer-border, oklch(0.7 0.075 282 / 0.3));
+}
+
+.sectionGroup[data-section-tone="comparison"] {
+  --log-section-accent: var(--log-section-comparison, oklch(0.82 0.12 300));
+  --log-section-bg: var(--log-section-comparison-bg, oklch(0.3 0.08 300 / 0.18));
+  --log-section-border: var(--log-section-comparison-border, oklch(0.74 0.1 300 / 0.32));
+}
+
+.sectionGroup[data-section-tone="routine"] {
+  --log-section-accent: var(--board-muted, oklch(0.76 0.025 235 / 0.68));
+  --log-section-bg: transparent;
+  --log-section-border: var(--log-section-border, oklch(0.62 0.025 245 / 0.2));
+}
+
 .sectionHeader {
   display: grid;
   grid-template-columns: minmax(0, 1fr) max-content;
@@ -557,12 +598,138 @@
   white-space: nowrap;
 }
 
-.sectionCount {
-  color: var(--board-muted, oklch(0.81 0.025 235 / 0.58));
-  font-size: 9px;
+.sectionHeading {
+  display: flex;
+  align-items: baseline;
+  min-width: 0;
+  gap: 6px;
+}
+
+.sectionMeta {
+  flex: 0 0 auto;
+  color: var(--board-muted, oklch(0.81 0.025 235 / 0.7));
+  font-size: 8px;
   font-weight: 760;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
   white-space: nowrap;
+}
+
+.sectionHeaderText {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.sectionEyebrow {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  color: var(--log-section-accent, oklch(0.82 0.08 235));
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.sectionActor {
+  display: inline-grid;
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--log-speaker, currentColor) 72%, transparent);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--log-speaker, currentColor) 15%, transparent);
+  color: var(--log-speaker, currentColor);
+  font-size: 7px;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.sectionSummary {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--board-text, oklch(0.94 0.012 245));
+  font-size: 11px;
+  font-weight: 680;
+  letter-spacing: 0;
+  line-height: 1.3;
+  text-transform: none;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.sectionCount {
+  flex: 0 0 auto;
+  color: var(--board-muted, oklch(0.81 0.025 235 / 0.58));
+  font-size: inherit;
+  font-weight: 760;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* Interactive variant of the section header used when sections can collapse
+   (`sectionExpansion="latest"`); mirrors the .turnHeader affordance. */
+.sectionHeaderButton {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 2px 1px 3px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--log-section-accent, oklch(0.82 0.08 235));
+  font: inherit;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.sectionHeaderButton:focus-within {
+  border-color: var(--log-section-border, oklch(0.62 0.045 245 / 0.28));
+  background: oklch(1 0 0 / 0.04);
+  outline: 2px solid var(--log-focus-ring, oklch(0.76 0.115 250 / 0.2));
+  outline-offset: 1px;
+}
+
+.sectionToggleButton {
+  appearance: none;
+  display: inline-flex;
+  align-self: start;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: 2px 1px 2px 3px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.sectionToggleButton:hover {
+  background: oklch(1 0 0 / 0.06);
+}
+
+.sectionToggleButton:focus-visible {
+  outline: none;
+}
+
+.sectionGroup[data-collapsed="true"] {
+  padding: 3px 5px;
 }
 
 .entryMeta {
@@ -630,6 +797,87 @@
   overflow-wrap: anywhere;
   line-height: 1.35;
   white-space: normal;
+}
+
+.entryActions {
+  display: inline-flex;
+  align-items: center;
+}
+
+.locateTooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.locateTooltipContent {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 6px);
+  z-index: 20;
+  width: max-content;
+  max-width: 180px;
+  padding: 5px 7px;
+  border: 1px solid var(--log-control-border, oklch(0.72 0.03 240 / 0.32));
+  border-radius: 5px;
+  background: var(--log-popover-bg, oklch(0.16 0.025 245));
+  box-shadow: 0 5px 14px oklch(0.05 0.02 245 / 0.42);
+  color: var(--board-text, oklch(0.965 0.012 235));
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(2px);
+  transition:
+    opacity 120ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 120ms cubic-bezier(0.22, 1, 0.36, 1);
+  visibility: hidden;
+  white-space: nowrap;
+}
+
+.locateTooltip:hover .locateTooltipContent,
+.locateTooltip:focus-within .locateTooltipContent {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.locateButton {
+  appearance: none;
+  display: inline-grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--log-control-border, oklch(0.72 0.03 240 / 0.28));
+  border-radius: 5px;
+  background: var(--log-control-bg, oklch(0.19 0.026 245 / 0.38));
+  color: var(--board-muted, oklch(0.79 0.025 235 / 0.78));
+  cursor: pointer;
+}
+
+.locateButton:hover,
+.locateButton:focus-visible,
+.locateButton[aria-pressed="true"] {
+  border-color: var(--log-focus, oklch(0.76 0.115 250 / 0.65));
+  background: var(--log-entry-highlight-bg, oklch(0.34 0.07 258 / 0.25));
+  color: var(--board-text, oklch(0.965 0.012 235));
+  outline: none;
+}
+
+.locateButton:focus-visible {
+  outline: 2px solid var(--log-focus-ring, oklch(0.76 0.115 250 / 0.2));
+  outline-offset: 1px;
+}
+
+.entryAvailability {
+  align-self: center;
+  max-width: 9ch;
+  color: var(--board-muted, oklch(0.79 0.025 235 / 0.62));
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: right;
 }
 
 .chatBubble {
@@ -775,5 +1023,45 @@
     gap: 6px;
     padding: 4px 5px;
     font-size: 11px;
+  }
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+  .filters,
+  .panelEmbedded .filters {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .filter,
+  .panelEmbedded .filter {
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: normal;
+  }
+
+  .controlsButton,
+  .panelEmbedded .controlsButton {
+    width: 44px;
+    height: 44px;
+  }
+
+  .controlsPopover,
+  .panelEmbedded .controlsPopover {
+    top: 50px;
+    max-height: min(70svh, 560px);
+    overflow-y: auto;
+  }
+
+  .copyButton,
+  .panelEmbedded .copyButton,
+  .filter,
+  .panelEmbedded .filter,
+  .sectionHeaderButton,
+  .sectionToggleButton,
+  .turnHeader,
+  button.entry {
+    min-height: 44px;
   }
 }

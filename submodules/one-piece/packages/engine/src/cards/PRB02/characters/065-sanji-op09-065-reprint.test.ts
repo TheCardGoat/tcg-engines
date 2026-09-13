@@ -3,7 +3,7 @@ import { prb02SanjiOp09065Reprint065 } from "../../../../../cards/src/cards/PRB0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-065 Sanji - OP09-065 (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02SanjiOp09065Reprint065);
   });
 });

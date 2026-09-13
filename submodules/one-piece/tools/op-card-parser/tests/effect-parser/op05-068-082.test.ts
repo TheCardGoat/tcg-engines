@@ -13,10 +13,11 @@ describe("OP05-068 through OP05-082 Character parser regressions", () => {
     }
   });
 
-  test("parses Miss Doublefinger's optional physical-card Trigger", () => {
+  test("parses Miss Doublefinger's physical-card Trigger without a post-activation opt-out", () => {
     const result = buildCardEffects(
       "[On Play] You may trash 1 card from your hand: Add up to 1 DON!! card from your DON!! deck and rest it. [Trigger] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play this card.",
     );
+    // Life Trigger is already opted-in via the lifeTrigger prompt; returnDon is mandatory.
     expect(result?.effects?.[1]).toEqual({
       trigger: "trigger",
       costs: [{ cost: "returnDon", amount: 1 }],

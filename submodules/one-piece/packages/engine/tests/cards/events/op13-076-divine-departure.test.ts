@@ -58,4 +58,34 @@ describe("OP13-076 Divine Departure", () => {
     expect(view.players.north.lifeCount).toBe(lifeBefore);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op13DivineDeparture076],
+        character: [{ card: eb01Doma005, attachedDon: 1 }],
+        activeDon: 5,
+      },
+      { character: [eb01MountainGod018] },
+    );
+    const targetId = engine.findCardInZone("north", "character", eb01MountainGod018);
+    const powerBefore = engine
+      .getView("south")
+      .players.north.characters.find((card) => card?.instanceId === targetId)?.power;
+    const activeDonBefore = engine.getView("south").players.south.activeDon;
+    const restedDonBefore = engine.getView("south").players.south.restedDon;
+
+    engine.playCard(op13DivineDeparture076);
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
+        ?.power,
+    ).toBe(powerBefore);
+    expect(engine.getView("south").players.south).toMatchObject({
+      activeDon: activeDonBefore,
+      restedDon: restedDonBefore,
+    });
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

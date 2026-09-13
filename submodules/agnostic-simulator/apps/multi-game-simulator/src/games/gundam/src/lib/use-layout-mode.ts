@@ -4,6 +4,7 @@ export type LayoutMode = "mobile" | "tablet" | "desktop";
 
 const MOBILE_MAX = 767;
 const MOBILE_SHORT_HEIGHT_MAX = 520;
+const COMPACT_LANDSCAPE_HEIGHT_MAX = 420;
 const TABLET_MAX = 1023;
 
 function resolve(width: number, height: number): LayoutMode {
@@ -13,8 +14,8 @@ function resolve(width: number, height: number): LayoutMode {
 }
 
 /**
- * Reactive viewport breakpoint. Tablet currently shares desktop chrome; only
- * `mobile` triggers the vertical-stack re-layout.
+ * Reactive viewport breakpoint. Individual surfaces decide whether tablet
+ * should use their compact or desktop composition based on available space.
  */
 export function useLayoutMode(): LayoutMode {
   // Initialize to "desktop" on BOTH server and client — if we read
@@ -33,6 +34,27 @@ export function useLayoutMode(): LayoutMode {
   }, []);
 
   return mode;
+}
+
+/**
+ * True when a landscape viewport is too short to show full mobile field cards
+ * and an interaction prompt without the two surfaces covering each other.
+ */
+export function useCompactLandscapeViewport(): boolean {
+  const [compact, setCompact] = useState(false);
+
+  useEffect(() => {
+    const update = () =>
+      setCompact(
+        window.innerWidth > window.innerHeight &&
+          window.innerHeight <= COMPACT_LANDSCAPE_HEIGHT_MAX,
+      );
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return compact;
 }
 
 export const isMobileMode = (mode: LayoutMode) => mode === "mobile";

@@ -228,7 +228,7 @@ function buildLegacySlots(params: {
         targetId,
         targetLabel: buildSelectedLabel(targetId, context, cardSnapshotsById),
         targetCardId: card?.cardId ?? (card ? null : targetId),
-        locked: slot.index < preselectedTargetCount,
+        locked: slot.locked || slot.index < preselectedTargetCount,
       };
     });
   }
@@ -258,7 +258,7 @@ function buildLegacySlots(params: {
       targetId,
       targetLabel: buildSelectedLabel(targetId, context, cardSnapshotsById),
       targetCardId: card?.cardId ?? (card ? null : targetId),
-      locked: index < preselectedTargetCount,
+      locked: targetId !== null || index < preselectedTargetCount,
     };
   });
 }
@@ -450,7 +450,7 @@ export function snapshotPendingPrompt(
       autoResolvedFromSlots: view.activePrompt.autoResolvedSlotCount,
     });
 
-    activeSlotIndex = computeLegacyActiveSlotIndex(slots);
+    activeSlotIndex = view.activePrompt.activeSlotIndex;
 
     const candidateEntries = buildCandidateEntriesFromView({
       view,
@@ -484,24 +484,4 @@ export function snapshotPendingPrompt(
     prompt,
     message: effectType ? getResolutionTargetPromptMessage(effectType, activeSlotIndex) : null,
   };
-}
-
-/**
- * Compute the active slot index from the synthesized legacy slot list,
- * mirroring the deleted presenter's `getDefaultActiveSlotIndex` rule:
- * the first unlocked, unfilled slot, falling back to the last unlocked
- * slot when every editable slot is filled.
- */
-function computeLegacyActiveSlotIndex(
-  slots: readonly ResolutionTargetSelectionSlotState[],
-): number | null {
-  const unfilledEditable = slots.findIndex((slot) => !slot.locked && !slot.targetId);
-  if (unfilledEditable >= 0) {
-    return unfilledEditable;
-  }
-  const lastEditable = [...slots].reverse().find((slot) => !slot.locked);
-  if (!lastEditable) {
-    return null;
-  }
-  return slots.findIndex((slot) => slot.id === lastEditable.id);
 }

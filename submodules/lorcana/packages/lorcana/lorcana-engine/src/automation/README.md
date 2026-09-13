@@ -180,11 +180,15 @@ Today the planner will skip some shapes on purpose and record a diagnostic inste
 
 Examples include:
 
-- "name a card" prompts,
-- ordered destination choices, such as scry-style destination ordering,
+- "name a card" prompts when no named-card candidates can be built,
+- ordered destination choices that are outside the scry planner,
 - very large target pools or too many combinations,
-- deeply nested branching,
+- simultaneous multi-choice branching on a single residual surface (`choiceCount > 1`),
 - some unusually complex multi-step play patterns.
+
+**Nested "you may" trees** (optional inside optional / sequence of mays, e.g. Pocahontas & Meeko WELCOME RETURN, Julieta SIGNATURE RECIPE) are **supported** by planning only the **immediate** decision surface. The engine peels later mays into subsequent bag/pending items; the next automated action resolves them separately. The planner does **not** require one candidate to encode the entire multi-may tree.
+
+**Dual-arm conditionals** (`then` + `else`, e.g. Buzz/Woody "choose both if another Toy") are **not** peeled into the true branch up front. The residual stays a conditional so the engine can evaluate the live arm at resolve time.
 
 There is another practical limit too: search caps.
 

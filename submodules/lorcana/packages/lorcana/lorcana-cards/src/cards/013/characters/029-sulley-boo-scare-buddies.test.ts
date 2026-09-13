@@ -100,6 +100,24 @@ describe("Sulley & Boo - Scare Buddies", () => {
       expect(testEngine.asPlayerOne().getCardZone(sulleyBooScareBuddies)).toBe("play");
       expect(testEngine.getCardsUnder(sulleyBooScareBuddies)).toHaveLength(2);
     });
+
+    it("is drying and exerted when either of two Shift targets has that state", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+        hand: [sulleyBooScareBuddies],
+        play: [
+          { card: sulleyBase, isDrying: false },
+          { card: booBase, isDrying: true, exerted: true },
+        ],
+        inkwell: 4,
+      });
+      const sulleyTarget = testEngine.findCardInstanceId(sulleyBase, "play", PLAYER_ONE);
+      const booTarget = testEngine.findCardInstanceId(booBase, "play", PLAYER_ONE);
+
+      expect(playWithComboShift(testEngine, sulleyTarget, [booTarget])).toBeSuccessfulCommand();
+
+      expect(testEngine.asPlayerOne().isExerted(sulleyBooScareBuddies)).toBe(true);
+      expect(testEngine.asPlayerOne().quest(sulleyBooScareBuddies).success).toBe(false);
+    });
   });
 
   describe("THE POWER OF FRIENDSHIP - When this character is banished, you may play under-character cards from discard for free", () => {

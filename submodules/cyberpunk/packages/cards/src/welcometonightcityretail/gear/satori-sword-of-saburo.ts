@@ -5,10 +5,11 @@ import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts"
 export const welcomeToNightCityRetailSatoriSwordOfSaburo = defineCyberpunkCard({
   id: "4670d02b-b97a-4771-bb7e-65bdc012530e",
   slug: "satori-sword-of-saburo",
+  subname: "Sword of Saburo",
   rulesText:
     "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit wins a fight against a rival Unit, draw 1.",
-  name: "Satori — Sword of Saburo",
-  displayName: "Satori — Sword of Saburo",
+  name: "Satori",
+  displayName: "Satori: Sword of Saburo",
   canonicalId: "satori-sword-of-saburo",
   color: "red",
   classifications: ["Arasaka", "Weapon"],

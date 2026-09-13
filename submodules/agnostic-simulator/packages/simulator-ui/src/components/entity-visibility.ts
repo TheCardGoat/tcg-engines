@@ -28,6 +28,8 @@ export function projectSimulatorEntityForFace(
     face: "hidden",
     states: [],
     backImageUrl: entity.backImageUrl,
+    hiddenBackLayout: entity.hiddenBackLayout,
+    imageAspectRatio: entity.hiddenBackLayout === "square" ? 1 : undefined,
     stats: [],
     traits: [],
   };

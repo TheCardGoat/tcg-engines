@@ -44,24 +44,25 @@ export const op12WeLlRingTheBellWaitingForYou116: EventCard = {
             revealFilters: [
               {
                 filter: "anyOf",
-                groups: [
-                  [
-                    {
-                      filter: "cardCategory",
-                      value: "character",
-                    },
-                    {
-                      filter: "trait",
-                      value: "Shandian Warrior",
-                      match: "includes",
-                    },
-                  ],
-                  [
-                    {
-                      filter: "name",
-                      value: "Mont Blanc Noland",
-                    },
-                  ],
+                filters: [
+                  {
+                    filter: "allOf",
+                    filters: [
+                      {
+                        filter: "trait",
+                        value: "Shandian Warrior",
+                        match: "includes",
+                      },
+                      {
+                        filter: "cardCategory",
+                        value: "character",
+                      },
+                    ],
+                  },
+                  {
+                    filter: "name",
+                    value: "Mont Blanc Noland",
+                  },
                 ],
               },
             ],

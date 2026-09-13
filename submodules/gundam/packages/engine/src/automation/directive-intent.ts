@@ -54,11 +54,13 @@ function targetOwnerOf(action: EffectAction): "self" | "friendly" | "opponent" |
 export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
   switch (action.action) {
     case "resolveThenQueue":
-      return classifyDirectiveIntent(action.first);
+      return action.first ? classifyDirectiveIntent(action.first) : "neutral";
 
     // Always-good for self.
     case "draw":
+    case "drawEventDestroyer":
     case "drawThenDiscard":
+    case "drawThenDiscardByOpponentCount":
     case "drawIfTargetMatches":
     case "drawAll":
     case "createDelayedTrigger":
@@ -67,8 +69,10 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     case "deployFromTrash":
     case "deployToken":
     case "deploySelf":
+    case "deploySelfAsUnit":
     case "addSelfToHand":
     case "returnPairedPilotToHand":
+    case "returnPairedCardToDeck":
     case "addShieldToHand":
     case "addFromTrash":
     case "addFromTrashThenDiscard":
@@ -76,11 +80,13 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     case "millDeckThenDamageIfTrait":
     case "millDeckThenDamageByTraitCount":
     case "millDeckThenStatModifierIfTrait":
+    case "millDeckThenStatModifierIfLevel":
     case "placeResource":
     case "placeExResource":
     case "payResources":
     case "lookAtTopDeck":
     case "pairPilot":
+    case "pairSourceFromZone":
     case "pairEventCardAsPilot":
     case "activateTiming":
     case "recoverHPEventCard":
@@ -98,6 +104,7 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     case "dealDamageByTargetKeyword":
     case "dealDamageThenDrawIfDestroyed":
     case "dealDamageEventSource":
+    case "dealDamageToFirstOpponentShield":
     case "dealDamageByCount":
     case "dealDamageBySourceStat":
     case "restThenDamageByChosenUnitLevel":
@@ -109,7 +116,12 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     case "destroy":
     case "destroyEventCard":
     case "exile": {
-      if (action.action === "destroyEventCard") return "accept";
+      if (
+        action.action === "destroyEventCard" ||
+        action.action === "dealDamageToFirstOpponentShield"
+      ) {
+        return "accept";
+      }
       const owner = targetOwnerOf(action);
       if (owner === "opponent" || owner === "any") return "accept";
       if (owner === "self" || owner === "friendly") return "decline";
@@ -153,6 +165,8 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
       if (owner === "opponent") return positive ? "decline" : "accept";
       return "neutral";
     }
+    case "statModifierByDamageReceived":
+      return "neutral";
     case "statModifierByEventPaidCost": {
       const owner = targetOwnerOf(action);
       if (owner === "self" || owner === "friendly") return "accept";
@@ -190,7 +204,11 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     }
 
     case "grantKeywordEventCard":
+    case "grantKeywordEventSource":
       return "accept";
+
+    case "queueEffectForOpponent":
+      return "neutral";
 
     // Lock-down actions: good vs opponent, bad vs self/friendly.
     case "cantAttack":
@@ -213,14 +231,24 @@ export function classifyDirectiveIntent(action: EffectAction): DirectiveIntent {
     case "allowAttackDeployedThisTurn":
     case "forceAttackTarget":
     case "changeAttackTarget":
+    case "beginDamageStepBattle":
+    case "destroyTopOpponentShields":
       return "accept";
 
     case "unparsedText":
+    case "exileSelf":
     case "deployRested":
+    case "deployRestedByFriendlyNameCount":
     case "returnEventCardToHand":
     case "substituteBaseRestWithSelf":
+    case "substituteUnitRestWithSelf":
+    case "queueEffectForPlayers":
+    case "millDeckThenAddToHand":
+    case "activatePairedCardTiming":
+    case "deployCostOverride":
     case "pairingCostOverride":
     case "deployCostSubstitution":
+    case "playCostSubstitution":
       return "neutral";
 
     default:

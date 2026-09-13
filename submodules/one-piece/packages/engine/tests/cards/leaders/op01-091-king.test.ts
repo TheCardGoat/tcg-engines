@@ -16,5 +16,6 @@ describe("OP01-091 King", () => {
     characters = engine.getView("south").players.north.characters;
     expect(characters.flatMap((card) => (card ? [card.power] : []))).toEqual([3000, 5000]);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

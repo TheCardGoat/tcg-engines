@@ -1,0 +1,43 @@
+{
+  "name": "grand-archive",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "tools/*"
+    ],
+    "catalog": {
+      "@types/node": "^24.13.3",
+      "@typescript/native": "npm:typescript@7.0.2",
+      "typescript": "npm:@typescript/typescript6@6.0.2",
+      "vite-plus": "0.2.4",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.24"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r --if-present --filter './packages/**' run build && pnpm -r --if-present --filter './tools/**' run build",
+    "check-types": "pnpm -r --if-present run check-types",
+    "test": "pnpm -r --if-present run test",
+    "ci-check": "pnpm run verify:generated && pnpm run audit:rules && pnpm --dir packages/cards run coverage:cards:check && pnpm run check-types && pnpm run test",
+    "audit:rules": "node packages/engine/scripts/rules-audit.mjs",
+    "audit:rules:list": "node packages/engine/scripts/rules-audit.mjs --list",
+    "audit:rules:complete": "node packages/engine/scripts/rules-audit.mjs --complete",
+    "scrape": "pnpm --dir tools/scraper run scrape",
+    "generate": "pnpm --dir tools/catalog run generate && pnpm --dir packages/cards exec vp fmt src/generated/grand-archive-catalog.ts && pnpm --dir packages/cards run generate:cards && pnpm --dir tools/catalog run generate:manifest",
+    "verify:catalog": "pnpm --dir tools/catalog run verify:catalog",
+    "verify:generated": "node tools/catalog/scripts/verify-generated.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

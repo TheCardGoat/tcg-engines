@@ -33,11 +33,9 @@ export const op04LaoG034: CharacterCard = {
         trigger: "endOfYourTurn",
         conditions: [
           {
-            condition: "donFieldCount",
-            player: "self",
+            condition: "activeDonCount",
             comparison: "gte",
             value: 3,
-            state: "active",
           },
         ],
         actions: [

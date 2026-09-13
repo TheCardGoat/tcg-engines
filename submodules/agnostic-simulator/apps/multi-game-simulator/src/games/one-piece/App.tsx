@@ -2,6 +2,7 @@ import "@mantine/core/styles.css";
 
 import { useEffect, type ReactNode } from "react";
 import { MantineProvider } from "@mantine/core";
+import { DefaultSimulatorEntityVisual, SimulatorEntityVisualProvider } from "@tcg/simulator-ui";
 import { Router } from "./Router";
 
 export interface OnePieceSimulatorAppProps {
@@ -24,7 +25,9 @@ export function OnePieceSimulatorProviders({ children }: OnePieceSimulatorProvid
 
   return (
     <MantineProvider defaultColorScheme="light">
-      <div className="one-piece-root">{children}</div>
+      <SimulatorEntityVisualProvider renderer={DefaultSimulatorEntityVisual}>
+        <div className="one-piece-root">{children}</div>
+      </SimulatorEntityVisualProvider>
     </MantineProvider>
   );
 }

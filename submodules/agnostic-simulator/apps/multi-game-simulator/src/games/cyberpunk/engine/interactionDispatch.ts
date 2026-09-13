@@ -18,8 +18,25 @@ export function interactionSubmissionToEngineAction(
     case "sellCard":
     case "callLegend":
     case "goSolo":
-    case "resolveCardToPlay":
       return { type: submission.actionId, cardId: requireString(submission, "cardId"), as };
+    case "resolveCardToPlay": {
+      if (optionalBoolean(submission, "pass")) {
+        return { type: "resolveCardToPlay", pass: true, as };
+      }
+      const attachToId = optionalString(submission, "attachToId");
+      return {
+        type: "resolveCardToPlay",
+        cardId: requireString(submission, "cardId"),
+        as,
+        ...(attachToId === undefined ? {} : { attachToId }),
+      };
+    }
+    case "resolveChooseEffect":
+      return {
+        type: "resolveChooseEffect",
+        optionId: requireString(submission, "optionId"),
+        as,
+      };
     case "attackUnit":
       return {
         type: "attackUnit",

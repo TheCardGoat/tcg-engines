@@ -227,14 +227,14 @@ describe("migrated cards produce the expected shape", () => {
     expect(card?.abilities).toEqual([
       {
         kind: "keyword",
-        text: "BLOCKER (When a rival unit attacks, you may spend this unit to redirect the attack to it.)",
+        text: "Blocker (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
         keyword: "blocker",
         source: { selector: "self" },
         effects: [],
       },
       {
         kind: "static",
-        text: "This unit can't attack.",
+        text: "This Unit can't attack.",
         effects: [
           {
             effect: "grantRule",
@@ -247,8 +247,8 @@ describe("migrated cards produce the expected shape", () => {
     ]);
   });
 
-  it("saburo-arasaka-stubborn-patriach has the +1 power-when-attacking static", () => {
-    const card = getStructuredCardBySlug("saburo-arasaka-stubborn-patriach");
+  it("saburo-arasaka-stubborn-patriarch has the +1 power-when-attacking static", () => {
+    const card = getStructuredCardBySlug("saburo-arasaka-stubborn-patriarch");
     const arasakaUnits = {
       selector: "card",
       controller: "friendly",
@@ -259,14 +259,15 @@ describe("migrated cards produce the expected shape", () => {
     expect(card?.abilities).toEqual([
       {
         kind: "static",
-        text: "Your Arasaka units have +1 power when attacking.",
+        text: "Friendly ARASAKA Units have +1 power while attacking.",
+        source: { selector: "self" },
         effects: [
           {
             effect: "modifyPower",
             target: arasakaUnits,
             value: 1,
             duration: "continuous",
-            conditions: [{ condition: "attacking", target: arasakaUnits }],
+            conditions: [{ condition: "attacking", target: { selector: "self" } }],
           },
         ],
       },
@@ -278,7 +279,7 @@ describe("migrated cards produce the expected shape", () => {
     expect(card?.abilities).toEqual([
       {
         kind: "triggered",
-        text: "The first time you play a blue unit or blue gear each turn, you may increase a friendly gig by 2. Then, if it's at max value, draw a card.",
+        text: "The first time you play a Blue Unit or Blue Gear each turn, you may decrease a friendly Gig by up to 2. If it becomes a min Gig, draw 1.",
         source: { selector: "self" },
         trigger: {
           trigger: "event",
@@ -294,15 +295,14 @@ describe("migrated cards produce the expected shape", () => {
           },
         },
         limits: ["firstTimeEachTurn"],
-        bindings: [
-          { id: "selectedGig", target: { selector: "gig", controller: "friendly", amount: 1 } },
-        ],
+        bindings: [{ id: "selectedGig", target: { selector: "gig", controller: "friendly" } }],
         effects: [
           {
-            effect: "modifyGig",
+            effect: "adjustGig",
             target: { selector: "bound", id: "selectedGig" },
-            operation: "increase",
-            value: 2,
+            maxAmount: 2,
+            direction: "decrease",
+            chooseUpTo: true,
             optional: true,
           },
           {
@@ -315,7 +315,7 @@ describe("migrated cards produce the expected shape", () => {
                 target: { selector: "bound", id: "selectedGig" },
                 property: "gigValue",
                 comparison: "eq",
-                value: "max",
+                value: 1,
               },
             ],
           },

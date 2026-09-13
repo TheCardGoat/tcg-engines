@@ -19,9 +19,10 @@ The Playwright dev server boots `vp dev --port 5193` automatically (see
 [../playwright.config.ts](../playwright.config.ts)). On macOS, browser
 binaries are cached at `~/Library/Caches/ms-playwright`.
 
-The harness must run against `vp dev`, never `vp preview`. The
-`/cyberpunk/simulator/tests/*` fixture routes are development-only and should be
-used only to render visible UI states.
+The harness must run against `vp dev`, never `vp preview`. The dev-only engine
+bridges (`window.__cyberpunkEngine` / `window.__cyberpunkSimulator`) are
+reachable only under `vp dev`; the `/cyberpunk/simulator/tests/*` fixture routes
+themselves render in both development and production.
 
 ## Architecture
 

@@ -59,4 +59,26 @@ describe("OP13-022 Windmill Village", () => {
     ).toBe(3000);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      stage: op13WindmillVillage022,
+      character: [op13Otama043, op13Otama043, op13Higuma013],
+    });
+    const stageId = engine.findCardInZone("south", "stage", op13WindmillVillage022);
+    const eligibleId = engine.findCardInZone("south", "character", op13Otama043);
+    const powerBefore = engine
+      .getView("south")
+      .players.south.characters.find((card) => card?.instanceId === eligibleId)?.power;
+
+    engine.activateEffect(stageId, "activateMain");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.stage?.rested).toBe(false);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === eligibleId)?.power,
+    ).toBe(powerBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

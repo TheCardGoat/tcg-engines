@@ -510,3 +510,14 @@
 .panelCompact .help {
   display: none;
 }
+
+@media (pointer: coarse) {
+  .panelCompact .btn,
+  .panelEmbedded.panelCompact .btn,
+  .panelCompact .segmentBtn,
+  .panelEmbedded.panelCompact .segmentBtn,
+  .panelCompact .select,
+  .panelEmbedded.panelCompact .select {
+    min-height: 44px;
+  }
+}

@@ -1,0 +1,320 @@
+/* Page chrome for naruto practice setup / fixture index / test-state pages. */
+
+.page {
+  min-height: 100svh;
+  padding: clamp(24px, 4vw, 56px);
+  color: #f8fbff;
+  background:
+    radial-gradient(ellipse at 6% 2%, rgba(235, 97, 1, 0.22), transparent 32%),
+    radial-gradient(ellipse at 93% 84%, rgba(62, 104, 161, 0.2), transparent 35%),
+    linear-gradient(135deg, #090d18 0%, #07111f 48%, #0a1626 100%);
+}
+
+.header {
+  display: grid;
+  gap: 10px;
+  max-width: 720px;
+  margin: 0 auto 34px;
+}
+
+.header p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(235, 97, 1, 0.85);
+}
+
+.previewNotice {
+  max-width: 60ch;
+  color: rgba(216, 229, 247, 0.82) !important;
+  font-size: 15px !important;
+  font-weight: 650 !important;
+  line-height: 1.5;
+}
+
+.assetNotice {
+  color: rgba(216, 229, 247, 0.64) !important;
+  font-size: 12px !important;
+  font-weight: 650 !important;
+}
+
+.header h1 {
+  margin: 0;
+  max-width: 13ch;
+  font-size: clamp(36px, 4.6vw, 58px);
+  letter-spacing: -0.035em;
+  line-height: 0.98;
+}
+
+.header a {
+  width: fit-content;
+  margin-top: 12px;
+  color: #eb6101;
+  font-weight: 850;
+}
+
+.setupLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 640px) minmax(240px, 340px);
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.setupGrid {
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid rgba(235, 97, 1, 0.24);
+  border-radius: 16px;
+  background: #0c1728;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.24);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(216, 229, 247, 0.72);
+}
+
+.field select,
+.field input,
+.field textarea {
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid rgba(146, 177, 220, 0.32);
+  border-radius: 8px;
+  background: #101d30;
+  color: #f8fbff;
+  font: inherit;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.field select:hover,
+.field input:hover,
+.field textarea:hover {
+  border-color: rgba(235, 97, 1, 0.64);
+}
+
+.field select:focus-visible,
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline: none;
+  border-color: #f98733;
+  box-shadow: 0 0 0 3px rgba(235, 97, 1, 0.22);
+}
+
+.field textarea {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+}
+
+.deckStatus {
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid rgba(111, 154, 211, 0.32);
+  background: rgba(13, 27, 46, 0.7);
+  font-size: 13px;
+}
+
+.deckStatus p {
+  margin: 2px 0;
+}
+
+.problem {
+  margin: 0;
+  color: #ff9c9c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.startButton {
+  min-height: 48px;
+  width: fit-content;
+  padding: 12px 28px;
+  border: 1px solid #ff9a4c;
+  border-radius: 8px;
+  background: #f1711d;
+  color: #1c0b00;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(235, 97, 1, 0.22);
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.startButton:hover {
+  background: #ff812e;
+  box-shadow: 0 10px 24px rgba(235, 97, 1, 0.3);
+  transform: translateY(-1px);
+}
+
+.startButton:focus-visible {
+  outline: 3px solid rgba(255, 180, 110, 0.58);
+  outline-offset: 3px;
+}
+
+.setupPreview {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  color: rgba(216, 229, 247, 0.82);
+}
+
+.previewCardFrame {
+  width: min(100%, 244px);
+  aspect-ratio: 0.716;
+  padding: 6px;
+  border: 1px solid rgba(235, 97, 1, 0.58);
+  border-radius: 12px;
+  background: #0b1422;
+  box-shadow: 0 22px 42px rgba(0, 0, 0, 0.34);
+}
+
+.previewCardArt {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.previewCopy {
+  max-width: 31ch;
+  text-align: center;
+}
+
+.previewCopy h2 {
+  margin: 0 0 6px;
+  color: #f8fbff;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.previewCopy p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.group {
+  display: grid;
+  gap: 12px;
+  max-width: 960px;
+  margin-top: 22px;
+}
+
+.group h2 {
+  margin: 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: rgba(216, 229, 247, 0.72);
+}
+
+.group ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.group a {
+  display: grid;
+  gap: 6px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(111, 154, 211, 0.28);
+  background: rgba(13, 27, 46, 0.7);
+  color: #f8fbff;
+  text-decoration: none;
+}
+
+.group a:hover {
+  border-color: #eb6101;
+}
+
+.group a span {
+  font-weight: 800;
+}
+
+.group a code {
+  font-size: 12px;
+  color: rgba(216, 229, 247, 0.6);
+}
+
+.group a p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(216, 229, 247, 0.72);
+}
+
+.practiceGame {
+  height: 100svh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.gameBar {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+}
+
+.gameBar button {
+  border: 1px solid rgba(216, 229, 247, 0.36);
+  border-radius: 6px;
+  background: rgba(8, 17, 30, 0.88);
+  color: #d8e5f7;
+  padding: 6px 10px;
+}
+
+.gameBar button:disabled {
+  opacity: 0.55;
+}
+
+@media (max-width: 899px) {
+  .gameBar {
+    display: none;
+  }
+}
+
+.practiceGame :global([data-testid="naruto-shell"]) {
+  height: 100%;
+}
+
+@media (max-width: 899px) {
+  .page {
+    padding: 24px 20px 40px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .setupLayout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .setupPreview {
+    display: none;
+  }
+}

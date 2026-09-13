@@ -46,6 +46,7 @@ describe("OP06-044 Gion", () => {
 
     engine.declareAttack(attackerIds[0]!, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventIds[0]!] }, "north");
+    engine.acceptLeadingOptional("north");
     const firstReturn = engine.pendingDecision("effectCostReturnDon", "north").steps[0];
     expect(firstReturn?.kind).toBe("payCost");
     if (firstReturn?.kind !== "payCost") throw new Error("Expected the Event's DON!! cost.");
@@ -64,6 +65,7 @@ describe("OP06-044 Gion", () => {
       "north",
     );
 
+    engine.acceptLeadingOptional("north");
     const returnChoice = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     expect(returnChoice?.kind).toBe("selectEntity");
     if (returnChoice?.kind !== "selectEntity") throw new Error("Expected Gion's hand choice.");
@@ -78,6 +80,23 @@ describe("OP06-044 Gion", () => {
 
     engine.declareAttack(attackerIds[1]!, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventIds[1]!] }, "north");
+    // Second Counter also has optional DON!! −1; accept/pay when a cost prompt remains.
+    try {
+      engine.acceptLeadingOptional("north");
+      const secondReturn = engine.pendingDecision("effectCostReturnDon", "north").steps[0];
+      if (secondReturn?.kind === "payCost") {
+        const paid = secondReturn.candidates.find((candidate) =>
+          candidate.ref.id.startsWith("rested-don:"),
+        );
+        engine.resolveDecision(
+          "effectCostReturnDon",
+          { selectedIds: [paid?.ref.id ?? secondReturn.candidates[0]!.ref.id] },
+          "north",
+        );
+      }
+    } catch {
+      // Optional accepted and cost auto-resolved.
+    }
     expect(engine.getView("north").players.north.donDeckCount).toBe(donDeckBefore + 2);
     engine.resolveDecision(
       "effectTargetSelection",

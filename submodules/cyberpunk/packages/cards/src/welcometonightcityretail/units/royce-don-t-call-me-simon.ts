@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailRoyceDonTCallMeSimon = defineCyberpunkCard({
   id: "9e465b11-9743-4275-a71d-d701b059eef0",
   slug: "royce-don-t-call-me-simon",
+  subname: "Don't Call Me Simon",
   rulesText:
     "{Play} Defeat a rival Unit with power 2 or less. If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 3 or less instead.",
-  name: "Royce — Don't Call Me Simon",
-  displayName: "Royce — Don't Call Me Simon",
+  name: "Royce",
+  displayName: "Royce: Don't Call Me Simon",
   canonicalId: "royce-don-t-call-me-simon",
   color: "red",
   classifications: ["Ganger", "Maelstrom"],

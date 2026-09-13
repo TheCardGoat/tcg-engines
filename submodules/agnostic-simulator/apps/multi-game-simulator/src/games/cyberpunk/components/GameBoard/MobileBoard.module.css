@@ -100,7 +100,7 @@
 
   .mobilePhaseControls :global([data-testid="phase-advance"]),
   .mobilePhaseControls :global([data-testid="phase-undo"]) {
-    min-height: 28px;
+    min-height: 44px;
     padding-block: 4px;
   }
 
@@ -846,11 +846,6 @@
   border-top: 1px solid rgb(245 230 66 / 48%);
 }
 
-.bottomSection:has([data-testid="hand-command-tray"]) {
-  z-index: 80;
-  overflow: visible;
-}
-
 .bottomSection:has(.promptBand > *) {
   z-index: 26;
   overflow: visible;
@@ -1020,7 +1015,7 @@
 }
 
 .mobileTopRail {
-  --mobile-command-bar-h: 36px;
+  --mobile-command-bar-h: 44px;
 
   grid-template-columns: minmax(0, 1fr) minmax(68px, 74px) minmax(0, 1fr);
   border-bottom-color: rgb(255 61 138 / 38%);
@@ -1029,7 +1024,7 @@
 .mobileBottomRail {
   --mobile-command-bar-h: var(--mobile-portrait-bottom-rail-h);
 
-  grid-template-columns: minmax(0, 1fr) minmax(68px, 74px) minmax(0, 1fr);
+  grid-template-columns: minmax(44px, 1fr) 68px 204px;
   border-top-color: rgb(74 217 255 / 42%);
 }
 
@@ -1441,7 +1436,7 @@
   width: auto;
   width: var(--mobile-command-bar-h);
   min-width: var(--mobile-command-bar-h);
-  min-height: 100%;
+  min-height: 44px;
   padding: 0;
   border: 0;
   border-left: 1px solid rgb(74 217 255 / 28%);
@@ -1577,6 +1572,15 @@
   white-space: nowrap;
   clip: rect(0, 0, 0, 0);
   border: 0;
+}
+
+.activityUtilities {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 100%;
+  padding: 12px;
+  background: rgb(7 9 12 / 96%);
 }
 
 .settingsControl {
@@ -1946,10 +1950,6 @@
   border-top: 0;
 }
 
-.bottomHandBand:has([data-testid="hand-command-tray"]) {
-  overflow: visible;
-}
-
 .bottomCommandBar {
   grid-area: controls;
   display: flex;
@@ -1981,7 +1981,26 @@
   flex: 1 1 auto;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: 0 6px 4px;
+  padding: 0;
+}
+
+.mobileConcedeAction {
+  flex: 0 0 58px;
+  min-width: 58px;
+  min-height: 44px;
+  border: 1px solid rgb(255 61 104 / 48%);
+  border-radius: 2px;
+  background: rgb(255 61 104 / 8%);
+  color: rgb(255 140 165);
+  font-family: Rajdhani, sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mobileConcedeAction:disabled {
+  opacity: 0.4;
 }
 
 .mobilePhaseControls > * {
@@ -2008,8 +2027,10 @@
   order: 8;
 }
 
-.mobilePhaseControls :global([data-testid="phase-advance"]) {
-  min-height: 32px;
+.mobilePhaseControls :global([data-testid="phase-advance"]),
+.mobilePhaseControls :global([data-testid="phase-undo"]) {
+  min-height: 44px;
+  height: 44px;
   gap: 1px 4px;
   padding-block: 4px;
 }

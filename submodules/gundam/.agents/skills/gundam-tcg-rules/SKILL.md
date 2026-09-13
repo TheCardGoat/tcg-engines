@@ -39,6 +39,11 @@ Return this JSON shape when rules need to become tests or code:
 
 ## Quality Rules
 
+- Apply this repository's 1v1 implementation scope: use the standard
+  two-player game in rule 1-1-1. Do not require section 12 battle-royale or
+  team behavior unless the user explicitly requests multiplayer support.
+- In the supported game, "each enemy player" means the single opponent. Keep
+  printed choice ownership intact even when multiplayer fan-out is irrelevant.
 - Do not import assumptions from another TCG when Gundam rules are silent.
 - Preserve Gundam wording for native concepts such as Unit, Pilot, Command, Base, Resource, Shield, Burst, Pair, Link, Lv., AP, and HP.
 - Treat card text as overriding base rules when they conflict.

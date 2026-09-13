@@ -1,4 +1,80 @@
 /* Base theme tokens */
+[data-simulator-animation-suppressed="true"] {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/*
+ * Spatial transfers run on the browser compositor. React and the rules engine
+ * can continue committing the destination state without starving card motion
+ * of animation frames on the main thread.
+ */
+.simulator-entity-transfer,
+.simulator-entity-transfer--fan {
+  animation-delay: var(--simulator-transfer-delay);
+  animation-duration: var(--simulator-transfer-duration);
+  animation-fill-mode: both;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.simulator-entity-transfer {
+  animation-name: simulator-entity-transfer;
+}
+
+.simulator-entity-transfer--fan {
+  animation-name: simulator-entity-transfer-fan;
+}
+
+.simulator-entity-transfer__flip {
+  animation-delay: var(--simulator-transfer-flip-delay);
+  animation-duration: var(--simulator-transfer-flip-duration);
+  animation-fill-mode: both;
+  animation-name: simulator-entity-transfer-flip;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+@keyframes simulator-entity-transfer {
+  from {
+    opacity: var(--simulator-transfer-start-opacity);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  to {
+    opacity: var(--simulator-transfer-end-opacity);
+    transform: translate3d(var(--simulator-transfer-x), var(--simulator-transfer-y), 0) rotate(0deg)
+      scale(var(--simulator-transfer-scale));
+  }
+}
+
+@keyframes simulator-entity-transfer-fan {
+  0% {
+    opacity: var(--simulator-transfer-start-opacity);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+
+  68% {
+    transform: translate3d(var(--simulator-transfer-mid-x), var(--simulator-transfer-mid-y), 0)
+      rotate(var(--simulator-transfer-mid-rotate)) scale(var(--simulator-transfer-scale));
+  }
+
+  100% {
+    opacity: var(--simulator-transfer-end-opacity);
+    transform: translate3d(var(--simulator-transfer-x), var(--simulator-transfer-y), 0) rotate(0deg)
+      scale(var(--simulator-transfer-scale));
+  }
+}
+
+@keyframes simulator-entity-transfer-flip {
+  from {
+    transform: rotateY(0deg);
+  }
+
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
 :root {
   --game-accent: #6d4cc2;
   --game-accent-soft: #f0ecff;
@@ -241,10 +317,109 @@
   --pill-border: rgba(216, 229, 247, 0.28);
 }
 
-@keyframes targeting-dash-flow {
-  to {
-    stroke-dashoffset: -14;
-  }
+[data-game="flesh-and-blood"] {
+  --game-accent: #8a1c1c;
+  --game-accent-soft: #fbeaea;
+  --board-layout-bg: #0f0a0a;
+  --board-mat-bg: #1a1212;
+  --board-surface: rgba(26, 18, 18, 0.92);
+  --board-surface-soft: rgba(26, 18, 18, 0.92);
+  --board-text: #fef2f2;
+  --board-muted: rgba(254, 242, 242, 0.62);
+  --board-border: rgba(138, 28, 28, 0.28);
+  --board-border-strong: rgba(138, 28, 28, 0.42);
+  --board-player-label-bg: #8a1c1c;
+  --board-opponent-label-bg: #1a1a2e;
+  --board-shared-label-bg: #8a1c1c;
+  --board-label-text: #ffffff;
+  --card-bg: #1a1212;
+  --card-border: rgba(138, 28, 28, 0.28);
+  --card-art-a: #8a1c1c;
+  --card-art-b: #d4a853;
+  --card-art-c: #1a1a2e;
+  --pill-bg: rgba(138, 28, 28, 0.12);
+  --pill-text: #fca5a5;
+  --pill-border: rgba(138, 28, 28, 0.28);
+
+  /* Event log Flesh and Blood overrides */
+  --log-bg: rgba(26, 18, 18, 0.72);
+  --log-bg-gradient: rgba(138, 28, 28, 0.03);
+  --log-border: rgba(138, 28, 28, 0.22);
+  --log-scrollbar: rgba(138, 28, 28, 0.28);
+  --log-turn-line: rgba(138, 28, 28, 0.18);
+  --log-turn-text: rgba(252, 165, 165, 0.65);
+  --log-turn-text-hover: rgba(252, 165, 165, 0.9);
+  --log-entry-hover-bg: rgba(138, 28, 28, 0.06);
+  --log-entry-highlight-bg: rgba(212, 168, 83, 0.1);
+  --log-focus: rgba(212, 168, 83, 0.5);
+  --log-speaker-player: rgba(252, 165, 165, 0.9);
+  --log-speaker-opponent: rgba(96, 165, 250, 0.9);
+  --log-speaker-system: rgba(212, 168, 83, 0.9);
+  --log-tag-border: rgba(138, 28, 28, 0.22);
+  --log-tag-hover-bg: rgba(138, 28, 28, 0.06);
+  --log-tag-active-border: rgba(138, 28, 28, 0.78);
+  --log-tag-active-bg: rgba(138, 28, 28, 0.14);
+  --log-tag-active-text: #8a1c1c;
+  --log-tag-system: rgba(254, 242, 242, 0.65);
+  --log-tag-move: rgba(138, 28, 28, 0.85);
+  --log-tag-combat: rgba(220, 38, 38, 0.85);
+  --log-tag-ability: rgba(212, 168, 83, 0.85);
+}
+
+[data-game="grand-archive"] {
+  --game-accent: #bb5a32;
+  --game-accent-soft: #fff0e8;
+  --board-layout-bg: oklch(0.16 0.018 255);
+  --board-mat-bg: oklch(0.205 0.021 255);
+  --board-surface: oklch(0.205 0.021 255 / 92%);
+  --board-surface-soft: oklch(0.255 0.021 255 / 82%);
+  --board-text: oklch(0.955 0.007 96);
+  --board-muted: oklch(0.73 0.019 250);
+  --board-border: oklch(0.72 0.028 250 / 22%);
+  --board-border-strong: color-mix(in srgb, var(--game-accent) 48%, transparent);
+  --board-player-label-bg: var(--game-accent);
+  --board-opponent-label-bg: oklch(0.39 0.09 82);
+  --board-shared-label-bg: oklch(0.62 0.135 83);
+  --board-label-text: oklch(0.982 0.006 96);
+  --card-bg: oklch(0.16 0.018 255);
+  --card-border: color-mix(in srgb, var(--game-accent) 38%, transparent);
+  --card-art-a: #bb5a32;
+  --card-art-b: oklch(0.78 0.14 86);
+  --card-art-c: oklch(0.39 0.09 82);
+  --pill-bg: color-mix(in srgb, var(--game-accent) 12%, transparent);
+  --pill-text: oklch(0.955 0.007 96);
+  --pill-border: color-mix(in srgb, var(--game-accent) 28%, transparent);
+  --surface: oklch(0.205 0.021 255);
+  --surface-soft: oklch(0.255 0.021 255);
+  --text: oklch(0.955 0.007 96);
+  --muted: oklch(0.73 0.019 250);
+  --quiet: oklch(0.73 0.019 250 / 72%);
+  --border: oklch(0.72 0.028 250 / 22%);
+  --ga-signal: oklch(0.78 0.14 86);
+}
+
+[data-game="naruto"] {
+  --game-accent: #eb6101;
+  --game-accent-soft: #fdeede;
+  --board-layout-bg: #07111f;
+  --board-mat-bg: #0d1d34;
+  --board-surface: rgba(13, 27, 46, 0.88);
+  --board-surface-soft: rgba(13, 27, 46, 0.82);
+  --board-text: #f8fbff;
+  --board-muted: rgba(216, 229, 247, 0.72);
+  --board-border: rgba(235, 97, 1, 0.28);
+  --board-border-strong: rgba(235, 97, 1, 0.42);
+  --board-player-label-bg: #eb6101;
+  --board-opponent-label-bg: #1e4367;
+  --board-shared-label-bg: #8a3b00;
+  --card-bg: #0d1d34;
+  --card-border: rgba(235, 97, 1, 0.28);
+  --card-art-a: #eb6101;
+  --card-art-b: #f3c260;
+  --card-art-c: #0f2147;
+  --pill-bg: rgba(235, 97, 1, 0.1);
+  --pill-text: #f8fbff;
+  --pill-border: rgba(235, 97, 1, 0.28);
 }
 
 /* Reduced motion */
@@ -255,9 +430,5 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-
-  .targeting-arrow-dash {
-    animation: none !important;
   }
 }

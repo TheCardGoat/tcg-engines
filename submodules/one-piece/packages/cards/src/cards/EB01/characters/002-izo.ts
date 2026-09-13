@@ -50,22 +50,6 @@ export const eb01Izo002: CharacterCard = {
       },
       {
         trigger: "onOpponentAttack",
-        conditions: [
-          {
-            condition: "compound",
-            operator: "or",
-            conditions: [
-              {
-                condition: "leaderTrait",
-                trait: "Land of Wano",
-              },
-              {
-                condition: "leaderTrait",
-                trait: "Whitebeard Pirates",
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "trashFromHand",
@@ -85,6 +69,22 @@ export const eb01Izo002: CharacterCard = {
             },
             value: -2000,
             duration: "thisTurn",
+            condition: {
+              condition: "compound",
+              operator: "or",
+              conditions: [
+                {
+                  condition: "leaderTrait",
+                  trait: "Land of Wano",
+                  match: "includes",
+                },
+                {
+                  condition: "leaderTrait",
+                  trait: "Whitebeard Pirates",
+                  match: "includes",
+                },
+              ],
+            },
           },
         ],
         optional: true,

@@ -1,89 +1,127 @@
 import { phaseLabel } from "../../game/labels.ts";
-import { MessageSquareText } from "lucide-react";
-import type { ReactNode } from "react";
-import { m } from "../../lib/i18n/messages.ts";
+import { MessageSquareText, Shield } from "lucide-react";
+import type { CSSProperties, ReactNode } from "react";
+import { MobilePlayerRail } from "@tcg/simulator-ui";
+import type { GundamControlState } from "../../game/index.ts";
 import { Button } from "../primitives/index.ts";
 import type { MatchInfo } from "./types.ts";
 
 export interface MobileTopHudProps {
   readonly matchInfo: MatchInfo;
-  readonly isSelfTurn: boolean;
-  readonly isSelfPriority: boolean;
+  readonly controlState: GundamControlState;
   readonly onOpenLog: () => void;
   readonly connectionIndicator?: ReactNode;
+  readonly opponentName: ReactNode;
+  readonly opponentClock?: ReactNode;
+  readonly opponentShields?: number;
 }
 
 /**
  * Compact top bar for mobile portrait. Replaces the left sidebar's header +
  * match-meta block with a single compact row. The log action opens a dedicated
- * log sheet; player and AI controls remain desktop-only.
+ * activity sheet; bot controls and utilities live under its More tab.
  */
 export function MobileTopHud({
   matchInfo,
-  isSelfTurn,
-  isSelfPriority,
+  controlState,
   onOpenLog,
   connectionIndicator,
+  opponentName,
+  opponentClock,
+  opponentShields,
 }: MobileTopHudProps) {
+  const isSetup = matchInfo.format === "setup";
+  const turnLabel = isSetup
+    ? "Setup"
+    : controlState.turnOwner === "self"
+      ? "Your turn"
+      : "Rival turn";
+  const priorityLabel = isSetup
+    ? controlState.kind === "resolving"
+      ? "Resolving"
+      : controlState.priorityHolder === "self"
+        ? "Your decision"
+        : "Waiting for rival"
+    : controlState.kind === "resolving"
+      ? "Resolving"
+      : controlState.priorityHolder === "self"
+        ? "Your priority"
+        : "Rival priority";
+  const sharedTurnAndPriority =
+    !isSetup &&
+    controlState.kind !== "resolving" &&
+    controlState.turnOwner === controlState.priorityHolder;
+
   return (
-    <header
-      className="gd-dark-surface flex items-center gap-2 border-b border-hud-border bg-hud-deep px-1.5 flex-shrink-0 min-w-0 overflow-visible shadow-[0_8px_20px_rgba(5,10,24,.24)]"
-      style={{
-        // Real rendered height must include the notch inset so content
-        // isn't squeezed into `topHudHeight - safeTop`. PendingEffects and
-        // the bottom-sheet both assume this same sum when positioning.
-        height: "calc(var(--mobile-top-hud-height) + var(--safe-top))",
-        paddingTop: "var(--safe-top)",
-      }}
-    >
-      <Button
-        onClick={onOpenLog}
-        variant="outline"
-        size="sm"
-        className="h-11 min-w-11 flex-shrink-0 gap-1 rounded-sm border-hud-accent/40 bg-hud-accent/10 px-2 text-[10px] font-bold tracking-[.08em] text-hud-accent-deep"
-        aria-label={m["sim.sidebar.log.regionLabel"]()}
-        style={{ color: "var(--color-hud-accent-hot)" }}
-      >
-        <MessageSquareText aria-hidden className="h-4 w-4" />
-        LOG
-      </Button>
-
-      <div className="flex min-w-0 flex-1 items-center justify-center gap-1 text-[10px] font-semibold text-hud-text">
-        <span className="whitespace-nowrap">Turn {matchInfo.turn}</span>
-        <span className="text-hud-text-faint">·</span>
-        <span className="truncate text-hud-accent-deep">{phaseLabel(matchInfo.phase)}</span>
-      </div>
-
-      <div className="grid w-[118px] flex-none grid-cols-[auto_1fr] overflow-hidden rounded-sm border border-hud-border/50 bg-hud-surface-raised text-[8px] font-bold uppercase leading-none tracking-[.08em]">
-        <StatusCell label="Turn" isSelf={isSelfTurn} />
-        <StatusCell label="Priority" isSelf={isSelfPriority} />
-      </div>
-
-      {connectionIndicator ? (
-        <div className="relative z-20 flex h-11 w-7 flex-none items-center justify-center">
-          {connectionIndicator}
+    <MobilePlayerRail
+      side="opponent"
+      data-combat-label-obstacle
+      className="gd-dark-surface flex-shrink-0 min-w-0 overflow-visible border-b border-hud-border bg-hud-deep px-1.5 shadow-[0_8px_20px_rgba(5,10,24,.24)]"
+      style={
+        {
+          height: "var(--mobile-top-hud-height)",
+          gridTemplateColumns: "auto minmax(0, 1fr) auto",
+          "--mobile-portrait-surface": "var(--color-hud-deep)",
+          "--mobile-portrait-text": "var(--color-hud-text)",
+          "--mobile-portrait-border": "var(--color-hud-border)",
+        } as CSSProperties
+      }
+      left={
+        <Button
+          onClick={onOpenLog}
+          variant="outline"
+          size="sm"
+          className="h-11 min-w-11 flex-shrink-0 gap-1 rounded-sm border-hud-accent/40 bg-hud-accent/10 px-2 text-xs font-bold tracking-[.05em] text-hud-accent-deep"
+          aria-label="Open match activity"
+          style={{ color: "var(--color-hud-accent-hot)" }}
+        >
+          <MessageSquareText aria-hidden className="h-4 w-4" />
+          <span className="hidden min-[480px]:inline">ACTIVITY</span>
+        </Button>
+      }
+      center={
+        <div className="grid min-w-0 place-content-center text-center text-xs font-semibold text-hud-text">
+          <span className="whitespace-nowrap">
+            Turn {matchInfo.turn} · {phaseLabel(matchInfo.phase)}
+          </span>
+          <span className="flex flex-wrap justify-center gap-x-1 text-xs leading-tight uppercase tracking-[.04em] text-hud-text-muted">
+            {sharedTurnAndPriority ? (
+              <span className="whitespace-nowrap">{turnLabel} · Priority</span>
+            ) : (
+              <>
+                <span className="whitespace-nowrap">{turnLabel}</span>
+                <span>·</span>
+                <span className="whitespace-nowrap">{priorityLabel}</span>
+              </>
+            )}
+          </span>
         </div>
-      ) : null}
-    </header>
-  );
-}
-
-function StatusCell({ label, isSelf }: { readonly label: string; readonly isSelf: boolean }) {
-  return (
-    <>
-      <span className="border-b border-hud-line px-1.5 py-1 text-hud-text-faint last:border-0">
-        {label}
-      </span>
-      <span
-        aria-label={`${label}: ${isSelf ? "You" : "Opponent"}`}
-        className="border-b border-hud-line px-1.5 py-1 text-right last:border-0"
-        style={{
-          color: isSelf ? "var(--color-hud-accent-deep)" : "var(--color-hud-danger-deep)",
-          background: isSelf ? "rgba(45,107,255,.10)" : "rgba(255,45,122,.10)",
-        }}
-      >
-        {isSelf ? "You" : "Opp"}
-      </span>
-    </>
+      }
+      right={
+        <div className="flex min-w-0 items-center justify-end gap-1.5 px-1 text-right">
+          <div className="grid min-w-0">
+            <strong className="max-w-[88px] truncate text-xs">{opponentName}</strong>
+            <span className="flex items-center justify-end gap-1 text-xs tabular-nums text-hud-text-muted">
+              {opponentShields === undefined ? null : (
+                <span
+                  className="inline-flex items-center gap-0.5 text-hud-accent-deep"
+                  aria-label={`Opponent shields: ${opponentShields}`}
+                  title="Opponent shields"
+                >
+                  <Shield aria-hidden className="size-3" />
+                  <span>{opponentShields}</span>
+                </span>
+              )}
+              <span>{opponentClock ?? "—"}</span>
+            </span>
+          </div>
+          {connectionIndicator ? (
+            <div className="relative z-20 flex h-11 w-7 flex-none items-center justify-center">
+              {connectionIndicator}
+            </div>
+          ) : null}
+        </div>
+      }
+    />
   );
 }

@@ -24,5 +24,6 @@ describe("OP11-085 Kurozumi Orochi", () => {
     if (target?.kind !== "selectEntity") throw new Error("Expected Orochi's SMILE choice.");
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(eligibleId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(expensiveId);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

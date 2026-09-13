@@ -1,0 +1,56 @@
+export { compileTurnLine, chooseCompiledLineCommand, rankTurnLines } from "./line-compiler.ts";
+export { buildHeuristicSnapshot, cardByInstance } from "./snapshot.ts";
+export {
+  estimateOffensiveValue,
+  estimateOnHitValue,
+  evaluateDefendSet,
+  scoreDefendSet,
+  cardValue,
+} from "./defend.ts";
+export {
+  valueExtractStrategy,
+  defendOnlyStrategy,
+  neverDefendStrategy,
+  goldfishWithHint,
+} from "./goldfish.ts";
+export {
+  heroProfileStrategy,
+  rhinarStrategy,
+  readRhinarHand,
+  rhinarRankingHint,
+  rhinarProfileApplies,
+  teklovossenStrategy,
+  teklovossenProfileApplies,
+  arakniStrategy,
+  arakniProfileApplies,
+  valdaStrategy,
+  valdaProfileApplies,
+  auroraStrategy,
+  auroraProfileApplies,
+  oscilioStrategy,
+  oscilioProfileApplies,
+  zyggyStrategy,
+  zyggyProfileApplies,
+  gravyStrategy,
+  gravyProfileApplies,
+  marlynnStrategy,
+  marlynnProfileApplies,
+  puffinStrategy,
+  puffinProfileApplies,
+  pleiadesStrategy,
+  pleiadesProfileApplies,
+  kayoStrategy,
+  kayoProfileApplies,
+  lyathStrategy,
+  lyathProfileApplies,
+} from "./profiles/index.ts";
+export type {
+  FabCardRole,
+  FabCompiledLine,
+  FabCompiledLineKind,
+  FabGoldfishPersona,
+  FabHeuristicCard,
+  FabHeuristicSnapshot,
+  FabLineRankingHint,
+  FabLineRankingInput,
+} from "./types.ts";

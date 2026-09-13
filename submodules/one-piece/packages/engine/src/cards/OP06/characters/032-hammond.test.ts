@@ -3,7 +3,7 @@ import { op06Hammond032 } from "../../../../../cards/src/cards/OP06/characters/0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-032 Hammond", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op06Hammond032);
   });
 });

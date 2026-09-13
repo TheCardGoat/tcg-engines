@@ -32,7 +32,6 @@ export const op07TrafalgarLawTr010: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        optional: true,
         costs: [
           {
             cost: "returnDon",
@@ -53,6 +52,7 @@ export const op07TrafalgarLawTr010: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -4,6 +4,7 @@ import {
   completeBattleResolution,
   continueEffectDamage,
   continueLeaderDamage,
+  endBattleIfParticipantLeftArea,
   finalizeBattleCleanup,
   finalizeBattle,
   queueBattleLifeTriggerPrompt,
@@ -158,9 +159,15 @@ export function drainResolutionQueue(state: MatchState) {
         break;
       }
       case "battleBlockStep":
+        if (state.battle?.id === item.battleId && endBattleIfParticipantLeftArea(state)) {
+          break;
+        }
         queueBattleBlockChoice(state, item.battleId);
         break;
       case "battleCounterStep": {
+        if (state.battle?.id === item.battleId && endBattleIfParticipantLeftArea(state)) {
+          break;
+        }
         beginBattleCounterStep(state);
         const battle = state.battle;
         if (battle && battle.id === item.battleId && !hasPendingNonJudgePrompt(state)) {

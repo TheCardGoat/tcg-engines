@@ -129,7 +129,7 @@ export function CardBack({ small, count, label, resourceArea }: CardBackProps) {
         }}
       />
       {count != null && (
-        <span className="absolute -top-[2px] -left-[2px] bg-hud-surface text-[#d3ba84] text-[8px] px-[3px] py-[1px] rounded-sm border border-[rgba(211,186,132,.3)]">
+        <span className="absolute -top-[2px] -left-[2px] bg-hud-surface text-[#d3ba84] text-hud-2xs px-[3px] py-[1px] rounded-sm border border-[rgba(211,186,132,.3)]">
           {label}
         </span>
       )}

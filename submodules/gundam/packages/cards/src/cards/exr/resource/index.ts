@@ -1,2 +1,11 @@
 export { exrExResource001 } from "./001-ex-resource.ts";
 export { exrExResource002 } from "./002-ex-resource.ts";
+export { exrExResource003 } from "./003-ex-resource.ts";
+export { exrExResource004 } from "./004-ex-resource.ts";
+export { exrExResource005 } from "./005-ex-resource.ts";
+export { exrExResource006 } from "./006-ex-resource.ts";
+export { exrExResource007 } from "./007-ex-resource.ts";
+export { exrExResource008 } from "./008-ex-resource.ts";
+export { exrExResource009 } from "./009-ex-resource.ts";
+export { exrExResource010 } from "./010-ex-resource.ts";
+export { exrExResource011 } from "./011-ex-resource.ts";

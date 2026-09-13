@@ -24,6 +24,9 @@ export function moveToInteractionSubmission(
     view,
     actionId: move,
     values: flattenPartialInput(partialInput, action),
+    ...(partialInput.automatic === true
+      ? { automation: { kind: "no-valid-action" as const } }
+      : {}),
   });
 }
 
@@ -37,6 +40,10 @@ function flattenPartialInput(
   );
 
   const nativeTargets = stringArray(input.targets);
+  const targetPartition = inputsById.get("targetPartition");
+  if (nativeTargets && targetPartition?.kind === "entity-partition") {
+    values.targetPartition = { targets: [...nativeTargets] };
+  }
   const targetGroups = action.inputs
     .flatMap((interactionInput) => {
       const match = /^targetGroups\.(\d+)$/.exec(interactionInput.id);
@@ -73,7 +80,7 @@ function flattenPartialInput(
       flattenDeckLookAnswers(values, inputsById, value);
       continue;
     }
-    if (key === "targets" && targetGroups.length > 0) continue;
+    if (key === "targets" && (targetGroups.length > 0 || targetPartition)) continue;
     const publishedInput = inputsById.get(key);
     if (!publishedInput) continue;
     const protocolValue = toProtocolValue(value, publishedInput);
@@ -110,21 +117,20 @@ function flattenDeckLookAnswers(
   if (!isRecord(value)) return;
   for (const [index, answer] of Object.entries(value)) {
     if (!isRecord(answer)) continue;
-    for (const [field, nested] of Object.entries(answer)) {
-      const inputId = `deckLookAnswers.${index}.${field}`;
-      const publishedInput = inputsById.get(inputId);
-      if (!publishedInput) continue;
-      if (Array.isArray(nested) && nested.length === 0) continue;
-      const protocolValue = toProtocolValue(nested, publishedInput);
-      if (protocolValue !== undefined) {
-        values[inputId] = protocolValue;
-      }
-    }
-    const completionId = `deckLookAnswers.${index}.completion`;
-    const completionInput = inputsById.get(completionId);
-    if (completionInput?.kind === "option-selection") {
-      values[completionId] = ["complete"];
-    }
+    const inputId = `deckLookAnswers.${index}`;
+    const publishedInput = inputsById.get(inputId);
+    if (publishedInput?.kind !== "entity-partition") continue;
+    const routeIds = new Set(publishedInput.routes.map((route) => route.id));
+    const partition = Object.fromEntries(
+      Object.entries(answer).flatMap(([field, nested]) => {
+        if (!routeIds.has(field)) return [];
+        if (field === "tutorCardId" && typeof nested === "string") return [[field, [nested]]];
+        return Array.isArray(nested) && nested.every((item) => typeof item === "string")
+          ? [[field, nested]]
+          : [];
+      }),
+    );
+    values[inputId] = partition;
   }
 }
 

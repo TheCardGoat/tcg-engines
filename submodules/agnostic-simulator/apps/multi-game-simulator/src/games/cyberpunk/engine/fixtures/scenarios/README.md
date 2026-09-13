@@ -8,6 +8,7 @@ These fixtures feed the dev scenario picker at `http://localhost:5174/tests`, th
 - `shared.ts` owns reusable players, helper functions, deterministic seeds, and scenario-only mock cards.
 - `core.ts` contains broad board-state and turn-flow fixtures.
 - `programs.ts`, `gears.ts`, `legends.ts`, and `units.ts` contain card-family fixtures.
+- `wtnc-22-qa.ts` contains multi-card human QA boards for the 22-card Welcome to Night City wave. Open one board, try a card, refresh to reset, then try another card on the same board.
 - `../scenarios.ts` is a compatibility barrel. Existing imports should continue to use that path unless they are editing this registry directly.
 
 ## Adding a scenario

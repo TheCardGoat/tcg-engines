@@ -27,6 +27,8 @@ export const interactionInputTextKeys = {
   boolean: "interaction.input.boolean",
   number: "interaction.input.number",
   ordering: "interaction.input.ordering",
+  "entity-partition": "interaction.input.entityPartition",
+  "entity-allocation": "interaction.input.entityAllocation",
 } as const satisfies Record<InteractionInput["kind"], `interaction.input.${string}`>;
 
 export function interactionInputKindForTypecheck(input: InteractionInput): string {
@@ -41,6 +43,10 @@ export function interactionInputKindForTypecheck(input: InteractionInput): strin
       return input.step === undefined ? input.id : `${input.id}:${input.step}`;
     case "ordering":
       return input.entityKind;
+    case "entity-partition":
+      return input.routes[0]?.id ?? input.id;
+    case "entity-allocation":
+      return input.role;
     default:
       return assertNeverInteractionInput(input);
   }

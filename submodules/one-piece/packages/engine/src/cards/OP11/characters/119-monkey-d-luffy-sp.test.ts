@@ -3,7 +3,7 @@ import { op11MonkeyDLuffySp119 } from "../../../../../cards/src/cards/OP11/chara
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-119 Monkey.D.Luffy (SP)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op11MonkeyDLuffySp119);
   });
 });

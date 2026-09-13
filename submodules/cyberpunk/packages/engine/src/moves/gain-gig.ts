@@ -4,6 +4,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { Operations } from "../operations/index.ts";
 import { SeededRNG } from "../state/rng.ts";
 import { processEventTriggers } from "../ability-executor.ts";
+import { getEffectiveRules } from "../active-effects/index.ts";
 
 export interface GainGigInput extends MoveInput {
   args: {
@@ -93,10 +94,12 @@ export function readySpentCards(
   const ids = [...player.zones.field, ...player.zones.legendArea, ...player.zones.eddieArea];
   for (const cardId of ids) {
     const card = state.G.cardIndex[cardId as string];
-    if (card?.meta.spent) {
-      operations.card.ready(cardId);
-      readiedCount++;
-    }
+    if (!card?.meta.spent) continue;
+    // cantReady rule locks a spent card through its ready step (e.g. Pacifica).
+    const rules = getEffectiveRules(state, cardId as string);
+    if (rules.includes("cantReady")) continue;
+    operations.card.ready(cardId);
+    readiedCount++;
   }
   if ((player.spentEddies ?? 0) > 0) {
     player.eddies += player.spentEddies;

@@ -1,104 +1,92 @@
-import { useEffect, useState, type ReactNode } from "react";
-
-import { MobileShell } from "@tcg/simulator-ui";
-
+import { useState, type CSSProperties, type ReactNode } from "react";
+import { SimulatorSelfParticipantActions } from "../../../../../simulator/participant-actions";
+import { useSimulatorRoute } from "../../../../../simulator/providers";
 import { useLayoutMode } from "../../lib/use-layout-mode.ts";
-import {
-  MatchLogContainer,
-  MobileTopHudContainer,
-  MobileActionBarContainer,
-} from "../containers/index.ts";
+
+import { SimulatorViewportShell } from "@tcg/simulator-ui";
+
+import { GundamChatProvider, type GundamChatRemoteWiring } from "../../game/chat-context.tsx";
+import { MobileTopHudContainer, MobileActionBarContainer } from "../containers/index.ts";
 import { MatchSidebarContainer } from "../containers/MatchSidebarContainer.tsx";
-import { MatchSidebarRailContainer } from "../containers/MatchSidebarRailContainer.tsx";
+import { GundamMobileActivityContainer } from "../containers/MatchSidebarContainer.tsx";
 
 export interface GundamBoardLayoutProps {
   readonly children: ReactNode;
   readonly connectionPanel?: ReactNode;
   readonly connectionIndicator?: ReactNode;
+  /**
+   * Remote (server-authoritative) chat wiring for live matches. Omit for
+   * local surfaces — they get local-only chat with free text enabled.
+   */
+  readonly chat?: GundamChatRemoteWiring;
 }
 
 export function GundamBoardLayout({
   children,
   connectionPanel,
   connectionIndicator,
+  chat,
 }: GundamBoardLayoutProps) {
+  const [selfActionHost, setSelfActionHost] = useState<HTMLDivElement | null>(null);
+  const route = useSimulatorRoute();
   const layoutMode = useLayoutMode();
-  const isMobile = layoutMode === "mobile";
-  // Keep match context and the comms log visible on desktop by default.
-  // Mobile uses MobileShell's own closed drawer state, so this preference
-  // does not consume playfield space on compact screens.
-  const [drawerOpen, setDrawerOpen] = useState(true);
 
-  // Tablet keeps the desktop board model but cannot fit a 312px sidebar and
-  // the center action rail at once. Start that intermediate layout on the
-  // narrow log rail; full desktop still opens the complete log by default.
-  useEffect(() => {
-    if (layoutMode === "tablet") setDrawerOpen(false);
-  }, [layoutMode]);
-
-  if (!isMobile) {
-    return (
-      <main
-        className="simulator-shell relative flex h-svh max-h-svh min-h-0 w-full overflow-hidden bg-[var(--surface-soft)] text-[var(--text)]"
+  return (
+    <GundamChatProvider {...chat}>
+      <SimulatorSelfParticipantActions
+        menuHost={selfActionHost}
+        viewportLayout={layoutMode === "mobile" ? "mobile" : "desktop"}
+        gameConfiguration={{
+          title: "Configure a new Gundam game?",
+          description: "Opening game configuration leaves the current battle and returns to setup.",
+          confirmLabel: "Open configuration",
+          onSelect: () => window.location.assign("/gundam/simulator"),
+        }}
+        support={{
+          source: "gundam-participant-menu",
+          gameSlug: "gundam",
+          matchId: route.matchId,
+          gameId: route.gameId,
+          stateVersion: route.matchPageData?.game.stateVersion,
+        }}
+      />
+      <SimulatorViewportShell
+        className="simulator-shell gd-dark-surface relative h-svh max-h-svh min-h-0 w-full overflow-hidden bg-[var(--surface-soft)] text-[var(--text)]"
         data-game="gundam"
         data-theme="light"
         data-testid="gundam-shared-simulator-shell"
-      >
-        {drawerOpen ? (
+        style={
+          {
+            "--board-surface": "var(--color-hud-deep)",
+            "--board-surface-soft": "var(--color-hud-surface-raised)",
+            "--board-text": "var(--color-hud-text)",
+            "--board-muted": "var(--color-hud-text-muted)",
+            "--board-border": "var(--color-hud-border)",
+            "--game-accent": "var(--color-hud-accent-deep)",
+          } as CSSProperties
+        }
+        sidebar={
           <MatchSidebarContainer
+            selfActions={<div ref={setSelfActionHost} />}
             connectionPanel={connectionPanel}
-            onCollapse={() => setDrawerOpen(false)}
-          />
-        ) : (
-          <MatchSidebarRailContainer
             connectionIndicator={connectionIndicator}
-            onOpenDrawer={() => setDrawerOpen(true)}
+          />
+        }
+        mobilePanel={<GundamMobileActivityContainer connectionPanel={connectionPanel} />}
+        mobilePanelLabel="Gundam activity and utilities"
+        mobileTopRail={({ openSidebar }) => (
+          <MobileTopHudContainer
+            connectionIndicator={connectionIndicator}
+            onOpenLog={openSidebar}
           />
         )}
-        <section
-          className="h-full min-h-0 min-w-0 flex-1 overflow-hidden"
-          aria-label="Gundam battlefield"
-        >
-          {children}
-        </section>
-      </main>
-    );
-  }
-
-  return (
-    <main
-      className="simulator-shell relative flex h-svh max-h-svh min-h-0 w-full overflow-hidden bg-[var(--surface-soft)] text-[var(--text)]"
-      data-game="gundam"
-      data-theme="light"
-      data-testid="gundam-shared-simulator-shell"
-    >
-      <div className="h-full min-h-0 min-w-0 w-full flex-1 overflow-hidden">
-        <MobileShell
-          layout="drawer-rail"
-          sidebar={<MatchSidebarContainer connectionPanel={connectionPanel} />}
-          board={
-            <section className="h-full w-full overflow-hidden" aria-label="Gundam battlefield">
-              {children}
-            </section>
-          }
-          // This branch also serves short-height phone landscape, whose
-          // width can exceed the portrait breakpoint.
-          layoutBreakpoint={1023}
-          interactions={null}
-          log={<MatchLogContainer />}
-          mobileTopBar={
-            isMobile
-              ? ({ openLog }) => (
-                  <MobileTopHudContainer
-                    connectionIndicator={connectionIndicator}
-                    onOpenLog={openLog}
-                  />
-                )
-              : undefined
-          }
-          mobileBottomBar={isMobile ? <MobileActionBarContainer /> : undefined}
-        />
-      </div>
-    </main>
+        mobileBottomRail={<MobileActionBarContainer />}
+        tabletop={
+          <section className="h-full w-full overflow-hidden" aria-label="Gundam battlefield">
+            {children}
+          </section>
+        }
+      />
+    </GundamChatProvider>
   );
 }

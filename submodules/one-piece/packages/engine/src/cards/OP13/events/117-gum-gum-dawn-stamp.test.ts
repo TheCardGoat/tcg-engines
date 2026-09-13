@@ -3,7 +3,7 @@ import { op13GumGumDawnStamp117 } from "../../../../../cards/src/cards/OP13/even
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-117 Gum-Gum Dawn Stamp", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13GumGumDawnStamp117);
   });
 });

@@ -194,6 +194,26 @@ export type ConnectionState =
   | "RECONNECTING"
   | "ERROR";
 
+export type AuthoritativeCommandRecoveryCause = "stale_state" | "delivery_unknown";
+
+type PendingAuthoritativeCommand = {
+  moveId: string;
+  commandID: string;
+  startedAt: number;
+};
+
+export type AuthoritativeCommandStatus =
+  | { phase: "idle" }
+  | (PendingAuthoritativeCommand & { phase: "submitting" })
+  | (PendingAuthoritativeCommand & {
+      phase: "recovering";
+      recoveryCause: AuthoritativeCommandRecoveryCause;
+    })
+  | (PendingAuthoritativeCommand & {
+      phase: "recovery_failed";
+      recoveryCause: AuthoritativeCommandRecoveryCause;
+    });
+
 // =============================================================================
 // Transport Interface
 // =============================================================================
@@ -206,6 +226,11 @@ export interface Transport {
   onDisconnect(handler: (reason: string) => void): void;
   onError(handler: (error: Error) => void): void;
   getState(): ConnectionState;
+  getAuthoritativeCommandStatus(): AuthoritativeCommandStatus;
+  onAuthoritativeCommandStatusChange(
+    handler: (status: AuthoritativeCommandStatus) => void,
+  ): () => void;
+  requestStateSync(lastKnownStateID?: number): void;
 }
 
 // Re-export InMemoryTransport type for engine consumers

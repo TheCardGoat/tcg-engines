@@ -107,6 +107,25 @@ describe("OnePieceServerEngine", () => {
     expect(engine.state.activeSeat).toBe("north");
   });
 
+  it("routes a player concede through the server adapter", () => {
+    const engine = new OnePieceServerEngine(
+      createMatch(createSt01MirrorPracticeConfig({ firstPlayer: "south" })),
+      { player1: "south", player2: "north" },
+    );
+
+    for (let step = 0; step < 8 && engine.state.status === "setup"; step++) {
+      engine.takeAutomatedAction({ strategyId: "value-ranked" }, context);
+    }
+
+    expect(engine.state.status).toBe("active");
+
+    const conceded = engine.dispatch("concede", "player1", {}, context);
+
+    expect(conceded.success).toBe(true);
+    expect(engine.state.status).toBe("finished");
+    expect(engine.state.winner).toBe("north");
+  });
+
   it("resolves a defending bot prompt before another active-seat action", () => {
     const engine = new OnePieceServerEngine(
       createMatch(

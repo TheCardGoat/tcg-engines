@@ -27,8 +27,7 @@ export const gd03FreedomGundamMeteor076: UnitCard = {
       },
       rarity: "uncommon",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-076.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-076.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-076.webp",
       productName: "Steel Requiem[GD03]",
     },
     {
@@ -44,15 +43,13 @@ export const gd03FreedomGundamMeteor076: UnitCard = {
       },
       rarity: "uncommon",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-076_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-076_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-076_p1.webp",
       productName: "Boost Kit 01",
     },
   ],
   reprints: ["GD03-076", "GD03-076_p1"],
   selectedPrintingId: "GD03-076",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-076.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-076.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-076.webp",
   legality: "legal",
   level: 8,
   cost: 6,
@@ -65,7 +62,7 @@ export const gd03FreedomGundamMeteor076: UnitCard = {
     {
       type: "triggered",
       activation: {
-        timing: ["onBattleDamageReceived"],
+        timing: ["onBattleDamageDealtToUnit"],
         restrictions: [
           {
             type: "oncePerTurn",
@@ -73,7 +70,6 @@ export const gd03FreedomGundamMeteor076: UnitCard = {
         ],
         conditions: [
           { type: "isTurn", whose: "friendly" },
-          { type: "eventPlayerIsOpponent" },
           {
             type: "eventSourceMatches",
             target: {

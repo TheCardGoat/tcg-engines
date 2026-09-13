@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "game": "one-piece",
+  "candidateId": "aggressive",
+  "parentStrategyId": "heuristic",
+  "informationPolicy": "oracle",
+  "hypothesis": "Tournament head-to-head: measure aggressive vs balanced heuristic strength (either may win; used for style calibration).",
+  "engineRevision": "fnv1a32:eb58c0c2",
+  "cardCatalogHash": "fnv1a32:fa100c22",
+  "adapterVersion": "2",
+  "changes": {
+    "suite": "tournament",
+    "candidate": "aggressive",
+    "baseline": "heuristic"
+  },
+  "evaluation": {
+    "suiteId": "tournament",
+    "seedBase": "op-tournament-aggressive-heuristic-v1",
+    "minimumBlocks": 28,
+    "maximumBlocks": 56,
+    "batchSize": 14,
+    "confidenceLevel": 0.95,
+    "minimumMeanImprovement": 0,
+    "maximumCellRegression": 1
+  }
+}

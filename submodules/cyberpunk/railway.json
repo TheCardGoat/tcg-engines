@@ -3,14 +3,35 @@
   "build": {
     "builder": "dockerfile",
     "dockerfilePath": "submodules/cyberpunk/Dockerfile",
-    "watchPatterns": [
-      "railway-deploy-trigger.txt",
-      "submodules/cyberpunk/**"
-    ]
+    "watchPatterns": ["railway-deploy-trigger.txt", "submodules/cyberpunk/**"]
   },
   "deploy": {
     "startCommand": "node server.js",
     "restartPolicyMaxRetries": 3,
     "restartPolicyWindowSeconds": 60
+  },
+  "environments": {
+    "production": {
+      "deploy": {
+        "sleepApplication": false,
+        "limitOverride": {
+          "containers": {
+            "cpu": 8,
+            "memoryBytes": 8000000000
+          }
+        }
+      }
+    },
+    "staging": {
+      "deploy": {
+        "sleepApplication": true,
+        "limitOverride": {
+          "containers": {
+            "cpu": 2,
+            "memoryBytes": 2000000000
+          }
+        }
+      }
+    }
   }
 }

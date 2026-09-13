@@ -87,6 +87,26 @@ export function matchTriggers(event: GameEvent, state: MatchState): TriggerMatch
       break;
   }
 
+  // ── Fight-participant targeted pass ────────────────────────────────────────
+  // fightResolved event triggers belong to the fight participants but must fire
+  // even when the loser has just moved to trash. The broadcast pass below only
+  // scans active zones (field/legendArea), so check both combatants by id here
+  // (matching by id, like the cardDefeated case, works regardless of zone).
+  if (event.type === "attackResolved") {
+    const combatantIds = [event.attackerId, event.defenderId].filter(
+      (id): id is CardInstanceId => id !== null && id !== undefined,
+    );
+    for (const combatantId of combatantIds) {
+      checkCardAbilities(
+        state,
+        combatantId,
+        (ability) =>
+          ability.trigger?.trigger === "event" && ability.trigger.event.event === "fightResolved",
+        matches,
+      );
+    }
+  }
+
   // ── Broadcast triggers ─────────────────────────────────────────────────────
   // Event-typed triggers (`trigger.trigger === "event"`) can live on any card
   // in any active zone and fire whenever the matching DSL event occurs — they

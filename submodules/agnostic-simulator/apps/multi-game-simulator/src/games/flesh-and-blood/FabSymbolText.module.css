@@ -1,0 +1,10 @@
+.inlineSymbol {
+  display: inline-flex;
+  margin-inline: 0.08em;
+  vertical-align: -0.18em;
+}
+
+.inlineSymbol img {
+  display: block;
+  object-fit: contain;
+}

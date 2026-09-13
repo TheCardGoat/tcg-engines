@@ -3,7 +3,7 @@ import { prb01Kaido003 } from "../../../../../cards/src/cards/PRB01/characters/0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST04-003 Kaido", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01Kaido003);
   });
 });

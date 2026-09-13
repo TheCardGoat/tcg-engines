@@ -1,0 +1,85 @@
+[
+  {
+    "id": "green-blue-luffy",
+    "leaderId": "OP16-022",
+    "missingCount": 14,
+    "missing": [
+      "OP16-022",
+      "OP16-034",
+      "OP16-054",
+      "OP16-055",
+      "ST30-014",
+      "ST12-010",
+      "OP16-045",
+      "OP16-056",
+      "OP16-026",
+      "OP16-048",
+      "OP16-042",
+      "OP15-032",
+      "OP16-032",
+      "OP16-038"
+    ],
+    "mainDeckCount": 50
+  },
+  {
+    "id": "blue-yellow-nami",
+    "leaderId": "OP11-041",
+    "missingCount": 5,
+    "missing": ["OP16-056", "OP15-113", "EB04-058", "OP15-114", "OP16-119"],
+    "mainDeckCount": 50
+  },
+  {
+    "id": "black-yellow-blackbeard",
+    "leaderId": "OP16-080",
+    "missingCount": 11,
+    "missing": [
+      "OP16-080",
+      "OP16-109",
+      "OP16-110",
+      "OP16-103",
+      "OP16-104",
+      "OP16-106",
+      "EB04-058",
+      "OP16-108",
+      "OP16-119",
+      "EB04-059",
+      "OP16-116"
+    ],
+    "mainDeckCount": 50
+  },
+  {
+    "id": "purple-enel",
+    "leaderId": "OP15-058",
+    "missingCount": 10,
+    "missing": [
+      "OP15-058",
+      "OP15-061",
+      "OP15-067",
+      "OP15-066",
+      "OP15-118",
+      "OP15-074",
+      "OP15-075",
+      "OP15-076",
+      "OP15-077",
+      "OP15-078"
+    ],
+    "mainDeckCount": 50
+  },
+  {
+    "id": "purple-yellow-rosinante",
+    "leaderId": "OP12-061",
+    "missingCount": 9,
+    "missing": [
+      "OP16-064",
+      "OP16-067",
+      "P-093",
+      "OP16-068",
+      "EB04-058",
+      "EB04-038",
+      "OP16-065",
+      "OP15-078",
+      "OP16-078"
+    ],
+    "mainDeckCount": 50
+  }
+]

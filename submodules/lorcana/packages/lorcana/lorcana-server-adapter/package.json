@@ -13,7 +13,8 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
-    }
+    },
+    "./deck-interchange": "./src/deck-interchange.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -26,7 +27,7 @@
     "@tcg/lorcana-cards": "workspace:*",
     "@tcg/lorcana-engine": "workspace:*",
     "@tcg/lorcana-types": "workspace:*",
-    "@tcg/shared": "workspace:*"
+    "@tcg/shared": "link:../../../../agnostic-simulator/packages/shared"
   },
   "devDependencies": {
     "@tcg/typescript-config": "workspace:*",

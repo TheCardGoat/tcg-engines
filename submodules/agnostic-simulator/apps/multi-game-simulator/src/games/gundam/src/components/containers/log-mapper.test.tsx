@@ -107,6 +107,6 @@ describe("toLogTurns", () => {
     );
 
     const item = turns[0]!.groups[0]!.items[0]!;
-    expect(item).toBe("You chose You to go first.");
+    expect(item).toBe("You chose to go first.");
   });
 });

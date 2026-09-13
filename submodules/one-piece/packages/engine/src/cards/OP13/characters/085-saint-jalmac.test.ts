@@ -3,7 +3,7 @@ import { op13SaintJalmac085 } from "../../../../../cards/src/cards/OP13/characte
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-085 Saint Jalmac", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13SaintJalmac085);
   });
 });

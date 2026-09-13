@@ -28,6 +28,7 @@ export interface HarnessAiBotConfig {
 
 const HARNESS_AI_PLAYER_ID = createPlayerId("player_two");
 
+// This class is imported by both the Svelte devtools surface and its Bun tests.
 export class HarnessAiController implements AiControllableOrchestrator {
   #requestedStrategyId: string;
   #server: LorcanaServer;

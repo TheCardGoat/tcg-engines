@@ -91,7 +91,7 @@ spec; the integration/e2e tests only verify the wiring presents that spec correc
   → The comprehensive tier exists but is broken by API drift; it must be repaired before it can be a
   reliable oracle, OR explicitly scoped out (alpha/spoiler are excluded from the live retail catalog).
 
-## Owners and gates (backpressure)
+## Owners and gates
 
 - **Engine/card-test fixes** live in `submodules/agnostic-simulator/apps/multi-game-simulator/card-tests/`
   and `submodules/cyberpunk/packages/engine`. One owner per patch.
@@ -109,7 +109,7 @@ as validation of correctness.
 
 ---
 
-## Results of this pass (backpressured loop)
+## Results of this pass
 
 ### Baseline reality measured
 
@@ -137,30 +137,29 @@ as validation of correctness.
 
 ### Cards given full engine-truth unit tests this session (103/103 tests green across 22 files)
 
-| Card                     | Tier        | Tests | Contract pinned                                                                                |
-| ------------------------ | ----------- | ----- | ---------------------------------------------------------------------------------------------- |
-| Carnage at the Colosseum | unit        | 10/10 | `powerLessThanAnyOf` (strict-less), -1€/8+Gig cost reduction, no-target no-op                  |
-| Corporate Surveillance   | unit        | 6/6   | rival cost ≤4 inclusive, **spend** vs defeat, already-spent targetable                         |
-| Gilded Matón             | unit        | 6/6   | `ifYouDo` optional gear-defeat → rival cost ≤3, **decline path**, auto-decline                 |
-| Gilded Matón             | integration | 1/1   | jsdom wiring of chooseCardToMove → chooseTarget                                                |
-| Reboot Optics            | unit        | 6/6   | no-target buff, `preventNextRivalFightDefeat` registered                                       |
-| Floor It                 | unit        | 8/8   | any-rival target, -1 power, **Draw resolves with no target** (engine fix)                      |
-| Gorilla Arms             | unit        | 6/6   | attach to unit/face-up-legend, **no-eligible-gig edge** (all values shared), firstTimeEachTurn |
-| Over the Edge            | unit        | 5/5   | power ≤ friendly d20 (inclusive), **targets BOTH sides**, no-target no-op                      |
-| All is Lost              | unit        | 5/5   | trash 3, `bound`-selector recovery (Units among trashed only), no-Unit no-choice               |
-| Mantis Blades            | unit        | 6/6   | attach unit/face-up-legend, +2 power, gear-follows-host                                        |
-| Meredith Stout           | unit        | 7/7   | BLOCKER, +2-vs-Legend static, gigValueChanged trigger, empty-trash no-choice                   |
-| Bootleg Black Sapphire   | unit        | 5/5   | sell-always + even/odd draw-2 conditional (both boundary sides)                                |
-| Sketchy Ripper           | unit        | 6/6   | attack trigger, power-0-no-steal, Gear-only deck-search, take-none                             |
-| Hanako Arasaka           | unit        | 6/6   | `costEqualsGigValueOf` (cost == any friendly gig value), multi-value, no-match                 |
+| Card                     | Tier        | Tests | Contract pinned                                                                                  |
+| ------------------------ | ----------- | ----- | ------------------------------------------------------------------------------------------------ |
+| Carnage at the Colosseum | unit        | 10/10 | `powerLessThanAnyOf` (strict-less), -1€/8+Gig cost reduction, no-target no-op                    |
+| Corporate Surveillance   | unit        | 6/6   | rival cost ≤4 inclusive, **spend** vs defeat, already-spent targetable                           |
+| Gilded Matón             | unit        | 6/6   | `ifYouDo` optional gear-defeat → rival cost ≤3, **decline path**, auto-decline                   |
+| Gilded Matón             | integration | 1/1   | jsdom wiring of chooseCardToMove → chooseTarget                                                  |
+| Reboot Optics            | unit        | 6/6   | no-target buff, `preventNextRivalFightDefeat` registered                                         |
+| Floor It                 | unit        | 8/8   | any-rival target, -1 power, **Draw resolves with no target** (engine fix)                        |
+| Gorilla Arms             | unit        | 6/6   | attach to unit/face-up-legend, **no-eligible-gig edge** (all values shared), firstTimeEachTurn   |
+| Over the Edge            | unit        | 5/5   | power ≤ friendly d20 (inclusive), **targets BOTH sides**, no-target no-op                        |
+| All is Lost              | unit        | 5/5   | trash 3, `bound`-selector recovery (Units among trashed only), no-Unit no-choice                 |
+| Mantis Blades            | unit        | 6/6   | attach unit/face-up-legend, +2 power, gear-follows-host                                          |
+| Meredith Stout           | unit        | 7/7   | BLOCKER, +2-vs-Legend static, gigValueChanged trigger, empty-trash no-choice                     |
+| Bootleg Black Sapphire   | unit        | 5/5   | sell-always + even/odd draw-2 conditional (both boundary sides)                                  |
+| Sketchy Ripper           | unit        | 6/6   | attack trigger, power-0-no-steal, Gear-only deck-search, take-none                               |
+| Hanako Arasaka           | unit        | 6/6   | `costEqualsGigValueOf` (cost == any friendly gig value), multi-value, no-match                   |
 | Peace Offering           | unit        | 5/5   | 2-Gig binding + optional copyGigValue + hasGigPair draw; flagged pre-existing binding-prompt bug |
-| Chrome Reverie           | unit        | 6/6   | rival-unit `cantAttack` (choose 1, optional), conditional free Legend call (hasMinGig)         |
-| Take Control             | unit        | 4/4   | Quick, `stealsOneFewerGig` to contextual attacker, AI/Drone/Vehicle conditional draw           |
-| Afterparty at Lizzie's   | unit        | 4/4   | adjustGig ±1 (either, chooseUpTo), hasDistinctGigValues(≥2) draw                               |
-| Industrial Assembly      | unit        | 4/4   | adjustGig +4 (increase), 8+ Gig conditional draw (targetExists minValue 8)                     |
-| Fool on the Hill         | unit        | 4/4   | rivalRevealChoice (top 2, hand/trash), draw-2-if-trash                                         |
-| Cyberpsychosis           | unit        | 4/4   | equipped-unit +3/gear (perCount), defeatAtEndOfTurnIfAttacks                                   |
-
+| Chrome Reverie           | unit        | 6/6   | rival-unit `cantAttack` (choose 1, optional), conditional free Legend call (hasMinGig)           |
+| Take Control             | unit        | 4/4   | Quick, `stealsOneFewerGig` to contextual attacker, AI/Drone/Vehicle conditional draw             |
+| Afterparty at Lizzie's   | unit        | 4/4   | adjustGig ±1 (either, chooseUpTo), hasDistinctGigValues(≥2) draw                                 |
+| Industrial Assembly      | unit        | 4/4   | adjustGig +4 (increase), 8+ Gig conditional draw (targetExists minValue 8)                       |
+| Fool on the Hill         | unit        | 4/4   | rivalRevealChoice (top 2, hand/trash), draw-2-if-trash                                           |
+| Cyberpsychosis           | unit        | 4/4   | equipped-unit +3/gear (perCount), defeatAtEndOfTurnIfAttacks                                     |
 
 ### Findings surfaced by the precise tests
 
@@ -180,7 +179,7 @@ as validation of correctness.
 - Continue the per-card loop for the remaining targeting-heavy retail cards (Mantis Blades, Meredith
   Stout, Hanako reveal-destination, Sketchy Ripper deck-search, Bootleg Black Sapphire Show, etc.).
 
-### Skipped checks (backpressure)
+### Skipped checks
 
 - **Engine broad baseline (26 fails):** pre-existing, unrelated (peace-offering etc.); flagged for the
   engine owner, not touched beyond the Floor It fix.

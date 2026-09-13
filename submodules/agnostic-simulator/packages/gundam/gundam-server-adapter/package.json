@@ -13,6 +13,11 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./deck-interchange": "./src/gundam-deck-document.ts",
+    "./deck-text": {
+      "types": "./src/gundam-deck-text-codec.ts",
+      "default": "./src/gundam-deck-text-codec.ts"
     }
   },
   "scripts": {
@@ -23,6 +28,8 @@
     "test": "vp test run --configLoader runner --passWithNoTests"
   },
   "dependencies": {
+    "@tcg/game-page-contract": "link:../../game-page-contract",
+    "@tcg/gundam-token-data": "link:../../../../gundam/packages/token-data",
     "@tcg/protocol": "link:../../protocol",
     "@tcg/shared": "link:../../shared"
   },

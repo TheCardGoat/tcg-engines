@@ -70,26 +70,21 @@ export const op02Smoker093: LeaderCard = {
             target: {
               player: "self",
               zones: ["leader"],
-              count: { amount: 1 },
+              count: {
+                amount: 1,
+              },
               self: true,
             },
             value: 1000,
             duration: "thisTurn",
             condition: {
-              condition: "compound",
-              operator: "or",
-              conditions: [
+              condition: "existsOnField",
+              zone: "character",
+              filters: [
                 {
-                  condition: "existsOnField",
-                  player: "self",
-                  zone: "character",
-                  filters: [{ filter: "cost", comparison: "eq", value: 0 }],
-                },
-                {
-                  condition: "existsOnField",
-                  player: "opponent",
-                  zone: "character",
-                  filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+                  filter: "cost",
+                  comparison: "eq",
+                  value: 0,
                 },
               ],
             },

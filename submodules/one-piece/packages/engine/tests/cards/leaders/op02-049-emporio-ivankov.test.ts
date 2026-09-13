@@ -21,5 +21,6 @@ describe("OP02-049 Emporio.Ivankov", () => {
     ]);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
   });
 });

@@ -27,15 +27,13 @@ export const gd03TierenTaozi074: UnitCard = {
       },
       rarity: "rare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-074.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-074.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-074.webp",
       productName: "Steel Requiem[GD03]",
     },
   ],
   reprints: ["GD03-074"],
   selectedPrintingId: "GD03-074",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-074.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-074.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-074.webp",
   legality: "legal",
   level: 3,
   cost: 2,
@@ -50,7 +48,6 @@ export const gd03TierenTaozi074: UnitCard = {
       activation: {
         conditions: [
           { type: "duringPair" },
-          { type: "selfIsRested" },
           {
             type: "unitCount",
             owner: "friendly",

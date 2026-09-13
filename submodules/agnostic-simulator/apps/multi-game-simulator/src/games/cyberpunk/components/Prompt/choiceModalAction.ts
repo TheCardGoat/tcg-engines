@@ -1,5 +1,6 @@
 import type { InteractionAction } from "@tcg/protocol";
 import type { MatchState, PlayerPrompt } from "@tcg/cyberpunk-engine";
+import { interactionTargetPresentation } from "@tcg/simulator-ui";
 import { entityInput, optionInput } from "./interactionInputs";
 
 export type TargetPromptPresentation = "drawer" | "none" | "spatial";
@@ -36,12 +37,11 @@ export function choiceModalActionFromInteractionView(
         // Single-target board choices are usually handled inline by Card.tsx
         // (the player clicks the card directly). Hand/trash/deck choices need
         // the drawer even if the card is technically visible elsewhere in the UI.
-        const allTargetsAreVisible =
-          targetInput.candidates.length > 0 &&
-          targetInput.candidates.every((candidate) =>
-            isVisibleEntityTarget(matchState, candidate.entity.instanceId, candidate.entity.kind),
-          );
-        return allTargetsAreVisible && !opts.includeSpatialTargets ? null : action;
+        const presentation = interactionTargetPresentation(
+          targetInput,
+          visibleCandidateIds(targetInput, matchState, opts.visibleHandOwnerId),
+        );
+        return presentation === "spatial" && !opts.includeSpatialTargets ? null : action;
       }
       case "resolveDiscardFromHand":
       case "resolveCardToMove":
@@ -121,7 +121,9 @@ export function getTargetPromptPresentation({
       targetIds.length > 0 &&
       (targetKind === "gig"
         ? targetIds.every((id) => isVisibleGigTarget(matchState, id))
-        : targetIds.every((id) => isVisibleEntityTarget(matchState, id, resolvedTargetKind)));
+        : targetIds.every((id) =>
+            isVisibleEntityTarget(matchState, id, resolvedTargetKind, visibleHandOwnerId),
+          ));
     return {
       action: null,
       presentation: allTargetsAreVisible ? "spatial" : "drawer",
@@ -201,9 +203,10 @@ function isVisibleEntityTarget(
   matchState: MatchState,
   entityId: string,
   entityKind: Parameters<typeof entityInput>[2],
+  visibleHandOwnerId?: string,
 ): boolean {
   if (entityKind === "card") {
-    return isVisibleCardTarget(matchState, entityId);
+    return isVisibleCardTarget(matchState, entityId, visibleHandOwnerId);
   }
   if (entityKind === "die") {
     return isVisibleGigTarget(matchState, entityId);
@@ -211,12 +214,39 @@ function isVisibleEntityTarget(
   return false;
 }
 
-function isVisibleCardTarget(matchState: MatchState, cardId: string): boolean {
+function isVisibleCardTarget(
+  matchState: MatchState,
+  cardId: string,
+  visibleHandOwnerId?: string,
+): boolean {
   const card = matchState.G.cardIndex[cardId];
   if (!card) {
     return false;
   }
-  return card.zone === "field" || card.zone === "legendArea";
+  return (
+    card.zone === "field" ||
+    card.zone === "legendArea" ||
+    (card.zone === "hand" && String(card.ownerId) === visibleHandOwnerId)
+  );
+}
+
+function visibleCandidateIds(
+  input: Extract<InteractionAction["inputs"][number], { kind: "entity-selection" }>,
+  matchState: MatchState,
+  visibleHandOwnerId?: string,
+): ReadonlySet<string> {
+  return new Set(
+    input.candidates
+      .filter((candidate) =>
+        isVisibleEntityTarget(
+          matchState,
+          candidate.entity.instanceId,
+          candidate.entity.kind,
+          visibleHandOwnerId,
+        ),
+      )
+      .map((candidate) => candidate.entity.instanceId),
+  );
 }
 
 function isVisibleGigTarget(matchState: MatchState, dieId: string): boolean {

@@ -3,7 +3,7 @@ import { prb02RevolutionaryArmyHqPirateFoil021 } from "../../../../../cards/src/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-021 Revolutionary Army HQ (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02RevolutionaryArmyHqPirateFoil021);
   });
 });

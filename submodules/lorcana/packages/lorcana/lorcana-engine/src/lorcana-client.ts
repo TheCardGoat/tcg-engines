@@ -15,6 +15,7 @@ import {
   type PlayerId,
   type CommandResult,
   type ProtocolError,
+  type AuthoritativeCommandStatus,
 } from "#core";
 import type { CardInput } from "./types";
 import { lorcanaRuntimeConfig } from "./runtime-game";
@@ -32,6 +33,7 @@ type LorcanaClientParams = {
 
 export class LorcanaClient extends LorcanaEngineBase {
   private readonly _playerId: string;
+  private readonly skipOptimisticState: boolean;
 
   private previousProjectedBoard?: LorcanaProjectedBoardView;
   private projectedBoard?: LorcanaProjectedBoardView;
@@ -42,6 +44,7 @@ export class LorcanaClient extends LorcanaEngineBase {
   constructor(params: LorcanaBaseEngineParams & LorcanaClientParams) {
     super(params);
     this._playerId = params.playerId;
+    this.skipOptimisticState = params.skipOptimisticState ?? false;
     const staticResources = this.getResolvedStaticResources();
 
     const clientEngineConfig: ClientEngineConfig = {
@@ -75,8 +78,26 @@ export class LorcanaClient extends LorcanaEngineBase {
     return this._playerId;
   }
 
+  protected shouldSkipAutoBagDrainAfterMove(): boolean {
+    return this.skipOptimisticState;
+  }
+
   onProtocolError(handler: (error: ProtocolError) => void): () => void {
     return this.engine.onProtocolError(handler);
+  }
+
+  getAuthoritativeCommandStatus(): AuthoritativeCommandStatus {
+    return this.engine.getAuthoritativeCommandStatus();
+  }
+
+  onAuthoritativeCommandStatusChange(
+    handler: (status: AuthoritativeCommandStatus) => void,
+  ): () => void {
+    return this.engine.onAuthoritativeCommandStatusChange(handler);
+  }
+
+  requestStateSync(): void {
+    this.engine.requestStateSync();
   }
 
   connectSync(): void {

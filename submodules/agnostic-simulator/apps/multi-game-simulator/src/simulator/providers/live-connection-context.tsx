@@ -4,6 +4,7 @@ import {
   type ConnectionDiagnosticEvent,
   type LiveMatchSessionConfig,
   type LiveMatchSessionState,
+  type LiveMatchBootstrapV1,
   type NormalizedPresenceChange,
 } from "@tcg/game-page-contract";
 import type { GatewayConnectionState, GatewayHandle } from "@tcg/gateway-client";
@@ -14,6 +15,7 @@ import {
   setGatewayManagerAnalyticsSink,
   type GatewayManagerAnalyticsSink,
 } from "../../lib/gateway/gateway-manager";
+import { logBrowserInfo } from "../../observability/browser";
 import { createRequiredSimulatorContext } from "./context-utils";
 
 export type SimulatorConnectionTelemetryEvent =
@@ -86,10 +88,7 @@ export interface SimulatorLiveConnectionContextValue extends LiveMatchSessionSta
 export interface SimulatorLiveConnectionProviderProps {
   children: ReactNode;
   handle: GatewayHandle | null;
-  gameId: string;
-  matchId: string;
-  resolveRole: LiveMatchSessionConfig["resolveRole"];
-  resolveGameProfileId: LiveMatchSessionConfig["resolveGameProfileId"];
+  bootstrap: LiveMatchBootstrapV1;
   buildHeartbeatPayload?: LiveMatchSessionConfig["buildHeartbeatPayload"];
   heartbeatIntervalMs?: LiveMatchSessionConfig["heartbeatIntervalMs"];
   authority?: LiveMatchSessionConfig["authority"];
@@ -133,10 +132,7 @@ export { useSimulatorLiveConnection };
 export function SimulatorLiveConnectionProvider({
   children,
   handle,
-  gameId,
-  matchId,
-  resolveRole,
-  resolveGameProfileId,
+  bootstrap,
   buildHeartbeatPayload,
   heartbeatIntervalMs,
   authority,
@@ -145,6 +141,28 @@ export function SimulatorLiveConnectionProvider({
   onDiagnostic,
   telemetrySink,
 }: SimulatorLiveConnectionProviderProps) {
+  const gameId = bootstrap.game.gameId;
+  const matchId = bootstrap.match.matchId;
+  const viewerKey =
+    bootstrap.viewer.role === "player"
+      ? `player:${bootstrap.viewer.userId}:${bootstrap.viewer.actorId}`
+      : `spectator:${bootstrap.viewer.userId ?? "anonymous"}:${bootstrap.viewer.spectatorId}`;
+  // Snapshots and callbacks can change without changing the connection's identity.
+  const latest = useRef({
+    bootstrap,
+    onGameEvent,
+    onPresenceChange,
+    onDiagnostic,
+    buildHeartbeatPayload,
+  });
+  latest.current = {
+    bootstrap,
+    onGameEvent,
+    onPresenceChange,
+    onDiagnostic,
+    buildHeartbeatPayload,
+  };
+  const hasHeartbeat = Boolean(buildHeartbeatPayload);
   const [state, setState] = useState<LiveMatchSessionState>(EMPTY_SIMULATOR_LIVE_CONNECTION_STATE);
   const sessionRef = useRef<ReturnType<typeof createLiveMatchSession> | null>(null);
   const telemetryRef = useRef<SimulatorConnectionTelemetrySink | undefined>(telemetrySink);
@@ -186,17 +204,23 @@ export function SimulatorLiveConnectionProvider({
 
     const session = createLiveMatchSession({
       handle,
-      gameId,
-      matchId,
-      resolveRole,
-      resolveGameProfileId,
-      buildHeartbeatPayload,
+      bootstrap: latest.current.bootstrap,
+      buildHeartbeatPayload: hasHeartbeat
+        ? () => latest.current.buildHeartbeatPayload?.() ?? {}
+        : undefined,
       heartbeatIntervalMs,
       authority,
-      onGameEvent,
-      onPresenceChange,
+      onGameEvent: (event, payload) => latest.current.onGameEvent(event, payload),
+      onPresenceChange: (change) => latest.current.onPresenceChange?.(change),
+      onHeartbeatRoundTrip: (sample) => {
+        logBrowserInfo("websocket.game_round_trip", {
+          "socketio.namespace": handle.slug,
+          "socketio.round_trip_ms": sample.roundTripMs,
+          "gateway.request_id": sample.correlationId,
+        });
+      },
       onDiagnostic: (event) => {
-        onDiagnostic?.(event);
+        latest.current.onDiagnostic?.(event);
         if (event.type !== "heartbeat_ack") return;
         emitTelemetry({
           type: "simulator_connection_heartbeat_ack",
@@ -219,6 +243,7 @@ export function SimulatorLiveConnectionProvider({
         previousAuthFailureKey,
         gameId,
         matchId,
+        gameSlug: handle.slug,
         emitTelemetry,
       });
       previousAuthFailureKey = authFailureKey(next);
@@ -235,17 +260,13 @@ export function SimulatorLiveConnectionProvider({
     };
   }, [
     authority,
-    buildHeartbeatPayload,
+    hasHeartbeat,
     emitTelemetry,
     gameId,
     handle,
     heartbeatIntervalMs,
     matchId,
-    onDiagnostic,
-    onGameEvent,
-    onPresenceChange,
-    resolveGameProfileId,
-    resolveRole,
+    viewerKey,
   ]);
 
   const emit = useCallback<SimulatorLiveConnectionContextValue["emit"]>((event, payload) => {
@@ -278,6 +299,7 @@ interface EmitStateTelemetryInput {
   previousAuthFailureKey: string | null;
   gameId: string;
   matchId: string;
+  gameSlug: GatewayHandle["slug"];
   emitTelemetry: (event: SimulatorConnectionTelemetryEvent) => void;
 }
 
@@ -287,6 +309,7 @@ function emitStateTelemetry({
   previousAuthFailureKey,
   gameId,
   matchId,
+  gameSlug,
   emitTelemetry,
 }: EmitStateTelemetryInput): void {
   if (hasStatusChanged(previous, state)) {
@@ -311,6 +334,11 @@ function emitStateTelemetry({
       previous.latencyMs !== state.latencyMs ||
       previous.lastPongAt !== state.lastPongAt)
   ) {
+    logBrowserInfo("websocket.gateway_round_trip", {
+      "socketio.namespace": gameSlug,
+      "socketio.round_trip_ms": state.latencyMs,
+      "browser.document_visible": document.visibilityState === "visible",
+    });
     emitTelemetry({
       type: "simulator_connection_latency_sample",
       at: state.lastPongAt ?? new Date().toISOString(),

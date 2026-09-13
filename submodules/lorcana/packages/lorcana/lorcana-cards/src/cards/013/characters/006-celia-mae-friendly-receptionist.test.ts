@@ -31,4 +31,18 @@ describe("Celia Mae - Friendly Receptionist", () => {
     expect(testEngine.asPlayerOne().isExerted(exertedAlly)).toBe(false);
     expect(testEngine.hasRestriction(exertedAlly, "cant-quest-or-challenge")).toBe(true);
   });
+
+  it("does not choose or restrict a character when the optional ink cost is declined", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [celiaMaeFriendlyReceptionist],
+      inkwell: celiaMaeFriendlyReceptionist.cost,
+      play: [{ card: exertedAlly, exerted: true }],
+      deck: [],
+    });
+
+    expect(testEngine.asPlayerOne().playCard(celiaMaeFriendlyReceptionist)).toBeSuccessfulCommand();
+
+    expect(testEngine.asPlayerOne().isExerted(exertedAlly)).toBe(true);
+    expect(testEngine.hasRestriction(exertedAlly, "cant-quest-or-challenge")).toBe(false);
+  });
 });

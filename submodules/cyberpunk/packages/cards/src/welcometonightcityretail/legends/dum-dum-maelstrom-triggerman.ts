@@ -5,10 +5,11 @@ import { quickAbility } from "@tcg/cyberpunk-types";
 export const welcomeToNightCityRetailDumDumMaelstromTriggerman = defineCyberpunkCard({
   id: "3b3f941d-aa58-4337-99dc-4af3fd3ccd47",
   slug: "dum-dum-maelstrom-triggerman",
+  subname: "Maelstrom Triggerman",
   rulesText:
     "{Call} You may defeat a friendly Gear. If you do, draw 2. Otherwise, draw 1.\n{Quick} 1 €$, {Spend} Give a friendly Unit +1 power this turn for each of its equipped Gear.",
-  name: "Dum Dum — Maelstrom Triggerman",
-  displayName: "Dum Dum — Maelstrom Triggerman",
+  name: "Dum Dum",
+  displayName: "Dum Dum: Maelstrom Triggerman",
   canonicalId: "dum-dum-maelstrom-triggerman",
   color: "yellow",
   classifications: ["Ganger", "Maelstrom"],

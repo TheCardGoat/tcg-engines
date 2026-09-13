@@ -1,5 +1,3 @@
-import { gunzipSync } from "node:zlib";
-
 export interface ReplayPlayerInfo {
   id: string;
   displayName: string | null;
@@ -62,37 +60,35 @@ export async function fetchReplay(
 ): Promise<PersistedReplayData> {
   const base = apiOrigin.replace(/\/$/, "");
   const encodedId = encodeURIComponent(replayId);
-  const urls = [
-    `${base}/v1/games/cyberpunk/play/replays/${encodedId}/data`,
-    `${base}/v1/play/replays/${encodedId}/data`,
-  ];
-
-  let lastError: Error | null = null;
-  for (const url of urls) {
-    try {
-      return await fetchReplayUrl(replayId, url);
-    } catch (err) {
-      if (err instanceof ReplayNotFoundError) {
-        lastError = err;
-        continue;
-      }
-      throw err;
-    }
+  const apiKey = process.env.MATCH_MANAGEMENT_API_KEY;
+  if (!apiKey) {
+    throw new Error("MATCH_MANAGEMENT_API_KEY is required to inspect raw replay artifacts");
   }
-
-  throw lastError ?? new ReplayNotFoundError(replayId);
+  return fetchReplayUrl(
+    replayId,
+    `${base}/v1/internal/games/cyberpunk/runtime/games/${encodedId}/replay-data`,
+    apiKey,
+  );
 }
 
-async function fetchReplayUrl(replayId: string, url: string): Promise<PersistedReplayData> {
-  const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(30_000) });
+async function fetchReplayUrl(
+  replayId: string,
+  url: string,
+  apiKey: string,
+): Promise<PersistedReplayData> {
+  const res = await fetch(url, {
+    headers: { "x-api-key": apiKey },
+    redirect: "follow",
+    signal: AbortSignal.timeout(30_000),
+  });
   if (res.status === 404) throw new ReplayNotFoundError(replayId);
   if (!res.ok) {
     throw new Error(`Failed to fetch replay (${res.status} ${res.statusText}) from ${url}`);
   }
 
-  const compressed = new Uint8Array(await res.arrayBuffer());
-  const text = gunzipSync(compressed).toString("utf8");
-  const parsed = JSON.parse(text) as PersistedReplayData;
+  const payload = (await res.json()) as { replay?: PersistedReplayData };
+  if (!payload.replay) throw new ReplayNotFoundError(replayId);
+  const parsed = payload.replay;
   if (parsed.gameType !== "cyberpunk") {
     throw new Error(`Replay ${replayId} is gameType=${parsed.gameType}, expected cyberpunk`);
   }

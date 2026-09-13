@@ -1,4 +1,4 @@
-import type { Action, TargetFilter } from "@tcg/op-types";
+import type { Action } from "@tcg/op-types";
 import { DRAW_RE } from "../constants.ts";
 import { parseComparison } from "../helpers.ts";
 import { parseConditionText } from "../condition-parser/index.ts";
@@ -130,15 +130,40 @@ export function parseTrashFromHandAction(text: string): TrashFromHandAction | nu
       character: "character",
     };
     const typeParts = typeText.split(/\s+or\s+/i);
-    const filters: TargetFilter[] = [];
-    for (const part of typeParts) {
-      const key = part.trim().toLowerCase();
-      if (cardTypeMap[key]) {
-        filters.push({ filter: "cardCategory", value: cardTypeMap[key] as any });
-      }
+    const categories = typeParts
+      .map((part) => cardTypeMap[part.trim().toLowerCase()])
+      .filter((value): value is string => Boolean(value));
+    if (categories.length === 1) {
+      return {
+        action: "trashFromHand",
+        player,
+        amount,
+        filters: [
+          {
+            filter: "cardCategory",
+            value: categories[0]! as "event" | "stage" | "character",
+          },
+        ],
+      };
     }
-    if (filters.length > 0) {
-      return { action: "trashFromHand", player, amount, filters };
+    if (categories.length > 1) {
+      // "Event or Stage" is a disjunction — AND filters match no card.
+      return {
+        action: "trashFromHand",
+        player,
+        amount,
+        filters: [
+          {
+            filter: "anyOf",
+            groups: categories.map((value) => [
+              {
+                filter: "cardCategory" as const,
+                value: value as "event" | "stage" | "character",
+              },
+            ]),
+          },
+        ],
+      };
     }
   }
 

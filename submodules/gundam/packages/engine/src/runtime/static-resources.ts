@@ -9,16 +9,20 @@ export interface Player {
   resourceDeck: string[]; // definition IDs — 10-card resource deck
 }
 
+export type SetupCardsByOwner = Record<string, Record<string, Card>>;
+
 export interface MatchStaticResources<TCard extends Card = Card> {
   catalog: CardCatalog;
   cardsMaps: CardsMaps;
   players: Player[];
+  setupCards?: SetupCardsByOwner;
   getDefinition: (definitionId: string) => TCard | undefined;
 }
 
 export function createStaticResources<TCard extends Card>(
   players: Player[],
   catalog: CardCatalog,
+  setupCards?: SetupCardsByOwner,
 ): MatchStaticResources<TCard> {
   const instancesMap = new Map<string, { definitionId: string; ownerID: string }>();
   const definitionsMap = new Map<string, Card>();
@@ -73,6 +77,7 @@ export function createStaticResources<TCard extends Card>(
     catalog,
     cardsMaps,
     players,
+    setupCards,
     getDefinition(definitionId: string): TCard | undefined {
       // Runtime-registered definitions (e.g. setup tokens spawned by
       // `framework.cards.registerDefinition`) live in `cardsMaps.definitions`

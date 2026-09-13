@@ -4,6 +4,7 @@ export const st06ClanBattle014: BaseCard = {
   cardNumber: "ST06-014",
   name: "Clan Battle",
   type: "base",
+  color: "red",
   traits: ["clan", "stronghold"],
   id: "ST06-014",
   canonicalId: "ST06-014",
@@ -26,8 +27,7 @@ export const st06ClanBattle014: BaseCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-014.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-014.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/st06/ST06-014.webp",
       productName: "Clan Unity [ST06]",
     },
     {
@@ -43,15 +43,13 @@ export const st06ClanBattle014: BaseCard = {
       },
       rarity: "common",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-014_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-014_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/st06/ST06-014_p1.webp",
       productName: "Clan Unity [ST06] Bonus Pack",
     },
   ],
   reprints: ["ST06-014", "ST06-014_p1"],
   selectedPrintingId: "ST06-014",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/st06/ST06-014.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST06-014.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/st06/ST06-014.webp",
   legality: "legal",
   level: 3,
   cost: 1,
@@ -92,8 +90,13 @@ export const st06ClanBattle014: BaseCard = {
       type: "activated",
       activation: {
         timing: ["activate:main"],
-        conditions: [
-          {
+      },
+      cost: {
+        restSelf: true,
+      },
+      directives: [
+        {
+          condition: {
             type: "unitCount",
             owner: "friendly",
             comparison: "gte",
@@ -101,24 +104,21 @@ export const st06ClanBattle014: BaseCard = {
             hasTrait: "clan",
             isLinkUnit: true,
           },
-        ],
-      },
-      cost: {
-        restSelf: true,
-      },
-      directives: [
-        {
-          action: {
-            action: "statModifier",
-            stat: "ap",
-            amount: 2,
-            duration: "thisTurn",
-            target: {
-              owner: "friendly",
-              cardType: "unit",
-              count: 1,
+          thenDirectives: [
+            {
+              action: {
+                action: "statModifier",
+                stat: "ap",
+                amount: 2,
+                duration: "thisTurn",
+                target: {
+                  owner: "friendly",
+                  cardType: "unit",
+                  count: 1,
+                },
+              },
             },
-          },
+          ],
         },
       ],
       sourceText:

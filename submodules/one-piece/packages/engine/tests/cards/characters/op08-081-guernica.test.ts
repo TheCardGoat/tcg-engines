@@ -61,4 +61,33 @@ describe("OP08-081 Guernica", () => {
     expect(engine.getState().players.south.deck.slice(-3)).toEqual(submittedOrder);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: op08Guernica081, playedOnTurn: 0 }],
+        trash: [op03Fukurou088, eb03Kalifa040, eb03Stussy043, eb01Doma005],
+      },
+      { character: [costZeroTarget] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const guernicaId = engine.findCardInZone("south", "character", op08Guernica081);
+    engine.declareAttack(guernicaId, engine.leader("north"), "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

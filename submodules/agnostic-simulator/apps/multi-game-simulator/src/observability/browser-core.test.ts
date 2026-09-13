@@ -4,6 +4,7 @@ import {
   buildOtlpIgnoreUrls,
   buildPropagationTargets,
   buildResourceAttributes,
+  browserGameFromPathname,
   normalizeRoute,
   parseTraceSampleRatio,
   sanitizeTelemetryValue,
@@ -32,6 +33,16 @@ describe("browser observability core", () => {
       "/cyberpunk/simulator/:id",
     );
     expect(normalizeRoute("/")).toBe("/");
+  });
+
+  it("identifies every simulator game in browser telemetry", () => {
+    expect(browserGameFromPathname("/flesh-and-blood/simulator/play/practice")).toBe(
+      "flesh-and-blood",
+    );
+    expect(browserGameFromPathname("/naruto/simulator/practice")).toBe("naruto");
+    expect(browserGameFromPathname("/riftbound/simulator/matches/match-1")).toBe("riftbound");
+    expect(browserGameFromPathname("/grand-archive/simulator/tests")).toBe("grand-archive");
+    expect(browserGameFromPathname("/unsupported/simulator")).toBe("unknown");
   });
 
   it("uses the configured trace sample ratio only when valid", () => {

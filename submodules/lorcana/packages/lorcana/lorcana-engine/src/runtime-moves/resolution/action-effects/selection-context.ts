@@ -462,6 +462,10 @@ function deriveChoiceOptionLabel(option: unknown): string | undefined {
     return explicitText;
   }
 
+  if (effect.type === "optional") {
+    return deriveChoiceOptionLabel(effect.effect);
+  }
+
   switch (effect.type) {
     case "sequence": {
       const steps = Array.isArray(effect.steps)
@@ -498,6 +502,11 @@ function deriveChoiceOptionLabel(option: unknown): string | undefined {
     }
     case "return-to-hand":
       return "Return chosen card to hand.";
+    case "return-from-discard":
+    case "play-card": {
+      const promptLabel = getSelectionPromptLabel(effect);
+      return promptLabel ? `${promptLabel}.` : undefined;
+    }
     case "put-on-bottom":
       return "Put chosen card on the bottom of their deck.";
     case "gain-lore": {
@@ -932,6 +941,18 @@ function buildGenericTargetSelectionContext(
   }
 
   const projectedCurrentSelection: ResolutionSelectionCurrentSelection = { ...currentSelection };
+  const moveToLocationDescriptor = asRecord(effectRecord?.location);
+  const moveToLocationTriggerSubjectId =
+    expectedSlottedKind === "move-to-location" &&
+    getRecordString(moveToLocationDescriptor, "ref") === "trigger-subject"
+      ? getRecordString(asRecord(args.resolutionInput.eventSnapshot ?? null), "subjectCardId")
+      : undefined;
+  if (moveToLocationTriggerSubjectId && !projectedCurrentSelection.targets?.length) {
+    // A played/triggering location is already fixed by the effect. Publish it
+    // as acknowledged selection state so renderers do not ask the player to
+    // choose that location again and can keep the character slot interactive.
+    projectedCurrentSelection.targets = [moveToLocationTriggerSubjectId as CardInstanceId];
+  }
   const [onlyTargetDsl] = analysis.targetDsl;
   const onlyTargetCardTypes =
     onlyTargetDsl && typeof onlyTargetDsl === "object" && "cardTypes" in onlyTargetDsl
@@ -951,6 +972,8 @@ function buildGenericTargetSelectionContext(
       projectedCurrentSelection.targets = priorTargets;
     }
   }
+
+  const promptLabel = getSelectionPromptLabel(effectRecord);
 
   return {
     origin: args.origin,
@@ -973,7 +996,93 @@ function buildGenericTargetSelectionContext(
     autoRejected: allowEmptyResolution,
     ...(expectedSlottedKind ? { expectedSlottedKind } : {}),
     ...(autoResolvedSlots && autoResolvedSlots.length > 0 ? { autoResolvedSlots } : {}),
+    ...(moveToLocationTriggerSubjectId
+      ? {
+          resolvedTargetIdsBySlot: {
+            location: moveToLocationTriggerSubjectId as CardInstanceId,
+          },
+        }
+      : {}),
+    ...(promptLabel ? { promptLabel } : {}),
   };
+}
+
+function getCardPlural(cardType: string): string {
+  return cardType === "character" ? "characters" : `${cardType}s`;
+}
+
+function getSelectionCardLabel(effect: Record<string, unknown>): string {
+  const cardType = getRecordString(effect, "cardType") ?? "card";
+  const count = resolveLabelAmount(effect.count);
+  const countPrefix = count && count > 1 ? `${count} ${getCardPlural(cardType)}` : `a ${cardType}`;
+  const restriction = asRecord(effect.costRestriction);
+  const comparison = restriction?.comparison;
+  const restrictionValue = restriction?.value;
+  const filterRecords = [effect.filter, ...(Array.isArray(effect.filters) ? effect.filters : [])]
+    .flatMap((filter) => (Array.isArray(filter) ? filter : [filter]))
+    .map(asRecord)
+    .filter((filter): filter is Record<string, unknown> => filter !== null);
+  const maxCost = filterRecords
+    .map((filter) => getRecordNumber(filter, "maxCost"))
+    .find((value): value is number => value !== undefined);
+
+  if (typeof restrictionValue === "number") {
+    if (comparison === "less-or-equal")
+      return `${countPrefix} with cost ${restrictionValue} or less`;
+    if (comparison === "greater-or-equal")
+      return `${countPrefix} with cost ${restrictionValue} or more`;
+    if (comparison === "equal") return `${countPrefix} with cost ${restrictionValue}`;
+  }
+  return maxCost === undefined ? countPrefix : `${countPrefix} with cost ${maxCost} or less`;
+}
+
+function getReturnFromDiscardSourceLabel(effect: Record<string, unknown>): string {
+  const target = getRecordString(effect, "target");
+  if (!target || target === "CONTROLLER" || target === "YOU") return "your discard";
+  if (target === "OPPONENT" || target === "CHOSEN_OPPONENT") return "an opponent's discard";
+  return "a discard pile";
+}
+
+function getReturnFromDiscardDestinationLabel(effect: Record<string, unknown>): string {
+  const destination = getRecordString(effect, "destination") ?? "hand";
+  const target = getRecordString(effect, "target");
+  const owner =
+    !target || target === "CONTROLLER" || target === "YOU"
+      ? "your"
+      : target === "OPPONENT" || target === "CHOSEN_OPPONENT"
+        ? "their"
+        : null;
+  if (destination === "top-of-deck")
+    return owner ? `the top of ${owner} deck` : "the top of a deck";
+  if (destination === "play") return "play";
+  return owner ? `${owner} hand` : "a hand";
+}
+
+function getPlayCardSourceLabel(effect: Record<string, unknown>): string {
+  const rawSources = Array.isArray(effect.from)
+    ? effect.from.filter((source): source is string => typeof source === "string")
+    : [getRecordString(effect, "from") ?? "hand"];
+  const labels = rawSources.map((source) => {
+    if (source === "under-self") return "under this character";
+    if (source === "revealed") return "the revealed cards";
+    return `your ${source}`;
+  });
+  return labels.length > 0 ? labels.join(" or ") : "your hand";
+}
+
+function getSelectionPromptLabel(effect: Record<string, unknown> | null): string | undefined {
+  if (!effect) return undefined;
+  const cardLabel = getSelectionCardLabel(effect);
+
+  if (effect.type === "return-from-discard") {
+    return `Return ${cardLabel} from ${getReturnFromDiscardSourceLabel(effect)} to ${getReturnFromDiscardDestinationLabel(effect)}`;
+  }
+  if (effect.type === "play-card") {
+    return effect.cost === "free" || effect.free === true
+      ? `Play ${cardLabel} from ${getPlayCardSourceLabel(effect)} for free`
+      : `Play ${cardLabel} from ${getPlayCardSourceLabel(effect)}`;
+  }
+  return undefined;
 }
 
 /**
@@ -1531,6 +1640,7 @@ function buildPlayCardSelectionContext(
   }
 
   const requiresShiftBase = effectRecord.playMethod === "shift";
+  const promptLabel = getSelectionPromptLabel(effectRecord);
   return {
     origin: args.origin,
     requestId: args.requestId,
@@ -1566,6 +1676,7 @@ function buildPlayCardSelectionContext(
     maxSelections: canSelectShiftBase ? 2 : 1,
     ordered: false,
     autoRejected: false,
+    ...(promptLabel ? { promptLabel } : {}),
     ...(playCardEntryModeCandidateIds.length > 0 ? { playCardEntryModeCandidateIds } : {}),
   };
 }
@@ -1684,6 +1795,11 @@ function buildImmediateSelectionContext(
     const childContext = buildImmediateSelectionContext({
       ...args,
       effect: effectRecord.effect,
+      // Crossing into an opponent-owned consequence ends the optional choice
+      // made by the outer effect's chooser. A child `optional` effect will add
+      // its own decline metadata below.
+      originatesFromOptional: undefined,
+      canDeclineSelection: undefined,
     });
     if (args.origin === "bag" && childContext?.chooserId !== args.chooserId) {
       return undefined;

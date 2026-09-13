@@ -65,6 +65,7 @@ export const op11Nami041: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
       {
         trigger: "onOpponentAttack",

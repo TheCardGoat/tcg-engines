@@ -30,5 +30,7 @@ describe("OP13-009 Curly.Dadan", () => {
       "south",
     );
     expect(alone.getView("south").players.north.lifeCount).toBe(1);
+    expect(alone.getView("south").prompts).toHaveLength(0);
+    expect(alone.getState().capabilityHistory).toHaveLength(0);
   });
 });

@@ -1,0 +1,46 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`has-status unhandled-set debt ledger > snapshots grandfathered N-or-more / this-way status slugs (new ones must be compare-amount or bindings) 1`] = `
+[
+  "a-weapon-you-control-has-hit-this-turn",
+  "attack-controller-destroyed-agility-token-this-turn",
+  "attack-controller-destroyed-might-token-this-turn",
+  "attack-controller-destroyed-vigor-token-this-turn",
+  "attack-controller-drawn-a-card-this-turn",
+  "attack-fragmented-this-turn",
+  "attacked-or-defended-with-attack-action-this-turn",
+  "attacked-them-this-turn",
+  "attacked-with-a-crouching-tiger-this-turn",
+  "aura-with-holo-counter-entered-this-turn",
+  "aura-you-control-was-destroyed-this-turn",
+  "banished-by-intimidate-this-turn",
+  "banished-earth-card-this-turn",
+  "banished-from-hand-this-turn",
+  "card-with-herald-in-its-name-put-into-soul-this-turn",
+  "completed-a-contract-this-turn",
+  "created-a-crouching-tiger-this-turn",
+  "created-a-seismic-surge-this-turn",
+  "created-or-activated-gate-to-iarathael-this-turn",
+  "created-or-stolen-gold-this-turn",
+  "created-or-stolen-gold-token-this-turn",
+  "dealt-damage-to-you-this-turn",
+  "dealt-or-been-dealt-physical-damage-this-turn",
+  "defended-this-turn",
+  "destroyed-a-lightning-flow-this-turn",
+  "didnt-banish-this-way-card-with-6-or-more-p",
+  "has-lost-life-this-turn",
+  "last-action-card-played-this-turn-was-lightning",
+  "last-attack-this-turn-hatchet-of-body",
+  "last-attack-this-turn-hatchet-of-mind",
+  "lost-life-this-turn",
+  "no-sword-hit-this-turn",
+  "revealed-power-greater-than-damage-dealt-this-turn",
+  "sharpened-this-turn",
+  "this-has-not-hit-this-turn",
+  "weapon-sharpened-this-turn",
+  "yellow-card-put-into-soul-this-turn",
+  "yellow-charged-this-way",
+]
+`;
+
+exports[`has-status unhandled-set debt ledger > snapshots the markers declared-but-not-yet-handled by either evaluator 1`] = `[]`;

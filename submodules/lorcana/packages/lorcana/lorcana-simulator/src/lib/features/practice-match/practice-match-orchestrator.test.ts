@@ -27,13 +27,9 @@ describe("PracticeMatchOrchestrator", () => {
     });
   }
 
-  it("waits for durable processing confirmation before completing the flush", async () => {
-    let resolveResponse: (() => void) | undefined;
-    const response = new Promise<void>((resolve) => {
-      resolveResponse = resolve;
-    });
+  it("persists the immutable initial snapshot when flush races startup", async () => {
     const send = mock((_message: object) => true);
-    const sendWithAck = mock((_message: object, _timeoutMs?: number) => response);
+    const sendWithAck = mock(async (_message: object, _timeoutMs?: number) => undefined);
     const gameId = "practice-match-final-flush";
     const orchestrator = await createOrchestrator(
       { send, sendWithAck } as unknown as Partial<GatewayClientStore>,
@@ -41,24 +37,16 @@ describe("PracticeMatchOrchestrator", () => {
     );
 
     try {
-      let completed = false;
-      const flush = orchestrator.flushPendingState("return").then(() => {
-        completed = true;
-      });
+      await orchestrator.flushPendingState("return");
 
       expect(sendWithAck).toHaveBeenCalledTimes(1);
       expect(sendWithAck.mock.calls[0]?.[0]).toMatchObject({
         type: "push_state",
         gameId,
-        moveType: "return",
+        moveType: "init",
+        version: 0,
+        expectedVersion: null,
       });
-      expect(sendWithAck.mock.calls[0]?.[1]).toBe(3_000);
-      await Bun.sleep(0);
-      expect(completed).toBe(false);
-
-      resolveResponse?.();
-      await flush;
-      expect(completed).toBe(true);
       expect(send).not.toHaveBeenCalled();
     } finally {
       orchestrator.dispose();
@@ -85,7 +73,7 @@ describe("PracticeMatchOrchestrator", () => {
 
     try {
       await Bun.sleep(125);
-      expect(send).toHaveBeenCalledTimes(1);
+      expect(sendWithAck).toHaveBeenCalledTimes(1);
 
       const server = orchestrator.orchestrator.server;
       const originalGetState = server.getState.bind(server);
@@ -102,8 +90,8 @@ describe("PracticeMatchOrchestrator", () => {
 
       await orchestrator.flushPendingState("return");
 
-      expect(sendWithAck).toHaveBeenCalledTimes(1);
-      expect(sendWithAck.mock.calls[0]?.[0]).toMatchObject({
+      expect(sendWithAck).toHaveBeenCalledTimes(2);
+      expect(sendWithAck.mock.calls[1]?.[0]).toMatchObject({
         type: "push_state",
         moveType: "return",
       });
@@ -112,9 +100,10 @@ describe("PracticeMatchOrchestrator", () => {
     }
   });
 
-  it("does not reject navigation when confirmation times out", async () => {
+  it("does not reject navigation when a terminal confirmation times out", async () => {
     const sendWithAck = mock(async (_message: object, _timeoutMs?: number) => {
-      throw "timeout";
+      if (sendWithAck.mock.calls.length > 1) throw "timeout";
+      return undefined;
     });
     const orchestrator = await createOrchestrator(
       { send: mock(() => true), sendWithAck } as unknown as Partial<GatewayClientStore>,
@@ -122,8 +111,48 @@ describe("PracticeMatchOrchestrator", () => {
     );
 
     try {
+      await Bun.sleep(125);
+      const server = orchestrator.orchestrator.server;
+      const originalGetState = server.getState.bind(server);
+      server.getState = (() => {
+        const state = originalGetState();
+        return {
+          ...state,
+          ctx: { ...state.ctx, status: { ...state.ctx.status, gameEnded: true } },
+        };
+      }) as typeof server.getState;
       await expect(orchestrator.flushPendingState("return")).resolves.toBeUndefined();
-      expect(sendWithAck).toHaveBeenCalledTimes(1);
+      expect(sendWithAck).toHaveBeenCalledTimes(2);
+    } finally {
+      orchestrator.dispose();
+    }
+  });
+
+  it("retries the initial snapshot after a disconnected acknowledgement", async () => {
+    const sendWithAck = mock(async (_message: object, _timeoutMs?: number) => {
+      if (sendWithAck.mock.calls.length === 1) throw "disconnected";
+      return undefined;
+    });
+    const orchestrator = await createOrchestrator(
+      { send: mock(() => true), sendWithAck } as unknown as Partial<GatewayClientStore>,
+      "practice-match-retry-initial-state",
+    );
+
+    try {
+      await Bun.sleep(250);
+      expect(sendWithAck).toHaveBeenCalledTimes(2);
+      expect(sendWithAck.mock.calls[0]?.[0]).toMatchObject({
+        type: "push_state",
+        version: 0,
+        expectedVersion: null,
+        moveType: "init",
+      });
+      expect(sendWithAck.mock.calls[1]?.[0]).toMatchObject({
+        type: "push_state",
+        version: 0,
+        expectedVersion: null,
+        moveType: "init",
+      });
     } finally {
       orchestrator.dispose();
     }

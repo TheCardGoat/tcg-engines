@@ -8,11 +8,9 @@ const repoRoot = resolve(currentDir, "../../..");
 const generatedFilePath = resolve(repoRoot, "packages/cards/src/generated.ts");
 const outputDir = resolve(repoRoot, "packages/engine/src");
 
-const { alphaCards, spoilerCards, promoCards } = await generateEngineTestFiles({
+const { promoCards } = await generateEngineTestFiles({
   generatedFilePath,
   outputDir,
 });
 
-console.log(
-  `Generated engine tests for ${alphaCards.length} alpha, ${spoilerCards.length} spoiler, and ${promoCards.length} promo cards in ${outputDir}`,
-);
+console.log(`Generated engine tests for ${promoCards.length} promo cards in ${outputDir}`);

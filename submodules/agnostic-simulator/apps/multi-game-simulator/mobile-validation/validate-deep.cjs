@@ -4,7 +4,7 @@
 //   - gear-in-hand (play -> attach -> assert gear count+1)
 //   - play-and-attack units (already covered broadly; assert field+1)
 //   - call legends (tap face-down legend -> assert it flips face-up)
-//   - sell (tap hand -> sell -> assert eddies unchanged but card to eddies)
+//   - sell (open hand card menu -> sell -> assert eddies unchanged but card to eddies)
 //
 // Reuses the broad-sweep driver. Writes mobile-validation/results-deep.json.
 const fs = require("fs");
@@ -69,10 +69,10 @@ async function runDeep(browser, cardCase) {
       strat === "play-gosolo"
     ) {
       // play from hand
-      const tray = await D.tapHandCard(page, def);
-      if (!tray.actions.includes("hand-action-play")) {
+      const menu = await D.tapHandCard(page, def);
+      if (!menu.actions.includes("card-action-playCard")) {
         out.status = "fail";
-        out.detail.reason = "play not in tray: " + tray.actions.join(",");
+        out.detail.reason = "play not in hand card menu: " + menu.actions.join(",");
         await D.screenshot(page, path.join(SHOT_DIR, `deep-fail-${cardCase.slug}.png`));
         return out;
       }
@@ -118,10 +118,10 @@ async function runDeep(browser, cardCase) {
     }
 
     if (strat === "sell") {
-      const tray = await D.tapHandCard(page, def);
-      if (!tray.actions.includes("hand-action-sell")) {
+      const menu = await D.tapHandCard(page, def);
+      if (!menu.actions.includes("card-action-sellCard")) {
         out.status = "fail";
-        out.detail.reason = "sell not in tray";
+        out.detail.reason = "sell not in hand card menu";
         return out;
       }
       await D.tapHandAction(page, "sell");

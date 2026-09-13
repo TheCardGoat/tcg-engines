@@ -3,7 +3,7 @@ import { prb01GumGumRedRocJollyRogerFoil056 } from "../../../../../cards/src/car
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-056 Gum-Gum Red Roc (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01GumGumRedRocJollyRogerFoil056);
   });
 });

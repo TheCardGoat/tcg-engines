@@ -12,6 +12,14 @@ function fixture(scenarioId: ScenarioId): CyberpunkE2EFixture {
 export const gameStart = fixture("gameStart");
 export const retailCardCatalog = fixture("retailCardCatalog");
 export const retailPr2295Cards = fixture("retailPr2295Cards");
+export const retailReleaseAug2026AllCards = fixture("retailReleaseAug2026AllCards");
+export const retailReleaseAug2026PlayBench = fixture("retailReleaseAug2026PlayBench");
+export const retailScrapedReleaseAug2026Qa = fixture("retailScrapedReleaseAug2026Qa");
+export const retailScrapedReleaseAug2026VStealQa = fixture("retailScrapedReleaseAug2026VStealQa");
+export const retailWtnc22FixerCallQa = fixture("retailWtnc22FixerCallQa");
+export const retailWtnc22CombatStealQa = fixture("retailWtnc22CombatStealQa");
+export const retailWtnc22CostGearQa = fixture("retailWtnc22CostGearQa");
+export const retailWtnc22TurnTriggerQa = fixture("retailWtnc22TurnTriggerQa");
 export const openingMain = fixture("openingMain");
 export const attackStep = fixture("attackStep");
 export const stealGigTest = fixture("stealGigTest");

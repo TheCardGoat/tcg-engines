@@ -48,5 +48,33 @@ describe("OP13-114 S-Snake", () => {
         ?.power,
     ).toBe(4000);
     expect(engine.getState().capabilityHistory).toEqual([]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op13SSnake114],
+        life: [op01Nekomamushi048],
+        activeDon: 10,
+      },
+      { character: [op01XDrake054] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const lifeId = engine.findCardInZone("south", "life", op01Nekomamushi048);
+    const drakeId = engine.findCardInZone("north", "character", op01XDrake054);
+    const powerBefore = engine
+      .getView("south")
+      .players.north.characters.find((card) => card?.instanceId === drakeId)?.power;
+
+    engine.playCard(op13SSnake114);
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    expect(engine.getState().cards[lifeId]?.faceUp).toBe(false);
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === drakeId)
+        ?.power,
+    ).toBe(powerBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

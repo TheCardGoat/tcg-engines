@@ -113,6 +113,39 @@ export interface BotActionOptions {
   strategyId?: string;
 }
 
+export type OpponentTimeoutEvaluation =
+  | {
+      outcome: "not_allowed";
+      reason: "no_time_control" | "requester_has_priority" | "within_limit";
+    }
+  | {
+      outcome: "timed_out";
+      timeout: "first" | "second";
+      stallerPlayerId: string;
+      timeoutCount: number;
+      forceDrop: boolean;
+      resetTimeOnSkipMs: number;
+    };
+
+export interface EvaluateOpponentTimeoutInput {
+  requesterPlayerId: string;
+  opponentPlayerId: string;
+  nowMs: number;
+}
+
+export interface SkipClockResetOptions {
+  resetMs?: number;
+  previousTimeoutCount: number;
+}
+
+export interface TurnSkippedLogInput {
+  gameId: string;
+  stateVersion: number;
+  skipperPlayerId: string;
+  stallerPlayerId: string;
+  sourceAuthority: MoveHistorySourceAuthority;
+}
+
 /**
  * Game-agnostic engine handle. Adapters wrap their concrete engines (e.g.
  * `LorcanaServer`, Cyberpunk `LocalEngine`) into this interface so the play
@@ -160,6 +193,10 @@ export interface ServerGameEngine {
    * the "skip stalling opponent's turn" recovery for this game.
    */
   takeAutomatedAction?(options: BotActionOptions, context: DispatchContext): BotActionResult;
+
+  evaluateOpponentTimeout?(input: EvaluateOpponentTimeoutInput): OpponentTimeoutEvaluation;
+  resetPlayerTimeAfterSkip?(playerId: string, options: SkipClockResetOptions): void;
+  createTurnSkippedLog?(input: TurnSkippedLogInput): EngineLogRecord;
 
   canUndo?(playerId: string): boolean;
   undo?(playerId: string, context: DispatchContext, prevStateID?: number): DispatchResult;

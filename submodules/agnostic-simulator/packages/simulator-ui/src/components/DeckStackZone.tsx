@@ -1,7 +1,13 @@
-import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
+import type { SimulatorDeckReveal, SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
+import type { ReactNode } from "react";
 
 import { cx } from "../class-names";
-import { CardFace } from "./CardFace";
+import {
+  AnimatedEntityCollection,
+  AnimatedEntitySlot,
+  AnimatedZoneSlot,
+  SimulatorEntityVisual,
+} from "../animation";
 import { DeckRevealShelf } from "./DeckRevealShelf";
 import { EmptyZone } from "./EmptyZone";
 
@@ -13,8 +19,12 @@ export interface DeckStackZoneProps {
   emptyLabel?: string;
   density?: "mini" | "compact";
   selectedId?: string;
+  reveal?: SimulatorDeckReveal;
+  /** Physical board side used as the preferred direction for reveal detail. */
+  revealPreferredSide?: "top" | "bottom";
   className?: string;
   onSelect?: (entity: SimulatorEntity) => void;
+  renderTopEntity?: (entity: SimulatorEntity) => ReactNode;
 }
 
 export function DeckStackZone({
@@ -25,8 +35,11 @@ export function DeckStackZone({
   emptyLabel,
   density = "mini",
   selectedId,
+  reveal,
+  revealPreferredSide,
   className,
   onSelect,
+  renderTopEntity,
 }: DeckStackZoneProps) {
   const sourceEntity = entities[0];
   const resolvedLabel = label ?? zone?.label ?? "Deck";
@@ -34,10 +47,10 @@ export function DeckStackZone({
   const topEntity =
     entityCount > 0 ? toFacedownEntity(sourceEntity, zone, resolvedLabel) : undefined;
 
-  return (
+  const contents = (
     <div
       className={cx(
-        "deck-stack-zone relative grid min-h-[118px] w-[78px] content-start justify-items-center overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)] px-[9px] pb-[18px] pt-1 text-[var(--board-text)]",
+        "deck-stack-zone relative grid min-h-[118px] w-[78px] content-start justify-items-center overflow-visible rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)] px-[9px] pb-[18px] pt-1 text-[var(--board-text)]",
         className,
       )}
       data-testid={`${zone?.id ?? resolvedLabel}-stack`}
@@ -47,30 +60,54 @@ export function DeckStackZone({
       data-count={entityCount}
       aria-label={`${resolvedLabel}, ${entityCount} ${entityCount === 1 ? "card" : "cards"}`}
     >
-      {topEntity ? (
-        <>
-          <span
-            className="deck-stack-zone-layers pointer-events-none absolute inset-[8px_8px_23px_13px] rounded-md border border-white/25 bg-slate-950/20"
-            aria-hidden="true"
-          />
-          <CardFace
-            entity={topEntity}
-            density={density}
-            selected={sourceEntity?.id === selectedId}
-            onClick={sourceEntity ? onSelect : undefined}
-          />
-        </>
-      ) : (
-        <EmptyZone label={resolvedEmptyLabel} count="0" />
-      )}
+      <AnimatedEntityCollection>
+        {topEntity ? (
+          <>
+            <span
+              className="deck-stack-zone-layers pointer-events-none absolute inset-[8px_8px_23px_13px] rounded-md border border-white/25 bg-slate-950/20"
+              aria-hidden="true"
+            />
+            <AnimatedEntitySlot
+              entity={topEntity}
+              density={density}
+              zoneRef={zone ? { kind: "zone", id: zone.id, ownerId: zone.ownerId } : undefined}
+              className="deck-stack-zone-entity"
+            >
+              {renderTopEntity ? (
+                renderTopEntity(topEntity)
+              ) : (
+                <button
+                  type="button"
+                  aria-pressed={sourceEntity?.id === selectedId}
+                  onClick={() => sourceEntity && onSelect?.(sourceEntity)}
+                  className={cx("block", sourceEntity?.id === selectedId && "is-selected")}
+                >
+                  <SimulatorEntityVisual entity={topEntity} density={density} />
+                </button>
+              )}
+            </AnimatedEntitySlot>
+          </>
+        ) : (
+          <EmptyZone label={resolvedEmptyLabel} count="0" />
+        )}
+      </AnimatedEntityCollection>
       <StackCount value={entityCount} />
       <DeckRevealShelf
-        reveal={zone?.deckReveal}
+        reveal={reveal ?? zone?.deckReveal}
         compact
-        className="absolute left-1/2 top-[calc(100%+6px)] z-20 -translate-x-1/2"
+        preferredSide={revealPreferredSide}
+        className="absolute right-1 top-1 z-20"
       />
       <StackLabel label={resolvedLabel} />
     </div>
+  );
+
+  return zone ? (
+    <AnimatedZoneSlot animationRef={{ kind: "zone", id: zone.id, ownerId: zone.ownerId }}>
+      {contents}
+    </AnimatedZoneSlot>
+  ) : (
+    contents
   );
 }
 

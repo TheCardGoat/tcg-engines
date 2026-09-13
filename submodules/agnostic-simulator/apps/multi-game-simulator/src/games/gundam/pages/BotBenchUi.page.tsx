@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useSyncExternalStore, type ReactNode } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 import { expandDeck, type MatchRuntime, type MatchStaticResources } from "@tcg/gundam-engine";
 
@@ -19,11 +19,10 @@ import {
   snapshotFromDevRuntime,
   type MatchSnapshot,
 } from "../src/game/snapshot.ts";
-import { useLayoutMode } from "../src/lib/use-layout-mode.ts";
 import {
   AttackTargetingOverlayContainer,
+  BattleStepRibbonContainer,
   MatchOverviewModalContainer,
-  PendingEffectsContainer,
   PlayerSeatContainer,
   PromptContainer,
   SetupPromptContainer,
@@ -32,13 +31,13 @@ import {
 } from "../src/components/containers/index.ts";
 import { SubmitErrorToast } from "../src/components/ui/SubmitErrorToast.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
-import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
+import { GundamInteractionDraftProvider } from "../src/game/interaction-draft.tsx";
+import { GundamDragDropProvider } from "../src/components/ui/playerSeat/gundam-drag-drop-context.tsx";
 import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
-import { PriorityActionButton } from "../src/components/ui/PriorityActionButton.tsx";
+import { GundamCardContextController } from "../src/components/GundamCardContextController.tsx";
 import { HintsProvider } from "../src/lib/use-hints-enabled.ts";
 import { createEngineAdapter } from "../src/game/adapter.ts";
-import { createPendingController } from "../src/game/pending.ts";
 import { createGameStore } from "../src/game/store.ts";
 import { GundamGameContext } from "../src/game/context-internals.ts";
 import type { ViewerId } from "../src/game/types.ts";
@@ -93,8 +92,7 @@ function BotBenchGameProvider({
   const value = useMemo(() => {
     const adapter = createEngineAdapter({ runtime, staticResources, viewerId });
     const store = createGameStore(adapter);
-    const pending = createPendingController(adapter);
-    return { adapter, store, pending, viewerId };
+    return { adapter, store, viewerId };
   }, [runtime, staticResources, viewerId]);
 
   useEffect(() => {
@@ -151,8 +149,6 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
     () => match.runtime.getState(),
   );
   const activePlayer = state.ctx.status.activePlayer;
-  const layoutMode = useLayoutMode();
-  const isMobile = layoutMode === "mobile";
 
   return (
     <BotBenchGameProvider
@@ -162,27 +158,25 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
     >
       <SubmitErrorProvider>
         <HintsProvider>
-          <GundamTargetingProvider>
-            <PendingEffectSelectionProvider>
+          <GundamInteractionDraftProvider>
+            <GundamTargetingProvider>
               <DualModeProvider>
-                <GundamBoardLayout>
-                  <GameTable>
-                    <PlayerSeatContainer side="top" />
-                    {!isMobile && (
-                      <div className="relative h-0">
-                        <div className="centerline -top-px" />
-                      </div>
-                    )}
-                    <PlayerSeatContainer side="bottom" />
-                    <PromptContainer />
-                    <SetupPromptContainer />
-                    {!isMobile && <PriorityActionButton />}
-                    <AttackTargetingOverlayContainer />
-                    <PendingEffectsContainer />
-                    <MatchOverviewModalContainer />
-                    <SubmitErrorToast />
-                  </GameTable>
-                </GundamBoardLayout>
+                <GundamDragDropProvider>
+                  <GundamCardContextController>
+                    <GundamBoardLayout>
+                      <GameTable>
+                        <PlayerSeatContainer side="top" />
+                        <BattleStepRibbonContainer />
+                        <PlayerSeatContainer side="bottom" />
+                        <PromptContainer />
+                        <SetupPromptContainer />
+                        <AttackTargetingOverlayContainer />
+                        <MatchOverviewModalContainer />
+                        <SubmitErrorToast />
+                      </GameTable>
+                    </GundamBoardLayout>
+                  </GundamCardContextController>
+                </GundamDragDropProvider>
                 <pre data-testid="bot-bench-state" hidden>
                   {JSON.stringify({
                     stateId: state.ctx._stateID,
@@ -193,8 +187,8 @@ function BotBenchMatch({ snapshot }: { readonly snapshot: MatchSnapshot }) {
                   })}
                 </pre>
               </DualModeProvider>
-            </PendingEffectSelectionProvider>
-          </GundamTargetingProvider>
+            </GundamTargetingProvider>
+          </GundamInteractionDraftProvider>
         </HintsProvider>
       </SubmitErrorProvider>
     </BotBenchGameProvider>

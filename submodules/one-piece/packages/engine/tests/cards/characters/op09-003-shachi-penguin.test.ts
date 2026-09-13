@@ -28,5 +28,6 @@ describe("OP09-003 Shachi & Penguin", () => {
       engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
         ?.power,
     ).toBe(eb01MountainGod018.power);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

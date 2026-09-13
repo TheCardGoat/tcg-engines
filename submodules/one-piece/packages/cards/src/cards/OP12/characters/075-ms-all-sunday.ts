@@ -75,6 +75,7 @@ export const op12MsAllSunday075: CharacterCard = {
             action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

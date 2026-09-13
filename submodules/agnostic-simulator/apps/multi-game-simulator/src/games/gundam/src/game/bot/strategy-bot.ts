@@ -11,21 +11,21 @@ import {
   type TakeAutomatedActionWithFallbackResult,
 } from "@tcg/gundam-engine";
 
-import { animationPlaybackGateFor } from "./animation-playback-gate.ts";
+import { simulatorExternalCommandGateFor } from "@tcg/simulator-runtime/animation";
 
 /**
  * Bot play speed presets — the delay between an opportunity to act and
  * the actual submission. Values line up with Lorcana's speed buckets so
  * the UX feels familiar.
  *
- *   - fast      — 150ms: no artificial pause, feels snappy in dev loops
- *   - balanced  — 500ms: visible "thinking", human can read the last move
- *   - slow      — 1200ms: deliberate pacing for showing off / recording
+ *   - fast      — 250ms: shortest pause, feels snappy in dev loops
+ *   - balanced  — 800ms: visible "thinking", human can read the last move
+ *   - slow      — 1400ms: deliberate pacing for showing off / recording
  */
 export const BOT_SPEED_MS = {
-  fast: 150,
-  balanced: 500,
-  slow: 1200,
+  fast: 250,
+  balanced: 800,
+  slow: 1400,
 } as const satisfies Record<string, number>;
 
 export type BotSpeed = keyof typeof BOT_SPEED_MS;
@@ -146,7 +146,7 @@ export function attachStrategyBot(
   }
 
   const player = asPlayerId(playerName) as PlayerId;
-  const animationGate = animationPlaybackGateFor(runtime);
+  const animationGate = simulatorExternalCommandGateFor(runtime);
   let strategy = options.strategy ?? getSafeGundamAutomatedActionStrategyOption().strategy;
   let speed: BotSpeed = options.speed ?? "balanced";
   let mode: BotPlayMode = options.playMode ?? "auto";
@@ -171,7 +171,7 @@ export function attachStrategyBot(
     const state = runtime.getState();
     if (state.ctx.status.gameEnded) return false;
     if (state.ctx.status.activePlayer !== player) return false;
-    return speed === "fast" || !animationGate.isBlocked();
+    return !animationGate.isBlocked();
   };
 
   const submit = (): TakeAutomatedActionWithFallbackResult | undefined => {
@@ -213,7 +213,7 @@ export function attachStrategyBot(
     if (mode === "auto") schedule();
   });
   const unsubscribeAnimationGate = animationGate.subscribe(() => {
-    if (mode !== "auto" || speed === "fast") return;
+    if (mode !== "auto") return;
     if (animationGate.isBlocked()) {
       clearTimer();
       return;

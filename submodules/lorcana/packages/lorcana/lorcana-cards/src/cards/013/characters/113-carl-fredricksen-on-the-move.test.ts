@@ -52,6 +52,10 @@ describe("Carl Fredricksen - On the Move", () => {
       originatesFromOptional: true,
       canDeclineSelection: true,
       autoResolvedSlots: ["subject"],
+      currentSelection: { targets: [testEngine.findCardInstanceId(testLocation, "play")] },
+      resolvedTargetIdsBySlot: {
+        location: testEngine.findCardInstanceId(testLocation, "play"),
+      },
     });
     if (!bagEffect?.selectionContext || bagEffect.selectionContext.kind !== "target-selection") {
       throw new Error("Expected Moving Partner to start as a target-selection prompt");

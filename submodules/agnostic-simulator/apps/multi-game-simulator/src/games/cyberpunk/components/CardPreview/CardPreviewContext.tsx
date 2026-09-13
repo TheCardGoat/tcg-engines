@@ -15,7 +15,7 @@ import { ViewerSafeCardImage } from "@tcg/simulator-ui";
 import { useCardInspect } from "../GameBoard/CardInspectContext";
 import classes from "./CardPreview.module.css";
 
-const CARD_BACK = "https://r2.tcg.online/public/cyberpunk/cards/back/card-back.webp";
+const CARD_BACK = "https://cdn.tcg.online/public/cyberpunk/cards/back/card-back.webp";
 
 type CardAccent = "blue" | "green" | "red" | "yellow";
 
@@ -127,7 +127,6 @@ export function CardPreviewProvider({ children }: { children: ReactNode }) {
               entity={previewEntity(state)}
               className={classes.image}
               alt={state.alt ?? ""}
-              fill
               loading="eager"
               onImageLoad={handleImageLoad}
               onImageError={handleImageError}

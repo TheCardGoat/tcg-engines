@@ -25,6 +25,31 @@ import { candidateToCommand } from "./candidate-types.ts";
  * basic shape (single-target vs multi-target, one-per-effect, etc.).
  */
 describe("candidate-enumerator: deployUnit", () => {
+  it("preserves selected payment Resources in the emitted deploy command", () => {
+    const unit = createMockUnit({ cost: 1, level: 1 });
+    const exResource = createMockResource({ name: "EX Resource" });
+    const engine = GundamTestEngine.create(
+      { hand: [unit], resourceArea: [{ card: exResource, isToken: true }] },
+      {},
+    );
+    const [exResourceId] = engine.asPlayer(PLAYER_ONE).getCardsInZone("resourceArea");
+    const [candidate] = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+      { moveNameFilter: ["deployUnit"] },
+    );
+
+    expect(candidate).toMatchObject({
+      family: "deployUnit",
+      paymentResourceIds: [exResourceId],
+    });
+    if (candidate?.family !== "deployUnit") throw new Error("Expected deploy candidate");
+    expect(candidateToCommand(candidate).args).toMatchObject({
+      paymentResourceIds: [exResourceId],
+    });
+  });
+
   it("enumerates a cost-1 unit deploy when the viewer has the resources", () => {
     const rx = createMockUnit({
       cost: 1,
@@ -477,6 +502,67 @@ describe("candidate-enumerator: optional Burst activation", () => {
 });
 
 describe("candidate-enumerator: resolveEffect target selection", () => {
+  it("keeps separate friendly and enemy target groups when resolving a paired effect", () => {
+    const pairedDamage: CardEffect = {
+      type: "triggered",
+      activation: { timing: ["whenPaired"] },
+      directives: [
+        {
+          action: {
+            action: "dealDamage",
+            amount: 1,
+            target: { owner: "friendly", cardType: "unit", count: 1 },
+          },
+        },
+        {
+          action: {
+            action: "dealDamage",
+            amount: 1,
+            target: { owner: "opponent", cardType: "unit", count: 1 },
+          },
+        },
+      ],
+      sourceText: "Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    };
+    const friendly = createMockUnit({ name: "Friendly Target", hp: 4 });
+    const enemy = createMockUnit({ name: "Enemy Target", hp: 4 });
+    const engine = GundamTestEngine.create({ play: [friendly] }, { play: [enemy] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    engine.getG().pendingEffects.push({
+      id: "pe_grouped_targetSelection",
+      controllerId: PLAYER_ONE,
+      sourceCardId: friendlyId,
+      effect: pairedDamage,
+      effectIndex: 0,
+      kind: "triggered",
+    });
+
+    const candidates = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+      { moveNameFilter: ["resolveEffect"] },
+    );
+    const resolution = candidates.find((candidate) => candidate.family === "resolveEffect");
+
+    expect(resolution).toMatchObject({
+      family: "resolveEffect",
+      targets: [friendlyId, enemyId],
+    });
+    if (resolution?.family !== "resolveEffect") {
+      throw new Error("Expected a grouped target-selection resolution candidate");
+    }
+
+    const command = candidateToCommand(resolution);
+    expectSuccess(engine.doMove(command.move, asPlayerId(PLAYER_ONE), command.args));
+    expect(p1.getVisibleCard(friendlyId)?.damage).toBe(1);
+    expect(p2.getVisibleCard(enemyId)?.damage).toBe(1);
+  });
+
   it("emits an executable target candidate instead of falling through to concession", () => {
     const targetedEffect: CardEffect = {
       type: "command",

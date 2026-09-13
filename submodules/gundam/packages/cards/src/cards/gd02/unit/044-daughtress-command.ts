@@ -28,15 +28,13 @@ export const gd02DaughtressCommand044: UnitCard = {
       },
       rarity: "uncommon",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-044.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-044.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-044.webp",
       productName: "Dual Impact [GD02]",
     },
   ],
   reprints: ["GD02-044"],
   selectedPrintingId: "GD02-044",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-044.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-044.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-044.webp",
   legality: "legal",
   level: 2,
   cost: 2,
@@ -49,10 +47,8 @@ export const gd02DaughtressCommand044: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["destroyed"],
-      },
-      directives: [
-        {
-          condition: {
+        conditions: [
+          {
             type: "unitCount",
             owner: "friendly",
             comparison: "gte",
@@ -60,21 +56,21 @@ export const gd02DaughtressCommand044: UnitCard = {
             excludeSelf: true,
             hasTrait: "new une",
           },
-          thenDirectives: [
-            {
-              action: {
-                action: "deployToken",
-                token: {
-                  name: "Daughtress",
-                  traits: ["new une"],
-                  ap: 0,
-                  hp: 1,
-                  deployState: "rested",
-                  printedCardNumber: "T-012",
-                },
-              },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "deployToken",
+            token: {
+              name: "Daughtress",
+              traits: ["new une"],
+              ap: 0,
+              hp: 1,
+              deployState: "rested",
+              printedCardNumber: "T-012",
             },
-          ],
+          },
         },
       ],
       sourceText:

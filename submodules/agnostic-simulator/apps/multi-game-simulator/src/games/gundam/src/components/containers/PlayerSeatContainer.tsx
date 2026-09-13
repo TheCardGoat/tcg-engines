@@ -1,111 +1,186 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { pilotSatisfiesUnitLinkCondition } from "@tcg/gundam-engine";
+import type { Card } from "@tcg/gundam-types";
 
 import {
   asMoveName,
-  protocolTargetSelection,
   useBoardProjection,
+  useGundamControlState,
   useGundamGame,
   useInteractionView,
-  usePending,
   useViewerId,
 } from "../../game/index.ts";
-import { deriveClockView } from "@tcg/gundam-engine";
+import { useGundamInteractionDraft } from "../../game/interaction-draft.tsx";
 import { PlayerSeat } from "../ui/playerSeat/PlayerSeat.tsx";
 import type { SeatSide } from "../ui/playerSeat/PlayerSeat.tsx";
-import type { PlayerInfo } from "../ui/types.ts";
 import { dispatchCardAction } from "./cardAction.ts";
-import {
-  countActiveResources,
-  mapZone,
-  resolveOpponentId,
-  toGameCardData,
-  zoneCount,
-} from "./mappers.ts";
+import { resolveOpponentId } from "./mappers.ts";
 import { SelfHandZoneContainer } from "./SelfHandZoneContainer.tsx";
 import { OpponentHandZoneContainer } from "./OpponentHandZoneContainer.tsx";
-import { usePendingEffectSelection } from "../ui/pending-effect-selection-context.tsx";
 import { useSubmitError } from "./submit-error-context.tsx";
-import { useClockNow } from "../../game/use-clock-now.ts";
-import { TimedOutPlayerOverlay } from "../ui/TimedOutPlayerOverlay.tsx";
+import { legalAttackTargetIds } from "../attack-interactions.ts";
+import { projectDirectAttackPresentation } from "./direct-attack-presentation.ts";
+import {
+  type GundamAttackUnitDragSource,
+  useGundamDragCommands,
+} from "../ui/playerSeat/gundam-drag-drop-context.tsx";
+import { OpponentTimeoutOverlayContainer } from "./OpponentTimeoutOverlayContainer.tsx";
+import { usePlayerSeatProjection } from "./player-seat-projection.ts";
 
 export interface PlayerSeatContainerProps {
   readonly side: SeatSide;
 }
 
+type PilotDropRoute =
+  | {
+      readonly moveName: ReturnType<typeof asMoveName>;
+      readonly sourceInputId: "pilotId";
+      readonly targetIds: readonly string[];
+    }
+  | {
+      readonly moveName: ReturnType<typeof asMoveName>;
+      readonly sourceInputId: "cardId";
+      readonly targetIds: readonly string[];
+    };
+
 export function PlayerSeatContainer({ side }: PlayerSeatContainerProps) {
   const view = useBoardProjection();
   const viewerId = useViewerId();
-  const pending = usePending();
+  const controlState = useGundamControlState();
+  const draft = useGundamInteractionDraft();
   const interactionView = useInteractionView();
-  const targetSelection = protocolTargetSelection(interactionView);
   const { adapter } = useGundamGame();
   const { report } = useSubmitError();
-  const pendingEffectSelection = usePendingEffectSelection();
+  const { registerAttackDropHandler, registerPilotDropHandler } = useGundamDragCommands();
 
   const opponentId = resolveOpponentId(view, viewerId) ?? viewerId;
   const playerId = side === "top" ? opponentId : viewerId;
   const isOpponent = side === "top";
 
-  // Fold paired pilots into their host unit so the play zone renders one
-  // visual slot per fielded mech (with the pilot peeking out below it),
-  // matching the official Gundam digital UI. Standalone pilot entries are
-  // filtered out of `play` — they live on the unit's `pairedPilot` field.
-  const rawPlay = mapZone(view, "battleArea", playerId).map((c) => toGameCardData(view, c));
-  const pilotAssignments =
-    (view.G as { pilotAssignments?: Record<string, string> }).pilotAssignments ?? {};
-  const pairedPilotIds = new Set(Object.values(pilotAssignments));
-  const playIndex = new Map(rawPlay.map((c) => [c.id ?? "", c]));
-  const play = rawPlay
-    .filter((c) => !(c.id && pairedPilotIds.has(c.id)))
-    .map((c) => {
-      const pilotId = c.id ? pilotAssignments[c.id] : undefined;
-      const pairedPilot = pilotId ? playIndex.get(pilotId) : undefined;
-      return pairedPilot ? { ...c, pairedPilot } : c;
-    });
-  const resourceArea = mapZone(view, "resourceArea", playerId).map((c) => toGameCardData(view, c));
-  const base = mapZone(view, "baseSection", playerId).map((c) => toGameCardData(view, c));
-  const shields = mapZone(view, "shieldArea", playerId).map((c) => toGameCardData(view, c));
-  const discard = mapZone(view, "trash", playerId).map((c) => toGameCardData(view, c));
-  const availableResources = countActiveResources(view, playerId);
-
-  const player: PlayerInfo = {
-    name: playerId,
-    clock: "\u2014",
-    colors: [],
-    deck: zoneCount(view, "deck", playerId),
-    discard: zoneCount(view, "trash", playerId),
-    shields: zoneCount(view, "shieldArea", playerId),
-  };
+  const {
+    player,
+    play,
+    resourceArea,
+    base,
+    shields,
+    discard,
+    removalArea,
+    availableResources,
+    handCount,
+  } = usePlayerSeatProjection(view, playerId);
 
   const isViewer = String(playerId) === String(viewerId);
-  const turnPlayerId = view.status.turnPlayer ?? view.status.activePlayer;
-  const isTurn = String(turnPlayerId ?? "") === String(playerId);
-  const isPriority = String(view.status.activePlayer ?? "") === String(playerId);
-  const clockNow = useClockNow();
+  const playerSide = isViewer ? "self" : "opponent";
+  const isTurn = controlState.turnOwner === playerSide;
+  const isPriority =
+    controlState.kind === "interactive" && controlState.priorityHolder === playerSide;
   const opponentClockSnapshot = isOpponent ? view.timerView.players?.[playerId] : undefined;
-  const opponentClockView = opponentClockSnapshot
-    ? deriveClockView(opponentClockSnapshot, clockNow)
-    : null;
 
-  const collectingStep = pending.state.status === "collecting" ? pending.state.steps[0] : null;
+  const directAttackPresentation = useMemo(
+    () => projectDirectAttackPresentation(view, String(opponentId)),
+    [opponentId, view],
+  );
+  const attackDragSources = useMemo(() => {
+    const sources = new Map<string, GundamAttackUnitDragSource>();
+    if (!isViewer || draft.active) return sources;
+    for (const card of play) {
+      if (!card.id) continue;
+      const legalTargetIds = legalAttackTargetIds(adapter, interactionView, card.id);
+      if (legalTargetIds.length === 0) continue;
+      sources.set(card.id, {
+        type: "attack-unit",
+        cardId: card.id,
+        card: {
+          name: card.name,
+          img: card.img,
+          cardType: card.cardType,
+          cost: card.cost,
+        },
+        legalTargetIds,
+        directTargetLabel: `Attack player · ${directAttackPresentation.actionDetail.replace(/\.$/, "")}`,
+      });
+    }
+    return sources;
+  }, [
+    adapter,
+    directAttackPresentation.actionDetail,
+    interactionView,
+    isViewer,
+    draft.active,
+    play,
+  ]);
+  const pilotDropRoutes = useMemo(() => {
+    const routes = new Map<string, PilotDropRoute>();
+    if (!isViewer || draft.active) return routes;
+    const moveRoutes = [
+      { moveName: asMoveName("assignPilot"), sourceInputId: "pilotId" },
+      { moveName: asMoveName("playCommandAsPilot"), sourceInputId: "cardId" },
+    ] as const;
 
-  const highlightCardIds: readonly string[] = targetSelection
-    ? [...targetSelection.targetIds]
-    : collectingStep?.kind === "selectTarget"
-      ? [...collectingStep.candidateIds]
-      : [];
+    for (const route of moveRoutes) {
+      const action = interactionView.actions.find(
+        (candidate) => candidate.id === route.moveName && candidate.enabled,
+      );
+      const sourceInput = action?.inputs.find(
+        (input) => input.kind === "entity-selection" && input.role === "source",
+      );
+      if (sourceInput?.kind !== "entity-selection") continue;
 
-  const selectedCardIds = targetSelection
-    ? pendingEffectSelection.selectedTargetIds
-    : pending.state.status === "collecting"
-      ? [
-          pending.state.partialInput.attackerId as string | undefined,
-          pending.state.partialInput.blockerId as string | undefined,
-          pending.state.partialInput.pilotId as string | undefined,
-          pending.state.partialInput.unitId as string | undefined,
-          pending.state.partialInput.cardId as string | undefined,
-        ].filter((id): id is string => Boolean(id))
-      : [];
+      for (const candidate of sourceInput.candidates) {
+        if (!candidate.enabled) continue;
+        const cardId = candidate.entity.instanceId;
+        const partialInput = route.sourceInputId === "pilotId" ? { pilotId: cardId } : { cardId };
+        const targetStep = adapter
+          .describeMove(route.moveName, partialInput)
+          .find((step) => step.kind === "selectTarget" && step.role === "unit");
+        if (targetStep?.kind === "selectTarget" && targetStep.candidateIds.length > 0) {
+          routes.set(cardId, { ...route, targetIds: targetStep.candidateIds });
+        }
+      }
+    }
+    return routes;
+  }, [adapter, draft.active, interactionView.actions, isViewer]);
+  const pilotDropTargetIds = useMemo(
+    () => new Map([...pilotDropRoutes].map(([cardId, route]) => [cardId, route.targetIds])),
+    [pilotDropRoutes],
+  );
+  const pilotLinkTargetIds = useMemo(() => {
+    const definitions = new Map<string, Card>();
+    for (const zone of Object.values(view.zones.zones)) {
+      for (const card of zone.cards) {
+        if (card.definition) definitions.set(card.instanceId, card.definition as Card);
+      }
+    }
+
+    const linkTargets = new Map<string, readonly string[]>();
+    for (const [pilotId, targetIds] of pilotDropTargetIds) {
+      const pilot = definitions.get(pilotId);
+      if (!pilot) continue;
+      const matchingUnitIds = targetIds.filter((unitId) =>
+        pilotSatisfiesUnitLinkCondition(pilot, definitions.get(unitId)),
+      );
+      if (matchingUnitIds.length > 0) linkTargets.set(pilotId, matchingUnitIds);
+    }
+    return linkTargets;
+  }, [pilotDropTargetIds, view.zones.zones]);
+  useEffect(() => {
+    if (!isViewer) return;
+    return registerAttackDropHandler((attackerId, targetId) => {
+      draft.begin("enterBattle", { attackerId: [attackerId], target: [targetId] });
+    });
+  }, [draft, isViewer, registerAttackDropHandler]);
+  useEffect(() => {
+    if (!isViewer) return;
+    return registerPilotDropHandler((pilotId, unitId) => {
+      const route = pilotDropRoutes.get(pilotId);
+      if (!route?.targetIds.includes(unitId)) return false;
+      draft.begin(route.moveName, { [route.sourceInputId]: [pilotId], unitId: [unitId] });
+      return true;
+    });
+  }, [draft, isViewer, pilotDropRoutes, registerPilotDropHandler]);
+
+  const highlightCardIds = [...draft.boardCandidateIds];
+  const selectedCardIds = [...draft.selectedIds];
 
   const handZone = isOpponent ? <OpponentHandZoneContainer /> : <SelfHandZoneContainer />;
 
@@ -117,12 +192,51 @@ export function PlayerSeatContainer({ side }: PlayerSeatContainerProps) {
   // would have nothing to start (no move accepts that cardId).
   const onPlayCardClick = useCallback(
     (cardId: string) => {
-      dispatchCardAction(
-        { adapter, pending, interactionView, targetSelection, report, pendingEffectSelection },
-        cardId,
-      );
+      dispatchCardAction({ draft, interactionView }, cardId);
     },
-    [adapter, pending, interactionView, targetSelection, report, pendingEffectSelection],
+    [draft, interactionView],
+  );
+  // A battle-area drop is an explicit choice of the Command mode for a
+  // dual-mode Command. It must not enter the click-only mode picker.
+  const onHandCardDrop = useCallback(
+    (cardId: string) => {
+      const commandAction = interactionView.actions.find(
+        (action) => action.id === "playCommand" && action.enabled,
+      );
+      const sourceInput = commandAction?.inputs.find(
+        (input) =>
+          input.kind === "entity-selection" &&
+          input.role === "source" &&
+          input.candidates.some(
+            (candidate) => candidate.enabled && candidate.entity.instanceId === cardId,
+          ),
+      );
+      if (sourceInput?.kind === "entity-selection") {
+        draft.begin("playCommand", { [sourceInput.id]: [cardId] });
+        return;
+      }
+      onPlayCardClick(cardId);
+    },
+    [draft, interactionView.actions, onPlayCardClick],
+  );
+
+  // A Shield choice is always a single concealed card. Submit it immediately
+  // once its pip is clicked: this avoids a second confirmation and makes the
+  // visible positional choice the complete player action.
+  const onShieldCardClick = useCallback(
+    (cardId: string) => {
+      if (
+        draft.input?.kind === "entity-selection" &&
+        draft.input.min === 1 &&
+        draft.input.max === 1 &&
+        draft.candidateIds.has(cardId)
+      ) {
+        draft.toggleEntity(draft.input.id, cardId);
+        return;
+      }
+      onPlayCardClick(cardId);
+    },
+    [draft, onPlayCardClick],
   );
 
   const onSkipOpponent = useCallback(() => {
@@ -142,19 +256,25 @@ export function PlayerSeatContainer({ side }: PlayerSeatContainerProps) {
       base={base}
       shields={shields}
       discard={discard}
+      removalArea={removalArea}
       availableResources={availableResources}
+      handCount={handCount}
       isViewer={isViewer}
       isTurn={isTurn}
       isPriority={isPriority}
       selectedCardIds={selectedCardIds}
       highlightCardIds={highlightCardIds}
-      onPlayCardClick={onPlayCardClick}
-      onHandCardDrop={isViewer ? onPlayCardClick : undefined}
+      onPlayCardClick={draft.boardInteractionEnabled ? onPlayCardClick : undefined}
+      onShieldCardClick={draft.boardInteractionEnabled ? onShieldCardClick : undefined}
+      onResourceCardClick={draft.boardInteractionEnabled ? onPlayCardClick : undefined}
+      onHandCardDrop={isViewer && draft.boardInteractionEnabled ? onHandCardDrop : undefined}
+      pilotDropTargetIds={isViewer ? pilotDropTargetIds : undefined}
+      pilotLinkTargetIds={isViewer ? pilotLinkTargetIds : undefined}
+      attackDragSources={attackDragSources}
       timeoutOverlay={
-        opponentClockView ? (
-          <TimedOutPlayerOverlay
-            canSkip={opponentClockView.canSkipOpponent}
-            canDrop={opponentClockView.canDropOpponent}
+        opponentClockSnapshot ? (
+          <OpponentTimeoutOverlayContainer
+            snapshot={opponentClockSnapshot}
             onSkip={onSkipOpponent}
             onDrop={onDropOpponent}
           />

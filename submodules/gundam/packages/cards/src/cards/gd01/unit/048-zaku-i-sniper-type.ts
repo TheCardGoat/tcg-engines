@@ -28,15 +28,13 @@ export const gd01ZakuISniperType048: UnitCard = {
       },
       rarity: "rare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-048.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-048.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-048.webp",
       productName: "Newtype Rising [GD01]",
     },
   ],
   reprints: ["GD01-048"],
   selectedPrintingId: "GD01-048",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-048.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-048.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-048.webp",
   legality: "legal",
   level: 2,
   cost: 2,
@@ -59,6 +57,7 @@ export const gd01ZakuISniperType048: UnitCard = {
             return: "chooseTop",
             tutorFilter: {
               owner: "friendly",
+              count: 1,
               cardType: "unit",
               attributeFilters: [
                 {

@@ -68,4 +68,27 @@ describe("OP14-036 Strive to Surpass me, Roronoa Zoro!!!", () => {
     ).toBe(true);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { hand: [op14eb04StriveToSurpassMeRoronoaZoro036], character: [eb01Doma005], activeDon: 1 },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const eventId = engine.findCardInZone("north", "hand", op14eb04StriveToSurpassMeRoronoaZoro036);
+    const costId = engine.findCardInZone("north", "character", eb01Doma005);
+    const lifeBefore = engine.getView("north").players.north.lifeCount;
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.characters.find((card) => card?.instanceId === costId)?.rested).toBe(
+      false,
+    );
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+    expect(view.players.north.lifeCount).toBe(lifeBefore - 1);
+  });
 });

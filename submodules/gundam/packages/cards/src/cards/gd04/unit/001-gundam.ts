@@ -27,8 +27,7 @@ export const gd04Gundam001: UnitCard = {
       },
       rarity: "legendRare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-001.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-001.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-001.webp",
       productName: "Phantom Aria [GD04]",
     },
     {
@@ -44,15 +43,13 @@ export const gd04Gundam001: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-001_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-001_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-001_p1.webp",
       productName: "Phantom Aria [GD04]",
     },
   ],
   reprints: ["GD04-001", "GD04-001_p1"],
   selectedPrintingId: "GD04-001",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-001.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-001.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-001.webp",
   legality: "legal",
   level: 6,
   cost: 4,
@@ -72,7 +69,14 @@ export const gd04Gundam001: UnitCard = {
           { type: "selfPairedPilotHasColor", color: "blue" },
         ],
       },
-      directives: [{ action: { action: "returnPairedPilotToHand" } }],
+      directives: [
+        {
+          condition: { type: "isAttackingUnit" },
+          thenDirectives: [
+            { action: { action: "returnPairedPilotToHand", color: "blue" }, optional: true },
+          ],
+        },
+      ],
       sourceText:
         "【During Link】【Attack】If you are attacking an enemy Unit, you may return a blue Pilot paired with this Unit to its owner's hand.",
     },

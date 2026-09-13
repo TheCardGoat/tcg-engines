@@ -51,6 +51,30 @@ describe("Red Gundam (GD03-039)", () => {
     expect(p2.getDamage(targetId)).toBe(0);
   });
 
+  it("rests the Clan Unit and skips the later choose when no enemy has 2 or less AP", () => {
+    const clanAlly = createMockUnit({ traits: ["clan"], ap: 2, hp: 4 });
+    const tooStrong = createMockUnit({ ap: 3, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { hand: [gd03RedGundam039], play: [clanAlly], resourceArea: activeResources(4) },
+      { play: [tooStrong] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const allyId = p1.getCardsInZone("battleArea")[0]!;
+    const tooStrongId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(gd03RedGundam039));
+    const restChoice = p1.getBoardView().pendingChoice;
+    if (restChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Red Gundam to ask which Clan Unit to rest");
+    }
+    expectSuccess(p1.resolveEffect({ targets: [allyId] }));
+
+    expect(p1.isExhausted(allyId)).toBe(true);
+    expect(p2.getDamage(tooStrongId)).toBe(0);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
   it("cannot deal Deploy damage to an enemy Unit with more than 2 AP", () => {
     const clanAlly = createMockUnit({ traits: ["clan"], ap: 2, hp: 4 });
     const target = createMockUnit({ ap: 3, hp: 4 });

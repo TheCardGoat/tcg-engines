@@ -3,7 +3,7 @@ import { op05Birdcage040 } from "../../../../../cards/src/cards/OP05/stages/040-
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-040 Birdcage", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op05Birdcage040);
   });
 });

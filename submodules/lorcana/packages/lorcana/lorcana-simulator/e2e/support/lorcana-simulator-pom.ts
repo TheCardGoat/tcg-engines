@@ -3,6 +3,7 @@ import type { LorcanaProjectedBoardView, LorcanaProjectedCard } from "@tcg/lorca
 import type {
   BrowserTransportLatencyModel,
   BrowserTransportMode,
+  LorcanaBrowserHarnessAutomatedActionResult,
   LorcanaBrowserHarnessConfig,
   LorcanaBrowserHarnessExecuteResult,
   LorcanaBrowserStatus,
@@ -38,7 +39,9 @@ interface LorcanaHarnessWindow extends Window {
       moveId: string,
       params?: Record<string, unknown>,
     ): Promise<LorcanaBrowserHarnessExecuteResult>;
+    takeAutomatedActionForCurrentActor(): Promise<LorcanaBrowserHarnessAutomatedActionResult>;
     getStatus(view?: LorcanaSimulatorView): Promise<LorcanaBrowserStatus>;
+    getBoard(view?: LorcanaSimulatorView): Promise<LorcanaProjectedBoardView>;
   };
 }
 
@@ -123,9 +126,16 @@ export class LorcanaSimulatorPom {
   }
 
   async swapPlayers(): Promise<void> {
-    await this.page.getByLabel("Open simulator debug actions").click();
-    await this.page.getByText("Swap players").click();
-    this.currentView = await this.getCurrentOwnedView();
+    await this.page.getByLabel("Open simulator debug panel").click();
+    const nextView = this.currentView === "playerOne" ? "playerTwo" : "playerOne";
+    await this.page.getByRole("combobox", { name: /^View/ }).selectOption(nextView);
+    await this.page.waitForFunction(
+      (targetView) =>
+        (window as LorcanaHarnessWindow).__lorcanaTestHarness?.getConfig().view === targetView,
+      nextView,
+    );
+    await this.page.getByRole("button", { name: "Close" }).click();
+    this.currentView = nextView;
   }
 
   async reset(): Promise<void> {
@@ -164,6 +174,20 @@ export class LorcanaSimulatorPom {
       },
       { targetView: view, targetMoveId: moveId, targetParams: params },
     );
+  }
+
+  async takeAutomatedActionForCurrentActor(): Promise<LorcanaBrowserHarnessAutomatedActionResult> {
+    await this.waitForHarness();
+    return this.page.evaluate(async () => {
+      const harness = (window as LorcanaHarnessWindow).__lorcanaTestHarness;
+      if (!harness?.takeAutomatedActionForCurrentActor) {
+        throw new Error(
+          "Lorcana test harness takeAutomatedActionForCurrentActor is unavailable in the page.",
+        );
+      }
+
+      return harness.takeAutomatedActionForCurrentActor();
+    });
   }
 
   async getBoard(view?: LorcanaSimulatorView): Promise<LorcanaProjectedBoardView> {

@@ -33,5 +33,9 @@ describe("OP09-093 Marshall.D.Teach", () => {
     expect(characterChoice.candidates.map((candidate) => candidate.ref.id)).toContain(
       opposingCharacterId,
     );
+
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
+    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
   });
 });

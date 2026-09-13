@@ -65,16 +65,17 @@ describe("V-Dash Gundam (GD04-006)", () => {
 
   it("cannot target an enemy Unit with more than 4 HP", () => {
     const ally = createMockUnit({ traits: ["league militaire"], ap: 2, hp: 3 });
+    const legalEnemy = createMockUnit({ ap: 2, hp: 4 });
     const highHpEnemy = createMockUnit({ ap: 2, hp: 5 });
     const engine = GundamTestEngine.create(
       { play: [gd04VDashGundam006, ally] },
-      { play: [highHpEnemy] },
+      { play: [legalEnemy, highHpEnemy] },
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const [vDashId] = p1.getCardsInZone("battleArea");
-    const [enemyId] = p2.getCardsInZone("battleArea");
+    const enemyId = p2.getCardsInZone("battleArea")[1]!;
 
-    expectFailure(p1.activateAbility(vDashId!, 0, { targets: [enemyId!] }), "ILLEGAL_TARGET");
+    expectFailure(p1.activateAbility(vDashId!, 0, { targets: [enemyId] }), "ILLEGAL_TARGET");
   });
 });

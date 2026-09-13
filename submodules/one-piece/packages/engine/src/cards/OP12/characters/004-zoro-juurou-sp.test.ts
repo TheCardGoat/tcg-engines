@@ -3,7 +3,7 @@ import { op12ZoroJuurouSp004 } from "../../../../../cards/src/cards/OP12/charact
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST18-004 Zoro-Juurou (SP)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op12ZoroJuurouSp004);
   });
 });

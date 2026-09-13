@@ -25,13 +25,14 @@ describe("Fool on the Hill", () => {
 
       const choice = engine.getState().G.turnMetadata.pendingChoice;
       expect(choice?.type).toBe("revealDestination");
+      if (!choice || choice.type !== "revealDestination") {
+        throw new Error(`expected a revealDestination pending choice, got ${choice?.type}`);
+      }
       // The Rival (P2) is the chooser, never the caster.
-      expect(choice?.chooserId).toBe(P2);
+      expect(choice.chooserId).toBe(P2);
       // The two revealed cards are exactly the top 2 of the deck.
       expect(
-        choice!.payload.revealedCardIds.map(
-          (id) => engine.getState().G.cardIndex[id]!.definitionId,
-        ),
+        choice.payload.revealedCardIds.map((id) => engine.getState().G.cardIndex[id]!.definitionId),
       ).toEqual([topA.id, topB.id]);
     });
 

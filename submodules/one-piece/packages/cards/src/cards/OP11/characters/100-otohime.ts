@@ -43,6 +43,10 @@ export const op11Otohime100: CharacterCard = {
             action: "draw",
             player: "self",
             amount: 1,
+            condition: {
+              condition: "leaderName",
+              name: "Shirahoshi",
+            },
           },
         ],
         optional: true,

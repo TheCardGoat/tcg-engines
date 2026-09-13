@@ -1,0 +1,1142 @@
+[
+  {
+    "id": "jFzmfHhmDN7gJTKngdL9m",
+    "slug": "ancient-earth-oak-red",
+    "scenarioId": "usurp-preview-ancient-earth-oak-red",
+    "name": "Ancient Earth Oak",
+    "color": "red",
+    "module": "actions/ancient-earth-oak.ts",
+    "test": "src/cards/actions/ancient-earth-oak.test.ts",
+    "new": false
+  },
+  {
+    "id": "bPPRRpDbkkrQ8G9mK8BNh",
+    "slug": "apex-buster-yellow",
+    "scenarioId": "usurp-preview-apex-buster-yellow",
+    "name": "Apex Buster",
+    "color": "yellow",
+    "module": "actions/apex-buster.ts",
+    "test": "src/cards/actions/apex-buster.test.ts",
+    "new": false
+  },
+  {
+    "id": "jCfWzCbzWDBKmcPThjMcq",
+    "slug": "appalling-bearers",
+    "scenarioId": "usurp-preview-appalling-bearers",
+    "name": "Appalling Bearers",
+    "color": "",
+    "module": "equipment/appalling-bearers.ts",
+    "test": "src/cards/equipment/appalling-bearers.test.ts",
+    "new": false
+  },
+  {
+    "id": "pkMGCRh9fDT98dRgnQF8W",
+    "slug": "arknight-shard-blue",
+    "scenarioId": "usurp-preview-arknight-shard-blue",
+    "name": "Arknight Shard",
+    "color": "blue",
+    "module": "resources/arknight-shard.ts",
+    "test": "src/cards/resources/arknight-shard.test.ts",
+    "new": false
+  },
+  {
+    "id": "DJmtJqpNw6QK6ghTrQDGr",
+    "slug": "astral-ambience-yellow",
+    "scenarioId": "usurp-preview-astral-ambience-yellow",
+    "name": "Astral Ambience",
+    "color": "yellow",
+    "module": "actions/astral-ambience.ts",
+    "test": "src/cards/actions/astral-ambience.test.ts",
+    "new": true
+  },
+  {
+    "id": "FmWWpM8FLJCCzQLKBwwKk",
+    "slug": "baalghor-omen-of-the-end",
+    "scenarioId": "usurp-preview-baalghor-omen-of-the-end",
+    "name": "Baalghor, Omen of the End",
+    "color": "",
+    "module": "heroes/baalghor-omen-of-the-end.ts",
+    "test": "src/cards/heroes/baalghor-omen-of-the-end.test.ts",
+    "new": false
+  },
+  {
+    "id": "qnkdHpL7jK6wQ6BRMhNcm",
+    "slug": "battle-clearing-bellow-blue",
+    "scenarioId": "usurp-preview-battle-clearing-bellow-blue",
+    "name": "Battle Clearing Bellow",
+    "color": "blue",
+    "module": "actions/battle-clearing-bellow.ts",
+    "test": "src/cards/actions/battle-clearing-bellow.test.ts",
+    "new": false
+  },
+  {
+    "id": "RN9WcJnf6Mf8nT8Hzhhpt",
+    "slug": "battle-prep-red",
+    "scenarioId": "usurp-preview-battle-prep-red",
+    "name": "Battle Prep",
+    "color": "red",
+    "module": "actions/battle-prep.ts",
+    "test": "src/cards/actions/battle-prep.test.ts",
+    "new": false
+  },
+  {
+    "id": "67JDf7dbPBfGCNbTRgFRj",
+    "slug": "battle-prep-yellow",
+    "scenarioId": "usurp-preview-battle-prep-yellow",
+    "name": "Battle Prep",
+    "color": "yellow",
+    "module": "actions/battle-prep.ts",
+    "test": "src/cards/actions/battle-prep.test.ts",
+    "new": false
+  },
+  {
+    "id": "6nwzBwJQTL9jrMWbkf9GR",
+    "slug": "battle-prep-blue",
+    "scenarioId": "usurp-preview-battle-prep-blue",
+    "name": "Battle Prep",
+    "color": "blue",
+    "module": "actions/battle-prep.ts",
+    "test": "src/cards/actions/battle-prep.test.ts",
+    "new": false
+  },
+  {
+    "id": "H6MhWPLLWJpTPmd7twtgC",
+    "slug": "beckoning-hunger-red",
+    "scenarioId": "usurp-preview-beckoning-hunger-red",
+    "name": "Beckoning Hunger",
+    "color": "red",
+    "module": "actions/beckoning-hunger.ts",
+    "test": "src/cards/actions/beckoning-hunger.test.ts",
+    "new": false
+  },
+  {
+    "id": "GKj9BJrLnJDb8cdQ6Dkc9",
+    "slug": "beckoning-hunger-yellow",
+    "scenarioId": "usurp-preview-beckoning-hunger-yellow",
+    "name": "Beckoning Hunger",
+    "color": "yellow",
+    "module": "actions/beckoning-hunger.ts",
+    "test": "src/cards/actions/beckoning-hunger.test.ts",
+    "new": false
+  },
+  {
+    "id": "FnptrgNbzKQRGnFK8rWwj",
+    "slug": "beckoning-hunger-blue",
+    "scenarioId": "usurp-preview-beckoning-hunger-blue",
+    "name": "Beckoning Hunger",
+    "color": "blue",
+    "module": "actions/beckoning-hunger.ts",
+    "test": "src/cards/actions/beckoning-hunger.test.ts",
+    "new": false
+  },
+  {
+    "id": "9DgdMqPdzCbJkLcqJKpNT",
+    "slug": "become-the-shadow-lord-blue",
+    "scenarioId": "usurp-preview-become-the-shadow-lord-blue",
+    "name": "Become the Shadow Lord",
+    "color": "blue",
+    "module": "actions/become-the-shadow-lord.ts",
+    "test": "src/cards/actions/become-the-shadow-lord.test.ts",
+    "new": false
+  },
+  {
+    "id": "FnQHkwDkfJcRFcrRDtPtT",
+    "slug": "blasmophet-the-insatiable-hunger",
+    "scenarioId": "usurp-preview-blasmophet-the-insatiable-hunger",
+    "name": "Blasmophet, the Insatiable Hunger",
+    "color": "",
+    "module": "tokens/blasmophet-the-insatiable-hunger.ts",
+    "test": "src/cards/tokens/blasmophet-the-insatiable-hunger.test.ts",
+    "new": false
+  },
+  {
+    "id": "HKQMBnGq8PCKJTdrjmfGk",
+    "slug": "blood-harvest",
+    "scenarioId": "usurp-preview-blood-harvest",
+    "name": "Blood Harvest",
+    "color": "",
+    "module": "actions/blood-harvest.ts",
+    "test": "src/cards/actions/blood-harvest.test.ts",
+    "new": false
+  },
+  {
+    "id": "RKtGjjJjBqhkrfb9PkRHw",
+    "slug": "bloodsong-gloomblade-red",
+    "scenarioId": "usurp-preview-bloodsong-gloomblade-red",
+    "name": "Bloodsong Gloomblade",
+    "color": "red",
+    "module": "actions/bloodsong-gloomblade.ts",
+    "test": "src/cards/actions/bloodsong-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "TKjfwJ6tqMrfNr6qWdMwR",
+    "slug": "bone-barrier-blue",
+    "scenarioId": "usurp-preview-bone-barrier-blue",
+    "name": "Bone Barrier",
+    "color": "blue",
+    "module": "defense-reactions/bone-barrier.ts",
+    "test": "src/cards/defense-reactions/bone-barrier.test.ts",
+    "new": false
+  },
+  {
+    "id": "f8mDBJ8bNgcpnGCTTCLj6",
+    "slug": "bridge-of-damnation-blue",
+    "scenarioId": "usurp-preview-bridge-of-damnation-blue",
+    "name": "Bridge of Damnation",
+    "color": "blue",
+    "module": "actions/bridge-of-damnation.ts",
+    "test": "src/cards/actions/bridge-of-damnation.test.ts",
+    "new": false
+  },
+  {
+    "id": "jLczHpKWNJw6BQQFqtftM",
+    "slug": "chains-of-consecration-yellow",
+    "scenarioId": "usurp-preview-chains-of-consecration-yellow",
+    "name": "Chains of Consecration",
+    "color": "yellow",
+    "module": "instants/chains-of-consecration.ts",
+    "test": "src/cards/instants/chains-of-consecration.test.ts",
+    "new": true
+  },
+  {
+    "id": "GPGfcbccKmqwfKtGPfbRM",
+    "slug": "circlet-of-eternal-end",
+    "scenarioId": "usurp-preview-circlet-of-eternal-end",
+    "name": "Circlet of Eternal End",
+    "color": "",
+    "module": "equipment/circlet-of-eternal-end.ts",
+    "test": "src/cards/equipment/circlet-of-eternal-end.test.ts",
+    "new": false
+  },
+  {
+    "id": "GLQCjzpfwgGf8rpzJrGgR",
+    "slug": "consuming-lash-yellow",
+    "scenarioId": "usurp-preview-consuming-lash-yellow",
+    "name": "Consuming Lash",
+    "color": "yellow",
+    "module": "actions/consuming-lash.ts",
+    "test": "src/cards/actions/consuming-lash.test.ts",
+    "new": false
+  },
+  {
+    "id": "Dc7LG9fFtW6GGgcTQ8P9C",
+    "slug": "consuming-strength-yellow",
+    "scenarioId": "usurp-preview-consuming-strength-yellow",
+    "name": "Consuming Strength",
+    "color": "yellow",
+    "module": "actions/consuming-strength.ts",
+    "test": "src/cards/actions/consuming-strength.test.ts",
+    "new": false
+  },
+  {
+    "id": "kQL7bQNCrdwfDnp8jbwzP",
+    "slug": "corrupt-and-conquer-red",
+    "scenarioId": "usurp-preview-corrupt-and-conquer-red",
+    "name": "Corrupt and Conquer",
+    "color": "red",
+    "module": "actions/corrupt-and-conquer.ts",
+    "test": "src/cards/actions/corrupt-and-conquer.test.ts",
+    "new": false
+  },
+  {
+    "id": "qmC78MP6bjTHcDChc6RMJ",
+    "slug": "corrupted-corpse",
+    "scenarioId": "usurp-preview-corrupted-corpse",
+    "name": "Corrupted Corpse",
+    "color": "",
+    "module": "actions/corrupted-corpse.ts",
+    "test": "src/cards/actions/corrupted-corpse.test.ts",
+    "new": false
+  },
+  {
+    "id": "9LNtFHHCkhTdKtWpDnFFH",
+    "slug": "countdown-to-extinction-red",
+    "scenarioId": "usurp-preview-countdown-to-extinction-red",
+    "name": "Countdown to Extinction",
+    "color": "red",
+    "module": "actions/countdown-to-extinction.ts",
+    "test": "src/cards/actions/countdown-to-extinction.test.ts",
+    "new": true
+  },
+  {
+    "id": "jqwqn9CmrMLzmHNfNQHcd",
+    "slug": "countdown-to-extinction-yellow",
+    "scenarioId": "usurp-preview-countdown-to-extinction-yellow",
+    "name": "Countdown to Extinction",
+    "color": "yellow",
+    "module": "actions/countdown-to-extinction.ts",
+    "test": "src/cards/actions/countdown-to-extinction.test.ts",
+    "new": true
+  },
+  {
+    "id": "9djqzttRFdLMNLDr77kQ6",
+    "slug": "countdown-to-extinction-blue",
+    "scenarioId": "usurp-preview-countdown-to-extinction-blue",
+    "name": "Countdown to Extinction",
+    "color": "blue",
+    "module": "actions/countdown-to-extinction.ts",
+    "test": "src/cards/actions/countdown-to-extinction.test.ts",
+    "new": true
+  },
+  {
+    "id": "KhnnKTGfhkBHMhTCzKQck",
+    "slug": "crushing-headache-red",
+    "scenarioId": "usurp-preview-crushing-headache-red",
+    "name": "Crushing Headache",
+    "color": "red",
+    "module": "actions/crushing-headache.ts",
+    "test": "src/cards/actions/crushing-headache.test.ts",
+    "new": false
+  },
+  {
+    "id": "Hbj86fDdmMwRkCMpwwfNw",
+    "slug": "cullingsong-gloomblade-red",
+    "scenarioId": "usurp-preview-cullingsong-gloomblade-red",
+    "name": "Cullingsong Gloomblade",
+    "color": "red",
+    "module": "actions/cullingsong-gloomblade.ts",
+    "test": "src/cards/actions/cullingsong-gloomblade.test.ts",
+    "new": true
+  },
+  {
+    "id": "Q8FGWt6BwzqcHpRzmmkQP",
+    "slug": "danse-macabre",
+    "scenarioId": "usurp-preview-danse-macabre",
+    "name": "Danse Macabre",
+    "color": "",
+    "module": "equipment/danse-macabre.ts",
+    "test": "src/cards/equipment/danse-macabre.test.ts",
+    "new": false
+  },
+  {
+    "id": "Mb9GFdjQhPqgqJC9gD6tt",
+    "slug": "darkest-hour-red",
+    "scenarioId": "usurp-preview-darkest-hour-red",
+    "name": "Darkest Hour",
+    "color": "red",
+    "module": "actions/darkest-hour.ts",
+    "test": "src/cards/actions/darkest-hour.test.ts",
+    "new": true
+  },
+  {
+    "id": "6WmwGtPrhhbjT6h8L6FNK",
+    "slug": "darkest-hour-yellow",
+    "scenarioId": "usurp-preview-darkest-hour-yellow",
+    "name": "Darkest Hour",
+    "color": "yellow",
+    "module": "actions/darkest-hour.ts",
+    "test": "src/cards/actions/darkest-hour.test.ts",
+    "new": true
+  },
+  {
+    "id": "8k9gJp8hcDg8wCBjTR9Bj",
+    "slug": "darkest-hour-blue",
+    "scenarioId": "usurp-preview-darkest-hour-blue",
+    "name": "Darkest Hour",
+    "color": "blue",
+    "module": "actions/darkest-hour.ts",
+    "test": "src/cards/actions/darkest-hour.test.ts",
+    "new": true
+  },
+  {
+    "id": "jmTnGfgnfpMGqPBTrnHKG",
+    "slug": "deadly-spinneret-red",
+    "scenarioId": "usurp-preview-deadly-spinneret-red",
+    "name": "Deadly Spinneret",
+    "color": "red",
+    "module": "actions/deadly-spinneret.ts",
+    "test": "src/cards/actions/deadly-spinneret.test.ts",
+    "new": true
+  },
+  {
+    "id": "jWcCz7DRFHRbkqHBhCKRr",
+    "slug": "demonbound-gloomblade-red",
+    "scenarioId": "usurp-preview-demonbound-gloomblade-red",
+    "name": "Demonbound Gloomblade",
+    "color": "red",
+    "module": "actions/demonbound-gloomblade.ts",
+    "test": "src/cards/actions/demonbound-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "QfFBhL9WNg9pdbTGqfPrh",
+    "slug": "demonbound-gloomblade-yellow",
+    "scenarioId": "usurp-preview-demonbound-gloomblade-yellow",
+    "name": "Demonbound Gloomblade",
+    "color": "yellow",
+    "module": "actions/demonbound-gloomblade.ts",
+    "test": "src/cards/actions/demonbound-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "Jr9TkGFQQQbFzNhQbPCCR",
+    "slug": "demonbound-gloomblade-blue",
+    "scenarioId": "usurp-preview-demonbound-gloomblade-blue",
+    "name": "Demonbound Gloomblade",
+    "color": "blue",
+    "module": "actions/demonbound-gloomblade.ts",
+    "test": "src/cards/actions/demonbound-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "dFcz7hbbCw7jGFKwrCzzF",
+    "slug": "dimenxxional-ferryman-blue",
+    "scenarioId": "usurp-preview-dimenxxional-ferryman-blue",
+    "name": "Dimenxxional Ferryman",
+    "color": "blue",
+    "module": "actions/dimenxxional-ferryman.ts",
+    "test": "src/cards/actions/dimenxxional-ferryman.test.ts",
+    "new": true
+  },
+  {
+    "id": "8d6ttTRWRPwLQw9mcmfLz",
+    "slug": "echoing-trap-blue",
+    "scenarioId": "usurp-preview-echoing-trap-blue",
+    "name": "Echoing Trap",
+    "color": "blue",
+    "module": "blocks/echoing-trap.ts",
+    "test": "src/cards/blocks/echoing-trap.test.ts",
+    "new": true
+  },
+  {
+    "id": "T997BRN8zNhbWCgbpbhP8",
+    "slug": "embrace-sin-yellow",
+    "scenarioId": "usurp-preview-embrace-sin-yellow",
+    "name": "Embrace Sin",
+    "color": "yellow",
+    "module": "actions/embrace-sin.ts",
+    "test": "src/cards/actions/embrace-sin.test.ts",
+    "new": false
+  },
+  {
+    "id": "BMWL86gpr7dDBCcfChgRg",
+    "slug": "embrace-ursur-red",
+    "scenarioId": "usurp-preview-embrace-ursur-red",
+    "name": "Embrace Ursur",
+    "color": "red",
+    "module": "actions/embrace-ursur.ts",
+    "test": "src/cards/actions/embrace-ursur.test.ts",
+    "new": true
+  },
+  {
+    "id": "hKqfRdRKBqgKwKJwzp7Dp",
+    "slug": "embrace-ursur-yellow",
+    "scenarioId": "usurp-preview-embrace-ursur-yellow",
+    "name": "Embrace Ursur",
+    "color": "yellow",
+    "module": "actions/embrace-ursur.ts",
+    "test": "src/cards/actions/embrace-ursur.test.ts",
+    "new": true
+  },
+  {
+    "id": "dkPRHjHr9Kjt8Lhqpbz69",
+    "slug": "embrace-ursur-blue",
+    "scenarioId": "usurp-preview-embrace-ursur-blue",
+    "name": "Embrace Ursur",
+    "color": "blue",
+    "module": "actions/embrace-ursur.ts",
+    "test": "src/cards/actions/embrace-ursur.test.ts",
+    "new": true
+  },
+  {
+    "id": "WwDhkb9GhLkbfGPdH68kh",
+    "slug": "forsaken-strike-yellow",
+    "scenarioId": "usurp-preview-forsaken-strike-yellow",
+    "name": "Forsaken Strike",
+    "color": "yellow",
+    "module": "actions/forsaken-strike.ts",
+    "test": "src/cards/actions/forsaken-strike.test.ts",
+    "new": true
+  },
+  {
+    "id": "JtkWt6Kzpgz9qpPLPp8Ff",
+    "slug": "gate-to-i-arathael",
+    "scenarioId": "usurp-preview-gate-to-i-arathael",
+    "name": "Gate to i'Arathael",
+    "color": "",
+    "module": "tokens/gate-to-i-arathael.ts",
+    "test": "src/cards/tokens/gate-to-i-arathael.test.ts",
+    "new": false
+  },
+  {
+    "id": "jrMzQzBmGK9LjRhQmPhCw",
+    "slug": "grasp-of-the-darknight",
+    "scenarioId": "usurp-preview-grasp-of-the-darknight",
+    "name": "Grasp of the Darknight",
+    "color": "",
+    "module": "equipment/grasp-of-the-darknight.ts",
+    "test": "src/cards/equipment/grasp-of-the-darknight.test.ts",
+    "new": false
+  },
+  {
+    "id": "pKjKMPTQr6TQMMkrnwDBp",
+    "slug": "grille-of-repentance",
+    "scenarioId": "usurp-preview-grille-of-repentance",
+    "name": "Grille of Repentance",
+    "color": "",
+    "module": "equipment/grille-of-repentance.ts",
+    "test": "src/cards/equipment/grille-of-repentance.test.ts",
+    "new": false
+  },
+  {
+    "id": "LfnJQtptHtLbDRNDcf9Pq",
+    "slug": "harbinger-of-destruction-red",
+    "scenarioId": "usurp-preview-harbinger-of-destruction-red",
+    "name": "Harbinger of Destruction",
+    "color": "red",
+    "module": "actions/harbinger-of-destruction.ts",
+    "test": "src/cards/actions/harbinger-of-destruction.test.ts",
+    "new": false
+  },
+  {
+    "id": "8jG8tQTCD6cHcRhRCFrMH",
+    "slug": "head-banging-chorus-yellow",
+    "scenarioId": "usurp-preview-head-banging-chorus-yellow",
+    "name": "Head Banging Chorus",
+    "color": "yellow",
+    "module": "instants/head-banging-chorus.ts",
+    "test": "src/cards/instants/head-banging-chorus.test.ts",
+    "new": false
+  },
+  {
+    "id": "zMbD7hqPwGNQCcDC6DPB9",
+    "slug": "hell-hammer",
+    "scenarioId": "usurp-preview-hell-hammer",
+    "name": "Hell Hammer",
+    "color": "",
+    "module": "weapons/hell-hammer.ts",
+    "test": "src/cards/weapons/hell-hammer.test.ts",
+    "new": false
+  },
+  {
+    "id": "wTM9CCchrrL6j6DLPqLGg",
+    "slug": "hellbound-assault-red",
+    "scenarioId": "usurp-preview-hellbound-assault-red",
+    "name": "Hellbound Assault",
+    "color": "red",
+    "module": "actions/hellbound-assault.ts",
+    "test": "src/cards/actions/hellbound-assault.test.ts",
+    "new": false
+  },
+  {
+    "id": "r7JgDQFn8LQRRBDDwMMTj",
+    "slug": "hellbound-assault-yellow",
+    "scenarioId": "usurp-preview-hellbound-assault-yellow",
+    "name": "Hellbound Assault",
+    "color": "yellow",
+    "module": "actions/hellbound-assault.ts",
+    "test": "src/cards/actions/hellbound-assault.test.ts",
+    "new": false
+  },
+  {
+    "id": "zRNknjBBKWttC7kRgJG9g",
+    "slug": "hellbound-assault-blue",
+    "scenarioId": "usurp-preview-hellbound-assault-blue",
+    "name": "Hellbound Assault",
+    "color": "blue",
+    "module": "actions/hellbound-assault.ts",
+    "test": "src/cards/actions/hellbound-assault.test.ts",
+    "new": false
+  },
+  {
+    "id": "zMHH8DntNfcWwFMNrPNnQ",
+    "slug": "hex-gauntlet",
+    "scenarioId": "usurp-preview-hex-gauntlet",
+    "name": "Hex Gauntlet",
+    "color": "",
+    "module": "equipment/hex-gauntlet.ts",
+    "test": "src/cards/equipment/hex-gauntlet.test.ts",
+    "new": false
+  },
+  {
+    "id": "CT9PFChMjT8kftwNFqP8p",
+    "slug": "ice-aged-oak-blue",
+    "scenarioId": "usurp-preview-ice-aged-oak-blue",
+    "name": "Ice Aged Oak",
+    "color": "blue",
+    "module": "actions/ice-aged-oak.ts",
+    "test": "src/cards/actions/ice-aged-oak.test.ts",
+    "new": false
+  },
+  {
+    "id": "dG7q7d6KBPQq9LprmWwWN",
+    "slug": "ingest-the-unknown-yellow",
+    "scenarioId": "usurp-preview-ingest-the-unknown-yellow",
+    "name": "Ingest the Unknown",
+    "color": "yellow",
+    "module": "actions/ingest-the-unknown.ts",
+    "test": "src/cards/actions/ingest-the-unknown.test.ts",
+    "new": false
+  },
+  {
+    "id": "WwzJLfPwhRTkFLDNjJPrk",
+    "slug": "levia",
+    "scenarioId": "usurp-preview-levia",
+    "name": "Levia",
+    "color": "",
+    "module": "heroes/levia.ts",
+    "test": "src/cards/heroes/levia.test.ts",
+    "new": false
+  },
+  {
+    "id": "rrJg7Bntjp9WzWNcnJcjw",
+    "slug": "malice",
+    "scenarioId": "usurp-preview-malice",
+    "name": "Malice",
+    "color": "",
+    "module": "heroes/malice.ts",
+    "test": "src/cards/heroes/malice.test.ts",
+    "new": false
+  },
+  {
+    "id": "cz8FPm7Rjjndfgb8jQBcT",
+    "slug": "malice-domina-of-the-dead",
+    "scenarioId": "usurp-preview-malice-domina-of-the-dead",
+    "name": "Malice, Domina of the Dead",
+    "color": "",
+    "module": "heroes/malice-domina-of-the-dead.ts",
+    "test": "src/cards/heroes/malice-domina-of-the-dead.test.ts",
+    "new": false
+  },
+  {
+    "id": "kqgmK6HhhfFrFq9zjgtQn",
+    "slug": "ominous-toll-red",
+    "scenarioId": "usurp-preview-ominous-toll-red",
+    "name": "Ominous Toll",
+    "color": "red",
+    "module": "actions/ominous-toll.ts",
+    "test": "src/cards/actions/ominous-toll.test.ts",
+    "new": true
+  },
+  {
+    "id": "wrrNQrjh7BtTjGrPq9qp7",
+    "slug": "ominous-toll-yellow",
+    "scenarioId": "usurp-preview-ominous-toll-yellow",
+    "name": "Ominous Toll",
+    "color": "yellow",
+    "module": "actions/ominous-toll.ts",
+    "test": "src/cards/actions/ominous-toll.test.ts",
+    "new": true
+  },
+  {
+    "id": "jmktPCQzQHc9pCpwWHf7n",
+    "slug": "ominous-toll-blue",
+    "scenarioId": "usurp-preview-ominous-toll-blue",
+    "name": "Ominous Toll",
+    "color": "blue",
+    "module": "actions/ominous-toll.ts",
+    "test": "src/cards/actions/ominous-toll.test.ts",
+    "new": true
+  },
+  {
+    "id": "KjbHhphRQNpDQRbjNJh9f",
+    "slug": "open-the-gate-to-i-arathael-red",
+    "scenarioId": "usurp-preview-open-the-gate-to-i-arathael-red",
+    "name": "Open the Gate to i'Arathael",
+    "color": "red",
+    "module": "actions/open-the-gate-to-i-arathael.ts",
+    "test": "src/cards/actions/open-the-gate-to-i-arathael.test.ts",
+    "new": false
+  },
+  {
+    "id": "qk9CgqWCcCFdkddzNngPh",
+    "slug": "otherworldly-sins-red",
+    "scenarioId": "usurp-preview-otherworldly-sins-red",
+    "name": "Otherworldly Sins",
+    "color": "red",
+    "module": "actions/otherworldly-sins.ts",
+    "test": "src/cards/actions/otherworldly-sins.test.ts",
+    "new": false
+  },
+  {
+    "id": "HCjKd6dWLBBJbkwhbBtfC",
+    "slug": "otherworldly-sins-yellow",
+    "scenarioId": "usurp-preview-otherworldly-sins-yellow",
+    "name": "Otherworldly Sins",
+    "color": "yellow",
+    "module": "actions/otherworldly-sins.ts",
+    "test": "src/cards/actions/otherworldly-sins.test.ts",
+    "new": false
+  },
+  {
+    "id": "nWPD8WCfJkKhb6JRhczTk",
+    "slug": "otherworldly-sins-blue",
+    "scenarioId": "usurp-preview-otherworldly-sins-blue",
+    "name": "Otherworldly Sins",
+    "color": "blue",
+    "module": "actions/otherworldly-sins.ts",
+    "test": "src/cards/actions/otherworldly-sins.test.ts",
+    "new": false
+  },
+  {
+    "id": "D8mWttQzTTrJH6twkGRw6",
+    "slug": "path-of-repentance",
+    "scenarioId": "usurp-preview-path-of-repentance",
+    "name": "Path of Repentance",
+    "color": "",
+    "module": "equipment/path-of-repentance.ts",
+    "test": "src/cards/equipment/path-of-repentance.test.ts",
+    "new": false
+  },
+  {
+    "id": "HbwkT7qd9wF9Rqkbt7tNt",
+    "slug": "planar-chaos-red",
+    "scenarioId": "usurp-preview-planar-chaos-red",
+    "name": "Planar Chaos",
+    "color": "red",
+    "module": "actions/planar-chaos.ts",
+    "test": "src/cards/actions/planar-chaos.test.ts",
+    "new": true
+  },
+  {
+    "id": "KKwgLK6Hhzbf9DTBbhJ8c",
+    "slug": "plundersong-gloomblade-red",
+    "scenarioId": "usurp-preview-plundersong-gloomblade-red",
+    "name": "Plundersong Gloomblade",
+    "color": "red",
+    "module": "actions/plundersong-gloomblade.ts",
+    "test": "src/cards/actions/plundersong-gloomblade.test.ts",
+    "new": true
+  },
+  {
+    "id": "RwBNCgjbQdncGdqP7MJjR",
+    "slug": "pull-from-beyond-red",
+    "scenarioId": "usurp-preview-pull-from-beyond-red",
+    "name": "Pull from Beyond",
+    "color": "red",
+    "module": "actions/pull-from-beyond.ts",
+    "test": "src/cards/actions/pull-from-beyond.test.ts",
+    "new": false
+  },
+  {
+    "id": "cwGdHMhbQbQHMkR7hWwhp",
+    "slug": "pull-from-beyond-yellow",
+    "scenarioId": "usurp-preview-pull-from-beyond-yellow",
+    "name": "Pull from Beyond",
+    "color": "yellow",
+    "module": "actions/pull-from-beyond.ts",
+    "test": "src/cards/actions/pull-from-beyond.test.ts",
+    "new": false
+  },
+  {
+    "id": "mJcpckWTBQMjHzQz8KRmq",
+    "slug": "pull-from-beyond-blue",
+    "scenarioId": "usurp-preview-pull-from-beyond-blue",
+    "name": "Pull from Beyond",
+    "color": "blue",
+    "module": "actions/pull-from-beyond.ts",
+    "test": "src/cards/actions/pull-from-beyond.test.ts",
+    "new": false
+  },
+  {
+    "id": "DJDdtNF6rgJkJ77JwLqQF",
+    "slug": "reach-of-the-abyss",
+    "scenarioId": "usurp-preview-reach-of-the-abyss",
+    "name": "Reach of the Abyss",
+    "color": "",
+    "module": "equipment/reach-of-the-abyss.ts",
+    "test": "src/cards/equipment/reach-of-the-abyss.test.ts",
+    "new": true
+  },
+  {
+    "id": "P7dJ7gDrJpWfDKpfnnj98",
+    "slug": "restless-cleric-red",
+    "scenarioId": "usurp-preview-restless-cleric-red",
+    "name": "Restless Cleric",
+    "color": "red",
+    "module": "actions/restless-cleric.ts",
+    "test": "src/cards/actions/restless-cleric.test.ts",
+    "new": false
+  },
+  {
+    "id": "96BKPQqp8PbgGRhHjn99c",
+    "slug": "restless-corporal-red",
+    "scenarioId": "usurp-preview-restless-corporal-red",
+    "name": "Restless Corporal",
+    "color": "red",
+    "module": "actions/restless-corporal.ts",
+    "test": "src/cards/actions/restless-corporal.test.ts",
+    "new": true
+  },
+  {
+    "id": "PRfhDbJzRtJD66DTGcccM",
+    "slug": "restless-magister-red",
+    "scenarioId": "usurp-preview-restless-magister-red",
+    "name": "Restless Magister",
+    "color": "red",
+    "module": "actions/restless-magister.ts",
+    "test": "src/cards/actions/restless-magister.test.ts",
+    "new": false
+  },
+  {
+    "id": "FLwPbj7LWWnPm8rQ8TMwb",
+    "slug": "restless-outlaw-red",
+    "scenarioId": "usurp-preview-restless-outlaw-red",
+    "name": "Restless Outlaw",
+    "color": "red",
+    "module": "actions/restless-outlaw.ts",
+    "test": "src/cards/actions/restless-outlaw.test.ts",
+    "new": true
+  },
+  {
+    "id": "PThDWrq6twrdKKcrNQ9fC",
+    "slug": "restless-quartermaster-red",
+    "scenarioId": "usurp-preview-restless-quartermaster-red",
+    "name": "Restless Quartermaster",
+    "color": "red",
+    "module": "actions/restless-quartermaster.ts",
+    "test": "src/cards/actions/restless-quartermaster.test.ts",
+    "new": false
+  },
+  {
+    "id": "8MHFrHBN9mLtggwpbCphD",
+    "slug": "robe-of-repentance",
+    "scenarioId": "usurp-preview-robe-of-repentance",
+    "name": "Robe of Repentance",
+    "color": "",
+    "module": "equipment/robe-of-repentance.ts",
+    "test": "src/cards/equipment/robe-of-repentance.test.ts",
+    "new": false
+  },
+  {
+    "id": "HDtcFpfJGnLpQW7LfmM7k",
+    "slug": "runechant-of-envy-yellow",
+    "scenarioId": "usurp-preview-runechant-of-envy-yellow",
+    "name": "Runechant of Envy",
+    "color": "yellow",
+    "module": "instants/runechant-of-envy.ts",
+    "test": "src/cards/instants/runechant-of-envy.test.ts",
+    "new": false
+  },
+  {
+    "id": "9wdzWnFf7J6nmL86nFhtN",
+    "slug": "runechant-of-gluttony-yellow",
+    "scenarioId": "usurp-preview-runechant-of-gluttony-yellow",
+    "name": "Runechant of Gluttony",
+    "color": "yellow",
+    "module": "instants/runechant-of-gluttony.ts",
+    "test": "src/cards/instants/runechant-of-gluttony.test.ts",
+    "new": false
+  },
+  {
+    "id": "MT8LQJTF6w8gPqMzNTrkr",
+    "slug": "runechant-of-greed-yellow",
+    "scenarioId": "usurp-preview-runechant-of-greed-yellow",
+    "name": "Runechant of Greed",
+    "color": "yellow",
+    "module": "instants/runechant-of-greed.ts",
+    "test": "src/cards/instants/runechant-of-greed.test.ts",
+    "new": false
+  },
+  {
+    "id": "FpMpBwHGNgTGDjgfpWBKB",
+    "slug": "runechant-of-lust-yellow",
+    "scenarioId": "usurp-preview-runechant-of-lust-yellow",
+    "name": "Runechant of Lust",
+    "color": "yellow",
+    "module": "instants/runechant-of-lust.ts",
+    "test": "src/cards/instants/runechant-of-lust.test.ts",
+    "new": false
+  },
+  {
+    "id": "HqGFdH8tMH6fR8bNMkTjq",
+    "slug": "runechant-of-pride-yellow",
+    "scenarioId": "usurp-preview-runechant-of-pride-yellow",
+    "name": "Runechant of Pride",
+    "color": "yellow",
+    "module": "instants/runechant-of-pride.ts",
+    "test": "src/cards/instants/runechant-of-pride.test.ts",
+    "new": false
+  },
+  {
+    "id": "BMgj68hT9jQHQ6nFqhTDT",
+    "slug": "runechant-of-sloth-yellow",
+    "scenarioId": "usurp-preview-runechant-of-sloth-yellow",
+    "name": "Runechant of Sloth",
+    "color": "yellow",
+    "module": "instants/runechant-of-sloth.ts",
+    "test": "src/cards/instants/runechant-of-sloth.test.ts",
+    "new": false
+  },
+  {
+    "id": "qwpdn8CJWGgkHLqdhDtgh",
+    "slug": "runechant-of-wrath-yellow",
+    "scenarioId": "usurp-preview-runechant-of-wrath-yellow",
+    "name": "Runechant of Wrath",
+    "color": "yellow",
+    "module": "instants/runechant-of-wrath.ts",
+    "test": "src/cards/instants/runechant-of-wrath.test.ts",
+    "new": false
+  },
+  {
+    "id": "JMT6bHRdPpnzwqJPkrNFH",
+    "slug": "runic-disposition-red",
+    "scenarioId": "usurp-preview-runic-disposition-red",
+    "name": "Runic Disposition",
+    "color": "red",
+    "module": "actions/runic-disposition.ts",
+    "test": "src/cards/actions/runic-disposition.test.ts",
+    "new": true
+  },
+  {
+    "id": "KPwLPNGwQBGRztKnqh8kH",
+    "slug": "runic-disposition-yellow",
+    "scenarioId": "usurp-preview-runic-disposition-yellow",
+    "name": "Runic Disposition",
+    "color": "yellow",
+    "module": "actions/runic-disposition.ts",
+    "test": "src/cards/actions/runic-disposition.test.ts",
+    "new": true
+  },
+  {
+    "id": "dmhHjqRHBRQMJWpDdRrnf",
+    "slug": "runic-disposition-blue",
+    "scenarioId": "usurp-preview-runic-disposition-blue",
+    "name": "Runic Disposition",
+    "color": "blue",
+    "module": "actions/runic-disposition.ts",
+    "test": "src/cards/actions/runic-disposition.test.ts",
+    "new": true
+  },
+  {
+    "id": "WLGtJWhc6kwGfrDRQFJjj",
+    "slug": "runic-reaving-red",
+    "scenarioId": "usurp-preview-runic-reaving-red",
+    "name": "Runic Reaving",
+    "color": "red",
+    "module": "actions/runic-reaving.ts",
+    "test": "src/cards/actions/runic-reaving.test.ts",
+    "new": true
+  },
+  {
+    "id": "kzzPHWCkjb8gddN6t6Nwn",
+    "slug": "runic-reaving-yellow",
+    "scenarioId": "usurp-preview-runic-reaving-yellow",
+    "name": "Runic Reaving",
+    "color": "yellow",
+    "module": "actions/runic-reaving.ts",
+    "test": "src/cards/actions/runic-reaving.test.ts",
+    "new": true
+  },
+  {
+    "id": "8pnmqdgNFqnBnj7Wm9Tt7",
+    "slug": "runic-reaving-blue",
+    "scenarioId": "usurp-preview-runic-reaving-blue",
+    "name": "Runic Reaving",
+    "color": "blue",
+    "module": "actions/runic-reaving.ts",
+    "test": "src/cards/actions/runic-reaving.test.ts",
+    "new": true
+  },
+  {
+    "id": "6MCNTLWcTpN7kJFkQBMPB",
+    "slug": "rush-of-knowledge-blue",
+    "scenarioId": "usurp-preview-rush-of-knowledge-blue",
+    "name": "Rush of Knowledge",
+    "color": "blue",
+    "module": "actions/rush-of-knowledge.ts",
+    "test": "src/cards/actions/rush-of-knowledge.test.ts",
+    "new": true
+  },
+  {
+    "id": "6NCKgNWRrD7cqzzhw6Qtz",
+    "slug": "seven-sin-nebula",
+    "scenarioId": "usurp-preview-seven-sin-nebula",
+    "name": "Seven Sin Nebula",
+    "color": "",
+    "module": "weapons/seven-sin-nebula.ts",
+    "test": "src/cards/weapons/seven-sin-nebula.test.ts",
+    "new": false
+  },
+  {
+    "id": "7KrF7PMWwdWRrDcdFqcj8",
+    "slug": "shadowrealm-harrower-blue",
+    "scenarioId": "usurp-preview-shadowrealm-harrower-blue",
+    "name": "Shadowrealm Harrower",
+    "color": "blue",
+    "module": "actions/shadowrealm-harrower.ts",
+    "test": "src/cards/actions/shadowrealm-harrower.test.ts",
+    "new": false
+  },
+  {
+    "id": "LrcHgbDdwcTGFmhJbnrbc",
+    "slug": "shadowrealm-harvester-red",
+    "scenarioId": "usurp-preview-shadowrealm-harvester-red",
+    "name": "Shadowrealm Harvester",
+    "color": "red",
+    "module": "actions/shadowrealm-harvester.ts",
+    "test": "src/cards/actions/shadowrealm-harvester.test.ts",
+    "new": false
+  },
+  {
+    "id": "6pbQC8JDw9F6rGhpbrgtt",
+    "slug": "shadowrealm-reaper-yellow",
+    "scenarioId": "usurp-preview-shadowrealm-reaper-yellow",
+    "name": "Shadowrealm Reaper",
+    "color": "yellow",
+    "module": "actions/shadowrealm-reaper.ts",
+    "test": "src/cards/actions/shadowrealm-reaper.test.ts",
+    "new": false
+  },
+  {
+    "id": "GTJwfppCK8hPcRGkKGPKC",
+    "slug": "shadowrealm-strength-red",
+    "scenarioId": "usurp-preview-shadowrealm-strength-red",
+    "name": "Shadowrealm Strength",
+    "color": "red",
+    "module": "actions/shadowrealm-strength.ts",
+    "test": "src/cards/actions/shadowrealm-strength.test.ts",
+    "new": false
+  },
+  {
+    "id": "t9FznwrqznJ6tF6bJ6Tht",
+    "slug": "sigil-of-the-muse-red",
+    "scenarioId": "usurp-preview-sigil-of-the-muse-red",
+    "name": "Sigil of the Muse",
+    "color": "red",
+    "module": "actions/sigil-of-the-muse.ts",
+    "test": "src/cards/actions/sigil-of-the-muse.test.ts",
+    "new": true
+  },
+  {
+    "id": "cPH6KbH6PDWmjq68jdFjb",
+    "slug": "sinspeaker-gloomblade-red",
+    "scenarioId": "usurp-preview-sinspeaker-gloomblade-red",
+    "name": "Sinspeaker Gloomblade",
+    "color": "red",
+    "module": "actions/sinspeaker-gloomblade.ts",
+    "test": "src/cards/actions/sinspeaker-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "QGDjNQdgN87Ln9hjGH7Wg",
+    "slug": "sonata-dystopia-blue",
+    "scenarioId": "usurp-preview-sonata-dystopia-blue",
+    "name": "Sonata Dystopia",
+    "color": "blue",
+    "module": "actions/sonata-dystopia.ts",
+    "test": "src/cards/actions/sonata-dystopia.test.ts",
+    "new": true
+  },
+  {
+    "id": "d8hLNTfQcKDtKNrWDm7dF",
+    "slug": "soul-of-existence-purple",
+    "scenarioId": "usurp-preview-soul-of-existence-purple",
+    "name": "Soul of Existence",
+    "color": "purple",
+    "module": "resources/soul-of-existence-purple.ts",
+    "test": "src/cards/resources/soul-of-existence-purple.test.ts",
+    "new": false
+  },
+  {
+    "id": "MRkhrddBmwkWNqjFMmL8j",
+    "slug": "stoke-vengeance-red",
+    "scenarioId": "usurp-preview-stoke-vengeance-red",
+    "name": "Stoke Vengeance",
+    "color": "red",
+    "module": "actions/stoke-vengeance.ts",
+    "test": "src/cards/actions/stoke-vengeance.test.ts",
+    "new": true
+  },
+  {
+    "id": "GNFQ6gbpKLLDMMmWJWhgh",
+    "slug": "tribute-to-greater-power-red",
+    "scenarioId": "usurp-preview-tribute-to-greater-power-red",
+    "name": "Tribute to Greater Power",
+    "color": "red",
+    "module": "actions/tribute-to-greater-power.ts",
+    "test": "src/cards/actions/tribute-to-greater-power.test.ts",
+    "new": false
+  },
+  {
+    "id": "nQhMbB7nzRmc99mPFqkrD",
+    "slug": "unbound-by-shadow-red",
+    "scenarioId": "usurp-preview-unbound-by-shadow-red",
+    "name": "Unbound by Shadow",
+    "color": "red",
+    "module": "actions/unbound-by-shadow.ts",
+    "test": "src/cards/actions/unbound-by-shadow.test.ts",
+    "new": false
+  },
+  {
+    "id": "HR7m9Twn8qDDFr7WnrgWm",
+    "slug": "usurp-the-shadow-throne-blue",
+    "scenarioId": "usurp-preview-usurp-the-shadow-throne-blue",
+    "name": "Usurp the Shadow Throne",
+    "color": "blue",
+    "module": "actions/usurp-the-shadow-throne.ts",
+    "test": "src/cards/actions/usurp-the-shadow-throne.test.ts",
+    "new": false
+  },
+  {
+    "id": "QqrWp6qDm6z7cQJqkmtg6",
+    "slug": "vexing-gloomblade-red",
+    "scenarioId": "usurp-preview-vexing-gloomblade-red",
+    "name": "Vexing Gloomblade",
+    "color": "red",
+    "module": "actions/vexing-gloomblade.ts",
+    "test": "src/cards/actions/vexing-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "6JJzpwWWLTzMMCp6bgQrt",
+    "slug": "vexing-gloomblade-yellow",
+    "scenarioId": "usurp-preview-vexing-gloomblade-yellow",
+    "name": "Vexing Gloomblade",
+    "color": "yellow",
+    "module": "actions/vexing-gloomblade.ts",
+    "test": "src/cards/actions/vexing-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "brJfWPFbzfFzBbRbtLLPN",
+    "slug": "vexing-gloomblade-blue",
+    "scenarioId": "usurp-preview-vexing-gloomblade-blue",
+    "name": "Vexing Gloomblade",
+    "color": "blue",
+    "module": "actions/vexing-gloomblade.ts",
+    "test": "src/cards/actions/vexing-gloomblade.test.ts",
+    "new": false
+  },
+  {
+    "id": "zggWCkTJQgBjj7FCDTwmQ",
+    "slug": "viserai-between-worlds",
+    "scenarioId": "usurp-preview-viserai-between-worlds",
+    "name": "Viserai, Between Worlds",
+    "color": "",
+    "module": "heroes/viserai-between-worlds.ts",
+    "test": "src/cards/heroes/viserai-between-worlds.test.ts",
+    "new": false
+  },
+  {
+    "id": "QMGnHJqg6fhcKLfmpRQLz",
+    "slug": "viserai-usurper",
+    "scenarioId": "usurp-preview-viserai-usurper",
+    "name": "Viserai, Usurper",
+    "color": "",
+    "module": "heroes/viserai-usurper.ts",
+    "test": "src/cards/heroes/viserai-usurper.test.ts",
+    "new": false
+  },
+  {
+    "id": "RLJggjWTcq6NK9PD9zQGh",
+    "slug": "viserai-the-forsaken",
+    "scenarioId": "usurp-preview-viserai-the-forsaken",
+    "name": "Viserai, the Forsaken",
+    "color": "",
+    "module": "heroes/viserai-the-forsaken.ts",
+    "test": "src/cards/heroes/viserai-the-forsaken.test.ts",
+    "new": false
+  },
+  {
+    "id": "PjHzdFtkjKpqTrDkwkJGK",
+    "slug": "vox-necropolis",
+    "scenarioId": "usurp-preview-vox-necropolis",
+    "name": "Vox Necropolis",
+    "color": "",
+    "module": "weapons/vox-necropolis.ts",
+    "test": "src/cards/weapons/vox-necropolis.test.ts",
+    "new": false
+  }
+]

@@ -11,10 +11,13 @@ import type {
   CardEffect,
   CardType,
   DamageProtectionArea,
+  EffectAction,
   KeywordEffectEntry,
   TargetFilter,
+  Zone,
 } from "@tcg/gundam-types";
 import type { GundamDomainEvent } from "./events.ts";
+import type { CardInstanceId } from "../types/branded.ts";
 
 export type { TargetFilter };
 
@@ -74,6 +77,12 @@ export interface TurnMetadata {
   attackedThisTurn: string[];
   /** Card instance IDs deployed this turn */
   deployedThisTurn: string[];
+  /** Command card instance IDs whose Main or Action was activated this turn. */
+  activatedCommandThisTurn: string[];
+  /** Players whose effects made an opponent discard during the current turn. */
+  opponentDiscardEffectOriginPlayerIds?: string[];
+  /** Traits of friendly cards whose effects destroyed one of each player's Units this turn. */
+  friendlyUnitDestroyedByFriendlyCardTraits?: Record<string, string[]>;
   /** Pending combat, if any */
   pendingCombat?: PendingCombatState;
 }
@@ -101,6 +110,7 @@ export type ContinuousEffectPayload =
       damageType?: "battle" | "effect";
       sourceCardType?: CardType;
       source?: "enemy";
+      maxDamageAmount?: number;
     }
   | {
       kind: "damage-reduction";
@@ -108,6 +118,7 @@ export type ContinuousEffectPayload =
       damageType?: "battle" | "effect";
       sourceCardType?: CardType;
       source?: "enemy";
+      consuming?: boolean;
     }
   | { kind: "battle-damage-redirect"; redirectToId: string }
   | { kind: "prevent-destroy"; source?: "enemy" }
@@ -121,8 +132,8 @@ export type ContinuousEffectPayload =
   | { kind: "force-attack-target"; attackTarget: TargetFilter; attackTargetId?: string }
   /** Grants this card the option to also attack targets matching attackTarget (may-choose) */
   | { kind: "grant-attack-target-option"; attackTarget: TargetFilter }
-  /** Lets this card ignore the same-turn deploy attack gate. */
-  | { kind: "allow-attack-deployed-this-turn" }
+  /** Lets this card ignore the same-turn deploy attack gate, optionally only for matching targets. */
+  | { kind: "allow-attack-deployed-this-turn"; attackTarget?: TargetFilter }
   /**
    * A temporary event watcher created by an effect such as "During this
    * turn, when ...". `targetId` is the controller that owns the delayed
@@ -130,7 +141,22 @@ export type ContinuousEffectPayload =
    */
   | {
       kind: "delayed-trigger";
-      eventType: "attackerDestroyedDefender" | "battleDamageDealtToUnit" | "turnEnded";
+      eventType:
+        | "attackerDestroyedDefender"
+        | "enemyCardDestroyedByBattle"
+        | "battleDamageDealtToUnit"
+        | "unitDestroyed"
+        | "turnEnded";
+      additionalEventTypes?: readonly (
+        | "attackerDestroyedDefender"
+        | "battleDamageDealtToUnit"
+        | "shieldAreaCardDestroyedByBattle"
+        | "unitDestroyed"
+        | "turnEnded"
+      )[];
+      eventDamageType?: "battle" | "effect";
+      oncePerSimultaneousGroup?: boolean;
+      eventCardIds?: string[];
       eventCardFilter: TargetFilter;
       eventSourceFilter?: TargetFilter;
       eventSourceIds?: string[];
@@ -167,6 +193,13 @@ export type PostResolveAction =
       event: GundamDomainEvent;
     };
 
+/** Provenance for a Command body activated through any rules path. */
+export type CommandActivationOrigin =
+  | { kind: "playedFromHand"; paidResources: number; paidExResources: number }
+  | { kind: "activatedWhilePaired"; hostUnitId: CardInstanceId }
+  | { kind: "activatedFromTrash" }
+  | { kind: "activatedFromShield" };
+
 /**
  * An effect waiting to be resolved.
  *
@@ -195,17 +228,42 @@ export interface PendingEffect {
   id: string;
   /** Player who decides targets / "you may" for this effect. */
   controllerId: string;
+  /** Stable origin across cross-controller choice handoffs. */
+  effectOriginPlayerId?: string;
   /** Card that generated the effect; undefined for engine-synthesised effects. */
   /** Card that generated the effect. Required on every pending effect. */
   sourceCardId: string;
+  /**
+   * Instance ids that must not be legal targets for this pending choice.
+   * Used by battle-area excess when multiple Units enter simultaneously
+   * (rule 11-4-2-2): every newly deployed Unit stays protected.
+   */
+  protectedCardIds?: readonly string[];
   /**
    * Rules identity of the source when the effect entered the queue. A paired
    * Pilot uses its host Unit here so delayed resolution still evaluates
    * "this Unit" after destruction cleanup removes the Pair assignment.
    */
   sourceIdentityCardId?: string;
+  /** Stable Command provenance for legality checks and effect observers. */
+  commandActivationOrigin?: CommandActivationOrigin;
+  /**
+   * Continuation retained across staged `resolveThenQueue` effects and
+   * enqueued only after the inherited command cleanup has completed.
+   */
+  afterResolutionEffect?: import("@tcg/gundam-types").CardEffect;
   /** Underlying CardEffect (triggered / activated / command). */
   effect: import("@tcg/gundam-types").CardEffect;
+  /**
+   * A bounded set created by an earlier directive and retained only for the
+   * next player choice. Unlike legal targets, this includes cards that must
+   * remain visible even when they are not eligible for the selected route.
+   */
+  choiceCandidateSet?: {
+    kind: "temporary";
+    zone: Zone;
+    cardIds: readonly string[];
+  };
   /**
    * Stable index of the effect within its lookup list. Interpretation
    * depends on how the entry was enqueued:
@@ -333,6 +391,22 @@ export interface PendingTargetSelectionPrompt {
   sourceCardId: string;
   /** Top-level index into `effect.directives` whose action carries the filter. */
   directiveIndex: number;
+  /** The action whose target is being selected. */
+  actionKind: EffectAction["action"];
+  /**
+   * The complete viewer-safe set the choice is being made from. This may be
+   * wider than legalTargetIds so the UI can show automatic remainders.
+   */
+  candidateSet?: {
+    kind: "zone" | "temporary";
+    zone: Zone;
+    cardIds: readonly string[];
+  };
+  /**
+   * When present, choosing targets also accepts this optional directive.
+   * Submitting no targets with a false answer skips the directive instead.
+   */
+  optionalDirectiveIndex?: number;
   /** The raw filter from the directive's action (useful for richer UX). */
   filter: TargetFilter;
   /** Inclusive bounds on how many targets the controller must pick. */
@@ -413,7 +487,7 @@ export interface PendingDeckLookPrompt {
   remainingDestination?: "bottom" | "trash";
   /** Remaining cards are randomized by the engine; no player ordering input is legal. */
   randomizeRemainingToBottom: boolean;
-  tutorDestination: "hand" | "battleArea";
+  tutorDestination: "hand" | "battleArea" | "deckTop";
   legalTutorCardIds: readonly string[];
 }
 
@@ -517,18 +591,25 @@ export interface DeployUnitArgs {
   mode?: "normal" | "alternate";
   /** Instance IDs chosen as targets for the unit's deploy triggered effect. */
   targets?: string[];
+  /** Active Resources explicitly selected to pay this Unit's cost. */
+  paymentResourceIds?: string[];
 }
 
 export interface DeployBaseArgs {
   cardId: string;
   /** Instance IDs chosen as targets for the base's deploy triggered effect. */
   targets?: string[];
+  /** Active Resources explicitly selected to pay this Base's cost. */
+  paymentResourceIds?: string[];
 }
 
 export interface PlayCommandArgs {
   cardId: string;
+  /** Printed payment or an optional card-defined play substitution. */
+  mode?: "normal" | "alternate";
   /** Instance IDs of cards chosen as targets for the command effect. */
   targets?: string[];
+  paymentResourceIds?: string[];
 }
 
 export interface ActivateAbilityArgs {
@@ -536,12 +617,16 @@ export interface ActivateAbilityArgs {
   /** Index into card's Activated effects */
   effectIndex: number;
   targets?: string[];
+  /** Active Resources explicitly selected to pay this ability's cost. */
+  paymentResourceIds?: string[];
   resolutionInput?: unknown;
 }
 
 export interface AssignPilotArgs {
   pilotId: string;
   unitId: string;
+  /** Active Resources explicitly selected to pay this Pilot's pairing cost. */
+  paymentResourceIds?: string[];
 }
 
 /**
@@ -552,6 +637,8 @@ export interface AssignPilotArgs {
 export interface PlayCommandAsPilotArgs {
   cardId: string;
   unitId: string;
+  /** Active Resources explicitly selected to pay this Command-as-Pilot's cost. */
+  paymentResourceIds?: string[];
 }
 
 export interface DeclareBlockArgs {
@@ -563,13 +650,18 @@ export interface EnterBattleArgs {
   target: string;
 }
 
-export interface PassBlockArgs {
-  // no args — standby player declines to block
+export interface AutomaticPassArgs {
+  /**
+   * Set by clients that auto-pass on the player's behalf when no legal
+   * alternative to passing is available. This annotation affects logs only;
+   * the move still passes through the same legality checks as a manual pass.
+   */
+  readonly automatic?: boolean;
 }
 
-export interface PassBattleActionArgs {
-  // no args — player passes in battle action step
-}
+export interface PassBlockArgs extends AutomaticPassArgs {}
+
+export interface PassBattleActionArgs extends AutomaticPassArgs {}
 
 export interface DiscardToHandLimitArgs {
   cardIds: string[];
@@ -632,7 +724,7 @@ export interface DeckLookAnswer {
 
 export type NoMoveArgs = Record<string, never>;
 
-export type PassActionStepArgs = NoMoveArgs;
+export interface PassActionStepArgs extends AutomaticPassArgs {}
 
 export type PassTurnArgs = NoMoveArgs;
 
@@ -718,11 +810,25 @@ export interface GundamBoardView {
   gameSegment?: string;
   phase?: string;
   step?: string;
+  /** Global turn counter (increments when the active turn player changes). */
+  turn?: number;
   activePlayer?: string;
   turnPlayer?: string;
   pendingDecision: string[];
   pendingCombat?: PendingCombatState;
   pendingEffectCount: number;
+  /**
+   * Public identity for a revealed Shield whose Burst is currently waiting
+   * on its controller. Unlike `pendingChoice`, this never includes legal
+   * targets, private-zone cards, or answer options, so every viewer may use
+   * it to keep the revealed card staged during the decision.
+   */
+  pendingBurst?: {
+    kind: "burst";
+    effectId: string;
+    controllerId: string;
+    sourceCardId: string;
+  };
   /**
    * Descriptor for the input the priority-head pending effect needs from
    * its controller, or `undefined` when the queue is empty / nothing is

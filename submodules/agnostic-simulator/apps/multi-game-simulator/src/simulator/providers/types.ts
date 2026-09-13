@@ -1,17 +1,14 @@
 import type {
   GameSnapshot,
+  LiveMatchBootstrapV1,
+  MatchSession,
   MatchInfo,
-  MatchPageData,
   MatchResolution,
   Participant,
   CanonicalUserSettings,
   UserSettings,
 } from "@tcg/game-page-contract";
-import type {
-  LiveStateTransition,
-  LiveTransitionSource,
-} from "@tcg/simulator-runtime/live-transition";
-import type { AnimationPlanV1, PlayableGameSlug } from "@tcg/protocol";
+import type { PlayableGameSlug } from "@tcg/protocol";
 import type { SessionResult } from "@tcg/shared/auth";
 import type { GatewayTicket } from "@tcg/simulator-runtime/gateway";
 
@@ -33,7 +30,8 @@ export interface SimulatorRouteContextValue {
   routeKind: SimulatorRouteKind;
   matchId?: string;
   gameId?: string;
-  matchPageData: MatchPageData | null;
+  matchPageData: LiveMatchBootstrapV1 | null;
+  session: MatchSession | null;
   matchResolution: MatchResolution | null;
   error: string | null;
 }
@@ -55,30 +53,12 @@ export interface SimulatorRuntimeConnectionContextValue {
 
 export interface SimulatorMatchContextValue {
   match: MatchInfo | null;
-  viewerSeat: MatchPageData["viewerSeat"] | null;
-  realtime: MatchPageData["realtime"] | null;
+  viewerSeat: number | "spectator" | null;
+  realtime: LiveMatchBootstrapV1["realtime"] | null;
 }
 
 export interface SimulatorGameSnapshotContextValue {
   game: GameSnapshot | null;
-}
-
-export type SimulatorGameTransitionAnimation = AnimationPlanV1;
-
-export interface SimulatorAuthoritativeGameUpdateInput {
-  game: GameSnapshot;
-  correlationId?: string;
-  animationPlan?: readonly SimulatorGameTransitionAnimation[];
-  source?: Extract<LiveTransitionSource, "authoritative" | "sync">;
-}
-
-export interface SimulatorTransitionContextValue {
-  authoritativeGame: GameSnapshot | null;
-  displayGame: GameSnapshot | null;
-  activeTransition: LiveStateTransition<GameSnapshot, SimulatorGameTransitionAnimation> | null;
-  queuedTransitions: readonly LiveStateTransition<GameSnapshot, SimulatorGameTransitionAnimation>[];
-  markAnimationComplete: (transitionId: string) => void;
-  enqueueAuthoritativeGameUpdate: (input: SimulatorAuthoritativeGameUpdateInput) => void;
 }
 
 export interface SimulatorPlayerSummary {

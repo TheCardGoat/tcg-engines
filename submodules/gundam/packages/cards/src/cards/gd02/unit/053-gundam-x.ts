@@ -28,8 +28,7 @@ export const gd02GundamX053: UnitCard = {
       },
       rarity: "legendRare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-053.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-053.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-053.webp",
       productName: "Dual Impact [GD02]",
     },
     {
@@ -45,15 +44,13 @@ export const gd02GundamX053: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-053_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-053_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-053_p1.webp",
       productName: "Dual Impact [GD02]",
     },
   ],
   reprints: ["GD02-053", "GD02-053_p1"],
   selectedPrintingId: "GD02-053",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-053.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-053.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-053.webp",
   legality: "legal",
   level: 7,
   cost: 5,
@@ -88,6 +85,7 @@ export const gd02GundamX053: UnitCard = {
             target: {
               owner: "friendly",
               cardType: "unit",
+              count: "all",
               excludeSource: true,
               attributeFilters: [
                 {

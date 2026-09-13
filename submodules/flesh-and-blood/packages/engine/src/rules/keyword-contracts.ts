@@ -1,0 +1,58 @@
+/**
+ * Residual keyword contracts for inventory honesty: every status:"tested"
+ * keyword must appear here OR in the named suite with CR-visible assertions.
+ * This list is the machine-checkable set of keyword ids covered by
+ * 08-keywords / release-notes tests (not free-form).
+ */
+export const TESTED_KEYWORD_CONTRACT_IDS = [
+  "go-again",
+  "dominate",
+  "overpower",
+  "battleworn",
+  "blade-break",
+  "temper",
+  "guardwell",
+  "fragment",
+  "piercing",
+  "blood-debt",
+  "phantasm",
+  "mirage",
+  "spectra",
+  "boost",
+  "fusion",
+  "heave",
+  "opt",
+  "amp",
+  "arcane-barrier",
+  "spellvoid",
+  "arcane-shelter",
+  "ward",
+  "shadow-resist",
+  "quell",
+  "crank",
+  "scrap",
+  "beat-chest",
+  "rune-gate",
+  "ambush",
+  "protect",
+  "modular",
+  "cloaked",
+  "perched",
+  "universal",
+  "watery-grave",
+  "suspense",
+  "meld",
+  "pairs",
+  "reload",
+  "sharpen",
+  "awaken",
+  "usurp",
+  "decay",
+  "incarnate",
+  "traverse",
+  "unique",
+  "crush",
+  "ephemeral",
+] as const;
+
+export type TestedKeywordContractId = (typeof TESTED_KEYWORD_CONTRACT_IDS)[number];

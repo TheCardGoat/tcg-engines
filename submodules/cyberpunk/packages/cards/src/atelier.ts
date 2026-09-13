@@ -42,6 +42,8 @@ export const CYBERPUNK_RARITY_TO_CODE: Readonly<Record<CardRarity, CyberpunkRari
   Epic: "epic",
   Secret: "epic",
   "Iconic Secret": "epic",
+  "Iconic Other": "epic",
+  "Iconic Legend": "epic",
   "Nova Rare": "epic",
 };
 
@@ -149,7 +151,7 @@ export function cyberpunkRarityCode(printing: { rarity: string }): CyberpunkRari
  * adapter's `AltArtPrintingInfo` shape so the adapter can pass these straight
  * through.
  *
- * - `canonicalId` is the merged (slug-unique) card id — the same id the
+ * - `canonicalId` is the merged card's stable slug — the same id the
  *   deckbuilder and engine use as `cardId`.
  * - `cardNumber` is the printing's `collectorNumber` (a free-form string like
  *   `"α002"` or `"005"`).
@@ -189,26 +191,26 @@ function toPrintingInfo(canonicalId: string, printing: CardPrinting): CyberpunkP
 }
 
 /**
- * Resolve the canonical (merged) card id for any authored Cyberpunk card id —
- * including cross-set ids that share a slug with a higher-priority canonical
+ * Resolve the stable canonical slug for any authored Cyberpunk card id or
+ * canonical slug — including cross-set ids that share a slug with a higher-priority canonical
  * (e.g. a spoiler id resolves to its retail canonical). Returns `null` for
  * truly-unknown ids, so callers can keep a strict "unknown card" rejection.
  */
 export function getCyberpunkCanonicalForCardId(cardId: string): string | null {
-  return getMergedCyberpunkCardsById().get(cardId)?.id ?? null;
+  return getMergedCyberpunkCardsById().get(cardId)?.canonicalId ?? null;
 }
 
 /**
  * Every printing unioned onto the canonical card for the given canonical id.
  * Returns `[]` for an unknown canonical id. The canonical id is the merged
- * card's `id` (see {@link getCyberpunkCanonicalForCardId}).
+ * card's stable slug identity (see {@link getCyberpunkCanonicalForCardId}).
  */
 export function getCyberpunkPrintingInfosForCanonical(
   canonicalId: string,
 ): CyberpunkPrintingInfo[] {
   const card = getMergedCyberpunkCardsById().get(canonicalId);
   if (!card) return [];
-  return card.printings.map((printing) => toPrintingInfo(card.id, printing));
+  return card.printings.map((printing) => toPrintingInfo(card.canonicalId, printing));
 }
 
 /**
@@ -223,7 +225,7 @@ const printingInfoById: ReadonlyMap<string, CyberpunkPrintingInfo> = (() => {
       // Post-merge a printing id belongs to exactly one canonical card; the
       // guard keeps the first occurrence defensively in case of data drift.
       if (!map.has(printing.id)) {
-        map.set(printing.id, toPrintingInfo(card.id, printing));
+        map.set(printing.id, toPrintingInfo(card.canonicalId, printing));
       }
     }
   }

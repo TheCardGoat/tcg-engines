@@ -10,9 +10,16 @@ import {
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
-import { gd01UnicornGundamDestroyMode002 } from "@tcg/gundam-cards";
+import {
+  gd01UnicornGundamDestroyMode002,
+  st10UnlockingTheDevelopmentDiagram014,
+} from "@tcg/gundam-cards";
 
-import { GundamGameProvider, asViewerId, usePending } from "../../game/index.ts";
+import { GundamGameProvider, asViewerId } from "../../game/index.ts";
+import {
+  GundamInteractionDraftProvider,
+  useGundamInteractionDraft,
+} from "../../game/interaction-draft.tsx";
 import { PromptContainer } from "./PromptContainer.tsx";
 import { SubmitErrorProvider } from "./submit-error-context.tsx";
 
@@ -25,19 +32,41 @@ function AlternateDeployHarness({
   readonly cardId: string;
   readonly destroyTargetId: string;
 }) {
-  const pending = usePending();
-  const firstStep = pending.state.status === "collecting" ? pending.state.steps[0] : undefined;
-  const canChooseDestroyTarget =
-    firstStep?.kind === "selectTarget" && firstStep.candidateIds.includes(destroyTargetId);
+  const draft = useGundamInteractionDraft();
+  const canChooseDestroyTarget = draft.candidateIds.has(destroyTargetId);
 
   return (
     <>
-      <button type="button" onClick={() => pending.startForCard("deployUnit", cardId)}>
+      <button type="button" onClick={() => draft.begin("deployUnit", { cardId: [cardId] })}>
         Deploy Destroy Mode
       </button>
       {canChooseDestroyTarget ? (
-        <button type="button" onClick={() => pending.provideTarget(firstStep, destroyTargetId)}>
+        <button type="button" onClick={() => draft.toggleEntity(draft.input!.id, destroyTargetId)}>
           Destroy Unicorn Mode
+        </button>
+      ) : null}
+    </>
+  );
+}
+
+function AlternateCommandHarness({
+  cardId,
+  discardId,
+}: {
+  readonly cardId: string;
+  readonly discardId: string;
+}) {
+  const draft = useGundamInteractionDraft();
+  const canChooseDiscard = draft.candidateIds.has(discardId);
+
+  return (
+    <>
+      <button type="button" onClick={() => draft.begin("playCommand", { cardId: [cardId] })}>
+        Play Unlocking
+      </button>
+      {canChooseDiscard ? (
+        <button type="button" onClick={() => draft.toggleEntity(draft.input!.id, discardId)}>
+          Discard Generation Unit
         </button>
       ) : null}
     </>
@@ -71,20 +100,61 @@ describe("PromptContainer selectMode binding", () => {
           staticResources={engine.getRuntime().getStaticResources()}
           viewerId={asViewerId(PLAYER_ONE)}
         >
-          <AlternateDeployHarness cardId={destroyModeId} destroyTargetId={unicornModeId} />
-          <PromptContainer />
+          <GundamInteractionDraftProvider>
+            <AlternateDeployHarness cardId={destroyModeId} destroyTargetId={unicornModeId} />
+            <PromptContainer />
+          </GundamInteractionDraftProvider>
         </GundamGameProvider>
       </SubmitErrorProvider>,
     );
 
     await user.click(view.getByRole("button", { name: "Deploy Destroy Mode" }));
-    await user.click(view.getByTestId("game-prompt-mode-alternate"));
+    await user.click(view.getByRole("radio", { name: /When playing this card/i }));
     await user.click(view.getByRole("button", { name: "Destroy Unicorn Mode" }));
 
     await waitFor(() => {
       expect(p1.getCardZone(unicornModeId)).toBe(`trash:${PLAYER_ONE}`);
       expect(p1.getCardZone(banagherId)).toBe(`trash:${PLAYER_ONE}`);
       expect(p1.getCardZone(destroyModeId)).toBe(`battleArea:${PLAYER_ONE}`);
+    });
+  });
+
+  it("lets a player choose ST10-014's alternate Command cost and discard its required Unit", async () => {
+    const user = userEvent.setup();
+    const discard = createMockUnit({ name: "Generation Unit", traits: ["g generation"] });
+    const engine = GundamTestEngine.create({
+      hand: [st10UnlockingTheDevelopmentDiagram014, discard],
+      resourceArea: activeResources(4),
+      deck: 3,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [commandId, discardId] = p1.getHand();
+    const view = render(
+      <SubmitErrorProvider>
+        <GundamGameProvider
+          runtime={engine.getRuntime()}
+          staticResources={engine.getRuntime().getStaticResources()}
+          viewerId={asViewerId(PLAYER_ONE)}
+        >
+          <GundamInteractionDraftProvider>
+            <AlternateCommandHarness cardId={commandId!} discardId={discardId!} />
+            <PromptContainer />
+          </GundamInteractionDraftProvider>
+        </GundamGameProvider>
+      </SubmitErrorProvider>,
+    );
+
+    await user.click(view.getByRole("button", { name: "Play Unlocking" }));
+    expect(view.getByRole("radio", { name: "Alternate · Lv. 2 / Cost 2" })).toBeTruthy();
+    expect(view.queryByRole("button", { name: "Choose none" })).toBeNull();
+    await user.click(view.getByRole("radio", { name: "Alternate · Lv. 2 / Cost 2" }));
+    await user.click(view.getByRole("button", { name: "Discard Generation Unit" }));
+
+    await waitFor(() => {
+      expect(p1.getCardZone(commandId!)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardZone(discardId!)).toBe(`trash:${PLAYER_ONE}`);
+      expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(2);
+      expect(p1.getHand()).toHaveLength(2);
     });
   });
 });

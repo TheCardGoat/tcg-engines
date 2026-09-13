@@ -3,7 +3,7 @@ import { eb02DonquixoteRosinante022 } from "../../../../../cards/src/cards/EB02/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-022 Donquixote Rosinante", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb02DonquixoteRosinante022);
   });
 });

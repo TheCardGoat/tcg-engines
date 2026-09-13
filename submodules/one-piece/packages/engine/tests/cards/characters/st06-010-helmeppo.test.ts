@@ -24,5 +24,7 @@ describe("ST06-010 Helmeppo", () => {
       engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
         ?.cost,
     ).toBe(eb01MountainGod018.cost);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

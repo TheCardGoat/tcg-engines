@@ -28,8 +28,7 @@ export const gd01GFighter009: UnitCard = {
       },
       rarity: "uncommon",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-009.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-009.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-009.webp",
       productName: "Newtype Rising [GD01]",
     },
     {
@@ -45,15 +44,13 @@ export const gd01GFighter009: UnitCard = {
       },
       rarity: "uncommon",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/beta/GD01-009_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-009_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/beta/GD01-009_p1.webp",
       productName: "Edition Beta",
     },
   ],
   reprints: ["GD01-009", "GD01-009_p1"],
   selectedPrintingId: "GD01-009",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-009.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-009.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-009.webp",
   legality: "legal",
   level: 3,
   cost: 2,
@@ -61,7 +58,7 @@ export const gd01GFighter009: UnitCard = {
   hp: 2,
   linkCondition: "(White Base Team) Trait",
   effect:
-    "【Deploy】Choose 1 of your (white Base Team) Units. It gains &lt;High-Maneuver&gt; during this turn.<br>\n (This Unit can't be blocked.)<br>",
+    "【Deploy】Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn.\n\n(This Unit can't be blocked.)",
   effects: [
     {
       type: "triggered",
@@ -90,7 +87,7 @@ export const gd01GFighter009: UnitCard = {
         },
       ],
       sourceText:
-        "【Deploy】Choose 1 of your (white Base Team) Units. It gains <High-Maneuver> during this turn. (This Unit can't be blocked.)",
+        "【Deploy】Choose 1 of your (White Base Team) Units. It gains <High-Maneuver> during this turn. (This Unit can't be blocked.)",
     },
   ] as CardEffect[],
   keywordEffects: [],

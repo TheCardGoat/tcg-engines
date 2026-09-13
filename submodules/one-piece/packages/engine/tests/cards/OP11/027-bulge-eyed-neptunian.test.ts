@@ -32,5 +32,6 @@ describe("OP11-027 Bulge-Eyed Neptunian", () => {
         ),
     ).toBe(true);
     expect(engine.getState().capabilityHistory).toEqual([]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

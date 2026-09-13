@@ -12,6 +12,7 @@ import { morphLittleImitator } from "./057-morph-little-imitator";
 import { sulleyBooScareBuddies } from "./029-sulley-boo-scare-buddies";
 import { mickeyMouseMinnieMouseAdventuringDuo } from "./099-mickey-mouse-minnie-mouse-adventuring-duo";
 import { sunYeeRedPandaSpirit } from "./119-sun-yee-red-panda-spirit";
+import { poseyVampirePotato } from "./091-posey-vampire-potato";
 
 const discardFodderOne = createMockCharacter({
   id: "morph-little-imitator-discard-fodder-one",
@@ -139,6 +140,23 @@ describe("Morph - Little Imitator", () => {
 
     expect(testEngine.asPlayerOne().getCardZone(sunYeeRedPandaSpirit)).toBe("play");
     expect(testEngine.getCardsUnder(sunYeeRedPandaSpirit)).toEqual([shiftTarget]);
+  });
+
+  it("can be used as the target for Potato Shift", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [poseyVampirePotato],
+      play: [morphLittleImitator],
+      inkwell: 5,
+    });
+    const shiftTarget = testEngine.findCardInstanceId(morphLittleImitator, "play", PLAYER_ONE);
+
+    expect(
+      testEngine.asPlayerOne().playCard(poseyVampirePotato, {
+        cost: { cost: "shift", shiftTarget },
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.getCardsUnder(poseyVampirePotato)).toEqual([shiftTarget]);
   });
 
   it("can be used as the target for Combo Shift", () => {

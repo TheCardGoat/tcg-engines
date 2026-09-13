@@ -108,7 +108,7 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
       const { p1, age1Id, discardId, deckBefore, resourcesBefore } = deployWith();
 
       const optionalChoice = p1.getBoardView().pendingChoice;
-      if (optionalChoice?.kind !== "optional") {
+      if (optionalChoice?.kind !== "targetSelection") {
         throw new Error("Expected a visible optional discard choice");
       }
       expectSuccess(
@@ -142,7 +142,7 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
       const { p1, resourcesBefore } = deployWith();
 
       const optionalChoice = p1.getBoardView().pendingChoice;
-      if (optionalChoice?.kind !== "optional") {
+      if (optionalChoice?.kind !== "targetSelection") {
         throw new Error("Expected a visible optional discard choice");
       }
       expectSuccess(
@@ -156,7 +156,7 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
       const { p1, deckBefore } = deployWith();
 
       const optionalChoice = p1.getBoardView().pendingChoice;
-      if (optionalChoice?.kind !== "optional") {
+      if (optionalChoice?.kind !== "targetSelection") {
         throw new Error("Expected a visible optional discard choice");
       }
       expectSuccess(
@@ -170,7 +170,7 @@ describe("Gundam AGE-1 Normal (GD02-021)", () => {
       const { p1, deckBefore } = deployWith({ resources: activeResources(5) });
 
       const optionalChoice = p1.getBoardView().pendingChoice;
-      if (optionalChoice?.kind !== "optional") {
+      if (optionalChoice?.kind !== "targetSelection") {
         throw new Error("Expected a visible optional discard choice");
       }
       expectSuccess(

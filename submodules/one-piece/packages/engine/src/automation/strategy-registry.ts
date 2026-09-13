@@ -7,8 +7,10 @@ import {
   passOnlyStrategy,
   randomStrategy,
   valueRankedStrategy,
+  type OnePieceBotPromptResolver,
   type OnePieceBotStrategy,
 } from "./bot-strategies.ts";
+import { aggressiveAgent, heuristicAgent } from "./heuristic-strategy.ts";
 
 export interface OnePieceAutomatedActionStrategyOption {
   readonly id: string;
@@ -16,6 +18,7 @@ export interface OnePieceAutomatedActionStrategyOption {
   readonly description: string;
   readonly informationPolicy: BotInformationPolicy;
   readonly strategy: OnePieceBotStrategy;
+  readonly resolvePrompt?: OnePieceBotPromptResolver;
   readonly testOnly?: boolean;
 }
 
@@ -23,6 +26,24 @@ export const DEFAULT_ONE_PIECE_AUTOMATED_ACTION_STRATEGY_ID = currentPromotion.p
 
 export const ONE_PIECE_AUTOMATED_ACTION_STRATEGIES: readonly OnePieceAutomatedActionStrategyOption[] =
   [
+    {
+      id: "heuristic",
+      label: "Heuristic (Oracle information)",
+      description:
+        "Rules-aware balanced heuristic: on-curve development, DON!! planning, counter/blocker defense, and effect target heuristics.",
+      informationPolicy: "oracle",
+      strategy: heuristicAgent.choose,
+      resolvePrompt: heuristicAgent.resolvePrompt,
+    },
+    {
+      id: "aggressive",
+      label: "Aggressive life-race (Oracle information)",
+      description:
+        "Rules-aware aggressive heuristic: leader pressure, Rush prioritization, offensive DON!! attachment, and early life defense.",
+      informationPolicy: "oracle",
+      strategy: aggressiveAgent.choose,
+      resolvePrompt: aggressiveAgent.resolvePrompt,
+    },
     {
       id: "value-ranked",
       label: "Value ranked (Oracle information)",

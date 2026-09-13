@@ -48,21 +48,32 @@ export const op09SoulFrankySwingArmBoxingSolid041: EventCard = {
             target: {
               player: "self",
               zones: ["character"],
-              count: { amount: 2, upTo: true },
-              filters: [{ filter: "state", value: "rested" }],
+              count: {
+                amount: 2,
+                upTo: true,
+              },
             },
             condition: {
               condition: "compound",
               operator: "and",
               conditions: [
-                { condition: "leaderTrait", trait: "ODYSSEY", match: "includes" },
+                {
+                  condition: "leaderTrait",
+                  trait: "ODYSSEY",
+                  match: "includes",
+                },
                 {
                   condition: "zoneCount",
                   player: "self",
                   zone: "character",
                   comparison: "gte",
                   value: 2,
-                  filters: [{ filter: "state", value: "rested" }],
+                  filters: [
+                    {
+                      filter: "state",
+                      value: "rested",
+                    },
+                  ],
                 },
               ],
             },
@@ -77,8 +88,17 @@ export const op09SoulFrankySwingArmBoxingSolid041: EventCard = {
             target: {
               player: "opponent",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
-              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
             },
           },
         ],

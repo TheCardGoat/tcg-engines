@@ -20,5 +20,6 @@ describe("OP12-006 Shakuyaku", () => {
     if (search?.kind !== "selectEntity") throw new Error("Expected Shakuyaku's search choice.");
     expect(search.candidates.find((candidate) => candidate.ref.id === luffyId)?.legal).toBe(true);
     expect(search.candidates.find((candidate) => candidate.ref.id === eventId)?.legal).toBe(true);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

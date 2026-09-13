@@ -22,5 +22,7 @@ describe("ST18-003 San-Gorou", () => {
     const view = engine.getView("south");
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(drawnId);
     expect(view.players.south.deckCount).toBe(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

@@ -100,4 +100,35 @@ describe("OP04-117 Heavenly Fire", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Life Trigger so Life/hand costs and add-to-Life do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [op04GunModoki115],
+        life: [op04HeavenlyFire117, eb01Doma005, eb01Fourtricks025],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const handCardId = engine.findCardInZone("north", "hand", op04GunModoki115);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const before = engine.getView("north").players.north;
+    const lifeCountBefore = before.lifeCount;
+    const handBefore = before.hand.length;
+    const lifeIdsBefore = [...engine.getState().players.north.life];
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.lifeCount).toBe(lifeCountBefore);
+    expect(view.players.north.hand.length).toBe(handBefore);
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(handCardId);
+    expect(engine.getState().players.north.life).toEqual(lifeIdsBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

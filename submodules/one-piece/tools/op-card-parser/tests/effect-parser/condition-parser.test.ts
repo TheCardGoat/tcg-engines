@@ -361,11 +361,9 @@ describe("parseInlineCondition", () => {
       const result = parseInlineCondition("If you have 3 or more active DON!! cards, draw 1 card.");
       expect(result).not.toBeNull();
       expect(result!.condition).toEqual({
-        condition: "donFieldCount",
-        player: "self",
+        condition: "activeDonCount",
         comparison: "gte",
         value: 3,
-        state: "active",
       });
     });
   });

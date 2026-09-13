@@ -117,6 +117,31 @@ export function parseCardStateCondition(text: string): Condition | null {
     };
   }
 
+  // Named field presence without zone noun: "you have a [Sarfunkel]"
+  // Official text often omits "Character" when the name uniquely identifies the card.
+  m = /^you\s+have\s+an?\s+\[([^\]]+)\]$/i.exec(t);
+  if (m) {
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "character",
+      filters: [{ filter: "name", value: m[1]! }],
+    };
+  }
+
+  // Named field presence: "you have [Merry Go] on your field"
+  // The printed name can be a Stage or Character; prefer Stage first because
+  // Stage-gated permanents are the common abbreviated form, then Character.
+  m = /^you\s+have\s+\[([^\]]+)\]\s+on\s+your\s+field$/i.exec(t);
+  if (m) {
+    return {
+      condition: "hasCard",
+      player: "self",
+      zone: "stage",
+      filters: [{ filter: "name", value: m[1]! }],
+    };
+  }
+
   // Has card: your opponent has a Leader or Character with a base power of N or more/less
   m =
     /^your\s+opponent\s+has\s+a\s+(Leader\s+or\s+)?Character\s+with\s+a\s+base\s+power\s+of\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(

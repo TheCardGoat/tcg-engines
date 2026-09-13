@@ -18,9 +18,7 @@ function truncateForAnalytics(input: unknown): string | undefined {
   if (input == null) return undefined;
   const text = String(input);
   if (text.length === 0) return undefined;
-  return text.length > ANALYTICS_TEXT_MAX_LENGTH
-    ? text.slice(0, ANALYTICS_TEXT_MAX_LENGTH)
-    : text;
+  return text.length > ANALYTICS_TEXT_MAX_LENGTH ? text.slice(0, ANALYTICS_TEXT_MAX_LENGTH) : text;
 }
 
 mock.module("web-vitals", () => ({
@@ -33,14 +31,6 @@ mock.module("web-vitals", () => ({
 
 mock.module("./analytics.js", () => ({
   ANALYTICS_TEXT_MAX_LENGTH,
-  analyticsErrorFields: (error: unknown) => {
-    const code = error instanceof Error ? error.name : undefined;
-    const message = truncateForAnalytics(error instanceof Error ? error.message : error);
-    return {
-      ...(code ? { error_code: code } : {}),
-      ...(message ? { error_message: message } : {}),
-    };
-  },
   initAnalytics: () => {},
   isAnalyticsConfigured: () => false,
   normalizePathForAnalytics: (path: string) => path,

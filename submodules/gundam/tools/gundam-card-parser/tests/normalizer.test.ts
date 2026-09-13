@@ -39,6 +39,11 @@ function makeRaw(overrides: Partial<RawGundamCard> = {}): RawGundamCard {
 // ── normalizeUnit ──────────────────────────────────────────────────────────────
 
 describe("normalizeUnit", () => {
+  test("accepts the official UNIT・TOKEN card type", () => {
+    const card = normalize(makeRaw({ cardType: "UNIT・TOKEN", id: "T-025", code: "T-025" }));
+    expect(card).toMatchObject({ cardNumber: "T-025", type: "unit" });
+  });
+
   test("produces a UnitCard with all basic fields", () => {
     const card = normalizeUnit(makeRaw({ ap: 3, hp: 5, color: "Red", rarity: "R" }));
     expect(card).toMatchObject({
@@ -58,6 +63,14 @@ describe("normalizeUnit", () => {
   test("parses official LR rarity as legendRare", () => {
     const card = normalizeUnit(makeRaw({ rarity: "LR" }));
     expect(card.rarity).toBe("legendRare");
+  });
+
+  test.each([
+    ["LKC +", "common"],
+    ["LKU +", "uncommon"],
+    ["LKR +", "rare"],
+  ] as const)("normalizes the official GD05 %s parallel rarity", (rarity, expected) => {
+    expect(normalizeUnit(makeRaw({ rarity })).rarity).toBe(expected);
   });
 
   test("parses plus rarity as its base rarity", () => {
@@ -143,6 +156,21 @@ describe("normalizeUnit", () => {
         productName: "Included in Booster Packs [GD01]",
       },
     ]);
+  });
+
+  test("separates the two official source titles concatenated on EXR-006", () => {
+    const card = normalizeUnit(
+      makeRaw({
+        id: "EXR-006",
+        code: "EXR-006",
+        sourceTitle:
+          "Mobile Suit Gundam: Char's Counterattack Mobile Suit Gundam: Hathaway's Flash",
+      }),
+    );
+
+    expect(card.sourceTitle).toBe(
+      "Mobile Suit Gundam: Char's Counterattack / Mobile Suit Gundam: Hathaway's Flash",
+    );
   });
 
   test("prefers raw set name over distribution text for catalog set name", () => {

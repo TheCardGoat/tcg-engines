@@ -22,5 +22,6 @@ describe("OP13-008 Emporio.Ivankov", () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(koalaId);
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(ivankovId);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

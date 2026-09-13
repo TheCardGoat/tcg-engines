@@ -12,6 +12,7 @@ import { st07AllelujahHaptism012 } from "../../st07/pilot/012-allelujah-haptism.
 import { gd03GundamKyrios022 } from "./022-gundam-kyrios.ts";
 
 describe("Gundam Kyrios (GD03-022)", () => {
+  /** @behavioral-proof complete: Link, controller turn, self destroy source, level filter, and all-enemy damage are public. */
   it("【During Link】 deals 1 damage to all enemy Units (Lv.3 or lower) when this destroys an enemy by battle damage on your turn", () => {
     const fragileDefender = createMockUnit({ ap: 1, hp: 1, level: 2 });
     const lowLvEnemy = createMockUnit({ ap: 2, hp: 5, level: 3 });
@@ -66,6 +67,33 @@ describe("Gundam Kyrios (GD03-022)", () => {
     expectSuccess(p2.passBattleAction());
     expectSuccess(p1.passBattleAction());
 
+    expect(p2.getDamage(lowLvId!)).toBe(0);
+  });
+
+  it("does not fire when another friendly Unit destroys an enemy Unit", () => {
+    const friendlyAttacker = createMockUnit({ ap: 4, hp: 4 });
+    const fragileDefender = createMockUnit({ ap: 1, hp: 1, level: 2 });
+    const lowLvEnemy = createMockUnit({ ap: 2, hp: 5, level: 3 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [st07AllelujahHaptism012],
+        play: [gd03GundamKyrios022, friendlyAttacker],
+        resourceArea: activeResources(3),
+      },
+      { play: [{ card: fragileDefender, exhausted: true }, lowLvEnemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [kyriosId, attackerId] = p1.getCardsInZone("battleArea");
+    const [defenderId, lowLvId] = p2.getCardsInZone("battleArea");
+
+    expectSuccess(p1.assignPilot(st07AllelujahHaptism012, kyriosId!));
+    expectSuccess(p1.enterBattle(attackerId!, defenderId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardZone(defenderId!)).toBe(`trash:${PLAYER_TWO}`);
     expect(p2.getDamage(lowLvId!)).toBe(0);
   });
 

@@ -7,6 +7,7 @@ import { OnePieceTestEngine } from "../../../index.ts";
 function playMagellanAndReturnOpponentDon(engine: OnePieceTestEngine) {
   engine.playCard(op02Magellan085, "north");
   engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+  engine.acceptLeadingOptional("north");
   const cost = engine.pendingDecision("effectCostReturnDon", "north").steps[0];
   if (cost?.kind !== "payCost") throw new Error("Expected Magellan's DON return cost.");
   engine.resolveDecision(
@@ -33,6 +34,7 @@ describe("OP14-068 Trebol", () => {
     );
 
     playMagellanAndReturnOpponentDon(engine);
+    engine.acceptLeadingOptional("south");
     const addDon = engine.pendingDecision("effectAddDon", "south").steps[0];
     if (addDon?.kind !== "chooseOption") throw new Error("Expected Trebol's rested DON choice.");
     expect(addDon.options.map((option) => option.id)).toEqual(["0", "1"]);
@@ -57,6 +59,7 @@ describe("OP14-068 Trebol", () => {
     const donDeckBefore = engine.getView("south").players.south.donDeckCount;
 
     engine.playCard(op02Hydra090, "south");
+    engine.acceptLeadingOptional("south");
     const cost = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     if (cost?.kind !== "payCost") throw new Error("Expected Hydra's DON return cost.");
     engine.resolveDecision(

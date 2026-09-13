@@ -88,7 +88,7 @@ describe("Ali al-Saachez (GD04-099)", () => {
       const { p1, p2, aliUnitId, enemyUnitId, enemyPilotId } = setup("[Ali al-Saachez]");
 
       expectSuccess(p1.enterBattle(aliUnitId, enemyUnitId));
-      expect(p1.getBoardView().pendingChoice?.kind).toBe("optional");
+      expect(p1.getBoardView().pendingChoice?.kind).toBe("targetSelection");
       expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
       expect(p1.getBoardView().pendingChoice?.kind).toBe("targetSelection");
       expectSuccess(p1.resolveEffect({ targets: [enemyPilotId] }));

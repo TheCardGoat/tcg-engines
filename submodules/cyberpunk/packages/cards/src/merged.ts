@@ -149,10 +149,10 @@ const mergedCyberpunkCards: CardDefinition[] = mergeDuplicateCards(allStructured
 );
 
 /**
- * Lookup keyed by every `id` present in the runtime card pool. Preview-only
- * ids are intentionally absent, so callers can keep a strict "Unknown
- * Cyberpunk card" rejection while resolving any legitimately stored runtime
- * card id to its complete printing set. Memoized at module load.
+ * Lookup keyed by each stable canonical slug, merged runtime id, and authored
+ * source id. Preview-only ids are intentionally absent, so callers can keep a
+ * strict "Unknown Cyberpunk card" rejection while resolving any legitimately
+ * stored identity to its complete printing set. Memoized at module load.
  */
 const mergedCyberpunkCardsById: ReadonlyMap<string, CardDefinition> = (() => {
   const slugToMerged = new Map<string, CardDefinition>();
@@ -160,6 +160,10 @@ const mergedCyberpunkCardsById: ReadonlyMap<string, CardDefinition> = (() => {
     slugToMerged.set(merged.slug, merged);
   }
   const byId = new Map<string, CardDefinition>();
+  for (const merged of mergedCyberpunkCards) {
+    byId.set(merged.canonicalId, merged);
+    byId.set(merged.id, merged);
+  }
   for (const source of allStructuredCards) {
     const merged = slugToMerged.get(source.slug);
     if (merged) byId.set(source.id, merged);

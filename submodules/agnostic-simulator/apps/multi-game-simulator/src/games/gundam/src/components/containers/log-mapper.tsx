@@ -60,7 +60,11 @@ function prettifyPlayerIds(
   if (opponentId) {
     out = out.replace(new RegExp(`\\b${escapeRegExp(opponentId)}\\b`, "g"), prettyNames.opponent);
   }
-  return out;
+  // Raw engine ids never repeat in a sentence, but pretty names do:
+  // "player_one chose player_one to go first." becomes "You chose You…".
+  return out
+    .replace(/^(\w+) chose \1 to go first\.$/, "$1 chose to go first.")
+    .replace(/^(\w+) redrew 0 cards\.$/, "$1 kept the opening hand.");
 }
 
 /**

@@ -45,9 +45,6 @@ export const op01Kaido061: LeaderCard = {
     effects: [
       {
         trigger: "whenCharacterKod",
-        eventFilter: {
-          player: "opponent",
-        },
         conditions: [
           {
             condition: "donAttached",

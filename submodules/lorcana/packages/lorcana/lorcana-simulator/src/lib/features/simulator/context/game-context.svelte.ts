@@ -1,6 +1,7 @@
 import { getContext, hasContext, onDestroy, onMount, setContext, untrack } from "svelte";
 import { getLocale, locales, setLocale } from "$lib/paraglide/runtime.js";
 import { m } from "$lib/i18n/messages.js";
+import { anchorClockSnapshot } from "@/features/simulator/model/clock-anchor.js";
 import {
   updateUserSettings,
   updateUserVisualSettings,
@@ -19,6 +20,7 @@ import type {
   ResolutionSelectionDestinationRule,
   ResolutionSelectionRevealedCard,
   TargetResolutionSelectionContext,
+  AuthoritativeCommandStatus,
 } from "@tcg/lorcana-engine";
 import type {
   CardInput,
@@ -321,6 +323,12 @@ export interface PendingEffectsPopoverItem {
   namedCardSearch?: NamedCardSearchState;
 }
 
+export interface AuthoritativeCommandDiagnostic {
+  code: string;
+  reason: string;
+  recordedAt: number;
+}
+
 export interface PendingEffectCardReferenceView {
   id: string;
   label: string;
@@ -388,7 +396,11 @@ export interface LorcanaGameContextValue {
   pendingErrorReason: () => string | null;
   pendingMoveError: () => SimulatorMoveError | null;
   pendingResolutionAutoOpenStateId: () => number | null;
-  isOptimisticMovePending: () => boolean;
+  authoritativeCommandStatus: () => AuthoritativeCommandStatus;
+  staleRecoveryCompletionCount: () => number;
+  isMovePending: () => boolean;
+  requestStateSync: () => void;
+  commandDiagnostic: () => AuthoritativeCommandDiagnostic | null;
   challengeSourceCardId: () => string | null;
   challengeMode: () => boolean;
   animations: () => ResolvedBoardMoveAnimation[];
@@ -752,9 +764,14 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
   #playerMetadata: Record<string, PlayerMatchMetadata> = {};
   #unsubscribeReadModelStateUpdates: (() => void) | null = null;
   #unsubscribeProtocolErrors: (() => void) | null = null;
+  #unsubscribeCommandStatus: (() => void) | null = null;
+  #authoritativeCommandStatus = $state<AuthoritativeCommandStatus>({ phase: "idle" });
+  #staleRecoveryCompletionCount = $state(0);
+  #commandDiagnostic = $state<AuthoritativeCommandDiagnostic | null>(null);
   #lastStateID = $state(0);
   #lastVisibleRevision = $state<number | null>(null);
   #boardSnapshot = $state<LorcanaProjectedBoardView | null>(null);
+  #clockSnapshotReceivedAtMs = $state(0);
   #cardSnapshotsById = $state<CardSnapshotMap>({});
   #selectedCardId = $state<string | null>(null);
   #selectedMulliganCardIds = $state<string[]>([]);
@@ -991,8 +1008,19 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
     const snapshot = this.#cardSnapshotsById[cardId] ?? null;
     return snapshot ?? this.resolveStaticCardSnapshot(cardId);
   };
-  readonly getPlayerSummary = (side: LorcanaPlayerSide): LorcanaPlayerSummary | null =>
-    getDerivedPlayerSummary(side, this.#boardSnapshot, this.#cardSnapshotsById);
+  readonly getPlayerSummary = (side: LorcanaPlayerSide): LorcanaPlayerSummary | null => {
+    const snapshot = this.#boardSnapshot;
+    const summary = getDerivedPlayerSummary(side, snapshot, this.#cardSnapshotsById);
+    if (!summary || !snapshot) return summary;
+    return {
+      ...summary,
+      timer: anchorClockSnapshot(
+        summary.timer,
+        snapshot.timerView.serverTimestamp,
+        this.#clockSnapshotReceivedAtMs,
+      ),
+    };
+  };
   // Perf: Lazy computation — buildExecutableMoves() (which calls getMoveOptions())
   // only runs when a consumer actually reads this getter, not on every state change.
   // The version-based cache ensures we recompute at most once per state change.
@@ -1144,8 +1172,17 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
   readonly pendingMoveError = (): SimulatorMoveError | null => this.#pendingMoveError;
   readonly pendingResolutionAutoOpenStateId = (): number | null =>
     this.#pendingResolutionAutoOpenStateId;
-  readonly isOptimisticMovePending = (): boolean =>
-    this.#engine?.isOptimisticMovePending() ?? false;
+  readonly authoritativeCommandStatus = (): AuthoritativeCommandStatus =>
+    this.#authoritativeCommandStatus;
+  readonly staleRecoveryCompletionCount = (): number => this.#staleRecoveryCompletionCount;
+  readonly isMovePending = (): boolean => this.#engine?.isMovePending() ?? false;
+  readonly requestStateSync = (): void => {
+    const engine = this.#engine;
+    if (engine && "requestStateSync" in engine && typeof engine.requestStateSync === "function") {
+      engine.requestStateSync();
+    }
+  };
+  readonly commandDiagnostic = (): AuthoritativeCommandDiagnostic | null => this.#commandDiagnostic;
   readonly challengeSourceCardId = (): string | null => this.#challengeSourceCardId;
   readonly challengeMode = (): boolean => this.challengeModeValue;
   readonly animations = (): ResolvedBoardMoveAnimation[] => this.#activeBoardAnimations;
@@ -1221,6 +1258,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       this.#playerSettings = nextPlayerSettings;
       this.#subscribeToReadModelStateUpdates();
       this.#subscribeToProtocolErrors();
+      this.#subscribeToAuthoritativeCommandStatus();
       this.#clearInteractionState();
       this.#resetBoardAnimations();
       this.#lastStateID = 0;
@@ -1242,6 +1280,7 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
     this.#flushMoveExecutionLatency("destroy");
     this.#unsubscribeFromReadModelStateUpdates();
     this.#unsubscribeFromProtocolErrors();
+    this.#unsubscribeFromAuthoritativeCommandStatus();
     this.#orchestrator.cancel();
     this.#clearBoardAnimationTimer();
     this.#clearQuestAnimationTimers();
@@ -2087,6 +2126,19 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
     }
 
     this.#unsubscribeProtocolErrors = engine.onProtocolError((error: ProtocolError) => {
+      this.#commandDiagnostic = {
+        code: error.code,
+        reason: error.message,
+        recordedAt: Date.now(),
+      };
+      if (error.resyncRequired) {
+        sidebarLogger.warning("Authoritative command rejected; recovering board state", {
+          code: error.code,
+          reason: error.message,
+        });
+        return;
+      }
+
       const message = error.resyncRequired
         ? m["sim.errors.execution.staleState"]({})
         : m["sim.errors.execution.invalidMove"]({});
@@ -2100,6 +2152,73 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
       this.#pendingErrorReason = message;
       this.#statusMessage = m["sim.status.actionRejected"]({});
     });
+  }
+
+  #subscribeToAuthoritativeCommandStatus(): void {
+    this.#unsubscribeFromAuthoritativeCommandStatus();
+
+    const engine = this.#engine;
+    if (
+      !engine ||
+      !("onAuthoritativeCommandStatusChange" in engine) ||
+      typeof engine.onAuthoritativeCommandStatusChange !== "function"
+    ) {
+      this.#authoritativeCommandStatus = { phase: "idle" };
+      return;
+    }
+
+    if (
+      "getAuthoritativeCommandStatus" in engine &&
+      typeof engine.getAuthoritativeCommandStatus === "function"
+    ) {
+      this.#authoritativeCommandStatus = engine.getAuthoritativeCommandStatus();
+    }
+
+    this.#unsubscribeCommandStatus = engine.onAuthoritativeCommandStatusChange(
+      (status: AuthoritativeCommandStatus) => {
+        const previous = this.#authoritativeCommandStatus;
+        this.#authoritativeCommandStatus = status;
+
+        if (status.phase === "recovering" || status.phase === "recovery_failed") {
+          this.#clearTransientCommandSelections();
+        }
+
+        if (
+          status.phase === "idle" &&
+          (previous.phase === "recovering" || previous.phase === "recovery_failed") &&
+          previous.recoveryCause === "stale_state"
+        ) {
+          this.#clearTransientCommandSelections();
+          this.#staleRecoveryCompletionCount += 1;
+        }
+      },
+    );
+  }
+
+  #clearTransientCommandSelections(): void {
+    this.#selectedCardId = null;
+    this.#selectedMulliganCardIds = [];
+    this.#challengeSourceCardId = null;
+    this.#pendingResolutionAutoOpenStateId = null;
+    this.#challengeReadyCardIds = [];
+    this.#moveCategorySummaries = [];
+    this.#currentAvailableMoves = [];
+    this.#currentLegalMoveIds = [];
+    this.#cachedExecutableMoves = [];
+    this.#cachedExecutableMovesVersion = -1;
+    this.#pendingResolutionMoves = [];
+    this.#validChallengeTargetIds = [];
+    this.#invalidChallengeTargetReasons = {};
+    this.#derivedStateVersion += 1;
+  }
+
+  #unsubscribeFromAuthoritativeCommandStatus(): void {
+    if (!this.#unsubscribeCommandStatus) return;
+    try {
+      this.#unsubscribeCommandStatus();
+    } finally {
+      this.#unsubscribeCommandStatus = null;
+    }
   }
 
   #unsubscribeFromProtocolErrors(): void {
@@ -3104,6 +3223,13 @@ export class LorcanaGameContext implements LorcanaGameContextValue {
 
     const nextBoardSnapshot = this.#measure("engine.getBoard", () => engine.getBoard());
     const previousSnapshot = this.#boardSnapshot;
+    // A local refresh of the same server snapshot must not restart its clock.
+    if (
+      !previousSnapshot ||
+      previousSnapshot.timerView.serverTimestamp !== nextBoardSnapshot.timerView.serverTimestamp
+    ) {
+      this.#clockSnapshotReceivedAtMs = performance.now();
+    }
     const previousAnchorSnapshot = this.#boardAnchors;
     const previousCardSnapshotsById = this.#cardSnapshotsById;
     const nextCardSnapshotsById = this.#measure("getBoard.buildCardSnapshotMap", () =>
@@ -4174,7 +4300,10 @@ function shouldAutoSubmitResolutionTargetSelection(
   skipActionConfirmation: boolean,
   amountSelection: ResolutionAmountSelectionState | null = null,
 ): boolean {
-  if (!skipActionConfirmation || !isTargetResolutionSelectionContext(session.context)) {
+  if (!skipActionConfirmation) {
+    return false;
+  }
+  if (!isTargetResolutionSelectionContext(session.context)) {
     return false;
   }
   if (hasPlayCardEntryModeSelection(session.context, session.selectedTargets)) {
@@ -4354,6 +4483,7 @@ function cardMatchesSelectionTargetDsl(params: {
   const cardTypes = getCardTargetTypes(target);
   if (
     cardTypes.length > 0 &&
+    !cardTypes.includes("card") &&
     (typeof card.cardType !== "string" || !cardTypes.includes(card.cardType))
   ) {
     return false;
@@ -4434,7 +4564,7 @@ function getNextEnterPlayExertedSelection(params: {
     matchesSelectionId(previousTargetId, nextTargetId) &&
     params.previousValue !== null
     ? params.previousValue
-    : false;
+    : null;
 }
 
 function splitMoveToLocationSessionTargets(params: {
@@ -5172,7 +5302,7 @@ export class LorcanaSidebarPresenter {
   showRawLogRegistryJson = $state(false);
   showRawErrorDialog = $state(false);
   mobileNotice = $state<{ id: number; message: string; tone: "info" } | null>(null);
-  pendingMulliganDangerConfirm = $state<"keepHand" | "allCards" | null>(null);
+  pendingMulliganDangerConfirm = $state<"allCards" | null>(null);
   get skipActionConfirmation() {
     return this.#settings.skipActionConfirmation;
   }
@@ -5273,35 +5403,42 @@ export class LorcanaSidebarPresenter {
         actions?: GuidanceAction[];
         mode?: ActivePlayerGuidanceItem["mode"];
       }) => {
-        const existing = this.#overlayGuidanceById[item.id];
-        const nextItem = {
-          id: item.id,
-          message: item.message,
-          inlineReference: item.inlineReference,
-          actions: item.actions ?? [],
-          mode: item.mode ?? "default",
-        } satisfies Omit<ActivePlayerGuidanceItem, "order">;
+        // Controller operations are imperative writes. Keep their internal
+        // reads out of a caller's reactive dependency graph so an effect can
+        // safely publish guidance with freshly-created action callbacks.
+        untrack(() => {
+          const existing = this.#overlayGuidanceById[item.id];
+          const nextItem = {
+            id: item.id,
+            message: item.message,
+            inlineReference: item.inlineReference,
+            actions: item.actions ?? [],
+            mode: item.mode ?? "default",
+          } satisfies Omit<ActivePlayerGuidanceItem, "order">;
 
-        if (overlayGuidanceEqual(existing, nextItem)) {
-          return;
-        }
+          if (overlayGuidanceEqual(existing, nextItem)) {
+            return;
+          }
 
-        const nextOrder = existing ? existing.order : ++this.#guidanceOrder;
-        this.#overlayGuidanceById = {
-          ...this.#overlayGuidanceById,
-          [item.id]: {
-            ...nextItem,
-            order: nextOrder,
-          },
-        };
+          const nextOrder = existing ? existing.order : ++this.#guidanceOrder;
+          this.#overlayGuidanceById = {
+            ...this.#overlayGuidanceById,
+            [item.id]: {
+              ...nextItem,
+              order: nextOrder,
+            },
+          };
+        });
       },
       remove: (id: string) => {
-        if (!(id in this.#overlayGuidanceById)) {
-          return;
-        }
+        untrack(() => {
+          if (!(id in this.#overlayGuidanceById)) {
+            return;
+          }
 
-        const { [id]: _removed, ...remaining } = this.#overlayGuidanceById;
-        this.#overlayGuidanceById = remaining;
+          const { [id]: _removed, ...remaining } = this.#overlayGuidanceById;
+          this.#overlayGuidanceById = remaining;
+        });
       },
       setSecondLayerCategory: (categoryLabel: string | null) => {
         this.#secondLayerCategoryLabel = categoryLabel;
@@ -5356,9 +5493,9 @@ export class LorcanaSidebarPresenter {
 
     // Don't auto-dispatch while an optimistic move is still awaiting server
     // confirmation. The engine would reject the second move with
-    // OPTIMISTIC_MOVE_PENDING. Leave the key unset so this effect retries once
+    // MOVE_PENDING. Leave the key unset so this effect retries once
     // the confirmed board state arrives (which produces a fresh stateID key).
-    if (this.#game.isOptimisticMovePending()) {
+    if (this.#game.isMovePending()) {
       sidebarLogger.debug(
         "Deferring auto-resolve of {moveId} (bag={bagId}): optimistic move in flight",
         {
@@ -6689,10 +6826,7 @@ export class LorcanaSidebarPresenter {
         actions: [
           {
             id: "mulligan-keep-hand",
-            label:
-              this.pendingMulliganDangerConfirm === "keepHand"
-                ? m["sim.guidance.action.areYouSure"]({})
-                : m["sim.pregame.mulligan.button.keepHand"]({}),
+            label: m["sim.pregame.mulligan.button.keepHand"]({}),
             onClick: this.handleKeepHand,
           },
           {
@@ -6976,14 +7110,16 @@ export class LorcanaSidebarPresenter {
   }
 
   #getResolutionSelectableCardIds(context: TargetResolutionSelectionContext): string[] {
-    const interactionCandidateIds =
-      this.interactionView?.interactions.flatMap((interaction) =>
+    const view = this.interactionView;
+    if (view?.activePrompt) {
+      const interactionCandidateIds = view.interactions.flatMap((interaction) =>
         interaction.kind === "select-card" ? [interaction.cardId as string] : [],
-      ) ?? [];
-
-    return interactionCandidateIds.length > 0
-      ? interactionCandidateIds
-      : [...this.#getResolutionSelectionCardCandidateIds(context)];
+      );
+      // Flat multi-select prompts retain selected cards so a click can deselect.
+      const selected = view.activePrompt?.slots ? [] : (view.activePrompt?.selectedCardIds ?? []);
+      return [...new Set([...interactionCandidateIds, ...selected])];
+    }
+    return [...this.#getResolutionSelectionCardCandidateIds(context)];
   }
 
   get resolutionSelectionCandidateCards(): LorcanaCardSnapshot[] {
@@ -7365,6 +7501,9 @@ export class LorcanaSidebarPresenter {
         )
           ? { selected: resolutionSession.selectedEnterPlayExerted }
           : undefined;
+        const hasPlayCardEntryModeCandidate = cardCandidateIds.some((cardId) =>
+          hasPlayCardEntryModeSelection(context, [cardId]),
+        );
         const amountSelection = this.#getResolutionAmountSelectionState(resolutionSession);
 
         return {
@@ -7383,8 +7522,17 @@ export class LorcanaSidebarPresenter {
           entries: this.interactionView?.interactions
             ? [
                 ...playerEntries,
+                // The view lists next clicks, not cards already selected.
+                ...cardEntries.filter((entry) => entry.selected),
                 ...this.interactionView.interactions.flatMap((interaction) => {
                   if (interaction.kind !== "select-card") return [];
+                  if (
+                    includesSelectionId(
+                      resolutionSession.selectedTargets,
+                      String(interaction.cardId),
+                    )
+                  )
+                    return [];
                   const card = this.cardSnapshotsById[interaction.cardId as unknown as string];
                   if (!card) return [];
                   return [
@@ -7413,12 +7561,14 @@ export class LorcanaSidebarPresenter {
           viewerSide: this.ownerSide,
           candidateEntries: [...playerEntries, ...cardEntries],
           playCardEntryModeChoice,
+          hasPlayCardEntryModeCandidate,
           activeSlotIndex: this.interactionView?.activePrompt?.activeSlotIndex ?? null,
           slots: [],
           amountSelection,
           selectedTargetLabels,
           minimumSelections: context.minSelections,
           maximumSelections: context.maxSelections,
+          ...(context.promptLabel ? { promptLabel: context.promptLabel } : {}),
           canBack: false,
           canCancel: true,
           canDecline,
@@ -7441,7 +7591,12 @@ export class LorcanaSidebarPresenter {
             id: `resolution:choice:${option.index}`,
             kind: "option" as const,
             moveId: String(option.index),
-            label: sourceCard?.choiceOptionTexts?.[option.index] ?? option.label,
+            // Generated card text can expose placeholder labels such as "Option 1".
+            // Prefer the engine's effect-derived label in that case so the player
+            // sees the action they are actually choosing.
+            label: sourceCard?.choiceOptionTexts?.[option.index]?.match(/^Option \d+$/i)
+              ? option.label
+              : (sourceCard?.choiceOptionTexts?.[option.index] ?? option.label),
             selected: resolutionSession.selectedChoiceIndex === option.index,
             disabled: !option.legal,
             disabledReason: option.legal ? undefined : "Unavailable",
@@ -9092,37 +9247,8 @@ export class LorcanaSidebarPresenter {
         );
       }
 
-      // Block confirmation when an "up-to" amount selection has resolved to
-      // a 0-damage cap (e.g. user picked an undamaged character as the
-      // move-damage source). The engine would silently advance the prompt
-      // with amount=0 and apply no patches — players see a "hung" prompt and
-      // retry endlessly. Replay mgGuD8kTITPMhvIEL3wO5ZG turn 22 (Luisa
-      // Madrigal — "I CAN TAKE IT"): the user activated the ability three
-      // times in a row, each time submitting an undamaged friendly source
-      // and watching nothing happen. Forcing the user to pick a damaged
-      // source — or decline the optional — keeps the UX honest.
-      //
-      // Only gate when the player has an escape hatch (a damaged candidate
-      // they could pick instead, or a Cancel/Skip option). Otherwise we
-      // would deadlock a mandatory prompt where every eligible source is
-      // undamaged: rules-wise an "up to N" with no available damage is a
-      // valid 0-damage resolution and must remain confirmable.
-      const amountSelection = this.#getResolutionAmountSelectionState(session);
-      if (amountSelection && amountSelection.max === 0) {
-        const canDecline =
-          context.canDeclineSelection === true || context.originatesFromOptional === true;
-        const hasDamagedAlternative = context.cardCandidateIds.some((candidateId) => {
-          if (session.selectedTargets.includes(candidateId)) {
-            return false;
-          }
-          const damage = this.cardSnapshotsById[candidateId]?.damage ?? 0;
-          return typeof damage === "number" && Number.isFinite(damage) && damage > 0;
-        });
-        if (canDecline || hasDamagedAlternative) {
-          return false;
-        }
-      }
-
+      // CR 6.1.3: an up-to amount may be zero, even if another target has
+      // damage. CR 6.1.2: confirming zero still advances any subsequent effects.
       const slots = this.interactionView?.activePrompt?.slots;
       if (slots) {
         // When maxSelections < total slots (e.g. move-damage with from: ALL_CHARACTERS),
@@ -9433,10 +9559,11 @@ export class LorcanaSidebarPresenter {
         return false;
       }
 
+      const fixedSubjectId = getFixedMoveToLocationSubjectId(session.context);
       const { subjectIds, locationId } = splitMoveToLocationSessionTargets({
         selectedTargets: session.selectedTargets,
         cardSnapshotsById: this.cardSnapshotsById,
-        fixedSubjectId: getFixedMoveToLocationSubjectId(session.context),
+        fixedSubjectId,
         fixedLocationId:
           getFixedMoveToLocationSlotId(activePrompt?.slots) ??
           getFixedMoveToLocationBoardId(this.#game.boardSnapshot(), session.context.sourceCardId),
@@ -9465,7 +9592,9 @@ export class LorcanaSidebarPresenter {
           : currentSelectionTargets.filter(
               (selectedTargetId) => !matchesSelectionId(selectedTargetId, targetId),
             );
-      const selectionCount = subjectIds.length + (locationId && !fixedLocationId ? 1 : 0);
+      const selectionCount =
+        subjectIds.filter((subjectId) => subjectId !== fixedSubjectId).length +
+        (locationId && !fixedLocationId ? 1 : 0);
       const userSelectedLocationIds = locationId && !fixedLocationId ? [locationId] : [];
       const nextSelectedTargets = isLocation
         ? [...baseSubjectIds, targetId]
@@ -10145,7 +10274,7 @@ export class LorcanaSidebarPresenter {
     );
   };
 
-  armMulliganDangerConfirm(action: "keepHand" | "allCards"): boolean {
+  armMulliganDangerConfirm(action: "allCards"): boolean {
     if (this.pendingMulliganDangerConfirm !== action) {
       this.pendingMulliganDangerConfirm = action;
       return false;
@@ -10226,10 +10355,6 @@ export class LorcanaSidebarPresenter {
       this.#game.setStatusMessage(m["sim.status.actionRejected"]({}));
       return;
     }
-    if (!this.armMulliganDangerConfirm("keepHand")) {
-      return;
-    }
-
     const playerId = this.ownerSide ? this.#game.getOwnerIdForSide(this.ownerSide) : null;
     if (!playerId) {
       this.#game.setPendingError(m["sim.errors.pregame.notYourTurnMulligan"]({}));

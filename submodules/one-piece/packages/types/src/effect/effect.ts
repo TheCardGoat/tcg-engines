@@ -17,6 +17,8 @@ export interface EffectEventFilter {
   targetFilters?: TargetFilter[];
   sourceFromZone?: Zone;
   minimumAmount?: number;
+  /** Disjunctive alternate filters for one printed multi-predicate trigger. */
+  anyOf?: EffectEventFilter[];
 }
 
 export interface EffectBlock {

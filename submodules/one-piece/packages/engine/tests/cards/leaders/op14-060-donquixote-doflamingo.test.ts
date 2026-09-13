@@ -39,4 +39,30 @@ describe("OP14-060 Donquixote Doflamingo", () => {
     expect(view.players.south.donDeckCount).toBe(donDeckBefore + 1);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04DonquixoteDoflamingoOp14060060,
+        character: [{ card: op14eb04Diamante066, playedOnTurn: 0 }],
+        restedDon: 1,
+        life: 2,
+      },
+      { character: [{ card: op14eb04Diamante066, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const defenderId = engine.findCardInZone("south", "character", op14eb04Diamante066);
+    const attackerId = engine.findCardInZone("north", "character", op14eb04Diamante066);
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+    const restedDonBefore = engine.getView("south").players.south.restedDon;
+
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+    expect(view.players.south.restedDon).toBe(restedDonBefore);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(defenderId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(defenderId);
+  });
 });

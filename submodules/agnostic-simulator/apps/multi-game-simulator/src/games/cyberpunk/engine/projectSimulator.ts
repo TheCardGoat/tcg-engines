@@ -60,8 +60,8 @@ export interface ProjectSimulatorInput {
 }
 
 const CARD_BACK_URLS = {
-  legend: "https://r2.tcg.online/public/cyberpunk/cards/back/legend-card-back.webp",
-  default: "https://r2.tcg.online/public/cyberpunk/cards/back/card-back.webp",
+  legend: "https://cdn.tcg.online/public/cyberpunk/cards/back/legend-card-back.webp",
+  default: "https://cdn.tcg.online/public/cyberpunk/cards/back/card-back.webp",
 } as const;
 
 const cardIds = (arr: ReadonlyArray<string | { toString(): string }>) =>
@@ -493,12 +493,22 @@ function projectCardEntity(
       value: effectiveCostDetails
         ? String(effectiveCostDetails.effectiveCost)
         : String(printedCost),
+      baseValue: String(printedCost),
+      detail:
+        effectiveCostDetails && effectiveCostDetails.effectiveCost !== printedCost
+          ? "Current Eddie cost after active modifiers."
+          : undefined,
     });
   }
   if (printedPower !== null) {
     stats.push({
       label: "Power",
       value: effectivePower !== null ? String(effectivePower) : String(printedPower),
+      baseValue: String(printedPower),
+      detail:
+        effectivePower !== null && effectivePower !== printedPower
+          ? "Current Power after Gear and active effects."
+          : undefined,
     });
   }
 
@@ -508,18 +518,31 @@ function projectCardEntity(
     ...(definition.keywords ?? []),
   ];
 
-  const overlayBadges: SimulatorEntity["overlayBadges"] = [];
+  const decorations: SimulatorEntity["decorations"] = [];
   if (definition.hasSellTag) {
-    overlayBadges.push({ label: "€$", color: "#fbbf24", position: "br" });
+    decorations.push({
+      id: "sell-tag",
+      slot: "bottom-end",
+      ariaLabel: "Sell tag",
+      content: { kind: "icon", token: "sell-tag" },
+      tone: "warning",
+    });
   }
   const ruleBadges = getEffectiveRules(matchState, String(instance.instanceId))
     .filter(
       (rule) =>
         rule === "blocker" || rule === "goSolo" || rule === "cantAttack" || rule === "mustAttack",
     )
-    .map((rule) => ({ label: rule, color: "#22d3ee", position: "tr" as const }));
-  overlayBadges.push(...ruleBadges);
+    .map((rule) => ({
+      id: `rule:${rule}`,
+      slot: "top-end" as const,
+      ariaLabel: rule,
+      content: { kind: "icon" as const, token: rule },
+      tone: "neutral" as const,
+    }));
+  decorations.push(...ruleBadges);
   const activeEffects = projectCardActiveEffects(matchState, cardId);
+  const effectiveRules = getEffectiveRules(matchState, cardId);
 
   const states: EntityState[] = [];
   if (instance.meta.spent) states.push("rested");
@@ -529,6 +552,9 @@ function projectCardEntity(
 
   const dataAttributes: SimulatorEntity["dataAttributes"] = {
     "data-spent": instance.meta.spent ? "true" : "false",
+    "data-has-lag": instance.meta.hasLag ? "true" : "false",
+    "data-card-type": definition.type,
+    "data-sim-zone-id": zone ? `${cardSide === "player" ? "p" : "opp"}-${zone}` : undefined,
   };
   if (!hiddenFromViewer) {
     if (printedPower !== null) {
@@ -553,8 +579,71 @@ function projectCardEntity(
     imageUrl: hiddenFromViewer ? undefined : definition.imageUrl,
     backImageUrl: definition.type === "legend" ? CARD_BACK_URLS.legend : CARD_BACK_URLS.default,
     frameStyle: { color: cardFrameColor(definition.color as string | undefined) ?? "#6b7280" },
-    overlayBadges,
+    decorations: hiddenFromViewer ? [] : decorations,
     activeEffects: hiddenFromViewer ? [] : activeEffects,
+    details:
+      hiddenFromViewer || face === "hidden"
+        ? undefined
+        : {
+            rules: [
+              ...(definition.abilities ?? []).map((ability, abilityIndex) => ({
+                id: `ability:${abilityIndex}`,
+                kind:
+                  ability.trigger?.trigger === "activated"
+                    ? ("ability" as const)
+                    : ("text" as const),
+                label:
+                  ability.trigger?.trigger === "activated"
+                    ? `Ability ${abilityIndex + 1}`
+                    : undefined,
+                text: ability.text,
+                actionId:
+                  ability.trigger?.trigger === "activated"
+                    ? `activateAbility:${abilityIndex}`
+                    : undefined,
+              })),
+              ...(definition.keywords ?? []).map((keyword) => ({
+                id: `keyword:${keyword}`,
+                kind: "keyword" as const,
+                label: String(keyword).toUpperCase(),
+                text: `This card has ${String(keyword).replace(/([a-z])([A-Z])/g, "$1 $2")}.`,
+              })),
+              ...(definition.rulesText
+                ? [
+                    {
+                      id: "printed-rules",
+                      kind: "text" as const,
+                      text: definition.rulesText,
+                    },
+                  ]
+                : []),
+              ...effectiveRules
+                .filter(
+                  (rule) =>
+                    !new Set<string>((definition.keywords ?? []).map(String)).has(String(rule)),
+                )
+                .map((rule) => ({
+                  id: `effective:${rule}`,
+                  kind: "ability" as const,
+                  label: "Effective",
+                  text: String(rule).replace(/([a-z])([A-Z])/g, "$1 $2"),
+                })),
+            ],
+            relationships:
+              instance.meta.attachedGearIds.length > 0
+                ? [
+                    {
+                      id: "attached-gear",
+                      label: "Attached Gear",
+                      entityIds: instance.meta.attachedGearIds.map(String),
+                      entityLabels: instance.meta.attachedGearIds.flatMap((gearId) => {
+                        const gear = matchState.G.cardIndex[String(gearId)];
+                        return gear ? [{ id: String(gearId), label: cardTitle(gear) }] : [];
+                      }),
+                    },
+                  ]
+                : undefined,
+          },
     dataAttributes,
   };
 
@@ -856,6 +945,9 @@ function projectInteractionAction(
         movePreview: movePreviewFor(action),
       };
     }
+    case "entity-partition":
+    case "entity-allocation":
+      return null;
     case "boolean": {
       return {
         id: action.id,
@@ -912,6 +1004,9 @@ function inputAllowsOmission(input: InteractionInput): boolean {
     case "option-selection":
     case "ordering":
       return input.min === 0;
+    case "entity-partition":
+    case "entity-allocation":
+      return false;
     case "boolean":
     case "number":
       return false;
@@ -950,9 +1045,17 @@ function projectAttackUnitInteraction(
   const pairEntityIds: string[] = [];
   for (const attackerId of attackerIds) {
     const attacker = matchState.G.cardIndex[attackerId];
+    const attackerRules = getEffectiveRules(matchState, attackerId);
     const attackerName = attacker ? cardTitle(attacker) : attackerId;
     for (const defenderId of defenderIds) {
       const defender = matchState.G.cardIndex[defenderId];
+      if (!defender) continue;
+      const defenderRules = getEffectiveRules(matchState, defenderId);
+      const canAttackDefender =
+        defender.meta.spent ||
+        attackerRules.includes("canAttackReadyUnits") ||
+        (attackerRules.includes("canAttackReadyBlockers") && defenderRules.includes("blocker"));
+      if (!canAttackDefender) continue;
       const defenderName = defender ? cardTitle(defender) : defenderId;
       const pairId = `${attackerId}->${defenderId}`;
       pairEntityIds.push(pairId);

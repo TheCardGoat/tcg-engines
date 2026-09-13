@@ -50,4 +50,24 @@ describe("OP11-049 Carrot", () => {
     expect(view.players.south.lifeCount).toBe(lifeBefore);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op11Carrot049] },
+      { character: [{ card: eb01Fourtricks025, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const attackerId = engine.findCardInZone("north", "character", eb01Fourtricks025);
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+
+    const carrotId = engine.findCardInZone("south", "character", op11Carrot049);
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    // Declined: Carrot stays on the field (not trashed) and Leader gains no +1000.
+    expect(after.characters.some((card) => card?.instanceId === carrotId)).toBe(true);
+    expect(after.trash.map((card) => card.instanceId)).not.toContain(carrotId);
+    expect(after.lifeCount).toBe(lifeBefore - 1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

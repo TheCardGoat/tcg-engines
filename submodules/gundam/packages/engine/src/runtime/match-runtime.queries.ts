@@ -18,7 +18,7 @@ import type { MatchStaticResources } from "./static-resources.ts";
 import { getValidMovesForPhase } from "./match-runtime.flow.ts";
 import { createCardReadAPI } from "./card-runtime.ts";
 import { createZoneOperations } from "./zone-operations.ts";
-import { checkTimeout } from "./time-control.ts";
+import { checkTimeout, hasClockGraceExpired } from "./time-control.ts";
 
 import { gundamMoves } from "../gundam/moves/index.ts";
 import type { GundamMoveName } from "../gundam/moves/move-name.ts";
@@ -78,6 +78,8 @@ export function buildReadAPI(
       if (state.ctx.time.mode !== "chess" && state.ctx.time.mode !== "dynamic") return false;
       return state.ctx.time.players[pid as string]?.isInNegativeTime ?? false;
     },
+    hasGraceExpired: (pid: PlayerId, now = clockNow) =>
+      hasClockGraceExpired(state, pid as string, now),
   };
 
   return {

@@ -22,7 +22,7 @@ describe("vs-AI · bot plays its own turn", () => {
     renderSimulator(loadVsAiDemo);
 
     // The unified PriorityActionButton's label changes with phase
-    // (PASS TURN / PASS BLOCK / PASS ACTION / WAITING), so we query by
+    // (PASS TURN / SKIP BLOCK / PASS ACTION / WAITING), so we query by
     // the stable `primary-action` testid rather than by accessible name.
     // Re-querying inside each waitFor matters: if the button is unmounted
     // and remounted across turn boundaries, a held reference would be

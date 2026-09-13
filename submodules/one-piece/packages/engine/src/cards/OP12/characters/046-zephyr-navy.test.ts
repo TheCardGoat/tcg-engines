@@ -49,4 +49,36 @@ describe("OP12-046 Zephyr(Navy)", () => {
     );
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(ownTargetId);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op12ZephyrNavy046, eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+        character: [eb01Doma005],
+        activeDon: op12ZephyrNavy046.cost,
+      },
+      { character: [eb01MountainGod018, op12Kuzan043] },
+    );
+    const paymentIds = [
+      engine.findCardInZone("south", "hand", eb01Doma005),
+      engine.findCardInZone("south", "hand", eb01Fourtricks025),
+    ];
+    const ownTargetId = engine.findCardInZone("south", "character", eb01Doma005);
+
+    engine.playCard(op12ZephyrNavy046, "south");
+    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: paymentIds }, "south");
+
+    const zephyrId = engine.findCardInZone("south", "character", op12ZephyrNavy046);
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    engine.activateEffect(zephyrId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(zephyrId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(ownTargetId);
+    expect(view.players.south.hand.map((card) => card.instanceId)).not.toContain(ownTargetId);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(zephyrId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

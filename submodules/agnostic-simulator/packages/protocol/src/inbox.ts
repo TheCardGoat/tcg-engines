@@ -38,6 +38,8 @@ export interface InboxEnvelopeBase {
   userId: string | null;
   /** True when the gateway middleware verified ticket / JWT / session. */
   authed: boolean;
+  /** Verified match/game/role binding, when the connection used scoped access. */
+  viewerScope?: import("./viewer-scope.js").RealtimeViewerScope;
   /** Wall-clock ms timestamp at gateway ingress (telemetry only). */
   ts: number;
   /**
@@ -94,8 +96,8 @@ export function inboxProcessedKey(correlationId: string): string {
  * Whitelist of events that need an idempotency gate at the consumer.
  * `execute_move` is excluded because the existing CAS write rejects
  * duplicates naturally (version mismatch). Pure-read events
- * (`heartbeat`, `matchmaking_poll`, `request_game_state_sync`) are
- * also naturally idempotent. The set below covers events with
+ * (`heartbeat`, `request_game_state_sync`) are also naturally
+ * idempotent. The set below covers events with
  * externally-visible side effects that wouldn't otherwise dedup on
  * redelivery.
  */

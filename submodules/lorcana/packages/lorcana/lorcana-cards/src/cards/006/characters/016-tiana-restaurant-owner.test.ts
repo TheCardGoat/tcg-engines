@@ -190,6 +190,35 @@ describe("Tiana - Restaurant Owner", () => {
       expect(testEngine.asPlayerTwo().getCardZone(attacker)).toBe("play");
     });
 
+    it("regression: applies -3 before damage when Tiana herself is challenged (bugrepLNEYCOXy)", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [{ card: tianaRestaurantOwner, exerted: true }],
+          deck: 2,
+        },
+        {
+          play: [{ card: attacker, exerted: false, isDrying: false }],
+          deck: 2,
+        },
+      );
+
+      expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+      expect(
+        testEngine.asPlayerTwo().challenge(attacker, tianaRestaurantOwner),
+      ).toBeSuccessfulCommand();
+
+      expect(testEngine.asPlayerOne().getBagCount()).toBe(1);
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(tianaRestaurantOwner),
+      ).toBeSuccessfulCommand();
+      // Choose the -3 strength option instead of paying ink.
+      expect(testEngine.asPlayerTwo().respondWithChoice(1)).toBeSuccessfulCommand();
+
+      // Attacker S 4 → 1; Tiana takes 1 and survives at W 4.
+      expect(testEngine.asPlayerOne().getDamage(tianaRestaurantOwner)).toBe(1);
+      expect(testEngine.asPlayerOne().getCardZone(tianaRestaurantOwner)).toBe("play");
+    });
+
     it("should NOT even enter the bag when Tiana is NOT exerted (phantom-trigger regression)", () => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
         {

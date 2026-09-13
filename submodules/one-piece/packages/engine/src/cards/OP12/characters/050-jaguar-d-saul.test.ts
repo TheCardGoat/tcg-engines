@@ -20,5 +20,9 @@ describe("OP12-050 Jaguar.D.Saul", () => {
     const blocker = engine.pendingDecision("battleBlocker", "south").steps[0];
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Saul's Blocker choice.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(saulId);
+
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
+    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
   });
 });

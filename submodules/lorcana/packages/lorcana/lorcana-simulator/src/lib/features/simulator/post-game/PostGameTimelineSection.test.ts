@@ -38,6 +38,7 @@ function createSummary(): PostGameSummary {
       turnNumber: 4,
       reason: null,
     } as unknown as PostGameSummary["board"],
+    durationMs: 12_000,
     outcome: {
       winnerSide: "playerOne",
       loserSide: "playerTwo",

@@ -25,5 +25,6 @@ describe("OP05-052 Maynard", () => {
         .getView("south")
         .players.south.characters.find((card) => card?.instanceId === maynardId)?.rested,
     ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

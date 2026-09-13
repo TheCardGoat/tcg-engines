@@ -67,4 +67,36 @@ describe("OP06-014 Ratchet", () => {
     ]);
     expect(view.players.south.leader.power).toBe(5000);
   });
+
+  test("may decline optional On Opponent's Attack so FILM trash and power do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op06LilyCarnation015, op06RaiseMax016, op06Arlong023],
+        character: [op06Ratchet014],
+        life: [op06Ratchet014],
+      },
+      { character: [{ card: op06Arlong023, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const attackerId = engine.findCardInZone("north", "character", op06Arlong023);
+    const firstFilmId = engine.findCardInZone("south", "hand", op06LilyCarnation015);
+    const secondFilmId = engine.findCardInZone("south", "hand", op06RaiseMax016);
+    const leaderPowerBefore = engine.getView("south").players.south.leader.power;
+
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([firstFilmId, secondFilmId]),
+    );
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.leader.power).toBe(leaderPowerBefore);
+    // Battle continues into the normal Counter window after the optional is declined.
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    expect(engine.getView("south").players.south.leader.power).toBe(leaderPowerBefore);
+  });
 });

@@ -77,6 +77,47 @@ function deterministicFinalStateHash(finalState: Parameters<typeof fingerprint>[
   return stableBotHash(fingerprint(finalState).replace(/eff_\d+/gu, "eff"));
 }
 
+const TOURNAMENT_DECK_IDS = [
+  "topdecks-01",
+  "topdecks-02",
+  "topdecks-03",
+  "topdecks-04",
+  "topdecks-05",
+  "topdecks-06",
+  "topdecks-07",
+  "topdecks-08",
+  "topdecks-09",
+  "topdecks-10",
+] as const;
+
+/**
+ * A fixed shuffle of tournament deck ids used to sample varied opponents.
+ * It remains static so evaluation manifests and replays are reproducible;
+ * BotLab's paired scheduler still randomizes strategy seats and match seeds.
+ */
+const RANDOMIZED_TOURNAMENT_OPPONENTS = [
+  "topdecks-06",
+  "topdecks-09",
+  "topdecks-02",
+  "topdecks-10",
+  "topdecks-03",
+  "topdecks-08",
+  "topdecks-01",
+  "topdecks-05",
+  "topdecks-07",
+  "topdecks-04",
+] as const;
+
+function tournamentRandomizedPairs() {
+  if (TOURNAMENT_DECK_IDS.length !== RANDOMIZED_TOURNAMENT_OPPONENTS.length) {
+    throw new Error("Gundam tournament deck and opponent fixture counts must match");
+  }
+  return TOURNAMENT_DECK_IDS.map((deckA, index) => {
+    const deckB = RANDOMIZED_TOURNAMENT_OPPONENTS[index]!;
+    return { id: `${deckA}-vs-${deckB}`, deckA, deckB };
+  });
+}
+
 function run(input: {
   readonly seed: string;
   readonly candidateSeat: "p1" | "p2";
@@ -136,11 +177,18 @@ export const gundamBotLabAdapter: BotLabAdapter = {
     if (!value) throw new Error(`Unknown Gundam strategy: ${manifest.candidateId}`);
     return value;
   },
-  getPromotionDeckPairs: () => [
-    { id: "ef-mirror", deckA: "ef-starter", deckB: "ef-starter" },
-    { id: "seed-mirror", deckA: "seed-aggro", deckB: "seed-aggro" },
-    { id: "mixed-cross", deckA: "gd01-mixed", deckB: "seed-aggro" },
-  ],
+  getPromotionDeckPairs: (suiteId) => {
+    if (suiteId === "topdecks-randomized") return tournamentRandomizedPairs();
+    if (suiteId === "promotion") {
+      return [
+        { id: "ef-mirror", deckA: "ef-starter", deckB: "ef-starter" },
+        { id: "seed-mirror", deckA: "seed-aggro", deckB: "seed-aggro" },
+        { id: "mixed-cross", deckA: "gd01-mixed", deckB: "seed-aggro" },
+        ...TOURNAMENT_DECK_IDS.map((deck) => ({ id: `${deck}-mirror`, deckA: deck, deckB: deck })),
+      ];
+    }
+    throw new Error(`Unknown Gundam BotLab suite: ${suiteId}`);
+  },
   runMatch: (input: BotLabMatchInput) => {
     const candidateSeat = input.scheduledMatch.p1Controller === "candidate" ? "p1" : "p2";
     return run({
@@ -220,6 +268,7 @@ export const gundamBotLabAdapter: BotLabAdapter = {
         batchSize: number;
         minimumMeanImprovement: number;
         maximumCellRegression: number;
+        suiteId: string;
       }>;
     };
     const candidateId = plan.candidateId;
@@ -253,7 +302,7 @@ export const gundamBotLabAdapter: BotLabAdapter = {
         corpusId: "gundam-registered-strategies-v1",
       },
       evaluation: {
-        suiteId: "promotion",
+        suiteId: plan.evaluation?.suiteId ?? "promotion",
         seedBase: seed,
         minimumBlocks: plan.evaluation?.minimumBlocks ?? 200,
         maximumBlocks: plan.evaluation?.maximumBlocks ?? 2_000,

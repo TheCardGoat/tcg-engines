@@ -26,6 +26,7 @@ export const EVENT_TIMING_MAP: Record<string, readonly string[]> = {
   effectDamageReceived: ["onEnemyEffectDamage"],
   apReducedByEnemy: ["onApReducedByEnemy"],
   exResourcePlaced: ["onExResourcePlaced"],
+  exResourceExiled: ["onExResourceExiled"],
   enemyLinkUnitDestroyed: ["onEnemyLinkUnitDestroyed"],
   battleDamageReceived: ["onBattleDamageReceived"],
   battleDamageDealtToUnit: ["onBattleDamageDealtToUnit"],

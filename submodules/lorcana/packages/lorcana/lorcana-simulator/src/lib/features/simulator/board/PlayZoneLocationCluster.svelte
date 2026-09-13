@@ -88,6 +88,11 @@
       : `${location.label}, ${occupants.length} characters at this location`,
   );
   const occupantSlots = $derived(Math.max(1, occupants.length));
+  // A location is a shared play surface, not a hand. Reserve room for the
+  // first three characters so their status and stat bands stay associated
+  // with their own card. Larger groups still use the rail's horizontal-scroll
+  // fallback rather than making the whole board grow without bound.
+  const visibleOccupantSlots = $derived(Math.min(3, occupantSlots));
 
   function handleDirectCardSelection(selectedCard: LorcanaCardSnapshot, event: MouseEvent): boolean {
     if (isResolutionSelectionMode(selectedCard.cardId)) {
@@ -134,7 +139,7 @@
   data-action-playable-card-ids={[...actionPlayableCardIds].join(",")}
   data-action-activatable-card-ids={[...actionActivatableCardIds].join(",")}
   aria-label={clusterLabel}
-  style={`--location-occupant-slots: ${occupantSlots};`}
+  style={`--location-occupant-slots: ${occupantSlots}; --location-occupant-visible-slots: ${visibleOccupantSlots};`}
 >
   <div
     class="location-cluster__slot location-cluster__slot--anchor"
@@ -260,13 +265,15 @@
     align-items: center;
     gap: 0.42rem;
     justify-self: center;
-    /* Cap cluster min-width at "location + one occupant" — extra occupants
-       beyond that overlap inside the rail rather than pushing the cluster
-       wider. width: max-content lets it grow naturally for low counts. */
+    /* Keep a small group legible. A location often collects characters with
+       several effect/status markers, so fanning them immediately makes those
+       controls look like they belong to the neighbouring card. The first
+       three each receive a full lane; additional occupants use the rail's
+       existing overlap and horizontal-scroll fallback. */
     min-width: calc(
       var(--location-card-height)
-      + var(--slot-width)
-      + (var(--play-grid-gap) * 2)
+      + (var(--slot-width) * var(--location-occupant-visible-slots))
+      + (var(--play-grid-gap) * (var(--location-occupant-visible-slots) + 1))
       + 1.7rem
     );
     width: max-content;
@@ -321,17 +328,15 @@
     pointer-events: none;
   }
 
-  /* Fan / overlap. Each occupant after the first uses a margin-left clamped
-     between the natural gap (no overlap when cards fit) and a max overlap
-     that always leaves ~45% of every card visible — enough to recognise
-     the character's face/silhouette, not just the right-edge stat badges.
-     Once that floor is hit (roughly 6+ occupants on mobile), the rail
-     overflows and the overflow-x: auto scroll fallback engages. */
+  /* Fan / overlap begins only after the room reserved for the first three
+     occupants. This keeps their top and bottom effect bands separate. Once
+     that room is exhausted, cards retain a recognisable face/silhouette and
+     the rail exposes horizontal scrolling for the rest. */
   .location-cluster__slot--occupant + .location-cluster__slot--occupant {
     margin-left: clamp(
       calc(var(--slot-width) * -0.55),
       calc(
-        ((100% - var(--slot-width)) / max(var(--location-occupant-slots) - 1, 1))
+        ((100% - var(--slot-width)) / max(var(--location-occupant-visible-slots) - 1, 1))
         - var(--slot-width)
       ),
       var(--play-grid-gap)
@@ -505,6 +510,20 @@
       min-width: 0;
       gap: 0.34rem;
       padding: 0.3rem;
+    }
+
+    /* A mobile board keeps its existing scroll-first behaviour. Full lanes
+       are useful on a desktop table, but must not compress the play zone on
+       a narrow viewport. */
+    .location-cluster__slot--occupant + .location-cluster__slot--occupant {
+      margin-left: clamp(
+        calc(var(--slot-width) * -0.55),
+        calc(
+          ((100% - var(--slot-width)) / max(var(--location-occupant-slots) - 1, 1))
+          - var(--slot-width)
+        ),
+        var(--play-grid-gap)
+      );
     }
   }
 </style>

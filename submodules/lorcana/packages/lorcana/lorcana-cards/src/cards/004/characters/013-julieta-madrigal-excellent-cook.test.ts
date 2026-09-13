@@ -69,12 +69,16 @@ describe("Julieta Madrigal - Excellent Cook [Set 004]", () => {
         testEngine.asPlayerOne().playCard(julietaMadrigalExcellentCook),
       ).toBeSuccessfulCommand();
 
-      const bagId = testEngine.asPlayerOne().getBagEffects()[0]!.id;
       expect(
         testEngine.asPlayerOne().resolvePendingByCard(julietaMadrigalExcellentCook, {
           resolveOptional: true,
           targets: [woundedAllyId],
         }),
+      ).toBeSuccessfulCommand();
+
+      // Second "you may draw" is an independent surface after remove-damage.
+      expect(
+        testEngine.asPlayerOne().resolveNextPending({ resolveOptional: true }),
       ).toBeSuccessfulCommand();
 
       // Played Julieta (hand -1) + drew a card (hand +1) = net 0 change
@@ -138,6 +142,46 @@ describe("Julieta Madrigal - Excellent Cook [Set 004]", () => {
       expect(testEngine.getCardInstanceIdsInZone("hand", PLAYER_ONE).length).toBe(
         handCountBefore - 1,
       );
+    });
+
+    it("bot drains nested SIGNATURE RECIPE mays without conceding", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+        hand: [julietaMadrigalExcellentCook],
+        inkwell: julietaMadrigalExcellentCook.cost,
+        play: [{ card: woundedAlly, damage: 2 }],
+        deck: 3,
+      });
+
+      expect(
+        testEngine.asPlayerOne().playCard(julietaMadrigalExcellentCook),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getBagCount()).toBeGreaterThan(0);
+
+      let sawResolutionWindow = false;
+      for (let step = 0; step < 8 && !testEngine.asServer().isGameOver(); step += 1) {
+        const before = testEngine.asServer().getState();
+        const hadWindow =
+          (before.G.triggeredAbilities?.bag.items.length ?? 0) > 0 ||
+          before.G.pendingEffects.length > 0;
+        const result = testEngine.asServer().takeAutomatedActionForCurrentActor();
+        if (hadWindow) {
+          sawResolutionWindow = true;
+          expect(result.fallbackTaken).not.toBe("concede");
+          expect(result.finalResult.success).toBe(true);
+        }
+        const after = testEngine.asServer().getState();
+        const hasWindow =
+          (after.G.triggeredAbilities?.bag.items.length ?? 0) > 0 ||
+          after.G.pendingEffects.length > 0;
+        if (sawResolutionWindow && !hasWindow) {
+          break;
+        }
+      }
+
+      expect(sawResolutionWindow).toBe(true);
+      expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
+      expect(testEngine.asServer().getState().G.pendingEffects).toHaveLength(0);
+      expect(testEngine.asServer().isGameOver()).toBe(false);
     });
   });
 });

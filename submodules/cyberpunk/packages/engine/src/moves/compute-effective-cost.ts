@@ -2,7 +2,12 @@ import type { CostModifier, StructuredCardDefinition, TargetDSL } from "@tcg/cyb
 import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import type { MatchState } from "../types/match-state.ts";
 import { defOf } from "../state/lookups.ts";
-import { resolveTarget, type ResolutionContext } from "../effects/target-resolver.ts";
+import {
+  evaluateCondition,
+  resolveTarget,
+  type ResolutionContext,
+} from "../effects/target-resolver.ts";
+import { recomputeActiveEffects } from "../active-effects/index.ts";
 
 export interface EffectiveCostModifierDetail {
   id: string;
@@ -158,6 +163,33 @@ export function consumeCostModifierUse(
       effect.remainingUses === undefined ||
       effect.remainingUses > 0,
   );
+
+  for (const effect of state.G.activeEffects) {
+    if (
+      effect.kind !== "costModifier" ||
+      effect.origin !== "static" ||
+      effect.playerId !== playerId ||
+      !effect.appliesTo ||
+      !resolveTarget(effect.appliesTo, ctx).includes(cardId as string)
+    ) {
+      continue;
+    }
+    const source = state.G.cardIndex[effect.sourceCardId as string];
+    const ability = source
+      ? (defOf(source) as StructuredCardDefinition).abilities[effect.abilityIndex]
+      : undefined;
+    if (!ability?.limits?.includes("firstTimeEachTurn")) continue;
+    const alreadyFired = state.G.turnMetadata.abilityFiredThisTurn.some(
+      (entry) => entry.cardId === effect.sourceCardId && entry.abilityIndex === effect.abilityIndex,
+    );
+    if (!alreadyFired) {
+      state.G.turnMetadata.abilityFiredThisTurn.push({
+        cardId: effect.sourceCardId,
+        abilityIndex: effect.abilityIndex,
+      });
+    }
+  }
+  recomputeActiveEffects(state);
 }
 
 function applyCostModifier(
@@ -170,6 +202,18 @@ function applyCostModifier(
     const reduced = currentCost - count * modifier.reductionPerCount;
     const effectiveCost = Math.max(modifier.min, reduced);
     return { effectiveCost, matchedCount: count };
+  }
+
+  if (modifier.reducer === "flat") {
+    const reduced = currentCost - modifier.amount;
+    const effectiveCost = Math.max(modifier.min, reduced);
+    return { effectiveCost, matchedCount: modifier.amount > 0 ? 1 : 0 };
+  }
+
+  if (modifier.reducer === "replace") {
+    const applies = modifier.conditions.every((condition) => evaluateCondition(condition, ctx));
+    if (!applies) return { effectiveCost: currentCost, matchedCount: 0 };
+    return { effectiveCost: modifier.amount, matchedCount: 1 };
   }
 
   return { effectiveCost: currentCost, matchedCount: 0 };
@@ -187,6 +231,13 @@ function buildCostModifierDetail(
     const unit = perCount === 1 ? "cost" : "cost each";
     const minimum = modifier.min > 0 ? ` Minimum cost ${modifier.min}.` : "";
     return `${sourceName}: ${signedNumber(delta)} cost from ${count} ${targetLabel} (-${perCount} ${unit}).${minimum}`;
+  }
+  if (modifier.reducer === "flat") {
+    const minimum = modifier.min > 0 ? ` Minimum cost ${modifier.min}.` : "";
+    return `${sourceName}: ${signedNumber(delta)} cost (-${modifier.amount}).${minimum}`;
+  }
+  if (modifier.reducer === "replace") {
+    return `${sourceName}: play for ${modifier.amount} instead.`;
   }
   return `${sourceName}: ${signedNumber(delta)} cost.`;
 }

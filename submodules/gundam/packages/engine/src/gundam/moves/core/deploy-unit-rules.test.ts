@@ -80,6 +80,37 @@ describe("Gap 5 — G.exhausted cleared on deploy", () => {
   });
 });
 
+describe("EX Resource payment", () => {
+  it("offers EX Resources as an explicit payment choice and removes the selected token", () => {
+    const unit = createMockUnit({ level: 1, cost: 1 });
+    const regular = createMockResource();
+    const exResource = createMockResource({ name: "EX Resource" });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [unit],
+        resourceArea: [active(regular), { card: exResource, exhausted: false, isToken: true }],
+      },
+      {},
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [regularId, exResourceId] = p1.getCardsInZone("resourceArea");
+
+    expect(p1.getMoveProcedure("deployUnit", { cardId: p1.getHand()[0]! })).toEqual([
+      {
+        kind: "selectTarget",
+        role: "resource",
+        candidateIds: [regularId, exResourceId],
+        minTargets: 1,
+        maxTargets: 1,
+      },
+    ]);
+
+    expectSuccess(p1.deployUnit(unit, { paymentResourceIds: [exResourceId!] }));
+    expect(p1.getCardsInZone("resourceArea")).toEqual([regularId]);
+    expect(p1.getCardZone(exResourceId!)).toBeUndefined();
+  });
+});
+
 // =============================================================================
 // Gap 2 — satisfiesLinkCondition
 // =============================================================================

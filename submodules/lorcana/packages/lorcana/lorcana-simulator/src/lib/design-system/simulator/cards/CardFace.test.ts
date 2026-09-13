@@ -27,6 +27,24 @@ function createCardSnapshot(overrides: Partial<LorcanaCardSnapshot> = {}): Lorca
 }
 
 describe("CardFace", () => {
+  it("renders playable and selected highlights without pulse animation classes", () => {
+    const { body } = render(CardFaceTestHost, {
+      props: {
+        card: createCardSnapshot(),
+        displayWidth: 132,
+        displayHeight: 184,
+        aspectRatio: 734 / 1024,
+        isPlayable: true,
+        isSelected: true,
+      },
+    });
+
+    expect(body).toContain("selection-indicator");
+    expect(body).toContain("playable-glow");
+    expect(body).not.toContain("animate-selection-pulse");
+    expect(body).not.toContain("animate-playable-pulse");
+  });
+
   it("hides stat badges when all stats match base values", () => {
     const { body } = render(CardFaceTestHost, {
       props: {

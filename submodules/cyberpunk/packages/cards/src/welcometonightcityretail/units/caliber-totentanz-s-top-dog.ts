@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailCaliberTotentanzSTopDog = defineCyberpunkCard({
   id: "0273f402-94fb-4b59-90ec-a1057c2d1284",
   slug: "caliber-totentanz-s-top-dog",
+  subname: "Totentanz's Top Dog",
   rulesText:
     "{Play} Defeat a rival Unit with cost 2 or less.\n{Defeated} A Rival discards 1. If the card's cost equals the value of a friendly Gig, that Rival discards 1 more.",
-  name: "Caliber — Totentanz's Top Dog",
-  displayName: "Caliber — Totentanz's Top Dog",
+  name: "Caliber",
+  displayName: "Caliber: Totentanz's Top Dog",
   canonicalId: "caliber-totentanz-s-top-dog",
   color: "yellow",
   classifications: ["Ganger", "Maelstrom"],

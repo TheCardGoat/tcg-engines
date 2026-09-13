@@ -9,12 +9,13 @@ import {
   type ProjectedPlayerState,
 } from "@tcg/op-engine";
 import { getCard, hasCard } from "@tcg/op-cards";
-import type {
-  BoardToken,
-  SimulatorEntity,
-  SimulatorEventLogEntry,
-  SimulatorTable,
-  SimulatorZone,
+import {
+  STANDARD_CARD_IMAGE_ASPECT_RATIO,
+  type BoardToken,
+  type SimulatorEntity,
+  type SimulatorEventLogEntry,
+  type SimulatorTable,
+  type SimulatorZone,
 } from "@tcg/simulator-contract";
 import type { OnePieceSeatId, OnePieceStaticBoard } from "./staticBoard.ts";
 import { getDefaultOnePieceVisualFixture, type OnePieceVisualFixture } from "./visualFixtures.ts";
@@ -36,6 +37,16 @@ const PHASE_LABELS: Record<string, string> = {
 
 const ONE_PIECE_CARD_CDN_BASE = "https://cdn.tcg.online/public/one-piece/cards";
 const MAX_EVENT_LOG_ENTRIES = 80;
+
+interface OnePieceCardDetails {
+  readonly traits?: string[];
+  readonly attribute?: string | string[];
+  readonly effect?: string;
+  readonly trigger?: string;
+  readonly counter?: number;
+  readonly cost?: number;
+  readonly power?: number;
+}
 
 export function buildDefaultOnePieceBoard(): OnePieceStaticBoard {
   return buildOnePieceBoardFromFixture(getDefaultOnePieceVisualFixture());
@@ -206,10 +217,15 @@ function entityForCard(
       states: ["hidden"],
       stats: [],
       traits: [],
+      imageAspectRatio: STANDARD_CARD_IMAGE_ASPECT_RATIO,
     };
   }
 
   const states: SimulatorEntity["states"] = [card.rested ? "rested" : "ready"];
+  const definition =
+    card.cardId && hasCard(card.cardId)
+      ? (getCard(card.cardId) as unknown as OnePieceCardDetails)
+      : undefined;
   if (card.attachedDon > 0) {
     states.push("attached");
   }
@@ -222,20 +238,66 @@ function entityForCard(
     ownerId,
     face: "public",
     states,
-    stats: statsFor(card),
-    traits: [],
+    stats: statsFor(card, definition),
+    traits: [
+      ...(definition?.traits ?? []),
+      ...(Array.isArray(definition?.attribute)
+        ? definition.attribute
+        : definition?.attribute
+          ? [definition.attribute]
+          : []),
+    ],
     imageUrl: imageUrlForCard(card.cardId),
+    imageAspectRatio: STANDARD_CARD_IMAGE_ASPECT_RATIO,
     frameStyle: { color: frameColorFor(ownerId, card.zone) },
-    overlayBadges:
+    decorations:
       card.attachedDon > 0
         ? [
             {
-              label: `+${card.attachedDon * 1000}`,
-              color: "#b4232f",
-              position: "tr",
+              id: "attached-don",
+              slot: "top-end",
+              ariaLabel: `${card.attachedDon} attached DON`,
+              content: { kind: "text", text: `+${card.attachedDon * 1000}` },
+              tone: "positive",
             },
           ]
         : undefined,
+    details: definition
+      ? {
+          rules: [
+            ...(definition.effect
+              ? [
+                  {
+                    id: "effect",
+                    kind: "text" as const,
+                    label: "Effect",
+                    text: definition.effect,
+                  },
+                ]
+              : []),
+            ...("trigger" in definition && definition.trigger
+              ? [
+                  {
+                    id: "trigger",
+                    kind: "ability" as const,
+                    label: "[Trigger]",
+                    text: definition.trigger,
+                  },
+                ]
+              : []),
+            ...("counter" in definition && definition.counter
+              ? [
+                  {
+                    id: "counter",
+                    kind: "keyword" as const,
+                    label: "[Counter]",
+                    text: `Counter +${definition.counter}`,
+                  },
+                ]
+              : []),
+          ],
+        }
+      : undefined,
     dataAttributes: {
       "data-card-printing-id": card.cardId ?? undefined,
       "data-zone": card.zone,
@@ -267,10 +329,31 @@ function onePiecePrintingImageUrl(printing: { id: string; setCode: string }): st
   )}/${encodeURIComponent(printing.id)}.webp`;
 }
 
-function statsFor(card: ProjectedCard): SimulatorEntity["stats"] {
+function statsFor(
+  card: ProjectedCard,
+  definition: OnePieceCardDetails | undefined,
+): SimulatorEntity["stats"] {
   return [
-    card.cost !== null ? { label: "Cost", value: String(card.cost) } : null,
-    card.power !== null ? { label: "Power", value: String(card.power) } : null,
+    card.cost !== null
+      ? {
+          label: "Cost",
+          value: String(card.cost),
+          baseValue:
+            definition && "cost" in definition && typeof definition.cost === "number"
+              ? String(definition.cost)
+              : undefined,
+        }
+      : null,
+    card.power !== null
+      ? {
+          label: "Power",
+          value: String(card.power),
+          baseValue:
+            definition && "power" in definition && typeof definition.power === "number"
+              ? String(definition.power)
+              : undefined,
+        }
+      : null,
     card.attachedDon > 0 ? { label: "DON!!", value: `${card.attachedDon} attached` } : null,
   ].filter((stat): stat is SimulatorEntity["stats"][number] => Boolean(stat));
 }

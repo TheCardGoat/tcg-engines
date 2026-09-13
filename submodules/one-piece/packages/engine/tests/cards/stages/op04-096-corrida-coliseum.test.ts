@@ -9,12 +9,18 @@ import {
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+/**
+ * OP04-096 Corrida Coliseum (continuous permanent):
+ * If Leader has Dressrosa, your Dressrosa Characters can attack Characters
+ * the turn they are played (rushCharacter). Not an optional ability — no decline path.
+ * Subject is the stage on the field; proofs exercise attack legality, not playCard theater.
+ */
 describe("OP04-096 Corrida Coliseum", () => {
   test("lets newly played Dressrosa Characters attack only Characters with a Dressrosa Leader", () => {
     const unavailableEngine = OnePieceTestEngine.create(
       {
         stage: op04CorridaColiseum096,
-        character: [{ card: op04Cavendish081, playedOnTurn: 1 }],
+        character: [{ card: op04Cavendish081, playedOnTurn: 3 }],
       },
       {
         character: [{ card: op02Magellan085, rested: true }],
@@ -45,8 +51,8 @@ describe("OP04-096 Corrida Coliseum", () => {
         leaderCardId: op04Rebecca039,
         stage: op04CorridaColiseum096,
         character: [
-          { card: op04Cavendish081, playedOnTurn: 1 },
-          { card: op13Higuma013, playedOnTurn: 1 },
+          { card: op04Cavendish081, playedOnTurn: 3 },
+          { card: op13Higuma013, playedOnTurn: 3 },
         ],
       },
       {
@@ -82,5 +88,30 @@ describe("OP04-096 Corrida Coliseum", () => {
       targetId,
     });
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("does not let a non-Dressrosa Character attack Characters on the turn it is played", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op04Rebecca039,
+        stage: op04CorridaColiseum096,
+        character: [{ card: op13Higuma013, playedOnTurn: 3 }],
+      },
+      { character: [{ card: op02Magellan085, rested: true }] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const unrelatedId = engine.findCardInZone("south", "character", op13Higuma013);
+    const actionStep = engine
+      .getView("south")
+      .decisions.find((decision) => decision.kind === "chooseAction")?.steps[0];
+    expect(actionStep?.kind).toBe("chooseAction");
+    if (actionStep?.kind !== "chooseAction") {
+      throw new Error("Expected the turn player to have an action decision.");
+    }
+    expect(
+      actionStep.actions.some(
+        (action) => action.commandType === "declareAttack" && action.source?.id === unrelatedId,
+      ),
+    ).toBe(false);
   });
 });

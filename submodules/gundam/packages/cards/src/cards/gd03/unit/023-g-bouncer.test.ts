@@ -4,6 +4,7 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockCommand,
   createMockUnit,
   expectFailure,
   expectSuccess,
@@ -14,6 +15,7 @@ import { gd03GundamAge2Normal019 } from "./019-gundam-age-2-normal.ts";
 import { gd03GBouncer023 } from "./023-g-bouncer.ts";
 
 describe("G-Bouncer (GD03-023)", () => {
+  /** @behavioral-proof complete: EX Resource controller, AGE System target, duration, and High-Maneuver combat are public. */
   it("when an EX Resource is placed, grants High-Maneuver to a friendly AGE System Unit", () => {
     const ageUnit = createMockUnit({ traits: ["age system"] });
     const engine = GundamTestEngine.create(
@@ -57,6 +59,35 @@ describe("G-Bouncer (GD03-023)", () => {
     expect(choice).toMatchObject({ kind: "targetSelection" });
     if (choice?.kind !== "targetSelection") throw new Error("Expected target selection");
     expect(choice.legalTargetIds).not.toContain(ordinaryId);
+  });
+
+  it("does not trigger when the opponent places an EX Resource", () => {
+    const placeExResource = createMockCommand({
+      level: 0,
+      cost: 0,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [{ action: { action: "placeExResource", state: "active" } }],
+          sourceText: "【Main】Place 1 EX Resource.",
+        },
+      ],
+    });
+    const ageUnit = createMockUnit({ traits: ["age system"] });
+    const engine = GundamTestEngine.create(
+      { play: [gd03GBouncer023, ageUnit] },
+      { hand: [placeExResource], resourceArea: activeResources(1) },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const ageUnitId = p1.getCardsInZone("battleArea")[1]!;
+
+    expectSuccess(p2.playCommand(placeExResource));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getVisibleCard(ageUnitId)?.keywords).not.toContain("HighManeuver");
   });
 
   it("removes High-Maneuver after the turn ends", () => {

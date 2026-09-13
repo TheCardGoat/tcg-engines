@@ -54,6 +54,8 @@ export const op01UltiMortar118: EventCard = {
             amount: 1,
           },
         ],
+        // Counter Event is already committed (rest cost DON!! + trash); returnDon
+        // is mandatory after activation — no post-commit Skip.
       },
       {
         trigger: "trigger",

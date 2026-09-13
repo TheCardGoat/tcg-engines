@@ -1,7 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "gundam.setup.firstPlayerChosen": "{chooser} chose {chosen} to go first.",
-  "gundam.setup.mulligan": "{playerId} altered {count} cards.",
+  "gundam.setup.mulligan": "{playerId} finished mulligan (redraw count: {count}).",
   "gundam.setup.done": "Setup complete.",
 
   "gundam.turn.started": "Turn {turnNumber} — {playerId}.",
@@ -30,8 +30,9 @@
   "gundam.effect.cardsDrawn": "{playerId} drew {count} card(s).",
   "gundam.effect.cardsDiscarded": "{playerId} discarded {cardIds}.",
   "gundam.effect.returnedToHand": "{cardId} returned to {playerId}'s hand.",
+  "gundam.effect.shieldsAddedToHand": "{playerId} added {count} Shield(s) to hand.",
   "gundam.effect.movedToZone": "{cardId} moved from {from} to {to}.",
-  "gundam.effect.exhausted": "{cardId} was exhausted.",
+  "gundam.effect.exhausted": "{cardId} was rested.",
   "gundam.effect.readied": "{cardId} was readied.",
   "gundam.effect.statModified": "{cardId} {stat} modified by {amount} ({duration}).",
   "gundam.effect.keywordGranted": "{cardId} gained {keyword} ({duration}).",

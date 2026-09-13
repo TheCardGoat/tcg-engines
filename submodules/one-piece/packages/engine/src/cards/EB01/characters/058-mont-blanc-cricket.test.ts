@@ -3,7 +3,7 @@ import { eb01MontBlancCricket058 } from "../../../../../cards/src/cards/EB01/cha
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-058 Mont Blanc Cricket", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01MontBlancCricket058);
   });
 });

@@ -19,7 +19,8 @@ import {
   type PlayerId,
 } from "@tcg/gundam-engine";
 import * as GundamCards from "@tcg/gundam-cards";
-import { exbpExBase001, exrpExResource003 } from "@tcg/gundam-cards";
+import { defaultGundamSetupCards } from "@tcg/gundam-token-data";
+import { exbExBase001, exrExResource001 } from "@tcg/gundam-cards";
 import type { Card } from "@tcg/gundam-types";
 
 export const PLAYER_ONE: PlayerId = asPlayerId("player_one");
@@ -41,8 +42,11 @@ function buildCatalog(): Map<string, Card> {
       catalog.set(card.cardNumber, card);
     }
   }
-  catalog.set(exbpExBase001.cardNumber, exbpExBase001);
-  catalog.set(exrpExResource003.cardNumber, exrpExResource003);
+  // Setup tokens resolve through the same catalog; the host default is the
+  // normal booster tokens (EXB-001 / EXR-001), matching
+  // `defaultGundamSetupCards` in @tcg/gundam-token-data.
+  catalog.set(exbExBase001.cardNumber, exbExBase001);
+  catalog.set(exrExResource001.cardNumber, exrExResource001);
   return catalog;
 }
 
@@ -116,7 +120,11 @@ export function buildBenchRuntime(options: BenchRuntimeOptions): BenchRuntimeHan
     resourceDeck: p2Expanded.resourceDeck.map((c) => c.cardNumber),
   };
 
-  const staticResources = createStaticResources([p1, p2], SHARED_CATALOG);
+  const staticResources = createStaticResources(
+    [p1, p2],
+    SHARED_CATALOG,
+    defaultGundamSetupCards([p1.id, p2.id]),
+  );
   const runtime = new MatchRuntime(staticResources);
   runtime.initialize([p1, p2], options.seed, options.initialActivePlayer ?? PLAYER_ONE);
 
@@ -137,11 +145,46 @@ export function buildBenchRuntime(options: BenchRuntimeOptions): BenchRuntimeHan
 import { earthFederationStarter } from "./decks/earth-federation-starter.ts";
 import { seedAggro } from "./decks/seed-aggro.ts";
 import { gd01Mixed } from "./decks/gd01-mixed.ts";
+import {
+  topdecks01,
+  topdecks02,
+  topdecks03,
+  topdecks04,
+  topdecks05,
+  topdecks06,
+  topdecks07,
+  topdecks08,
+  topdecks09,
+  topdecks10,
+} from "./decks/topdecks.ts";
 
-export type BenchDeckId = "ef-starter" | "seed-aggro" | "gd01-mixed";
+export type BenchDeckId =
+  | "ef-starter"
+  | "seed-aggro"
+  | "gd01-mixed"
+  | "topdecks-01"
+  | "topdecks-02"
+  | "topdecks-03"
+  | "topdecks-04"
+  | "topdecks-05"
+  | "topdecks-06"
+  | "topdecks-07"
+  | "topdecks-08"
+  | "topdecks-09"
+  | "topdecks-10";
 
 export const REGISTERED_DECKS: Readonly<Record<BenchDeckId, DeckList>> = {
   "ef-starter": earthFederationStarter,
   "seed-aggro": seedAggro,
   "gd01-mixed": gd01Mixed,
+  "topdecks-01": topdecks01,
+  "topdecks-02": topdecks02,
+  "topdecks-03": topdecks03,
+  "topdecks-04": topdecks04,
+  "topdecks-05": topdecks05,
+  "topdecks-06": topdecks06,
+  "topdecks-07": topdecks07,
+  "topdecks-08": topdecks08,
+  "topdecks-09": topdecks09,
+  "topdecks-10": topdecks10,
 };

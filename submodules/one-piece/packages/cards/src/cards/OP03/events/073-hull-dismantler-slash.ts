@@ -59,6 +59,7 @@ export const op03HullDismantlerSlash073: EventCard = {
             },
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

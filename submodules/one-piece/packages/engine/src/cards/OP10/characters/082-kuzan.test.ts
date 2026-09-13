@@ -70,4 +70,29 @@ describe("OP10-082 Kuzan", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline Activate: Main so it is not trashed and no Character is played", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [op10Kuzan082],
+      deck: [eb01Fourtricks025, eb01Doma005],
+      trash: [op09Peachbeard094, op09AvaloPizarro082, op09MarshallDTeach093, eb01Doma005],
+    });
+    const kuzanId = engine.findCardInZone("south", "character", op10Kuzan082);
+    const peachId = engine.findCardInZone("south", "trash", op09Peachbeard094);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const handBefore = engine.getView("south").players.south.hand.length;
+
+    engine.activateEffect(kuzanId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(kuzanId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(kuzanId);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(peachId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

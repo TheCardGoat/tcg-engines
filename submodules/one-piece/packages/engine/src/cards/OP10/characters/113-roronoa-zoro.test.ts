@@ -51,4 +51,32 @@ describe("OP10-113 Roronoa Zoro", () => {
     expect(view.players.north.characters.some((card) => card?.instanceId === zoroId)).toBe(true);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        leaderCardId: op10EustassCaptainKid099,
+        life: [op10RoronoaZoro113],
+        hand: [eb01Doma005],
+        deck: [eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005, eb01Doma005],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+
+    const discardId = engine.findCardInZone("north", "hand", eb01Doma005);
+    const before = engine.getView("north").players.north;
+    const lifeBefore = before.lifeCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    // Declined Trigger cost: hand payment not trashed and Zoro is not played.
+    expect(after.hand.map((card) => card.instanceId)).toContain(discardId);
+    expect(after.characters.every((card) => card?.cardId !== op10RoronoaZoro113.id)).toBe(true);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
 });

@@ -45,18 +45,39 @@ export const op10EustassCaptainKid099: LeaderCard = {
     effects: [
       {
         trigger: "endOfYourTurn",
-        costs: [{ cost: "turnLifeFaceUp", count: 1 }],
+        costs: [
+          {
+            cost: "turnLifeFaceUp",
+            count: 1,
+            faceUp: true,
+          },
+        ],
         actions: [
           {
             action: "setActive",
             target: {
               player: "self",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
               filters: [
-                { filter: "trait", value: "Supernovas", match: "includes" },
-                { filter: "cost", comparison: "gte", value: 3 },
-                { filter: "cost", comparison: "lte", value: 8 },
+                {
+                  filter: "trait",
+                  value: "Supernovas",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 3,
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 8,
+                },
               ],
             },
           },
@@ -65,11 +86,12 @@ export const op10EustassCaptainKid099: LeaderCard = {
             target: {
               player: "self",
               zones: ["character"],
-              count: { amount: 1 },
+              count: {
+                amount: 1,
+              },
             },
             keyword: "blocker",
             duration: "untilEndOfOpponentNextTurn",
-            previousActionTargets: true,
           },
         ],
         optional: true,

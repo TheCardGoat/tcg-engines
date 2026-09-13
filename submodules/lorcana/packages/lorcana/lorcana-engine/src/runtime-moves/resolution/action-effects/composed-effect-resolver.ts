@@ -1778,8 +1778,22 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
         return result;
       }
 
+      // Only consume decision fields after steps that use them. Clearing after
+      // every step would wipe resolveOptional before a later "you may" in the
+      // same sequence (e.g. exert then optional free-play). Sibling mays/choices
+      // still need isolation when the step itself is optional/choice/or.
+      const stepType = getEffectType(nestedEffect);
+      if (stepType === "optional" || stepType === "choice" || stepType === "or") {
+        resolutionInput.resolveOptional = undefined;
+        resolutionInput.choiceIndex = undefined;
+        if (nestedResolutionInput !== resolutionInput) {
+          nestedResolutionInput.resolveOptional = undefined;
+          nestedResolutionInput.choiceIndex = undefined;
+        }
+      }
+
       if (
-        getEffectType(nestedEffect) === "select-target" &&
+        stepType === "select-target" &&
         nestedResolutionInput.eventSnapshot?.lastEffectPerformed === false
       ) {
         return RESOLVED_ACTION_EFFECT;
@@ -1909,6 +1923,18 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
             !Array.isArray(innerTarget) &&
             (innerTarget as Record<string, unknown>).requireDifferentTargets === true
           ) {
+            // The outer sequence step may already have completed its own target
+            // selection. Preview the optional inner effect with a fresh
+            // selection while preserving the shared event snapshot that tracks
+            // previously targeted cards.
+            const innerPreviewResolutionInput = {
+              ...chooserScopedResolutionInput,
+              targets: undefined,
+              slottedTargets: undefined,
+              targetSelectionResolved: false,
+              currentTargets: undefined,
+              contextTargets: undefined,
+            };
             const innerSelectionContext = buildResolutionSelectionContext({
               origin: "pending-effect",
               requestId: "optional:preview",
@@ -1916,7 +1942,7 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
               chooserId: actorId,
               cardPlayed,
               effect: effect.effect,
-              resolutionInput: chooserScopedResolutionInput,
+              resolutionInput: innerPreviewResolutionInput,
               ctx,
             });
             if (
@@ -1967,6 +1993,10 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
       // parent's decision.  See Woody Jungle Guide — "draw, then you may
       // play a character for free" — where the sequence auto-inherited
       // resolveOptional=true from the bag executor.
+      // Sibling sequence/for-each steps share this resolutionInput object;
+      // those resolvers clear resolveOptional between steps so later mays
+      // stay independent (do not clear here — resolve-effect logging still
+      // reads resolveOptional after this returns).
       const nestedResolutionInput =
         resolutionInput.resolveOptional !== undefined
           ? { ...baseResolutionInput, resolveOptional: undefined }
@@ -2059,10 +2089,12 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
     }
 
     const choiceIndex = Math.min(rawChoiceIndex, choiceOptions.length - 1);
-    const nestedResolutionInput =
+    const baseNested =
       effect.chooser === "CHOSEN_PLAYER"
         ? promoteSelectedPlayersToTargetContext(ctx, resolutionInput)
         : resolutionInput;
+    // Nested choice/or under the selected arm must not reuse this choiceIndex.
+    const nestedResolutionInput = { ...baseNested, choiceIndex: undefined };
     return resolveActionEffect(
       ctx,
       cardPlayed,
@@ -2107,10 +2139,11 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
 
     if (legalOptionIndices.length === 1 && actorId === chooserId) {
       const forcedChoiceIndex = legalOptionIndices[0]!;
-      const nestedResolutionInput =
+      const baseNested =
         effect.chooser === "CHOSEN_PLAYER"
           ? promoteSelectedPlayersToTargetContext(ctx, resolutionInput)
           : resolutionInput;
+      const nestedResolutionInput = { ...baseNested, choiceIndex: undefined };
       return resolveActionEffect(
         ctx,
         cardPlayed,
@@ -2158,10 +2191,11 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
       return RESOLVED_ACTION_EFFECT;
     }
 
-    const nestedResolutionInput =
+    const baseNested =
       effect.chooser === "CHOSEN_PLAYER"
         ? promoteSelectedPlayersToTargetContext(ctx, resolutionInput)
         : resolutionInput;
+    const nestedResolutionInput = { ...baseNested, choiceIndex: undefined };
     return resolveActionEffect(
       ctx,
       cardPlayed,
@@ -2215,12 +2249,34 @@ const actionEffectResolvers: Record<SupportedActionEffectType, ActionEffectResol
     };
 
     for (let index = 0; index < repeatCount; index += 1) {
-      const result = resolveActionEffect(ctx, cardPlayed, effect.effect, nestedResolutionInput, {
-        continuation: index === repeatCount - 1 ? options?.continuation : undefined,
-      });
+      // Remaining iterations must survive a mid-loop suspend (optional/choice
+      // prompt). Encode them as continuation remainingEffects so resolve-effect
+      // resumes the rest after the player answers (Queen's Castle with 3+
+      // characters used to drop later draws).
+      const remainingIterationEffects =
+        index < repeatCount - 1
+          ? Array.from({ length: repeatCount - index - 1 }, () => effect.effect)
+          : [];
+      const continuation = mergeContinuationEffects(
+        remainingIterationEffects,
+        options?.continuation,
+      );
+      const result = resolveActionEffect(
+        ctx,
+        cardPlayed,
+        effect.effect,
+        nestedResolutionInput,
+        continuation ? { continuation } : {},
+      );
       if (result.status === "suspended") {
         return result;
       }
+      // Each for-each iteration is an independent "you may" / choice surface
+      // (e.g. Queen's Castle — one optional draw per character here).
+      nestedResolutionInput.resolveOptional = undefined;
+      nestedResolutionInput.choiceIndex = undefined;
+      resolutionInput.resolveOptional = undefined;
+      resolutionInput.choiceIndex = undefined;
     }
 
     return RESOLVED_ACTION_EFFECT;

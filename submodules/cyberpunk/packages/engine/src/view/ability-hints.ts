@@ -148,6 +148,14 @@ function collectEffectSemantics(
     for (const nested of effect.elseEffects ?? []) collectEffectSemantics(nested, effects, roles);
   } else if (effect.effect === "delayed" || effect.effect === "forEachFriendlyGigPair") {
     for (const nested of effect.effects) collectEffectSemantics(nested, effects, roles);
+  } else if (effect.effect === "chooseEffect") {
+    for (const option of effect.options) {
+      for (const nested of option.effects) collectEffectSemantics(nested, effects, roles);
+    }
+  } else if ("elseEffects" in effect && Array.isArray(effect.elseEffects)) {
+    for (const nested of effect.elseEffects as Effect[]) {
+      collectEffectSemantics(nested, effects, roles);
+    }
   }
 }
 
@@ -189,6 +197,9 @@ function rolesForEffect(effect: Effect): AbilityRoleHint[] {
     case "modifyPower":
     case "multiplyPower":
     case "grantRule":
+    case "grantFightWinAgainst":
+    case "grantNextFriendlyFightLossDefeat":
+    case "grantRivalGoSoloCostIncrease":
     case "ready":
     case "defeatAtEndOfTurnIfAttacks":
     case "revealTopCardAndModifyPowerByCost":
@@ -200,6 +211,7 @@ function rolesForEffect(effect: Effect): AbilityRoleHint[] {
       return ["setup"];
     case "ifYouDo":
     case "delayed":
+    case "chooseEffect":
       return [];
   }
 }

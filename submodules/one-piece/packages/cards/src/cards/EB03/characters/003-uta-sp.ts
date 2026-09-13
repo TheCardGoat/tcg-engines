@@ -50,17 +50,15 @@ export const eb03UtaSp003: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Uta",
-          },
-        ],
         actions: [
           {
             action: "draw",
             player: "self",
             amount: 2,
+            condition: {
+              condition: "leaderName",
+              name: "Uta",
+            },
           },
           {
             action: "play",

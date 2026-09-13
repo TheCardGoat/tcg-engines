@@ -66,6 +66,47 @@ function buildContext(
   };
 }
 
+function buildAttackContext(attackerEnabled = true): DropContext {
+  return {
+    humanSide: "player",
+    humanZones: { hand: [] },
+    interactionView: {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "cyberpunk",
+      actorId: "p1",
+      stateVersion: 1,
+      status: "ready",
+      actions: [
+        {
+          id: "attackRival",
+          requestId: "attackRival-1",
+          intent: "attack",
+          text: { key: "cyberpunk.move.attackRival" },
+          enabled: true,
+          inputs: [
+            {
+              id: "attackerId",
+              kind: "entity-selection",
+              role: "attacker",
+              entityKinds: ["card"],
+              text: { key: "cyberpunk.move.attackRival.attacker" },
+              min: 1,
+              max: 1,
+              ordered: false,
+              candidates: [
+                {
+                  entity: { kind: "card", instanceId: "unit_1", ownerId: "p1" },
+                  enabled: attackerEnabled,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    } satisfies EngineInteractionView,
+  };
+}
+
 describe("mapDropToAction", () => {
   it("maps Gear from hand onto a legal friendly field host", () => {
     const action = mapDropToAction(
@@ -115,6 +156,33 @@ describe("mapDropToAction", () => {
         target: { type: "card", zone: "p-legendArea", index: 0, cardId: "legend_1" },
       },
       buildContext([], { cardId: "unit_1", cardType: "unit" }),
+    );
+
+    expect(action).toBeNull();
+  });
+
+  it.each(["opp-pinfo", "opp-gigArea"])(
+    "maps a legal field Unit dropped on %s to a rival attack",
+    (zone) => {
+      const action = mapDropToAction(
+        {
+          source: { type: "card", zone: "p-field", index: 0, cardId: "unit_1" },
+          target: { type: "zone", zone },
+        },
+        buildAttackContext(),
+      );
+
+      expect(action).toEqual({ type: "attackRival", attackerId: "unit_1", as: "p1" });
+    },
+  );
+
+  it("rejects an ineligible Unit dropped on the rival Gig area", () => {
+    const action = mapDropToAction(
+      {
+        source: { type: "card", zone: "p-field", index: 0, cardId: "unit_1" },
+        target: { type: "zone", zone: "opp-gigArea" },
+      },
+      buildAttackContext(false),
     );
 
     expect(action).toBeNull();

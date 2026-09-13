@@ -43,7 +43,32 @@ export const mulanCreatedByTheVineEpic: CharacterCard = {
   classifications: ["Floodborn", "Princess", "Vineling"],
   abilities: [
     {
-      id: "v6P-1",
+      id: "v6P-1-self",
+      name: "DEMOLISH",
+      type: "triggered",
+      text: "DEMOLISH Whenever you play this or another Floodborn character, you may banish chosen item.",
+      trigger: {
+        event: "play",
+        on: "SELF",
+        timing: "whenever",
+      },
+      effect: {
+        type: "optional",
+        chooser: "CONTROLLER",
+        effect: {
+          type: "banish",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["item"],
+          },
+        },
+      },
+    },
+    {
+      id: "v6P-1-other",
       name: "DEMOLISH",
       type: "triggered",
       text: "DEMOLISH Whenever you play this or another Floodborn character, you may banish chosen item.",

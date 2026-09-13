@@ -59,4 +59,29 @@ describe("OP13-031 Trafalgar Law", () => {
     expect(engine.getState().cards[nekomamushiId]?.rested).toBe(true);
     expect(engine.getState().capabilityHistory).toEqual([]);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op13TrafalgarLaw031, op01Nekomamushi048],
+        character: [op01XDrake054],
+        activeDon: 10,
+      },
+      {},
+      { firstPlayer: "south", activeSeat: "south" },
+    );
+    const drakeId = engine.findCardInZone("south", "character", op01XDrake054);
+    const nekomamushiId = engine.findCardInZone("south", "hand", op01Nekomamushi048);
+
+    engine.playCard(op13TrafalgarLaw031);
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(drakeId);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(nekomamushiId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(
+      nekomamushiId,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

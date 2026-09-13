@@ -3,6 +3,14 @@ import { getAllCardsByIdSync } from "@tcg/lorcana-cards/cards/sync";
 import { lorcanaServerAdapter } from "./adapter";
 
 describe("Lorcana metadata projection", () => {
+  it("declares ink facets for specialist skill and mastery", () => {
+    expect(lorcanaServerAdapter.metadata!.facets).toSatisfy((definitions) =>
+      definitions.every(
+        (definition) => definition.ranking.specialistSkill && definition.ranking.mastery,
+      ),
+    );
+  });
+
   it("projects individual inks and the exact ink combination", () => {
     const cards = Object.values(getAllCardsByIdSync());
     const first = cards.find((card) => card.inkType.length > 0)!;

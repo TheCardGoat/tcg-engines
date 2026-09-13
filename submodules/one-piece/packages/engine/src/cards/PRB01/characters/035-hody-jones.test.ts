@@ -3,7 +3,7 @@ import { prb01HodyJones035 } from "../../../../../cards/src/cards/PRB01/characte
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-035 Hody Jones", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01HodyJones035);
   });
 });

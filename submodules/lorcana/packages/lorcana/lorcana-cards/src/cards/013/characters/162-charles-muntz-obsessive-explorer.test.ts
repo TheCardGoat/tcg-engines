@@ -75,19 +75,53 @@ describe("Charles Muntz - Obsessive Explorer", () => {
     );
   });
 
-  it("puts the top card on the bottom and gains no extra lore when it is not Kevin", () => {
+  it("lets you put a non-Kevin top card on the bottom of your deck (FIND THAT BIRD)", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [charlesMuntzObsessiveExplorer],
       deck: [bottomCard, topCard],
     });
 
     expect(testEngine.asPlayerOne().quest(charlesMuntzObsessiveExplorer)).toBeSuccessfulCommand();
+    // Non-Kevin must prompt top-or-bottom (not auto-bottom).
+    expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(1);
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(charlesMuntzObsessiveExplorer, {
+        destinations: [
+          { zone: "deck-top", cards: [] },
+          { zone: "deck-bottom", cards: [topCard] },
+        ],
+      }),
+    ).toBeSuccessfulCommand();
 
     expect(testEngine.asPlayerOne().getCardZone(topCard)).toBe("deck");
     expect(testEngine.asPlayerOne()).toHaveZoneCounts({ hand: 0, deck: 2 });
     expect(testEngine.getCardDefinitionIdsInZone("deck", PLAYER_ONE)).toEqual([
       topCard.id,
       bottomCard.id,
+    ]);
+    expect(testEngine.asPlayerOne().getLore(PLAYER_ONE)).toBe(charlesMuntzObsessiveExplorer.lore);
+  });
+
+  it("lets you leave a non-Kevin top card on top of your deck (FIND THAT BIRD)", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [charlesMuntzObsessiveExplorer],
+      deck: [bottomCard, topCard],
+    });
+
+    expect(testEngine.asPlayerOne().quest(charlesMuntzObsessiveExplorer)).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(1);
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(charlesMuntzObsessiveExplorer, {
+        destinations: [
+          { zone: "deck-top", cards: [topCard] },
+          { zone: "deck-bottom", cards: [] },
+        ],
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.getCardDefinitionIdsInZone("deck", PLAYER_ONE)).toEqual([
+      bottomCard.id,
+      topCard.id,
     ]);
     expect(testEngine.asPlayerOne().getLore(PLAYER_ONE)).toBe(charlesMuntzObsessiveExplorer.lore);
   });

@@ -2,9 +2,9 @@ import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseCardToMovePendingChoice } from "../types/match-state.ts";
 import { executeAbilityEffects, resumeCurrentTrigger } from "../ability-executor.ts";
+import { bottomDeckCardsSimultaneously } from "../effects/bottom-deck.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
 import { tryDefOf } from "../state/lookups.ts";
-import { createDefaultMetaForZone } from "../types/card-instance.ts";
 
 export interface ResolveCardToMoveInput extends MoveInput {
   args: {
@@ -71,7 +71,9 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
     };
 
     if (input.args.pass) {
-      const followupStatus = executeAbilityEffects(elseEffects, ctx, operations);
+      const followupStatus = executeAbilityEffects(elseEffects, ctx, operations, 0, {
+        nested: true,
+      });
       operations.log.emit({
         type: "resolveCardToMove",
         playerId,
@@ -100,47 +102,7 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
       operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
       operations.card.attachGear(cardId as CardInstanceId, resolvedAttachToId as CardInstanceId);
     } else if (destination === "deckBottom") {
-      // Bottom-deck flow: remove from current zone, append to bottom of owner's deck.
-      const owner = card.ownerId;
-      const fromZone = card.zone;
-      const attachedGearIds = [...card.meta.attachedGearIds];
-      if (card.meta.attachedToId) {
-        operations.card.detachGear(cardId as CardInstanceId);
-      }
-      const player = state.G.players[owner as string];
-      if (player) {
-        for (const movedId of [cardId as CardInstanceId, ...attachedGearIds]) {
-          const movedCard = state.G.cardIndex[movedId as string];
-          if (!movedCard) continue;
-          const fromList = player.zones[movedCard.zone];
-          const idx = fromList.indexOf(movedId);
-          if (idx !== -1) fromList.splice(idx, 1);
-        }
-      }
-      operations.zone.moveCardsToBottom(owner, [cardId as CardInstanceId, ...attachedGearIds]);
-      card.zone = "deck";
-      card.meta = createDefaultMetaForZone("deck", { attachedGearIds });
-      operations.event.emit({
-        type: "cardMoved",
-        cardId: cardId as CardInstanceId,
-        fromZone,
-        toZone: "deck",
-        playerId: owner,
-      } as any);
-      for (const gearId of attachedGearIds) {
-        const gear = state.G.cardIndex[gearId as string];
-        if (!gear) continue;
-        const gearFromZone = gear.zone;
-        gear.zone = "deck";
-        gear.meta = createDefaultMetaForZone("deck", { attachedToId: cardId as CardInstanceId });
-        operations.event.emit({
-          type: "cardMoved",
-          cardId: gearId,
-          fromZone: gearFromZone,
-          toZone: "deck",
-          playerId: owner,
-        } as any);
-      }
+      bottomDeckCardsSimultaneously([cardId as CardInstanceId], state, operations);
     } else {
       // Generic move to a destination zone (e.g. discard to trash).
       const destZone = (destination ?? "trash") as import("@tcg/cyberpunk-types").CardZone;
@@ -151,7 +113,7 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
       operations.zone.moveCard(cardId as CardInstanceId, destZone, card.ownerId);
     }
 
-    const followupStatus = executeAbilityEffects(ifEffects, ctx, operations);
+    const followupStatus = executeAbilityEffects(ifEffects, ctx, operations, 0, { nested: true });
 
     operations.log.emit({
       type: "resolveCardToMove",

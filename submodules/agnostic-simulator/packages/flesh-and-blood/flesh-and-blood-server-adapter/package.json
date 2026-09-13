@@ -1,0 +1,73 @@
+{
+  "name": "@tcg/flesh-and-blood-server-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Server-side GameAdapter implementation for Flesh and Blood — wires the Flesh and Blood runtime into the @tcg/shared/game-adapter contract.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    "./testing": {
+      "types": "./src/testing.ts",
+      "default": "./src/testing.ts"
+    },
+    "./deck-validation": {
+      "types": "./src/deck-validation.ts",
+      "default": "./src/deck-validation.ts"
+    },
+    "./deck-validation-card": {
+      "types": "./src/deck-validation-card.ts",
+      "default": "./src/deck-validation-card.ts"
+    },
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./interaction": {
+      "types": "./src/interaction.ts",
+      "default": "./src/interaction.ts"
+    },
+    "./animation": {
+      "types": "./src/animation.ts",
+      "default": "./src/animation.ts"
+    },
+    "./analytics": {
+      "types": "./src/analytics-v2.ts",
+      "default": "./src/analytics-v2.ts"
+    },
+    "./deck-interchange": {
+      "types": "./src/deck-interchange.ts",
+      "default": "./src/deck-interchange.ts"
+    },
+    "./clock": {
+      "types": "./src/clock.ts",
+      "default": "./src/clock.ts"
+    },
+    "./practice-catalog": {
+      "types": "./src/practice-catalog.ts",
+      "default": "./src/practice-catalog.ts"
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --configLoader runner --passWithNoTests --testTimeout 30000"
+  },
+  "dependencies": {
+    "@tcg/flesh-and-blood-cards": "link:../../../../flesh-and-blood/packages/cards",
+    "@tcg/flesh-and-blood-engine": "link:../../../../flesh-and-blood/packages/engine",
+    "@tcg/flesh-and-blood-types": "link:../../../../flesh-and-blood/packages/types",
+    "@tcg/game-page-contract": "link:../../game-page-contract",
+    "@tcg/protocol": "link:../../protocol",
+    "@tcg/shared": "link:../../shared",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

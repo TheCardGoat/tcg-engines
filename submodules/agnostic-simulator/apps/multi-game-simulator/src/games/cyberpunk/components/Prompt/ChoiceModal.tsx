@@ -7,7 +7,7 @@ import {
   type InteractionSubmissionValue,
 } from "@tcg/protocol";
 import type { PlayerPrompt } from "@tcg/cyberpunk-engine";
-import { DeckRevealShelf } from "@tcg/simulator-ui";
+import { DeckRevealShelf, interactionBoundsCopy } from "@tcg/simulator-ui";
 import { defOf } from "@tcg/cyberpunk-engine";
 import {
   getGearAttachTargets,
@@ -53,8 +53,7 @@ type ChoiceModalPlacement = "top" | "bottom";
  * (chooseCardToPlay where candidates are visible on the board, chooseCardToMove
  * onto a unit, etc.) are handled inline by Card.tsx and don't surface here.
  *
- * chooseEffect is fully wired; the rest get a JSON placeholder so designers can
- * see the shape and we can plumb them incrementally.
+ * Modal choices (including chooseEffect) dispatch through interaction actions.
  */
 export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   const [placement, setPlacement] = useState<ChoiceModalPlacement>("bottom");
@@ -712,8 +711,8 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
     }
   }, [action, submitInteraction]);
 
-  const effectInput = optionInput(action, "effectId");
-  if (effectInput) {
+  const effectInput = optionInput(action, "optionId") ?? optionInput(action, "effectId");
+  if (effectInput && (action.id === "resolveChooseEffect" || action.id === "resolveEffectTarget")) {
     const effects = effectInput.options;
     return (
       <>
@@ -726,16 +725,10 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
               type="button"
               className={classes.option}
               disabled={!action.enabled}
+              data-testid="choose-effect-option"
+              data-option-id={eff.id}
               onClick={() => {
-                // Effect resolution is handled engine-side via resolveCardToPlay
-                // for the chooseCardToPlay subtype, or the engine auto-applies
-                // for chooseEffect when the chooser submits a direct index.
-                // For this prototype we surface the option but rely on the
-                // engine's own auto-resolve for chooseEffect — manual wiring
-                // requires a new dispatch action which we'll add when the
-                // engine surfaces `resolveChooseEffect`.
-                // eslint-disable-next-line no-console
-                console.warn("chooseEffect id", eff.id, "not yet wired to a dispatch");
+                submitInteraction("resolveChooseEffect", { optionId: eff.id });
               }}
             >
               {textParam(eff.text.params, "label") ?? `Effect ${eff.id}`}
@@ -1577,22 +1570,17 @@ function targetZoneSort(zone: string | undefined): number {
 }
 
 function effectTargetSubtitle(required: number, max: number, hasMultipleZones: boolean): string {
-  const cardLabel = max === 1 ? "card" : "cards";
-  const selectionText =
-    required === 0
-      ? `Pick up to ${max} ${cardLabel}.`
-      : `Pick ${required === max ? required.toString() : `${required}-${max}`} ${cardLabel}.`;
+  const selectionText = `${interactionBoundsCopy(
+    { required: required > 0, min: required, max },
+    "card",
+  )}.`;
   return hasMultipleZones
     ? `${selectionText} Targets are grouped by source zone.`
     : `${selectionText} Hover for full card view.`;
 }
 
 function gigTargetSubtitle(required: number, max: number): string {
-  if (required === 0) {
-    return max === 1 ? "Pick up to 1 Gig." : `Pick up to ${max} Gigs.`;
-  }
-  const range = required === max ? required.toString() : `${required}-${max}`;
-  return `Pick ${range} Gig${max === 1 ? "" : "s"}.`;
+  return `${interactionBoundsCopy({ required: required > 0, min: required, max }, "Gig")}.`;
 }
 
 function gigDieSummary(

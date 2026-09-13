@@ -1,17 +1,13 @@
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
-import { attackHandTrashCost, beginAttack, canAttackWith, legalAttackTargets } from "../battle.ts";
+import { attackHandTrashCost, beginAttack } from "../battle.ts";
 import {
-  canPayCosts,
   enqueueEffectsForTrigger,
   enqueueInPlayEffectsForTrigger,
-  evaluateConditions,
+  enqueueMirroredInPlayEffectsForTrigger,
 } from "../effects.ts";
-import { isCardPlayRestricted, isPlayedRestedByPermanentEffect } from "../effects/permanent.ts";
 import { applyJudgeCommand } from "../judge.ts";
 import {
   cardName,
-  effectBlocksFor,
-  effectBlocksForInstance,
   emitEvent,
   emitLog,
   enqueueResolution,
@@ -23,16 +19,29 @@ import {
   shuffle,
 } from "../shared.ts";
 import {
-  consumeNextPlayCostModifiers,
   createChoicePrompt,
   drawTopCard,
+  finalizeMatchImmediately,
   formatCardList,
   getOpenCharacterSlots,
   moveCard,
+  placeStartingLife,
 } from "../state.ts";
 import type { EngineCommand, JoKenPoChoice, MatchSeat, MatchState } from "../types.ts";
+import {
+  canActivateEffect,
+  canAttachDon,
+  canChooseFirstPlayer,
+  canConcede,
+  canDeclareAttack,
+  canEndTurn,
+  canKeepHand,
+  canMulligan,
+  canPlayCard,
+  canStartGame,
+} from "./legality.ts";
+import { completeCharacterPlayFromHand, projectCharacterReplacementPrompt } from "./play.ts";
 import { handlePlayerPromptResolution } from "./prompt.ts";
-import { hasPendingNonJudgePrompt } from "./shared.ts";
 
 interface CommandMutationContext {
   joKenPoChoices: Partial<Record<MatchSeat, JoKenPoChoice>>;
@@ -170,6 +179,29 @@ export function applyQueuedCommandMutation(
   }
 
   switch (command.type) {
+    case "concede": {
+      // 1-2-3: a player may concede at any point — during setup or while the
+      // game is active, in any phase, mid-battle, or mid-prompt — and loses
+      // the game immediately. The only illegal moment is after the game has
+      // already finished.
+      const legality = canConcede(state);
+      if (!legality.ok) {
+        reason = legality.reason;
+        break;
+      }
+      // 1-2-4: no card effect can affect, replace, or prevent a concession,
+      // so this resolves as a direct state transition: no domain event is
+      // dispatched and no replacement/effect machinery is consulted.
+      const winner = otherSeat(command.seat);
+      finalizeMatchImmediately(
+        state,
+        winner,
+        "concession",
+        `${getPlayer(state, command.seat).playerName} concedes. ${getPlayer(state, winner).playerName} wins by concession.`,
+      );
+      accepted = true;
+      break;
+    }
     case "chooseJoKenPo": {
       if (state.status !== "setup" || state.setup.started) {
         reason = "Jo Ken Po is only available during setup.";
@@ -226,16 +258,9 @@ export function applyQueuedCommandMutation(
       break;
     }
     case "chooseFirstPlayer": {
-      if (state.status !== "setup" || state.setup.started) {
-        reason = "The first turn can only be chosen during setup.";
-        break;
-      }
-      if (state.setup.joKenPo.winner !== command.seat) {
-        reason = "Only the Jo Ken Po winner can choose who takes the first turn.";
-        break;
-      }
-      if (state.setup.joKenPo.firstPlayerDecided) {
-        reason = "The first turn has already been chosen.";
+      const legality = canChooseFirstPlayer(state, command.seat);
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
       state.config.firstPlayer = command.firstPlayer;
@@ -257,19 +282,12 @@ export function applyQueuedCommandMutation(
       break;
     }
     case "mulligan": {
-      if (state.status !== "setup" || state.setup.started) {
-        reason = "Mulligan is only available during setup.";
-        break;
-      }
-      if (!state.setup.joKenPo.firstPlayerDecided) {
-        reason = "Resolve Jo Ken Po and choose the first player before mulligan.";
+      const legality = canMulligan(state, command.seat);
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
       const player = getPlayer(state, command.seat);
-      if (state.setup.mulliganDecided[command.seat]) {
-        reason = "This player already made a mulligan choice.";
-        break;
-      }
       state.setup.mulliganDecided[command.seat] = true;
       state.setup.mulliganUsed[command.seat] = true;
       const returned = [...player.hand];
@@ -312,16 +330,9 @@ export function applyQueuedCommandMutation(
       break;
     }
     case "keepHand": {
-      if (state.status !== "setup" || state.setup.started) {
-        reason = "Opening hand choices are only available during setup.";
-        break;
-      }
-      if (!state.setup.joKenPo.firstPlayerDecided) {
-        reason = "Resolve Jo Ken Po and choose the first player before mulligan.";
-        break;
-      }
-      if (state.setup.mulliganDecided[command.seat]) {
-        reason = "This player already made a mulligan choice.";
+      const legality = canKeepHand(state, command.seat);
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
       state.setup.mulliganDecided[command.seat] = true;
@@ -343,18 +354,19 @@ export function applyQueuedCommandMutation(
       accepted = true;
       break;
     }
-    case "startGame":
-      if (state.status !== "setup" || state.setup.started) {
-        reason = "The match has already started.";
+    case "startGame": {
+      const legality = canStartGame(state, command.seat);
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
-      if (command.seat !== state.config.firstPlayer) {
-        reason = "Only the first player can start the match in this draft.";
-        break;
-      }
-      if (!state.setup.mulliganDecided.north || !state.setup.mulliganDecided.south) {
-        reason = "Both players must choose whether to take a mulligan before starting.";
-        break;
+      // 5-2-1-7: starting Life is placed after the opening-hand redraws
+      // (5-2-1-6), just before the first player starts their turn (5-2-1-8).
+      for (const seat of ["south", "north"] as const) {
+        if (!state.setup.lifePlaced[seat]) {
+          placeStartingLife(state, seat);
+          state.setup.lifePlaced[seat] = true;
+        }
       }
       state.status = "active";
       state.setup.started = true;
@@ -374,13 +386,11 @@ export function applyQueuedCommandMutation(
       });
       accepted = true;
       break;
-    case "endTurn":
-      if (state.status !== "active" || state.activeSeat !== command.seat) {
-        reason = "It is not this player's turn.";
-        break;
-      }
-      if (hasPendingNonJudgePrompt(state)) {
-        reason = "Resolve pending prompts before ending the turn.";
+    }
+    case "endTurn": {
+      const legality = canEndTurn(state, command.seat);
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
       state.phase = "end";
@@ -451,75 +461,33 @@ export function applyQueuedCommandMutation(
       });
       accepted = true;
       break;
+    }
     case "playCard": {
-      if (
-        state.status !== "active" ||
-        state.activeSeat !== command.seat ||
-        state.phase !== "main"
-      ) {
-        reason = "Cards can only be played during your main phase.";
+      const legality = canPlayCard(state, command.seat, command.instanceId, command.slotIndex);
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
       const instance = getInstance(state, command.instanceId);
-      if (instance.controller !== command.seat || instance.zone !== "hand") {
-        reason = "The selected card is not in the active player's hand.";
-        break;
-      }
       const card = getCard(instance.cardId);
       const player = getPlayer(state, command.seat);
-      if (isCardPlayRestricted(state, command.seat, command.instanceId, "hand")) {
-        reason = "A card effect prevents this card from being played.";
-        break;
-      }
       const cardCost = card.cardType === "leader" ? 0 : getCardCost(state, command.instanceId);
-      if (player.activeDon < cardCost) {
-        reason = "Not enough active DON!! to pay the cost.";
-        break;
-      }
 
       if (card.cardType === "character") {
         const openSlots = getOpenCharacterSlots(state, command.seat);
         const slotIndex = command.slotIndex ?? openSlots[0];
         if (slotIndex === undefined || !openSlots.includes(slotIndex)) {
-          reason = "A valid character slot is required.";
+          // 3-7-6-1: with a full Character area, the player reveals the card
+          // and trashes 1 of their Characters before completing the play.
+          projectCharacterReplacementPrompt(state, command.seat, command.instanceId);
+          accepted = true;
           break;
         }
-        player.activeDon -= cardCost;
-        player.restedDon += cardCost;
-        consumeNextPlayCostModifiers(state, command.instanceId);
-        moveCard(state, command.instanceId, command.seat, "character", {
-          slotIndex,
-          faceUp: true,
-          publicKnowledge: true,
-          actor: command.seat,
-        });
-        getInstance(state, command.instanceId).playedOnTurn = state.turnNumber;
-        getInstance(state, command.instanceId).rested = isPlayedRestedByPermanentEffect(
-          state,
-          command.seat,
-          command.instanceId,
-        );
-      } else if (card.cardType === "stage") {
-        player.activeDon -= cardCost;
-        player.restedDon += cardCost;
-        const existingStage = player.stageArea;
-        if (existingStage) {
-          moveCard(state, existingStage, getInstance(state, existingStage).owner, "trash", {
-            faceUp: true,
-            publicKnowledge: true,
-            actor: command.seat,
-          });
-        }
-        moveCard(state, command.instanceId, command.seat, "stage", {
-          faceUp: true,
-          publicKnowledge: true,
-          actor: command.seat,
-        });
-      } else if (card.cardType === "event") {
-        if (!effectBlocksFor(card, "main").length) {
-          reason = "This event does not have a playable [Main] effect.";
-          break;
-        }
+        completeCharacterPlayFromHand(state, command.seat, command.instanceId, slotIndex);
+        accepted = true;
+        break;
+      }
+      if (card.cardType === "event") {
         player.activeDon -= cardCost;
         player.restedDon += cardCost;
         emitEvent(state, "cardPlayed", command.seat, {
@@ -538,25 +506,32 @@ export function applyQueuedCommandMutation(
           publicKnowledge: true,
           actor: command.seat,
         });
-        enqueueInPlayEffectsForTrigger(
+        enqueueMirroredInPlayEffectsForTrigger(
           state,
+          command.seat,
           "whenYouActivateEvent",
-          { instanceId: command.instanceId, effectController: command.seat },
-          [command.seat],
-        );
-        enqueueInPlayEffectsForTrigger(
-          state,
           "whenOpponentActivatesEvent",
           { instanceId: command.instanceId, effectController: command.seat },
-          [otherSeat(command.seat)],
         );
         accepted = true;
         break;
-      } else {
-        reason = "Leaders cannot be played from hand.";
-        break;
       }
-
+      // canPlayCard rejects Leaders, so only Stages reach the shared play path.
+      player.activeDon -= cardCost;
+      player.restedDon += cardCost;
+      const existingStage = player.stageArea;
+      if (existingStage) {
+        moveCard(state, existingStage, getInstance(state, existingStage).owner, "trash", {
+          faceUp: true,
+          publicKnowledge: true,
+          actor: command.seat,
+        });
+      }
+      moveCard(state, command.instanceId, command.seat, "stage", {
+        faceUp: true,
+        publicKnowledge: true,
+        actor: command.seat,
+      });
       emitEvent(state, "cardPlayed", command.seat, {
         sourceCardId: card.id,
         sourceInstanceId: command.instanceId,
@@ -568,48 +543,18 @@ export function applyQueuedCommandMutation(
         visibility: "public",
       });
       enqueueEffectsForTrigger(state, command.instanceId, command.seat, "onPlay", undefined);
-      if (card.cardType === "character") {
-        const triggerEvent = {
-          instanceId: command.instanceId,
-          effectController: command.seat,
-          fromZone: "hand" as const,
-        };
-        enqueueInPlayEffectsForTrigger(state, "whenYouPlayCharacter", triggerEvent, [command.seat]);
-        enqueueInPlayEffectsForTrigger(state, "whenOpponentPlaysCharacter", triggerEvent, [
-          otherSeat(command.seat),
-        ]);
-        if (card.trigger || effectBlocksFor(card, "trigger").length > 0) {
-          enqueueInPlayEffectsForTrigger(state, "whenTriggerCharacterPlayed", triggerEvent, [
-            command.seat,
-          ]);
-        }
-      }
       accepted = true;
       break;
     }
     case "attachDon": {
-      if (
-        state.status !== "active" ||
-        state.activeSeat !== command.seat ||
-        state.phase !== "main"
-      ) {
-        reason = "DON!! can only be attached during your main phase.";
-        break;
-      }
       const amount = command.amount ?? 1;
+      const legality = canAttachDon(state, command.seat, command.targetId, amount);
+      if (!legality.ok) {
+        reason = legality.reason;
+        break;
+      }
       const player = getPlayer(state, command.seat);
-      if (player.activeDon < amount) {
-        reason = "Not enough active DON!! to attach.";
-        break;
-      }
       const target = getInstance(state, command.targetId);
-      if (
-        target.controller !== command.seat ||
-        (target.zone !== "leader" && target.zone !== "character")
-      ) {
-        reason = "DON!! can only be attached to your leader or characters.";
-        break;
-      }
       player.activeDon -= amount;
       target.attachedDon += amount;
       emitEvent(state, "donAttached", command.seat, {
@@ -638,30 +583,14 @@ export function applyQueuedCommandMutation(
       break;
     }
     case "declareAttack": {
-      if (
-        state.status !== "active" ||
-        state.activeSeat !== command.seat ||
-        state.phase !== "main"
-      ) {
-        reason = "Attacks can only be declared during your main phase.";
-        break;
-      }
-      if (!canAttackWith(state, command.seat, command.attackerId)) {
-        reason = "The selected attacker cannot attack.";
-        break;
-      }
-      const targetIds = legalAttackTargets(state, command.seat, command.attackerId);
-      if (!targetIds.includes(command.targetId)) {
-        reason = "The selected target cannot be attacked.";
+      const legality = canDeclareAttack(state, command.seat, command.attackerId, command.targetId);
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
       const handTrashAmount = attackHandTrashCost(state, command.attackerId);
       if (handTrashAmount > 0) {
         const candidateIds = [...getPlayer(state, command.seat).hand];
-        if (candidateIds.length < handTrashAmount) {
-          reason = `The attack requires trashing ${handTrashAmount} card(s) from hand.`;
-          break;
-        }
         createChoicePrompt(state, {
           choiceKind: "costPayment",
           seat: command.seat,
@@ -695,65 +624,15 @@ export function applyQueuedCommandMutation(
       break;
     }
     case "activateEffect": {
-      if (
-        state.status !== "active" ||
-        state.activeSeat !== command.seat ||
-        state.phase !== "main"
-      ) {
-        reason = "Effects can only be activated during your main phase.";
-        break;
-      }
-      const source = getInstance(state, command.sourceInstanceId);
-      if (
-        source.controller !== command.seat ||
-        !["leader", "character", "stage"].includes(source.zone)
-      ) {
-        reason = "The selected source is not controllable from the field.";
-        break;
-      }
-      const activationBlocks = effectBlocksForInstance(
+      const legality = canActivateEffect(
         state,
+        command.seat,
         command.sourceInstanceId,
         command.trigger,
+        command.trashHandIds,
       );
-      if (!activationBlocks.length) {
-        reason = "This card does not have that activation timing.";
-        break;
-      }
-      const unusedActivationBlocks = activationBlocks.filter(
-        (block, index) =>
-          !block.oncePerTurn ||
-          !source.usedEffectKeys.includes(block.oncePerTurnKey ?? `${command.trigger}:${index}`),
-      );
-      if (!unusedActivationBlocks.length) {
-        reason = "This effect has already been used this turn.";
-        break;
-      }
-      const conditionEligibleActivationBlocks = unusedActivationBlocks.filter((block) => {
-        const conditions = evaluateConditions(
-          state,
-          command.seat,
-          command.sourceInstanceId,
-          block.conditions,
-        );
-        return !conditions.supported || conditions.matches;
-      });
-      if (!conditionEligibleActivationBlocks.length) {
-        reason = "The activation conditions are not met.";
-        break;
-      }
-      if (
-        !conditionEligibleActivationBlocks.some((block) =>
-          canPayCosts(
-            state,
-            command.seat,
-            command.sourceInstanceId,
-            block.costs,
-            command.trashHandIds,
-          ),
-        )
-      ) {
-        reason = "The activation costs cannot be paid.";
+      if (!legality.ok) {
+        reason = legality.reason;
         break;
       }
       const enqueued = enqueueEffectsForTrigger(

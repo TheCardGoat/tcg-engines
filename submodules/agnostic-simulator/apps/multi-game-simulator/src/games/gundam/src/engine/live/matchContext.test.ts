@@ -1,6 +1,16 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { getMatchmakingReturnUrl, resolveMatchOverviewDestination } from "./matchContext.ts";
+import {
+  buildGundamReplayHref,
+  getMatchmakingReturnUrl,
+  resolveMatchOverviewDestination,
+} from "./matchContext.ts";
+
+describe("buildGundamReplayHref", () => {
+  it("keeps replay navigation inside the mounted Gundam simulator", () => {
+    expect(buildGundamReplayHref("game id")).toBe("/gundam/simulator/replay/game%20id");
+  });
+});
 
 describe("getMatchmakingReturnUrl", () => {
   afterEach(() => {
@@ -32,7 +42,7 @@ describe("getMatchmakingReturnUrl", () => {
 });
 
 describe("resolveMatchOverviewDestination", () => {
-  it("preserves the mounted simulator basename", () => {
+  it("preserves the mount while removing browser-selected identity", () => {
     const destination = resolveMatchOverviewDestination(
       {
         object: "match",
@@ -46,6 +56,6 @@ describe("resolveMatchOverviewDestination", () => {
     );
 
     expect(destination.pathname).toBe("/gundam/simulator/matches/match_1/games/game_1");
-    expect(destination.search).toBe("?playerId=p1");
+    expect(destination.search).toBe("");
   });
 });

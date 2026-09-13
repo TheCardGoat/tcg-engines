@@ -1,8 +1,12 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { createMatch, createSt01MirrorPracticeConfig } from "@tcg/op-engine/practice-st01";
+import {
+  createMatch,
+  createSt01MirrorPracticeConfig,
+  placeStartingLife,
+} from "@tcg/op-engine/practice-st01";
 
 import { OnePieceSimulatorProviders } from "../App.tsx";
 import { OnePieceSimulatorShell } from "../components/OnePieceSimulatorShell.tsx";
@@ -153,35 +157,102 @@ describe("One Piece simulator board prototype", () => {
     });
   });
 
-  it("renders a board-only shell with a floating event log", async () => {
+  it("renders the shared collapsible shell with participant actions in the sidebar", async () => {
     renderShell();
 
-    expect(screen.queryByTestId("one-piece-sidebar")).toBeNull();
-    expect(screen.queryByLabelText("Collapse sidebar")).toBeNull();
-    expect(screen.queryByLabelText("Expand sidebar")).toBeNull();
-    expect(screen.queryByTestId("event-log")).toBeNull();
-
-    fireEvent.click(screen.getByLabelText("Expand event log"));
-
+    expect(screen.getByTestId("one-piece-sidebar")).not.toBeNull();
+    expect(screen.getByLabelText("Collapse sidebar")).not.toBeNull();
     expect(screen.getByTestId("event-log")).not.toBeNull();
     expect(screen.getByText("Loaded visual fixture: Main phase reference.")).not.toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
+    expect(screen.getByRole("menuitem", { name: "Settings" })).not.toBeNull();
+    expect(screen.getByRole("menuitem", { name: "Report bug" })).not.toBeNull();
 
-    fireEvent.click(screen.getByLabelText("Collapse event log"));
+    // The three legacy menu items collapsed into one tabbed settings dialog.
+    fireEvent.click(screen.getByRole("menuitem", { name: "Settings" }));
+    const settingsDialog = within(screen.getByRole("dialog", { name: "Settings" }));
+    expect(settingsDialog.getAllByRole("tab").map((tab) => tab.textContent)).toEqual([
+      "Simulator",
+      "Game",
+      "Account",
+    ]);
+    fireEvent.click(screen.getByRole("button", { name: "Close settings" }));
+
+    fireEvent.click(screen.getByLabelText("Collapse sidebar"));
 
     await waitFor(() => {
-      expect(screen.queryByTestId("event-log")).toBeNull();
+      expect(screen.queryByTestId("one-piece-sidebar")).toBeNull();
     });
+    expect(screen.getByLabelText("Expand sidebar")).not.toBeNull();
+  });
 
-    expect(screen.queryByLabelText("Settings")).toBeNull();
+  it("opens a bug report from More with the current One Piece evidence context", () => {
+    const fixture = getOnePieceVisualFixture("main-phase-reference");
+    const board = buildOnePieceBoardFromFixture(fixture!);
+    render(
+      <OnePieceSimulatorProviders>
+        <OnePieceSimulatorShell
+          board={board}
+          bugReportContext={{
+            gameSlug: "one-piece",
+            turn: board.table.status.turn,
+            stateVersion: board.table.status.stateVersion,
+            playerCount: 2,
+          }}
+        />
+      </OnePieceSimulatorProviders>,
+    );
+
+    fireEvent.click(screen.getByRole("tab", { name: "More" }));
+    fireEvent.click(screen.getByRole("button", { name: "Report a bug from this turn" }));
+    expect(screen.getByRole("dialog", { name: "Report a One Piece bug" })).not.toBeNull();
+  });
+
+  it("keeps universal match actions in the shared dock", () => {
+    const fixture = getOnePieceVisualFixture("main-phase-reference");
+    const board = buildOnePieceBoardFromFixture(fixture!);
+    const onAction = vi.fn();
+    const passTurn = { type: "endTurn" as const, seat: "south" as const, label: "End turn" };
+    const concede = {
+      type: "concede" as const,
+      seat: "south" as const,
+      label: "Concede the game",
+    };
+
+    render(
+      <OnePieceSimulatorProviders>
+        <OnePieceSimulatorShell board={board} actions={[concede, passTurn]} onAction={onAction} />
+      </OnePieceSimulatorProviders>,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Pass turn" }));
+    expect(onAction).toHaveBeenCalledWith(passTurn);
+    expect(
+      (
+        screen.getByRole("button", {
+          name: "No undoable move available",
+        }) as HTMLButtonElement
+      ).disabled,
+    ).toBe(true);
+
+    fireEvent.click(screen.getByRole("button", { name: "Concede" }));
+    const dialog = screen.getByRole("dialog", { name: "Concede match?" });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Concede" }));
+    expect(onAction).toHaveBeenCalledWith(concede);
   });
 
   it("projects relevant setup history into categorized event log entries", () => {
     const state = createMatch(createSt01MirrorPracticeConfig({ firstPlayer: "south" }));
-    const board = buildOnePieceBoardFromState(state, {
-      id: "setup-history",
-      label: "Setup history",
-      description: "Setup history projection test.",
-    });
+    placeStartingLife(state, "south");
+    placeStartingLife(state, "north");
+    const board = buildOnePieceBoardFromState(
+      state as Parameters<typeof buildOnePieceBoardFromState>[0],
+      {
+        id: "setup-history",
+        label: "Setup history",
+        description: "Setup history projection test.",
+      },
+    );
 
     expect(board.eventLog.length).toBeGreaterThan(5);
     expect(board.eventLog.some((entry) => entry.message.includes("Cards drawn"))).toBe(true);
@@ -473,7 +544,9 @@ describe("One Piece simulator board prototype", () => {
 
     expect(screen.getByRole("dialog", { name: "Choose First Turn" })).not.toBeNull();
 
-    fireEvent.click(screen.getByRole("button", { name: "Let Practice Bot take the first turn" }));
+    fireEvent.click(
+      screen.getAllByRole("button", { name: "Let Practice Bot take the first turn" }).at(-1)!,
+    );
     expect(onAction).toHaveBeenCalledWith(letBotStart);
   });
 

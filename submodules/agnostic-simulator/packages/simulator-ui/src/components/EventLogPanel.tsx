@@ -1,15 +1,19 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import {
   IconArrowRight,
   IconBolt,
+  IconChevronDown,
+  IconChevronRight,
   IconDotsVertical,
   IconMessageCircle,
   IconSettings,
   IconSwords,
+  IconTarget,
 } from "@tabler/icons-react";
 
 import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
-import { copyTextToClipboard, safeStringify } from "@tcg/simulator-runtime/debug";
+import { copyTextToClipboard } from "@tcg/simulator-runtime/debug";
 
 import { cx } from "../class-names";
 import { useStickToBottom } from "../hooks/useStickToBottom";
@@ -19,15 +23,38 @@ import classes from "./EventLogPanel.module.css";
 export interface EventLogPanelProps {
   entries: readonly SimulatorEventLogEntry[];
   highlightedEntityIds?: readonly string[];
+  /** Viewer-safe entities that currently have a spatial representation on the board. */
+  availableEntityIds?: readonly string[];
   onHighlightEntity?: (entityIds: readonly string[]) => void;
-  onEntryClick?: (entry: SimulatorEventLogEntry) => void;
   renderMessage?: (entry: SimulatorEventLogEntry) => ReactNode;
+  /** Allows a game to enrich semantic section labels without changing the log projection. */
+  renderSectionLabel?: (section: NonNullable<SimulatorEventLogEntry["section"]>) => ReactNode;
   chatMessages?: readonly ChatMessage[];
+  /** Enables the built-in player-readable log export. */
+  readableCopy?: boolean;
+  /** Overrides the built-in player-readable export when supplied. */
   copyText?: string;
+  /** Optional diagnostic projection export; callers should expose this only in development. */
   rawCopyText?: string;
   embedded?: boolean;
+  /** Parent activity tabs already name this panel, so the redundant title bar can be removed. */
+  showHeader?: boolean;
+  /** Optional host for the options control when a product shell owns the visible header. */
+  controlsContainer?: Element | null;
   turnExpansion?: "all" | "latest";
+  /**
+   * Section groups: "all" (default) renders every section's rows; "latest"
+   * collapses every section except the newest one per expanded turn into a
+   * single clickable summary row showing the section's `summary` when present.
+   */
+  sectionExpansion?: "all" | "latest";
+  /** "always" keeps live activity pinned to the newest row after every update. */
+  autoScroll?: "when-near-bottom" | "always";
+  /** Optional seat display names for speaker labels; defaults to generic P1/P2 chips. */
+  seatLabels?: { player?: string; opponent?: string };
 }
+
+type SeatLabels = NonNullable<EventLogPanelProps["seatLabels"]>;
 
 type TagFilter = "all" | "move" | "combat" | "ability" | "system" | "chat";
 
@@ -44,12 +71,21 @@ type EventLogChunk =
       key: string;
       section: NonNullable<SimulatorEventLogEntry["section"]>;
       entries: SimulatorEventLogEntry[];
+      children: EventLogChunk[];
     }
   | {
       type: "chat";
       key: string;
       message: ChatMessage;
     };
+
+type SectionChunk = Extract<EventLogChunk, { type: "section" }>;
+
+/** Collapsed-section interaction, active only when `sectionExpansion` is "latest". */
+interface SectionToggleControl {
+  isCollapsed(chunk: SectionChunk, depth: number): boolean;
+  onToggle(chunk: SectionChunk): void;
+}
 
 type ActivityRow =
   | {
@@ -89,18 +125,44 @@ function speakerClass(seatId: string | undefined): string | undefined {
   return classes.system;
 }
 
-function speakerLabel(seatId: string | undefined): string {
+function speakerLabel(seatId: string | undefined, seatLabels?: SeatLabels): string {
   if (!seatId) return "SYS";
-  if (seatId === "player" || seatId === "p1") return "P1";
-  if (seatId === "opponent" || seatId === "p2") return "P2";
+  if (seatId === "player" || seatId === "p1") return seatLabels?.player ?? "P1";
+  if (seatId === "opponent" || seatId === "p2") return seatLabels?.opponent ?? "P2";
   return seatId.slice(0, 3).toUpperCase();
 }
 
-function speakerAccessibleLabel(seatId: string | undefined): string {
+function speakerAccessibleLabel(seatId: string | undefined, seatLabels?: SeatLabels): string {
   if (!seatId) return "System";
-  if (seatId === "player" || seatId === "p1") return "You";
-  if (seatId === "opponent" || seatId === "p2") return "Rival";
-  return speakerLabel(seatId);
+  if (seatId === "player" || seatId === "p1") return seatLabels?.player ?? "You";
+  if (seatId === "opponent" || seatId === "p2") return seatLabels?.opponent ?? "Rival";
+  return speakerLabel(seatId, seatLabels);
+}
+
+function SectionActorMarker({
+  seatId,
+  seatLabels,
+}: {
+  readonly seatId: string;
+  readonly seatLabels?: SeatLabels;
+}) {
+  const shortLabel =
+    seatId === "player" || seatId === "p1"
+      ? "Y"
+      : seatId === "opponent" || seatId === "p2"
+        ? "O"
+        : speakerLabel(seatId, seatLabels).slice(0, 1);
+  const label = `Played by ${speakerAccessibleLabel(seatId, seatLabels)}`;
+  return (
+    <span
+      className={cx(classes.sectionActor, speakerClass(seatId))}
+      data-section-actor={seatId}
+      aria-label={label}
+      title={label}
+    >
+      {shortLabel}
+    </span>
+  );
 }
 
 function primaryTag(entry: SimulatorEventLogEntry): PrimaryTag {
@@ -137,6 +199,7 @@ function eventTagIcon(tag: PrimaryTag): typeof IconArrowRight {
 }
 
 function isRoutineEntry(entry: SimulatorEventLogEntry): boolean {
+  if (entry.importance === "routine") return true;
   if (entry.tags.includes("system")) return true;
   return (
     entry.message.startsWith("Phase changed ") ||
@@ -149,26 +212,36 @@ function normalizePhase(phase: string): string {
   return phase.trim().replace(/[-_]+/g, " ");
 }
 
-function displayPhase(phase: string): string {
-  const normalized = normalizePhase(phase);
-  return normalized.length > 0 ? normalized : "Phase";
-}
-
-function phaseSummary(entries: readonly SimulatorEventLogEntry[]): string {
+function phaseSummary(entries: readonly SimulatorEventLogEntry[]): string | null {
   const phases: string[] = [];
   for (const entry of entries) {
-    const phase = displayPhase(entry.phase);
+    const phase = normalizePhase(entry.phase);
+    if (phase.length === 0) continue;
     if (!phases.includes(phase)) {
       phases.push(phase);
     }
   }
-  if (phases.length === 0) return "No phase";
+  if (phases.length === 0) return null;
   if (phases.length <= 2) return phases.join(" / ");
   return `${phases.slice(0, 2).join(" / ")} +${phases.length - 2}`;
 }
 
 function entryCountLabel(count: number): string {
   return count === 1 ? "1 entry" : `${count} entries`;
+}
+
+function SectionEntryCount({ count }: { readonly count: number }) {
+  const label = entryCountLabel(count);
+  return (
+    <span
+      className={classes.sectionCount}
+      data-entry-count={count}
+      aria-label={label}
+      title={label}
+    >
+      {count}
+    </span>
+  );
 }
 
 function activitySummaryLabel(entryCount: number, chatCount: number): string {
@@ -181,17 +254,27 @@ function activitySummaryLabel(entryCount: number, chatCount: number): string {
 export function EventLogPanel({
   entries,
   highlightedEntityIds = [],
+  availableEntityIds,
   onHighlightEntity,
-  onEntryClick,
   renderMessage,
+  renderSectionLabel,
   chatMessages = [],
+  readableCopy = false,
   copyText,
   rawCopyText,
   embedded = false,
+  showHeader = true,
+  controlsContainer,
   turnExpansion = "all",
+  sectionExpansion = "all",
+  autoScroll = "when-near-bottom",
+  seatLabels,
 }: EventLogPanelProps) {
   const [activeFilter, setActiveFilter] = useState<TagFilter>("all");
   const [turnExpansionOverrides, setTurnExpansionOverrides] = useState<Map<number, boolean>>(
+    new Map(),
+  );
+  const [sectionExpansionOverrides, setSectionExpansionOverrides] = useState<Map<string, boolean>>(
     new Map(),
   );
   const [copyStatus, setCopyStatus] = useState<"readable" | "raw" | "failed" | null>(null);
@@ -217,8 +300,16 @@ export function EventLogPanel({
     });
   }, []);
 
+  const toggleSection = useCallback((sectionId: string, currentlyExpanded: boolean) => {
+    setSectionExpansionOverrides((prev) => {
+      const next = new Map(prev);
+      next.set(sectionId, !currentlyExpanded);
+      return next;
+    });
+  }, []);
+
   const grouped = useMemo(() => {
-    const groups = new Map<number, ActivityRow[]>();
+    const rowGroups = new Map<number, ActivityRow[]>();
     const eventRows: Array<Extract<ActivityRow, { type: "entry" }>> = entries.map(
       (entry, index) => ({
         type: "entry",
@@ -238,9 +329,9 @@ export function EventLogPanel({
       if (activeFilter !== "all" && !entry.tags.includes(activeFilter)) {
         continue;
       }
-      const list = groups.get(row.turn) ?? [];
+      const list = rowGroups.get(row.turn) ?? [];
       list.push(row);
-      groups.set(row.turn, list);
+      rowGroups.set(row.turn, list);
     }
 
     if (activeFilter === "all" || activeFilter === "chat") {
@@ -248,7 +339,7 @@ export function EventLogPanel({
       chatMessages.forEach((message, index) => {
         const epochMs = parseTimestamp(message.timestamp, Number.MAX_SAFE_INTEGER - index);
         const turn = turnForChatMessage(epochMs, orderedEventRows);
-        const list = groups.get(turn) ?? [];
+        const list = rowGroups.get(turn) ?? [];
         list.push({
           type: "chat",
           key: `chat:${message.id}`,
@@ -257,25 +348,28 @@ export function EventLogPanel({
           sequence: entries.length + index,
           message,
         });
-        groups.set(turn, list);
+        rowGroups.set(turn, list);
       });
     }
 
-    for (const list of groups.values()) {
-      list.sort(compareActivityRows);
+    // Chunk per turn once per memo run instead of on every render; the turn
+    // headers still read the sorted rows for phase summaries and counts.
+    const groups = new Map<number, { rows: ActivityRow[]; chunks: EventLogChunk[] }>();
+    for (const [turn, rows] of rowGroups) {
+      rows.sort(compareActivityRows);
+      groups.set(turn, { rows, chunks: buildEventLogChunks(rows) });
     }
-
     return groups;
   }, [activeFilter, chatMessages, entries]);
 
   const sortedTurns = useMemo(() => Array.from(grouped.keys()).sort((a, b) => a - b), [grouped]);
   const { scrollRef, onScroll } = useStickToBottom<HTMLDivElement>(
     [entries.length, chatMessages.length, activeFilter, sortedTurns.length],
-    { thresholdPx: 48 },
+    { thresholdPx: 48, always: autoScroll === "always" },
   );
 
-  const showCopyActions = copyText !== undefined || rawCopyText !== undefined;
-  const readableCopyText = copyText ?? formatEventLogForClipboard(entries);
+  const showReadableCopy = readableCopy || copyText !== undefined;
+  const showCopyActions = showReadableCopy || rawCopyText !== undefined;
   const activitySummary = activitySummaryLabel(entries.length, chatMessages.length);
 
   const copyEventLog = useCallback(async (kind: "readable" | "raw", text: string) => {
@@ -315,15 +409,22 @@ export function EventLogPanel({
     const prev = entriesInGroup[index - 1];
     const groupedWithPrev =
       prev !== undefined && speakerClass(prev.seatId) === speakerClass(entry.seatId);
-    const isHighlighted =
-      entry.entityIds && entry.entityIds.some((id) => highlightedEntityIds.includes(id));
+    const entityIds = entry.entityIds ?? [];
+    const locatableEntityIds =
+      availableEntityIds === undefined
+        ? entityIds
+        : entityIds.filter((id) => availableEntityIds.includes(id));
+    const isHighlighted = locatableEntityIds.some((id) => highlightedEntityIds.includes(id));
+    const hasEntityReference = entityIds.length > 0;
+    const canLocate = locatableEntityIds.length > 0 && onHighlightEntity !== undefined;
+    const locateLabel = isHighlighted ? "Clear board highlight" : "Show card on board";
+    const locateTooltipId = `${controlsId}-locate-${entry.id}`;
     const tag = primaryTag(entry);
     const TagIcon = eventTagIcon(tag);
-    const metaLabel = `${speakerAccessibleLabel(entry.seatId)}, ${tag}`;
+    const metaLabel = `${speakerAccessibleLabel(entry.seatId, seatLabels)}, ${tag}`;
     return (
-      <button
+      <div
         key={entry.id}
-        type="button"
         className={cx(
           classes.entry,
           speakerClass(entry.seatId),
@@ -332,10 +433,7 @@ export function EventLogPanel({
         )}
         data-primary-tag={tag}
         data-routine={isRoutineEntry(entry) ? "true" : undefined}
-        onClick={() => {
-          if (entry.entityIds) onHighlightEntity?.(entry.entityIds);
-          onEntryClick?.(entry);
-        }}
+        data-interactive={canLocate ? "true" : undefined}
       >
         <span
           className={cx(classes.entryMeta, tagClass(tag))}
@@ -345,7 +443,28 @@ export function EventLogPanel({
           <TagIcon size={13} stroke={2.2} aria-hidden="true" />
         </span>
         <p className={classes.message}>{renderMessage ? renderMessage(entry) : entry.message}</p>
-      </button>
+        {canLocate ? (
+          <span className={classes.entryActions}>
+            <span className={classes.locateTooltip}>
+              <button
+                type="button"
+                className={classes.locateButton}
+                aria-pressed={isHighlighted}
+                aria-label={locateLabel}
+                aria-describedby={locateTooltipId}
+                onClick={() => onHighlightEntity(isHighlighted ? [] : locatableEntityIds)}
+              >
+                <IconTarget size={14} stroke={2.2} aria-hidden="true" />
+              </button>
+              <span id={locateTooltipId} className={classes.locateTooltipContent} role="tooltip">
+                {locateLabel}
+              </span>
+            </span>
+          </span>
+        ) : hasEntityReference && availableEntityIds !== undefined ? (
+          <span className={classes.entryAvailability}>Not currently on board</span>
+        ) : null}
+      </div>
     );
   };
 
@@ -378,7 +497,140 @@ export function EventLogPanel({
     );
   };
 
-  const renderChunks = (chunks: readonly EventLogChunk[]) => {
+  function renderSectionChildren(
+    chunks: readonly EventLogChunk[],
+    sectionControl: SectionToggleControl | undefined,
+    depth: number,
+  ): ReactNode[] {
+    return chunks.map((chunk) => {
+      if (chunk.type === "chat") return renderChatMessage(chunk.message);
+      if (chunk.type === "section") return renderSectionChunk(chunk, sectionControl, depth);
+      return (
+        <div key={chunk.key} className={classes.entryList}>
+          {chunk.entries.map((entry, index) => renderEntry(entry, index, chunk.entries))}
+        </div>
+      );
+    });
+  }
+
+  function renderSectionChunk(
+    chunk: SectionChunk,
+    sectionControl: SectionToggleControl | undefined,
+    depth: number,
+  ): ReactNode {
+    // Collapsed sections drop their rows from the DOM entirely (bounding a
+    // long match to one row per group) and surface the projection-stamped
+    // summary as the row's text.
+    if (sectionControl?.isCollapsed(chunk, depth)) {
+      return (
+        <div
+          key={chunk.key}
+          className={classes.sectionGroup}
+          data-section-tone={chunk.section.tone}
+          data-section-depth={depth}
+          data-collapsed="true"
+          role="group"
+          aria-label={chunk.section.label}
+        >
+          <div
+            className={classes.sectionHeaderButton}
+            data-testid="event-log-section"
+            data-expanded="false"
+          >
+            <span className={classes.sectionHeaderText}>
+              <span className={classes.sectionEyebrow}>
+                {chunk.section.actorSeatId ? (
+                  <SectionActorMarker seatId={chunk.section.actorSeatId} seatLabels={seatLabels} />
+                ) : null}
+                <span className={classes.sectionLabel}>{chunk.section.label}</span>
+              </span>
+              <span className={classes.sectionSummary}>
+                {renderSectionLabel
+                  ? renderSectionLabel({
+                      ...chunk.section,
+                      label: chunk.section.summary ?? chunk.section.label,
+                    })
+                  : (chunk.section.summary ?? chunk.section.label)}
+              </span>
+            </span>
+            <button
+              type="button"
+              className={classes.sectionToggleButton}
+              aria-label={`Expand ${chunk.section.label}`}
+              aria-expanded={false}
+              onClick={() => sectionControl.onToggle(chunk)}
+            >
+              <SectionEntryCount count={chunk.entries.length} />
+              <IconChevronRight size={13} stroke={2.2} aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div
+        key={chunk.key}
+        className={classes.sectionGroup}
+        data-section-tone={chunk.section.tone}
+        data-section-depth={depth}
+        role="group"
+        aria-label={chunk.section.label}
+      >
+        {sectionControl ? (
+          <div
+            className={classes.sectionHeaderButton}
+            data-testid="event-log-section"
+            data-expanded="true"
+          >
+            <span className={classes.sectionHeading}>
+              {chunk.section.actorSeatId ? (
+                <SectionActorMarker seatId={chunk.section.actorSeatId} seatLabels={seatLabels} />
+              ) : null}
+              <span className={classes.sectionLabel}>
+                {renderSectionLabel ? renderSectionLabel(chunk.section) : chunk.section.label}
+              </span>
+              {chunk.section.meta ? (
+                <span className={classes.sectionMeta}>{chunk.section.meta}</span>
+              ) : null}
+            </span>
+            <button
+              type="button"
+              className={classes.sectionToggleButton}
+              aria-label={`Collapse ${chunk.section.label}`}
+              aria-expanded={true}
+              onClick={() => sectionControl.onToggle(chunk)}
+            >
+              <SectionEntryCount count={chunk.entries.length} />
+              <IconChevronDown size={13} stroke={2.2} aria-hidden="true" />
+            </button>
+          </div>
+        ) : (
+          <div className={classes.sectionHeader}>
+            <span className={classes.sectionHeading}>
+              {chunk.section.actorSeatId ? (
+                <SectionActorMarker seatId={chunk.section.actorSeatId} seatLabels={seatLabels} />
+              ) : null}
+              <span className={classes.sectionLabel}>
+                {renderSectionLabel ? renderSectionLabel(chunk.section) : chunk.section.label}
+              </span>
+              <SectionEntryCount count={chunk.entries.length} />
+              {chunk.section.meta ? (
+                <span className={classes.sectionMeta}>{chunk.section.meta}</span>
+              ) : null}
+            </span>
+          </div>
+        )}
+        <div className={classes.sectionEntries}>
+          {renderSectionChildren(chunk.children, sectionControl, depth + 1)}
+        </div>
+      </div>
+    );
+  }
+
+  const renderChunks = (
+    chunks: readonly EventLogChunk[],
+    sectionControl?: SectionToggleControl,
+  ) => {
     let previousPhase: string | null = null;
     const rendered: ReactNode[] = [];
     for (const chunk of chunks) {
@@ -388,8 +640,8 @@ export function EventLogPanel({
       }
       const firstEntry = chunk.entries[0];
       if (!firstEntry) continue;
-      const phase = displayPhase(firstEntry.phase);
-      if (phase !== previousPhase) {
+      const phase = normalizePhase(firstEntry.phase);
+      if (phase.length > 0 && phase !== previousPhase) {
         rendered.push(
           <div key={`phase:${chunk.key}:${phase}`} className={classes.phaseHeader}>
             <span>{phase}</span>
@@ -405,23 +657,7 @@ export function EventLogPanel({
         );
         continue;
       }
-      rendered.push(
-        <div
-          key={chunk.key}
-          className={classes.sectionGroup}
-          data-section-tone={chunk.section.tone}
-          role="group"
-          aria-label={chunk.section.label}
-        >
-          <div className={classes.sectionHeader}>
-            <span className={classes.sectionLabel}>{chunk.section.label}</span>
-            <span className={classes.sectionCount}>{entryCountLabel(chunk.entries.length)}</span>
-          </div>
-          <div className={classes.sectionEntries}>
-            {chunk.entries.map((entry, index) => renderEntry(entry, index, chunk.entries))}
-          </div>
-        </div>,
-      );
+      rendered.push(renderSectionChunk(chunk, sectionControl, 0));
     }
     return rendered;
   };
@@ -433,22 +669,44 @@ export function EventLogPanel({
       data-testid="event-log"
       data-count={entries.length}
     >
-      <div className={classes.header}>
-        <h3 className={classes.title}>Event log</h3>
-        <div className={classes.headerActions}>
-          <button
-            type="button"
-            className={classes.controlsButton}
-            aria-label="Event log options"
-            aria-expanded={controlsOpen}
-            aria-controls={controlsId}
-            title="Event log options"
-            onClick={() => setControlsOpen((open) => !open)}
-          >
-            <IconDotsVertical size={15} stroke={2.4} aria-hidden="true" />
-          </button>
+      {showHeader ? (
+        <div className={classes.header}>
+          <h3 className={classes.title}>Event log</h3>
+          {controlsContainer ? (
+            createPortal(
+              <EventLogControls
+                controlsId={controlsId}
+                controlsOpen={controlsOpen}
+                onToggle={() => setControlsOpen((open) => !open)}
+              />,
+              controlsContainer,
+            )
+          ) : (
+            <EventLogControls
+              controlsId={controlsId}
+              controlsOpen={controlsOpen}
+              onToggle={() => setControlsOpen((open) => !open)}
+            />
+          )}
         </div>
-      </div>
+      ) : controlsContainer ? (
+        createPortal(
+          <EventLogControls
+            controlsId={controlsId}
+            controlsOpen={controlsOpen}
+            onToggle={() => setControlsOpen((open) => !open)}
+          />,
+          controlsContainer,
+        )
+      ) : (
+        <div className={classes.header}>
+          <EventLogControls
+            controlsId={controlsId}
+            controlsOpen={controlsOpen}
+            onToggle={() => setControlsOpen((open) => !open)}
+          />
+        </div>
+      )}
       {controlsOpen ? (
         <div
           id={controlsId}
@@ -469,7 +727,10 @@ export function EventLogPanel({
                   key={tag}
                   type="button"
                   className={cx(classes.filter, activeFilter === tag && classes.filterActive)}
-                  onClick={() => setActiveFilter(tag)}
+                  onClick={() => {
+                    setActiveFilter(tag);
+                    setControlsOpen(false);
+                  }}
                   aria-pressed={activeFilter === tag}
                 >
                   <span>{TAG_LABELS[tag]}</span>
@@ -483,11 +744,16 @@ export function EventLogPanel({
             <div className={classes.controlsSection}>
               <span className={classes.controlsLabel}>Copy</span>
               <div className={classes.copyActions}>
-                {copyText !== undefined ? (
+                {showReadableCopy ? (
                   <button
                     type="button"
                     className={classes.copyButton}
-                    onClick={() => void copyEventLog("readable", readableCopyText)}
+                    onClick={() =>
+                      void copyEventLog(
+                        "readable",
+                        copyText ?? formatEventLogForClipboard(entries, seatLabels),
+                      )
+                    }
                     disabled={!mounted || entries.length === 0}
                     aria-label="Copy readable event log"
                     title="Copy readable event log"
@@ -533,6 +799,7 @@ export function EventLogPanel({
         className={classes.scroll}
         onScroll={onScroll}
         role="log"
+        aria-label="Event log"
         aria-live="polite"
         aria-atomic="false"
       >
@@ -542,11 +809,35 @@ export function EventLogPanel({
           </div>
         ) : (
           sortedTurns.map((turn) => {
-            const turnRows = grouped.get(turn) ?? [];
+            const turnData = grouped.get(turn) ?? { rows: [], chunks: [] };
             const latestTurn = sortedTurns[sortedTurns.length - 1];
             const defaultExpanded = turnExpansion === "all" || turn === latestTurn;
             const isExpanded = turnExpansionOverrides.get(turn) ?? defaultExpanded;
-            const chunks = buildEventLogChunks(turnRows);
+            const turnPhaseSummary = phaseSummaryForRows(turnData.rows);
+            // The newest section of an expanded turn stays open; older
+            // sections collapse behind their summaries (overridable).
+            let lastSectionKey: string | null = null;
+            for (const chunk of turnData.chunks) {
+              if (chunk.type === "section") lastSectionKey = chunk.key;
+            }
+            const sectionControl: SectionToggleControl | undefined =
+              sectionExpansion === "latest"
+                ? {
+                    isCollapsed: (chunk, depth) => {
+                      const defaultExpanded =
+                        !chunk.section.collapsedByDefault &&
+                        (depth > 0 || chunk.key === lastSectionKey);
+                      return !(sectionExpansionOverrides.get(chunk.section.id) ?? defaultExpanded);
+                    },
+                    onToggle: (chunk) =>
+                      toggleSection(
+                        chunk.section.id,
+                        sectionExpansionOverrides.get(chunk.section.id) ??
+                          (!chunk.section.collapsedByDefault &&
+                            (chunk.section.parent !== undefined || chunk.key === lastSectionKey)),
+                      ),
+                  }
+                : undefined;
             return (
               <div key={turn} className={classes.turnGroup}>
                 <button
@@ -558,10 +849,12 @@ export function EventLogPanel({
                   <span className={classes.turnTitle}>
                     {turn === 0 ? "Messages" : `Turn ${turn}`}
                   </span>
-                  <span className={classes.turnMeta}>{phaseSummaryForRows(turnRows)}</span>
-                  <span className={classes.turnCount}>{activityCountLabel(turnRows)}</span>
+                  {turnPhaseSummary ? (
+                    <span className={classes.turnMeta}>{turnPhaseSummary}</span>
+                  ) : null}
+                  <span className={classes.turnCount}>{activityCountLabel(turnData.rows)}</span>
                 </button>
-                {isExpanded && renderChunks(chunks)}
+                {isExpanded && renderChunks(turnData.chunks, sectionControl)}
               </div>
             );
           })
@@ -571,40 +864,118 @@ export function EventLogPanel({
   );
 }
 
+function EventLogControls({
+  controlsId,
+  controlsOpen,
+  onToggle,
+}: {
+  controlsId: string;
+  controlsOpen: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <div className={classes.headerActions}>
+      <button
+        type="button"
+        className={classes.controlsButton}
+        aria-label="Event log options"
+        aria-expanded={controlsOpen}
+        aria-controls={controlsId}
+        title="Event log options"
+        onClick={onToggle}
+      >
+        <IconDotsVertical size={15} stroke={2.4} aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
+
 function buildEventLogChunks(rows: readonly ActivityRow[]): EventLogChunk[] {
   const chunks: EventLogChunk[] = [];
+
+  const sectionPath = (
+    section: NonNullable<SimulatorEventLogEntry["section"]>,
+  ): NonNullable<SimulatorEventLogEntry["section"]>[] => {
+    const reversed = [section];
+    const seen = new Set([section.id]);
+    let parent = section.parent;
+    while (parent && !seen.has(parent.id)) {
+      reversed.push(parent);
+      seen.add(parent.id);
+      parent = parent.parent;
+    }
+    return reversed.reverse();
+  };
+
+  const appendEntryChunk = (target: EventLogChunk[], entry: SimulatorEventLogEntry): void => {
+    const previous = target[target.length - 1];
+    if (previous?.type === "entries" && chunkPhase(previous) === normalizePhase(entry.phase)) {
+      previous.entries.push(entry);
+      return;
+    }
+    target.push({ type: "entries", key: `entries:${entry.id}`, entries: [entry] });
+  };
+
+  const appendSectionEntry = (
+    parent: SectionChunk,
+    path: readonly NonNullable<SimulatorEventLogEntry["section"]>[],
+    entry: SimulatorEventLogEntry,
+  ): void => {
+    parent.entries.push(entry);
+    const childSection = path[0];
+    if (!childSection) {
+      appendEntryChunk(parent.children, entry);
+      return;
+    }
+    const existing = parent.children.find(
+      (candidate): candidate is SectionChunk =>
+        candidate.type === "section" && candidate.section.id === childSection.id,
+    );
+    const child =
+      existing ??
+      ({
+        type: "section" as const,
+        key: `${childSection.id}:${entry.id}`,
+        section: childSection,
+        entries: [],
+        children: [],
+      } satisfies SectionChunk);
+    if (!existing) parent.children.push(child);
+    appendSectionEntry(child, path.slice(1), entry);
+  };
+
   for (const row of rows) {
     if (row.type === "chat") {
       chunks.push({ type: "chat", key: row.key, message: row.message });
       continue;
     }
     const entry = row.entry;
-    const entryPhase = displayPhase(entry.phase);
+    const entryPhase = normalizePhase(entry.phase);
     if (!entry.section) {
-      const previous = chunks[chunks.length - 1];
-      if (previous?.type === "entries" && chunkPhase(previous) === entryPhase) {
-        previous.entries.push(entry);
-        continue;
-      }
-      chunks.push({ type: "entries", key: `entries:${entry.id}`, entries: [entry] });
+      appendEntryChunk(chunks, entry);
       continue;
     }
+    const path = sectionPath(entry.section);
+    const rootSection = path[0] ?? entry.section;
     const previous = chunks[chunks.length - 1];
     if (
       previous?.type === "section" &&
-      previous.section.id === entry.section.id &&
-      previous.section.label === entry.section.label &&
+      previous.section.id === rootSection.id &&
+      previous.section.label === rootSection.label &&
       chunkPhase(previous) === entryPhase
     ) {
-      previous.entries.push(entry);
+      appendSectionEntry(previous, path.slice(1), entry);
       continue;
     }
-    chunks.push({
+    const root: SectionChunk = {
       type: "section",
-      key: `${entry.section.id}:${entry.id}`,
-      section: entry.section,
-      entries: [entry],
-    });
+      key: `${rootSection.id}:${entry.id}`,
+      section: rootSection,
+      entries: [],
+      children: [],
+    };
+    appendSectionEntry(root, path.slice(1), entry);
+    chunks.push(root);
   }
   return chunks;
 }
@@ -612,7 +983,7 @@ function buildEventLogChunks(rows: readonly ActivityRow[]): EventLogChunk[] {
 function chunkPhase(chunk: EventLogChunk): string | null {
   if (chunk.type === "chat") return null;
   const firstEntry = chunk.entries[0];
-  return firstEntry ? displayPhase(firstEntry.phase) : null;
+  return firstEntry ? normalizePhase(firstEntry.phase) : null;
 }
 
 function parseTimestamp(value: string, fallback: number): number {
@@ -639,15 +1010,11 @@ function turnForChatMessage(
   return candidate;
 }
 
-function phaseSummaryForRows(rows: readonly ActivityRow[]): string {
+function phaseSummaryForRows(rows: readonly ActivityRow[]): string | null {
   const entries = rows
     .filter((row): row is Extract<ActivityRow, { type: "entry" }> => row.type === "entry")
     .map((row) => row.entry);
-  const chatCount = rows.length - entries.length;
-  if (entries.length === 0) return chatCount === 1 ? "1 message" : `${chatCount} messages`;
-  const entrySummary = phaseSummary(entries);
-  if (chatCount === 0) return entrySummary;
-  return `${entrySummary} + ${chatCount === 1 ? "1 message" : `${chatCount} messages`}`;
+  return phaseSummary(entries);
 }
 
 function activityCountLabel(rows: readonly ActivityRow[]): string {
@@ -675,22 +1042,25 @@ function formatChatTime(timestamp: string): string {
   return new Date(epochMs).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 }
 
-function formatEventLogForClipboard(entries: readonly SimulatorEventLogEntry[]): string {
+function formatEventLogForClipboard(
+  entries: readonly SimulatorEventLogEntry[],
+  seatLabels?: SeatLabels,
+): string {
   if (entries.length === 0) {
     return "No event log entries.";
   }
   return [
     "# Event log",
-    entries.map(formatEventLogEntryForClipboard).join("\n"),
-    "",
-    "# Projected entries",
-    safeStringify(entries),
+    entries.map((entry) => formatEventLogEntryForClipboard(entry, seatLabels)).join("\n"),
   ].join("\n");
 }
 
-function formatEventLogEntryForClipboard(entry: SimulatorEventLogEntry): string {
+function formatEventLogEntryForClipboard(
+  entry: SimulatorEventLogEntry,
+  seatLabels?: SeatLabels,
+): string {
   const timestamp = entry.timestamp ? ` ${entry.timestamp}` : "";
-  const speaker = speakerLabel(entry.seatId);
+  const speaker = speakerLabel(entry.seatId, seatLabels);
   const tags = entry.tags.length > 0 ? ` [${entry.tags.join(", ")}]` : "";
   return `Turn ${entry.turn}${timestamp} ${speaker} ${entry.phase}${tags}: ${entry.message}`;
 }

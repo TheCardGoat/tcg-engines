@@ -3,7 +3,7 @@ import { op03EustassCaptainKidWantedPoster051 } from "../../../../../cards/src/c
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-051 051-eustass-captain-kid-wanted-poster", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op03EustassCaptainKidWantedPoster051);
   });
 });

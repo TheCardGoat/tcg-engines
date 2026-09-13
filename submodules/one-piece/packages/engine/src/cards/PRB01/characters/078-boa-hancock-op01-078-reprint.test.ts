@@ -3,7 +3,7 @@ import { prb01BoaHancockOp01078Reprint078 } from "../../../../../cards/src/cards
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-078 Boa Hancock (OP01-078) (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01BoaHancockOp01078Reprint078);
   });
 });

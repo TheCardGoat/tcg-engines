@@ -1,34 +1,37 @@
 /**
  * Target-legality shared primitives.
  *
- * Three call sites evaluate "which IDs can the player legally pick for
- * this effect's target filter":
+ * Rule 10-2-2-1 defines "choosing a target" as picking a player or a card
+ * in a public location (battle area, base section, resource area, trash).
+ * That classification plus the first-segment walk (10-1-8-1-2 / 10-3-3)
+ * is the activation gate shared by:
  *
- *   1. `play-command.ts:validateEffectTargets` — multi-filter check at
- *      play time; iterates every action in the effect, including the
- *      branches of conditional / chooseOne directives.
- *   2. `play-card-shared.ts:validateDeployTriggerTargets` — multi-filter
- *      check at play time for a card's own deploy triggers; only the
- *      top-level effect directives, with optional-directive handling.
- *   3. `pending-effects.ts:evaluateLegalTargets` — single-prompt check at
- *      resolve time; returns the candidate set for the next halting
- *      target-selection directive (priority head).
+ *   1. `play-command.ts` — cannot play a Command if the first segment's
+ *      required public target cannot be chosen.
+ *   2. `pending-effects.ts:hasLegalRequiredTargets` — a triggered /
+ *      activated effect does not activate when that same gate fails.
+ *   3. `pending-effects.ts:evaluateLegalTargets` — resolve-time candidate
+ *      set for the next printed choose instruction (10-3-3).
  *
- * The three differ on iteration shape (multi-filter vs single-prompt)
- * and condition handling, so a single canonical helper would either
- * have a complex options bag or distort one of the call sites. The
- * stable shared piece is the small set of structural primitives — count
- * bounds, candidate gathering, filter extraction. Extracting *those*
- * gives us one source of truth without forcing the three semantically
- * distinct flows through the same shape.
- *
- * If the three flows ever converge (e.g. all moves move to single-prompt
- * resolution with no play-time pre-commit), the higher-level helpers
- * can be added here and the call sites collapsed.
+ * Deploy pre-commit (`validateDeployTriggerTargets`) only checks supplied
+ * IDs. Omitting targets is not an activation gate — the trigger either
+ * enqueues or is skipped by (2).
  */
 
-import type { EffectAction, TargetFilter } from "@tcg/gundam-types";
+import type {
+  ConditionalDirective,
+  Directive,
+  EffectAction,
+  EffectDirective,
+  TargetFilter,
+  Zone,
+} from "@tcg/gundam-types";
 import type { buildTargetResolutionContext } from "../rules/derived-state.ts";
+import {
+  evaluateCondition,
+  evaluateTargetFilter,
+  type TargetResolutionContext,
+} from "../../runtime/target-dsl.ts";
 
 /**
  * Decode a TargetFilter's `count` into inclusive {min, max} integers.
@@ -93,6 +96,10 @@ export function gatherAllCardsForTargeting(
  *
  * `forceAttackTarget.attackTarget` is also gated: the chosen Unit is the
  * play-time target that enemy Units must attack later.
+ *
+ * Redirect effects can make either `target` or `redirectTo` the player's
+ * explicit choice. Include both filters: `findChoiceInDirective` selects the
+ * non-self filter with a concrete count, covering both field orientations.
  */
 export function extractActionFilters(action: EffectAction): TargetFilter[] {
   if (action.action === "discard") {
@@ -111,7 +118,7 @@ export function extractActionFilters(action: EffectAction): TargetFilter[] {
   }
 
   if (action.action === "resolveThenQueue") {
-    return extractActionFilters(action.first);
+    return action.first ? extractActionFilters(action.first) : [];
   }
 
   // These compound actions change public state before their conditional
@@ -120,9 +127,11 @@ export function extractActionFilters(action: EffectAction): TargetFilter[] {
   // Treating the embedded filter as an up-front choice would expose hidden
   // deck information and force a meaningless target when the trait misses.
   if (
+    action.action === "millDeckThenAddToHand" ||
     action.action === "millDeckThenDamageIfTrait" ||
     action.action === "millDeckThenDamageByTraitCount" ||
-    action.action === "millDeckThenStatModifierIfTrait"
+    action.action === "millDeckThenStatModifierIfTrait" ||
+    action.action === "millDeckThenStatModifierIfLevel"
   ) {
     return [];
   }
@@ -139,8 +148,204 @@ export function extractActionFilters(action: EffectAction): TargetFilter[] {
   if (action.action === "createDelayedTrigger" && action.eventSourceFilter !== undefined) {
     filters.push(action.eventSourceFilter);
   }
+  if (action.action === "redirectBattleDamage") {
+    filters.push(action.redirectTo);
+  }
   if (action.action === "forceAttackTarget") {
     filters.push(action.attackTarget);
   }
   return filters;
+}
+
+/** Public locations listed in rule 10-2-2-1. */
+const PUBLIC_TARGET_ZONES = new Set<Zone>(["battleArea", "baseSection", "resourceArea", "trash"]);
+
+/** Private / hidden locations — selecting from these is not 10-2-2-1 targeting. */
+const PRIVATE_TARGET_ZONES = new Set<Zone>(["hand", "deck", "shieldArea", "resourceDeck"]);
+
+/**
+ * How a filter participates in activation vs resolution.
+ *
+ *   - `targetChoice` — "choose (something)" / "you may choose" against a
+ *     public location or a player (10-2-2-1). Empty set blocks activation.
+ *   - `privateSelection` — hand / deck / shield section. 1-3-2 applies;
+ *     missing cards do not block play or trigger activation.
+ *   - `implicitSelf` — the source card (10-3-4). Not a player choice.
+ *   - `massAction` — `count: "all"` / no count / min 0. Do as much as
+ *     possible (1-3-2, 10-1-3); zero matches is legal.
+ */
+export type TargetSelectionClass =
+  | "targetChoice"
+  | "privateSelection"
+  | "implicitSelf"
+  | "massAction";
+
+export function classifyTargetFilter(filter: TargetFilter): TargetSelectionClass {
+  if (filter.owner === "self") return "implicitSelf";
+
+  const { min } = getFilterCountBounds(filter);
+  if (filter.count === undefined || filter.count === "all" || min <= 0) {
+    return "massAction";
+  }
+
+  const zone = filter.zone;
+  if (zone !== undefined && PRIVATE_TARGET_ZONES.has(zone)) return "privateSelection";
+  if (zone === undefined || PUBLIC_TARGET_ZONES.has(zone) || zone === "removalArea") {
+    return "targetChoice";
+  }
+  return "privateSelection";
+}
+
+/** Required public choose that gates activation (10-2-2, 10-1-8-1-1). */
+export function isActivationGateFilter(filter: TargetFilter): boolean {
+  return classifyTargetFilter(filter) === "targetChoice";
+}
+
+function isEffectDirective(directive: Directive): directive is EffectDirective {
+  return (
+    typeof directive === "object" &&
+    directive !== null &&
+    "action" in directive &&
+    !("condition" in directive) &&
+    !("kind" in directive)
+  );
+}
+
+function isConditionalDirective(directive: Directive): directive is ConditionalDirective {
+  return (
+    typeof directive === "object" &&
+    directive !== null &&
+    "condition" in directive &&
+    "thenDirectives" in directive
+  );
+}
+
+export interface FirstSegmentAction {
+  action: EffectAction;
+  filters: TargetFilter[];
+}
+
+type SegmentWalkState = "start" | "inFirstTargets" | "afterPreamble";
+
+/**
+ * Walk the printed first portion of an effect — the text preceding
+ * "Then" / "If you do" (rules 10-1-8-1-2, 5-20) — and return every
+ * required public target filter in that portion.
+ *
+ * Segment breaks:
+ *   - `dependsOnPrevious` without `sharesTargetChoiceWithPrevious` (If you do)
+ *   - `resolveThenQueue` after its `first` action
+ *   - `optional` after the first portion has started
+ *   - a public choose that follows a non-targeting preamble (Then, choose)
+ *   - `chooseOne` (caller evaluates each option's first segment)
+ */
+export function collectFirstSegmentActivationActions(
+  directives: readonly Directive[],
+  tgtCtx?: TargetResolutionContext,
+): FirstSegmentAction[] {
+  const out: FirstSegmentAction[] = [];
+  walkFirstSegment(directives, tgtCtx, out, "start");
+  return out;
+}
+
+function walkFirstSegment(
+  directives: readonly Directive[],
+  tgtCtx: TargetResolutionContext | undefined,
+  out: FirstSegmentAction[],
+  state: SegmentWalkState,
+): SegmentWalkState | "stop" {
+  for (const directive of directives) {
+    if (isConditionalDirective(directive)) {
+      const branch = tgtCtx
+        ? evaluateCondition(directive.condition, tgtCtx)
+          ? directive.thenDirectives
+          : (directive.elseDirectives ?? [])
+        : directive.thenDirectives;
+      const next = walkFirstSegment(branch, tgtCtx, out, state);
+      if (next === "stop") return "stop";
+      state = next;
+      continue;
+    }
+
+    if ("kind" in directive && directive.kind === "chooseOne") {
+      return "stop";
+    }
+
+    if (!isEffectDirective(directive)) continue;
+
+    if (directive.optional) {
+      if (state === "start") continue;
+      return "stop";
+    }
+    if (directive.dependsOnPrevious && !directive.sharesTargetChoiceWithPrevious) {
+      return "stop";
+    }
+    // "Choose 1 A and 1 B" is one printed selection even when encoded as
+    // two sibling actions (Mikazuki Augus ST05-010 and siblings).
+    if (directive.sharesTargetChoiceWithPrevious && state === "afterPreamble") {
+      state = "inFirstTargets";
+    }
+
+    const action = directive.action;
+    // drawIfTargetMatches inspects the previous printed selection. It is
+    // not a new 10-2-2-1 choose and must not join the activation gate.
+    if (action.action === "drawIfTargetMatches") {
+      continue;
+    }
+    const actionFilters = extractActionFilters(action);
+    const publicFilters = actionFilters.filter(isActivationGateFilter);
+
+    if (action.action === "resolveThenQueue") {
+      if (action.first) {
+        if (publicFilters.length > 0) {
+          if (state === "afterPreamble") return "stop";
+          out.push({ action, filters: publicFilters });
+        }
+        return "stop";
+      }
+      // Staged continuation with no `first` step: the follow-up is the
+      // first printed choose of this segment.
+      walkFirstSegment(action.followUp.directives, tgtCtx, out, state);
+      return "stop";
+    }
+
+    if (publicFilters.length > 0) {
+      if (state === "afterPreamble") return "stop";
+      out.push({ action, filters: publicFilters });
+      state = "inFirstTargets";
+      continue;
+    }
+
+    // "Destroy this and choose 1 enemy" is one first portion. Implicit
+    // self is not a Then-preamble the way draw / add-to-hand is.
+    const isImplicitSelfOnly =
+      actionFilters.length > 0 &&
+      actionFilters.every((filter) => classifyTargetFilter(filter) === "implicitSelf");
+    if (isImplicitSelfOnly && (state === "start" || state === "inFirstTargets")) {
+      continue;
+    }
+
+    state = "afterPreamble";
+  }
+  return state;
+}
+
+/**
+ * True when every first-segment activation-gate filter has enough
+ * public candidates. Empty first segment (draw, discard, Then-only
+ * choose) is legal — later chooses are 10-3-3 resolution, not a gate.
+ */
+export function firstSegmentActivationGateSatisfied(
+  directives: readonly Directive[],
+  tgtCtx: TargetResolutionContext,
+): boolean {
+  const actions = collectFirstSegmentActivationActions(directives, tgtCtx);
+  const cards = gatherAllCardsForTargeting(tgtCtx);
+  for (const { filters } of actions) {
+    for (const filter of filters) {
+      const { min } = getFilterCountBounds(filter);
+      if (evaluateTargetFilter(filter, cards, tgtCtx).length < min) return false;
+    }
+  }
+  return true;
 }

@@ -19,23 +19,23 @@ describe("Main-phase · Non-Link unit can't attack the turn it deploys", () => {
     renderSimulator(loadNewlyDeployedCannotAttackDemo);
 
     const hand = screen.getByRole("list", { name: /your hand/i });
-    const rxInHand = within(hand).getByRole("listitem", { name: /RX-78-2/i });
-    const rxId = rxInHand.querySelector<HTMLElement>("[data-card-id]")?.dataset.cardId;
-    expect(rxId).toBeTruthy();
+    const gmInHand = within(hand).getByRole("listitem", { name: /^GM \(cost 1\)$/i });
+    const gmId = gmInHand.querySelector<HTMLElement>("[data-card-id]")?.dataset.cardId;
+    expect(gmId).toBeTruthy();
 
-    await user.click(rxInHand);
+    await user.click(gmInHand);
 
     // Unit lands on the battle area.
     await waitFor(() => {
-      expect(findCardsById(rxId!, { excludeWithin: hand }).length).toBeGreaterThanOrEqual(1);
+      expect(findCardsById(gmId!, { excludeWithin: hand }).length).toBeGreaterThanOrEqual(1);
     });
 
     // Attack targeting overlay shouldn't already be open.
     expect(document.querySelector("[data-testid^='attack-target-']")).toBeNull();
 
     // Click the newly-deployed unit.
-    const rxOnBoard = findCardsById(rxId!, { excludeWithin: hand })[0]!;
-    await user.click(rxOnBoard);
+    const gmOnBoard = findCardsById(gmId!, { excludeWithin: hand })[0]!;
+    await user.click(gmOnBoard);
 
     // Flush microtasks and confirm the attack-targeting overlay did not
     // open. The shared TargetingOverlay renders attack-target click
@@ -46,6 +46,6 @@ describe("Main-phase · Non-Link unit can't attack the turn it deploys", () => {
     expect(screen.queryByRole("button", { name: /^confirm$/i })).toBeNull();
 
     // Unit still on the board.
-    expect(findCardsById(rxId!, { excludeWithin: hand })).toHaveLength(1);
+    expect(findCardsById(gmId!, { excludeWithin: hand })).toHaveLength(1);
   });
 });

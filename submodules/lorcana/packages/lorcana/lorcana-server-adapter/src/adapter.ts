@@ -27,6 +27,7 @@ import {
   lorcanaRestoreEngine,
   lorcanaSerializeEngine,
 } from "./lorcana-engine-lifecycle";
+import { lorcanaDeckInterchangeAdapter } from "./deck-interchange";
 
 const LORCANA_FORMAT_IDS = new Set<string>(Object.keys(LORCANA_FORMATS));
 
@@ -43,6 +44,7 @@ function getLorcanaCard(publicId: string) {
 
 export const lorcanaServerAdapter: GameAdapter = {
   slug: "lorcana",
+  deckInterchange: lorcanaDeckInterchangeAdapter,
 
   createGameId(): string {
     return createGameId() as string;
@@ -92,6 +94,24 @@ export const lorcanaServerAdapter: GameAdapter = {
     return card?.canonicalId ?? null;
   },
 
+  getPublicGameScore(spectatorView: unknown) {
+    if (!spectatorView || typeof spectatorView !== "object") return undefined;
+    const players = (spectatorView as { players?: unknown }).players;
+    if (!players || typeof players !== "object" || Array.isArray(players)) return undefined;
+
+    const loreByPlayer: Record<string, number> = {};
+    for (const [playerId, value] of Object.entries(players)) {
+      if (!value || typeof value !== "object") continue;
+      const lore = (value as { lore?: unknown }).lore;
+      if (typeof lore === "number" && Number.isFinite(lore) && lore >= 0) {
+        loreByPlayer[playerId] = lore;
+      }
+    }
+    return Object.keys(loreByPlayer).length > 0
+      ? { kind: "lore", players: loreByPlayer }
+      : undefined;
+  },
+
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult {
     if (!isLorcanaFormatId(formatId)) {
       throw new Error(`Unknown Lorcana format: ${formatId}`);
@@ -114,13 +134,21 @@ export const lorcanaServerAdapter: GameAdapter = {
     projectionVersion: 1,
     capabilities: { colors: true, deckLists: true, archetypes: true },
     facets: [
-      { type: "color", label: "Ink", pluralLabel: "Inks", kind: "individual", order: 10 },
+      {
+        type: "color",
+        label: "Ink",
+        pluralLabel: "Inks",
+        kind: "individual",
+        order: 10,
+        ranking: { specialistSkill: true, mastery: true },
+      },
       {
         type: "color-combination",
         label: "Ink combination",
         pluralLabel: "Ink combinations",
         kind: "combination",
         order: 20,
+        ranking: { specialistSkill: true, mastery: true },
       },
     ],
     projectDeck(deck) {

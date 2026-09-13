@@ -123,6 +123,11 @@ export interface CardPrintingMetadata {
   sortNumber?: number;
 }
 
+export interface PrintingFoilPresentation {
+  foilType?: string;
+  foilMaskHash?: string;
+}
+
 export interface LorcanaCardIdentityRegistryEntry {
   printingId: string;
   canonicalId: string;
@@ -415,6 +420,7 @@ function getEmbeddedLocalization(
 // generated package cards so runtime builds do not require canonical-cards.json.
 import auxKvData from "./cards.aux.kv.json";
 import identityRegistryData from "./cards.identity-registry.json";
+import legacyShortIdAliasesData from "./cards.legacy-short-id-aliases.json";
 import printingMetadataData from "./cards.aux.printing-metadata.json";
 import legacyPrintingsData from "./printings.json";
 import setsData from "./sets.json";
@@ -566,6 +572,16 @@ interface LegacyShortIdMapping {
   printingId: string;
 }
 
+type LegacyShortIdAliasRegistry = Record<
+  string,
+  {
+    printingId: string;
+    shortId: string;
+  }
+>;
+
+export const lorcanaLegacyShortIdAliases = legacyShortIdAliasesData as LegacyShortIdAliasRegistry;
+
 let legacyShortIdToCurrentShortId: Map<string, LegacyShortIdMapping> | null = null;
 let currentPrintingIdByShortId: Map<string, string> | null = null;
 
@@ -593,6 +609,12 @@ function getLegacyShortIdToCurrentShortId(): Map<string, LegacyShortIdMapping> {
         printingId: legacyPrinting.id,
       });
     }
+  }
+  for (const [legacyShortId, alias] of Object.entries(lorcanaLegacyShortIdAliases)) {
+    legacyShortIdToCurrentShortId.set(legacyShortId, {
+      currentShortId: alias.shortId,
+      printingId: alias.printingId,
+    });
   }
 
   return legacyShortIdToCurrentShortId;
@@ -1016,6 +1038,27 @@ export function getPrintingIdsForCard(shortIdOrCanonicalId: string): string[] {
  */
 export function getPrinting(printingId: string): CardPrintingMetadata | undefined {
   return printings[printingId];
+}
+
+/**
+ * Return only the visual foil metadata needed by card renderers.
+ *
+ * Runtime printing records are intentionally compact, while the generated
+ * legacy printing catalog retains variant assets. Keep that storage detail
+ * behind this accessor instead of exposing the full legacy record.
+ */
+export function getPrintingFoilPresentation(
+  printingId: string,
+): PrintingFoilPresentation | undefined {
+  const variant = legacyPrintings[printingId]?.variants.find(
+    (candidate) => candidate.foilType || candidate.foilMaskHash,
+  );
+  if (!variant) return undefined;
+
+  return {
+    ...(variant.foilType ? { foilType: variant.foilType } : {}),
+    ...(variant.foilMaskHash ? { foilMaskHash: variant.foilMaskHash } : {}),
+  };
 }
 
 /**

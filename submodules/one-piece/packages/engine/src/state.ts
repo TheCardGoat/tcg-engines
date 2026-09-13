@@ -19,6 +19,7 @@ import type {
   CardInstance,
   CardZone,
   ChoiceKind,
+  MatchFinishReason,
   MatchSeat,
   MatchState,
   ModifierState,
@@ -58,6 +59,49 @@ function describeHiddenCard(state: MatchState, instanceId: string): string {
   return "a hidden card";
 }
 
+/**
+ * Ends the match as a direct state transition with no domain-event dispatch:
+ * pending prompts are cancelled, queued resolutions are dropped, any ongoing
+ * battle is abandoned, and no effect or replacement machinery is consulted.
+ * Used by concession (1-2-3, which 1-2-4 shields from every card effect) and
+ * by the draw outcome (11-1). Defeat-by-rule-processing and effect wins keep
+ * their own event-emitting paths instead.
+ */
+export function finalizeMatchImmediately(
+  state: MatchState,
+  winner: MatchSeat | null,
+  finishReason: MatchFinishReason,
+  message: string,
+) {
+  state.status = "finished";
+  state.phase = "finished";
+  state.winner = winner;
+  state.finishReason = finishReason;
+  state.battle = null;
+  state.resolutionQueue = [];
+  state.resolutionStatus = "idle";
+  for (const prompt of state.promptQueue) {
+    if (prompt.status === "pending") {
+      prompt.status = "cancelled";
+    }
+  }
+  emitLog(state, "system", message, {
+    visibility: "public",
+  });
+}
+
+/**
+ * 11-1: the game can end in a draw, with no winner. Infinite-loop detection
+ * (11-1-1) is not implemented yet; this helper is the constructible draw
+ * outcome future loop detection (or a judge) finalizes through.
+ */
+export function finalizeDraw(state: MatchState) {
+  if (state.status === "finished") {
+    return;
+  }
+  finalizeMatchImmediately(state, null, "draw", "The game is a draw.");
+}
+
 function processEmptyDeckDefeat(state: MatchState, seat: MatchSeat) {
   if (state.status !== "active" || getPlayer(state, seat).deck.length > 0) {
     return;
@@ -72,6 +116,7 @@ function processEmptyDeckDefeat(state: MatchState, seat: MatchSeat) {
   state.status = "finished";
   state.phase = "finished";
   state.winner = winner;
+  state.finishReason = replacement ? "effectWin" : "emptyDeck";
   emitEvent(state, "winnerDeclared", winner, {
     sourceCardId: replacement ? getInstance(state, leaderId).cardId : null,
     sourceInstanceId: replacement ? leaderId : null,
@@ -261,6 +306,23 @@ export function moveCard(
   removeFromCurrentZone(state, instanceId);
   placeInZone(state, instanceId, owner, zone, options);
   const next = getInstance(state, instanceId);
+  // 3-1-6 / 10-2-13-4: a card that leaves the field is treated as a new card,
+  // so effects applied to it in the original area and its [Once Per Turn]
+  // usage do not carry over.
+  const leftField =
+    (previous.zone === "leader" || previous.zone === "character" || previous.zone === "stage") &&
+    zone !== "leader" &&
+    zone !== "character" &&
+    zone !== "stage";
+  if (leftField) {
+    for (const modifier of Object.values(state.modifiers)) {
+      if (modifier.targetId === instanceId) {
+        removeModifier(state, modifier.id);
+      }
+    }
+    next.usedEffectKeys = [];
+    next.battledOpponentCharacterOnTurn = null;
+  }
   emitEvent(state, "cardMoved", options.actor ?? "system", {
     sourceCardId: options.redactIdentity ? null : next.cardId,
     sourceInstanceId: options.redactIdentity ? null : instanceId,
@@ -659,21 +721,10 @@ export function buildInitialPlayerState(
     activeDon: 0,
     restedDon: 0,
     donDeckCount: playerConfig.donDeckCount ?? DEFAULT_DON_DECK_COUNT,
+    turnsStarted: 0,
   };
 
   state.players[seat] = player;
-
-  for (let index = 0; index < leaderLife(leader as LeaderCard); index += 1) {
-    const instanceId = player.deck.shift();
-    if (!instanceId) {
-      throw new Error(`Deck for ${seat} does not have enough cards to build life`);
-    }
-    placeInZone(state, instanceId, seat, "life", {
-      faceUp: false,
-      publicKnowledge: false,
-    });
-  }
-  reindexLinearZone(state, seat, "deck");
 
   for (let index = 0; index < config.openingHandSize; index += 1) {
     const drawn = drawTopCard(state, seat, { suppressLog: true });
@@ -683,6 +734,34 @@ export function buildInitialPlayerState(
   }
 
   return player;
+}
+
+// 5-2-1-7 / 2-9-2-1: starting Life is placed after the opening-hand redraws
+// (5-2-1-6), taking cards from the top of the deck so that the deck-top card
+// ends up at the bottom of the Life area (life[0] is the top of the stack).
+export function placeStartingLife(state: MatchState, seat: MatchSeat) {
+  const player = getPlayer(state, seat);
+  const leader = getCard(player.leaderCardId) as LeaderCard;
+  for (let index = 0; index < leaderLife(leader); index += 1) {
+    const instanceId = player.deck.shift();
+    if (!instanceId) {
+      throw new Error(`Deck for ${seat} does not have enough cards to build life`);
+    }
+    placeInZone(state, instanceId, seat, "life", {
+      lifePosition: "top",
+      faceUp: false,
+      publicKnowledge: false,
+    });
+  }
+  reindexLinearZone(state, seat, "deck");
+  emitLog(
+    state,
+    "system",
+    `${player.playerName} places ${player.life.length} Life card${player.life.length === 1 ? "" : "s"}.`,
+    {
+      visibility: "public",
+    },
+  );
 }
 
 function resetStartOfTurnState(state: MatchState, seat: MatchSeat) {
@@ -720,6 +799,15 @@ function resetStartOfTurnState(state: MatchState, seat: MatchSeat) {
 
 export function beginTurn(state: MatchState, seat: MatchSeat, skipDraw: boolean) {
   state.activeSeat = seat;
+  // 6-5-6-1: count each seat's first turn independently (extra turns do not
+  // reassign the opponent's first-turn battle ban to a different game turn).
+  // Normalize missing field for snapshots serialized before turnsStarted existed
+  // (undefined += 1 would become NaN and silently allow first-turn attacks).
+  const player = getPlayer(state, seat);
+  if (typeof player.turnsStarted !== "number" || Number.isNaN(player.turnsStarted)) {
+    player.turnsStarted = 0;
+  }
+  player.turnsStarted += 1;
 
   state.phase = "refresh";
   emitEvent(state, "phaseChanged", "system", {
@@ -771,7 +859,9 @@ export function finalizeBeginTurnRefresh(state: MatchState, seat: MatchSeat, ski
     visibility: "public",
   });
   const player = getPlayer(state, seat);
-  const placedDon = Math.min(2, player.donDeckCount);
+  // 6-4-1: the player going first places only 1 DON!! card on their first turn.
+  const isFirstPlayerFirstTurn = state.turnNumber === 1 && seat === state.config.firstPlayer;
+  const placedDon = Math.min(isFirstPlayerFirstTurn ? 1 : 2, player.donDeckCount);
   const givenDon = Math.min(placedDon, donGivenFromDonPhase(state, seat));
   addDonFromDeck(state, seat, placedDon - givenDon, false);
   if (givenDon > 0) {

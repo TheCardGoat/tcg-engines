@@ -24,5 +24,6 @@ describe("OP09-091 Vasco Shot", () => {
     const view = engine.getView("south");
     expect(view.players.south.lifeCount).toBe(lifeBefore);
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(blockerId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -81,6 +81,7 @@ export const eb01Kalifa031: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

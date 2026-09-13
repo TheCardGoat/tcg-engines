@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "ready": "pnpm run check && vp run -r test && vp run -r build",
-    "dev": "vp run website#dev",
+    "dev": "pnpm --dir apps/multi-game-simulator exec vp dev --host 127.0.0.1 --port 5193",
     "prepare": "vp config",
     "build": "vp run -r build",
     "check": "vp fmt --check --ignore-path .oxfmtignore apps/*/src packages/*/src packages/*/*/src && vp lint apps/*/src packages/*/src packages/*/*/src --ignore-pattern '**/*.test.ts' --ignore-pattern '**/*.svelte' --no-error-on-unmatched-pattern && vp run -r check-types",
@@ -26,5 +26,5 @@
   "engines": {
     "node": ">=22.18.0"
   },
-  "packageManager": "pnpm@10.33.0"
+  "packageManager": "pnpm@11.22.0"
 }

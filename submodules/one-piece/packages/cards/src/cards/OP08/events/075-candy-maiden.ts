@@ -58,6 +58,7 @@ export const op08CandyMaiden075: EventCard = {
             player: "self",
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

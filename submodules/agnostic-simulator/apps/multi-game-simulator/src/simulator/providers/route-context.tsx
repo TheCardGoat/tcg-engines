@@ -5,6 +5,7 @@ export const EMPTY_SIMULATOR_ROUTE_CONTEXT: SimulatorRouteContextValue = {
   gameSlug: null,
   routeKind: "other",
   matchPageData: null,
+  session: null,
   matchResolution: null,
   error: null,
 };

@@ -125,13 +125,11 @@ This replaces the current split where framework internals (`InternalState`) live
   - All message types (UPDATE_ACTION, UPDATE_PATCH, SYNC_FULL, ERROR)
   - Protocol validation
   - Type guards
-- [x] **WebSocket Transport** (`websocket-transport.ts`)
 - [x] **In-Memory Transport** (`in-memory-transport.ts`)
 
 **Files:**
 
 - `protocol-types.ts` + `.test.ts`
-- `websocket-transport.ts`
 - `in-memory-transport.ts`
 
 ### ✅ Phase 6: Persistence, Replay, Audit, and Auth

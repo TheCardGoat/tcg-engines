@@ -5,10 +5,11 @@ import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts"
 export const welcomeToNightCityRetailDyingNightVSPistol = defineCyberpunkCard({
   id: "df06b6e2-1675-48a3-bfe2-d0bc4c5f35eb",
   slug: "dying-night-v-s-pistol",
+  subname: "V's Pistol",
   rulesText:
     '(Equip to a friendly Unit or face-up Legend.)\n{Attack} Decrease a Gig by up to 2. At the end of your turn, if this Unit is named "V", ready 2 Eddies.',
-  name: "Dying Night — V's Pistol",
-  displayName: "Dying Night — V's Pistol",
+  name: "Dying Night",
+  displayName: "Dying Night: V's Pistol",
   canonicalId: "dying-night-v-s-pistol",
   color: "blue",
   classifications: ["Merc", "Weapon"],

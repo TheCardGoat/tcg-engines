@@ -1,22 +1,23 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { env } from '$env/dynamic/public';
   import { onMount, onDestroy, untrack } from 'svelte';
   import { LorcanaTabletopSimulator } from '$lib';
   import { SpectatorMatchOrchestrator, type SpectatorRecentHistory } from '@/features/spectator/spectator-match-orchestrator.svelte.js';
   import { OpponentPresenceTracker } from '@/features/gateway/opponent-presence.svelte.js';
-  import { authSession } from '$lib/auth/session.svelte.js';
-  import { connectAndJoin } from './connect-gateway.js';
+  import { connectAndJoin, type MatchGatewayConnection } from './connect-gateway.js';
   import { createMessageRouter, buildAcceptedMove } from './game-mode-message-router.js';
   import {
     buildVisualSettings,
+    buildPlayerMetadataMap,
     mergeWsVisuals,
     createMatchChat,
+    type PlayerMatchMetadata,
   } from './game-mode-setup.js';
   import type { GamePageData } from '../+page.server.js';
   import type { CardsMaps, LorcanaMatchState } from '@tcg/lorcana-engine';
   import type { MatchChatController } from '@/features/match-chat/match-chat-controller.svelte.js';
   import type { LorcanaPlayerSettingsMap } from '$lib/features/simulator/model/player-visual-settings.js';
-  import type { GatewayClientStore } from '@/features/gateway/gateway-client.svelte.js';
+  import { resolvePlatformMatchmakingReturnUrl } from '$lib/navigation/platform-matchmaking-url.js';
 
   type ServerData = Extract<GamePageData, { mode: 'server' }>;
   let { data }: { data: ServerData } = $props();
@@ -25,12 +26,13 @@
   let spectatorOrchestrator = $state<SpectatorMatchOrchestrator | null>(null);
   let matchChatController = $state<MatchChatController | null>(null);
   let playerVisualSettings = $state<LorcanaPlayerSettingsMap>({});
+  let playerMetadataMap = $state<Record<string, PlayerMatchMetadata>>({});
 
   const opponentPresence = new OpponentPresenceTracker();
   // Top lane in spectator view is always playerTwo (ownerSide is null → bottomSide="playerOne").
   // We track only the top-lane player's presence so the overlay renders on the correct lane.
   let topLanePlayerId = $state<string | null>(null);
-  let gateway = $state<GatewayClientStore | null>(null);
+  let gateway = $state<MatchGatewayConnection | null>(null);
   let gatewayStatus = $derived(gateway?.status ?? null);
   let connectionEmoji = $derived(
     gatewayStatus === 'connected' ? '\u{1F7E2}' :
@@ -40,42 +42,13 @@
   );
 
   async function handleReturnToMatchmaking(): Promise<void> {
-    await goto('/matchmaking');
+    window.location.assign(
+      resolvePlatformMatchmakingReturnUrl(
+        new URL(window.location.href),
+        env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+      ),
+    );
   }
-
-  // DEPLOYMENT CACHE STRATEGY: Auto-rejoin on WS reconnect.
-  // During blue-green deploys all WebSocket connections drop and spectators
-  // reconnect to the new instance. When we detect a new connectionId, we
-  // re-subscribe this socket to the game's pub/sub channel. Authenticated
-  // spectators can use `reconnect`, but anonymous spectators must use the
-  // gateway-allowed `join_game` flow with `role: 'spectator'` since the
-  // server restricts unauthenticated connections to ping/join_game/leave_game.
-  // Without this, the spectator would stop receiving state_update
-  // broadcasts until the heartbeat fires.
-  let lastConnectionId = $state<string | null>(null);
-  $effect(() => {
-    const cid = gateway?.connectionId;
-    if (!cid || !spectatorOrchestrator) return;
-    if (cid === lastConnectionId) return;
-    if (lastConnectionId !== null) {
-      const userId = authSession.user?.id;
-      if (userId) {
-        gateway!.send({
-          type: 'reconnect',
-          gameId: data.gameId,
-          userId,
-          lastReceivedVersion: 0,
-        });
-      } else {
-        gateway!.send({
-          type: 'join_game',
-          gameId: data.gameId,
-          role: 'spectator',
-        });
-      }
-    }
-    lastConnectionId = cid;
-  });
 
   const initialGameId = untrack(() => data.gameId);
   const handleMessage = createMessageRouter({
@@ -116,13 +89,17 @@
       const { matchId, gameId, match, game } = data;
 
       playerVisualSettings = buildVisualSettings(match.participants);
+      playerMetadataMap = buildPlayerMetadataMap(match.participants);
+
+      const realtime = data.bootstrap.realtime;
+      if (!realtime || data.bootstrap.viewer.role !== 'spectator') {
+        loadError = 'This spectator session is no longer available.';
+        return;
+      }
 
       const result = await connectAndJoin({
-        ticket: null, // spectators don't need a ticket
-        gameId,
-        role: 'spectator',
+        bootstrap: data.bootstrap,
         matchType: match.matchType,
-        userId: authSession.user?.id,
         onMessage: handleMessage,
       });
 
@@ -243,6 +220,7 @@
     readModel={spectatorOrchestrator.readModel}
     viewerMode="spectator"
     playerSettings={playerVisualSettings}
+    {playerMetadataMap}
     {matchChatController}
     {opponentPresence}
     {gatewayStatus}

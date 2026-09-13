@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { LorcanaProjectedBoardView } from "@tcg/lorcana-engine";
+import { createPlayerId, type LorcanaProjectedBoardView } from "@tcg/lorcana-engine";
 import { m } from "$lib/i18n/messages.js";
 import type {
   MoveLogEntrySnapshot,
@@ -280,6 +280,7 @@ describe("buildPostGameSummary", () => {
     });
 
     expect(summary.totalLogEntries).toBe(entries.length);
+    expect(summary.durationMs).toBe(30_500);
     expect(summary.timeline).toHaveLength(entries.length);
     expect(summary.turns).toHaveLength(6);
     expect(summary.outcome.winnerSide).toBe("playerTwo");
@@ -409,5 +410,91 @@ describe("buildPostGameSummary", () => {
       }),
     );
     expect(summary.highlights[0]?.detail).toBe("Reached 20 lore");
+    expect(summary.durationMs).toBe(30_000);
+  });
+
+  it("retains engine logs produced while a submitted card play auto-resolves", () => {
+    const board = createBoard();
+    const playerTwo = createPlayerId("player_two");
+    const summary = buildPostGameSummaryFromCanonical(
+      {
+        source: "redis",
+        gameId: "game-1",
+        matchId: "match-1",
+        status: "completed",
+        winnerId: "player_two",
+        reason: "Reached 20 lore",
+        createdAt: new Date(0).toISOString(),
+        completedAt: new Date(30_000).toISOString(),
+        durationMs: 30_000,
+        authority: "server",
+        matchType: "testing",
+        players: [
+          {
+            id: "player_one",
+            side: "playerOne",
+            displayName: "Player One",
+            username: null,
+            mmr: null,
+          },
+          {
+            id: "player_two",
+            side: "playerTwo",
+            displayName: "Player Two",
+            username: null,
+            mmr: null,
+          },
+        ],
+        board,
+        acceptedMoves: [
+          {
+            gameId: "game-1",
+            stateVersion: 14,
+            turnNumber: 5,
+            actorId: "player_two",
+            moveId: "playCard",
+            input: { args: { cardId: "card-mickey", cost: "standard" } },
+            processedCommand: {
+              commandID: "persisted:game-1:14",
+              input: { args: { cardId: "card-mickey", cost: "standard" } },
+              move: "playCard",
+            },
+            timestamp: 10_000,
+            sourceAuthority: "server",
+          },
+        ],
+        engineLogs: [
+          {
+            gameId: "game-1",
+            stateVersion: 14,
+            timestamp: 10_000,
+            sourceAuthority: "server",
+            log: {
+              moveType: "playCard",
+              playerId: playerTwo,
+              timestamp: 10_000,
+              public: [],
+            },
+          },
+          {
+            gameId: "game-1",
+            stateVersion: 14,
+            timestamp: 10_001,
+            sourceAuthority: "server",
+            log: {
+              moveType: "resolveEffect",
+              playerId: playerTwo,
+              timestamp: 10_001,
+              public: [],
+            },
+          },
+        ],
+      },
+      "playerTwo",
+    );
+
+    expect(summary.timeline.map((entry) => entry.moveId)).toEqual(["playCard", "resolveEffect"]);
+    expect(summary.countersBySide.playerTwo.cardsPlayed).toBe(1);
+    expect(summary.countersBySide.playerTwo.effectResolutions).toBe(1);
   });
 });

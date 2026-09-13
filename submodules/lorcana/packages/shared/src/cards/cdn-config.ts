@@ -64,7 +64,7 @@ const LORCANA_FORMATS: CardImageFormat[] = [
 ];
 
 const LORCANA_CONFIG: GameCardImageConfig = {
-  baseUrl: "https://r2.tcg.online/public/lorcana/",
+  baseUrl: "https://cdn.tcg.online/public/lorcana/",
   formats: LORCANA_FORMATS,
   supportedLanguages: LORCANA_SUPPORTED_LANGUAGES,
   defaultLanguage: LORCANA_DEFAULT_LANGUAGE,
@@ -85,7 +85,7 @@ const GUNDAM_FORMATS: CardImageFormat[] = [
 ];
 
 const GUNDAM_CONFIG: GameCardImageConfig = {
-  baseUrl: "https://r2.tcg.online/public/gundam/",
+  baseUrl: "https://cdn.tcg.online/public/gundam/",
   formats: GUNDAM_FORMATS,
 };
 

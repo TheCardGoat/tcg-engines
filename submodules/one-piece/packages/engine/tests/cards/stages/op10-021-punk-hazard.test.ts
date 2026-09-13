@@ -66,4 +66,31 @@ describe("OP10-021 Punk Hazard", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op10CaesarClown002,
+      stage: op10PunkHazard021,
+      character: [op10Monet016],
+      restedDon: 2,
+    });
+    const stageId = engine.findCardInZone("south", "stage", op10PunkHazard021);
+    engine.activateEffect(stageId, "activateMain");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

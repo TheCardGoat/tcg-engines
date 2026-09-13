@@ -13,6 +13,7 @@ describe("multi-game index routing", () => {
 
   afterEach(() => {
     cleanup();
+    vi.restoreAllMocks();
     window.history.pushState({}, "", "/");
   });
 
@@ -60,6 +61,14 @@ describe("multi-game index routing", () => {
     render(<App initialPath="/gundam" />);
 
     await waitFor(() => expect(window.location.pathname).toBe("/gundam/simulator"));
+  });
+
+  it("uses the private-match tabletop as the Riftbound game index", async () => {
+    window.history.pushState({}, "", "/riftbound");
+
+    render(<App initialPath="/riftbound" />);
+
+    await waitFor(() => expect(window.location.pathname).toBe("/riftbound/simulator"));
   });
 
   it("does not expose a fake Lorcana game fixture route", async () => {

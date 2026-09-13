@@ -56,6 +56,7 @@ export const op05PunkRotten078: EventCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

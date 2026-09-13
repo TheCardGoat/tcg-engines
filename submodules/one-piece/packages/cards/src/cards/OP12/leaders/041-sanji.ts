@@ -63,6 +63,7 @@ export const op12Sanji041: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
       {
         trigger: "whenAttacking",

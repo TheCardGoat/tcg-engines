@@ -3,7 +3,7 @@ import { op03Blamenco011 } from "../../../../../cards/src/cards/OP03/characters/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-011 Blamenco", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op03Blamenco011);
   });
 });

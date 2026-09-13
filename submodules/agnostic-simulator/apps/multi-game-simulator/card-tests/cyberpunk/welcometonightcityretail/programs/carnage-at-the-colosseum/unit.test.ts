@@ -6,7 +6,6 @@ import {
   createMockUnit,
   expectEligibleTargets,
   expectNoPendingChoice,
-  expectPendingChoice,
 } from "@cyberpunk-engine/testing/index.ts";
 import { welcomeToNightCityRetailCarnageAtTheColosseum } from "@tcg/cyberpunk-cards";
 

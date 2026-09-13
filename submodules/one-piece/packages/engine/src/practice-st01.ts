@@ -3,7 +3,7 @@ import { allCards } from "../../cards/src/index.ts";
 
 registerCards(allCards);
 
-export { applyCommand, createMatch, getLegalCommands } from "./core.ts";
+export { applyCommand, createMatch, getLegalCommands, getPotentialCardCommands } from "./core.ts";
 export {
   commandFromDescriptor,
   greedyStrategy,
@@ -15,10 +15,12 @@ export {
   ST01_LEADER_CARD_ID,
   ST01_MAIN_DECK,
 } from "./starter-decks.ts";
+export { placeStartingLife } from "./state.ts";
 
 export type {
   ApplyCommandResult,
   EngineAnimation,
   LegalCommandDescriptor,
   MatchState,
+  PotentialCardCommandDescriptor,
 } from "./types.ts";

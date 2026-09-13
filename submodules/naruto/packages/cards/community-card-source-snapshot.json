@@ -1,0 +1,1752 @@
+{
+  "schemaVersion": 1,
+  "status": "provisional-community-cross-check",
+  "fetchedAt": "2026-08-02T09:01:03.234Z",
+  "sources": {
+    "narutoCardGameSimulator": {
+      "source": "naruto-card-game-simulator",
+      "sourceUrl": "https://narutocardgamesimulator.com/en/collection",
+      "payloadUrl": "https://narutocardgamesimulator.com/_next/static/chunks/2lwokegtf0ss7.js",
+      "fetchedAt": "2026-08-02T09:01:03.235Z",
+      "sha256": "f0689e15e42781de6d853a795ab8c8f37f93d6a5e3f587e51992a24764326288",
+      "cardBack": {
+        "sourceUrl": "https://optcg-cards.theramenbowl.net/naruto/cardBack.webp",
+        "provenance": "Observed as the rendered card-back asset in the community simulator on 2026-08-02."
+      },
+      "cards": [
+        {
+          "id": "N-001",
+          "set": "N",
+          "number": "N-001",
+          "rarity": "L",
+          "cardType": "leader",
+          "color": "red",
+          "nameEn": "Naruto Uzumaki",
+          "nameFr": "Naruto Uzumaki",
+          "nameJa": "うずまきナルト",
+          "damage": 1,
+          "power": 3,
+          "health": null,
+          "life": 15,
+          "traits": ["Wind", "Jinchuriki", "Hidden Leaf Village", "Team 7"],
+          "skills": [
+            {
+              "labels": ["Activate: Main"],
+              "text": "Flip 1 of your CHAKRA face-down and choose 1 Character: The chosen card gets +3 power during this turn."
+            },
+            {
+              "labels": ["Recovery"],
+              "text": "If it is the second turn or later, rest this card and flip all of your CHAKRA face-up."
+            }
+          ],
+          "support": null,
+          "artist": "LAYUP",
+          "notForSale": true,
+          "image": "/images/cards/en/N-001.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-004",
+          "set": "N",
+          "number": "N-004",
+          "rarity": "R",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Naruto Uzumaki",
+          "nameFr": "Naruto Uzumaki",
+          "nameJa": "うずまきナルト",
+          "damage": 1,
+          "power": 5,
+          "health": 4,
+          "life": null,
+          "traits": ["Special", "Jinchuriki", "Hidden Leaf Village", "Team 7"],
+          "skills": [],
+          "support": {
+            "name": "Rasengan",
+            "text": "K.O. all Characters.",
+            "timing": "During Your Main",
+            "cost": 2
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-004.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-005",
+          "set": "N",
+          "number": "N-005",
+          "rarity": "C",
+          "cardType": "ex_character",
+          "color": "red",
+          "nameEn": "Gamabunta",
+          "nameFr": "Gamabunta",
+          "nameJa": "ガマ文太",
+          "damage": 2,
+          "power": 10,
+          "health": 8,
+          "life": null,
+          "traits": ["Water", "Toad", "Mount Myoboku"],
+          "skills": [
+            {
+              "labels": [],
+              "text": "Cannot be summoned normally."
+            },
+            {
+              "labels": ["Summon Requirements"],
+              "text": "Place 1 of your Characters with 10 or more power in your trash."
+            },
+            {
+              "labels": ["On Summon"],
+              "text": "Summon 1 non-EX [Naruto Uzumaki], [Jiraiya], or [Minato Namikaze] Character from your trash."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-005.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-006",
+          "set": "N",
+          "number": "N-006",
+          "rarity": "SB",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Jiraiya",
+          "nameFr": "Jiraiya",
+          "nameJa": "自来也",
+          "damage": 1,
+          "power": 7,
+          "health": 4,
+          "life": null,
+          "traits": ["Fire", "The Legendary Sannin", "Hidden Leaf Village"],
+          "skills": [],
+          "support": {
+            "name": "Fire Style: Toad Flame Bombs",
+            "text": "Choose up to 2 rested Characters: K.O. the chosen cards.",
+            "timing": "During Your Opponent's Attack",
+            "cost": 2
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-006.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-007",
+          "set": "N",
+          "number": "N-007",
+          "rarity": "SR",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Minato Namikaze",
+          "nameFr": "Minato Namikaze",
+          "nameJa": "波風ミナト",
+          "damage": 2,
+          "power": 8,
+          "health": 8,
+          "life": null,
+          "traits": ["Wind", "Lightning", "The Five Kage", "Hidden Leaf Village"],
+          "skills": [
+            {
+              "labels": ["Your Turn"],
+              "text": "If this Character has 10 or more power, this Character gains [Rush]. (This card can attack on the turn in which it is summoned.)"
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-007.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-008",
+          "set": "N",
+          "number": "N-008",
+          "rarity": "C",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Shikamaru Nara",
+          "nameFr": "Shikamaru Nara",
+          "nameJa": "奈良シカマル",
+          "damage": 1,
+          "power": 6,
+          "health": 4,
+          "life": null,
+          "traits": ["Special", "Hidden Leaf Village", "Team 10"],
+          "skills": [],
+          "support": {
+            "name": "Shadow Possession Jutsu",
+            "text": "Summon this card and interrupt that attack.",
+            "timing": "During Your Opponent's Attack",
+            "cost": 1
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-008.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-010",
+          "set": "N",
+          "number": "N-010",
+          "rarity": "",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Karin",
+          "nameFr": "Karin",
+          "nameJa": "香燐",
+          "damage": 1,
+          "power": 4,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "The Taka"],
+          "skills": [],
+          "support": {
+            "name": "Hurry up and bite me!",
+            "text": "Summon this card and you gain 2 Life.",
+            "timing": "During Your Opponent's Attack",
+            "cost": 1
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-010.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-011",
+          "set": "N",
+          "number": "N-011",
+          "rarity": "C",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Ino Yamanaka",
+          "nameFr": "Ino Yamanaka",
+          "nameJa": "山中いの",
+          "damage": 2,
+          "power": 5,
+          "health": 8,
+          "life": null,
+          "traits": ["Special", "Hidden Leaf Village", "Team 10"],
+          "skills": [
+            {
+              "labels": ["Activate: Main", "Once Per Turn"],
+              "text": "If you have [Shikamaru Nara] and [Choji Akimichi] on the field, your [Ino Yamanaka], [Shikamaru Nara], and [Choji Akimichi] all gain [Rush] and +5 power/+1 damage during this turn. (This card can attack on the turn in which it is summoned.)"
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-011.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-012",
+          "set": "N",
+          "number": "N-012",
+          "rarity": "L",
+          "cardType": "leader",
+          "color": "blue",
+          "nameEn": "Sasuke Uchiha",
+          "nameFr": "Sasuke Uchiha",
+          "nameJa": "うちはサスケ",
+          "damage": 1,
+          "power": 3,
+          "health": null,
+          "life": 15,
+          "traits": ["Fire", "Lightning", "Uchiha Clan", "The Taka"],
+          "skills": [
+            {
+              "labels": ["Activate: Main", "Once Per Turn"],
+              "text": "Draw 1 card and place 1 card from your hand on top of your deck."
+            },
+            {
+              "labels": ["Recovery"],
+              "text": "If it is the second turn or later, rest this card and flip all of your CHAKRA face-up."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-012.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-013",
+          "set": "N",
+          "number": "N-013",
+          "rarity": "SR",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Itachi Uchiha",
+          "nameFr": "Itachi Uchiha",
+          "nameJa": "うちはイタチ",
+          "damage": 2,
+          "power": 8,
+          "health": 8,
+          "life": null,
+          "traits": ["Fire", "Illusion", "Uchiha Clan", "Akatsuki"],
+          "skills": [
+            {
+              "labels": ["On Summon"],
+              "text": "Choose 1 Leader or Character: Reveal the top card of your deck, and if the revealed card has the {Uchiha Clan} type, the selected card cannot attack during your opponent's next turn."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-013.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-014",
+          "set": "N",
+          "number": "N-014",
+          "rarity": "SR",
+          "cardType": "ex_character",
+          "color": "blue",
+          "nameEn": "Sasuke Uchiha",
+          "nameFr": "Sasuke Uchiha",
+          "nameJa": "うちはサスケ",
+          "damage": 3,
+          "power": 10,
+          "health": 11,
+          "life": null,
+          "traits": ["Fire", "Lightning", "Uchiha Clan", "The Taka"],
+          "skills": [
+            {
+              "labels": [],
+              "text": "Cannot be summoned normally."
+            },
+            {
+              "labels": ["Summon Requirements"],
+              "text": "Place 1 of your Characters and 1 of your {The Taka} type Characters in your trash."
+            },
+            {
+              "labels": ["Rush"],
+              "text": "(This card can attack on the turn in which it is summoned.)"
+            },
+            {
+              "labels": ["On Summon"],
+              "text": "Choose 1 Character: K.O. the chosen card."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-014.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-015",
+          "set": "N",
+          "number": "N-015",
+          "rarity": "R",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Sasuke Uchiha",
+          "nameFr": "Sasuke Uchiha",
+          "nameJa": "うちはサスケ",
+          "damage": 1,
+          "power": 4,
+          "health": 5,
+          "life": null,
+          "traits": ["Lightning", "Uchiha Clan"],
+          "skills": [],
+          "support": {
+            "name": "Chidori: One Thousand Birds",
+            "text": "K.O. all Characters.",
+            "timing": "During Your Main",
+            "cost": 2
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-015.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-016",
+          "set": "N",
+          "number": "N-016",
+          "rarity": "R",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Shisui Uchiha",
+          "nameFr": "Shisui Uchiha",
+          "nameJa": "うちはシスイ",
+          "damage": 1,
+          "power": 5,
+          "health": 6,
+          "life": null,
+          "traits": ["Illusion", "Uchiha Clan", "Hidden Leaf Village"],
+          "skills": [],
+          "support": {
+            "name": "Koto Amatsukami",
+            "text": "Negate that card. Then, from this turn until the end of your next turn's End Phase, you cannot turn your CHAKRA face-up.",
+            "timing": "Support Activated",
+            "cost": 1
+          },
+          "artist": "hoshino.",
+          "notForSale": true,
+          "image": "/images/cards/en/N-016.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-019",
+          "set": "N",
+          "number": "N-019",
+          "rarity": "",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Jugo",
+          "nameFr": "Jugo",
+          "nameJa": "重吾",
+          "damage": 2,
+          "power": 9,
+          "health": 7,
+          "life": null,
+          "traits": ["Special", "The Taka"],
+          "skills": [
+            {
+              "labels": ["When Attacking"],
+              "text": "Reveal the top card of your deck, and if the revealed card is a [Sasuke Uchiha] or {The Taka} type card other than an EX Character, summon that card."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-019.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-021",
+          "set": "N",
+          "number": "N-021",
+          "rarity": "",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Suigetsu Hozuki",
+          "nameFr": "Suigetsu Hozuki",
+          "nameJa": "水月",
+          "damage": 1,
+          "power": 5,
+          "health": 5,
+          "life": null,
+          "traits": ["Water", "The Taka"],
+          "skills": [],
+          "support": {
+            "name": "Water Transformation Jutsu",
+            "text": "Choose 1 Character: Summon this card, and the chosen card will not be affected by your opponent's Support effects during this turn.",
+            "timing": "Quick",
+            "cost": 1
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-021.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-022",
+          "set": "N",
+          "number": "N-022",
+          "rarity": "R",
+          "cardType": "ex_character",
+          "color": "blue",
+          "nameEn": "Manda",
+          "nameFr": "Manda",
+          "nameJa": "マンダ",
+          "damage": 2,
+          "power": 8,
+          "health": 10,
+          "life": null,
+          "traits": ["Special", "Snake"],
+          "skills": [
+            {
+              "labels": [],
+              "text": "Cannot be summoned normally."
+            },
+            {
+              "labels": ["Summon Requirements"],
+              "text": "Place 1 of your Characters in your trash."
+            },
+            {
+              "labels": ["On Summon"],
+              "text": "Reveal the top card of your deck, and if the revealed card is a non-EX Character, summon that card."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-022.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "K-039",
+          "set": "N",
+          "number": "K-039",
+          "rarity": "",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Kakashi Hatake",
+          "nameFr": "Kakashi Hatake",
+          "nameJa": "はたけカカシ",
+          "damage": 1,
+          "power": 7,
+          "health": 4,
+          "life": null,
+          "traits": ["Lightning", "Hidden Leaf Village", "Team 7"],
+          "skills": [],
+          "support": {
+            "name": "Lightning Blade",
+            "text": "Negate that card. Then, reduce your life by 2.",
+            "timing": "Support Activated",
+            "cost": 1
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/K-039.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-naruto-ex",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "ex_character",
+          "color": "red",
+          "nameEn": "Naruto Uzumaki",
+          "nameFr": "Naruto Uzumaki",
+          "nameJa": "うずまきナルト",
+          "damage": 3,
+          "power": 11,
+          "health": 10,
+          "life": null,
+          "traits": ["Wind", "Jinchuriki", "Hidden Leaf Village", "Team 7"],
+          "skills": [
+            {
+              "labels": [],
+              "text": "Cannot be summoned normally."
+            },
+            {
+              "labels": ["Summon Requirements"],
+              "text": "Place 1 of your Characters and 1 of your Characters with 10 or more power in your trash."
+            },
+            {
+              "labels": ["Rush"],
+              "text": "(This card can attack on the turn in which it is played.)"
+            },
+            {
+              "labels": ["On Summon"],
+              "text": "Summon up to 1 [Naruto Uzumaki] from your deck or trash with its effects negated."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-naruto-ex.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-choji",
+          "set": "N",
+          "number": "",
+          "rarity": "R",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Choji Akimichi",
+          "nameFr": "Choji Akimichi",
+          "nameJa": "秋道チョウジ",
+          "damage": 1,
+          "power": 7,
+          "health": 3,
+          "life": null,
+          "traits": ["Taijutsu", "Hidden Leaf Village", "Team 10"],
+          "skills": [],
+          "support": {
+            "name": "Expansion Jutsu",
+            "text": "Choose 1 Character: Summon this card, and the chosen card's power is doubled during this turn.",
+            "timing": "Quick",
+            "cost": 1
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-choji.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-hinata",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Hinata Hyuga",
+          "nameFr": "Hinata Hyuga",
+          "nameJa": "日向ヒナタ",
+          "damage": 1,
+          "power": 5,
+          "health": 5,
+          "life": null,
+          "traits": ["Hyuga Clan", "Hidden Leaf Village", "Team 8"],
+          "skills": [],
+          "support": {
+            "name": "[8-TRIGRAM] Air Palm",
+            "text": "Choose 1 non-EX Character: K.O. the chosen card.",
+            "timing": "During Opponents Attack",
+            "cost": 1
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-hinata.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-orochimaru",
+          "set": "N",
+          "number": "",
+          "rarity": "SR",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Orochimaru",
+          "nameFr": "Orochimaru",
+          "nameJa": "大蛇丸",
+          "damage": 1,
+          "power": 4,
+          "health": 7,
+          "life": null,
+          "traits": ["Special", "The Legendary Sannin", "Village Hidden in the Sound"],
+          "skills": [],
+          "support": {
+            "name": "Striking Shadow Snake",
+            "text": "Choose up to 2 rested Characters: K.O. the chosen cards.",
+            "timing": "During Your Opponent's Attack",
+            "cost": 2
+          },
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/N-orochimaru.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-sakura",
+          "set": "N",
+          "number": "",
+          "rarity": "R",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Sakura Haruno",
+          "nameFr": "Sakura Haruno",
+          "nameJa": "春野サクラ",
+          "damage": 1,
+          "power": 6,
+          "health": 4,
+          "life": null,
+          "traits": ["Taijutsu", "Hidden Leaf Village", "Team 7"],
+          "skills": [],
+          "support": {
+            "name": "Cha!",
+            "text": "Choose 1 Character: Return the chosen card to the owner's hand.",
+            "timing": "During Your Opponent's Attack",
+            "cost": 1
+          },
+          "artist": "Odomika",
+          "notForSale": true,
+          "image": "/images/cards/en/N-sakura.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "N-reveal-01",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Orochimaru",
+          "nameFr": "Orochimaru",
+          "nameJa": "大蛇丸",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "The Legendary Sannin", "Village Hidden in the Sound"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card01.webp",
+          "imageJa": "/images/cards/jp/card01.webp"
+        },
+        {
+          "id": "N-reveal-02",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Boruto Uzumaki",
+          "nameFr": "Boruto Uzumaki",
+          "nameJa": "うずまきボルト",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Lightning", "Hidden Leaf Village"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card02.webp",
+          "imageJa": "/images/cards/jp/card02.webp"
+        },
+        {
+          "id": "N-reveal-03",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Sasuke Uchiha",
+          "nameFr": "Sasuke Uchiha",
+          "nameJa": "うちはサスケ",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "Hidden Leaf Village"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card03.webp",
+          "imageJa": "/images/cards/jp/card03.webp"
+        },
+        {
+          "id": "N-reveal-04",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Naruto Uzumaki",
+          "nameFr": "Naruto Uzumaki",
+          "nameJa": "うずまきナルト",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "Hidden Leaf Village"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card04.webp",
+          "imageJa": "/images/cards/jp/card04.webp"
+        },
+        {
+          "id": "N-reveal-05",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Jiraiya",
+          "nameFr": "Jiraiya",
+          "nameJa": "自来也",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "Hidden Leaf Village"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card05.webp",
+          "imageJa": "/images/cards/jp/card05.webp"
+        },
+        {
+          "id": "N-reveal-06",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Itachi Uchiha",
+          "nameFr": "Itachi Uchiha",
+          "nameJa": "うちはイタチ",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "Akatsuki Organization"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card06.webp",
+          "imageJa": "/images/cards/jp/card06.webp"
+        },
+        {
+          "id": "N-reveal-07",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "blue",
+          "nameEn": "Sasuke Uchiha",
+          "nameFr": "Sasuke Uchiha",
+          "nameJa": "うちはサスケ",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Lightning", "The Taka"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card07.webp",
+          "imageJa": "/images/cards/jp/card07.webp"
+        },
+        {
+          "id": "N-reveal-08",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Naruto Uzumaki",
+          "nameFr": "Naruto Uzumaki",
+          "nameJa": "うずまきナルト",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Wind", "Hidden Leaf Village"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card08.webp",
+          "imageJa": "/images/cards/jp/card08.webp"
+        },
+        {
+          "id": "N-reveal-09",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "red",
+          "nameEn": "Sakura Haruno",
+          "nameFr": "Sakura Haruno",
+          "nameJa": "春野サクラ",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "Hidden Leaf Village"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card09.webp",
+          "imageJa": "/images/cards/jp/card09.webp"
+        },
+        {
+          "id": "N-reveal-10",
+          "set": "N",
+          "number": "",
+          "rarity": "",
+          "cardType": "character",
+          "color": "green",
+          "nameEn": "Tsunade",
+          "nameFr": "Tsunade",
+          "nameJa": "綱手",
+          "damage": 3,
+          "power": 6,
+          "health": 6,
+          "life": null,
+          "traits": ["Special", "Hidden Leaf Village"],
+          "skills": [],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/card10.webp",
+          "imageJa": "/images/cards/jp/card10.webp"
+        },
+        {
+          "id": "C-001",
+          "set": "N",
+          "number": "C-001",
+          "rarity": "",
+          "cardType": "chakra",
+          "color": "",
+          "nameEn": "Chakra Card",
+          "nameFr": "Chakra Card",
+          "nameJa": "",
+          "damage": null,
+          "power": null,
+          "health": null,
+          "life": null,
+          "traits": [],
+          "skills": [
+            {
+              "labels": [],
+              "text": "When using Chakra, turn this card face-down."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/C-001.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "CP-001",
+          "set": "N",
+          "number": "CP-001",
+          "rarity": "",
+          "cardType": "chakra",
+          "color": "",
+          "nameEn": "Chakra Card",
+          "nameFr": "Chakra Card",
+          "nameJa": "",
+          "damage": null,
+          "power": null,
+          "health": null,
+          "life": null,
+          "traits": [],
+          "skills": [
+            {
+              "labels": [],
+              "text": "When using Chakra, turn this card face-down."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": true,
+          "image": "/images/cards/en/CP-001.webp",
+          "imageJa": ""
+        },
+        {
+          "id": "S-001",
+          "set": "N",
+          "number": "S-001",
+          "rarity": "",
+          "cardType": "summon",
+          "color": "",
+          "nameEn": "Summon Card",
+          "nameFr": "Summon Card",
+          "nameJa": "",
+          "damage": null,
+          "power": null,
+          "health": null,
+          "life": null,
+          "traits": [],
+          "skills": [
+            {
+              "labels": [],
+              "text": "You may rest this card to summon a Character card."
+            }
+          ],
+          "support": null,
+          "artist": "",
+          "notForSale": false,
+          "image": "/images/cards/en/S-001.webp",
+          "imageJa": ""
+        }
+      ]
+    },
+    "exBurst": {
+      "source": "exburst",
+      "sourceUrl": "https://exburst.dev/naruto/cardlist",
+      "fetchedAt": "2026-08-02T09:01:03.708Z",
+      "sha256": "37ce687ab2ebdbadea9a262ef52144a130099dd0b11430edec515220110adda5",
+      "reportedCardCount": 37,
+      "cards": [
+        {
+          "number": "C-001",
+          "name": "Chakra Card",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/C-001.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/C-001",
+          "rarity": null,
+          "fields": {
+            "Effect": ["When using Chakra, turn this card face-down."],
+            "Type": ["CHAKRA"],
+            "Set / Source": ["Official website reveal"]
+          }
+        },
+        {
+          "number": "CP-001",
+          "name": "Chakra Card",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/CP-001.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/CP-001",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHAKRA"],
+            "Set / Source": ["GenCon 2026"]
+          }
+        },
+        {
+          "number": "N-001",
+          "name": "Naruto Uzumaki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-001.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-001",
+          "rarity": "L",
+          "fields": {
+            "Effect": [
+              "[Activate: Main] Flip 1 of your CHAKRA face-down and choose 1 Character: The chosen card gets +3 power during this turn.",
+              "[Recovery] If it is the second turn or later, rest this card and flip all of your CHAKRA face-up."
+            ],
+            "Type": ["LEADER"],
+            "Rarity": ["L"],
+            "Trait": ["Wind Jinchuriki Hidden Leaf Village Team 7"],
+            "DMG": ["1"],
+            "POW": ["3"],
+            "Set / Source": ["Official website reveal"]
+          }
+        },
+        {
+          "number": "N-002",
+          "name": "Choji Akimichi",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-002.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-002",
+          "rarity": "R",
+          "fields": {
+            "Effect": [
+              "[Support] Expansion Jutsu",
+              "[Quick] Choose 1 Character: Summon this card, and the chosen card's power is doubled during this turn."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["R"],
+            "Trait": ["Taijutsu Hidden Leaf Village Team 10"],
+            "Chakra": ["1"],
+            "DMG": ["1"],
+            "POW": ["7"],
+            "HP": ["3"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-003",
+          "name": "Naruto Uzumaki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-003.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-003",
+          "rarity": "SR",
+          "fields": {
+            "Effect": [
+              "Cannot be summoned normally.",
+              "[Summon Requirements] Place 1 of your Characters and 1 of your Characters with 10 or more power in your trash.",
+              "[Rush] (This card can attack on the turn in which it is played.)",
+              "[On Summon] Summon up to 1 [Naruto Uzumaki] from your deck or trash with its effects negated."
+            ],
+            "Type": ["EX CHARACTER"],
+            "Rarity": ["SR"],
+            "Trait": ["Wind Jinchuriki Hidden Leaf Village Team 7"],
+            "DMG": ["3"],
+            "POW": ["11"],
+            "HP": ["10"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-004",
+          "name": "Naruto Uzumaki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-004.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-004",
+          "rarity": "R",
+          "fields": {
+            "Effect": ["[Support] Rasengan", "[During Your Main] K.O. all Characters."],
+            "Type": ["CHARACTER"],
+            "Rarity": ["R"],
+            "Trait": ["Special Jinchuriki Hidden Leaf Village Team 7"],
+            "Chakra": ["2"],
+            "DMG": ["1"],
+            "POW": ["5"],
+            "HP": ["4"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-005",
+          "name": "Gamabunta",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-005.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-005",
+          "rarity": "C",
+          "fields": {
+            "Effect": [
+              "Cannot be summoned normally.",
+              "[Summon Requirements] Place 1 of your Characters with 10 or more power in your trash.",
+              "[On Summon] Summon 1 non-EX [Naruto Uzumaki], [Jiraiya], or [Minato Namikaze] Character from your trash."
+            ],
+            "Type": ["EX CHARACTER"],
+            "Rarity": ["C"],
+            "Trait": ["Water Toad Mount Myoboku"],
+            "DMG": ["2"],
+            "POW": ["10"],
+            "HP": ["8"],
+            "Set / Source": ["Official website reveal"]
+          }
+        },
+        {
+          "number": "N-006",
+          "name": "Jiraiya",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-006.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-006",
+          "rarity": "SR",
+          "fields": {
+            "Effect": [
+              "[Support] Fire Style: Toad Flame Bombs",
+              "[During Your Opponent's Attack] Choose up to 2 rested Characters: K.O. the chosen cards."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["SR"],
+            "Trait": ["Fire The Legendary Sannin Hidden Leaf Village"],
+            "Chakra": ["2"],
+            "DMG": ["1"],
+            "POW": ["7"],
+            "HP": ["4"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-007",
+          "name": "Minato Namikaze",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-007.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-007",
+          "rarity": "SR",
+          "fields": {
+            "Effect": [
+              "[Your Turn] If this Character has 10 or more power, this Character gains [Rush]. (This card can attack on the turn in which it is summoned.)"
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["SR"],
+            "Trait": ["Wind Lightning The Five Kage Hidden Leaf Village"],
+            "DMG": ["2"],
+            "POW": ["8"],
+            "HP": ["8"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-008",
+          "name": "Shikamaru Nara",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-008.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-008",
+          "rarity": "C",
+          "fields": {
+            "Effect": [
+              "[Support] Shadow Possession Jutsu",
+              "[During Your Opponent's Attack] Summon this card and interrupt that attack."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["C"],
+            "Trait": ["Special Hidden Leaf Village Team 10"],
+            "Chakra": ["1"],
+            "DMG": ["1"],
+            "POW": ["6"],
+            "HP": ["4"],
+            "Set / Source": ["Official website reveal"]
+          }
+        },
+        {
+          "number": "N-009",
+          "name": "Kakashi Hatake",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-009.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-009",
+          "rarity": "R",
+          "fields": {
+            "Effect": [
+              "[Support] Lightning Blade",
+              "[Support Activated] Negate that card. Then, reduce your life by 2."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["R"],
+            "Trait": ["Lightning Hidden Leaf Village Team 7"],
+            "Chakra": ["1"],
+            "DMG": ["1"],
+            "POW": ["7"],
+            "HP": ["4"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-010",
+          "name": "Karin",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-010.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-010",
+          "rarity": null,
+          "fields": {
+            "Effect": [
+              "[Support] Hurry up and bite me!",
+              "[During Your Opponent's Attack] Summon this card and you gain 2 Life."
+            ],
+            "Type": ["CHARACTER"],
+            "Trait": ["Special The Taka"],
+            "Chakra": ["1"],
+            "DMG": ["1"],
+            "POW": ["4"],
+            "HP": ["6"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-011",
+          "name": "Ino Yamanaka",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-011.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-011",
+          "rarity": "C",
+          "fields": {
+            "Effect": [
+              "[Activate: Main] [Once Per Turn] If you have [Shikamaru Nara] and [Choji Akimichi] on the field, your [Ino Yamanaka], [Shikamaru Nara], and [Choji Akimichi] all gain [Rush] and +5 power/+1 damage during this turn. (This card can attack on the turn in which it is summoned.)"
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["C"],
+            "Trait": ["Special Hidden Leaf Village Team 10"],
+            "DMG": ["2"],
+            "POW": ["5"],
+            "HP": ["8"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-012",
+          "name": "Sasuke Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-012.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-012",
+          "rarity": "L",
+          "fields": {
+            "Effect": [
+              "[Activate: Main] [Once Per Turn] Draw 1 card and place 1 card from your hand on top of your deck.",
+              "[Recovery] If it is the second turn or later, rest this card and flip all of your CHAKRA face-up."
+            ],
+            "Type": ["LEADER"],
+            "Rarity": ["L"],
+            "Trait": ["Fire Lightning Uchiha Clan The Taka"],
+            "DMG": ["1"],
+            "POW": ["3"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-013",
+          "name": "Itachi Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-013.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-013",
+          "rarity": "SR",
+          "fields": {
+            "Effect": [
+              "[On Summon] Choose 1 Leader or Character: Reveal the top card of your deck, and if the revealed card has the [Uchiha Clan] type, the selected card cannot attack during your opponent's next turn."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["SR"],
+            "Trait": ["Fire Illusion Uchiha Clan Akatsuki"],
+            "DMG": ["2"],
+            "POW": ["8"],
+            "HP": ["8"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-014",
+          "name": "Sasuke Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-014.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-014",
+          "rarity": "SR",
+          "fields": {
+            "Effect": [
+              "Cannot be summoned normally.",
+              "[Summon Requirements] Place 1 of your Characters and 1 of your [The Taka] type Characters in your trash.",
+              "[Rush] (This card can attack on the turn in which it is summoned.)",
+              "[On Summon] Choose 1 Character: K.O. the chosen card."
+            ],
+            "Type": ["EX CHARACTER"],
+            "Rarity": ["SR"],
+            "Trait": ["Fire Lightning Uchiha Clan The Taka"],
+            "DMG": ["3"],
+            "POW": ["10"],
+            "HP": ["11"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-015",
+          "name": "Sasuke Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-015.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-015",
+          "rarity": "R",
+          "fields": {
+            "Effect": [
+              "[Support] Chidori: One Thousand Birds",
+              "[During Your Main] K.O. all Characters."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["R"],
+            "Trait": ["Lightning Uchiha Clan"],
+            "Chakra": ["2"],
+            "DMG": ["1"],
+            "POW": ["4"],
+            "HP": ["5"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-016",
+          "name": "Shisui Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-016.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-016",
+          "rarity": "R",
+          "fields": {
+            "Effect": [
+              "[Support] Koto Amatsukami",
+              "[Support Activated] Negate that card. Then, from this turn until the end of your next turn's End Phase, you cannot turn your CHAKRA face-up."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["R"],
+            "Trait": ["Illusion Uchiha Clan Hidden Leaf Village"],
+            "Chakra": ["1"],
+            "DMG": ["1"],
+            "POW": ["5"],
+            "HP": ["6"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-017",
+          "name": "Orochimaru",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-017.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-017",
+          "rarity": "SR",
+          "fields": {
+            "Effect": [
+              "[Support] Striking Shadow Snake",
+              "[During Your Opponent's Attack] Choose up to 2 rested Characters: K.O. the chosen cards."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["SR"],
+            "Trait": ["Special The Legendary Sannin Hidden Sound Village"],
+            "Chakra": ["2"],
+            "DMG": ["1"],
+            "POW": ["4"],
+            "HP": ["7"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-018",
+          "name": "Hinata Hyuga",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-018.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-018",
+          "rarity": null,
+          "fields": {
+            "Effect": [
+              "[Support] [8-Trigram] Air Palm",
+              "[During Your Opponent's Attack] Choose 1 non-EX Character: K.O. the chosen card."
+            ],
+            "Type": ["CHARACTER"],
+            "Trait": ["Hyuga Clan Hidden Leaf Village Team 8"],
+            "Chakra": ["1"],
+            "DMG": ["1"],
+            "POW": ["5"],
+            "HP": ["5"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-019",
+          "name": "Jugo",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-019.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-019",
+          "rarity": "C",
+          "fields": {
+            "Effect": [
+              "[When Attacking] Reveal the top card of your deck, and if the revealed card is [Sasuke Uchiha] or a [The Taka] type card other than an EX Character, summon that card."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["C"],
+            "Trait": ["Special The Taka"],
+            "DMG": ["2"],
+            "POW": ["9"],
+            "HP": ["7"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-020",
+          "name": "Sakura Haruno",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-020.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-020",
+          "rarity": "R",
+          "fields": {
+            "Effect": [
+              "[Support] Cha!",
+              "[During Your Opponent's Attack] Choose 1 Character: Return the chosen card to the owner's hand."
+            ],
+            "Type": ["CHARACTER"],
+            "Rarity": ["R"],
+            "Trait": ["Taijutsu Hidden Leaf Village Team 7"],
+            "Chakra": ["1"],
+            "DMG": ["2"],
+            "POW": ["6"],
+            "HP": ["4"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-021",
+          "name": "Suigetsu Hozuki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-021.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-021",
+          "rarity": null,
+          "fields": {
+            "Effect": [
+              "[Support] Water Transformation Jutsu",
+              "[Quick] Choose 1 Character: Summon this card, and the chosen card will not be affected by your opponent's Support effects during this turn."
+            ],
+            "Type": ["CHARACTER"],
+            "Trait": ["Water The Taka"],
+            "Chakra": ["1"],
+            "DMG": ["1"],
+            "POW": ["5"],
+            "HP": ["5"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "N-022",
+          "name": "Manda",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/N-022.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/N-022",
+          "rarity": "R",
+          "fields": {
+            "Effect": [
+              "Cannot be summoned normally.",
+              "[Summon Requirements] Place 1 of your Characters in your trash.",
+              "[On Summon] Reveal the top card of your deck, and if the revealed card is a non-EX Character, summon that card."
+            ],
+            "Type": ["EX CHARACTER"],
+            "Rarity": ["R"],
+            "Trait": ["Special Snake"],
+            "DMG": ["2"],
+            "POW": ["8"],
+            "HP": ["10"],
+            "Set / Source": ["Official reveal"]
+          }
+        },
+        {
+          "number": "S-001",
+          "name": "Summon Card",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/S-001.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/S-001",
+          "rarity": null,
+          "fields": {
+            "Effect": ["You may rest this card to summon a Character card."],
+            "Type": ["SUMMON"],
+            "Set / Source": ["Official website reveal"]
+          }
+        },
+        {
+          "number": "SAMPLE-1",
+          "name": "Orochimaru",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-1.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-1",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special The Legendary Sannin Village Hidden in the Sound"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-10",
+          "name": "Tsunade",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-10.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-10",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special Hidden Leaf Village"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-11",
+          "name": "Sasuke Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-11.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-11",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Lightning Uchiha Clan"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-12",
+          "name": "Naruto Uzumaki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-12.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-12",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special Jinchuriki Hidden Leaf Village Team 7"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-2",
+          "name": "Boruto Uzumaki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-2.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-2",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Lightning Hidden Leaf Village"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-3",
+          "name": "Sasuke Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-3.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-3",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special Hidden Leaf Village"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-4",
+          "name": "Naruto Uzumaki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-4.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-4",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special Hidden Leaf Village"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-5",
+          "name": "Jiraiya",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-5.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-5",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special Hidden Leaf Village"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-6",
+          "name": "Itachi Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-6.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-6",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special Akatsuki Organization"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-7",
+          "name": "Sasuke Uchiha",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-7.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-7",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Lightning The Taka"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-8",
+          "name": "Naruto Uzumaki",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-8.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-8",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Wind Hidden Leaf Village"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        },
+        {
+          "number": "SAMPLE-9",
+          "name": "Sakura Haruno",
+          "imageUrl": "https://exburst.dev/nrtb/cards/hd/SAMPLE-9.webp",
+          "detailUrl": "https://exburst.dev/naruto/cards/SAMPLE-9",
+          "rarity": null,
+          "fields": {
+            "Type": ["CHARACTER"],
+            "Trait": ["Special Hidden Leaf Village"],
+            "DMG": ["3"],
+            "POW": ["6"],
+            "HP": ["6"],
+            "Set / Source": ["Official website showcase (SAMPLE)"]
+          }
+        }
+      ]
+    }
+  },
+  "reconciliation": {
+    "exactNumberMatches": 19,
+    "inferredIdentityMatches": [
+      {
+        "simulatorId": "K-039",
+        "exBurstNumber": "N-009",
+        "score": 17
+      },
+      {
+        "simulatorId": "N-naruto-ex",
+        "exBurstNumber": "N-003",
+        "score": 24
+      },
+      {
+        "simulatorId": "N-choji",
+        "exBurstNumber": "N-002",
+        "score": 17
+      },
+      {
+        "simulatorId": "N-hinata",
+        "exBurstNumber": "N-018",
+        "score": 17
+      },
+      {
+        "simulatorId": "N-orochimaru",
+        "exBurstNumber": "N-017",
+        "score": 16
+      },
+      {
+        "simulatorId": "N-sakura",
+        "exBurstNumber": "N-020",
+        "score": 12
+      },
+      {
+        "simulatorId": "N-reveal-01",
+        "exBurstNumber": "SAMPLE-1",
+        "score": 31
+      },
+      {
+        "simulatorId": "N-reveal-02",
+        "exBurstNumber": "SAMPLE-2",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-03",
+        "exBurstNumber": "SAMPLE-3",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-04",
+        "exBurstNumber": "SAMPLE-4",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-05",
+        "exBurstNumber": "SAMPLE-5",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-06",
+        "exBurstNumber": "SAMPLE-6",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-07",
+        "exBurstNumber": "SAMPLE-7",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-08",
+        "exBurstNumber": "SAMPLE-8",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-09",
+        "exBurstNumber": "SAMPLE-9",
+        "score": 30
+      },
+      {
+        "simulatorId": "N-reveal-10",
+        "exBurstNumber": "SAMPLE-10",
+        "score": 30
+      }
+    ],
+    "simulatorOnly": [],
+    "exBurstOnly": ["SAMPLE-11", "SAMPLE-12"],
+    "conflicts": [
+      {
+        "simulatorId": "N-006",
+        "exBurstNumber": "N-006",
+        "fields": ["rarity"]
+      },
+      {
+        "simulatorId": "N-019",
+        "exBurstNumber": "N-019",
+        "fields": ["rarity"]
+      },
+      {
+        "simulatorId": "K-039",
+        "exBurstNumber": "N-009",
+        "fields": ["rarity"]
+      },
+      {
+        "simulatorId": "N-naruto-ex",
+        "exBurstNumber": "N-003",
+        "fields": ["rarity"]
+      },
+      {
+        "simulatorId": "N-sakura",
+        "exBurstNumber": "N-020",
+        "fields": ["damage"]
+      }
+    ]
+  },
+  "limitations": [
+    "Both catalogs are unofficial community sources; neither establishes authoritative rules or card text.",
+    "Printed text remains display evidence and must not generate executable engine behavior.",
+    "Images are referenced by URL for source identification only and are not downloaded or shipped."
+  ]
+}

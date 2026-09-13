@@ -24,5 +24,7 @@ describe("ST13-011 Portgas.D.Ace", () => {
         ?.rested,
     ).toBe(true);
     expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
   });
 });

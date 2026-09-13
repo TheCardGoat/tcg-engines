@@ -14,12 +14,7 @@ export const dropOpponent: GundamMoveDefinition<"dropOpponent"> = {
     const opponent = getOpponent(framework.state.playerIds, playerId);
     if (!opponent) return false;
     const timeout = framework.time.getTimeoutStatus(opponent);
-    const opponentTime = framework.time.getPlayerTime(opponent);
-    return (
-      framework.time.isInNegativeTime(opponent) ||
-      opponentTime.reserveMsRemaining <= 0 ||
-      timeout === "second"
-    );
+    return framework.time.hasGraceExpired(opponent) || timeout === "second";
   },
 
   validate({ playerId, framework, validationMode }) {
@@ -38,11 +33,7 @@ export const dropOpponent: GundamMoveDefinition<"dropOpponent"> = {
     }
 
     const timeout = framework.time.getTimeoutStatus(opponent);
-    const opponentTime = framework.time.getPlayerTime(opponent);
-    const canDrop =
-      framework.time.isInNegativeTime(opponent) ||
-      opponentTime.reserveMsRemaining <= 0 ||
-      timeout === "second";
+    const canDrop = framework.time.hasGraceExpired(opponent) || timeout === "second";
 
     if (!canDrop) {
       return {

@@ -1,4 +1,11 @@
-import { P1, P2, type EngineCtx, type MatchState, type MoveLog } from "@tcg/cyberpunk-engine";
+import {
+  P1,
+  P2,
+  type EngineCtx,
+  type FilteredMatchView,
+  type MatchState,
+  type MoveLog,
+} from "@tcg/cyberpunk-engine";
 import {
   EngineInteractionView,
   type EngineInteractionView as EngineInteractionViewType,
@@ -12,6 +19,8 @@ import { createLiveHttpError } from "./httpFeedback";
 import { cyberpunkRuntimeRequestHeaders, readServerRuntimeHeaders } from "./runtimeHeaders";
 import type { ChatPresetKey } from "../chat";
 import { buildMountedHref } from "../../../../routes/router-paths.ts";
+import { MatchResolutionSchema, type LiveMatchBootstrapV1 } from "@tcg/game-page-contract";
+import { isFilteredMatchView, isMatchState, viewerProjectionToMatchState } from "./liveState";
 
 export interface LiveMatchContext {
   match: {
@@ -35,6 +44,7 @@ export interface LiveMatchContext {
       opponent: string;
     };
     state: MatchState | null;
+    viewerProjection?: FilteredMatchView;
     version: number;
     cardsMaps?: unknown;
     timeControl?: EngineCtx["timeControl"];
@@ -61,35 +71,6 @@ export interface LiveMatchOverview {
   status: "waiting" | "in_progress" | "completed" | "abandoned";
   currentGameId?: string;
   gameIds: string[];
-}
-
-interface RawLiveMatchContext {
-  object?: string;
-  match?: Partial<LiveMatchContext["match"]> & {
-    participants?: unknown;
-  };
-  game?: Partial<LiveMatchContext["game"]> & {
-    player1Id?: unknown;
-    player2Id?: unknown;
-    state?: unknown;
-    cardsMaps?: unknown;
-    timeControl?: unknown;
-    clockState?: unknown;
-    interactionView?: unknown;
-  };
-  history?: {
-    engineLogs?: unknown;
-    chatMessages?: unknown;
-    freeTextEnabled?: unknown;
-  };
-}
-
-interface RawLiveMatchOverview {
-  object?: string;
-  matchId?: string;
-  status?: LiveMatchOverview["status"];
-  currentGameId?: string;
-  gameIds?: string[];
 }
 
 interface CanonicalEngineLogMessage {
@@ -129,17 +110,9 @@ export interface RemoteClockPlayerState {
 }
 
 export type RemoteClockState = Record<string, RemoteClockPlayerState>;
-type CyberpunkTimeControl = NonNullable<EngineCtx["timeControl"]>;
 
 export function buildMatchOverviewUrl(gameSlug: GameSlug, matchId: string): string {
   return playUrl(gameSlug, `/matches/${encodeURIComponent(matchId)}`);
-}
-
-export function buildMatchContextUrl(gameSlug: GameSlug, matchId: string, gameId: string): string {
-  return playUrl(
-    gameSlug,
-    `/matches/${encodeURIComponent(matchId)}/games/${encodeURIComponent(gameId)}/context`,
-  );
 }
 
 export function getMatchmakingReturnUrl(
@@ -171,89 +144,76 @@ export async function fetchLiveMatchOverview(
   return parseLiveMatchOverview(await response.json());
 }
 
-export async function fetchLiveMatchContext(
-  gameSlug: GameSlug,
-  matchId: string,
-  gameId: string,
-  fetcher: typeof fetch = fetch,
-): Promise<LiveMatchContext> {
-  await primeAuthSession();
-  const response = await fetcher(buildMatchContextUrl(gameSlug, matchId, gameId), {
-    credentials: "include",
-    headers: cyberpunkRuntimeRequestHeaders(),
-  });
-  if (!response.ok) {
-    throw await createLiveHttpError(response, "Match context request failed");
+export function liveMatchContextFromBootstrap(bootstrap: LiveMatchBootstrapV1): LiveMatchContext {
+  const viewerState = bootstrap.game.view;
+  if (viewerState !== null && !isMatchState(viewerState) && !isFilteredMatchView(viewerState)) {
+    throw new Error("Live bootstrap did not include a Cyberpunk viewer projection.");
   }
-  logRuntimeHeaderMismatch(response, "match-context");
-  const payload = await response.json();
-  logLiveMatchPayload(payload, { matchId, gameId });
-  return parseLiveMatchContext(payload);
-}
-
-export function parseLiveMatchOverview(value: unknown): LiveMatchOverview {
-  const raw = value as RawLiveMatchOverview;
-  if (!raw || raw.object !== "match" || !raw.matchId) {
-    throw new Error("Match overview response was not a match.");
+  const matchStatus = bootstrap.match.status;
+  if (matchStatus === "waiting") {
+    throw new Error("Live bootstrap cannot initialize Cyberpunk before the match starts.");
   }
+  const viewerId = bootstrap.viewer.role === "player" ? bootstrap.viewer.actorId : undefined;
+  const opponentId = viewerId
+    ? bootstrap.match.participants.find((participant) => participant.id !== viewerId)?.id
+    : undefined;
+  const resources = bootstrap.game.resources;
+  const cardsMaps =
+    resources && typeof resources === "object" && "cardsMaps" in resources
+      ? (resources as { cardsMaps?: unknown }).cardsMaps
+      : undefined;
   return {
-    object: "match",
-    matchId: raw.matchId,
-    status: raw.status ?? "in_progress",
-    currentGameId: raw.currentGameId,
-    gameIds: Array.isArray(raw.gameIds) ? raw.gameIds : [],
+    match: {
+      matchId: bootstrap.match.matchId,
+      status: matchStatus,
+      format: bootstrap.match.format === "best_of_3" ? "best_of_3" : "best_of_1",
+      currentGameId: bootstrap.game.gameId,
+      gameIds: bootstrap.match.gameIds,
+      winnerId: bootstrap.match.winnerId,
+      player1Score: bootstrap.match.scores?.[bootstrap.match.participants[0]?.id ?? ""],
+      player2Score: bootstrap.match.scores?.[bootstrap.match.participants[1]?.id ?? ""],
+      participants: bootstrap.match.participants.map((participant) => ({
+        id: participant.id,
+        displayName: participant.displayName,
+        seat: participant.seat === 2 ? 2 : 1,
+        ...(participant.userId ? { userId: participant.userId } : {}),
+      })),
+    },
+    game: {
+      gameId: bootstrap.game.gameId,
+      gameNumber: bootstrap.game.gameNumber,
+      status: bootstrap.game.status,
+      authority: bootstrap.game.authority,
+      ...(viewerId && opponentId ? { actorIds: { player: viewerId, opponent: opponentId } } : {}),
+      state:
+        viewerState === null
+          ? null
+          : isMatchState(viewerState)
+            ? viewerState
+            : viewerProjectionToMatchState(viewerState, bootstrap.match.matchId),
+      ...(!viewerState || isMatchState(viewerState) ? {} : { viewerProjection: viewerState }),
+      version: bootstrap.game.stateVersion,
+      ...(cardsMaps ? { cardsMaps } : {}),
+      ...(bootstrap.game.interactionView
+        ? { interactionView: parseInteractionView(bootstrap.game.interactionView) }
+        : {}),
+    },
+    history: {
+      engineLogs: bootstrap.history.engineLogs.map((entry) => entry.data),
+      chatMessages: parseRemoteChatMessages(bootstrap.history.chatMessages),
+      freeTextEnabled: bootstrap.history.freeTextEnabled === true,
+    },
   };
 }
 
-export function parseLiveMatchContext(value: unknown): LiveMatchContext {
-  const raw = value as RawLiveMatchContext;
-  if (!raw || raw.object !== "game_context" || !raw.match || !raw.game) {
-    throw new Error("Match context response was not a game context.");
-  }
-  if (!raw.match.matchId || !raw.game.gameId) {
-    throw new Error("Match context response is missing match or game identifiers.");
-  }
-  if (raw.game.state !== null && raw.game.state !== undefined && !isMatchState(raw.game.state)) {
-    throw new Error("Match context response did not include a Cyberpunk match state.");
-  }
-  const interactionView = parseInteractionView(raw.game.interactionView);
-  const actorIds = parseActorIds(raw.game);
-  const timeControl = parseRemoteTimeControl(raw.game.timeControl);
-  const clockState = parseRemoteClockState(raw.game.clockState);
-  const state =
-    raw.game.state && isMatchState(raw.game.state)
-      ? mergeClockIntoState(raw.game.state, timeControl, clockState)
-      : null;
+export function parseLiveMatchOverview(value: unknown): LiveMatchOverview {
+  const resolved = MatchResolutionSchema.parse(value);
   return {
-    match: {
-      matchId: raw.match.matchId,
-      status: raw.match.status ?? "in_progress",
-      format: raw.match.format === "best_of_3" ? "best_of_3" : "best_of_1",
-      currentGameId: raw.match.currentGameId,
-      gameIds: Array.isArray(raw.match.gameIds) ? raw.match.gameIds : [raw.game.gameId],
-      winnerId: raw.match.winnerId,
-      player1Score: raw.match.player1Score,
-      player2Score: raw.match.player2Score,
-      participants: parseParticipants(raw.match.participants),
-    },
-    game: {
-      gameId: raw.game.gameId,
-      gameNumber: raw.game.gameNumber ?? 1,
-      status: raw.game.status ?? "in_progress",
-      authority: raw.game.authority ?? "server",
-      ...(actorIds ? { actorIds } : {}),
-      state,
-      version: raw.game.version ?? 0,
-      ...(raw.game.cardsMaps ? { cardsMaps: raw.game.cardsMaps } : {}),
-      ...(timeControl ? { timeControl } : {}),
-      ...(clockState ? { clockState } : {}),
-      ...(interactionView ? { interactionView } : {}),
-    },
-    history: {
-      engineLogs: Array.isArray(raw.history?.engineLogs) ? raw.history.engineLogs : [],
-      chatMessages: parseRemoteChatMessages(raw.history?.chatMessages),
-      freeTextEnabled: raw.history?.freeTextEnabled === true,
-    },
+    object: "match",
+    matchId: resolved.match.matchId,
+    status: resolved.match.status,
+    ...(resolved.currentGameId ? { currentGameId: resolved.currentGameId } : {}),
+    gameIds: resolved.match.gameIds,
   };
 }
 
@@ -265,71 +225,6 @@ export function parseRemoteChatMessages(value: unknown): RemoteChatMessage[] {
     const parsed = parseRemoteChatMessage(item);
     return parsed ? [parsed] : [];
   });
-}
-
-export function parseRemoteClockState(value: unknown): RemoteClockState | undefined {
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    return undefined;
-  }
-  const out: RemoteClockState = {};
-  for (const [playerId, rawClock] of Object.entries(value)) {
-    if (!rawClock || typeof rawClock !== "object" || Array.isArray(rawClock)) {
-      continue;
-    }
-    const clock = rawClock as Record<string, unknown>;
-    if (
-      typeof clock.reserveMsRemaining !== "number" ||
-      typeof clock.totalConsumedMs !== "number" ||
-      typeof clock.movesMade !== "number"
-    ) {
-      continue;
-    }
-    out[playerId] = {
-      reserveMsRemaining: clock.reserveMsRemaining,
-      totalConsumedMs: clock.totalConsumedMs,
-      movesMade: clock.movesMade,
-      lastUpdatedAtMs: typeof clock.lastUpdatedAtMs === "number" ? clock.lastUpdatedAtMs : 0,
-      ...(typeof clock.timeoutCount === "number" ? { timeoutCount: clock.timeoutCount } : {}),
-      ...(typeof clock.isInNegativeTime === "boolean"
-        ? { isInNegativeTime: clock.isInNegativeTime }
-        : {}),
-      ...(typeof clock.isOnClock === "boolean" ? { isOnClock: clock.isOnClock } : {}),
-    };
-  }
-  return Object.keys(out).length > 0 ? out : undefined;
-}
-
-function parseParticipants(value: unknown): LiveMatchParticipant[] {
-  if (!Array.isArray(value)) {
-    return [];
-  }
-  const participants: LiveMatchParticipant[] = [];
-  for (const item of value) {
-    if (!item || typeof item !== "object") {
-      continue;
-    }
-    const raw = item as Record<string, unknown>;
-    if (typeof raw.id !== "string" || typeof raw.displayName !== "string") {
-      continue;
-    }
-    if (raw.seat !== 1 && raw.seat !== 2) {
-      continue;
-    }
-    participants.push({
-      id: raw.id,
-      seat: raw.seat,
-      displayName: raw.displayName,
-      ...(typeof raw.userId === "string" ? { userId: raw.userId } : {}),
-      ...(typeof raw.deckName === "string" ? { deckName: raw.deckName } : {}),
-      ...(typeof raw.deckListId === "string" ? { deckListId: raw.deckListId } : {}),
-      ...(typeof raw.subscriptionTier === "string"
-        ? { subscriptionTier: raw.subscriptionTier }
-        : {}),
-      ...(typeof raw.isMobile === "boolean" ? { isMobile: raw.isMobile } : {}),
-      ...(typeof raw.mmrAtMatch === "number" ? { mmrAtMatch: raw.mmrAtMatch } : {}),
-    });
-  }
-  return participants;
 }
 
 export function resolveMatchOverviewDestination(
@@ -387,11 +282,19 @@ export function buildLiveMatchGameHref(
   basename = import.meta.env.BASE_URL,
 ): string {
   const path = `/matches/${encodeURIComponent(matchId)}/games/${encodeURIComponent(gameId)}`;
-  return `${buildMountedHref(path, basename)}${currentPathSearch}`;
+  const params = new URLSearchParams(currentPathSearch);
+  for (const key of ["playerId", "role", "spectate", "ticket", "authToken"]) params.delete(key);
+  const query = params.toString();
+  return `${buildMountedHref(path, basename)}${query ? `?${query}` : ""}`;
 }
 
-export function projectLiveStateForSimulator(state: MatchState): MatchState {
-  const [serverP1, serverP2] = state.ctx.playerIds.map(String);
+export function projectLiveStateForSimulator(
+  state: MatchState,
+  actorIds?: LiveMatchContext["game"]["actorIds"],
+): MatchState {
+  const [serverP1, serverP2] = actorIds
+    ? [actorIds.player, actorIds.opponent]
+    : state.ctx.playerIds.map(String);
   if (!serverP1 || !serverP2 || (serverP1 === String(P1) && serverP2 === String(P2))) {
     return state;
   }
@@ -399,11 +302,26 @@ export function projectLiveStateForSimulator(state: MatchState): MatchState {
     [serverP1, String(P1)],
     [serverP2, String(P2)],
   ]);
-  return replaceExactStrings(state, replacements) as MatchState;
+  const projected = replaceExactStrings(state, replacements) as MatchState;
+  return {
+    ...projected,
+    ctx: {
+      ...projected.ctx,
+      // Local renderer semantics are viewer-relative: P1 is always this
+      // browser and P2 is the rival, regardless of the server seat order.
+      playerIds: [P1, P2],
+    },
+  };
 }
 
-export function projectLiveValueForSimulator<T>(value: T, state: MatchState): T {
-  const [serverP1, serverP2] = state.ctx.playerIds.map(String);
+export function projectLiveValueForSimulator<T>(
+  value: T,
+  state: MatchState,
+  actorIds?: LiveMatchContext["game"]["actorIds"],
+): T {
+  const [serverP1, serverP2] = actorIds
+    ? [actorIds.player, actorIds.opponent]
+    : state.ctx.playerIds.map(String);
   if (!serverP1 || !serverP2 || (serverP1 === String(P1) && serverP2 === String(P2))) {
     return value;
   }
@@ -447,131 +365,16 @@ export function projectSimulatorValueForLive<T>(
 function isAllowedReturnUrl(value: string): boolean {
   try {
     const url = new URL(value);
+    const currentOrigin = typeof window === "undefined" ? null : window.location.origin;
     return (
       url.origin === "https://tcg.online" ||
+      url.origin === "https://staging.cardgoat.org" ||
+      url.origin === currentOrigin ||
       (url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1"))
     );
   } catch {
     return false;
   }
-}
-
-function isMatchState(value: unknown): value is MatchState {
-  if (!value || typeof value !== "object") {
-    return false;
-  }
-  const maybe = value as Partial<MatchState>;
-  return Boolean(maybe.G && maybe.ctx);
-}
-
-function mergeClockIntoState(
-  state: MatchState,
-  timeControl: EngineCtx["timeControl"] | undefined,
-  clockState: RemoteClockState | undefined,
-): MatchState {
-  if (!timeControl && !clockState) {
-    return state;
-  }
-  return {
-    ...state,
-    ctx: {
-      ...state.ctx,
-      ...(timeControl ? { timeControl } : {}),
-      ...(clockState ? { clockState } : {}),
-    },
-  };
-}
-
-function parseRemoteTimeControl(value: unknown): CyberpunkTimeControl | undefined {
-  if (!isRecord(value) || typeof value.mode !== "string") {
-    return undefined;
-  }
-
-  if (value.mode === "none") {
-    return { mode: "none" };
-  }
-
-  const config = isRecord(value.config) ? value.config : value;
-  if (value.mode === "chess") {
-    const initialReserveMs = config.initialReserveMs;
-    if (typeof initialReserveMs !== "number") {
-      return undefined;
-    }
-    return {
-      mode: "chess",
-      config: {
-        initialReserveMs,
-        incrementMs: numberProperty(config, "incrementMs", 0),
-        delayMs: numberProperty(config, "delayMs", 0),
-        graceMs: numberProperty(config, "graceMs", 0),
-        resetTimeOnSkipMs: numberProperty(config, "resetTimeOnSkipMs", 0),
-        lossPolicy: "lose-on-time",
-        ...optionalNumberConfig(config, "maxDecisionTimeMs"),
-      },
-    };
-  }
-
-  if (value.mode === "priority") {
-    const perPriorityWindowMs = config.perPriorityWindowMs;
-    const reserveMs = config.reserveMs ?? config.initialReserveMs;
-    if (typeof perPriorityWindowMs !== "number" || typeof reserveMs !== "number") {
-      return undefined;
-    }
-    return {
-      mode: "priority",
-      config: {
-        perPriorityWindowMs,
-        reserveMs,
-        perMoveBonusMs: numberProperty(config, "perMoveBonusMs", 0),
-        endGameBaselineMs: numberProperty(config, "endGameBaselineMs", 0),
-        graceMs: numberProperty(config, "graceMs", 0),
-        onWindowExpiry: "auto-pass-if-legal-else-forfeit",
-        onReserveExpiry: "lose-on-time",
-      },
-    };
-  }
-
-  if (value.mode === "dynamic") {
-    const initialReserveMs = config.initialReserveMs;
-    if (typeof initialReserveMs !== "number") {
-      return undefined;
-    }
-    return {
-      mode: "dynamic",
-      config: {
-        initialReserveMs,
-        reserveCapMs: numberProperty(config, "reserveCapMs", initialReserveMs),
-        perActionBonusMs: numberProperty(config, "perActionBonusMs", 0),
-        perTurnPassBonusMs: numberProperty(
-          config,
-          "perTurnPassBonusMs",
-          numberProperty(config, "turnPassBonusMs", 0),
-        ),
-        resetTimeOnSkipMs: numberProperty(config, "resetTimeOnSkipMs", 0),
-        graceMs: numberProperty(config, "graceMs", 0),
-        ...optionalNumberConfig(config, "maxDecisionTimeMs"),
-      },
-    };
-  }
-
-  return undefined;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return Boolean(value && typeof value === "object" && !Array.isArray(value));
-}
-
-function numberProperty(value: Record<string, unknown>, key: string, fallback: number): number {
-  return typeof value[key] === "number" ? value[key] : fallback;
-}
-
-function optionalNumberConfig<K extends string>(
-  value: Record<string, unknown>,
-  key: K,
-): Partial<Record<K, number>> {
-  return typeof value[key] === "number"
-    ? ({ [key]: value[key] } as Partial<Record<K, number>>)
-    : {};
 }
 
 function moveLogFromCanonical(log: CanonicalEngineMoveLog): MoveLog {
@@ -621,15 +424,6 @@ function isLegacyMoveLog(value: unknown): boolean {
 function parseInteractionView(value: unknown): EngineInteractionViewType | undefined {
   const parsed = EngineInteractionView.safeParse(value);
   return parsed.success ? parsed.data : undefined;
-}
-
-function parseActorIds(value: {
-  player1Id?: unknown;
-  player2Id?: unknown;
-}): LiveMatchContext["game"]["actorIds"] {
-  return typeof value.player1Id === "string" && typeof value.player2Id === "string"
-    ? { player: value.player1Id, opponent: value.player2Id }
-    : undefined;
 }
 
 function parseRemoteChatMessage(value: unknown): RemoteChatMessage | null {
@@ -689,48 +483,6 @@ function parseRemoteChatMessage(value: unknown): RemoteChatMessage | null {
     };
   }
   return null;
-}
-
-const LIVE_MATCH_PAYLOAD_LOG_STORAGE_KEY = "tcg:live-match-payload-log";
-const LIVE_MATCH_PAYLOAD_LOG_QUERY_PARAMS = [
-  "livePayloadLog",
-  "payloadDebug",
-  "redisPayloadLog",
-  "ssrPayloadLog",
-];
-
-function logLiveMatchPayload(payload: unknown, ids: { matchId: string; gameId: string }): void {
-  if (!shouldLogLiveMatchPayload()) return;
-  // eslint-disable-next-line no-console
-  console.log("[live-match] SSR/context payload", {
-    ...ids,
-    payload,
-  });
-}
-
-function shouldLogLiveMatchPayload(): boolean {
-  if (import.meta.env.DEV) return true;
-  if (typeof window === "undefined") return false;
-
-  try {
-    const params = new URLSearchParams(window.location.search);
-    for (const key of LIVE_MATCH_PAYLOAD_LOG_QUERY_PARAMS) {
-      const value = params.get(key);
-      if (value == null) continue;
-      const normalized = value.toLowerCase();
-      if (normalized === "1" || normalized === "true" || normalized === "on") {
-        window.localStorage.setItem(LIVE_MATCH_PAYLOAD_LOG_STORAGE_KEY, "1");
-        return true;
-      }
-      if (normalized === "0" || normalized === "false" || normalized === "off") {
-        window.localStorage.removeItem(LIVE_MATCH_PAYLOAD_LOG_STORAGE_KEY);
-        return false;
-      }
-    }
-    return window.localStorage.getItem(LIVE_MATCH_PAYLOAD_LOG_STORAGE_KEY) === "1";
-  } catch {
-    return false;
-  }
 }
 
 function replaceExactStrings(value: unknown, replacements: ReadonlyMap<string, string>): unknown {

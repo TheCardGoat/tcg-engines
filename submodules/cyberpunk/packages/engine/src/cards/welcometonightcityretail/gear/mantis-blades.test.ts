@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailGoroTakemuraHandsUnclean,
-  boxTopperRetailVCorporateExile,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  theHeistRetailStarterDeckVCorporateExile,
   welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailMantisBlades,
 } from "@tcg/cyberpunk-cards";
@@ -24,8 +24,8 @@ describe("Mantis Blades", () => {
       hand: [welcomeToNightCityRetailMantisBlades],
       field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
       legendArea: [
-        { card: boxTopperRetailVCorporateExile, faceDown: false },
-        { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
+        { card: theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+        { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
       ],
       eddies: 1,
     });
@@ -37,10 +37,11 @@ describe("Mantis Blades", () => {
     );
     const attachTargets = getAttachTargets(engine);
     expect(attachTargets).toContain(
-      engine.getCard(boxTopperRetailVCorporateExile, "legendArea", P1).instanceId,
+      engine.getCard(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1).instanceId,
     );
     expect(attachTargets).not.toContain(
-      engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean, "legendArea", P1).instanceId,
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, "legendArea", P1)
+        .instanceId,
     );
   });
 

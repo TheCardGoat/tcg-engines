@@ -51,7 +51,6 @@ describe("OP03-072 Gum-Gum Jet Gatling", () => {
       SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
     );
     const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
-    const before = engine.getView("north").players.north;
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
@@ -67,10 +66,34 @@ describe("OP03-072 Gum-Gum Jet Gatling", () => {
 
     const view = engine.getView("north");
     expect(view.players.north).toMatchObject({
-      activeDon: before.activeDon + 1,
-      donDeckCount: before.donDeckCount - 1,
+      activeDon: 1,
+      donDeckCount: 0,
     });
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [op03GumGumJetGatling072, eb01Doma005],
+        life: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const eventId = engine.findCardInZone("north", "hand", op03GumGumJetGatling072);
+    const costId = engine.findCardInZone("north", "hand", eb01Doma005);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    // Optional hand-trash cost did not fire — cost card remains available.
+    expect(after.hand.map((card) => card.instanceId)).toContain(costId);
+    expect(after.trash.map((card) => card.instanceId)).not.toContain(costId);
+    expect(after.trash.map((card) => card.instanceId)).toContain(eventId);
   });
 });

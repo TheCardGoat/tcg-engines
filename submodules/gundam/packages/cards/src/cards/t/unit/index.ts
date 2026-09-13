@@ -1,7 +1,4 @@
 export {
-  tGundam001,
-  tGuncannon002,
-  tGuntank003,
   tLeo004,
   tTallgeese005,
   tCharsZakuIi006,
@@ -12,6 +9,12 @@ export {
   tDaughtress012,
   TOKEN_PRINTINGS,
 } from "@tcg/gundam-token-data";
+// These three official Token cards have Edition Beta parallel printings. The
+// legacy token-data records intentionally carry only gameplay setup data, so
+// export the catalog definitions here to retain the complete printing set.
+export { tGundam001 } from "./001-gundam.ts";
+export { tGuncannon002 } from "./002-guncannon.ts";
+export { tGuntank003 } from "./003-guntank.ts";
 export { tCharSZaku006 } from "./006-char-s-zaku.ts";
 export { tZaku007 } from "./007-zaku.ts";
 export { tFatum00011 } from "./011-fatum-00.ts";
@@ -27,3 +30,6 @@ export { tParts021 } from "./021-parts.ts";
 export { tWireGuidedArm022 } from "./022-wire-guided-arm.ts";
 export { tZeongHead023 } from "./023-zeong-head.ts";
 export { tAlvaaron024 } from "./024-alvaaron.ts";
+export { tGundnode026 } from "./026-gundnode.ts";
+export { tPluma027 } from "./027-pluma.ts";
+export { tGundamExia025 } from "./025-gundam-exia.ts";

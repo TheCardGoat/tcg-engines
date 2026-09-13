@@ -81,4 +81,40 @@ describe("OP05-082 Shirahoshi", () => {
     expect(view.players.north.trash).toHaveLength(0);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional Activate: Main so rest, trash return, and discard do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op05Shirahoshi082],
+        trash: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+      },
+      {
+        hand: [
+          eb01Doma005,
+          eb01Fourtricks025,
+          eb01MountainGod018,
+          eb01Doma005,
+          eb01Fourtricks025,
+          eb01MountainGod018,
+        ],
+      },
+    );
+    const shirahoshiId = engine.findCardInZone("south", "character", op05Shirahoshi082);
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const oppHandBefore = engine.getView("south").players.north.hand.length;
+
+    engine.activateEffect(shirahoshiId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === shirahoshiId)?.rested,
+    ).toBe(false);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.north.hand.length).toBe(oppHandBefore);
+    expect(view.players.north.trash).toHaveLength(0);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

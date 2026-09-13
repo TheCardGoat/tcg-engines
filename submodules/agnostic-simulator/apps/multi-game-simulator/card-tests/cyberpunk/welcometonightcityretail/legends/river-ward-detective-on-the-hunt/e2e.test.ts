@@ -1,7 +1,6 @@
 import { test } from "@playwright/test";
 
 import {
-  welcomeToNightCityRetailKiroshiOptics,
   welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
 } from "@tcg/cyberpunk-cards";

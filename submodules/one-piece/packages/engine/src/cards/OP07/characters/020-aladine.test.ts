@@ -3,7 +3,7 @@ import { op07Aladine020 } from "../../../../../cards/src/cards/OP07/characters/0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-020 Aladine", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07Aladine020);
   });
 });

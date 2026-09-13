@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { CardEffects, EventCard, StageCard } from "@tcg/op-types";
 import { buildCardEffects } from "../src/effect-parser/index.ts";
+import { joinPrintedAbilityText } from "../src/printed-text.ts";
 
 type AuditedCard = EventCard | StageCard;
 type AuditedType = AuditedCard["cardType"];
@@ -99,14 +100,10 @@ async function loadCard(file: string, cardType: AuditedType, cardId: string): Pr
 }
 
 function printedText(card: AuditedCard): string {
-  const effectText = card.effect ?? card.i18n.en.effect;
-  const triggerText =
-    card.trigger && !/(?:^|\n)\s*\[Trigger\]/i.test(effectText ?? "")
-      ? `[Trigger] ${card.trigger}`
-      : undefined;
-  return [effectText, triggerText]
-    .filter((text): text is string => Boolean(text?.trim()))
-    .join("\n");
+  return joinPrintedAbilityText({
+    effect: card.effect ?? card.i18n.en.effect,
+    trigger: card.trigger,
+  });
 }
 
 function stable(value: unknown): string {

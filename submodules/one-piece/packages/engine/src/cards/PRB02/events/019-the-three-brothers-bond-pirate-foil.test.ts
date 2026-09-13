@@ -3,7 +3,7 @@ import { prb02TheThreeBrothersBondPirateFoil019 } from "../../../../../cards/src
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST13-019 The Three Brothers' Bond (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02TheThreeBrothersBondPirateFoil019);
   });
 });

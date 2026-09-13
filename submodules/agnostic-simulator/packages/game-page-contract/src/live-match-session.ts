@@ -11,6 +11,8 @@ import type {
   PlayerPresenceDiagnostic,
   SimulatorConnectionStatus,
 } from "./connection-diagnostic.js";
+import type { LiveMatchBootstrapV1 } from "./page-data.js";
+import { createHeartbeatProbeTracker, type CompletedHeartbeatProbe } from "./heartbeat-probe.js";
 
 /**
  * A normalized presence change the consumer can use for chat / identity
@@ -30,19 +32,18 @@ export interface NormalizedPresenceChange {
 export interface LiveMatchSessionConfig {
   /** The acquired gateway handle for this game namespace. */
   handle: GatewayHandle;
-  gameId: string;
-  matchId: string;
-  /** Resolved when the session joins. "player" vs "spectator" — game-specific derivation. */
-  resolveRole: () => "player" | "spectator";
-  /** Game profile id for the join payload, if the role is "player". */
-  resolveGameProfileId: () => string | undefined;
+  /** Server-selected viewer, game, version, and scoped realtime access. */
+  bootstrap: LiveMatchBootstrapV1;
   /**
    * Heartbeat payload builder. When paired with `heartbeatIntervalMs`, the
    * session owns the heartbeat loop and emits `heartbeat` while the underlying
    * handle is authenticated. Omit both → no session-owned heartbeat (the
    * handle's manager-level heartbeat still runs if configured).
    */
-  buildHeartbeatPayload?: () => Record<string, unknown>;
+  buildHeartbeatPayload?: () => Omit<
+    Parameters<ClientToServerEvents["heartbeat"]>[0],
+    "correlationId" | "clientSentAt" | "previousCorrelationId" | "previousRoundTripMs"
+  >;
   /**
    * Heartbeat cadence in ms. When paired with `buildHeartbeatPayload`, the
    * session owns the heartbeat loop. The timer is cleared on `stop()`.
@@ -59,6 +60,8 @@ export interface LiveMatchSessionConfig {
   onPresenceChange?: (change: NormalizedPresenceChange) => void;
   /** Fires when a diagnostic event is recorded (connect, disconnect, join, error, etc.). */
   onDiagnostic?: (event: ConnectionDiagnosticEvent) => void;
+  /** Fires for each valid browser-observed full-path heartbeat RTT. */
+  onHeartbeatRoundTrip?: (sample: CompletedHeartbeatProbe) => void;
 }
 
 export interface LiveMatchSessionState {
@@ -112,10 +115,12 @@ const SYNC_DEDUP_MS = 2000;
  */
 export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatchSession {
   const handle = config.handle;
+  const gameId = config.bootstrap.game.gameId;
 
   let started = false;
   let stopped = false;
   let lastSyncRequestAt = 0;
+  const heartbeatProbeTracker = createHeartbeatProbeTracker();
 
   const cleanups: Array<() => void> = [];
   const presenceMap = new Map<string, PlayerPresenceDiagnostic>();
@@ -275,7 +280,7 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     const now = Date.now();
     if (now - lastSyncRequestAt < SYNC_DEDUP_MS) return;
     lastSyncRequestAt = now;
-    const emitPayload: { gameId: string; stateVersion?: number } = { gameId: config.gameId };
+    const emitPayload: { gameId: string; stateVersion?: number } = { gameId };
     if (version) emitPayload.stateVersion = version;
     recordDiagnostic("state_sync_request", emitPayload);
     handle.emit("request_game_state_sync", emitPayload);
@@ -284,19 +289,6 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
   function start(): void {
     if (started || stopped) return;
     started = true;
-
-    const role = config.resolveRole();
-    const gameProfileId = config.resolveGameProfileId();
-    recordDiagnostic("join_game_emit", {
-      gameId: config.gameId,
-      role,
-      gameProfileId,
-    });
-    handle.join({
-      gameId: config.gameId,
-      role,
-      gameProfileId,
-    });
 
     const offAny = handle.onAny((event, payload) => {
       applySessionEvent(event, payload);
@@ -318,6 +310,8 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     cleanups.push(offLatency);
 
     const offHeartbeatAck = handle.onHeartbeatAck((payload) => {
+      const completedProbe = heartbeatProbeTracker.acknowledge(payload);
+      if (completedProbe) config.onHeartbeatRoundTrip?.(completedProbe);
       baseState.lastHeartbeatAckAt =
         typeof payload.serverTime === "string" && payload.serverTime.length > 0
           ? payload.serverTime
@@ -330,6 +324,15 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     });
     cleanups.push(offHeartbeatAck);
 
+    // Install listeners before joining. A warm gateway can acknowledge the
+    // join immediately; subscribing afterward loses the initial state,
+    // presence, and recent-history payloads until the page is reloaded.
+    recordDiagnostic("join_game_emit", {
+      gameId,
+      role: config.bootstrap.viewer.role,
+    });
+    handle.join({ gameId, stateVersion: config.bootstrap.game.stateVersion });
+
     // Session-owned heartbeat loop. Requires BOTH `buildHeartbeatPayload` and
     // `heartbeatIntervalMs`. Skips emits while the handle is unauthenticated
     // (heartbeats are an authenticated-session concept, matching the
@@ -339,8 +342,12 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
       const intervalMs = config.heartbeatIntervalMs;
       const timer: ReturnType<typeof setInterval> = setInterval(() => {
         if (!handle.getState().authenticated) return;
-        baseState.lastHeartbeatSentAt = new Date().toISOString();
-        handle.emit("heartbeat", buildPayload());
+        const clientSentAt = Date.now();
+        baseState.lastHeartbeatSentAt = new Date(clientSentAt).toISOString();
+        handle.emit("heartbeat", {
+          ...buildPayload(),
+          ...heartbeatProbeTracker.nextHeartbeatFields(clientSentAt),
+        });
         fireSubscribers();
       }, intervalMs);
       cleanups.push(() => clearInterval(timer));
@@ -350,6 +357,7 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
   function stop(): void {
     if (stopped) return;
     stopped = true;
+    heartbeatProbeTracker.clear();
 
     handle.leave();
 

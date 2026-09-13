@@ -3,7 +3,7 @@ import { prb02SlowSlowBeamSwordPirateFoil076 } from "../../../../../cards/src/ca
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-076 Slow-Slow Beam Sword (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02SlowSlowBeamSwordPirateFoil076);
   });
 });

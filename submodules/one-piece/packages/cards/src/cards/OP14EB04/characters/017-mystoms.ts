@@ -35,6 +35,7 @@ export const op14eb04Mystoms017: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Minks",
+            match: "includes",
           },
         ],
         actions: [

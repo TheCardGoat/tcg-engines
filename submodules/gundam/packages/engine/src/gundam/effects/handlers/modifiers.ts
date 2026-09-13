@@ -9,11 +9,8 @@ import type { ContinuousEffectEntry } from "../../types.ts";
 import { hasRestriction } from "../../rules/derived-state.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
-import {
-  enqueueMoveCompletionFence,
-  enqueueOwnCardTriggers,
-  enqueueObserverTriggers,
-} from "../pending-effects.ts";
+import { enqueueOwnCardTriggers, enqueueObserverTriggers } from "../pending-effects.ts";
+import { executePilotPairing } from "../../moves/core/pilot-pairing.ts";
 
 let effectIdCounter = 0;
 
@@ -174,37 +171,26 @@ export function handlePairPilotAction(
   unitId: string,
   ctx: EffectExecutionContext,
 ): void {
-  // Move pilot to BattleArea alongside the unit
-  const pilotOwnerId = ctx.framework.cards.getOwner(pilotId) as string | undefined;
-  if (pilotOwnerId) {
-    ctx.framework.zones.moveCard(pilotId, { zone: "battleArea", playerId: pilotOwnerId });
+  // Rules 3-3-4/3-3-5: effects that pair a Pilot do not exchange an
+  // existing Pilot or bypass a Unit's pairing restriction. Prompt
+  // generation filters these targets too; retain this execution guard for
+  // committed/stale targets and callers that resolve without a prompt.
+  if (
+    ctx.G.pilotAssignments[unitId] ||
+    hasRestriction(unitId, "cannot-pair-pilot", ctx.G, ctx.framework.cards, ctx.framework)
+  ) {
+    return;
   }
 
-  ctx.G.pilotAssignments[unitId] = pilotId;
-
-  // Placement event (synchronous) — see `handleDeployAction` in
-  // movement.ts for the contract. The completion event is deferred via
-  // the fence below so it fires after any future WhenPaired/WhenLinked
-  // triggers added here would settle. (This handler doesn't currently
-  // enqueue those triggers — separate gap from the contract fix — but
-  // routing through the fence keeps the contract uniform.)
-  emitGundamEvent(ctx.framework.events, {
-    kind: "PILOT_PAIRED",
-    payload: { pilotId, unitId },
-  });
-  enqueueMoveCompletionFence(
+  // Route effect-driven pairing through the same trigger-aware path as the
+  // public Pair moves so When Paired, When Linked, and observer triggers fire.
+  const pilotOwnerId = ctx.framework.cards.getOwner(pilotId) as string | undefined;
+  executePilotPairing(
+    pilotId,
+    unitId,
+    pilotOwnerId ?? (ctx.sourcePlayerId as string),
     ctx.G,
-    pilotOwnerId ?? (ctx.sourcePlayerId as unknown as string),
     ctx.framework,
-    [
-      {
-        kind: "emitEvent",
-        event: {
-          kind: "PILOT_ASSIGNED",
-          payload: { pilotId, unitId },
-        },
-      },
-    ],
   );
 }
 

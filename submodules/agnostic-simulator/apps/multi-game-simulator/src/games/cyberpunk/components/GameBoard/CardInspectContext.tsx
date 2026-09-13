@@ -142,7 +142,6 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
                 <ViewerSafeCardImage
                   entity={inspectEntity(selectedCard)}
                   alt={selectedCard.name ?? ""}
-                  fill
                 />
               </div>
               {(state.name ?? state.zone) && (
@@ -164,11 +163,7 @@ export function CardInspectProvider({ children }: { children: ReactNode }) {
                       onClick={() => setSelectedIndex(index)}
                       aria-label={index === 0 ? "View main card" : `View attached gear ${index}`}
                     >
-                      <ViewerSafeCardImage
-                        entity={inspectEntity(card)}
-                        alt={card.name ?? ""}
-                        fill
-                      />
+                      <ViewerSafeCardImage entity={inspectEntity(card)} alt={card.name ?? ""} />
                       <span>{index === 0 ? "Unit" : `Gear ${index}`}</span>
                     </button>
                   ))}

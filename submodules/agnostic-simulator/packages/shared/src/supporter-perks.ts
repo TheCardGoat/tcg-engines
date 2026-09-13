@@ -8,7 +8,8 @@ export type SupporterPerkConfig = {
   monthlyInkmarks: number;
   cosmeticProgressMultiplier: number;
   eventTicketMultiplier: number;
-  alternateArtAccess: boolean;
+  /** Automatic cloud replay retention measured from game completion. */
+  replayRetentionDays: number;
 };
 
 export const SUPPORTER_PERK_TIERS = [
@@ -24,7 +25,7 @@ export const SUPPORTER_PERK_CONFIG = {
     monthlyInkmarks: 50,
     cosmeticProgressMultiplier: 2,
     eventTicketMultiplier: 2,
-    alternateArtAccess: false,
+    replayRetentionDays: 30,
   },
   tier3: {
     tier: "tier3",
@@ -32,7 +33,7 @@ export const SUPPORTER_PERK_CONFIG = {
     monthlyInkmarks: 100,
     cosmeticProgressMultiplier: 3,
     eventTicketMultiplier: 3,
-    alternateArtAccess: false,
+    replayRetentionDays: 60,
   },
   tier4: {
     tier: "tier4",
@@ -40,17 +41,35 @@ export const SUPPORTER_PERK_CONFIG = {
     monthlyInkmarks: 150,
     cosmeticProgressMultiplier: 5,
     eventTicketMultiplier: 5,
-    alternateArtAccess: true,
+    replayRetentionDays: 90,
   },
 } as const satisfies Record<SupporterPerkTier, SupporterPerkConfig>;
+
+export const FREE_REPLAY_RETENTION_DAYS = 1;
+
+/** Resolve the immutable retention promise captured when a game completes. */
+export function replayRetentionDaysForTier(tier: SubscriptionTier | string | null | undefined) {
+  const paidTier = normalizeSupporterPerkTier(tier);
+  return paidTier
+    ? SUPPORTER_PERK_CONFIG[paidTier].replayRetentionDays
+    : FREE_REPLAY_RETENTION_DAYS;
+}
+
+export function replayRetentionExpiryAt(
+  completedAt: Date,
+  retentionDays: number,
+  publishedAt?: Date | null,
+): Date {
+  const entitlementExpiry = completedAt.getTime() + retentionDays * 24 * 60 * 60 * 1000;
+  const recoveryExpiry = publishedAt ? publishedAt.getTime() + 24 * 60 * 60 * 1000 : 0;
+  return new Date(Math.max(entitlementExpiry, recoveryExpiry));
+}
 
 export const SUPPORTER_PERK_TIER_ALIASES = {
   tier2: "tier2",
   tier3: "tier3",
   tier4: "tier4",
-  tier5: "tier4",
-  tier6: "tier4",
-} as const satisfies Partial<Record<Exclude<SubscriptionTier, "free">, SupporterPerkTier>>;
+} as const satisfies Record<Exclude<SubscriptionTier, "free">, SupporterPerkTier>;
 
 export const ATELIER_INKMARK_PRICE_ANCHORS = {
   permanentLegendaryInkmarks: 50,
@@ -118,6 +137,7 @@ export const ALT_ART_CALIBRATION_TARGET = {
 export const ALT_ART_TOP_RARITY_BY_GAME: Readonly<Record<string, AltArtCalibrationRarityCode>> = {
   lorcana: "enchanted", // Enchanted rarity (specialRarity: enchanted)
   cyberpunk: "enchanted", // promo + boxtoppersretail + boxtoppersbeta alt-art sets bump to enchanted
+  "flesh-and-blood": "enchanted", // Fabled (rarest catalog rarity) maps to enchanted
 };
 
 export function normalizeSupporterPerkTier(
@@ -145,8 +165,4 @@ export function getCosmeticProgressMultiplier(tier: string | null | undefined): 
 
 export function getEventTicketMultiplier(tier: string | null | undefined): number {
   return getSupporterPerks(tier)?.eventTicketMultiplier ?? 1;
-}
-
-export function hasActiveAlternateArtAccess(tier: string | null | undefined): boolean {
-  return getSupporterPerks(tier)?.alternateArtAccess ?? false;
 }

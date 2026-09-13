@@ -1,46 +1,26 @@
-import { createMockCommand, createMockResource } from "@tcg/gundam-engine";
-import type { CardEffect, CommandCard } from "@tcg/gundam-types";
+import { st07ArmedIntervention013 } from "@tcg/gundam-cards";
 
 import { createDevRuntime, type DevRuntime } from "../dev-runtime.ts";
+import { realResourceCards } from "./real-cards.ts";
 
 /**
- * Action-only command timing fixture — viewer holds a command whose
- * effect only fires at action-step timing (`timing: ["action"]`),
- * while the engine is in main-phase. Rule 3-4-5 gates these: a
+ * Action-only command timing fixture using ST07-013 Armed Intervention while
+ * the engine is in main-phase. Rule 3-4-5 gates these: an
  * 【Main】-only or 【Action】-only command must match the current
  * phase. See
  * `packages/engine/src/gundam/moves/core/play-command.ts`
  * (`findPlayableCommandEffect`) + the timing-gating suite in
  * `play-command.test.ts`.
  *
- * `playCommand.enumerateCandidates` runs
- * `findPlayableCommandEffect(def, phase, step)` and skips cards
- * whose effect doesn't match, so the action-only command never
- * lands in `selectableCardIds` during main-phase. Clicking is a
- * no-op from the UI side.
+ * Four resources satisfy its level and cost so timing is the only reason the
+ * card is unavailable.
  */
-function makeActionOnlyCommand(): CommandCard {
-  const effect: CardEffect = {
-    type: "command",
-    activation: { timing: ["action"] },
-    directives: [{ action: { action: "draw", count: 1 } }],
-    sourceText: "【Action】 Draw 1.",
-  };
-  return createMockCommand({
-    name: "Tactical Draw",
-    cost: 1,
-    level: 1,
-    effect: effect.sourceText,
-    effects: [effect],
-  });
-}
-
 export function loadActionOnlyCommandDemo(): DevRuntime {
   return createDevRuntime({
     skipToMainPhase: true,
     p1: {
-      hand: [makeActionOnlyCommand()],
-      resourceArea: [createMockResource(), createMockResource(), createMockResource()],
+      hand: [st07ArmedIntervention013],
+      resourceArea: realResourceCards(4),
       deck: 30,
       resourceDeck: 10,
     },

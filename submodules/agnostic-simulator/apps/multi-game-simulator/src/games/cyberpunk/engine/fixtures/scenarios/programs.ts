@@ -714,4 +714,150 @@ export const programScenarios: Scenario[] = [
         { seed: scenarioSeed("progTakeControlRetail"), autoGainGig: false },
       ),
   },
+
+  // ── Program: Bonnie and Clyde (Retail) ───────────────────────────────────
+  {
+    id: "progBonnieAndClyde",
+    group: "program-spend",
+    label: "Bonnie and Clyde · gig differential allows 2 defeats",
+    description:
+      "P1 holds Bonnie and Clyde (cost 3). Rival controls 2 more Gigs than P1, so the condition is met and up to 2 rival Units with power ≤ 4 can be defeated. Rival field has two eligible targets (Corpo Security and Wraith Marauders).",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailBonnieAndClyde],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.welcomeToNightCityRetailWraithMarauders, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d6", faceValue: 1 },
+          ],
+        },
+        { seed: scenarioSeed("progBonnieAndClyde"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "progBonnieAndClydeSingleTarget",
+    group: "program-spend",
+    label: "Bonnie and Clyde · gig differential not met, single target",
+    description:
+      "P1 holds Bonnie and Clyde. Gig counts are equal so only 1 target may be defeated. Rival field has one eligible target (Corpo Security, power 2) and one ineligible target (Psycho Squad, power 6).",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailBonnieAndClyde],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 5,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.welcomeToNightCityRetailPsychoSquad, spent: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progBonnieAndClydeSingleTarget"), autoGainGig: false },
+      ),
+  },
+
+  // ── Program: The Heist (Retail) ──────────────────────────────────────────
+  {
+    id: "progTheHeist",
+    group: "program-spend",
+    label: "The Heist · trash 4 and recover a Gear",
+    description:
+      "P1 holds The Heist (cost 2). Deck top contains a Gear (Kiroshi Optics) among 4 cards. No friendly Gig matches the Gear cost, so it goes to hand. Tests trash-from-deck and Gear selection.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailTheHeist],
+          deck: [
+            c.welcomeToNightCityRetailKiroshiOptics,
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+            c.welcomeToNightCityRetailMantisBlades,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progTheHeist"), autoGainGig: false, preserveDeckOrder: true },
+      ),
+  },
+  // ── Program: Gig manipulation (Trust No One) ────────────────────────────
+  {
+    id: "progTrustNoOne",
+    group: "program-gig",
+    label: "Trust No One · decrease a Gig by up to 3, then draw if any Gig",
+    description:
+      "P1 holds Trust No One (cost 1, blue). P1 has a d6 Gig at face 4 and enough eddies. Tests one-step Gig decrease with optional conditional draw.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailTrustNoOne],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 2,
+          gigArea: [{ dieType: "d6", faceValue: 4 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        { seed: scenarioSeed("progTrustNoOne"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "progTheHeistFreePlay",
+    group: "program-spend",
+    label: "The Heist · Gear cost matches friendly Gig for free play",
+    description:
+      "P1 holds The Heist. Deck top contains Mantis Blades (cost 1). P1 controls a d4 showing 1 — matching the Gear cost — so the free-play prompt should appear.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailTheHeist],
+          deck: [
+            c.welcomeToNightCityRetailMantisBlades,
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+            c.welcomeToNightCityRetailKiroshiOptics,
+          ],
+          field: [{ card: c.welcomeToNightCityRetailSecondhandBombus, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 1 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("progTheHeistFreePlay"), autoGainGig: false, preserveDeckOrder: true },
+      ),
+  },
 ];

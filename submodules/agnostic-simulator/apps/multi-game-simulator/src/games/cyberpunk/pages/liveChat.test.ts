@@ -12,9 +12,9 @@ import {
 import type { LiveMatchContext } from "../engine/live/matchContext";
 
 function fakeHandle(): Pick<GatewayHandle, "emit"> & {
-  emit: ReturnType<typeof vi.fn>;
+  emit: ReturnType<typeof vi.fn<GatewayHandle["emit"]>>;
 } {
-  return { emit: vi.fn() };
+  return { emit: vi.fn<GatewayHandle["emit"]>() };
 }
 
 function liveMatchContext({

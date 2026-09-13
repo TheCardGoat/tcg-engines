@@ -1,7 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import type { CardText, LorcanaCardDefinition } from "@tcg/lorcana-types";
 
-import { getPrintedKeywordTitles, getPrintedKeywordValues, hasKeyword } from "./card-utils";
+import {
+  cardHasName,
+  getCardNameVariants,
+  getPrintedKeywordTitles,
+  getPrintedKeywordValues,
+  hasKeyword,
+} from "./card-utils";
 
 function cardWithText(text: CardText): LorcanaCardDefinition {
   return {
@@ -73,5 +79,43 @@ describe("printed keyword text", () => {
 
     expect(getPrintedKeywordTitles(card)).toEqual(["Ward"]);
     expect(hasKeyword(card, "Ward")).toBe(true);
+  });
+});
+
+describe("cardHasName / ampersand names (CR 5.2.6.1)", () => {
+  function characterNamed(name: string): LorcanaCardDefinition {
+    return {
+      ...cardWithText([]),
+      name,
+      cardType: "character",
+    };
+  }
+
+  it("matches the full printed name and each ampersand half", () => {
+    const team = characterNamed("Darkwing Duck & Launchpad");
+
+    expect(getCardNameVariants(team)).toEqual([
+      "Darkwing Duck & Launchpad",
+      "Darkwing Duck",
+      "Launchpad",
+    ]);
+    expect(cardHasName(team, "Darkwing Duck & Launchpad")).toBe(true);
+    expect(cardHasName(team, "Darkwing Duck")).toBe(true);
+    expect(cardHasName(team, "Launchpad")).toBe(true);
+    expect(cardHasName(team, "Gizmoduck")).toBe(false);
+  });
+
+  it("does not treat a solo Launchpad as named Darkwing Duck", () => {
+    const launchpad = characterNamed("Launchpad");
+
+    expect(cardHasName(launchpad, "Launchpad")).toBe(true);
+    expect(cardHasName(launchpad, "Darkwing Duck")).toBe(false);
+  });
+
+  it("matches case-insensitively after accent normalization", () => {
+    const team = characterNamed("Darkwing Duck & Launchpad");
+
+    expect(cardHasName(team, "darkwing duck")).toBe(true);
+    expect(cardHasName(team, "LAUNCHPAD")).toBe(true);
   });
 });

@@ -1,5 +1,6 @@
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
 import { createMatch } from "../engine/match.ts";
+import { otherSeat } from "../shared.ts";
 import type { CardZone, MatchConfig, MatchSeat, MatchState } from "../types.ts";
 import type { OPCard } from "@tcg/op-types";
 
@@ -51,6 +52,12 @@ export interface TestMatchOptions {
   seed?: string | number;
   firstPlayer?: MatchSeat;
   activeSeat?: MatchSeat;
+  /**
+   * Game turn counter. When `skipSetup` is true (mid-game fixtures), defaults
+   * to 3 so both players are past their first turn (6-5-6-1). Pass `1` (or
+   * `2`) when a test must exercise a player's first-turn battle ban.
+   */
+  turnNumber?: number;
   skipSetup?: boolean;
   fillerCardId?: string;
   maxCharacterSlots?: number;
@@ -319,6 +326,9 @@ function applyPlayerFixture(
   placeCharacters(state, pool, seat, fixture.character);
   placeStage(state, pool, seat, fixture.stage);
 
+  // The fixture places starting Life directly, so startGame must not place it again.
+  state.setup.lifePlaced[seat] = true;
+
   const player = state.players[seat];
   player.activeDon = fixture.activeDon;
   player.restedDon = fixture.restedDon;
@@ -350,9 +360,45 @@ export function createTestMatchState(
     state.setup.started = true;
     state.activeSeat = options.activeSeat ?? options.firstPlayer ?? PLAYER_ONE;
     state.phase = "main";
+    // Mid-game fixtures are past both players' first turns unless a test
+    // explicitly pins turnNumber for 6-5-6-1 / first-turn DON!! scenarios.
+    state.turnNumber = options.turnNumber ?? 3;
+    seedTurnsStartedForSkipSetup(state);
+  } else if (options.turnNumber !== undefined) {
+    state.turnNumber = options.turnNumber;
+  }
+
+  // Legacy fixture convention: `playedOnTurn: 1` means "played this turn"
+  // (when the suite historically always started at turnNumber 1). Remap to the
+  // effective turn so 3-7-4 / Rush / Rush:Character scenarios still apply
+  // same-turn attack bans under mid-game turnNumber defaults.
+  if (state.turnNumber !== 1) {
+    for (const instance of Object.values(state.cards)) {
+      if (instance.playedOnTurn === 1) {
+        instance.playedOnTurn = state.turnNumber;
+      }
+    }
   }
 
   return state;
+}
+
+/**
+ * Seed per-seat `turnsStarted` for skipSetup fixtures that never ran `beginTurn`.
+ * Assumes normal seat alternation from turn 1 with no extra turns (fixtures that
+ * need an extra-turn timeline should run endTurn handoff after create).
+ */
+function seedTurnsStartedForSkipSetup(state: MatchState): void {
+  const first = state.config.firstPlayer;
+  const second = otherSeat(first);
+  const n = state.turnNumber;
+  if (state.activeSeat === first) {
+    state.players[first].turnsStarted = Math.ceil(n / 2);
+    state.players[second].turnsStarted = Math.floor(n / 2);
+  } else {
+    state.players[first].turnsStarted = Math.floor(n / 2);
+    state.players[second].turnsStarted = Math.ceil(n / 2);
+  }
 }
 
 export function extractCardId(entry: FixtureCardEntry): string {

@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
+import { SimulatorRouteStatus } from "@tcg/simulator-ui";
 
 import { loadGundamReplay } from "../replay/loadReplay.ts";
 import type { GundamReplayOrchestrator } from "../replay/replayOrchestrator.ts";
-import { createLiveMatchViewerEngine } from "../src/engine/live/liveState.ts";
+import {
+  createReplayViewerEngine,
+  type GundamReplayViewerState,
+} from "../src/engine/live/liveState.ts";
 import { asViewerId } from "../src/game/types.ts";
 import { LiveSimulatorShell } from "./LiveMatch.page.tsx";
+import { parseNonNegativeIntegerQuery, syncReplayStepQuery } from "../../../runtime/replayQuery.ts";
 
 type LoadState =
   | { readonly status: "loading" }
@@ -18,24 +23,33 @@ interface ReplaySnapshot {
   readonly totalSteps: number;
   readonly totalTurns: number;
   readonly isPlaying: boolean;
-  readonly state: Record<string, unknown>;
+  readonly state: GundamReplayViewerState;
 }
 
 export function ReplayPage() {
   const { gameId = "" } = useParams<{ gameId: string }>();
+  const [search] = useSearchParams();
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
+  const requestedStateVersion = parseNonNegativeIntegerQuery(search.get("stateVersion"));
+  const requestedCursor = parseNonNegativeIntegerQuery(search.get("step"));
+  const preferredSource = search.get("source") === "device" ? "device" : "cloud";
 
   useEffect(() => {
     let cancelled = false;
     let loadedOrchestrator: GundamReplayOrchestrator | null = null;
     setLoadState({ status: "loading" });
-    loadGundamReplay(gameId)
+    loadGundamReplay(gameId, preferredSource)
       .then((orchestrator) => {
         if (cancelled) {
           orchestrator.dispose();
           return;
         }
         loadedOrchestrator = orchestrator;
+        if (requestedStateVersion !== null) {
+          orchestrator.goToStateVersion(requestedStateVersion);
+        } else if (requestedCursor !== null) {
+          orchestrator.goToStep(requestedCursor);
+        }
         setLoadState({ status: "ready", orchestrator });
       })
       .catch((error) => {
@@ -50,11 +64,11 @@ export function ReplayPage() {
       cancelled = true;
       loadedOrchestrator?.dispose();
     };
-  }, [gameId]);
+  }, [gameId, requestedCursor, requestedStateVersion, preferredSource]);
 
   if (loadState.status !== "ready") {
     return (
-      <ReplayStatus
+      <SimulatorRouteStatus
         title={loadState.status === "loading" ? "Loading replay" : "Replay unavailable"}
         message={loadState.status === "loading" ? "Fetching the recorded game." : loadState.message}
       />
@@ -67,9 +81,15 @@ export function ReplayPage() {
 function ReplayBoard({ orchestrator }: { readonly orchestrator: GundamReplayOrchestrator }) {
   const snapshot = useReplaySnapshot(orchestrator);
   const { runtime, staticResources, viewerPlayerId } = useMemo(
-    () => createLiveMatchViewerEngine(snapshot.state),
+    () => createReplayViewerEngine(snapshot.state),
     [snapshot.state],
   );
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const search = syncReplayStepQuery(url.search, snapshot.step);
+    window.history.replaceState({}, "", `${url.pathname}${search}`);
+  }, [snapshot.step]);
 
   return (
     <>
@@ -77,11 +97,14 @@ function ReplayBoard({ orchestrator }: { readonly orchestrator: GundamReplayOrch
         runtime={runtime}
         staticResources={staticResources}
         viewerId={asViewerId(viewerPlayerId)}
+        presentation={orchestrator.presentation}
         remoteSubmit={() => {
           throw new Error("Replay playback is read-only.");
         }}
         getInteractionView={() => undefined}
         getAnimationPackets={() => []}
+        getEngineLogRecords={() => []}
+        autoPassEnabled={false}
         ended={readEnded(snapshot.state)}
         copyDiagnosticJson={async () => {
           await navigator.clipboard?.writeText(
@@ -109,7 +132,7 @@ function ReplayControls({
   readonly snapshot: ReplaySnapshot;
 }) {
   return (
-    <div className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-md border border-cyan-300/30 bg-slate-950/90 px-3 py-2 font-mono text-[11px] text-cyan-100 shadow-lg">
+    <div className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-md border border-cyan-300/30 bg-slate-950/90 px-3 py-2 font-mono text-hud-xs text-cyan-100 shadow-lg">
       <button
         type="button"
         className="rounded border px-2 py-1"
@@ -164,18 +187,6 @@ function ReplayControls({
   );
 }
 
-function ReplayStatus({ title, message }: { readonly title: string; readonly message: string }) {
-  return (
-    <main className="min-h-screen grid place-items-center text-hud-text">
-      <div className="font-mono text-center space-y-3 px-6">
-        <div className="text-hud-xs tracking-hud-label text-hud-text-faint">GUNDAM · REPLAY</div>
-        <div className="text-hud-lg font-bold">{title}</div>
-        <div className="text-hud-sm text-hud-text-faint max-w-md">{message}</div>
-      </div>
-    </main>
-  );
-}
-
 function useReplaySnapshot(orchestrator: GundamReplayOrchestrator): ReplaySnapshot {
   const [snapshot, setSnapshot] = useState(() => createReplaySnapshot(orchestrator));
 
@@ -199,15 +210,12 @@ function createReplaySnapshot(orchestrator: GundamReplayOrchestrator): ReplaySna
 }
 
 function readEnded(
-  state: Record<string, unknown>,
+  state: GundamReplayViewerState,
 ): { winnerId: string | null; reason: string | null } | null {
-  const ctx = state.ctx as
-    | { status?: { gameEnded?: unknown; winner?: unknown; reason?: unknown } }
-    | undefined;
-  const status = ctx?.status;
-  if (!status?.gameEnded) return null;
+  const status = "ctx" in state ? state.ctx.status : state.status;
+  if (!status.gameEnded) return null;
   return {
-    winnerId: typeof status.winner === "string" ? status.winner : null,
-    reason: typeof status.reason === "string" ? status.reason : null,
+    winnerId: status.winner ?? null,
+    reason: status.winReason ?? null,
   };
 }

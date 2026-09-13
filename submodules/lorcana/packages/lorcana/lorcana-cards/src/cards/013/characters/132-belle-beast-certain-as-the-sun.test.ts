@@ -98,4 +98,20 @@ describe("Belle & Beast - Certain as the Sun", () => {
     expect(testEngine.asPlayerOne().getAvailableInk(PLAYER_ONE)).toBe(0);
     expect(testEngine.hasRestriction(otherCharacter, "cant-quest")).toBe(true);
   });
+
+  // bugrepzV59W5Ma9u7ak-8G_twTh: player had 7 ready ink and could not pay 6
+  it("can activate APPRECIATIVE AUDIENCE 6 with 7 ready ink", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [belleBeastCertainAsTheSun, { card: otherCharacter, exerted: true }],
+      inkwell: 7,
+    });
+
+    expect(testEngine.asPlayerOne().getAvailableInk(PLAYER_ONE)).toBe(7);
+    expect(
+      testEngine.asPlayerOne().activateAbility(belleBeastCertainAsTheSun),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().isExerted(otherCharacter)).toBe(false);
+    expect(testEngine.asPlayerOne().getAvailableInk(PLAYER_ONE)).toBe(1);
+    expect(testEngine.hasRestriction(otherCharacter, "cant-quest")).toBe(true);
+  });
 });

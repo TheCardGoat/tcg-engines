@@ -58,6 +58,7 @@ export function applyJudgeCommand(state: MatchState, command: JudgeCommand): boo
       state.status = "finished";
       state.phase = "finished";
       state.winner = command.winner;
+      state.finishReason = "judgeDecision";
       emitEvent(state, "winnerDeclared", "judge", {
         visibility: "judge",
         data: {

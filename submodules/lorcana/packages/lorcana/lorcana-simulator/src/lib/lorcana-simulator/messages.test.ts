@@ -23,6 +23,13 @@ describe("paraglide messages proxy fallback", () => {
     );
   });
 
+  it("resolves post-game replay and finalization labels", () => {
+    expect(m["sim.postGame.replay.watch"]({})).toBe("Watch Replay");
+    expect(m["sim.postGame.replay.saveOnDevice"]({})).toBe("Save on this device");
+    expect(m["sim.postGame.finalization.pending"]({})).toBe("Finalizing match…");
+    expect(m["sim.postGame.finalization.failed"]({})).toBe("Match finalization failed");
+  });
+
   it("falls back to the English catalog when a key is not generated but exists in en.json", () => {
     expect(m["sim.pregame.chooseFirst.button"]({})).toBe("Player One goes first");
   });

@@ -61,15 +61,7 @@ export const eb03Lilith058: CharacterCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-            self: true,
+            action: "playThisCard",
           },
         ],
       },

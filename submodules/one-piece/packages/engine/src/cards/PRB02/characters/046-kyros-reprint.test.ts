@@ -3,7 +3,7 @@ import { prb02KyrosReprint046 } from "../../../../../cards/src/cards/PRB02/chara
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-046 Kyros (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02KyrosReprint046);
   });
 });

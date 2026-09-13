@@ -51,7 +51,7 @@ describe("Gwadan (GD02-125)", () => {
     expectSuccess(p1.deployBase(gd02Gwadan125));
     expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected the optional red discard");
+    if (optional?.kind !== "targetSelection") throw new Error("Expected the optional red discard");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
     const discardChoice = p1.getBoardView().pendingChoice;
     if (discardChoice?.kind !== "targetSelection") {
@@ -80,7 +80,7 @@ describe("Gwadan (GD02-125)", () => {
 
     expectSuccess(p1.deployBase(gd02Gwadan125));
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected the optional red discard");
+    if (optional?.kind !== "targetSelection") throw new Error("Expected the optional red discard");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
     expect(p1.getCardZone(redCardId)).toBe(`hand:${PLAYER_ONE}`);

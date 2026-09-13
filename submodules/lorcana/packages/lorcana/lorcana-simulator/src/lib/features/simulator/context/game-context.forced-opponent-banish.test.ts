@@ -105,7 +105,11 @@ function createGameContextStub(
     pendingErrorReason: () => null,
     pendingMoveError: () => null,
     pendingResolutionAutoOpenStateId: () => null,
-    isOptimisticMovePending: () => false,
+    authoritativeCommandStatus: () => ({ phase: "idle" }),
+    staleRecoveryCompletionCount: () => 0,
+    isMovePending: () => false,
+    requestStateSync: () => {},
+    commandDiagnostic: () => null,
     challengeSourceCardId: () => null,
     challengeMode: () => false,
     animations: () => [],
@@ -244,6 +248,52 @@ function createForceOpponentBanishContext(args: {
 }
 
 describe("Forced-opponent banish prompt | confirm flow", () => {
+  for (const cardType of ["character", "action", "item", "location"] as const) {
+    it(`accepts a ${cardType} for an any-card discard selection`, () => {
+      const card = createCardSnapshot({ cardId: "discard-target", cardType, zoneId: "discard" });
+      const presenter = new LorcanaSidebarPresenter(
+        createGameContextStub({
+          cardSnapshotsById: () => ({ [card.cardId]: card }),
+        }),
+      );
+      presenter.skipActionConfirmation = false;
+      const context = createForceOpponentBanishContext({
+        sourceCardId: "source",
+        chooserId: PLAYER_ONE,
+        cardCandidateIds: [card.cardId],
+      });
+      context.targetDsl = [
+        { selector: "chosen", owner: "any", zones: ["discard"], cardTypes: ["card"], count: 1 },
+      ];
+      context.allowedZones = ["discard"];
+      expect(
+        presenter.startResolutionSelectionSession(createPendingResolutionMove(), context),
+      ).toBe(true);
+      expect(presenter.handleAvailableMovesSelectionCard(card.cardId)).toBe(true);
+      expect(presenter.canConfirmResolutionSelection).toBe(true);
+    });
+  }
+
+  it("still rejects an item when a character is required", () => {
+    const card = createCardSnapshot({ cardId: "item-target", cardType: "item" });
+    const presenter = new LorcanaSidebarPresenter(
+      createGameContextStub({
+        cardSnapshotsById: () => ({ [card.cardId]: card }),
+      }),
+    );
+    presenter.skipActionConfirmation = false;
+    const context = createForceOpponentBanishContext({
+      sourceCardId: "source",
+      chooserId: PLAYER_ONE,
+      cardCandidateIds: [card.cardId],
+    });
+    expect(presenter.startResolutionSelectionSession(createPendingResolutionMove(), context)).toBe(
+      true,
+    );
+    expect(presenter.handleAvailableMovesSelectionCard(card.cardId)).toBe(true);
+    expect(presenter.canConfirmResolutionSelection).toBe(false);
+  });
+
   // Source card belongs to PLAYER_ONE (the player who played Sid / Be King).
   // The PROMPT is delivered to PLAYER_TWO (the opponent / chooser).
   // Player two must be able to click their own character and have Confirm enable.

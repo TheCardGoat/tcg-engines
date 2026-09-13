@@ -17,7 +17,6 @@
   interface ActivePlayerGuidanceProps {
     items?: ActivePlayerGuidanceItem[];
     anchor?: GuidanceAnchor;
-    isBottomHandExpanded?: boolean;
     isTopHandExpanded?: boolean;
     onToggleAnchor?: () => void;
     canOpenTargetModal?: boolean;
@@ -25,7 +24,7 @@
     onAmountChange?: (value: number) => void;
   }
 
-  let { items = [], anchor = "bottom", isBottomHandExpanded = false, isTopHandExpanded = false, onToggleAnchor, canOpenTargetModal = false, onOpenTargetModal, onAmountChange }: ActivePlayerGuidanceProps = $props();
+  let { items = [], anchor = "bottom", isTopHandExpanded = false, onToggleAnchor, canOpenTargetModal = false, onOpenTargetModal, onAmountChange }: ActivePlayerGuidanceProps = $props();
 
   const PAGE_SIZE = 3;
   let page = $state(0);
@@ -41,8 +40,11 @@
   const handTargetable = $derived(visibleItems.some((item) => item.mode === "pregame"));
   const isTopAnchor = $derived(anchor === "top");
   const toggleTitle = $derived(isTopAnchor ? "Move guidance to bottom" : "Move guidance to top");
+  // Guidance must never sit on top of either hand. The hand can expand after
+  // guidance is measured (or report a collapsed state while its cards remain
+  // actionable), so the default bottom anchor always reserves its hand lane.
   const needsHandClearance = $derived(
-    (anchor === "bottom" && isBottomHandExpanded) ||
+    anchor === "bottom" ||
     (anchor === "top" && isTopHandExpanded),
   );
   const simulatorCardContext = maybeUseSimulatorCardContext();

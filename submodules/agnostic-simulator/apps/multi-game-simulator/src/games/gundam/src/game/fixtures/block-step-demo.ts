@@ -1,4 +1,4 @@
-import { asPlayerId, createMockResource, createMockUnit, type PlayerId } from "@tcg/gundam-engine";
+import { asPlayerId, type PlayerId } from "@tcg/gundam-engine";
 
 import {
   createDevRuntime,
@@ -7,10 +7,16 @@ import {
   type DevRuntime,
 } from "../dev-runtime.ts";
 import { attachAutoPassBot } from "./auto-pass.ts";
+import {
+  realResourceCards,
+  st01DemiTrainer008,
+  st01Guncannon003,
+  st01Guntank004,
+} from "./real-cards.ts";
 
 /**
  * Block-step fixture — drops the viewer (player_one) into an active
- * block-step as the *defender*, with the opponent's Zaku mid-attack
+ * block-step as the *defender*, with the opponent's Guncannon mid-attack
  * against one of the viewer's rested units. Mirrors the Blocker-keyword
  * scenarios at
  * `packages/engine/src/gundam/lifecycle/battle-phase/battle-phase.test.ts:
@@ -20,8 +26,8 @@ import { attachAutoPassBot } from "./auto-pass.ts";
  * no UI to drive the opponent's `enterBattle`. We:
  *   1. Flip `initialActivePlayer` to player_two so the engine starts on
  *      opponent's turn.
- *   2. Seat an attacker (Zaku II) + a rested defender target (Jim) + a
- *      fresh <Blocker> unit (Guncannon Blocker).
+ *   2. Seat an attacker (Guncannon) + a rested defender target (Guntank) + a
+ *      fresh <Blocker> unit (Demi Trainer).
  *   3. Submit the opponent's `enterBattle` synchronously as part of
  *      fixture boot. After `executeCommand` returns the engine is in
  *      `battle-phase / block-step`, viewer is the active player (standby
@@ -63,31 +69,21 @@ export function loadBlockStepDemo(): DevRuntime {
         // The attack target. Rested so it registers as a legal
         // unit-target per rule 8-1-3 (see `listLegalAttackTargets`).
         {
-          card: createMockUnit({ cost: 1, level: 1, ap: 1, hp: 3, color: "blue", name: "GM Jim" }),
+          card: st01Guntank004,
           exhausted: true,
         },
         // The would-be blocker: active, carries <Blocker>. `canBlock`
         // (rules/derived-state.ts) gates declareBlock on: unit, active,
         // not the attacker's target itself, and keyword present.
-        createMockUnit({
-          cost: 2,
-          level: 2,
-          ap: 2,
-          hp: 4,
-          color: "white",
-          name: "Guncannon Blocker",
-          keywordEffects: [{ keyword: "Blocker" }],
-        }),
+        st01DemiTrainer008,
       ],
-      resourceArea: [createMockResource(), createMockResource()],
+      resourceArea: realResourceCards(2),
       deck: 30,
       resourceDeck: 10,
     },
     p2: {
-      battleArea: [
-        createMockUnit({ cost: 2, level: 2, ap: 2, hp: 4, color: "red", name: "Zaku II" }),
-      ],
-      resourceArea: [createMockResource(), createMockResource()],
+      battleArea: [st01Guncannon003],
+      resourceArea: realResourceCards(2),
       deck: 30,
       resourceDeck: 10,
     },
@@ -95,8 +91,8 @@ export function loadBlockStepDemo(): DevRuntime {
 
   // Resolve attacker + target by name — robust to future fixture
   // edits that might reorder or add units in either battle area.
-  const p2Units = instanceIdsByName(dev, DEV_PLAYER_TWO, "Zaku II");
-  const p1Units = instanceIdsByName(dev, DEV_PLAYER_ONE, "GM Jim");
+  const p2Units = instanceIdsByName(dev, DEV_PLAYER_TWO, "Guncannon");
+  const p1Units = instanceIdsByName(dev, DEV_PLAYER_ONE, "Guntank");
   const attackerId = p2Units[0];
   const targetId = p1Units[0];
   if (!attackerId || !targetId) {

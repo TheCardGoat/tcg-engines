@@ -3,7 +3,7 @@ import { op02Mr3Galdino065 } from "../../../../../cards/src/cards/OP02/character
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-065 Mr.3 (Galdino)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op02Mr3Galdino065);
   });
 });

@@ -660,7 +660,14 @@ function projectActionDecision(
   viewer: MatchSeat | "judge",
 ): ProjectedDecision | null {
   const commands = getLegalCommands(state, viewer).filter(
-    (command) => command.type !== "resolvePrompt" && command.type !== "judgeResolvePrompt",
+    (command) =>
+      command.type !== "resolvePrompt" &&
+      command.type !== "judgeResolvePrompt" &&
+      // Concession (1-2-3) stays out of the projected action list: it is a
+      // meta action the client offers separately, not a game action choice,
+      // and excluding it keeps decisions empty while a player has no real
+      // action (e.g. waiting on an opponent's prompt).
+      command.type !== "concede",
   );
 
   if (commands.length === 0) {
@@ -769,6 +776,7 @@ export function projectStateForSeat(state: MatchState, viewer: Viewer): PlayerVi
     turnNumber: state.turnNumber,
     phase: state.phase,
     winner: state.winner,
+    finishReason: state.finishReason,
     players: {
       north: projectPlayer(state, viewer, "north"),
       south: projectPlayer(state, viewer, "south"),

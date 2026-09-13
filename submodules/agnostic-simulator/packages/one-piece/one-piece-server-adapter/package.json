@@ -13,7 +13,8 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
-    }
+    },
+    "./deck-interchange": "./src/deck-interchange.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",

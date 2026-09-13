@@ -1,8 +1,14 @@
 import { describe, expect, it } from "vite-plus/test";
 
+import { defaultGundamSetupCards } from "@tcg/gundam-token-data";
 import { createStaticResources, type Player } from "./static-resources.ts";
 import { MatchRuntime } from "./match-runtime.ts";
-import { DEFAULT_DYNAMIC_CLOCK_CONFIG, checkTimeout, settleClocks } from "./time-control.ts";
+import {
+  DEFAULT_DYNAMIC_CLOCK_CONFIG,
+  checkTimeout,
+  hasClockGraceExpired,
+  settleClocks,
+} from "./time-control.ts";
 import { asPlayerId } from "../types/branded.ts";
 
 const p1 = asPlayerId("player_one");
@@ -16,9 +22,14 @@ function players(): Player[] {
 }
 
 function runtimeWithClock(): MatchRuntime {
-  const staticResources = createStaticResources(players(), new Map());
+  const roster = players();
+  const staticResources = createStaticResources(
+    roster,
+    new Map(),
+    defaultGundamSetupCards(roster.map((player) => player.id)),
+  );
   const runtime = new MatchRuntime(staticResources);
-  runtime.initialize(players(), "clock-test", p1, {
+  runtime.initialize(roster, "clock-test", p1, {
     mode: "dynamic",
     config: DEFAULT_DYNAMIC_CLOCK_CONFIG,
   });
@@ -26,9 +37,14 @@ function runtimeWithClock(): MatchRuntime {
 }
 
 function runtimeWithoutClock(): MatchRuntime {
-  const staticResources = createStaticResources(players(), new Map());
+  const roster = players();
+  const staticResources = createStaticResources(
+    roster,
+    new Map(),
+    defaultGundamSetupCards(roster.map((player) => player.id)),
+  );
   const runtime = new MatchRuntime(staticResources);
-  runtime.initialize(players(), "clockless-test", p1);
+  runtime.initialize(roster, "clockless-test", p1);
   return runtime;
 }
 
@@ -90,6 +106,77 @@ describe("time-control", () => {
     expect(checkTimeout(state, String(p2), 30_001)).toBeNull();
   });
 
+  it("honors grace before reserve exhaustion becomes droppable", () => {
+    const runtime = runtimeWithClock();
+    const state = runtime.getState();
+    if (state.ctx.time.mode !== "dynamic") throw new Error("expected dynamic clock");
+
+    state.ctx.time.startedAtMs = 1_000;
+    state.ctx.time.players[p1].reserveMsRemaining = 10_000;
+    state.ctx.time.players[p1].isInNegativeTime = true;
+    state.ctx.time.players[p1].timeoutCount = 1;
+    state.ctx.time.config.graceMs = 15_000;
+
+    expect(hasClockGraceExpired(state, String(p1), 25_999)).toBe(false);
+    expect(checkTimeout(state, String(p1), 25_999)).toBeNull();
+    expect(hasClockGraceExpired(state, String(p1), 26_000)).toBe(true);
+    expect(checkTimeout(state, String(p1), 26_000)).toBe("second");
+  });
+
+  it("awards action and turn-pass bonuses after successful commands", () => {
+    const runtime = runtimeWithClock();
+    const state = runtime.getState();
+    if (state.ctx.time.mode !== "dynamic") throw new Error("expected dynamic clock");
+
+    state.ctx.time.running = false;
+    state.ctx.time.startedAtMs = undefined;
+    state.ctx.time.players[p1].reserveMsRemaining = 50_000;
+
+    const chooseResult = runtime.executeCommand(
+      {
+        commandID: "choose-first-player-clock-bonus",
+        move: "chooseFirstPlayer",
+        prevStateID: state.ctx._stateID,
+        actorRole: "player",
+        args: { playerId: p1 },
+      },
+      p1,
+    );
+
+    expect(chooseResult.success).toBe(true);
+    const afterChoose = runtime.getState();
+    if (afterChoose.ctx.time.mode !== "dynamic") throw new Error("expected dynamic clock");
+    expect(afterChoose.ctx.time.players[p1].actionBonusMsGranted).toBe(5_000);
+    expect(afterChoose.ctx.time.players[p1].turnPassBonusMsGranted).toBe(0);
+
+    afterChoose.ctx.status.gameSegment = "game";
+    afterChoose.ctx.status.phase = "main";
+    afterChoose.ctx.status.step = undefined;
+    afterChoose.ctx.status.turnPlayer = p1;
+    afterChoose.ctx.status.activePlayer = p1;
+    afterChoose.ctx.status.pendingDecision = [];
+    afterChoose.ctx.time.running = false;
+    afterChoose.ctx.time.startedAtMs = undefined;
+
+    const passResult = runtime.executeCommand(
+      {
+        commandID: "pass-turn-clock-bonus",
+        move: "passTurn",
+        prevStateID: afterChoose.ctx._stateID,
+        actorRole: "player",
+        args: {},
+      },
+      p1,
+    );
+
+    expect(passResult.success).toBe(true);
+    const afterPass = runtime.getState();
+    if (afterPass.ctx.time.mode !== "dynamic") throw new Error("expected dynamic clock");
+    expect(afterPass.ctx.time.players[p1].actionBonusMsGranted).toBe(10_000);
+    expect(afterPass.ctx.time.players[p1].turnPassBonusMsGranted).toBe(60_000);
+    expect(afterPass.ctx.time.players[p1].reserveMsRemaining).toBe(120_000);
+  });
+
   it("skipOpponentTurn resets a first stalling timeout", () => {
     const runtime = runtimeWithClock();
     const state = runtime.getState();
@@ -122,14 +209,15 @@ describe("time-control", () => {
     expect(next.ctx.status.activePlayer).toBe(p1);
   });
 
-  it("dropOpponent ends the game when opponent reserve is exhausted", () => {
+  it("dropOpponent ends the game after opponent reserve and grace are exhausted", () => {
     const runtime = runtimeWithClock();
     const state = runtime.getState();
     if (state.ctx.time.mode !== "dynamic") throw new Error("expected dynamic clock");
 
     state.ctx.status.activePlayer = p2;
     state.ctx.time.activePlayerID = String(p2);
-    state.ctx.time.players[p2].reserveMsRemaining = -1;
+    state.ctx.time.config.graceMs = 15_000;
+    state.ctx.time.players[p2].reserveMsRemaining = -15_001;
     state.ctx.time.players[p2].isInNegativeTime = true;
 
     const result = runtime.executeCommand(

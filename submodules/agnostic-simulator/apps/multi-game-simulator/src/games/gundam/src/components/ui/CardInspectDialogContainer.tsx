@@ -1,24 +1,16 @@
 import { useMemo } from "react";
 
-import {
-  asCardInstanceId,
-  asMoveName,
-  protocolTargetSelection,
-  useInteractionView,
-  usePending,
-} from "../../game/index.ts";
+import { asCardInstanceId, asMoveName, useInteractionView } from "../../game/index.ts";
+import { useGundamInteractionDraft } from "../../game/interaction-draft.tsx";
 import { cardActionIdsFromInteractionView } from "../containers/interaction.ts";
 import type { CardAction } from "./CardInfoDialog.tsx";
 import { CardInfoDialog } from "./CardInfoDialog.tsx";
 import { useCardInspect } from "./card/card-inspect-context.tsx";
-import { usePendingEffectSelection } from "./pending-effect-selection-context.tsx";
 
 export function CardInspectDialog() {
   const ctx = useCardInspect();
   const interactionView = useInteractionView();
-  const targetSelection = protocolTargetSelection(interactionView);
-  const pending = usePending();
-  const pendingEffectSelection = usePendingEffectSelection();
+  const draft = useGundamInteractionDraft();
 
   const card = ctx?.inspected?.card ?? null;
   const cardId = card?.id ?? null;
@@ -27,7 +19,7 @@ export function CardInspectDialog() {
     if (!cardId) return { actions: [] as CardAction[], dispatch: () => {} };
     const branded = asCardInstanceId(cardId);
 
-    if (targetSelection?.targetIds.includes(branded)) {
+    if (draft.input?.kind === "entity-selection" && draft.candidateIds.has(branded)) {
       const act: CardAction = {
         id: "resolve-target",
         label: "Select as target",
@@ -36,31 +28,9 @@ export function CardInspectDialog() {
       return {
         actions: [act],
         dispatch: (id: string) => {
-          if (id === "resolve-target") pendingEffectSelection.selectTarget(cardId);
+          if (id === "resolve-target") draft.toggleEntity(draft.input!.id, cardId);
         },
       };
-    }
-
-    if (pending.state.status === "collecting") {
-      const step = pending.state.steps[0];
-      if (step?.kind === "selectTarget" && step.candidateIds.includes(branded)) {
-        const act: CardAction = {
-          id: "provide-target",
-          label: "Select as target",
-          tone: "primary",
-          hint: humanizeMoveName(pending.state.move),
-        };
-        return {
-          actions: [act],
-          dispatch: (id: string) => {
-            if (id !== "provide-target") return;
-            if (pending.state.status !== "collecting") return;
-            const currentStep = pending.state.steps[0];
-            if (currentStep?.kind !== "selectTarget") return;
-            pending.provideTarget(currentStep, cardId);
-          },
-        };
-      }
     }
 
     const candidates = cardActionIdsFromInteractionView(cardId, interactionView);
@@ -75,10 +45,14 @@ export function CardInspectDialog() {
       dispatch: (id: string) => {
         const move = candidates.find((candidate) => String(candidate) === id);
         if (!move) return;
-        pending.startForCard(move, cardId);
+        const action = interactionView.actions.find((candidate) => candidate.id === move);
+        const source = action?.inputs.find(
+          (input) => input.kind === "entity-selection" && input.role === "source",
+        );
+        draft.begin(move, source ? { [source.id]: [cardId] } : undefined);
       },
     };
-  }, [cardId, interactionView, pending, targetSelection, pendingEffectSelection]);
+  }, [cardId, draft, interactionView]);
 
   return (
     <CardInfoDialog

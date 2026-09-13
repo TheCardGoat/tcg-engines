@@ -120,6 +120,7 @@ describe("Trinity Warship (GD04-125)", () => {
 
     it("rejects enemy Units above Lv.5", () => {
       const costUnit = createMockUnit({ traits: ["cb"] });
+      const legalEnemy = createMockUnit({ level: 5 });
       const enemy = createMockUnit({ level: 6 });
       const engine = GundamTestEngine.create(
         {
@@ -127,10 +128,10 @@ describe("Trinity Warship (GD04-125)", () => {
           play: [costUnit],
           resourceArea: activeResources(1),
         },
-        { play: [enemy] },
+        { play: [legalEnemy, enemy] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[1]!;
 
       expectFailure(
         p1.activateBaseAbility(gd04TrinityWarship125, { targets: [enemyId] }),

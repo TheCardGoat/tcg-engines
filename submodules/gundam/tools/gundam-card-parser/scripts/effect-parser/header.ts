@@ -1,5 +1,12 @@
-import type { CardColor, EffectCondition, EffectCost, EffectTiming } from "@tcg/gundam-types";
+import type {
+  AttributeFilter,
+  CardColor,
+  EffectCondition,
+  EffectCost,
+  EffectTiming,
+} from "@tcg/gundam-types";
 import { CARD_COLORS } from "./helpers.ts";
+import { parseTargetFilter } from "./target-filter.ts";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Timing label map
@@ -34,11 +41,18 @@ export interface ParsedHeader {
   timings: EffectTiming[];
   conditions: EffectCondition[];
   oncePerTurn: boolean;
+  developmentCount: number | undefined;
   cost: EffectCost | undefined;
   pilotName: string | undefined;
   /** Pilot color/trait restriction from composite brackets, e.g. 【During Pair·Red Pilot】 */
   pilotQualifier:
-    | { color?: CardColor; hasTrait?: string; maxLevel?: number; minLevel?: number }
+    | {
+        color?: CardColor;
+        hasTrait?: string;
+        maxLevel?: number;
+        minLevel?: number;
+        filter?: AttributeFilter;
+      }
     | undefined;
   /** remaining text after all 【...】 blocks */
   rest: string;
@@ -53,9 +67,16 @@ export function parseHeader(segment: string): ParsedHeader {
   const timings: EffectTiming[] = [];
   const conditions: EffectCondition[] = [];
   let oncePerTurn = false;
+  let developmentCount: number | undefined;
   let pilotName: string | undefined;
   let pilotQualifier:
-    | { color?: CardColor; hasTrait?: string; maxLevel?: number; minLevel?: number }
+    | {
+        color?: CardColor;
+        hasTrait?: string;
+        maxLevel?: number;
+        minLevel?: number;
+        filter?: AttributeFilter;
+      }
     | undefined;
   const cost: EffectCost = {};
   let hasCost = false;
@@ -79,7 +100,12 @@ export function parseHeader(segment: string): ParsedHeader {
       break;
     }
 
-    const mapped = TIMING_LABEL_MAP[label.toLowerCase()];
+    const developmentMatch = label.match(/^(.+?)[·・･]Development\s+(\d+)$/i);
+    const normalizedLabel = (developmentMatch?.[1]?.trim() ?? label).replace(/[・･]/g, "·");
+    if (developmentMatch) {
+      developmentCount = Number.parseInt(developmentMatch[2], 10);
+    }
+    const mapped = TIMING_LABEL_MAP[normalizedLabel.toLowerCase()];
     if (mapped === "OncePerTurn") {
       oncePerTurn = true;
     } else if (mapped === "Pilot") {
@@ -91,7 +117,7 @@ export function parseHeader(segment: string): ParsedHeader {
     } else {
       // Try composite: "During Pair·Red Pilot" / "When Paired·(White Base Team) Pilot"
       // Also handles level qualifiers like "During Pair·Lv.3 or Lower Pilot"
-      const compositeM = label.match(/^([\w\s]+)·([\w\s().]+)\s+pilot$/i);
+      const compositeM = label.match(/^([\w\s]+)·([\w\s()/. -]+)\s+pilot$/i);
       if (compositeM) {
         const baseLabel = compositeM[1].trim().toLowerCase();
         const qualifierText = compositeM[2].trim();
@@ -104,7 +130,21 @@ export function parseHeader(segment: string): ParsedHeader {
           }
           // Qualifier: "(Trait Name)" | color word | "Lv.X or Lower/Higher"
           const traitM = qualifierText.match(/^\(([^)]+)\)$/);
-          if (traitM) {
+          const traitAlternatives = Array.from(qualifierText.matchAll(/\(([^)]+)\)/g)).map((m) =>
+            m[1].toLowerCase(),
+          );
+          if (traitAlternatives.length > 1 && qualifierText.includes("/")) {
+            pilotQualifier = {
+              filter: {
+                attribute: "or",
+                filters: traitAlternatives.map((value) => ({
+                  attribute: "trait" as const,
+                  comparison: "includes" as const,
+                  value,
+                })),
+              },
+            };
+          } else if (traitM) {
             pilotQualifier = { hasTrait: traitM[1].toLowerCase() };
           } else {
             const lvQualM = qualifierText.match(/Lv\.?\s*(\d+)\s+or\s+(lower|higher)/i);
@@ -130,6 +170,75 @@ export function parseHeader(segment: string): ParsedHeader {
 
     // After the bracket check for cost symbols: ②, ①, etc., then ：
     const afterBracket = segment.slice(pos);
+    const exileFromTrashMatch = afterBracket.match(
+      /^(?:([①②③④⑤⑥]+),\s*)?Exile\s+(\d+)\s+(?:(\([^)]+\)|blue|green|red|white|purple)\s+)?(?:(Unit|Pilot|Command|Base)\s+)?cards?\s+(?:from|in) your trash(?: from the game)?[：:]\s*/i,
+    );
+    if (exileFromTrashMatch) {
+      const resourceSymbols = exileFromTrashMatch[1];
+      const qualifier = exileFromTrashMatch[3];
+      const cardType = exileFromTrashMatch[4]?.toLowerCase() as
+        | "unit"
+        | "pilot"
+        | "command"
+        | "base"
+        | undefined;
+      cost.exileFromTrash = {
+        owner: "friendly",
+        zone: "trash",
+        ...(cardType ? { cardType } : {}),
+        count: Number.parseInt(exileFromTrashMatch[2], 10),
+        ...(qualifier
+          ? {
+              attributeFilters: [
+                qualifier.startsWith("(")
+                  ? {
+                      attribute: "trait",
+                      comparison: "includes",
+                      value: qualifier.slice(1, -1).toLowerCase(),
+                    }
+                  : {
+                      attribute: "color",
+                      comparison: "eq",
+                      value: CARD_COLORS[qualifier.toLowerCase()],
+                    },
+              ],
+            }
+          : {}),
+      };
+      if (resourceSymbols) {
+        cost.payResources = Array.from(resourceSymbols).reduce(
+          (sum, symbol) => sum + ({ "①": 1, "②": 2, "③": 3, "④": 4, "⑤": 5, "⑥": 6 }[symbol] ?? 0),
+          0,
+        );
+      }
+      hasCost = true;
+      pos += exileFromTrashMatch[0].length;
+      break;
+    }
+    const restTargetMatch = afterBracket.match(/^(?:([①②③④⑤⑥]+),\s*)?[Rr]est\s+(.+?)[：:]\s*/);
+    if (restTargetMatch && !/^[Rr]est this (?:Base|Card|Unit)[：:]/.test(afterBracket)) {
+      if (restTargetMatch[1]) {
+        const circleDigits: Record<string, number> = {
+          "①": 1,
+          "②": 2,
+          "③": 3,
+          "④": 4,
+          "⑤": 5,
+          "⑥": 6,
+        };
+        cost.payResources = Array.from(restTargetMatch[1]).reduce(
+          (total, digit) => total + (circleDigits[digit] ?? 0),
+          0,
+        );
+      }
+      cost.restTarget = {
+        ...parseTargetFilter(restTargetMatch[2]),
+        state: "active",
+      };
+      hasCost = true;
+      pos += restTargetMatch[0].length;
+      break;
+    }
     const compoundCostMatch = afterBracket.match(/^([①②③④⑤⑥]+),\s*(.+?)[：:]\s*/);
     if (compoundCostMatch) {
       const circleDigits: Record<string, number> = {
@@ -185,6 +294,15 @@ export function parseHeader(segment: string): ParsedHeader {
       pos += restSelfMatch[0].length;
       break;
     }
+
+    // "Destroy this Unit：" or "Destroy this card："
+    const destroySelfMatch = segment.slice(pos).match(/^Destroy this (?:Unit|card)[：:]/i);
+    if (destroySelfMatch) {
+      cost.destroySelf = true;
+      hasCost = true;
+      pos += destroySelfMatch[0].length;
+      break;
+    }
   }
 
   // Also handle "Main/Action" with a slash between two bracket groups already parsed
@@ -207,6 +325,7 @@ export function parseHeader(segment: string): ParsedHeader {
     timings,
     conditions,
     oncePerTurn,
+    developmentCount,
     cost: hasCost ? cost : undefined,
     pilotName,
     pilotQualifier,

@@ -4363,6 +4363,9 @@ describe("automated actions", () => {
     );
     const sourceId = engine.asPlayerTwo().getCard(source).id as CardInstanceId;
 
+    // Zero-option choice prompt: no legal candidates and passTurn is illegal while
+    // the pending decision is held — exercises repeated-state deadlock → concede.
+    // (Nested multi-may trees are intentionally supported via immediate-decision planning.)
     loadMutatedState(engine, (state) => {
       state.ctx.priority.holder = PLAYER_ONE;
       state.G.pendingEffects = [
@@ -4381,27 +4384,7 @@ describe("automated actions", () => {
           }),
           effect: {
             type: "or",
-            options: [
-              {
-                type: "or",
-                options: [
-                  {
-                    amount: 1,
-                    target: "CONTROLLER",
-                    type: "draw",
-                  },
-                  {
-                    target: "SELF",
-                    type: "banish",
-                  },
-                ],
-              },
-              {
-                amount: 1,
-                target: "CONTROLLER",
-                type: "draw",
-              },
-            ],
+            options: [],
           } satisfies Effect,
           resolutionInput: {},
         } satisfies PendingActionEffect,
@@ -4425,6 +4408,145 @@ describe("automated actions", () => {
     expect(third.finalResult.success).toBe(true);
     expect(engine.asServer().isGameOver()).toBe(true);
     expect(engine.asServer().getWinner()).toBe(PLAYER_ONE);
+  });
+
+  it("enumerates and resolves nested optional bag effects via the immediate decision surface", () => {
+    const source = createMockCharacter({
+      id: "nested-optional-source",
+      name: "Nested Optional Source",
+      cost: 4,
+      lore: 2,
+      abilities: [],
+    });
+    const costOneInPlay = createMockCharacter({
+      id: "nested-optional-cost-one-play",
+      name: "Nested Cost One Play",
+      cost: 1,
+      strength: 1,
+      willpower: 2,
+      lore: 1,
+    });
+    const costOneInHand = createMockCharacter({
+      id: "nested-optional-cost-one-hand",
+      name: "Nested Cost One Hand",
+      cost: 1,
+      strength: 1,
+      willpower: 2,
+      lore: 1,
+    });
+    const engine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [
+        { card: source, isDrying: false },
+        { card: costOneInPlay, isDrying: false },
+      ],
+      hand: [costOneInHand],
+      deck: 2,
+    });
+    const sourceId = engine.asPlayerOne().getCard(source).id as CardInstanceId;
+    const costOneInPlayId = engine.findCardInstanceId(costOneInPlay, "play", PLAYER_ONE);
+
+    loadMutatedState(engine, (state) => {
+      state.G.triggeredAbilities.bag.items = [
+        {
+          id: "bag:nested-optional:1",
+          type: "bag-effect",
+          kind: "triggered-ability",
+          abilityId: "nested-may",
+          abilityKey: "nested-may",
+          abilityName: "NESTED MAY",
+          sourceId,
+          controllerId: PLAYER_ONE,
+          chooserId: PLAYER_ONE,
+          abilityIndex: 0,
+          occurrenceIndex: 0,
+          cardPlayed: getCardPlayedPayload({
+            playerId: PLAYER_ONE,
+            cardId: sourceId,
+            cardType: "character",
+          }),
+          effect: {
+            type: "optional",
+            chooser: "CONTROLLER",
+            effect: {
+              type: "sequence",
+              steps: [
+                {
+                  type: "return-to-hand",
+                  target: {
+                    selector: "chosen",
+                    count: 1,
+                    owner: "you",
+                    zones: ["play"],
+                    cardTypes: ["character"],
+                    filter: [{ type: "cost-comparison", comparison: "equal", value: 1 }],
+                  },
+                },
+                {
+                  type: "conditional",
+                  condition: { type: "if-you-do" },
+                  then: {
+                    type: "optional",
+                    chooser: "CONTROLLER",
+                    effect: {
+                      type: "play-card",
+                      from: "hand",
+                      cardType: "character",
+                      costRestriction: { comparison: "equal", value: 1 },
+                      cost: "free",
+                    },
+                  },
+                },
+              ],
+            },
+          } satisfies Effect,
+          resolutionInput: {},
+        } satisfies BagEffectEntry,
+      ];
+    });
+
+    const enumeration = engine.asPlayerOne().enumerateAutomatedActions();
+    const resolveBagCandidates = enumeration.candidates.filter(
+      (candidate) => candidate.family === "resolveBag",
+    );
+    expect(
+      enumeration.unsupportedSkips.filter(
+        (diagnostic) =>
+          diagnostic.reason === "Nested branching exceeds the v1 automation support matrix",
+      ),
+    ).toHaveLength(0);
+    expect(resolveBagCandidates).toContainEqual(
+      expect.objectContaining({
+        family: "resolveBag",
+        bagId: "bag:nested-optional:1",
+        resolveOptional: false,
+      }),
+    );
+    expect(resolveBagCandidates).toContainEqual(
+      expect.objectContaining({
+        family: "resolveBag",
+        bagId: "bag:nested-optional:1",
+        resolveOptional: true,
+        targets: [costOneInPlayId],
+      }),
+    );
+
+    // Drain the full multi-may window without conceding.
+    for (let step = 0; step < 8 && !engine.asServer().isGameOver(); step += 1) {
+      const before = engine.asServer().getState();
+      const hadWindow =
+        (before.G.triggeredAbilities?.bag.items.length ?? 0) > 0 ||
+        before.G.pendingEffects.length > 0;
+      if (!hadWindow) {
+        break;
+      }
+      const result = engine.asServer().takeAutomatedActionForCurrentActor();
+      expect(result.fallbackTaken).not.toBe("concede");
+      expect(result.finalResult.success).toBe(true);
+    }
+
+    expect(engine.asServer().getState().G.triggeredAbilities.bag.items ?? []).toHaveLength(0);
+    expect(engine.asServer().getState().G.pendingEffects).toHaveLength(0);
+    expect(engine.asServer().isGameOver()).toBe(false);
   });
 
   it("emits ordered candidate heuristics, selection, and execution attempts to the trace sink", () => {

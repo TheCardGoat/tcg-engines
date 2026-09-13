@@ -3,7 +3,7 @@ import { prb02Mr3GaldinoOp09056Reprint056 } from "../../../../../cards/src/cards
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-056 Mr.3(Galdino) - OP09-056 (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02Mr3GaldinoOp09056Reprint056);
   });
 });

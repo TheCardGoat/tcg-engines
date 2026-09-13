@@ -39,4 +39,30 @@ describe("OP14-076 Ever White", () => {
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
     expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op01DonquixoteDoflamingo060,
+      hand: [op14eb04EverWhite076],
+      activeDon: 3,
+      donDeckCount: 5,
+    });
+    engine.playCard(op14eb04EverWhite076, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

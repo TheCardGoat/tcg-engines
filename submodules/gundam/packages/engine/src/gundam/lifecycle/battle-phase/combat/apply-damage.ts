@@ -25,6 +25,7 @@ export function applyBattleDamage(
   cardId: string,
   amount: number,
   sourceCardId: string,
+  attackKind: "direct" | "fight" = "fight",
 ): boolean {
   const redirectedCardId = resolveBattleDamageRedirect(g, cardId);
   if (redirectedCardId && redirectedCardId !== cardId) {
@@ -37,7 +38,7 @@ export function applyBattleDamage(
     kind: "DAMAGE_DEALT",
     payload: { cardId, amount, sourceCardId },
   });
-  logCombatDamage(framework, { cardId, amount, sourceCardId });
+  logCombatDamage(framework, { cardId, amount, sourceCardId, attackKind });
 
   const ownerId = framework.cards.getOwner(cardId);
   const sourceOwnerId = framework.cards.getOwner(sourceCardId);

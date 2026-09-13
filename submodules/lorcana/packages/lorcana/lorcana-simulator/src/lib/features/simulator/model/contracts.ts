@@ -21,6 +21,7 @@ export type LorcanaPlayerSide = (typeof LORCANA_PLAYER_SIDES)[number];
 export interface MatchNavigationContext {
   nextGameId: string | undefined;
   matchCompleted: boolean;
+  completionFailed?: boolean;
   winnerId?: string;
   endReason?: string;
   format: string;
@@ -332,12 +333,20 @@ export interface ResolutionTargetAvailableMovesSelectionState extends AvailableM
   playCardEntryModeChoice?: {
     selected: boolean | null;
   };
+  /**
+   * At least one legal card target needs a ready-versus-exerted decision when
+   * it enters play. This lets the surface choose a stable picker before the
+   * player clicks that card, rather than switching interaction modes midway.
+   */
+  hasPlayCardEntryModeCandidate?: boolean;
   activeSlotIndex: number | null;
   slots: ResolutionTargetSelectionSlotState[];
   amountSelection: ResolutionAmountSelectionState | null;
   selectedTargetLabels: string[];
   minimumSelections: number;
   maximumSelections: number;
+  /** Effect-specific selection instruction supplied by the engine context. */
+  promptLabel?: string;
 }
 
 export interface ResolutionTargetSelectionSlotState {

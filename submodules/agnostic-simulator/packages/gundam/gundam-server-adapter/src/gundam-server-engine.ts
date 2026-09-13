@@ -1,12 +1,19 @@
+import { gundamAnimationPlan } from "./gundam-animation.js";
 import {
   LocalEngine,
   candidateToCommand,
+  checkTimeout,
   enumerateGundamBotCandidates,
   getSafeGundamAutomatedActionStrategyOption,
+  resetPlayerTimeAfterSkip,
+  settleClocks,
   type CandidateStrategyContext,
+  type ChessClockContext,
   type CommandResult,
+  type DynamicClockContext,
   type GundamMoveLog,
   type GundamBotCandidate,
+  type FilteredMatchView,
   type MatchState,
   type MatchStaticResources,
   type PlayerId,
@@ -25,10 +32,20 @@ import type {
   DispatchContext,
   DispatchResult,
   EngineLogRecord,
+  EvaluateOpponentTimeoutInput,
+  OpponentTimeoutEvaluation,
   PacketAnimation,
   ServerGameEngine,
+  SkipClockResetOptions,
+  TurnSkippedLogInput,
 } from "@tcg/shared/game-engine";
 import { buildGundamInteractionView, gundamSubmissionToPayload } from "./interaction-protocol.js";
+import {
+  applyGundamPresentationToView,
+  filterGundamCardsMapsForView,
+  type GundamPresentation,
+} from "./gundam-presentation.js";
+import type { CardsMaps } from "@tcg/shared/game-adapter";
 
 /**
  * Wraps a Gundam {@link LocalEngine} into the game-agnostic
@@ -43,15 +60,26 @@ import { buildGundamInteractionView, gundamSubmissionToPayload } from "./interac
  *   so each attempt routes through `this.dispatch(...)` and returns a full
  *   `DispatchResult` (patches/animations/move record). `options.strategyId`
  *   selects the candidate-ranking strategy (defaults to `value-ranked`).
+ * - Server-authoritative forfeits (disconnect / timeout drop) run the loser's
+ *   always-legal `concede` and persist the platform terminal reason.
  *
  * `staticResources` is captured at adapter construction so the planner can
  * call `enumerateGundamBotCandidates` without re-deriving deck metadata.
  */
 export class GundamServerEngine implements ServerGameEngine {
+  public readonly engine: LocalEngine;
+  public readonly staticResources: MatchStaticResources;
+  public readonly cardsMaps: CardsMaps;
+
   constructor(
-    public readonly engine: LocalEngine,
-    public readonly staticResources: MatchStaticResources,
-  ) {}
+    engine: LocalEngine,
+    staticResources: MatchStaticResources,
+    cardsMaps: CardsMaps = { cardInstances: {}, owners: {} },
+  ) {
+    this.engine = engine;
+    this.staticResources = staticResources;
+    this.cardsMaps = cardsMaps;
+  }
 
   dispatch(
     moveType: string,
@@ -59,6 +87,9 @@ export class GundamServerEngine implements ServerGameEngine {
     payload: Record<string, unknown>,
     context: DispatchContext,
   ): DispatchResult {
+    if (moveType === "undo") {
+      return this.undo(actorId, context);
+    }
     const prevStateID = this.engine.getStateID();
     const result = this.engine.executeCommand(
       {
@@ -81,6 +112,49 @@ export class GundamServerEngine implements ServerGameEngine {
     return this.engine.getState();
   }
 
+  getViewerState(
+    viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
+  ): unknown {
+    return applyGundamPresentationToView(
+      this.#filteredViewFor(viewer) as FilteredMatchView,
+      this.presentation,
+    );
+  }
+
+  getViewerResources(
+    viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
+  ): unknown {
+    // Replays are post-match artifacts (replay access is participant-gated),
+    // and replay playback needs the full presentation overlay from version 0 —
+    // before any card is visible — so hidden-deck filtering must not apply.
+    if (viewer.role === "replay") {
+      return { cardsMaps: this.cardsMaps };
+    }
+    // The authoritative maps index every instance of the match, including the
+    // opponent's face-down deck; expose only what this viewer's projection
+    // already reveals so bootstrap/realtime payloads stay viewer-safe.
+    return {
+      cardsMaps: filterGundamCardsMapsForView(
+        this.cardsMaps,
+        this.#filteredViewFor(viewer) as FilteredMatchView,
+      ),
+    };
+  }
+
+  #filteredViewFor(
+    viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
+  ) {
+    return viewer.role === "player"
+      ? this.engine
+          .getRuntime()
+          .getFilteredView({ role: "player", playerId: viewer.actorId as PlayerId })
+      : this.engine.getRuntime().getFilteredView({ role: "spectator" });
+  }
+
+  private get presentation(): GundamPresentation | undefined {
+    return this.cardsMaps.presentation;
+  }
+
   getActivePlayerId(): string | undefined {
     const state = this.engine.getState() as MatchState;
     return state.ctx.status.activePlayer as string | undefined;
@@ -100,6 +174,108 @@ export class GundamServerEngine implements ServerGameEngine {
     };
   }
 
+  forfeit(winnerId: string, reason: string, context: DispatchContext): DispatchResult {
+    const state = this.engine.getState() as MatchState;
+    const playerIds = state.ctx.playerIds.map(String);
+    const winnerSeated = playerIds.includes(winnerId);
+    const loserId = playerIds.find((playerId) => playerId !== winnerId);
+    if (!winnerSeated || !loserId) {
+      return {
+        success: false,
+        error: `Cannot forfeit Gundam game to unknown winner ${winnerId}.`,
+        errorCode: "invalid_forfeit_winner",
+        stateID: this.getStateID(),
+      };
+    }
+
+    const prevStateID = this.engine.getStateID();
+    const result = this.engine.executeCommand(
+      {
+        commandID: `${context.gameId}:${winnerId}:forfeit:${prevStateID}`,
+        move: "concede",
+        prevStateID,
+        actorRole: "player",
+        args: {},
+      },
+      loserId as PlayerId,
+    );
+    if (result.success) preserveGundamForfeitReason(result, reason);
+    return this.#toDispatchResult(result, context, winnerId, "forfeitGame");
+  }
+
+  evaluateOpponentTimeout(input: EvaluateOpponentTimeoutInput): OpponentTimeoutEvaluation {
+    const state = this.engine.getState() as MatchState;
+    if (state.ctx.time.mode !== "chess" && state.ctx.time.mode !== "dynamic") {
+      return { outcome: "not_allowed", reason: "no_time_control" };
+    }
+    const settled = settleClocks(state, input.nowMs);
+    const time = settled.ctx.time as ChessClockContext | DynamicClockContext;
+    const opponent = time.players[input.opponentPlayerId];
+    if (!opponent) return { outcome: "not_allowed", reason: "within_limit" };
+
+    if (!time.activePlayerID || time.activePlayerID === input.requesterPlayerId) {
+      if (!opponent.isInNegativeTime || opponent.timeoutCount < 1) {
+        return { outcome: "not_allowed", reason: "requester_has_priority" };
+      }
+      return {
+        outcome: "timed_out",
+        timeout: "second",
+        stallerPlayerId: input.opponentPlayerId,
+        timeoutCount: opponent.timeoutCount,
+        forceDrop: true,
+        resetTimeOnSkipMs: time.config.resetTimeOnSkipMs,
+      };
+    }
+
+    const timeout = checkTimeout(settled, input.opponentPlayerId, input.nowMs);
+    if (!timeout) return { outcome: "not_allowed", reason: "within_limit" };
+    return {
+      outcome: "timed_out",
+      timeout,
+      stallerPlayerId: input.opponentPlayerId,
+      timeoutCount: opponent.timeoutCount,
+      forceDrop: false,
+      resetTimeOnSkipMs: time.config.resetTimeOnSkipMs,
+    };
+  }
+
+  resetPlayerTimeAfterSkip(playerId: string, options: SkipClockResetOptions): void {
+    const runtime = this.engine.getRuntime();
+    const state = runtime.state;
+    const time = state.ctx.time;
+    const currentTimeoutCount =
+      time.mode === "chess" || time.mode === "dynamic"
+        ? (time.players[playerId]?.timeoutCount ?? 0)
+        : 0;
+    runtime.state = resetPlayerTimeAfterSkip(state, playerId, options.resetMs, {
+      incrementTimeoutCount: currentTimeoutCount <= options.previousTimeoutCount,
+    });
+  }
+
+  createTurnSkippedLog(input: TurnSkippedLogInput): EngineLogRecord {
+    const timestamp = Date.now();
+    return {
+      gameId: input.gameId,
+      stateVersion: input.stateVersion,
+      timestamp,
+      sourceAuthority: input.sourceAuthority,
+      log: createCanonicalEngineMoveLog({
+        moveType: "turnSkipped",
+        playerId: input.skipperPlayerId,
+        timestamp,
+        messages: [
+          createEngineLogMessage({
+            key: "gundam.system.turnSkipped",
+            values: {
+              skipperPlayerId: input.skipperPlayerId,
+              stallerPlayerId: input.stallerPlayerId,
+            },
+          }),
+        ],
+      }),
+    };
+  }
+
   getInteractionView(actorId: string): EngineInteractionView {
     const state = this.engine.getState() as MatchState;
     return buildGundamInteractionView({
@@ -110,6 +286,7 @@ export class GundamServerEngine implements ServerGameEngine {
       pendingChoice: this.engine
         .getRuntime()
         .getPendingChoice({ role: "player", playerId: actorId as PlayerId }),
+      publicPendingChoice: this.engine.getRuntime().getPendingChoice({ role: "judge" }),
     });
   }
 
@@ -147,6 +324,20 @@ export class GundamServerEngine implements ServerGameEngine {
 
   canUndo(playerId: string): boolean {
     return this.engine.canUndo(playerId as never);
+  }
+
+  undo(playerId: string, context: DispatchContext): DispatchResult {
+    const currentStateID = this.engine.getStateID();
+    const result = this.engine.undo(playerId as never);
+    if (!result) {
+      return {
+        success: false,
+        error: "No undoable move is available.",
+        errorCode: "UNDO_NOT_AVAILABLE",
+        stateID: currentStateID,
+      };
+    }
+    return this.#toDispatchResult(result, context, playerId, "undo");
   }
 
   /**
@@ -309,7 +500,8 @@ export class GundamServerEngine implements ServerGameEngine {
       timestamp: Date.now(),
       sourceAuthority: context.sourceAuthority,
       newStateID: stateVersion,
-      transitionType: "move",
+      transitionType: moveType === "undo" ? "undo" : "move",
+      ...(moveType === "undo" ? { undoneStateID: result.processedCommand.prevStateID } : {}),
     };
 
     const engineLogRecords: EngineLogRecord[] = (result.moveLogs ?? []).map((log) => ({
@@ -329,6 +521,16 @@ export class GundamServerEngine implements ServerGameEngine {
       // ({id, type, duration, data} vs. {id, kind, payload}); we translate
       // here so the gateway can pass them through uniformly.
       animations: (result.animations ?? []).map(gundamPacketAnimation),
+      animationPlan:
+        (result.animations?.length ?? 0) === 0
+          ? null
+          : gundamAnimationPlan(
+              `${context.gameId}:${actorId}:${stateVersion}`,
+              result.animations ?? [],
+              actorId,
+              this.engine.getRuntime().getFilteredView({ role: "spectator" }),
+            ),
+      transition: "move",
       acceptedMoveRecord,
       engineLogRecords,
       undoable: result.undoable,
@@ -362,6 +564,25 @@ function toCanonicalGundamMoveLog(log: GundamMoveLog) {
       }),
     ],
   });
+}
+
+function preserveGundamForfeitReason(
+  result: Extract<CommandResult, { success: true }>,
+  reason: string,
+): void {
+  result.state.ctx.status.winReason = reason;
+  result.undoable = false;
+
+  const patches = result.patches as Array<{ op?: string; path?: unknown; value?: unknown }>;
+  const existing = patches.find(
+    (patch) =>
+      Array.isArray(patch.path) &&
+      patch.path[0] === "ctx" &&
+      patch.path[1] === "status" &&
+      patch.path[2] === "winReason",
+  );
+  if (existing && existing.op !== "remove") existing.value = reason;
+  else patches.push({ op: "replace", path: ["ctx", "status", "winReason"], value: reason });
 }
 
 function valuesWithout(value: object, keys: readonly string[]): Record<string, unknown> {

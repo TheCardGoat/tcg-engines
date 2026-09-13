@@ -17,6 +17,7 @@ export function createMatch(config: MatchConfig): MatchState {
     promptQueue: [],
     battle: null,
     winner: null,
+    finishReason: null,
     setup: {
       started: false,
       joKenPo: {
@@ -32,6 +33,10 @@ export function createMatch(config: MatchConfig): MatchState {
         south: false,
       },
       mulliganDecided: {
+        north: false,
+        south: false,
+      },
+      lifePlaced: {
         north: false,
         south: false,
       },
@@ -72,14 +77,6 @@ export function createMatch(config: MatchConfig): MatchState {
   );
 
   for (const seat of ["north", "south"] as const) {
-    emitLog(
-      state,
-      "system",
-      `${getPlayer(state, seat).playerName} places ${getPlayer(state, seat).life.length} Life card${getPlayer(state, seat).life.length === 1 ? "" : "s"}.`,
-      {
-        visibility: "public",
-      },
-    );
     emitLog(
       state,
       "system",

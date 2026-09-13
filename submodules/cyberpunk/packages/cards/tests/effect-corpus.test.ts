@@ -28,6 +28,9 @@ const REQUIRED_FIELDS: Record<Effect["effect"], readonly string[]> = {
   modifyPower: ["target", "value", "duration"],
   multiplyPower: ["target", "multiplier", "duration"],
   grantRule: ["target", "rule", "duration"],
+  grantFightWinAgainst: ["target", "classifications", "duration"],
+  grantNextFriendlyFightLossDefeat: ["duration"],
+  grantRivalGoSoloCostIncrease: ["target", "amount", "duration"],
   ready: ["target"],
   readyEddies: ["player", "amount"],
   lookAt: ["target", "revealToOpponent"],
@@ -55,6 +58,7 @@ const REQUIRED_FIELDS: Record<Effect["effect"], readonly string[]> = {
   rerollGig: ["target"],
   revealTopCardType: ["player", "cardTypes"],
   revealTopCardAndModifyPowerByCost: ["player", "target", "duration"],
+  chooseEffect: ["options"],
 };
 
 const KNOWN_EFFECTS = new Set(Object.keys(REQUIRED_FIELDS));
@@ -89,15 +93,28 @@ function* walkEffects(effect: Effect, path: string): Generator<{ effect: Effect;
       yield* walkEffects(e, `${path}.effects[${i}]`);
     }
   }
+  if (effect.effect === "chooseEffect") {
+    for (const [oi, option] of effect.options.entries()) {
+      for (const [ei, e] of (option.effects ?? []).entries()) {
+        yield* walkEffects(e, `${path}.options[${oi}].effects[${ei}]`);
+      }
+    }
+  }
+  // Optional effects (e.g. free playCard) may carry decline branches.
+  if ("elseEffects" in effect && Array.isArray(effect.elseEffects) && effect.effect !== "ifYouDo") {
+    for (const [i, e] of (effect.elseEffects as Effect[]).entries()) {
+      yield* walkEffects(e, `${path}.elseEffects[${i}]`);
+    }
+  }
 }
 
 describe("effect corpus shape", () => {
   it("every effect literal has a known `effect` discriminator", () => {
     const violations: Violation[] = [];
     for (const card of cards) {
-      const abilities = card.abilities as Ability[];
+      const abilities = (card.abilities ?? []) as Ability[];
       for (const [i, ability] of abilities.entries()) {
-        for (const [j, effect] of ability.effects.entries()) {
+        for (const [j, effect] of (ability.effects ?? []).entries()) {
           for (const node of walkEffects(effect, `effects[${j}]`)) {
             const tag = (node.effect as { effect?: string }).effect;
             if (typeof tag !== "string") {
@@ -127,9 +144,9 @@ describe("effect corpus shape", () => {
   it("every effect literal has the required fields for its discriminator", () => {
     const violations: Violation[] = [];
     for (const card of cards) {
-      const abilities = card.abilities as Ability[];
+      const abilities = (card.abilities ?? []) as Ability[];
       for (const [i, ability] of abilities.entries()) {
-        for (const [j, effect] of ability.effects.entries()) {
+        for (const [j, effect] of (ability.effects ?? []).entries()) {
           for (const node of walkEffects(effect, `effects[${j}]`)) {
             const tag = node.effect.effect as Effect["effect"];
             const required = REQUIRED_FIELDS[tag];

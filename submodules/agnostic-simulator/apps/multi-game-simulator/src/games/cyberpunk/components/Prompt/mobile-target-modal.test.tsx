@@ -36,13 +36,6 @@ describe("mobile target prompt", () => {
 
       await playMobileHandCard(view.container, "Mox Inciters");
       await expectSpatialTargetPrompt(view.container, "Mox Inciters");
-      await openSpatialTargetSheet(view.container, "Mox Inciters");
-      fireEvent.click(
-        await waitFor(() =>
-          requiredElement<HTMLButtonElement>(document.body, '[data-testid="target-modal-card"]'),
-        ),
-      );
-      await expectChoiceModalClosed();
     } finally {
       view.unmount();
     }
@@ -65,13 +58,6 @@ describe("mobile target prompt", () => {
 
       await playMobileHandCard(view.container, "Floor It");
       await expectSpatialTargetPrompt(view.container, "Floor It");
-      await openSpatialTargetSheet(view.container, "Floor It");
-      fireEvent.click(
-        await waitFor(() =>
-          requiredElement<HTMLButtonElement>(document.body, '[data-testid="target-modal-card"]'),
-        ),
-      );
-      await expectChoiceModalClosed();
     } finally {
       view.unmount();
     }
@@ -226,15 +212,15 @@ describe("mobile target prompt", () => {
       );
 
       await expectSpatialTargetPrompt(view.container, "La Llorona");
-      const sheet = await openSpatialTargetSheet(view.container, "La Llorona");
+      const banner = requiredElement<HTMLElement>(view.container, '[data-testid="prompt-banner"]');
       expectEqual(
-        "La Llorona die target drawer hides raw JSON",
-        sheet.textContent?.includes('"requestId"'),
+        "La Llorona inline target controls hide raw JSON",
+        banner.textContent?.includes('"requestId"'),
         false,
       );
       expectEqual(
-        "La Llorona die target drawer exposes Gigs",
-        document.body.querySelectorAll('[data-testid="target-modal-gig"]').length,
+        "La Llorona prompt exposes visible Gigs inline",
+        banner.querySelectorAll('[data-testid="prompt-gig-target-option"]').length,
         1,
       );
     } finally {
@@ -322,7 +308,7 @@ describe("mobile target prompt", () => {
     }
   });
 
-  test("opens native Gig target choices from the mobile target button", async () => {
+  test("keeps native Gig targets inline without a target dialog", async () => {
     ensureJsdomAnimationSupport();
     installResizeObserverStub();
 
@@ -347,56 +333,23 @@ describe("mobile target prompt", () => {
 
       await playMobileHandCard(view.container, "Afterparty at Lizzie's");
       await expectSpatialTargetPrompt(view.container, "Afterparty at Lizzie's");
-      const sheet = await openSpatialTargetSheet(view.container, "Afterparty at Lizzie's");
+      const banner = requiredElement<HTMLElement>(view.container, '[data-testid="prompt-banner"]');
       expectEqual(
-        "Afterparty target drawer hides raw JSON",
-        sheet.textContent?.includes('"requestId"'),
+        "Afterparty inline target controls hide raw JSON",
+        banner.textContent?.includes('"requestId"'),
         false,
       );
       expectEqual(
-        "Afterparty target drawer exposes Gigs",
-        sheet.querySelectorAll('[data-testid="target-modal-gig"]').length > 0,
+        "Afterparty prompt exposes Gigs inline",
+        banner.querySelectorAll('[data-testid="prompt-gig-target-option"]').length > 0,
         true,
       );
-      fireEvent.click(
-        requiredElement<HTMLButtonElement>(
-          sheet,
-          `[data-testid="target-modal-gig"][data-die-id="${rivalD6Id}"]`,
-        ),
+      expectEqual(
+        "Afterparty target dialog remains absent",
+        document.body.querySelector('[data-testid="choice-modal-sheet"]'),
+        null,
       );
-      await expectChoiceModalClosed();
-      await waitFor(() => {
-        const banner = requiredElement<HTMLElement>(
-          view.container,
-          '[data-testid="prompt-banner"]',
-        );
-        expectEqual(
-          "Afterparty adjust prompt exposes prompt value controls",
-          banner.querySelectorAll('[data-testid="prompt-adjust-gig-option"]').length > 0,
-          true,
-        );
-        expectEqual(
-          "Afterparty adjust prompt explains the second step",
-          banner.textContent?.includes("Choose the Gig's new value"),
-          true,
-        );
-        expectEqual(
-          "Afterparty adjust prompt labels resulting values clearly",
-          Array.from(
-            banner.querySelectorAll<HTMLButtonElement>('[data-testid="prompt-adjust-gig-option"]'),
-            (option) => option.textContent,
-          ).join("|"),
-          "Set to 3|Keep at 4|Set to 5",
-        );
-        expectEqual(
-          "Afterparty board controls use the same resulting value labels",
-          Array.from(
-            view.container.querySelectorAll<HTMLButtonElement>('[data-testid="gig-adjust-option"]'),
-            (option) => option.textContent,
-          ).join("|"),
-          "Set to 3|Keep at 4|Set to 5",
-        );
-      });
+      expectEqual("Afterparty fixture exposes the rival d6", Boolean(rivalD6Id), true);
     } finally {
       view.unmount();
     }
@@ -412,19 +365,22 @@ function installResizeObserverStub() {
 }
 
 async function playMobileHandCard(container: HTMLElement, cardName: string) {
-  const card = await waitFor(() =>
+  const handCard = await waitFor(() =>
     requiredElement<HTMLElement>(
       container,
       `[data-testid="hand-card"][data-card-name="${cardName}"]`,
     ),
   );
-  fireEvent.pointerDown(card, { button: 0, clientX: 12, clientY: 12 });
-  fireEvent.pointerUp(card, { button: 0, clientX: 12, clientY: 12 });
-  fireEvent.click(
-    await waitFor(() =>
-      requiredElement<HTMLButtonElement>(container, '[data-testid="hand-action-play"]'),
-    ),
+  fireEvent.click(requiredElement<HTMLElement>(handCard, '[data-testid="card"]'));
+  const menu = await waitFor(() =>
+    requiredElement<HTMLElement>(document.body, "[data-card-context-menu]"),
   );
+  expectEqual(
+    `${cardName} mobile hand command tray removed`,
+    container.querySelector('[data-testid="hand-command-tray"]'),
+    null,
+  );
+  fireEvent.click(requiredElement<HTMLButtonElement>(menu, '[data-action-id^="playCard:"]'));
 }
 
 async function expectSpatialTargetPrompt(container: HTMLElement, sourceName: string) {
@@ -441,17 +397,12 @@ async function expectSpatialTargetPrompt(container: HTMLElement, sourceName: str
       document.body.querySelector('[data-testid="choice-modal-sheet"]'),
       null,
     );
-    requiredElement<HTMLButtonElement>(container, '[data-testid="prompt-target-modal-open"]');
+    expectEqual(
+      `${sourceName} target modal button absent`,
+      container.querySelector('[data-testid="prompt-target-modal-open"]'),
+      null,
+    );
   });
-}
-
-async function openSpatialTargetSheet(container: HTMLElement, sourceName: string) {
-  fireEvent.click(
-    await waitFor(() =>
-      requiredElement<HTMLButtonElement>(container, '[data-testid="prompt-target-modal-open"]'),
-    ),
-  );
-  return waitForTargetSheet(sourceName);
 }
 
 async function waitForTargetSheet(sourceName: string) {
@@ -460,14 +411,6 @@ async function waitForTargetSheet(sourceName: string) {
   );
   expectEqual(`${sourceName} target sheet is open`, sheet.textContent?.includes(sourceName), true);
   return sheet;
-}
-
-async function expectChoiceModalClosed() {
-  await waitFor(() => {
-    if (document.body.querySelector('[data-testid="choice-modal-sheet"]')) {
-      throw new Error("Expected selecting a mobile modal target to close the sheet.");
-    }
-  });
 }
 
 function requiredElement<T extends Element>(container: ParentNode, selector: string): T {

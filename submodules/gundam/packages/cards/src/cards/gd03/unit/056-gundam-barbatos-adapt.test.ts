@@ -1,55 +1,114 @@
-import { describe, it, expect } from "vite-plus/test";
+import { describe, expect, it } from "vite-plus/test";
 import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
   createMockUnit,
-  expectSuccess,
+  expectCard,
+  expectFailure,
+  expectLogType,
+  expectPublicLog,
 } from "@tcg/gundam-engine";
 import { gd03GundamBarbatosAdapt056 } from "./056-gundam-barbatos-adapt.ts";
 
 describe("Gundam Barbatos Adapt (GD03-056)", () => {
-  it("【Deploy】 deals 1 damage to one friendly Unit and one enemy Unit", () => {
-    const ally = createMockUnit({ hp: 4 });
-    const enemy = createMockUnit({ hp: 4 });
-    const engine = GundamTestEngine.create(
-      {
+  describe("【Deploy】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.", () => {
+    it("deals 1 damage to the chosen friendly Unit and the chosen enemy Unit", () => {
+      const ally = createMockUnit({ hp: 4 });
+      const enemy = createMockUnit({ hp: 4 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [gd03GundamBarbatosAdapt056],
+          play: [ally],
+          resourceArea: activeResources(4),
+        },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+
+      const deployed = p1.must.deployUnit(gd03GundamBarbatosAdapt056);
+      expectPublicLog(engine, "gundam.move.deployUnit", {
+        playerId: PLAYER_ONE,
+        cost: gd03GundamBarbatosAdapt056.cost,
+      });
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        minTargets: 2,
+        maxTargets: 2,
+        groups: [
+          {
+            minTargets: 1,
+            maxTargets: 1,
+            legalTargetIds: expect.arrayContaining([p1.unit(ally).instanceId, deployed.instanceId]),
+          },
+          { minTargets: 1, maxTargets: 1, legalTargetIds: [p2.unit(enemy).instanceId] },
+        ],
+      });
+      const choice = p1.getBoardView().pendingChoice;
+      if (choice?.kind !== "targetSelection") throw new Error("Expected target selection");
+      expect(choice.groups[0]?.legalTargetIds).not.toContain(p2.unit(enemy).instanceId);
+      expect(choice.groups[1]?.legalTargetIds).not.toContain(p1.unit(ally).instanceId);
+      expect(choice.groups[1]?.legalTargetIds).not.toContain(deployed.instanceId);
+      p1.must.resolveEffect({ targets: [ally, enemy] });
+
+      expectLogType(engine, "gundam.combat.damageDealt", { min: 1 });
+      expectCard(p1, ally).toHaveDamage(1);
+      expectCard(p1, gd03GundamBarbatosAdapt056).toHaveDamage(0);
+      expectCard(p2, enemy).toHaveDamage(1);
+    });
+
+    it("may choose itself as the friendly damage target", () => {
+      const ally = createMockUnit({ hp: 4 });
+      const enemy = createMockUnit({ hp: 4 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [gd03GundamBarbatosAdapt056],
+          play: [ally],
+          resourceArea: activeResources(4),
+        },
+        { play: [enemy] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+
+      const deployed = p1.must.deployUnit(gd03GundamBarbatosAdapt056);
+      p1.must.resolveEffect({ targets: [deployed, enemy] });
+
+      expectCard(p1, gd03GundamBarbatosAdapt056).toHaveDamage(1);
+      expectCard(p1, ally).toHaveDamage(0);
+      expectCard(p2, enemy).toHaveDamage(1);
+    });
+
+    it("does not deal damage when no enemy Unit is in play", () => {
+      const ally = createMockUnit({ hp: 4 });
+      const engine = GundamTestEngine.create({
         hand: [gd03GundamBarbatosAdapt056],
         play: [ally],
         resourceArea: activeResources(4),
-      },
-      { play: [enemy] },
-    );
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const allyId = p1.getCardsInZone("battleArea")[0]!;
-    const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+        deck: 5,
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
 
-    expectSuccess(p1.deployUnit(gd03GundamBarbatosAdapt056));
-    const deployedId = p1.getCardsInZone("battleArea").find((id) => id !== allyId);
-    expect(deployedId).toBeDefined();
-    expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "targetSelection",
-      minTargets: 2,
-      maxTargets: 2,
-      groups: [
-        {
-          minTargets: 1,
-          maxTargets: 1,
-          legalTargetIds: expect.arrayContaining([allyId, deployedId]),
-        },
-        { minTargets: 1, maxTargets: 1, legalTargetIds: [enemyId] },
-      ],
+      p1.must.deployUnit(gd03GundamBarbatosAdapt056);
+
+      // No legal enemy target: deploy still succeeds, but no damage is applied
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expectCard(p1, ally).toHaveDamage(0);
+      expectCard(p1, gd03GundamBarbatosAdapt056).toHaveDamage(0);
     });
-    const choice = p1.getBoardView().pendingChoice;
-    if (choice?.kind !== "targetSelection") throw new Error("Expected target selection");
-    expect(choice.groups[0]?.legalTargetIds).not.toContain(enemyId);
-    expect(choice.groups[1]?.legalTargetIds).not.toContain(allyId);
-    expect(choice.groups[1]?.legalTargetIds).not.toContain(deployedId);
-    expectSuccess(p1.resolveEffect({ targets: [allyId, enemyId] }));
+  });
 
-    expect(p1.getDamage(allyId)).toBe(1);
-    expect(p1.getDamage(deployedId!)).toBe(0);
-    expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyId)).toBe(1);
+  it("cannot deploy below Lv.4", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd03GundamBarbatosAdapt056],
+      resourceArea: activeResources(2),
+      deck: 5,
+    });
+    expectFailure(
+      engine.asPlayer(PLAYER_ONE).deployUnit(gd03GundamBarbatosAdapt056),
+      "INSUFFICIENT_RESOURCE_LEVEL",
+    );
   });
 });

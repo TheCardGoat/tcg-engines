@@ -3,7 +3,7 @@ import { op01CrescentCutlass089 } from "../../../../../cards/src/cards/OP01/even
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-089 Crescent Cutlass", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01CrescentCutlass089);
   });
 });

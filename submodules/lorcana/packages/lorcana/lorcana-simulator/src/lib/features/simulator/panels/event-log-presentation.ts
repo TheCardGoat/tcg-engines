@@ -14,6 +14,8 @@ import {
 
 export type { CardReferenceResolver, EventLogMarkerId, EventLogPlayerTone, EventLogSegment };
 
+export type PlayerSideLabelResolver = (side: LorcanaPlayerSide) => string | null;
+
 export type EventLogRow =
   | {
       kind: "turn-separator";
@@ -118,6 +120,7 @@ export function buildEventLogRows(
   entries: MoveLogEntrySnapshot[],
   viewerSide?: LorcanaPlayerSide | null,
   resolveCard?: CardReferenceResolver,
+  resolvePlayerSideLabel?: PlayerSideLabelResolver,
 ): EventLogRow[] {
   const visibleEntries = filterEntriesToLastTurns(entries).filter(shouldShowEventLogEntry);
   if (visibleEntries.length === 0) {
@@ -139,7 +142,7 @@ export function buildEventLogRows(
       });
     }
 
-    rows.push(buildEventRow(entry, viewerSide, resolveCard));
+    rows.push(buildEventRow(entry, viewerSide, resolveCard, resolvePlayerSideLabel));
   }
 
   return rows;
@@ -153,6 +156,7 @@ function buildEventRow(
   entry: MoveLogEntrySnapshot,
   viewerSide?: LorcanaPlayerSide | null,
   resolveCard?: CardReferenceResolver,
+  resolvePlayerSideLabel?: PlayerSideLabelResolver,
 ): Extract<EventLogRow, { kind: "event-row" }> {
   const body = formatEventLogBody(entry, viewerSide, undefined, resolveCard);
 
@@ -162,7 +166,7 @@ function buildEventRow(
     turnNumber: entry.turnNumber,
     timestamp: entry.timestamp,
     marker: body.marker,
-    actor: buildActor(entry.actorSide, viewerSide),
+    actor: buildActor(entry.actorSide, viewerSide, resolvePlayerSideLabel),
     segments: body.segments,
     source: body.source,
     isManual: entry.moveId.startsWith("manual"),
@@ -186,8 +190,9 @@ export function buildActivityFeed(
   chatMessages: readonly ChatMessage[],
   viewerSide?: LorcanaPlayerSide | null,
   resolveCard?: CardReferenceResolver,
+  resolvePlayerSideLabel?: PlayerSideLabelResolver,
 ): ActivityFeedGroup[] {
-  const rows = buildEventLogRows(entries, viewerSide, resolveCard);
+  const rows = buildEventLogRows(entries, viewerSide, resolveCard, resolvePlayerSideLabel);
   const groups = groupEventLogRows(rows);
 
   // Oldest visible game event timestamp — used to filter out stale chat messages
@@ -280,6 +285,7 @@ export function buildActivityFeed(
 function buildActor(
   actorSide?: LorcanaPlayerSide | null,
   viewerSide?: LorcanaPlayerSide | null,
+  resolvePlayerSideLabel?: PlayerSideLabelResolver,
 ): { label: string; tone: EventLogPlayerTone } {
   if (!actorSide) {
     return { label: "System", tone: "system" };
@@ -293,7 +299,15 @@ function buildActor(
     return { label: m["sim.player.opponent"]({}), tone: "opponent" };
   }
 
+  const resolvedLabel = resolvePlayerSideLabel?.(actorSide);
+
   return actorSide === "playerOne"
-    ? { label: m["sim.player.side.playerOne"]({}), tone: "playerOne" }
-    : { label: m["sim.player.side.playerTwo"]({}), tone: "playerTwo" };
+    ? {
+        label: resolvedLabel ?? m["sim.player.side.playerOne"]({}),
+        tone: "playerOne",
+      }
+    : {
+        label: resolvedLabel ?? m["sim.player.side.playerTwo"]({}),
+        tone: "playerTwo",
+      };
 }

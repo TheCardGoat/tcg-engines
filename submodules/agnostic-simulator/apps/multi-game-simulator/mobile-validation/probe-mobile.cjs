@@ -37,8 +37,7 @@ void (async () => {
           }
         : null,
       interactionPanelPresent: has('[aria-label="Interaction panel"]'),
-      handCommandTrayPresent: has('[data-testid="hand-command-tray"]'),
-      handActionPlayPresent: has('[data-testid="hand-action-play"]'),
+      cardActionMenuPresent: has('[data-testid="card-action-menu"]'),
       phaseAdvancePresent: has('[data-testid="phase-advance"]'),
       promptBannerPresent: has('[data-testid="prompt-banner"]'),
       promptState: document
@@ -58,30 +57,28 @@ void (async () => {
 
   console.log(JSON.stringify({ scenario: SCENARIO, report, pageErrors: errors }, null, 2));
 
-  // Snapshot: tap the first face-up hand card and see if a command tray appears.
-  const tap = await page.evaluate(async () => {
-    const card = document.querySelector('[data-testid="hand-card"]');
-    if (!card) return { tapped: false };
-    const r = card.getBoundingClientRect();
-    const x = r.left + r.width / 2;
-    const y = r.top + r.height / 2;
-    for (const type of ["pointerdown", "pointerup"]) {
-      card.dispatchEvent(
-        new PointerEvent(type, { bubbles: true, clientX: x, clientY: y, pointerId: 1 }),
-      );
-    }
-    await new Promise((res) => setTimeout(res, 250));
-    const tray = document.querySelector('[data-testid="hand-command-tray"]');
-    const play = document.querySelector('[data-testid="hand-action-play"]');
-    const sell = document.querySelector('[data-testid="hand-action-sell"]');
-    const goSolo = document.querySelector('[data-testid="hand-action-goSolo"]');
+  // Snapshot: tap the first face-up hand card and inspect its card action menu.
+  const handCard = page
+    .locator('[data-testid="hand-card"] [data-testid="card"][data-actionable="true"]')
+    .first();
+  const handCardCount = await handCard.count();
+  if (handCardCount > 0) {
+    await handCard.click();
+  }
+  await page.waitForTimeout(250);
+  const tap = await page.evaluate(() => {
+    const card = document.querySelector(
+      '[data-testid="hand-card"] [data-testid="card"][data-actionable="true"]',
+    );
+    const menu = document.querySelector('[data-testid="card-action-menu"]');
+    const actions = Array.from(menu?.querySelectorAll('[data-testid^="card-action-"]') ?? []).map(
+      (action) => action.getAttribute("data-testid"),
+    );
     return {
-      tapped: true,
-      cardName: card.getAttribute("data-card-name"),
-      trayVisible: tray !== null,
-      playVisible: play !== null,
-      sellVisible: sell !== null,
-      goSoloVisible: goSolo !== null,
+      tapped: card !== null,
+      cardName: card?.getAttribute("data-card-name") ?? null,
+      menuVisible: menu !== null,
+      actions,
     };
   });
   console.log("TAP_RESULT", JSON.stringify(tap, null, 2));

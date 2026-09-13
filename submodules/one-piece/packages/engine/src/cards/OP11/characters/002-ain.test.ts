@@ -22,5 +22,6 @@ describe("OP11-002 Ain", () => {
     const view = engine.getView("south");
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(tashigiId);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

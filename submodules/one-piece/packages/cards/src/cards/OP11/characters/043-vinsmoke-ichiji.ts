@@ -69,6 +69,7 @@ export const op11VinsmokeIchiji043: CharacterCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

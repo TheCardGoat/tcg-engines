@@ -1,0 +1,49 @@
+.anchor {
+  width: 100%;
+}
+
+.trigger {
+  min-height: 44px;
+  color: var(--sim-text, #f8fafc);
+  background: var(--sim-surface-soft, rgb(255 255 255 / 6%));
+}
+
+.trigger:hover {
+  background: var(--sim-surface-hover, #2c333d);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--game-accent, #60a5fa);
+  outline-offset: 2px;
+}
+
+.panel {
+  border-color: var(--sim-border, rgb(255 255 255 / 12%));
+  background: var(--sim-surface-strong, #171b21);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.status {
+  margin-top: 10px;
+}

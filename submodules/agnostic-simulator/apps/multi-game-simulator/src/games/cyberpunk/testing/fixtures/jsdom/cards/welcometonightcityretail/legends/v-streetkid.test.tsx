@@ -1,4 +1,5 @@
 import { describe, test } from "vite-plus/test";
+import { fireEvent, waitFor } from "@testing-library/react";
 import {
   welcomeToNightCityRetailAfterpartyAtLizzieS,
   welcomeToNightCityRetailVStreetkid,
@@ -31,10 +32,19 @@ describe("V - Streetkid (Retail) jsdom happy path", () => {
       const handBefore = await pom.getHandSize(CYBERPUNK_P1);
       const deckBefore = await pom.getDeckSize(CYBERPUNK_P1);
 
-      await pom.callLegend(vStreetkid.instanceId, CYBERPUNK_P1);
+      const faceDownLegend = view.container.querySelector<HTMLElement>(
+        `[data-testid="legend-slot"] [data-testid="card"][data-instance-id="${vStreetkid.instanceId}"]`,
+      );
+      if (!faceDownLegend) throw new Error("Expected the callable Legend on the visible board.");
+
+      // A face-down Legend cannot open the public card-context menu. Its card
+      // itself must execute the legal Call a Legend action when clicked.
+      fireEvent.click(faceDownLegend);
 
       // Optional moveCard creates a chooseTarget for the Braindance selection
-      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+      await waitFor(async () => {
+        await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+      });
       const eligible = await pom.getEligibleTargetIds(CYBERPUNK_P1);
       expectEqual("V-Streetkid eligible Braindance count", eligible.length, 1);
       await pom.resolveEffectTarget([eligible[0]!], CYBERPUNK_P1);

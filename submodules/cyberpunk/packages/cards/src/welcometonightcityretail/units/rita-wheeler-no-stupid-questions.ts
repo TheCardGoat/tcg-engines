@@ -5,8 +5,9 @@ export const welcomeToNightCityRetailRitaWheelerNoStupidQuestions = defineCyberp
   id: "65a14367-da52-4578-8162-3c4bac11007d",
   canonicalId: "rita-wheeler-no-stupid-questions",
   slug: "rita-wheeler-no-stupid-questions",
-  name: "Rita Wheeler — No Stupid Questions",
-  displayName: "Rita Wheeler — No Stupid Questions",
+  subname: "No Stupid Questions",
+  name: "Rita Wheeler",
+  displayName: "Rita Wheeler: No Stupid Questions",
   rulesText:
     "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nThe first time this Unit is spent each turn, draw 1, then discard 1.",
   color: "blue",

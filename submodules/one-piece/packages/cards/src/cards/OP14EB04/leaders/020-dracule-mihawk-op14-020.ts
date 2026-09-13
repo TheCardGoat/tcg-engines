@@ -88,13 +88,15 @@ export const op14eb04DraculeMihawkOp14020020: LeaderCard = {
                   count: { amount: 3, upTo: true },
                 },
               },
-              {
-                action: "playRestriction",
-                restriction: "cannotPlay",
-                filters: [{ filter: "cardCategory", value: "character" }],
-                duration: "thisTurn",
-              },
             ],
+          },
+          // "Then, you cannot play character cards" applies after the rest cost
+          // regardless of whether a cost-5 Character was present for the DON!! set.
+          {
+            action: "playRestriction",
+            restriction: "cannotPlay",
+            filters: [{ filter: "cardCategory", value: "character" }],
+            duration: "thisTurn",
           },
         ],
         optional: true,

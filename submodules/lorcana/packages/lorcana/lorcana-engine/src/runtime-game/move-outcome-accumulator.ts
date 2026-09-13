@@ -128,8 +128,18 @@ export class MoveOutcomeAccumulator {
       case "challengeCleared":
       case "abilityActivated":
       case "putCardUnder":
-      case "cardLeftDiscard":
         break;
+      case "cardLeftDiscard": {
+        const data = gameEvent.data as { cardId: CardInstanceId; toZone: string };
+        // `return-from-discard` moves directly through the zone API and
+        // publishes cardLeftDiscard rather than cardReturnedToHand. Preserve
+        // its player-visible result in the move log just like a return from
+        // play, without inventing a hand-return outcome for other destinations.
+        if (data.toZone === "hand") {
+          this.cardsReturnedToHand.push(data.cardId);
+        }
+        break;
+      }
       default:
         assertNever(customType);
     }

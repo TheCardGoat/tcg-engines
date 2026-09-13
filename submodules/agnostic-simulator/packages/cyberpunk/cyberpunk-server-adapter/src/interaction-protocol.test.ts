@@ -141,6 +141,25 @@ describe("Cyberpunk interaction protocol adapter", () => {
         },
       ],
     });
+    expect(parsed.resolution).toMatchObject({
+      actingPlayerId: "p1",
+      pendingCount: 1,
+      currentEffect: {
+        text: {
+          params: {
+            label: "Misty Olszewski — At the end of your turn, choose a card type.",
+          },
+        },
+      },
+      currentStep: {
+        requirement: {
+          kind: "option-selection",
+          required: true,
+          min: 1,
+          max: 1,
+        },
+      },
+    });
   });
 
   it("projects reveal destination choices as option selections", () => {
@@ -345,7 +364,7 @@ describe("Cyberpunk interaction protocol adapter", () => {
 
   it("translates protocol submissions back to native command args", () => {
     const submission = InteractionSubmission.parse({
-      protocolVersion: 1,
+      protocolVersion: 2,
       stateVersion: 3,
       requestId: "cyberpunk:3:attackUnit",
       actionId: "attackUnit",
@@ -360,7 +379,7 @@ describe("Cyberpunk interaction protocol adapter", () => {
 
   it("translates resolveAttack pass submissions back to native command args", () => {
     const submission = InteractionSubmission.parse({
-      protocolVersion: 1,
+      protocolVersion: 2,
       stateVersion: 3,
       requestId: "cyberpunk:3:resolveAttack",
       actionId: "resolveAttack",
@@ -375,7 +394,7 @@ describe("Cyberpunk interaction protocol adapter", () => {
 
   it("defaults missing resolveAttack pass submissions to false", () => {
     const submission = InteractionSubmission.parse({
-      protocolVersion: 1,
+      protocolVersion: 2,
       stateVersion: 3,
       requestId: "cyberpunk:3:resolveAttack",
       actionId: "resolveAttack",
@@ -388,9 +407,30 @@ describe("Cyberpunk interaction protocol adapter", () => {
     });
   });
 
+  it("forwards selected Gig-prevention pairs to the native move", () => {
+    const submission = InteractionSubmission.parse({
+      protocolVersion: 2,
+      stateVersion: 3,
+      requestId: "cyberpunk:3:resolvePreventGigSteal",
+      actionId: "resolvePreventGigSteal",
+      values: { dieIds: ["gig_1", "gig_2"], cardIds: ["card_3", "card_6"] },
+    });
+
+    expect(cyberpunkSubmissionToPayload(submission)).toEqual({
+      moveType: "resolvePreventGigSteal",
+      payload: {
+        pass: false,
+        preventions: [
+          { dieId: "gig_1", cardId: "card_3" },
+          { dieId: "gig_2", cardId: "card_6" },
+        ],
+      },
+    });
+  });
+
   it("translates reveal destination submissions back to native command args", () => {
     const submission = InteractionSubmission.parse({
-      protocolVersion: 1,
+      protocolVersion: 2,
       stateVersion: 14,
       requestId: "cyberpunk:14:resolveRevealDestination",
       actionId: "resolveRevealDestination",
@@ -400,6 +440,130 @@ describe("Cyberpunk interaction protocol adapter", () => {
     expect(cyberpunkSubmissionToPayload(submission)).toEqual({
       moveType: "resolveRevealDestination",
       payload: { destination: "trash" },
+    });
+  });
+
+  it("projects chooseEffect as an enabled resolveChooseEffect option selection", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseEffect",
+        chooserId: "p1",
+        payload: {
+          options: [
+            { id: "power-down", label: "Give a rival Unit -5 power this turn" },
+            { id: "bottom-deck", label: "Bottom-deck a rival Unit with power 0" },
+          ],
+        },
+      },
+    };
+
+    const parsed = EngineInteractionView.parse(
+      buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 21, prompt }),
+    );
+
+    expect(parsed.actions[0]).toMatchObject({
+      id: "resolveChooseEffect",
+      intent: "choose-option",
+      enabled: true,
+    });
+    expect(parsed.actions[0]?.inputs[0]).toMatchObject({
+      kind: "option-selection",
+      id: "optionId",
+      min: 1,
+      max: 1,
+    });
+    const options = parsed.actions[0]?.inputs[0];
+    expect(options && "options" in options ? options.options.map((o) => o.id) : []).toEqual([
+      "power-down",
+      "bottom-deck",
+    ]);
+  });
+
+  it("projects optional free-play choices with a pass/decline input", () => {
+    const prompt: PlayerPrompt = {
+      status: "choice",
+      availableMoves: [],
+      choice: {
+        type: "chooseCardToPlay",
+        chooserId: "p1",
+        payload: {
+          cardIds: ["revealed_1"],
+          cards: [filteredCard("revealed_1", "def_1")],
+          free: true,
+          canDecline: true,
+        },
+      },
+    };
+
+    const parsed = EngineInteractionView.parse(
+      buildCyberpunkInteractionView({ actorId: "p1", stateVersion: 22, prompt }),
+    );
+
+    expect(parsed.actions[0]).toMatchObject({
+      id: "resolveCardToPlay",
+      intent: "play-card",
+    });
+    expect(parsed.actions[0]?.inputs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          kind: "entity-selection",
+          id: "cardId",
+          min: 0,
+          max: 1,
+        }),
+        expect.objectContaining({
+          kind: "boolean",
+          id: "pass",
+          required: false,
+        }),
+      ]),
+    );
+  });
+
+  it("translates resolveChooseEffect submissions back to native command args", () => {
+    const submission = InteractionSubmission.parse({
+      protocolVersion: 2,
+      stateVersion: 21,
+      requestId: "cyberpunk:21:resolveChooseEffect",
+      actionId: "resolveChooseEffect",
+      values: { optionId: "power-down" },
+    });
+
+    expect(cyberpunkSubmissionToPayload(submission)).toEqual({
+      moveType: "resolveChooseEffect",
+      payload: { optionId: "power-down" },
+    });
+  });
+
+  it("translates optional free-play decline submissions back to native command args", () => {
+    const submission = InteractionSubmission.parse({
+      protocolVersion: 2,
+      stateVersion: 22,
+      requestId: "cyberpunk:22:resolveCardToPlay",
+      actionId: "resolveCardToPlay",
+      values: { pass: true },
+    });
+
+    expect(cyberpunkSubmissionToPayload(submission)).toEqual({
+      moveType: "resolveCardToPlay",
+      payload: { pass: true },
+    });
+  });
+
+  it("treats an empty optional free-play selection as a decline", () => {
+    const submission = InteractionSubmission.parse({
+      protocolVersion: 2,
+      stateVersion: 22,
+      requestId: "cyberpunk:22:resolveCardToPlay",
+      actionId: "resolveCardToPlay",
+      values: {},
+    });
+
+    expect(cyberpunkSubmissionToPayload(submission)).toEqual({
+      moveType: "resolveCardToPlay",
+      payload: { pass: true },
     });
   });
 });

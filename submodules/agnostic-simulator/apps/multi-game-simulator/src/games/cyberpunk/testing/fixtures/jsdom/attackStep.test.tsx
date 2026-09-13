@@ -1,4 +1,5 @@
 import { describe, test, vi } from "vite-plus/test";
+import { fireEvent, waitFor } from "@testing-library/react";
 
 vi.mock("../../../animation", async () => {
   const actual = await vi.importActual<typeof import("../../../animation")>("../../../animation");
@@ -20,6 +21,60 @@ import {
 } from "../../render-cyberpunk-simulator";
 
 describe("attackStep fixture behavior", () => {
+  test.each(["Enter", " "])("keyboard %s activates a selectable fight target", async (key) => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "attackStep" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+
+      const attacker = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailSwordwiseHuscle.id,
+      );
+      const defender = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P2,
+        welcomeToNightCityRetailJackieWellesRideOrDieChoom.id,
+      );
+      const attackerElement = view.container.querySelector<HTMLElement>(
+        `[data-entity-id="${attacker.instanceId}"]`,
+      );
+      const defenderElement = view.container.querySelector<HTMLElement>(
+        `[data-entity-id="${defender.instanceId}"]`,
+      );
+      if (!attackerElement || !defenderElement) {
+        throw new Error("Expected attack-step field cards to render.");
+      }
+
+      fireEvent.click(attackerElement);
+      const fightAction = await waitFor(() => {
+        const action = document.querySelector<HTMLButtonElement>(
+          '[data-testid="card-context-menu"] [data-action-id^="attackUnit"]',
+        );
+        if (!action) throw new Error("Expected the attacker context menu to offer Fight.");
+        return action;
+      });
+      fireEvent.click(fightAction);
+      await waitFor(() => {
+        expectEqual("fight target role", defenderElement.getAttribute("role"), "button");
+        expectEqual("fight target focusable", defenderElement.getAttribute("tabindex"), "0");
+      });
+
+      fireEvent.keyDown(defenderElement, { key });
+
+      await waitFor(async () => {
+        const attack = await pom.getAttackState();
+        expectEqual("keyboard attack kind", attack?.kind, "fight");
+        expectEqual("keyboard attack attacker", attack?.attackerId, attacker.instanceId);
+        expectEqual("keyboard attack defender", attack?.defenderId, defender.instanceId);
+      });
+    } finally {
+      view.unmount();
+    }
+  });
+
   test("Main phase - attackers ready in jsdom", async () => {
     ensureJsdomAnimationSupport();
     const view = renderCyberpunkSimulatorScenario({ scenarioId: "attackStep" });

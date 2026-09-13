@@ -72,7 +72,7 @@ describe("13th Tactical Testing Sector (GD01-130)", () => {
     expect(p1.isExhausted(baseId)).toBe(true);
   });
 
-  it("cannot activate without a friendly Academy Unit", () => {
+  it("pays the rest cost but has no target choice without a friendly Academy Unit", () => {
     const enemy = createMockUnit({ ap: 4 });
     const engine = GundamTestEngine.create(
       { baseSection: [gd0113thTacticalTestingSector130] },
@@ -81,9 +81,9 @@ describe("13th Tactical Testing Sector (GD01-130)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const baseId = p1.getCardsInZone("baseSection")[0]!;
 
-    expectFailure(p1.activateAbility(baseId, 0), "CONDITIONS_NOT_MET");
+    expectSuccess(p1.activateAbility(baseId, 0));
 
-    expect(p1.isExhausted(baseId)).toBe(false);
+    expect(p1.isExhausted(baseId)).toBe(true);
     expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 

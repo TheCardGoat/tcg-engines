@@ -18,12 +18,24 @@ import {
   updateRootIndex,
   writeSetIndex,
 } from "./_helpers.ts";
-import { NormalizationError, normalize } from "../src/normalizer.ts";
+import { NormalizationError, normalize, normalizeSourceTitle } from "../src/normalizer.ts";
 import type { RawGundamCard } from "../src/types/scraper.ts";
 import { parseEffect } from "./parseEffect.ts";
 
 const DATA_DIR = join(new URL("..", import.meta.url).pathname, "data/scraped");
 const OVERWRITE_EXISTING = process.env["GUNDAM_GENERATOR_OVERWRITE"] === "1";
+const SELECTED_SET_IDS = new Set(
+  (process.env["GUNDAM_GENERATOR_SETS"] ?? "")
+    .split(",")
+    .map((value) => value.trim().toLowerCase())
+    .filter(Boolean),
+);
+const SELECTED_CARD_NUMBERS = new Set(
+  (process.env["GUNDAM_GENERATOR_CARD_NUMBERS"] ?? "")
+    .split(",")
+    .map((value) => value.trim().toUpperCase())
+    .filter(Boolean),
+);
 
 type CardBucket = Map<string, Card>;
 type TypeBucket = Map<Card["type"], CardBucket>;
@@ -241,24 +253,6 @@ function loadRawCards(): RawGundamCard[] {
     .flatMap((file) => JSON.parse(readFileSync(join(DATA_DIR, file), "utf8")) as RawGundamCard[]);
 }
 
-function normalizeSourceTitle(value: string | null | undefined): string | undefined {
-  const trimmed = value?.trim();
-  if (!trimmed || trimmed === "-") return undefined;
-
-  const normalized = trimmed
-    .replace(/Hathaway"s/g, "Hathaway's")
-    .replace(/^Mobile Suit Gundam Mobile Suit Gundam GQuuuuuuX$/i, "Mobile Suit Gundam GQuuuuuuX");
-
-  const lower = normalized.toLowerCase();
-  if (lower === "mobile suit gundam uc") return "Mobile Suit Gundam Unicorn";
-  if (lower === "mobile suit gundam seed destiny") return "Mobile Suit Gundam SEED Destiny";
-  if (lower === "mobile suit gundam iron-blooded orphans") {
-    return "Mobile Suit Gundam: Iron-Blooded Orphans";
-  }
-
-  return normalized;
-}
-
 function normalizeCardNumberKey(value: string | null | undefined): string | undefined {
   const trimmed = value?.trim();
   if (!trimmed) return undefined;
@@ -394,6 +388,7 @@ for (const raw of rawCards) {
 
 let written = 0;
 for (const [setId, byType] of buckets) {
+  if (SELECTED_SET_IDS.size > 0 && !SELECTED_SET_IDS.has(setId)) continue;
   for (const [type, cards] of byType) {
     const dir = join(CARDS_DIR, setId, type);
     mkdirSync(dir, { recursive: true });
@@ -402,6 +397,12 @@ for (const [setId, byType] of buckets) {
     for (const card of [...cards.values()].sort((a, b) =>
       a.cardNumber.localeCompare(b.cardNumber, "en", { numeric: true }),
     )) {
+      if (
+        SELECTED_CARD_NUMBERS.size > 0 &&
+        !SELECTED_CARD_NUMBERS.has(card.cardNumber.toUpperCase())
+      ) {
+        continue;
+      }
       const num = cardNumber(card.cardNumber);
       const filename = `${num}-${slugify(card.name)}.ts`;
       const constName = toConstName(card.name, num, setId);

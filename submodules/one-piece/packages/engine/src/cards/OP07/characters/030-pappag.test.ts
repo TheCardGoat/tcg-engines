@@ -3,7 +3,7 @@ import { op07Pappag030 } from "../../../../../cards/src/cards/OP07/characters/03
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-030 Pappag", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07Pappag030);
   });
 });

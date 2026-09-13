@@ -20,9 +20,11 @@ import { resolveRevealDestinationMove } from "./resolve-reveal-destination.ts";
 import { resolveDiscardFromHandMove } from "./resolve-discard-from-hand.ts";
 import { resolveAdjustGigMove } from "./resolve-adjust-gig.ts";
 import { resolveStealGigsMove } from "./resolve-steal-gigs.ts";
+import { resolvePreventGigStealMove } from "./resolve-prevent-gig-steal.ts";
 import { resolveTriggerMove } from "./resolve-trigger.ts";
 import { resolveEffectTargetMove } from "./resolve-effect-target.ts";
 import { resolveCardTypeChoiceMove } from "./resolve-card-type-choice.ts";
+import { resolveChooseEffectMove } from "./resolve-choose-effect.ts";
 
 /**
  * Single source of truth for every move id the engine ships. Tuple form so the
@@ -51,9 +53,11 @@ export const MOVE_IDS = [
   "resolveDiscardFromHand",
   "resolveAdjustGig",
   "resolveStealGigs",
+  "resolvePreventGigSteal",
   "resolveTrigger",
   "resolveEffectTarget",
   "resolveCardTypeChoice",
+  "resolveChooseEffect",
 ] as const;
 
 export type MoveId = (typeof MOVE_IDS)[number];
@@ -80,9 +84,11 @@ export const allMoves: Record<MoveId, MoveDefinition<any>> = {
   resolveDiscardFromHand: resolveDiscardFromHandMove,
   resolveAdjustGig: resolveAdjustGigMove,
   resolveStealGigs: resolveStealGigsMove,
+  resolvePreventGigSteal: resolvePreventGigStealMove,
   resolveTrigger: resolveTriggerMove,
   resolveEffectTarget: resolveEffectTargetMove,
   resolveCardTypeChoice: resolveCardTypeChoiceMove,
+  resolveChooseEffect: resolveChooseEffectMove,
 };
 
 export {
@@ -107,8 +113,10 @@ export {
   resolveDiscardFromHandMove,
   resolveAdjustGigMove,
   resolveStealGigsMove,
+  resolvePreventGigStealMove,
   resolveTriggerMove,
   resolveEffectTargetMove,
   resolveCardTypeChoiceMove,
+  resolveChooseEffectMove,
 };
 export { getProjectedDirectAttackGigStealCount } from "./resolve-attack.ts";

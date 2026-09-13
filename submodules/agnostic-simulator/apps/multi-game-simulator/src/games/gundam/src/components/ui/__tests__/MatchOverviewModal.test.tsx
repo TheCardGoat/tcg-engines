@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import { MatchOverviewModal } from "../MatchOverviewModal.tsx";
 import type { MatchResult, PlayerRecap } from "../MatchOverviewModal.tsx";
@@ -56,6 +56,8 @@ describe("MatchOverviewModal: footer wiring", () => {
         onBackToMatchmaking={() => {}}
         onDownloadReplay={() => {}}
         onSaveReplay={() => {}}
+        onSaveNotes={async () => ({ ok: true })}
+        canSaveNotes
         onReportBug={() => {}}
         onShareFeedback={() => {}}
       />,
@@ -67,6 +69,7 @@ describe("MatchOverviewModal: footer wiring", () => {
     expect(screen.queryByText("LORE")).toBeNull();
     expect(screen.queryByText("QUESTS")).toBeNull();
     expect(screen.queryByText("CHALLENGES")).toBeNull();
+    expect(screen.queryByRole("button", { name: /^rematch$/i })).toBeNull();
   });
 
   it("invokes onBackToMatchmaking when the back button is clicked", () => {
@@ -78,6 +81,8 @@ describe("MatchOverviewModal: footer wiring", () => {
         onBackToMatchmaking={onBack}
         onDownloadReplay={() => {}}
         onSaveReplay={() => {}}
+        onSaveNotes={async () => ({ ok: true })}
+        canSaveNotes
         onReportBug={() => {}}
         onShareFeedback={() => {}}
       />,
@@ -88,6 +93,27 @@ describe("MatchOverviewModal: footer wiring", () => {
     expect(onBack).toHaveBeenCalledTimes(1);
   });
 
+  it("renders and invokes rematch only when the container supplies an exact recipe", () => {
+    const onRematch = vi.fn();
+    render(
+      <MatchOverviewModal
+        result={stubResult()}
+        onClose={() => {}}
+        onBackToMatchmaking={() => {}}
+        onRematch={onRematch}
+        onDownloadReplay={() => {}}
+        onSaveReplay={() => {}}
+        onSaveNotes={async () => ({ ok: true })}
+        canSaveNotes
+        onReportBug={() => {}}
+        onShareFeedback={() => {}}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /^rematch$/i }));
+    expect(onRematch).toHaveBeenCalledTimes(1);
+  });
+
   it("does not render when result is null", () => {
     const { container } = render(
       <MatchOverviewModal
@@ -96,11 +122,66 @@ describe("MatchOverviewModal: footer wiring", () => {
         onBackToMatchmaking={() => {}}
         onDownloadReplay={() => {}}
         onSaveReplay={() => {}}
+        onSaveNotes={async () => ({ ok: true })}
+        canSaveNotes
         onReportBug={() => {}}
         onShareFeedback={() => {}}
       />,
     );
     // Dialog is closed — no modal content should be visible.
     expect(container.querySelector('[role="dialog"]')).toBeNull();
+  });
+
+  it("saves private notes from the Notes tab", async () => {
+    const onSaveNotes = vi.fn().mockResolvedValue({ ok: true });
+    render(
+      <MatchOverviewModal
+        result={stubResult()}
+        onClose={() => {}}
+        onBackToMatchmaking={() => {}}
+        onDownloadReplay={() => {}}
+        onSaveReplay={() => {}}
+        onSaveNotes={onSaveNotes}
+        canSaveNotes
+        onReportBug={() => {}}
+        onShareFeedback={() => {}}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /notes/i }));
+    expect(screen.getByText("NOTES READY TO EDIT")).toBeTruthy();
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "Test match note" } });
+    fireEvent.click(screen.getByRole("button", { name: /save notes/i }));
+
+    await waitFor(() => expect(onSaveNotes).toHaveBeenCalledWith("Test match note"));
+    expect(screen.getByText("NOTES SAVED")).toBeTruthy();
+
+    fireEvent.click(screen.getByRole("button", { name: /timeline/i }));
+    fireEvent.click(screen.getByRole("button", { name: /notes/i }));
+
+    expect((screen.getByRole("textbox") as HTMLTextAreaElement).value).toBe("Test match note");
+    expect(screen.getByText("NOTES SAVED")).toBeTruthy();
+  });
+
+  it("uses localized save errors", async () => {
+    render(
+      <MatchOverviewModal
+        result={stubResult()}
+        onClose={() => {}}
+        onBackToMatchmaking={() => {}}
+        onDownloadReplay={() => {}}
+        onSaveReplay={() => {}}
+        onSaveNotes={async () => ({ ok: false, error: "unauthenticated" })}
+        canSaveNotes
+        onReportBug={() => {}}
+        onShareFeedback={() => {}}
+      />,
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /notes/i }));
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "Test match note" } });
+    fireEvent.click(screen.getByRole("button", { name: /save notes/i }));
+
+    expect(await screen.findByText("SIGN IN TO SAVE MATCH NOTES")).toBeTruthy();
   });
 });

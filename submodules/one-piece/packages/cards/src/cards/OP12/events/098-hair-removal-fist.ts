@@ -64,7 +64,6 @@ export const op12HairRemovalFist098: EventCard = {
                 {
                   filter: "trait",
                   value: "Revolutionary Army",
-                  match: "includes",
                 },
                 {
                   filter: "cost",

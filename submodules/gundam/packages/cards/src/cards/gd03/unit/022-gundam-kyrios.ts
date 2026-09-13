@@ -27,8 +27,7 @@ export const gd03GundamKyrios022: UnitCard = {
       },
       rarity: "rare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-022.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-022.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-022.webp",
       productName: "Steel Requiem[GD03]",
     },
     {
@@ -44,15 +43,13 @@ export const gd03GundamKyrios022: UnitCard = {
       },
       rarity: "rare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-022_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-022_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-022_p1.webp",
       productName: "Steel Requiem[GD03]",
     },
   ],
   reprints: ["GD03-022", "GD03-022_p1"],
   selectedPrintingId: "GD03-022",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-022.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-022.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-022.webp",
   legality: "legal",
   level: 5,
   cost: 3,
@@ -66,7 +63,11 @@ export const gd03GundamKyrios022: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["onDestroyByBattle"],
-        conditions: [{ type: "duringLink" }, { type: "isTurn", whose: "friendly" }],
+        conditions: [
+          { type: "duringLink" },
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
+        ],
       },
       directives: [
         {

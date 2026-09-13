@@ -27,8 +27,7 @@ export const gd02DesilGalette096: PilotCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-096.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-096.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-096.webp",
       productName: "Dual Impact [GD02]",
     },
     {
@@ -44,8 +43,7 @@ export const gd02DesilGalette096: PilotCard = {
       },
       rarity: "common",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-096_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-096_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-096_p1.webp",
       productName: "Store Tournament Participant Pack 04",
     },
     {
@@ -61,15 +59,13 @@ export const gd02DesilGalette096: PilotCard = {
       },
       rarity: "common",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-096_p2.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-096_p2.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-096_p2.webp",
       productName: "Store Tournament Winner Pack 04",
     },
   ],
   reprints: ["GD02-096", "GD02-096_p1", "GD02-096_p2"],
   selectedPrintingId: "GD02-096",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-096.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-096.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-096.webp",
   legality: "legal",
   level: 4,
   cost: 1,
@@ -101,7 +97,6 @@ export const gd02DesilGalette096: PilotCard = {
         {
           action: {
             action: "deployFromTrash",
-            levelAtMost: 2,
             payCost: true,
             target: {
               owner: "friendly",

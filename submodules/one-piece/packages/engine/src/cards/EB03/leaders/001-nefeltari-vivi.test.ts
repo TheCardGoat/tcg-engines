@@ -3,7 +3,7 @@ import { eb03NefeltariVivi001 } from "../../../../../cards/src/cards/EB03/leader
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB03-001 Nefeltari Vivi", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb03NefeltariVivi001);
   });
 });

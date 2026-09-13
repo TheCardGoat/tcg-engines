@@ -16,6 +16,7 @@
  * backed by a stable production catalog.
  */
 
+import { defaultGundamSetupCards } from "@tcg/gundam-token-data";
 import {
   createStaticResources,
   deserializeState,
@@ -71,6 +72,12 @@ export interface MatchSnapshot {
   /** Serialized engine state (G + ctx). `deserializeState` rebuilds
    * the live MatchState. */
   readonly state: SerializedMatchState;
+  /** Authored fixture commands may run before SSR snapshotting. Preserve
+   * their public history so the hydrated battle log starts with the action
+   * that produced the visible state instead of appearing empty. */
+  readonly moveHistory: ReturnType<MatchRuntime["getMoveHistory"]>;
+  readonly moveLogHistory: ReturnType<MatchRuntime["getMoveLogHistory"]>;
+  readonly gameLogHistory: ReturnType<MatchRuntime["getGameLogHistory"]>;
   readonly p1Id: ViewerId;
   readonly p2Id: ViewerId;
   /** Whether the original `DevRuntime` carried a strategy bot. The
@@ -93,6 +100,12 @@ export interface SnapshotBotConfig {
    * the snapshot layer to the simulator's strategy enum — the
    * bot-registry resolves it back to a concrete strategy. */
   readonly strategy: string;
+  /**
+   * Override a fixture's authored automation with the interactive strategy
+   * bot. Named browser labs use this so every visual fixture starts with the
+   * promoted default AI and exposes the shared bot controls.
+   */
+  readonly driver?: "strategy";
   /** Optional second-seat strategy for bot-vs-bot spectator matches. */
   readonly opponentStrategy?: string;
   /** Optional client-side pacing preset for automated fixtures. */
@@ -118,9 +131,12 @@ export function snapshotFromDevRuntime(
       readonly [string, Card]
     >,
     state: serializeState(dev.runtime.getState()),
+    moveHistory: dev.runtime.getMoveHistory(),
+    moveLogHistory: dev.runtime.getMoveLogHistory(),
+    gameLogHistory: dev.runtime.getGameLogHistory(),
     p1Id: dev.p1Id,
     p2Id: dev.p2Id,
-    hasBot: Boolean(dev.bot),
+    hasBot: Boolean(dev.bot) || options.botConfig?.driver === "strategy",
     ...(options.botConfig ? { botConfig: options.botConfig } : {}),
   };
 }
@@ -137,7 +153,11 @@ export interface ReconstructedMatch {
 
 export function reconstructFromSnapshot(snapshot: MatchSnapshot): ReconstructedMatch {
   const catalog = new Map(snapshot.catalog);
-  const staticResources = createStaticResources([...snapshot.players], catalog);
+  const staticResources = createStaticResources(
+    [...snapshot.players],
+    catalog,
+    defaultGundamSetupCards(snapshot.players.map((player) => player.id)),
+  );
 
   // `createStaticResources` seeded the registry with deck +
   // resourceDeck instances from `players`, and populated
@@ -174,7 +194,13 @@ export function reconstructFromSnapshot(snapshot: MatchSnapshot): ReconstructedM
   // surface. Cross the gap with a `Parameters` lookup so TS doesn't
   // need the concrete G type.
   type LoadStateArg = Parameters<typeof runtime.loadState>[0];
-  runtime.loadState(deserializeState(snapshot.state) as LoadStateArg);
+  runtime.loadState(deserializeState(snapshot.state) as LoadStateArg, {
+    moveHistory: snapshot.moveHistory,
+    moveLogHistory: snapshot.moveLogHistory,
+    gameLogHistory: snapshot.gameLogHistory,
+    logCounter:
+      snapshot.gameLogHistory.reduce((maximum, { entry }) => Math.max(maximum, entry.id), 0) + 1,
+  });
   return {
     runtime,
     staticResources,

@@ -28,8 +28,7 @@ export const gd01Lagowe050: UnitCard = {
       },
       rarity: "rare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-050.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-050.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-050.webp",
       productName: "Newtype Rising [GD01]",
     },
     {
@@ -45,15 +44,13 @@ export const gd01Lagowe050: UnitCard = {
       },
       rarity: "rare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-050_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-050_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-050_p1.webp",
       productName: "Newtype Rising [GD01]",
     },
   ],
   reprints: ["GD01-050", "GD01-050_p1"],
   selectedPrintingId: "GD01-050",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-050.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-050.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-050.webp",
   legality: "legal",
   level: 3,
   cost: 2,
@@ -67,36 +64,27 @@ export const gd01Lagowe050: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["attack"],
+        conditions: [
+          {
+            type: "and",
+            conditions: [
+              { type: "selfStat", stat: "ap", comparison: "gte", value: 5 },
+              { type: "isAttackingUnit" },
+            ],
+          },
+        ],
       },
       directives: [
         {
-          condition: {
-            type: "and",
-            conditions: [
-              {
-                type: "selfStat",
-                stat: "ap",
-                comparison: "gte",
-                value: 5,
-              },
-              {
-                type: "isAttackingUnit",
-              },
-            ],
-          },
-          thenDirectives: [
-            {
-              action: {
-                action: "dealDamage",
-                amount: 2,
-                target: {
-                  owner: "opponent",
-                  cardType: "unit",
-                  count: 1,
-                },
-              },
+          action: {
+            action: "dealDamage",
+            amount: 2,
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              count: 1,
             },
-          ],
+          },
         },
       ],
       sourceText:

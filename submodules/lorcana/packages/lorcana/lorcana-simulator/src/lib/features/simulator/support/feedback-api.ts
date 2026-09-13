@@ -11,6 +11,9 @@ export interface BugReportContext {
   turn?: number;
   stateVersion?: number;
   platform?: "mobile" | "desktop";
+  lastCommandErrorCode?: string;
+  lastCommandErrorReason?: string;
+  lastCommandErrorAt?: number;
 }
 
 /** Minimal projected-board fields used to build bug-report context (matches engine board view). */

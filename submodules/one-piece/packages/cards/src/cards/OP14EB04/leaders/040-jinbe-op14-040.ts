@@ -63,9 +63,17 @@ export const op14eb04JinbeOp14040040: LeaderCard = {
               filters: [
                 {
                   filter: "anyOf",
-                  groups: [
-                    [{ filter: "trait", value: "Fish-Man", match: "includes" }],
-                    [{ filter: "trait", value: "Merfolk", match: "includes" }],
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Fish-Man",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Merfolk",
+                      match: "includes",
+                    },
                   ],
                 },
               ],

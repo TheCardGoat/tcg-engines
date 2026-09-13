@@ -21,7 +21,8 @@ describe("UserConfigButton", () => {
 
     fireEvent.click(screen.getByLabelText("Open simulator settings"));
 
-    expect(screen.getByRole("dialog", { name: "Simulator settings" })).toBeTruthy();
+    expect(screen.getByRole("dialog", { name: "Settings" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("tab", { name: "Game" }));
     expect(screen.getByLabelText("Compact")).toBeTruthy();
     expect(screen.getByLabelText("Standard")).toBeTruthy();
     expect(screen.getByLabelText("Large")).toBeTruthy();

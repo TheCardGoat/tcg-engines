@@ -16,12 +16,14 @@ describe("OP13-003 Gol.D.Roger", () => {
 
     const view = engine.getView("south");
     expect(view.players.south).toMatchObject({ activeDon: 2, donDeckCount: 0 });
-    expect(view.players.south.leader).toMatchObject({ attachedDon: 1, power: 10000 });
+    // 7000 base − 2000 (≤9 DON!! field) + 1000 attached DON!! = 6000
+    expect(view.players.south.leader).toMatchObject({ attachedDon: 1, power: 6000 });
 
     const capped = OnePieceTestEngine.create({
       leaderCardId: op13GolDRoger003,
       activeDon: 10,
     });
+    // 10 DON!! on field: penalty does not apply.
     expect(capped.getView("south").players.south.leader.power).toBe(7000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });

@@ -1,0 +1,21 @@
+{
+  "name": "@tcg/play-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Game-agnostic terminal play CLI for headless match loops and agent validation.",
+  "type": "module",
+  "scripts": {
+    "play-cli": "bun ./src/cli.ts",
+    "test": "vp test run",
+    "check-types": "vp check --no-fmt src"
+  },
+  "dependencies": {
+    "@tcg/op-engine": "link:../../../one-piece/packages/engine"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

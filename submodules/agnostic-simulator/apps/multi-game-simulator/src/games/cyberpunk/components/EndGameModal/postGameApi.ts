@@ -53,7 +53,6 @@ export interface CyberpunkPlayerAnalytics {
   username: string | null;
   seat: 1 | 2;
   onThePlay: boolean;
-  deckName?: string;
   deckListId?: string;
   deckColors: string[];
   deckCardIds: string[];
@@ -216,6 +215,7 @@ export async function submitCyberpunkBugReport(params: {
     gameId: string;
     gameSlug: "cyberpunk";
     matchId?: string;
+    playerCount?: number;
     stateVersion?: number;
     winnerId?: string;
     endReason?: string;

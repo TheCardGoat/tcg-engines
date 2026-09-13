@@ -11,6 +11,9 @@
  * Seed values verified against real game data (RFC §4 / Open Question 8):
  *  - `ravensburger`, `cultureInvariantId`, `lorcast`, `tcgPlayer`: real Lorcana keys.
  *  - `bandai`: forward-looking key for Bandai-published games (Gundam/One Piece/SWU).
+ *  - `fabCube`: The FAB Cube community dataset for Flesh and Blood.
+ *  - `goagain`: Go Again card database for Flesh and Blood.
+ *  - `gatcgIndex`: Grand Archive's official Index card database.
  *
  * Note: Lorcana's native `cultureInvariantId` and `tcgPlayer` are `number` today;
  * the unified model coerces all values to `string` (RFC §10 Lorcana step 2).
@@ -22,7 +25,10 @@ export type ExternalSource =
   | "tcgPlayer"
   | "tcgcsv"
   | "cardNexus"
-  | "bandai";
+  | "bandai"
+  | "fabCube"
+  | "goagain"
+  | "gatcgIndex";
 
 export const EXTERNAL_SOURCES = [
   "ravensburger",
@@ -32,6 +38,9 @@ export const EXTERNAL_SOURCES = [
   "tcgcsv",
   "cardNexus",
   "bandai",
+  "fabCube",
+  "goagain",
+  "gatcgIndex",
 ] as const satisfies readonly ExternalSource[];
 
 export function isExternalSource(value: unknown): value is ExternalSource {

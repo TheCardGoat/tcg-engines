@@ -49,6 +49,7 @@ export const op04WeaknessIsAnUnforgivableSin076: EventCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

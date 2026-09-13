@@ -3,6 +3,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { Action, CardEffects, CharacterCard } from "@tcg/op-types";
 import { buildCardEffects } from "../src/effect-parser/index.ts";
+import { joinPrintedAbilityText } from "../src/printed-text.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const CARDS_DIR = join(__dirname, "../../../packages/cards/src/cards");
@@ -136,17 +137,10 @@ function replaceEffects(file: string, effects: CardEffects | undefined): void {
 const options = parseArgs(process.argv.slice(2));
 const file = findCardFile(options.cardId);
 const card = await loadCard(file, options.cardId);
-const storedEffectText = card.effect ?? card.i18n.en.effect;
-const trimmedEffectText = storedEffectText?.trim();
-const effectText =
-  trimmedEffectText && !/^(?:NULL|-)$/i.test(trimmedEffectText) ? trimmedEffectText : undefined;
-const triggerText =
-  card.trigger && !/(?:^|\n)\s*\[Trigger\]/i.test(effectText ?? "")
-    ? `[Trigger] ${card.trigger}`
-    : undefined;
-const printedText = [effectText, triggerText]
-  .filter((text): text is string => Boolean(text))
-  .join("\n");
+const printedText = joinPrintedAbilityText({
+  effect: card.effect ?? card.i18n.en.effect,
+  trigger: card.trigger,
+});
 
 if (
   options.cardId === "OP14-009" &&

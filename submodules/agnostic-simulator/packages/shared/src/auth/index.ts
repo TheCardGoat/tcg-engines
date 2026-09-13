@@ -4,6 +4,7 @@
 export type {
   AuthSession,
   AuthUser,
+  CanonicalAuthContext,
   LorcanitoUserSettings,
   SessionResult,
   SubscriptionTier,

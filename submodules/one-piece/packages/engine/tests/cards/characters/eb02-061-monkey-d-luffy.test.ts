@@ -99,4 +99,38 @@ describe("EB02-061 Monkey.D.Luffy", () => {
     });
     expect(failure.reason).toBe("The selected attacker cannot attack.");
   });
+
+  test("may decline the when-attacking DON!! return without restanding or taking Life", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: eb02MonkeyDLuffy010,
+        hand: [eb02MonkeyDLuffy061],
+        life: [eb01Doma005, eb01Fourtricks025],
+        deck: [eb01Doma005, eb01Doma005],
+        activeDon: 9,
+      },
+      { activeDon: 5, deck: [eb01Doma005, eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const topLifeId = engine.findCardInZone("south", "life", eb01Doma005);
+    engine.attachDon(engine.leader("south"), 1, "south");
+    engine.playCard(eb02MonkeyDLuffy061, "south");
+    const luffyId = engine.findCardInZone("south", "character", eb02MonkeyDLuffy061);
+    const beforeAttack = engine.getView("south").players.south;
+    const donPoolBefore = beforeAttack.activeDon + beforeAttack.restedDon;
+    const donDeckBefore = beforeAttack.donDeckCount;
+    const lifeBefore = beforeAttack.lifeCount;
+
+    engine.declareAttack(luffyId, engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.find((card) => card?.instanceId === luffyId)?.rested).toBe(
+      true,
+    );
+    expect(view.players.south.lifeCount).toBe(lifeBefore);
+    expect(view.players.south.hand.map((card) => card.instanceId)).not.toContain(topLifeId);
+    expect(view.players.south.activeDon + view.players.south.restedDon).toBe(donPoolBefore);
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+  });
 });

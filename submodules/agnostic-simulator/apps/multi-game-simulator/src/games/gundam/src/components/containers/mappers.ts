@@ -1,3 +1,4 @@
+import { pilotSatisfiesUnitLinkCondition } from "@tcg/gundam-engine";
 import type { Card } from "@tcg/gundam-types";
 
 import type { BoardProjection } from "../../game/index.ts";
@@ -28,6 +29,34 @@ const KEYWORD_EFFECTS: ReadonlySet<KeywordEffectEntry["keyword"]> = new Set([
 export function asCardColor(color: string | undefined | null): CardColor | undefined {
   if (!color) return undefined;
   return CARD_COLORS.has(color as CardColor) ? (color as CardColor) : undefined;
+}
+
+/**
+ * The engine projection deliberately uses stable player IDs for ownership and
+ * zone keys. Match-page participants carry the separate, player-facing name.
+ */
+export function resolvePlayerDisplayName(
+  playerId: string,
+  participants: readonly { readonly id: string; readonly displayName: string }[] | undefined,
+  fallback = playerId,
+): string {
+  const displayName = participants?.find((participant) => participant.id === playerId)?.displayName;
+  return displayName?.trim() || fallback;
+}
+
+/** Replace engine-owned player IDs in public copy with the names shown by the UI. */
+export function replacePlayerIdsWithDisplayNames(
+  text: string | undefined,
+  players: readonly { readonly id: string; readonly displayName: string }[],
+): string | undefined {
+  if (!text) return text;
+  return [...players]
+    .sort((left, right) => right.id.length - left.id.length)
+    .reduce(
+      (result, player) =>
+        player.id.length > 0 ? result.split(player.id).join(player.displayName) : result,
+      text,
+    );
 }
 
 type FilteredCardView = BoardProjection["zones"]["zones"][string]["cards"][number];
@@ -103,6 +132,11 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
 
   const grantedKeywords = (meta as { grantedKeywords?: string[] } | null)?.grantedKeywords;
   const effectiveKeywordEffects = effectiveKeywordEffectsFromMeta(meta);
+  const keywords =
+    effectiveKeywordEffects ?? ((def.keywordEffects ?? []) as readonly KeywordEffectEntry[]);
+  const hasActivatedAbility =
+    def.effects?.some((effect) => effect.type === "activated") === true ||
+    keywords.some((keyword) => keyword.keyword === "Support");
 
   const activeEffects = extractActiveEffects(view, g, card.instanceId);
   const deployedThisTurn =
@@ -116,7 +150,11 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
 
   const restrictions = collectRestrictions(g, card.instanceId);
   const linkCondition = (def as { linkCondition?: string }).linkCondition;
-  const isLinkUnit = isUnit && Boolean(linkCondition);
+  const pairedPilotId = g.pilotAssignments?.[card.instanceId];
+  const pairedPilotDefinition = pairedPilotId
+    ? (findCardByInstanceId(view, pairedPilotId)?.definition as Card | undefined)
+    : undefined;
+  const isLinkUnit = isUnit && pilotSatisfiesUnitLinkCondition(pairedPilotDefinition, def);
   // `cantAttack` fires for both effect-driven restrictions AND the
   // deploy-sickness rule (3-2-4: a non-Link unit cannot attack the turn
   // it is deployed). Keeping the two causes merged here means the
@@ -145,8 +183,9 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
     baseHp: defHp,
     damage,
     effect: def.effect,
-    keywords:
-      effectiveKeywordEffects ?? ((def.keywordEffects ?? []) as readonly KeywordEffectEntry[]),
+    effectBlocks: def.effects?.map((effect) => effect.sourceText),
+    hasActivatedAbility,
+    keywords,
     grantedKeywords,
     traits: def.traits ?? [],
     battlefieldZones: def.type === "unit" || def.type === "base" ? def.battlefieldZones : undefined,
@@ -163,6 +202,45 @@ export function toGameCardData(view: BoardProjection, card: FilteredCardView): G
     cantBlock,
     isLinkUnit,
     zoneId: card.zoneId,
+  };
+}
+
+/**
+ * Project an actor-authorized hidden-zone candidate without consulting the
+ * ordinary board projection. Deck cards intentionally remain face-down there;
+ * the interaction input is what authorizes this one revealed identity.
+ */
+export function cardDefinitionToGameCardData(def: Card, instanceId: string): GameCardData {
+  const isUnit = def.type === "unit";
+  const isBase = def.type === "base";
+  const hp = isUnit || isBase ? ((def as { hp?: number }).hp ?? null) : null;
+
+  return {
+    id: instanceId,
+    name: def.name,
+    subtitle: subtitleForCard(def),
+    color: asCardColor((def as { color?: string }).color),
+    cost: def.cost,
+    level: def.level,
+    cardType: def.type as CardType,
+    ap: isUnit ? ((def as { ap?: number }).ap ?? null) : null,
+    hp,
+    baseAp: isUnit ? ((def as { ap?: number }).ap ?? null) : null,
+    baseHp: hp,
+    effect: def.effect,
+    effectBlocks: def.effects?.map((effect) => effect.sourceText),
+    hasActivatedAbility:
+      def.effects?.some((effect) => effect.type === "activated") === true ||
+      def.keywordEffects?.some((keyword) => keyword.keyword === "Support") === true,
+    keywords: (def.keywordEffects ?? []) as readonly KeywordEffectEntry[],
+    traits: def.traits ?? [],
+    battlefieldZones: def.type === "unit" || def.type === "base" ? def.battlefieldZones : undefined,
+    set: setOf(def),
+    cardNumber: def.cardNumber,
+    rarity: def.rarity,
+    img: cardImageUrlOf(def),
+    linkRequirement: (def as { linkCondition?: string }).linkCondition,
+    highlight: true,
   };
 }
 
@@ -229,6 +307,22 @@ function computeEffectiveStatsForCard({
   readonly baseAp: number | null;
   readonly baseHp: number | null;
 }): { readonly effectiveAp: number | null; readonly effectiveHp: number | null } {
+  // Prefer engine-projected derived stats when present. Constant effects such
+  // as 【During Link】 AP+N are computed only in getEffectiveStats and projected
+  // onto FilteredCardView.meta by MatchRuntime.getFilteredView — re-deriving
+  // from pilot bonuses + continuousEffects alone misses those modifiers.
+  const projected = meta as { effectiveAp?: unknown; effectiveHp?: unknown } | null;
+  if (
+    definition.type === "unit" &&
+    typeof projected?.effectiveAp === "number" &&
+    typeof projected?.effectiveHp === "number"
+  ) {
+    return {
+      effectiveAp: Math.max(0, projected.effectiveAp),
+      effectiveHp: Math.max(1, projected.effectiveHp),
+    };
+  }
+
   let effectiveAp = baseAp;
   let effectiveHp = baseHp;
 

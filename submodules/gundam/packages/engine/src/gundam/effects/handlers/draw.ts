@@ -81,8 +81,8 @@ export function handleChosenDiscardAction(
  *
  * Clamps `count` to the deck size so a short/empty deck no-ops gracefully
  * (see Freeden GD02-127 【Destroyed】 — mill 2 even if the deck only has 1).
- * Discard / draw-style actions don't emit events in this codebase; mill
- * mirrors that and stays silent.
+ * The executor records the resulting public deck-to-Trash moves so the
+ * simulator can animate each card transfer.
  */
 export function handleMillDeckAction(
   count: number,

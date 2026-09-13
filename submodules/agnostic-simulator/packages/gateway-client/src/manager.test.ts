@@ -639,6 +639,125 @@ describe("gateway-client manager", () => {
   });
 
   describe("credential refresh loop", () => {
+    it("keeps a valid socket connected while failed scheduled renewals retry", async () => {
+      vi.useFakeTimers();
+      const mgr = createGatewayConnectionManager({ gatewayOrigin: "http://localhost:3003" });
+      try {
+        const refresh = vi.fn(async () => {
+          throw new Error("temporarily unavailable");
+        });
+        const handle = mgr.acquire("gundam", {
+          credentials: {
+            get: () => ({ token: "scope", expiresAt: Date.now() + 60 * 60_000 }),
+            refresh,
+          },
+        });
+        authOpts().auth(() => {});
+        fakes[0].__emit("connect");
+        fakes[0].__emit("welcome", { authenticated: true });
+        await vi.advanceTimersByTimeAsync(45 * 60_000 + 15_000);
+        expect(refresh).toHaveBeenCalledTimes(3);
+        expect(handle.getState()).toMatchObject({
+          status: "connected",
+          authenticated: true,
+          authStatus: "ok",
+          authFailureReason: null,
+          error: null,
+        });
+        expect(fakes[0].disconnect).not.toHaveBeenCalled();
+        mgr.destroy();
+        await vi.advanceTimersByTimeAsync(60 * 60_000);
+        expect(refresh).toHaveBeenCalledTimes(3);
+      } finally {
+        mgr.destroy();
+        vi.useRealTimers();
+      }
+    });
+
+    it("renews one-hour access with 15 minutes left, rejoins and requests a full snapshot", async () => {
+      vi.useFakeTimers();
+      const mgr = createGatewayConnectionManager({ gatewayOrigin: "http://localhost:3003" });
+      try {
+        let current: GatewayCredentials = {
+          ticket: "initial",
+          token: "scope-1",
+          requireAuth: true,
+          expiresAt: Date.now() + 60 * 60_000,
+        };
+        const refresh = vi.fn(async () => {
+          current = {
+            ...current,
+            ticket: "renewed",
+            token: "scope-2",
+            expiresAt: Date.now() + 60 * 60_000,
+          };
+          return current;
+        });
+        const handle = mgr.acquire("gundam", { credentials: { get: () => current, refresh } });
+        authOpts().auth(() => {});
+        const socket = fakes[0];
+        socket.disconnect.mockImplementation(() =>
+          socket.__emit("disconnect", "io client disconnect"),
+        );
+        socket.__emit("connect");
+        socket.__emit("welcome", { authenticated: true });
+        handle.join({ gameId: "game-1", stateVersion: 7 });
+        await vi.advanceTimersByTimeAsync(45 * 60_000 - 1);
+        expect(refresh).not.toHaveBeenCalled();
+        await vi.advanceTimersByTimeAsync(1);
+        expect(refresh).toHaveBeenCalledTimes(1);
+        expect(socket.disconnect).toHaveBeenCalledTimes(1);
+        const auth = vi.fn();
+        authOpts().auth(auth);
+        expect(auth).toHaveBeenCalledWith({
+          ticket: "renewed",
+          token: "scope-2",
+          requireAuth: true,
+        });
+        socket.emit.mockClear();
+        socket.id = "renewed-connection";
+        socket.__emit("connect");
+        socket.__emit("welcome", { authenticated: true });
+        expect(socket.emit).toHaveBeenCalledWith(
+          "join_game",
+          expect.objectContaining({ gameId: "game-1" }),
+        );
+        expect(socket.emit).toHaveBeenCalledWith("request_game_state_sync", { gameId: "game-1" });
+        await vi.advanceTimersByTimeAsync(16 * 60_000);
+        handle.emit("ping", { t: Date.now() });
+        expect(socket.emit).toHaveBeenCalledWith("ping", { t: Date.now() });
+        expect(handle.getState().authenticated).toBe(true);
+        expect(ioMock).toHaveBeenCalledTimes(1);
+      } finally {
+        mgr.destroy();
+        vi.useRealTimers();
+      }
+    });
+
+    it("refreshes expired scope errors once and ignores refresh completion after release", async () => {
+      let finish: (value: GatewayCredentials) => void = () => {};
+      const refresh = vi.fn(
+        () =>
+          new Promise<GatewayCredentials>((resolve) => {
+            finish = resolve;
+          }),
+      );
+      const mgr = createGatewayConnectionManager({ gatewayOrigin: "http://localhost:3003" });
+      const handle = mgr.acquire("gundam", {
+        credentials: { get: () => ({ token: "old" }), refresh },
+      });
+      const socket = fakes[0];
+      socket.__emit("connect");
+      socket.__emit("gateway_error", { code: "viewer_scope_expired" });
+      socket.__emit("gateway_error", { code: "viewer_scope_expired" });
+      expect(refresh).toHaveBeenCalledTimes(1);
+      handle.release();
+      finish({ token: "new" });
+      await Promise.resolve();
+      await Promise.resolve();
+      expect(socket.connect).toHaveBeenCalledTimes(1);
+    });
+
     const flushPromises = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0));
 
     /**
@@ -683,6 +802,80 @@ describe("gateway-client manager", () => {
       const received: unknown[] = [];
       authOpts().auth((d) => received.push(d));
       expect(received[0]).toEqual({ ticket: "fresh", token: "jwt", requireAuth: true });
+
+      h.release();
+    });
+
+    it("refreshes once when the gateway rejects an expired token during the handshake", async () => {
+      const { controller, refresh } = refreshableController({
+        initial: { token: "expired", requireAuth: true },
+        refreshed: { ticket: "fresh", token: "fresh-scope", requireAuth: true },
+      });
+      const mgr = createGatewayConnectionManager({
+        gatewayOrigin: "wss://gateway.tcg.online",
+      });
+      const h = mgr.acquire("lorcana", { credentials: controller });
+
+      fakes[0].__emit("connect_error", new Error("unauthenticated"));
+      await flushPromises();
+
+      expect(refresh).toHaveBeenCalledTimes(1);
+      expect(fakes[0].connect).toHaveBeenCalledTimes(2);
+      expect(ioMock).toHaveBeenCalledTimes(1);
+
+      const received: unknown[] = [];
+      authOpts().auth((d) => received.push(d));
+      expect(received[0]).toEqual({
+        ticket: "fresh",
+        token: "fresh-scope",
+        requireAuth: true,
+      });
+
+      h.release();
+    });
+
+    it("does not spend the auth refresh attempt on a non-authentication connection failure", async () => {
+      const { controller, refresh } = refreshableController({
+        initial: { token: "current", requireAuth: true },
+        refreshed: { ticket: "fresh", token: "fresh-scope", requireAuth: true },
+      });
+      const mgr = createGatewayConnectionManager({
+        gatewayOrigin: "wss://gateway.tcg.online",
+      });
+      const h = mgr.acquire("lorcana", { credentials: controller });
+
+      fakes[0].__emit("connect_error", new Error("transport error"));
+      await flushPromises();
+
+      expect(refresh).not.toHaveBeenCalled();
+
+      fakes[0].__emit("connect_error", new Error("unauthenticated"));
+      await flushPromises();
+      expect(refresh).toHaveBeenCalledTimes(1);
+
+      h.release();
+    });
+
+    it("does not loop after refreshed credentials are rejected during the handshake", async () => {
+      const { controller, refresh } = refreshableController({
+        initial: { token: "expired", requireAuth: true },
+        refreshed: { ticket: "fresh", token: "still-invalid", requireAuth: true },
+      });
+      const mgr = createGatewayConnectionManager({
+        gatewayOrigin: "wss://gateway.tcg.online",
+      });
+      const h = mgr.acquire("lorcana", { credentials: controller });
+
+      fakes[0].__emit("connect_error", new Error("unauthenticated"));
+      await flushPromises();
+      fakes[0].__emit("connect_error", new Error("unauthenticated"));
+
+      expect(refresh).toHaveBeenCalledTimes(1);
+      expect(mgr.getState("lorcana")).toMatchObject({
+        status: "disconnected",
+        authStatus: "failed",
+        authFailureReason: "refresh_exhausted",
+      });
 
       h.release();
     });
@@ -1114,7 +1307,12 @@ describe("gateway-client manager", () => {
       const h = mgr.acquire("lorcana");
       fakes[0].emit.mockClear();
 
-      h.join({ gameId: "game_1", role: "player", gameProfileId: "profile_7" });
+      h.join({
+        gameId: "game_1",
+        stateVersion: 7,
+        role: "player",
+        gameProfileId: "profile_7",
+      });
 
       // Not authenticated yet — no emit at registration.
       expect(fakes[0].emit).not.toHaveBeenCalled();
@@ -1126,6 +1324,7 @@ describe("gateway-client manager", () => {
         "join_game",
         expect.objectContaining({
           gameId: "game_1",
+          stateVersion: 7,
           role: "player",
           gameProfileId: "profile_7",
           correlationId: expect.any(String),
@@ -1185,7 +1384,7 @@ describe("gateway-client manager", () => {
       h.release();
     });
 
-    it("in-flight guard skips emit within the 2s window", () => {
+    it("rejoins immediately when a credential handshake reconnects within 2 seconds", () => {
       const mgr = createGatewayConnectionManager({
         gatewayOrigin: "wss://gateway.tcg.online",
       });
@@ -1197,13 +1396,17 @@ describe("gateway-client manager", () => {
       expect(fakes[0].emit.mock.calls.filter((c) => c[0] === "join_game")).toHaveLength(1);
 
       // Immediate disconnect+reconnect (no time advance) on a new socket id —
-      // socket-id dedup would allow the emit, but the in-flight guard skips.
+      // the old in-flight join must not suppress joining the new connection.
       fakes[0].__emit("disconnect", "transport close");
       fakes[0].id = "conn_2";
       fakes[0].__emit("connect");
       fakes[0].__emit("welcome", { authenticated: true, connectionId: "c2" });
 
-      expect(fakes[0].emit.mock.calls.filter((c) => c[0] === "join_game")).toHaveLength(1);
+      expect(fakes[0].emit.mock.calls.filter((c) => c[0] === "join_game")).toHaveLength(2);
+
+      // Repeated welcomes on the new connection still deduplicate.
+      fakes[0].__emit("welcome", { authenticated: true, connectionId: "c2" });
+      expect(fakes[0].emit.mock.calls.filter((c) => c[0] === "join_game")).toHaveLength(2);
 
       h.release();
     });

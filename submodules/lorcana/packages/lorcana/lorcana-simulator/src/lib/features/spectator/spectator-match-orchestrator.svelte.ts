@@ -8,7 +8,7 @@ import {
   type LorcanaMatchState,
   type MoveLog,
 } from "@tcg/lorcana-engine";
-import type { GatewayClientStore } from "../gateway/gateway-client.svelte.js";
+import type { GatewayTransportClient } from "../gateway/gateway-transport.js";
 import type {
   LogCardReference,
   LorcanaPlayerSide,
@@ -461,12 +461,12 @@ export function extractMatchState(
 
 export class SpectatorMatchOrchestrator {
   readonly readModel = new SpectatorReadModel();
-  readonly #gateway: GatewayClientStore;
+  readonly #gateway: GatewayTransportClient;
   readonly #cardsMaps: CardsMaps;
   #engine: LorcanaClient;
 
   constructor(args: {
-    gateway: GatewayClientStore;
+    gateway: GatewayTransportClient;
     state: LorcanaMatchState;
     cardsMaps: CardsMaps;
     recentHistory?: SpectatorRecentHistory;

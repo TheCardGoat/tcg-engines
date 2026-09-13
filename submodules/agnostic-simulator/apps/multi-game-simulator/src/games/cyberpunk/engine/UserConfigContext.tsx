@@ -1,4 +1,16 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
+import { CyberpunkGameSettingsSchema } from "@tcg/game-page-contract/settings";
+import { apiUrl } from "../../../runtime/gameRuntimeApi";
+import { useSimulatorAuth } from "../../../simulator/providers";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  type ReactNode,
+} from "react";
 import {
   DEFAULT_BASE_GAME_USER_CONFIG,
   clampSoundVolume,
@@ -44,6 +56,8 @@ const DEFAULTS: UserConfig = {
   fieldCardSize: "standard",
 };
 
+const schema = CyberpunkGameSettingsSchema.shape.simulator.unwrap().strip();
+
 const STORAGE_KEY = "cyberpunk:userConfig";
 
 export const DEFAULT_USER_CONFIG: UserConfig = DEFAULTS;
@@ -86,33 +100,94 @@ interface UserConfigContextValue {
 
 const UserConfigContext = createContext<UserConfigContextValue | null>(null);
 
+// SETTINGS PARITY: keep in sync with the platform web app's GameSettingsFields.svelte.
+// Both sides save gameSettings.cyberpunk.simulator; keep defaults and choices aligned.
 export function UserConfigProvider({ children }: { children: ReactNode }) {
+  const auth = useSimulatorAuth();
+  const editVersion = useRef(0);
+  const saveQueue = useRef(Promise.resolve());
+
   const [config, setConfigState] = useState<UserConfig>(loadConfig);
 
-  const setConfig = useCallback((patch: Partial<UserConfig>) => {
-    setConfigState((prev) => {
-      const next = {
-        ...prev,
-        ...patch,
-        soundVolume:
-          patch.soundVolume === undefined ? prev.soundVolume : clampSoundVolume(patch.soundVolume),
-        animationPacing:
-          patch.animationPacing === undefined
-            ? prev.animationPacing
-            : parseAnimationPacing(patch.animationPacing),
-        fieldCardSize:
-          patch.fieldCardSize === undefined
-            ? prev.fieldCardSize
-            : parseFieldCardSize(patch.fieldCardSize),
-      };
-      try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-      } catch {
-        // ignore storage errors
+  useEffect(() => {
+    if (!auth.isAuthenticated) return;
+    const version = editVersion.current;
+    const controller = new AbortController();
+    void fetch(apiUrl("platform", "/users/me/settings"), {
+      credentials: "include",
+      signal: controller.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Settings load failed (${response.status})`);
+        const body: unknown = await response.json();
+        if (!body || typeof body !== "object" || !("gameSettings" in body)) return;
+        const gameSettings = body.gameSettings;
+        if (!gameSettings || typeof gameSettings !== "object" || !("cyberpunk" in gameSettings))
+          return;
+        const parsed = CyberpunkGameSettingsSchema.safeParse(gameSettings.cyberpunk);
+        if (!parsed.success || controller.signal.aborted || editVersion.current !== version) return;
+        setConfigState((current) => {
+          const next = { ...current, ...parsed.data.simulator };
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+          } catch {
+            /* best effort */
+          }
+          return next;
+        });
+      })
+      .catch((error: unknown) => {
+        if (!controller.signal.aborted)
+          console.error("[cyberpunk-settings] Failed to load:", error);
+      });
+    return () => controller.abort();
+  }, [auth.isAuthenticated, auth.userId]);
+
+  const setConfig = useCallback(
+    (patch: Partial<UserConfig>) => {
+      editVersion.current += 1;
+      const simulator = schema.parse(patch);
+      if (auth.isAuthenticated && Object.keys(simulator).length > 0) {
+        saveQueue.current = saveQueue.current
+          .then(async () => {
+            const response = await fetch(apiUrl("platform", "/users/me/settings"), {
+              method: "PUT",
+              keepalive: true,
+              credentials: "include",
+              headers: { "content-type": "application/json" },
+              body: JSON.stringify({ gameSettings: { cyberpunk: { simulator } } }),
+            });
+            if (!response.ok) throw new Error(`Settings save failed (${response.status})`);
+          })
+          .catch((error: unknown) => console.error("[cyberpunk-settings] Failed to save:", error));
       }
-      return next;
-    });
-  }, []);
+      setConfigState((prev) => {
+        const next = {
+          ...prev,
+          ...patch,
+          soundVolume:
+            patch.soundVolume === undefined
+              ? prev.soundVolume
+              : clampSoundVolume(patch.soundVolume),
+          animationPacing:
+            patch.animationPacing === undefined
+              ? prev.animationPacing
+              : parseAnimationPacing(patch.animationPacing),
+          fieldCardSize:
+            patch.fieldCardSize === undefined
+              ? prev.fieldCardSize
+              : parseFieldCardSize(patch.fieldCardSize),
+        };
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        } catch {
+          // ignore storage errors
+        }
+        return next;
+      });
+    },
+    [auth.isAuthenticated],
+  );
 
   const value = useMemo<UserConfigContextValue>(() => ({ config, setConfig }), [config, setConfig]);
 

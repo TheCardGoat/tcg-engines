@@ -14,13 +14,11 @@ import type { PlayerId } from "../types/branded.ts";
  * — which is misleading once that player has already kept/mulliganed and
  * is waiting on the opponent.
  *
- * Concrete failure mode this helper exists to fix: a server-side bot
- * driver (whether the legacy `gateway/routes/ws-route` path or the new
- * inbox `execute-move` handler) calls `engine.getActivePlayerId()` to
- * decide whether the bot should act. Without this carve-out, after the
- * human player keeps their hand the bot never gets priority — the
- * canonical `activePlayerId` is still pointing at the human — and the
- * match stalls forever in SETUP.
+ * Concrete failure mode this helper exists to fix: the server-side bot
+ * driver calls `engine.getActivePlayerId()` to decide whether the bot
+ * should act. Without this carve-out, after the human player keeps their
+ * hand the bot never gets priority — the canonical `activePlayerId` is
+ * still pointing at the human — and the match stalls forever in SETUP.
  *
  * Rules:
  *   - non-setup phases → return `turnMetadata.activePlayerId` (no change)

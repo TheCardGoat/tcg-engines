@@ -38,6 +38,15 @@ export interface LorcanaBrowserHarnessExecuteResult {
   code?: string;
 }
 
+export interface LorcanaBrowserHarnessAutomatedActionResult {
+  success: boolean;
+  fallbackTaken?: string;
+  gameOver: boolean;
+  winner?: string;
+  bagCount: number;
+  pendingCount: number;
+}
+
 export interface LorcanaBrowserHarnessConfig {
   fixtureId: string;
   latencyModel?: BrowserTransportLatencyModel;
@@ -54,6 +63,7 @@ export interface LorcanaBrowserHarness {
     moveId: string,
     params?: Record<string, unknown>,
   ): Promise<LorcanaBrowserHarnessExecuteResult>;
+  takeAutomatedActionForCurrentActor(): Promise<LorcanaBrowserHarnessAutomatedActionResult>;
   getBoard(view: LorcanaSimulatorView): Promise<LorcanaProjectedBoardView>;
   getStatus(view?: LorcanaSimulatorView): Promise<LorcanaBrowserStatus>;
 

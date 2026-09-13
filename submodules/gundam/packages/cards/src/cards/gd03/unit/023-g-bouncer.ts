@@ -27,15 +27,13 @@ export const gd03GBouncer023: UnitCard = {
       },
       rarity: "rare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-023.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-023.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-023.webp",
       productName: "Steel Requiem[GD03]",
     },
   ],
   reprints: ["GD03-023"],
   selectedPrintingId: "GD03-023",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-023.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-023.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-023.webp",
   legality: "legal",
   level: 4,
   cost: 3,
@@ -49,6 +47,7 @@ export const gd03GBouncer023: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["onExResourcePlaced"],
+        conditions: [{ type: "eventPlayerIsSelf" }],
       },
       directives: [
         {

@@ -30,5 +30,7 @@ describe("OP13-014 Portgas.D.Rouge", () => {
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === aceId)
         ?.power,
     ).toBe(basePower);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

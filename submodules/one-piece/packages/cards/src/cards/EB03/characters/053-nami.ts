@@ -98,6 +98,7 @@ export const eb03Nami053: CharacterCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: true,
           },
         ],
         actions: [

@@ -9,7 +9,8 @@ import { ChoiceResolutionOverlay } from "./ChoiceResolutionOverlay";
 import { EventLogPanel } from "./EventLogPanel";
 import { FixtureNavigation } from "./FixtureNavigation";
 import { InteractionPanel } from "./InteractionPanel";
-import { MobileShell } from "./MobileShell";
+import { SimulatorViewportShell } from "./SimulatorViewportShell";
+import { TabletopStatementsPanel } from "./TabletopStatementsPanel";
 import { PromptBanner } from "./PromptBanner";
 import { RunbookPanel } from "./RunbookPanel";
 import { TargetingArrow } from "./TargetingArrow";
@@ -54,6 +55,52 @@ export const EventLogPanelStates: Story = {
         <StoryCase title="empty">
           <div className="h-[260px]">
             <EventLogPanel entries={[]} />
+          </div>
+        </StoryCase>
+      </StoryGrid>
+    </StoryFrame>
+  ),
+};
+
+export const TabletopStatementsPanelStates: Story = {
+  render: () => (
+    <StoryFrame title="TabletopStatementsPanel states">
+      <StoryGrid>
+        <StoryCase title="live manual match">
+          <div className="h-[520px] rounded-lg bg-[var(--board-surface)] p-3">
+            <TabletopStatementsPanel
+              viewerId="player-one"
+              state={{
+                statements: [
+                  {
+                    id: "statement-one",
+                    authorId: "player-one",
+                    text: "Attack declared against the left battlefield.",
+                    createdAt: Date.now(),
+                    acknowledgements: ["player-two"],
+                  },
+                ],
+                spotlightStatementId: "statement-one",
+                activity: [
+                  {
+                    id: "activity-one",
+                    actorId: "player-one",
+                    at: Date.now(),
+                    summary: "published a statement",
+                  },
+                ],
+              }}
+              onAction={() => undefined}
+            />
+          </div>
+        </StoryCase>
+        <StoryCase title="read-only replay">
+          <div className="h-[360px] rounded-lg bg-[var(--board-surface)] p-3">
+            <TabletopStatementsPanel
+              viewerId="player-one"
+              readOnly
+              state={{ statements: [], activity: [] }}
+            />
           </div>
         </StoryCase>
       </StoryGrid>
@@ -219,32 +266,32 @@ export const FixtureNavigationAndRunbook: Story = {
   ),
 };
 
-export const MobileShellStates: Story = {
+export const SimulatorViewportShellStates: Story = {
   render: () => (
-    <StoryFrame title="MobileShell states" width="900px">
+    <StoryFrame title="SimulatorViewportShell states" width="900px">
       <StoryGrid>
         <StoryCase title="with log tab">
-          <MobileShell
-            hasLog
+          <SimulatorViewportShell
             sidebar={<RunbookPanel fixture={fixture} />}
-            board={
+            mobilePanel={<RunbookPanel fixture={fixture} />}
+            tabletop={
               <div className="storybook-panel min-h-[360px] p-4 text-[var(--board-text)]">
                 Board content
               </div>
             }
-            interactions={<InteractionPanel fixture={fixture} />}
-            log={<EventLogPanel entries={eventLog} />}
+            mobileTopRail={<div>Opponent · Match panel</div>}
+            mobileBottomRail={<div>Player actions</div>}
           />
         </StoryCase>
         <StoryCase title="without log tab">
-          <MobileShell
+          <SimulatorViewportShell
             sidebar={<RunbookPanel fixture={fixture} />}
-            board={
+            mobilePanel={<RunbookPanel fixture={fixture} />}
+            tabletop={
               <div className="storybook-panel min-h-[260px] p-4 text-[var(--board-text)]">
                 Board content
               </div>
             }
-            interactions={<InteractionPanel fixture={{ ...fixture, interactions: [] }} />}
           />
         </StoryCase>
       </StoryGrid>

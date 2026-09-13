@@ -114,7 +114,7 @@ describe("Clan Battle (ST06-014)", () => {
       expect(p1.getVisibleCard(linkId!)?.effectiveAp).toBe(2);
     });
 
-    it("cannot activate when the friendly Clan Unit is not linked", () => {
+    it("pays the rest cost but grants no AP when the friendly Clan Unit is not linked", () => {
       const target = createMockUnit({ name: "Target", ap: 2, hp: 5 });
       const engine = GundamTestEngine.create({
         baseSection: [st06ClanBattle014],
@@ -124,8 +124,8 @@ describe("Clan Battle (ST06-014)", () => {
       const baseId = p1.getCardsInZone("baseSection")[0]!;
       const targetId = p1.getCardsInZone("battleArea")[1]!;
 
-      expectFailure(p1.activateBaseAbility(baseId, { targets: [targetId] }), "CONDITIONS_NOT_MET");
-      expect(p1.isExhausted(baseId)).toBe(false);
+      expectSuccess(p1.activateBaseAbility(baseId));
+      expect(p1.isExhausted(baseId)).toBe(true);
       expect(p1.getVisibleCard(targetId)?.effectiveAp).toBe(2);
     });
   });

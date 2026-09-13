@@ -28,22 +28,10 @@ export const op13TheWorldSEquilibriumCannotBeMaintainedForever097: EventCard = {
     effects: [
       {
         trigger: "main",
-        costs: [{ cost: "restDon", amount: 5 }],
-        conditions: [
+        costs: [
           {
-            condition: "zoneCount",
-            player: "self",
-            zone: "character",
-            comparison: "eq",
-            value: 0,
-            filters: [
-              {
-                filter: "trait",
-                value: "Celestial Dragons",
-                match: "includes",
-                negate: true,
-              },
-            ],
+            cost: "restDon",
+            amount: 5,
           },
         ],
         actions: [
@@ -61,6 +49,21 @@ export const op13TheWorldSEquilibriumCannotBeMaintainedForever097: EventCard = {
                   filter: "baseCost",
                   comparison: "lte",
                   value: 6,
+                },
+              ],
+            },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "eq",
+              value: 0,
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Celestial Dragons",
+                  match: "includes",
+                  negate: true,
                 },
               ],
             },

@@ -33,6 +33,7 @@ export const op13GumGumDawnStamp117: EventCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: true,
           },
         ],
         actions: [
@@ -59,7 +60,13 @@ export const op13GumGumDawnStamp117: EventCard = {
       },
       {
         trigger: "trigger",
-        actions: [{ action: "draw", player: "self", amount: 1 }],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
       },
     ],
   },

@@ -27,5 +27,9 @@ describe("OP10-106 Killer", () => {
     expect(search.candidates.find((candidate) => candidate.ref.id === eligibleId)?.legal).toBe(
       true,
     );
+
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
+    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
   });
 });

@@ -18,6 +18,7 @@ import {
   buildOtlpIgnoreUrls,
   buildPropagationTargets,
   buildResourceAttributes,
+  browserGameFromPathname,
   normalizeRoute,
   parseTraceSampleRatio,
   sanitizeTelemetryValue,
@@ -28,7 +29,6 @@ import {
 const DEFAULT_SERVICE_NAME = "tcg-multi-game-simulator";
 const errorGate = new TelemetryEventGate(10, 60_000, 60_000);
 const warningGate = new TelemetryEventGate(10, 60_000, 60_000);
-const KNOWN_GAMES = new Set(["cyberpunk", "gundam", "one-piece"]);
 
 let initialized = false;
 let flushing = false;
@@ -45,8 +45,7 @@ function normalizeEndpoint(endpoint: string): string {
 }
 
 function currentGame(): string {
-  const segment = window.location.pathname.split("/").filter(Boolean)[0];
-  return segment && KNOWN_GAMES.has(segment) ? segment : "unknown";
+  return browserGameFromPathname(window.location.pathname);
 }
 
 function sanitizeAttributes(attributes: AnyValueMap): AnyValueMap {
@@ -76,6 +75,15 @@ export function logBrowserWarn(body: string, attributes: AnyValueMap = {}): void
     body,
     severityNumber: SeverityNumber.WARN,
     severityText: "WARN",
+    attributes: baseAttributes(attributes),
+  });
+}
+
+export function logBrowserInfo(body: string, attributes: AnyValueMap = {}): void {
+  logs.getLogger("browser").emit({
+    body,
+    severityNumber: SeverityNumber.INFO,
+    severityText: "INFO",
     attributes: baseAttributes(attributes),
   });
 }

@@ -28,8 +28,7 @@ export const gd02Qubeley036: UnitCard = {
       },
       rarity: "legendRare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-036.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-036.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-036.webp",
       productName: "Dual Impact [GD02]",
     },
     {
@@ -45,8 +44,7 @@ export const gd02Qubeley036: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-036_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-036_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-036_p1.webp",
       productName: "Dual Impact [GD02]",
     },
     {
@@ -62,15 +60,13 @@ export const gd02Qubeley036: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-036_p2.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-036_p2.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-036_p2.webp",
       productName: "Newtype Challenge 2025 Mission 3",
     },
   ],
   reprints: ["GD02-036", "GD02-036_p1", "GD02-036_p2"],
   selectedPrintingId: "GD02-036",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-036.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-036.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-036.webp",
   legality: "legal",
   level: 7,
   cost: 5,
@@ -105,10 +101,12 @@ export const gd02Qubeley036: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["attack"],
-        conditions: [
-          { type: "duringPair" },
-          { type: "selfPairedPilotHasTrait", trait: "neo zeon" },
-        ],
+        qualification: {
+          attribute: "trait",
+          comparison: "includes",
+          value: "neo zeon",
+        },
+        conditions: [{ type: "duringPair" }],
       },
       directives: [
         {

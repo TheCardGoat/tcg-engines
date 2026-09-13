@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "game": "flesh-and-blood",
+  "locale": "fr-FR",
+  "provenance": {
+    "source": "fab-cube",
+    "sourceUrl": "https://github.com/the-fab-cube/flesh-and-blood-cards",
+    "sourceRef": "usurp-the-shadow-throne",
+    "locale": "fr-FR",
+    "fetchedAt": "2026-09-11T04:33:18.000Z",
+    "sourceVersion": "9fb8c73011311720bc7add61fb8eaab00b131bc3",
+    "sha256": "98cdc3c3a32bdbb332809dd68921a3676502c44090ec7541d37abf25da10fa3f",
+    "productionEligible": false
+  },
+  "catalogSha256": "5d08485a19fdcbd7c82f048a8626027bf3703241c189905f41059eb2f19d4c64",
+  "printingsByCanonicalId": {
+    "N77hdGp96fNQnzc79hqN9": [
+      {
+        "id": "BBqrPDLK8RpDLfF99Cr8d",
+        "artId": "qKwMnMt9wnQzGpw7jLLbj",
+        "setPrintingId": "qKwMnMt9wnQzGpw7jLLbj",
+        "setCode": "1HP",
+        "collectorNumber": "1HP000",
+        "rarity": "F",
+        "boardImageUrl": "https://cdn.tcg.online/public/fab/assets/board/477d8c337502da8cbf5dabe213da05a5e279f6e40a9517950adb7a02585f8a04.webp",
+        "imageUrl": "https://cdn.tcg.online/public/fab/assets/full/d313771b584da88ed5ec74bfef71806fa7116ba98b99dfae1b3270719245413d.webp",
+        "locale": "fr-FR",
+        "artists": ["Alexandra Malygina"],
+        "artVariationIds": [],
+        "finish": "R",
+        "edition": "N",
+        "expansionSlot": false,
+        "externalIds": {
+          "fabCube": "BBqrPDLK8RpDLfF99Cr8d"
+        }
+      }
+    ],
+    "pBpLPQ7kg6mkBpNMMPdCD": [
+      {
+        "id": "zPG97HKzdmzJGdncK8nnG",
+        "artId": "qKwMnMt9wnQzGpw7jLLbj",
+        "setPrintingId": "qKwMnMt9wnQzGpw7jLLbj",
+        "setCode": "1HP",
+        "collectorNumber": "1HP000",
+        "rarity": "F",
+        "boardImageUrl": "https://cdn.tcg.online/public/fab/assets/board/3b5c9bde5da40657c33b14cd288dfb8090c46379674d3a6f2e84aad53d0bc3c2.webp",
+        "imageUrl": "https://cdn.tcg.online/public/fab/assets/full/a91e444dca17dc24708dd89936d57da5a661ac368c3c39ebd1020b6d22eff8fc.webp",
+        "locale": "fr-FR",
+        "artists": ["Adolfo Navarro"],
+        "artVariationIds": [],
+        "finish": "R",
+        "edition": "N",
+        "expansionSlot": false,
+        "externalIds": {
+          "fabCube": "zPG97HKzdmzJGdncK8nnG"
+        }
+      }
+    ],
+    "pkMGCRh9fDT98dRgnQF8W": [
+      {
+        "id": "LQmdBgHpTGLTpLmftWkbz",
+        "artId": "qKwMnMt9wnQzGpw7jLLbj",
+        "setPrintingId": "qKwMnMt9wnQzGpw7jLLbj",
+        "setCode": "1HP",
+        "collectorNumber": "1HP000",
+        "rarity": "F",
+        "boardImageUrl": "https://cdn.tcg.online/public/fab/assets/board/8ce6a375af760d2bdf1859531c075e7c77e3c4a94c7e21aa0c8b35d5b0ced72f.webp",
+        "imageUrl": "https://cdn.tcg.online/public/fab/assets/full/cebb2bd691ec30f421885429c11134c8b588fa96b0818956493150dbb11b5507.webp",
+        "locale": "fr-FR",
+        "artists": ["Maxim Kostin"],
+        "artVariationIds": [],
+        "finish": "R",
+        "edition": "N",
+        "expansionSlot": false,
+        "externalIds": {
+          "fabCube": "LQmdBgHpTGLTpLmftWkbz"
+        }
+      }
+    ]
+  }
+}

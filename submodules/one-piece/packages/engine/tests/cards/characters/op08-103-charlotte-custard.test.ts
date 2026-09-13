@@ -48,4 +48,34 @@ describe("OP08-103 Charlotte Custard", () => {
       3000,
     );
   });
+
+  test("may decline optional Activate: Main so Life take and power do not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op08CharlotteCustard103],
+      life: [eb01Fourtricks025, eb01Doma005],
+      character: [eb01Doma005],
+      activeDon: op08CharlotteCustard103.cost,
+    });
+    const targetId = engine.findCardInZone("south", "character", eb01Doma005);
+    const lifeId = engine.findCardInZone("south", "life", eb01Fourtricks025);
+
+    engine.playCard(op08CharlotteCustard103, "south");
+    const custardId = engine.findCardInZone("south", "character", op08CharlotteCustard103);
+    engine.activateEffect(custardId, "activateMain", "south");
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const powerBefore = engine
+      .getView("south")
+      .players.south.characters.find((card) => card?.instanceId === targetId)?.power;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.lifeCount).toBe(lifeBefore);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.hand.map((card) => card.instanceId)).not.toContain(lifeId);
+    expect(view.players.south.characters.find((card) => card?.instanceId === targetId)?.power).toBe(
+      powerBefore,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

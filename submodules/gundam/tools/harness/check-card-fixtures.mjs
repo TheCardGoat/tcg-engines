@@ -78,6 +78,19 @@ const PUBLIC_PLAYER_MOVE_METHODS = new Set([
   "restUnitsByAttackingDirectly",
   "passTurnThroughPublicMoves",
   "resolveUnitBattle",
+  "expectBlockerAbility",
+  "expectBreachAbility",
+  "expectBaseBurstAndDeployAbilities",
+  "expectPilotBurstAddsToHand",
+  "expectDeployPlacesActiveExResources",
+  "expectDeployDamagesRestedEnemy",
+  "expectDeployDestroysEnemyAtOrBelowLevel",
+  "expectRepairAbility",
+  "expectSupportAbility",
+  "expectHighManeuverAbility",
+  "expectSuppressionAbility",
+  "expectDestroyedDrawsExactly",
+  "expectDestroyedDrawsThenDiscards",
 ]);
 
 const STRICT_SET_FORBIDDEN_TEST_PATTERNS = [
@@ -309,7 +322,22 @@ function auditIndividualBehaviorTests(
           calledName = child.expression.text;
         }
 
-        if (calledName === "expectUnitCanDeploy") {
+        if (
+          calledName === "expectUnitCanDeploy" ||
+          calledName === "expectBlockerAbility" ||
+          calledName === "expectBreachAbility" ||
+          calledName === "expectBaseBurstAndDeployAbilities" ||
+          calledName === "expectPilotBurstAddsToHand" ||
+          calledName === "expectDeployPlacesActiveExResources" ||
+          calledName === "expectDeployDamagesRestedEnemy" ||
+          calledName === "expectDeployDestroysEnemyAtOrBelowLevel" ||
+          calledName === "expectRepairAbility" ||
+          calledName === "expectSupportAbility" ||
+          calledName === "expectHighManeuverAbility" ||
+          calledName === "expectSuppressionAbility" ||
+          calledName === "expectDestroyedDrawsExactly" ||
+          calledName === "expectDestroyedDrawsThenDiscards"
+        ) {
           hasFixture = true;
           hasPlayerMove = true;
         }
@@ -386,7 +414,11 @@ for await (const abs of walk(CARDS_DIR)) {
     if (/\b[A-Za-z_$][\w$]*\.(?:effects|keywordEffects)(?:(?:\?|!)\.)?/.test(content)) {
       structural.push(testRel);
     }
-    if (!/\b(?:GundamTestEngine\.create|expectUnitCanDeploy)\b/.test(content)) {
+    if (
+      !/\b(?:GundamTestEngine\.create|expectUnitCanDeploy|expectBlockerAbility|expectBreachAbility|expectBaseBurstAndDeployAbilities|expectPilotBurstAddsToHand|expectDeployPlacesActiveExResources|expectDeployDamagesRestedEnemy|expectDeployDestroysEnemyAtOrBelowLevel|expectRepairAbility|expectSupportAbility|expectHighManeuverAbility|expectSuppressionAbility|expectDestroyedDrawsExactly|expectDestroyedDrawsThenDiscards)\b/.test(
+        content,
+      )
+    ) {
       fixtureless.push(testRel);
     }
     auditIndividualBehaviorTests(content, testRel, {

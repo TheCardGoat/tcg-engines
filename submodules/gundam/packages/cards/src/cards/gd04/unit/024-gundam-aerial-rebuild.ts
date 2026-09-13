@@ -27,8 +27,7 @@ export const gd04GundamAerialRebuild024: UnitCard = {
       },
       rarity: "uncommon",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-024.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-024.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-024.webp",
       productName: "Phantom Aria [GD04]",
     },
     {
@@ -44,16 +43,14 @@ export const gd04GundamAerialRebuild024: UnitCard = {
       },
       rarity: "uncommon",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-024_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-024_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-024_p1.webp",
       productName:
         "Booster Pack Phantom Aria [GD04] Release Event Commemorative Items for Participants",
     },
   ],
   reprints: ["GD04-024", "GD04-024_p1"],
   selectedPrintingId: "GD04-024",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-024.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-024.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-024.webp",
   legality: "legal",
   level: 7,
   cost: 5,
@@ -79,6 +76,7 @@ export const gd04GundamAerialRebuild024: UnitCard = {
             randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
+              count: 1,
               cardType: ["unit", "command"],
               attributeFilters: [
                 {

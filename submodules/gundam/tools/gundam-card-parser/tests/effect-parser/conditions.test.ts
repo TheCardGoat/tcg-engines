@@ -34,6 +34,11 @@ describe("self-state conditions", () => {
     const branch = firstBranch("【Attack】 If this Unit is attacking, draw 1.");
     expect(branch).toMatchObject({ condition: { type: "selfIsAttacking" } });
   });
+
+  test("if it is attacking an enemy Unit → isAttackingUnit", () => {
+    const branch = firstBranch("【Attack】 If it is attacking an enemy Unit, draw 1.");
+    expect(branch).toMatchObject({ condition: { type: "isAttackingUnit" } });
+  });
 });
 
 describe("selfStat conditions", () => {
@@ -56,6 +61,13 @@ describe("selfStat conditions", () => {
     expect(branch).toMatchObject({
       condition: { type: "selfStat", stat: "hp", comparison: "lte", value: 4 },
     });
+  });
+
+  test("while this Unit has 1 HP → selfStat eq", () => {
+    const [effect] = parseEffect("While this Unit has 1 HP, it gains <Repair 3>.");
+    expect(effect.activation.conditions).toEqual([
+      { type: "selfStat", stat: "hp", comparison: "eq", value: 1 },
+    ]);
   });
 });
 
@@ -131,6 +143,54 @@ describe("playerLevel conditions", () => {
 });
 
 describe("unitCount conditions", () => {
+  test("while your opponent has an EX Resource → opponent resource-area condition", () => {
+    const [effect] = parseEffect(
+      "While your opponent has an EX Resource, this Unit can't receive battle damage from enemy Units that are Lv.5 or lower.",
+    );
+    expect(effect.activation.conditions).toContainEqual({
+      type: "cardInZone",
+      owner: "opponent",
+      zone: "resourceArea",
+      cardType: "resource",
+      hasName: "EX Resource",
+      comparison: "gte",
+      count: 1,
+    });
+  });
+
+  test("if you have a named Lv.5 Unit in play → cardInZone with name and level filters", () => {
+    const [effect] = parseEffect(
+      '【Activate·Main】②：If you have a Unit with "Gundam Aerial" in its card name that is Lv.5 or higher in play, deploy 1 [Gundnode]((Quiet Zero)·AP2·HP2·<Breach 1>) Unit token.',
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "cardInZone",
+        owner: "friendly",
+        zone: "battleArea",
+        cardType: "unit",
+        comparison: "gte",
+        count: 1,
+        attributeFilters: [
+          { attribute: "name", comparison: "includes", value: "Gundam Aerial" },
+          { attribute: "level", comparison: "gte", value: 5 },
+        ],
+      },
+    ]);
+  });
+
+  test("if there are 6 or more rested Units in play → unitCount across all players", () => {
+    const branch = firstBranch("【Main】 If there are 6 or more rested Units in play, draw 2.");
+    expect(branch).toMatchObject({
+      condition: {
+        type: "unitCount",
+        owner: "any",
+        comparison: "gte",
+        count: 6,
+        state: "rested",
+      },
+    });
+  });
+
   test("no Earth Alliance Unit tokens in play → trait token count eq 0", () => {
     const branch = firstBranch(
       "【Burst】If you have no (Earth Alliance) Unit tokens in play, draw 1.",
@@ -197,6 +257,23 @@ describe("unitCount conditions", () => {
     });
   });
 
+  test("if you have an AEUG Link Unit in play → trait count requires a Link Unit", () => {
+    const [effect] = parseEffect(
+      "【Destroyed】If you have an (AEUG) Link Unit in play, choose 1 enemy Unit. Rest it.",
+    );
+
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "gte",
+        count: 1,
+        hasTrait: "aeug",
+        isLinkUnit: true,
+      },
+    ]);
+  });
+
   test("if you have another (Gundam) Unit in play → unitCount excludeSelf with trait", () => {
     const branch = firstBranch("【Deploy】 If you have another (Gundam) Unit in play, draw 1.");
     expect(branch).toMatchObject({
@@ -206,6 +283,101 @@ describe("unitCount conditions", () => {
         hasTrait: "gundam",
       },
     });
+  });
+
+  test("while you have another Unit with High-Maneuver → keyword count excluding self", () => {
+    const [effect] = parseEffect(
+      "While you have another Unit with <High-Maneuver> in play, this Unit gets AP+1.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "gte",
+        count: 1,
+        excludeSelf: true,
+        hasKeyword: "HighManeuver",
+      },
+    ]);
+  });
+
+  test("while you have a Unit token in play → friendly token count", () => {
+    const [effect] = parseEffect("While you have a Unit token in play, this Unit gets AP+1.");
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "gte",
+        count: 1,
+        isToken: true,
+      },
+    ]);
+  });
+
+  test("while another friendly Zeon Link Unit is in play → qualified count excluding self", () => {
+    const [effect] = parseEffect(
+      "While another friendly (Zeon) Link Unit is in play, this Unit gains <Breach 5>.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "gte",
+        count: 1,
+        excludeSelf: true,
+        hasTrait: "zeon",
+        isLinkUnit: true,
+      },
+    ]);
+  });
+
+  test("while a rested enemy Unit is in play → opponent rested count", () => {
+    const [effect] = parseEffect(
+      "While a rested enemy Unit is in play, this Unit gains <Suppression>.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "opponent",
+        comparison: "gte",
+        count: 1,
+        state: "rested",
+      },
+    ]);
+  });
+
+  test("while you have a rested trait Unit in play → friendly rested trait count", () => {
+    const [effect] = parseEffect(
+      "While you have a rested (Zeon) Unit in play, this Base can't receive battle damage from enemy Units that are Lv.4 or lower.",
+      "base",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "unitCount",
+        owner: "friendly",
+        comparison: "gte",
+        count: 1,
+        hasTrait: "zeon",
+        state: "rested",
+      },
+    ]);
+  });
+
+  test("if an enemy CB Unit is in play → opponent trait count", () => {
+    const [effect] = parseEffect(
+      "【Burst】If an enemy (CB) Unit is in play, add this card to your hand.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "cardInZone",
+        owner: "opponent",
+        zone: "battleArea",
+        cardType: "unit",
+        comparison: "gte",
+        count: 1,
+        hasTrait: "cb",
+      },
+    ]);
   });
 
   test("if 2 or more enemy Units are in play → unitCount opponent", () => {
@@ -315,6 +487,24 @@ describe("cardInZone conditions", () => {
 });
 
 describe("cardInZone in-play conditions", () => {
+  test("if you have no EX Resources → zero friendly EX Resources", () => {
+    const [effect] = parseEffect(
+      "【During Link】【Destroyed】If you have no EX Resources, place 1 EX Resource.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      { type: "duringLink" },
+      {
+        type: "cardInZone",
+        owner: "friendly",
+        zone: "resourceArea",
+        cardType: "resource",
+        hasName: "EX Resource",
+        comparison: "eq",
+        count: 0,
+      },
+    ]);
+  });
+
   test("while you have a (CB) Pilot in play → battleArea pilot trait condition", () => {
     const [effect] = parseEffect(
       "During your turn, while you have a (CB) Pilot in play, this Unit gets AP+2.",
@@ -332,6 +522,24 @@ describe("cardInZone in-play conditions", () => {
       },
     ]);
   });
+
+  test("while you have a red Super Soldier Pilot in play → color and trait condition", () => {
+    const [effect] = parseEffect(
+      "While you have a red (Super Soldier) Pilot in play, this Unit gains <First Strike>.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "cardInZone",
+        owner: "friendly",
+        zone: "battleArea",
+        cardType: "pilot",
+        hasTrait: "super soldier",
+        hasColor: "red",
+        comparison: "gte",
+        count: 1,
+      },
+    ]);
+  });
 });
 
 describe("handCount conditions", () => {
@@ -342,6 +550,31 @@ describe("handCount conditions", () => {
     expect(branch).toMatchObject({
       condition: { type: "handCount", owner: "opponent", comparison: "gte", count: 3 },
     });
+  });
+
+  test("if you have 4 or less cards in your hand → handCount friendly lte 4", () => {
+    const branch = firstBranch("【Deploy】 If you have 4 or less cards in your hand, draw 1.");
+    expect(branch).toMatchObject({
+      condition: { type: "handCount", owner: "friendly", comparison: "lte", count: 4 },
+    });
+  });
+
+  test("while you have a non-blue Newtype Pilot in play keeps its color exclusion", () => {
+    const [effect] = parseEffect(
+      "While you have a non-blue (Newtype) Pilot in play, this card in your hand gets cost -2.",
+    );
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "cardInZone",
+        owner: "friendly",
+        zone: "battleArea",
+        cardType: "pilot",
+        hasTrait: "newtype",
+        attributeFilters: [{ attribute: "color", comparison: "neq", value: "blue" }],
+        comparison: "gte",
+        count: 1,
+      },
+    ]);
   });
 });
 
@@ -358,6 +591,27 @@ describe("friendlyBaseInPlay conditions", () => {
     expect(branch).toMatchObject({
       condition: { type: "friendlyBaseInPlay" },
     });
+  });
+
+  test("while there is a friendly white Base in play → friendlyBaseInPlay White", () => {
+    const [effect] = parseEffect(
+      "While there is a friendly white Base in play, this Unit gets AP+2.",
+    );
+    expect(effect.activation.conditions).toEqual([{ type: "friendlyBaseInPlay", color: "white" }]);
+  });
+
+  test("while no enemy Base is in play → opponent Base count zero", () => {
+    const [effect] = parseEffect("While no enemy Base is in play, this Unit gets AP+1.");
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "cardInZone",
+        owner: "opponent",
+        zone: "baseSection",
+        cardType: "base",
+        comparison: "eq",
+        count: 0,
+      },
+    ]);
   });
 });
 

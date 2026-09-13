@@ -35,5 +35,6 @@ describe("OP05-109 Pagaya", () => {
     const view = engine.getView("north");
     expect(view.players.north.hand).toHaveLength(2);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

@@ -62,7 +62,7 @@ describe("Jamil Neate (GD03-096)", () => {
 
     expectSuccess(p1.enterBattle(attackerId, defenderId));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
+      kind: "targetSelection",
       sourceCardId: pilotId,
     });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
@@ -112,7 +112,7 @@ describe("Jamil Neate (GD03-096)", () => {
 
     expectSuccess(p1.enterBattle(attackerId, defenderId));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
+      kind: "targetSelection",
       sourceCardId: pilotId,
     });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));

@@ -11,6 +11,14 @@ function cards(): Card[] {
 }
 
 describe("Gundam metadata projection", () => {
+  it("declares deck color facets for specialist skill and mastery", () => {
+    expect(gundamServerAdapter.metadata!.facets).toSatisfy((definitions) =>
+      definitions.every(
+        (definition) => definition.ranking.specialistSkill && definition.ranking.mastery,
+      ),
+    );
+  });
+
   it("projects the exact non-resource color set", () => {
     const colored = cards().find((card) => card.type !== "resource" && card.color)!;
     const projection = gundamServerAdapter.metadata!.projectDeck([

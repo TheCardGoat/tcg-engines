@@ -47,4 +47,34 @@ describe("OP11-040 Monkey.D.Luffy", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op11MonkeyDLuffy040,
+        deck: [
+          op11RoronoaZoro016,
+          op10Urouge101,
+          eb01Doma005,
+          eb01Doma005,
+          eb01Doma005,
+          eb01Doma005,
+        ],
+        activeDon: 8,
+      },
+      {},
+      { firstPlayer: "south", activeSeat: "south" },
+    );
+    engine.endTurn("south");
+    engine.endTurn("north");
+
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    // Declined start-of-turn search: only the normal turn draw (hand=1), no search pick.
+    expect(after.hand).toHaveLength(1);
+    expect(after.deckCount).toBe(deckBefore - 1);
+    expect(engine.getView("south").phase).toBe("main");
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

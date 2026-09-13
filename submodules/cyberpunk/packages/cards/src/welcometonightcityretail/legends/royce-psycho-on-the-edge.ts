@@ -5,10 +5,11 @@ import { goSoloAbility } from "@tcg/cyberpunk-types";
 export const welcomeToNightCityRetailRoycePsychoOnTheEdge = defineCyberpunkCard({
   id: "9e681d3e-cbfd-4c7b-a69a-72a83dc8b847",
   slug: "royce-psycho-on-the-edge",
+  subname: "Psycho on the Edge",
   rulesText:
     "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\nDuring your turn, this Legend has +2 power for each of its equipped Gear.",
-  name: "Royce — Psycho on the Edge",
-  displayName: "Royce — Psycho on the Edge",
+  name: "Royce",
+  displayName: "Royce: Psycho on the Edge",
   canonicalId: "royce-psycho-on-the-edge",
   color: "red",
   classifications: ["Ganger", "Maelstrom"],

@@ -1,5 +1,8 @@
 import { defineConfig } from "vite-plus";
 
+const turboConcurrency = process.env.VP_RUN_CONCURRENCY_LIMIT;
+const turboConcurrencyFlag = turboConcurrency ? ` --concurrency=${turboConcurrency}` : "";
+
 export default defineConfig({
   run: {
     cache: {
@@ -8,11 +11,11 @@ export default defineConfig({
     },
     tasks: {
       "ci:check": {
-        command: "pnpm exec turbo run lint check-types test",
+        command: `pnpm exec turbo run lint check-types test${turboConcurrencyFlag}`,
         cache: false,
       },
       "ci:full": {
-        command: "vp run ci:check && pnpm exec turbo run build",
+        command: `vp run ci:check && pnpm exec turbo run build${turboConcurrencyFlag}`,
         cache: false,
       },
     },

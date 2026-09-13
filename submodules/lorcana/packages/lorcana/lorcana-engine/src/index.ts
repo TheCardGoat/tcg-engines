@@ -26,6 +26,8 @@ export type {
   EngineMoveId,
   EnginePacketUpdate,
   ProtocolError,
+  AuthoritativeCommandRecoveryCause,
+  AuthoritativeCommandStatus,
   EnginePendingEffectProjection,
   MatchRuntime,
   MatchRuntimeConfig,

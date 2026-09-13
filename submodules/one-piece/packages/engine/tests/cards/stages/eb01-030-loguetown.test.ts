@@ -93,4 +93,30 @@ describe("EB01-030 Loguetown", () => {
     expect(resolvedView.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      stage: eb01Loguetown030,
+      hand: [op13Otama043, op13York094],
+      deck: [op13Higuma013, op13WindmillVillage022],
+    });
+    const stageId = engine.findCardInZone("south", "stage", eb01Loguetown030);
+    engine.activateEffect(stageId, "activateMain");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -23,5 +23,6 @@ describe("OP01-046 Denjiro", () => {
     expect(view.players.south.activeDon).toBe(2);
     expect(view.players.south.restedDon).toBe(0);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

@@ -13,6 +13,7 @@ import {
   welcomeToNightCityRetailGildedMatoN,
   welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
+import type { CardZone } from "@tcg/cyberpunk-types";
 
 const maton = welcomeToNightCityRetailGildedMatoN; // unit, cost 4, power 3
 const friendlyHost = welcomeToNightCityRetailSwordwiseHuscle; // a real unit to attach gear to
@@ -40,21 +41,11 @@ function withGearAttached() {
 function expectCardInZone(
   engine: CyberpunkTestEngine,
   card: { id: string },
-  zone: string,
+  zone: CardZone,
   player: typeof P1 | typeof P2,
 ): void {
   const ids = engine.getCardsInZone(zone, player).map((c) => c.definitionId);
   expect(ids, `expected ${card.id} to be in ${zone} for ${player}`).toContain(card.id);
-}
-
-function expectCardNotInZone(
-  engine: CyberpunkTestEngine,
-  card: { id: string },
-  zone: string,
-  player: typeof P1 | typeof P2,
-): void {
-  const ids = engine.getCardsInZone(zone, player).map((c) => c.definitionId);
-  expect(ids, `expected ${card.id} NOT to be in ${zone} for ${player}`).not.toContain(card.id);
 }
 
 describe("Gilded Matón", () => {

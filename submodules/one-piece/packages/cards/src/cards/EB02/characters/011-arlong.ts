@@ -54,10 +54,12 @@ export const eb02Arlong011: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Fish-Man",
+                match: "includes",
               },
               {
                 condition: "leaderTrait",
                 trait: "East Blue",
+                match: "includes",
               },
             ],
           },

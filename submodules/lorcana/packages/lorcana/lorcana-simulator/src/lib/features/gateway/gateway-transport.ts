@@ -15,9 +15,17 @@ import type {
   ServerMessage,
   ConnectionState,
   ErrorCode,
+  AuthoritativeCommandStatus,
+  AuthoritativeCommandRecoveryCause,
 } from "@tcg/lorcana-engine";
+import { createHeartbeatProbeTracker } from "@tcg/game-page-contract";
 import type { GatewayClientStore } from "./gateway-client.svelte.js";
 import type { IdleStore } from "./idle-store.svelte.js";
+
+export type GatewayTransportClient = Pick<
+  GatewayClientStore,
+  "send" | "sendWithAck" | "addGameMessageListener" | "addStatusChangeListener"
+>;
 
 const PROTOCOL_VERSION = 5;
 
@@ -50,7 +58,7 @@ export function mapGatewayErrorCodeToEngineCode(gatewayCode: string): ErrorCode 
 
 export interface GatewayTransportConfig {
   /** The connected gateway WS client. */
-  gateway: GatewayClientStore;
+  gateway: GatewayTransportClient;
   /** Game ID to filter inbound messages. */
   gameId: string;
   /** Game roster seat id (`game_profiles.game_profile_id`). */
@@ -69,18 +77,39 @@ export interface GatewayTransportConfig {
    * an `activity_update` message to the server whenever it changes.
    */
   idleStore?: IdleStore;
+  /** Override in focused tests. Production recovery waits ten seconds. */
+  recoveryTimeoutMs?: number;
+  /** Override in focused tests. Production heartbeats run every fifteen seconds. */
+  heartbeatIntervalMs?: number;
+  onRecoveryTelemetry?: (event: AuthoritativeRecoveryTelemetryEvent) => void;
 }
+
+export type AuthoritativeRecoveryTelemetryEvent =
+  | {
+      type: "started";
+      cause: AuthoritativeCommandRecoveryCause;
+      moveType: string;
+    }
+  | {
+      type: "completed" | "failed";
+      cause: AuthoritativeCommandRecoveryCause;
+      moveType: string;
+      durationMs: number;
+    };
 
 /** Interval between heartbeat messages sent to the server while in-game. */
 const HEARTBEAT_INTERVAL_MS = 15_000;
+const RECOVERY_TIMEOUT_MS = 10_000;
 
 export class GatewayTransport implements Transport {
-  readonly #gateway: GatewayClientStore;
+  readonly #gateway: GatewayTransportClient;
   readonly #gameId: string;
   readonly #gameProfileId: string;
   readonly #userId: string | undefined;
   readonly #matchID: string;
   readonly #initialState: unknown | undefined;
+  readonly #heartbeatIntervalMs: number;
+  readonly #heartbeatProbeTracker = createHeartbeatProbeTracker();
 
   #messageHandler: ((message: ServerMessage) => void) | null = null;
   #errorHandler: ((error: Error) => void) | null = null;
@@ -103,7 +132,31 @@ export class GatewayTransport implements Transport {
    */
   #pendingUndoMove: boolean = false;
   /** A move that was in-flight when the socket dropped — retried after reconnect + state sync. */
-  #pendingRetryMove: { message: object; expectedVersion: number; isUndo?: boolean } | null = null;
+  #pendingRetryMove: {
+    message: object;
+    commandID: string;
+    expectedVersion: number;
+    isUndo?: boolean;
+  } | null = null;
+  /** Base version for the single command currently guarded by `#commandStatus`. */
+  #pendingCommandExpectedVersion: number | null = null;
+  /** The server accepted the command but omitted the authoritative state payload. */
+  #pendingCommandKnownAccepted = false;
+  #commandStatus: AuthoritativeCommandStatus = { phase: "idle" };
+  #commandStatusHandlers = new Set<(status: AuthoritativeCommandStatus) => void>();
+  #recoveryTimer: ReturnType<typeof setTimeout> | null = null;
+  #stateSyncRequested = false;
+  #recoveryStartedEmitted = false;
+  #recoveryFailedEmitted = false;
+  #activeRecoveryCause: AuthoritativeCommandRecoveryCause | null = null;
+  /**
+   * Set when the server reports the match is gone (`game_not_found`). Stops
+   * reconnect/heartbeat/move traffic so a gateway flap after deploy cannot
+   * spam the game-server for a dead runtime game.
+   */
+  #sessionTerminal = false;
+  readonly #recoveryTimeoutMs: number;
+  readonly #onRecoveryTelemetry: ((event: AuthoritativeRecoveryTelemetryEvent) => void) | undefined;
   readonly #idleStore: IdleStore | undefined;
   #idleStoreCleanup: (() => void) | null = null;
 
@@ -115,6 +168,9 @@ export class GatewayTransport implements Transport {
     this.#matchID = config.matchID;
     this.#initialState = config.initialState;
     this.#idleStore = config.idleStore;
+    this.#heartbeatIntervalMs = config.heartbeatIntervalMs ?? HEARTBEAT_INTERVAL_MS;
+    this.#recoveryTimeoutMs = config.recoveryTimeoutMs ?? RECOVERY_TIMEOUT_MS;
+    this.#onRecoveryTelemetry = config.onRecoveryTelemetry;
   }
 
   /** Optional identity echoes for gateway messages (authority remains connection/ticket). */
@@ -129,7 +185,14 @@ export class GatewayTransport implements Transport {
   // ===========================================================================
 
   async connect(): Promise<void> {
+    // Terminal after game_not_found: do not re-arm traffic if this instance is reused.
+    if (this.#sessionTerminal) {
+      this.#state = "DISCONNECTED";
+      return;
+    }
+
     this.#state = "CONNECTING";
+    this.#detachGatewayListeners();
 
     // Register listener for gateway messages
     this.#unsubscribe = this.#gateway.addGameMessageListener((msg) => {
@@ -149,6 +212,9 @@ export class GatewayTransport implements Transport {
         this.#disconnectHandler?.("gateway disconnected");
       } else if (status === "connected" && wasDisconnected) {
         wasDisconnected = false;
+        // Dead matches must not re-arm reconnect after a gateway flap
+        // (common during deploys when runtime Redis for the game is gone).
+        if (this.#sessionTerminal) return;
         this.#state = "CONNECTED";
         this.#gateway.send({
           type: "reconnect",
@@ -180,7 +246,7 @@ export class GatewayTransport implements Transport {
     // Send periodic heartbeats so the server can detect and recover stale state.
     this.#heartbeatTimer = setInterval(() => {
       this.#sendHeartbeat();
-    }, HEARTBEAT_INTERVAL_MS);
+    }, this.#heartbeatIntervalMs);
 
     // Watch for idle/AFK state changes and send immediate activity_update messages.
     if (this.#idleStore) {
@@ -191,23 +257,24 @@ export class GatewayTransport implements Transport {
   }
 
   async disconnect(): Promise<void> {
-    if (this.#heartbeatTimer !== null) {
-      clearInterval(this.#heartbeatTimer);
-      this.#heartbeatTimer = null;
-    }
-    this.#idleStoreCleanup?.();
-    this.#idleStoreCleanup = null;
-    this.#statusUnsubscribe?.();
-    this.#statusUnsubscribe = null;
-    this.#unsubscribe?.();
-    this.#unsubscribe = null;
+    this.#detachGatewayListeners();
     this.#state = "DISCONNECTED";
+    // Keep `#sessionTerminal` — a game_not_found session must stay dead even if
+    // the caller disconnects and later reuses this transport instance.
     this.#lastMoveAcceptedStateVersion = -1;
     this.#pendingUndoMove = false;
     this.#pendingRetryMove = null;
+    this.#clearRecoveryTimer();
+    this.#stateSyncRequested = false;
+    this.#recoveryStartedEmitted = false;
+    this.#recoveryFailedEmitted = false;
+    this.#activeRecoveryCause = null;
+    this.#setCommandStatus({ phase: "idle" });
+    this.#commandStatusHandlers.clear();
   }
 
   send(message: ClientMessage): void {
+    if (this.#sessionTerminal) return;
     switch (message.type) {
       case "UPDATE_ACTION": {
         const cmd = (
@@ -218,6 +285,7 @@ export class GatewayTransport implements Transport {
             ? (cmd.input.args as Record<string, unknown>)
             : {};
         const prevStateID = (message as { prevStateID: number }).prevStateID;
+        if (!this.#beginCommand(cmd.move, cmd.commandID, prevStateID)) break;
         const moveMsg = {
           type: "execute_move",
           ...this.#identityEcho(),
@@ -227,23 +295,23 @@ export class GatewayTransport implements Transport {
           payload,
         };
         this.#gateway.sendWithAck(moveMsg).catch((reason: string) => {
+          if (!this.#isCurrentCommand(cmd.commandID)) return;
           if (reason === "disconnected" || reason === "timeout") {
-            this.#pendingRetryMove = { message: moveMsg, expectedVersion: prevStateID };
+            this.#pendingRetryMove = {
+              message: moveMsg,
+              commandID: cmd.commandID,
+              expectedVersion: prevStateID,
+            };
+            this.#beginRecovery("delivery_unknown");
+            this.requestStateSync(this.#serverStateVersion);
           }
         });
         break;
       }
 
       case "SYNC_REQUEST": {
-        // The gateway handles sync via game_joined on join or reconnect.
-        // If the client requests resync, send a reconnect message.
         const lastKnown = (message as { lastKnownStateID?: number }).lastKnownStateID ?? 0;
-        this.#gateway.send({
-          type: "reconnect",
-          ...this.#identityEcho(),
-          gameId: this.#gameId,
-          lastReceivedVersion: lastKnown,
-        });
+        this.requestStateSync(lastKnown);
         break;
       }
 
@@ -252,8 +320,12 @@ export class GatewayTransport implements Transport {
         break;
 
       case "UNDO_REQUEST": {
-        this.#pendingUndoMove = true;
+        const commandID =
+          (message as { commandID?: string }).commandID ??
+          `undo-${this.#gameProfileId}-${Date.now()}`;
         const undoPrevStateID = (message as { prevStateID: number }).prevStateID;
+        if (!this.#beginCommand("undo", commandID, undoPrevStateID)) break;
+        this.#pendingUndoMove = true;
         const undoMsg = {
           type: "execute_move",
           ...this.#identityEcho(),
@@ -263,6 +335,7 @@ export class GatewayTransport implements Transport {
           payload: {},
         };
         this.#gateway.sendWithAck(undoMsg).catch((reason: string) => {
+          if (!this.#isCurrentCommand(commandID)) return;
           if (reason === "disconnected" || reason === "timeout") {
             // Do NOT clear #pendingUndoMove here. On timeout the socket may still be
             // alive, and a delayed move_rejected (with proposal reason) must still
@@ -271,9 +344,12 @@ export class GatewayTransport implements Transport {
             // the server snapshot confirms the undo was already applied.
             this.#pendingRetryMove = {
               message: undoMsg,
+              commandID,
               expectedVersion: undoPrevStateID,
               isUndo: true,
             };
+            this.#beginRecovery("delivery_unknown");
+            this.requestStateSync(this.#serverStateVersion);
           }
         });
         break;
@@ -300,6 +376,35 @@ export class GatewayTransport implements Transport {
     return this.#state;
   }
 
+  getAuthoritativeCommandStatus(): AuthoritativeCommandStatus {
+    return { ...this.#commandStatus };
+  }
+
+  onAuthoritativeCommandStatusChange(
+    handler: (status: AuthoritativeCommandStatus) => void,
+  ): () => void {
+    this.#commandStatusHandlers.add(handler);
+    return () => this.#commandStatusHandlers.delete(handler);
+  }
+
+  requestStateSync(lastKnownStateID = this.#serverStateVersion): void {
+    if (this.#sessionTerminal) return;
+    const recovering =
+      this.#commandStatus.phase === "recovering" || this.#commandStatus.phase === "recovery_failed";
+    if (recovering && this.#stateSyncRequested) return;
+    if (this.#commandStatus.phase === "recovery_failed") {
+      this.#setCommandStatus({ ...this.#commandStatus, phase: "recovering" });
+      this.#startRecoveryTimer();
+    }
+    this.#stateSyncRequested = recovering;
+    this.#gateway.send({
+      type: "reconnect",
+      ...this.#identityEcho(),
+      gameId: this.#gameId,
+      lastReceivedVersion: lastKnownStateID,
+    });
+  }
+
   // ===========================================================================
   // Gateway → Engine message translation
   // ===========================================================================
@@ -308,15 +413,34 @@ export class GatewayTransport implements Transport {
     // Filter by gameId
     if (msg.gameId && msg.gameId !== this.#gameId) return;
 
+    if (msg.type === "heartbeat_ack") {
+      this.#heartbeatProbeTracker.acknowledge({
+        correlationId: typeof msg.correlationId === "string" ? msg.correlationId : undefined,
+        clientSentAt: typeof msg.clientSentAt === "number" ? msg.clientSentAt : undefined,
+      });
+    }
+
     switch (msg.type) {
       case "move_accepted": {
         // The server sends move_accepted as a unicast to the actor with the
         // full authoritative state and animations. Deliver it as UPDATE_FULL so
         // the engine loads the authoritative state and forwards animations to the UI.
+        const stateVersion = (msg.stateVersion as number) ?? 0;
+        const pendingExpectedVersion = this.#pendingCommandExpectedVersion;
+        if (
+          this.#commandStatus.phase !== "idle" &&
+          pendingExpectedVersion !== null &&
+          stateVersion <= pendingExpectedVersion
+        ) {
+          // A state_update may already have confirmed the previous command
+          // and allowed a follow-up command. Do not let a reordered acceptance
+          // for that older version replace the new optimistic state or unlock
+          // the follow-up command.
+          break;
+        }
         this.#pendingUndoMove = false;
         const state = msg.state;
         if (state) {
-          const stateVersion = (msg.stateVersion as number) ?? 0;
           this.#serverStateVersion = stateVersion;
           this.#lastMoveAcceptedStateVersion = stateVersion;
           const animations = Array.isArray(msg.animations) ? msg.animations : [];
@@ -335,6 +459,15 @@ export class GatewayTransport implements Transport {
             },
             animations,
           } as ServerMessage);
+          this.#completeCommand();
+        } else if (this.#commandStatus.phase !== "idle") {
+          // A correlated acceptance settles GatewayClient.sendWithAck(). If the
+          // state payload is missing, its timeout can no longer start recovery,
+          // so explicitly reconcile instead of leaving the UI locked forever.
+          this.#pendingRetryMove = null;
+          this.#pendingCommandKnownAccepted = true;
+          this.#beginRecovery("delivery_unknown");
+          this.requestStateSync(this.#serverStateVersion);
         }
         break;
       }
@@ -353,7 +486,7 @@ export class GatewayTransport implements Transport {
             canUndo: false,
             state,
           } as ServerMessage);
-          this.#checkAndRetryPendingMove(stateVersion);
+          this.#handleAuthoritativeSync(stateVersion);
         }
         break;
       }
@@ -373,7 +506,7 @@ export class GatewayTransport implements Transport {
             canUndo: false,
             state,
           } as ServerMessage);
-          this.#checkAndRetryPendingMove(stateVersion);
+          this.#handleAuthoritativeSync(stateVersion);
         }
         break;
       }
@@ -396,6 +529,11 @@ export class GatewayTransport implements Transport {
 
         const stateUpdateAnimations = Array.isArray(msg.animations) ? msg.animations : [];
         const stateUpdateMoveType = typeof msg.moveType === "string" ? msg.moveType : "unknown";
+        const confirmsSubmittedCommand = this.#stateUpdateConfirmsSubmittedCommand(
+          msg,
+          stateVersion,
+          stateUpdateMoveType,
+        );
         this.#deliverMessage({
           type: "UPDATE_FULL",
           protocolVersion: PROTOCOL_VERSION,
@@ -409,7 +547,15 @@ export class GatewayTransport implements Transport {
           },
           animations: stateUpdateAnimations,
         } as ServerMessage);
-        this.#checkAndRetryPendingMove(stateVersion);
+        if (confirmsSubmittedCommand) {
+          // The actor receives both move_accepted and a per-actor state_update.
+          // Treat the latter as authoritative confirmation when the unicast is
+          // dropped or reordered; the full state has already replaced the
+          // optimistic client state, so keeping the command lock is harmful.
+          this.#completeCommand();
+        } else {
+          this.#handleAuthoritativeSync(stateVersion);
+        }
         break;
       }
 
@@ -428,6 +574,7 @@ export class GatewayTransport implements Transport {
         // of delivering a confusing INVALID_MOVE error to the engine.
         if (this.#pendingUndoMove && code === "rejected_illegal" && reason.includes("proposal")) {
           this.#pendingUndoMove = false;
+          this.#completeCommand();
           this.#gateway.send({
             type: "proposal_send",
             gameId: this.#gameId,
@@ -445,6 +592,12 @@ export class GatewayTransport implements Transport {
               ? "INVALID_MOVE"
               : "INVALID_MOVE";
 
+        if (engineCode === "STALE_STATE") {
+          this.#beginRecovery("stale_state");
+        } else {
+          this.#completeCommand();
+        }
+
         this.#deliverMessage({
           type: "ERROR",
           protocolVersion: PROTOCOL_VERSION,
@@ -454,6 +607,9 @@ export class GatewayTransport implements Transport {
           currentStateID: (msg.currentVersion as number) ?? undefined,
           resyncRequired: engineCode === "STALE_STATE",
         } as ServerMessage);
+        if (engineCode === "STALE_STATE") {
+          this.requestStateSync((msg.currentVersion as number) ?? this.#serverStateVersion);
+        }
         break;
       }
 
@@ -476,12 +632,14 @@ export class GatewayTransport implements Transport {
   }
 
   #sendHeartbeat(): void {
+    if (this.#sessionTerminal) return;
     const activity = this.#idleStore
       ? { idle: this.#idleStore.idle, tabVisible: this.#idleStore.tabVisible }
       : undefined;
 
     this.#gateway.send({
       type: "heartbeat",
+      ...this.#heartbeatProbeTracker.nextHeartbeatFields(),
       ...this.#identityEcho(),
       game: {
         gameId: this.#gameId,
@@ -493,12 +651,49 @@ export class GatewayTransport implements Transport {
   }
 
   #sendActivityUpdate(idle: boolean, tabVisible: boolean): void {
+    if (this.#sessionTerminal) return;
     this.#gateway.send({
       type: "activity_update",
       gameId: this.#gameId,
       idle,
       tabVisible,
     });
+  }
+
+  /**
+   * Permanently stop gameplay traffic for this transport instance. Used when
+   * the runtime reports `game_not_found` (deploy recycle / expired Redis).
+   */
+  #markSessionTerminal(reason: string): void {
+    if (this.#sessionTerminal) return;
+    this.#sessionTerminal = true;
+    this.#pendingRetryMove = null;
+    this.#pendingUndoMove = false;
+    this.#stateSyncRequested = false;
+    this.#clearRecoveryTimer();
+    this.#completeCommand();
+    this.#detachGatewayListeners();
+    this.#state = "DISCONNECTED";
+    this.#disconnectHandler?.(reason);
+  }
+
+  /** Tear down heartbeats, idle watchers, and gateway subscriptions. */
+  #detachGatewayListeners(): void {
+    this.#stopPeriodicTraffic();
+    this.#heartbeatProbeTracker.clear();
+    this.#idleStoreCleanup?.();
+    this.#idleStoreCleanup = null;
+    this.#statusUnsubscribe?.();
+    this.#statusUnsubscribe = null;
+    this.#unsubscribe?.();
+    this.#unsubscribe = null;
+  }
+
+  #stopPeriodicTraffic(): void {
+    if (this.#heartbeatTimer !== null) {
+      clearInterval(this.#heartbeatTimer);
+      this.#heartbeatTimer = null;
+    }
   }
 
   #deliverMessage(message: ServerMessage): void {
@@ -521,6 +716,7 @@ export class GatewayTransport implements Transport {
       if (retry.isUndo) {
         this.#pendingUndoMove = false;
       }
+      this.#completeCommand();
       return;
     }
 
@@ -535,14 +731,180 @@ export class GatewayTransport implements Transport {
     if (retry.isUndo) {
       this.#pendingUndoMove = true;
     }
+    this.#setSubmittingAfterReconciliation();
     this.#gateway.sendWithAck(retry.message).catch((reason: string) => {
+      if (!this.#isCurrentCommand(retry.commandID)) return;
       if (reason === "disconnected" || reason === "timeout") {
         // Do NOT clear #pendingUndoMove here — same reasoning as in UNDO_REQUEST:
         // the socket may still be alive on timeout and a delayed move_rejected
         // (proposal reason) must still trigger proposal escalation.
         this.#pendingRetryMove = retry;
+        this.#beginRecovery("delivery_unknown");
+        this.requestStateSync(this.#serverStateVersion);
       }
     });
+  }
+
+  #handleAuthoritativeSync(currentStateVersion: number): void {
+    this.#stateSyncRequested = false;
+    if (
+      this.#commandStatus.phase === "recovering" ||
+      this.#commandStatus.phase === "recovery_failed"
+    ) {
+      if (this.#commandStatus.recoveryCause === "stale_state") {
+        this.#pendingRetryMove = null;
+        this.#completeCommand();
+        return;
+      }
+      if (
+        this.#pendingCommandKnownAccepted &&
+        this.#pendingCommandExpectedVersion !== null &&
+        currentStateVersion > this.#pendingCommandExpectedVersion
+      ) {
+        this.#completeCommand();
+        return;
+      }
+    }
+    this.#checkAndRetryPendingMove(currentStateVersion);
+  }
+
+  #beginCommand(moveId: string, commandID: string, expectedVersion: number): boolean {
+    if (this.#commandStatus.phase !== "idle") return false;
+    this.#recoveryStartedEmitted = false;
+    this.#recoveryFailedEmitted = false;
+    this.#activeRecoveryCause = null;
+    this.#pendingCommandExpectedVersion = expectedVersion;
+    this.#pendingCommandKnownAccepted = false;
+    this.#setCommandStatus({
+      phase: "submitting",
+      moveId,
+      commandID,
+      startedAt: Date.now(),
+    });
+    return true;
+  }
+
+  #beginRecovery(cause: AuthoritativeCommandRecoveryCause): void {
+    const current = this.#commandStatus;
+    if (current.phase === "idle") return;
+    if (current.phase === "recovering" && current.recoveryCause === cause) return;
+    this.#activeRecoveryCause ??= cause;
+
+    this.#setCommandStatus({
+      phase: "recovering",
+      moveId: current.moveId,
+      commandID: current.commandID,
+      startedAt: current.startedAt,
+      recoveryCause: cause,
+    });
+    if (!this.#recoveryStartedEmitted) {
+      this.#recoveryStartedEmitted = true;
+      this.#onRecoveryTelemetry?.({ type: "started", cause, moveType: current.moveId });
+    }
+    this.#startRecoveryTimer();
+  }
+
+  #isCurrentCommand(commandID: string): boolean {
+    return this.#commandStatus.phase !== "idle" && this.#commandStatus.commandID === commandID;
+  }
+
+  #setSubmittingAfterReconciliation(): void {
+    const current = this.#commandStatus;
+    if (current.phase === "idle") return;
+    this.#clearRecoveryTimer();
+    this.#setCommandStatus({
+      phase: "submitting",
+      moveId: current.moveId,
+      commandID: current.commandID,
+      startedAt: current.startedAt,
+    });
+  }
+
+  #completeCommand(): void {
+    const current = this.#commandStatus;
+    this.#pendingCommandExpectedVersion = null;
+    this.#pendingCommandKnownAccepted = false;
+    if (current.phase === "idle") return;
+    const recoveryCause = this.#activeRecoveryCause;
+    this.#clearRecoveryTimer();
+    this.#stateSyncRequested = false;
+    if (recoveryCause) {
+      this.#onRecoveryTelemetry?.({
+        type: "completed",
+        cause: recoveryCause,
+        moveType: current.moveId,
+        durationMs: Math.max(0, Date.now() - current.startedAt),
+      });
+    }
+    this.#recoveryStartedEmitted = false;
+    this.#recoveryFailedEmitted = false;
+    this.#activeRecoveryCause = null;
+    this.#setCommandStatus({ phase: "idle" });
+  }
+
+  #stateUpdateConfirmsSubmittedCommand(
+    msg: Record<string, unknown>,
+    stateVersion: number,
+    moveType: string,
+  ): boolean {
+    const current = this.#commandStatus;
+    const expectedVersion = this.#pendingCommandExpectedVersion;
+    if (
+      current.phase !== "submitting" ||
+      expectedVersion === null ||
+      stateVersion <= expectedVersion ||
+      moveType !== current.moveId
+    ) {
+      return false;
+    }
+
+    const explicitActorId = typeof msg.actorId === "string" ? msg.actorId : null;
+    if (explicitActorId !== null) return explicitActorId === this.#gameProfileId;
+
+    const engineLogs = Array.isArray(msg.engineLogs) ? msg.engineLogs : [];
+    for (const entry of engineLogs) {
+      if (!entry || typeof entry !== "object") continue;
+      const log = (entry as { log?: unknown }).log;
+      if (!log || typeof log !== "object") continue;
+      const playerId = (log as { playerId?: unknown }).playerId;
+      if (typeof playerId === "string") return playerId === this.#gameProfileId;
+    }
+
+    // Every player receives per-actor projections for every committed move.
+    // Without actor evidence, an opponent winning a concurrent CAS with the
+    // same move type could be mistaken for confirmation of our command.
+    return false;
+  }
+
+  #startRecoveryTimer(): void {
+    this.#clearRecoveryTimer();
+    this.#recoveryTimer = setTimeout(() => {
+      const current = this.#commandStatus;
+      if (current.phase !== "recovering") return;
+      this.#stateSyncRequested = false;
+      this.#setCommandStatus({ ...current, phase: "recovery_failed" });
+      if (!this.#recoveryFailedEmitted) {
+        this.#recoveryFailedEmitted = true;
+        this.#onRecoveryTelemetry?.({
+          type: "failed",
+          cause: current.recoveryCause,
+          moveType: current.moveId,
+          durationMs: Math.max(0, Date.now() - current.startedAt),
+        });
+      }
+    }, this.#recoveryTimeoutMs);
+  }
+
+  #clearRecoveryTimer(): void {
+    if (this.#recoveryTimer === null) return;
+    clearTimeout(this.#recoveryTimer);
+    this.#recoveryTimer = null;
+  }
+
+  #setCommandStatus(status: AuthoritativeCommandStatus): void {
+    this.#commandStatus = status;
+    const snapshot = { ...status };
+    for (const handler of this.#commandStatusHandlers) handler(snapshot);
   }
 
   /** Push a protocol ERROR so the client engine rolls back optimistic moves. */
@@ -559,9 +921,30 @@ export class GatewayTransport implements Transport {
       resyncRequired: engineCode === "STALE_STATE",
     } as ServerMessage);
 
+    // Runtime game is gone (deploy recycle, TTL expiry, or never existed).
+    // Stop reconnect/heartbeat loops so the tab cannot spam the game-server.
+    if (gatewayCode === "game_not_found" || engineCode === "MATCH_NOT_FOUND") {
+      this.#markSessionTerminal("match not found");
+      return;
+    }
+
+    // completion_failed is emitted only after the engine move committed. The
+    // slower match-completion pipeline failed, not the player's command, so do
+    // not leave the command banner locked waiting for an acceptance that will
+    // never arrive. Reconcile the committed terminal board while recovery
+    // retries match completion independently.
+    if (gatewayCode === "completion_failed") {
+      this.#pendingRetryMove = null;
+      this.#pendingUndoMove = false;
+      this.#completeCommand();
+      this.requestStateSync(this.#serverStateVersion);
+      return;
+    }
+
     // The game ended while our state may still show it as in progress.
     // Request a lightweight sync so the server can push the final state if needed.
     if (gatewayCode === "game_already_completed") {
+      if (this.#sessionTerminal) return;
       this.#gateway.send({
         type: "request_game_state_sync",
         gameId: this.#gameId,

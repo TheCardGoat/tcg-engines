@@ -25,7 +25,7 @@ export interface PostGameCanonicalData {
   completedAt: string;
   durationMs: number;
   authority: "server" | "client" | null;
-  matchType: "ranked" | "casual" | "practice_vs_bot" | "private" | null;
+  matchType: "ranked" | "casual" | "testing" | "practice_vs_bot" | "private" | null;
   players: [PostGamePlayerIdentity, PostGamePlayerIdentity];
   board: LorcanaProjectedBoardView;
   /** Raw move history — only present when source: "redis" (expires after ~1hr) */
@@ -155,6 +155,7 @@ function isPostGameCanonicalData(value: unknown): value is PostGameCanonicalData
     (value.authority === "server" || value.authority === "client" || value.authority === null) &&
     (value.matchType === "ranked" ||
       value.matchType === "casual" ||
+      value.matchType === "testing" ||
       value.matchType === "practice_vs_bot" ||
       value.matchType === "private" ||
       value.matchType === null) &&
@@ -167,7 +168,7 @@ function isPostGameCanonicalData(value: unknown): value is PostGameCanonicalData
   );
 }
 
-function parsePostGameRecordEnvelope(payload: unknown): PostGameRecordEnvelope {
+export function parsePostGameRecordEnvelope(payload: unknown): PostGameRecordEnvelope {
   if (
     !isRecord(payload) ||
     typeof payload.gameId !== "string" ||

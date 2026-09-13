@@ -36,25 +36,31 @@ export const eb02Jinbe055: CharacterCard = {
         conditions: [
           {
             condition: "compound",
-            operator: "or",
+            operator: "and",
             conditions: [
               {
-                condition: "leaderTrait",
-                trait: "Fish-Man",
-                match: "includes",
+                condition: "compound",
+                operator: "or",
+                conditions: [
+                  {
+                    condition: "leaderTrait",
+                    trait: "Fish-Man",
+                    match: "includes",
+                  },
+                  {
+                    condition: "leaderTrait",
+                    trait: "Merfolk",
+                    match: "includes",
+                  },
+                ],
               },
               {
-                condition: "leaderTrait",
-                trait: "Merfolk",
-                match: "includes",
+                condition: "lifeCount",
+                player: "self",
+                comparison: "lte",
+                value: 2,
               },
             ],
-          },
-          {
-            condition: "lifeCount",
-            player: "self",
-            comparison: "lte",
-            value: 2,
           },
         ],
         actions: [

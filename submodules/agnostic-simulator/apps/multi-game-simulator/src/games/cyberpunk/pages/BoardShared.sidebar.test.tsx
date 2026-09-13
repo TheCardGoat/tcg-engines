@@ -2,12 +2,12 @@
 
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { afterEach, describe, expect, test, vi } from "vite-plus/test";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vite-plus/test";
 
 import { CardPreviewProvider } from "../components/CardPreview/CardPreviewContext";
-import { UserConfigProvider } from "../engine";
+import { AI_STRATEGIES, UserConfigProvider } from "../engine";
 import { theme } from "../theme";
 import { BoardSharedPage } from "./BoardShared.page";
 
@@ -88,6 +88,30 @@ function fetchJsonBody(call: { init?: RequestInit } | undefined): unknown {
 }
 
 describe("BoardSharedPage sidebar", () => {
+  beforeEach(() => {
+    vi.stubGlobal(
+      "matchMedia",
+      vi.fn((query: string) => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        dispatchEvent: vi.fn(),
+      })),
+    );
+    vi.stubGlobal(
+      "ResizeObserver",
+      class ResizeObserver {
+        observe() {}
+        unobserve() {}
+        disconnect() {}
+      },
+    );
+  });
+
   afterEach(() => {
     cleanup();
     vi.unstubAllGlobals();
@@ -100,22 +124,37 @@ describe("BoardSharedPage sidebar", () => {
     expect(screen.queryByTestId("ai-control-panel")).toBeNull();
     expect(screen.getByTestId("human-sidebar-opponent").textContent).toContain("MrGMBH");
     expect(screen.getByTestId("human-sidebar-self").textContent).toContain("Wazar Testing");
-    fireEvent.click(screen.getByRole("button", { name: "Player actions" }));
+    expect(screen.getByTestId("human-sidebar-opponent").textContent).toContain("1510 MMR");
+    expect(screen.getByTestId("human-sidebar-self").textContent).toContain("1425 MMR");
+    fireEvent.click(screen.getByRole("button", { name: "Open MrGMBH actions" }));
     expect(screen.getByRole("menuitem", { name: "Add friend" })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "Report player" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("menuitem", { name: "Report player" }));
+    expect(screen.getByRole("dialog", { name: "Report MrGMBH" })).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Close report mrgmbh" }));
+
+    fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
+    expect(screen.getByRole("menuitem", { name: "Settings" })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "Report bug" })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "Request feature" })).toBeTruthy();
     expect(screen.getByRole("menuitem", { name: "Share feedback" })).toBeTruthy();
-    expect(screen.getByLabelText("Open simulator settings")).toBeTruthy();
+
+    // The three legacy menu items collapsed into one tabbed settings dialog.
+    fireEvent.click(screen.getByRole("menuitem", { name: "Settings" }));
+    const settingsDialog = within(screen.getByRole("dialog", { name: "Settings" }));
+    expect(settingsDialog.getAllByRole("tab").map((tab) => tab.textContent)).toEqual([
+      "Simulator",
+      "Game",
+      "Account",
+    ]);
+    fireEvent.click(screen.getByRole("button", { name: "Close settings" }));
+
     fireEvent.click(screen.getByRole("button", { name: "MrGMBH connection status: Connected" }));
     expect(screen.getByRole("dialog", { name: "MrGMBH connection details" })).toBeTruthy();
     expect(screen.getByText("Rival presence is live")).toBeTruthy();
-    expect(screen.getByText("Connected")).toBeTruthy();
+    expect(screen.getAllByText("Connected").length).toBeGreaterThan(0);
     fireEvent.click(screen.getByText("Technical details"));
     expect(screen.queryByText("dl_secret_opp")).toBeNull();
-
-    fireEvent.click(screen.getByRole("menuitem", { name: "Report player" }));
-    expect(screen.getByRole("dialog", { name: "Report MrGMBH" })).toBeTruthy();
   });
 
   test("submits add friend and marks the action as done", async () => {
@@ -131,7 +170,7 @@ describe("BoardSharedPage sidebar", () => {
     vi.stubGlobal("fetch", fetchMock);
     renderHumanMatchSidebar({ opponentUserId: "user_opp" });
 
-    fireEvent.click(screen.getByRole("button", { name: "Player actions" }));
+    fireEvent.click(screen.getByRole("button", { name: "Open MrGMBH actions" }));
     fireEvent.click(screen.getByRole("menuitem", { name: "Add friend" }));
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
@@ -141,7 +180,6 @@ describe("BoardSharedPage sidebar", () => {
       gameId: "game_1",
     });
 
-    fireEvent.click(screen.getByRole("button", { name: "Player actions" }));
     expect(
       (screen.getByRole("menuitem", { name: "Friend added" }) as HTMLButtonElement).disabled,
     ).toBe(true);
@@ -159,7 +197,7 @@ describe("BoardSharedPage sidebar", () => {
     vi.stubGlobal("fetch", fetchMock);
     renderHumanMatchSidebar({ opponentUserId: "user_opp" });
 
-    fireEvent.click(screen.getByRole("button", { name: "Player actions" }));
+    fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
     fireEvent.click(screen.getByRole("menuitem", { name: "Report bug" }));
     expect(screen.getByRole("dialog", { name: "Report bug" })).toBeTruthy();
     fireEvent.change(screen.getByPlaceholderText("What happened?"), {
@@ -171,7 +209,7 @@ describe("BoardSharedPage sidebar", () => {
     expect(fetchUrl(fetchCalls[0])).toContain("/feedback/bug-reports");
     expect(fetchJsonBody(fetchCalls[0])).toMatchObject({
       description: "The game locked after I passed priority.",
-      source: "cyberpunk-live-match-sidebar",
+      source: "cyberpunk-live-participant-menu",
       context: {
         gameId: "game_1",
         gameSlug: "cyberpunk",
@@ -180,7 +218,7 @@ describe("BoardSharedPage sidebar", () => {
       },
     });
 
-    fireEvent.click(screen.getByRole("button", { name: "Player actions" }));
+    fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
     fireEvent.click(screen.getByRole("menuitem", { name: "Request feature" }));
     expect(screen.getByRole("dialog", { name: "Request feature" })).toBeTruthy();
     fireEvent.change(screen.getByPlaceholderText("What should we add or improve?"), {
@@ -192,10 +230,10 @@ describe("BoardSharedPage sidebar", () => {
     expect(fetchUrl(fetchCalls[1])).toContain("/feedback");
     expect(fetchJsonBody(fetchCalls[1])).toMatchObject({
       message: "Feature request: Add a visible priority timer.",
-      source: "cyberpunk-live-match-sidebar",
+      source: "cyberpunk-live-participant-menu",
     });
 
-    fireEvent.click(screen.getByRole("button", { name: "Player actions" }));
+    fireEvent.click(screen.getByRole("button", { name: "Open your player actions" }));
     fireEvent.click(screen.getByRole("menuitem", { name: "Share feedback" }));
     expect(screen.getByRole("dialog", { name: "Share feedback" })).toBeTruthy();
     fireEvent.change(screen.getByPlaceholderText("What should we improve?"), {
@@ -207,7 +245,7 @@ describe("BoardSharedPage sidebar", () => {
     expect(fetchUrl(fetchCalls[2])).toContain("/feedback");
     expect(fetchJsonBody(fetchCalls[2])).toMatchObject({
       message: "The sidebar is useful.",
-      source: "cyberpunk-live-match-sidebar",
+      source: "cyberpunk-live-participant-menu",
     });
   });
 
@@ -249,6 +287,7 @@ describe("BoardSharedPage sidebar", () => {
       />,
     );
 
+    fireEvent.click(screen.getByRole("tab", { name: "More" }));
     fireEvent.click(screen.getByRole("button", { name: "MrGMBH connection status: Disconnected" }));
     expect(screen.getByRole("dialog", { name: "MrGMBH connection details" })).toBeTruthy();
     expect(screen.getByText("Rival disconnected")).toBeTruthy();
@@ -289,12 +328,13 @@ describe("BoardSharedPage sidebar", () => {
       />,
     );
 
+    fireEvent.click(screen.getByRole("tab", { name: "More" }));
     expect(screen.getByText("Connection lost").closest('[role="status"]')).toBeTruthy();
     expect(screen.getByText("Actions are paused.")).toBeTruthy();
     expect(screen.getByText(/Wait for this to clear/)).toBeTruthy();
   });
 
-  test("integrates chat messages into the human event log and keeps compose controls in the floating chat bubble", () => {
+  test("integrates chat messages into the human event log and keeps compose controls in the Chat tab", async () => {
     const sendPreset = vi.fn(() => true);
     const requestFreeText = vi.fn(() => true);
     renderBoard(
@@ -348,23 +388,21 @@ describe("BoardSharedPage sidebar", () => {
       />,
     );
 
-    const logMessages = screen.getAllByTestId("event-log-chat-message");
-    expect(logMessages).toHaveLength(2);
-    expect(logMessages[0].textContent).toContain("Rival");
-    expect(logMessages[0].textContent).toContain("Good luck!");
-    expect(logMessages[1].textContent).toContain("You");
-    expect(logMessages[1].textContent).toContain("Ready when you are.");
-
-    fireEvent.click(screen.getByLabelText("Open chat controls"));
-    expect(screen.getByTestId("chat-presets")).toBeTruthy();
-    expect(screen.queryByTestId("chat-messages")).toBeNull();
+    const chatMessages = await screen.findAllByTestId("event-log-chat-message");
+    expect(chatMessages).toHaveLength(2);
+    expect(chatMessages[0]?.textContent).toContain("Rival");
+    expect(chatMessages[0]?.textContent).toContain("Good luck!");
+    expect(chatMessages[1]?.textContent).toContain("You");
+    expect(chatMessages[1]?.textContent).toContain("Ready when you are.");
+    fireEvent.click(screen.getByRole("tab", { name: "Chat" }));
+    expect(await screen.findByTestId("chat-presets")).toBeTruthy();
     fireEvent.click(screen.getAllByTestId("chat-quick")[0]);
     expect(sendPreset).toHaveBeenCalledTimes(1);
     fireEvent.click(screen.getByTestId("chat-request-free-text"));
     expect(requestFreeText).toHaveBeenCalledTimes(1);
   });
 
-  test("keeps the AI sidebar when no human match metadata is provided", () => {
+  test("keeps AI controls in the fixed automation summary popover", async () => {
     renderBoard(
       <BoardSharedPage
         scenarioId="gameStart"
@@ -374,11 +412,61 @@ describe("BoardSharedPage sidebar", () => {
     );
 
     expect(screen.getByTestId("cyberpunk-practice-sidebar")).toBeTruthy();
-    expect(screen.getByTestId("ai-control-panel")).toBeTruthy();
+    expect(screen.queryByTestId("ai-control-panel")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Bot controls" }));
+    expect(await screen.findByTestId("ai-control-panel")).toBeTruthy();
+    expect(screen.getByTestId("ai-mode-auto")).toBeTruthy();
     expect(screen.queryByTestId("cyberpunk-human-match-sidebar")).toBeNull();
   });
 
-  test("shows chat controls in the bot sidebar and feeds messages into the event log", () => {
+  test("takes over and releases the bot seat from the closed automation strip", async () => {
+    renderBoard(
+      <BoardSharedPage
+        scenarioId="gameStart"
+        initialAi={{ player: null, opponent: AI_STRATEGIES[0]?.strategy ?? null }}
+        initialAiMode="step"
+      />,
+    );
+
+    const quickTakeover = screen.getByTestId("cyberpunk-practice-quick-take-control");
+    expect(quickTakeover.textContent).toBe("Take over");
+    expect(quickTakeover).not.toHaveProperty("disabled", true);
+    expect(screen.getByTestId("cyberpunk-practice-quick-next")).toBeTruthy();
+    expect(screen.getByTestId("cyberpunk-practice-quick-play")).toBeTruthy();
+    expect(screen.queryByTestId("ai-control-panel")).toBeNull();
+
+    fireEvent.click(screen.getByTestId("cyberpunk-practice-quick-play"));
+    expect(screen.getByTestId("cyberpunk-practice-quick-pause")).toBeTruthy();
+    expect(screen.queryByTestId("cyberpunk-practice-quick-next")).toBeNull();
+    fireEvent.click(screen.getByTestId("cyberpunk-practice-quick-pause"));
+    expect(screen.getByTestId("cyberpunk-practice-quick-next")).toBeTruthy();
+    expect(screen.getByTestId("cyberpunk-practice-quick-play")).toBeTruthy();
+
+    fireEvent.click(quickTakeover);
+
+    await waitFor(() => {
+      expect(screen.getByTestId("cyberpunk-practice-quick-take-control").textContent).toBe(
+        "Release",
+      );
+    });
+    expect(screen.getByRole("button", { name: "Bot controls" }).textContent).toContain(
+      "You control bot",
+    );
+    expect(screen.queryByTestId("ai-control-panel")).toBeNull();
+
+    fireEvent.click(screen.getByTestId("cyberpunk-practice-quick-take-control"));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("cyberpunk-practice-quick-take-control").textContent).toBe(
+        "Take over",
+      );
+    });
+    expect(screen.getByRole("button", { name: "Bot controls" }).textContent).toContain(
+      "Paused · step",
+    );
+  });
+
+  test("keeps bot chat in the shared Chat tab", async () => {
     renderBoard(
       <BoardSharedPage
         scenarioId="gameStart"
@@ -388,28 +476,13 @@ describe("BoardSharedPage sidebar", () => {
     );
 
     expect(screen.getByTestId("cyberpunk-practice-sidebar")).toBeTruthy();
-    expect(screen.queryByTestId("event-log-chat-message")).toBeNull();
-
-    fireEvent.click(screen.getByLabelText("Open chat controls"));
-    expect(screen.getByTestId("chat-presets")).toBeTruthy();
-    expect(screen.queryByTestId("chat-messages")).toBeNull();
-    expect(screen.getByLabelText("Close chat popover")).toBeTruthy();
-
-    fireEvent.keyDown(window, { key: "Escape" });
-    expect(screen.queryByTestId("chat-presets")).toBeNull();
-
-    fireEvent.click(screen.getByLabelText("Open chat controls"));
-    expect(screen.getByTestId("chat-presets")).toBeTruthy();
-    fireEvent.click(screen.getByLabelText("Close chat popover"));
-    expect(screen.queryByTestId("chat-presets")).toBeNull();
-
-    fireEvent.click(screen.getByLabelText("Open chat controls"));
-    expect(screen.getByTestId("chat-presets")).toBeTruthy();
-
+    expect(screen.queryByTestId("chat-message")).toBeNull();
+    fireEvent.click(screen.getByRole("tab", { name: "Chat" }));
+    expect(await screen.findByTestId("chat-presets")).toBeTruthy();
     fireEvent.click(screen.getAllByTestId("chat-quick")[0]);
-
-    const logMessage = screen.getByTestId("event-log-chat-message");
-    expect(logMessage.textContent).toContain("You");
-    expect(logMessage.textContent).toContain("Good luck!");
+    expect(screen.getByTestId("chat-message").textContent).toContain("You");
+    expect(screen.getByTestId("chat-message").textContent).toContain("Good luck!");
+    fireEvent.click(screen.getByRole("tab", { name: "Log" }));
+    expect(screen.queryByTestId("chat-message")).toBeNull();
   });
 });

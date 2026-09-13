@@ -96,11 +96,12 @@ const violations = [];
 for (const docRoot of DOC_ROOTS) {
   for await (const docPath of walkDocs(docRoot)) {
     const content = await readFile(docPath, "utf8");
+    const prose = stripCode(content);
     const docDir = dirname(docPath);
     const docRel = relative(ROOT, docPath);
 
     // 1. Markdown links
-    for (const match of content.matchAll(LINK_RE)) {
+    for (const match of prose.matchAll(LINK_RE)) {
       let target = match[1];
       // Strip query/fragment.
       target = target.split("#")[0].split("?")[0];
@@ -126,13 +127,12 @@ for (const docRoot of DOC_ROOTS) {
           doc: docRel,
           kind: "link",
           target,
-          line: lineOf(content, match.index),
+          line: lineOf(prose, match.index),
         });
       }
     }
 
     // 2. Bareword paths — scan prose only, skip fenced/inline code.
-    const prose = stripCode(content);
     const seen = new Set();
     for (const match of prose.matchAll(PATH_RE)) {
       const target = match[1];

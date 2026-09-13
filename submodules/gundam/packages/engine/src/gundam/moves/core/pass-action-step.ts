@@ -31,7 +31,7 @@ export const passActionStep: GundamMoveDefinition<"passActionStep"> = {
     return { valid: true };
   },
 
-  execute({ playerId, framework }) {
+  execute({ playerId, args, framework }) {
     const pending = (framework.state.status.pendingDecision ?? []).filter(
       (id) => id !== (playerId as PlayerId),
     ) as PlayerId[];
@@ -44,7 +44,11 @@ export const passActionStep: GundamMoveDefinition<"passActionStep"> = {
 
     emitGundamLog(framework, {
       type: "gundam.move.pass",
-      values: { playerId, context: "action-step" },
+      values: {
+        playerId,
+        context: "action-step",
+        ...(args?.automatic === true ? { automatic: true } : {}),
+      },
       visibility: { mode: "PUBLIC" },
       category: "action",
     });

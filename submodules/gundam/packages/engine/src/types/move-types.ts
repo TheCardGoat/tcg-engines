@@ -97,6 +97,7 @@ export interface TimeQueryAPI {
   getActivePlayerId: () => string | undefined;
   getTimeoutStatus: (playerId: PlayerId, now?: number) => "first" | "second" | null;
   isInNegativeTime: (playerId: PlayerId) => boolean;
+  hasGraceExpired: (playerId: PlayerId, now?: number) => boolean;
 }
 
 export interface TimeOperationsAPI extends TimeQueryAPI {

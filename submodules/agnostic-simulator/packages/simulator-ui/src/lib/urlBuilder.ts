@@ -8,13 +8,17 @@ export interface CardImageUrlParams {
   size?: "small" | "medium" | "large" | "full";
 }
 
-const CDN_BASE = "https://r2.tcg.online";
+const CDN_BASE = "https://cdn.tcg.online";
 
 const GAME_PATHS: Record<GameSlug, string> = {
   "one-piece": "one-piece/cards",
   gundam: "gundam/cards",
   cyberpunk: "cyberpunk/cards",
   lorcana: "lorcana/cards",
+  riftbound: "riftbound/cards",
+  "flesh-and-blood": "flesh-and-blood/cards",
+  "grand-archive": "grand-archive/cards",
+  naruto: "naruto/cards",
   platform: "platform/cards",
 };
 

@@ -1,5 +1,4 @@
 import { getContext, setContext } from "svelte";
-import type { GatewayClientStore } from "@/features/gateway/gateway-client.svelte.js";
 import { trackEvent } from "$lib/analytics/analytics.js";
 
 /**
@@ -27,7 +26,7 @@ export interface ManualModeController {
 
 interface CreateOptions {
   gameId: string;
-  getGateway: () => GatewayClientStore | null;
+  getGateway: () => { send(message: object): boolean } | null;
   getExpectedVersion: () => number;
   /**
    * Notified after a proposal is sent so the host can paint a

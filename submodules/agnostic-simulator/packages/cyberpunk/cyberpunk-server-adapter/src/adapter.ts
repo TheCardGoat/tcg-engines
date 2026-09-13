@@ -20,17 +20,52 @@ import {
   normalizeMetadataColors,
   sortMetadataFacets,
 } from "@tcg/shared/game-adapter";
+import { slugify } from "@tcg/shared/utils";
 import {
   cyberpunkCreateServerEngine,
   cyberpunkExtractCardsMapsFromSnapshot,
   cyberpunkRestoreEngine,
   cyberpunkSerializeEngine,
 } from "./cyberpunk-engine-lifecycle";
+import { cyberpunkDeckInterchangeAdapter } from "./deck-interchange";
 import { CYBERPUNK_RUNTIME_FINGERPRINT } from "./runtime-fingerprint";
 
 const cyberpunkCardsByPublicId = new Map(cyberpunkStructuredCards.map((card) => [card.id, card]));
 for (const card of getMergedCyberpunkCards()) {
   cyberpunkCardsByPublicId.set(card.canonicalId, card);
+}
+
+// Catalog slugs are source-owned and remain stable URLs. Some older deck rows
+// instead contain a slug derived from the displayed name. Resolve such a row
+// only when accent-folding identifies a single card, never as an authoritative
+// identity or when it would be ambiguous.
+const cyberpunkCardsByDerivedSlug = new Map<
+  string,
+  ReturnType<typeof getMergedCyberpunkCards>[number]
+>();
+const ambiguousDerivedSlugs = new Set<string>();
+for (const card of getMergedCyberpunkCards()) {
+  const derivedSlug = slugify(card.displayName);
+  const existing = cyberpunkCardsByDerivedSlug.get(derivedSlug);
+  if (existing && existing.canonicalId !== card.canonicalId) {
+    cyberpunkCardsByDerivedSlug.delete(derivedSlug);
+    ambiguousDerivedSlugs.add(derivedSlug);
+  } else if (!ambiguousDerivedSlugs.has(derivedSlug)) {
+    cyberpunkCardsByDerivedSlug.set(derivedSlug, card);
+  }
+}
+
+// Metadata projection and normalization use the public-id map directly, so
+// register each safe legacy alias there as well. Never overwrite a catalog id:
+// source-owned ids remain authoritative over display-derived compatibility ids.
+for (const [derivedSlug, card] of cyberpunkCardsByDerivedSlug) {
+  if (!cyberpunkCardsByPublicId.has(derivedSlug)) {
+    cyberpunkCardsByPublicId.set(derivedSlug, card);
+  }
+}
+
+function resolveCyberpunkCard(publicId: string) {
+  return cyberpunkCardsByPublicId.get(publicId) ?? cyberpunkCardsByDerivedSlug.get(publicId);
 }
 
 /**
@@ -44,6 +79,7 @@ for (const card of getMergedCyberpunkCards()) {
  */
 export const cyberpunkServerAdapter: GameAdapter = {
   slug: "cyberpunk",
+  deckInterchange: cyberpunkDeckInterchangeAdapter,
 
   createGameId(): string {
     return `cyberpunk-game-${crypto.randomUUID()}`;
@@ -57,6 +93,8 @@ export const cyberpunkServerAdapter: GameAdapter = {
   buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps {
     const cardInstances: Record<string, string> = {};
     const owners: Record<string, string[]> = {};
+    const instanceSections: Record<string, string> = {};
+    let hasSections = false;
     for (const { owner, deck } of decks) {
       const ownerInstances: string[] = [];
       // Use a per-owner monotonic counter so duplicate cardId rows in the
@@ -68,15 +106,19 @@ export const cyberpunkServerAdapter: GameAdapter = {
           const instanceId = `${owner}-${entry.cardId}-${counter++}`;
           cardInstances[instanceId] = entry.cardId;
           ownerInstances.push(instanceId);
+          if (entry.sectionId) {
+            instanceSections[instanceId] = entry.sectionId;
+            hasSections = true;
+          }
         }
       }
       owners[owner] = ownerInstances;
     }
-    return { cardInstances, owners };
+    return hasSections ? { cardInstances, owners, instanceSections } : { cardInstances, owners };
   },
 
   getCardById(publicId: string): CardSummary | null {
-    const card = cyberpunkCardsByPublicId.get(publicId);
+    const card = resolveCyberpunkCard(publicId);
     if (!card) return null;
     return {
       publicId,
@@ -112,13 +154,13 @@ export const cyberpunkServerAdapter: GameAdapter = {
     // validate against both shapes. The merged view supplies the authoritative
     // card data for canonical ids, while the raw view keeps legacy UUID decks
     // playable during the migration.
-    const unknownEntries = deck.filter((entry) => !cyberpunkCardsByPublicId.has(entry.cardId));
+    const unknownEntries = deck.filter((entry) => !resolveCyberpunkCard(entry.cardId));
     const totalCount = deck.reduce((sum, entry) => sum + entry.quantity, 0);
     const legends: CyberpunkDeckValidationEntry[] = [];
     const mainDeck: CyberpunkDeckValidationEntry[] = [];
 
     for (const entry of deck) {
-      const card = cyberpunkCardsByPublicId.get(entry.cardId);
+      const card = resolveCyberpunkCard(entry.cardId);
       if (!card) continue;
       const validationEntry = {
         card: {
@@ -188,15 +230,31 @@ export const cyberpunkServerAdapter: GameAdapter = {
         pluralLabel: "Legend lineups",
         kind: "combination",
         order: 10,
+        ranking: { specialistSkill: true, mastery: true },
       },
-      { type: "legend", label: "Legend", pluralLabel: "Legends", kind: "individual", order: 20 },
-      { type: "color", label: "Color", pluralLabel: "Colors", kind: "individual", order: 30 },
+      {
+        type: "legend",
+        label: "Legend",
+        pluralLabel: "Legends",
+        kind: "individual",
+        order: 20,
+        ranking: { specialistSkill: true, mastery: true },
+      },
+      {
+        type: "color",
+        label: "Color",
+        pluralLabel: "Colors",
+        kind: "individual",
+        order: 30,
+        ranking: { specialistSkill: true, mastery: true },
+      },
       {
         type: "color-combination",
         label: "Color combination",
         pluralLabel: "Color combinations",
         kind: "combination",
         order: 40,
+        ranking: { specialistSkill: true, mastery: true },
       },
     ],
     projectDeck(deck) {

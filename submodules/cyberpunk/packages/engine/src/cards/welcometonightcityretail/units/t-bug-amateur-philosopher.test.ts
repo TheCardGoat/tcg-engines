@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailGoroTakemuraHandsUnclean,
-  boxTopperRetailJackieWellesPourOneOutForMe,
-  boxTopperRetailSaburoArasakaStubbornPatriarch,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
+  embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
@@ -22,8 +22,8 @@ describe("T-Bug — Amateur Philosopher", () => {
           },
         ],
         legendArea: [
-          { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
-          { card: boxTopperRetailJackieWellesPourOneOutForMe, faceDown: true },
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+          { card: theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: true },
         ],
       },
       {
@@ -49,10 +49,14 @@ describe("T-Bug — Amateur Philosopher", () => {
     expect(engine.getPrompt(P1).choice?.type).toBe("chooseTarget");
 
     // Choose Goro → flip it for free.
-    engine.resolveEffectTarget(boxTopperRetailGoroTakemuraHandsUnclean, { as: P1 });
+    engine.resolveEffectTarget(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, { as: P1 });
 
-    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(false);
-    expect(engine.getCard(boxTopperRetailJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
+    expect(
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean).meta.faceDown,
+    ).toBe(false);
+    expect(engine.getCard(theHeistRetailStarterDeckJackieWellesPourOneOutForMe).meta.faceDown).toBe(
+      true,
+    );
     // Free Call — Eddie total unchanged.
     expect(engine.getEddies(P1)).toBe(eddiesBefore);
     expect(engine.getCardsInZone("trash", P1).map((c) => c.definitionId)).toContain(
@@ -75,8 +79,12 @@ describe("T-Bug — Amateur Philosopher", () => {
     // Decline the optional call.
     engine.executeMove("resolveEffectTarget", { args: { pass: true } }, P1);
 
-    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
-    expect(engine.getCard(boxTopperRetailJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
+    expect(
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean).meta.faceDown,
+    ).toBe(true);
+    expect(engine.getCard(theHeistRetailStarterDeckJackieWellesPourOneOutForMe).meta.faceDown).toBe(
+      true,
+    );
   });
 
   it("if a Legend was already Called this turn, the free Call is skipped but lookAt still occurs (c)", () => {
@@ -91,9 +99,9 @@ describe("T-Bug — Amateur Philosopher", () => {
           },
         ],
         legendArea: [
-          { card: boxTopperRetailSaburoArasakaStubbornPatriarch, faceDown: true },
-          { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
-          { card: boxTopperRetailJackieWellesPourOneOutForMe, faceDown: true },
+          { card: embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, faceDown: true },
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+          { card: theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: true },
         ],
       },
       {
@@ -102,8 +110,10 @@ describe("T-Bug — Amateur Philosopher", () => {
     );
 
     // Call Saburo first — flips it face-up and sets calledLegendThisTurn.
-    engine.callLegend(boxTopperRetailSaburoArasakaStubbornPatriarch, { as: P1 });
-    expect(engine.getCard(boxTopperRetailSaburoArasakaStubbornPatriarch).meta.faceDown).toBe(false);
+    engine.callLegend(embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch, { as: P1 });
+    expect(
+      engine.getCard(embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch).meta.faceDown,
+    ).toBe(false);
 
     engine.attackUnit(
       welcomeToNightCityRetailTBugAmateurPhilosopher,
@@ -118,7 +128,11 @@ describe("T-Bug — Amateur Philosopher", () => {
     // and the remaining face-down Legends stay face-down. The lookAt still occurred
     // (it ran before the guarded callLegend effect and emitted cardsRevealed).
     expect(engine.getPrompt(P1).choice).toBeNull();
-    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
-    expect(engine.getCard(boxTopperRetailJackieWellesPourOneOutForMe).meta.faceDown).toBe(true);
+    expect(
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean).meta.faceDown,
+    ).toBe(true);
+    expect(engine.getCard(theHeistRetailStarterDeckJackieWellesPourOneOutForMe).meta.faceDown).toBe(
+      true,
+    );
   });
 });

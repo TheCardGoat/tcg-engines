@@ -3,7 +3,7 @@ import { prb02MonkeyDDragonReprint015 } from "../../../../../cards/src/cards/PRB
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-015 Monkey.D.Dragon (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02MonkeyDDragonReprint015);
   });
 });

@@ -1,6 +1,5 @@
-import { createMockResource, createMockUnit } from "@tcg/gundam-engine";
-
 import { createDevRuntime, skipToEndPhaseHandStep, type DevRuntime } from "../dev-runtime.ts";
+import { realMainDeckCards, realResourceCards } from "./real-cards.ts";
 
 /**
  * Discard-to-hand-limit fixture — drops the viewer straight into
@@ -10,23 +9,17 @@ import { createDevRuntime, skipToEndPhaseHandStep, type DevRuntime } from "../de
  * `packages/engine/src/gundam/moves/core/discard-to-hand-limit.ts`
  * (rule 7-6-5-1).
  *
- * Each card is named uniquely (Unit 01 … Unit 12) so the spec can
- * select specific cards by name rather than by index — less
- * susceptible to MatchHandBar's fan layout / ordering changes.
+ * The hand uses twelve distinct production cards so the scenario validates the
+ * same visible identities and interaction path used by a real match.
  */
 export function loadDiscardLimitDemo(): DevRuntime {
-  const hand = Array.from({ length: 12 }, (_, i) =>
-    createMockUnit({
-      cost: 1,
-      level: 1,
-      ap: 1,
-      hp: 2,
-      color: "blue",
-      name: `Unit ${String(i + 1).padStart(2, "0")}`,
-    }),
-  );
   const dev = createDevRuntime({
-    p1: { hand, resourceArea: [createMockResource()], deck: 30, resourceDeck: 10 },
+    p1: {
+      hand: realMainDeckCards(12),
+      resourceArea: realResourceCards(1),
+      deck: 30,
+      resourceDeck: 10,
+    },
     p2: { deck: 30, resourceDeck: 10 },
   });
 

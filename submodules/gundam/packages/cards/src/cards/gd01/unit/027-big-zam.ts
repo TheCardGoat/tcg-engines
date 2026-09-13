@@ -28,8 +28,7 @@ export const gd01BigZam027: UnitCard = {
       },
       rarity: "rare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-027.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-027.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-027.webp",
       productName: "Newtype Rising [GD01]",
     },
     {
@@ -45,15 +44,13 @@ export const gd01BigZam027: UnitCard = {
       },
       rarity: "rare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-027_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-027_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-027_p1.webp",
       productName: "Newtype Rising [GD01]",
     },
   ],
   reprints: ["GD01-027", "GD01-027_p1"],
   selectedPrintingId: "GD01-027",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-027.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-027.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-027.webp",
   legality: "legal",
   level: 7,
   cost: 5,
@@ -67,8 +64,10 @@ export const gd01BigZam027: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["deploy"],
-        conditions: [
-          {
+      },
+      directives: [
+        {
+          condition: {
             type: "cardInZone",
             owner: "friendly",
             zone: "trash",
@@ -77,19 +76,19 @@ export const gd01BigZam027: UnitCard = {
             count: 10,
             hasTrait: ["zeon", "neo zeon"],
           },
-        ],
-      },
-      directives: [
-        {
-          action: {
-            action: "dealDamageAll",
-            amount: 4,
-            target: {
-              owner: "any",
-              cardType: "unit",
-              hasKeyword: "Blocker",
+          thenDirectives: [
+            {
+              action: {
+                action: "dealDamageAll",
+                amount: 4,
+                target: {
+                  owner: "any",
+                  cardType: "unit",
+                  hasKeyword: "Blocker",
+                },
+              },
             },
-          },
+          ],
         },
       ],
       sourceText:

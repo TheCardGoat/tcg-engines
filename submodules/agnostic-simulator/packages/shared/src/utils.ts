@@ -49,8 +49,9 @@ export type NonNullable<T> = T extends null | undefined ? never : T;
 
 /**
  * Converts a string to URL-safe kebab-case slug.
- * Replaces whitespace and special characters with hyphens, converts to lowercase.
- * Strips apostrophes and other non-alphanumeric chars (except hyphens).
+ * Folds diacritics to their base letters, replaces whitespace and special
+ * characters with hyphens, converts to lowercase, and strips apostrophes and
+ * other non-alphanumeric characters (except hyphens).
  *
  * @param text - The text to slugify
  * @returns A URL-safe slug string
@@ -60,10 +61,16 @@ export type NonNullable<T> = T extends null | undefined ? never : T;
  * slugify("A Pirate's Life") // "a-pirates-life"
  */
 export function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/[\s_—-]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-+|-+$/g, "");
+  return (
+    text
+      // Decompose first so diacritics remain searchable as their base letters
+      // rather than being discarded with the rest of the punctuation.
+      .normalize("NFKD")
+      .replace(/\p{M}/gu, "")
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_—-]+/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-+|-+$/g, "")
+  );
 }

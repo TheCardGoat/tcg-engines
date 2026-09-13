@@ -20,11 +20,17 @@ import {
   isLinkUnit,
 } from "../../rules/derived-state.ts";
 import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
-import { gatherAllCardsForTargeting, getFilterCountBounds } from "../../effects/target-legality.ts";
+import {
+  firstSegmentActivationGateSatisfied,
+  gatherAllCardsForTargeting,
+  getFilterCountBounds,
+} from "../../effects/target-legality.ts";
 import {
   countPayableDiscardCostCards,
   listPayableDiscardCostCards,
   payCost,
+  resourcePaymentSelection,
+  validatePaymentResourceIds,
 } from "./play-card-shared.ts";
 import { resetActionStepOnAction } from "./action-step-reset.ts";
 import {
@@ -42,6 +48,10 @@ import { rejectWithKey } from "./validation-error.ts";
 
 function isActionTiming(phase: string | undefined, step: string | undefined): boolean {
   return (phase === "battle-phase" || phase === "end-phase") && step === "action-step";
+}
+
+function getRestTargetCostBounds(filter: TargetFilter): { min: number; max: number } {
+  return filter.count === undefined ? { min: 1, max: 1 } : getFilterCountBounds(filter);
 }
 
 function canBeginActivation(
@@ -97,16 +107,24 @@ function canBeginActivation(
     const candidates = evaluateTargetFilter(filter, gatherAllCardsForTargeting(tgtCtx), tgtCtx);
     if (candidates.length < getFilterCountBounds(filter).min) return false;
   }
-  if (
-    cost?.restTarget &&
-    evaluateTargetFilter(cost.restTarget, gatherAllCardsForTargeting(tgtCtx), tgtCtx).length === 0
-  ) {
-    return false;
+  if (cost?.restTarget) {
+    const candidates = evaluateTargetFilter(
+      cost.restTarget,
+      gatherAllCardsForTargeting(tgtCtx),
+      tgtCtx,
+    );
+    const requiredCount = getRestTargetCostBounds(cost.restTarget).min;
+    if (candidates.length < requiredCount) return false;
   }
   if (effect.activation.restrictions?.some((restriction) => restriction.type === "oncePerTurn")) {
     const meta = framework.cards.getMeta(cardId) as GundamCardMeta | undefined;
     if ((meta?.abilityUsesThisTurn?.[String(effectIndex)] ?? 0) >= 1) return false;
   }
+  // Rule 10-2-2: an activated effect that requires a public target does
+  // not activate when that target cannot be chosen. `evaluateLegalTargets`
+  // returns null for an unchoosable first-segment choose (no prompt), so
+  // it cannot be the only gate here.
+  if (!firstSegmentActivationGateSatisfied(effect.directives, tgtCtx)) return false;
   const targetResolution = evaluateLegalTargets(
     {
       id: "__availability__",
@@ -203,6 +221,56 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
         ];
       }
     }
+    if (effect?.cost?.restTarget) {
+      const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
+        sourceCardId: cardId,
+      });
+      const filter = effect.cost.restTarget;
+      const candidates = evaluateTargetFilter(
+        filter,
+        gatherAllCardsForTargeting(tgtCtx),
+        tgtCtx,
+      ) as readonly string[];
+      const selected = ((partialInput as { targets?: readonly string[] }).targets ?? []).filter(
+        (id) => candidates.includes(id),
+      );
+      const { min, max } = getRestTargetCostBounds(filter);
+      if (selected.length < min && candidates.length > min) {
+        return [
+          {
+            kind: "selectTarget",
+            role: "cost",
+            candidateIds: candidates,
+            minTargets: min,
+            maxTargets: Number.isFinite(max) ? max : candidates.length,
+          },
+        ];
+      }
+    }
+
+    const paymentCost = effect?.cost?.payResources ?? 0;
+    const selectedPayment = (partialInput as { paymentResourceIds?: readonly string[] })
+      .paymentResourceIds;
+    if (paymentCost > 0 && selectedPayment?.length !== paymentCost) {
+      const activeResources = resourcePaymentSelection(
+        paymentCost,
+        playerId,
+        g,
+        framework,
+        selectedPayment !== undefined,
+      );
+      if (activeResources || selectedPayment !== undefined) {
+        return [
+          {
+            kind: "selectTarget",
+            role: "resource",
+            candidateIds: activeResources ?? [],
+            minTargets: paymentCost,
+            maxTargets: paymentCost,
+          },
+        ];
+      }
+    }
 
     return [];
   },
@@ -233,7 +301,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
   validate({ G, playerId, args, framework, validationMode }) {
     if (validationMode === "preflight") return { valid: true };
     const g = G;
-    const { cardId, effectIndex, targets } = args;
+    const { cardId, effectIndex, targets, paymentResourceIds } = args;
 
     if (!framework.cards.getDefinition(cardId)) {
       return { valid: false, error: "Card not found", errorCode: "UNKNOWN_CARD" };
@@ -338,6 +406,15 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
       }
     }
 
+    const payment = validatePaymentResourceIds(
+      paymentResourceIds,
+      cost?.payResources ?? 0,
+      playerId,
+      g,
+      framework,
+    );
+    if (!payment.valid) return payment;
+
     if (cost?.discardCount) {
       const payable = countPayableDiscardCostCards(cost, cardId, playerId, g, framework);
       if (payable < cost.discardCount) {
@@ -410,14 +487,33 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
         cost.restTarget,
         gatherAllCardsForTargeting(tgtCtx),
         tgtCtx,
-      );
-      if (candidates.length === 0) {
+      ) as readonly string[];
+      const { min, max } = getRestTargetCostBounds(cost.restTarget);
+      if (candidates.length < min) {
         return {
           valid: false,
           error: "No matching card to rest for cost",
           errorCode: "COST_NOT_PAYABLE",
         };
       }
+      const selected = (targets ?? []).filter((id) => candidates.includes(id));
+      if (new Set(selected).size !== selected.length) {
+        return {
+          valid: false,
+          error: "Cost targets must be unique",
+          errorCode: "DUPLICATE_TARGETS",
+        };
+      }
+      const chosen =
+        selected.length >= min ? selected : candidates.length === min ? candidates : [];
+      if (chosen.length < min || chosen.length > max) {
+        return rejectWithKey(
+          "gundam.error.ability.wrongTargetCount",
+          { min, max, got: chosen.length },
+          "WRONG_TARGET_COUNT",
+        );
+      }
+      costTargetIds.push(...chosen);
     }
 
     // Once per turn
@@ -437,6 +533,16 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
     // targets at play-time so they can't be snuck in via pre-commit and bypass
     // the resolveEffect path. Same shape as resolveEffect.validate — shared
     // candidate evaluation via `evaluateLegalTargets`.
+    const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
+      sourceCardId: cardId,
+    });
+    if (!firstSegmentActivationGateSatisfied((effect as CardEffect).directives, tgtCtx)) {
+      return {
+        valid: false,
+        error: "No legal targets for this activated ability",
+        errorCode: "NO_LEGAL_TARGETS",
+      };
+    }
     const syntheticPE: PendingEffect = {
       id: "__validate__",
       controllerId: playerId,
@@ -526,7 +632,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
 
   execute({ G, playerId, args, moveId, framework }) {
     const g = G;
-    const { cardId, effectIndex, targets } = args;
+    const { cardId, effectIndex, targets, paymentResourceIds } = args;
 
     const activatedEffects = getActivatedEffects(cardId, g, framework.cards);
     const effect = activatedEffects[effectIndex]!;
@@ -546,6 +652,21 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
       ) as string[];
       costTargetIds.push(...(targets ?? []).filter((id) => candidates.includes(id)));
     }
+    if (cost?.restTarget) {
+      const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
+        sourceCardId: cardId,
+      });
+      const candidates = evaluateTargetFilter(
+        cost.restTarget,
+        gatherAllCardsForTargeting(tgtCtx),
+        tgtCtx,
+      ) as string[];
+      const { min, max } = getRestTargetCostBounds(cost.restTarget);
+      const selected = (targets ?? []).filter((id) => candidates.includes(id));
+      const chosen =
+        selected.length >= min ? selected : candidates.length === min ? candidates : [];
+      costTargetIds.push(...chosen.slice(0, Number.isFinite(max) ? max : chosen.length));
+    }
     let effectTargets = targets?.filter((id) => !costTargetIds.includes(id));
     if (effectTargets !== undefined) {
       const syntheticPE: PendingEffect = {
@@ -561,7 +682,7 @@ export const activateAbility: GundamMoveDefinition<"activateAbility"> = {
       if (assigned) effectTargets = assigned.flat();
     }
 
-    payCost(cost, cardId, playerId, g, framework, costTargetIds);
+    payCost(cost, cardId, playerId, g, framework, costTargetIds, paymentResourceIds);
     const cardDef = framework.cards.getDefinition(cardId) as Card | undefined;
     if (cardDef?.type === "unit" && cost?.payResources !== undefined && cost.payResources > 0) {
       const event = {

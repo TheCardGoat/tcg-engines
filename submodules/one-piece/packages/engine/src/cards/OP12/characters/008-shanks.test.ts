@@ -54,4 +54,38 @@ describe("OP12-008 Shanks", () => {
     expect(() => engine.pendingDecision("effectOptional", "south")).toThrow();
     expect(engine.pendingDecision("battleBlocker", "south").steps[0]?.kind).toBe("selectEntity");
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { hand: [eb01Doma005, eb01Doma005], character: [op12Shanks008] },
+      {
+        character: [
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+        ],
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const paymentId = engine.findCardInZone("south", "hand", eb01Doma005);
+    const firstAttackerId = engine
+      .getView("north")
+      .players.north.characters.filter((card) => card !== null)
+      .map((card) => card.instanceId)[0]!;
+    const powerBefore = engine
+      .getView("south")
+      .players.north.characters.find((card) => card?.instanceId === firstAttackerId)?.power;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const handBefore = engine.getView("south").players.south.hand.length;
+
+    engine.declareAttack(firstAttackerId, engine.leader("south"), "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(paymentId);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(
+      view.players.north.characters.find((card) => card?.instanceId === firstAttackerId)?.power,
+    ).toBe(powerBefore);
+  });
 });

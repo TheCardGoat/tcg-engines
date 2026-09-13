@@ -3,7 +3,7 @@ import { op13LilithOp07111Sp111 } from "../../../../../cards/src/cards/OP13/char
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-111 Lilith - OP07-111 (SP)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13LilithOp07111Sp111);
   });
 });

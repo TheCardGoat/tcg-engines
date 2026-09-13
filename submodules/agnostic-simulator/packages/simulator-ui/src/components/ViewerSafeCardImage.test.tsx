@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vite-plus/test";
 
 import { ViewerSafeCardImage } from "./ViewerSafeCardImage.js";
+import { projectSimulatorEntityForFace } from "./entity-visibility.js";
 
 const PRIVATE_URL = "https://private.invalid/opponent-secret.webp";
 const BACK_URL = "https://public.invalid/card-back.webp";
@@ -53,5 +54,20 @@ describe("ViewerSafeCardImage", () => {
 
     expect(markup).toContain(BACK_URL);
     expect(markup).not.toContain(PRIVATE_URL);
+  });
+
+  it("preserves an identity-safe square footprint through repeated hidden projections", () => {
+    const squareHidden = {
+      ...leakedEntity("hidden"),
+      hiddenBackLayout: "square" as const,
+      imageAspectRatio: 1,
+    };
+
+    const projected = projectSimulatorEntityForFace(projectSimulatorEntityForFace(squareHidden));
+
+    expect(projected.hiddenBackLayout).toBe("square");
+    expect(projected.imageAspectRatio).toBe(1);
+    expect(projected.imageUrl).toBeUndefined();
+    expect(projected.dataAttributes).toBeUndefined();
   });
 });

@@ -2,7 +2,7 @@ import type { GigDieId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseGigsToStealPendingChoice } from "../types/match-state.ts";
 import { getEffectivePower } from "../active-effects/index.ts";
-import { performGigSteal } from "./resolve-attack.ts";
+import { buildGigStealPrevention, performGigSteal } from "./resolve-attack.ts";
 import { tryGetDefinition } from "../state/card-registry.ts";
 
 export interface ResolveStealGigsInput extends MoveInput {
@@ -76,11 +76,23 @@ export const resolveStealGigsMove: MoveDefinition<ResolveStealGigsInput> = {
       attack.attackerId as string,
     );
     operations.game.setPendingChoice(undefined);
+    const resolvedGigIds = input.args.dieIds.map((id) => id as GigDieId);
+    const prevention = buildGigStealPrevention(
+      state,
+      attack,
+      resolvedGigIds,
+      attackerName,
+      attackerPower,
+    );
+    if (prevention) {
+      operations.game.setPendingChoice(prevention);
+      return;
+    }
     performGigSteal({
       state,
       operations,
       attack,
-      gigIds: input.args.dieIds.map((id) => id as GigDieId),
+      gigIds: resolvedGigIds,
       playerId,
       attackerName,
       attackerPower,

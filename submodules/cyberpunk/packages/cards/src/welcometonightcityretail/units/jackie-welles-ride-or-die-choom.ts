@@ -5,10 +5,11 @@ import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts"
 export const welcomeToNightCityRetailJackieWellesRideOrDieChoom = defineCyberpunkCard({
   id: "b665e103-456b-4c51-9551-95b0bc87212a",
   slug: "jackie-welles-ride-or-die-choom",
+  subname: "Ride or Die Choom",
   rulesText:
     "{Attack} Give this Unit +2 power this turn for each friendly Gig with an even value.\n{Defeated} Draw 1 for each friendly Gig with an odd value.",
-  name: "Jackie Welles — Ride or Die Choom",
-  displayName: "Jackie Welles — Ride or Die Choom",
+  name: "Jackie Welles",
+  displayName: "Jackie Welles: Ride or Die Choom",
   canonicalId: "jackie-welles-ride-or-die-choom",
   color: "yellow",
   classifications: ["Merc", "Valentino"],

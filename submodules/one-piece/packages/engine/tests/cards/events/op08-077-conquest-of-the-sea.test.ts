@@ -83,4 +83,39 @@ describe("OP08-077 Conquest of the Sea", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Main so DON!! return and K.O. do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op01Kaido061,
+        hand: [op08ConquestOfTheSea077],
+        activeDon: 9,
+        restedDon: 1,
+      },
+      { character: [eb01Doma005, eb01MountainGod018, op14eb04Kaido030] },
+    );
+    const firstTargetId = engine.findCardInZone("north", "character", eb01Doma005);
+
+    engine.playCard(op08ConquestOfTheSea077, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const northCharsBefore = engine
+      .getView("south")
+      .players.north.characters.filter(Boolean).length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(engine.getView("south").players.north.characters.filter(Boolean).length).toBe(
+      northCharsBefore,
+    );
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.some((card) => card?.instanceId === firstTargetId),
+    ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

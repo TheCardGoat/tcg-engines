@@ -110,6 +110,7 @@ function scoreAction(
       return 7;
     case "deployToken":
     case "deploySelf":
+    case "deploySelfAsUnit":
       return 8;
     default:
       return 1;

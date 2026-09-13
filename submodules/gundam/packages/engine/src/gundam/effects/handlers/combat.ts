@@ -4,7 +4,7 @@
 
 import type { Card, CardEffect } from "@tcg/gundam-types";
 import type { CardInstanceId } from "../../../types/branded.ts";
-import type { FrameworkReadAPI, FrameworkWriteAPI } from "../../../types/move-types.ts";
+import type { FrameworkReadAPI } from "../../../types/move-types.ts";
 import type { EffectExecutionContext } from "../executor.ts";
 import type { ReadonlyGundamG } from "../../types.ts";
 import { getEffectiveStats, isLinkUnit } from "../../rules/derived-state.ts";
@@ -38,7 +38,10 @@ type CardLeaveContext = Pick<EffectExecutionContext, "G" | "framework">;
 export type DestructionContext = Pick<
   EffectExecutionContext,
   "G" | "sourcePlayerId" | "sourceCardId" | "framework" | "battleDestroyBreachValue"
->;
+> & {
+  /** Present only for destruction managed during a battle damage step. */
+  destructionDamageType?: "battle";
+};
 
 export function isDestructionPreventedFor(
   cardId: string,
@@ -76,7 +79,14 @@ export function handleDealDamageAction(
     // `ctx.sourceCardId` — the card whose effect is resolving.
     if (
       ctx.sourceCardId &&
-      hasDamagePreventionFor(cardId as string, ctx.sourceCardId, ctx.G, ctx.framework, "effect")
+      hasDamagePreventionFor(
+        cardId as string,
+        ctx.sourceCardId,
+        ctx.G,
+        ctx.framework,
+        "effect",
+        amount,
+      )
     ) {
       continue;
     }
@@ -223,6 +233,29 @@ function handleShieldDestroyedByEffectDamage(
   );
 }
 
+export function handleDestroyTopOpponentShields(
+  count: number,
+  opponentId: string,
+  ctx: EffectExecutionContext,
+): void {
+  for (let destroyed = 0; destroyed < count; destroyed++) {
+    const baseId = ctx.framework.zones.getCards({
+      zone: "baseSection",
+      playerId: opponentId,
+    })[0];
+    if (baseId) {
+      handleBaseDestroyed(baseId, opponentId, ctx);
+      continue;
+    }
+    const shieldId = ctx.framework.zones.getCards({
+      zone: "shieldArea",
+      playerId: opponentId,
+    })[0];
+    if (!shieldId) break;
+    handleShieldDestroyedByEffectDamage(shieldId, opponentId, ctx);
+  }
+}
+
 function enqueueShieldAreaCardDestroyedBySourceUnit(
   destroyedCardId: string,
   defenderPlayerId: string,
@@ -245,6 +278,7 @@ function enqueueShieldAreaCardDestroyedBySourceUnit(
 export function handleUnitDefeated(cardId: string, ctx: DestructionContext): void {
   const ownerId = ctx.framework.cards.getOwner(cardId) as string | undefined;
   if (!ownerId) return;
+  recordFriendlyUnitDestroyedByFriendlyCardTraits(cardId, ownerId, ctx);
 
   // Rule 10-1-6-1 / 10-1-6-4: 【Destroyed】 triggers enqueue before the
   // card moves to trash (their effects still resolve once it leaves).
@@ -261,6 +295,7 @@ export function handleUnitDefeated(cardId: string, ctx: DestructionContext): voi
     ownerId,
     playerId: ctx.sourcePlayerId,
     destroyedBy: ctx.sourcePlayerId,
+    damageType: ctx.destructionDamageType ?? "effect",
   };
   enqueueOwnCardTriggers(ctx.G, destroyEvent, cardId, ownerId, ctx.framework);
   if (pairedPilotId) {
@@ -408,23 +443,32 @@ export function handleRecoverHPAction(
     const next = Math.max(0, current - amount);
     if (next === current) continue;
     const recovered = current - next;
-    ctx.G.damage[id] = next;
+    if (next === 0) {
+      delete ctx.G.damage[id];
+    } else {
+      ctx.G.damage[id] = next;
+    }
+    const ownerId = ctx.framework.cards.getOwner(id);
+    const controllerId = ctx.framework.cards.getController(id);
 
-    emitGundamLog(ctx.framework, {
-      type: "gundam.effect.hpRecovered",
-      values: { cardId: id, amount: recovered },
-      visibility: { mode: "PUBLIC" },
-      category: "action",
-    });
+    emitGundamLog(
+      ctx.framework,
+      {
+        type: "gundam.effect.hpRecovered",
+        values: { cardId: id, amount: recovered },
+        visibility: { mode: "PUBLIC" },
+        category: "action",
+      },
+      controllerId,
+    );
 
     // Rule 10-1-6-1: fire 【When Healed】 triggers on the healed card's
     // own effects + any in-play observer whose effect watches the event.
     // Mirrors the unitDestroyed / attackDeclared enqueue pattern in this
     // file (see handleUnitDefeated above).
-    const ownerId = ctx.framework.cards.getOwner(id) as string | undefined;
     if (!ownerId) continue;
-    const event = { type: "unitHealed", cardId: id, ownerId } as const;
-    enqueueOwnCardTriggers(ctx.G, event, id, ownerId, ctx.framework);
+    const event = { type: "unitHealed", cardId: id, ownerId: String(ownerId) } as const;
+    enqueueOwnCardTriggers(ctx.G, event, id, String(ownerId), ctx.framework);
     enqueueObserverTriggers(ctx.G, event, ctx.framework, id);
   }
 }
@@ -441,7 +485,8 @@ export function handleRestAction(
   for (const cardId of targetIds) {
     if (
       options.allowSubstitution !== false &&
-      enqueueBaseRestSubstitutionChoice(cardId as string, ctx)
+      (enqueueUnitRestSubstitutionChoice(cardId as string, ctx) ||
+        enqueueBaseRestSubstitutionChoice(cardId as string, ctx))
     ) {
       continue;
     }
@@ -466,6 +511,80 @@ export function handleRestAction(
     enqueueOwnCardTriggers(ctx.G, event, restCardId, ownerId, ctx.framework);
     enqueueObserverTriggers(ctx.G, event, ctx.framework, restCardId);
   }
+}
+
+function enqueueUnitRestSubstitutionChoice(cardId: string, ctx: EffectExecutionContext): boolean {
+  if (!ctx.sourceCardId) return false;
+  const targetDef = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
+  const sourceDef = ctx.framework.cards.getDefinition(ctx.sourceCardId) as Card | undefined;
+  if (targetDef?.type !== "unit" || sourceDef?.type !== "unit") return false;
+  const ownerId = ctx.framework.cards.getOwner(cardId) as string | undefined;
+  if (
+    !ownerId ||
+    ownerId !== (ctx.sourcePlayerId as unknown as string) ||
+    (ctx.framework.state.status.activePlayer as unknown as string) !== ownerId
+  ) {
+    return false;
+  }
+
+  const eligibleBases = ctx.framework.zones
+    .getCards({ zone: "baseSection", playerId: ownerId })
+    .filter((baseId) => {
+      if (ctx.G.exhausted[baseId]) return false;
+      const baseDef = ctx.framework.cards.getDefinition(baseId) as Card | undefined;
+      return (baseDef?.effects as CardEffect[] | undefined)?.some(
+        (effect) =>
+          effect.type === "substitution" &&
+          effect.directives.some((directive) => {
+            if (!("action" in directive)) return false;
+            const substitutionAction = directive.action;
+            if (substitutionAction.action !== "substituteUnitRestWithSelf") return false;
+            return sourceDef.traits.some(
+              (trait) => trait.toLowerCase() === substitutionAction.sourceUnitTrait.toLowerCase(),
+            );
+          }),
+      );
+    });
+  if (eligibleBases.length === 0) return false;
+
+  const baseId = eligibleBases[0]!;
+  enqueuePendingEffect(
+    ctx.G,
+    {
+      id: nextPendingEffectId(ctx.G),
+      controllerId: ownerId,
+      sourceCardId: baseId,
+      effect: {
+        type: "substitution",
+        activation: {},
+        directives: [
+          {
+            action: {
+              action: "rest",
+              allowSubstitution: false,
+              target: {
+                owner: "friendly",
+                cardType: ["unit", "base"],
+                count: 1,
+                instanceIds: [cardId, baseId],
+              },
+            },
+          },
+        ],
+        sourceText: `Choose ${baseDefName(ctx, baseId)} to rest instead, or choose the Unit to rest it normally.`,
+      } as CardEffect,
+      effectIndex: -1,
+      kind: "triggered",
+    },
+    ctx.framework,
+    { preempt: true },
+  );
+  return true;
+}
+
+function baseDefName(ctx: EffectExecutionContext, baseId: string): string {
+  const def = ctx.framework.cards.getDefinition(baseId) as Card | undefined;
+  return def?.name ?? "this Base";
 }
 
 function enqueueBaseRestSubstitutionChoice(cardId: string, ctx: EffectExecutionContext): boolean {
@@ -597,6 +716,7 @@ export function handleDestroyAction(
 
     const ownerId = ctx.framework.cards.getOwner(cardId as string) as string | undefined;
     if (!ownerId) continue;
+    recordFriendlyUnitDestroyedByFriendlyCardTraits(cardId as string, ownerId, ctx);
     const pairedPilotId = ctx.G.pilotAssignments[cardId as string];
 
     const destroyEvent = {
@@ -606,6 +726,8 @@ export function handleDestroyAction(
       ownerId,
       playerId: ctx.sourcePlayerId,
       destroyedBy: ctx.sourcePlayerId,
+      sourceCardId: ctx.sourceCardId,
+      damageType: "effect" as const,
     };
     enqueueOwnCardTriggers(ctx.G, destroyEvent, cardId as string, ownerId, ctx.framework);
     if (pairedPilotId) {
@@ -625,16 +747,44 @@ export function handleDestroyAction(
 
 export function handleExileAction(
   targetIds: readonly CardInstanceId[],
-  framework: FrameworkWriteAPI,
+  ctx: Pick<EffectExecutionContext, "framework">,
 ): void {
   for (const cardId of targetIds) {
-    framework.zones.moveCard(cardId as string, { zone: "removalArea" });
+    const id = cardId as string;
+    const from = ctx.framework.cards.getZone(id)?.split(":")[0];
+    ctx.framework.zones.moveCard(id, { zone: "removalArea" });
+    emitGundamLog(ctx.framework, {
+      type: "gundam.effect.movedToZone",
+      values: { cardId: id, from: from ?? "unknown", to: "removalArea" },
+      visibility: { mode: "PUBLIC" },
+      category: "action",
+    });
   }
 }
 
 // =============================================================================
 // Internal Helpers
 // =============================================================================
+
+function recordFriendlyUnitDestroyedByFriendlyCardTraits(
+  destroyedCardId: string,
+  ownerId: string,
+  ctx: Pick<EffectExecutionContext, "G" | "sourceCardId" | "sourcePlayerId" | "framework">,
+): void {
+  if (!ctx.sourceCardId || ctx.sourcePlayerId !== ownerId) return;
+  const destroyedDefinition = ctx.framework.cards.getDefinition(destroyedCardId) as
+    | Card
+    | undefined;
+  if (destroyedDefinition?.type !== "unit") return;
+  const sourceDefinition = ctx.framework.cards.getDefinition(ctx.sourceCardId) as Card | undefined;
+  const traits = sourceDefinition?.traits?.map((trait) => trait.toLowerCase()) ?? [];
+  if (traits.length === 0) return;
+  const history = (ctx.G.turnMetadata.friendlyUnitDestroyedByFriendlyCardTraits ??= {});
+  const recordedTraits = (history[ownerId] ??= []);
+  for (const trait of traits) {
+    if (!recordedTraits.includes(trait)) recordedTraits.push(trait);
+  }
+}
 
 export function cleanupCardOnLeave(cardId: string, ctx: CardLeaveContext): void {
   delete ctx.G.damage[cardId];

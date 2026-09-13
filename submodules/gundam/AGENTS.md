@@ -14,6 +14,19 @@ evaluation belongs to `.agents/skills/gundam-bot-bench/SKILL.md`.
 Keep Gundam rules, cards, engine semantics, and glossary-native wording inside
 this submodule. The parent guide owns cross-workspace adapter and route rules.
 
+## Supported Match Scope
+
+The product implementation, required behavior tests, and review triage target
+the standard two-player game described by rule 1-1-1. Battle royale and team
+rules for three or more players in comprehensive-rules section 12 are out of
+scope unless the user explicitly requests multiplayer work.
+
+Model exactly one opponent in fixtures and implementation decisions. Printed
+phrases such as "each enemy player" therefore apply to that single opponent.
+Do not create blockers solely for multiplayer fan-out, but do preserve the
+printed controller of every choice: a wrong decision owner in a 1v1 match is
+still a supported-game bug.
+
 ## Where To Look
 
 - `docs/architecture.md` - package boundaries and structural map.
@@ -39,10 +52,7 @@ this submodule. The parent guide owns cross-workspace adapter and route rules.
 - Card behavior bugs start with `packages/cards/src`, then test the engine path
   that interprets the declarative data.
 
-## Agent Backpressure Gates
-
-Use the root `/backpressured` command for long-running Gundam work and keep the
-local architecture docs in scope for package-boundary decisions.
+## Validation Gates
 
 - Card data behavior: add or update the sibling card/engine fixture before
   changing broad primitives.

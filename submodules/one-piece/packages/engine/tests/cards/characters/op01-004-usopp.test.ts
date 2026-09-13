@@ -32,6 +32,7 @@ describe("OP01-004 Usopp", () => {
 
     engine.declareAttack(firstAttackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [firstEventId!] }, "north");
+    engine.acceptLeadingOptional("north");
     const firstReturn = engine.pendingDecision("effectCostReturnDon", "north").steps[0];
     expect(firstReturn?.kind).toBe("payCost");
     if (firstReturn?.kind !== "payCost") throw new Error("Expected the Event's DON!! cost.");
@@ -56,6 +57,7 @@ describe("OP01-004 Usopp", () => {
     );
     engine.declareAttack(secondAttackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [secondEventId] }, "north");
+    engine.acceptLeadingOptional("north");
     const secondReturn = engine.pendingDecision("effectCostReturnDon", "north").steps[0];
     expect(secondReturn?.kind).toBe("payCost");
     if (secondReturn?.kind !== "payCost")

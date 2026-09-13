@@ -9,7 +9,12 @@ import {
 } from "react";
 import type { ReactNode } from "react";
 import { copyTextToClipboard, safeStringify } from "@tcg/simulator-runtime/debug";
-import type { BotDecisionRecord, MatchRuntime } from "@tcg/gundam-engine";
+import {
+  GUNDAM_AUTOMATED_ACTION_STRATEGIES,
+  getGundamAutomatedActionStrategyOption,
+  type BotDecisionRecord,
+  type MatchRuntime,
+} from "@tcg/gundam-engine";
 
 import type { BotPlayMode, BotSpeed, StrategyBotHandle } from "./strategy-bot.ts";
 import type { DevRuntimeBotHandle } from "../dev-runtime.ts";
@@ -20,16 +25,17 @@ import { useGundamGame } from "../context.tsx";
  * and drive a running bot without drilling the handle through every
  * container.
  *
- * Returns `null` outside a provider — `vs-ai-demo` is the only
- * fixture that mounts a provider today, so most sim pages see `null`
- * and hide AI controls entirely.
+ * Returns `null` outside a provider. VS-AI matches and named browser
+ * labs mount a provider; other simulator surfaces hide AI controls.
  */
 export interface VsAiContextValue {
   readonly mode: BotPlayMode;
   readonly speed: BotSpeed;
   readonly strategyName: string;
+  readonly strategies: ReadonlyArray<{ readonly id: string; readonly label: string }>;
   readonly setMode: (mode: BotPlayMode) => void;
   readonly setSpeed: (speed: BotSpeed) => void;
+  readonly setStrategy: (strategyId: string) => void;
   readonly stepOnce: () => void;
 }
 
@@ -133,6 +139,9 @@ export function VsAiProvider({ bot, runtime, onRestartScenario, children }: VsAi
       mode,
       speed,
       strategyName,
+      strategies: GUNDAM_AUTOMATED_ACTION_STRATEGIES.filter((option) => !option.testOnly).map(
+        ({ id, label }) => ({ id, label }),
+      ),
       setMode: (nextMode) => {
         botRef.current.setMode(nextMode);
         setModeState(nextMode);
@@ -140,6 +149,12 @@ export function VsAiProvider({ bot, runtime, onRestartScenario, children }: VsAi
       setSpeed: (nextSpeed) => {
         botRef.current.setSpeed(nextSpeed);
         setSpeedState(nextSpeed);
+      },
+      setStrategy: (strategyId) => {
+        const option = getGundamAutomatedActionStrategyOption(strategyId);
+        if (!option || option.testOnly) return;
+        botRef.current.setStrategy(option.strategy);
+        setStrategyName(option.id);
       },
       stepOnce: () => {
         botRef.current.stepOnce();

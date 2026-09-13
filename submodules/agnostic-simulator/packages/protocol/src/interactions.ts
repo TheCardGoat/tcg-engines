@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { PLAYABLE_GAME_SLUGS } from "./games.js";
 
-export const INTERACTION_PROTOCOL_VERSION = 1;
+export const INTERACTION_PROTOCOL_VERSION = 2;
 export type InteractionProtocolVersion = typeof INTERACTION_PROTOCOL_VERSION;
 
 export const InteractionText = z
@@ -57,12 +57,79 @@ export const EntityRef = z
   .object({
     kind: EntityKind,
     instanceId: z.string().min(1),
+    /** Stable definition identity used to render an otherwise private candidate. */
+    definitionId: z.string().min(1).optional(),
     ownerId: z.string().min(1).optional(),
     zoneId: z.string().min(1).optional(),
   })
   .strict();
 
 export type EntityRef = z.infer<typeof EntityRef>;
+
+export const InteractionResolutionRequirement = z
+  .object({
+    kind: z.enum([
+      "entity-selection",
+      "option-selection",
+      "boolean",
+      "number",
+      "ordering",
+      "entity-partition",
+      "entity-allocation",
+    ]),
+    text: InteractionText,
+    required: z.boolean(),
+    min: z.number().int().min(0).optional(),
+    max: z.number().int().min(0).optional(),
+  })
+  .strict()
+  .refine(
+    (requirement) =>
+      requirement.min === undefined ||
+      requirement.max === undefined ||
+      requirement.max >= requirement.min,
+    {
+      message: "max must be greater than or equal to min",
+      path: ["max"],
+    },
+  );
+
+export type InteractionResolutionRequirement = z.infer<typeof InteractionResolutionRequirement>;
+
+/**
+ * Viewer-safe progress for an effect-resolution queue.
+ *
+ * This deliberately contains no candidates or submitted values. It can be
+ * projected to the acting player and observers without exposing private card
+ * identities or tentative selections.
+ */
+export const InteractionResolutionContext = z
+  .object({
+    actingPlayerId: z.string().min(1),
+    pendingCount: z.number().int().min(1),
+    currentEffect: z
+      .object({
+        id: z.string().min(1),
+        text: InteractionText,
+        source: EntityRef.optional(),
+      })
+      .strict(),
+    currentStep: z
+      .object({
+        index: z.number().int().min(1),
+        count: z.number().int().min(1),
+        text: InteractionText,
+        requirement: InteractionResolutionRequirement.optional(),
+      })
+      .strict()
+      .refine((step) => step.index <= step.count, {
+        message: "index must not exceed count",
+        path: ["index"],
+      }),
+  })
+  .strict();
+
+export type InteractionResolutionContext = z.infer<typeof InteractionResolutionContext>;
 
 export const EntityCandidate = z
   .object({
@@ -115,7 +182,7 @@ const InteractionInputBase = z
                 z
                   .object({
                     inputId: z.string().min(1),
-                    value: z.union([z.string(), z.number(), z.boolean()]),
+                    value: z.union([z.string(), z.number(), z.boolean(), z.array(z.string())]),
                   })
                   .strict(),
               )
@@ -161,11 +228,51 @@ export const InteractionOption = z
 
 export type InteractionOption = z.infer<typeof InteractionOption>;
 
+export const OptionSuggestionGroup = z
+  .object({
+    id: z.string().min(1),
+    text: InteractionText,
+    optionIds: z.array(z.string().min(1)).min(1),
+  })
+  .strict();
+
+export type OptionSuggestionGroup = z.infer<typeof OptionSuggestionGroup>;
+
+export const OptionSearchPresentation = z
+  .object({
+    kind: z.literal("search"),
+    label: InteractionText,
+    placeholder: InteractionText,
+    confirmLabel: InteractionText,
+    description: InteractionText.optional(),
+    resultLimit: z.number().int().min(1).max(100).optional(),
+    suggestionGroups: z.array(OptionSuggestionGroup).optional(),
+  })
+  .strict();
+
+export type OptionSearchPresentation = z.infer<typeof OptionSearchPresentation>;
+
+export const OptionDirectPresentation = z
+  .object({
+    kind: z.literal("direct"),
+    emptyText: InteractionText,
+  })
+  .strict();
+
+export type OptionDirectPresentation = z.infer<typeof OptionDirectPresentation>;
+
+export const OptionSelectionPresentation = z.discriminatedUnion("kind", [
+  OptionSearchPresentation,
+  OptionDirectPresentation,
+]);
+
 export const OptionSelectionInput = InteractionInputBase.extend({
   kind: z.literal("option-selection"),
+  implicit: z.boolean().optional(),
   min: z.number().int().min(0),
   max: z.number().int().min(0),
   options: z.array(InteractionOption).min(1),
+  presentation: OptionSelectionPresentation.optional(),
 })
   .strict()
   .refine(hasOrderedBounds, {
@@ -220,12 +327,142 @@ export const OrderingInput = InteractionInputBase.extend({
 
 export type OrderingInput = z.infer<typeof OrderingInput>;
 
+export const EntityPartitionRoute = z
+  .object({
+    id: z.string().min(1),
+    text: InteractionText,
+    kind: z.enum(["extract", "destination"]),
+    ordered: z.boolean(),
+    orderDirection: z.enum(["top-first", "bottom-first"]).optional(),
+    min: z.number().int().min(0),
+    max: z.number().int().min(0),
+    candidateIds: z.array(z.string().min(1)).optional(),
+    minWhenRemainingAtLeast: z
+      .object({
+        count: z.number().int().min(1),
+        min: z.number().int().min(1),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict()
+  .refine(hasOrderedBounds, {
+    message: "max must be greater than or equal to min",
+    path: ["max"],
+  });
+
+export type EntityPartitionRoute = z.infer<typeof EntityPartitionRoute>;
+
+export const EntityPartitionInput = InteractionInputBase.extend({
+  kind: z.literal("entity-partition"),
+  entityKind: EntityKind,
+  candidateSetText: InteractionText.optional(),
+  candidates: z.array(EntityCandidate).min(1),
+  routes: z.array(EntityPartitionRoute),
+  assignment: z.enum(["exhaustive", "remainder-automatic"]),
+  remainderText: InteractionText.optional(),
+})
+  .strict()
+  .superRefine((input, ctx) => {
+    const candidateIds = new Set(input.candidates.map((candidate) => candidate.entity.instanceId));
+    if (candidateIds.size !== input.candidates.length) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["candidates"],
+        message: "Partition candidates must have unique instance ids.",
+      });
+    }
+    const routeIds = new Set<string>();
+    for (const [routeIndex, route] of input.routes.entries()) {
+      if (routeIds.has(route.id)) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["routes", routeIndex, "id"],
+          message: `Duplicate partition route id "${route.id}".`,
+        });
+      }
+      routeIds.add(route.id);
+      for (const candidateId of route.candidateIds ?? []) {
+        if (!candidateIds.has(candidateId)) {
+          ctx.addIssue({
+            code: "custom",
+            path: ["routes", routeIndex, "candidateIds"],
+            message: `Partition route candidate "${candidateId}" is not an input candidate.`,
+          });
+        }
+      }
+    }
+    if (input.assignment === "remainder-automatic" && !input.remainderText) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["remainderText"],
+        message: "Automatic partition remainders require explanatory text.",
+      });
+    }
+    if (input.assignment === "exhaustive" && input.routes.length === 0) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["routes"],
+        message: "Exhaustive partitions require at least one route.",
+      });
+    }
+  });
+
+export type EntityPartitionInput = z.infer<typeof EntityPartitionInput>;
+
+export const EntityAllocationCandidate = EntityCandidate.extend({
+  min: z.number().int().min(0).default(0),
+  max: z.number().int().min(0),
+})
+  .strict()
+  .refine((candidate) => candidate.max >= candidate.min, {
+    message: "max must be greater than or equal to min",
+    path: ["max"],
+  });
+
+export type EntityAllocationCandidate = z.infer<typeof EntityAllocationCandidate>;
+
+/** Distributes an integer amount across viewer-safe entity candidates. */
+export const EntityAllocationInput = InteractionInputBase.extend({
+  kind: z.literal("entity-allocation"),
+  role: EntitySelectionRole,
+  entityKinds: z.array(EntityKind).min(1),
+  totalMin: z.number().int().min(0),
+  totalMax: z.number().int().min(0),
+  candidates: z.array(EntityAllocationCandidate).min(1),
+})
+  .strict()
+  .superRefine((input, ctx) => {
+    if (input.totalMax < input.totalMin) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["totalMax"],
+        message: "totalMax must be greater than or equal to totalMin",
+      });
+    }
+    const candidateMin = input.candidates.reduce((total, candidate) => total + candidate.min, 0);
+    const candidateMax = input.candidates
+      .filter((candidate) => candidate.enabled !== false)
+      .reduce((total, candidate) => total + candidate.max, 0);
+    if (input.totalMin < candidateMin || input.totalMax > candidateMax) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["candidates"],
+        message: "Allocation totals must fit the enabled candidate bounds.",
+      });
+    }
+  });
+
+export type EntityAllocationInput = z.infer<typeof EntityAllocationInput>;
+
 export const InteractionInput = z.discriminatedUnion("kind", [
   EntitySelectionInput,
   OptionSelectionInput,
   BooleanInput,
   NumberInput,
   OrderingInput,
+  EntityPartitionInput,
+  EntityAllocationInput,
 ]);
 
 export type InteractionInput = z.infer<typeof InteractionInput>;
@@ -252,11 +489,18 @@ export const EngineInteractionView = z
     actorId: z.string().min(1),
     stateVersion: z.number().int().min(0),
     status: InteractionViewStatus,
+    resolution: InteractionResolutionContext.optional(),
     actions: z.array(InteractionAction),
   })
   .strict();
 
 export type EngineInteractionView = z.infer<typeof EngineInteractionView>;
+
+export const EntityPartitionValue = z.record(z.string(), z.array(z.string()));
+export type EntityPartitionValue = z.infer<typeof EntityPartitionValue>;
+
+export const EntityAllocationValue = z.record(z.string(), z.number().int().min(0));
+export type EntityAllocationValue = z.infer<typeof EntityAllocationValue>;
 
 export const InteractionSubmissionValue = z.union([
   z.string(),
@@ -264,9 +508,19 @@ export const InteractionSubmissionValue = z.union([
   z.number(),
   z.boolean(),
   z.null(),
+  EntityPartitionValue,
+  EntityAllocationValue,
 ]);
 
 export type InteractionSubmissionValue = z.infer<typeof InteractionSubmissionValue>;
+
+export const InteractionAutomation = z
+  .object({
+    kind: z.literal("no-valid-action"),
+  })
+  .strict();
+
+export type InteractionAutomation = z.infer<typeof InteractionAutomation>;
 
 export const InteractionSubmission = z
   .object({
@@ -275,6 +529,7 @@ export const InteractionSubmission = z
     requestId: z.string().min(1),
     actionId: z.string().min(1),
     values: z.record(z.string(), InteractionSubmissionValue),
+    automation: InteractionAutomation.optional(),
     correlationId: z.string().min(1).optional(),
   })
   .strict();
@@ -292,6 +547,7 @@ export type BuildInteractionSubmissionInput = {
   view: EngineInteractionView;
   action: InteractionAction;
   values?: Record<string, InteractionSubmissionValue>;
+  automation?: InteractionAutomation;
   correlationId?: string;
 };
 
@@ -299,6 +555,7 @@ export type BuildInteractionSubmissionForActionIdInput = {
   view: EngineInteractionView;
   actionId: string;
   values?: Record<string, InteractionSubmissionValue>;
+  automation?: InteractionAutomation;
   correlationId?: string;
 };
 
@@ -314,6 +571,7 @@ export type InteractionSubmissionValidationIssueCode =
   | "invalid_value_type"
   | "selection_count_out_of_bounds"
   | "duplicate_selection"
+  | "partition_incomplete"
   | "candidate_unavailable"
   | "option_unavailable"
   | "number_out_of_bounds"
@@ -347,6 +605,14 @@ export function entityCandidatesForAction(
         if (filter.inputId !== undefined && input.id !== filter.inputId) return [];
         if (filter.role !== undefined) return [];
         return input.candidates.filter((candidate) => entityCandidateMatches(candidate, filter));
+      case "entity-partition":
+        if (filter.inputId !== undefined && input.id !== filter.inputId) return [];
+        if (filter.role !== undefined) return [];
+        return input.candidates.filter((candidate) => entityCandidateMatches(candidate, filter));
+      case "entity-allocation":
+        if (filter.inputId !== undefined && input.id !== filter.inputId) return [];
+        if (filter.role !== undefined && input.role !== filter.role) return [];
+        return input.candidates.filter((candidate) => entityCandidateMatches(candidate, filter));
       case "boolean":
       case "number":
       case "option-selection":
@@ -378,6 +644,7 @@ export function buildInteractionSubmission(
     requestId: input.action.requestId,
     actionId: input.action.id,
     values: input.values ?? {},
+    ...(input.automation === undefined ? {} : { automation: input.automation }),
     ...(input.correlationId === undefined ? {} : { correlationId: input.correlationId }),
   });
 }
@@ -394,6 +661,7 @@ export function buildInteractionSubmissionForActionId(
     view: input.view,
     action,
     values: input.values,
+    automation: input.automation,
     correlationId: input.correlationId,
   });
 }
@@ -529,6 +797,12 @@ function validateSubmissionValues(
       case "ordering":
         validateOrderingInput(input, value, issues);
         break;
+      case "entity-partition":
+        validateEntityPartitionInput(input, value, issues);
+        break;
+      case "entity-allocation":
+        validateEntityAllocationInput(input, value, issues);
+        break;
       default:
         assertNeverInteractionInput(input);
     }
@@ -548,6 +822,10 @@ function inputAllowsOmission(
     case "option-selection":
     case "ordering":
       return input.min === 0;
+    case "entity-partition":
+      return false;
+    case "entity-allocation":
+      return input.totalMin === 0;
     case "boolean":
     case "number":
       return false;
@@ -562,9 +840,15 @@ function requirementMatches(
 ): boolean {
   return requirement.all.every((condition) => {
     const value = values[condition.inputId];
-    return Array.isArray(value)
-      ? typeof condition.value === "string" && value.includes(condition.value)
-      : value === condition.value;
+    const expected = condition.value;
+    if (Array.isArray(expected)) {
+      return (
+        Array.isArray(value) &&
+        value.length === expected.length &&
+        value.every((entry, index) => entry === expected[index])
+      );
+    }
+    return Array.isArray(value) ? value.includes(String(expected)) : value === expected;
   });
 }
 
@@ -685,6 +969,157 @@ function validateOrderingInput(
         message: `Entity "${id}" is not an enabled ordering candidate for input "${input.id}".`,
       });
     }
+  }
+}
+
+function validateEntityPartitionInput(
+  input: EntityPartitionInput,
+  value: InteractionSubmissionValue,
+  issues: InteractionSubmissionValidationIssue[],
+): void {
+  const parsed = EntityPartitionValue.safeParse(value);
+  if (!parsed.success) {
+    issues.push({
+      code: "invalid_value_type",
+      path: ["values", input.id],
+      message: `Input "${input.id}" requires a route-to-card-array record.`,
+    });
+    return;
+  }
+
+  const candidates = new Map(
+    input.candidates.map((candidate) => [candidate.entity.instanceId, candidate]),
+  );
+  const enabledCandidateIds = new Set(
+    input.candidates
+      .filter((candidate) => candidate.enabled !== false)
+      .map((candidate) => candidate.entity.instanceId),
+  );
+  const routes = new Map(input.routes.map((route) => [route.id, route]));
+  const assigned = new Set<string>();
+  const extracted = new Set<string>();
+
+  for (const [routeId, ids] of Object.entries(parsed.data)) {
+    const route = routes.get(routeId);
+    if (!route) {
+      issues.push({
+        code: "unknown_value",
+        path: ["values", input.id, routeId],
+        message: `Partition route "${routeId}" is not available on input "${input.id}".`,
+      });
+      continue;
+    }
+    const eligible = route.candidateIds ? new Set(route.candidateIds) : enabledCandidateIds;
+    const uniqueIds = new Set(ids);
+    if (uniqueIds.size !== ids.length) {
+      issues.push({
+        code: "duplicate_selection",
+        path: ["values", input.id, routeId],
+        message: `Partition route "${routeId}" contains a duplicate entity.`,
+      });
+    }
+    for (const id of ids) {
+      const candidate = candidates.get(id);
+      if (!candidate || candidate.enabled === false || !eligible.has(id)) {
+        issues.push({
+          code: "candidate_unavailable",
+          path: ["values", input.id, routeId],
+          message: `Entity "${id}" is not enabled for partition route "${routeId}".`,
+        });
+      }
+      if (assigned.has(id)) {
+        issues.push({
+          code: "duplicate_selection",
+          path: ["values", input.id, routeId],
+          message: `Entity "${id}" is assigned to more than one partition route.`,
+        });
+      }
+      assigned.add(id);
+      if (route.kind === "extract") extracted.add(id);
+    }
+  }
+
+  const remainingCount = Math.max(0, enabledCandidateIds.size - extracted.size);
+  for (const route of input.routes) {
+    const ids = parsed.data[route.id] ?? [];
+    const conditionalMin =
+      route.minWhenRemainingAtLeast && remainingCount >= route.minWhenRemainingAtLeast.count
+        ? route.minWhenRemainingAtLeast.min
+        : 0;
+    const min = Math.max(route.min, conditionalMin);
+    if (ids.length < min || ids.length > route.max) {
+      issues.push({
+        code: "selection_count_out_of_bounds",
+        path: ["values", input.id, route.id],
+        message: `Partition route "${route.id}" requires ${min}–${route.max} entities.`,
+      });
+    }
+  }
+
+  if (
+    input.assignment === "exhaustive" &&
+    [...enabledCandidateIds].some((candidateId) => !assigned.has(candidateId))
+  ) {
+    issues.push({
+      code: "partition_incomplete",
+      path: ["values", input.id],
+      message: `Input "${input.id}" must assign every enabled candidate exactly once.`,
+    });
+  }
+}
+
+function validateEntityAllocationInput(
+  input: EntityAllocationInput,
+  value: InteractionSubmissionValue,
+  issues: InteractionSubmissionValidationIssue[],
+): void {
+  const parsed = EntityAllocationValue.safeParse(value);
+  if (!parsed.success) {
+    issues.push({
+      code: "invalid_value_type",
+      path: ["values", input.id],
+      message: `Input "${input.id}" requires an entity-to-amount record.`,
+    });
+    return;
+  }
+  const candidates = new Map(
+    input.candidates.map((candidate) => [candidate.entity.instanceId, candidate]),
+  );
+  let total = 0;
+  for (const [id, amount] of Object.entries(parsed.data)) {
+    const candidate = candidates.get(id);
+    if (!candidate || candidate.enabled === false) {
+      issues.push({
+        code: "candidate_unavailable",
+        path: ["values", input.id, id],
+        message: `Entity "${id}" is not enabled for allocation input "${input.id}".`,
+      });
+      continue;
+    }
+    if (amount < candidate.min || amount > candidate.max) {
+      issues.push({
+        code: "number_out_of_bounds",
+        path: ["values", input.id, id],
+        message: `Allocation for "${id}" must be between ${candidate.min} and ${candidate.max}.`,
+      });
+    }
+    total += amount;
+  }
+  for (const candidate of input.candidates) {
+    if ((parsed.data[candidate.entity.instanceId] ?? 0) < candidate.min) {
+      issues.push({
+        code: "number_out_of_bounds",
+        path: ["values", input.id, candidate.entity.instanceId],
+        message: `Allocation for "${candidate.entity.instanceId}" must be at least ${candidate.min}.`,
+      });
+    }
+  }
+  if (total < input.totalMin || total > input.totalMax) {
+    issues.push({
+      code: "selection_count_out_of_bounds",
+      path: ["values", input.id],
+      message: `Input "${input.id}" requires a total allocation between ${input.totalMin} and ${input.totalMax}.`,
+    });
   }
 }
 

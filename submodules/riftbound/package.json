@@ -1,0 +1,46 @@
+{
+  "name": "riftbound",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "tools/*"
+    ],
+    "catalog": {
+      "@types/node": "^24",
+      "@typescript/native": "npm:typescript@7.0.2",
+      "@typescript/native-preview": "npm:typescript@7.0.2",
+      "@types/sanitize-html": "^2.16.1",
+      "sanitize-html": "^2.17.0",
+      "typescript": "npm:@typescript/typescript6@6.0.2",
+      "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4",
+      "vite-plus": "0.2.4",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.24",
+      "zod": "^4.4.3"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "vp run -r build",
+    "ci-check": "vp run ci:check",
+    "ci-check-full": "vp run ci:full",
+    "check-types": "pnpm -r --if-present run check-types",
+    "test": "pnpm -r --if-present run test",
+    "scrape:gallery": "pnpm --dir tools/scraper run scrape:gallery",
+    "scrape:riot": "pnpm --dir tools/scraper run scrape:riot",
+    "generate": "pnpm --dir tools/parser run generate",
+    "verify:catalog": "pnpm --dir tools/parser run verify:catalog",
+    "prepare": "node -e \"process.exit(process.env.CI?0:1)\" || vp config"
+  },
+  "devDependencies": {
+    "@typescript/native": "catalog:",
+    "@typescript/native-preview": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

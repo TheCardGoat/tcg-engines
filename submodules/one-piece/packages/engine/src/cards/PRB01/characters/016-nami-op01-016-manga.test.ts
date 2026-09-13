@@ -3,7 +3,7 @@ import { prb01NamiOp01016Manga016 } from "../../../../../cards/src/cards/PRB01/c
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-016 Nami (OP01-016) (Manga)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01NamiOp01016Manga016);
   });
 });

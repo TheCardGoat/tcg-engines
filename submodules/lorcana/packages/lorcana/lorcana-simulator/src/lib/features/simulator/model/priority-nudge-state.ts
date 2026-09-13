@@ -5,8 +5,6 @@ import type {
 
 export const PRIORITY_NUDGE_DELAY_MS = 20_000;
 
-const NON_ACTION_PRIORITY_CATEGORIES = new Set<ExecutableMovePresentationCategoryId>(["undo"]);
-
 export interface PriorityNudgeEligibilityInput {
   viewerMode: "player" | "spectator";
   isPostGame: boolean;
@@ -27,7 +25,30 @@ export interface PriorityWindowKeyInput {
 export function isActionablePriorityCategory(
   categoryId: ExecutableMovePresentationCategoryId,
 ): boolean {
-  return !NON_ACTION_PRIORITY_CATEGORIES.has(categoryId);
+  switch (categoryId) {
+    case "activate-ability":
+    case "challenge":
+    case "ink-card":
+    case "move-to-location":
+    case "pass-turn":
+    case "play-card":
+    case "quest":
+    case "quest-all":
+    case "shift-card":
+    case "sing-card":
+      return true;
+    case "alter-hand":
+    case "choose-first-player":
+    case "concede":
+    case "keep-hand":
+    case "undo":
+    case "unknown":
+      return false;
+    default: {
+      const unhandled: never = categoryId;
+      return unhandled;
+    }
+  }
 }
 
 export function shouldArmPriorityNudge(input: PriorityNudgeEligibilityInput): boolean {
@@ -35,8 +56,9 @@ export function shouldArmPriorityNudge(input: PriorityNudgeEligibilityInput): bo
   if (input.isPostGame) return false;
   if (!input.ownerSide) return false;
   if (input.prioritySide !== input.ownerSide) return false;
+  if (input.hasActiveSelection) return false;
 
-  return input.hasActiveSelection || input.moveCategoryIds.some(isActionablePriorityCategory);
+  return input.moveCategoryIds.some(isActionablePriorityCategory);
 }
 
 /**

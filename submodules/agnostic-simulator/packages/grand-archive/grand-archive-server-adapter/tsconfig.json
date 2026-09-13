@@ -1,0 +1,32 @@
+{
+  "include": ["src/**/*", "scripts/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"],
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": true,
+    "types": ["node"],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@tcg/game-page-contract": ["../../game-page-contract/src/index.ts"],
+      "@tcg/grand-archive-cards": ["../../../../grand-archive/packages/cards/src/index.ts"],
+      "@tcg/grand-archive-engine/runtime": [
+        "../../../../grand-archive/packages/engine/src/runtime-api.ts"
+      ],
+      "@tcg/grand-archive-engine/automation": [
+        "../../../../grand-archive/packages/engine/src/automation/index.ts"
+      ],
+      "@tcg/grand-archive-engine/simulator": [
+        "../../../../grand-archive/packages/engine/src/simulator-api.ts"
+      ],
+      "@tcg/grand-archive-types": ["../../../../grand-archive/packages/types/src/index.ts"],
+      "@tcg/protocol": ["../../protocol/src/index.ts"],
+      "@tcg/shared/*": ["../../shared/src/*"],
+      "@tcg/simulator-contract": ["../../simulator-contract/src/index.ts"]
+    }
+  }
+}

@@ -4,9 +4,10 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailKerryEurodyneTheLastRockerboy = defineCyberpunkCard({
   id: "5c4d4058-9185-4305-9e8f-7eca41cf6674",
   slug: "kerry-eurodyne-the-last-rockerboy",
+  subname: "The Last Rockerboy",
   rulesText: "{Spend} If you control a Gig with 8+ value, draw 2.",
-  name: "Kerry Eurodyne — The Last Rockerboy",
-  displayName: "Kerry Eurodyne — The Last Rockerboy",
+  name: "Kerry Eurodyne",
+  displayName: "Kerry Eurodyne: The Last Rockerboy",
   canonicalId: "kerry-eurodyne-the-last-rockerboy",
   color: "red",
   classifications: ["Rocker", "Samurai"],

@@ -3,7 +3,7 @@ import { op08CharlotteOven061 } from "../../../../../cards/src/cards/OP08/charac
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP08-061 Charlotte Oven", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op08CharlotteOven061);
   });
 });

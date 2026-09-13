@@ -34,6 +34,7 @@ function destroyCommand(owner: "friendly" | "opponent") {
 }
 
 describe("Jamil's Gundam X (GD04-058)", () => {
+  /** @behavioral-proof complete: destroyed timing, Vulture qualification, controller turn, and Pilot destination are public. */
   describe("【During Pair･(Vulture) Pilot】【Destroyed】If it is your turn, return this Unit's paired Pilot to its owner's hand.", () => {
     it("returns its paired Vulture Pilot when a played effect destroys it on its controller's turn", () => {
       const vulturePilot = createMockPilot({ traits: ["vulture"], cost: 1 });

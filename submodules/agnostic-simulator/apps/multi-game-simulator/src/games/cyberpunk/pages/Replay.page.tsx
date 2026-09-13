@@ -31,6 +31,7 @@ import { loadCyberpunkReplay } from "../replay/loadReplay";
 import type { CyberpunkReplayOrchestrator } from "../replay/replayOrchestrator";
 import classes from "./Replay.module.css";
 import { cyberpunkSimulatorPath } from "./simulatorPaths";
+import { parseNonNegativeIntegerQuery, syncReplayStepQuery } from "../../../runtime/replayQuery.ts";
 
 const SPEEDS = [
   { label: "0.5x", ms: 1600 },
@@ -50,16 +51,26 @@ export function ReplayPage() {
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
   const [speedIndex, setSpeedIndex] = useState(1);
   const [showForkMenu, setShowForkMenu] = useState(false);
-  const initialStep = useMemo(() => Number(searchParams.get("step") ?? "0"), [searchParams]);
+  const requestedStateVersion = useMemo(
+    () => parseNonNegativeIntegerQuery(searchParams.get("stateVersion")),
+    [searchParams],
+  );
+  const requestedStep = useMemo(
+    () => parseNonNegativeIntegerQuery(searchParams.get("step")),
+    [searchParams],
+  );
+  const preferredSource = searchParams.get("source") === "device" ? "device" : "cloud";
 
   useEffect(() => {
     let cancelled = false;
     setLoadState({ status: "loading" });
-    loadCyberpunkReplay(gameId)
+    loadCyberpunkReplay(gameId, preferredSource)
       .then((orchestrator) => {
         if (cancelled) return;
-        if (Number.isFinite(initialStep) && initialStep > 0) {
-          orchestrator.goToStep(initialStep);
+        if (requestedStateVersion !== null) {
+          orchestrator.goToStateVersion(requestedStateVersion);
+        } else if (requestedStep !== null) {
+          orchestrator.goToStep(requestedStep);
         }
         setLoadState({ status: "ready", orchestrator });
       })
@@ -74,7 +85,7 @@ export function ReplayPage() {
     return () => {
       cancelled = true;
     };
-  }, [gameId, initialStep]);
+  }, [gameId, requestedStateVersion, requestedStep, preferredSource]);
 
   useEffect(() => {
     return () => {
@@ -135,6 +146,10 @@ function ReplayBoard({
 }) {
   const snapshot = useReplaySnapshot(orchestrator);
   const postGameContext = useMemo(() => replayPostGameContext(orchestrator), [orchestrator]);
+  const initialEngineBuilder = useCallback(
+    () => createLiveMatchViewerEngine(snapshot.state),
+    [snapshot.state],
+  );
   const remoteDispatch = useCallback(
     (
       _action: EngineAction,
@@ -163,19 +178,15 @@ function ReplayBoard({
 
   useEffect(() => {
     const url = new URL(window.location.href);
-    if (snapshot.step === 0) {
-      url.searchParams.delete("step");
-    } else {
-      url.searchParams.set("step", String(snapshot.step));
-    }
-    window.history.replaceState({}, "", `${url.pathname}${url.search}`);
+    const search = syncReplayStepQuery(url.search, snapshot.step);
+    window.history.replaceState({}, "", `${url.pathname}${search}`);
   }, [snapshot.step]);
 
   return (
     <main className={classes.page}>
       <BoardSharedPage
         key={`replay:${snapshot.step}`}
-        initialEngineBuilder={() => createLiveMatchViewerEngine(snapshot.state)}
+        initialEngineBuilder={initialEngineBuilder}
         initialAi={{ player: null, opponent: null }}
         initialHumanSide="player"
         initialAiMode="step"

@@ -1,29 +1,46 @@
-# Vite+ Monorepo Starter
+# Game-Agnostic Simulator
 
-A starter for creating a Vite+ monorepo.
+This workspace owns TCG Online's shared simulator contracts, runtime helpers,
+UI primitives, game adapters, agents, and multi-game browser application.
 
-## Development
+Game rules do not live here. Each game owns its native engine and cards; this
+workspace connects those engines to shared platform and browser contracts.
 
-- Check everything is ready:
+## Start Here
 
-```bash
-vp run ready
+- [Architecture and mental model](docs/architecture.md) explains ownership,
+  package boundaries, data flow, and where changes belong.
+- [Gundam integration](docs/gundam-integration.md) traces one game through
+  local play, server-authoritative live play, replay, projection, and UI.
+- [Testing](TESTING.md) explains the package, jsdom, and Playwright layers.
+- [Contributor constraints](AGENTS.md) is the source of truth for ownership
+  and validation requirements.
+
+## Common Commands
+
+From the repository root:
+
+```sh
+pnpm run dev:multi-game-sim
+pnpm run ci:agnostic:check
 ```
 
-- Run the tests:
+For the consolidated local stack:
 
-```bash
-vp run -r test
+```sh
+vp run docker
 ```
 
-- Build the monorepo:
+Then open `http://localhost:8080/gundam/simulator`.
 
-```bash
-vp run -r build
+Run commands from this workspace when working on shared packages:
+
+```sh
+vp install
+pnpm run check
+pnpm run test
 ```
 
-- Run the development server:
-
-```bash
-vp run dev
-```
+Each submodule has its own workspace and lockfile. Install the owning game
+workspace before this one when cross-workspace `link:` dependencies are
+missing.

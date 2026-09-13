@@ -11,13 +11,45 @@ export interface GundamMoveLogBase {
   readonly outcomes?: GundamMoveOutcomes;
 }
 
+export type GundamMoveOutcomeKind =
+  | "resourcesSpent"
+  | "cardsDiscarded"
+  | "unitsRested"
+  | "damageDealt"
+  | "hpRecovered"
+  | "shieldsRemoved"
+  | "unitsDefeated"
+  | "cardsDrawn"
+  | "cardsMoved"
+  | "cardsReturnedToHand"
+  | "shieldsAddedToHand"
+  | "cardsReadied"
+  | "cardsExhausted"
+  | "statModifiers"
+  | "resourcesPlaced"
+  | "effectsQueued"
+  | "effectsResolved";
+
+export interface GundamMoveOutcomeOrderEntry {
+  readonly kind: GundamMoveOutcomeKind;
+  /** Index in the corresponding outcome array. Omitted for aggregate outcomes. */
+  readonly index?: number;
+}
+
 export interface GundamMoveOutcomes {
+  /** Chronological order of the public outcomes emitted while the move ran. */
+  readonly order?: readonly GundamMoveOutcomeOrderEntry[];
   readonly resourcesSpent?: { readonly regularCount: number; readonly exRemovedCount: number };
   readonly cardsDiscarded?: readonly CardInstanceId[];
   readonly unitsRested?: readonly CardInstanceId[];
   readonly damageDealt?: readonly {
     readonly sourceCardId?: CardInstanceId;
     readonly targetId: CardInstanceId;
+    readonly amount: number;
+    readonly attackKind?: "direct" | "fight";
+  }[];
+  readonly hpRecovered?: readonly {
+    readonly cardId: CardInstanceId;
     readonly amount: number;
   }[];
   readonly shieldsRemoved?: readonly {
@@ -41,8 +73,19 @@ export interface GundamMoveOutcomes {
     readonly to: string;
   }[];
   readonly cardsReturnedToHand?: readonly CardInstanceId[];
+  /** Hidden-safe summary for effects that add face-down Shields to hand. */
+  readonly shieldsAddedToHand?: {
+    readonly playerId: PlayerId;
+    readonly count: number;
+  };
   readonly cardsReadied?: readonly CardInstanceId[];
   readonly cardsExhausted?: readonly CardInstanceId[];
+  readonly statModifiers?: readonly {
+    readonly cardId: CardInstanceId;
+    readonly stat: string;
+    readonly amount: number;
+    readonly duration: string;
+  }[];
   readonly resourcesPlaced?: readonly {
     readonly playerId: PlayerId;
     readonly cardId: CardInstanceId;
@@ -53,6 +96,7 @@ export interface GundamMoveOutcomes {
     readonly sourceCardId: CardInstanceId;
     readonly controllerId: PlayerId;
     readonly kind: string;
+    readonly timing?: string;
   }[];
   readonly effectsResolved?: readonly {
     readonly effectId: string;
@@ -120,6 +164,12 @@ export interface ResolveEffectLog extends GundamMoveLogBase {
 export interface PassLog extends GundamMoveLogBase {
   readonly type: "pass";
   readonly context: "action-step" | "block" | "battle" | "turn";
+  /**
+   * True when a client auto-passed on the player's behalf because no
+   * legal alternatives were available (see `AutomaticPassArgs.automatic`). Lets
+   * log projections label the pass as automatic.
+   */
+  readonly automatic?: boolean;
 }
 
 export interface TurnStartLog extends GundamMoveLogBase {
@@ -127,6 +177,20 @@ export interface TurnStartLog extends GundamMoveLogBase {
   readonly turnNumber: number;
   readonly activePlayerId: PlayerId;
   readonly drawn?: PrivateField<CardInstanceId[]>;
+}
+
+/**
+ * Setup mulligan (alterHand). Public viewers see `count` only; the actor sees
+ * returned/drawn identities via private fields (same strip model as draw).
+ */
+export interface MulliganLog extends GundamMoveLogBase {
+  readonly type: "mulligan";
+  /** Cards redrawn (0 = kept opening hand). */
+  readonly count: number;
+  /** Cards returned to the deck — owner-only. */
+  readonly returnedCardIds?: PrivateField<CardInstanceId[]>;
+  /** Replacement hand cards — owner-only. */
+  readonly drawnCardIds?: PrivateField<CardInstanceId[]>;
 }
 
 export interface GameEndLog extends GundamMoveLogBase {
@@ -145,4 +209,5 @@ export type GundamMoveLog =
   | ResolveEffectLog
   | PassLog
   | TurnStartLog
+  | MulliganLog
   | GameEndLog;

@@ -26,6 +26,7 @@ import {
 } from "../../rules/derived-state.ts";
 import { evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
 import { emitGundamLog } from "../../logging.ts";
+import { enqueueBattleAreaExcessManagement } from "../../rules/battle-area-excess.ts";
 import { enqueueObserverTriggers, enqueueOwnCardTriggers } from "../pending-effects.ts";
 import { takeTopCards } from "../../../runtime/zone-order.ts";
 
@@ -35,7 +36,7 @@ export function handleLookAtTopDeckAction(
   remainingDestination: "bottom" | "trash" | undefined,
   randomizeRemainingToBottom: boolean,
   tutorFilter: TargetFilter | undefined,
-  tutorDestination: "hand" | "battleArea" | undefined,
+  tutorDestination: "hand" | "battleArea" | "deckTop" | undefined,
   ctx: EffectExecutionContext,
 ): void {
   const playerId = ctx.sourcePlayerId;
@@ -84,7 +85,10 @@ export function handleLookAtTopDeckAction(
 
   if (tutored) {
     const destination = tutorDestination ?? "hand";
-    ctx.framework.zones.moveCard(tutored, { zone: destination, playerId });
+    ctx.framework.zones.moveCard(tutored, {
+      zone: destination === "deckTop" ? "deck" : destination,
+      playerId,
+    });
     if (destination === "battleArea") {
       ctx.G.turnMetadata.deployedThisTurn.push(tutored);
       ctx.G.exhausted[tutored] = false;
@@ -306,4 +310,6 @@ export function handleDeployFromTrashAction(
     visibility: { mode: "PUBLIC" },
     category: "action",
   });
+  // Rule 11-4: trash re-deploys still fill battle-area capacity.
+  enqueueBattleAreaExcessManagement(ctx.G, playerId, cardId, ctx.framework);
 }

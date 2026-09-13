@@ -75,4 +75,34 @@ describe("OP12-028 Kouzuki Hiyori", () => {
     expect(engine.findCardInZone("south", "hand", op01PunkGibson058)).toBe(punkGibsonId);
     expect(engine.getState().capabilityHistory).toEqual([]);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op01RoronoaZoro001,
+        character: [op12KouzukiHiyori028],
+        deck: [op01XDrake054, op01PunkGibson058, op04Dellinger029, op01RoundTable027],
+        activeDon: 1,
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const hiyoriId = engine.findCardInZone("south", "character", op12KouzukiHiyori028);
+    const activeDonBefore = engine.getView("south").players.south.activeDon;
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const handBefore = engine.getView("south").players.south.hand.length;
+
+    engine.activateEffect(hiyoriId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon).toBe(activeDonBefore);
+    expect(view.players.south.restedDon).toBe(0);
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === hiyoriId)?.rested,
+    ).toBe(false);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

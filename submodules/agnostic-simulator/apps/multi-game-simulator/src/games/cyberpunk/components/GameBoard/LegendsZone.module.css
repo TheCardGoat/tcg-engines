@@ -125,6 +125,19 @@
     repeating-linear-gradient(135deg, rgb(7 9 12 / 18%) 0 7px, transparent 7px 16px);
 }
 
+.slot[data-face-down="true"]:not([data-spent="true"]):not([data-log-highlight="true"]):not(
+    [data-call-legend-actionable="true"]
+  )
+  :global(.sim-card-image-frame)::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 40;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgb(7 9 12 / 68%) 0%, rgb(7 9 12 / 52%) 28%, transparent 66%);
+  pointer-events: none;
+}
+
 .slot[data-spent="true"]::after,
 .slot[data-call-legend-actionable="true"]::after {
   position: absolute;

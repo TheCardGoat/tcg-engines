@@ -83,11 +83,13 @@
   --font-body: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* ---- Typography — HUD scale (cockpit callouts, stat pips, labels) ---- */
-  --text-hud-2xs: 7px;
-  --text-hud-xs: 9px;
-  --text-hud-sm: 10px;
-  --text-hud-md: 11px;
+  /* ---- Typography — HUD scale (cockpit callouts, stat pips, labels) ----
+   * Floor is 9px: anything smaller fails legibility on the dark command
+   * surface, so 2xs/xs/sm/md step up in even 1px increments. */
+  --text-hud-2xs: 9px;
+  --text-hud-xs: 10px;
+  --text-hud-sm: 11px;
+  --text-hud-md: 12px;
   --text-hud-lg: 13px;
   --text-hud-xl: 15px;
   --text-hud-2xl: 22px;
@@ -220,7 +222,9 @@
 /* Hangar workbench theme -----------------------------------------------------
  * Structural chrome is graphite rather than paper white. These tokens remain
  * scoped so prompts and card details can stay light and read as raised layers. */
-.gd-dark-surface {
+.gd-dark-surface,
+body.gundam-simulator-active [role="dialog"]:has([class*="settingsTabs"]),
+body.gundam-simulator-active [role="menu"][class*="_menu_"] {
   --color-hud-bg: oklch(0.17 0.025 263);
   --color-hud-deep: oklch(0.205 0.03 262);
   --color-hud-surface: oklch(0.255 0.032 260);
@@ -239,6 +243,73 @@
   --color-hud-border: oklch(0.7 0.12 255 / 0.3);
   --color-hud-border-hot: oklch(0.76 0.15 253 / 0.72);
   --color-hud-line: oklch(0.69 0.055 255 / 0.2);
+}
+
+.gd-card-context {
+  --game-accent: var(--color-hud-accent-hot);
+}
+
+.gd-compact-resource-panel {
+  container: gundam-resource-counter / inline-size;
+}
+
+@container gundam-resource-counter (max-width: 140px) {
+  .gd-resource-level {
+    display: none;
+  }
+}
+
+@media (max-height: 520px) {
+  .gd-match-overview-dialog {
+    overflow-y: auto;
+  }
+
+  .gd-match-overview-dialog > div {
+    flex-shrink: 0;
+  }
+
+  .gd-match-overview-dialog .gd-match-overview-content {
+    flex: none;
+    overflow: visible;
+  }
+
+  body.gundam-simulator-active [data-card-context-preview-dialog] {
+    height: calc(100dvh - 40px);
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: hidden;
+  }
+
+  body.gundam-simulator-active [data-card-context-preview-dialog] > .sim-card-face {
+    height: 100%;
+    width: auto !important;
+    justify-self: center;
+  }
+}
+
+@media (pointer: coarse), (max-width: 767px), (max-height: 520px) {
+  .gd-card-context > header button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .gd-card-context [data-card-context-details-toggle] {
+    min-height: 44px;
+  }
+}
+
+/* A phone-wide card panel needs viewport space, not the narrow area beside
+ * or below its card. Keep the desktop popover anchored to the battlefield. */
+@media (max-width: 767px) {
+  [data-radix-popper-content-wrapper]:has(> .gd-card-context) {
+    top: max(8px, env(safe-area-inset-top)) !important;
+    left: max(8px, env(safe-area-inset-left)) !important;
+    transform: none !important;
+  }
+
+  .gd-card-context[data-card-context-menu] {
+    --card-context-available-height: calc(100dvh - var(--card-context-safe-block));
+    width: calc(100vw - var(--card-context-safe-inline));
+  }
 }
 
 .gd-dark-surface .bg-white {
@@ -268,7 +339,80 @@
   background: linear-gradient(180deg, oklch(0.34 0.04 258), oklch(0.255 0.032 260));
 }
 
+.gd-mobile-activity {
+  --match-sidebar-type-label: var(--text-hud-md);
+  --match-sidebar-border: var(--color-hud-border);
+  --match-sidebar-muted: var(--color-hud-text-muted);
+  --match-sidebar-text: var(--color-hud-text);
+  --match-sidebar-accent: var(--color-hud-accent-hot);
+}
+
+.gundam-simulator-root [role="dialog"]:has(.gd-mobile-activity) {
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.gundam-simulator-root [role="dialog"]:has(.gd-mobile-activity) > button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 1;
+  margin: 0;
+}
+
+.gd-mobile-activity > header {
+  min-height: 60px;
+  padding-right: 88px;
+}
+
+.gd-mobile-activity select {
+  min-height: 44px !important;
+}
+
+.gd-mobile-activity input[type="range"] {
+  height: 44px;
+}
+
+:is(.gd-mobile-activity, .gd-command-surface) [data-testid="chat"] {
+  --simulator-chat-empty-color: var(--color-hud-text-muted);
+  --simulator-chat-empty-opacity: 1;
+  font-family: var(--font-body);
+  color: var(--color-hud-text);
+}
+
+:is(.gd-mobile-activity, .gd-command-surface) [data-testid="chat-quick"] {
+  min-height: 44px;
+  border-color: var(--color-hud-border);
+  background: var(--color-hud-surface);
+  font-size: var(--text-hud-md);
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+:is(.gd-mobile-activity, .gd-command-surface) [data-testid="chat-quick"]:hover:not(:disabled) {
+  background: var(--color-hud-surface-raised);
+}
+
+:is(.gd-mobile-activity, .gd-command-surface) [data-testid="chat-input"] {
+  border-color: var(--color-hud-border);
+  font-size: var(--text-hud-md);
+}
+
+:is(.gd-mobile-activity, .gd-command-surface) [data-testid="chat-input"]::placeholder {
+  color: var(--color-hud-text-muted);
+  opacity: 1;
+}
+
+.gd-support-action {
+  font-size: var(--text-hud-md);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: var(--color-hud-text);
+}
+
 .gd-command-surface {
+  --simulator-participant-height: 10.5rem;
+
   background:
     linear-gradient(180deg, oklch(0.225 0.03 262), oklch(0.175 0.025 263)), oklch(0.19 0.025 263);
   box-shadow:
@@ -276,41 +420,228 @@
     8px 0 28px oklch(0.08 0.02 265 / 0.28);
 }
 
+/* Let the command rail's root surface run continuously behind every section.
+ * Accent washes and hairlines establish hierarchy without stacking panels. */
+.gd-command-surface :is([aria-label="Opponent match status"], [aria-label="Your match status"]) {
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--participant-accent) 8%, transparent),
+      transparent 58%
+    ),
+    transparent;
+}
+
+.gd-command-surface [aria-label="Match actions"] > div {
+  background: transparent;
+}
+
+body.gundam-simulator-active [role="menu"][class*="_menu_"] {
+  background: var(--color-hud-deep);
+  border-color: var(--color-hud-border);
+  color: var(--color-hud-text);
+}
+
+body.gundam-simulator-active [role="menu"] > [class*="menuHeader"] {
+  background: var(--color-hud-surface);
+  border-color: var(--color-hud-border);
+}
+
+body.gundam-simulator-active [role="menu"] > [class*="menuHeader"] span {
+  color: var(--color-hud-text-muted);
+}
+
+body.gundam-simulator-active [role="menu"] [role="menuitem"]:hover {
+  background: var(--color-hud-surface-raised);
+}
+
+body.gundam-simulator-active [role="menu"] [role="menuitem"]:focus-visible {
+  outline-color: var(--color-hud-accent);
+}
+
+body.gundam-simulator-active [role="dialog"]:has([class*="settingsTabs"]) {
+  background: var(--color-hud-deep);
+  border-color: var(--color-hud-border);
+  color: var(--color-hud-text);
+}
+
+body.gundam-simulator-active
+  [role="dialog"]:has([class*="settingsTabs"])
+  :is(header, [role="tablist"], [class*="settingsAction"]) {
+  border-color: var(--color-hud-border);
+}
+
+body.gundam-simulator-active
+  [role="dialog"]:has([class*="settingsTabs"])
+  :is([role="tab"], legend, label > span, output, p) {
+  color: var(--color-hud-text-muted);
+}
+
+body.gundam-simulator-active
+  [role="dialog"]:has([class*="settingsTabs"])
+  [role="tab"][aria-selected="true"] {
+  color: var(--color-hud-text);
+  border-color: var(--color-hud-accent-hot);
+}
+
+body.gundam-simulator-active
+  [role="dialog"]:has([class*="settingsTabs"])
+  :is(
+    [class*="iconButton"],
+    [class*="segmented"] label,
+    select,
+    [class*="settingsAction"] button,
+    [class*="settingsAction"] a
+  ) {
+  background: var(--color-hud-surface);
+  border-color: var(--color-hud-border);
+  color: var(--color-hud-text);
+}
+
+body.gundam-simulator-active [role="dialog"]:has([class*="settingsTabs"]) :focus-visible {
+  outline-color: var(--color-hud-accent-hot);
+}
+
+.gundam-simulator-root [data-sim-board] {
+  --board-scroll-cue-inset: clamp(6rem, 22vh, 8rem);
+}
+
+@media (max-height: 520px) {
+  .gundam-simulator-root [data-sim-board] {
+    --board-scroll-cue-inset: clamp(3rem, 14vh, 4rem);
+  }
+}
+
+@media (max-width: 767px), (max-height: 520px) {
+  body:has([data-card-context-menu]) .gundam-simulator-root [data-board-scroll-cue] {
+    display: none;
+  }
+
+  .gundam-simulator-root:has([data-testid="attack-targeting-dismiss-layer"])
+    [data-board-scroll-cue] {
+    display: none;
+  }
+
+  body.gundam-simulator-active [role="dialog"]:has([class*="settingsTabs"]) [class*="iconButton"] {
+    width: 44px;
+    height: 44px;
+  }
+
+  body.gundam-simulator-active [role="dialog"]:has([class*="settingsTabs"]) input[type="range"] {
+    height: 44px;
+  }
+}
+
+.gd-command-surface [class*="nameLine"] {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 4px 6px;
+}
+
+.gd-command-surface [class*="nameLine"] [class*="status"] {
+  grid-column: 2;
+  justify-self: start;
+  max-width: 100%;
+  margin-left: 0;
+}
+
+/* Player metrics belong to the sidebar surface, not four separate cards.
+ * One continuous strip and shared hairlines preserve the scan columns. */
+.gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) {
+  grid-template-columns: 1.15fr 1.5fr 1fr 0.95fr;
+  gap: 0;
+  overflow: hidden;
+  border-block: 1px solid var(--color-hud-border);
+}
+
+.gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) > div {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) dt {
+  min-height: 2.5em;
+  line-height: 1.25;
+  letter-spacing: 0;
+  white-space: normal;
+}
+
+.gd-command-surface
+  :is([aria-label="Opponent resources"], [aria-label="Your resources"])
+  > div
+  + div {
+  border-left: 1px solid var(--color-hud-border);
+}
+
 .gd-command-surface header,
 .gd-command-surface footer {
   background: oklch(0.205 0.03 262);
 }
 
-.gd-command-surface [role="log"],
-.gd-command-surface [aria-label="Game log panel"] {
-  background: oklch(0.185 0.025 263 / 0.96);
+@media (pointer: coarse) {
+  .gd-command-surface footer button {
+    min-height: 44px;
+  }
 }
 
-.gd-command-surface .gundam-ai-control-panel [class*="select"],
-.gd-command-surface .gundam-ai-control-panel [class*="btn"] {
+.gd-command-surface [role="log"],
+.gd-command-surface [aria-label="Game log panel"] {
+  background: transparent;
+}
+
+:is(.gd-command-surface, .gd-mobile-activity) .gundam-ai-control-panel [class*="select"],
+:is(.gd-command-surface, .gd-mobile-activity) .gundam-ai-control-panel [class*="btn"] {
   color: var(--color-hud-text);
   border-color: var(--color-hud-border);
   background: oklch(0.27 0.035 260 / 0.92);
 }
 
-.gd-command-surface .gundam-ai-control-panel [class*="segmentBtn"] {
+:is(.gd-command-surface, .gd-mobile-activity) .gundam-ai-control-panel [class*="segmentBtn"] {
   color: var(--color-hud-text-muted);
   border-color: var(--color-hud-border);
   background: oklch(0.245 0.032 261 / 0.94);
 }
 
-.gd-command-surface .gundam-ai-control-panel [class*="segmentActive"] {
+:is(.gd-command-surface, .gd-mobile-activity) .gundam-ai-control-panel [class*="segmentActive"] {
   color: var(--color-hud-text);
   background: oklch(0.49 0.14 257 / 0.62);
 }
 
-.gd-command-surface .gundam-ai-control-panel [class*="statusRow"] {
+:is(.gd-command-surface, .gd-mobile-activity) .gundam-ai-control-panel [class*="statusRow"] {
   border-color: var(--color-hud-border);
   background: linear-gradient(110deg, oklch(0.29 0.045 260), oklch(0.225 0.03 263));
 }
 
-.gd-command-surface .gundam-ai-control-panel [class*="statusName"] {
+:is(.gd-command-surface, .gd-mobile-activity) .gundam-ai-control-panel [class*="statusName"] {
   color: var(--color-hud-text);
+}
+
+.gd-dark-surface.gd-mobile-activity .gundam-ai-control-panel :is(button, summary) {
+  min-height: 44px;
+  font-size: var(--text-hud-md);
+}
+
+.gd-dark-surface:is(.gd-command-surface, .gd-mobile-activity)
+  .gundam-ai-control-panel
+  [class*="section"]:has(select) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.gd-dark-surface:is(.gd-command-surface, .gd-mobile-activity) .gundam-ai-control-panel select {
+  font-family: var(--font-body);
+  font-size: var(--text-hud-md);
+  letter-spacing: normal;
+}
+
+.gd-dark-surface:is(.gd-command-surface, .gd-mobile-activity)
+  .gundam-ai-control-panel
+  [class*="statusName"] {
+  overflow-wrap: anywhere;
+  white-space: normal;
+  font-family: var(--font-body);
+  font-size: var(--text-hud-md);
+  letter-spacing: normal;
 }
 
 .gd-dark-surface *::-webkit-scrollbar-track {
@@ -328,6 +659,19 @@
   color: oklch(0.38 0.04 260);
 }
 
+/* The hidden main deck is cockpit equipment, not a light paper panel. Keep
+ * its footprint visually aligned with the adjacent dark board utilities. */
+.gundam-zone-primitive.gundam-deck-stack {
+  --board-surface-soft: oklch(0.225 0.032 262 / 0.98);
+  --board-border: oklch(0.48 0.08 257 / 0.72);
+  --board-text: oklch(0.9 0.025 255);
+  --board-muted: oklch(0.72 0.04 255);
+}
+
+.gd-dark-surface .gundam-zone-primitive.gundam-deck-stack .tabletop-pile-label {
+  color: oklch(0.76 0.04 255);
+}
+
 /* Scanline utility kept as a no-op for backwards compatibility — the official
  * Gundam digital UI is clean (no CRT artifacts), so any class:scanline call
  * sites render transparent. Remove the class outright once consumers migrate. */
@@ -340,9 +684,11 @@
  * Body / root defaults
  * ========================================================================== */
 
+body.gundam-simulator-active,
 .gundam-simulator-root {
-  /* Mobile chrome slot sizes — used by the portrait re-layout. Kept outside @theme
-     (not @theme) so they read as plain CSS vars in calc()/env() expressions. */
+  /* Mobile chrome slot sizes — used by the portrait re-layout and dialog
+     portals. Kept outside @theme so they read as plain CSS vars in calc()/env()
+     expressions. */
   --mobile-top-hud-height: 52px;
   --mobile-opp-hand-height: 104px;
   --mobile-opp-resources-height: 94px;
@@ -622,6 +968,15 @@ body.gundam-simulator-active {
   right: 0;
 }
 
+/* Card-tag help may extend across the battlefield divider. Elevate only the
+ * active seat so its tooltip can cross that rail without changing the board's
+ * normal stacking order or clipping other card content. */
+[data-seat-side]:has([data-card-tag-tooltip]:hover),
+[data-seat-side]:has([data-card-tag-tooltip]:focus-within) {
+  z-index: 60;
+  overflow: visible;
+}
+
 /* =============================================================================
  * `.hud-corner` — mecha L-bracket corners on panels.
  * ========================================================================== */
@@ -677,6 +1032,38 @@ body.gundam-simulator-active {
   animation: gd-blink 1.4s infinite;
 }
 
+/* The primary action remains fully legible while this small cockpit beacon
+ * carries the repeating "priority is armed" signal. */
+@keyframes gd-action-beacon {
+  0%,
+  28% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  58%,
+  100% {
+    opacity: 0.38;
+    transform: scale(0.68);
+  }
+}
+.gd-action-ready .gd-action-beacon {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  background: currentColor;
+  box-shadow: 0 0 7px color-mix(in srgb, currentColor 70%, transparent);
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  transform-origin: center;
+  animation: gd-action-beacon 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .gd-action-ready .gd-action-beacon {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /*
  * NOTE: intentionally opacity-only. Animating `transform` here would override
  * any `translate-*` classes applied via className (e.g. modal centering via
@@ -713,31 +1100,73 @@ body.gundam-simulator-active {
   animation: gd-pulse-red 1.6s ease-in-out infinite;
 }
 
-/* Hints-mode pulse for playable cards. Soft green halo every ~1.6s so
- * the player can find their next legal move without overpowering the
- * existing legality rim. Toggled via the seat-plate Hints button. */
-@keyframes gd-pulse-playable {
-  0%,
-  100% {
-    box-shadow:
-      0 0 8px rgba(86, 220, 120, 0.7),
-      0 0 18px rgba(86, 220, 120, 0.3);
-    border-color: rgba(120, 235, 140, 0.85);
-  }
-  50% {
-    box-shadow:
-      0 0 16px rgba(140, 245, 160, 1),
-      0 0 36px rgba(86, 220, 120, 0.75);
-    border-color: rgba(180, 255, 200, 1);
-  }
+/* Actionable cards need to read in a frozen frame as well as in motion.
+ * The white/green double rim survives busy card art and the diamond is a
+ * non-color cue that remains visible when hints or motion are disabled. */
+.gd-card-shell {
+  isolation: isolate;
 }
-.gd-pulse-playable {
-  animation: gd-pulse-playable 1.6s ease-in-out infinite;
+.gd-card-aura {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  transition:
+    box-shadow 200ms ease,
+    outline-color 200ms ease;
 }
-@media (prefers-reduced-motion: reduce) {
-  .gd-pulse-playable {
-    animation: none;
-  }
+.gd-card-actionable {
+  isolation: isolate;
+}
+.gd-card-action-marker {
+  position: absolute;
+  z-index: 8;
+  top: 5px;
+  right: 5px;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+  background: #39e56f;
+  border: 2px solid #f4fff6;
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  box-shadow:
+    0 2px 5px rgba(4, 64, 24, 0.72),
+    0 0 12px rgba(57, 229, 111, 0.9);
+}
+.gd-link-target-marker {
+  position: absolute;
+  z-index: 9;
+  top: 50%;
+  left: -7px;
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px 3px 7px;
+  pointer-events: none;
+  color: #edfff8;
+  background: rgba(5, 74, 58, 0.96);
+  border: 1px solid rgba(168, 255, 221, 0.95);
+  box-shadow:
+    0 5px 12px rgba(0, 27, 21, 0.72),
+    0 0 18px rgba(52, 235, 166, 0.7);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 24, 17, 0.9);
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+  transform: translateY(-50%);
+}
+.gd-link-target-marker__diamond {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  background: #71f7c2;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 8px rgba(113, 247, 194, 0.95);
+  transform: rotate(45deg);
 }
 
 /* One-shot cyan flash for the undo button right after the viewer makes
@@ -768,83 +1197,6 @@ body.gundam-simulator-active {
   }
 }
 
-@keyframes gd-target-candidate-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 3px rgba(255, 248, 170, 1),
-      0 0 0 7px rgba(255, 190, 35, 0.78),
-      0 0 28px rgba(255, 214, 64, 1),
-      0 0 62px rgba(255, 150, 20, 0.72),
-      0 0 96px rgba(255, 105, 0, 0.4);
-  }
-  50% {
-    box-shadow:
-      0 0 0 4px rgba(255, 255, 210, 1),
-      0 0 0 9px rgba(255, 200, 40, 0.9),
-      0 0 38px rgba(255, 226, 80, 1),
-      0 0 82px rgba(255, 150, 20, 0.82),
-      0 0 124px rgba(255, 105, 0, 0.5);
-  }
-}
-
-@keyframes gd-target-selected-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 0 3px rgba(255, 255, 255, 1),
-      0 0 0 7px rgba(45, 107, 255, 1),
-      0 0 30px rgba(45, 107, 255, 1),
-      0 0 68px rgba(76, 195, 255, 0.9),
-      0 0 104px rgba(76, 195, 255, 0.48);
-  }
-  50% {
-    box-shadow:
-      0 0 0 4px rgba(255, 255, 255, 1),
-      0 0 0 9px rgba(45, 107, 255, 1),
-      0 0 40px rgba(45, 107, 255, 1),
-      0 0 88px rgba(76, 195, 255, 0.98),
-      0 0 132px rgba(76, 195, 255, 0.58);
-  }
-}
-
-.gd-target-candidate {
-  animation: gd-target-candidate-pulse 1.15s ease-in-out infinite;
-}
-.gd-target-selected {
-  animation: gd-target-selected-pulse 0.95s ease-in-out infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .gd-target-candidate,
-  .gd-target-selected {
-    animation: none;
-  }
-}
-
-/* Dual-mode card lifted state — cyan candidate pulse on each half of
- * a Command-with-Pilot card while the user picks command vs pair-as-
- * pilot (rule 3-4-6). Mirrors the candidate-target cyan used by
- * inline targeting so the visual language stays consistent.
- */
-@keyframes gd-dual-mode-pulse {
-  0%,
-  100% {
-    box-shadow:
-      inset 0 0 0 2px rgba(41, 212, 247, 0.85),
-      inset 0 0 18px rgba(41, 212, 247, 0.25);
-  }
-  50% {
-    box-shadow:
-      inset 0 0 0 2px rgba(140, 240, 255, 1),
-      inset 0 0 28px rgba(41, 212, 247, 0.45);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  [data-testid="dual-mode-overlay"] button {
-    animation: none !important;
-  }
-}
-
 /* Hand strip fades slightly on hover so the player can peek at the board. */
 .hand-wrap {
   transition: opacity 0.2s ease;
@@ -865,12 +1217,496 @@ body.gundam-simulator-active {
   .hand-wrap:hover {
     opacity: 1;
   }
+
+  /* Compact result reports can be several screens tall. Keep the existing
+   * next-step and replay actions ahead of the scroll-heavy tab content so a
+   * finished match never hides its primary exit at the end of the report. */
+  .gd-match-overview-footer {
+    order: 1;
+  }
+
+  .gd-match-overview-content {
+    order: 2;
+  }
+
+  .gd-match-overview-actions {
+    order: 1;
+  }
+
+  .gd-match-overview-actions > button:last-child {
+    order: -1;
+  }
+
+  .gd-match-overview-feedback {
+    order: 2;
+  }
+}
+
+/* Budget for a Unit–Pilot stack as well as the fixed utility and hand rows.
+ * Scroll only when the viewport cannot contain both complete seats. */
+@media (max-width: 639px) {
+  .gd-match-overview-tabs button {
+    font-size: var(--text-hud-md);
+  }
+}
+
+@media (max-width: 767px) {
+  body.gundam-simulator-active [role="dialog"]:has([class*="settingsTabs"]) [role="tabpanel"] {
+    min-height: 0;
+  }
+
+  body.gundam-simulator-active
+    [role="dialog"]:has([class*="settingsTabs"])
+    [class*="settingsAction"] {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  body.gundam-simulator-active
+    [role="dialog"]:has([class*="settingsTabs"])
+    [class*="settingsAction"]
+    :is(button, a) {
+    display: grid;
+    min-height: 44px;
+    place-items: center;
+    text-align: center;
+  }
+
+  .gd-match-overview-dialog {
+    overflow-y: auto;
+  }
+
+  .gd-match-overview-dialog > div {
+    flex-shrink: 0;
+  }
+
+  .gd-match-overview-dialog .gd-match-overview-content {
+    flex: none;
+    overflow: visible;
+  }
+
+  .gd-match-overview-footer button {
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 8px;
+    white-space: normal;
+    font-size: var(--text-hud-md);
+    letter-spacing: normal;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-placement="bottom"] {
+    position: fixed;
+    bottom: calc(var(--mobile-menubar-height) + 8px);
+    max-height: calc(100dvh - var(--mobile-top-hud-height) - var(--mobile-menubar-height) - 16px);
+    overflow-y: auto;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-placement="top"] {
+    position: fixed;
+    top: calc(var(--mobile-top-hud-height) + 8px);
+    max-height: calc(100dvh - var(--mobile-top-hud-height) - var(--mobile-menubar-height) - 16px);
+    overflow-y: auto;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="focused"]:not(
+      [data-minimized="true"]
+    ) {
+    position: fixed;
+    top: calc(var(--mobile-top-hud-height) + 8px);
+    right: 8px;
+    bottom: calc(var(--mobile-menubar-height) + 8px);
+    left: 8px;
+    width: auto;
+    max-height: calc(100dvh - var(--mobile-top-hud-height) - var(--mobile-menubar-height) - 16px);
+    transform: none;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"]
+    [data-slot="interaction-instruction"] {
+    display: block;
+    max-height: min(8rem, 25dvh);
+    overflow-y: auto;
+    white-space: normal;
+    -webkit-line-clamp: unset;
+  }
+
+  /* Give entity-selection instructions their own full-width row. Source and
+   * utility controls share the first row; confirmation actions use the third.
+   * This avoids both excessive wrapping and text underneath touch controls. */
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+    [data-slot="interaction-rail"] {
+    grid-template-areas:
+      "signal source controls"
+      "signal instruction instruction"
+      "signal actions actions";
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    row-gap: 0.25rem;
+    padding-block: 0.4rem;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+    [data-slot="interaction-identity"] {
+    display: contents;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+    [data-slot="interaction-source-row"] {
+    grid-area: source;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+    [data-slot="interaction-instruction"] {
+    grid-area: instruction;
+  }
+
+  @media (max-width: 479px) {
+    .gundam-simulator-root
+      [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+      [data-slot="interaction-source"] {
+      font-size: 0.5625rem;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  @media (min-width: 480px) and (max-width: 640px) and (max-height: 420px) {
+    [data-radix-popper-content-wrapper]:has(> [data-interaction-utility-menu]) {
+      position: fixed !important;
+      top: 8px !important;
+      right: 8px !important;
+      bottom: 8px !important;
+      left: auto !important;
+      min-width: 0 !important;
+      transform: none !important;
+    }
+
+    [data-interaction-utility-menu] {
+      width: min(21rem, calc(100vw - 1rem));
+      max-height: calc(100dvh - 1rem);
+    }
+
+    [data-interaction-utility-menu] > svg {
+      display: none;
+    }
+
+    .gundam-simulator-root
+      [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"] {
+      width: min(19rem, calc(100vw - 1rem));
+    }
+
+    .gundam-simulator-root
+      [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+      [data-slot="interaction-source"] {
+      font-size: 0.5625rem;
+      letter-spacing: 0.02em;
+    }
+
+    .gundam-simulator-root
+      [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+      [data-slot="interaction-source"]
+      > :first-child {
+      flex: 0 0 auto;
+    }
+
+    .gundam-simulator-root
+      [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+      [data-slot="interaction-source"]
+      > :last-child {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /* Keep in-place card selections close to the hand they modify. A wrapping
+   * list makes the prompt grow over the cards after every tap, which is
+   * especially disruptive for hand-limit discards. */
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"]
+    [aria-label="Current selections"] {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"]
+    [aria-label="Current selections"]::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"]
+    [aria-label="Current selections"]
+    > span {
+    flex: 0 0 auto;
+    min-width: 0;
+    max-width: min(15rem, calc(100vw - 4rem));
+  }
+
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"]
+    [aria-label="Current selections"]
+    > span
+    > small {
+    display: none;
+  }
+
+  /* The selection prompt already identifies the resolving card. Keep its
+   * animation anchor, but clear the duplicate preview from selectable Units. */
+  .gundam-simulator-root:has([data-testid="interaction-resolution-prompt"])
+    [data-testid="gundam-command-focus-preview-handle"] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* Spatial prompts reveal their actual candidates before the decision opens.
+   * Vertical board navigation is unrelated until that decision resolves and
+   * otherwise peeks out from beneath the prompt as a clipped control. */
+  .gundam-simulator-root:has(
+      [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-input-kind="entity-selection"]
+    )
+    [data-board-scroll-cue] {
+    display: none;
+  }
+
+  .gd-choice-surface .choice-modal-backdrop {
+    position: fixed;
+    top: var(--mobile-top-hud-height);
+    bottom: var(--mobile-menubar-height);
+  }
+
+  .gd-choice-surface .choice-modal {
+    max-height: 100%;
+    overflow-y: auto;
+  }
+
+  .gd-choice-surface .choice-modal > div:first-child {
+    padding: var(--simulator-panel-header-padding, 0.625rem);
+  }
+
+  .gd-choice-surface .choice-modal > div:last-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--simulator-surface-gap, 0.5rem);
+    padding: var(--simulator-action-rail-padding, 0.625rem);
+  }
+
+  .gd-choice-surface .choice-modal-option {
+    min-height: 44px;
+    padding: 0.5rem;
+  }
+
+  @media (min-width: 480px) and (max-width: 640px) and (max-height: 420px) {
+    .gd-mulligan-choice .choice-modal-backdrop {
+      align-items: stretch;
+      justify-items: end;
+      padding: 0.25rem 0.5rem;
+    }
+
+    .gd-mulligan-choice .choice-modal {
+      width: 13rem;
+      max-width: 13rem;
+    }
+
+    .gd-mulligan-choice .choice-modal > div:first-child {
+      padding: 0.5rem;
+    }
+
+    .gd-mulligan-choice .choice-modal-title,
+    .gd-mulligan-choice .choice-modal-description {
+      text-align: left;
+    }
+
+    .gd-mulligan-choice .choice-modal-title {
+      font-size: 1rem;
+    }
+
+    .gd-mulligan-choice .choice-modal-description {
+      font-size: 0.75rem;
+      line-height: 1.25;
+    }
+
+    .gd-mulligan-choice .choice-modal > div:last-child {
+      gap: 0.35rem;
+      padding: 0.5rem;
+    }
+
+    .gundam-simulator-root:has(.gd-mulligan-choice)
+      [data-seat-side="bottom"]
+      [data-seat-row="hand"]
+      [data-zone-id="hand"] {
+      align-items: flex-start;
+    }
+
+    .gundam-simulator-root:has(.gd-mulligan-choice)
+      [data-seat-side="bottom"]
+      [data-seat-row="hand"]
+      .hand-container {
+      width: calc(100% - 13rem);
+      justify-content: flex-start;
+      padding-inline: 0.5rem;
+    }
+  }
+
+  .gundam-simulator-root [data-sim-board] {
+    overflow-y: auto !important;
+    overscroll-behavior-y: contain;
+  }
+
+  .gundam-simulator-root:has([data-animation-interaction-boundary][aria-busy="true"])
+    [data-board-scroll-cue] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .gundam-simulator-root [data-seat-side] {
+    --paired-stack-clearance: 0px;
+    min-height: calc(370px + var(--paired-stack-clearance));
+    flex: 1 0 calc(370px + var(--paired-stack-clearance));
+  }
+
+  .gundam-simulator-root [data-seat-side]:has([data-paired-pilot-stack]) {
+    --paired-stack-clearance: 24px;
+  }
+
+  /* An empty opponent hand has no visible contents to reserve 90px for. */
+  .gundam-simulator-root [data-seat-side="top"]:has([data-zone-id="hand"] .hand-container:empty) {
+    min-height: calc(280px + var(--paired-stack-clearance));
+    flex-basis: calc(280px + var(--paired-stack-clearance));
+  }
+
+  .gundam-simulator-root [data-seat-side="top"] [data-seat-row="hand"]:has(.hand-container:empty) {
+    height: 0;
+    min-height: 0;
+    border: 0;
+  }
+}
+
+.gundam-simulator-root [class*="sectionLabel"] {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+@media (max-width: 767px) {
+  .gundam-simulator-root [data-testid="attack-unit-targeting-instruction"] {
+    top: calc(var(--mobile-top-hud-height) + 8px);
+    width: calc(100vw - 24px);
+    text-align: center;
+  }
 }
 
 /* A phone in landscape has desktop-like width but only a narrow vertical play
  * window. Preserve readable cards and complete seat rows in a swipeable board
- * while MobileShell keeps status and actions fixed outside this scroller. */
+ * while the viewport shell keeps status and actions fixed outside this scroller. */
 @media (min-width: 768px) and (max-height: 520px) {
+  .gundam-simulator-root
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-placement="bottom"] {
+    position: fixed;
+    bottom: 12px;
+    width: auto;
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+  }
+
+  [data-game="gundam"][data-sidebar-open="true"]
+    [data-testid="interaction-resolution-prompt"][data-layout="compact"][data-placement="bottom"] {
+    left: calc(clamp(12.5rem, 20vw, 16rem) + 12px);
+  }
+
+  body.gundam-simulator-active [role="menu"] [role="menuitem"] {
+    min-height: 44px;
+  }
+
+  /* Keep the selected activity readable when the two status panels fill a
+   * short screen. The rail scrolls independently of the battlefield. */
+  .gd-command-surface {
+    --simulator-activity-min-height: 20rem;
+    --simulator-participant-height: 14rem;
+    --simulator-sidebar-collapse-inset: 0px;
+    margin-top: 3.5rem;
+    height: calc(100% - 3.5rem);
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  .gd-command-surface select {
+    min-height: 44px !important;
+  }
+
+  .gd-command-surface input[type="range"] {
+    height: 44px;
+  }
+
+  .gd-command-surface [class*="automationPanel"] {
+    position: fixed;
+    inset: 64px auto 8px 8px;
+    width: min(360px, calc(100vw - 16px));
+    max-height: none;
+    z-index: 60;
+    overscroll-behavior: contain;
+  }
+
+  .gd-dark-surface.gd-command-surface .gundam-ai-control-panel :is(button, summary) {
+    min-height: 44px;
+    font-size: var(--text-hud-md);
+  }
+
+  .gd-command-surface [class*="automationSummary"] {
+    display: block;
+  }
+
+  .gd-command-surface [class*="automationSummary"] > span {
+    flex-wrap: wrap;
+    gap: 4px;
+    font-family: var(--font-body);
+    letter-spacing: normal;
+  }
+
+  .gd-command-surface [class*="automationSummary"] .truncate {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) > div {
+    padding-inline: 0;
+  }
+
+  .gd-command-surface
+    :is([aria-label="Opponent resources"], [aria-label="Your resources"])
+    > div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .gd-command-surface
+    :is([aria-label="Opponent resources"], [aria-label="Your resources"])
+    > div:nth-child(n + 3) {
+    border-top: 1px solid var(--color-hud-border);
+  }
+
+  .gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) dt {
+    font-size: var(--text-hud-xs);
+  }
+
+  /* Match the expanded viewport shell rail so fixed choices stay inside
+   * the visible battlefield instead of clipping behind the sidebar. */
+  [data-game="gundam"][data-sidebar-open="true"] .gd-choice-surface .choice-modal-backdrop {
+    left: clamp(12.5rem, 20vw, 16rem);
+  }
+
   .gundam-simulator-root [data-sim-board] {
     overflow-y: auto !important;
     overscroll-behavior-y: contain;
@@ -883,9 +1719,14 @@ body.gundam-simulator-active {
   }
 
   .gundam-simulator-root [data-seat-side] {
-    min-height: 300px;
-    flex: 0 0 300px;
+    --paired-stack-clearance: 0px;
+    min-height: calc(370px + var(--paired-stack-clearance));
+    flex: 0 0 calc(370px + var(--paired-stack-clearance));
     scroll-snap-align: start;
+  }
+
+  .gundam-simulator-root [data-seat-side]:has([data-paired-pilot-stack]) {
+    --paired-stack-clearance: 24px;
   }
 }
 
@@ -914,7 +1755,7 @@ body.gundam-simulator-active {
   max-height: 88vh;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #ffffff, #fbfcfe);
+  background: linear-gradient(180deg, var(--color-hud-surface-raised), var(--color-hud-surface));
   border-top: 1px solid var(--color-hud-border-hot);
   box-shadow:
     0 -12px 40px rgba(26, 37, 66, 0.18),
@@ -967,6 +1808,8 @@ body.gundam-simulator-active {
   visibility: hidden;
 }
 .play-band--top {
+  position: relative;
+  top: 8px;
   height: var(--play-band-height-top, 22px);
   justify-content: flex-end;
   margin-bottom: calc(var(--play-band-height-top, 22px) * var(--play-band-overlap, 0.5) * -1);
@@ -976,7 +1819,10 @@ body.gundam-simulator-active {
 .play-band--bottom {
   position: absolute;
   right: 4px;
-  bottom: calc(4px + var(--play-slot-stat-bottom-offset, 0px));
+  /* Reserve the pill's lower edge inside the slot. The battlefield lane is
+   * intentionally scroll-clipped horizontally, so a 4px inset can cut off
+   * the stat circle when a large card reaches the field boundary. */
+  bottom: calc(12px + var(--play-slot-stat-bottom-offset, 0px));
   height: var(--play-band-height-bottom, 22px);
   justify-content: flex-end;
   padding: 0;
@@ -1063,5 +1909,88 @@ body.gundam-simulator-active {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) and (min-height: 521px) {
+  .gundam-simulator-root [data-sim-board] {
+    overflow-y: auto !important;
+    overscroll-behavior-y: contain;
+  }
+
+  .gundam-simulator-root [data-seat-side] {
+    flex: 1 0 auto;
+  }
+
+  .gundam-simulator-root [data-seat-row="field"] {
+    min-height: 220px;
+  }
+
+  .gundam-simulator-root [data-seat-side]:has([data-paired-pilot-stack]) [data-seat-row="field"] {
+    min-height: 244px;
+  }
+
+  .gd-command-surface [class*="automationPanel"] {
+    position: fixed;
+    inset: 294px auto auto 8px;
+    width: min(360px, calc(100vw - 16px));
+    max-height: min(26rem, calc(100dvh - 302px));
+    z-index: 60;
+  }
+
+  .gd-dark-surface.gd-command-surface .gundam-ai-control-panel :is(button, summary, select) {
+    min-height: 44px;
+  }
+
+  .gd-command-surface [class*="automationSummary"] {
+    display: block;
+  }
+
+  .gd-command-surface [class*="automationSummary"] > span {
+    flex-wrap: wrap;
+    gap: 4px;
+    font-family: var(--font-body);
+    letter-spacing: normal;
+  }
+
+  .gd-command-surface [class*="automationSummary"] .truncate {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .gundam-simulator-root
+    [data-seat-side="top"]
+    [data-seat-row="hand"]:has(.hand-container:empty):not(:has(button[aria-expanded="false"])) {
+    height: 0;
+    min-height: 0;
+    border: 0;
+    visibility: hidden;
+  }
+
+  .gd-command-surface {
+    --simulator-participant-height: 14rem;
+    --simulator-activity-min-height: 20rem;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+  }
+
+  .gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gd-command-surface :is([aria-label="Opponent resources"], [aria-label="Your resources"]) > div {
+    padding-inline: 0;
+  }
+
+  .gd-command-surface
+    :is([aria-label="Opponent resources"], [aria-label="Your resources"])
+    > div:nth-child(3) {
+    border-left: 0;
+  }
+
+  .gd-command-surface
+    :is([aria-label="Opponent resources"], [aria-label="Your resources"])
+    > div:nth-child(n + 3) {
+    border-top: 1px solid var(--color-hud-border);
   }
 }

@@ -1,8 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { notifications } from "@mantine/notifications";
-import { type CommandSuccess, type MatchState } from "@tcg/cyberpunk-engine";
+import {
+  EMPTY_ANIMATION_SCRIPT,
+  type CommandSuccess,
+  type MatchState,
+} from "@tcg/cyberpunk-engine";
 import type {
+  AnimationPlanV2,
   ClientToServerEvents,
   EngineInteractionView,
   InteractionSubmission,
@@ -17,7 +22,7 @@ import type {
   SimulatorConnectionStatus,
 } from "@tcg/game-page-contract/connection-diagnostic";
 import { type NormalizedPresenceChange } from "@tcg/game-page-contract";
-import { buildInteractionSubmissionForActionId } from "@tcg/protocol";
+import { AnimationPlanV2Schema, buildInteractionSubmissionForActionId } from "@tcg/protocol";
 import {
   buildDiscordRichPresenceMatchUrl,
   clearDiscordPlayingGamePresence,
@@ -27,7 +32,6 @@ import {
 import { buildGatewaySocketIoUrl, type LiveGatewayMessage } from "../engine/live/liveGateway";
 import type { GatewayConnectionState, GatewayHandle } from "@tcg/gateway-client";
 import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket";
-import { getAuthSnapshot } from "../auth/auth-store";
 import {
   parseGatewayEvent,
   prepareLiveContext,
@@ -42,16 +46,16 @@ import {
   recordLocalConnectionHeartbeat,
 } from "../engine/live/playerConnectionState";
 import {
-  fetchLiveMatchContext,
   getMatchmakingReturnUrl,
   normalizeRemoteMoveLog,
+  projectLiveStateForSimulator,
   projectLiveValueForSimulator,
   projectSimulatorStateForLive,
   projectSimulatorValueForLive,
-  resolveSeriesDestination,
   parseRemoteChatMessages,
   type RemoteChatMessage,
   type LiveMatchContext,
+  liveMatchContextFromBootstrap,
 } from "../engine/live/matchContext";
 import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 import { apiUrl } from "../../../runtime/gameRuntimeApi";
@@ -62,8 +66,13 @@ import {
   type SimulatorConnectionTelemetrySink,
   type SimulatorLiveConnectionContextValue,
 } from "../../../simulator/providers";
-import { LiveHttpError, type LiveFeedbackSeverity } from "../engine/live/httpFeedback";
-import { createLiveMatchViewerEngine } from "../engine/live/liveState";
+import type { LiveFeedbackSeverity } from "../engine/live/httpFeedback";
+import {
+  createLiveMatchViewerEngine,
+  isFilteredMatchView,
+  isMatchState,
+  viewerProjectionToMatchState,
+} from "../engine/live/liveState";
 import {
   DEFAULT_SCENARIO,
   createPracticeAiConfig,
@@ -75,8 +84,6 @@ import {
   type ChatMessage,
   type ChatPresetKey,
   type EngineAction,
-  type AnimationScript,
-  type GameEvent,
   type LocalCommandCommit,
   type MoveLog,
   type PlayerConnectionBySide,
@@ -142,20 +149,6 @@ interface RemoteEngineLogRecord {
   stateVersion?: number;
   timestamp?: number;
   log?: unknown;
-}
-
-interface RemoteAnimationPacket {
-  id: string;
-  kind: "cyberpunk.animationScript";
-  payload: {
-    actorId?: string;
-    moveType?: string;
-    input?: unknown;
-    stateID?: number;
-    gameEvents?: unknown[];
-    moveLogs?: unknown[];
-    animationScript?: unknown;
-  };
 }
 
 const REMOTE_MOVE_LOG_LIMIT = 200;
@@ -253,15 +246,11 @@ export function LiveMatchPage() {
   const hasReadyGameState = Boolean(readyContext?.game.state);
   const liveViewerEngineBuilder = useMemo(() => {
     const state = readyContext?.game.state;
-    return state ? () => createLiveMatchViewerEngine(state) : undefined;
-  }, [readyContext?.game.state]);
-  const searchPlayerId = useMemo(
-    () => new URLSearchParams(location.search).get("playerId"),
-    [location.search],
-  );
+    return state ? () => createLiveMatchViewerEngine(state, matchId) : undefined;
+  }, [matchId, readyContext?.game.state]);
   const contextPlayerId = useMemo(
-    () => searchPlayerId ?? (readyContext ? resolveLocalPlayerIdFromAuth(readyContext) : undefined),
-    [readyContext, searchPlayerId],
+    () => (readyContext ? resolveLocalPlayerId(readyContext) : undefined),
+    [readyContext],
   );
   const clientAuthorityConfig = useMemo(
     () => (readyContext?.game.authority === "client" ? loadPracticeMatchConfig(matchId) : null),
@@ -322,7 +311,6 @@ export function LiveMatchPage() {
   ]);
 
   useEffect(() => {
-    let cancelled = false;
     setLoadState({ status: "loading" });
     setGatewayJoin(null);
     setPlayerConnections({});
@@ -331,54 +319,36 @@ export function LiveMatchPage() {
     setSyncRequestNonce(0);
     setPendingOptimisticMove(null);
     submittedInteractionMessagesRef.current.clear();
-    fetchLiveMatchContext(CYBERPUNK_GAME_SLUG, matchId, gameId)
-      .then((context) => {
-        if (cancelled) {
-          return;
-        }
-        const destination = resolveSeriesDestination(context, location.search);
-        if (destination.type !== "stay") {
-          window.location.replace(destination.href);
-          return;
-        }
-        seenLogKeysRef.current = new Set();
-        seenAnimationIdsRef.current = new Set();
-        const preparedContext = prepareLiveContext(context);
-        setLoadState({
-          status: "ready",
-          context: preparedContext,
-          moveLogs: appendRemoteEngineLogs(
-            [],
-            preparedContext.history?.engineLogs ?? [],
-            preparedContext,
-            seenLogKeysRef.current,
-          ),
-          engineEvents: [],
-          chatMessages: remoteChatMessagesForContext(
-            preparedContext.history?.chatMessages ?? [],
-            preparedContext,
-          ),
-          freeTextEnabled: preparedContext.history?.freeTextEnabled === true,
-          freeTextProposalPending: false,
-        });
-      })
-      .catch((error) => {
-        if (!cancelled) {
-          showHttpFailureNotification(error, {
-            id: `live-match:load-context:${matchId}:${gameId}`,
-            title: "Could not load match",
-            fallbackMessage: "Unable to load match.",
-          });
-          setLoadState({
-            status: "error",
-            message: error instanceof Error ? error.message : "Unable to load match.",
-          });
-        }
+    try {
+      if (!simulatorRoute.matchPageData) return;
+      const context = liveMatchContextFromBootstrap(simulatorRoute.matchPageData);
+      seenLogKeysRef.current = new Set();
+      seenAnimationIdsRef.current = new Set();
+      const preparedContext = prepareLiveContext(context);
+      setLoadState({
+        status: "ready",
+        context: preparedContext,
+        moveLogs: appendRemoteEngineLogs(
+          [],
+          preparedContext.history?.engineLogs ?? [],
+          preparedContext,
+          seenLogKeysRef.current,
+        ),
+        engineEvents: [],
+        chatMessages: remoteChatMessagesForContext(
+          preparedContext.history?.chatMessages ?? [],
+          preparedContext,
+        ),
+        freeTextEnabled: preparedContext.history?.freeTextEnabled === true,
+        freeTextProposalPending: false,
       });
-    return () => {
-      cancelled = true;
-    };
-  }, [gameId, location.search, matchId]);
+    } catch (error) {
+      setLoadState({
+        status: "error",
+        message: error instanceof Error ? error.message : "Unable to load match.",
+      });
+    }
+  }, [simulatorRoute.matchPageData]);
 
   useEffect(() => {
     latestContextRef.current = loadState.status === "ready" ? loadState.context : null;
@@ -760,7 +730,7 @@ export function LiveMatchPage() {
       if (!context) {
         return;
       }
-      const localPlayerId = contextPlayerId ?? resolveLocalPlayerIdFromAuth(context);
+      const localPlayerId = contextPlayerId ?? resolveLocalPlayerId(context);
       if (change.playerId === localPlayerId) {
         return;
       }
@@ -923,16 +893,6 @@ export function LiveMatchPage() {
     recordGatewayDiagnostic,
   ]);
 
-  const liveJoinRole: "player" | "spectator" =
-    readyContext?.game.authority === "client" && !canRunClientAuthorityPractice && !contextPlayerId
-      ? "spectator"
-      : "player";
-
-  const resolveLiveRole = useCallback(() => liveJoinRole, [liveJoinRole]);
-  const resolveLiveGameProfileId = useCallback(
-    () => contextPlayerId ?? undefined,
-    [contextPlayerId],
-  );
   const buildLiveHeartbeatPayload = useCallback(() => {
     const context = latestContextRef.current;
     return {
@@ -1257,7 +1217,7 @@ export function LiveMatchPage() {
     }
     const context = loadState.context;
     const actorIds = context.game.actorIds;
-    const localPlayerId = contextPlayerId ?? resolveLocalPlayerIdFromAuth(context);
+    const localPlayerId = contextPlayerId ?? resolveLocalPlayerId(context);
     const canSendHostedChat = Boolean(localPlayerId);
     const canRequestFreeText = false;
     const clientAuthorityJoined =
@@ -1319,6 +1279,8 @@ export function LiveMatchPage() {
         autoResolveSingletonCardTargets={false}
         remoteDispatch={remoteDispatch}
         remoteSubmitInteraction={remoteSubmitInteraction}
+        remoteInteractionView={context.game.interactionView}
+        remotePrompt={context.game.viewerProjection?.prompt}
         requestRemoteUndo={requestRemoteUndo}
         remoteMoveLogs={loadState.moveLogs}
         remoteEngineEvents={loadState.engineEvents}
@@ -1417,13 +1379,18 @@ export function LiveMatchPage() {
     loadState.status === "ready" ? (
       <LiveProposalBanner
         proposal={activeProposal}
-        localPlayerId={contextPlayerId ?? resolveLocalPlayerIdFromAuth(loadState.context)}
+        localPlayerId={contextPlayerId ?? resolveLocalPlayerId(loadState.context)}
         onAccept={() => respondToActiveProposal(true)}
         onDecline={() => respondToActiveProposal(false)}
       />
     ) : null;
 
-  if (!gatewayHandle || !readyGameId || (!hasReadyGameState && !canRunClientAuthorityPractice)) {
+  if (
+    !gatewayHandle ||
+    !readyGameId ||
+    !simulatorRoute.matchPageData ||
+    (!hasReadyGameState && !canRunClientAuthorityPractice)
+  ) {
     return (
       <>
         {proposalBanner}
@@ -1435,10 +1402,7 @@ export function LiveMatchPage() {
   return (
     <SimulatorLiveConnectionProvider
       handle={gatewayHandle}
-      gameId={gameId}
-      matchId={matchId}
-      resolveRole={resolveLiveRole}
-      resolveGameProfileId={resolveLiveGameProfileId}
+      bootstrap={simulatorRoute.matchPageData}
       buildHeartbeatPayload={buildLiveHeartbeatPayload}
       heartbeatIntervalMs={15_000}
       authority={readyContext?.game.authority}
@@ -1553,6 +1517,7 @@ function ClientAuthorityPracticeBoard({
         gameId: context.game.gameId,
         state,
         cardsMaps,
+        expectedVersion: version === 0 ? null : version - 1,
         version,
         moveType: commit?.result.processedCommand.move ?? moveType,
         actorId,
@@ -1897,7 +1862,7 @@ function appendRemoteMoveLogs(
     message.engineLogs,
     context,
     seenLogKeys,
-    matchStateFromMessage(message) ?? undefined,
+    matchStateFromMessage(message, context) ?? undefined,
   );
 }
 
@@ -1907,56 +1872,37 @@ function appendRemoteEngineEvents(
   context: LiveMatchContext,
   seenAnimationIds: Set<string>,
 ): RawEngineEventEntry[] {
-  const state = matchStateFromMessage(message) ?? context.game.state;
-  if (!state || !("animations" in message) || !Array.isArray(message.animations)) {
+  const state = matchStateFromMessage(message, context) ?? context.game.state;
+  if (!state || !("animationPlan" in message) || message.animationPlan === null) {
     return current;
   }
-
-  const additions: RawEngineEventEntry[] = [];
-  for (const raw of message.animations) {
-    const packet = parseRemoteAnimationPacket(raw);
-    if (!packet || seenAnimationIds.has(packet.id)) {
-      continue;
-    }
-    seenAnimationIds.add(packet.id);
-
-    const actorSide = sideForActorId(context, packet.payload.actorId ?? "");
-    const moveLogs = projectLiveValueForSimulator(packet.payload.moveLogs ?? [], state).filter(
-      (log): log is MoveLog => normalizeRemoteMoveLog(log) !== null,
-    );
-    const events = projectLiveValueForSimulator(
-      (packet.payload.gameEvents ?? []) as GameEvent[],
-      state,
-    );
-    const animationScript = projectLiveValueForSimulator(
-      packet.payload.animationScript as AnimationScript,
-      state,
-    );
-    const fallbackSide =
-      moveLogs[0]?.playerId === P2 ? "opponent" : moveLogs[0]?.playerId === P1 ? "player" : null;
-    const stateVersion = "stateVersion" in message ? message.stateVersion : undefined;
-
-    additions.push({
-      id: current.length + additions.length + 1,
-      timestamp: Date.now() + additions.length,
-      side: actorSide ?? fallbackSide ?? "system",
-      move: packet.payload.moveType ?? "unknown",
-      input: projectLiveValueForSimulator(packet.payload.input ?? { args: {} }, state),
-      stateID:
-        packet.payload.stateID ??
-        (typeof stateVersion === "number" ? stateVersion : undefined) ??
-        0,
-      events,
-      moveLogs,
-      animationScript,
-    });
-  }
-
-  if (additions.length === 0) {
+  const parsed = AnimationPlanV2Schema.safeParse(message.animationPlan);
+  if (!parsed.success || seenAnimationIds.has(parsed.data.id)) {
     return current;
   }
+  seenAnimationIds.add(parsed.data.id);
   pruneSeenLogKeys(seenAnimationIds);
-  return current.concat(additions).slice(-REMOTE_MOVE_LOG_LIMIT);
+  const stateVersion = "stateVersion" in message ? message.stateVersion : undefined;
+  const move =
+    "moveType" in message && typeof message.moveType === "string" ? message.moveType : "";
+  const entry: RawEngineEventEntry = {
+    id: typeof stateVersion === "number" ? stateVersion : Math.max(0, current.at(-1)?.id ?? 0) + 1,
+    timestamp: Date.now(),
+    side: "system",
+    move: move || "authoritative",
+    input: { args: {} },
+    stateID: typeof stateVersion === "number" ? stateVersion : 0,
+    afterState: state,
+    events: [],
+    moveLogs: [],
+    animationScript: EMPTY_ANIMATION_SCRIPT,
+    animationPlan: projectLiveValueForSimulator(
+      parsed.data as AnimationPlanV2,
+      state,
+      context.game.actorIds,
+    ),
+  };
+  return current.concat(entry).slice(-REMOTE_MOVE_LOG_LIMIT);
 }
 
 function appendRemoteEngineLogs(
@@ -1982,7 +1928,7 @@ function appendRemoteEngineLogs(
     }
     seenLogKeys.add(key);
     const moveLog = normalizeRemoteMoveLog(
-      projectLiveValueForSimulator(record.log, projectionState),
+      projectLiveValueForSimulator(record.log, projectionState, context.game.actorIds),
     );
     if (moveLog) {
       additions.push(moveLog);
@@ -2222,13 +2168,8 @@ export function canRunClientAuthorityPracticeForContext(
   );
 }
 
-function resolveLocalPlayerIdFromAuth(context: LiveMatchContext): string | undefined {
-  const authData = getAuthSnapshot().data;
-  if (!authData) return undefined;
-  const userId = (authData.user as { id?: string } | undefined)?.id;
-  if (!userId) return undefined;
-  const participant = context.match.participants?.find((p) => p.userId === userId);
-  return participant?.id;
+function resolveLocalPlayerId(context: LiveMatchContext): string | undefined {
+  return context.game.actorIds?.player;
 }
 
 function getRemoteBotStrategy(search: string) {
@@ -2261,12 +2202,19 @@ function pruneSeenLogKeys(seenLogKeys: Set<string>): void {
   }
 }
 
-function matchStateFromMessage(message: LiveGatewayMessage): MatchState | null {
+function matchStateFromMessage(
+  message: LiveGatewayMessage,
+  context: LiveMatchContext,
+): MatchState | null {
   if (!("state" in message) || !message.state || typeof message.state !== "object") {
     return null;
   }
-  const state = message.state as Partial<MatchState>;
-  return state.G && state.ctx ? (message.state as MatchState) : null;
+  const state = isMatchState(message.state)
+    ? message.state
+    : isFilteredMatchView(message.state)
+      ? viewerProjectionToMatchState(message.state, context.match.matchId)
+      : null;
+  return state ? projectLiveStateForSimulator(state, context.game.actorIds) : null;
 }
 
 function parseRemoteEngineLogRecord(value: unknown): RemoteEngineLogRecord | null {
@@ -2275,31 +2223,6 @@ function parseRemoteEngineLogRecord(value: unknown): RemoteEngineLogRecord | nul
   }
   const record = value as RemoteEngineLogRecord;
   return record.log && typeof record.log === "object" ? record : null;
-}
-
-function parseRemoteAnimationPacket(value: unknown): RemoteAnimationPacket | null {
-  if (!value || typeof value !== "object") {
-    return null;
-  }
-  const packet = value as RemoteAnimationPacket;
-  if (
-    typeof packet.id !== "string" ||
-    packet.kind !== "cyberpunk.animationScript" ||
-    !packet.payload ||
-    typeof packet.payload !== "object" ||
-    !isAnimationScript(packet.payload.animationScript)
-  ) {
-    return null;
-  }
-  return packet;
-}
-
-function isAnimationScript(value: unknown): value is AnimationScript {
-  if (!value || typeof value !== "object") {
-    return false;
-  }
-  const script = value as Partial<AnimationScript>;
-  return Array.isArray(script.steps) && typeof script.totalDurationMs === "number";
 }
 
 function correlationId(): string {
@@ -2391,7 +2314,7 @@ function parseActiveProposalAction(actionType: string): ActiveProposalAction | n
 }
 
 function contextPlayerIdForProposal(context: LiveMatchContext): string {
-  return resolveLocalPlayerIdFromAuth(context) ?? context.game.actorIds?.player ?? "";
+  return resolveLocalPlayerId(context) ?? "";
 }
 
 function proposalCopy(actionType: ActiveProposalAction): {
@@ -2610,32 +2533,6 @@ function handleProposalExpired(
     color: "yellow",
     title: "Undo request expired",
     message: "Your opponent did not respond in time.",
-  });
-}
-
-function showHttpFailureNotification(
-  error: unknown,
-  options: {
-    id: string;
-    title: string;
-    fallbackMessage: string;
-    fallbackSeverity?: LiveFeedbackSeverity;
-  },
-): void {
-  if (error instanceof LiveHttpError) {
-    showServerFeedbackNotification({
-      id: options.id,
-      severity: error.severity,
-      title: error.code ? `${options.title}: ${error.code}` : options.title,
-      message: error.message,
-    });
-    return;
-  }
-  showServerFeedbackNotification({
-    id: options.id,
-    severity: options.fallbackSeverity ?? "error",
-    title: options.title,
-    message: error instanceof Error && error.message ? error.message : options.fallbackMessage,
   });
 }
 

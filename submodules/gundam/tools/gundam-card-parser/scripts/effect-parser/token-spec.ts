@@ -37,6 +37,14 @@ export function parseTokenSpec(tokenText: string): TokenSpec | undefined {
 
   // Deploy state
   if (/rested/i.test(tokenText)) deployState = "rested";
+  const cantTargetPlayer =
+    /(?:this Unit )?can['’]t choose the enemy player as its attack target/i.test(tokenText);
+  const restrictions = [
+    ...(/can['’]t be set as active/i.test(inner) ? (["cannotSetActive"] as const) : []),
+    ...(/(?:can['’]t be |or )paired with a Pilot/i.test(inner)
+      ? (["cannotPairPilot"] as const)
+      : []),
+  ];
 
   return {
     name,
@@ -44,6 +52,8 @@ export function parseTokenSpec(tokenText: string): TokenSpec | undefined {
     ap,
     hp,
     ...(keywordEffects.length > 0 ? { keywordEffects } : {}),
+    ...(cantTargetPlayer ? { cantTargetPlayer: true } : {}),
+    ...(restrictions.length > 0 ? { restrictions } : {}),
     deployState,
   };
 }

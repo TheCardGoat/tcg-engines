@@ -7,6 +7,7 @@ import {
   gd01FortressDefense106,
   gd01JusticeGundam066,
 } from "@tcg/gundam-cards";
+import { exbpExBase001 } from "@tcg/gundam-token-data";
 import {
   GundamTestEngine,
   PLAYER_ONE,
@@ -18,7 +19,10 @@ import {
 } from "@tcg/gundam-engine";
 
 import { CardFace } from "../ui/card/CardFace.tsx";
-import { applyLiveStateUpdate, createLiveMatchViewerEngine } from "../../engine/live/liveState.ts";
+import {
+  applyReplaySnapshotUpdate,
+  createReplayViewerEngine,
+} from "../../engine/live/liveState.ts";
 import { mapZone, toGameCardData } from "./mappers.ts";
 
 describe("GD01 token cards in the live simulator", () => {
@@ -29,12 +33,12 @@ describe("GD01 token cards in the live simulator", () => {
       hand: [gd01JusticeGundam066],
       resourceArea: activeResources(7),
     });
-    const live = createLiveMatchViewerEngine(serializedState(serverEngine));
+    const live = createReplayViewerEngine(serializedState(serverEngine));
 
     expectSuccess(serverEngine.asPlayer(PLAYER_ONE).deployUnit(gd01JusticeGundam066));
     const tokenState = serializedState(serverEngine);
-    applyLiveStateUpdate(live.runtime, live.staticResources, tokenState);
-    const joinedAfterDeployment = createLiveMatchViewerEngine(tokenState);
+    applyReplaySnapshotUpdate(live.runtime, live.staticResources, tokenState);
+    const joinedAfterDeployment = createReplayViewerEngine(tokenState);
 
     for (const runtime of [live.runtime, joinedAfterDeployment.runtime]) {
       const visible = renderVisibleToken(runtime, "battleArea", "T-011");
@@ -44,7 +48,7 @@ describe("GD01 token cards in the live simulator", () => {
       ).toBeTruthy();
       expect(visible.getByLabelText("BLOCK")).toBeTruthy();
       expect(visible.getByAltText("Fatum-00").getAttribute("src")).toBe(
-        "https://r2.tcg.online/public/gundam/cards/t/T-011.webp",
+        "https://cdn.tcg.online/public/gundam/cards/t/T-011.webp",
       );
     }
   });
@@ -54,12 +58,12 @@ describe("GD01 token cards in the live simulator", () => {
       hand: [gd01FortressDefense106],
       resourceArea: activeResources(5),
     });
-    const live = createLiveMatchViewerEngine(serializedState(serverEngine));
+    const live = createReplayViewerEngine(serializedState(serverEngine));
 
     expectSuccess(serverEngine.asPlayer(PLAYER_ONE).playCommand(gd01FortressDefense106));
     const tokenState = serializedState(serverEngine);
-    applyLiveStateUpdate(live.runtime, live.staticResources, tokenState);
-    const joinedAfterDeployment = createLiveMatchViewerEngine(tokenState);
+    applyReplaySnapshotUpdate(live.runtime, live.staticResources, tokenState);
+    const joinedAfterDeployment = createReplayViewerEngine(tokenState);
 
     for (const runtime of [live.runtime, joinedAfterDeployment.runtime]) {
       const view = runtime.getFilteredView({ role: "player", playerId: asPlayerId(PLAYER_ONE) });
@@ -72,7 +76,7 @@ describe("GD01 token cards in the live simulator", () => {
         const visible = within(render(<CardFace card={zaku} width={587} height={819} />).container);
         expect(visible.getByLabelText("Zaku Ⅱ, unit, AP 1, HP 1, ready, zeon")).toBeTruthy();
         expect(visible.getByAltText("Zaku Ⅱ").getAttribute("src")).toBe(
-          "https://r2.tcg.online/public/gundam/cards/t/T-007.webp",
+          "https://cdn.tcg.online/public/gundam/cards/t/T-007.webp",
         );
       }
     }
@@ -85,7 +89,7 @@ describe("GD01 token cards in the live simulator", () => {
       { play: [attacker], deck: 5 },
       { initialActivePlayer: PLAYER_TWO },
     );
-    const live = createLiveMatchViewerEngine(serializedState(serverEngine));
+    const live = createReplayViewerEngine(serializedState(serverEngine));
     const p1 = serverEngine.asPlayer(PLAYER_ONE);
     const p2 = serverEngine.asPlayer(PLAYER_TWO);
     const attackerId = p2.getCardsInZone("battleArea")[0]!;
@@ -97,22 +101,40 @@ describe("GD01 token cards in the live simulator", () => {
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [-1]: true } }));
 
     const tokenState = serializedState(serverEngine);
-    applyLiveStateUpdate(live.runtime, live.staticResources, tokenState);
-    const joinedAfterDeployment = createLiveMatchViewerEngine(tokenState);
+    applyReplaySnapshotUpdate(live.runtime, live.staticResources, tokenState);
+    const joinedAfterDeployment = createReplayViewerEngine(tokenState);
 
     for (const runtime of [live.runtime, joinedAfterDeployment.runtime]) {
-      const visible = renderVisibleToken(runtime, "resourceArea", "EXRP-003");
+      // Effect-spawned EX Resource tokens default to the normal booster
+      // token art (EXR-001, `placeExResource` in the engine executor).
+      const visible = renderVisibleToken(runtime, "resourceArea", "EXR-001");
 
       expect(visible.getByLabelText("EX Resource, resource, ready")).toBeTruthy();
       expect(visible.getByAltText("EX Resource").getAttribute("src")).toBe(
-        "https://r2.tcg.online/public/gundam/cards/exrp/EXRP-003.webp",
+        "https://cdn.tcg.online/public/gundam/cards/exr/EXR-001_p6.webp",
       );
     }
+  });
+
+  it("shows the EX Base art placed during setup", () => {
+    const serverEngine = GundamTestEngine.create({ baseSection: [exbpExBase001] });
+    const view = serverEngine.asPlayer(PLAYER_ONE).getView();
+    const base = mapZone(view, "baseSection", PLAYER_ONE)
+      .map((candidate) => toGameCardData(view, candidate))
+      .find((candidate) => candidate.cardNumber === "EXBP-001");
+    if (!base) throw new Error("Expected visible EXBP-001 in baseSection");
+
+    const visible = within(render(<CardFace card={base} width={587} height={819} />).container);
+
+    expect(visible.getByLabelText("EX Base, base, HP 3, ready")).toBeTruthy();
+    expect(visible.getByAltText("EX Base").getAttribute("src")).toBe(
+      "https://cdn.tcg.online/public/gundam/cards/exbp/EXBP-001.webp",
+    );
   });
 });
 
 function renderVisibleToken(
-  runtime: ReturnType<typeof createLiveMatchViewerEngine>["runtime"],
+  runtime: ReturnType<typeof createReplayViewerEngine>["runtime"],
   zone: "battleArea" | "resourceArea",
   cardNumber: string,
 ) {
@@ -125,6 +147,6 @@ function renderVisibleToken(
   return within(render(<CardFace card={card} width={587} height={819} />).container);
 }
 
-function serializedState(engine: GundamTestEngine): Record<string, unknown> {
-  return structuredClone(engine.getState()) as unknown as Record<string, unknown>;
+function serializedState(engine: GundamTestEngine) {
+  return structuredClone(engine.getState());
 }

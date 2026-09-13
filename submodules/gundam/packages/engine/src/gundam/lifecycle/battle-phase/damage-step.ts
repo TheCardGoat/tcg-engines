@@ -27,6 +27,7 @@ export function battlePhaseDamageStepOnEnter(ctx: LifecycleContext): void {
     sourcePlayerId: attackerPlayerId,
     sourceCardId: attackerId,
     framework: ctx.framework,
+    destructionDamageType: "battle" as const,
   };
 
   if (blockerId && blockerPlayerId) {

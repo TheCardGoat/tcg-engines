@@ -25,5 +25,7 @@ describe("OP06-002 Inazuma", () => {
     const view = engine.getView("north");
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(lifeId);
     expect(view.decisions).toHaveLength(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

@@ -4,6 +4,7 @@ export const gd049thTacticalTestingSector124: BaseCard = {
   cardNumber: "GD04-124",
   name: "9th Tactical Testing Sector",
   type: "base",
+  color: "green",
   traits: ["academy", "stronghold"],
   id: "GD04-124",
   canonicalId: "GD04-124",
@@ -26,15 +27,13 @@ export const gd049thTacticalTestingSector124: BaseCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-124.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-124.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-124.webp",
       productName: "Phantom Aria [GD04]",
     },
   ],
   reprints: ["GD04-124"],
   selectedPrintingId: "GD04-124",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-124.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-124.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-124.webp",
   legality: "legal",
   level: 3,
   cost: 1,
@@ -75,6 +74,7 @@ export const gd049thTacticalTestingSector124: BaseCard = {
       type: "triggered",
       activation: {
         timing: ["onExResourcePlaced"],
+        conditions: [{ type: "eventPlayerIsSelf" }],
       },
       directives: [
         {

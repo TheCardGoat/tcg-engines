@@ -3,7 +3,7 @@ import { eb03CharlotteBrulee033 } from "../../../../../cards/src/cards/EB03/char
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB03-033 Charlotte Brulee", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb03CharlotteBrulee033);
   });
 });

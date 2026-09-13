@@ -14,37 +14,25 @@ import {
   type InteractionSubmissionValue,
 } from "@tcg/protocol";
 import {
-  useEffect,
   useRef,
   useState,
   type CSSProperties,
   type FocusEvent,
+  type KeyboardEvent,
   type MouseEvent,
   type PointerEvent,
 } from "react";
-import { createPortal } from "react-dom";
-import { useCyberpunkAnimationVisualState } from "../../animation/AnimationVisualStateContext";
-import { useCardInspect } from "./CardInspectContext";
 import type { CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import { CardImage } from "./CardImage";
 import { CardNameToken } from "../CardDisplay/CardNameToken";
 import { encodeCardSourceId, encodeTargetId, useDragDrop } from "./DragDropContext";
 import { useAttackSelectionState } from "./useAttackSelection";
 import { useMoveSelection, useMoveSelectionStateForSide } from "./MoveSelectionContext";
-import { useFloatingPointMenu } from "./useFloatingPointMenu";
-import {
-  CARD_ACTION_HOTKEY_SLOTS,
-  getCardActionHotkey,
-  getCardActionLabel,
-  isCardActionHotkeyMoveId,
-  type CardActionHotkeyMoveId,
-} from "./cardActionHotkeys";
 import {
   PLAYER_SIDE_TO_ID,
   getGearAttachTargets,
   getProgramSpatialTargets,
   interactionSubmissionToEngineAction,
-  interactionViewAbilityIndexesForCard,
   interactionViewAbilityIndexForCard,
   interactionViewActionHasCandidate,
   interactionViewCanFightTarget,
@@ -67,15 +55,6 @@ const NO_SIDE: Side = "player";
 function cardKindFromType(cardType: EngineCardType | undefined): "leader" | "card" {
   return cardType === "legend" ? "leader" : "card";
 }
-
-type CardMenuAction = {
-  id: CardActionHotkeyMoveId | "inspectCard";
-  key: string;
-  label: string;
-  hotkey?: string;
-  abilityIndex?: number;
-  run: () => void;
-};
 
 export interface CardGearAttachment {
   imageUrl: string;
@@ -153,8 +132,6 @@ interface CardProps {
   activeEffects?: readonly CardActiveEffectView[];
   /** Disable the global hover/tap preview while preserving explicit inspect. */
   disablePreview?: boolean;
-  /** Suppress the default card action popover when a parent surface owns card actions. */
-  disableActionMenu?: boolean;
   /** Click hook — receives the cardId (or undefined for legacy cards). */
   onCardClick?: (cardId: string | undefined) => void;
 }
@@ -189,13 +166,10 @@ export function Card({
   effectivePower,
   activeEffects = [],
   disablePreview = false,
-  disableActionMenu = false,
   onCardClick,
 }: CardProps) {
   const [powerMenuOpen, setPowerMenuOpen] = useState(false);
-  const [actionMenuAnchor, setActionMenuAnchor] = useState<{ x: number; y: number } | null>(null);
   const powerMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const { hasPendingAnimations } = useCyberpunkAnimationVisualState();
   // Hooks are always called. When the card is not engine-aware (no cardId or
   // no provider), the hooks return safe defaults.
   const engineCtx = useEngineOptional();
@@ -212,6 +186,15 @@ export function Card({
       ? "gig"
       : "card"
     : null;
+  const pendingChoice = engineCtx?.matchState.G.turnMetadata.pendingChoice;
+  const nativeEffectTargetSelectable = Boolean(
+    cardId &&
+    pendingChoice?.type === "chooseTarget" &&
+    pendingChoice.chooserId === PLAYER_SIDE_TO_ID[choiceSide] &&
+    pendingChoice.payload.type === "effectTarget" &&
+    pendingChoice.payload.eligibleIds?.includes(cardId) &&
+    (pendingChoice.payload.max ?? 1) === 1,
+  );
   const effectCardTargetSelected = Boolean(
     cardId &&
     engineCtx?.effectCardTargetSelection?.side === permissionSide &&
@@ -235,7 +218,6 @@ export function Card({
     engineCtx?.humanSide ?? NO_SIDE,
     globalSelectedMoveState?.sourceCardId ?? "",
   );
-  const { inspect } = useCardInspect();
   const selectedPlayCardSourceCandidate =
     selectedMove === "playCard" &&
     !selectedMoveState?.sourceCardId &&
@@ -364,26 +346,6 @@ export function Card({
   const drop = useDroppable({ id: droppableId, disabled: !droppableId });
 
   const dragStyle = drag.isDragging ? { opacity: 0 } : undefined;
-
-  useEffect(() => {
-    if (!actionMenuAnchor) return;
-    const close = () => setActionMenuAnchor(null);
-    const closeOnKey = (ev: KeyboardEvent) => {
-      if (ev.key === "Escape") {
-        close();
-      }
-    };
-    document.addEventListener("pointerdown", close);
-    window.addEventListener("resize", close);
-    window.addEventListener("scroll", close, true);
-    document.addEventListener("keydown", closeOnKey);
-    return () => {
-      document.removeEventListener("pointerdown", close);
-      window.removeEventListener("resize", close);
-      window.removeEventListener("scroll", close, true);
-      document.removeEventListener("keydown", closeOnKey);
-    };
-  }, [actionMenuAnchor]);
 
   const executePlayCard = (sourceCardId: string, actionSide: Side) => {
     if (!engineCtx) return;
@@ -566,112 +528,20 @@ export function Card({
     return true;
   };
 
-  const inspectCard = () => {
-    if (faceDown || !imageUrl) {
-      return;
-    }
-    inspect({
-      imageUrl,
-      face: "public",
-      name,
-      zone,
-      color,
-      attachments: gear.map((g) => ({ imageUrl: g.imageUrl, name: g.name, face: "public" })),
-    });
-  };
-
-  const actionMenuActions: CardMenuAction[] =
-    !faceDown && imageUrl
-      ? [
-          {
-            id: "inspectCard",
-            key: "inspectCard",
-            label: "Inspect card",
-            run: inspectCard,
-          },
-        ]
-      : [];
-  if (engineAware && !selectedMove && permission.kind === "armable" && cardId && side) {
-    const availableMoves = new Set<CardActionHotkeyMoveId>();
-    for (const actionId of permission.actionIds) {
-      if (!isCardActionHotkeyMoveId(actionId)) continue;
-      availableMoves.add(actionId);
-    }
-
-    for (const slot of CARD_ACTION_HOTKEY_SLOTS) {
-      const moveId = slot.moveId;
-      if (!availableMoves.has(moveId)) continue;
-      const abilityIndexes =
-        moveId === "activateAbility" && engineCtx
-          ? interactionViewAbilityIndexesForCard(engineCtx.interactionViews[side], cardId)
-          : [undefined];
-      const actionIndexes = abilityIndexes.length > 0 ? abilityIndexes : [undefined];
-      for (const abilityIndex of actionIndexes) {
-        actionMenuActions.push({
-          id: moveId,
-          key: abilityIndex === undefined ? moveId : `${moveId}:${abilityIndex}`,
-          label:
-            moveId === "activateAbility" && abilityIndex !== undefined
-              ? `${getCardActionLabel(moveId)} ${abilityIndex + 1}`
-              : getCardActionLabel(moveId),
-          hotkey: getCardActionHotkey(moveId),
-          abilityIndex,
-          run: () => executeDirectMove(moveId, side, cardId, abilityIndex),
-        });
-      }
-    }
-
-    if (engineCtx) {
-      for (const attachment of gear) {
-        if (!attachment.cardId) continue;
-        const abilityIndexes = interactionViewAbilityIndexesForCard(
-          engineCtx.interactionViews[side],
-          attachment.cardId,
-        );
-        if (abilityIndexes.length === 0) continue;
-        for (const abilityIndex of abilityIndexes) {
-          actionMenuActions.push({
-            id: "activateAbility",
-            key: `activateAbility:${attachment.cardId}:${abilityIndex}`,
-            label:
-              abilityIndexes.length > 1
-                ? `Ability ${abilityIndex + 1}: ${attachment.name}`
-                : `Ability: ${attachment.name}`,
-            hotkey: getCardActionHotkey("activateAbility"),
-            abilityIndex,
-            run: () => executeDirectMove("activateAbility", side, attachment.cardId!, abilityIndex),
-          });
-        }
-      }
-    }
-  }
-
-  const openActionMenu = (ev: MouseEvent<HTMLDivElement>) => {
-    if (actionMenuActions.length === 0) {
+  const executeNativeEffectTarget = () => {
+    if (!engineCtx || !cardId || !nativeEffectTargetSelectable) {
       return false;
     }
-    const rect = ev.currentTarget.getBoundingClientRect();
-    setActionMenuAnchor({
-      x: Math.min(window.innerWidth - 12, Math.max(12, rect.left + rect.width / 2)),
-      y: Math.min(window.innerHeight - 12, Math.max(12, rect.top + rect.height * 0.2)),
+    engineCtx.dispatch({
+      type: "resolveEffectTarget",
+      targetIds: [cardId],
+      as: PLAYER_SIDE_TO_ID[choiceSide],
     });
     return true;
   };
 
-  const handleClick = (ev: MouseEvent<HTMLDivElement>) => {
+  const activateCard = () => {
     if (!engineAware || !engineCtx) {
-      return;
-    }
-    ev.stopPropagation();
-    setActionMenuAnchor(null);
-    const shouldOpenActionMenu =
-      !disableActionMenu &&
-      !selectedMove &&
-      !selectedGearAttachTarget &&
-      !selectedProgramSpatialTarget &&
-      !attackSelection.canSelectFightTarget &&
-      permission.kind !== "selectable";
-    if (shouldOpenActionMenu && openActionMenu(ev)) {
       return;
     }
     if (executeSelectedTarget()) {
@@ -694,6 +564,22 @@ export function Card({
       moveSelection.clearSelection();
       return;
     }
+    if (executeNativeEffectTarget()) {
+      return;
+    }
+    // Face-down Legends have no public card-context menu. When the engine
+    // authorizes Call a Legend, their visible card is therefore the direct,
+    // rule-valid control for the one-Eddie action.
+    if (
+      cardType === "legend" &&
+      cardId &&
+      side &&
+      permission.kind === "armable" &&
+      permission.actionIds.some((actionId) => actionId === "callLegend")
+    ) {
+      executeDirectMove("callLegend", side, cardId);
+      return;
+    }
     if (permission.kind === "inert") {
       return;
     }
@@ -702,6 +588,36 @@ export function Card({
     }
     // Other choice types (blockerInterrupt context, searchDeck) handled elsewhere.
     onCardClick?.(cardId);
+  };
+
+  const handleClick = (ev: MouseEvent<HTMLDivElement>) => {
+    ev.stopPropagation();
+    activateCard();
+  };
+
+  const interactionState = engineAware
+    ? nativeEffectTargetSelectable
+      ? "selectable"
+      : attackSelection.canSelectFightTarget
+        ? "selectable"
+        : selectedGearAttachTarget
+          ? "selectable"
+          : selectedProgramSpatialTarget
+            ? "selectable"
+            : selectedMove
+              ? selectedMoveIsLegal
+                ? "selectable"
+                : "inert"
+              : permission.kind
+    : "legacy";
+
+  const handleKeyDown = (ev: KeyboardEvent<HTMLDivElement>) => {
+    if (interactionState !== "selectable" || (ev.key !== "Enter" && ev.key !== " ")) {
+      return;
+    }
+    ev.preventDefault();
+    ev.stopPropagation();
+    activateCard();
   };
 
   const stopCostClick = (ev: MouseEvent<HTMLDivElement>) => {
@@ -754,22 +670,8 @@ export function Card({
     closePowerMenuSoon();
   };
 
-  const interactionState = engineAware
-    ? attackSelection.canSelectFightTarget
-      ? "selectable"
-      : selectedGearAttachTarget
-        ? "selectable"
-        : selectedProgramSpatialTarget
-          ? "selectable"
-          : selectedMove
-            ? selectedMoveIsLegal
-              ? "selectable"
-              : "inert"
-            : permission.kind
-    : "legacy";
-  const stateClass = hasPendingAnimations
-    ? ""
-    : interactionState === "inert"
+  const stateClass =
+    interactionState === "inert"
       ? classes.inert
       : interactionState === "selectable"
         ? classes.selectable
@@ -915,12 +817,12 @@ export function Card({
       className={[
         classes.stack,
         stateClass,
-        activeTriggerSource && !hasPendingAnimations ? classes.activeTriggerSource : "",
+        activeTriggerSource ? classes.activeTriggerSource : "",
         peeked && faceDown ? classes.peekedFaceDown : "",
-        isValidAttackDropTarget && !hasPendingAnimations ? classes.validAttackDropTarget : "",
-        isValidGearDropTarget && !hasPendingAnimations ? classes.validGearDropTarget : "",
-        isValidProgramDropTarget && !hasPendingAnimations ? classes.validProgramDropTarget : "",
-        drop.isOver && !hasPendingAnimations ? classes.dropOver : "",
+        isValidAttackDropTarget ? classes.validAttackDropTarget : "",
+        isValidGearDropTarget ? classes.validGearDropTarget : "",
+        isValidProgramDropTarget ? classes.validProgramDropTarget : "",
+        drop.isOver ? classes.dropOver : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -963,7 +865,11 @@ export function Card({
       }
       {...publicCardAttrs}
       style={dragStyle}
+      role={interactionState === "selectable" ? "button" : undefined}
+      tabIndex={interactionState === "selectable" ? 0 : undefined}
+      aria-label={interactionState === "selectable" ? `Select ${name ?? "card"}` : undefined}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
       {...(draggable ? drag.listeners : undefined)}
       {...(draggable ? drag.attributes : undefined)}
     >
@@ -1092,99 +998,6 @@ export function Card({
           <strong>{effectivePower}</strong>
         </div>
       ) : null}
-      {actionMenuAnchor
-        ? createPortal(
-            <CardActionMenu
-              x={actionMenuAnchor.x}
-              y={actionMenuAnchor.y}
-              cardName={name}
-              cardId={cardId}
-              actions={actionMenuActions}
-              onClose={() => setActionMenuAnchor(null)}
-            />,
-            document.body,
-          )
-        : null}
-    </div>
-  );
-}
-
-function CardActionMenu({
-  x,
-  y,
-  cardName,
-  cardId,
-  actions,
-  onClose,
-}: {
-  x: number;
-  y: number;
-  cardName?: string;
-  cardId?: string;
-  actions: CardMenuAction[];
-  onClose: () => void;
-}) {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const position = useFloatingPointMenu(ref, { x, y, align: "center", offset: 8, padding: 8 });
-  const handlePointer = (ev: PointerEvent<HTMLDivElement>) => {
-    ev.stopPropagation();
-  };
-
-  useEffect(() => {
-    const onKey = (ev: KeyboardEvent) => {
-      if (ev.altKey || ev.ctrlKey || ev.metaKey || ev.shiftKey) return;
-      const action = actions.find((candidate) => candidate.hotkey === ev.key);
-      if (!action) return;
-      ev.preventDefault();
-      ev.stopPropagation();
-      onClose();
-      action.run();
-    };
-
-    window.addEventListener("keydown", onKey, true);
-    return () => window.removeEventListener("keydown", onKey, true);
-  }, [actions, onClose]);
-
-  return (
-    <div
-      ref={ref}
-      className={classes.actionMenu}
-      style={
-        {
-          left: `${position.left}px`,
-          top: `${position.top}px`,
-          "--menu-arrow-left": `${position.arrowLeft}px`,
-        } as CSSProperties
-      }
-      role="menu"
-      aria-label={cardName ? `${cardName} actions` : "Card actions"}
-      data-testid="card-action-menu"
-      data-for-card-id={cardId ?? undefined}
-      data-side={position.side}
-      onPointerDown={handlePointer}
-      onClick={(ev) => ev.stopPropagation()}
-    >
-      {actions.map((action) => (
-        <button
-          key={action.key}
-          type="button"
-          className={classes.actionMenuItem}
-          role="menuitem"
-          aria-keyshortcuts={action.hotkey}
-          data-testid={`card-action-${action.id}`}
-          data-action-key={action.key}
-          data-hotkey={action.hotkey}
-          data-ability-index={action.abilityIndex}
-          onClick={(ev) => {
-            ev.stopPropagation();
-            onClose();
-            action.run();
-          }}
-        >
-          <span>{action.label}</span>
-          {action.hotkey ? <kbd className={classes.actionMenuHotkey}>{action.hotkey}</kbd> : null}
-        </button>
-      ))}
     </div>
   );
 }
@@ -1216,7 +1029,6 @@ function AttachedGear({
   zIndex: number;
 }) {
   const engineCtx = useEngineOptional();
-  const { hasPendingAnimations } = useCyberpunkAnimationVisualState();
   const choiceSide = engineCtx?.humanSide ?? side ?? NO_SIDE;
   const choicePermission = useInteractionPermission(choiceSide, gear.cardId ?? "");
   const selectablePermission =
@@ -1267,9 +1079,7 @@ function AttachedGear({
 
   return (
     <div
-      className={[classes.gear, selectable && !hasPendingAnimations ? classes.selectable : ""]
-        .filter(Boolean)
-        .join(" ")}
+      className={[classes.gear, selectable ? classes.selectable : ""].filter(Boolean).join(" ")}
       style={
         {
           "--gear-offset": `${offsetPercent}%`,

@@ -45,15 +45,6 @@ export const op01TrafalgarLaw002: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "zoneCount",
-            player: "self",
-            zone: "character",
-            comparison: "eq",
-            value: 5,
-          },
-        ],
         costs: [
           {
             cost: "restDon",
@@ -70,6 +61,13 @@ export const op01TrafalgarLaw002: LeaderCard = {
                 amount: 1,
               },
             },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "eq",
+              value: 5,
+            },
           },
           {
             action: "play",
@@ -83,13 +81,13 @@ export const op01TrafalgarLaw002: LeaderCard = {
             },
             filters: [
               {
-                filter: "cardCategory",
-                value: "character",
-              },
-              {
                 filter: "cost",
                 comparison: "lte",
                 value: 5,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
             differentColorFromPreviousCharacter: true,

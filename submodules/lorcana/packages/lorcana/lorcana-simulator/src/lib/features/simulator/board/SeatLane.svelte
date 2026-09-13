@@ -8,7 +8,6 @@ import type { SimulatorLayoutMode } from "@/features/simulator/model/layout-mode
 import CardImage from "@/design-system/simulator/cards/CardImage.svelte";
 import PlayZone from "./PlayZone.svelte";
 import InkwellZone from "@/features/simulator/board/InkwellZone.svelte";
-import ItemZone from "./ItemZone.svelte";
 import DeckZone from "@/features/simulator/board/DeckZone.svelte";
 import DiscardZone from "./DiscardZone.svelte";
 import {
@@ -82,21 +81,6 @@ const dnd = useLorcanaSimulatorDndContext();
 const ownerId = $derived(board.getOwnerIdForSide(playerSide));
 const boardSummary = $derived(board.getPlayerSummary(playerSide));
 const visualSettings = $derived(board.getPlayerVisualSettings(playerSide));
-const hasItemsInPlay = $derived.by(() =>
-	board
-		.getZoneCards(playerSide, "play")
-		.some((card) => card.cardType === "item"),
-);
-const showSeparateItemZone = $derived(layoutMode !== "mobile" && hasItemsInPlay);
-const BAR_ZONE_SPLIT_MINIMUM = 30;
-const BAR_ZONE_SPLIT_MAXIMUM = 70;
-let barZoneSplit = $state(50);
-let isResizingBarZones = $state(false);
-let barZoneContainerEl = $state<HTMLDivElement | null>(null);
-let barZoneResizerEl = $state<HTMLButtonElement | null>(null);
-const playZoneExcludedCardTypes = $derived.by(
-	(): Array<"item"> => (layoutMode === "mobile" ? [] : ["item"]),
-);
 const effectSourceCards = $derived.by(() => {
 	const sourceIds = boardSummary?.effectSourceCardIds ?? [];
 	const cardSnapshotsById = board.cardSnapshotsById;
@@ -154,53 +138,6 @@ function handleLoreIncrement(): void {
 function handleLoreDecrement(): void {
 	if (!manualMode || !ownerId) return;
 	manualMode.setLore(ownerId, Math.max(0, lore - 1));
-}
-
-function updateBarZoneSplit(clientX: number, container: HTMLElement): void {
-	const bounds = container.getBoundingClientRect();
-	if (bounds.width <= 0) return;
-
-	const split = ((clientX - bounds.left) / bounds.width) * 100;
-	barZoneSplit = Math.min(BAR_ZONE_SPLIT_MAXIMUM, Math.max(BAR_ZONE_SPLIT_MINIMUM, split));
-}
-
-function handleBarZoneResizeStart(event: PointerEvent): void {
-	if (event.button !== 0 || !barZoneContainerEl || !barZoneResizerEl) return;
-
-	event.preventDefault();
-	barZoneResizerEl.setPointerCapture(event.pointerId);
-	isResizingBarZones = true;
-	updateBarZoneSplit(event.clientX, barZoneContainerEl);
-}
-
-function handleBarZoneResizeMove(event: PointerEvent): void {
-	if (isResizingBarZones && barZoneContainerEl) {
-		updateBarZoneSplit(event.clientX, barZoneContainerEl);
-	}
-}
-
-function handleBarZoneResizeEnd(event: PointerEvent): void {
-	isResizingBarZones = false;
-	if (barZoneResizerEl?.hasPointerCapture(event.pointerId)) {
-		barZoneResizerEl.releasePointerCapture(event.pointerId);
-	}
-}
-
-function handleBarZoneResizeKeydown(event: KeyboardEvent): void {
-	const step = event.shiftKey ? 10 : 5;
-	if (event.key === "ArrowLeft") {
-		event.preventDefault();
-		barZoneSplit = Math.max(BAR_ZONE_SPLIT_MINIMUM, barZoneSplit - step);
-	} else if (event.key === "ArrowRight") {
-		event.preventDefault();
-		barZoneSplit = Math.min(BAR_ZONE_SPLIT_MAXIMUM, barZoneSplit + step);
-	} else if (event.key === "Home") {
-		event.preventDefault();
-		barZoneSplit = BAR_ZONE_SPLIT_MINIMUM;
-	} else if (event.key === "End") {
-		event.preventDefault();
-		barZoneSplit = BAR_ZONE_SPLIT_MAXIMUM;
-	}
 }
 
 // Card-based moves require selecting a specific card — always disabled in context menu
@@ -536,9 +473,6 @@ function confirmPendingAction(): void {
             <div class="bar-zones__center-viewport" data-board-scroll-sync>
               <div
                 class="bar-zones__center-content"
-                class:bar-zones__center-content--with-items={showSeparateItemZone}
-                style={`--bar-zone-split: ${barZoneSplit}%`}
-                bind:this={barZoneContainerEl}
               >
                 <div class="bar-zone-shell bar-zone-shell--inkwell">
                   <InkwellZone
@@ -546,33 +480,8 @@ function confirmPendingAction(): void {
                     {playerSide}
                     {seat}
                     onCounterClick={onInkwellClick}
-                    hasItemsInPlay={showSeparateItemZone}
                   />
                 </div>
-
-                {#if showSeparateItemZone}
-                  <button
-                    type="button"
-                    class="bar-zone-resizer"
-                    aria-label={m["sim.itemZone.resizeAria"]({ percent: Math.round(barZoneSplit) })}
-                    data-current-split={Math.round(barZoneSplit)}
-                    data-testid={`bar-zone-resizer-${playerSide}`}
-                    bind:this={barZoneResizerEl}
-                    onpointerdown={handleBarZoneResizeStart}
-                    onpointermove={handleBarZoneResizeMove}
-                    onpointerup={handleBarZoneResizeEnd}
-                    onpointercancel={handleBarZoneResizeEnd}
-                    onkeydown={handleBarZoneResizeKeydown}
-                  ></button>
-                  <div class="bar-zone-shell bar-zone-shell--items">
-                    <ItemZone
-                      {layoutMode}
-                      {isOpponent}
-                      {playerSide}
-                      {seat}
-                    />
-                  </div>
-                {/if}
               </div>
             </div>
 
@@ -603,7 +512,6 @@ function confirmPendingAction(): void {
             {seat}
             {isOpponent}
             label=""
-            excludeCardTypes={playZoneExcludedCardTypes}
             hotkeyBindings={playHotkeyBindings}
           />
         </div>
@@ -1136,8 +1044,9 @@ function confirmPendingAction(): void {
 
   .seat-effect-card {
     position: relative;
-    width: 1.15rem;
-    height: 1.35rem;
+    width: 3rem;
+    height: auto;
+    aspect-ratio: 734 / 602;
     margin-left: calc(var(--effect-card-offset) * -0.35rem);
     filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
     border-radius: 0.18rem;
@@ -1267,58 +1176,11 @@ function confirmPendingAction(): void {
     justify-content: stretch;
   }
 
-  .bar-zone-shell--inkwell,
-  .bar-zone-shell--items {
+  .bar-zone-shell--inkwell {
     flex: 1 1 0;
   }
 
-  .bar-zones__center-content--with-items .bar-zone-shell--inkwell {
-    flex: 0 1 var(--bar-zone-split);
-  }
-
-  .bar-zone-resizer {
-    position: relative;
-    z-index: 2;
-    flex: 0 0 0.7rem;
-    align-self: stretch;
-    min-height: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-    background: transparent;
-    cursor: col-resize;
-    touch-action: none;
-  }
-
-  .bar-zone-resizer::before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0.18rem;
-    height: 2.4rem;
-    border-radius: 999px;
-    background: rgba(191, 219, 254, 0.45);
-    box-shadow: 0 0 0 1px rgba(11, 25, 46, 0.72);
-    content: "";
-    transform: translate(-50%, -50%);
-    transition: background 150ms ease, box-shadow 150ms ease;
-  }
-
-  .bar-zone-resizer:hover::before,
-  .bar-zone-resizer:focus-visible::before {
-    background: rgba(147, 197, 253, 0.96);
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.28);
-  }
-
-  .bar-zone-resizer:focus-visible {
-    outline: none;
-  }
-
   .bar-zone-shell--inkwell {
-    padding: 0;
-  }
-
-  .bar-zone-shell--items {
     padding: 0;
   }
 
@@ -1337,10 +1199,6 @@ function confirmPendingAction(): void {
     height: 100%;
   }
 
-  .bar-zones__center-content--with-items {
-    width: 100%;
-  }
-
   @container (max-width: 400px) {
     .bar-zones {
       --bar-row-card-height: 52px;
@@ -1357,12 +1215,7 @@ function confirmPendingAction(): void {
     min-width: 160px;
   }
 
-  .bar-zones :global(.item-zone) {
-    min-width: 132px;
-  }
-
-  .bar-zones :global(.inkwell-container),
-  .bar-zones :global(.item-zone) {
+  .bar-zones :global(.inkwell-container) {
     height: 100%;
     max-width: none;
     flex: 1 1 0;
@@ -1380,20 +1233,6 @@ function confirmPendingAction(): void {
     --ink-card-height: var(--bar-row-card-height);
     --ink-card-gap: 0.25rem;
     padding: 0;
-    border: none;
-    border-radius: calc(var(--bar-shell-radius) - 2px);
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .bar-zone-shell :global(.item-zone) {
-    width: 100%;
-    height: 100%;
-    --item-zone-card-height: clamp(64px, calc(var(--bar-row-card-height) + 24px), 76px);
-    --item-zone-card-width: calc(var(--item-zone-card-height) * var(--bar-row-card-aspect));
-    --item-grid-gap: 0.25rem;
-    --item-container-padding: 0;
-    padding: var(--item-zone-shell-padding, 0);
     border: none;
     border-radius: calc(var(--bar-shell-radius) - 2px);
     background: transparent;

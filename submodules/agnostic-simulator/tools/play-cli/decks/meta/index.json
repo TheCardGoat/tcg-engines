@@ -1,0 +1,74 @@
+{
+  "source": "https://onepiece.limitlesstcg.com/decks",
+  "format": "OP16",
+  "fetchedAt": "2026-07-30",
+  "metagameShare": [
+    {
+      "rank": 1,
+      "name": "Blue/Yellow Nami",
+      "share": "24.79%",
+      "leaderId": "OP11-041"
+    },
+    {
+      "rank": 2,
+      "name": "Purple Enel",
+      "share": "23.24%",
+      "leaderId": "OP15-058"
+    },
+    {
+      "rank": 3,
+      "name": "Green/Blue Luffy",
+      "share": "22.23%",
+      "leaderId": null
+    },
+    {
+      "rank": 4,
+      "name": "Black/Yellow Blackbeard",
+      "share": "8.76%",
+      "leaderId": null
+    },
+    {
+      "rank": 5,
+      "name": "Purple/Yellow Rosinante",
+      "share": "8.64%",
+      "leaderId": null
+    }
+  ],
+  "lists": [
+    {
+      "id": "blue-yellow-nami",
+      "path": "decks/meta/blue-yellow-nami.json",
+      "leaderId": "OP11-041",
+      "mainDeckCount": 50,
+      "sourceUrl": "https://onepiece.limitlesstcg.com/decks/list/6738"
+    },
+    {
+      "id": "purple-enel",
+      "path": "decks/meta/purple-enel.json",
+      "leaderId": "OP15-058",
+      "mainDeckCount": 50,
+      "sourceUrl": "https://onepiece.limitlesstcg.com/decks/list/6739"
+    },
+    {
+      "id": "green-blue-luffy",
+      "path": "decks/meta/green-blue-luffy.json",
+      "leaderId": "OP16-022",
+      "mainDeckCount": 50,
+      "sourceUrl": "https://onepiece.limitlesstcg.com/decks/list/6697"
+    },
+    {
+      "id": "black-yellow-blackbeard",
+      "path": "decks/meta/black-yellow-blackbeard.json",
+      "leaderId": "OP16-080",
+      "mainDeckCount": 50,
+      "sourceUrl": "https://onepiece.limitlesstcg.com/decks/list/6761"
+    },
+    {
+      "id": "purple-yellow-rosinante",
+      "path": "decks/meta/purple-yellow-rosinante.json",
+      "leaderId": "OP12-061",
+      "mainDeckCount": 50,
+      "sourceUrl": "https://onepiece.limitlesstcg.com/decks/list/6717"
+    }
+  ]
+}

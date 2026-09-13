@@ -20,6 +20,7 @@ describe("createDevRuntime", () => {
   it("returns both runtime and staticResources aligned to the same instances", () => {
     const unit = createMockUnit({ cost: 1 });
     const { runtime, staticResources } = createDevRuntime({
+      allowSyntheticCards: true,
       skipToMainPhase: true,
       p1: { hand: [unit], resourceArea: [createMockResource()], deck: 30 },
       p2: { deck: 30 },
@@ -35,6 +36,7 @@ describe("createDevRuntime", () => {
   it("seeds deployUnit candidates from the hand when resources are available", () => {
     const unit = createMockUnit({ cost: 1, level: 1 });
     const { runtime, staticResources } = createDevRuntime({
+      allowSyntheticCards: true,
       skipToMainPhase: true,
       p1: { hand: [unit], resourceArea: [createMockResource()], deck: 30 },
       p2: { deck: 30 },
@@ -65,6 +67,7 @@ describe("createDevRuntime", () => {
   it("places cards into the non-active player's zones", () => {
     const unit = createMockUnit();
     const { runtime } = createDevRuntime({
+      allowSyntheticCards: true,
       p2: { battleArea: [unit], deck: 30 },
       p1: { deck: 30 },
     });
@@ -76,6 +79,7 @@ describe("createDevRuntime", () => {
   it("produces a filtered view scoped to the viewer", () => {
     const handUnit = createMockUnit();
     const { runtime } = createDevRuntime({
+      allowSyntheticCards: true,
       p1: { hand: [handUnit], deck: 10 },
       p2: { hand: [createMockUnit()], deck: 10 },
     });

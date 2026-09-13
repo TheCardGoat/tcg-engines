@@ -36,5 +36,6 @@ describe("OP06-072 Cosette", () => {
       "south",
     );
     expect(shortByOne.getView("north").decisions).toHaveLength(0);
+    expect(shortByOne.getView("south").prompts).toHaveLength(0);
   });
 });

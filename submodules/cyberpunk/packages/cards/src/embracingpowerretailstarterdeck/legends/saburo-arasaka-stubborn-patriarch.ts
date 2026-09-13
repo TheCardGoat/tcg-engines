@@ -5,10 +5,11 @@ export const embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch = def
   id: "cf50fa24-bf94-4c35-bcc1-c6d56a6f68d8",
   canonicalId: "saburo-arasaka-stubborn-patriarch",
   slug: "saburo-arasaka-stubborn-patriarch",
+  subname: "Stubborn Patriarch",
   rulesText:
     "Friendly ARASAKA Units have +1 power while attacking.\n(Units steal an extra Gig for every 10 power.)",
-  name: "Saburo Arasaka — Stubborn Patriarch",
-  displayName: "Saburo Arasaka — Stubborn Patriarch",
+  name: "Saburo Arasaka",
+  displayName: "Saburo Arasaka: Stubborn Patriarch",
   color: "green",
   classifications: ["Arasaka", "Corpo"],
   set: {

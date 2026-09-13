@@ -27,5 +27,6 @@ describe("OP08-017 I'd Never Shoot You!!!!", () => {
       engine.getView("north").players.south.characters.find((c) => c?.instanceId === debuff)?.power,
     ).toBe(2000);
     expect(engine.getView("north").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

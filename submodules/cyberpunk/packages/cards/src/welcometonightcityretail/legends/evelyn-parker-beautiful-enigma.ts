@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailEvelynParkerBeautifulEnigma = defineCyberpunkCard({
   id: "55807eb7-8a8e-44a9-97a2-c8ac993e7b43",
   slug: "evelyn-parker-beautiful-enigma",
+  subname: "Beautiful Enigma",
   rulesText:
     "When a friendly CORPO or GANGER Unit steals 1 or more Gigs, ready 1 Eddie.\n1 €$, {Spend} A rival Unit must attack next turn if it can.",
-  name: "Evelyn Parker — Beautiful Enigma",
-  displayName: "Evelyn Parker — Beautiful Enigma",
+  name: "Evelyn Parker",
+  displayName: "Evelyn Parker: Beautiful Enigma",
   canonicalId: "evelyn-parker-beautiful-enigma",
   color: "blue",
   classifications: ["Doll"],

@@ -29,6 +29,7 @@ import type {
   LorcanaMoveDefinition,
   LorcanaRuntimeMoveInputs,
 } from "../../../types";
+import type { PlayFromDiscardPermission } from "../../../types/runtime-state";
 import {
   analyzeEffectTargets,
   analyzeTargetSelectionAvailabilityFromAnalysis,
@@ -81,6 +82,7 @@ import {
   emitTriggeredLorcanaEvent,
   flushTriggeredEventsToBag,
   hasPendingBagItems,
+  snapshotBoardTriggerCandidates,
   snapshotTriggeredCandidatesForCard,
 } from "../../effects/triggered-abilities";
 import {
@@ -112,7 +114,10 @@ import {
 import { getOrBuildMoveRegistry } from "../../rules/move-registry-cache";
 import type { StaticEffectRegistry } from "../../../rules/static-effect-registry";
 import { getActivePlayFromUnderPermissions } from "../../effects/play-from-under-permissions";
-import { getActivePlayFromDiscardPermissions } from "../../effects/play-from-discard-permissions";
+import {
+  consumePlayFromDiscardPermission,
+  getActivePlayFromDiscardPermissions,
+} from "../../effects/play-from-discard-permissions";
 import { banishAsAbilityCost } from "../../../operations";
 import { getLegalChoiceOptionIndices } from "../../resolution/action-effects/composed-effect-resolver";
 
@@ -536,8 +541,9 @@ function entersPlayExerted(
   });
 }
 
-type PlayFromDiscardPermission = {
+type ActivePlayFromDiscardPermission = {
   entersExerted: boolean;
+  temporaryPermission?: PlayFromDiscardPermission;
 };
 
 function matchesPlayFromDiscardCardType(
@@ -566,7 +572,7 @@ function getActivePlayFromDiscardPermission(
   playerId: PlayerId,
   cardId: CardInstanceId,
   cardDef: LorcanaCard,
-): PlayFromDiscardPermission | undefined {
+): ActivePlayFromDiscardPermission | undefined {
   const zone = getZoneFromZoneKey(ctx.framework.zones.getCardZone(cardId));
   const ownerId = ctx.framework.zones.getCardOwner(cardId);
   if (zone !== "discard" || ownerId !== playerId) {
@@ -583,7 +589,7 @@ function getActivePlayFromDiscardPermission(
       permission.cardId === cardId && matchesPlayFromDiscardCardType(cardDef, permission.cardType),
   );
   if (temporaryPermission) {
-    return { entersExerted: false };
+    return { entersExerted: false, temporaryPermission };
   }
 
   const playCards = ctx.framework.zones.getCards({
@@ -789,9 +795,12 @@ function getControlledShiftTargetsInPlay(
   getCardDefinition: (cardId: string) => LorcanaCard | undefined,
 ): CardInstanceId[] {
   const targetCardType = shiftRules?.targetCardType ?? "character";
-  return playCards.filter(
-    (cardId) => getCardDefinition(cardId)?.cardType === targetCardType,
-  ) as CardInstanceId[];
+  return playCards.filter((cardId) => {
+    const cardDef = getCardDefinition(cardId);
+    return (
+      cardDef !== undefined && (cardDef.cardType === targetCardType || hasAdvancedMimicry(cardDef))
+    );
+  }) as CardInstanceId[];
 }
 
 function normalizeActionTargets(targets: unknown): CardInstanceId[] {
@@ -2092,6 +2101,10 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             );
             return {
               targetDsl: [...currentAnalysis.targetDsl, ...analysis.targetDsl],
+              sameOwnerTargetGroups: [
+                ...(currentAnalysis.sameOwnerTargetGroups ?? []),
+                ...(analysis.sameOwnerTargetGroups ?? []),
+              ],
               cardCandidates: [
                 ...new Set([...currentAnalysis.cardCandidates, ...analysis.cardCandidates]),
               ],
@@ -2114,6 +2127,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
           },
           {
             targetDsl: [],
+            sameOwnerTargetGroups: [],
             cardCandidates: [] as CardInstanceId[],
             playerCandidates: [] as PlayerId[],
             allowedZones: [] as ActionSelectionZone[],
@@ -2531,6 +2545,13 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
       playerId: currentPlayer,
     });
     if (playedFromDiscard) {
+      if (playFromDiscardPermission.temporaryPermission) {
+        consumePlayFromDiscardPermission(
+          ctx.G.playFromDiscardPermissions,
+          currentPlayer,
+          playFromDiscardPermission.temporaryPermission,
+        );
+      }
       recordDiscardExitThisTurn(ctx);
       emitTriggeredLorcanaEvent(
         ctx,
@@ -2615,6 +2636,10 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
           );
           return {
             targetDsl: [...currentAnalysis.targetDsl, ...analysis.targetDsl],
+            sameOwnerTargetGroups: [
+              ...(currentAnalysis.sameOwnerTargetGroups ?? []),
+              ...(analysis.sameOwnerTargetGroups ?? []),
+            ],
             cardCandidates: [
               ...new Set([...currentAnalysis.cardCandidates, ...analysis.cardCandidates]),
             ],
@@ -2635,6 +2660,7 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
         },
         {
           targetDsl: [],
+          sameOwnerTargetGroups: [],
           cardCandidates: [] as CardInstanceId[],
           playerCandidates: [] as PlayerId[],
           allowedZones: [] as ActionSelectionZone[],
@@ -2667,12 +2693,20 @@ export const playCard: LorcanaMoveDefinition<"playCard"> = {
             zone: destination.zone,
           }))
         : undefined;
+      // Snapshot board observers before action effects run. Mass effects like
+      // Be Prepared can banish characters (e.g. Maui - Half-Shark) that have
+      // "whenever you play an action" triggers; without a pre-effect snapshot,
+      // those observers are gone by the time flushTriggeredEventsToBag runs.
+      const actionPlayTriggerCandidates = [
+        ...(shiftTargetTriggerCandidates ?? []),
+        ...snapshotBoardTriggerCandidates(ctx),
+      ];
       emitTriggeredLorcanaEvent(ctx, "cardPlayed", cardPlayedPayload, {
         event: "play",
         playerId: currentPlayer,
         subjectCardId: cardId,
         triggerSourceCardId: cardId,
-        triggerCandidates: shiftTargetTriggerCandidates,
+        triggerCandidates: actionPlayTriggerCandidates,
       });
       if (singerIds) {
         singerIds.forEach((singerId) => {

@@ -20,5 +20,6 @@ describe("OP01-104 Speed", () => {
     expect(view.players.north.characters.some((card) => card?.instanceId === speedId)).toBe(true);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(speedId);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

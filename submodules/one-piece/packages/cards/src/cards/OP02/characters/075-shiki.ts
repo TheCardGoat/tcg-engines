@@ -33,9 +33,18 @@ export const op02Shiki075: CharacterCard = {
     effects: [
       {
         trigger: "trigger",
-        costs: [{ cost: "returnDon", amount: 1 }],
-        actions: [{ action: "playThisCard" }],
-        optional: true,
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+        // Life Trigger activation is already chosen; returnDon is not skippable.
       },
     ],
   },

@@ -16,5 +16,10 @@ describe("OP12-070 Sanji", () => {
       .players.south.characters.find((card) => card?.instanceId === sanjiId);
 
     expect(projectedSanji?.power).toBe((op12Sanji070.power ?? 0) + 2000);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.characters.filter(Boolean).length).toBeGreaterThan(
+      0,
+    );
   });
 });

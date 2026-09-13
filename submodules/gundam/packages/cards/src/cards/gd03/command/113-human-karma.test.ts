@@ -90,6 +90,24 @@ describe("Human Karma (GD03-113)", () => {
     expectSuccess(p1.passPhase());
   });
 
+  it("can be played when an active friendly Unit exists even if no enemy Unit can be chosen", () => {
+    const friendly = createMockUnit({ level: 4, hp: 6 });
+    const engine = GundamTestEngine.create({
+      hand: [gd03HumanKarma113],
+      play: [friendly],
+      resourceArea: activeResources(3),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const commandId = p1.getHand()[0]!;
+    const friendlyId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.playCommand(commandId, { targets: [friendlyId] }));
+
+    expect(p1.isExhausted(friendlyId)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
   it("requires the chosen friendly Unit to be active", () => {
     const { p1, commandId, friendlyId } = setup({ friendlyExhausted: true });
 

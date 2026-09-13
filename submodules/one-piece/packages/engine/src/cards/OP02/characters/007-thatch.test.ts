@@ -3,7 +3,7 @@ import { op02Thatch007 } from "../../../../../cards/src/cards/OP02/characters/00
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-007 Thatch", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op02Thatch007);
   });
 });

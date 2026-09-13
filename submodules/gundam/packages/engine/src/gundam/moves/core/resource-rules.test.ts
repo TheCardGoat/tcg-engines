@@ -10,6 +10,7 @@
 
 import { describe, it, expect } from "vite-plus/test";
 import type { CardEffect, ResourceCard } from "@tcg/gundam-types";
+import { exrpExResource003 } from "@tcg/gundam-token-data";
 import type { FrameworkReadAPI } from "../../../types/move-types.ts";
 import {
   GundamTestEngine,
@@ -130,6 +131,27 @@ describe("Rule 4-4-3 — resource area is public", () => {
 // ── Rule 5-17-3-2-3: EX tokens removed from game when used ────────────────────
 
 describe("Rule 5-17-3-2-3 — EX resource tokens removed from game when spent", () => {
+  it.each([
+    ["EXR", createMockResource({ cardNumber: "EXR-001" })],
+    ["EXRP", exrpExResource003],
+  ])(
+    "rests an ordinary %s Resource-card instance that is not marked as a token",
+    (_prefix, resource) => {
+      const unit = createMockUnit({ level: 1, cost: 1 });
+      const engine = GundamTestEngine.create(
+        { hand: [unit], resourceArea: [active(resource)] },
+        {},
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const [resourceId] = p1.getCardsInZone("resourceArea");
+
+      expectSuccess(p1.deployUnit(unit));
+
+      expect(p1.getCardsInZone("resourceArea")).toEqual([resourceId]);
+      expect(p1.isExhausted(resourceId!)).toBe(true);
+    },
+  );
+
   it("regular resource cards are exhausted (not removed) when paying costs", () => {
     const unit = createMockUnit({ level: 1, cost: 1 });
     const res = createMockResource();
@@ -163,6 +185,18 @@ describe("Rule 5-17-3-2-3 — EX resource tokens removed from game when spent", 
     expect(p1.getCardsInZone("resourceArea")).not.toContain(tokenId);
     expect(p1.getCardsInZone("removalArea")).not.toContain(tokenId);
     expect(p1.getCardZone(tokenId)).toBeUndefined();
+  });
+
+  it("continues EX Resource token IDs from persisted match state", () => {
+    const setup = exResourceCommand();
+    const engine = GundamTestEngine.create({ hand: [setup] }, {});
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    engine.getState().G.eventCounters.exResourceToken = 7;
+
+    expectSuccess(p1.playCommand(setup));
+
+    expect(p1.getCardsInZone("resourceArea")).toEqual(["ex_resource_token_8"]);
+    expect(engine.getState().G.eventCounters.exResourceToken).toBe(8);
   });
 
   it("prefers exhausting regular resources over consuming EX tokens", () => {

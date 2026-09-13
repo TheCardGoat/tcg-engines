@@ -54,5 +54,7 @@ describe("OP12-112 Baby 5", () => {
     );
     monocolored.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
     expect(monocolored.getView("north").players.north.handCount).toBe(monoHandBefore);
+    expect(monocolored.getView("south").prompts).toHaveLength(0);
+    expect(monocolored.getState().capabilityHistory).toHaveLength(0);
   });
 });

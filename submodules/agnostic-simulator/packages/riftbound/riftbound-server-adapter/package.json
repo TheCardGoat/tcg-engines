@@ -1,0 +1,35 @@
+{
+  "name": "@tcg/riftbound-server-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Riftbound client-authoritative game adapter.",
+  "files": [
+    "src/"
+  ],
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./deck-interchange": "./src/deck-interchange.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vp test run --configLoader runner"
+  },
+  "dependencies": {
+    "@tcg/riftbound-cards": "link:../../../../riftbound/packages/cards",
+    "@tcg/riftbound-decks": "link:../../../../riftbound/packages/decks",
+    "@tcg/riftbound-types": "link:../../../../riftbound/packages/types",
+    "@tcg/shared": "link:../../shared"
+  },
+  "devDependencies": {
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

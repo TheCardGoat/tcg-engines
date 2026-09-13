@@ -12,6 +12,9 @@ export const ANIMATION_DURATIONS_MS = {
   combatResolve: 280,
   gigMove: 360,
   phaseChange: 1500,
+  entityStateChange: 420,
+  randomization: 720,
+  gameResult: 1200,
   /** Per-card stagger when multiple cards are drawn in one event. */
   drawStaggerMs: 70,
 } as const;

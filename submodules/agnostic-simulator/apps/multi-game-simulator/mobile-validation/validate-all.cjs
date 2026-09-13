@@ -175,11 +175,13 @@ async function validateCard(browser, cardCase) {
     let targetPicked = false;
     let afterPick;
     if (plan.surface === "hand") {
-      const tray = await D.tapHandCard(page, cardCase.definitionId);
-      result.detail.trayActions = tray.actions;
-      if (!tray.actions.includes(`hand-action-${plan.action}`)) {
+      const menu = await D.tapHandCard(page, cardCase.definitionId);
+      result.detail.menuActions = menu.actions;
+      const actionId =
+        plan.action === "play" ? "playCard" : plan.action === "sell" ? "sellCard" : "goSolo";
+      if (!menu.actions.includes(`card-action-${actionId}`)) {
         result.status = "fail";
-        result.detail.reason = `hand-action-${plan.action} not in tray (${tray.actions.join(",")})`;
+        result.detail.reason = `card-action-${actionId} not in hand card menu (${menu.actions.join(",")})`;
         await D.screenshot(page, path.join(SHOT_DIR, `fail-${cardCase.slug}.png`));
         return result;
       }

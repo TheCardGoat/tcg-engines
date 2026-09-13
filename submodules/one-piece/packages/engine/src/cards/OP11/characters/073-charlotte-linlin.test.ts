@@ -68,4 +68,43 @@ describe("OP11-073 Charlotte Linlin", () => {
       engine.getView("south").prompts.some((prompt) => prompt.label.includes("optional effect")),
     ).toBe(false);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op11CharlotteLinlin073],
+        activeDon: 10,
+      },
+      {
+        deck: [eb01Doma005, eb01MountainGod018],
+        character: [
+          { card: eb01Doma005, playedOnTurn: 0 },
+          { card: eb01Doma005, playedOnTurn: 0 },
+        ],
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const attackers = engine
+      .getView("north")
+      .players.north.characters.filter((card) => card?.cardId === eb01Doma005.id)
+      .map((card) => card!.instanceId);
+    engine.declareAttack(attackers[0]!, engine.leader("south"), "north");
+
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

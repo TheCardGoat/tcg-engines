@@ -46,5 +46,7 @@ describe("OP10-036 Perona", () => {
     engine.playCard(restCharacter, "south");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [targets[1]!] }, "south");
     expect(engine.getView("south").players.south).toMatchObject({ activeDon: 1, restedDon: 1 });
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

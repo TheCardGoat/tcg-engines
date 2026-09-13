@@ -10,8 +10,7 @@ import {
  * Why a separate POM: `MobileBoard` does NOT render the generic
  * `InteractionPanel` that `InteractionPanelPom` drives (that panel is desktop
  * only). On mobile every action is reached through the native UI:
- *   - hand cards: tap -> `hand-command-tray` (`hand-action-play`/`sell`/`goSolo`)
- *   - field units / legends: tap -> `card-action-menu` (`card-action-*`)
+ *   - hand cards, field units, and legends: tap -> `card-action-menu` (`card-action-*`)
  *   - target selection: `prompt-target-modal-open` -> `ChoiceModal` sheet
  *     (`target-modal-card` / `target-modal-gig` / `search-deck-card`)
  *   - phase advance: `phase-advance` (bottom rail)
@@ -21,11 +20,6 @@ import {
  * component tests and Playwright mobile e2e. Compose it onto a
  * `CyberpunkSimulatorPom` or use standalone with a `SimulatorDomDriver`.
  *
- * NOTE on hand-card taps: the mobile `useHandCardTap` recognizer treats a tap as
- * a pointerdown+pointerup at (nearly) the same point. With the Playwright driver
- * `click()` synthesizes real pointer events and works directly. In jsdom, mirror
- * the pointer sequence used in `mobile-target-modal.test.tsx` if a plain click
- * does not open the tray.
  */
 export class MobileInteractionPom {
   private readonly dom: SimulatorDomDriver;
@@ -44,16 +38,6 @@ export class MobileInteractionPom {
     return this.dom.locator(`[data-testid="hand-card"][data-card-id=${cssString(cardId)}]`);
   }
 
-  /** The command tray that appears once a hand card is selected. */
-  handCommandTray(): SimulatorDomElement {
-    return this.dom.getByTestId("hand-command-tray");
-  }
-
-  /** A specific action button in the hand command tray (play/sell/goSolo). */
-  handAction(action: "play" | "sell" | "goSolo"): SimulatorDomElement {
-    return this.dom.getByTestId(`hand-action-${action}`);
-  }
-
   /**
    * A field unit or legend card. Mobile field units + face-up legends expose
    * data-definition-id; face-down legends hide it (hidden info) and must be
@@ -69,7 +53,7 @@ export class MobileInteractionPom {
     throw new Error("boardCard requires definitionId or instanceId");
   }
 
-  /** The floating action menu that opens when a field unit / legend is tapped. */
+  /** The floating action menu that opens when an actionable card is tapped. */
   cardActionMenu(): SimulatorDomElement {
     return this.dom.getByTestId("card-action-menu");
   }
@@ -134,13 +118,14 @@ export class MobileInteractionPom {
   // --- high-level mobile flows ------------------------------------------------
 
   /**
-   * Select a hand card and tap a tray action. Opens the tray first, then taps
-   * the requested action button.
+   * Open a hand card's action menu and tap the requested action.
    */
   async playHandAction(cardId: string, action: "play" | "sell" | "goSolo"): Promise<void> {
-    await this.handCard(cardId).click();
-    await this.handCommandTray().waitFor({ state: "visible" });
-    await this.handAction(action).click();
+    await this.handCard(cardId).locator('[data-testid="card"]').click();
+    await this.cardActionMenu().waitFor({ state: "visible" });
+    await this.cardAction(
+      action === "play" ? "playCard" : action === "sell" ? "sellCard" : "goSolo",
+    ).click();
   }
 
   /**

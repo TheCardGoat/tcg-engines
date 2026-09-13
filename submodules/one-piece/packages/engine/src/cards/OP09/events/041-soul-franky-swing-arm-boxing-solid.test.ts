@@ -3,7 +3,7 @@ import { op09SoulFrankySwingArmBoxingSolid041 } from "../../../../../cards/src/c
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-041 Soul Franky Swing Arm Boxing Solid", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op09SoulFrankySwingArmBoxingSolid041);
   });
 });

@@ -71,4 +71,35 @@ describe("OP11-030 Shirahoshi", () => {
     expect(engine.findCardInZone("south", "hand", op11Ishilly025)).toBe(fishManIslandId);
     expect(engine.getState().capabilityHistory).toEqual([]);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op11Shirahoshi030],
+        deck: [op11BulgeEyedNeptunian027, op11Ishilly025, op14eb04Killer005],
+        activeDon: 1,
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const shirahoshiId = engine.findCardInZone("south", "character", op11Shirahoshi030);
+    engine.activateEffect(shirahoshiId, "activateMain", "south");
+
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -67,9 +67,10 @@ describe("Nena Trinity (GD04-089)", () => {
 
     it("cannot target the Unit with Support itself", () => {
       const host = createMockUnit({ ap: 2 });
+      const ally = createMockUnit({ ap: 3 });
       const engine = GundamTestEngine.create({
         hand: [gd04NenaTrinity089],
-        play: [host],
+        play: [host, ally],
         resourceArea: activeResources(4),
       });
       const p1 = engine.asPlayer(PLAYER_ONE);

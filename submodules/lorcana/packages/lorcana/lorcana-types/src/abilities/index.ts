@@ -269,6 +269,7 @@ export type {
   // Zone movement effects
   ReturnToHandEffect,
   RevealAndRouteEffect,
+  RevealAndRouteFallback,
   RevealRoute,
   RevealRouteDestination,
   RevealHandEffect,

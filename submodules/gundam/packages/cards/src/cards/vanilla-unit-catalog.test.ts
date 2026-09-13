@@ -52,8 +52,8 @@ const vanillaUnitTokens = [...canonicalCards.values()]
   .sort((a, b) => a.cardNumber.localeCompare(b.cardNumber, "en", { numeric: true }));
 
 describe("canonical vanilla Unit catalog", () => {
-  it("contains all 93 canonical non-token vanilla Units", () => {
-    expect(vanillaUnits).toHaveLength(93);
+  it("contains all 117 canonical non-token vanilla Units", () => {
+    expect(vanillaUnits).toHaveLength(117);
   });
 
   describe.each(vanillaUnits)("$name ($cardNumber)", (card) => {
@@ -95,8 +95,8 @@ describe("canonical vanilla Unit catalog", () => {
 });
 
 describe("canonical vanilla Unit token catalog", () => {
-  it("contains all 17 canonical vanilla Unit tokens", () => {
-    expect(vanillaUnitTokens).toHaveLength(17);
+  it("contains all 19 canonical vanilla Unit tokens", () => {
+    expect(vanillaUnitTokens).toHaveLength(19);
   });
 
   describe.each(vanillaUnitTokens)("$name ($cardNumber)", (card) => {

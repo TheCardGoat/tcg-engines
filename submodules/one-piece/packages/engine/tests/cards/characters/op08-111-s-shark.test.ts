@@ -54,4 +54,29 @@ describe("OP08-111 S-Shark", () => {
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(sharkId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional Life Trigger so hand trash and play do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { hand: [eb01Doma005], life: [op08SShark111, eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const sharkId = engine.findCardInZone("north", "life", op08SShark111);
+    const costId = engine.findCardInZone("north", "hand", eb01Doma005);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const handBefore = engine.getView("north").players.north.hand.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(costId);
+    expect(view.players.north.hand.length).toBe(handBefore);
+    expect(view.players.north.characters.map((card) => card?.instanceId)).not.toContain(sharkId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(costId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(sharkId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

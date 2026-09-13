@@ -21,6 +21,8 @@ export const eb03Makino009: CharacterCard = {
   rarity: "C",
   setId: "EB03",
   cost: 1,
+  power: 0,
+  counter: 2000,
   traits: ["Windmill Village"],
   attribute: "wisdom",
   effect:

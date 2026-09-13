@@ -55,6 +55,7 @@
  */
 
 import {
+  canAttack,
   combatAwareStrategy,
   composeStrategy,
   DEFAULT_FAMILY_PRIORITY,
@@ -791,6 +792,616 @@ export const iter26BlockerBaitOrder = withAttackOrdering(
   "iter-26-blocker-bait-order",
   rankBlockerBaitCombat,
 );
+
+// ── Next-heuristic hypotheses 7/8: sustained direct pressure ────────────────
+
+/**
+ * Treat every legal direct attack as pressure worth applying before optional
+ * Unit combat. The canonical ranking still decides attacker order, so Base
+ * lethal and higher-AP attacks retain their existing priority.
+ */
+const rankDirectAssaultCombat: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const canonical = rankEffectiveCombat(ctx);
+  return [...canonical].sort(
+    (a, b) => Number(b.target === "direct") - Number(a.target === "direct"),
+  );
+};
+
+/** Isolated target-selection candidate: direct attacks precede Unit attacks. */
+export const iter27DirectAssault = withAttackOrdering(
+  "iter-27-direct-assault",
+  rankDirectAssaultCombat,
+);
+
+/**
+ * Apply sustained direct pressure, but lead with the least valuable blockable
+ * attacker while an active enemy <Blocker> remains. This tests whether
+ * presenting the opponent with an early block decision preserves the more
+ * valuable attackers for subsequent direct attacks.
+ */
+const rankDirectAssaultWithBait: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const directFirst = rankDirectAssaultCombat(ctx);
+  if (!opponentHasActiveBlocker(ctx.parent)) return directFirst;
+  return [...directFirst].sort((a, b) => {
+    if (a.target !== "direct" || b.target !== "direct") return 0;
+    const aUnit = combatUnitValue(ctx.parent, a.attackerId);
+    const bUnit = combatUnitValue(ctx.parent, b.attackerId);
+    const aCanBeBlocked = !aUnit.keywords.includes("HighManeuver");
+    const bCanBeBlocked = !bUnit.keywords.includes("HighManeuver");
+    if (aCanBeBlocked !== bCanBeBlocked) return Number(bCanBeBlocked) - Number(aCanBeBlocked);
+    return aUnit.value - bUnit.value;
+  });
+};
+
+/** Direct-first target selection plus explicit multi-attacker Blocker bait. */
+export const iter28DirectAssaultBait = withAttackOrdering(
+  "iter-28-direct-assault-bait",
+  rankDirectAssaultWithBait,
+);
+
+/**
+ * Prioritize direct attacks only while the opponent still has a Base. Damage
+ * persists on a Base, so this applies early pressure without abandoning the
+ * canonical Unit-combat policy throughout the later Shield-only game.
+ */
+const rankBaseAssaultCombat: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const canonical = rankEffectiveCombat(ctx);
+  const ownId = ctx.parent.playerId as unknown as string;
+  const opponentId = ctx.parent.state.ctx.playerIds.find((id) => id !== ownId);
+  const opponentHasBase = opponentId
+    ? (ctx.parent.view.zones.zones[`baseSection:${opponentId}`]?.count ?? 0) > 0
+    : false;
+  if (!opponentHasBase) return canonical;
+  return [...canonical].sort(
+    (a, b) => Number(b.target === "direct") - Number(a.target === "direct"),
+  );
+};
+
+/** Direct-first targeting during the Base-damage window only. */
+export const iter29BaseAssault = withAttackOrdering("iter-29-base-assault", rankBaseAssaultCombat);
+
+function activeOpponentBlockerCount(
+  parent: Parameters<FamilyPolicy<"enterBattle">>[0]["parent"],
+): number {
+  return activeOpponentBlockerIds(parent).length;
+}
+
+function activeOpponentBlockerIds(
+  parent: Parameters<FamilyPolicy<"enterBattle">>[0]["parent"],
+): readonly string[] {
+  const ownId = parent.playerId as unknown as string;
+  const opponentId = parent.state.ctx.playerIds.find((id) => id !== ownId);
+  if (!opponentId) return [];
+  const g = parent.state.G as unknown as GundamG;
+  return (parent.view.zones.zones[`battleArea:${opponentId}`]?.cards ?? [])
+    .filter((card) =>
+      Boolean(
+        card.definition &&
+        card.definition.type === "unit" &&
+        !g.exhausted[card.instanceId] &&
+        getEffectiveStats(card.instanceId, g, parent.cards).keywords.includes("Blocker"),
+      ),
+    )
+    .map((card) => card.instanceId);
+}
+
+function pressureBoardIsStable(
+  parent: Parameters<FamilyPolicy<"enterBattle">>[0]["parent"],
+): boolean {
+  const ownId = parent.playerId as unknown as string;
+  const opponentId = parent.state.ctx.playerIds.find((id) => id !== ownId);
+  if (!opponentId) return false;
+  const ownUnits = parent.view.zones.zones[`battleArea:${ownId}`]?.count ?? 0;
+  const opponentUnits = parent.view.zones.zones[`battleArea:${opponentId}`]?.count ?? 0;
+  return ownUnits >= opponentUnits;
+}
+
+/**
+ * Number of direct attacks that still connect after every currently active
+ * <Blocker> redirects one blockable attacker. <High-Maneuver> attacks remain
+ * guaranteed because they cannot be blocked (13-1-6).
+ */
+function guaranteedDirectConnections(
+  parent: Parameters<FamilyPolicy<"enterBattle">>[0]["parent"],
+  direct: readonly Extract<GundamBotCandidate, { family: "enterBattle" }>[],
+): number {
+  const highManeuver = direct.filter((candidate) =>
+    combatUnitValue(parent, candidate.attackerId).keywords.includes("HighManeuver"),
+  ).length;
+  const blockable = direct.length - highManeuver;
+  return highManeuver + Math.max(0, blockable - activeOpponentBlockerCount(parent));
+}
+
+/**
+ * Pressure only from a stable board and only when at least two attacks are
+ * guaranteed to connect. Against a Base, require that one guaranteed attacker
+ * can destroy it so another can immediately reach a Shield. Against Shields,
+ * lead with the smallest attacker because excess AP is wasted and a revealed
+ * Burst may deploy a new Base or Blocker before the next attack.
+ */
+const rankPressureWindowCombat: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const canonical = rankEffectiveCombat(ctx);
+  if (!pressureBoardIsStable(ctx.parent)) return canonical;
+  const direct = canonical.filter(
+    (candidate): candidate is Extract<GundamBotCandidate, { family: "enterBattle" }> =>
+      candidate.target === "direct",
+  );
+  if (guaranteedDirectConnections(ctx.parent, direct) < 2) return canonical;
+
+  const ownId = ctx.parent.playerId as unknown as string;
+  const opponentId = ctx.parent.state.ctx.playerIds.find((id) => id !== ownId);
+  if (!opponentId) return canonical;
+  const g = ctx.parent.state.G as unknown as GundamG;
+  const base = ctx.parent.view.zones.zones[`baseSection:${opponentId}`]?.cards[0];
+  let remainingBaseHp = 0;
+  if (base) {
+    const baseHp = base.definition?.type === "base" ? base.definition.hp : 0;
+    remainingBaseHp = Math.max(0, baseHp - (g.damage[base.instanceId] ?? 0));
+    const activeBlockers = activeOpponentBlockerCount(ctx.parent);
+    const unblockableBreakers = direct.filter((candidate) => {
+      const attacker = combatUnitValue(ctx.parent, candidate.attackerId);
+      return attacker.keywords.includes("HighManeuver") && attacker.ap >= remainingBaseHp;
+    }).length;
+    const blockableBreakers = direct.filter((candidate) => {
+      const attacker = combatUnitValue(ctx.parent, candidate.attackerId);
+      return !attacker.keywords.includes("HighManeuver") && attacker.ap >= remainingBaseHp;
+    }).length;
+    if (unblockableBreakers + Math.max(0, blockableBreakers - activeBlockers) === 0) {
+      return canonical;
+    }
+  }
+
+  return [...canonical].sort((a, b) => {
+    if (a.target !== "direct" || b.target !== "direct") {
+      return Number(b.target === "direct") - Number(a.target === "direct");
+    }
+    const aUnit = combatUnitValue(ctx.parent, a.attackerId);
+    const bUnit = combatUnitValue(ctx.parent, b.attackerId);
+    if (base) {
+      const aBreaksBase = aUnit.ap >= remainingBaseHp;
+      const bBreaksBase = bUnit.ap >= remainingBaseHp;
+      if (aBreaksBase !== bBreaksBase) return Number(bBreaksBase) - Number(aBreaksBase);
+    }
+    return aUnit.ap - bUnit.ap || aUnit.value - bUnit.value;
+  });
+};
+
+/** Board-aware, multi-attack pressure with Base/Shield sequencing. */
+export const iter30PressureWindow = withAttackOrdering(
+  "iter-30-pressure-window",
+  rankPressureWindowCombat,
+);
+
+function makeLatePressureCombat(pressureTurn: number): FamilyPolicy<"enterBattle"> {
+  return (ctx) => {
+    const canonical = rankEffectiveCombat(ctx);
+    if (ctx.parent.turnNumber < pressureTurn) return canonical;
+
+    const ownId = ctx.parent.playerId as unknown as string;
+    const opponentId = ctx.parent.state.ctx.playerIds.find((id) => id !== ownId);
+    if (!opponentId) return canonical;
+    const g = ctx.parent.state.G as unknown as GundamG;
+    const base = ctx.parent.view.zones.zones[`baseSection:${opponentId}`]?.cards[0];
+    const baseHp = base?.definition?.type === "base" ? base.definition.hp : 0;
+    const remainingBaseHp = base ? Math.max(0, baseHp - (g.damage[base.instanceId] ?? 0)) : 0;
+
+    return [...canonical].sort((a, b) => {
+      if (a.target !== "direct" || b.target !== "direct") {
+        return Number(b.target === "direct") - Number(a.target === "direct");
+      }
+      const aUnit = combatUnitValue(ctx.parent, a.attackerId);
+      const bUnit = combatUnitValue(ctx.parent, b.attackerId);
+      if (base) {
+        const aBreaksBase = aUnit.ap >= remainingBaseHp;
+        const bBreaksBase = bUnit.ap >= remainingBaseHp;
+        if (aBreaksBase !== bBreaksBase) return Number(bBreaksBase) - Number(aBreaksBase);
+        if (!aBreaksBase) return bUnit.ap - aUnit.ap;
+      }
+      return aUnit.ap - bUnit.ap || aUnit.value - bUnit.value;
+    });
+  };
+}
+
+/** Build/control through turn 7, then apply sequenced direct pressure. */
+export const iter31Turn8Pressure = withAttackOrdering(
+  "iter-31-turn-8-pressure",
+  makeLatePressureCombat(8),
+);
+
+/** More conservative clock: switch to sequenced direct pressure on turn 10. */
+export const iter32Turn10Pressure = withAttackOrdering(
+  "iter-32-turn-10-pressure",
+  makeLatePressureCombat(10),
+);
+
+function defenderDirectLoss(
+  parent: Parameters<FamilyPolicy<"enterBattle">>[0]["parent"],
+  attacker: CombatUnitValue,
+): number {
+  const ownId = parent.playerId as unknown as string;
+  const opponentId = parent.state.ctx.playerIds.find((id) => id !== ownId);
+  if (!opponentId) return 0;
+  const shields = parent.view.zones.zones[`shieldArea:${opponentId}`]?.count ?? 0;
+  const base = parent.view.zones.zones[`baseSection:${opponentId}`]?.cards[0];
+  if (!base) {
+    if (shields === 0) return 1_000;
+    return shields <= 1 ? 24 : shields === 2 ? 10 : 4;
+  }
+  const g = parent.state.G as unknown as GundamG;
+  const baseHp = base.definition?.type === "base" ? base.definition.hp : 0;
+  const remainingBaseHp = Math.max(0, baseHp - (g.damage[base.instanceId] ?? 0));
+  return Math.min(attacker.ap, remainingBaseHp) + (attacker.ap >= remainingBaseHp ? 24 : 0);
+}
+
+function directAttackInducesBlock(
+  parent: Parameters<FamilyPolicy<"enterBattle">>[0]["parent"],
+  attackerId: string,
+): boolean {
+  const attacker = combatUnitValue(parent, attackerId);
+  if (attacker.keywords.includes("HighManeuver")) return false;
+  const unblockedLoss = defenderDirectLoss(parent, attacker);
+  return activeOpponentBlockerIds(parent).some((blockerId) => {
+    const blocker = combatUnitValue(parent, blockerId);
+    const blocked = combatOutcome(attacker, blocker);
+    const blockedNetLoss =
+      (blocked.defenderDestroyed ? blocker.value : 0) -
+      (blocked.attackerDestroyed ? attacker.value : 0);
+    return unblockedLoss - blockedNetLoss > 0;
+  });
+}
+
+/**
+ * Lead with the least valuable direct attacker that the canonical defensive
+ * model predicts will draw a block. Re-evaluation after that battle naturally
+ * returns to canonical targeting with the consumed Blocker rested or gone.
+ */
+const rankBlockTaxCombat: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const canonical = rankEffectiveCombat(ctx);
+  const direct = canonical.filter((candidate) => candidate.target === "direct");
+  if (direct.length < 2) return canonical;
+  const taxingAttackerIds = new Set(
+    direct
+      .filter((candidate) => directAttackInducesBlock(ctx.parent, candidate.attackerId))
+      .map((candidate) => candidate.attackerId),
+  );
+  if (taxingAttackerIds.size === 0) return canonical;
+  return [...canonical].sort((a, b) => {
+    const aTaxes = a.target === "direct" && taxingAttackerIds.has(a.attackerId);
+    const bTaxes = b.target === "direct" && taxingAttackerIds.has(b.attackerId);
+    if (aTaxes !== bTaxes) return Number(bTaxes) - Number(aTaxes);
+    if (!aTaxes || !bTaxes) return 0;
+    return (
+      combatUnitValue(ctx.parent, a.attackerId).value -
+      combatUnitValue(ctx.parent, b.attackerId).value
+    );
+  });
+};
+
+/** Direct pressure only when it is predicted to consume an active Blocker. */
+export const iter33BlockTax = withAttackOrdering("iter-33-block-tax", rankBlockTaxCombat);
+
+function activeFriendlyBlockerIds(
+  parent: Parameters<FamilyPolicy<"declareBlock">>[0]["parent"],
+): readonly string[] {
+  const ownId = parent.playerId as unknown as string;
+  const g = parent.state.G as unknown as GundamG;
+  return (parent.view.zones.zones[`battleArea:${ownId}`]?.cards ?? [])
+    .filter((card) =>
+      Boolean(
+        card.definition?.type === "unit" &&
+        !g.exhausted[card.instanceId] &&
+        getEffectiveStats(card.instanceId, g, parent.cards).keywords.includes("Blocker"),
+      ),
+    )
+    .map((card) => card.instanceId);
+}
+
+function bestBlockImprovement(
+  parent: Parameters<FamilyPolicy<"declareBlock">>[0]["parent"],
+  attackerId: string,
+  blockers: readonly string[],
+): number {
+  const attacker = combatUnitValue(parent, attackerId);
+  const unblockedLoss = directLossValue(parent, attacker, (shields) =>
+    shields <= 1 ? 24 : shields === 2 ? 10 : 4,
+  );
+  return Math.max(
+    Number.NEGATIVE_INFINITY,
+    ...blockers.map((blockerId) => {
+      const blocker = combatUnitValue(parent, blockerId);
+      const blocked = combatOutcome(attacker, blocker);
+      const blockedNetLoss =
+        (blocked.defenderDestroyed ? blocker.value : 0) -
+        (blocked.attackerDestroyed ? attacker.value : 0);
+      return unblockedLoss - blockedNetLoss;
+    }),
+  );
+}
+
+function shouldReserveBlocker(
+  parent: Parameters<FamilyPolicy<"declareBlock">>[0]["parent"],
+): boolean {
+  const g = parent.state.G as unknown as GundamG;
+  const combat = g.turnMetadata.pendingCombat;
+  if (!combat || combat.target !== "direct") return false;
+  const blockers = activeFriendlyBlockerIds(parent);
+  if (blockers.length === 0) return false;
+  const ownId = parent.playerId as unknown as string;
+  const opponentId = parent.state.ctx.playerIds.find((id) => id !== ownId);
+  if (!opponentId) return false;
+  const futureAttackers = (parent.view.zones.zones[`battleArea:${opponentId}`]?.cards ?? [])
+    .map((card) => card.instanceId)
+    .filter((cardId) => cardId !== combat.attackerId)
+    .filter((cardId) => canAttack(cardId, g, parent.cards));
+  if (futureAttackers.length < blockers.length) return false;
+  const currentImprovement = bestBlockImprovement(parent, combat.attackerId, blockers);
+  const futureImprovement = Math.max(
+    Number.NEGATIVE_INFINITY,
+    ...futureAttackers.map((attackerId) => bestBlockImprovement(parent, attackerId, blockers)),
+  );
+  return futureImprovement > currentImprovement;
+}
+
+/** Defender look-ahead: save scarce Blockers for the best remaining attack. */
+export const iter34BlockerReserve = {
+  name: "iter-34-blocker-reserve",
+  selectCandidates(parent) {
+    const canonical = combatAwareStrategy.selectCandidates(parent);
+    if (!shouldReserveBlocker(parent)) return canonical;
+    return canonical.filter((candidate) => candidate.family !== "declareBlock");
+  },
+} satisfies CandidateStrategy;
+
+// ── Next-heuristic hypotheses 15–17: adaptive and mixed attack plans ───────
+
+type AttackParent = Parameters<FamilyPolicy<"enterBattle">>[0]["parent"];
+type AttackCandidate = Extract<GundamBotCandidate, { family: "enterBattle" }>;
+
+interface ProjectedAttacker {
+  readonly ap: number;
+  readonly highManeuver: boolean;
+}
+
+interface AttackPlanEvaluation {
+  readonly pressureScore: number;
+  readonly controlScore: number;
+  readonly ownTurnsToDefeat: number;
+  readonly opponentTurnsToDefeat: number;
+  readonly immediateLethal: boolean;
+}
+
+function opponentId(parent: AttackParent): string | undefined {
+  const ownId = parent.playerId as unknown as string;
+  return parent.state.ctx.playerIds.find((id) => id !== ownId);
+}
+
+function directAttackers(parent: AttackParent, candidates: readonly AttackCandidate[]) {
+  const seen = new Set<string>();
+  return candidates
+    .filter((candidate) => candidate.target === "direct")
+    .filter((candidate) => {
+      if (seen.has(candidate.attackerId)) return false;
+      seen.add(candidate.attackerId);
+      return true;
+    })
+    .map((candidate): ProjectedAttacker => {
+      const unit = combatUnitValue(parent, candidate.attackerId);
+      return { ap: unit.ap, highManeuver: unit.keywords.includes("HighManeuver") };
+    });
+}
+
+function futureAttackers(parent: AttackParent, playerId: string): readonly ProjectedAttacker[] {
+  return (parent.view.zones.zones[`battleArea:${playerId}`]?.cards ?? [])
+    .filter((card) => card.definition?.type === "unit")
+    .map((card) => {
+      const unit = combatUnitValue(parent, card.instanceId);
+      return { ap: unit.ap, highManeuver: unit.keywords.includes("HighManeuver") };
+    });
+}
+
+/**
+ * Public-information race clock. It repeats the visible attacker set and
+ * assumes each active Blocker can absorb one blockable attack per turn. Base
+ * damage persists; excess AP does not spill into a Shield, and every Shield
+ * plus the final direct hit consumes one connection.
+ */
+function projectedTurnsToDefeat(
+  parent: AttackParent,
+  defenderId: string,
+  attackers: readonly ProjectedAttacker[],
+  blockerCount: number,
+): number {
+  if (attackers.length === 0) return Number.POSITIVE_INFINITY;
+  const g = parent.state.G as unknown as GundamG;
+  const base = parent.view.zones.zones[`baseSection:${defenderId}`]?.cards[0];
+  let baseHp =
+    base?.definition?.type === "base"
+      ? Math.max(0, base.definition.hp - (g.damage[base.instanceId] ?? 0))
+      : 0;
+  let shields = parent.view.zones.zones[`shieldArea:${defenderId}`]?.count ?? 0;
+
+  for (let turn = 1; turn <= 20; turn += 1) {
+    const unblockable = attackers.filter((attacker) => attacker.highManeuver);
+    const blockable = attackers
+      .filter((attacker) => !attacker.highManeuver)
+      .sort((a, b) => b.ap - a.ap)
+      .slice(Math.min(blockerCount, attackers.length));
+    const connections = [...unblockable, ...blockable].sort((a, b) => b.ap - a.ap);
+    for (const attacker of connections) {
+      if (baseHp > 0) {
+        baseHp = Math.max(0, baseHp - attacker.ap);
+      } else if (shields > 0) {
+        shields -= 1;
+      } else {
+        return turn;
+      }
+    }
+  }
+  return Number.POSITIVE_INFINITY;
+}
+
+function pressureAttackOrder(parent: AttackParent, candidates: readonly AttackCandidate[]) {
+  const enemyId = opponentId(parent);
+  if (!enemyId) return [...candidates];
+  const g = parent.state.G as unknown as GundamG;
+  const base = parent.view.zones.zones[`baseSection:${enemyId}`]?.cards[0];
+  const remainingBaseHp =
+    base?.definition?.type === "base"
+      ? Math.max(0, base.definition.hp - (g.damage[base.instanceId] ?? 0))
+      : 0;
+  return [...candidates].sort((a, b) => {
+    if (a.target !== "direct" || b.target !== "direct") {
+      return Number(b.target === "direct") - Number(a.target === "direct");
+    }
+    const aUnit = combatUnitValue(parent, a.attackerId);
+    const bUnit = combatUnitValue(parent, b.attackerId);
+    if (remainingBaseHp > 0) {
+      const aBreaks = aUnit.ap >= remainingBaseHp;
+      const bBreaks = bUnit.ap >= remainingBaseHp;
+      if (aBreaks !== bBreaks) return Number(bBreaks) - Number(aBreaks);
+      if (!aBreaks) return bUnit.ap - aUnit.ap;
+    }
+    return aUnit.ap - bUnit.ap || aUnit.value - bUnit.value;
+  });
+}
+
+function unitControlScore(parent: AttackParent, candidates: readonly AttackCandidate[]): number {
+  const usedAttackers = new Set<string>();
+  const usedTargets = new Set<string>();
+  return candidates
+    .filter((candidate) => candidate.target !== "direct")
+    .map((candidate) => {
+      const attacker = combatUnitValue(parent, candidate.attackerId);
+      const defender = combatUnitValue(parent, candidate.target);
+      const outcome = combatOutcome(attacker, defender);
+      return {
+        candidate,
+        score:
+          Math.min(attacker.ap, defender.remainingHp) +
+          (outcome.defenderDestroyed ? 18 + defender.value + defender.ap * 2 : 0) -
+          (outcome.attackerDestroyed ? 12 + attacker.value : 0),
+      };
+    })
+    .sort((a, b) => b.score - a.score)
+    .reduce((total, entry) => {
+      if (
+        usedAttackers.has(entry.candidate.attackerId) ||
+        usedTargets.has(entry.candidate.target)
+      ) {
+        return total;
+      }
+      usedAttackers.add(entry.candidate.attackerId);
+      usedTargets.add(entry.candidate.target);
+      return total + Math.max(0, entry.score);
+    }, 0);
+}
+
+export function evaluateAttackPlans(
+  parent: AttackParent,
+  candidates: readonly AttackCandidate[],
+): AttackPlanEvaluation {
+  const ownId = parent.playerId as unknown as string;
+  const enemyId = opponentId(parent);
+  if (!enemyId) {
+    return {
+      pressureScore: 0,
+      controlScore: 0,
+      ownTurnsToDefeat: Number.POSITIVE_INFINITY,
+      opponentTurnsToDefeat: Number.POSITIVE_INFINITY,
+      immediateLethal: false,
+    };
+  }
+
+  const ownAttackers = directAttackers(parent, candidates);
+  const enemyAttackers = futureAttackers(parent, enemyId);
+  const ownClock = projectedTurnsToDefeat(
+    parent,
+    enemyId,
+    ownAttackers,
+    activeOpponentBlockerCount(parent),
+  );
+  const enemyClock = projectedTurnsToDefeat(
+    parent,
+    ownId,
+    enemyAttackers,
+    activeFriendlyBlockerIds(parent).length,
+  );
+  const guaranteed = guaranteedDirectConnections(
+    parent,
+    candidates.filter((candidate) => candidate.target === "direct"),
+  );
+  const immediateLethal = ownClock === 1;
+  const clockEdge =
+    Number.isFinite(ownClock) && Number.isFinite(enemyClock)
+      ? Math.max(-3, Math.min(3, enemyClock - ownClock))
+      : Number.isFinite(ownClock)
+        ? 3
+        : -3;
+  const pressureScore = (immediateLethal ? 1_000 : 0) + guaranteed * 12 + clockEdge * 14;
+  return {
+    pressureScore,
+    controlScore: unitControlScore(parent, candidates),
+    ownTurnsToDefeat: ownClock,
+    opponentTurnsToDefeat: enemyClock,
+    immediateLethal,
+  };
+}
+
+/** Attack when the visible race is tied or favorable; otherwise retain control. */
+const rankRaceClockCombat: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const canonical = rankEffectiveCombat(ctx);
+  const evaluation = evaluateAttackPlans(ctx.parent, canonical);
+  if (evaluation.ownTurnsToDefeat > evaluation.opponentTurnsToDefeat) return canonical;
+  return pressureAttackOrder(ctx.parent, canonical);
+};
+
+export const iter35RaceClock = withAttackOrdering("iter-35-race-clock", rankRaceClockCombat);
+
+/** Choose once from the projected pressure and Unit-control plans. */
+const rankTurnPlanCombat: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const canonical = rankEffectiveCombat(ctx);
+  const evaluation = evaluateAttackPlans(ctx.parent, canonical);
+  if (evaluation.pressureScore < evaluation.controlScore) return canonical;
+  return pressureAttackOrder(ctx.parent, canonical);
+};
+
+export const iter36TurnPlan = withAttackOrdering("iter-36-turn-plan", rankTurnPlanCombat);
+
+/** Stable 32-bit roll used for replay-safe variation between near-equal plans. */
+export function deterministicPolicyRoll(key: string): number {
+  let hash = 0x811c9dc5;
+  for (let index = 0; index < key.length; index += 1) {
+    hash ^= key.charCodeAt(index);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return (hash >>> 0) / 0x1_0000_0000;
+}
+
+const MIX_REGRET_BAND = 18;
+
+/**
+ * Outside the regret band, take the higher-scoring plan. Inside it, choose a
+ * deterministic 25–75% pressure mixture keyed by public replay state.
+ */
+const rankRegretMixedCombat: FamilyPolicy<"enterBattle"> = (ctx) => {
+  const canonical = rankEffectiveCombat(ctx);
+  const evaluation = evaluateAttackPlans(ctx.parent, canonical);
+  if (evaluation.immediateLethal) return pressureAttackOrder(ctx.parent, canonical);
+  const delta = evaluation.pressureScore - evaluation.controlScore;
+  if (Math.abs(delta) > MIX_REGRET_BAND) {
+    return delta > 0 ? pressureAttackOrder(ctx.parent, canonical) : canonical;
+  }
+  const pressureProbability = 0.5 + (delta / MIX_REGRET_BAND) * 0.25;
+  const signature = canonical
+    .map((candidate) => `${candidate.attackerId}:${candidate.target}`)
+    .join("|");
+  const roll = deterministicPolicyRoll(
+    `${String(ctx.parent.state.ctx._stateID)}:${ctx.parent.turnNumber}:${String(ctx.parent.playerId)}:${signature}`,
+  );
+  return roll < pressureProbability ? pressureAttackOrder(ctx.parent, canonical) : canonical;
+};
+
+export const iter37RegretMix = withAttackOrdering("iter-37-regret-mix", rankRegretMixedCombat);
 
 // ── Command-utility hypotheses ──────────────────────────────────────────────
 

@@ -43,4 +43,33 @@ describe("OP03-092 Rob Lucci", () => {
     engine.declareAttack(lucciId, engine.leader("north"), "south");
     expect(engine.getView("south").players.north.lifeCount).toBe(lifeBefore - 1);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op03RobLucci092],
+        trash: [op03Kumadori082, op07Hattori088, op03Jabra085, op03Camie101],
+        activeDon: op03RobLucci092.cost,
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.playCard(op03RobLucci092, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

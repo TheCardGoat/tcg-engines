@@ -35,6 +35,7 @@ export const op14eb04Porche037: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Foxy Pirates",
+            match: "includes",
           },
         ],
         actions: [

@@ -26,6 +26,7 @@ import type {
   UpdateFullMessage,
   SyncFullMessage,
   ErrorMessage,
+  AuthoritativeCommandStatus,
 } from "../runtime/protocol-types";
 import {
   PROTOCOL_VERSION,
@@ -195,7 +196,7 @@ export class ClientEngine implements GameEngine {
     });
 
     // Roll back any pending optimistic move when the transport drops. Without
-    // this, executeMove keeps short-circuiting with OPTIMISTIC_MOVE_PENDING
+    // this, executeMove keeps short-circuiting with MOVE_PENDING
     // until the next server frame — which may never arrive if the in-flight
     // command never reached the server.
     this.transport?.onDisconnect(() => {
@@ -252,12 +253,7 @@ export class ClientEngine implements GameEngine {
       return;
     }
 
-    this.transport.send({
-      type: "SYNC_REQUEST",
-      lastKnownStateID: this.stateID,
-      protocolVersion: PROTOCOL_VERSION,
-      matchID: this.getMatchID(),
-    });
+    this.transport.requestStateSync(this.stateID);
   }
 
   /**
@@ -477,8 +473,25 @@ export class ClientEngine implements GameEngine {
     );
   }
 
-  get isOptimisticMovePending(): boolean {
-    return this.optimisticState !== null;
+  get isMovePending(): boolean {
+    return (
+      this.optimisticState !== null ||
+      (this.transport?.getAuthoritativeCommandStatus().phase ?? "idle") !== "idle"
+    );
+  }
+
+  getAuthoritativeCommandStatus(): AuthoritativeCommandStatus {
+    return this.transport?.getAuthoritativeCommandStatus() ?? { phase: "idle" };
+  }
+
+  onAuthoritativeCommandStatusChange(
+    handler: (status: AuthoritativeCommandStatus) => void,
+  ): () => void {
+    return this.transport?.onAuthoritativeCommandStatusChange(handler) ?? (() => {});
+  }
+
+  requestStateSync(): void {
+    this.requestSync();
   }
 
   executeMove(moveId: string, input: MoveInput): EngineMoveExecutionResult {
@@ -491,11 +504,11 @@ export class ClientEngine implements GameEngine {
       return { success: false, reason: "Not connected", code: "NOT_CONNECTED" };
     }
 
-    if (this.optimisticState) {
+    if (this.isMovePending) {
       return {
         success: false,
         reason: "Please wait a moment before making another move",
-        code: "OPTIMISTIC_MOVE_PENDING",
+        code: "MOVE_PENDING",
       };
     }
 
@@ -590,7 +603,7 @@ export class ClientEngine implements GameEngine {
 
   canUndo(playerId: string): boolean {
     return (
-      !this.optimisticState &&
+      !this.isMovePending &&
       this.config.role === "player" &&
       playerId === this.config.playerId &&
       this.canUndoState &&
@@ -606,7 +619,7 @@ export class ClientEngine implements GameEngine {
       playerId !== this.config.playerId ||
       !this.canUndoState ||
       this.pendingUndo ||
-      this.optimisticState
+      this.isMovePending
     ) {
       return false;
     }

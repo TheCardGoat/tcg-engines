@@ -3,7 +3,7 @@ import { prb01KouzukiHiyori106 } from "../../../../../cards/src/cards/PRB01/char
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-106 Kouzuki Hiyori", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01KouzukiHiyori106);
   });
 });

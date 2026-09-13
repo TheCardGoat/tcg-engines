@@ -3,13 +3,34 @@ import { getAllCards } from "@tcg/op-cards";
 import { onePieceServerAdapter } from "./adapter";
 
 describe("One Piece metadata projection", () => {
+  it("uses leader identity for mastery while retaining specialist color boards", () => {
+    expect(onePieceServerAdapter.metadata!.facets).toEqual([
+      expect.objectContaining({
+        type: "leader",
+        ranking: { specialistSkill: true, mastery: true },
+      }),
+      expect.objectContaining({
+        type: "color",
+        ranking: { specialistSkill: true, mastery: false },
+      }),
+      expect.objectContaining({
+        type: "color-combination",
+        ranking: { specialistSkill: true, mastery: false },
+      }),
+    ]);
+  });
+
   it("uses the Leader as identity and color source", () => {
     const leader = getAllCards().find((card) => card.cardType === "leader")!;
     const projection = onePieceServerAdapter.metadata!.projectDeck([
       { cardId: leader.id, quantity: 1 },
     ]);
+    expect(projection.projectionVersion).toBe(2);
     expect(projection.facets.find((facet) => facet.type === "leader")?.key).toBe(
-      leader.canonicalId,
+      leader.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, ""),
     );
     expect(projection.colors).toEqual([...leader.color].sort());
   });

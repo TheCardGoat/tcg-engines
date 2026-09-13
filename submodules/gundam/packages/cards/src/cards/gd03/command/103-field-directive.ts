@@ -27,15 +27,13 @@ export const gd03FieldDirective103: CommandCard = {
       },
       rarity: "uncommon",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-103.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-103.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-103.webp",
       productName: "Steel Requiem[GD03]",
     },
   ],
   reprints: ["GD03-103"],
   selectedPrintingId: "GD03-103",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-103.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-103.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-103.webp",
   legality: "legal",
   level: 4,
   cost: 1,
@@ -72,29 +70,27 @@ export const gd03FieldDirective103: CommandCard = {
       type: "command",
       activation: {
         timing: ["main"],
-      },
-      directives: [
-        {
-          condition: {
+        conditions: [
+          {
             type: "unitCount",
             owner: "opponent",
             comparison: "gte",
             count: 3,
           },
-          thenDirectives: [
-            {
-              action: {
-                action: "dealDamage",
-                amount: 2,
-                target: {
-                  owner: "opponent",
-                  cardType: "unit",
-                  state: "rested",
-                  count: 1,
-                },
-              },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "dealDamage",
+            amount: 2,
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              state: "rested",
+              count: 1,
             },
-          ],
+          },
         },
       ],
       sourceText:

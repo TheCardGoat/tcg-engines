@@ -117,8 +117,36 @@ describe("CyberpunkServerEngine animation packets", () => {
               to: "run",
               playerId: "p1",
             },
+            {
+              id: "step-2",
+              kind: "entityStateChange",
+              startMs: 120,
+              durationMs: 120,
+              reason: "cardSpent",
+              cardId: "unit-1",
+              playerId: "p1",
+              change: "spent",
+            },
+            {
+              id: "step-3",
+              kind: "randomization",
+              startMs: 240,
+              durationMs: 120,
+              reason: "deckShuffled",
+              playerId: "p1",
+              randomization: "shuffle",
+            },
+            {
+              id: "step-4",
+              kind: "gameResult",
+              startMs: 360,
+              durationMs: 120,
+              reason: "gameEnded",
+              winnerId: "p1",
+              reasonLabel: "concession",
+            },
           ],
-          totalDurationMs: 120,
+          totalDurationMs: 480,
         },
         processedCommand: { commandID: "cmd-1", move: "passPhase" },
         undoable: true,
@@ -145,10 +173,21 @@ describe("CyberpunkServerEngine animation packets", () => {
         moveType: "passPhase",
         stateID: 8,
         animationScript: {
-          totalDurationMs: 120,
+          totalDurationMs: 480,
         },
       },
     });
+    expect(result.animationPlan?.steps).toMatchObject([
+      { type: "phaseChange" },
+      {
+        type: "entityStateChange",
+        change: "orientation",
+        fromRotationDeg: 0,
+        toRotationDeg: 90,
+      },
+      { type: "randomization", kind: "shuffle" },
+      { type: "gameResult", outcome: "winner", winner: { kind: "player", id: "p1" } },
+    ]);
   });
 });
 

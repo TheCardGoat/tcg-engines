@@ -1,14 +1,26 @@
 import type { Card } from "@tcg/gundam-types";
 
+import {
+  evaluateGundamFormatLegality,
+  type AppliedFormatPolicy,
+  type DeckCardIdentityCount,
+  type FormatLegalityViolation,
+  type GundamFormatLegalityContext,
+  type GundamRegisteredLineup,
+} from "./format-legality.ts";
+
 /**
  * Official Gundam TCG construction rules: 50-card main deck, 10-card
- * resource deck, one or two main-deck colors, and max 4 copies of any card by
- * `cardNumber` (except the resource card itself and engine-spawned tokens).
+ * resource deck, one or two main-deck colors, and max 4 copies of the same
+ * card number (except Resource cards and engine-spawned tokens). The catalog's
+ * canonical identity is the aggregation key so alternate printing records
+ * cannot accidentally evade that rule.
  */
 export const GUNDAM_MAIN_DECK_SIZE = 50;
 export const GUNDAM_RESOURCE_DECK_SIZE = 10;
 export const GUNDAM_MAX_COPIES_PER_CARD = 4;
 export const GUNDAM_MAX_DECK_COLORS = 2;
+export const GUNDAM_SIDEBOARD_SIZE = 10;
 
 /**
  * Card numbers the engine creates as tokens (see
@@ -17,28 +29,38 @@ export const GUNDAM_MAX_DECK_COLORS = 2;
  * from the 4-copy cap. Decklists must not include these at all — they
  * are spawned by the engine, not drafted.
  *
- * The set lists the two setup tokens explicitly. The `T-` prefix is
- * reserved for *any* in-game token printing (Gundam, Guncannon, Zaku Ⅱ,
- * Strike Gundam variants, …) — see `cards/t/unit/`. Reserving the
- * prefix at validation time keeps the deck rules in sync with the token
- * catalog without having to enumerate each new printing here.
+ * Engine-spawned tokens: every EX Base artwork (`EXB-` booster, `EXBP-`
+ * promo) and the promo EX Resource artworks (`EXRP-`). The booster EX
+ * Resource cards (`EXR-*`) are deliberately NOT tokens — they are legal
+ * resource-deck cards a player builds with. The `T-` prefix is reserved
+ * for *any* in-game token printing (Gundam, Guncannon, Zaku Ⅱ, Strike
+ * Gundam variants, …) — see `cards/t/unit/`. Reserving the prefixes at
+ * validation time keeps the deck rules in sync with the token catalog
+ * without having to enumerate each new printing here.
  */
-const TOKEN_CARD_NUMBERS: ReadonlySet<string> = new Set(["EXBP-001", "EXRP-003"]);
-const TOKEN_PREFIXES: readonly string[] = ["T-"];
+const TOKEN_PREFIXES: readonly string[] = ["T-", "EXB-", "EXBP-", "EXRP-"];
 
 function isTokenCardNumber(cardNumber: string): boolean {
-  if (TOKEN_CARD_NUMBERS.has(cardNumber)) return true;
   return TOKEN_PREFIXES.some((p) => cardNumber.startsWith(p));
 }
 
 export interface DeckListEntry {
   readonly cardNumber: string;
   readonly count: number;
+  /**
+   * Presentation printing for this row. A deck may allocate one canonical
+   * card across several printings as separate rows; gameplay identity stays
+   * `cardNumber` and this field only carries the chosen art. Optional so
+   * engine-internal deck lists (sample decks, bots) stay unaffected.
+   */
+  readonly printingId?: string;
 }
 
 export interface DeckListResourceEntry {
   readonly cardNumber: string;
   readonly count: number;
+  /** Presentation printing for the resource row (the art choice). */
+  readonly printingId?: string;
 }
 
 /**
@@ -52,11 +74,51 @@ export interface DeckList {
   readonly description?: string;
   readonly cards: ReadonlyArray<DeckListEntry>;
   readonly resource: DeckListResourceEntry;
+  readonly sideboard?: ReadonlyArray<DeckListEntry>;
 }
 
+export type GundamDeckConstructionFormat = "standard" | "best-of-three";
+export type DeckListZone = "main" | "sideboard" | "resource" | "main-and-sideboard";
+
+export type BaseDeckValidationViolationCode =
+  | "deck-name"
+  | "token-card"
+  | "invalid-count"
+  | "unknown-card"
+  | "wrong-deck"
+  | "base-copy-limit"
+  | "main-deck-size"
+  | "deck-colors"
+  | "resource-deck-size"
+  | "sideboard-not-allowed"
+  | "sideboard-size";
+
+export interface BaseDeckValidationViolation {
+  readonly code: BaseDeckValidationViolationCode;
+  readonly message: string;
+  readonly cardIds?: ReadonlyArray<string>;
+  readonly actual?: number;
+  readonly allowed?: number;
+  readonly zone?: DeckListZone;
+}
+
+export type DeckValidationViolation = BaseDeckValidationViolation | FormatLegalityViolation;
+
 export type DeckValidationResult =
-  | { readonly ok: true }
-  | { readonly ok: false; readonly errors: ReadonlyArray<string> };
+  | {
+      readonly ok: true;
+      readonly violations: readonly [];
+      readonly policy?: AppliedFormatPolicy;
+      readonly appliedExceptionIds?: ReadonlyArray<string>;
+    }
+  | {
+      readonly ok: false;
+      /** Compatibility projection for existing player-facing consumers. */
+      readonly errors: ReadonlyArray<string>;
+      readonly violations: ReadonlyArray<DeckValidationViolation>;
+      readonly policy?: AppliedFormatPolicy;
+      readonly appliedExceptionIds?: ReadonlyArray<string>;
+    };
 
 export interface DeckValidationOptions {
   readonly catalog: ReadonlyMap<string, Card> | Record<string, Card>;
@@ -65,6 +127,13 @@ export interface DeckValidationOptions {
   readonly maxCopies?: number;
   /** Override the color limit for non-player fixtures such as card coverage decks. */
   readonly maxColors?: number;
+  /** Standard is the default; BO3 requires an exactly 10-card sideboard. */
+  readonly constructionFormat?: GundamDeckConstructionFormat;
+  /**
+   * Optional dated format policy. Omitting this preserves base construction
+   * validation only. `asOf` is mandatory when policies are supplied.
+   */
+  readonly formatLegality?: GundamFormatLegalityContext;
 }
 
 function getCard(
@@ -76,70 +145,158 @@ function getCard(
 }
 
 /**
- * Returns `{ ok: true }` if the decklist satisfies Gundam TCG
- * construction rules against the supplied catalog. On failure,
- * `errors` contains every problem found — callers should surface all
- * of them rather than stopping at the first one.
+ * Returns an empty violation list when the deck satisfies Gundam TCG
+ * construction rules and the selected dated format policy. On failure,
+ * structured `violations` and the compatibility `errors` projection contain
+ * every problem found — callers should surface all of them rather than
+ * stopping at the first one.
  */
 export function validateDeckList(
   list: DeckList,
   options: DeckValidationOptions,
 ): DeckValidationResult {
-  const errors: string[] = [];
+  const violations: DeckValidationViolation[] = [];
+  const addViolation = (violation: BaseDeckValidationViolation): void => {
+    violations.push(violation);
+  };
   const mainSize = options.mainDeckSize ?? GUNDAM_MAIN_DECK_SIZE;
   const resSize = options.resourceDeckSize ?? GUNDAM_RESOURCE_DECK_SIZE;
   const maxCopies = options.maxCopies ?? GUNDAM_MAX_COPIES_PER_CARD;
   const maxColors = options.maxColors ?? GUNDAM_MAX_DECK_COLORS;
+  const constructionFormat = options.constructionFormat ?? "standard";
 
   if (!list.name || list.name.trim().length === 0) {
-    errors.push("deck must have a non-empty name");
+    addViolation({ code: "deck-name", message: "deck must have a non-empty name" });
   }
 
   const counts = new Map<string, number>();
+  const displayCardNumbers = new Map<string, Set<string>>();
+  const resolvedEntries: DeckCardIdentityCount[] = [];
   const colors = new Set<string>();
   let totalMain = 0;
+  const totalSideboard = (list.sideboard ?? []).reduce(
+    (total, entry) =>
+      Number.isInteger(entry.count) && entry.count > 0 ? total + entry.count : total,
+    0,
+  );
 
-  for (const entry of list.cards) {
-    if (isTokenCardNumber(entry.cardNumber)) {
-      errors.push(
-        `main deck cannot contain token "${entry.cardNumber}" — tokens are engine-spawned`,
-      );
-      continue;
+  const validateCardEntries = (
+    entries: ReadonlyArray<DeckListEntry>,
+    zone: "main" | "sideboard",
+  ): void => {
+    for (const entry of entries) {
+      if (isTokenCardNumber(entry.cardNumber)) {
+        addViolation({
+          code: "token-card",
+          message: `${zone} deck cannot contain token "${entry.cardNumber}" — tokens are engine-spawned`,
+          cardIds: [entry.cardNumber],
+          zone,
+        });
+        continue;
+      }
+      if (!Number.isInteger(entry.count) || entry.count <= 0) {
+        addViolation({
+          code: "invalid-count",
+          message: `${entry.cardNumber}: count must be a positive integer`,
+          cardIds: [entry.cardNumber],
+          actual: entry.count,
+          zone,
+        });
+        continue;
+      }
+      const card = getCard(options.catalog, entry.cardNumber);
+      if (!card) {
+        addViolation({
+          code: "unknown-card",
+          message: `${entry.cardNumber}: unknown card`,
+          cardIds: [entry.cardNumber],
+          zone,
+        });
+        continue;
+      }
+      if (card.type === "resource") {
+        addViolation({
+          code: "wrong-deck",
+          message: `${entry.cardNumber}: resource cards belong in the resource deck, not the ${zone} deck`,
+          cardIds: [entry.cardNumber],
+          zone,
+        });
+        continue;
+      }
+      const canonicalId = card.canonicalId || card.cardNumber || entry.cardNumber;
+      const existing = counts.get(canonicalId) ?? 0;
+      counts.set(canonicalId, existing + entry.count);
+      const aliases = displayCardNumbers.get(canonicalId) ?? new Set<string>();
+      aliases.add(entry.cardNumber);
+      displayCardNumbers.set(canonicalId, aliases);
+      resolvedEntries.push({
+        cardNumber: entry.cardNumber,
+        canonicalId,
+        count: entry.count,
+        zone,
+      });
+      if (card.color) colors.add(card.color);
+      if (zone === "main") totalMain += entry.count;
     }
-    if (!Number.isInteger(entry.count) || entry.count <= 0) {
-      errors.push(`${entry.cardNumber}: count must be a positive integer`);
-      continue;
-    }
-    const card = getCard(options.catalog, entry.cardNumber);
-    if (!card) {
-      errors.push(`${entry.cardNumber}: unknown card`);
-      continue;
-    }
-    if (card.type === "resource") {
-      errors.push(
-        `${entry.cardNumber}: resource cards belong in the resource deck, not the main deck`,
-      );
-      continue;
-    }
-    const existing = counts.get(entry.cardNumber) ?? 0;
-    counts.set(entry.cardNumber, existing + entry.count);
-    if (card.color) colors.add(card.color);
-    totalMain += entry.count;
+  };
+
+  validateCardEntries(list.cards, "main");
+  validateCardEntries(list.sideboard ?? [], "sideboard");
+
+  if (constructionFormat === "standard" && totalSideboard > 0) {
+    addViolation({
+      code: "sideboard-not-allowed",
+      message: `standard decks cannot include a sideboard (found ${totalSideboard} cards)`,
+      actual: totalSideboard,
+      allowed: 0,
+      zone: "sideboard",
+    });
+  } else if (constructionFormat === "best-of-three" && totalSideboard !== GUNDAM_SIDEBOARD_SIZE) {
+    addViolation({
+      code: "sideboard-size",
+      message: `best-of-three sideboard must have exactly ${GUNDAM_SIDEBOARD_SIZE} cards (found ${totalSideboard})`,
+      actual: totalSideboard,
+      allowed: GUNDAM_SIDEBOARD_SIZE,
+      zone: "sideboard",
+    });
   }
 
-  for (const [cardNumber, count] of counts) {
+  for (const [canonicalId, count] of counts) {
     if (count > maxCopies) {
-      errors.push(`${cardNumber}: ${count} copies exceeds max of ${maxCopies}`);
+      const cardIds = [...(displayCardNumbers.get(canonicalId) ?? [canonicalId])];
+      addViolation({
+        code: "base-copy-limit",
+        message: `${cardIds.join(" / ")}: ${count} copies exceeds max of ${maxCopies}`,
+        cardIds,
+        actual: count,
+        allowed: maxCopies,
+        zone: constructionFormat === "best-of-three" ? "main-and-sideboard" : "main",
+      });
     }
   }
 
   if (totalMain !== mainSize) {
-    errors.push(`main deck must have exactly ${mainSize} cards (found ${totalMain})`);
+    addViolation({
+      code: "main-deck-size",
+      message: `main deck must have exactly ${mainSize} cards (found ${totalMain})`,
+      actual: totalMain,
+      allowed: mainSize,
+      zone: "main",
+    });
   }
   if (colors.size < 1 || colors.size > maxColors) {
     const colorRule =
       maxColors === GUNDAM_MAX_DECK_COLORS ? "one or two colors" : `one to ${maxColors} colors`;
-    errors.push(`main deck must use ${colorRule} (found ${colors.size})`);
+    addViolation({
+      code: "deck-colors",
+      message:
+        constructionFormat === "best-of-three"
+          ? `main deck and sideboard must use ${colorRule} (found ${colors.size})`
+          : `main deck must use ${colorRule} (found ${colors.size})`,
+      actual: colors.size,
+      allowed: maxColors,
+      zone: constructionFormat === "best-of-three" ? "main-and-sideboard" : "main",
+    });
   }
 
   // The three resource-side rules are independent: the cardNumber can
@@ -149,33 +306,78 @@ export function validateDeckList(
   // contract is to surface *every* error at once, not short-circuit on
   // the first.
   if (isTokenCardNumber(list.resource.cardNumber)) {
-    errors.push(
-      `resource deck cannot contain token "${list.resource.cardNumber}" — tokens are engine-spawned`,
-    );
+    addViolation({
+      code: "token-card",
+      message: `resource deck cannot contain token "${list.resource.cardNumber}" — tokens are engine-spawned`,
+      cardIds: [list.resource.cardNumber],
+      zone: "resource",
+    });
   } else {
     const resCard = getCard(options.catalog, list.resource.cardNumber);
     if (!resCard) {
-      errors.push(`${list.resource.cardNumber}: unknown resource card`);
+      addViolation({
+        code: "unknown-card",
+        message: `${list.resource.cardNumber}: unknown resource card`,
+        cardIds: [list.resource.cardNumber],
+        zone: "resource",
+      });
     } else if (resCard.type !== "resource") {
-      errors.push(
-        `${list.resource.cardNumber}: resource deck entry must be a resource card (got "${resCard.type}")`,
-      );
+      addViolation({
+        code: "wrong-deck",
+        message: `${list.resource.cardNumber}: resource deck entry must be a resource card (got "${resCard.type}")`,
+        cardIds: [list.resource.cardNumber],
+        zone: "resource",
+      });
     }
   }
 
   if (!Number.isInteger(list.resource.count) || list.resource.count !== resSize) {
-    errors.push(`resource deck must have exactly ${resSize} cards (found ${list.resource.count})`);
+    addViolation({
+      code: "resource-deck-size",
+      message: `resource deck must have exactly ${resSize} cards (found ${list.resource.count})`,
+      actual: list.resource.count,
+      allowed: resSize,
+      zone: "resource",
+    });
   }
 
-  if (errors.length > 0) return { ok: false, errors };
-  return { ok: true };
+  const formatReport = options.formatLegality
+    ? evaluateGundamFormatLegality(resolvedEntries, options.formatLegality, {
+        mainDeck: list.cards,
+        resourceDeck: [list.resource],
+        ...(list.sideboard === undefined ? {} : { sideboard: list.sideboard }),
+      } satisfies GundamRegisteredLineup)
+    : { violations: [] };
+  violations.push(...formatReport.violations);
+
+  if (violations.length > 0) {
+    return {
+      ok: false,
+      errors: violations.map((violation) => violation.message),
+      violations,
+      ...(formatReport.policy ? { policy: formatReport.policy } : {}),
+      ...(formatReport.appliedExceptionIds
+        ? { appliedExceptionIds: formatReport.appliedExceptionIds }
+        : {}),
+    };
+  }
+  return {
+    ok: true,
+    violations: [],
+    ...(formatReport.policy ? { policy: formatReport.policy } : {}),
+    ...(formatReport.appliedExceptionIds
+      ? { appliedExceptionIds: formatReport.appliedExceptionIds }
+      : {}),
+  };
 }
 
 /**
  * True iff this card number is reserved for an engine-spawned token
  * and must not appear in a player-constructed decklist. Returns true
- * for both the explicit setup tokens (`EXBP-001` / `EXRP-003`) and any
- * in-game token printing under the `T-` prefix.
+ * for the EX Base artworks (`EXB-` / `EXBP-`), the promo EX Resource
+ * artworks (`EXRP-`), and any in-game token printing under the `T-`
+ * prefix. Booster EX Resource cards (`EXR-`) are legal resource-deck
+ * cards, not tokens.
  */
 export function isDeckListToken(cardNumber: string): boolean {
   return isTokenCardNumber(cardNumber);

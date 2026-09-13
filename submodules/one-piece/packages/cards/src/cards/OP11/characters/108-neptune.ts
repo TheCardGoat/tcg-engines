@@ -39,14 +39,23 @@ export const op11Neptune108: CharacterCard = {
         ],
         actions: [
           {
-            action: "draw",
-            player: "self",
-            amount: 2,
-          },
-          {
-            action: "trashFromHand",
-            player: "self",
-            amount: 1,
+            action: "conditional",
+            predicate: {
+              condition: "leaderName",
+              name: "Shirahoshi",
+            },
+            whenTrue: [
+              {
+                action: "draw",
+                player: "self",
+                amount: 2,
+              },
+              {
+                action: "trashFromHand",
+                player: "self",
+                amount: 1,
+              },
+            ],
           },
         ],
         optional: true,

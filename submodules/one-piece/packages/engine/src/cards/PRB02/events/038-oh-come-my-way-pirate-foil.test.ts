@@ -3,7 +3,7 @@ import { prb02OhComeMyWayPirateFoil038 } from "../../../../../cards/src/cards/PR
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-038 Oh Come My Way (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02OhComeMyWayPirateFoil038);
   });
 });

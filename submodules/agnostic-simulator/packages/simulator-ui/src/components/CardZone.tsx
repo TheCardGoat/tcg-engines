@@ -1,5 +1,7 @@
 import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 
+import { AnimatedZoneSlot } from "../animation";
+import type { CardInteractionStateResolver } from "../interactions/card-interaction";
 import { CardGrid } from "./CardGrid";
 import { CardRow } from "./CardRow";
 import { CardStack } from "./CardStack";
@@ -14,10 +16,22 @@ export interface CardZoneProps {
   compact?: boolean;
   ariaLabel?: string;
   selectedId?: string;
+  interactionStateFor?: CardInteractionStateResolver;
   onSelect?: (entity: SimulatorEntity) => void;
 }
 
-export function CardZone({
+export function CardZone({ zone, ...props }: CardZoneProps) {
+  const content = <CardZoneContent zone={zone} {...props} />;
+  return zone ? (
+    <AnimatedZoneSlot animationRef={{ kind: "zone", id: zone.id, ownerId: zone.ownerId }}>
+      {content}
+    </AnimatedZoneSlot>
+  ) : (
+    content
+  );
+}
+
+function CardZoneContent({
   zone,
   entities,
   entityCount,
@@ -25,6 +39,7 @@ export function CardZone({
   compact = false,
   ariaLabel,
   selectedId,
+  interactionStateFor,
   onSelect,
 }: CardZoneProps) {
   const resolvedEmptyLabel = emptyLabel ?? "Card zone";
@@ -38,6 +53,7 @@ export function CardZone({
         label={zone.label}
         emptyLabel={resolvedEmptyLabel}
         selectedId={selectedId}
+        interactionStateFor={interactionStateFor}
         onSelect={onSelect}
       />
     );
@@ -52,7 +68,9 @@ export function CardZone({
         wrap={false}
         ariaLabel={ariaLabel}
         selectedId={selectedId}
+        interactionStateFor={interactionStateFor}
         onSelect={onSelect}
+        zone={zone}
       />
     );
   }
@@ -62,8 +80,10 @@ export function CardZone({
       <CompactHandZone
         entities={entities}
         selectedId={selectedId}
+        interactionStateFor={interactionStateFor}
         ariaLabel={ariaLabel}
         onSelect={onSelect}
+        zone={zone}
       />
     );
   }
@@ -78,13 +98,21 @@ export function CardZone({
         compact
         ariaLabel={ariaLabel}
         selectedId={selectedId}
+        interactionStateFor={interactionStateFor}
         onSelect={onSelect}
       />
     );
   }
 
   return zone?.layoutHint === "fan" ? (
-    <HandZone entities={entities} density="compact" selectedId={selectedId} onSelect={onSelect} />
+    <HandZone
+      entities={entities}
+      density="compact"
+      selectedId={selectedId}
+      interactionStateFor={interactionStateFor}
+      onSelect={onSelect}
+      zone={zone}
+    />
   ) : (
     <CardGrid
       entities={entities}
@@ -92,7 +120,9 @@ export function CardZone({
       countLabel={entityCount.toString()}
       ariaLabel={ariaLabel}
       selectedId={selectedId}
+      interactionStateFor={interactionStateFor}
       onSelect={onSelect}
+      zone={zone}
     />
   );
 }

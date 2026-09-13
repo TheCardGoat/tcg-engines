@@ -1,9 +1,13 @@
-import type { SimulatorEntity } from "@tcg/simulator-contract";
-import { motion } from "motion/react";
+import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 
 import { cx } from "../class-names";
-import { CardFace } from "./CardFace";
+import { AnimatedEntityCollection, AnimatedEntitySlot, SimulatorEntityVisual } from "../animation";
 import { EmptyZone } from "./EmptyZone";
+import { CardInteractionFrame } from "./CardInteractionFrame";
+import {
+  cardInteractionStateFromFlags,
+  type CardInteractionStateResolver,
+} from "../interactions/card-interaction";
 
 export interface CardRowProps {
   entities: SimulatorEntity[];
@@ -12,13 +16,10 @@ export interface CardRowProps {
   wrap?: boolean;
   ariaLabel?: string;
   selectedId?: string;
+  interactionStateFor?: CardInteractionStateResolver;
   onSelect?: (entity: SimulatorEntity) => void;
+  zone?: SimulatorZone;
 }
-
-const CARD_LAYOUT_TRANSITION = {
-  duration: 0.24,
-  ease: [0.22, 1, 0.36, 1],
-} as const;
 
 export function CardRow({
   entities,
@@ -27,7 +28,9 @@ export function CardRow({
   wrap = true,
   ariaLabel,
   selectedId,
+  interactionStateFor,
   onSelect,
+  zone,
 }: CardRowProps) {
   const rowClass = cx(
     "card-row mt-2 flex min-w-0 items-stretch gap-2 [overscroll-behavior-inline:contain]",
@@ -43,33 +46,44 @@ export function CardRow({
       role={ariaLabel ? "list" : undefined}
       aria-label={ariaLabel}
     >
-      {entities.length > 0 ? (
-        entities.map((entity) => (
-          <motion.div
-            key={entity.id}
-            className="min-w-0 flex-shrink-0"
-            data-card-layout-id={entity.id}
-            data-card-id={entity.id}
-            data-card-states={entity.states.join(" ")}
-            data-entity-id={entity.id}
-            data-sim-entity-id={entity.id}
-            role={ariaLabel ? "listitem" : undefined}
-            aria-label={ariaLabel ? entity.title : undefined}
-            layout="position"
-            layoutId={`sim-entity-${entity.id}`}
-            transition={CARD_LAYOUT_TRANSITION}
-          >
-            <CardFace
-              entity={entity}
-              density={density}
-              selected={entity.id === selectedId}
-              onClick={onSelect}
-            />
-          </motion.div>
-        ))
-      ) : (
-        <EmptyZone label={emptyLabel} />
-      )}
+      <AnimatedEntityCollection>
+        {entities.length > 0 ? (
+          entities.map((entity) => {
+            const interactionState =
+              interactionStateFor?.(entity) ??
+              cardInteractionStateFromFlags({ selected: entity.id === selectedId });
+            return (
+              <AnimatedEntitySlot
+                key={entity.id}
+                entity={entity}
+                zoneRef={zone ? { kind: "zone", id: zone.id, ownerId: zone.ownerId } : undefined}
+                density={density}
+                className="min-w-0 flex-shrink-0"
+                data-card-layout-id={entity.id}
+                data-card-id={entity.id}
+                data-card-states={entity.states.join(" ")}
+                data-entity-id={entity.id}
+                data-sim-entity-id={entity.id}
+                role={ariaLabel ? "listitem" : undefined}
+                aria-label={ariaLabel ? entity.title : undefined}
+              >
+                <button
+                  type="button"
+                  aria-pressed={interactionState.kind === "selected"}
+                  onClick={() => onSelect?.(entity)}
+                  className="block"
+                >
+                  <CardInteractionFrame state={interactionState}>
+                    <SimulatorEntityVisual entity={entity} density={density} />
+                  </CardInteractionFrame>
+                </button>
+              </AnimatedEntitySlot>
+            );
+          })
+        ) : (
+          <EmptyZone label={emptyLabel} />
+        )}
+      </AnimatedEntityCollection>
     </div>
   );
 }

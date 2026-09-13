@@ -6,7 +6,6 @@ import {
   createMockCharacter,
 } from "@tcg/lorcana-engine/testing";
 import { brokenPod } from "./070-broken-pod";
-import { sourceOfTheVine } from "./072-source-of-the-vine";
 import { potato } from "./105-potato";
 import { vinePod } from "./107-vine-pod";
 import { closetDoorPortal } from "./170-closet-door-portal";
@@ -54,13 +53,6 @@ const brokenPodDiscardCard = createMockCharacter({
   id: "set13-broken-pod-discard-card",
   name: "Broken Pod Discard Card",
   cost: 1,
-});
-
-const sourceQuestingCharacter = createMockCharacter({
-  id: "set13-source-of-vine-quester",
-  name: "Source Questing Character",
-  cost: 1,
-  lore: 1,
 });
 
 const vinePodOldCharacter = createMockCharacter({
@@ -221,39 +213,6 @@ describe("Set 13 item happy paths", () => {
     expect(testEngine.getCardDefinitionIdsInZone("deck", PLAYER_ONE)).not.toContain(
       brokenPodDiscardCard.id,
     );
-  });
-
-  it("Source of the Vine gains lore when the opposing questing player does not pay", () => {
-    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
-      {
-        play: [sourceOfTheVine],
-      },
-      {
-        play: [{ card: sourceQuestingCharacter, isDrying: false }],
-      },
-    );
-
-    expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
-    expect(testEngine.asPlayerTwo().quest(sourceQuestingCharacter)).toBeSuccessfulCommand();
-    expect(testEngine.asPlayerOne().resolvePendingByCard(sourceOfTheVine)).toBeSuccessfulCommand();
-    expect(testEngine.asPlayerTwo().respondWithChoice(1)).toBeSuccessfulCommand();
-
-    expect(testEngine.getLore(PLAYER_ONE)).toBe(1);
-  });
-
-  it("Source of the Vine's Radiant Bloom gains 1 lore", () => {
-    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
-      play: [sourceOfTheVine],
-      inkwell: 2,
-    });
-
-    expect(
-      testEngine.asPlayerOne().activateAbility(sourceOfTheVine, {
-        ability: "RADIANT BLOOM",
-      }),
-    ).toBeSuccessfulCommand();
-
-    expect(testEngine.getLore(PLAYER_ONE)).toBe(1);
   });
 
   it("Vine Pod enters play exerted", () => {

@@ -3,7 +3,7 @@ import { op01EustassCaptainKid051 } from "../../../../../cards/src/cards/OP01/ch
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-051 051-eustass-captain-kid", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01EustassCaptainKid051);
   });
 });

@@ -61,4 +61,37 @@ describe("OP12-057 Ice Block Pheasant Peck", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        hand: [eb01MountainGod018],
+        life: [op12IceBlockPheasantPeck057],
+        deck: [eb01Doma005, eb01MountainGod018, eb01Doma005, eb01MountainGod018],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const paymentId = engine.findCardInZone("north", "hand", eb01MountainGod018);
+    const drawId = engine.findCardInZone("north", "deck", eb01Doma005);
+    const lifeId = engine.findCardInZone("north", "life", op12IceBlockPheasantPeck057);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const afterTrigger = engine.getView("north").players.north;
+    const handAfterTrigger = afterTrigger.hand.length;
+    const deckAfterTrigger = afterTrigger.deckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(paymentId);
+    expect(view.players.north.hand.map((card) => card.instanceId)).not.toContain(drawId);
+    expect(view.players.north.hand.length).toBe(handAfterTrigger);
+    expect(view.players.north.deckCount).toBe(deckAfterTrigger);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(lifeId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(paymentId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

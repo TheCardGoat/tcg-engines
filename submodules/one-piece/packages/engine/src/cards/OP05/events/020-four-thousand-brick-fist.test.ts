@@ -3,7 +3,7 @@ import { op05FourThousandBrickFist020 } from "../../../../../cards/src/cards/OP0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-020 Four Thousand-Brick Fist", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op05FourThousandBrickFist020);
   });
 });

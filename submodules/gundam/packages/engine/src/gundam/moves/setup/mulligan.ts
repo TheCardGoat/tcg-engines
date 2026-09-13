@@ -55,15 +55,17 @@ export const alterHand: GundamMoveDefinition<"alterHand"> = {
     const { wantsRedraw } = args;
 
     let redrawCount = 0;
+    let returnedCardIds: string[] = [];
+    let drawnCardIds: string[] = [];
+
     if (wantsRedraw) {
       const handCards = framework.zones.getCards({ zone: "hand", playerId });
       redrawCount = handCards.length;
+      returnedCardIds = [...handCards];
 
       for (const cardId of handCards) {
         framework.zones.moveCard(cardId, { zone: "deck", playerId }, { index: 0 });
       }
-
-      framework.zones.shuffle({ zone: "deck", playerId });
 
       if (framework.zones.getCardCount({ zone: "deck", playerId }) === 0) {
         framework.events.endGame({
@@ -73,19 +75,39 @@ export const alterHand: GundamMoveDefinition<"alterHand"> = {
         return;
       }
 
-      framework.zones.drawCards({
+      drawnCardIds = framework.zones.drawCards({
         from: { zone: "deck", playerId },
         to: { zone: "hand", playerId },
         count: redrawCount,
       });
+
+      framework.zones.shuffle({ zone: "deck", playerId });
     }
 
+    // Public: everyone sees that a mulligan decision happened and how many
+    // cards were redrawn — not which cards left or entered the hand.
     emitGundamLog(framework, {
       type: "gundam.setup.mulligan",
       values: { playerId, count: redrawCount },
       visibility: { mode: "PUBLIC" },
       category: "action",
     });
+
+    // Private detail (drawer only): returned + drawn identities. Same pattern
+    // as gundam.effect.cardsDrawn (PUBLIC count + PRIVATE cardIds).
+    if (redrawCount > 0) {
+      emitGundamLog(framework, {
+        type: "gundam.setup.mulligan",
+        values: {
+          playerId,
+          count: redrawCount,
+          returnedCardIds,
+          drawnCardIds,
+        },
+        visibility: { mode: "PRIVATE", visibleTo: [playerId as PlayerId] },
+        category: "action",
+      });
+    }
 
     const pendingDecision = (framework.state.status.pendingDecision ?? []).filter(
       (id) => id !== playerId,

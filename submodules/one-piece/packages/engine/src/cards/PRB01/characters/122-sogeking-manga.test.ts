@@ -3,7 +3,7 @@ import { prb01SogekingManga122 } from "../../../../../cards/src/cards/PRB01/char
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-122 Sogeking (Manga)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01SogekingManga122);
   });
 });

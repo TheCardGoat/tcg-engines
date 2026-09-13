@@ -1,12 +1,28 @@
 export type ImageFormat = "full" | "art_only";
 
+/**
+ * Native width/height of the shipped Gundam full-card CDN assets
+ * (e.g. 832 × 1162). Older exports were 832 × 1248 (exact 2:3) with
+ * transparent top/bottom padding; the padding was removed from the
+ * assets, so layout must use this tighter ratio or `object-fit: contain`
+ * letterboxes dark gaps in the card shell.
+ */
+export const GUNDAM_FULL_CARD_NATIVE_WIDTH = 832;
+export const GUNDAM_FULL_CARD_NATIVE_HEIGHT = 1162;
+export const GUNDAM_FULL_CARD_ASPECT_RATIO =
+  GUNDAM_FULL_CARD_NATIVE_WIDTH / GUNDAM_FULL_CARD_NATIVE_HEIGHT;
+
 export const CARD_IMAGE_DIMENSIONS: Record<ImageFormat, { width: number; height: number }> = {
-  full: { width: 734, height: 1024 },
+  // Keep a 1024px-tall layout base; width follows the native asset ratio.
+  full: {
+    width: Math.round(1024 * GUNDAM_FULL_CARD_ASPECT_RATIO),
+    height: 1024,
+  },
   art_only: { width: 734, height: 602 },
 };
 
 export const CARD_IMAGE_ASPECT_RATIOS: Record<ImageFormat, number> = {
-  full: CARD_IMAGE_DIMENSIONS.full.width / CARD_IMAGE_DIMENSIONS.full.height,
+  full: GUNDAM_FULL_CARD_ASPECT_RATIO,
   art_only: CARD_IMAGE_DIMENSIONS.art_only.width / CARD_IMAGE_DIMENSIONS.art_only.height,
 };
 
@@ -45,7 +61,7 @@ export function resolveCardDimensions(
   };
 }
 
-const CDN_BASE = "https://r2.tcg.online/public/gundam/cards";
+const CDN_BASE = "https://cdn.tcg.online/public/gundam/cards";
 
 export function buildCardImageUrl(set: string, cardNumber: string): string {
   // `cardNumber` already carries the set prefix in Gundam data ("ST01-008").

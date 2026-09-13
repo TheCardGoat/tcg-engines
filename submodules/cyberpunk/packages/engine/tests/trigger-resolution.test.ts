@@ -7,7 +7,7 @@ import {
   welcomeToNightCityRetailTBugAmateurPhilosopher,
   theHeistRetailStarterDeckVCorporateExile,
 } from "@tcg/cyberpunk-cards";
-import { CyberpunkTestEngine, P1, P2, registerMatchers } from "../src/testing/index.ts";
+import { CyberpunkTestEngine, registerMatchers } from "../src/testing/index.ts";
 
 registerMatchers();
 

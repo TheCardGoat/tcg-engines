@@ -20,6 +20,13 @@ describe("EB01-035 Ms. Monday", () => {
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    // DON!! −1 is optional; accept and pay so Play this card resolves.
+    engine.accept("north");
+    try {
+      engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "north");
+    } catch {
+      // Cost auto-paid when a single DON!! is the only legal payment.
+    }
 
     const mondayId = engine.findCardInZone("north", "character", eb01MsMonday035);
     const powerTarget = engine.pendingDecision("effectTargetSelection", "north").steps[0];
@@ -43,5 +50,30 @@ describe("EB01-035 Ms. Monday", () => {
     expect(view.players.north.donDeckCount).toBe(donDeckBefore + 1);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(mondayId);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        leaderCardId: op01Crocodile062,
+        life: [eb01MsMonday035],
+        activeDon: 1,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const before = engine.getView("north").players.north;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.characters.some((card) => card?.cardId === eb01MsMonday035.id)).toBe(false);
+    expect(after.leader.power).toBe(before.leader.power);
   });
 });

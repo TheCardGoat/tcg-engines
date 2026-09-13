@@ -3,6 +3,11 @@ import { eb01MountainGod018, op03Iceburg058, op04Iceburg059 } from "@tcg/op-card
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+/**
+ * OP04-059 Iceburg: [On Your Opponent's Attack] optional DON!! −1 → if Water Seven Leader,
+ * gains Blocker this turn. Decline must open via opponent declareAttack, not own attack.
+ */
+
 function opponentAttacks(leaderCardId?: typeof op03Iceburg058) {
   const engine = OnePieceTestEngine.create(
     {
@@ -42,11 +47,27 @@ describe("OP04-059 Iceburg", () => {
   });
 
   test("may decline without returning DON!! or gaining Blocker", () => {
-    const { engine, iceburgId } = opponentAttacks(op03Iceburg058);
+    // Inline opponent attack so the optional opener is visible in this test block.
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op03Iceburg058,
+        character: [op04Iceburg059],
+        activeDon: 2,
+      },
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const iceburgId = engine.findCardInZone("south", "character", op04Iceburg059);
+    const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
+    // No DON!! −1, no Blocker rest.
     expect(view.players.south.activeDon).toBe(2);
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
     expect(
       view.players.south.characters.find((card) => card?.instanceId === iceburgId)?.rested,
     ).toBe(false);

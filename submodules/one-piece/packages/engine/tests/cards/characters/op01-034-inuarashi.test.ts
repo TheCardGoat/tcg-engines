@@ -21,5 +21,7 @@ describe("OP01-034 Inuarashi", () => {
     const view = engine.getView("south");
     expect(view.players.south.activeDon).toBe(1);
     expect(view.players.south.restedDon).toBe(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

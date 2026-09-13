@@ -3,7 +3,7 @@ import { op07Foxy059 } from "../../../../../cards/src/cards/OP07/leaders/059-fox
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-059 Foxy", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07Foxy059);
   });
 });

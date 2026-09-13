@@ -2,6 +2,7 @@
 import { describe, expect, it, vi } from "vite-plus/test";
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID } from "@tcg/gundam-engine";
 
 import { renderSimulator } from "../../test/renderSimulator.tsx";
 import { loadVsAiDemo } from "../../game/fixtures/vs-ai-demo.ts";
@@ -32,16 +33,44 @@ describe("vs-AI · control panel", () => {
   });
 
   it("renders on vs-ai-demo", async () => {
+    const user = userEvent.setup();
     renderSimulator(loadVsAiDemo);
-    // `getByRole` already throws if the region isn't found — no extra
-    // null assertion needed.
+    await user.click(screen.getByRole("button", { name: "Bot controls" }));
     screen.getByRole("region", { name: /ai opponent controls/i });
+  });
+
+  it("starts with the promoted strategy and lets visual testers change it", async () => {
+    const user = userEvent.setup();
+    renderSimulator(loadVsAiDemo);
+    await user.click(screen.getByRole("button", { name: "Bot controls" }));
+
+    const strategy = screen.getByRole("combobox", {
+      name: "AI strategy",
+    }) as HTMLSelectElement;
+    expect(strategy.options.length).toBeGreaterThan(1);
+    expect(strategy.value).toBe(DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID);
+
+    await user.selectOptions(strategy, "tempo");
+    expect(strategy.value).toBe("tempo");
+    expect(screen.getByText(/Bot · tempo/i)).toBeTruthy();
+  });
+
+  it("exposes Lorcana-style animation speed in match tools", async () => {
+    const user = userEvent.setup();
+    renderSimulator(loadVsAiDemo);
+    await user.click(screen.getByRole("tab", { name: "More" }));
+
+    const animationSpeed = screen.getByLabelText("Animation speed") as HTMLSelectElement;
+    expect(animationSpeed.value).toBe("normal");
+    await user.selectOptions(animationSpeed, "slow");
+    expect(animationSpeed.value).toBe("slow");
   });
 
   it("offers local diagnostic tools and forwards a restart request", async () => {
     const user = userEvent.setup();
     const onRestartScenario = vi.fn();
     renderSimulator(loadVsAiDemo, { onRestartScenario });
+    await user.click(screen.getByRole("button", { name: "Bot controls" }));
     await user.click(screen.getByText("Tools"));
 
     expect(screen.getByTestId("ai-log-snapshot")).toBeTruthy();

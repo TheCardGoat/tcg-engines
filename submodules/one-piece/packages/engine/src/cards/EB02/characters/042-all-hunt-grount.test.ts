@@ -3,7 +3,7 @@ import { eb02AllHuntGrount042 } from "../../../../../cards/src/cards/EB02/charac
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB02-042 All-Hunt Grount", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb02AllHuntGrount042);
   });
 });

@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const theHeistRetailStarterDeckViktorVektorSitDownAndRelax = defineCyberpunkCard({
   id: "f090dc44-d7f0-4aec-a19e-9213155a6611",
   slug: "viktor-vektor-sit-down-and-relax",
+  subname: "Sit Down and Relax",
   rulesText:
     "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
-  name: "Viktor Vektor — Sit Down and Relax",
-  displayName: "Viktor Vektor — Sit Down and Relax",
+  name: "Viktor Vektor",
+  displayName: "Viktor Vektor: Sit Down and Relax",
   canonicalId: "viktor-vektor-sit-down-and-relax",
   color: "yellow",
   classifications: ["Merc", "Ripperdoc"],

@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const theHeistRetailStarterDeckJackieWellesPourOneOutForMe = defineCyberpunkCard({
   id: "40502c1f-78a2-426a-a706-c60ebd4b31e3",
   slug: "jackie-welles-pour-one-out-for-me",
+  subname: "Pour One Out For Me",
   rulesText:
     "The first time you play a Blue Unit or Blue Gear each turn, you may decrease a friendly Gig by up to 2. If it becomes a min Gig, draw 1.",
-  name: "Jackie Welles — Pour One Out For Me",
-  displayName: "Jackie Welles — Pour One Out For Me",
+  name: "Jackie Welles",
+  displayName: "Jackie Welles: Pour One Out For Me",
   canonicalId: "jackie-welles-pour-one-out-for-me",
   color: "blue",
   classifications: ["Merc"],

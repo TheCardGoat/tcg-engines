@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent, ReactNode } from "react";
+import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
+import { RefreshCw } from "lucide-react";
 
 import { m } from "../../lib/i18n/messages.ts";
+import { CardLinkedText } from "./CardLinkedText.tsx";
 import {
   Button,
   Dialog,
@@ -27,7 +30,6 @@ const MOM = {
   cyan: "#7bb7ff",
   text: "#1a2542",
   textDim: "#5c6b8a",
-  textMuted: "#94a3b8",
 } as const;
 
 interface OutcomeTheme {
@@ -107,6 +109,8 @@ export interface TimelineEvent {
   readonly turn: number;
   readonly who: "self" | "opp";
   readonly text: string;
+  /** Card instances named in the event text, rendered as hoverable references. */
+  readonly cardRefs?: SimulatorEventLogEntry["cardRefs"];
 }
 
 export interface MatchResult {
@@ -127,24 +131,57 @@ export interface MatchOverviewModalProps {
   readonly result: MatchResult | null;
   readonly onClose: () => void;
   readonly onBackToMatchmaking: () => void;
+  /** Present only when the completed match has an exact bot-practice recipe. */
+  readonly onRematch?: () => void;
   readonly onDownloadReplay: () => void;
   readonly onSaveReplay: () => void;
+  readonly onWatchReplay?: () => void;
+  /** Persists the viewer's private, match-level notes for a hosted game. */
+  readonly onSaveNotes: (note: string) => Promise<NotesSaveResult>;
+  /** Practice games have no hosted match record to attach notes to. */
+  readonly canSaveNotes: boolean;
   readonly onReportBug: () => void;
   readonly onShareFeedback: () => void;
 }
 
 type Tab = "overview" | "timeline" | "notes";
+type NotesSaveError = "unauthenticated" | "failed";
+export type NotesSaveResult =
+  | { readonly ok: true }
+  | { readonly ok: false; readonly error: NotesSaveError };
 
 export function MatchOverviewModal({
   result,
   onClose,
   onBackToMatchmaking,
+  onRematch,
   onDownloadReplay,
   onSaveReplay,
+  onWatchReplay,
+  onSaveNotes,
+  canSaveNotes,
   onReportBug,
   onShareFeedback,
 }: MatchOverviewModalProps) {
   const [tab, setTab] = useState<Tab>("overview");
+  const [noteText, setNoteText] = useState("");
+  const [savedNoteText, setSavedNoteText] = useState("");
+  const [hasSavedNotes, setHasSavedNotes] = useState(false);
+  const [savingNotes, setSavingNotes] = useState(false);
+  const [notesSaveError, setNotesSaveError] = useState<NotesSaveError | null>(null);
+  const wasOpen = useRef(false);
+
+  useEffect(() => {
+    if (result && !wasOpen.current) {
+      const notes = result.notes ?? "";
+      setNoteText(notes);
+      setSavedNoteText(notes);
+      setHasSavedNotes(result.notes !== undefined);
+      setSavingNotes(false);
+      setNotesSaveError(null);
+    }
+    wasOpen.current = result !== null;
+  }, [result]);
 
   const open = result !== null;
   const theme = result
@@ -161,7 +198,7 @@ export function MatchOverviewModal({
       }}
     >
       <DialogContent
-        className="hud-corner flex flex-col overflow-hidden w-full h-[100dvh] md:w-[min(980px,100%)] md:h-auto md:max-h-[calc(100dvh-56px)] md:clip-hud-16"
+        className="gd-match-overview-dialog hud-corner flex flex-col overflow-hidden w-full h-[100dvh] md:w-[min(980px,100%)] md:h-auto md:max-h-[calc(100dvh-56px)] md:clip-hud-16"
         style={{
           background: `${theme.bgWash}, linear-gradient(180deg, ${MOM.surface} 0%, ${MOM.deep} 100%)`,
           border: `1px solid ${theme.tagBorder}`,
@@ -207,18 +244,48 @@ export function MatchOverviewModal({
 
             <TabBar tab={tab} onTab={setTab} theme={theme} />
 
-            <div className="flex-1 min-h-0 overflow-y-auto pt-3.5 pr-[22px] pb-[18px] pl-[22px] relative z-[1]">
+            <div className="gd-match-overview-content flex-1 min-h-0 overflow-y-auto pt-3.5 pr-[22px] pb-[18px] pl-[22px] relative z-[1]">
               {tab === "overview" && <OverviewTab result={result} theme={theme} />}
               {tab === "timeline" && <TimelineTab result={result} theme={theme} />}
-              {tab === "notes" && <NotesTab result={result} />}
+              {tab === "notes" && (
+                <NotesTab
+                  text={noteText}
+                  savedText={savedNoteText}
+                  hasSavedNotes={hasSavedNotes}
+                  saving={savingNotes}
+                  saveError={notesSaveError}
+                  onTextChange={setNoteText}
+                  onSave={async () => {
+                    if (!canSaveNotes || noteText === savedNoteText || savingNotes) return;
+                    setSavingNotes(true);
+                    setNotesSaveError(null);
+                    try {
+                      const saveResult = await onSaveNotes(noteText);
+                      if (saveResult.ok) {
+                        setSavedNoteText(noteText);
+                        setHasSavedNotes(true);
+                      } else {
+                        setNotesSaveError(saveResult.error);
+                      }
+                    } catch {
+                      setNotesSaveError("failed");
+                    } finally {
+                      setSavingNotes(false);
+                    }
+                  }}
+                  canSaveNotes={canSaveNotes}
+                />
+              )}
             </div>
 
             <Footer
               theme={theme}
               onClose={onClose}
               onBackToMatchmaking={onBackToMatchmaking}
+              {...(onRematch ? { onRematch } : {})}
               onDownloadReplay={onDownloadReplay}
               onSaveReplay={onSaveReplay}
+              onWatchReplay={onWatchReplay}
               onReportBug={onReportBug}
               onShareFeedback={onShareFeedback}
             />
@@ -275,7 +342,7 @@ function HeaderStrip({ result, theme, title, subtitle, onClose }: HeaderStripPro
           {result.reason && (
             <div
               className="gd-mono text-hud-sm uppercase tracking-hud-label"
-              style={{ color: MOM.textMuted }}
+              style={{ color: MOM.textDim }}
             >
               // {result.reason}
             </div>
@@ -359,7 +426,7 @@ function StatStrip({
 
   return (
     <div
-      className="grid gap-2.5 pt-3.5 pr-[24px] pb-3.5 pl-[24px] relative z-[1] grid-cols-3"
+      className="hidden gap-1.5 px-3 py-3.5 relative z-[1] grid-cols-3 sm:gap-2.5 sm:px-6 md:grid"
       style={{ borderBottom: `1px solid ${MOM.blueDim}` }}
     >
       <StripCell
@@ -402,7 +469,7 @@ interface StripCellProps {
 function StripCell({ label, value, unit, accent, glow, fillSegments }: StripCellProps) {
   return (
     <div
-      className="hud-corner relative pt-3 pr-3.5 pb-3.5 pl-3.5 clip-hud-6 bg-[linear-gradient(180deg,rgba(248,250,254,.85),rgba(255,255,255,.6))] overflow-hidden"
+      className="hud-corner relative min-w-0 pt-3 px-2 pb-3.5 sm:px-3.5 clip-hud-6 bg-[linear-gradient(180deg,rgba(248,250,254,.85),rgba(255,255,255,.6))] overflow-hidden"
       style={{ border: `1px solid ${MOM.blueDim}` }}
     >
       <div
@@ -410,20 +477,20 @@ function StripCell({ label, value, unit, accent, glow, fillSegments }: StripCell
         style={{ background: `linear-gradient(180deg, ${accent}, transparent)` }}
       />
       <div
-        className="gd-mono font-bold tracking-hud-label"
-        style={{ color: MOM.textMuted, fontSize: 10, marginBottom: 6 }}
+        className="gd-mono font-bold tracking-normal min-h-[2.5em] leading-tight [overflow-wrap:anywhere] sm:min-h-0 sm:tracking-hud-label"
+        style={{ color: MOM.textDim, fontSize: 10, marginBottom: 6 }}
       >
         {label}
       </div>
       <div
-        className="gd-display font-extrabold tracking-hud-body flex items-baseline gap-1.5"
-        style={{ fontSize: 26, color: MOM.text, lineHeight: 1 }}
+        className="gd-display font-extrabold tracking-hud-body flex flex-wrap items-baseline gap-1.5 text-[20px] sm:text-[26px]"
+        style={{ color: MOM.text, lineHeight: 1 }}
       >
         <span>{value}</span>
         <span
           className="gd-mono"
           style={{
-            color: MOM.textMuted,
+            color: MOM.textDim,
             fontSize: 10,
             letterSpacing: "0.2em",
           }}
@@ -466,7 +533,7 @@ function TabBar({ tab, onTab, theme }: TabBarProps) {
   ];
   return (
     <div
-      className="flex gap-1.5 pt-2.5 pr-[24px] pb-2.5 pl-[24px] relative z-[1]"
+      className="gd-match-overview-tabs grid grid-cols-3 gap-1.5 px-3 py-2.5 relative z-[1] sm:px-6"
       style={{ borderBottom: `1px solid ${MOM.blueDim}` }}
     >
       {tabs.map((t) => {
@@ -476,7 +543,7 @@ function TabBar({ tab, onTab, theme }: TabBarProps) {
             key={t.id}
             onClick={() => onTab(t.id)}
             variant="outline"
-            className="flex-1 h-auto py-[10px] px-[14px] tracking-hud-label clip-hud-8"
+            className="min-w-0 h-auto min-h-11 gap-1 py-[10px] px-1 text-[length:var(--text-hud-md)] tracking-normal clip-hud-8 sm:px-[14px] sm:text-base sm:tracking-hud-label"
             style={{
               background: active
                 ? `linear-gradient(180deg, ${theme.accent}30, ${theme.accent}14)`
@@ -586,7 +653,7 @@ function PlayerRecapCard({
         style={{ background: `linear-gradient(180deg, ${labelColor}, transparent)` }}
       />
 
-      <div className="flex items-center gap-2.5 mb-3">
+      <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-2.5 gap-y-2 mb-3 sm:grid-cols-[auto_minmax(0,1fr)_auto]">
         <Avatar name={player.name} color={labelColor} />
         <div className="flex-1 min-w-0">
           <div
@@ -596,13 +663,17 @@ function PlayerRecapCard({
             {label}
           </div>
           <div
-            className="gd-display font-extrabold whitespace-nowrap overflow-hidden text-ellipsis tracking-hud-body text-[16px]"
+            className="gd-display font-extrabold whitespace-normal [overflow-wrap:anywhere] tracking-hud-body text-[16px]"
             style={{ color: MOM.text }}
           >
             {player.name}
           </div>
         </div>
-        {winner && <WinnerBadge />}
+        {winner && (
+          <div className="col-start-2 justify-self-start sm:col-start-3 sm:row-start-1">
+            <WinnerBadge />
+          </div>
+        )}
       </div>
 
       <div
@@ -633,7 +704,7 @@ function PlayerRecapCard({
         <ColorChips colors={player.colors} />
       </div>
 
-      <div className="grid gap-1.5 grid-cols-3">
+      <div className="grid gap-1.5 grid-cols-2 sm:grid-cols-3">
         <StatBox
           label={m["sim.matchOverview.stat.deck"]()}
           value={player.deck}
@@ -804,8 +875,8 @@ function StatBox({ label, value, ratio, barColor, barGlow }: StatBoxProps) {
       style={{ border: `1px solid rgba(45,107,255,.18)` }}
     >
       <div
-        className="gd-mono font-bold whitespace-nowrap overflow-hidden text-ellipsis tracking-hud-label"
-        style={{ color: MOM.textMuted, fontSize: 9 }}
+        className="gd-mono min-h-[2.5em] sm:min-h-[1.25em] font-bold whitespace-normal [overflow-wrap:anywhere] tracking-normal"
+        style={{ color: MOM.textDim, fontSize: "var(--text-hud-xs)", lineHeight: 1.25 }}
       >
         {label}
       </div>
@@ -860,7 +931,7 @@ function TimelineTab({
       {turns.map((t) => (
         <div key={t} className="mb-3.5 relative">
           <div
-            className="absolute grid place-items-center font-extrabold tracking-hud-body -left-6 top-1 w-5 h-5 text-[9px] clip-hud-4 bg-[linear-gradient(135deg,rgba(255,255,255,.95),rgba(248,250,254,.95))]"
+            className="absolute grid place-items-center font-extrabold tracking-hud-body -left-6 top-1 w-5 h-5 text-hud-xs clip-hud-4 bg-[linear-gradient(135deg,rgba(255,255,255,.95),rgba(248,250,254,.95))]"
             style={{
               border: `1px solid ${theme.tagBorder}`,
               color: theme.accent,
@@ -893,7 +964,11 @@ function TimelineTab({
                   ? m["sim.matchOverview.timeline.selfTag"]()
                   : m["sim.matchOverview.timeline.oppTag"]()}
               </span>
-              {e.text}
+              <CardLinkedText
+                message={e.text}
+                cardRefs={e.cardRefs}
+                referenceKey={`timeline-${e.turn}-${i}`}
+              />
             </div>
           ))}
         </div>
@@ -902,19 +977,40 @@ function TimelineTab({
   );
 }
 
-function NotesTab({ result }: { readonly result: MatchResult }) {
-  const [text, setText] = useState(result.notes || "");
+interface NotesTabProps {
+  readonly text: string;
+  readonly savedText: string;
+  readonly hasSavedNotes: boolean;
+  readonly saving: boolean;
+  readonly saveError: NotesSaveError | null;
+  readonly onTextChange: (text: string) => void;
+  readonly onSave: () => Promise<void>;
+  readonly canSaveNotes: boolean;
+}
+
+function NotesTab({
+  text,
+  savedText,
+  hasSavedNotes,
+  saving,
+  saveError,
+  onTextChange,
+  onSave,
+  canSaveNotes,
+}: NotesTabProps) {
+  const dirty = text !== savedText;
+
   return (
     <div>
       <div
         className="gd-mono text-hud-sm font-bold mb-2 tracking-hud-label"
-        style={{ color: MOM.textMuted }}
+        style={{ color: MOM.textDim }}
       >
         {m["sim.matchOverview.notes.private"]()}
       </div>
       <textarea
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e) => onTextChange(e.target.value)}
         placeholder={m["sim.matchOverview.notes.placeholder"]()}
         className="w-full pt-3 pr-3.5 pb-3 pl-3.5 outline-none min-h-[220px] resize-y bg-[rgba(248,250,254,.6)] text-[13px] leading-normal clip-hud-6"
         style={{
@@ -922,6 +1018,41 @@ function NotesTab({ result }: { readonly result: MatchResult }) {
           color: MOM.text,
         }}
       />
+      <div className="flex items-center justify-between gap-3 mt-2.5 flex-wrap">
+        <p
+          aria-live="polite"
+          className="gd-mono text-hud-xs font-bold tracking-hud-label"
+          style={{ color: saveError ? MOM.redDeep : MOM.textDim }}
+        >
+          {(saveError === "unauthenticated"
+            ? m["sim.matchOverview.notes.signIn"]()
+            : saveError === "failed"
+              ? m["sim.matchOverview.notes.saveFailed"]()
+              : null) ??
+            (canSaveNotes
+              ? dirty
+                ? m["sim.matchOverview.notes.unsaved"]()
+                : hasSavedNotes
+                  ? m["sim.matchOverview.notes.saved"]()
+                  : m["sim.matchOverview.notes.ready"]()
+              : m["sim.matchOverview.notes.unavailable"]())}
+        </p>
+        <Button
+          type="button"
+          variant="primary"
+          disabled={!canSaveNotes || !dirty || saving}
+          onClick={() => void onSave()}
+          className="h-auto px-[14px] py-2 text-hud-md tracking-hud-display clip-hud-6"
+          style={{
+            background: `linear-gradient(180deg, ${MOM.blue}, ${MOM.blueDeep})`,
+            color: "#fff",
+            border: `1px solid ${MOM.blue}`,
+            boxShadow: `0 0 14px ${MOM.blue}55`,
+          }}
+        >
+          {saving ? m["sim.matchOverview.notes.saving"]() : m["sim.matchOverview.notes.save"]()}
+        </Button>
+      </div>
     </div>
   );
 }
@@ -931,7 +1062,7 @@ function EmptyState({ label, theme }: { readonly label: string; readonly theme: 
     <div
       className="text-center text-hud-lg pt-8 pr-5 pb-8 pl-5 border border-dashed"
       style={{
-        color: MOM.textMuted,
+        color: MOM.textDim,
         borderColor: MOM.blueDim,
       }}
     >
@@ -950,8 +1081,10 @@ interface FooterProps {
   readonly theme: OutcomeTheme;
   readonly onClose: () => void;
   readonly onBackToMatchmaking: () => void;
+  readonly onRematch?: () => void;
   readonly onDownloadReplay: () => void;
   readonly onSaveReplay: () => void;
+  readonly onWatchReplay?: () => void;
   readonly onReportBug: () => void;
   readonly onShareFeedback: () => void;
 }
@@ -960,24 +1093,26 @@ function Footer({
   theme,
   onClose,
   onBackToMatchmaking,
+  onRematch,
   onDownloadReplay,
   onSaveReplay,
+  onWatchReplay,
   onReportBug,
   onShareFeedback,
 }: FooterProps) {
   return (
     <div
-      className="flex items-center gap-2.5 pt-3 pr-[24px] pb-3 pl-[24px] relative z-[1] bg-[rgba(248,250,254,.6)] flex-wrap"
+      className="gd-match-overview-footer flex items-center gap-2.5 px-3 py-3 sm:px-6 relative z-[1] bg-[rgba(248,250,254,.6)] flex-wrap"
       style={{ borderTop: `1px solid ${MOM.blueDim}` }}
     >
-      <div className="flex items-center gap-2.5">
+      <div className="gd-match-overview-feedback flex w-full flex-wrap items-center gap-2.5 sm:w-auto">
         <div
           className="gd-mono text-hud-xs font-bold tracking-hud-label"
-          style={{ color: MOM.textMuted }}
+          style={{ color: MOM.textDim }}
         >
           {m["sim.matchOverview.footer.helpUsImprove"]()}
         </div>
-        <div className="flex gap-1.5">
+        <div className="grid w-full grid-cols-2 gap-1.5 sm:flex sm:w-auto sm:flex-wrap">
           <ChipButton onClick={onReportBug} icon="⚠" accent={MOM.red}>
             {m["sim.matchOverview.footer.reportBug"]()}
           </ChipButton>
@@ -987,10 +1122,15 @@ function Footer({
         </div>
       </div>
 
-      <div className="flex-1" />
+      <div className="hidden flex-1 sm:block" />
 
-      <div className="flex gap-1.5 items-center">
+      <div className="gd-match-overview-actions grid w-full grid-cols-2 items-stretch gap-1.5 sm:flex sm:w-auto sm:flex-wrap sm:items-center sm:justify-end">
         <FooterBtn onClick={onClose}>{m["sim.matchOverview.footer.close"]()}</FooterBtn>
+        {onWatchReplay ? (
+          <FooterBtn onClick={onWatchReplay}>
+            {m["sim.matchOverview.footer.watchReplay"]()}
+          </FooterBtn>
+        ) : null}
         <FooterBtn onClick={onDownloadReplay} icon="⬇">
           {m["sim.matchOverview.footer.downloadReplay"]()}
         </FooterBtn>
@@ -998,13 +1138,23 @@ function Footer({
           {m["sim.matchOverview.footer.saveReplay"]()}
         </FooterBtn>
         <FooterBtn
-          primary
-          accent={theme.accent}
-          accentDeep={theme.accentDeep}
+          primary={!onRematch}
+          {...(!onRematch ? { accent: theme.accent, accentDeep: theme.accentDeep } : {})}
           onClick={onBackToMatchmaking}
         >
           {m["sim.matchOverview.footer.backToMatchmaking"]()}
         </FooterBtn>
+        {onRematch ? (
+          <FooterBtn
+            primary
+            accent={theme.accent}
+            accentDeep={theme.accentDeep}
+            onClick={onRematch}
+            icon={<RefreshCw className="size-4" aria-hidden="true" />}
+          >
+            {m["sim.matchOverview.footer.rematch"]()}
+          </FooterBtn>
+        ) : null}
       </div>
     </div>
   );
@@ -1048,7 +1198,7 @@ interface FooterBtnProps {
   readonly primary?: boolean;
   readonly accent?: string;
   readonly accentDeep?: string;
-  readonly icon?: string;
+  readonly icon?: ReactNode;
 }
 
 function FooterBtn({ children, onClick, primary, accent, accentDeep, icon }: FooterBtnProps) {

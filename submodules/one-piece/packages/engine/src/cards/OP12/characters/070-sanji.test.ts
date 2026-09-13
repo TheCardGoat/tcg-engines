@@ -20,6 +20,7 @@ describe("OP12-070 Sanji", () => {
     ).toBe(op12Sanji070.power);
 
     engine.playCard(op02Hydra090, "south");
+    engine.acceptLeadingOptional("south");
     const returnDon = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     if (returnDon?.kind !== "payCost") throw new Error("Expected Hydra's DON!! return cost.");
     engine.resolveDecision(

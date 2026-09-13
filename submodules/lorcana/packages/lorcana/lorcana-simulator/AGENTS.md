@@ -24,7 +24,9 @@ before changing rules-facing behavior.
 ## Visual Regression Routes
 
 - `http://localhost:5174/` is the dark-only development console. The production
-  root continues to redirect to `/matchmaking`.
+  root redirects to the platform matchmaking lobby (`/matchmaking` 308s to the
+  platform app; the lobby, private rooms, and practice entry live in the
+  platform web app).
 - `http://localhost:5174/tests/regressions` indexes saved player-report
   fixtures. Search it before adding a new case.
 - Reuse one fixture when board state is materially the same. Put engine

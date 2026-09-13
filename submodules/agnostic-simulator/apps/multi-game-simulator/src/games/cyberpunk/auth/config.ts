@@ -13,7 +13,11 @@ export function normalizeAuthBaseUrl(
 }
 
 export function resolveAuthBaseUrl(env: AuthBaseEnv): string {
-  const fallback = env.PROD ? PRODUCTION_AUTH_BASE_URL : LOCAL_AUTH_BASE_URL;
+  const defaultFallback = env.PROD ? PRODUCTION_AUTH_BASE_URL : LOCAL_AUTH_BASE_URL;
+  const fallback =
+    typeof env.VITE_API_URL === "string"
+      ? normalizeSharedAuthBaseUrl(env.VITE_API_URL, defaultFallback)
+      : defaultFallback;
   return normalizeSharedAuthBaseUrl(
     typeof env.VITE_AUTH_BASE_URL === "string" ? env.VITE_AUTH_BASE_URL : undefined,
     fallback,

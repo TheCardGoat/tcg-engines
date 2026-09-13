@@ -1,10 +1,6 @@
 import * as generatedMessages from "$lib/paraglide/messages.js";
 import enMessages from "../../messages/en.json";
 
-/** Paraglide message id — keep in sync with `src/messages/en.json` fallback keys below. */
-const archetypeIntroKey = "sim.matchmaking.archetype.intro";
-const archetypeUserMatchesTitleKey = "sim.matchmaking.archetype.userMatches.title";
-
 type Locale = "en" | "de" | "it" | "es" | "pt-br";
 type LocalizedString = string;
 export type SimulatorMessageTranslator = (
@@ -73,21 +69,3 @@ export const m = new Proxy(
     },
   },
 ) as Record<string, SimulatorMessageTranslator>;
-
-/** Archetype lobby hero copy. */
-export const simMatchmakingArchetypeIntro: SimulatorMessageTranslator = (inputs = {}) => {
-  const template =
-    (enMessages as Record<string, unknown>)[archetypeIntroKey] ??
-    "Create a match by specifying which archetype you want to find. The purpose of this feature is to help you test a specific matchup as thoroughly as possible.";
-  return renderWithValues(template, inputs) as LocalizedString;
-};
-
-/** Archetype match list card title. */
-export const simMatchmakingArchetypeUserMatchesTitle: SimulatorMessageTranslator = (
-  inputs = {},
-) => {
-  const template =
-    (enMessages as Record<string, unknown>)[archetypeUserMatchesTitleKey] ??
-    "Matches Created by Players";
-  return renderWithValues(template, inputs) as LocalizedString;
-};

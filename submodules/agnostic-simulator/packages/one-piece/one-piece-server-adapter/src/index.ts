@@ -2,6 +2,7 @@ import { registerGameAdapter } from "@tcg/shared/game-adapter";
 import { onePieceServerAdapter } from "./adapter";
 
 export { onePieceServerAdapter } from "./adapter";
+export { listOnePieceDeckPresets } from "./deck-presets";
 export { OnePieceServerEngine } from "./one-piece-server-engine";
 export { buildOnePieceInteractionView, onePieceSubmissionToPayload } from "./interaction-protocol";
 

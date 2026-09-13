@@ -7,16 +7,16 @@ import {
   getStrategyById,
   type StrategyDescriptor,
 } from "../engine";
-import { downloadReplayZipFromBlob } from "../replay/downloadReplay";
 import {
-  deleteReplay,
-  importReplayArchive,
-  isReplayStoreAvailable,
-  listSavedReplays,
-  loadReplayData,
-  ReplayImportError,
-  type SavedReplayMeta,
-} from "../replay/replayStore";
+  deleteDeviceReplay,
+  downloadReplayArchive,
+  importReplayToDevice,
+  isBrowserReplayStorageAvailable,
+  listDeviceReplays,
+  loadReplayFromDevice,
+  ReplayArchiveError,
+  type SavedBrowserReplaySummary,
+} from "@tcg/simulator-runtime/replay-library";
 import classes from "./Practice.module.css";
 import { cyberpunkSimulatorPath } from "./simulatorPaths";
 
@@ -24,7 +24,7 @@ export function MatchmakingPage() {
   const [botStrategyId, setBotStrategyId] = useState<StrategyDescriptor["id"]>(
     DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
   );
-  const [savedReplays, setSavedReplays] = useState<SavedReplayMeta[]>([]);
+  const [savedReplays, setSavedReplays] = useState<SavedBrowserReplaySummary[]>([]);
   const [replaysLoading, setReplaysLoading] = useState(true);
   const [replayStoreAvailable, setReplayStoreAvailable] = useState(false);
   const [replayImporting, setReplayImporting] = useState(false);
@@ -37,7 +37,7 @@ export function MatchmakingPage() {
   useEffect(() => {
     let cancelled = false;
     const load = async () => {
-      const available = isReplayStoreAvailable();
+      const available = isBrowserReplayStorageAvailable();
       setReplayStoreAvailable(available);
       if (!available) {
         setReplaysLoading(false);
@@ -45,7 +45,7 @@ export function MatchmakingPage() {
       }
 
       try {
-        const replays = await listSavedReplays();
+        const replays = await listDeviceReplays("cyberpunk");
         if (!cancelled) {
           setSavedReplays(replays);
         }
@@ -67,20 +67,20 @@ export function MatchmakingPage() {
 
   async function handleDownloadReplay(gameId: string): Promise<void> {
     try {
-      const blob = await loadReplayData(gameId);
-      if (!blob) {
+      const playback = await loadReplayFromDevice("cyberpunk", gameId);
+      if (!playback) {
         console.error("[CyberpunkReplays] Replay data not found in IndexedDB");
         setSavedReplays((current) => current.filter((replay) => replay.gameId !== gameId));
         return;
       }
-      await downloadReplayZipFromBlob(gameId, blob);
+      downloadReplayArchive(playback);
     } catch (error) {
       console.error("[CyberpunkReplays] Failed to download saved replay:", error);
     }
   }
 
   async function refreshSavedReplays(): Promise<void> {
-    setSavedReplays(await listSavedReplays());
+    setSavedReplays(await listDeviceReplays("cyberpunk"));
   }
 
   async function handleImportReplay(file: File): Promise<void> {
@@ -91,11 +91,11 @@ export function MatchmakingPage() {
     setReplayImporting(true);
     setReplayImportError(null);
     try {
-      await importReplayArchive(file);
+      await importReplayToDevice(file, "cyberpunk");
       await refreshSavedReplays();
     } catch (error) {
       setReplayImportError(
-        error instanceof ReplayImportError ? error.message : "Failed to import replay.",
+        error instanceof ReplayArchiveError ? error.message : "Failed to import replay.",
       );
     } finally {
       setReplayImporting(false);
@@ -104,7 +104,7 @@ export function MatchmakingPage() {
 
   async function handleDeleteReplay(gameId: string): Promise<void> {
     try {
-      await deleteReplay(gameId);
+      await deleteDeviceReplay("cyberpunk", gameId);
       setSavedReplays((current) => current.filter((replay) => replay.gameId !== gameId));
     } catch (error) {
       console.error("[CyberpunkReplays] Failed to delete saved replay:", error);
@@ -197,17 +197,19 @@ export function MatchmakingPage() {
                 {savedReplays.map((replay) => (
                   <article className={classes.savedReplayRow} key={replay.gameId}>
                     <div className={classes.savedReplayMain}>
-                      <strong>{replay.players?.[0]?.displayName ?? replay.playerIds[0]}</strong>
-                      <span>vs {replay.players?.[1]?.displayName ?? replay.playerIds[1]}</span>
+                      <strong>{replay.participants[0]?.displayName ?? "Player one"}</strong>
+                      <span>vs {replay.participants[1]?.displayName ?? "Player two"}</span>
                       <small>
-                        {formatReplayDate(replay.createdAt)} - {replay.totalMoves} moves -{" "}
-                        {formatBytes(replay.sizeBytes)}
+                        {formatReplayDate(replay.metadata.createdAt)} - {replay.metadata.totalMoves}{" "}
+                        moves - {formatBytes(replay.sizeBytes)}
                       </small>
                     </div>
                     <div className={classes.savedReplayActions}>
                       <Link
                         className={classes.replayIconButton}
-                        to={cyberpunkSimulatorPath(`/replay/${encodeURIComponent(replay.gameId)}`)}
+                        to={cyberpunkSimulatorPath(
+                          `/replay/${encodeURIComponent(replay.gameId)}?source=device`,
+                        )}
                         title="Open replay"
                         aria-label="Open replay"
                       >

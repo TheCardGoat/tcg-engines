@@ -113,7 +113,7 @@ function applyDamage(
       ? Math.max(0, amount - getResistValue(ctx, targetId, options.registry))
       : amount;
     if (appliedDamage <= 0) {
-      effectLogger.warn(`Target ${targetId} took no damage after reduction`);
+      effectLogger.debug(`Target ${targetId} took no damage after reduction`);
       continue;
     }
 

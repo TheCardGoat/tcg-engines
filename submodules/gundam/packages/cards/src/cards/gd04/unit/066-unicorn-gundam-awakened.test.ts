@@ -7,6 +7,8 @@ import {
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
+import { gd05HokaKyotenJuzetsujin112 } from "../../gd05/command/112-hoka-kyoten-juzetsujin.ts";
+import { gd05DragonGundam035 } from "../../gd05/unit/035-dragon-gundam.ts";
 import { gd04Inspector112 } from "../command/112-inspector.ts";
 import { gd04UnicornGundamAwakened066 } from "./066-unicorn-gundam-awakened.ts";
 
@@ -50,6 +52,45 @@ describe("Unicorn Gundam (Awakened) (GD04-066)", () => {
       expectSuccess(p2.playCommand(gd04Inspector112));
 
       expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(5);
+    });
+
+    it("observes a paired Command Main activated indirectly by Dragon Gundam", () => {
+      const enemy = createMockUnit({ name: "Enemy", level: 4, ap: 5, hp: 8 });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [gd05HokaKyotenJuzetsujin112],
+          play: [gd04UnicornGundamAwakened066, gd05DragonGundam035],
+          resourceArea: activeResources(5),
+        },
+        { play: [{ card: enemy, exhausted: true }] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [unicornId, dragonId] = p1.getCardsInZone("battleArea");
+      const commandId = p1.getHand()[0]!;
+      const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.playCommandAsPilot(commandId, dragonId!));
+      expectSuccess(p1.enterBattle(dragonId!, enemyId));
+
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        sourceCardId: unicornId,
+        legalTargetIds: [enemyId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+      expect(p1.getVisibleCard(enemyId)?.effectiveAp).toBe(3);
+
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        sourceCardId: commandId,
+        legalTargetIds: [dragonId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [dragonId!] }));
+
+      expect(p1.getVisibleCard(enemyId)?.effectiveAp).toBe(3);
+      expect(p1.getPilotId(dragonId!)).toBe(commandId);
+      expect(p1.getCardZone(commandId)).toBe(`battleArea:${PLAYER_ONE}`);
     });
   });
 

@@ -100,6 +100,7 @@ export const eb03VinsmokeReiju031: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

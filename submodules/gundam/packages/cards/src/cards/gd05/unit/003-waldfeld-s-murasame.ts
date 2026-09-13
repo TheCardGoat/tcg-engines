@@ -1,0 +1,97 @@
+import type { CardEffect, UnitCard } from "@tcg/gundam-types";
+
+export const gd05WaldfeldSMurasame003: UnitCard = {
+  cardNumber: "GD05-003",
+  name: "Waldfeld's Murasame",
+  type: "unit",
+  color: "blue",
+  traits: ["orb"],
+  id: "GD05-003",
+  canonicalId: "GD05-003",
+  externalIds: { bandai: "gundam:gd05-003" },
+  slug: "waldfeld-s-murasame-gd05-003",
+  displayName: "Waldfeld's Murasame",
+  set: { code: "GD05", name: "Freedom Ascension [GD05]", packageId: "616105" },
+  printNumber: "GD05-003",
+  printings: [
+    {
+      id: "GD05-003",
+      artId: "GD05-003",
+      setCode: "GD05",
+      collectorNumber: "GD05-003",
+      cardNumber: "GD05-003",
+      set: {
+        code: "GD05",
+        name: "Freedom Ascension [GD05]",
+        packageId: "616105",
+      },
+      rarity: "rare",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd05/GD05-003.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD05-003.webp?260715",
+      productName: "Freedom Ascension [GD05]",
+    },
+    {
+      id: "GD05-003_p1",
+      artId: "GD05-003_p1",
+      setCode: "GD05",
+      collectorNumber: "GD05-003_p1",
+      cardNumber: "GD05-003",
+      set: {
+        code: "GD05",
+        name: "Freedom Ascension [GD05]",
+        packageId: "616105",
+      },
+      rarity: "rare",
+      finish: "parallel",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd05/GD05-003_p1.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD05-003_p1.webp?260715",
+      productName: "Freedom Ascension [GD05]",
+    },
+  ],
+  reprints: ["GD05-003", "GD05-003_p1"],
+  selectedPrintingId: "GD05-003",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd05/GD05-003.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD05-003.webp?260715",
+  legality: "legal",
+  sourceTitle: "Mobile Suit Gundam SEED Destiny",
+  level: 3,
+  cost: 2,
+  ap: 2,
+  hp: 4,
+  linkCondition: "[Andrew Waldfeld]",
+  battlefieldZones: ["space", "earth"],
+  effect: "【Destroyed】If you have an (Orb) Pilot in play, draw 1.",
+  effects: [
+    {
+      type: "triggered",
+      activation: {
+        timing: ["destroyed"],
+      },
+      directives: [
+        {
+          condition: {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "battleArea",
+            cardType: "pilot",
+            comparison: "gte",
+            count: 1,
+            hasTrait: "orb",
+          },
+          thenDirectives: [
+            {
+              action: {
+                action: "draw",
+                count: 1,
+              },
+            },
+          ],
+        },
+      ],
+      sourceText: "【Destroyed】If you have an (Orb) Pilot in play, draw 1.",
+    },
+  ] as CardEffect[],
+  keywordEffects: [],
+  rarity: "rare",
+};

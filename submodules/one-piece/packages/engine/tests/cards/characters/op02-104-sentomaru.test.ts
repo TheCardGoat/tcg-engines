@@ -21,5 +21,6 @@ describe("OP02-104 Sentomaru", () => {
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(sentomaruId);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(sentomaruId);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

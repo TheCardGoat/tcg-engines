@@ -13,6 +13,10 @@ export interface PlayerTimerProps {
 export function PlayerTimer({ snapshot, isOwnClock = false, compact = false }: PlayerTimerProps) {
   const now = useClockNow();
   const view = deriveClockView(snapshot, now, { isOwnClock });
+  const prominentOwnClock =
+    !compact &&
+    isOwnClock &&
+    (view.urgencyClass === "timer--danger" || view.urgencyClass === "timer--critical");
 
   return (
     <ClockReadout
@@ -41,7 +45,8 @@ export function PlayerTimer({ snapshot, isOwnClock = false, compact = false }: P
           "border-red-500/60 text-red-500 bg-red-500/10 motion-safe:animate-pulse",
         view.urgencyClass === "timer--critical" &&
           "border-red-500/80 text-red-600 bg-red-500/15 animate-pulse",
-        compact ? "text-hud-2xs" : "text-hud-xs",
+        compact ? "text-hud-2xs" : prominentOwnClock ? "text-sm" : "text-hud-xs",
+        prominentOwnClock && "min-w-12 px-2 py-1 ring-1 ring-red-500/35",
       )}
     />
   );

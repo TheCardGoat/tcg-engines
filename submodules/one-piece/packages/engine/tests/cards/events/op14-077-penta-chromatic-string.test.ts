@@ -27,5 +27,7 @@ describe("OP14-077 Penta-Chromatic String", () => {
       donDeckCount: 4,
     });
     expect(engine.getView("north").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("north").players.north.leader).toBeTruthy();
   });
 });

@@ -68,4 +68,27 @@ describe("OP12-094 Monkey.D.Dragon", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op12Koala081,
+      hand: [op12MonkeyDDragon094],
+      trash: [op12Karasu085, op12Koala086, op12Morley093, op12Hack089, eb01Doma005],
+      activeDon: op12MonkeyDDragon094.cost,
+    });
+    const trashIds = engine.getView("south").players.south.trash.map((c) => c.instanceId);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+
+    engine.playCard(op12MonkeyDDragon094, "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining(trashIds),
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

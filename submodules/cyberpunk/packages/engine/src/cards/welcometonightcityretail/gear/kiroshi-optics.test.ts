@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailGoroTakemuraHandsUnclean,
-  boxTopperRetailVCorporateExile,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  theHeistRetailStarterDeckVCorporateExile,
   welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailKiroshiOptics,
 } from "@tcg/cyberpunk-cards";
@@ -19,14 +19,20 @@ describe("Kiroshi Optics (retail)", () => {
         },
       ],
       legendArea: [
-        { card: boxTopperRetailVCorporateExile, faceDown: true },
-        { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: false },
+        { card: theHeistRetailStarterDeckVCorporateExile, faceDown: true },
+        { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
       ],
     });
-    const faceDownLegendId = engine.findCardId(boxTopperRetailVCorporateExile, "legendArea", P1);
+    const faceDownLegendId = engine.findCardId(
+      theHeistRetailStarterDeckVCorporateExile,
+      "legendArea",
+      P1,
+    );
 
     engine.attackRival(welcomeToNightCityRetailFieldOperator, { as: P1 });
-    expect(engine.resolveEffectTarget(boxTopperRetailVCorporateExile, { as: P1 })).toMatchObject({
+    expect(
+      engine.resolveEffectTarget(theHeistRetailStarterDeckVCorporateExile, { as: P1 }),
+    ).toMatchObject({
       success: true,
     });
 
@@ -45,7 +51,7 @@ describe("Kiroshi Optics (retail)", () => {
           attachedGears: [welcomeToNightCityRetailKiroshiOptics],
         },
       ],
-      legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: false }],
+      legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
     });
 
     engine.attackRival(welcomeToNightCityRetailFieldOperator, { as: P1 });

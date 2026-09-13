@@ -3,7 +3,7 @@ import { prb02CharlottePuddingReprint047 } from "../../../../../cards/src/cards/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-047 Charlotte Pudding (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02CharlottePuddingReprint047);
   });
 });

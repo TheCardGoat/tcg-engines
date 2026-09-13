@@ -23,14 +23,16 @@
 
 const TICK_INTERVAL_MS = 100;
 
-let now = $state(Date.now());
+// Snapshots are anchored to this monotonic epoch when received. Wall-clock
+// settings and subsequent device clock adjustments must not spend game time.
+let now = $state(performance.now());
 let refCount = 0;
 let intervalId: ReturnType<typeof setInterval> | undefined;
 
 function startTicking() {
   if (intervalId) return;
   intervalId = setInterval(() => {
-    now = Date.now();
+    now = performance.now();
   }, TICK_INTERVAL_MS);
 }
 
@@ -56,7 +58,7 @@ export function useClockNow(): ClockNow {
     refCount++;
     if (refCount === 1) {
       // Start fresh so the first tick aligns with subscription.
-      now = Date.now();
+      now = performance.now();
       startTicking();
     }
     return () => {

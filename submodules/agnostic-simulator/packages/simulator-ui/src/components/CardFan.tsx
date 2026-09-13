@@ -1,19 +1,29 @@
-import type { ReactNode } from "react";
-import type { SimulatorEntity } from "@tcg/simulator-contract";
+import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 
 import { cx } from "../class-names";
 import { useActiveLayout } from "../hooks/useActiveLayout";
-import { CardFace } from "./CardFace";
+import { AnimatedEntityCollection, AnimatedEntitySlot, SimulatorEntityVisual } from "../animation";
+import {
+  cardInteractionStateFromFlags,
+  type CardInteractionStateResolver,
+} from "../interactions/card-interaction";
+import { CardInteractionFrame } from "./CardInteractionFrame";
 
 export interface CardFanProps {
   entities: SimulatorEntity[];
+  /** Entity ids that are currently legal spatial choices. */
+  highlightedIds?: ReadonlySet<string>;
+  /** Controls the amount of rotation while retaining the shared hand layout. */
+  fanStyle?: "arc" | "shallow";
   density?: "compact" | "normal";
   selectedId?: string;
+  selectionOrder?: ReadonlyMap<string, number>;
+  interactionStateFor?: CardInteractionStateResolver;
   orientation?: "portrait" | "landscape";
   ariaLabel?: string;
   onSelect?: (entity: SimulatorEntity) => void;
   onPlay?: (entity: SimulatorEntity) => void;
-  renderCard?: (entity: SimulatorEntity, state: CardFanItemState) => ReactNode;
+  zone?: SimulatorZone;
 }
 
 export interface CardFanItemState {
@@ -22,6 +32,7 @@ export interface CardFanItemState {
   selected: boolean;
   density: "compact" | "normal";
   mobile: boolean;
+  active: boolean;
 }
 
 const CARD_WIDTH: Record<CardFanProps["density"] & string, number> = {
@@ -36,13 +47,17 @@ const CARD_HEIGHT: Record<CardFanProps["density"] & string, number> = {
 
 export function CardFan({
   entities,
+  highlightedIds,
+  fanStyle = "arc",
   density = "compact",
   selectedId,
+  selectionOrder,
+  interactionStateFor,
   orientation = "portrait",
   ariaLabel = "Card fan",
   onSelect,
   onPlay,
-  renderCard,
+  zone,
 }: CardFanProps) {
   const cardW = CARD_WIDTH[density];
   const cardH = CARD_HEIGHT[density];
@@ -50,26 +65,111 @@ export function CardFan({
   const fanContainerHeight = isLandscape ? cardW * 0.9 : cardH * 1.35;
   const activeLayout = useActiveLayout();
 
-  return (
-    <>
+  if (activeLayout === "mobile") {
+    return (
       <div
-        className={cx(
-          "card-fan-desktop relative hidden min-w-0 items-end justify-center md:flex",
-          isLandscape && "items-center",
-        )}
-        data-active-fan={activeLayout === "desktop"}
-        style={{ height: fanContainerHeight }}
+        className="card-fan-mobile flex min-w-0 overflow-x-auto pb-2 pt-1"
+        data-active-fan="true"
+        style={{
+          minHeight: cardH,
+          scrollSnapType: "x mandatory",
+          overscrollBehaviorInline: "contain",
+        }}
         role="list"
         aria-label={ariaLabel}
       >
+        <AnimatedEntityCollection>
+          {entities.map((entity, i) => {
+            const isSelected = entity.id === selectedId;
+            const interactionState =
+              interactionStateFor?.(entity) ??
+              cardInteractionStateFromFlags({
+                selected: isSelected,
+                actionable: highlightedIds?.has(entity.id),
+              });
+            return (
+              <AnimatedEntitySlot
+                key={entity.id}
+                entity={entity}
+                zoneRef={zone ? { kind: "zone", id: zone.id, ownerId: zone.ownerId } : undefined}
+                density="compact"
+                className={cx(
+                  "card-fan-mobile-item flex-shrink-0 scroll-mx-2 snap-center transition-transform duration-200",
+                  i !== 0 && "-ml-3",
+                  isSelected && "-translate-y-2",
+                )}
+                style={{ width: cardW * 0.9 }}
+                data-highlighted={highlightedIds?.has(entity.id) ? "true" : undefined}
+                role="listitem"
+              >
+                <button
+                  className="relative"
+                  type="button"
+                  data-entity-id={entity.id}
+                  data-sim-entity-id={entity.id}
+                  aria-pressed={interactionState.kind === "selected"}
+                  aria-label={
+                    selectionOrder?.has(entity.id)
+                      ? `${entity.title}, position ${selectionOrder.get(entity.id)} of ${selectionOrder.size}`
+                      : entity.face === "hidden"
+                        ? entity.title
+                        : undefined
+                  }
+                  tabIndex={entity.face === "hidden" ? -1 : undefined}
+                  draggable
+                  onClick={() => onSelect?.(entity)}
+                  onDoubleClick={() => onPlay?.(entity)}
+                >
+                  <CardInteractionFrame state={interactionState}>
+                    <SimulatorEntityVisual entity={entity} density="compact" />
+                  </CardInteractionFrame>
+                  {selectionOrder?.has(entity.id) ? (
+                    <span
+                      className="absolute right-1 top-1 z-20 grid size-6 place-items-center rounded-full bg-[var(--prompt-accent)] text-xs font-bold text-black"
+                      aria-hidden="true"
+                    >
+                      {selectionOrder.get(entity.id)}
+                    </span>
+                  ) : null}
+                </button>
+              </AnimatedEntitySlot>
+            );
+          })}
+        </AnimatedEntityCollection>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={cx(
+        "card-fan-desktop relative flex min-w-0 items-end justify-center",
+        isLandscape && "items-center",
+      )}
+      data-active-fan="true"
+      data-fan-style={fanStyle}
+      style={{ height: fanContainerHeight }}
+      role="list"
+      aria-label={ariaLabel}
+    >
+      <AnimatedEntityCollection>
         {entities.map((entity, i) => {
-          const angle = computeFanAngle(i, entities.length);
+          const angle = computeFanAngle(i, entities.length, fanStyle);
           const offsetX = computeOffsetX(i, entities.length, cardW);
           const zIndex = computeZIndex(i, entities.length, selectedId, entities);
           const isSelected = entity.id === selectedId;
+          const interactionState =
+            interactionStateFor?.(entity) ??
+            cardInteractionStateFromFlags({
+              selected: isSelected,
+              actionable: highlightedIds?.has(entity.id),
+            });
           return (
-            <div
+            <AnimatedEntitySlot
               key={entity.id}
+              entity={entity}
+              zoneRef={zone ? { kind: "zone", id: zone.id, ownerId: zone.ownerId } : undefined}
+              density={density}
               className={cx(
                 "card-fan-item absolute transition-transform duration-200 ease-out will-change-transform",
                 isSelected && "-translate-y-3",
@@ -80,85 +180,50 @@ export function CardFan({
                 zIndex,
                 width: cardW,
               }}
+              data-highlighted={highlightedIds?.has(entity.id) ? "true" : undefined}
               role="listitem"
             >
-              {renderCard ? (
-                renderCard(entity, {
-                  index: i,
-                  total: entities.length,
-                  selected: isSelected,
-                  density,
-                  mobile: false,
-                })
-              ) : (
-                <CardFace
-                  entity={entity}
-                  density={density}
-                  selected={isSelected}
-                  draggable
-                  tabIndex={0}
-                  onClick={() => onSelect?.(entity)}
-                  onDblClick={() => onPlay?.(entity)}
-                />
-              )}
-            </div>
+              <button
+                className="relative"
+                type="button"
+                data-entity-id={entity.id}
+                data-sim-entity-id={entity.id}
+                aria-pressed={interactionState.kind === "selected"}
+                aria-label={
+                  selectionOrder?.has(entity.id)
+                    ? `${entity.title}, position ${selectionOrder.get(entity.id)} of ${selectionOrder.size}`
+                    : entity.face === "hidden"
+                      ? entity.title
+                      : undefined
+                }
+                tabIndex={entity.face === "hidden" ? -1 : undefined}
+                draggable
+                onClick={() => onSelect?.(entity)}
+                onDoubleClick={() => onPlay?.(entity)}
+              >
+                <CardInteractionFrame state={interactionState}>
+                  <SimulatorEntityVisual entity={entity} density={density} />
+                </CardInteractionFrame>
+                {selectionOrder?.has(entity.id) ? (
+                  <span
+                    className="absolute right-1 top-1 z-20 grid size-6 place-items-center rounded-full bg-[var(--prompt-accent)] text-xs font-bold text-black"
+                    aria-hidden="true"
+                  >
+                    {selectionOrder.get(entity.id)}
+                  </span>
+                ) : null}
+              </button>
+            </AnimatedEntitySlot>
           );
         })}
-      </div>
-
-      <div
-        className="card-fan-mobile flex min-w-0 overflow-x-auto pb-2 pt-1 md:hidden"
-        data-active-fan={activeLayout === "mobile"}
-        style={{
-          minHeight: cardH,
-          scrollSnapType: "x mandatory",
-          overscrollBehaviorInline: "contain",
-        }}
-        role="list"
-        aria-label={ariaLabel}
-      >
-        {entities.map((entity, i) => {
-          const isSelected = entity.id === selectedId;
-          return (
-            <div
-              key={entity.id}
-              className={cx(
-                "card-fan-mobile-item flex-shrink-0 scroll-mx-2 snap-center transition-transform duration-200",
-                i !== 0 && "-ml-3",
-                isSelected && "-translate-y-2",
-              )}
-              style={{ width: cardW * 0.9 }}
-              role="listitem"
-            >
-              {renderCard ? (
-                renderCard(entity, {
-                  index: i,
-                  total: entities.length,
-                  selected: isSelected,
-                  density,
-                  mobile: true,
-                })
-              ) : (
-                <CardFace
-                  entity={entity}
-                  density="compact"
-                  selected={isSelected}
-                  draggable
-                  onClick={() => onSelect?.(entity)}
-                  onDblClick={() => onPlay?.(entity)}
-                />
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </>
+      </AnimatedEntityCollection>
+    </div>
   );
 }
 
-function computeFanAngle(index: number, total: number): number {
+function computeFanAngle(index: number, total: number, fanStyle: "arc" | "shallow"): number {
   if (total <= 1) return 0;
-  const maxAngle = Math.min(60, total * 5.5);
+  const maxAngle = fanStyle === "shallow" ? Math.min(12, total * 2.25) : Math.min(60, total * 5.5);
   const step = maxAngle / Math.max(1, total - 1);
   return (index - (total - 1) / 2) * step;
 }

@@ -1,24 +1,21 @@
 import type { EngineInteractionView } from "@tcg/protocol";
 
-import {
-  asMoveName,
-  findDualModeMatchInInteractionView,
-  type ProtocolTargetSelection,
-  type SubmitOutcome,
-} from "../../game/index.ts";
-import type { EngineAdapter } from "../../game/adapter.ts";
-import type { PendingMoveControls } from "../../game/hooks.ts";
+import { findDualModeMatchInInteractionView } from "../../game/index.ts";
+import type { InteractionInput, InteractionSubmissionValue } from "@tcg/protocol";
 import type { DualModeContextValue } from "../ui/dual-mode-context.tsx";
-import type { PendingEffectSelectionContextValue } from "../ui/pending-effect-selection-context.tsx";
 import { pickMoveForCardFromInteractionView } from "./interaction.ts";
 
 export interface DispatchCardActionContext {
-  readonly adapter: EngineAdapter;
-  readonly pending: PendingMoveControls;
+  readonly draft: {
+    readonly active: boolean;
+    readonly input?: InteractionInput;
+    readonly begin: (
+      actionId: string,
+      values?: Readonly<Record<string, InteractionSubmissionValue>>,
+    ) => void;
+    readonly toggleEntity: (inputId: string, entityId: string) => void;
+  };
   readonly interactionView: EngineInteractionView;
-  readonly targetSelection: ProtocolTargetSelection | null;
-  readonly report: (outcome: SubmitOutcome | null) => void;
-  readonly pendingEffectSelection?: PendingEffectSelectionContextValue;
   /**
    * Dual-mode decision controller. When the clicked card has BOTH
    * `playCommand` and `playCommandAsPilot` available (rule 3-4-6), the
@@ -49,15 +46,7 @@ export interface DispatchCardActionContext {
  * No-op when the card has no id or none of the above apply.
  */
 export function dispatchCardAction(ctx: DispatchCardActionContext, cardId: string): void {
-  const {
-    adapter,
-    pending,
-    interactionView,
-    targetSelection,
-    report,
-    dual,
-    pendingEffectSelection,
-  } = ctx;
+  const { draft, interactionView, dual } = ctx;
 
   // Priority 0: dual-mode card already lifted — clicking the same
   // card again (or anywhere on it) is a no-op; the user must pick a
@@ -68,29 +57,17 @@ export function dispatchCardAction(ctx: DispatchCardActionContext, cardId: strin
     dual.cancel();
   }
 
-  // Priority 1: target a server-driven pending choice.
-  if (targetSelection?.targetIds.includes(cardId)) {
+  // Priority 1: feed the current shared protocol selection.
+  if (
+    draft.active &&
+    (draft.input?.kind === "entity-selection" || draft.input?.kind === "entity-partition")
+  ) {
     if (
-      pendingEffectSelection &&
-      pendingEffectSelection.activeEffectId === targetSelection.pendingEffectId
+      draft.input.candidates.some(
+        (candidate) => candidate.enabled && candidate.entity.instanceId === cardId,
+      )
     ) {
-      pendingEffectSelection.selectTarget(cardId);
-      return;
-    }
-    report(
-      adapter.submit(asMoveName("resolveEffect"), {
-        pendingEffectId: targetSelection.pendingEffectId,
-        targets: [cardId],
-      }),
-    );
-    return;
-  }
-
-  // Priority 2: feed a locally-pending selectTarget step.
-  if (pending.state.status === "collecting") {
-    const step = pending.state.steps[0];
-    if (step?.kind === "selectTarget" && step.candidateIds.includes(cardId)) {
-      pending.provideTarget(step, cardId);
+      draft.toggleEntity(draft.input.id, cardId);
       return;
     }
   }
@@ -115,5 +92,14 @@ export function dispatchCardAction(ctx: DispatchCardActionContext, cardId: strin
   // Priority 3: start a new pending move for this card.
   const move = pickMoveForCardFromInteractionView(cardId, interactionView);
   if (!move) return;
-  pending.startForCard(move, cardId);
+  const action = interactionView.actions.find((candidate) => candidate.id === move);
+  const sourceInput = action?.inputs.find(
+    (input) =>
+      input.kind === "entity-selection" &&
+      input.role === "source" &&
+      input.candidates.some(
+        (candidate) => candidate.enabled && candidate.entity.instanceId === cardId,
+      ),
+  );
+  draft.begin(move, sourceInput ? { [sourceInput.id]: [cardId] } : undefined);
 }

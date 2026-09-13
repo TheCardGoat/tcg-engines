@@ -94,6 +94,22 @@ function removeCardFromCurrentZone(zones: ZoneRuntimeState, cardId: string): str
   return oldKey;
 }
 
+function clearDefinitionOverrideAfterBattlefieldExit(
+  zones: ZoneRuntimeState,
+  cardId: string,
+  oldKey: string | undefined,
+  newKey: string,
+): void {
+  const oldZone = oldKey?.split(":")[0];
+  const newZone = newKey.split(":")[0];
+  if (oldZone !== "battleArea" || newZone === "battleArea") return;
+
+  const meta = zones.private.cardMeta[cardId];
+  if (meta?.definitionOverride === undefined) return;
+  const { definitionOverride: _definitionOverride, ...remainingMeta } = meta;
+  zones.private.cardMeta[cardId] = remainingMeta;
+}
+
 /**
  * Add a card to a zone at the given index (defaults to end / "top").
  */
@@ -232,6 +248,7 @@ export function createZoneOperations(
     const newKey = makeZoneKey(toZone);
 
     addCardToZone(zones, cardId, newKey, options?.index);
+    clearDefinitionOverrideAfterBattlefieldExit(zones, cardId, oldKey, newKey);
 
     // Sync summaries for both old and new zones
     if (oldKey && oldKey !== newKey) {
@@ -248,6 +265,7 @@ export function createZoneOperations(
       const oldKey = removeCardFromCurrentZone(zones, cardId);
       if (oldKey) affectedKeys.add(oldKey);
       addCardToZone(zones, cardId, newKey);
+      clearDefinitionOverrideAfterBattlefieldExit(zones, cardId, oldKey, newKey);
     }
 
     affectedKeys.add(newKey);
@@ -271,6 +289,7 @@ export function createZoneOperations(
       removeCardFromCurrentZone(zones, cardId);
       const toKey = makeZoneKey(params.to);
       addCardToZone(zones, cardId, toKey);
+      clearDefinitionOverrideAfterBattlefieldExit(zones, cardId, fromKey, toKey);
       drawn.push(cardId);
     }
 
@@ -288,6 +307,7 @@ export function createZoneOperations(
     removeCardFromCurrentZone(zones, cardId);
     const toKey = makeZoneKey(to);
     addCardToZone(zones, cardId, toKey);
+    clearDefinitionOverrideAfterBattlefieldExit(zones, cardId, fromKey, toKey);
 
     syncSummary(zones, fromKey, zoneConfigs);
     if (toKey !== fromKey) {
@@ -312,6 +332,7 @@ export function createZoneOperations(
       removeCardFromCurrentZone(zones, cardId);
       const toKey = makeZoneKey(to);
       addCardToZone(zones, cardId, toKey);
+      clearDefinitionOverrideAfterBattlefieldExit(zones, cardId, fromKey, toKey);
       milled.push(cardId);
     }
 

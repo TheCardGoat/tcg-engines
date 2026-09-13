@@ -21,14 +21,21 @@ export function enqueueShieldAreaCardDestroyedByUnitDamageTrigger(
   sourcePlayerId: string,
   defenderPlayerId: string,
   framework: FrameworkWriteAPI,
+  options: {
+    damageType?: "battle" | "effect";
+    simultaneousGroupId?: string;
+  } = {},
 ): void {
   const event = {
     type: "shieldAreaCardDestroyedByBattle" as const,
     cardId: sourceUnitId,
+    sourceCardId: sourceUnitId,
     destroyedCardId,
     ownerId: sourcePlayerId,
     playerId: sourcePlayerId,
     defenderPlayerId,
+    damageType: options.damageType ?? "effect",
+    simultaneousGroupId: options.simultaneousGroupId,
   };
   enqueueOwnCardTriggers(g, event, sourceUnitId, sourcePlayerId, framework);
   enqueueObserverTriggers(g, event, framework, sourceUnitId);

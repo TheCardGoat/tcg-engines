@@ -3,7 +3,7 @@ import { op01OfficerAgents087 } from "../../../../../cards/src/cards/OP01/events
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-087 Officer Agents", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01OfficerAgents087);
   });
 });

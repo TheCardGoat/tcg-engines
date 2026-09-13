@@ -49,7 +49,9 @@ export function enumerateChoiceActions(
     case "chooseTarget":
       return enumerateTargetChoices(choice);
     case "chooseEffect":
-      return [];
+      return choice.payload.options.map((option) =>
+        command("resolveChooseEffect", { optionId: option.id }),
+      );
     case "chooseTrigger": {
       const actions = choice.payload.options.map((option) =>
         command("resolveTrigger", { triggerId: option.triggerId }),
@@ -62,6 +64,9 @@ export function enumerateChoiceActions(
         choice.payload.eligibleDice.map((die) => die.dieId),
         choice.payload.count,
       ).map((dieIds) => command("resolveStealGigs", { dieIds }));
+    case "preventGigSteal":
+      // Bots decline prevention; human/test resolution goes via the move.
+      return [command("resolvePreventGigSteal", { pass: true, preventions: [] })];
     case "chooseCardToPlay":
       return choice.payload.cardIds.map((cardId) => command("resolveCardToPlay", { cardId }));
     case "chooseCardToMove": {

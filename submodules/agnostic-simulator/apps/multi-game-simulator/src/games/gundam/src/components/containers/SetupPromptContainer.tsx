@@ -1,7 +1,13 @@
 import { useCallback } from "react";
 
 import { m } from "../../lib/i18n/messages.ts";
-import { asMoveName, useBoardProjection, useGundamGame, useViewerId } from "../../game/index.ts";
+import {
+  asMoveName,
+  useBoardProjection,
+  useGundamGame,
+  useInteractionView,
+  useViewerId,
+} from "../../game/index.ts";
 import { ChooseFirstPlayerPrompt } from "../ui/ChooseFirstPlayerPrompt.tsx";
 import { MulliganPrompt } from "../ui/MulliganPrompt.tsx";
 import { WaitingForOpponentPrompt } from "../ui/WaitingForOpponentPrompt.tsx";
@@ -22,6 +28,7 @@ import { useSubmitError } from "./submit-error-context.tsx";
 export function SetupPromptContainer() {
   const view = useBoardProjection();
   const viewerId = useViewerId();
+  const interactionView = useInteractionView();
   const { adapter } = useGundamGame();
   const { report } = useSubmitError();
 
@@ -66,6 +73,12 @@ export function SetupPromptContainer() {
   if (adapter.viewerContext.role === "spectator") return null;
 
   if (phase === "choose-first-player") {
+    const canChooseFirstPlayer = interactionView.actions.some(
+      (action) => action.id === "chooseFirstPlayer" && action.enabled,
+    );
+    if (!canChooseFirstPlayer) {
+      return <WaitingForOpponentPrompt message={m["sim.setup.waiting.firstPlayer"]()} />;
+    }
     return (
       <ChooseFirstPlayerPrompt onChooseSelf={onChooseSelf} onChooseOpponent={onChooseOpponent} />
     );

@@ -174,28 +174,6 @@ export function truncateForAnalytics(input: unknown): string | undefined {
 }
 
 /**
- * Extract `error_code` and `error_message` from an unknown error in the shape
- * GA4 event payloads expect. Truncates the message to ANALYTICS_TEXT_MAX_LENGTH
- * to keep the payload safe and bounded.
- *
- * Designed to be spread into a `trackEvent` params object:
- * ```ts
- * trackEvent("queue_join_error", { error: "api_error", ...analyticsErrorFields(err) });
- * ```
- */
-export function analyticsErrorFields(error: unknown): {
-  error_code?: string;
-  error_message?: string;
-} {
-  const code = error instanceof Error ? error.name : undefined;
-  const message = truncateForAnalytics(error instanceof Error ? error.message : error);
-  return {
-    ...(code ? { error_code: code } : {}),
-    ...(message ? { error_message: message } : {}),
-  };
-}
-
-/**
  * Track an exception. Thin wrapper over `trackEvent("app_exception", ...)`
  * that handles message truncation and code fallback.
  */

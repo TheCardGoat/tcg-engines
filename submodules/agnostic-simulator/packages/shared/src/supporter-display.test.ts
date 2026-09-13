@@ -16,22 +16,20 @@ describe("supporter display", () => {
   });
 
   it("maps paid tiers to the three public supporter tiers", () => {
-    expect(normalizeSupporterTier("tier1")).toBe("supporter");
     expect(normalizeSupporterTier("tier2")).toBe("supporter");
     expect(normalizeSupporterTier("tier3")).toBe("champion");
     expect(normalizeSupporterTier("tier4")).toBe("legend");
-    expect(normalizeSupporterTier("tier6")).toBe("legend");
   });
 
-  it("maps admin tier and role marker to a distinct admin flair", () => {
-    expect(normalizeSupporterTier("tier5")).toBe("admin");
-    expect(normalizeSupporterTier("admin")).toBe("admin");
-    expect(getSupporterDisplayConfig("tier5")?.label).toBe("Admin");
+  it("does not mix retired tiers or authorization roles into supporter flair", () => {
+    for (const value of ["tier1", "tier5", "tier6", "admin", "donor", "moderator"]) {
+      expect(normalizeSupporterTier(value)).toBeNull();
+    }
   });
 
   it("formats an accessible supporter label", () => {
     expect(formatSupporterAriaLabel("Ariel", "tier3")).toBe("Ariel, Champion");
-    expect(formatSupporterAriaLabel("Ursula", "admin")).toBe("Ursula, Admin");
+    expect(formatSupporterAriaLabel("Ursula", "admin")).toBe("Ursula");
     expect(formatSupporterAriaLabel("Ariel", "free")).toBe("Ariel");
   });
 });

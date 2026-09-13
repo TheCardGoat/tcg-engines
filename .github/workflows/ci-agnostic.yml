@@ -8,9 +8,13 @@ on:
       - ".bun-version"
       - "submodules/agnostic-simulator/**"
       - "submodules/cyberpunk/**"
+      - "submodules/flesh-and-blood/**"
+      - "submodules/grand-archive/**"
       - "submodules/gundam/**"
       - "submodules/lorcana/**"
+      - "submodules/naruto/**"
       - "submodules/one-piece/**"
+      - "submodules/riftbound/**"
       - "submodules/star-wars-unlimited/**"
   pull_request:
     branches: [main]
@@ -19,9 +23,13 @@ on:
       - ".bun-version"
       - "submodules/agnostic-simulator/**"
       - "submodules/cyberpunk/**"
+      - "submodules/flesh-and-blood/**"
+      - "submodules/grand-archive/**"
       - "submodules/gundam/**"
       - "submodules/lorcana/**"
+      - "submodules/naruto/**"
       - "submodules/one-piece/**"
+      - "submodules/riftbound/**"
       - "submodules/star-wars-unlimited/**"
   workflow_dispatch:
 
@@ -64,8 +72,12 @@ jobs:
       - name: Install linked game dependencies
         run: |
           pnpm --dir submodules/cyberpunk install --frozen-lockfile
+          pnpm --dir submodules/flesh-and-blood install --frozen-lockfile
+          pnpm --dir submodules/grand-archive install --frozen-lockfile
           pnpm --dir submodules/gundam install --frozen-lockfile
+          pnpm --dir submodules/naruto install --frozen-lockfile
           pnpm --dir submodules/one-piece install --frozen-lockfile
+          pnpm --dir submodules/riftbound install --frozen-lockfile
           # Lorcana + SWU resolve to source (not built dist), but their
           # node_modules must exist so the card-model conformance guard can
           # resolve `@tcg/card-model` while type-checking their linked types.

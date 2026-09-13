@@ -1,0 +1,1202 @@
+{
+  "game-mechanics/game-mechanics-card-and-object-information.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+  },
+  "game-mechanics/game-mechanics-card-and-object-information.md#last-known-information": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+  },
+  "game-mechanics/game-mechanics-copy.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+  },
+  "game-mechanics/game-mechanics-copy.md#copying-objects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+  },
+  "game-mechanics/game-mechanics-copy.md#static-copying": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+  },
+  "game-mechanics/game-mechanics-copy.md#copying-abilities-card-activations-and-materializations": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card/object information, last-known information, and copies"
+  },
+  "game-mechanics/game-mechanics-game-zones.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Shared game-zone and object-specific-zone contract"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-banishment.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-effects-stack.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-field.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-graveyard.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-hand.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-intent.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-memory.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Player-owned destination zones"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-main-deck.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-material-deck.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-object-specific-zones.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Shared game-zone and object-specific-zone contract"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-pantheon.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Main Deck, Material Deck, and Pantheon"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-public-vs-private-information.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Field, Effects Stack, Intent, and information visibility"
+  },
+  "game-mechanics/game-mechanics-properties-and-states.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+  },
+  "game-mechanics/game-mechanics-playing-cards.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+  },
+  "game-mechanics/game-mechanics-playing-cards/playing-cards-card-activation.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+  },
+  "game-mechanics/game-mechanics-playing-cards/playing-cards-card-materialization.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+  },
+  "game-mechanics/game-mechanics-playing-cards/playing-cards-costs-and-memory.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+  },
+  "game-mechanics/game-mechanics-playing-cards/playing-cards-resolution.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+  },
+  "game-mechanics/game-mechanics-playing-cards/playing-cards-resolution.md#checking-resolution": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Playing cards lifecycle"
+  },
+  "game-mechanics/game-mechanics-mastery.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+  },
+  "game-mechanics/game-mechanics-mastery.md#fractured-memories": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+  },
+  "game-mechanics/game-mechanics-mastery.md#phantasmagoria": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+  },
+  "game-mechanics/game-mechanics-mastery.md#servile-possessions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+  },
+  "game-mechanics/game-mechanics-mastery.md#files-bplhk9r8zibbpc3uinsm-files-uuzsopogyzfqfjk5rpk9": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Masteries and named mastery state"
+  },
+  "game-mechanics/game-mechanics-properties-and-states.md#facing": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Facing and end-of-game disclosure"
+  },
+  "game-mechanics/game-mechanics-properties-and-states.md#orientation": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+  },
+  "game-mechanics/game-mechanics-properties-and-states.md#properties-of-cards-in-the-effects-stack": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+  },
+  "game-mechanics/game-mechanics-properties-and-states.md#properties-and-states-of-objects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+  },
+  "game-mechanics/game-mechanics-properties-and-states.md#properties-and-states-of-players": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Properties, orientation, and rules-derived states"
+  },
+  "game-mechanics/game-mechanics-special-elements.md#exalted": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Exalted and Norm element enablement"
+  },
+  "game-mechanics/game-mechanics-special-elements.md#norm": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Exalted and Norm element enablement"
+  },
+  "game-mechanics/game-mechanics-statuses.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Statuses and Crowd's Favor"
+  },
+  "game-mechanics/game-mechanics-statuses.md#crowd-s-favor": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Statuses and Crowd's Favor"
+  },
+  "game-mechanics/game-mechanics-timing-and-permissions.md#fast-vs-slow-x20": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions"
+  },
+  "game-mechanics/game-mechanics-timing-and-permissions.md#opportunity": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions"
+  },
+  "game-mechanics/game-mechanics-timing-and-permissions.md#special-play-permissions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Timing, Opportunity, and special play permissions"
+  },
+  "game-mechanics/game-mechanics-turn-order.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Turn order and phase boundaries"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase.md#turn-order-combat-phase": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-attack-declaration.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-attack-declaration.md#declaring-an-attack": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-attacking-and-the-combat-phase.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-damage-step.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-combat-phase/combat-phase-retaliation-step.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Combat phase, declaration, retaliation, and damage"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-materialize-phase.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-draw-phase.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-end-phase.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-ending-phases.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ending phases and turns"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-main-phase.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Draw, Main, and End"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-recollection-phase.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-skipping-phases.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Skipping phases"
+  },
+  "game-mechanics/game-mechanics-turn-order/turn-order-wake-up-phase.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Wake Up, Materialize, and Recollection"
+  },
+  "game-mechanics/game-mechanics-damage.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Damage and damage prevention"
+  },
+  "game-mechanics/game-mechanics-damage-prevention.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Damage and damage prevention"
+  },
+  "game-mechanics/game-mechanics-drawing-cards.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Drawing cards"
+  },
+  "game-mechanics/game-mechanics-types-of-effects.md#game-mechanics-types-of-effects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#instanced-effects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#static-effects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#syntax-of-continuous-effects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#layers": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#dependencies": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-continuous-effects.md#timestamps": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-game-effects.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-types-of-effects/types-of-effects-replacement-effects.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Game, replacement, and continuous effects"
+  },
+  "game-mechanics/game-mechanics-tokens.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Token classification, control, and lifetime"
+  },
+  "game-mechanics/game-mechanics-abilities.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-ability-tracking.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-activated-abilities.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-resolving-triggered-and-activated-abilities.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#level-restrictions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#class-restrictions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#damage-restrictions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#memory-restrictions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#element-restrictions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#champion-restrictions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-restriction-abilities.md#sheen-x-restrictions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-static-abilities.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-abilities/abilities-triggered-abilities.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ability lifecycle, tracking, and restrictions"
+  },
+  "game-mechanics/game-mechanics-counters.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#buff": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#bulwark": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Bulwark"
+  },
+  "game-mechanics/game-mechanics-counters.md#damage": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#debuff": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#durability": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#enlighten": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#level": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#omen": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#static": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-counters.md#wither": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Counter lifecycle and inherent counter abilities"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-object-specific-zones.md#inner-lineage": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Inherited Effect; generated lineage; host incarnation"
+  },
+  "game-mechanics/game-mechanics-game-zones/game-zones-object-specific-zones.md#loaded-cards": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Aethercalling and Loaded Cards"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics.md#game-mechanics-miscellaneous-topics": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/concession.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/default-case.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/die-results-d-effects.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/effects.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/naming.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/permission.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/player-action-legality.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/randomization.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/rounding.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/searching-and-finding.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/simultaneous-selections.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/special-game-actions-and-turn-based-actions.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/state-based-checks-and-effects.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/state-based-checks-and-effects.md#types-of-checks": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/tracking-information.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Miscellaneous rules, special actions, and state stabilization"
+  },
+  "game-mechanics/game-mechanics-miscellaneous-topics/ordering-and-tracking.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ordered private placements"
+  },
+  "game-mechanics/game-mechanics-objects-and-targeting.md#objects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+  },
+  "game-mechanics/game-mechanics-objects-and-targeting.md#non-objects": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+  },
+  "game-mechanics/game-mechanics-objects-and-targeting.md#target": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+  },
+  "game-mechanics/game-mechanics-objects-and-targeting.md#redirect": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Objects, non-objects, targeting, and redirect"
+  },
+  "glossary/game-terms.md#distant": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Distant and durability counters"
+  },
+  "glossary/game-terms.md#durability-counters": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Distant and durability counters"
+  },
+  "glossary/keywords-and-abilities.md#aenean-progression": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Aenean Progression"
+  },
+  "glossary/keywords-and-abilities.md#aethercalling": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Aethercalling and Loaded Cards"
+  },
+  "glossary/keywords-and-abilities.md#agility-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Agility"
+  },
+  "glossary/keywords-and-abilities.md#ambush": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ambush and Steadfast"
+  },
+  "glossary/keywords-and-abilities.md#bulwark": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Bulwark"
+  },
+  "glossary/keywords-and-abilities.md#brew": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Brew"
+  },
+  "glossary/keywords-and-abilities.md#cascade": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Cascade"
+  },
+  "glossary/keywords-and-abilities.md#champion-bonus": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions"
+  },
+  "glossary/keywords-and-abilities.md#class-bonus": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions"
+  },
+  "glossary/keywords-and-abilities.md#class-locked": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions and Class Locked"
+  },
+  "glossary/keywords-and-abilities.md#cleave": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Cleave"
+  },
+  "glossary/keywords-and-abilities.md#command": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Multiple Command abilities"
+  },
+  "glossary/keywords-and-abilities.md#commanded-will-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic"
+  },
+  "glossary/keywords-and-abilities.md#critical-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic"
+  },
+  "glossary/keywords-and-abilities.md#divine-relic": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Critical, Commanded Will, and Divine Relic"
+  },
+  "glossary/keywords-and-abilities.md#efficiency": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Efficiency"
+  },
+  "glossary/keywords-and-abilities.md#element-bonus": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — all-zone bonus restrictions"
+  },
+  "glossary/keywords-and-abilities.md#empower-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#ephemerate": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#fast-activation": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#first-boon": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#floating-memory": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#elysian-aura": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Elysian Aura"
+  },
+  "glossary/keywords-and-abilities.md#foster": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Foster"
+  },
+  "glossary/keywords-and-abilities.md#hindered": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#imbue": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Imbue"
+  },
+  "glossary/keywords-and-abilities.md#immortality": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#inherited-effect": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Inherited Effect"
+  },
+  "glossary/keywords-and-abilities.md#intercept": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Intercept"
+  },
+  "glossary/keywords-and-abilities.md#interdiction": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — activation and entry keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#kindle-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#level-locked-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#level-restriction": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#lineage-keyword": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Lineage"
+  },
+  "glossary/keywords-and-abilities.md#lineage-release": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#link": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Link"
+  },
+  "glossary/keywords-and-abilities.md#link-shield": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Link Shield reference substitution"
+  },
+  "glossary/keywords-and-abilities.md#memory-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#multistrike-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#omnishroud": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restriction, payment, and protection keyword cluster"
+  },
+  "glossary/keywords-and-abilities.md#on-attack": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-banish": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-charge-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-death": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-enter": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-foster": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-hit": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-kill": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#on-leave": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — named trigger keyword family"
+  },
+  "glossary/keywords-and-abilities.md#prepare-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Multiple Prepare abilities"
+  },
+  "glossary/keywords-and-abilities.md#preserve-preserved": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+  },
+  "glossary/keywords-and-abilities.md#pride-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Pride and obedience"
+  },
+  "glossary/keywords-and-abilities.md#ranged-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Parameterized keyword provenance"
+  },
+  "glossary/keywords-and-abilities.md#renewable": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — restricted destinations and Renewable regression"
+  },
+  "glossary/keywords-and-abilities.md#reservable": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+  },
+  "glossary/keywords-and-abilities.md#retort-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Parameterized keyword provenance"
+  },
+  "glossary/keywords-and-abilities.md#steadfast": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Ambush and Steadfast"
+  },
+  "glossary/keywords-and-abilities.md#spellshroud": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight"
+  },
+  "glossary/keywords-and-abilities.md#starcalling": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+  },
+  "glossary/keywords-and-abilities.md#stealth": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight"
+  },
+  "glossary/keywords-and-abilities.md#taunt": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+  },
+  "glossary/keywords-and-abilities.md#true-sight": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Shroud, Stealth, and True Sight"
+  },
+  "glossary/keywords-and-abilities.md#unblockable": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — preservation, payment, and combat permission keyword tail"
+  },
+  "glossary/keywords-and-abilities.md#vigor": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Vigor"
+  },
+  "general-rules/general-rules-card-characteristics.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+  },
+  "general-rules/general-rules-card-characteristics.md#type-overwriting-and-type-setting": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+  },
+  "general-rules/general-rules-card-characteristics.md#type-acting": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+  },
+  "general-rules/general-rules-card-characteristics.md#type-expansion": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+  },
+  "general-rules/general-rules-card-characteristics.md#stat-setting": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+  },
+  "general-rules/general-rules-card-characteristics/double-faced-cards.md#double-faced-cards": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card characteristics and double-faced cards"
+  },
+  "general-rules/general-rules-parts-of-a-card.md#general-rules-parts-of-a-card": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-border-information.md#parts-of-a-card-border-information": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-cost.md#parts-of-a-card-cost": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-element.md#parts-of-a-card-element": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-name.md#parts-of-a-card-name": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#durability": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#life": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#power": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-stats.md#speed": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-text-box.md#parts-of-a-card-text-box": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-parts-of-a-card/parts-of-a-card-typeline.md#parts-of-a-card-typeline": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Printed card parts"
+  },
+  "general-rules/general-rules-card-types.md#general-rules-card-types": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-action.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-ally.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-attack.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-boons.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-champion.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-domain.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-domains": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-items": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-actions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-functional-subtypes.md#functional-weapons": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-item.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-phantasia.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-supertypes.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-supertypes.md#unique": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-supertypes.md#regalia": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-card-types/card-types-weapon.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Card types, functional subtypes, and supertypes"
+  },
+  "general-rules/general-rules-format-conventions.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "general-rules/general-rules-format-conventions.md#standard-constructed-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "general-rules/general-rules-format-conventions.md#draft-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "general-rules/general-rules-format-conventions.md#pantheon-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "general-rules/general-rules-ending-the-game.md#general-rules-ending-the-game": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+  },
+  "general-rules/general-rules-objectives.md#general-rules-objectives": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+  },
+  "general-rules/general-rules-players.md#general-rules-players": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+  },
+  "general-rules/general-rules-players.md#player-actions": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Players, objectives, and ending the game"
+  },
+  "general-rules/general-rules-starting-the-game.md#standard-games": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "general-rules/general-rules-starting-the-game.md#standard-games-turn-one": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "general-rules/general-rules-starting-the-game.md#pantheon-games": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "general-rules/general-rules-starting-the-game.md#pantheon-games-turn-one": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Match formats and pre-game setup"
+  },
+  "game-mechanics.md#game-mechanics": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "general-rules.md#general-rules": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary.md#glossary": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#activate-activating": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#awake": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#banish": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#buff-counters": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#control-and-ownership": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#copy": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#damage-counters": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#destruction": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#died-dies-and-kills-killed": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#discard": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#element": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#enlighten-counters": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#ephemeral": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#fast": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#fizzle": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#fostered": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#gather": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#generate": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#glimpse": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#hit": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#influence": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#inner-lineage": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#label-keywords": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#last-known-information": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#leave-leaves": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#level-base": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#level-counters": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#level-up": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#lineage-term": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#load": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#loaded": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#lv": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#modes": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#negate": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#negated-x20": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#obedience": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#opportunity": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#play-played": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#player-action": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#players": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#preparation-counters": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#recover": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#redirect": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#reflexive-trigger": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#reserve": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#rest-rested": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#retaliate-retaliation": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#reveal": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#sacrifice": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#scavenge-n": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#search": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#shuffling": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#slow": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#source": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#suppress": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#summon": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#timestamp": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#token": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#transform": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#unit": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#wake-up": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/game-terms.md#wield": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/type-list.md#elements": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/type-list.md#types": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  },
+  "glossary/type-list.md#subtypes": {
+    "status": "implemented",
+    "evidence": "docs/grand-archive-rules-coverage.md — Glossary terminology and categorical type list"
+  }
+}

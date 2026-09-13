@@ -141,15 +141,8 @@ async function getCardSupportedMoves(page, definitionId) {
 
 // --- native DOM tap helpers --------------------------------------------------
 
-/**
- * Dispatch a mobile-style tap (pointerdown + pointerup at the same coords) so
- * the `useHandCardTap` recognizer treats it as a tap, not a drag. Falls back to
- * a real click if pointer events don't open the expected surface.
- */
+/** Dispatch a mobile-style tap at the center of an element. */
 async function tapElement(page, selector) {
-  // Use Playwright mouse with a tiny dwell to mimic a mobile tap (pointerdown
-  // then pointerup at the same point) so the useHandCardTap recognizer treats
-  // it as a tap rather than a drag.
   const el = page.locator(selector).first();
   const box = await el.boundingBox();
   if (!box) throw new Error(`tapElement: no bounding box for ${selector}`);
@@ -173,31 +166,29 @@ async function clickTestId(page, testid) {
 
 // --- high-level mobile actions ----------------------------------------------
 
-/**
- * Tap a hand card by definitionId, opening the hand-command-tray.
- * Returns the tray's available action testids.
- */
+/** Tap a hand card by definitionId and return its card-action menu actions. */
 async function tapHandCard(page, definitionId) {
-  const sel = `[data-testid="hand-card"][data-definition-id="${definitionId}"]`;
+  const sel =
+    `[data-testid="hand-card"][data-definition-id="${definitionId}"] ` + '[data-testid="card"]';
   await waitFor(page, sel);
   await tapElement(page, sel);
-  // tray should appear
   await sleep(150);
-  const trayVisible = await exists(page, '[data-testid="hand-command-tray"]');
-  if (!trayVisible) {
+  const menuVisible = await exists(page, '[data-testid="card-action-menu"]');
+  if (!menuVisible) {
     // some cards may not be armable; that's a legitimate "no action" result
-    return { trayVisible: false, actions: [] };
+    return { menuVisible: false, actions: [] };
   }
   const actions = await page
-    .locator('[data-testid^="hand-action-"]')
+    .locator('[data-testid^="card-action-"]')
     .evaluateAll((els) =>
       els.filter((e) => e.offsetParent !== null).map((e) => e.getAttribute("data-testid")),
     );
-  return { trayVisible: true, actions };
+  return { menuVisible: true, actions };
 }
 
 async function tapHandAction(page, action /* "play" | "sell" | "goSolo" */) {
-  await clickTestId(page, `hand-action-${action}`);
+  const actionId = action === "play" ? "playCard" : action === "sell" ? "sellCard" : "goSolo";
+  await clickTestId(page, `card-action-${actionId}`);
 }
 
 /**

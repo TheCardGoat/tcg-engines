@@ -139,6 +139,7 @@ function fightPairedBlocker(
 }
 
 describe("Olba Frost (GD02-093)", () => {
+  /** @behavioral-proof complete: Burst, controller turn, self battle source, defeated pairing/trait, draw count, First Strike, and costs are public. */
   it("【Burst】 adds the revealed Shield to its owner's hand", () => {
     const attacker = createMockUnit({ ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
@@ -218,6 +219,35 @@ describe("Olba Frost (GD02-093)", () => {
 
     expect(p2.getCardZone(defenderId)).toBe(`trash:${PLAYER_TWO}`);
     expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(4);
+  });
+
+  it("does not draw when its Unit destroys an attacker on the opponent's turn", () => {
+    const host = createMockUnit({ name: "Olba Host", ap: 3, hp: 6 });
+    const fragileAttacker = createMockUnit({ ap: 1, hp: 1 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd02OlbaFrost093],
+        play: [{ card: host, exhausted: true }],
+        resourceArea: activeResources(3),
+        deck: 5,
+      },
+      { play: [fragileAttacker], deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd02OlbaFrost093, hostId));
+    passTurnThroughPublicMoves(engine, PLAYER_ONE);
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+    expectSuccess(p2.enterBattle(attackerId, hostId));
+    expectSuccess(p1.passBlock());
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+
+    expect(p2.getCardZone(attackerId)).toBe(`trash:${PLAYER_TWO}`);
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
   });
 
   it("requires both its printed Lv.3 and one active Resource to be paired", () => {

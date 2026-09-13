@@ -6,10 +6,19 @@ import {
   createPlayerId,
   getLorcanaServerAuthoritativeSnapshot,
   loadLorcanaServerAuthoritativeSnapshot,
+  type ClientMessage,
   type LorcanaMatchState,
+  type ServerMessage,
+  type Transport,
+  type AuthoritativeCommandStatus,
 } from "@tcg/lorcana-engine";
 import { getLorcanaCardCatalogSync } from "@tcg/lorcana-cards/cards/sync";
-import { minnieMouseAlwaysClassy, liloMakingAWish } from "@tcg/lorcana-cards/cards/001";
+import {
+  liloMakingAWish,
+  minnieMouseAlwaysClassy,
+  stealFromTheRich,
+} from "@tcg/lorcana-cards/cards/001";
+import { mauiHalfshark } from "@tcg/lorcana-cards/cards/006";
 
 describe("Standalone LorcanaClient (no transport)", () => {
   function createTestState() {
@@ -121,5 +130,95 @@ describe("LorcanaServer + connected LorcanaClient (2 instances)", () => {
     // Step 4: Verify state changed
     const board = client.getBoard();
     expect(board).toBeDefined();
+  });
+});
+
+describe("LorcanaClient with delayed authoritative updates", () => {
+  it("submits one resolveBag command while waiting for the server projection", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        hand: [stealFromTheRich],
+        inkwell: Array.from({ length: stealFromTheRich.cost }, () => liloMakingAWish),
+        play: [mauiHalfshark],
+        deck: [liloMakingAWish, minnieMouseAlwaysClassy],
+      },
+      { deck: [liloMakingAWish, minnieMouseAlwaysClassy] },
+    );
+    expect(
+      testEngine.asPlayerOne().playCard(stealFromTheRich, {
+        preventAutoResolveTriggeredEffects: true,
+      }),
+    ).toBeSuccessfulCommand();
+
+    const snapshot = getLorcanaServerAuthoritativeSnapshot(
+      testEngine.asServer(),
+      testEngine.getCardsMaps(),
+    );
+    const matchState = snapshot.state as LorcanaMatchState;
+    const players = Object.keys(snapshot.cardsMaps.owners).map((id) => ({ id }));
+    const playerId = String(players[0]?.id);
+    const sentMessages: ClientMessage[] = [];
+    let commandStatus: AuthoritativeCommandStatus = { phase: "idle" };
+    let messageHandler: (message: ServerMessage) => void = () => {};
+
+    const transport: Transport = {
+      connect: async () => {},
+      disconnect: async () => {},
+      send: (message) => {
+        sentMessages.push(message);
+        if (message.type === "UPDATE_ACTION") {
+          commandStatus = {
+            phase: "submitting",
+            moveId: message.command.move,
+            commandID: message.command.commandID,
+            startedAt: Date.now(),
+          };
+        }
+        if (message.type === "SYNC_REQUEST") {
+          messageHandler({
+            type: "SYNC_FULL",
+            protocolVersion: message.protocolVersion,
+            matchID: message.matchID,
+            stateID: matchState.ctx._stateID,
+            canUndo: false,
+            state: matchState,
+          });
+        }
+      },
+      onMessage: (handler) => {
+        messageHandler = handler;
+      },
+      onDisconnect: () => {},
+      onError: () => {},
+      getState: () => "CONNECTED",
+      getAuthoritativeCommandStatus: () => commandStatus,
+      onAuthoritativeCommandStatusChange: () => () => {},
+      requestStateSync: () => {},
+    };
+
+    const client = createLorcanaClient({
+      seed: matchState.ctx.random.seed,
+      cardsMaps: snapshot.cardsMaps,
+      cardCatalog: getLorcanaCardCatalogSync(),
+      players,
+      playerId,
+      role: "player",
+      transport,
+      goingFirst: createPlayerId(playerId),
+      skipOptimisticState: true,
+    });
+    client.connectSync();
+
+    const [bagEffect] = client.getBagEffects();
+    expect(bagEffect).toBeDefined();
+    expect(client.resolveBag(bagEffect!.id)).toBeSuccessfulCommand();
+    const duplicate = client.resolveBag(bagEffect!.id);
+    expect(duplicate.success).toBe(false);
+
+    const resolveBagMessages = sentMessages.filter(
+      (message) => message.type === "UPDATE_ACTION" && message.command.move === "resolveBag",
+    );
+    expect(resolveBagMessages).toHaveLength(1);
+    expect(client.getBagEffects()).toHaveLength(1);
   });
 });

@@ -40,6 +40,7 @@
     "@floating-ui/dom": "catalog:",
     "@mantine/core": "9.0.0",
     "@mantine/hooks": "9.0.0",
+    "@radix-ui/react-popover": "catalog:",
     "@tabler/icons-react": "catalog:",
     "@tcg/protocol": "link:../protocol",
     "@tcg/simulator-contract": "link:../simulator-contract",

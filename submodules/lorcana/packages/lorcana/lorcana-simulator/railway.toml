@@ -1,4 +1,6 @@
 # Railway configuration for the Lorcana simulator (SvelteKit via adapter-node).
+# Staging deploy trigger: rebuild the simulator against the current live gateway.
+# The Docker image builds SvelteKit at /lorcana/simulator for the platform proxy.
 
 [build]
 builder = "DOCKERFILE"
@@ -18,18 +20,28 @@ watchPatterns = [
 healthcheckTimeout = 60
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
-numReplicas = 1
 
 [deploy.teardown]
 overlapSeconds = 60
 drainingSeconds = 60
 
 [environments.production.deploy]
-numReplicas = 1
 restartPolicyMaxRetries = 5
+sleepApplication = false
+
+[environments.production.deploy.multiRegionConfig.us-east4-eqdc4a]
+numReplicas = 1
+
+[environments.production.deploy.limitOverride.containers]
+cpu = 8
+memoryBytes = 8000000000
 
 [environments.staging.deploy]
+sleepApplication = true
+
+[environments.staging.deploy.multiRegionConfig.europe-west4-drams3a]
 numReplicas = 1
 
-[environments.pr.deploy]
-numReplicas = 1
+[environments.staging.deploy.limitOverride.containers]
+cpu = 2
+memoryBytes = 2000000000

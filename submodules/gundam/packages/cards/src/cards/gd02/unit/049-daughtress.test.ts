@@ -53,7 +53,7 @@ describe("Daughtress (GD02-049)", () => {
     });
 
     it("cannot support itself", () => {
-      const engine = GundamTestEngine.create({ play: [gd02Daughtress049] });
+      const engine = GundamTestEngine.create({ play: [gd02Daughtress049, createMockUnit()] });
       const p1 = engine.asPlayer(PLAYER_ONE);
       const supporterId = p1.getCardsInZone("battleArea")[0]!;
 

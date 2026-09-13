@@ -73,6 +73,7 @@ export const op02Squard009: CharacterCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
       },

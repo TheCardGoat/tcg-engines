@@ -48,15 +48,24 @@ export const op11GlorpWeb019: EventCard = {
             target: {
               player: "self",
               zones: ["leader", "character"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
             },
             value: 1000,
             duration: "thisTurn",
             condition: {
-              condition: "existsOnField",
+              condition: "hasCard",
               player: "opponent",
               zone: "character",
-              filters: [{ filter: "power", comparison: "gte", value: 6000 }],
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "gte",
+                  value: 6000,
+                },
+              ],
             },
           },
         ],
@@ -69,7 +78,10 @@ export const op11GlorpWeb019: EventCard = {
             target: {
               player: "self",
               zones: ["leader", "character"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
             },
             value: 1000,
             duration: "thisTurn",

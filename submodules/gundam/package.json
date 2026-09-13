@@ -8,12 +8,13 @@
     "ci-check": "vp run ci:check",
     "ci-check-full": "vp run ci:full",
     "test": "pnpm exec turbo run test",
-    "dev": "vp run website#dev",
+    "dev": "cd ../agnostic-simulator/apps/multi-game-simulator && VITE_BASE_URL=/gundam/simulator/ vp dev",
     "prepare": "node -e \"process.exit(process.env.CI?0:1)\" || vp config",
     "check:invariants": "node tools/harness/check-invariants.mjs",
     "check:card-fixtures": "node tools/harness/check-card-fixtures.mjs",
     "check:doc-drift": "node tools/harness/check-doc-drift.mjs",
     "check:harness": "pnpm check:invariants && pnpm check:card-fixtures && pnpm check:doc-drift",
+    "audit:released-catalog": "node --experimental-strip-types tools/reconcile-released-catalog.ts",
     "build": "pnpm exec turbo run build"
   },
   "devDependencies": {

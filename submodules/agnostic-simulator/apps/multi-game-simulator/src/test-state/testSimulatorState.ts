@@ -3,7 +3,10 @@ import type { GameSlug } from "@tcg/simulator-contract";
 
 export const TEST_SIMULATOR_SNAPSHOT_VERSION = 1;
 
-export type TestSimulatorGameSlug = Extract<GameSlug, "cyberpunk" | "gundam" | "one-piece">;
+export type TestSimulatorGameSlug = Extract<
+  GameSlug,
+  "cyberpunk" | "gundam" | "one-piece" | "naruto"
+>;
 
 export interface TestSimulatorSnapshotEnvelope<TPayload = unknown> {
   readonly version: typeof TEST_SIMULATOR_SNAPSHOT_VERSION;

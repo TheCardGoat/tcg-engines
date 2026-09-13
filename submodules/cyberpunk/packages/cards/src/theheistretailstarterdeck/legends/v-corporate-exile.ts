@@ -5,10 +5,11 @@ import { goSoloAbility } from "@tcg/cyberpunk-types";
 export const theHeistRetailStarterDeckVCorporateExile = defineCyberpunkCard({
   id: "627186b3-cffb-4228-aed4-b3ee35235fb6",
   slug: "v-corporate-exile",
+  subname: "Corporate Exile",
   rulesText:
-    "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
-  name: "V — Corporate Exile",
-  displayName: "V — Corporate Exile",
+    "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. When it leaves the field, remove it from the game.)",
+  name: "V",
+  displayName: "V: Corporate Exile",
   canonicalId: "v-corporate-exile",
   color: "blue",
   classifications: ["Corpo", "Merc"],

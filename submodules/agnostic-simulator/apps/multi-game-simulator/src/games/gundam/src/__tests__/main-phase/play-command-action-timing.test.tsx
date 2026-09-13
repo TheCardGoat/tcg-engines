@@ -18,7 +18,7 @@ describe("Main-phase · Action-only command · timing gate", () => {
     renderSimulator(loadActionOnlyCommandDemo);
 
     const hand = screen.getByRole("list", { name: /your hand/i });
-    const tactical = within(hand).getByRole("listitem", { name: /Tactical Draw/i });
+    const tactical = within(hand).getByRole("listitem", { name: /Armed Intervention/i });
 
     // No confirm prompt at boot. `{ hidden: true }` so a present-but-
     // hidden (e.g. aria-hidden) prompt would still be detected.
@@ -31,7 +31,7 @@ describe("Main-phase · Action-only command · timing gate", () => {
     await Promise.resolve();
 
     expect(screen.queryByRole("button", { name: /^confirm$/i, hidden: true })).toBeNull();
-    expect(within(hand).getByRole("listitem", { name: /Tactical Draw/i })).toBeDefined();
+    expect(within(hand).getByRole("listitem", { name: /Armed Intervention/i })).toBeDefined();
     expect(within(hand).getAllByRole("listitem")).toHaveLength(1);
   });
 });

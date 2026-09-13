@@ -70,6 +70,7 @@ export const op08ConquestOfTheSea077: EventCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

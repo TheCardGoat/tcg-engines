@@ -62,4 +62,40 @@ describe("OP08-075 Candy Maiden", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Main so DON!! return, rest, and Life face-down do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op08CandyMaiden075],
+        life: [
+          { card: eb01Doma005, faceUp: true, publicKnowledge: true },
+          { card: op05BartholomewKuma011, faceUp: true, publicKnowledge: true },
+        ],
+        activeDon: 2,
+        restedDon: 1,
+      },
+      { character: [op05BartholomewKuma011] },
+    );
+    const targetId = engine.findCardInZone("north", "character", op05BartholomewKuma011);
+    const lifeIds = [...engine.getState().players.south.life];
+
+    engine.playCard(op08CandyMaiden075, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
+        ?.rested,
+    ).toBe(false);
+    expect(lifeIds.map((instanceId) => engine.getState().cards[instanceId]?.faceUp)).toEqual([
+      true,
+      true,
+    ]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

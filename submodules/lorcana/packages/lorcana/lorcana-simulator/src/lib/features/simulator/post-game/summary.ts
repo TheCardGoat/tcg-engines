@@ -57,6 +57,7 @@ export interface BuildPostGameSummaryInput {
   board: LorcanaProjectedBoardView;
   entries: MoveLogEntrySnapshot[];
   viewerSide?: LorcanaPlayerSide | null;
+  durationMs?: number;
 }
 
 const PLAYER_SIDES: LorcanaPlayerSide[] = ["playerOne", "playerTwo"];
@@ -78,6 +79,7 @@ export function buildPostGameSummaryFromCanonical(
     },
     entries: createPersistedMoveLogEntries(postGame),
     viewerSide,
+    durationMs: postGame.durationMs,
   });
 }
 
@@ -107,6 +109,7 @@ function buildPostGameSummaryFromAnalytics(
 
   return {
     board,
+    durationMs: analytics.summary.durationMs,
     outcome,
     players: {
       playerOne: buildPlayerBoardSummary(board, "playerOne"),
@@ -462,9 +465,14 @@ export function buildPostGameSummary(input: BuildPostGameSummaryInput): PostGame
   }
 
   const turns = buildTurnSummaries(timeline);
+  const firstTurn = turns[0];
+  const lastTurn = turns.at(-1);
+  const recordedSpanMs =
+    firstTurn && lastTurn ? Math.max(0, lastTurn.endedAt - firstTurn.startedAt) : 0;
 
   return {
     board,
+    durationMs: input.durationMs ?? recordedSpanMs,
     outcome,
     players: {
       playerOne: buildPlayerBoardSummary(board, "playerOne"),
@@ -1082,30 +1090,86 @@ function sideToLabel(side: LorcanaPlayerSide, viewerSide: LorcanaPlayerSide | nu
 function createPersistedMoveLogEntries(postGame: PostGameCanonicalData): MoveLogEntrySnapshot[] {
   if (!postGame.acceptedMoves || !postGame.engineLogs) return [];
   return postGame.acceptedMoves.flatMap((acceptedMove, index) => {
-    const matchingLog = postGame.engineLogs!.find(
+    const matchingLogs = postGame.engineLogs!.filter(
       (record) => record.stateVersion === acceptedMove.stateVersion,
     );
-    const actorSide = postGame.players.find((player) => player.id === acceptedMove.actorId)?.side;
-    const entry: MoveLogEntrySnapshot = {
-      actorSide,
-      id: `post-game-${acceptedMove.stateVersion}-${index}-${acceptedMove.moveId}`,
-      moveId: acceptedMove.moveId as MoveLogEntrySnapshot["moveId"],
-      playerId: acceptedMove.actorId,
-      params: normalizePersistedMoveParams(acceptedMove.input),
+    const primaryLogIndex = matchingLogs.findIndex(
+      (record) => readPersistedLogMoveType(record.log) === acceptedMove.moveId,
+    );
+    const resolvedPrimaryLogIndex = primaryLogIndex >= 0 ? primaryLogIndex : 0;
+    const primaryLog = matchingLogs[resolvedPrimaryLogIndex];
+    const primaryEntry = createPersistedMoveLogEntry({
+      acceptedMove,
+      actorId: acceptedMove.actorId,
+      actorSide: postGame.players.find((player) => player.id === acceptedMove.actorId)?.side,
+      index: `${index}`,
+      moveId: acceptedMove.moveId,
+      typedLogEntry: primaryLog?.log,
       timestamp: acceptedMove.timestamp,
-      title: "",
-      turnNumber: acceptedMove.turnNumber,
-      typedLogEntry: matchingLog?.log as MoveLogEntrySnapshot["typedLogEntry"],
-    };
-    const presentation = formatEventLogBody(entry);
+    });
 
-    return [
-      {
-        ...entry,
-        title: matchingLog ? normalizeTimelineText(entry, presentation.text) : "",
-      },
-    ];
+    const nestedEntries = matchingLogs.flatMap((record, logIndex) => {
+      if (logIndex === resolvedPrimaryLogIndex) return [];
+      const moveId = readPersistedLogMoveType(record.log);
+      if (!moveId) return [];
+      return [
+        createPersistedMoveLogEntry({
+          acceptedMove,
+          actorId: readPersistedLogPlayerId(record.log) ?? acceptedMove.actorId,
+          actorSide: postGame.players.find(
+            (player) =>
+              player.id === (readPersistedLogPlayerId(record.log) ?? acceptedMove.actorId),
+          )?.side,
+          index: `${index}-${logIndex}`,
+          moveId,
+          typedLogEntry: record.log,
+          timestamp: record.timestamp,
+        }),
+      ];
+    });
+
+    return [primaryEntry, ...nestedEntries];
   });
+}
+
+function createPersistedMoveLogEntry(input: {
+  acceptedMove: NonNullable<PostGameCanonicalData["acceptedMoves"]>[number];
+  actorId: string;
+  actorSide?: LorcanaPlayerSide;
+  index: string;
+  moveId: string;
+  typedLogEntry?: unknown;
+  timestamp: number;
+}): MoveLogEntrySnapshot {
+  const entry: MoveLogEntrySnapshot = {
+    actorSide: input.actorSide,
+    id: `post-game-${input.acceptedMove.stateVersion}-${input.index}-${input.moveId}`,
+    moveId: input.moveId as MoveLogEntrySnapshot["moveId"],
+    playerId: input.actorId,
+    params:
+      input.moveId === input.acceptedMove.moveId
+        ? normalizePersistedMoveParams(input.acceptedMove.input)
+        : undefined,
+    timestamp: input.timestamp,
+    title: "",
+    turnNumber: input.acceptedMove.turnNumber,
+    typedLogEntry: input.typedLogEntry as MoveLogEntrySnapshot["typedLogEntry"],
+  };
+  const presentation = formatEventLogBody(entry);
+  return {
+    ...entry,
+    title: input.typedLogEntry ? normalizeTimelineText(entry, presentation.text) : "",
+  };
+}
+
+function readPersistedLogMoveType(log: unknown): string | null {
+  if (!log || typeof log !== "object" || !("moveType" in log)) return null;
+  return typeof log.moveType === "string" ? log.moveType : null;
+}
+
+function readPersistedLogPlayerId(log: unknown): string | null {
+  if (!log || typeof log !== "object" || !("playerId" in log)) return null;
+  return typeof log.playerId === "string" ? log.playerId : null;
 }
 
 function normalizePersistedMoveParams(input?: unknown): SimulatorSerializedObject | undefined {

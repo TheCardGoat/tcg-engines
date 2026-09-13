@@ -16,17 +16,24 @@ interface QuickMatchConfigResponse {
   playerId: string;
   botPlayerId: string;
   playerDeckText: string;
+  botDeckText: string | null;
   botFixtureId: string | null;
   botStrategyId: string | null;
 }
 
 export type QuickMatchPlayByIdData =
-  | { status: "ok"; session: PracticeMatchSession; unknownCards: string[] }
+  | {
+      status: "ok";
+      session: PracticeMatchSession;
+      unknownCards: string[];
+      returnTo: string | null;
+    }
   | { status: "error"; message: string };
 
 export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayByIdData> {
   const gameId = event.params.gameId!;
   const cookie = event.request.headers.get("cookie") ?? "";
+  const returnTo = event.url.searchParams.get("returnTo")?.trim() || null;
   const trace = (...args: unknown[]) => {
     if (import.meta.env.DEV) console.log("[quick-match/play]", ...args);
   };
@@ -70,11 +77,16 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayByIdDa
     return { status: "error", message: "The stored deck could not be resolved." };
   }
 
-  const opponentFixture = configResponse.botFixtureId
-    ? DECK_FIXTURES.find((f) => f.id === configResponse.botFixtureId)
-    : DECK_FIXTURES[0];
+  const { sanitizedText: sanitizedOpponentDeck } = configResponse.botDeckText
+    ? await sanitizeDeckText(configResponse.botDeckText)
+    : { sanitizedText: "" };
+  const opponentFixture = sanitizedOpponentDeck
+    ? undefined
+    : configResponse.botFixtureId
+      ? DECK_FIXTURES.find((f) => f.id === configResponse.botFixtureId)
+      : DECK_FIXTURES[0];
 
-  if (!opponentFixture) {
+  if (!opponentFixture && !sanitizedOpponentDeck) {
     trace("fixture not found", { botFixtureId: configResponse.botFixtureId });
     return { status: "error", message: "Bot deck fixture not found." };
   }
@@ -83,8 +95,8 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayByIdDa
 
   const deckConfig: HumanVsAiMatchConfig = {
     playerOneDeckText: sanitizedText,
-    playerTwoDeckText: opponentFixture.cards,
-    playerTwoFixtureId: opponentFixture.id,
+    playerTwoDeckText: sanitizedOpponentDeck || opponentFixture!.cards,
+    ...(opponentFixture ? { playerTwoFixtureId: opponentFixture.id } : {}),
     strategyId: strategy.id,
     seed: createAutomatedMatchSeed(),
   };
@@ -103,5 +115,5 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayByIdDa
     gameId: session.gameId,
   });
 
-  return { status: "ok", session, unknownCards };
+  return { status: "ok", session, unknownCards, returnTo };
 }

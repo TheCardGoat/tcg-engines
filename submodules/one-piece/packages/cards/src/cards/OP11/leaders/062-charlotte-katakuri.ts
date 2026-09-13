@@ -72,6 +72,7 @@ export const op11CharlotteKatakuri062: LeaderCard = {
         ],
         oncePerTurn: true,
         oncePerTurnKey: "katakuri-deck-look",
+        optional: true,
       },
       {
         trigger: "onOpponentAttack",
@@ -102,6 +103,7 @@ export const op11CharlotteKatakuri062: LeaderCard = {
         ],
         oncePerTurn: true,
         oncePerTurnKey: "katakuri-deck-look",
+        optional: true,
       },
     ],
   },

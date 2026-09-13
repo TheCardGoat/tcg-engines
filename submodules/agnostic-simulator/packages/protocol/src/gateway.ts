@@ -1,18 +1,20 @@
+import { PresentationEnvelopeSchema } from "./presentation.js";
 import { z } from "zod";
 import { EngineInteractionView, InteractionSubmission } from "./interactions.js";
-import { AnimationPacketV1Schema } from "./animations.js";
+import { AnimationPlanV2Schema } from "./animations/plan.js";
+import { MAX_HEARTBEAT_ROUND_TRIP_MS } from "./schemas.js";
 
 const opaqueId = z.string().min(1);
 const looseObject = z.record(z.string(), z.unknown());
 const matchStatus = z.enum(["waiting", "in_progress", "completed", "abandoned"]);
 
 /**
- * Raw JSON WebSocket contract for clients that connect to
- * `/v1/gateway/ws?game=<slug>&ticket=<ticket>`.
+ * Gateway event-envelope contract for the game-scoped Socket.IO namespace.
  *
- * This is the deployed native WebSocket shape. Authentication is carried by
- * the WS URL, moves use `moveType`, and state snapshots are included directly
- * on update messages.
+ * Authentication is carried in the Socket.IO handshake auth payload. Moves
+ * use `moveType`, and state snapshots are included directly on update events.
+ * The transport exposes the event name separately; consumers add the `type`
+ * discriminant before validating an inbound payload with these schemas.
  */
 
 export const RawGatewayPingMessageSchema = z
@@ -26,7 +28,8 @@ export const RawGatewayJoinGameMessageSchema = z
   .object({
     type: z.literal("join_game"),
     gameId: opaqueId,
-    role: z.enum(["player", "spectator"]).default("player"),
+    stateVersion: z.number().int().nonnegative().optional(),
+    role: z.enum(["player", "spectator"]).optional(),
     gameProfileId: opaqueId.optional(),
     userId: opaqueId.optional(),
     correlationId: z.string().optional(),
@@ -61,6 +64,15 @@ export const RawGatewaySubmitInteractionMessageSchema = z
 export const RawGatewayHeartbeatMessageSchema = z
   .object({
     type: z.literal("heartbeat"),
+    correlationId: z.string().uuid().optional(),
+    clientSentAt: z.number().int().nonnegative().optional(),
+    previousRoundTripMs: z
+      .number()
+      .nonnegative()
+      .finite()
+      .max(MAX_HEARTBEAT_ROUND_TRIP_MS)
+      .optional(),
+    previousCorrelationId: z.string().uuid().optional(),
     gameProfileId: opaqueId.optional(),
     userId: opaqueId.optional(),
     game: z
@@ -147,7 +159,9 @@ export const RawGatewayGameJoinedMessageSchema = z
     gameId: opaqueId,
     role: z.enum(["player", "spectator"]),
     stateVersion: z.number().int().nonnegative(),
-    state: z.unknown(),
+    state: z.unknown().optional(),
+    resources: z.unknown().optional(),
+    presentation: PresentationEnvelopeSchema.optional(),
     cardsMaps: z.unknown().optional(),
     players: z.array(
       z
@@ -162,6 +176,7 @@ export const RawGatewayGameJoinedMessageSchema = z
     pendingProposal: z.unknown().optional(),
     manualModeEnabled: z.boolean().optional(),
     interactionView: EngineInteractionView.optional(),
+    undoable: z.boolean().optional(),
     correlationId: z.string().optional(),
   })
   .strict();
@@ -236,11 +251,14 @@ const rawGatewayUpdateBase = {
   stateVersion: z.number().int().nonnegative(),
   patches: z.array(z.unknown()),
   engineLogs: z.array(z.unknown()),
-  animations: z.array(AnimationPacketV1Schema),
+  animationPlan: AnimationPlanV2Schema.nullable(),
   state: z.unknown(),
+  resources: z.unknown().optional(),
+  presentation: PresentationEnvelopeSchema.optional(),
   serverProcessingMs: z.number().optional(),
   matchInfo: RawGatewayMatchInfoSchema.optional(),
   interactionView: EngineInteractionView.optional(),
+  undoable: z.boolean().optional(),
 } as const;
 
 export const RawGatewayMoveAcceptedMessageSchema = z
@@ -251,7 +269,7 @@ export const RawGatewayMoveAcceptedMessageSchema = z
     actorId: opaqueId,
     payload: z.unknown().optional(),
     acceptedMove: z.unknown().optional(),
-    undoable: z.boolean().optional(),
+    outcome: z.unknown().optional(),
     correlationId: z.string().optional(),
   })
   .strict();
@@ -289,11 +307,18 @@ export const RawGatewayStateSyncMessageSchema = z
     gameId: opaqueId,
     stateVersion: z.number().int().nonnegative(),
     engineLogs: z.array(z.unknown()),
-    animations: z.array(AnimationPacketV1Schema),
+    animationPlan: z.null(),
     state: z.unknown(),
+    resources: z.unknown().optional(),
+    presentation: PresentationEnvelopeSchema.optional(),
     serverProcessingMs: z.number().optional(),
     matchInfo: RawGatewayMatchInfoSchema.optional(),
+    // Viewer-filtered cards maps (instances/owners/presentation). The server
+    // attaches them whenever the game engine publishes viewer resources; the
+    // schema must accept them or the whole message fails strict parsing.
+    cardsMaps: z.unknown().optional(),
     interactionView: EngineInteractionView.optional(),
+    undoable: z.boolean().optional(),
   })
   .strict();
 
@@ -324,6 +349,14 @@ export const RawGatewayGameEndedMessageSchema = z
   })
   .strict();
 
+export const RawGatewayMatchSessionChangedMessageSchema = z
+  .object({
+    type: z.literal("match_session_changed"),
+    matchId: opaqueId,
+    revision: z.number().int().nonnegative(),
+  })
+  .strict();
+
 export const RawGatewayMatchStateMessageSchema = z
   .object({
     type: z.literal("match_state"),
@@ -345,6 +378,8 @@ export const RawGatewayHeartbeatAckMessageSchema = z
     type: z.literal("heartbeat_ack"),
     serverTime: z.string(),
     stateVersions: z.record(z.string(), z.number().int().nonnegative()),
+    correlationId: z.string().uuid().optional(),
+    clientSentAt: z.number().int().nonnegative().optional(),
   })
   .strict();
 
@@ -370,6 +405,7 @@ export const RawGatewayServerMessageSchema = z.discriminatedUnion("type", [
   RawGatewayMoveRejectedMessageSchema,
   RawGatewayGameEndedMessageSchema,
   RawGatewayMatchStateMessageSchema,
+  RawGatewayMatchSessionChangedMessageSchema,
   RawGatewayHeartbeatAckMessageSchema,
   RawGatewayPongMessageSchema,
   RawGatewayRequestStateSyncServerMessageSchema,

@@ -66,12 +66,59 @@ describe("Marshmallow - Cranky Climber", () => {
 
     expect(testEngine.asPlayerOne().quest(marshmallowCrankyClimber)).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerTwo().resolvePendingByCard(marshmallowCrankyClimber, {
+        targets: [readyTargetA],
+      }),
+    ).toBeSuccessfulCommand();
 
     const readyCount = [readyTargetA, readyTargetB, readyTargetC].filter(
       (card) => !testEngine.isExerted(card),
     ).length;
 
     expect(readyCount).toBe(1);
+  });
+
+  it("lets the opponent choose which exerted character to ready", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        play: [{ card: marshmallowCrankyClimber, isDrying: false }],
+        deck: 5,
+      },
+      {
+        play: [
+          { card: readyTargetA, exerted: true, isDrying: false },
+          { card: readyTargetB, exerted: true, isDrying: false },
+          { card: readyTargetC, exerted: true, isDrying: false },
+        ],
+        deck: 5,
+      },
+    );
+
+    expect(testEngine.asPlayerOne().quest(marshmallowCrankyClimber)).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+
+    const [pendingReadyChoice] = testEngine.asPlayerTwo().getPendingEffects();
+    expect(pendingReadyChoice?.selectionContext).toMatchObject({
+      kind: "target-selection",
+      promptLabel: "Choose a character to ready",
+      minSelections: 1,
+      maxSelections: 1,
+    });
+    expect(
+      pendingReadyChoice?.selectionContext?.kind === "target-selection"
+        ? pendingReadyChoice.selectionContext.cardCandidateIds
+        : [],
+    ).toHaveLength(3);
+    expect(
+      testEngine.asPlayerTwo().resolvePendingByCard(marshmallowCrankyClimber, {
+        targets: [readyTargetB],
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.isExerted(readyTargetA)).toBe(true);
+    expect(testEngine.isExerted(readyTargetB)).toBe(false);
+    expect(testEngine.isExerted(readyTargetC)).toBe(true);
   });
 
   it("does not affect a turn after the next opponent turn", () => {
@@ -91,6 +138,11 @@ describe("Marshmallow - Cranky Climber", () => {
 
     expect(testEngine.asPlayerOne().quest(marshmallowCrankyClimber)).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerTwo().resolvePendingByCard(marshmallowCrankyClimber, {
+        targets: [readyTargetA],
+      }),
+    ).toBeSuccessfulCommand();
 
     const stillExerted = [readyTargetA, readyTargetB].find((card) => testEngine.isExerted(card));
     expect(stillExerted).toBeDefined();
@@ -127,6 +179,16 @@ describe("Marshmallow - Cranky Climber", () => {
     expect(testEngine.asPlayerOne().quest(marshmallowCrankyClimber)).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().quest(secondMarshmallowCrankyClimber)).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+    const [pendingReadyChoice] = testEngine.asPlayerTwo().getPendingEffects();
+    expect(pendingReadyChoice).toBeDefined();
+    if (!pendingReadyChoice) {
+      throw new Error("Expected ICY BLAST to ask which character should ready");
+    }
+    expect(
+      testEngine.asPlayerTwo().resolveEffect(pendingReadyChoice.id, {
+        targets: [readyTargetA],
+      }),
+    ).toBeSuccessfulCommand();
 
     const readyCount = [readyTargetA, readyTargetB, readyTargetC].filter(
       (card) => !testEngine.isExerted(card),

@@ -80,6 +80,33 @@ describe("priority nudge state", () => {
     ).toBe(false);
   });
 
+  it("does not arm during setup or while a player is resolving a selection", () => {
+    for (const categoryId of ["choose-first-player", "alter-hand", "keep-hand"] as const) {
+      expect(isActionablePriorityCategory(categoryId)).toBe(false);
+      expect(
+        shouldArmPriorityNudge({
+          viewerMode: "player",
+          isPostGame: false,
+          ownerSide: "playerOne",
+          prioritySide: "playerOne",
+          moveCategoryIds: [categoryId],
+          hasActiveSelection: false,
+        }),
+      ).toBe(false);
+    }
+
+    expect(
+      shouldArmPriorityNudge({
+        viewerMode: "player",
+        isPostGame: false,
+        ownerSide: "playerOne",
+        prioritySide: "playerOne",
+        moveCategoryIds: ["play-card"],
+        hasActiveSelection: true,
+      }),
+    ).toBe(false);
+  });
+
   it("keeps dismissal scoped to a concrete priority window", () => {
     const first = createPriorityWindowKey({
       ownerSide: "playerOne",

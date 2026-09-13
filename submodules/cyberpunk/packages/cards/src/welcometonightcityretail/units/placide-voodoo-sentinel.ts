@@ -4,9 +4,10 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailPlacideVoodooSentinel = defineCyberpunkCard({
   id: "783a9082-b79c-4b45-bf66-48728ff9b92d",
   slug: "placide-voodoo-sentinel",
+  subname: "Voodoo Sentinel",
   rulesText: "{Play} {Attack} You may discard 1 Program. If you do, bottom-deck a rival Unit.",
-  name: "Placide — Voodoo Sentinel",
-  displayName: "Placide — Voodoo Sentinel",
+  name: "Placide",
+  displayName: "Placide: Voodoo Sentinel",
   canonicalId: "placide-voodoo-sentinel",
   color: "blue",
   classifications: ["Ganger", "Netrunner", "Voodoo Boys"],

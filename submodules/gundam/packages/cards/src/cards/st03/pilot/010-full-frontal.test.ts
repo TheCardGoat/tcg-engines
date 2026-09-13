@@ -73,16 +73,21 @@ describe("Full Frontal (ST03-010)", () => {
       const [fullFrontalId, zeonId] = p1.getHand();
 
       expectSuccess(p1.assignPilot(fullFrontalId!, hostId));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") {
-        throw new Error("Expected Full Frontal's optional deploy choice");
+      const deployChoice = p1.getBoardView().pendingChoice;
+      if (deployChoice?.kind !== "targetSelection") {
+        throw new Error("Expected Full Frontal's deploy target choice");
       }
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
-      expect(p1.getBoardView().pendingChoice).toMatchObject({
+      expect(deployChoice).toMatchObject({
         kind: "targetSelection",
+        optionalDirectiveIndex: deployChoice.directiveIndex,
         legalTargetIds: [zeonId],
       });
-      expectSuccess(p1.resolveEffect({ targets: [zeonId!] }));
+      expectSuccess(
+        p1.resolveEffect({
+          optionalAnswers: { [deployChoice.directiveIndex]: true },
+          targets: [zeonId!],
+        }),
+      );
 
       expect(p1.getCardZone(zeonId!)).toBe(`battleArea:${PLAYER_ONE}`);
       expect(p1.getCardsInZone("resourceArea").filter((id) => p1.isExhausted(id))).toHaveLength(1);
@@ -106,12 +111,9 @@ describe("Full Frontal (ST03-010)", () => {
       const neoZeonId = p1.getHand()[1]!;
 
       expectSuccess(p1.assignPilot(st03FullFrontal010, hostId));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") throw new Error("Expected optional deploy choice");
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
-
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
+        optionalDirectiveIndex: 0,
         legalTargetIds: [neoZeonId],
       });
     });
@@ -134,12 +136,9 @@ describe("Full Frontal (ST03-010)", () => {
       const [, wrongTraitId, eligibleId] = p1.getHand();
 
       expectSuccess(p1.assignPilot(st03FullFrontal010, hostId));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") throw new Error("Expected optional deploy choice");
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
-
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
+        optionalDirectiveIndex: 0,
         legalTargetIds: [eligibleId],
       });
       expect(p1.getBoardView().pendingChoice).not.toMatchObject({
@@ -161,12 +160,9 @@ describe("Full Frontal (ST03-010)", () => {
       const [, tooHighId, eligibleId] = p1.getHand();
 
       expectSuccess(p1.assignPilot(st03FullFrontal010, hostId));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") throw new Error("Expected optional deploy choice");
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
-
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
+        optionalDirectiveIndex: 0,
         legalTargetIds: [eligibleId],
       });
       expect(p1.getBoardView().pendingChoice).not.toMatchObject({
@@ -187,9 +183,15 @@ describe("Full Frontal (ST03-010)", () => {
       const eligibleId = p1.getHand()[1]!;
 
       expectSuccess(p1.assignPilot(st03FullFrontal010, hostId));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") throw new Error("Expected optional deploy choice");
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
+      const deployChoice = p1.getBoardView().pendingChoice;
+      if (deployChoice?.kind !== "targetSelection") {
+        throw new Error("Expected optional deploy target choice");
+      }
+      expectSuccess(
+        p1.resolveEffect({
+          optionalAnswers: { [deployChoice.directiveIndex]: false },
+        }),
+      );
 
       expect(p1.getCardZone(eligibleId)).toBe(`hand:${PLAYER_ONE}`);
       expect(p1.getBoardView().pendingChoice).toBeUndefined();

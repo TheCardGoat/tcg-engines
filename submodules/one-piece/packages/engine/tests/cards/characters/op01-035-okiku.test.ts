@@ -32,7 +32,10 @@ describe("OP01-035 Okiku", () => {
 
     engine.declareAttack(kinEmonId, engine.leader("north"), "south");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [okikuId] }, "south");
+    // Complete the battle before declaring the next attack (6-5-6).
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
     engine.declareAttack(okikuId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
     const view = engine.getView("south");
     expect(
@@ -42,5 +45,6 @@ describe("OP01-035 Okiku", () => {
       view.players.north.characters.find((card) => card?.instanceId === opposingIds[1])?.rested,
     ).toBe(false);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

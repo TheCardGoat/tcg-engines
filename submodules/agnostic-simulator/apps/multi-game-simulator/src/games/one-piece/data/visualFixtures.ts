@@ -5,7 +5,11 @@ import {
   type MatchState,
   type PlayerFixture,
 } from "@tcg/op-engine";
-import { createMatch, createSt01PlayerConfig } from "@tcg/op-engine/practice-st01";
+import {
+  createMatch,
+  createSt01PlayerConfig,
+  placeStartingLife,
+} from "@tcg/op-engine/practice-st01";
 
 export type OnePieceVisualFixtureGroup = "core" | "privacy" | "resources";
 export type OnePieceVisualFixtureId =
@@ -56,8 +60,8 @@ export const ONE_PIECE_VISUAL_FIXTURES: readonly OnePieceVisualFixture[] = [
     label: "Fresh game setup",
     description:
       "A newly prepared ST-01 mirror game before the first turn begins: leaders, opening hands, Life, empty play areas, and full DON!! decks.",
-    buildState: () =>
-      createMatch({
+    buildState: () => {
+      const state = createMatch({
         firstPlayer: SOUTH,
         shuffleDecks: true,
         openingHandSize: 5,
@@ -67,7 +71,11 @@ export const ONE_PIECE_VISUAL_FIXTURES: readonly OnePieceVisualFixture[] = [
           south: createSt01PlayerConfig("You"),
           north: createSt01PlayerConfig("Opponent"),
         },
-      }),
+      });
+      placeStartingLife(state, SOUTH);
+      placeStartingLife(state, "north");
+      return state as MatchState;
+    },
   },
   {
     id: "main-phase-reference",

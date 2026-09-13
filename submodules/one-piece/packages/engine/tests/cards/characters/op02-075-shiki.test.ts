@@ -16,7 +16,8 @@ describe("OP02-075 Shiki", () => {
 
     engine.declareAttack(attacker, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
-    engine.resolveDecision("effectOptional", { optionId: "yes" }, "north");
+    // Life Trigger activation is the only opt-out; returnDon is then mandatory.
+    // With a single DON!! available the cost pays automatically.
 
     const view = engine.getView("north");
     expect(view.players.north.characters.some((card) => card?.cardId === op02Shiki075.id)).toBe(
@@ -27,10 +28,10 @@ describe("OP02-075 Shiki", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("may decline the DON!! cost after activating the Life Trigger", () => {
+  test("does not offer a second opt-out after Life Trigger activation", () => {
     const engine = OnePieceTestEngine.create(
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
-      { life: [op02Shiki075], activeDon: 1 },
+      { life: [op02Shiki075], activeDon: 2 },
       SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
     );
     const attacker = engine.findCardInZone("south", "character", eb01MountainGod018);
@@ -38,14 +39,17 @@ describe("OP02-075 Shiki", () => {
 
     engine.declareAttack(attacker, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
-    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
 
+    // After lifeTrigger "activate", returnDon is mandatory (engine may auto-pay).
+    // There is no effectOptional Skip that would abandon playThisCard.
+    expect(() => engine.pendingDecision("effectOptional", "north")).toThrow(
+      /Could not find a pending effectOptional/,
+    );
     const view = engine.getView("north");
     expect(view.players.north.characters.some((card) => card?.cardId === op02Shiki075.id)).toBe(
-      false,
+      true,
     );
-    expect(view.players.north.donDeckCount).toBe(donDeckBefore);
-    expect(view.prompts).toHaveLength(0);
+    expect(view.players.north.donDeckCount).toBe(donDeckBefore + 1);
   });
 
   test("cannot pay or play itself from Life without a DON!! card to return", () => {

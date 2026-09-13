@@ -110,4 +110,36 @@ describe("OP04-115 Gun Modoki", () => {
     engine.endTurn("south");
     expect(leaderPower(engine, "north")).toBe(powerBefore);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op04GunModoki115],
+        life: [eb01Doma005, eb01Fourtricks025],
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+        activeDon: 1,
+      },
+      {
+        life: [eb01Doma005, eb01Fourtricks025],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    engine.playCard(op04GunModoki115, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

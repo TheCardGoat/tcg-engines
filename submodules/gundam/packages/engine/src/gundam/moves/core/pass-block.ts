@@ -37,7 +37,7 @@ export const passBlock: GundamMoveDefinition<"passBlock"> = {
     return { valid: true };
   },
 
-  execute({ G, playerId, framework }) {
+  execute({ G, playerId, args, framework }) {
     const g = G;
     if (g.turnMetadata.pendingCombat) {
       // Changing stage away from "block-step" lets block-step.endIf fire
@@ -48,7 +48,11 @@ export const passBlock: GundamMoveDefinition<"passBlock"> = {
 
     emitGundamLog(framework, {
       type: "gundam.move.pass",
-      values: { playerId, context: "block" },
+      values: {
+        playerId,
+        context: "block",
+        ...(args?.automatic === true ? { automatic: true } : {}),
+      },
       visibility: { mode: "PUBLIC" },
       category: "action",
     });

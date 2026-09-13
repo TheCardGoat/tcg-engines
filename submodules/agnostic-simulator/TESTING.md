@@ -88,8 +88,8 @@ proof.
 From repo root:
 
 ```sh
-bun run ci:agnostic:check
-bun run ci:agnostic
+pnpm run ci:agnostic:check
+pnpm run ci:agnostic
 ```
 
 From `submodules/agnostic-simulator`:

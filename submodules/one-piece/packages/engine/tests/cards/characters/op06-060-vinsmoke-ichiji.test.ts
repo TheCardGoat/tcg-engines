@@ -77,4 +77,33 @@ describe("OP06-060 Vinsmoke Ichiji", () => {
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(handIchijiId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional Activate: Main so DON!! return and self-trash do not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op06VinsmokeReiju042,
+      hand: [op06VinsmokeIchiji061],
+      character: [op06VinsmokeIchiji060],
+      trash: [op06VinsmokeIchiji061, eb01Doma005],
+      deck: [eb01Doma005, eb01Doma005],
+      activeDon: 1,
+      restedDon: 1,
+    });
+    const sourceId = engine.findCardInZone("south", "character", op06VinsmokeIchiji060);
+
+    engine.activateEffect(sourceId, "activateMain", "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const trashBefore = before.trash.length;
+    const handBefore = before.hand.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.characters.some((card) => card?.instanceId === sourceId)).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

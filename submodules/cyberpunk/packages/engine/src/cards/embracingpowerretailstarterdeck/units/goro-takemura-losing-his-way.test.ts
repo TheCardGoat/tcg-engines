@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailVCorporateExile,
+  theHeistRetailStarterDeckVCorporateExile,
   embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
   welcomeToNightCityRetailCorpoSecurity,
 } from "@tcg/cyberpunk-cards";
@@ -18,7 +18,7 @@ describe("Goro Takemura - Losing His Way", () => {
             hasLag: false,
           },
         ],
-        legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: false }],
+        legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
       },
       {
         field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
@@ -53,7 +53,7 @@ describe("Goro Takemura - Losing His Way", () => {
             hasLag: false,
           },
         ],
-        legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: true }],
+        legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: true }],
       },
       {
         field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],

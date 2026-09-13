@@ -9,7 +9,6 @@ import {
   type RefObject,
 } from "react";
 import { Drawer } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import {
   IconBug,
@@ -20,7 +19,6 @@ import {
   IconMessageCircle,
   IconPlayerPause,
   IconPlayerPlay,
-  IconRobot,
   IconUserPlus,
 } from "@tabler/icons-react";
 import type { SimulatorConnectionDiagnosticInput } from "@tcg/game-page-contract/connection-diagnostic";
@@ -38,7 +36,9 @@ import {
   MobileHandDock,
   MobilePlayerRail,
   MobilePortraitBoard,
+  SimulatorViewportRailPortal,
   MobileZoneInventoryPopover,
+  SimulatorActivityTabs,
   TargetFilterModal,
 } from "@tcg/simulator-ui";
 import { CardImage } from "./CardImage";
@@ -52,7 +52,7 @@ import { useTemporaryRevealedHandCardIds } from "./temporaryHandReveals";
 import { TrashZone } from "./TrashZone";
 import { useGameClock } from "./useGameClock";
 import { useGameState } from "./gameStateContext";
-import { AiControlPanel } from "../AiControlPanel";
+import { DeferredAiControlPanel } from "../AiControlPanel/DeferredAiControlPanel";
 import { ChatPanel } from "../ChatPanel";
 import { ChoiceModal } from "../Prompt/ChoiceModal";
 import { PromptBanner } from "../Prompt/PromptBanner";
@@ -66,7 +66,6 @@ import {
   PLAYER_SIDE_TO_ID,
   formatPlayerIdentityMeta,
   isVisibleSubscriptionTier,
-  resolveAiStatus,
   useBoardMode,
   useEngine,
   useEngineInteractionView,
@@ -92,7 +91,7 @@ import { useDeckRevealForSide } from "./deckReveal";
 import { apiUrl } from "../../../../runtime/gameRuntimeApi";
 import classes from "./MobileBoard.module.css";
 
-type DrawerKey = "logs" | "chat" | "ai" | "actions" | null;
+type DrawerKey = "activity" | "actions" | null;
 
 const MOBILE_EVENT_LOG_ENTRY_CAP = 80;
 const HAND_HELPER_ONE_MIN_WIDTH = 104;
@@ -102,8 +101,6 @@ const HAND_HELPER_MULTI_MIN_WIDTH = 168;
 const HAND_HELPER_MULTI_MAX_WIDTH = 184;
 const HAND_HELPER_MULTI_WIDTH_RATIO = 0.2;
 const HAND_HELPER_GAP = 4;
-const ROTATE_GATE_MESSAGE =
-  "Landscape keeps the board, hand, clocks, and actions visible on small phones.";
 
 const drawerClassNames = {
   body: classes.drawerBody,
@@ -822,95 +819,6 @@ function ClockPill({
   );
 }
 
-function RotateToPlayGate({
-  humanIdentity,
-  rivalIdentity,
-  humanConnection,
-  rivalConnection,
-}: {
-  humanIdentity?: PlayerIdentityBySide[Side];
-  rivalIdentity?: PlayerIdentityBySide[Side];
-  humanConnection?: PlayerConnectionBySide[Side];
-  rivalConnection?: PlayerConnectionBySide[Side];
-}) {
-  const { humanSide } = useEngine();
-  const rivalSide = otherSide(humanSide);
-  const { prioritySide, turnNumber, phase, gameEnded } = useGameState();
-  const clock = useGameClock(prioritySide, { paused: gameEnded });
-  const humanStatus = connectionUiStatus(humanConnection);
-  const rivalStatus = connectionUiStatus(rivalConnection);
-
-  return (
-    <section className={classes.rotateGate}>
-      <div className={classes.rotateGateFrame}>
-        <header className={classes.rotateGateHeader}>
-          <div className={classes.rotateGateStatus}>
-            <span
-              className={classes.connectionDot}
-              data-status={humanStatus === "connected" ? undefined : humanStatus}
-              aria-hidden="true"
-            />
-            <span>{humanStatus === "connected" ? "Connected" : humanStatus}</span>
-          </div>
-          <div className={classes.rotateGateUtilities} aria-label="Landscape utility actions">
-            <UserConfigButton />
-            <a
-              className={classes.rotateGateIconButton}
-              href="/report-player"
-              aria-label="Report player"
-              title="Report player"
-            >
-              <IconFlag3 size={16} stroke={2.2} aria-hidden="true" />
-            </a>
-          </div>
-        </header>
-
-        <div className={classes.rotateGateHero}>
-          <div className={classes.rotatePhone} aria-hidden="true">
-            <span className={classes.rotatePhoneScreen} />
-          </div>
-          <div className={classes.rotateGateCopy}>
-            <p className={classes.rotateGateKicker}>Cyberpunk TCG</p>
-            <h1>Rotate to play</h1>
-            <p>{ROTATE_GATE_MESSAGE}</p>
-          </div>
-        </div>
-
-        <div className={classes.rotateMatchPanel} aria-label="Current match status">
-          <div className={classes.rotatePlayerRow} data-side="rival">
-            <span
-              className={classes.connectionDot}
-              data-status={rivalStatus === "connected" ? undefined : rivalStatus}
-              aria-hidden="true"
-            />
-            <div>
-              <strong>{rivalIdentity?.displayName ?? "Rival"}</strong>
-              <span>{prioritySide === rivalSide ? "Priority" : "Waiting"}</span>
-            </div>
-            <b>{clock[rivalSide].time}</b>
-          </div>
-          <div className={classes.rotateMatchCore}>
-            <span>Turn {turnNumber}</span>
-            <strong>{phase}</strong>
-          </div>
-          <div className={classes.rotatePlayerRow} data-side="player">
-            <span
-              className={classes.connectionDot}
-              data-status={humanStatus === "connected" ? undefined : humanStatus}
-              aria-hidden="true"
-            />
-            <div>
-              <strong>{humanIdentity?.displayName ?? "You"}</strong>
-              <span>{prioritySide === humanSide ? "Priority" : "Waiting"}</span>
-            </div>
-            <b>{clock[humanSide].time}</b>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function MobileDirectAttackDropTarget() {
   const drop = useZoneDroppable("opp-pinfo");
   const { activeSource } = useDragDrop();
@@ -944,98 +852,6 @@ function ReconnectCue() {
     <div className={classes.reconnectCue} role="status" aria-live="polite">
       <strong>Reconnecting</strong>
       <span>Actions are paused while we rejoin the match server.</span>
-    </div>
-  );
-}
-
-function MobileAiRailControl({ onOpen }: { onOpen: () => void }) {
-  const engine = useEngine();
-  const defaultAiSide: Side = otherSide(engine.humanSide);
-  const isTakeover = engine.aiTakeover !== null;
-  const nextAiSide =
-    (["player", "opponent"] as const).find((side) => {
-      if (!engine.aiStrategies[side]) {
-        return false;
-      }
-      const view = engine.interactionViews[side];
-      return (
-        view.status === "choosing" ||
-        (view.status === "ready" && view.actions.some((action) => action.enabled))
-      );
-    }) ?? null;
-  const controlledSide = engine.aiTakeover?.side ?? nextAiSide ?? defaultAiSide;
-  const aiInteractionView = useEngineInteractionView(controlledSide);
-  const aiStrategy = engine.aiTakeover?.strategy ?? engine.aiStrategies[controlledSide];
-  const status = resolveAiStatus({
-    gameEnded: engine.matchState.G.gameEnded,
-    lastError: engine.lastAiError,
-    mode: engine.aiMode,
-    humanSide: engine.humanSide,
-    aiSide: controlledSide,
-    hasStrategy: aiStrategy !== null && !isTakeover,
-    aiInteractionView,
-  });
-  const canToggle = aiStrategy !== null && !engine.matchState.G.gameEnded;
-  const badge =
-    engine.aiMode === "auto"
-      ? "AUTO"
-      : status === "error"
-        ? "ERROR"
-        : status === "you-control"
-          ? "YOU"
-          : "PAUSED";
-  const label =
-    status === "thinking"
-      ? "Bot running"
-      : status === "paused"
-        ? "Bot paused"
-        : status === "waiting"
-          ? engine.aiMode === "auto"
-            ? "Bot waiting"
-            : "Ready to resume"
-          : status === "you-control"
-            ? "You drive"
-            : status === "done"
-              ? "Match ended"
-              : "Check bot";
-  const ActionIcon = engine.aiMode === "auto" ? IconPlayerPause : IconPlayerPlay;
-
-  return (
-    <div className={classes.smartAiControl} data-status={status} data-mode={engine.aiMode}>
-      <button
-        type="button"
-        className={classes.smartAiOpen}
-        aria-label="Open AI controls"
-        title="Open AI controls"
-        onClick={onOpen}
-      >
-        <IconRobot size={15} stroke={2.2} aria-hidden="true" />
-      </button>
-      <button
-        type="button"
-        className={classes.smartAiPrimary}
-        aria-label={
-          canToggle
-            ? engine.aiMode === "auto"
-              ? `Pause bot automation. ${label}.`
-              : `Resume bot automation. ${label}.`
-            : `AI status. ${label}.`
-        }
-        title={canToggle ? label : "Open AI controls"}
-        onClick={() => {
-          if (!canToggle) {
-            onOpen();
-            return;
-          }
-          engine.setAiMode(engine.aiMode === "auto" ? "step" : "auto");
-        }}
-      >
-        <ActionIcon size={14} stroke={2.2} aria-hidden="true" />
-        <span className={classes.smartAiText}>
-          <strong>{label}</strong>
-          <span>{badge}</span>
-        </span>
-      </button>
     </div>
   );
 }
@@ -1576,10 +1392,6 @@ export function MobileBoard({
       ),
     [trashViewerOwnerId, trashViewerZoneId, trashViewerZones.trash],
   );
-  const trashViewerCardsById = useMemo(
-    () => new Map(trashViewerZones.trash.map((card) => [card.cardId, card])),
-    [trashViewerZones.trash],
-  );
   const humanPeekedLegends = usePeekedLegendsForSide(moveLogs, humanSide, turnNumber);
   const rivalPeekedLegends = usePeekedLegendsForSide(moveLogs, rivalSide, turnNumber);
   const boardRef = useRef<HTMLDivElement | null>(null);
@@ -1613,11 +1425,6 @@ export function MobileBoard({
   const dockHumanHelpers =
     promptMode !== "select-target" &&
     canDockHandHelper(humanHandMeasurement, bottomSectionWidth, human.legendArea.length);
-  const phoneLandscapeGate =
-    useMediaQuery(
-      "(orientation: landscape) and (max-height: 520px) and (max-width: 900px)",
-      false,
-    ) ?? false;
   const eventLogEntries = useMemo(
     () => projectMoveLogEntries(matchState, moveLogs, humanSide).slice(-MOBILE_EVENT_LOG_ENTRY_CAP),
     [humanSide, matchState, moveLogs],
@@ -1639,19 +1446,12 @@ export function MobileBoard({
     setConfirmingConcede(true);
   };
 
-  if (phoneLandscapeGate) {
-    return (
-      <RotateToPlayGate
-        humanIdentity={humanIdentity}
-        rivalIdentity={rivalIdentity}
-        humanConnection={playerConnections?.[humanSide]}
-        rivalConnection={playerConnections?.[rivalSide]}
-      />
-    );
-  }
-
-  const rivalLedgerLegends = legendsOf(rival.legendArea, rivalPeekedLegends);
-  const friendlyLedgerLegends = legendsOf(human.legendArea, humanPeekedLegends);
+  const rivalLedgerLegends = legendsOf(rival.legendArea, rivalPeekedLegends).filter(
+    (legend) => !legend.faceDown,
+  );
+  const friendlyLedgerLegends = legendsOf(human.legendArea, humanPeekedLegends).filter(
+    (legend) => !legend.faceDown,
+  );
   const ledgerDensity = mobileLedgerDensity(
     Math.max(rivalLedgerLegends.length, friendlyLedgerLegends.length),
   );
@@ -1697,87 +1497,75 @@ export function MobileBoard({
         }
         data-end-reason={gameEnded ? (winReason ?? undefined) : undefined}
         promptActive={promptActive}
+        externalRails
         overlays={<CombatArrowOverlay containerRef={boardRef} />}
         topRail={
-          <MobilePlayerRail
-            side="opponent"
-            className={classes.mobileTopRail}
-            left={
-              <div className={classes.gameControls}>
-                <button
-                  type="button"
-                  className={classes.gameControlButton}
-                  aria-label="Logs"
-                  title="Logs"
-                  onClick={() => setDrawer("logs")}
-                >
-                  <IconHistory size={15} stroke={2.2} aria-hidden="true" />
-                  <span className={classes.gameControlLabel}>Logs</span>
-                </button>
-                <button
-                  type="button"
-                  className={classes.gameControlButton}
-                  aria-label="Chat"
-                  title="Chat"
-                  onClick={() => setDrawer("chat")}
-                >
-                  <IconMessageCircle size={15} stroke={2.2} aria-hidden="true" />
-                  <span className={classes.gameControlLabel}>Chat</span>
-                </button>
-                <div className={classes.settingsControl}>
-                  <UserConfigButton />
-                </div>
-                {mobileHumanMatch && liveMatchSidebar ? (
+          <SimulatorViewportRailPortal position="top">
+            <MobilePlayerRail
+              side="opponent"
+              className={classes.mobileTopRail}
+              left={
+                <div className={classes.gameControls}>
                   <button
                     type="button"
                     className={classes.gameControlButton}
-                    aria-label="Player actions"
-                    title="Player actions"
+                    aria-label="Open match activity"
+                    title="Activity"
+                    onClick={() => setDrawer("activity")}
+                  >
+                    <IconHistory size={15} stroke={2.2} aria-hidden="true" />
+                    <span className={classes.gameControlLabel}>Activity</span>
+                  </button>
+                  {mobileHumanMatch && liveMatchSidebar ? (
+                    <button
+                      type="button"
+                      className={classes.gameControlButton}
+                      aria-label="Player actions"
+                      title="Player actions"
+                      onClick={() => openPlayerActions("opponent")}
+                    >
+                      <IconDotsVertical size={15} stroke={2.2} aria-hidden="true" />
+                      <span className={classes.gameControlLabel}>Actions</span>
+                    </button>
+                  ) : null}
+                </div>
+              }
+              center={<MobileClockChip side={rivalSide} label="Rival" />}
+              right={
+                mobileHumanMatch ? (
+                  <button
+                    type="button"
+                    className={`${classes.opponentIdentity} ${classes.playerInfoButton}`}
+                    aria-label={`Open actions for ${rivalIdentity?.displayName ?? "opponent"}`}
+                    aria-haspopup="dialog"
                     onClick={() => openPlayerActions("opponent")}
                   >
-                    <IconDotsVertical size={15} stroke={2.2} aria-hidden="true" />
-                    <span className={classes.gameControlLabel}>Actions</span>
+                    <MobileRailIdentity
+                      identity={rivalIdentity}
+                      meta={rivalIdentityMeta}
+                      fallback="Rival"
+                    />
                   </button>
                 ) : (
-                  <MobileAiRailControl onOpen={() => setDrawer("ai")} />
-                )}
-              </div>
-            }
-            center={<MobileClockChip side={rivalSide} label="Rival" />}
-            right={
-              mobileHumanMatch ? (
-                <button
-                  type="button"
-                  className={`${classes.opponentIdentity} ${classes.playerInfoButton}`}
-                  aria-label={`Open actions for ${rivalIdentity?.displayName ?? "opponent"}`}
-                  aria-haspopup="dialog"
-                  onClick={() => openPlayerActions("opponent")}
-                >
-                  <MobileRailIdentity
-                    identity={rivalIdentity}
-                    meta={rivalIdentityMeta}
-                    fallback="Rival"
-                  />
-                </button>
-              ) : (
-                <div className={classes.opponentIdentity} aria-label="Opponent status">
-                  <MobileRailIdentity
-                    identity={rivalIdentity}
-                    meta={rivalIdentityMeta}
-                    fallback="Rival"
-                  />
-                  <a
-                    className={classes.reportPlayerButton}
-                    href="/report-player"
-                    aria-label="Report player"
-                    title="Report player"
-                  >
-                    <IconFlag3 size={14} stroke={2.1} aria-hidden="true" />
-                  </a>
-                </div>
-              )
-            }
-          />
+                  <div className={classes.opponentIdentity} aria-label="Opponent status">
+                    <MobileRailIdentity
+                      identity={rivalIdentity}
+                      meta={rivalIdentityMeta}
+                      fallback="Rival"
+                    />
+                    <a
+                      className={classes.reportPlayerButton}
+                      href="/report-player"
+                      aria-label="Report player"
+                      title="Report player"
+                    >
+                      <IconFlag3 size={14} stroke={2.1} aria-hidden="true" />
+                    </a>
+                  </div>
+                )
+              }
+            />
+          </SimulatorViewportRailPortal>
         }
         opponentHand={
           <div
@@ -1946,50 +1734,60 @@ export function MobileBoard({
           </MobileHandDock>
         }
         bottomRail={
-          <MobilePlayerRail
-            side="player"
-            className={classes.mobileBottomRail}
-            left={
-              <div className={classes.mobilePlayerRailLeft}>
-                {mobileHumanMatch ? (
+          <SimulatorViewportRailPortal position="bottom">
+            <MobilePlayerRail
+              side="player"
+              className={classes.mobileBottomRail}
+              left={
+                <div className={classes.mobilePlayerRailLeft}>
+                  {mobileHumanMatch ? (
+                    <button
+                      type="button"
+                      className={`${classes.opponentIdentity} ${classes.playerIdentity} ${classes.playerInfoButton}`}
+                      aria-label={`Open actions for ${humanIdentity?.displayName ?? "you"}`}
+                      aria-haspopup="dialog"
+                      onClick={() => openPlayerActions("self")}
+                    >
+                      <MobileRailIdentity
+                        identity={humanIdentity}
+                        meta={[humanIdentityMeta, `T${turnNumber}`, phase]
+                          .filter(Boolean)
+                          .join(" · ")}
+                        fallback="You"
+                      />
+                    </button>
+                  ) : (
+                    <div
+                      className={`${classes.opponentIdentity} ${classes.playerIdentity}`}
+                      aria-label="Player status"
+                    >
+                      <MobileRailIdentity
+                        identity={humanIdentity}
+                        meta={[humanIdentityMeta, `T${turnNumber}`, phase]
+                          .filter(Boolean)
+                          .join(" · ")}
+                        fallback="You"
+                      />
+                    </div>
+                  )}
+                </div>
+              }
+              center={<MobileClockChip side={humanSide} label="Your" />}
+              right={
+                <div className={`${classes.gameControls} ${classes.mobilePhaseControls}`}>
+                  <PassTurnControl compact compactLabelStyle="action" actionsOnly />
                   <button
                     type="button"
-                    className={`${classes.opponentIdentity} ${classes.playerIdentity} ${classes.playerInfoButton}`}
-                    aria-label={`Open actions for ${humanIdentity?.displayName ?? "you"}`}
-                    aria-haspopup="dialog"
-                    onClick={() => openPlayerActions("self")}
+                    className={classes.mobileConcedeAction}
+                    disabled={gameEnded}
+                    onClick={requestConcede}
                   >
-                    <MobileRailIdentity
-                      identity={humanIdentity}
-                      meta={[humanIdentityMeta, `T${turnNumber}`, phase]
-                        .filter(Boolean)
-                        .join(" · ")}
-                      fallback="You"
-                    />
+                    Concede
                   </button>
-                ) : (
-                  <div
-                    className={`${classes.opponentIdentity} ${classes.playerIdentity}`}
-                    aria-label="Player status"
-                  >
-                    <MobileRailIdentity
-                      identity={humanIdentity}
-                      meta={[humanIdentityMeta, `T${turnNumber}`, phase]
-                        .filter(Boolean)
-                        .join(" · ")}
-                      fallback="You"
-                    />
-                  </div>
-                )}
-              </div>
-            }
-            center={<MobileClockChip side={humanSide} label="Your" />}
-            right={
-              <div className={`${classes.gameControls} ${classes.mobilePhaseControls}`}>
-                <PassTurnControl compact compactLabelStyle="action" />
-              </div>
-            }
-          />
+                </div>
+              }
+            />
+          </SimulatorViewportRailPortal>
         }
       />
       <TargetFilterModal
@@ -1999,41 +1797,8 @@ export function MobileBoard({
         table={trashViewerTable}
         entities={trashViewerEntities}
         emptyLabel="Trash is empty"
-        renderEntity={(entity) => {
-          const card = trashViewerCardsById.get(entity.id);
-          if (!card) return null;
-
-          return (
-            <div className={classes.trashViewerCard} data-card-id={card.cardId}>
-              <CardImage
-                imageUrl={card.imageUrl}
-                faceDown={card.faceDown}
-                cardType={card.cardType}
-                alt={card.faceDown ? "Face-down card" : card.name}
-                color={card.color}
-                previewDetails={trashCardToPreviewDetails(card)}
-              />
-            </div>
-          );
-        }}
         onClose={() => setTrashViewerSide(null)}
       />
-
-      <Drawer
-        opened={drawer === "ai"}
-        onClose={close}
-        position="bottom"
-        size="80%"
-        title="AI controls"
-        classNames={drawerClassNames}
-      >
-        <AiControlPanel
-          compact
-          embedded
-          hideDecisionLog
-          scenarioActionsVariant={mobileHumanMatch ? "hidden" : "details"}
-        />
-      </Drawer>
 
       <Drawer
         opened={drawer === "actions"}
@@ -2085,30 +1850,37 @@ export function MobileBoard({
       </Drawer>
 
       <Drawer
-        opened={drawer === "logs"}
+        opened={drawer === "activity"}
         onClose={close}
         position="bottom"
-        size="78%"
-        title="Logs"
+        size="82%"
+        title="Match activity"
         classNames={drawerClassNames}
       >
-        <EventLogPanel
-          embedded
-          entries={eventLogEntries}
-          copyText={eventLogCopyText}
-          rawCopyText={rawEventLogCopyText}
+        <SimulatorActivityTabs
+          log={
+            <EventLogPanel
+              embedded
+              entries={eventLogEntries}
+              copyText={eventLogCopyText}
+              rawCopyText={rawEventLogCopyText}
+            />
+          }
+          chat={<ChatPanel compact layout="mobile-drawer" />}
+          secondary={
+            <div className={classes.activityUtilities}>
+              {!mobileHumanMatch ? (
+                <DeferredAiControlPanel
+                  compact
+                  embedded
+                  hideDecisionLog
+                  scenarioActionsVariant="details"
+                />
+              ) : null}
+              <UserConfigButton />
+            </div>
+          }
         />
-      </Drawer>
-
-      <Drawer
-        opened={drawer === "chat"}
-        onClose={close}
-        position="bottom"
-        size="72%"
-        title="Chat"
-        classNames={drawerClassNames}
-      >
-        <ChatPanel compact layout="mobile-drawer" />
       </Drawer>
     </>
   );
@@ -2264,35 +2036,6 @@ function trashCardToSimulatorEntity(
       "data-card-color": card.color,
     },
   };
-}
-
-function trashCardToPreviewDetails(card: TrashViewerCard) {
-  if (card.faceDown) return undefined;
-
-  return {
-    name: card.name,
-    cardType: card.cardType,
-    cost: card.cost,
-    effectiveCost: card.effectiveCost,
-    power: card.power,
-    effectivePower: card.effectivePower,
-    classifications: card.classifications,
-    keywords: card.keywords,
-    rules: [
-      ...card.keywords.map(formatPreviewKeyword),
-      ...(card.rulesText ? [card.rulesText] : []),
-      ...card.effectiveRules
-        .filter((rule) => !card.keywords.includes(rule))
-        .map((rule) => `Effective: ${formatPreviewKeyword(rule)}.`),
-    ],
-    costEffects: card.costEffects,
-    activeEffects: card.activeEffects,
-    hasSellTag: card.hasSellTag,
-  };
-}
-
-function formatPreviewKeyword(value: string): string {
-  return value.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/^./, (first) => first.toUpperCase());
 }
 
 function formatEventLogEntryForClipboard(entry: SimulatorEventLogEntry): string {

@@ -19,7 +19,7 @@ describe("Sidebar · Comms log", () => {
 
     const log = await screen.findByRole("log", { name: /comms log/i });
     expect(within(log).getByText(/to go first/i)).not.toBeNull();
-    expect(screen.getByRole("button", { name: /close match panel/i })).not.toBeNull();
+    expect(screen.getByRole("button", { name: /collapse sidebar/i })).not.toBeNull();
   });
 
   it("renders player ids as pretty names (You / Opponent), not raw engine ids", async () => {
@@ -28,7 +28,7 @@ describe("Sidebar · Comms log", () => {
 
     await user.click(screen.getByRole("button", { name: /i go first/i }));
     const log = await screen.findByRole("log", { name: /comms log/i });
-    expect(within(log).getByText(/you chose you to go first/i)).not.toBeNull();
+    expect(within(log).getByText(/you chose to go first/i)).not.toBeNull();
     expect(log.textContent ?? "").not.toMatch(/player_one|player_two/i);
   });
 });

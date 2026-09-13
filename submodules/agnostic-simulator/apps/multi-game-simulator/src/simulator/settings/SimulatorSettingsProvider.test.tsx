@@ -17,7 +17,37 @@ describe("SimulatorSettingsProvider", () => {
     vi.restoreAllMocks();
   });
 
-  test("ignores stale hydration after a local volume edit", async () => {
+  test("flushes the final edit on page exit without waiting for the debounce", async () => {
+    const fetchMock = vi.fn(() => Promise.resolve(new Response("{}", { status: 200 })));
+    vi.stubGlobal("fetch", fetchMock);
+    renderSettingsProbe(authContext({ isAuthenticated: true, userId: "user-1" }), {
+      soundVolume: 50,
+      cardInteractionMode: "detailed",
+      animationSpeed: "normal",
+    });
+    fireEvent.click(screen.getByRole("button", { name: "set volume" }));
+    fireEvent(window, new Event("pagehide"));
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        method: "PUT",
+        keepalive: true,
+        body: JSON.stringify({
+          playerSettings: {
+            soundVolume: 80,
+            cardInteractionMode: "detailed",
+            animationSpeed: "normal",
+          },
+        }),
+      }),
+    );
+    await act(async () => {
+      vi.advanceTimersByTime(500);
+    });
+    expect(fetchMock).toHaveBeenCalledOnce();
+  });
+
+  test("ignores stale hydration after local settings edits", async () => {
     const getSettings = deferred<Response>();
     const fetchMock = vi.fn((_: RequestInfo | URL, init?: RequestInit) => {
       if (init?.method === "PUT") {
@@ -30,7 +60,9 @@ describe("SimulatorSettingsProvider", () => {
     renderSettingsProbe(authContext({ isAuthenticated: true, userId: "user-1" }));
 
     fireEvent.click(screen.getByRole("button", { name: "set volume" }));
+    fireEvent.click(screen.getByRole("button", { name: "use quick actions" }));
     expect(screen.getByTestId("volume").textContent).toBe("80");
+    expect(screen.getByTestId("card-mode").textContent).toBe("quick");
 
     await act(async () => {
       getSettings.resolve(
@@ -40,6 +72,7 @@ describe("SimulatorSettingsProvider", () => {
     });
 
     expect(screen.getByTestId("volume").textContent).toBe("80");
+    expect(screen.getByTestId("card-mode").textContent).toBe("quick");
 
     await act(async () => {
       vi.advanceTimersByTime(500);
@@ -50,7 +83,13 @@ describe("SimulatorSettingsProvider", () => {
       expect.stringContaining("/v1/users/me/settings"),
       expect.objectContaining({
         method: "PUT",
-        body: JSON.stringify({ gameplaySettings: { soundVolume: 80 } }),
+        body: JSON.stringify({
+          playerSettings: {
+            soundVolume: 80,
+            cardInteractionMode: "quick",
+            animationSpeed: "normal",
+          },
+        }),
       }),
     );
   });
@@ -61,9 +100,13 @@ describe("SimulatorSettingsProvider", () => {
 
     renderSettingsProbe(authContext({ isAuthenticated: true, userId: "user-1" }), {
       soundVolume: 35,
+      cardInteractionMode: "quick",
+      animationSpeed: "slow",
     });
 
     expect(screen.getByTestId("volume").textContent).toBe("35");
+    expect(screen.getByTestId("card-mode").textContent).toBe("quick");
+    expect(screen.getByTestId("animation-speed").textContent).toBe("slow");
 
     await act(async () => {
       await Promise.resolve();
@@ -86,6 +129,8 @@ describe("SimulatorSettingsProvider", () => {
       authContext({ isAuthenticated: true, userId: "user-1" }),
       {
         soundVolume: 35,
+        cardInteractionMode: "detailed",
+        animationSpeed: "normal",
       },
     );
     fireEvent.click(screen.getByRole("button", { name: "set volume" }));
@@ -95,7 +140,13 @@ describe("SimulatorSettingsProvider", () => {
       <SimulatorAuthContextProvider
         value={authContext({ isAuthenticated: true, userId: "user-2" })}
       >
-        <SimulatorSettingsProvider initialSettings={{ soundVolume: 35 }}>
+        <SimulatorSettingsProvider
+          initialSettings={{
+            soundVolume: 35,
+            cardInteractionMode: "detailed",
+            animationSpeed: "normal",
+          }}
+        >
           <SettingsProbe />
         </SimulatorSettingsProvider>
       </SimulatorAuthContextProvider>,
@@ -155,15 +206,25 @@ function renderSettingsProbe(
 
 function SettingsProbe() {
   const {
-    settings: { soundVolume },
+    settings: { soundVolume, cardInteractionMode, animationSpeed },
     setSoundVolume,
+    setCardInteractionMode,
+    setAnimationSpeed,
   } = useSimulatorSettings();
 
   return (
     <section>
       <output data-testid="volume">{soundVolume}</output>
+      <output data-testid="card-mode">{cardInteractionMode}</output>
+      <output data-testid="animation-speed">{animationSpeed}</output>
       <button type="button" onClick={() => setSoundVolume(80)}>
         set volume
+      </button>
+      <button type="button" onClick={() => setCardInteractionMode("quick")}>
+        use quick actions
+      </button>
+      <button type="button" onClick={() => setAnimationSpeed("slow")}>
+        set slow animations
       </button>
     </section>
   );

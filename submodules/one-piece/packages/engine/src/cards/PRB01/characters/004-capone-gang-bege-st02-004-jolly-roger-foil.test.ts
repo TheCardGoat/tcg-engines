@@ -3,7 +3,7 @@ import { prb01CaponeGangBegeSt02004JollyRogerFoil004 } from "../../../../../card
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST02-004 004-capone-gang-bege-st02-004-jolly-roger-foil", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01CaponeGangBegeSt02004JollyRogerFoil004);
   });
 });

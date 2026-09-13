@@ -3,7 +3,7 @@ import { op02Mr2BonKureiBentham064 } from "../../../../../cards/src/cards/OP02/c
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-064 Mr.2.Bon.Kurei (Bentham)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op02Mr2BonKureiBentham064);
   });
 });

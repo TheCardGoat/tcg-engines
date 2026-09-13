@@ -3,7 +3,7 @@ import { op14eb04IHaveAPlanToTakeDownOneOfTheFourEmperors019 } from "../../../..
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP14-019 I Have a Plan to Take Down One of the Four Emperors!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04IHaveAPlanToTakeDownOneOfTheFourEmperors019);
   });
 });

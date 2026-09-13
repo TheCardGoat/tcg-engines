@@ -47,7 +47,7 @@ describe("Zeydra (GD03-054)", () => {
 
     expectSuccess(p1.assignPilot(pilot, unitId));
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    if (optional?.kind !== "targetSelection") throw new Error("Expected the Vagan exile choice");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
@@ -87,7 +87,7 @@ describe("Zeydra (GD03-054)", () => {
 
     expectSuccess(p1.assignPilot(pilot, unitId));
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    if (optional?.kind !== "targetSelection") throw new Error("Expected the Vagan exile choice");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
     expect(p1.getCardsInZone("trash")).toHaveLength(4);

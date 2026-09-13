@@ -43,5 +43,7 @@ describe("OP10-049 Sabo", () => {
     const view = engine.getView("south");
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(allyId);
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(saboId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

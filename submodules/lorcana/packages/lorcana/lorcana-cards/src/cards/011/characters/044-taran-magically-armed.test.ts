@@ -46,6 +46,54 @@ describe("Taran - Magically Armed", () => {
   });
 
   describe("WEAKEN THE CAULDRON - When you play this character, put up to 2 cards from chosen player's discard on the bottom of their deck in any order", () => {
+    // CR 6.1.2–6.1.3: one chosen player's discard; up to includes zero.
+    for (const openPrompt of [false, true]) {
+      it(`rejects mixed-owner cards ${openPrompt ? "in the pending prompt" : "when resolving the bag"} without moving either card`, () => {
+        const engine = LorcanaMultiplayerTestEngine.createWithFixture(
+          { hand: [taranMagicallyArmed], inkwell: 5, discard: [discardCard1], deck: 5 },
+          { discard: [discardCard2, discardCard3], deck: 5 },
+        );
+        const own = engine.findCardInstanceId(discardCard1, "discard", PLAYER_ONE);
+        const opponent = engine.findCardInstanceId(discardCard2, "discard", PLAYER_TWO);
+        const otherOpponent = engine.findCardInstanceId(discardCard3, "discard", PLAYER_TWO);
+        expect(engine.asPlayerOne().playCard(taranMagicallyArmed)).toBeSuccessfulCommand();
+        if (openPrompt) {
+          expect(
+            engine.asPlayerOne().resolvePendingByCard(taranMagicallyArmed),
+          ).toBeSuccessfulCommand();
+        }
+        expect(
+          engine.asPlayerOne().resolvePendingByCard(taranMagicallyArmed, {
+            targets: [own, opponent],
+          }),
+        ).not.toBeSuccessfulCommand();
+        expect(engine.asServer().getCardZone(discardCard1)).toBe("discard");
+        expect(engine.asServer().getCardZone(discardCard2)).toBe("discard");
+        expect(
+          engine.asPlayerOne().resolvePendingByCard(taranMagicallyArmed, {
+            targets: [otherOpponent, opponent],
+          }),
+        ).toBeSuccessfulCommand();
+        expect(engine.getCardInstanceIdsInZone("deck", PLAYER_TWO).slice(0, 2)).toEqual([
+          otherOpponent,
+          opponent,
+        ]);
+        expect(engine.asServer().getCardZone(discardCard1)).toBe("discard");
+      });
+    }
+
+    it("allows choosing zero cards even when both players have discard cards", () => {
+      const engine = LorcanaMultiplayerTestEngine.createWithFixture(
+        { hand: [taranMagicallyArmed], inkwell: 5, discard: [discardCard1], deck: 5 },
+        { discard: [discardCard2], deck: 5 },
+      );
+      expect(engine.asPlayerOne().playCard(taranMagicallyArmed)).toBeSuccessfulCommand();
+      expect(
+        engine.asPlayerOne().resolvePendingByCard(taranMagicallyArmed, { targets: [] }),
+      ).toBeSuccessfulCommand();
+      expect(engine.asServer().getCardZone(discardCard1)).toBe("discard");
+      expect(engine.asServer().getCardZone(discardCard2)).toBe("discard");
+    });
     it("should put up to 2 cards from own discard on bottom of own deck", () => {
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
         hand: [taranMagicallyArmed],

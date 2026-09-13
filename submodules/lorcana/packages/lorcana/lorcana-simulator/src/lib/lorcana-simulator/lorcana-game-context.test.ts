@@ -1,4 +1,4 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it, spyOn } from "bun:test";
 import {
   type CardInstanceId,
   type ChallengePreviewResult,
@@ -250,6 +250,46 @@ function createEngine(options?: {
 }
 
 describe("lorcana game context", () => {
+  it("anchors new server clocks without restarting clocks on local refreshes", () => {
+    const now = spyOn(performance, "now").mockReturnValue(500);
+    const serverTimestamp = 1_700_000_000_000;
+    const board = createBoard(1);
+    board.timerView = {
+      serverTimestamp,
+      players: {
+        player_one: {
+          reserveMsRemaining: 180_000,
+          isRunning: true,
+          startedAtMs: serverTimestamp,
+          timeoutCount: 0,
+          isInNegativeTime: false,
+        },
+      },
+    };
+    try {
+      const engine = createEngine({ board });
+      const context = new LorcanaGameContext(toEngine(engine));
+      expect(context.getPlayerSummary("playerOne")?.timer?.startedAtMs).toBe(500);
+
+      now.mockReturnValue(1_500);
+      context.handleLocaleChanged();
+      engine.setBoard({ ...board, stateID: 2 });
+      context.refreshFromReadModel();
+      expect(context.getPlayerSummary("playerOne")?.timer?.startedAtMs).toBe(500);
+      expect(board.timerView.players?.player_one?.startedAtMs).toBe(serverTimestamp);
+
+      engine.setBoard({
+        ...board,
+        stateID: 3,
+        timerView: { ...board.timerView, serverTimestamp: serverTimestamp + 800 },
+      });
+      context.refreshFromReadModel();
+      expect(context.getPlayerSummary("playerOne")?.timer?.startedAtMs).toBe(700);
+    } finally {
+      now.mockRestore();
+    }
+  });
+
   it("populates move log entries from the engine snapshot refresh", () => {
     const initialEntries = [createLogEntry("Played Stitch")];
     const engine = createEngine({ moveLogEntries: initialEntries });

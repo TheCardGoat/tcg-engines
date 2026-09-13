@@ -43,6 +43,32 @@ describe("Look What You've Done", () => {
     expect(testEngine.getCard(lookTarget).damage).toBe(2);
   });
 
+  it("does not trigger its discard ability when it resolves into discard", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        hand: [lookWhatYouveDone],
+        inkwell: lookWhatYouveDone.cost * 2,
+      },
+      {
+        play: [lookTarget],
+      },
+    );
+
+    expect(
+      testEngine.asPlayerOne().playCard(lookWhatYouveDone, {
+        targets: [lookTarget],
+      }),
+    ).toBeSuccessfulCommand();
+
+    const cardId = testEngine.findCardInstanceId(lookWhatYouveDone, "discard", "player_one");
+    const playMove = testEngine
+      .asPlayerOne()
+      .getAvailableMoves()
+      .find((move) => move.moveId === "playCard");
+
+    expect(playMove?.selectableCardIds ?? []).not.toContain(cardId);
+  });
+
   it("may be played from discard any time this turn after being discarded during your turn", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
       {
@@ -76,6 +102,12 @@ describe("Look What You've Done", () => {
 
     expect(testEngine.getCard(lookTarget).damage).toBe(2);
     expect(testEngine.asPlayerOne().getCardZone(lookWhatYouveDone)).toBe("discard");
+
+    const replayMove = testEngine
+      .asPlayerOne()
+      .getAvailableMoves()
+      .find((move) => move.moveId === "playCard");
+    expect(replayMove?.selectableCardIds ?? []).not.toContain(lookWhatYouveDoneId);
   });
 
   it("may be played from discard any time this turn after Angel discards it as an activated ability cost", () => {
@@ -117,5 +149,11 @@ describe("Look What You've Done", () => {
 
     expect(testEngine.getCard(lookTarget).damage).toBe(4);
     expect(testEngine.asPlayerOne().getCardZone(lookWhatYouveDone)).toBe("discard");
+
+    const replayMove = testEngine
+      .asPlayerOne()
+      .getAvailableMoves()
+      .find((move) => move.moveId === "playCard");
+    expect(replayMove?.selectableCardIds ?? []).not.toContain(lookWhatYouveDoneId);
   });
 });

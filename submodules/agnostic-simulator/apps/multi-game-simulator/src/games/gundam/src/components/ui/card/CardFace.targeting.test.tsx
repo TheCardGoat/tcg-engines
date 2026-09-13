@@ -6,6 +6,10 @@ import { TargetingContext, type TargetingContextValue } from "@tcg/simulator-ui"
 
 import { CardFace } from "./CardFace.tsx";
 import type { GameCardData } from "../types.ts";
+import {
+  LinkTargetPreviewContext,
+  type LinkTargetPreviewValue,
+} from "../link-target-preview-context.tsx";
 
 const CANONICAL_WIDTH = 734;
 const card: GameCardData = {
@@ -18,19 +22,29 @@ const card: GameCardData = {
 
 function Wrap({
   value,
+  linkValue = { active: false, linkCandidateIds: new Set() },
   children,
 }: {
   readonly value: TargetingContextValue;
+  readonly linkValue?: LinkTargetPreviewValue;
   readonly children: ReactNode;
 }) {
-  return <TargetingContext.Provider value={value}>{children}</TargetingContext.Provider>;
+  return (
+    <LinkTargetPreviewContext.Provider value={linkValue}>
+      <TargetingContext.Provider value={value}>{children}</TargetingContext.Provider>
+    </LinkTargetPreviewContext.Provider>
+  );
 }
 
-function renderWithTargeting(value: TargetingContextValue, scale = 0.8) {
+function renderWithTargeting(
+  value: TargetingContextValue,
+  scale = 0.8,
+  linkValue?: LinkTargetPreviewValue,
+) {
   const width = Math.round(CANONICAL_WIDTH * scale);
   const height = Math.round((1024 / 734) * width);
   return render(
-    <Wrap value={value}>
+    <Wrap value={value} linkValue={linkValue}>
       <CardFace card={card} width={width} height={height} />
     </Wrap>,
   );
@@ -82,9 +96,35 @@ describe("CardFace · targeting hover styling", () => {
     expect(el.style.cursor).toBe("pointer");
     expect(el.style.border).toContain("3px solid");
     expect(el.style.border).toContain("rgb(255, 227, 110)");
-    expect(el.style.boxShadow).toContain("255,214,64");
+    const aura = container.querySelector<HTMLElement>("[data-card-aura]")!;
+    expect(aura.style.boxShadow).toContain("255,214,64");
     expect(el.className).toContain("gd-target-candidate");
-    expect(el.style.transform).toBe("none");
+    expect(container.querySelector<HTMLElement>(".gd-card-shell")!.style.transform).toBe("none");
+  });
+
+  it("distinguishes a candidate that meets the selected Pilot's Link Condition", () => {
+    const { container } = renderWithTargeting(
+      {
+        active: true,
+        candidateIds: new Set(["unit_1"]),
+        role: "unit",
+      },
+      0.8,
+      {
+        active: true,
+        linkCandidateIds: new Set(["unit_1"]),
+      },
+    );
+    const el = container.querySelector<HTMLElement>("[data-card-id='unit_1']")!;
+    const aura = container.querySelector<HTMLElement>("[data-card-aura]")!;
+
+    expect(el.dataset.targetingState).toBe("link-candidate");
+    expect(el.style.border).toContain("rgb(134, 255, 209)");
+    expect(el.className).toContain("gd-target-link");
+    expect(aura.className).toContain("gd-target-link");
+    expect(aura.style.boxShadow).toContain("52,235,166");
+    expect(container.querySelector("[data-testid='link-target-marker']")).not.toBeNull();
+    expect(el.getAttribute("aria-label")).toContain("Link Condition met");
   });
 
   it("ignores hover when targeting is inactive", () => {

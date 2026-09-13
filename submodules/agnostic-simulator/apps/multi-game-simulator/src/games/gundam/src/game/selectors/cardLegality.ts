@@ -1,12 +1,9 @@
 import { useMemo, useSyncExternalStore } from "react";
 
 import { useOptionalGundamGame } from "../context.tsx";
-import { usePending } from "../hooks.ts";
 import type { GameSnapshot } from "../store.ts";
-import type { BoardProjection, PendingState } from "../types.ts";
+import type { BoardProjection } from "../types.ts";
 import { interactionViewHasSourceCard } from "./interactionView.ts";
-
-type PendingMoveStep = Extract<PendingState, { status: "collecting" }>["steps"][number];
 
 /**
  * Tri-state legality for a card from the viewer's perspective.
@@ -101,35 +98,4 @@ export function useCardLegality(cardId: string | undefined): CardLegality {
  */
 export function useCardDisabledReason(_cardId: string | undefined): undefined {
   return undefined;
-}
-
-/**
- * Shape of the active targeting step, when the pending move is currently
- * collecting a target. Returns `null` outside target-collection mode.
- *
- * This is the engine's `selectTarget` step from `describeProcedure`,
- * surfaced as a UI selector so card components can light up legal
- * targets without each one re-deriving the same shape from `usePending`.
- */
-export interface TargetingStep {
-  readonly role: string;
-  readonly minTargets: number;
-  readonly maxTargets: number;
-  readonly candidateIds: ReadonlySet<string>;
-}
-
-export function useCurrentTargetingStep(): TargetingStep | null {
-  const { state } = usePending();
-
-  return useMemo<TargetingStep | null>(() => {
-    if (state.status !== "collecting") return null;
-    const step: PendingMoveStep | undefined = state.steps[0];
-    if (!step || step.kind !== "selectTarget") return null;
-    return {
-      role: step.role,
-      minTargets: step.minTargets,
-      maxTargets: step.maxTargets,
-      candidateIds: new Set(step.candidateIds),
-    };
-  }, [state]);
 }

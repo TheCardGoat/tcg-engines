@@ -48,4 +48,41 @@ describe("ST15-002 Edward.Newgate", () => {
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(powerfulId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op10EdwardNewgateSp002],
+        activeDon: op10EdwardNewgateSp002.cost,
+        restedDon: 1,
+      },
+      { character: [eb01Doma005, op01Shanks120] },
+    );
+    engine.playCard(op10EdwardNewgateSp002, "south");
+    const newgateId = engine.findCardInZone("south", "character", op10EdwardNewgateSp002);
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    engine.activateEffect(newgateId, "activateMain", "south");
+
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

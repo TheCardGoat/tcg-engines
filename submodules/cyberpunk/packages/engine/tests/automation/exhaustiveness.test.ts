@@ -22,6 +22,7 @@ describe("exhaustiveness", () => {
       "chooseTarget",
       "chooseTrigger",
       "gainGig",
+      "preventGigSteal",
       "revealDestination",
       "scry",
     ].sort();

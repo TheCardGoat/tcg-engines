@@ -12,6 +12,9 @@ export function parseKeywords(text: string): Keyword[] {
     // Skip if preceded by reference context ("a card with a [Blocker]")
     const before = text.slice(0, match.index);
     if (KEYWORD_REFERENCE_PREFIX.test(before) || /activate\s+the\s+$/i.test(before)) continue;
+    // Skip filter uses: "opponent's [Blocker] Characters" / "[Blocker] Character with"
+    const after = text.slice(match.index + match[0].length);
+    if (/^\s+Characters?\b/i.test(after)) continue;
     const clauseStart = Math.max(
       before.lastIndexOf("."),
       before.lastIndexOf("\n"),

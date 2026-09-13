@@ -8,6 +8,7 @@ import type {
   DelayedEffect,
   ScryDestination,
   CardType,
+  Condition,
 } from "@tcg/cyberpunk-types";
 import type { ZoneRuntimeState } from "@tcg/engine-core";
 import type { GameEvent } from "./game-events.ts";
@@ -44,7 +45,10 @@ export type ActiveEffectKind =
   | "costModifier"
   | "defeatAtEndOfTurnIfAttacked"
   | "preventNextRivalFightDefeat"
-  | "nextFightWinGigSteal";
+  | "nextFightWinGigSteal"
+  | "winsFightsAgainst"
+  | "defeatRivalOnNextFriendlyFightLoss"
+  | "rivalGoSoloCostIncrease";
 export type ActiveEffectOrigin = "static" | "imperative";
 
 export interface ActiveEffect {
@@ -61,6 +65,9 @@ export interface ActiveEffect {
   remainingUses?: number;
   triggered?: boolean;
   minPowerMargin?: number;
+  winsFightsAgainst?: { classifications: string[] };
+  amount?: number;
+  conditions?: Condition[];
   duration: "turn" | "continuous" | "untilSourceNextTurn";
   expiresAtStartOfTurnForPlayerId?: PlayerId;
   origin: ActiveEffectOrigin;
@@ -100,8 +107,21 @@ export interface QueuedTrigger {
 }
 
 export interface ResolvingTrigger extends QueuedTrigger {
+  /**
+   * Resume index into the main ability `effects` list (not option/nested bodies).
+   */
   nextEffectIndex: number;
   costsPaid?: boolean;
+  /**
+   * Nested effect body mid-resolution (chooseEffect option, partial expansion,
+   * if/else follow-ups). Resume runs this list first; `nextEffectIndex` on the
+   * outer ability is preserved independently.
+   */
+  continuation?: {
+    effects: import("@tcg/cyberpunk-types").Effect[];
+    nextIndex: number;
+  };
+  remainingEffects?: Effect[];
 }
 
 export interface TurnMetadata {
@@ -129,6 +149,7 @@ export type PendingChoice =
   | ChooseEffectPendingChoice
   | ChooseTriggerPendingChoice
   | ChooseGigsToStealPendingChoice
+  | PreventGigStealPendingChoice
   | ChooseCardToPlayPendingChoice
   | ChooseCardToMovePendingChoice
   | ChooseCardTypePendingChoice
@@ -235,7 +256,14 @@ export interface ChooseEffectPendingChoice {
   type: "chooseEffect";
   chooserId: PlayerId;
   effectId: string;
-  payload: { options: ChooseEffectOption[] };
+  payload: {
+    options: ChooseEffectOption[];
+    sourceCardId: CardInstanceId;
+    sourcePlayerId: PlayerId;
+    abilityIndex: number;
+    boundTargets: Record<string, string[]>;
+    contextTargets: Record<string, string[]>;
+  };
 }
 
 export interface ChooseTriggerOption {
@@ -270,6 +298,35 @@ export interface ChooseGigsToStealPendingChoice {
   };
 }
 
+/**
+ * Offered to the defending player (the rival about to have a Gig stolen) when
+ * they control a card with the `preventsGigStealByDiscard` rule (e.g. Alt
+ * Cunningham — Mother of Daemons). For each Gig a rival Unit would steal, the
+ * defender may discard one hand card whose cost equals that Gig's face value to
+ * keep the Gig. The resolver move discards the chosen cards and steals only the
+ * remaining dice.
+ */
+export interface PreventGigStealPendingChoice {
+  type: "preventGigSteal";
+  chooserId: PlayerId;
+  effectId: string;
+  payload: {
+    attackerId: CardInstanceId;
+    rivalId: PlayerId;
+    attackerName: string;
+    attackerPower: number;
+    /** Each Gig about to be stolen, with its current face value. */
+    stealEntries: Array<{ dieId: GigDieId; value: number }>;
+    /** Snapshot of the defender's discard-eligible hand cards (cost included). */
+    handEntries: Array<{ cardId: CardInstanceId; cost: number }>;
+    /** Present when a card effect, rather than a direct attack, is stealing the Gigs. */
+    effectSteal?: {
+      sourcePlayerId: PlayerId;
+      sourceCardId: CardInstanceId;
+    };
+  };
+}
+
 export interface ChooseCardToPlayPendingChoice {
   type: "chooseCardToPlay";
   chooserId: PlayerId;
@@ -284,6 +341,12 @@ export interface ChooseCardToPlayPendingChoice {
     sourcePlayerId?: PlayerId;
     abilityIndex?: number;
     ifEffects?: Effect[];
+    /**
+     * Applied when the player declines an optional free-play offer
+     * (e.g. Judy Álvarez — Nothing to Doubt: add the revealed card to hand).
+     */
+    elseEffects?: Effect[];
+    canDecline?: boolean;
   };
 }
 
@@ -302,6 +365,14 @@ export interface ChooseCardToMovePendingChoice {
     ifEffects: Effect[];
     elseEffects: Effect[];
     canDecline?: boolean;
+    /**
+     * Optional binding id. When set, the chosen card ids are published into the
+     * trigger's persistent boundTargets[outputBinding] (a `string[]`, even when
+     * `selection.max` is 1) after resolution, so a later effect in the same
+     * ability can reference the just-moved card(s) (e.g. "play the Gear you
+     * just recovered from trash").
+     */
+    outputBinding?: string;
   };
 }
 

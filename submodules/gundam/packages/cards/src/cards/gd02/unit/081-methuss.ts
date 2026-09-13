@@ -28,15 +28,13 @@ export const gd02Methuss081: UnitCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-081.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-081.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-081.webp",
       productName: "Dual Impact [GD02]",
     },
   ],
   reprints: ["GD02-081"],
   selectedPrintingId: "GD02-081",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-081.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-081.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-081.webp",
   legality: "legal",
   level: 2,
   cost: 2,
@@ -50,28 +48,21 @@ export const gd02Methuss081: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["deploy"],
+        conditions: [{ type: "friendlyBaseInPlay", color: "white" }],
       },
       directives: [
         {
-          condition: {
-            type: "friendlyBaseInPlay",
-            color: "white",
-          },
-          thenDirectives: [
-            {
-              action: {
-                action: "statModifier",
-                stat: "ap",
-                amount: -2,
-                duration: "thisTurn",
-                target: {
-                  owner: "opponent",
-                  cardType: "unit",
-                  count: 1,
-                },
-              },
+          action: {
+            action: "statModifier",
+            stat: "ap",
+            amount: -2,
+            duration: "thisTurn",
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              count: 1,
             },
-          ],
+          },
         },
       ],
       sourceText:

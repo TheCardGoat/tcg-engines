@@ -12,11 +12,9 @@
  */
 
 function utf8ToBase64(text: string): string {
-  if (typeof Buffer !== "undefined") {
-    return Buffer.from(text, "utf-8").toString("base64");
-  }
-  // Browser fallback. `btoa` only handles latin-1, so encode utf-8 bytes
-  // through a binary string first.
+  // `btoa` only handles latin-1, so encode UTF-8 bytes through a binary
+  // string first. This deliberately uses Web APIs rather than Node's Buffer:
+  // the contract is consumed by browser deployables as well as server code.
   const bytes = new TextEncoder().encode(text);
   let binary = "";
   for (const b of bytes) binary += String.fromCharCode(b);
@@ -24,9 +22,6 @@ function utf8ToBase64(text: string): string {
 }
 
 function base64ToUtf8(b64: string): string {
-  if (typeof Buffer !== "undefined") {
-    return Buffer.from(b64, "base64").toString("utf-8");
-  }
   const binary = atob(b64);
   const bytes = new Uint8Array(binary.length);
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);

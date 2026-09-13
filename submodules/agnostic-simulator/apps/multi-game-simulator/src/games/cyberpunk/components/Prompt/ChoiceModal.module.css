@@ -26,9 +26,9 @@
   border-radius: 8px;
   padding: 18px 46px 18px 22px;
   min-width: 360px;
-  width: min(1040px, calc(100vw - 40px));
-  max-width: min(1040px, calc(100vw - 40px));
-  max-height: calc(100dvh - 48px);
+  width: min(880px, calc(100vw - 40px));
+  max-width: min(880px, calc(100vw - 40px));
+  max-height: min(68dvh, 540px);
   overflow-y: auto;
   overscroll-behavior: contain;
   box-shadow:
@@ -93,7 +93,7 @@
 }
 
 .mobileSheet .targetZoneGroups {
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: start;
   gap: 10px;
 }
@@ -113,7 +113,7 @@
 }
 
 .mobileSheet .targetZoneGroup .searchOptions {
-  grid-template-columns: repeat(auto-fill, minmax(86px, 104px));
+  grid-template-columns: minmax(78px, 96px);
   justify-content: center;
 }
 
@@ -129,7 +129,7 @@
 }
 
 .mobileSheet .cardArt {
-  width: min(100%, 86px);
+  width: min(100%, 78px);
 }
 
 .mobileSheet .searchCardMeta {
@@ -391,12 +391,30 @@
 
 .targetZoneGroups {
   display: grid;
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  align-items: start;
+  gap: 12px;
 }
 
 .targetZoneGroup {
   display: grid;
   gap: 6px;
+}
+
+.targetZoneGroup .searchOptions {
+  grid-template-columns: repeat(auto-fill, minmax(108px, 126px));
+  justify-content: center;
+  gap: 8px;
+  padding: 8px;
+}
+
+.targetZoneGroup .cardOption {
+  min-height: 174px;
+  padding: 6px;
+}
+
+.targetZoneGroup .cardArt {
+  width: min(100%, 112px);
 }
 
 .targetZoneHeader {

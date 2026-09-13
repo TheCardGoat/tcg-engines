@@ -3,6 +3,7 @@ import { afterEach } from "vite-plus/test";
 import { cleanup } from "@testing-library/react";
 import { MemoryRouter } from "react-router";
 
+import { SimulatorSettingsProvider } from "../../../../simulator/settings";
 import { SimulatorApp, type SimulatorAppProps } from "../SimulatorApp.tsx";
 import type { DevRuntime } from "../game/dev-runtime.ts";
 
@@ -90,13 +91,15 @@ export function renderSimulator(
     // root; in tests we wrap with `MemoryRouter` so those hooks
     // resolve to a no-op in-memory navigator.
     <MemoryRouter initialEntries={["/vs-ai"]}>
-      <SimulatorApp
-        runtime={dev.runtime}
-        staticResources={dev.staticResources}
-        viewerId={overrides.viewerId ?? dev.p1Id}
-        bot={overrides.bot ?? dev.bot}
-        onRestartScenario={overrides.onRestartScenario}
-      />
+      <SimulatorSettingsProvider>
+        <SimulatorApp
+          runtime={dev.runtime}
+          staticResources={dev.staticResources}
+          viewerId={overrides.viewerId ?? dev.p1Id}
+          bot={overrides.bot ?? dev.bot}
+          onRestartScenario={overrides.onRestartScenario}
+        />
+      </SimulatorSettingsProvider>
     </MemoryRouter>,
   );
   return Object.assign(result, { dev });

@@ -1,5 +1,12 @@
 import * as HoverCard from "@radix-ui/react-hover-card";
-import type { ComponentPropsWithoutRef, ReactElement } from "react";
+import {
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ComponentPropsWithoutRef,
+  type ReactElement,
+} from "react";
+import { createPortal } from "react-dom";
 
 import { cn } from "../../../lib/utils.ts";
 import type { CardTag } from "./card-tags.ts";
@@ -64,7 +71,7 @@ export function CardTagStrip({
                 aria-hidden="true"
               />
               <span className="relative z-10 inline-flex h-6 w-6 items-center justify-center rounded-full">
-                <CollapsedIcon className="h-3.5 w-3.5" aria-hidden="true" />
+                <CollapsedIcon className="h-4 w-4" strokeWidth={2.25} aria-hidden="true" />
               </span>
               <span className="absolute -right-1 -top-1 z-20 inline-flex min-w-3.5 items-center justify-center rounded-full border border-slate-950/80 bg-slate-100 px-1 text-[0.5rem] font-bold leading-none text-slate-900 shadow-sm">
                 {collapsedTagCount}
@@ -136,32 +143,119 @@ interface TagTooltipProps {
 }
 
 function TagTooltip({ tag, side, sideOffset, children }: TagTooltipProps) {
-  const inlinePosition =
-    side === "left"
-      ? "right-full top-1/2 mr-2 -translate-y-1/2"
-      : "bottom-full left-1/2 mb-2 -translate-x-1/2";
+  const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLSpanElement>(null);
+  const focusFromPointerRef = useRef(false);
+  const [position, setPosition] = useState<{
+    left: number;
+    top: number;
+    side: "top" | "bottom" | "left" | "right";
+  } | null>(null);
+
+  useLayoutEffect(() => {
+    if (!open || triggerRef.current === null) return;
+
+    const updatePosition = () => {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+
+      const gutter = 12;
+      const tooltipWidth = Math.min(220, window.innerWidth - gutter * 2);
+      const tooltipHeight = 88;
+      const prefersLeft = side === "left";
+      const resolvedSide = prefersLeft
+        ? rect.left >= tooltipWidth + sideOffset + gutter
+          ? "left"
+          : "right"
+        : rect.top >= tooltipHeight + sideOffset + gutter
+          ? "top"
+          : "bottom";
+      const left = Math.min(
+        Math.max(
+          resolvedSide === "left"
+            ? rect.left - sideOffset
+            : resolvedSide === "right"
+              ? rect.right + sideOffset
+              : rect.left + rect.width / 2 - tooltipWidth / 2,
+          gutter,
+        ),
+        window.innerWidth - tooltipWidth - gutter,
+      );
+      const top = Math.min(
+        Math.max(
+          resolvedSide === "top"
+            ? rect.top - sideOffset
+            : resolvedSide === "bottom"
+              ? rect.bottom + sideOffset
+              : rect.top + rect.height / 2 - tooltipHeight / 2,
+          gutter,
+        ),
+        window.innerHeight - tooltipHeight - gutter,
+      );
+
+      setPosition({
+        left,
+        top,
+        side: resolvedSide,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [open, sideOffset]);
 
   return (
-    <HoverCard.Root openDelay={150} closeDelay={80}>
-      <span className="group/tag-tooltip relative inline-flex">
-        <HoverCard.Trigger asChild>{children}</HoverCard.Trigger>
-        <span
-          className={cn(
-            "pointer-events-none absolute z-[9999] hidden w-max max-w-[220px] rounded-lg border border-white/10 bg-slate-950/95 px-2.5 py-2 text-[0.7rem] leading-snug text-slate-100 opacity-0 shadow-xl transition-opacity duration-150 group-hover/tag-tooltip:block group-hover/tag-tooltip:opacity-100 group-focus-within/tag-tooltip:block group-focus-within/tag-tooltip:opacity-100",
-            inlinePosition,
-          )}
-          style={{ marginBlockEnd: side === "top" ? sideOffset : undefined }}
-          role="tooltip"
-        >
-          <span className="block font-semibold">{tag.label}</span>
-          <span className="mt-1 block text-slate-300">{tag.tooltip}</span>
-        </span>
+    <>
+      <span
+        ref={triggerRef}
+        className="inline-flex"
+        onPointerEnter={() => setOpen(true)}
+        onPointerLeave={() => setOpen(false)}
+        onPointerDown={() => {
+          focusFromPointerRef.current = true;
+          setOpen(false);
+        }}
+        onFocus={() => {
+          if (!focusFromPointerRef.current) setOpen(true);
+          focusFromPointerRef.current = false;
+        }}
+        onBlur={() => {
+          focusFromPointerRef.current = false;
+          setOpen(false);
+        }}
+      >
+        {children}
       </span>
-      <TooltipContent side={side} sideOffset={sideOffset}>
-        <div className="font-semibold">{tag.label}</div>
-        <div className="mt-1 text-slate-300">{tag.tooltip}</div>
-      </TooltipContent>
-    </HoverCard.Root>
+      {open && position
+        ? createPortal(
+            <div
+              role="tooltip"
+              className="pointer-events-none z-[9999] rounded-lg border border-white/10 bg-slate-950/95 px-2.5 py-2 text-[0.7rem] leading-snug text-slate-100 shadow-xl"
+              style={{
+                position: "fixed",
+                left: position.left,
+                top: position.top,
+                width: "min(220px, calc(100vw - 24px))",
+                transform:
+                  position.side === "top"
+                    ? "translateY(-100%)"
+                    : position.side === "left"
+                      ? "translateX(-100%)"
+                      : undefined,
+              }}
+            >
+              <span className="block font-semibold">{tag.label}</span>
+              <span className="mt-1 block text-slate-300">{tag.tooltip}</span>
+            </div>,
+            document.body,
+          )
+        : null}
+    </>
   );
 }
 
@@ -186,7 +280,11 @@ function TagButton({ tag, compact }: TagButtonProps) {
       title={`${tag.label} — ${tag.tooltip}`}
       onClick={(event) => event.stopPropagation()}
     >
-      <Icon className={compact ? "h-3.5 w-3.5" : "h-3.5 w-3.5 shrink-0"} aria-hidden="true" />
+      <Icon
+        className={compact ? "h-4 w-4" : "h-4 w-4 shrink-0"}
+        strokeWidth={2.25}
+        aria-hidden="true"
+      />
       {!compact && <span className="leading-none">{tag.label}</span>}
     </button>
   );
@@ -197,14 +295,17 @@ function TooltipContent({
   sideOffset,
   className,
   children,
+  ...contentProps
 }: ComponentPropsWithoutRef<typeof HoverCard.Content>) {
   return (
     <HoverCard.Portal>
       <HoverCard.Content
         side={side}
         sideOffset={sideOffset}
+        collisionPadding={12}
+        {...contentProps}
         className={cn(
-          "z-50 max-w-[220px] rounded-lg border border-white/10 bg-slate-950/95 px-2.5 py-2 text-[0.7rem] leading-snug text-slate-100 shadow-xl",
+          "z-[9999] max-w-[220px] rounded-lg border border-white/10 bg-slate-950/95 px-2.5 py-2 text-[0.7rem] leading-snug text-slate-100 shadow-xl",
           className,
         )}
       >

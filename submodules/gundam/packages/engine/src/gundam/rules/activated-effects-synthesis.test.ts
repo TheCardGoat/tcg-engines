@@ -115,12 +115,14 @@ describe("activateAbility — target validation (rule 10-3-3)", () => {
     const supporter = createMockUnit({
       keywordEffects: [{ keyword: "Support", value: 1 }],
     });
-    const engine = GundamTestEngine.create({ play: [supporter] }, {});
+    const ally = createMockUnit();
+    const engine = GundamTestEngine.create({ play: [supporter, ally] }, {});
     const p1 = engine.asPlayer(PLAYER_ONE);
     const supporterId = p1.getCardsInZone("battleArea")[0]!;
 
     // Self-targeting Support is illegal per excludeSource on the
-    // synthetic filter.
+    // synthetic filter. A second friendly Unit keeps the 10-2-2
+    // activation gate from firing first.
     expectFailure(p1.activateAbility(supporterId, 0, { targets: [supporterId] }), "ILLEGAL_TARGET");
   });
 
@@ -165,8 +167,9 @@ describe("Support synthetic filter — zone gating (rule 13-1-3)", () => {
     const supporter = createMockUnit({
       keywordEffects: [{ keyword: "Support", value: 2 }],
     });
+    const ally = createMockUnit({ ap: 2, hp: 3 });
     const inHand = createMockUnit({ ap: 3, hp: 5 });
-    const engine = GundamTestEngine.create({ play: [supporter], hand: [inHand] }, {});
+    const engine = GundamTestEngine.create({ play: [supporter, ally], hand: [inHand] }, {});
     const p1 = engine.asPlayer(PLAYER_ONE);
     const supporterId = p1.getCardsInZone("battleArea")[0]!;
     const handId = p1.getCardsInZone("hand")[0]!;

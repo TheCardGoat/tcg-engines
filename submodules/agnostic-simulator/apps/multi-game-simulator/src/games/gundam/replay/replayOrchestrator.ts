@@ -1,282 +1,196 @@
-import type { JsonPatch, ReplayStep } from "@tcg/game-page-contract";
+import type { ReplayPlaybackV1 } from "@tcg/game-page-contract";
+import type { GundamG, MatchState } from "@tcg/gundam-engine";
+import { ReplayPlaybackController } from "@tcg/simulator-runtime";
+import { readGundamPresentation, type GundamPresentation } from "@tcg/gundam-server-adapter";
+import { parseGundamLiveProjection } from "../src/engine/live/liveProjection.ts";
+import type { GundamReplayViewerState } from "../src/engine/live/liveState.ts";
+import { displayTurn } from "../src/game/labels.ts";
 
-import type { GundamReplayData } from "./fetchReplay.ts";
-
+/** Gundam renderer binding over the shared replay cursor and patch controller. */
 export class GundamReplayOrchestrator {
   readonly gameId: string;
   readonly matchId: string;
-  readonly replay: GundamReplayData;
+  readonly presentation: GundamPresentation | undefined;
 
-  readonly #states: readonly Record<string, unknown>[];
+  readonly #controller: ReplayPlaybackController;
   readonly #turnNumbers: readonly number[];
-  #currentStep = 0;
-  #isPlaying = false;
-  #speedMs = 800;
-  #timer: ReturnType<typeof setTimeout> | null = null;
-  #listeners = new Set<() => void>();
 
-  constructor(replay: GundamReplayData) {
-    if (replay.gameType !== "gundam") {
-      throw new Error(`Replay is for ${replay.gameType}, not Gundam.`);
+  constructor(playback: ReplayPlaybackV1) {
+    if (playback.replay.gameType !== "gundam") {
+      throw new Error(`Replay is for ${playback.replay.gameType}, not Gundam.`);
     }
-    this.gameId = replay.gameId;
-    this.matchId = replay.matchId;
-    this.replay = replay;
-
-    const states: Record<string, unknown>[] = [parseReplayState(replay.initialState)];
-    const turns: number[] = [readTurnNumber(states[0])];
-    let currentState: unknown = states[0];
-
-    replay.steps.forEach((step, stepIndex) => {
-      currentState = applyReplayJsonPatches(currentState, step.patches, {
-        gameId: replay.gameId,
-        matchId: replay.matchId,
-        stepIndex,
-        acceptedMove: step.acceptedMove,
-      });
-      const state = parseReplayState(currentState);
-      states.push(state);
-      turns.push(readTurnNumber(state));
-    });
-
-    this.#states = states;
-    this.#turnNumbers = turns;
+    this.gameId = playback.replay.gameId;
+    this.matchId = playback.replay.matchId;
+    this.presentation =
+      readGundamPresentation(playback.resources) ??
+      readGundamPresentation({ cardsMaps: (playback.replay as { cardsMaps?: unknown }).cardsMaps });
+    this.#controller = new ReplayPlaybackController(playback);
+    this.#turnNumbers = this.#buildTurnNumbers();
   }
 
   subscribe(listener: () => void): () => void {
-    this.#listeners.add(listener);
-    return () => this.#listeners.delete(listener);
+    return this.#controller.subscribe(() => listener());
   }
 
   get currentStep(): number {
-    return this.#currentStep;
+    return this.#controller.snapshot.cursor;
   }
 
   get totalSteps(): number {
-    return this.#states.length;
+    return this.#controller.snapshot.totalSteps + 1;
   }
 
   get currentTurn(): number {
-    return this.#turnNumbers[this.#currentStep] ?? 0;
+    return displayTurn(this.#currentEngineTurn);
   }
 
   get totalTurns(): number {
-    return Math.max(0, ...this.#turnNumbers);
+    return displayTurn(Math.max(0, ...this.#turnNumbers));
   }
 
   get isPlaying(): boolean {
-    return this.#isPlaying;
+    return this.#controller.snapshot.isPlaying;
   }
 
   get isAtEnd(): boolean {
-    return this.#currentStep >= this.#states.length - 1;
+    return this.currentStep >= this.totalSteps - 1;
   }
 
-  get currentState(): Record<string, unknown> {
-    return this.#states[this.#currentStep]!;
+  get currentState(): GundamReplayViewerState {
+    return parseReplayState(this.#controller.snapshot.state);
   }
 
-  stateAt(step: number): Record<string, unknown> {
-    const clamped = Math.max(0, Math.min(step, this.#states.length - 1));
-    return this.#states[clamped]!;
+  stateAt(step: number): GundamReplayViewerState {
+    const reader = new ReplayPlaybackController(this.#controller.playback);
+    reader.seek(step);
+    const state = parseReplayState(reader.snapshot.state);
+    reader.dispose();
+    return state;
   }
 
   goToStep(step: number): void {
-    const clamped = Math.max(0, Math.min(step, this.#states.length - 1));
-    if (clamped === this.#currentStep) return;
-    this.#currentStep = clamped;
-    this.#notify();
+    this.#controller.seek(step);
+  }
+
+  cursorForStateVersion(stateVersion: number): number {
+    return this.#controller.cursorForStateVersion(stateVersion);
+  }
+
+  goToStateVersion(stateVersion: number): void {
+    this.#controller.seekStateVersion(stateVersion);
   }
 
   nextStep(): void {
-    this.goToStep(this.#currentStep + 1);
+    this.#controller.next();
   }
 
   prevStep(): void {
-    this.goToStep(this.#currentStep - 1);
+    this.#controller.previous();
   }
 
   nextTurn(): void {
-    const currentTurn = this.currentTurn;
-    for (let i = this.#currentStep + 1; i < this.#turnNumbers.length; i++) {
-      if ((this.#turnNumbers[i] ?? 0) > currentTurn) {
-        this.goToStep(i);
-        return;
-      }
-    }
-    this.goToStep(this.#states.length - 1);
+    const currentTurn = this.#currentEngineTurn;
+    const next = this.#turnNumbers.findIndex(
+      (turn, cursor) => cursor > this.currentStep && turn > currentTurn,
+    );
+    this.goToStep(next === -1 ? this.totalSteps - 1 : next);
   }
 
   prevTurn(): void {
-    const currentTurn = this.currentTurn;
-    const firstOfCurrentTurn = this.#turnNumbers.indexOf(currentTurn);
-    if (firstOfCurrentTurn !== -1 && this.#currentStep > firstOfCurrentTurn) {
-      this.goToStep(firstOfCurrentTurn);
+    const currentTurn = this.#currentEngineTurn;
+    const firstOfCurrent = this.#turnNumbers.indexOf(currentTurn);
+    if (firstOfCurrent !== -1 && this.currentStep > firstOfCurrent) {
+      this.goToStep(firstOfCurrent);
       return;
     }
-    const prevTurn = this.#turnNumbers[this.#currentStep - 1] ?? 0;
-    const firstOfPrevTurn = this.#turnNumbers.indexOf(prevTurn);
-    this.goToStep(firstOfPrevTurn === -1 ? 0 : firstOfPrevTurn);
+    const previousTurn = this.#turnNumbers[this.currentStep - 1] ?? 0;
+    this.goToStep(Math.max(0, this.#turnNumbers.indexOf(previousTurn)));
   }
 
   togglePlay(): void {
-    if (this.#isPlaying) this.pause();
-    else this.play();
-  }
-
-  play(): void {
-    if (this.#isPlaying) return;
-    if (this.isAtEnd) this.goToStep(0);
-    this.#isPlaying = true;
-    this.#notify();
-    this.#scheduleNext();
-  }
-
-  pause(): void {
-    this.#isPlaying = false;
-    this.#clearTimer();
-    this.#notify();
+    if (this.isPlaying) this.#controller.pause();
+    else this.#controller.play();
   }
 
   dispose(): void {
-    this.pause();
-    this.#listeners.clear();
+    this.#controller.dispose();
   }
 
-  #scheduleNext(): void {
-    this.#timer = setTimeout(() => {
-      this.#timer = null;
-      if (!this.#isPlaying) return;
-      if (this.isAtEnd) {
-        this.#isPlaying = false;
-        this.#notify();
-        return;
-      }
-      this.nextStep();
-      this.#scheduleNext();
-    }, this.#speedMs);
-  }
-
-  #clearTimer(): void {
-    if (this.#timer) clearTimeout(this.#timer);
-    this.#timer = null;
-  }
-
-  #notify(): void {
-    for (const listener of this.#listeners) listener();
-  }
-}
-
-interface ReplayPatchContext {
-  readonly gameId: string;
-  readonly matchId: string;
-  readonly stepIndex: number;
-  readonly acceptedMove: ReplayStep["acceptedMove"];
-}
-
-interface JsonPatchOperation {
-  readonly op: "add" | "remove" | "replace";
-  readonly path: string | readonly (string | number)[];
-  readonly value?: unknown;
-}
-
-export function applyReplayJsonPatches(
-  root: unknown,
-  patches: JsonPatch,
-  context: ReplayPatchContext,
-): unknown {
-  const next = structuredClone(root);
-  patches.forEach((patch, patchIndex) => {
-    if (!isJsonPatchOperation(patch)) {
-      // eslint-disable-next-line no-console
-      console.warn("[GundamReplay] Ignoring unsupported replay patch", {
-        ...context,
-        patchIndex,
-        patch,
-      });
-      return;
+  #buildTurnNumbers(): number[] {
+    const turns: number[] = [];
+    for (let cursor = 0; cursor < this.totalSteps; cursor += 1) {
+      this.#controller.seek(cursor);
+      turns.push(readTurnNumber(parseReplayState(this.#controller.snapshot.state)));
     }
-    applyJsonPatch(next, patch);
-  });
-  return next;
-}
-
-function applyJsonPatch(root: unknown, patch: JsonPatchOperation): void {
-  const segments = parsePatchPath(patch.path);
-  if (segments.length === 0) throw new Error("Replay patch cannot replace the root state.");
-  const key = segments[segments.length - 1]!;
-  const parent = resolvePatchParent(root, segments.slice(0, -1));
-
-  if (Array.isArray(parent)) {
-    if (key === "length") {
-      if (patch.op !== "replace" || typeof patch.value !== "number") {
-        throw new Error(`Replay patch array length is invalid at ${segments.join("/")}`);
-      }
-      parent.length = patch.value;
-      return;
-    }
-    const index = key === "-" ? parent.length : Number(key);
-    if (!Number.isInteger(index)) throw new Error(`Replay patch array path is invalid: ${key}`);
-    if (patch.op === "remove") parent.splice(index, 1);
-    else if (patch.op === "add") parent.splice(index, 0, patch.value);
-    else parent[index] = patch.value;
-    return;
+    this.#controller.seek(0);
+    return turns;
   }
 
-  if (!isRecord(parent)) throw new Error(`Replay patch parent is invalid: ${segments.join("/")}`);
-  if (patch.op === "remove") delete parent[key];
-  else parent[key] = patch.value;
-}
-
-function resolvePatchParent(root: unknown, segments: readonly string[]): unknown {
-  let cursor = root;
-  for (const segment of segments) {
-    if (Array.isArray(cursor)) cursor = cursor[Number(segment)];
-    else if (isRecord(cursor)) cursor = cursor[segment];
-    else throw new Error(`Replay patch path is invalid: ${segments.join("/")}`);
+  get #currentEngineTurn(): number {
+    return this.#turnNumbers[this.currentStep] ?? 0;
   }
-  return cursor;
 }
 
-function parsePatchPath(path: JsonPatchOperation["path"]): string[] {
-  if (typeof path === "string") {
-    return path
-      .split("/")
-      .slice(1)
-      .map((segment) => segment.replaceAll("~1", "/").replaceAll("~0", "~"));
-  }
-  return path.map(String);
-}
-
-function isJsonPatchOperation(value: unknown): value is JsonPatchOperation {
-  if (!isRecord(value)) return false;
-  return (
-    (value.op === "add" || value.op === "remove" || value.op === "replace") &&
-    (typeof value.path === "string" || Array.isArray(value.path))
-  );
-}
-
-function parseReplayState(value: unknown): Record<string, unknown> {
+function parseReplayState(value: unknown): GundamReplayViewerState {
   if (typeof value === "string") {
     try {
       return parseReplayState(JSON.parse(value) as unknown);
     } catch {
-      throw new Error("Replay initial state was not valid JSON.");
+      throw new Error("Replay state was not valid JSON.");
     }
   }
-  if (isRecord(value) && "G" in value && "ctx" in value) return value;
+  const projection = parseGundamLiveProjection(value);
+  if (projection) return projection;
+  if (isGundamReplayState(value)) return value;
   if (isRecord(value) && "state" in value) return parseReplayState(value.state);
   if (isRecord(value) && "engineSnapshot" in value) return parseReplayState(value.engineSnapshot);
-  throw new Error("Replay did not contain a Gundam match state.");
+  throw new Error("Replay did not contain a valid Gundam engine snapshot.");
 }
 
-function readTurnNumber(state: Record<string, unknown>): number {
-  const ctx = state.ctx;
-  if (!isRecord(ctx)) return 0;
-  const turn = ctx.turnNumber;
-  return typeof turn === "number" ? turn : 0;
+function readTurnNumber(state: GundamReplayViewerState): number {
+  return "ctx" in state ? state.ctx.status.turn : state.status.turn;
+}
+
+function isGundamReplayState(value: unknown): value is MatchState<GundamG> {
+  if (!isRecord(value) || !isRecord(value.G) || !isRecord(value.ctx)) return false;
+  const { ctx } = value;
+  return (
+    typeof ctx.protocolVersion === "string" &&
+    typeof ctx.matchID === "string" &&
+    typeof ctx.gameID === "string" &&
+    typeof ctx.rulesetHash === "string" &&
+    typeof ctx._stateID === "number" &&
+    Array.isArray(ctx.playerIds) &&
+    ctx.playerIds.every((playerId) => typeof playerId === "string") &&
+    isZoneRuntimeState(ctx.zones) &&
+    isRecord(ctx.status) &&
+    typeof ctx.status.turn === "number" &&
+    typeof ctx.status.activePlayer === "string" &&
+    typeof ctx.status.gameEnded === "boolean" &&
+    Array.isArray(ctx.status.pendingDecision) &&
+    isRecord(ctx.time) &&
+    isRecord(ctx.random)
+  );
+}
+
+function isZoneRuntimeState(value: unknown): boolean {
+  if (!isRecord(value)) return false;
+  const publicZones = value.public;
+  const privateZones = value.private;
+  const reveals = value.reveals;
+  return (
+    isRecord(publicZones) &&
+    isRecord(publicZones.zoneSummaries) &&
+    isRecord(privateZones) &&
+    isRecord(privateZones.zoneCards) &&
+    isRecord(privateZones.cardIndex) &&
+    isRecord(privateZones.cardMeta) &&
+    isRecord(reveals) &&
+    isRecord(reveals.active) &&
+    typeof reveals.nextId === "number"
+  );
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null;
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }

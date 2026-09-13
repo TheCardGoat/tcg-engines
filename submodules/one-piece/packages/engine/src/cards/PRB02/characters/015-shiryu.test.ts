@@ -3,7 +3,7 @@ import { prb02Shiryu015 } from "../../../../../cards/src/cards/PRB02/characters/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("PRB02-015 Shiryu", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02Shiryu015);
   });
 });

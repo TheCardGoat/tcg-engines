@@ -1,9 +1,11 @@
-import type { CSSProperties } from "react";
+import type { SimulatorEntity } from "@tcg/simulator-contract";
+import { ResourceCardZone } from "@tcg/simulator-ui";
+
 import { CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
 import { useZoneDroppable } from "./useZoneDroppable";
-import { ZoneBadge } from "./ZoneBadge";
 import type { Side } from "../../engine";
+import { cyberpunkCardZoneToSimulatorZone } from "../../engine/projectSimulator";
 import classes from "./EddiesZone.module.css";
 
 interface EddieCardDisplay {
@@ -39,6 +41,8 @@ export function EddiesZone({
   side,
 }: EddiesZoneProps) {
   const zoneName = opponent ? "opp-eddies" : "p-eddies";
+  const resolvedSide = side ?? (opponent ? "opponent" : "player");
+  const zone = cyberpunkCardZoneToSimulatorZone("eddieArea", resolvedSide);
   const drop = useZoneDroppable(zoneName);
   const { activeSource } = useDragDrop();
   const dropReady = activeSource?.zone === "p-hand" && zoneName === "p-eddies" ? "sell" : undefined;
@@ -59,65 +63,95 @@ export function EddiesZone({
   const readyCards = renderedCards.filter((card) => !card.spent);
   const spentCards = renderedCards.filter((card) => card.spent);
   const orderedCards = [...readyCards, ...spentCards];
-  const rowStyle = {
-    "--eddie-card-count": Math.max(orderedCards.length, 1),
-  } as CSSProperties;
+  const entities = orderedCards.map((card, index) => eddieEntity(card, index, zone));
+  const cardById = new Map(entities.map((entity, index) => [entity.id, orderedCards[index]!]));
 
   return (
-    <div
-      ref={drop.setNodeRef}
-      className={`${classes.zone} ${opponent ? classes.opponent : ""} ${drop.isOver ? classes.dropOver : ""}`}
-      data-testid="eddies-zone"
-      data-zone-id={opponent ? "opp-eddieArea" : "p-eddieArea"}
-      data-sim-zone-id={opponent ? "opp-eddieArea" : "p-eddieArea"}
-      data-side={side}
-      data-count={count}
-      data-card-count={cardCount}
-      data-available-count={availableCount}
-      data-total-count={totalCount}
-      data-drop-ready={dropReady}
-      data-drop-over={drop.isOver ? "true" : "false"}
-    >
-      <div
-        className={classes.counter}
-        aria-label={`Eddies ${counterLabel}`}
-        data-testid="eddies-counter"
-        data-sim-anchor-id={`${opponent ? "opp" : "p"}-eddies`}
-        data-available={availableCount}
-        data-total={totalCount}
-        data-resource="eddies"
-        data-sim-value={counterLabel}
-        data-player-side={side}
-      >
-        {counterLabel}
-      </div>
-      <div className={classes.row} style={rowStyle}>
-        {orderedCards.map((card, i) => (
-          <div
-            key={card.cardId ?? i}
-            className={`${classes.card} ${card.spent ? classes.spent : ""} ${card.revealed ? classes.revealed : ""}`}
-            data-testid="card"
-            data-card-kind="card"
-            data-entity-id={card.cardId}
-            data-instance-id={card.cardId}
-            data-definition-id={card.revealed ? card.definitionId : undefined}
-            data-card-name={card.revealed ? card.name : undefined}
-            data-sim-entity-id={card.cardId}
-            data-face={card.revealed ? undefined : "hidden"}
-            data-spent={card.spent ? "true" : "false"}
-            data-revealed={card.revealed ? "true" : "false"}
-          >
-            <CardImage
-              faceDown={!card.revealed}
-              imageUrl={card.revealed ? card.imageUrl : undefined}
-              alt={card.revealed ? (card.name ?? "Sold card") : "Eddie"}
-            />
-          </div>
-        ))}
-      </div>
-      <ZoneBadge position={opponent ? "top" : "bottom"} label="Eddies">
-        Eddies
-      </ZoneBadge>
-    </div>
+    <ResourceCardZone
+      zone={{ ...zone, entityIds: entities.map((entity) => entity.id), count: cardCount }}
+      entities={entities}
+      entityCount={totalCount}
+      availableCount={availableCount}
+      label="Eddies"
+      emptyLabel="Eddies"
+      zoneSlotClassName={classes.zoneSlot}
+      className={`${classes.zone} ${opponent ? classes.opponent : ""} ${
+        drop.isOver ? classes.dropOver : ""
+      }`}
+      rowClassName={classes.row}
+      counterClassName={classes.counter}
+      counterAttributes={{
+        "data-testid": "eddies-counter",
+        "data-available": availableCount,
+        "data-total": totalCount,
+        "data-resource": "eddies",
+        "data-sim-value": counterLabel,
+        "data-player-side": side,
+      }}
+      entityClassName={(entity) => {
+        const card = cardById.get(entity.id);
+        return `${classes.card} ${card?.spent ? classes.spent : ""} ${
+          card?.revealed ? classes.revealed : ""
+        }`;
+      }}
+      entityAttributes={(entity) => {
+        const card = cardById.get(entity.id);
+        return {
+          "data-testid": "card",
+          "data-card-kind": "card",
+          "data-instance-id": card?.cardId,
+          "data-definition-id": card?.revealed ? card.definitionId : undefined,
+          "data-card-name": card?.revealed ? card.name : undefined,
+          "data-face": card?.revealed ? undefined : "hidden",
+          "data-spent": card?.spent ? "true" : "false",
+          "data-revealed": card?.revealed ? "true" : "false",
+          "data-resource-state": card?.spent ? "spent" : "ready",
+        };
+      }}
+      anchorId={`${opponent ? "opp" : "p"}-eddies`}
+      elementRef={drop.setNodeRef}
+      testId="eddies-zone"
+      dataAttributes={{
+        "data-side": side,
+        "data-count": count,
+        "data-card-count": cardCount,
+        "data-total-count": totalCount,
+        "data-drop-ready": dropReady,
+        "data-drop-over": drop.isOver ? "true" : "false",
+      }}
+      renderEntity={(entity) => {
+        const card = cardById.get(entity.id);
+        return (
+          <CardImage
+            faceDown={!card?.revealed}
+            imageUrl={card?.revealed ? card.imageUrl : undefined}
+            alt={card?.revealed ? (card.name ?? "Sold card") : "Eddie"}
+          />
+        );
+      }}
+    />
   );
+}
+
+function eddieEntity(
+  card: EddieCardDisplay,
+  index: number,
+  zone: ReturnType<typeof cyberpunkCardZoneToSimulatorZone>,
+): SimulatorEntity {
+  const id = card.cardId ?? `${zone.id}:hidden:${index}`;
+  return {
+    id,
+    title: card.revealed ? (card.name ?? "Sold card") : card.spent ? "Spent Eddie" : "Ready Eddie",
+    subtitle: card.revealed ? "Sold card" : "Private information",
+    kind: "resource",
+    ownerId: zone.ownerId ?? "unknown",
+    face: card.revealed ? "public" : "hidden",
+    states: card.spent ? ["rested"] : ["ready"],
+    stats: [],
+    traits: [],
+    imageUrl: card.revealed ? card.imageUrl : undefined,
+    dataAttributes: {
+      "data-definition-id": card.revealed ? card.definitionId : undefined,
+    },
+  };
 }

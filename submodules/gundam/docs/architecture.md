@@ -13,8 +13,6 @@ gundam/
 │   ├── cards/         ← Declarative card definitions. Depends on types + token-data.
 │   ├── engine/        ← Rules engine, runtime, automation. Depends on types + token-data.
 │   └── utils/         ← Cross-cutting helpers. Leaf.
-├── apps/
-│   └── website/       ← Marketing site. Independent.
 ├── tools/             ← Repo tooling (workspace pkgs).
 └── ../agnostic-simulator/apps/multi-game-simulator/src/games/gundam
     └── migrated simulator UI, fixtures, practice, and live-match routes.
@@ -50,7 +48,6 @@ gundam/
 - `engine` depends on `types` and `token-data`. It must not import from `cards`.
 - The migrated simulator module in `../agnostic-simulator` wires `cards` and
   `engine` together for browser play.
-- `apps/website` does not depend on the engine or cards.
 - `tools/*` packages are scripts/codemods, never imported by app code.
 
 These rules are enforced two ways:

@@ -475,10 +475,8 @@ export function getPermanentModifierTotal(
 
       const card = getCard(source.cardId);
       for (const effect of card.effects?.permanentEffects ?? []) {
-        const relevantActions = effect.actions.filter(
-          (action) =>
-            (type === "power" && action.action === "setBasePowerFrom") ||
-            actionIsDynamicModifier(action, type),
+        const relevantActions = effect.actions.filter((action) =>
+          actionIsDynamicModifier(action, type),
         );
         if (relevantActions.length === 0) {
           continue;
@@ -494,38 +492,6 @@ export function getPermanentModifierTotal(
         }
 
         for (const action of relevantActions) {
-          if (type === "power" && action.action === "setBasePowerFrom") {
-            const targetPool = candidatePoolForTarget(
-              state,
-              source.controller,
-              source.instanceId,
-              action.target,
-            );
-            if (!targetPool.supported || !targetPool.candidateIds.includes(targetInstanceId)) {
-              continue;
-            }
-            const sourcePool = candidatePoolForTarget(
-              state,
-              source.controller,
-              source.instanceId,
-              action.source,
-            );
-            if (!sourcePool.supported || sourcePool.candidateIds.length !== 1) {
-              continue;
-            }
-            const targetCard = getCard(state.cards[targetInstanceId]!.cardId);
-            const sourceCard = getCard(state.cards[sourcePool.candidateIds[0]!]!.cardId);
-            const targetBasePower =
-              targetCard.cardType === "leader" || targetCard.cardType === "character"
-                ? (targetCard.power ?? 0)
-                : 0;
-            const sourceBasePower =
-              sourceCard.cardType === "leader" || sourceCard.cardType === "character"
-                ? (sourceCard.power ?? 0)
-                : 0;
-            total += sourceBasePower - targetBasePower;
-            continue;
-          }
           if (!actionIsDynamicModifier(action, type)) {
             continue;
           }
@@ -575,6 +541,85 @@ export function getPermanentModifierTotal(
       }
     }
     return total;
+  } finally {
+    active.delete(evaluationKey);
+    if (active.size === 0) {
+      activeEvaluations.delete(state);
+    }
+  }
+}
+
+// 4-9-2-1: permanent effects that set a base power compete by absolute value;
+// the highest set value wins instead of stacking as additive deltas.
+export function getPermanentSetBasePower(
+  state: MatchState,
+  targetInstanceId: string,
+): number | null {
+  const evaluationKey = `setBasePower:${targetInstanceId}`;
+  const active = activeEvaluations.get(state) ?? new Set<string>();
+  if (active.has(evaluationKey)) {
+    return null;
+  }
+  activeEvaluations.set(state, active);
+  active.add(evaluationKey);
+
+  try {
+    let setBasePower: number | null = null;
+    for (const source of Object.values(state.cards)) {
+      const sourceIsSelfInHand = source.instanceId === targetInstanceId && source.zone === "hand";
+      if (
+        (!sourceIsInPlay(state, source.instanceId) && !sourceIsSelfInHand) ||
+        sourceEffectsAreNegated(state, source.instanceId)
+      ) {
+        continue;
+      }
+      const card = getCard(source.cardId);
+      for (const effect of card.effects?.permanentEffects ?? []) {
+        const setBaseActions = effect.actions.filter(
+          (action) => action.action === "setBasePowerFrom",
+        );
+        if (setBaseActions.length === 0) {
+          continue;
+        }
+        const conditions = evaluateConditions(
+          state,
+          source.controller,
+          source.instanceId,
+          effect.conditions,
+        );
+        if (!conditions.supported || !conditions.matches) {
+          continue;
+        }
+        for (const action of setBaseActions) {
+          const targetPool = candidatePoolForTarget(
+            state,
+            source.controller,
+            source.instanceId,
+            action.target,
+          );
+          if (!targetPool.supported || !targetPool.candidateIds.includes(targetInstanceId)) {
+            continue;
+          }
+          const sourcePool = candidatePoolForTarget(
+            state,
+            source.controller,
+            source.instanceId,
+            action.source,
+          );
+          if (!sourcePool.supported || sourcePool.candidateIds.length !== 1) {
+            continue;
+          }
+          const sourceCard = getCard(state.cards[sourcePool.candidateIds[0]!]!.cardId);
+          const sourceBasePower =
+            sourceCard.cardType === "leader" || sourceCard.cardType === "character"
+              ? (sourceCard.power ?? 0)
+              : 0;
+          setBasePower =
+            setBasePower === null ? sourceBasePower : Math.max(setBasePower, sourceBasePower);
+        }
+      }
+    }
+    return setBasePower;
   } finally {
     active.delete(evaluationKey);
     if (active.size === 0) {

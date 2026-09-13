@@ -49,6 +49,7 @@ export const op05GammaKnife077: EventCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

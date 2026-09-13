@@ -47,5 +47,6 @@ export const prb01GuardPointJollyRogerFoil014: EventCard = {
       imageId: "ST01-014_r1",
     },
   ],
+  // Inherit ST01-014 effects (Counter + single Trigger). Do not re-author.
   i18n: prb01GuardPointJollyRogerFoil014I18n,
 };

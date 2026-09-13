@@ -53,12 +53,12 @@ export const op11AfterAllTheseYearsIMLosingMyEdge097: EventCard = {
               },
               filters: [
                 {
-                  filter: "cardCategory",
-                  value: "character",
-                },
-                {
                   filter: "color",
                   value: "black",
+                },
+                {
+                  filter: "cardCategory",
+                  value: "character",
                 },
                 {
                   filter: "cost",

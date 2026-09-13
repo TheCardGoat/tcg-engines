@@ -1,4 +1,5 @@
 import type { LorcanaSimulatorFixture } from "@/features/simulator/model/contracts.js";
+import { taranDiscardPickerRegression } from "./taran-discard-picker.js";
 import { createFixtureRegistry } from "../registry.js";
 import { wardHiddenZoneSelectionRegressionFixture } from "./ward-hidden-zone-selection.js";
 import { shiftingThenSingingUnderTheSea } from "@/features/simulator-devtools/fixtures/regressions/shifting-then-singing-under-the-sea";
@@ -80,6 +81,13 @@ import { meridaMosquitoBitePutDamageRegression } from "./2026-05-20/merida-mosqu
 import { feedback20260713TeamShiftAlternativesFixture } from "./feedback-2026-07-13-team-shift-alternatives.js";
 import { feedbackUiLegibilityFixture } from "./feedback-ui-legibility.js";
 import { dashParrSuperFastRevealedPlayRegression } from "./2026-07-15/dash-parr-super-fast-revealed-play.js";
+import { loseTheWaySelectedFirstRegression } from "./2026-07-30/lose-the-way-selected-first.js";
+import { nestedOptionalBotAutomationRegression } from "./2026-08-01/nested-optional-bot-automation.js";
+import { darkwingsChairSetAmpersandHealRegression } from "./2026-08-01/darkwings-chair-set-ampersand-heal.js";
+import { lookWhatYouveDoneSingleReplayRegression } from "./2026-09-03/look-what-youve-done-single-replay.js";
+import { mulanCreatedByTheVineSelfTriggerRegression } from "./2026-09-03/mulan-created-by-the-vine-self-trigger.js";
+import { timerDeviceClockSkewRegression } from "./2026-09-03/timer-device-clock-skew.js";
+import { luisaZeroWithDamagedAlternative } from "./2026-09-04/luisa-zero-with-damaged-alternative.js";
 
 const regressionFixtureRegistry = createFixtureRegistry(
   [
@@ -170,6 +178,18 @@ const regressionFixtureRegistry = createFixtureRegistry(
     feedbackUiLegibilityFixture,
     // --- 2026-07-15 player feedback ---
     dashParrSuperFastRevealedPlayRegression,
+    // --- 2026-07-30 player report ---
+    loseTheWaySelectedFirstRegression,
+    // --- 2026-08-01 nested multi-may bot automation ---
+    nestedOptionalBotAutomationRegression,
+    // --- 2026-08-01 Darkwing's Chair Set ampersand name heal ---
+    darkwingsChairSetAmpersandHealRegression,
+    // --- 2026-09-03 player report ---
+    lookWhatYouveDoneSingleReplayRegression,
+    mulanCreatedByTheVineSelfTriggerRegression,
+    timerDeviceClockSkewRegression,
+    taranDiscardPickerRegression,
+    luisaZeroWithDamagedAlternative,
   ] satisfies LorcanaSimulatorFixture[],
   "simulator regression fixtures",
 );

@@ -107,6 +107,13 @@ export function parseGiveDonAction(text: string): GiveDonAction | GiveDonAction[
     let target: Target | null = null;
     if (/^this\s+Character$/i.test(targetText)) {
       target = { player: "self", zones: ["character"], count: { amount: 1 }, self: true };
+    } else if (/^this\s+Leader\s+or\s+(\d+)\s+of\s+your\s+Characters$/i.test(targetText)) {
+      const amountMatch = /^this\s+Leader\s+or\s+(\d+)\s+of\s+your\s+Characters$/i.exec(targetText);
+      target = {
+        player: "self",
+        zones: ["leader", "character"],
+        count: { amount: parseInt(amountMatch![1]!, 10), upTo: true },
+      };
     } else {
       target = parseGiveDonTarget(targetText);
     }
@@ -231,6 +238,25 @@ export function parseGiveDonTarget(text: string): Target | null {
   // "your ([Name]/[Trait] type)? Leader" or "your attribute Leader"
   if (/^your\s+attribute\s+Leader$/i.test(text)) {
     return { player: "self", zones: ["leader"], count: { amount: 1 } };
+  }
+  // "your "Slash" attribute Leader" / your [Slash] attribute Leader
+  const attributeLeaderMatch =
+    /^your\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])\s+attribute\s+Leader$/i.exec(text);
+  if (attributeLeaderMatch) {
+    const attribute = attributeLeaderMatch[1]!.trim().toLowerCase();
+    if (/^(?:strike|slash|ranged|wisdom|special)$/.test(attribute)) {
+      return {
+        player: "self",
+        zones: ["leader"],
+        count: { amount: 1 },
+        filters: [
+          {
+            filter: "attribute",
+            value: attribute as "strike" | "slash" | "ranged" | "wisdom" | "special",
+          },
+        ],
+      };
+    }
   }
   const leaderMatch = /^your\s+(?:([[{][^\]}]+[\]}])\s+(?:type\s+)?)?Leader$/i.exec(text);
   if (leaderMatch) {

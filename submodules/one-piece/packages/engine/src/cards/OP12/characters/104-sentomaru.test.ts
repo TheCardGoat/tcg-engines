@@ -17,5 +17,8 @@ describe("OP12-104 Sentomaru", () => {
     expect(engine.getView("north").players.south.trash.map((card) => card.instanceId)).toContain(
       targetId,
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
   });
 });

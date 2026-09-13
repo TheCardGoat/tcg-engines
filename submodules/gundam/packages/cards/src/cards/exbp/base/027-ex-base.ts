@@ -1,0 +1,48 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase027: BaseCard = {
+  cardNumber: "EXBP-027",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-027",
+  canonicalId: "EXBP-027",
+  externalIds: { bandai: "gundam:exbp-027" },
+  slug: "ex-base-exbp-027",
+  displayName: "EX Base",
+  set: { code: "SC01", name: "Deck Build Box Freedom Ascension [SC01]", packageId: "616301" },
+  printNumber: "EXBP-027",
+  printings: [
+    {
+      id: "EXBP-027",
+      artId: "EXBP-027",
+      setCode: "SC01",
+      collectorNumber: "EXBP-027",
+      cardNumber: "EXBP-027",
+      set: {
+        code: "SC01",
+        name: "Deck Build Box Freedom Ascension [SC01]",
+        packageId: "616301",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/exbp/EXBP-027.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-027.webp?260715",
+      productName: "Deck Build Box Freedom Ascension [SC01]",
+    },
+  ],
+  reprints: ["EXBP-027"],
+  selectedPrintingId: "EXBP-027",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/exbp/EXBP-027.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-027.webp?260715",
+  legality: "legal",
+  sourceTitle: "Mobile Suit Gundam Wing: Endless Waltz",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};
+export const sc01ExBase027 = exbpExBase027;

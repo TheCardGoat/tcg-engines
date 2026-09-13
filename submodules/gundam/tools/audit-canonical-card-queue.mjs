@@ -52,7 +52,9 @@ function preferCanonicalOwner(current, candidate) {
 }
 
 const state = JSON.parse(readFileSync(STATE_PATH, "utf8"));
-const verifiedSets = new Set(state.verifiedSets);
+if ("verifiedSets" in state) {
+  throw new Error("inventory-state.json must use explicit verifiedCardIds, not verifiedSets.");
+}
 const verifiedCardIds = new Set(state.verifiedCardIds);
 
 const definitions = walk(CARDS_ROOT)
@@ -88,7 +90,7 @@ for (const definition of definitions) {
 
 const canonicalAbilityCards = [...canonicalById.values()].filter((card) => card.hasAbility);
 const remaining = canonicalAbilityCards
-  .filter((card) => !verifiedSets.has(card.set) && !verifiedCardIds.has(card.cardNumber))
+  .filter((card) => !verifiedCardIds.has(card.cardNumber))
   .sort(
     (a, b) =>
       setRank(a.set) - setRank(b.set) ||

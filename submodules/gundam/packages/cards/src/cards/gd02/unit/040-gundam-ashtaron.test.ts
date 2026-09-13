@@ -63,7 +63,7 @@ describe("Gundam Ashtaron (GD02-040)", () => {
   });
 
   it("Support cannot choose Ashtaron itself", () => {
-    const engine = GundamTestEngine.create({ play: [gd02GundamAshtaron040] });
+    const engine = GundamTestEngine.create({ play: [gd02GundamAshtaron040, createMockUnit()] });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const ashtaronId = p1.getCardsInZone("battleArea")[0]!;
 

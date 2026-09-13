@@ -1,5 +1,6 @@
 import { isPlayableGameSlug, type PlayableGameSlug } from "./games.js";
 import type { EventName, InboxEnvelope, PayloadOf } from "./inbox.js";
+import type { RealtimeViewerScope } from "./viewer-scope.js";
 
 /**
  * Envelope construction (gateway side) and parsing (consumer side).
@@ -26,6 +27,7 @@ export interface BuildEnvelopeArgs<E extends EventName> {
   socketId: string;
   userId: string | null;
   authed: boolean;
+  viewerScope?: RealtimeViewerScope;
   /** Optional W3C tracecontext carrier injected by the gateway. */
   traceparent?: string;
   tracestate?: string;
@@ -40,6 +42,7 @@ export function buildEnvelope<E extends EventName>(args: BuildEnvelopeArgs<E>): 
     socketId: args.socketId,
     userId: args.userId,
     authed: args.authed,
+    ...(args.viewerScope ? { viewerScope: args.viewerScope } : {}),
     ts: Date.now(),
     payload: args.payload,
     ...(args.traceparent ? { traceparent: args.traceparent } : {}),
@@ -66,6 +69,7 @@ export function serializeEnvelope(env: InboxEnvelope): Record<string, string> {
     payload: JSON.stringify(env.payload),
   };
   if (env.enqueuedMs !== undefined) fields.enqueuedMs = String(env.enqueuedMs);
+  if (env.viewerScope) fields.viewerScope = JSON.stringify(env.viewerScope);
   if (env.traceparent) fields.traceparent = env.traceparent;
   if (env.tracestate) fields.tracestate = env.tracestate;
   return fields;
@@ -119,6 +123,25 @@ export function parseEnvelope(fields: Record<string, string | undefined>): Inbox
   const tracestate = fields.tracestate;
   const enqueuedMsRaw = fields.enqueuedMs;
   const enqueuedMs = enqueuedMsRaw !== undefined ? Number(enqueuedMsRaw) : undefined;
+  let viewerScope: RealtimeViewerScope | undefined;
+  if (fields.viewerScope) {
+    try {
+      const parsedScope = JSON.parse(fields.viewerScope) as RealtimeViewerScope;
+      if (
+        !parsedScope ||
+        typeof parsedScope !== "object" ||
+        typeof parsedScope.matchId !== "string" ||
+        typeof parsedScope.gameId !== "string" ||
+        (parsedScope.role !== "player" && parsedScope.role !== "spectator") ||
+        typeof parsedScope.expiresAt !== "number"
+      ) {
+        return null;
+      }
+      viewerScope = parsedScope;
+    } catch {
+      return null;
+    }
+  }
   return {
     v: 1,
     type: type as EventName,
@@ -129,6 +152,7 @@ export function parseEnvelope(fields: Record<string, string | undefined>): Inbox
     authed: authedRaw === "1",
     ts,
     payload: payload as PayloadOf<EventName>,
+    ...(viewerScope ? { viewerScope } : {}),
     ...(enqueuedMs !== undefined && Number.isFinite(enqueuedMs) ? { enqueuedMs } : {}),
     ...(traceparent ? { traceparent } : {}),
     ...(tracestate ? { tracestate } : {}),

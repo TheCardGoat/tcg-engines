@@ -13,7 +13,7 @@ import {
   enqueueObserverTriggers,
   enqueueOwnCardTriggers,
 } from "../../effects/pending-effects.ts";
-import { canBlock, hasKeyword } from "../../rules/derived-state.ts";
+import { canBlock, getEffectiveStats, hasKeyword } from "../../rules/derived-state.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { rejectWithKey } from "./validation-error.ts";
@@ -26,12 +26,26 @@ export const declareBlock: GundamMoveDefinition<"declareBlock"> = {
     const combat = g.turnMetadata.pendingCombat;
     if (!combat || combat.stage !== "block-step") return [];
     if (playerId === combat.attackerPlayerId) return [];
+    // Rule 13-1-6: <High-Maneuver> attackers cannot be blocked at all, so
+    // no unit is a legal blocker candidate regardless of its keywords.
+    if (hasKeyword(combat.attackerId, "HighManeuver", g, framework.cards, framework)) return [];
     const myField = framework.zones.getCards({ zone: "battleArea", playerId });
     const out: string[] = [];
     for (const unitId of myField) {
       const def = framework.cards.getDefinition(unitId) as Card | undefined;
       if (!def || def.type !== "unit") continue;
+      // Rule 8-3-3: the Unit originally targeted for attack cannot
+      // activate its own <Blocker> effect.
+      if (combat.target !== "direct" && unitId === combat.target) continue;
       if (!canBlock(unitId, g, framework.cards)) continue;
+      if (
+        getEffectiveStats(unitId, g, framework.cards, framework).restrictions.includes(
+          "cannot-activate-blocker",
+        )
+      ) {
+        continue;
+      }
+      if (!hasKeyword(unitId, "Blocker", g, framework.cards, framework)) continue;
       out.push(unitId);
     }
     return out;
@@ -91,6 +105,18 @@ export const declareBlock: GundamMoveDefinition<"declareBlock"> = {
 
     if (!canBlock(blockerId, g, framework.cards)) {
       return { valid: false, error: "This unit cannot block", errorCode: "CANNOT_BLOCK" };
+    }
+
+    if (
+      getEffectiveStats(blockerId, g, framework.cards, framework).restrictions.includes(
+        "cannot-activate-blocker",
+      )
+    ) {
+      return {
+        valid: false,
+        error: "This unit cannot activate Blocker",
+        errorCode: "CANNOT_BLOCK",
+      };
     }
 
     // Rule 13-1-6: <High-Maneuver> cannot be blocked.

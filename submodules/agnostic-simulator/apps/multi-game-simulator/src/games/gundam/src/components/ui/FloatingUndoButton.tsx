@@ -29,7 +29,7 @@ export function FloatingUndoButton({ embedded = false }: { readonly embedded?: b
       style={{ color: canUndo ? "var(--color-hud-text)" : "var(--color-hud-text-dim)" }}
       className={
         embedded
-          ? "h-full min-w-[112px] flex-none"
+          ? "h-full min-w-0 w-full"
           : "absolute z-30 right-[22px] top-1/2 mt-[68px] -translate-y-1/2 min-w-[140px]"
       }
     />

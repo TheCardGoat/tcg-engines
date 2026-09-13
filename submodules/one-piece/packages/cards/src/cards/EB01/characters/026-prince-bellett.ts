@@ -47,7 +47,7 @@ export const eb01PrinceBellett026: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

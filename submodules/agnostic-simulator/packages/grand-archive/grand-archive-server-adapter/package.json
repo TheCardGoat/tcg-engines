@@ -1,0 +1,49 @@
+{
+  "name": "@tcg/grand-archive-server-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Grand Archive engine adapter for the game-agnostic simulator contracts.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./platform-decks": {
+      "types": "./src/platform-decks.ts",
+      "default": "./src/platform-decks.ts"
+    },
+    "./practice": {
+      "types": "./src/practice.ts",
+      "default": "./src/practice.ts"
+    },
+    "./preparation": {
+      "types": "./src/preparation.ts",
+      "default": "./src/preparation.ts"
+    }
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "inspect-replay": "node --experimental-transform-types --no-warnings scripts/inspect-replay.ts",
+    "test": "vp test run --configLoader runner --passWithNoTests"
+  },
+  "dependencies": {
+    "@noble/hashes": "2.2.0",
+    "@tcg/game-page-contract": "link:../../game-page-contract",
+    "@tcg/grand-archive-cards": "link:../../../../grand-archive/packages/cards",
+    "@tcg/grand-archive-engine": "link:../../../../grand-archive/packages/engine",
+    "@tcg/grand-archive-types": "link:../../../../grand-archive/packages/types",
+    "@tcg/protocol": "link:../../protocol",
+    "@tcg/shared": "link:../../shared",
+    "@tcg/simulator-contract": "link:../../simulator-contract"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

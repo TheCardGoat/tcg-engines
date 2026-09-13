@@ -50,6 +50,7 @@ export const op01Sanji013: CharacterCard = {
           {
             cost: "addLifeToHand",
             amount: 1,
+            position: "top",
           },
         ],
         actions: [

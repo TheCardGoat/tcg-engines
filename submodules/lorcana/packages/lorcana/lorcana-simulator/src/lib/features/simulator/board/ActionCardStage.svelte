@@ -105,10 +105,6 @@
       inset 0 0 24px rgba(253, 230, 138, 0.12);
   }
 
-  .action-card-stage--targeting::before {
-    animation: action-card-stage-targeting-pulse 1500ms ease-in-out infinite;
-  }
-
   .action-card-stage--targeting.action-card-stage--has-target::before {
     border-color: rgba(187, 247, 208, 0.42);
     background: radial-gradient(circle at 50% 40%, rgba(34, 197, 94, 0.24), transparent 64%);
@@ -137,18 +133,6 @@
     to {
       opacity: 1;
       transform: translate3d(0, 0, 0) scale(1);
-    }
-  }
-
-  @keyframes action-card-stage-targeting-pulse {
-    0%,
-    100% {
-      opacity: 0.78;
-      transform: scale(0.98);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.03);
     }
   }
 

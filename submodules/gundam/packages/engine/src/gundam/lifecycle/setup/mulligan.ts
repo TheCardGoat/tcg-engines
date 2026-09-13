@@ -1,20 +1,18 @@
-import { exbpExBase001, exrpExResource003 } from "@tcg/gundam-token-data";
+import type { Card } from "@tcg/gundam-types";
 import type { LifecycleContext } from "../../../types/index.ts";
 import { canPlaceResource } from "../../moves/core/play-card-shared.ts";
 import { emitGundamLog } from "../../logging.ts";
 
-// Engine-spawned setup tokens. We import the canonical defs from
-// `@tcg/gundam-cards` instead of duplicating them inline so a single
-// source of truth feeds both the runtime registry and the static
-// catalog (which the view filter needs to resolve images and stats).
-//
-// REVISIT once real matchmaking is in place: players will assemble
-// their own decks and likely choose which tokens to bundle (alt-art
-// EX Base/Resource printings, set-specific tokens, etc.). At that
-// point the host should pass the chosen token defs in alongside the
-// deck list rather than the engine hard-coding EXBP-001 / EXRP-003.
-const EX_BASE_TOKEN_DEF = exbpExBase001;
-const EX_RESOURCE_TOKEN_DEF = exrpExResource003;
+export const GUNDAM_SETUP_SLOT_EX_BASE = "ex-base";
+export const GUNDAM_SETUP_SLOT_EX_RESOURCE = "ex-resource";
+
+function requireSetupCard(ctx: LifecycleContext, playerId: string, slot: string): Card {
+  const card = ctx.setupCards?.[playerId]?.[slot];
+  if (!card) {
+    throw new Error(`Host must supply a setup card for player ${playerId} slot ${slot}`);
+  }
+  return card;
+}
 
 export function mulliganOnEnter(ctx: LifecycleContext): void {
   for (const playerId of ctx.framework.state.playerIds) {
@@ -41,24 +39,26 @@ export function mulliganOnExit(ctx: LifecycleContext): void {
   }
 
   for (const pid of allPlayerIds) {
+    const tokenDef = requireSetupCard(ctx, pid as string, GUNDAM_SETUP_SLOT_EX_BASE);
     const tokenId = `ex-base-token:${pid as string}`;
-    ctx.framework.cards.registerDefinition(tokenId, EX_BASE_TOKEN_DEF, pid);
+    ctx.framework.cards.registerDefinition(tokenId, tokenDef, pid);
     ctx.framework.zones.placeToken(tokenId, { zone: "baseSection", playerId: pid as string }, pid, {
       isToken: true,
-      tokenDefinitionId: EX_BASE_TOKEN_DEF.cardNumber,
+      tokenDefinitionId: tokenDef.cardNumber,
     });
   }
 
   if (secondPlayer) {
     const secondPlayerStr = secondPlayer as string;
     if (canPlaceResource(secondPlayerStr, true, ctx.framework)) {
+      const tokenDef = requireSetupCard(ctx, secondPlayerStr, GUNDAM_SETUP_SLOT_EX_RESOURCE);
       const resourceTokenId = `ex-resource-token:${secondPlayerStr}`;
-      ctx.framework.cards.registerDefinition(resourceTokenId, EX_RESOURCE_TOKEN_DEF, secondPlayer);
+      ctx.framework.cards.registerDefinition(resourceTokenId, tokenDef, secondPlayer);
       ctx.framework.zones.placeToken(
         resourceTokenId,
         { zone: "resourceArea", playerId: secondPlayerStr },
         secondPlayer,
-        { isToken: true, tokenDefinitionId: EX_RESOURCE_TOKEN_DEF.cardNumber },
+        { isToken: true, tokenDefinitionId: tokenDef.cardNumber },
       );
     }
   }

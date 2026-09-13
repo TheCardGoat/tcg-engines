@@ -27,8 +27,7 @@ export const st07GundamExia001: UnitCard = {
       },
       rarity: "legendRare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-001.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-001.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/st07/ST07-001.webp",
       productName: "Celestial Drive [ST07]",
     },
     {
@@ -44,15 +43,13 @@ export const st07GundamExia001: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-001_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-001_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/st07/ST07-001_p1.webp",
       productName: "Celestial Drive [ST07] Bonus Pack",
     },
   ],
   reprints: ["ST07-001", "ST07-001_p1"],
   selectedPrintingId: "ST07-001",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-001.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-001.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/st07/ST07-001.webp",
   legality: "legal",
   level: 5,
   cost: 4,
@@ -62,24 +59,6 @@ export const st07GundamExia001: UnitCard = {
   effect:
     "At the end of your turn, if there are 7 or more (CB) cards in your trash, choose 1 of your Resources. Set it as active.\n【When Paired】Place the top 2 cards of your deck into your trash. If you place a (CB) card with this effect, draw 1.",
   effects: [
-    {
-      type: "triggered",
-      activation: {
-        timing: ["whenPaired"],
-      },
-      directives: [
-        {
-          action: {
-            action: "millDeckThenDrawIfTrait",
-            count: 2,
-            trait: "cb",
-            drawCount: 1,
-          },
-        },
-      ],
-      sourceText:
-        "【When Paired】Place the top 2 cards of your deck into your trash. If you place a (CB) card with this effect, draw 1.",
-    },
     {
       type: "triggered",
       activation: {
@@ -109,6 +88,24 @@ export const st07GundamExia001: UnitCard = {
       ],
       sourceText:
         "At the end of your turn, if there are 7 or more (CB) cards in your trash, choose 1 of your Resources. Set it as active.",
+    },
+    {
+      type: "triggered",
+      activation: {
+        timing: ["whenPaired"],
+      },
+      directives: [
+        {
+          action: {
+            action: "millDeckThenDrawIfTrait",
+            count: 2,
+            trait: "cb",
+            drawCount: 1,
+          },
+        },
+      ],
+      sourceText:
+        "【When Paired】Place the top 2 cards of your deck into your trash. If you place a (CB) card with this effect, draw 1.",
     },
   ] as CardEffect[],
   keywordEffects: [],

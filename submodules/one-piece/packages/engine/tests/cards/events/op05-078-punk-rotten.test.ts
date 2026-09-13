@@ -58,4 +58,27 @@ describe("OP05-078 Punk Rotten", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Main so DON!! return and power gain do not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op05PunkRotten078],
+      character: [op06HitokiriKamazo076],
+      activeDon: 3,
+    });
+    const powerBefore = engine.getView("south").players.south.characters[0]?.power;
+
+    engine.playCard(op05PunkRotten078, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(after.characters[0]?.power).toBe(powerBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

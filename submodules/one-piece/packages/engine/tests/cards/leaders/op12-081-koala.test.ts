@@ -9,6 +9,12 @@ import {
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+/**
+ * OP12-081 Koala Leader: when-attacking draw with 2× cost≥8 allies;
+ * once per turn optional when opponent plays a Character with base cost ≥8
+ * (or via Character effect) → remove 1 Life from opponent.
+ * Subject is op12Koala081 as leaderCardId — never playCard(Koala) from hand.
+ */
 describe("OP12-081 Koala", () => {
   test("draws on a Leader attack and reacts once to a directly played base-cost-8 Character", () => {
     const engine = OnePieceTestEngine.create(
@@ -55,5 +61,31 @@ describe("OP12-081 Koala", () => {
 
     expect(engine.getView("north").players.north.lifeCount).toBe(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline when opponent plays a cost-8 Character so Life is unchanged", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op12Koala081,
+        character: [op12Issho082, op12Issho082],
+        deck: [eb01Doma005, eb01Doma005],
+      },
+      { hand: [op12Issho082], life: [eb01Doma005, eb01Doma005], activeDon: 8 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.endTurn("south");
+
+    const lifeBefore = engine.getView("north").players.north.lifeCount;
+    // Opponent plays the Character; Koala's optional opens for south.
+    engine.playCard(op12Issho082, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    expect(engine.getView("north").players.north.lifeCount).toBe(lifeBefore);
+    expect(
+      engine.getView("north").players.north.characters.some((c) => c?.cardId === op12Issho082.id),
+    ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

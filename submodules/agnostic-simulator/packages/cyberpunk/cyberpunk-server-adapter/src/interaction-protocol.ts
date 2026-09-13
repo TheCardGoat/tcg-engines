@@ -4,9 +4,16 @@ import {
   type EntityCandidate,
   type InteractionAction,
   type InteractionInput,
+  type InteractionResolutionContext,
   type InteractionSubmission,
 } from "@tcg/protocol";
-import type { AvailableMove, ChoicePrompt, PlayerPrompt } from "@tcg/cyberpunk-engine";
+import {
+  defOf,
+  type AvailableMove,
+  type ChoicePrompt,
+  type MatchState,
+  type PlayerPrompt,
+} from "@tcg/cyberpunk-engine";
 
 type NativePayload = Record<string, unknown>;
 
@@ -14,6 +21,7 @@ export function buildCyberpunkInteractionView(input: {
   actorId: string;
   stateVersion: number;
   prompt: PlayerPrompt;
+  state?: MatchState;
 }): EngineInteractionView {
   const actions =
     input.prompt.choice === null
@@ -26,8 +34,136 @@ export function buildCyberpunkInteractionView(input: {
     actorId: input.actorId,
     stateVersion: input.stateVersion,
     status: mapStatus(input.prompt.status),
+    resolution: cyberpunkResolutionContext(input, actions),
     actions,
   };
+}
+
+function cyberpunkResolutionContext(
+  input: {
+    actorId: string;
+    prompt: PlayerPrompt;
+    state?: MatchState;
+  },
+  actions: readonly InteractionAction[],
+): InteractionResolutionContext | undefined {
+  const turnMetadata = input.state?.G?.turnMetadata;
+  const publicChoice = turnMetadata?.pendingChoice;
+  const choice = input.prompt.choice ?? publicChoice;
+  if (!choice) return undefined;
+
+  const action = actions[0];
+  const queueLength = turnMetadata?.triggerQueue?.length ?? 0;
+  const hasCurrentTrigger = turnMetadata?.currentTrigger ? 1 : 0;
+  const choiceOptionCount = choice.type === "chooseTrigger" ? choice.payload.options.length : 1;
+  const pendingCount = Math.max(1, queueLength + hasCurrentTrigger, choiceOptionCount);
+  const actingPlayerId = String(choice.chooserId);
+  const source = cyberpunkChoiceSource(choice, input.state);
+  const requirement = action
+    ? cyberpunkRequirement(action.inputs[0])
+    : cyberpunkNativeRequirement(choice);
+
+  return {
+    actingPlayerId,
+    pendingCount,
+    currentEffect: {
+      id:
+        ("effectId" in choice && typeof choice.effectId === "string" && choice.effectId) ||
+        `${choice.type}:${actingPlayerId}`,
+      text: {
+        key: "cyberpunk.effect.current",
+        params: { label: source?.label ?? "Effect" },
+      },
+      ...(input.prompt.choice && source?.instanceId
+        ? {
+            source: {
+              kind: "card" as const,
+              instanceId: source.instanceId,
+            },
+          }
+        : {}),
+    },
+    currentStep: {
+      index: 1,
+      count: pendingCount,
+      text: action?.text ?? { key: `cyberpunk.choice.${choice.type}` },
+      ...(requirement ? { requirement } : {}),
+    },
+  };
+}
+
+function cyberpunkChoiceSource(
+  choice: ChoicePrompt | NonNullable<MatchState["G"]["turnMetadata"]["pendingChoice"]>,
+  state: MatchState | undefined,
+): { label: string; instanceId?: string } | undefined {
+  if (choice.type === "chooseTrigger") {
+    const option = choice.payload.options[0];
+    return option
+      ? { label: `${option.cardName} — ${option.abilityText}`, instanceId: option.sourceCardId }
+      : undefined;
+  }
+
+  const payload = choice.payload as {
+    source?: { cardId?: string; displayName?: string };
+    sourceCardId?: string;
+  };
+  const instanceId = payload.source?.cardId ?? payload.sourceCardId;
+  if (payload.source?.displayName) return { label: payload.source.displayName, instanceId };
+  const card = instanceId ? state?.G?.cardIndex?.[instanceId] : undefined;
+  return card ? { label: defOf(card).displayName, instanceId } : undefined;
+}
+
+function cyberpunkRequirement(
+  input: InteractionInput | undefined,
+): InteractionResolutionContext["currentStep"]["requirement"] {
+  if (!input) return undefined;
+  const required =
+    input.required === true || ("min" in input && typeof input.min === "number" && input.min > 0);
+  if (input.kind === "entity-selection" || input.kind === "option-selection") {
+    return {
+      kind: input.kind,
+      text: input.text,
+      required,
+      min: input.min,
+      max: input.max,
+    };
+  }
+  if (input.kind === "ordering") {
+    return {
+      kind: input.kind,
+      text: input.text,
+      required,
+      min: input.min,
+      max: input.max,
+    };
+  }
+  return { kind: input.kind, text: input.text, required };
+}
+
+function cyberpunkNativeRequirement(
+  choice: ChoicePrompt | NonNullable<MatchState["G"]["turnMetadata"]["pendingChoice"]>,
+): InteractionResolutionContext["currentStep"]["requirement"] {
+  if (choice.type === "chooseTarget" && choice.payload.type === "effectTarget") {
+    const min = choice.payload.min ?? 1;
+    const max = choice.payload.max ?? min;
+    return {
+      kind: "entity-selection",
+      text: { key: "cyberpunk.choice.targets" },
+      required: min > 0 && !choice.payload.canDecline,
+      min,
+      max,
+    };
+  }
+  if (choice.type === "chooseTrigger") {
+    return {
+      kind: "option-selection",
+      text: { key: "cyberpunk.choice.trigger" },
+      required: !choice.payload.canPass,
+      min: choice.payload.canPass ? 0 : 1,
+      max: 1,
+    };
+  }
+  return undefined;
 }
 
 const MUST_ATTACK_PASS_DISABLED_TEXT = {
@@ -50,10 +186,30 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
     }
     case "sellCard":
     case "goSolo":
-    case "resolveCardToPlay":
       return {
         moveType: submission.actionId,
         payload: { cardId: requireString(submission, "cardId") },
+      };
+    case "resolveCardToPlay": {
+      const cardId = optionalString(submission, "cardId");
+      const pass = optionalBoolean(submission, "pass") ?? cardId === undefined;
+      if (pass) {
+        return { moveType: submission.actionId, payload: { pass: true } };
+      }
+      const attachToId = optionalString(submission, "attachToId");
+      return {
+        moveType: submission.actionId,
+        payload: withOptional(
+          { cardId: requireString(submission, "cardId") },
+          "attachToId",
+          attachToId,
+        ),
+      };
+    }
+    case "resolveChooseEffect":
+      return {
+        moveType: submission.actionId,
+        payload: { optionId: requireString(submission, "optionId") },
       };
     case "callLegend":
       return {
@@ -149,6 +305,21 @@ export function cyberpunkSubmissionToPayload(submission: InteractionSubmission):
       return {
         moveType: submission.actionId,
         payload: { pass, ...(gigIdsToSteal !== undefined ? { gigIdsToSteal } : {}) },
+      };
+    }
+    case "resolvePreventGigSteal": {
+      const pass = optionalBoolean(submission, "pass") ?? false;
+      const dieIds = optionalStringArray(submission, "dieIds") ?? [];
+      const cardIds = optionalStringArray(submission, "cardIds") ?? [];
+      if (dieIds.length !== cardIds.length) {
+        throw new Error('Interaction values "dieIds" and "cardIds" must have matching lengths.');
+      }
+      return {
+        moveType: submission.actionId,
+        payload: {
+          pass,
+          preventions: dieIds.map((dieId, index) => ({ dieId, cardId: cardIds[index]! })),
+        },
       };
     }
     default:
@@ -449,15 +620,36 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
           ),
         ],
       });
-    case "chooseCardToPlay":
+    case "chooseCardToPlay": {
+      const canDecline = choice.payload.canDecline === true;
       return choiceAction({
         stateVersion,
         id: "resolveCardToPlay",
         intent: "play-card",
+        textParams: { canDecline },
         inputs: [
-          entityInput("cardId", "source", "card", { min: 1, max: 1 }, choice.payload.cardIds),
+          entityInput(
+            "cardId",
+            "source",
+            "card",
+            canDecline ? { min: 0, max: 1 } : { min: 1, max: 1 },
+            choice.payload.cardIds,
+          ),
+          ...(canDecline
+            ? [
+                {
+                  kind: "boolean" as const,
+                  id: "pass",
+                  text: { key: "cyberpunk.input.pass" },
+                  required: false,
+                  trueText: { key: "cyberpunk.input.pass.true" },
+                  falseText: { key: "cyberpunk.input.pass.false" },
+                },
+              ]
+            : []),
         ],
       });
+    }
     case "chooseCardToMove": {
       const canDecline = choice.payload.canDecline === true;
       return choiceAction({
@@ -550,14 +742,12 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
     case "chooseEffect":
       return choiceAction({
         stateVersion,
-        id: "resolveEffectTarget",
+        id: "resolveChooseEffect",
         intent: "choose-option",
-        enabled: false,
-        disabledText: { key: "cyberpunk.choice.chooseEffect.unsupported" },
         inputs: [
           {
             kind: "option-selection",
-            id: "effectId",
+            id: "optionId",
             text: { key: "cyberpunk.choice.chooseEffect" },
             required: true,
             min: 1,
@@ -568,6 +758,34 @@ function actionFromChoice(choice: ChoicePrompt, stateVersion: number): Interacti
               enabled: true,
             })),
           },
+        ],
+      });
+    case "preventGigSteal":
+      return choiceAction({
+        stateVersion,
+        id: "resolvePreventGigSteal",
+        intent: "custom",
+        inputs: [
+          entityInput(
+            "dieIds",
+            "target",
+            "die",
+            { min: 0, max: choice.payload.stealEntries.length },
+            choice.payload.stealEntries.map((entry) => entry.dieId),
+          ),
+          entityInput(
+            "cardIds",
+            "source",
+            "card",
+            { min: 0, max: choice.payload.handEntries.length },
+            choice.payload.handEntries.map((entry) => entry.cardId),
+          ),
+          booleanInput(
+            "pass",
+            { key: "cyberpunk.input.pass" },
+            { key: "cyberpunk.input.pass.true" },
+            { key: "cyberpunk.input.pass.false" },
+          ),
         ],
       });
   }

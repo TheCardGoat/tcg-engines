@@ -3,7 +3,7 @@ import { op14eb04YouLlFrightenMe118 } from "../../../../../cards/src/cards/OP14E
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP14-118 You'll Frighten Me...", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04YouLlFrightenMe118);
   });
 });

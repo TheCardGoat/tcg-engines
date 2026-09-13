@@ -43,4 +43,42 @@ describe("OP07-075 Slow-Slow Beam", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Counter so DON!! return and power reductions do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }, eb01Doma005],
+      },
+      {
+        hand: [op07SlowSlowBeam075],
+        life: 2,
+        activeDon: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const characterId = engine.findCardInZone("south", "character", eb01Doma005);
+    const eventId = engine.findCardInZone("north", "hand", op07SlowSlowBeam075);
+    const leaderPowerBefore = engine.getView("north").players.south.leader.power!;
+    const charPowerBefore = engine
+      .getView("north")
+      .players.south.characters.find((card) => card?.instanceId === characterId)?.power;
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    const before = engine.getView("north").players.north;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.activeDon + view.players.north.restedDon).toBe(donPoolBefore);
+    expect(view.players.north.donDeckCount).toBe(donDeckBefore);
+    expect(view.players.south.leader.power).toBe(leaderPowerBefore);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === characterId)?.power,
+    ).toBe(charPowerBefore);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

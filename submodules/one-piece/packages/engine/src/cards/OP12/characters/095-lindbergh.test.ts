@@ -24,5 +24,7 @@ describe("OP12-095 Lindbergh", () => {
       view.players.south.characters.find((card) => card?.instanceId === lindberghId)?.cost,
     ).toBe(op12Lindbergh095.cost + 4);
     expect(view.players.south.trash).toHaveLength(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

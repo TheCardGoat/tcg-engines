@@ -22,5 +22,6 @@ describe("OP12-029 Shimotsuki Kouzaburou", () => {
     expect(engine.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(
       peronaId,
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

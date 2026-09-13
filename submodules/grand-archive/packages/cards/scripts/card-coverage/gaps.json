@@ -1,0 +1,1843 @@
+{
+  "version": 1,
+  "families": [
+    {
+      "family": "doa-resolution-target-scopes",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/scope-resolution-targets.ts",
+      "status": "resolved",
+      "repro": "Independent resolution paragraphs reused target-1, merging distinct targets.",
+      "resolvedBy": "Typed compiler scoping renames later collisions and corresponding effect references; unsupported remaining references fail closed. Direct tests cover disabled class bonus, independent targets, uniqueness, payment and expiration.",
+      "members": [
+        {
+          "canonicalId": "XMb6pSHFJg",
+          "abilityIds": ["XMb6pSHFJg-a1", "XMb6pSHFJg-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-top-deck-permission",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/rule-modifications.ts",
+      "status": "resolved",
+      "repro": "Top-deck activation permissions admitted deeper cards.",
+      "resolvedBy": "Typed fromTopOfDeck restriction checks the current owner\u2019s main-deck top at admission.",
+      "members": [
+        {
+          "canonicalId": "ymhDYTPfi1",
+          "abilityIds": ["ymhDYTPfi1-a3"]
+        }
+      ]
+    },
+    {
+      "family": "doa-graveyard-material-permission",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Gaia\u2019s Blessing banished hand cards at resolution instead of paying for a material-deck activation.",
+      "resolvedBy": "Exact printed grammar emits a graveyard selection payment and waived base activation cost while retaining element restriction.",
+      "members": [
+        {
+          "canonicalId": "ymhDYTPfi1",
+          "abilityIds": ["ymhDYTPfi1-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-activation-characteristic-history",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/kernel/event-admission.ts",
+      "status": "resolved",
+      "repro": "Melodious Flute granted Melody after the activation event and history lost temporary subtypes after zone changes.",
+      "resolvedBy": "Pre-entry replacement grants Melody to the incoming incarnation; committed activation events capture characteristics used by historical filter conditions.",
+      "members": [
+        {
+          "canonicalId": "WAFNy2lY5t",
+          "abilityIds": ["WAFNy2lY5t-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-option-multiselection",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/activation/activation.ts",
+      "status": "resolved",
+      "repro": "Option decisions accepted only a single string.",
+      "resolvedBy": "Public option decisions accept scalar or arrays with exact membership, count, and duplicate legality checks.",
+      "members": [
+        {
+          "canonicalId": "qtRBz9azeZ",
+          "abilityIds": ["qtRBz9azeZ-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-play-cost-card-activation",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/rule-modifications.ts",
+      "status": "resolved",
+      "repro": "Play-cost modifiers did not affect activation and materialization.",
+      "resolvedBy": "Card activations and materializations collect play-cost rules, preserving ability activation exclusion and rule ordering.",
+      "members": [
+        {
+          "canonicalId": "PZM9uvCFai",
+          "abilityIds": ["PZM9uvCFai-a2", "PZM9uvCFai-a3"]
+        }
+      ]
+    },
+    {
+      "family": "doa-entry-reveal-controller",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Prismatic Edge used an unavailable entry-event actor as the reveal owner.",
+      "resolvedBy": "Controller-relative reveal plus each-player chooser reveals each player\u2019s own memory. Exact compiler and maintained override agree.",
+      "members": [
+        {
+          "canonicalId": "FxYwR2azTt",
+          "abilityIds": ["FxYwR2azTt-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-self-memory-reveal-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Self-reveal triggers were inactive in memory.",
+      "resolvedBy": "Structural self-subject card-revealed events from memory receive the memory functional zone. Public tests distinguish class, element, memory versus hand, revealing actor and original versus another named copy.",
+      "members": [
+        {
+          "canonicalId": "qufoIF014c",
+          "abilityIds": ["qufoIF014c-a2"]
+        },
+        {
+          "canonicalId": "VAFTR5taNG",
+          "abilityIds": ["VAFTR5taNG-a2"]
+        },
+        {
+          "canonicalId": "uwnHTLG3fL",
+          "abilityIds": ["uwnHTLG3fL-a1"]
+        },
+        {
+          "canonicalId": "zxB4tzy9iy",
+          "abilityIds": ["zxB4tzy9iy-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-named-descriptor-boundary",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Gleaming Cut required an invented CUT subtype when selecting its named card.",
+      "resolvedBy": "A complete named-card descriptor terminates characteristic parsing and emits an exact name filter. Direct tests prove selecting either copy and reject wrong names, opponents and wrong zones.",
+      "members": [
+        {
+          "canonicalId": "qufoIF014c",
+          "abilityIds": ["qufoIF014c-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-removed-static-stat-modifier",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/continuous.ts",
+      "status": "resolved",
+      "repro": "Caliburn removed Silvie abilities but her life bonus still applied.",
+      "resolvedBy": "Removed static abilities retain only their already-applied earlier-layer continuous changes. Later power/life modifiers cease. Public combat tests prove class, champion hit, ally hit, duration and interception; an engine test separately proves retained subtype and removed power.",
+      "members": [
+        {
+          "canonicalId": "bA3tRrJr2T",
+          "abilityIds": ["bA3tRrJr2T-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-entry-ability-copy",
+      "kind": "engine-primitive",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts; packages/engine/src/rules/replacements/replacements.ts; packages/engine/src/procedures/effects/effect-executor.ts",
+      "status": "resolved",
+      "repro": "Tome entry matched the material deck instead of the effects stack, and entry continuous effects retained the departing incarnation.",
+      "resolvedBy": "Exact Tome compilation matches activation entry from the effects stack. Synchronous entry replacements anchor the incoming incarnation. Resolved copies capture abilities so subsequent source movement cannot erase them. Public engine tests prove single and grouped entry replacements and copied self references.",
+      "members": [
+        {
+          "canonicalId": "MyUTeqUJ0H",
+          "abilityIds": ["MyUTeqUJ0H-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-paid-zone-activation",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/activation/activation.ts; packages/engine/src/testing/player-handle.ts",
+      "status": "resolved",
+      "repro": "Paid activation permissions admitted activation without paying their cost, and the harness forced explicit card references to hand.",
+      "resolvedBy": "Zone permissions contribute their selected cost, while free alternatives remain free. Explicit instance references retain their zone; definition shorthand retains hand selection. Tome tests prove Book ownership, type, zone, payment, and element boundaries.",
+      "members": [
+        {
+          "canonicalId": "MyUTeqUJ0H",
+          "abilityIds": ["MyUTeqUJ0H-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-champion-attack-redirection",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Cry for Help did not bind its life bonus to the chosen ally; Hymn offered redirection without a champion attack.",
+      "resolvedBy": "Typed current-attack target checks guard redirection, and a unique preceding redirect choice supplies the follow-up binding. Twenty-two direct scenarios prove entry, redirect and class boundaries.",
+      "members": [
+        {
+          "canonicalId": "nIKhHFa0rK",
+          "abilityIds": ["nIKhHFa0rK-a1"]
+        },
+        {
+          "canonicalId": "okDVkV1l76",
+          "abilityIds": ["okDVkV1l76-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-class-modal-lower-bound",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Bestial Frenzy required at least one mode even with its up-to-two class bonus.",
+      "resolvedBy": "An exact printed-text match uses a class-dependent zero minimum and preserves the one-mode requirement without class. Public tests cover each combination, unique targets, cleave combat, power, level and expiration.",
+      "members": [
+        {
+          "canonicalId": "HsaWNAsmAQ",
+          "abilityIds": ["HsaWNAsmAQ-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-activation-target-event",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/kernel/observed-events.ts; packages/types/src/abilities/trigger.ts",
+      "status": "resolved",
+      "repro": "Nimue triggered without receiving the original activation targets and destroyed no allies.",
+      "resolvedBy": "Card-activation observations now carry the declared target identities, and the event type admits a recipient filter. Nimue filters action activations and destroys only the targeted allies. Public tests prove class, actor, action-versus-ability, champion exclusion, multiple allies and destruction before the action resolves.",
+      "members": [
+        {
+          "canonicalId": "l52lVIFvpy",
+          "abilityIds": ["l52lVIFvpy-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-graveyard-mill-return",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Mistbound Cutthroat did not function in the graveyard; its event clause omitted another and required its owner to cause the mill.",
+      "resolvedBy": "A compiled self-return from graveyard makes the trigger functional there. The deck-to-own-graveyard clause uses ownership, excludes its source for another, and admits either mill actor. Twenty-four public scenarios prove level, source zone, card type, self exclusion and rested entry.",
+      "members": [
+        {
+          "canonicalId": "C7zFV2K7bL",
+          "abilityIds": ["C7zFV2K7bL-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-reveal-followup-binding",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Zander iterated an unbound reveal-selection after revealing memory.",
+      "resolvedBy": "A unique preceding reveal structurally binds the following per-revealed-card iteration. Public tests cover choices and empty or short opponent hands.",
+      "members": [
+        {
+          "canonicalId": "UAF6Nr7GUE",
+          "abilityIds": ["UAF6Nr7GUE-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-single-revealed-shuffle-pool",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Storm Tyrants Eye always placed the Arcane stopping card after all earlier cards if another card was chosen.",
+      "resolvedBy": "The reveal result binds every revealed card; one randomized remainder move includes the stopping card. Multiple seeded public tests prove the permutation boundary.",
+      "members": [
+        {
+          "canonicalId": "EQZZsiUDyl",
+          "abilityIds": ["EQZZsiUDyl-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-resolved-intercept-prohibition",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/effect-executor.ts",
+      "status": "resolved",
+      "repro": "Map of Hidden Passage threw an unsupported-feature error while resolving its temporary interception prohibition.",
+      "resolvedBy": "The rule-effect executor admits intercept restrictions to the existing typed rule collector. Public tests prove both players, Stealth boundaries, rest and banish costs, and expiration.",
+      "members": [
+        {
+          "canonicalId": "2bzajcZZRD",
+          "abilityIds": ["2bzajcZZRD-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-ensoul-selection-and-duration",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ensoul reused its cheap-Sword selection filter for all Sword attack permissions and sacrifices, and delayed sacrifice until a later turn.",
+      "resolvedBy": "The exact compiler separates selection from controlled-Sword effects and schedules the next own end phase without a next-turn start. Public tests summon from both zones and attack with an existing expensive Sword.",
+      "members": [
+        {
+          "canonicalId": "CQ1bxUyi0Q",
+          "abilityIds": ["CQ1bxUyi0Q-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-attack-damage-replacement-participant",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Rending Flames accepted three Fire graveyard cards but did not double combat damage, whose source is the champion.",
+      "resolvedBy": "The exact attack-damage replacement matches the attack as a combat participant using the typed using event subject. Direct tests prove payment, class and card boundaries.",
+      "members": [
+        {
+          "canonicalId": "soO3hjaVfN",
+          "abilityIds": ["soO3hjaVfN-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-ordered-deck-placement",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts",
+      "status": "resolved",
+      "repro": "Idle Thoughts and Arcanists Prism ignored orderChosenBy; sequential top placements reversed the requested order.",
+      "resolvedBy": "Resolution suspends for an exact ordered permutation. Adjacent selection and placement share one choice; already ordered partitions do not prompt twice. Top insertions commit in reverse to preserve requested deck order. Public engine tests cover top/bottom, invalid permutations, snapshot restore, and draw ordering; direct card tests cover short/empty decks and recollection. Existing ALC selection/ordering contracts remain intact.",
+      "members": [
+        {
+          "canonicalId": "rWhFC8XBaH",
+          "abilityIds": ["rWhFC8XBaH-a1"]
+        },
+        {
+          "canonicalId": "dIEAN4J4YS",
+          "abilityIds": ["dIEAN4J4YS-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-animal-or-beast-descriptor",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Blissful Calling compiled Animal or Beast as Beast only, rejecting a legal Animal selection.",
+      "resolvedBy": "Exact standalone Animal or Beast descriptor preserves the two subtype alternatives. Direct tests select both types, reject Human and out-of-range/foreign cards, decline the selection, and order the remainder.",
+      "members": [
+        {
+          "canonicalId": "YOjdZJpOO1",
+          "abilityIds": ["YOjdZJpOO1-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-source-controlled-fairy-effects",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Snow Fairy prevented waking outside the normal wake-up phase; Fairy effects did not require continued source control. Spark Fairy also recursed through unrelated class restrictions during Layer D derivation.",
+      "resolvedBy": "Exact source-name duration grammar adds control conditions and normal wake-phase restrictions. Layer D collection checks that static abilities modify abilities before evaluating their gates. Direct tests prove other wake effects, recollection damage, unpreventability, source death, control transfer, and a second same-name source remaining.",
+      "members": [
+        {
+          "canonicalId": "4s0c9XgLg7",
+          "abilityIds": ["4s0c9XgLg7-a2"]
+        },
+        {
+          "canonicalId": "FWnxKjSeB1",
+          "abilityIds": ["FWnxKjSeB1-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-per-unit-damage-buffer",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Clarent compiles as an incomplete removal effect rather than a durability-paid activated prevention ability.",
+      "resolvedBy": "The exact each-unit buffer grammar preserves amount, controlled recipients, independent per-object capacity, damage type, and turn duration. Real Fireball and combat sequences prove each boundary and the ordinary cost grammar handles the durability payment.",
+      "members": [
+        {
+          "canonicalId": "m31WVJ9F04",
+          "abilityIds": ["m31WVJ9F04-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-counter-cost-alternative",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ensnaring Fumes incorrectly asks for a champion target and removes counters while resolving after reserve was already paid.",
+      "resolvedBy": "The exact champion-counter alternative-cost grammar emits the existing optional pay-cost replacement, with atomic own-counter removal. Tests cover insufficient payment, reserve versus counter choice, pre-resolution costs, empty/populated boards, and owner-specific return destinations.",
+      "members": [
+        {
+          "canonicalId": "wPKxvzTmqq",
+          "abilityIds": ["wPKxvzTmqq-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-self-next-damage-prevention",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileInstruction",
+      "status": "resolved",
+      "repro": "Barrier Servant compiles into a counter removal resolution instead of a paid activated shield.",
+      "resolvedBy": "Source-referenced next-damage prevention compiles structurally, allowing the ordinary counter-cost activated-ability grammar to handle the printed ability. Direct tests use actual Jewel counters and prove source scoping, cost rejection, one-use prevention, and expiration.",
+      "members": [
+        {
+          "canonicalId": "xW6SZSlJX6",
+          "abilityIds": ["xW6SZSlJX6-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-one-event-water-prevention",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileInstruction",
+      "status": "resolved",
+      "repro": "Water Barrier reduces every damage instance during the turn.",
+      "resolvedBy": "The exact prevention paragraph now expires after its next matching damage event, including an initial one-damage hit that prevents zero; direct tests cover subsequent damage, other recipients, and expiration.",
+      "members": [
+        {
+          "canonicalId": "xWJND68I8X",
+          "abilityIds": ["xWJND68I8X-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-attacking-defender-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedObjectTarget",
+      "status": "resolved",
+      "repro": "Spontaneous Combustion incorrectly targets allies attacking other allies.",
+      "resolvedBy": "A typed attacking-subject filter checks both the active attacker and the defended champion at target admission and revalidation; exact compiler matching and public combat tests cover ally/champion attackers and ally/champion victims.",
+      "members": [
+        {
+          "canonicalId": "cQlxapCsxQ",
+          "abilityIds": ["cQlxapCsxQ-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-returned-sword-entry-counters",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileInstruction",
+      "status": "resolved",
+      "repro": "Lorraine Spirit Ruler adds three durability counters after its returned Sword enters, so the entry event contains only printed durability.",
+      "resolvedBy": "A bound-object field-entry replacement adds counters during entry, before the move commits. Public materialization, choice, exact cost/type/owner exclusions, initial entry counters, and subsequent weapon combat are tested.",
+      "members": [
+        {
+          "canonicalId": "n2TKqNaODR",
+          "abilityIds": ["n2TKqNaODR-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-random-selection-word-order",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileSelectionAction",
+      "status": "resolved",
+      "repro": "Erratic Bolt asks its controller to choose memory cards even though its printed banishment is random.",
+      "resolvedBy": "The selection grammar recognizes at-random both before and after the zone phrase and rejects duplicated random modifiers. Direct card tests cover accept/decline, no/insufficient/sufficient memory, ownership, class, and damage.",
+      "members": [
+        {
+          "canonicalId": "DqtlaMGMvd",
+          "abilityIds": ["DqtlaMGMvd-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-arcane-mage-spell-characteristics",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedCardFilter",
+      "status": "resolved",
+      "repro": "Rai Storm Seer counts an arcane Cleric Spell as an arcane Mage Spell.",
+      "resolvedBy": "The exact arcane-element Mage Spell descriptor now retains element, class, and subtype. Real level-dependent damage tests exclude wrong classes, subtypes, elements, zones, and owners, then confirm a banishment increases level dynamically.",
+      "members": [
+        {
+          "canonicalId": "g92bHLtTNl",
+          "abilityIds": ["g92bHLtTNl-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-sequential-prior-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:earlySentences",
+      "status": "resolved",
+      "repro": "Flamelash Subduer damages its selected ally without granting the printed power increase.",
+      "resolvedBy": "A sentence starting with an explicit That-ally/unit/object pronoun reuses its sole preceding target declaration when it introduces no new targets. Public tests cover self, other allies, lethal damage, class restrictions, cost, combat power, and expiration.",
+      "members": [
+        {
+          "canonicalId": "1i6ierdDjq",
+          "abilityIds": ["1i6ierdDjq-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-damaged-source-counter",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:wheneverTrigger",
+      "status": "resolved",
+      "repro": "Blue Slime places its damage-triggered buff counter on the damage source rather than itself.",
+      "resolvedBy": "A self-recipient damage trigger with a nontargeted event-subject counter effect binds that counter to the source. Explicitly targeted counter effects remain bound to their target. Public tests cover class, combat/noncombat, one counter per damage event, unrelated damage, and persistent combat stats.",
+      "members": [
+        {
+          "canonicalId": "1Sl4Gq2OuV",
+          "abilityIds": ["1Sl4Gq2OuV-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-next-filtered-cost-scope",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:nextActivationCost",
+      "status": "resolved",
+      "repro": "Horn of Beastcalling discounts opposing Beasts and retains its unused discount across turns.",
+      "resolvedBy": "Filtered next-activation cost rules retain controller scope and a this-turn expiry, matching the unfiltered grammar. Behavioral tests cover unrelated cards, first/second matching cards, underpayment, floor-zero discounts, opponent activation, class draws, and expiry.",
+      "members": [
+        {
+          "canonicalId": "6e7lRnczfL",
+          "abilityIds": ["6e7lRnczfL-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-per-controller-wake-duration",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileInstruction",
+      "status": "resolved",
+      "repro": "Frozen Nova prevents opposing allies waking but expires before its controller's allies reach their next wake phase.",
+      "resolvedBy": "Emit individual wake prohibitions bound to each ally controller, using the existing relative-player duration model. Tests follow both controllers through their skipped wake and subsequent legal attack.",
+      "members": [
+        {
+          "canonicalId": "IyXuaLKjSA",
+          "abilityIds": ["IyXuaLKjSA-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-opponent-hand-reserve-choice",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileParagraph",
+      "status": "resolved",
+      "repro": "Blinding Orb attempts to move an unbound selection and leaves opponent hands unchanged.",
+      "resolvedBy": "Emit the existing reserve operation with an each-opponent resolution choice instead of referencing an undeclared binding. Public tests cover empty, short, exact, and selectable hands, ownership, cost, and class draws. The compiler match is now anchored to exact printed text and its optional reminder. The reserve effect now accepts a typed player set, matching its existing multiplayer selection executor rather than narrowing each-opponent semantics.",
+      "members": [
+        {
+          "canonicalId": "qYH9PJP7uM",
+          "abilityIds": ["qYH9PJP7uM-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-class-bonus-prior-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:classBonusContinuation",
+      "status": "resolved",
+      "repro": "Second Wind wakes its ally but does not grant the Class Bonus power.",
+      "resolvedBy": "A That-ally continuation with exactly one existing target and no new target reuses the original target binding. Own and opposing allies prove the extra attack, matching-class power, and expiration.",
+      "members": [
+        {
+          "canonicalId": "Huh1DljE0j",
+          "abilityIds": ["Huh1DljE0j-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-stealth-combat-filter",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedCardFilter",
+      "status": "resolved",
+      "repro": "Stillwater Patrol deals three rather than two combat damage when attacking a unit without stealth.",
+      "resolvedBy": "The exact unit-with-stealth descriptor retains both unit type and keyword requirements. Public combat tests distinguish targets with and without stealth. Target declarations also retain the exact controlled-ally-with-stealth restriction, proven by Poisoned Coating Oil legality and combat tests.",
+      "members": [
+        {
+          "canonicalId": "LNSRQ5xW6E",
+          "abilityIds": ["LNSRQ5xW6E-a2"]
+        },
+        {
+          "canonicalId": "OofVX5hX8X",
+          "abilityIds": ["OofVX5hX8X-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-alternative-and-opponent-object-targets",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedObjectTarget",
+      "status": "resolved",
+      "repro": "Zephyr accepts neither ordinary allies nor regalia; Extortion Scheme accepts controlled allies.",
+      "resolvedBy": "Exact ally-or-regalia wording now forms an alternative filter; opponent-controls suffixes retain controller scope. Public tests cover own and opposing allies/regalia, illegal champions, suppression timing, and counter bonuses.",
+      "members": [
+        {
+          "canonicalId": "idaRe7y3In",
+          "abilityIds": ["idaRe7y3In-a1"]
+        },
+        {
+          "canonicalId": "WdkZU2wwnw",
+          "abilityIds": ["WdkZU2wwnw-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-counter-replacement-prior-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:bindEventSubjectToPriorTarget",
+      "status": "resolved",
+      "repro": "Young Beastbonder puts two buff counters on itself when its selected ally is a Beast.",
+      "resolvedBy": "Counter effects now rebind event-subject pronouns to the existing target just as continuous effects do. Public Beast, Animal, Human, controller, class, and illegal-self-target tests pass.",
+      "members": [
+        {
+          "canonicalId": "NwswAHojeq",
+          "abilityIds": ["NwswAHojeq-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-random-reveal-conditional",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:randomRevealConditional",
+      "status": "resolved",
+      "repro": "Wind Cutter hits while its controller has two memory cards and incorrectly asks which one to reveal.",
+      "resolvedBy": "The exact random reveal conditional compiler retains method random. Public Wind Cutter tests prove automatic selection only from its controllers memory, wind/nonwind/empty outcomes, and no reveal on a prevented hit.",
+      "members": [
+        {
+          "canonicalId": "TgYTZg6TaG",
+          "abilityIds": ["TgYTZg6TaG-a2"]
+        }
+      ]
+    },
+    {
+      "family": "doa-harmony-melody-card-alternatives",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedCardFilter",
+      "status": "resolved",
+      "repro": "Activating a Harmony card fails to trigger Wilderness Harpist and Discordia because the paired descriptor is truncated to Melody.",
+      "resolvedBy": "An exact Harmony or Melody descriptor emits both alternatives. Public tests distinguish Harmony, Melody, other actions, allies, and opposing activations.",
+      "members": [
+        {
+          "canonicalId": "aKgdkLSBza",
+          "abilityIds": ["aKgdkLSBza-a2"]
+        },
+        {
+          "canonicalId": "5LoOprBJay",
+          "abilityIds": ["5LoOprBJay-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-negative-control-condition",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileCondition",
+      "status": "resolved",
+      "repro": "Sword of Adversity gains power while controlling allies and loses it with none.",
+      "resolvedBy": "The negative-control parser now recognizes you control no before positive control matching. Public combat tests cross class, controlled ally presence, and defending unit type.",
+      "members": [
+        {
+          "canonicalId": "dpu9pHGX48",
+          "abilityIds": ["dpu9pHGX48-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-required-memory-payment-source",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/activation/activation.ts:printedMemoryPayment",
+      "status": "resolved",
+      "repro": "Sealed Blade accepts ordinary and partial Floating Memory payments despite requiring only Floating Memory.",
+      "resolvedBy": "Printed memory payments collect and enforce applicable required payment-source filters before payment. Public Sealed Blade tests reject ordinary, mixed, and nonkeyword payments atomically and prove full payment banishment before resolution.",
+      "members": [
+        {
+          "canonicalId": "mDN1CI9IEe",
+          "abilityIds": ["mDN1CI9IEe-a1"]
+        }
+      ]
+    },
+    {
+      "family": "doa-mage-action-trigger-characteristics",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedCardFilter",
+      "status": "resolved",
+      "repro": "Rest Conduit of the Mad Mage using the opponent's Glacial Guidance, then activate Cram Session. Conduit incorrectly wakes and gets +1 POWER because Mage Spell action was emitted as only ACTION. Rai, Archmage's first Mage action trigger likewise accepted non-Mage actions.",
+      "resolvedBy": "Exact Mage action and Mage Spell action descriptors now conjunct ACTION with MAGE class and, where printed, SPELL subtype. Compiler regressions and public Conduit tests distinguish Mage Spells, Mage Skills, non-Mage Spells, allies, and opposing activations. Rai tests prove first qualifying activation per turn from active and inner lineage, and no trigger from the material deck.",
+      "members": [
+        {
+          "canonicalId": "6SXL09rEzS",
+          "abilityIds": ["6SXL09rEzS-a1"]
+        },
+        {
+          "canonicalId": "zdIhSL5RhK",
+          "abilityIds": ["zdIhSL5RhK-a2"]
+        }
+      ]
+    },
+    {
+      "family": "next-attack-combined-power-scope",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:next-attack modifiers",
+      "status": "resolved",
+      "repro": "Level into Tonoris, Might of Humanity, resolve its On Enter ability, and declare Tonoris' next attack using a one-power Guardian weapon. The delayed trigger resolves but the attack deals only one damage because its continuous modifier targets the attack event's object subject rather than the combined attack itself.",
+      "resolvedBy": "Generic named-source, target, controller-declared and champion next-attack modifiers now target the current attack, so Layer E modifies its combined unit, weapon and intent power exactly once. Compiler regressions preserve that scope. Public Tonoris combat proves four damage on the armed attack followed by only one next turn; Take Aim proves the one-shot +2 independently from its Class Bonus Ranged 2 contribution and both expirations.",
+      "members": [
+        {
+          "canonicalId": "yevpmu6gvn",
+          "abilityIds": ["yevpmu6gvn-a2"]
+        },
+        {
+          "canonicalId": "vnta6qsesw",
+          "abilityIds": ["vnta6qsesw-a1"]
+        }
+      ]
+    },
+    {
+      "family": "other-card-resolution-selection",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileSelectionAction",
+      "status": "resolved",
+      "repro": "Fanatical Devotee dies with only one other Fire card in its graveyard. Its optional cost can incorrectly select the dead Devotee itself as the second card because the generated selection omitted other/source exclusion.",
+      "resolvedBy": "Resolution selections described as other now conjunct a typed not-source filter with their characteristic filter. The compiler regression proves the Fire and source-exclusion filters together; public Devotee tests cover the one-other-card feasibility boundary.",
+      "members": [
+        {
+          "canonicalId": "1gxrpx8jyp",
+          "abilityIds": ["1gxrpx8jyp-a2"]
+        }
+      ]
+    },
+    {
+      "family": "optional-reflexive-action-feasibility",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts:optionalEffectCannotBeFullyPerformed",
+      "status": "resolved",
+      "repro": "Fanatical Devotee dies with only one other Fire card in its graveyard. The runtime offers its all-or-nothing optional effect because feasibility does not inspect the required action inside a reflexive effect; accepting then partially banishes the lone card without generating the consequence.",
+      "resolvedBy": "All-or-nothing optional feasibility now descends into a reflexive effect's action. An engine regression proves an impossible reflexive choice takes the declined fallback without presenting a decision, while public Devotee cases prove zero/one eligible cards cannot be partially banished and two/three eligible cards generate the separately targeted damage trigger only after the exact banishment.",
+      "members": [
+        {
+          "canonicalId": "1gxrpx8jyp",
+          "abilityIds": ["1gxrpx8jyp-a2"]
+        }
+      ]
+    },
+    {
+      "family": "negative-subtype-object-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedObjectTarget",
+      "status": "resolved",
+      "repro": "Whirlwind Vizier publicly activates its destroy ability targeting Fractal of Snow. The activation is accepted because non-Fractal was reduced to the PHANTASIA type without retaining the excluded subtype.",
+      "resolvedBy": "Object target parsing now emits a negated subtype filter for capitalized non-X descriptors. Public Vizier cases reject controlled and opposing Fractals before costs, and a compiler regression asserts the PHANTASIA plus not-FRACTAL conjunction.",
+      "members": [
+        {
+          "canonicalId": "5swaf8urrq",
+          "abilityIds": ["5swaf8urrq-a2"]
+        }
+      ]
+    },
+    {
+      "family": "current-attack-stat-modifier-precedence",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileInstruction",
+      "status": "resolved",
+      "repro": "Accept Flameblessed Trainee's Fire discard when attacking an ally, then attack a champion on its next turn. The generated permanent source modifier incorrectly deals four damage instead of one.",
+      "resolvedBy": "Parse explicit This attack modifiers before indefinite source aliases, bind current-attack, and use this-attack duration. Sixteen public scenarios prove restrictions, eligible discard choices, exact first-attack damage, and subsequent-attack expiry; compiler regressions preserve named-source indefinite modifiers.",
+      "members": [
+        {
+          "canonicalId": "qmyn2rz308",
+          "abilityIds": ["qmyn2rz308-a1"]
+        }
+      ]
+    },
+    {
+      "family": "granted-trigger-variable-evaluation-timing",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/abilities/intrinsic-keywords.ts",
+      "status": "resolved",
+      "repro": "Resolve Reposition targeting Gloamspire Wraith. Keyword derivation eagerly evaluates the granted On Hit ability's event-amount variable before any hit exists, rejecting the pass with event amount outside event context.",
+      "resolvedBy": "Granted and copied abilities with no keyword contribution no longer evaluate variables during keyword discovery. Wraith's public tests cover Class Bonus Ranged, distant/absent/expired recovery, actual hit amounts, healing bounds, allies, champions, and retaliation including simultaneous lethal damage.",
+      "members": [
+        {
+          "canonicalId": "xrpx8jypwc",
+          "abilityIds": ["xrpx8jypwc-a1", "xrpx8jypwc-a2"]
+        }
+      ]
+    },
+    {
+      "family": "replacement-follow-up-trigger-preservation",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/game-flow/runtime.ts",
+      "status": "resolved",
+      "repro": "A distant Gloamspire Wraith hits a champion protected by False Step. One or three combat damage is correctly marked, but starting the replacement's interactive linked effect drops the hit's trigger-event batch, so no recovery trigger appears.",
+      "resolvedBy": "The runtime records pending triggers from already-committed events before entering a replacement follow-up. They wait until its resolution finishes before entering the stack. Two public Wraith cases decline False Step's linked optional payment, then verify a separate recovery trigger using exactly the reduced one/three damage rather than the original three/five power.",
+      "members": [
+        {
+          "canonicalId": "xrpx8jypwc",
+          "abilityIds": ["xrpx8jypwc-a2"]
+        }
+      ]
+    },
+    {
+      "family": "numeric-continuous-static-restrictions",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/continuous.ts:collectNumericModifiers",
+      "status": "resolved",
+      "repro": "Academy Attendant deals three combat damage with a non-Cleric champion or only three cards in memory, and retains three power after recollection empties memory. Numeric static modifiers evaluated ability conditions but omitted static restrictions.",
+      "resolvedBy": "Numeric modifier collection now evaluates static restrictions after filtering for the relevant numeric property and attack/object scope. Six public Academy Attendant scenarios prove both restrictions, memory counts three/four/five, reserve payment enabling the threshold, and recollection disabling it with exact combat damage.",
+      "members": [
+        {
+          "canonicalId": "m4c8ljyevp",
+          "abilityIds": ["m4c8ljyevp-a1"]
+        }
+      ]
+    },
+    {
+      "family": "granted-death-ability-last-known-information",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/kernel/event-admission.ts and packages/engine/src/rules/abilities/triggers.ts",
+      "status": "resolved",
+      "resolvedBy": "Field-departure admission captures active abilities, and trigger discovery uses that snapshot. Lethal-damage batches snapshot every dying unit before committing any death, preserving grants when source and recipient die together. Eight public Claude grant cases cover controlled Automaton targeting, non-Automaton/opponent/absent-source boundaries, exact Glimpse 3, source removal, and simultaneous source/recipient death.",
+      "repro": "With Claude on the field, kill its controller's Reconnaissance Scout in combat. Taunt is correctly granted, but no On Death Glimpse 3 trigger appears: discovery restores the deceased object's prior identity while resolving dynamic ability grants against its new graveyard zone.",
+      "members": [
+        {
+          "canonicalId": "52215upufy",
+          "abilityIds": ["52215upufy-a2"]
+        }
+      ]
+    },
+    {
+      "family": "optional-reflexive-target-announcement",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:optionalFollowUp",
+      "status": "resolved",
+      "resolvedBy": "The optional When-you-do compiler branch now owns consequence targets on the reflexive effect, retaining only action targets on the original ability. Four public Gatekeeper cases prove decline/accept, exact reserve payment with underpayment rejection, post-payment target legality, separate buff resolution and actual buffed combat damage. Two compiler regressions distinguish When-you-do from If-you-do target ownership.",
+      "repro": "Activate Winbless Gatekeeper through reserve payment and resolve entry. The original definition requires announcing the Guardian target before resolving the optional pay 2 effect; the target belongs to the When you do reflexive trigger after payment instead. All four new public cases fail at the premature announcement.",
+      "members": [
+        {
+          "canonicalId": "y5ttkk39i1",
+          "abilityIds": ["y5ttkk39i1-a2"]
+        }
+      ]
+    },
+    {
+      "family": "optional-discard-selection-minimum",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts:optionalEffectCannotBeFullyPerformed",
+      "status": "resolved",
+      "repro": "Resolve Fiery Duelist's entry with no Fire card in hand. Accepting the optional effect draws a card and grants distant without discarding anything because optional feasibility omits discard selection minimums.",
+      "resolvedBy": "Discard selections now use the same minimum feasibility check as banish and choose. Four public cases cross Fire availability and acceptance, reject non-Fire/memory/opposing-hand selections, prove exact selected discard before draw and distant, and verify distant expires at the controller's turn end.",
+      "members": [
+        {
+          "canonicalId": "wc8tuhuy4x",
+          "abilityIds": ["wc8tuhuy4x-a2"]
+        }
+      ]
+    },
+    {
+      "family": "optional-banish-selection-minimum",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts:optionalEffectCannotBeFullyPerformed",
+      "status": "resolved",
+      "repro": "Resolve Rimesoul Bishop's entry with only a non-Floating-Memory card in its controller's graveyard. Accepting the optional effect draws a card without banishing anything because optional feasibility does not check a banish selection's required minimum.",
+      "resolvedBy": "Optional feasibility now checks banish selection minimums, as it already checks choose effects. Five public entry cases prove accepted/declined banishment, exact selected card and top-card draw, rejection of non-keyword/opposing/field cards, and no draw or unresolved decision when no eligible card exists.",
+      "members": [
+        {
+          "canonicalId": "urrqtjot4n",
+          "abilityIds": ["urrqtjot4n-a1"]
+        }
+      ]
+    },
+    {
+      "family": "activated-self-return-graveyard-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:activated instruction",
+      "status": "resolved",
+      "repro": "With an Umbra champion, activate Relentless Hexchaser's return ability in the graveyard and offer two reserve. The public action rejects it as not functional in the source zone because its generated ability omits the printed graveyard origin as a functional zone.",
+      "resolvedBy": "The activated-instruction compiler preserves graveyard functionality for an initial self-move from that zone. Hexchaser's public tests prove Element Bonus on/off independently of Class Bonus, exact reserve payment before movement, rested field entry with a separately queued entry trigger, and rejection from hand, field and banishment without payment.",
+      "members": [
+        {
+          "canonicalId": "por7ch2bbm",
+          "abilityIds": ["por7ch2bbm-a3"]
+        }
+      ]
+    },
+    {
+      "family": "target-opponent-zone-inspection-viewer",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:inspectOpponentZones",
+      "status": "resolved",
+      "repro": "Activate Reconnaissance Field, target the opponent with its entry trigger, and resolve it. The cards-looked-at event names the opponent as viewer instead of the ability controller. The inspected card IDs correctly belong to the opponent's hand and memory.",
+      "resolvedBy": "The shared inspection compiler separates the controller viewer from the targeted opponent's zones. Four sibling cases cross empty/two-card hand and memory, reject self-targeting without changing state, prove separate entry-trigger resolution, inspect exact card IDs, and preserve both players' zones.",
+      "members": [
+        {
+          "canonicalId": "2rz308kuz0",
+          "abilityIds": ["2rz308kuz0-a1"]
+        }
+      ]
+    },
+    {
+      "family": "paired-typed-sacrifice-cost",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileCost",
+      "status": "resolved",
+      "repro": "Activate Dormant Sacrificial Altar with costSelections containing only an Automaton ally. The activation succeeds and mills despite the printed cost also requiring a Human ally; the compiler consumes the conjunction as one description and drops the second requirement.",
+      "resolvedBy": "The cost compiler preserves paired typed sacrifices as two independently selected costs with distinct result bindings. Public sibling tests reject missing, wrong-type, opposing and reused second sacrifices without state changes, pay both allies before resolution, and mill only the available top two cards with zero/one/three cards in deck. The separate entry suite proves the draw goes to memory after the entry trigger, not to hand or during reserve payment.",
+      "members": [
+        {
+          "canonicalId": "px8jypwc8t",
+          "abilityIds": ["px8jypwc8t-a2"]
+        }
+      ]
+    },
+    {
+      "family": "weapon-on-attack-attacker-binding",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/abilities/triggers.ts",
+      "status": "resolved",
+      "repro": "Bombard Flarecannon's On Attack has eventAttacker bound to the Gun instead of the champion. With Polkhawk and a Fire Bullet in intent, its fire-intent condition still fails and no units take damage.",
+      "resolvedBy": "Attack-declared trigger bindings use the original combat-started attacker's identity, preserving the distinct source/subject for weapon and intent triggers. Eight public cases cross Polkhawk enabled/disabled, Fire/non-Fire loaded Bullet, and champion/ally attack targets; the fire-intent condition succeeds only for the named champion with the Fire Bullet.",
+      "members": [
+        {
+          "canonicalId": "oqk1l75tlz",
+          "abilityIds": ["oqk1l75tlz-a1"]
+        }
+      ]
+    },
+    {
+      "family": "group-damage-defending-player-control",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:groupDamage",
+      "status": "resolved",
+      "repro": "Wield Bombard Flarecannon loaded with Incendiary Shot using Polkhawk against either an ally or champion while the defender controls other units. The damage recipient assertion fails. Its generated recipient uses a defending object-state filter rather than restricting units by the defending player's control; a separate attacker-binding bug also prevents the damage condition from succeeding.",
+      "resolvedBy": "The shared group damage parser removes the defending-player control suffix before deriving object filters and preserves it as a player restriction. Sibling tests prove two damage to both champion and surviving ally, lethal damage to a squirrel, no damage to either friendly unit or the opponent's Item, and separate On Attack resolution before combat damage.",
+      "members": [
+        {
+          "canonicalId": "oqk1l75tlz",
+          "abilityIds": ["oqk1l75tlz-a1"]
+        }
+      ]
+    },
+    {
+      "family": "non-combat-damage-event-matching",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts:matchesGrandArchiveEventPattern",
+      "status": "resolved",
+      "repro": "Sacrifice Condensed Supernova with Nico level one and Magebane Lash on the field. Nico takes one non-combat damage, but no recovery trigger appears after Glimpse: ordinary effect damage omits combatDamage and event matching incorrectly distinguishes undefined from false.",
+      "resolvedBy": "Event and historical condition matching classify damage as combat only when combatDamage is true, consistently with damage execution and replacement evaluation. Magebane Lash's public tests cross Nico enabled/disabled with zero/one/two/three effect damage, prove separate trigger resolution and recovery bounded at zero, preserve allied/opposing damage, and exclude combat damage.",
+      "members": [
+        {
+          "canonicalId": "oh300z2sns",
+          "abilityIds": ["oh300z2sns-a3"]
+        }
+      ]
+    },
+    {
+      "family": "per-counter-on-controller-champion",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:perDescriptorAmount",
+      "status": "resolved",
+      "repro": "Materialize Magebane Lash with a Guardian champion, resolve its entry lash counter, and wield it in a champion attack. It deals zero rather than one damage because its generated power modifier searches for an object literally named champion instead of counting counters on the controller's champion.",
+      "resolvedBy": "The shared per-counter parser resolves your champion to the controller's champion subject. Sibling public materialization/combat tests prove separate entry resolution, Class Bonus gating, zero/one/two counters, dynamic updates to the first Lash after materializing another, and exclusion of the opponent's lash counter. Regeneration also corrects Limitless Defiance without claiming its acceptance coverage.",
+      "members": [
+        {
+          "canonicalId": "oh300z2sns",
+          "abilityIds": ["oh300z2sns-a2"]
+        }
+      ]
+    },
+    {
+      "family": "irrelevant-static-restriction-characteristic-recursion",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/continuous.ts:collectCharacteristicModifiers",
+      "status": "resolved",
+      "repro": "With a nonmatching champion, two Seeker's Rifles and several other objects, resolve Deploy Gunshield on one Gun, then activate Meltdown targeting the other. Public activation takes about six seconds and resolution another five; CPU profiling shows repeated characteristic derivation through unrelated static level/cost restrictions. The acceptance test exceeds its unchanged five-second timeout.",
+      "resolvedBy": "Characteristic collection skips abilities without any layer B/C characteristic effects before evaluating their restrictions. The original full fixture, including Magebane Lash, now runs both Deploy Gunshield effect cases in roughly 150ms. They prove valid Gun targeting, non-Gun/opponent rejection, spell-only protection, loading through protection, response fizzle and expiry on either player's turn.",
+      "members": [
+        {
+          "canonicalId": "bjvwbcizm6",
+          "abilityIds": ["bjvwbcizm6-a1"]
+        }
+      ]
+    },
+    {
+      "family": "persistent-replacement-created-object-matching",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/replacements/replacements.ts:replacementInstanceEvaluation",
+      "status": "resolved",
+      "repro": "Sacrifice Fractal of Snow with Class Bonus, then resolve Summon Sentinels. Both simultaneously summoned Automaton Drone tokens enter awake: persistent replacement matching cannot inspect their types because the proposed objects are not committed to state yet.",
+      "resolvedBy": "Persistent replacement evaluation includes proposed object-created and tokens-summoned characteristics for matching and bindings, as static entry replacements already do. Public sibling tests prove simultaneous friendly/enemy token entries, non-ally exclusion, single ordinary ally entry, once-only consumption, Class Bonus rejection, sacrifice/resolution timing, and turn-end expiry.",
+      "members": [
+        {
+          "canonicalId": "uhuy4xippo",
+          "abilityIds": ["uhuy4xippo-a2"]
+        }
+      ]
+    },
+    {
+      "family": "target-token-copy-activation",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedObjectTarget",
+      "status": "resolved",
+      "repro": "Activate Fractal of Creation's x7mnu1xhs5-a2 targeting a controlled Springleaf or Automaton Drone token. The public action rejects it as not an activated ability: the target parser cannot describe a token-only target, and the fallback compiles the whole paragraph as a card-resolution sacrifice.",
+      "resolvedBy": "The shared object-target parser preserves token/non-token restrictions, allowing the existing activated-ability and summon-copy parsers to compile the full printed ability. Sibling tests prove Item/Ally token copies, sacrifice before resolution, non-token/opposing-token rejection without cost payment, copy ownership, and an awake copy of a rested Drone dealing its printed one combat damage.",
+      "members": [
+        {
+          "canonicalId": "x7mnu1xhs5",
+          "abilityIds": ["x7mnu1xhs5-a2"]
+        }
+      ]
+    },
+    {
+      "family": "persistent-replacement-result-variables",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/replacements/replacements.ts:applyAfterReplacementEffect",
+      "status": "resolved",
+      "repro": "Resolve Spellshield: Astra, then deal damage to its controller's champion. Its Glimpse X follow-up throws undeclared variable X because the creating stack item has gone and the replacement retained only already-evaluated variables.",
+      "resolvedBy": "Replacement instances preserve result-dependent declarations and evaluate them against the actual replacement result before executing follow-ups. Spellshield's public acceptance tests prove two prevented damage, one/three-card deck ordering, unrelated ally damage, once-only use and expiry; Anathema's End proves unpreventable damage produces zero prevented damage without a Glimpse choice.",
+      "members": [
+        {
+          "canonicalId": "nmp5af098k",
+          "abilityIds": ["nmp5af098k-a2"]
+        }
+      ]
+    },
+    {
+      "family": "suspended-replacement-combat-cleanup",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/game-flow/runtime.ts",
+      "status": "resolved",
+      "repro": "Prevent an Automated Gardener attack using Spellshield: Astra and answer the Glimpse decision. Combat remains at end with no decision, stack item, resolution or Opportunity, leaving no public action to continue.",
+      "resolvedBy": "Runtime stabilization resumes normal combat damage completion after replacement follow-up choices finish. Spellshield's sibling suite completes Glimpse, then publicly declares and completes another attack that deals its normal damage.",
+      "members": [
+        {
+          "canonicalId": "nmp5af098k",
+          "abilityIds": ["nmp5af098k-a2"]
+        }
+      ]
+    },
+    {
+      "family": "targeted-controlled-group-modifier",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:groupTurnModifier",
+      "status": "resolved",
+      "repro": "Hit a champion with Turbulent Bullet while controlling three allies and a matching Ranger champion. No target-announcement decision appears; its generated continuous effect applies to all friendly allies instead of up to two chosen targets.",
+      "resolvedBy": "The group modifier parser excludes text containing target, letting the existing multi-target modifier parser preserve the announcement, count, relationship and bound subjects. Six sibling cases prove Class Bonus enabled/disabled, zero/one/two targets, too-many and opposing-ally rejection, exact selected power changes, separate resolution, and end-of-turn expiry.",
+      "members": [
+        {
+          "canonicalId": "f8urrqtjot",
+          "abilityIds": ["f8urrqtjot-a3"]
+        }
+      ]
+    },
+    {
+      "family": "hit-ally-return-field-restriction",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Vanishing Shot hits and destroys Woodland Squirrels. Accepting its optional trigger incorrectly returns the destroyed card from the graveyard into memory.",
+      "resolvedBy": "The compiled move now requires from:field, matching Objects and Targeting Objects 4. Vanishing Shot's six hit cases prove accepted/declined returns of surviving allies, no return of destroyed allies, no trigger on champion hit, owner memory, and separate trigger resolution.",
+      "members": [
+        {
+          "canonicalId": "0iqmyn2rz3",
+          "abilityIds": ["0iqmyn2rz3-a2"]
+        }
+      ]
+    },
+    {
+      "family": "domain-item-weapon-target-union",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedObjectTarget",
+      "status": "resolved",
+      "repro": "Meltdown rejects both a Renewable Bullet on the field and Seeker's Rifle: its generated target retained only DOMAIN from the printed Domain, Item, or Weapon union.",
+      "resolvedBy": "The parser preserves all three target types. Meltdown's sibling suite proves each allowed type and rejects an ally before payment. Renewable Bullet suites additionally exercise friendly Item/Weapon destruction through the same corrected definition.",
+      "members": [
+        {
+          "canonicalId": "ht2tsn0ye3",
+          "abilityIds": ["ht2tsn0ye3-a2"]
+        }
+      ]
+    },
+    {
+      "family": "non-attack-card-abilities-in-intent",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/game/card-runtime.ts:grandArchiveAbilityFunctionalZones",
+      "status": "resolved",
+      "repro": "Load Mindbreak Bullet into Seeker's Rifle with a Ranger champion, wield it to hit the opposing champion, and observe no On Champion Hit trigger. Default functional zones for non-Attack cards omitted intent, contrary to Abilities 6.",
+      "resolvedBy": "Default functional zones now include intent, preserving explicit zone overrides and hosted execution-source constraints. Mindbreak's sibling suite proves the trigger in intent, Class Bonus and champion-versus-ally restrictions, empty memory, and rejection of its REST loading cost while in intent.",
+      "members": [
+        {
+          "canonicalId": "9htu9agwj4",
+          "abilityIds": ["9htu9agwj4-a2"]
+        }
+      ]
+    },
+    {
+      "family": "hit-opponent-memory-viewer",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Resolve Mindbreak Bullet's champion-hit trigger against two opposing memory cards. The cards-looked-at event names player-two (the victim), not player-one (the ability controller).",
+      "resolvedBy": "The look-at viewer is controller while selection candidates remain event-recipient-controller's memory. Mindbreak's sibling suite asserts the viewer and exact visible card IDs before the controller chooses the second card to discard, leaving the controller's own memory untouched.",
+      "members": [
+        {
+          "canonicalId": "9htu9agwj4",
+          "abilityIds": ["9htu9agwj4-a2"]
+        }
+      ]
+    },
+    {
+      "family": "unloaded-weapon-subtype-targets",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedObjectTarget",
+      "status": "resolved",
+      "repro": "Focusing Round's public activateAbility accepts Magebane Lash as target-weapon and pays two reserve/rest despite its printed Gun requirement. The original generated target lacks the subtype filter because unloaded interrupts the subtype parser. Anathema's End's maintained override has the same omission.",
+      "resolvedBy": "The shared described-target parser retains the subtype after unloaded, and the Anathema's End override explicitly requires GUN. Seven ALC sibling suites run the load-bullet acceptance contract: legal load, cost/resolution timing, non-Gun/opponent/loaded-host rejection, repeat-rest rejection, and transfer into intent on wield. Focusing Round additionally rejects reserve underpayment. The original definition fails the Magebane Lash regression; regenerated definitions pass.",
+      "members": [
+        {
+          "canonicalId": "7yacwhzzfb",
+          "abilityIds": ["7yacwhzzfb-a2"]
+        },
+        {
+          "canonicalId": "ii17fzcyfr",
+          "abilityIds": ["ii17fzcyfr-a1"]
+        },
+        {
+          "canonicalId": "0iqmyn2rz3",
+          "abilityIds": ["0iqmyn2rz3-a1"]
+        },
+        {
+          "canonicalId": "9htu9agwj4",
+          "abilityIds": ["9htu9agwj4-a1"]
+        },
+        {
+          "canonicalId": "ywc08c9htu",
+          "abilityIds": ["ywc08c9htu-a2"]
+        },
+        {
+          "canonicalId": "f8urrqtjot",
+          "abilityIds": ["f8urrqtjot-a2"]
+        },
+        {
+          "canonicalId": "r7ch2bbmoq",
+          "abilityIds": ["r7ch2bbmoq-a1"]
+        }
+      ]
+    },
+    {
+      "family": "continuous-effect-source-last-known-information",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/continuous.ts",
+      "status": "resolved",
+      "repro": "Age Distilled Atrophy twice through public turn progression, then sacrifice it targeting a level-two champion. Its resolved temporary modifier lost the source departure checkpoint, read zero age counters, and left the target at level two rather than zero.",
+      "resolvedBy": "Distilled Atrophy sibling acceptance tests verify zero-age, below-zero, zero and above-zero level boundaries, damage, turn expiry, and retaining the original source checkpoint after Scavenge the Distillery moves the potion again. Continuous instances now retain source incarnation and departure event, used by all continuous-effect evaluators.",
+      "members": [
+        {
+          "canonicalId": "h38lrj5221",
+          "abilityIds": ["h38lrj5221-a3"]
+        }
+      ]
+    },
+    {
+      "family": "phase-trigger-actor-provenance",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/turn-progression.ts",
+      "status": "resolved",
+      "repro": "Start Wildgrowth Elixir or Distilled Atrophy on the field, then pass to its controller's next recollection. The phase event omitted actorId, so actor:controller trigger patterns never matched and no age counter was added.",
+      "resolvedBy": "ALC aging-potion public acceptance contract proves own/opponent recollection and separate trigger resolution. Wildgrowth Elixir also proves last-known age after sacrifice. Engine phase-actor.test.ts verifies all ordinary phase events for both players; phase sequencing and keyword regressions pass.",
+      "members": [
+        {
+          "canonicalId": "tjot4nmxqs",
+          "abilityIds": ["tjot4nmxqs-a2", "tjot4nmxqs-a3"]
+        },
+        {
+          "canonicalId": "h38lrj5221",
+          "abilityIds": ["h38lrj5221-a2"]
+        }
+      ]
+    },
+    {
+      "family": "champion-materialization-element-exemption",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/activation/activation.ts:proposeGrandArchiveMaterialization",
+      "status": "resolved",
+      "repro": "Materialize Diana, Duskstalker from a Norm-only Diana lineage with three memory. The public materialize command incorrectly rejects the new element. Champion / Leveling Up rule 3 exempts champion materialization from element requirements.",
+      "resolvedBy": "ALC/champions/* Lineage sibling acceptance suites (33 tests); engine materialization-elements.test.ts covers command discovery and admission plus off-element Regalia rejection. Materialization now checks elements only for non-champions.",
+      "members": [
+        {
+          "canonicalId": "3vkxrw9462",
+          "abilityIds": ["3vkxrw9462-a1"]
+        },
+        {
+          "canonicalId": "7e22tk3ir1",
+          "abilityIds": ["7e22tk3ir1-a1"]
+        },
+        {
+          "canonicalId": "8m69iq4d5v",
+          "abilityIds": ["8m69iq4d5v-a1"]
+        },
+        {
+          "canonicalId": "iq4d5vettc",
+          "abilityIds": ["iq4d5vettc-a1"]
+        },
+        {
+          "canonicalId": "n2jnltv5kl",
+          "abilityIds": ["n2jnltv5kl-a1"]
+        },
+        {
+          "canonicalId": "o0qtb31x97",
+          "abilityIds": ["o0qtb31x97-a1"]
+        },
+        {
+          "canonicalId": "q3huqj5bba",
+          "abilityIds": ["q3huqj5bba-a1"]
+        },
+        {
+          "canonicalId": "ta6qsesw2u",
+          "abilityIds": ["ta6qsesw2u-a1"]
+        }
+      ]
+    },
+    {
+      "family": "past-tense-source-counter-basis",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:perDescriptorAmount",
+      "status": "resolved",
+      "repro": "After four or eight public Gather actions add refinement counters, activating Alchemist's Kit banishes it as cost but its generated draw amount reads the counter-cleared current object and draws zero. The printed text counts counters that was on the Kit.",
+      "resolvedBy": "The shared per-descriptor counter parser now emits last-known basis with a zero fallback when past-tense text counts counters that were on its source. A focused compiler regression checks the exact generated amount, and Alchemist's Kit publicly gathers zero, three, four, or eight times before banishing itself and drawing zero, zero, one, or two cards.",
+      "members": [
+        {
+          "canonicalId": "ettczb14m4",
+          "abilityIds": ["ettczb14m4-a2"]
+        }
+      ]
+    },
+    {
+      "family": "controller-champion-granted-keyword-subject",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:grantedUntil",
+      "status": "resolved",
+      "repro": "Resolve Calculated Foresight, accept its optional Floating Memory banishment, and declare an attack with the controller's distant champion. The attack is rejected because lowercase printed text for your champion falls through a case-sensitive discriminator and generates linked-object as the Ranged 3 subject.",
+      "resolvedBy": "The shared temporary-keyword parser recognizes your champion case-insensitively and emits the controller's champion subject. A compiler regression preserves the exact Calculated Foresight sequence, while its public acceptance cases prove eligible selection boundaries, accepted and declined choices, actual three-damage Ranged combat, and turn-end expiry.",
+      "members": [
+        {
+          "canonicalId": "sl7dedg616",
+          "abilityIds": ["sl7dedg616-a1"]
+        }
+      ]
+    },
+    {
+      "family": "capitalized-item-subtype-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedObjectTarget",
+      "status": "resolved",
+      "repro": "Resolve Fertile Grounds' recollection trigger while controlling both Blightroot and Potion of Healing. The choice incorrectly accepts the Potion because the generated copied-object filter preserves Item but drops the capitalized Herb subtype.",
+      "resolvedBy": "The shared described-object parser now retains a capitalized subtype before Item as it already did for Ally and Weapon. An exact compiler regression asserts the ITEM and HERB conjunction; Fertile Grounds publicly rejects a controlled non-Herb Item and an opposing Herb before summoning an awake token copy of the selected controlled Herb.",
+      "members": [
+        {
+          "canonicalId": "8bls6g7xgw",
+          "abilityIds": ["8bls6g7xgw-a1"]
+        }
+      ]
+    },
+    {
+      "family": "capitalized-card-type-duplicate-subtype-filter",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:describedCardFilter",
+      "status": "resolved",
+      "repro": "Activate a Domain card while controlling Wayfinder's Map. The generated cost modifier requires the activation to match both type DOMAIN and subtype DOMAIN, but ordinary Domain cards have DOMAIN as a type and their actual class/location subtypes, so the printed discount never applies.",
+      "resolvedBy": "The shared described-card parser no longer adds a duplicate subtype predicate when a standalone capitalized descriptor is the same recognized card type. An exact compiler regression asserts that Domain cards compile to the DOMAIN type filter alone; Wayfinder's Map acceptance proves the resulting reserve discount on a real Domain activation.",
+      "members": [
+        {
+          "canonicalId": "porhlq2kkv",
+          "abilityIds": ["porhlq2kkv-a1"]
+        }
+      ]
+    },
+    {
+      "family": "alternative-reveal-filter-conjunction",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:topRevealToHand",
+      "status": "resolved",
+      "repro": "Resolve Enhance Hearing with a wind non-Reaction card and a non-wind Reaction among the top three cards. The generated choice combines WIND and REACTION with an all filter, so neither printed alternative is eligible unless one card has both characteristics.",
+      "resolvedBy": "The top-card reveal parser now recognizes the printed 'card or a ... card' alternatives and emits an any filter over their independently parsed characteristics. An exact compiler regression preserves WIND-or-REACTION, and Enhance Hearing acceptance proves each branch, the ineligible boundary, optional decline, and bottom ordering.",
+      "members": [
+        {
+          "canonicalId": "edg616r0za",
+          "abilityIds": ["edg616r0za-a2"]
+        }
+      ]
+    },
+    {
+      "family": "ordered-resolution-selection",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/activation/activation.ts:deterministicallyDeclareGrandArchiveResolutionChoice",
+      "status": "resolved",
+      "repro": "Resolve Enhance Hearing after selecting or declining its eligible reveal. The generated bottom placement carries orderChosenBy, but the runtime treats the complete remainder as deterministic and never asks its controller to order the cards.",
+      "resolvedBy": "Resolution choices can now declare ordered: true, which preserves forced membership while requiring the player to submit its order when multiple cards remain. The generic reveal-to-hand compiler binds the reveal to the prior choice and emits one ordered remainder choice; Enhance Hearing acceptance reverses and verifies the exact bottom order for both selections and decline.",
+      "members": [
+        {
+          "canonicalId": "edg616r0za",
+          "abilityIds": ["edg616r0za-a2"]
+        }
+      ]
+    },
+    {
+      "family": "unless-paid-target-controller-and-negation-binding",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:unlessPaidInstruction",
+      "status": "resolved",
+      "repro": "Resolve Frozen Dismissal or Flash Freeze against another player's activation. The generated unless-paid instruction asks the event recipient rather than the targeted activation's controller, and its follow-up cannot identify the negated activation's source card.",
+      "resolvedBy": "Generic unless-paid compilation derives the payer from the targeted stack item's controller, and generic negate instructions bind the negated stack item for subsequent source-card movement. Exact compiler regressions preserve both structures; public Frozen Dismissal and Flash Freeze cases prove payment ownership, resolution when paid, and source banishment when declined.",
+      "members": [
+        {
+          "canonicalId": "8qgr2drym1",
+          "abilityIds": ["8qgr2drym1-a2"]
+        },
+        {
+          "canonicalId": "w3rrii17fz",
+          "abilityIds": ["w3rrii17fz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "stack-item-relative-player-binding",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts:resolveGrandArchivePlayers",
+      "status": "resolved",
+      "repro": "Resolve Tether in Flames, Frozen Dismissal, or Flash Freeze with a player selector based on the targeted stack item. The selector only inspects object bindings, resolves no player, and the effect cannot offer its damage or payment decision.",
+      "resolvedBy": "Relative owner/controller selectors now inspect bound stack item IDs as well as object IDs, using stack controller identity or source ownership as appropriate. Public Tether, Frozen Dismissal, and Flash Freeze suites prove that decisions belong to the targeted activation's controller.",
+      "members": [
+        {
+          "canonicalId": "215upufyoz",
+          "abilityIds": ["215upufyoz-a2"]
+        },
+        {
+          "canonicalId": "8qgr2drym1",
+          "abilityIds": ["8qgr2drym1-a2"]
+        },
+        {
+          "canonicalId": "w3rrii17fz",
+          "abilityIds": ["w3rrii17fz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "negated-stack-source-last-known-information",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts:bindingStackSourceObjects",
+      "status": "resolved",
+      "repro": "Decline Frozen Dismissal or Flash Freeze's payment. Negation removes the activation from the stack immediately, so the following instruction cannot resolve the bound activation's source card and leaves it in its ordinary destination.",
+      "resolvedBy": "Stack-source binding resolution falls back to the committed stack-item-negated event after the bound item leaves the stack. Public Frozen Dismissal and Flash Freeze cases prove that the exact negated source card is banished while paid activations resolve normally.",
+      "members": [
+        {
+          "canonicalId": "8qgr2drym1",
+          "abilityIds": ["8qgr2drym1-a2"]
+        },
+        {
+          "canonicalId": "w3rrii17fz",
+          "abilityIds": ["w3rrii17fz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "effect-payment-dynamic-cost-snapshot",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts:snapshotEffectPaymentCost",
+      "status": "resolved",
+      "repro": "Resolve Flash Freeze from a level-one or level-two champion and choose to pay. The pending LV reserve cost is re-evaluated with the payer as controller, reads that player's level-zero champion, and rejects the printed one- or two-card payment as extraneous.",
+      "resolvedBy": "State-dependent effect-payment amounts and selection counts are exhaustively snapshotted in the resolving effect's evaluation context when the decision is created; payment ownership remains with the selected payer. Flash Freeze's public suite proves exact LV 1 and LV 2 payments, atomic LV 2 underpayment rejection, decline, and both Ally and non-Ally activation sources.",
+      "members": [
+        {
+          "canonicalId": "w3rrii17fz",
+          "abilityIds": ["w3rrii17fz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "next-fast-activation-class-filter",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:nextFastActivation",
+      "status": "resolved",
+      "repro": "Resolve Bombastic Sprint with a Polkhawk champion, then attempt to use its permission for a non-Ranger action. The generated filter retains ACTION but drops the printed RANGER class, permitting the wrong card.",
+      "resolvedBy": "Generic next-fast-activation compilation preserves a recognized class alongside the card type. An exact compiler regression asserts ACTION and RANGER; Bombastic Sprint's public suite proves a non-Ranger action does not consume the permission and only a Ranger action receives fast timing.",
+      "members": [
+        {
+          "canonicalId": "t4owmcva0f",
+          "abilityIds": ["t4owmcva0f-a2"]
+        }
+      ]
+    },
+    {
+      "family": "next-fast-activation-immediate-consumption",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/rule-modifications.ts:durationIsActive",
+      "status": "resolved",
+      "repro": "Use Bombastic Sprint's permission to activate one Ranger action at fast speed, then immediately activate a second Ranger action on the same stack. The duration scanner reconstructs card-activated events as activate requests instead of activate-fast requests, so the permission never recognizes its matching event and remains active.",
+      "resolvedBy": "For-next-event duration matching now reconstructs card and ability activation requests with activate-fast when that is the owning modification's action. Bombastic Sprint's public suite proves the first matching Ranger action consumes the permission immediately while an earlier non-Ranger fast action does not.",
+      "members": [
+        {
+          "canonicalId": "t4owmcva0f",
+          "abilityIds": ["t4owmcva0f-a2"]
+        }
+      ]
+    },
+    {
+      "family": "champion-successor-lineage-filter",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/ability-overrides.ts:level-up destination filters",
+      "status": "resolved",
+      "repro": "With Nico, Vanitas, or Polkhawk active, try to level into a next-level champion whose lineage name matches but whose full titled name does not equal the bare character name. The maintained definitions use an exact name filter and reject every legitimate titled successor.",
+      "resolvedBy": "The maintained definitions now use the typed champion-name filter, matching the generic lineage-restriction compiler. Public successor suites allow the matching lineage name and atomically reject a differently named next-level champion.",
+      "members": [
+        {
+          "canonicalId": "29lqrve8fz",
+          "abilityIds": ["29lqrve8fz-a1"]
+        },
+        {
+          "canonicalId": "8eyeqhc37y",
+          "abilityIds": ["8eyeqhc37y-a1"]
+        },
+        {
+          "canonicalId": "x8bd7ozuj6",
+          "abilityIds": ["x8bd7ozuj6-a1"]
+        }
+      ]
+    },
+    {
+      "family": "lineage-collection-physical-card-identity",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts:resolveGrandArchiveCollection",
+      "status": "resolved",
+      "repro": "Materialize Nico, Vanitas, or Polkhawk from a Norm-only level-zero champion. Their 'another element card in the lineage' condition sees the active level-one card stored in inner-lineage as its own matching element, while it cannot inspect the base physical champion card represented by the field object.",
+      "resolvedBy": "Lineage-of collections now evaluate the base physical champion definition alongside hosted lineage cards, and not-source maps an active champion object to its active physical lineage card. Twelve public champion scenarios prove false and true element conditions, exact deck effects, next-event consumption, and successor restrictions.",
+      "members": [
+        {
+          "canonicalId": "29lqrve8fz",
+          "abilityIds": ["29lqrve8fz-a2"]
+        },
+        {
+          "canonicalId": "8eyeqhc37y",
+          "abilityIds": ["8eyeqhc37y-a2"]
+        },
+        {
+          "canonicalId": "x8bd7ozuj6",
+          "abilityIds": ["x8bd7ozuj6-a2"]
+        }
+      ]
+    },
+    {
+      "family": "named-lineage-element-host-binding",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:lineageElement",
+      "status": "resolved",
+      "repro": "Compile an 'another element card in [name]'s lineage' condition. The generic condition and maintained Vanitas definition scan every inner-lineage card controlled by the player instead of cards hosted by that champion, allowing another champion lineage to satisfy it.",
+      "resolvedBy": "Named lineage-element conditions now bind the collection to the controller's champion with relationship lineage-of. An exact compiler regression preserves the host, relationship, element, and not-source filters; public Vanitas cases prove the condition against its own lineage.",
+      "members": [
+        {
+          "canonicalId": "x8bd7ozuj6",
+          "abilityIds": ["x8bd7ozuj6-a2"]
+        }
+      ]
+    },
+    {
+      "family": "perfect-repulsion-resolution-snapshot",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Perfect Repulsion",
+      "status": "resolved",
+      "repro": "Resolve Perfect Repulsion with two cards in memory, then move a third card into memory before its target would take two damage. The generated replacement compares against a live memory count and fails to prevent the printed snapshotted amount.",
+      "resolvedBy": "The replacement now compares event damage against its declared derived X variable, which the activation snapshots as the card resolves. An exact compiler regression preserves the variable reference; the public card suite changes memory afterward, prevents exactly the original amount, draws once, and proves the replacement is consumed.",
+      "members": [
+        {
+          "canonicalId": "gwj4f15joh",
+          "abilityIds": ["gwj4f15joh-a1"]
+        }
+      ]
+    },
+    {
+      "family": "umbral-tithe-player-memory-threshold",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:group damage parsing",
+      "status": "resolved",
+      "repro": "Resolve Umbral Tithe while one player has only five cards in memory after its draw. The broad group-damage parser discards 'controlled by players with six or more cards in their memory' and deals four damage to every champion.",
+      "resolvedBy": "The exact threshold instruction is compiled before broad group damage as a typed per-player loop that checks that player's memory and damages only their champion. A compiler regression retains the binding; four public cases cross both players independently and also prove the global Curse discount and exact draws.",
+      "members": [
+        {
+          "canonicalId": "2snsdwmxz1",
+          "abilityIds": ["2snsdwmxz1-a1"]
+        }
+      ]
+    },
+    {
+      "family": "intent-only-activated-ability-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:activated ability functional zones",
+      "status": "resolved",
+      "repro": "Activate Cyclonic Strike, declare its attack, and attempt its printed ability while the card is in intent. The generated ability defaults to field functionality and is rejected in its only legal printed zone.",
+      "resolvedBy": "Activated-ability compilation now detects the explicit intent-only reminder and emits functionalZones intent. An exact compiler regression preserves the zone; the public attack test proves the Class Bonus gate, opponent-Ally targeting, source-instance limit, Suppress result, and -2 POWER during combat.",
+      "members": [
+        {
+          "canonicalId": "3ir1o0qtb3",
+          "abilityIds": ["3ir1o0qtb3-a1"]
+        }
+      ]
+    },
+    {
+      "family": "resolution-selected-card-derived-power",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:optional banish-for-power instruction",
+      "status": "resolved",
+      "repro": "Resolve Amorphous Strike's Class Bonus trigger and banish an Attack card with two power from its controller's graveyard. Its generated X variable is evaluated before the resolution-time choice exists, so the selected card is banished but the attack receives zero power.",
+      "resolvedBy": "The compiler now binds the committed banishment result and evaluates that selected card's last-known power in the following continuous effect instead of declaring X before the choice. An exact compiler regression preserves the binding and public Amorphous Strike tests prove the Class Bonus gate, decline path, legal ownership/type boundaries, committed banishment, and resulting combat damage.",
+      "members": [
+        {
+          "canonicalId": "5kt3q2svd5",
+          "abilityIds": ["5kt3q2svd5-a1"]
+        }
+      ]
+    },
+    {
+      "family": "recipient-suffixed-this-turn-prevention-duration",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:genericDamagePrevention",
+      "status": "resolved",
+      "repro": "Resolve Storm of Thorns, let the Action leave the effects stack, then deal damage to a controlled unit during the same turn. The compiler strips the trailing 'this turn' from the recipient description but emits while-source-on-field, so no damage is prevented.",
+      "resolvedBy": "Generic damage prevention now retains this-turn duration whether the phrase prefixes the instruction or suffixes its recipient. An exact compiler regression preserves the duration; the public Storm of Thorns suite proves repeated controlled-unit prevention after the Action leaves the stack, no retaliation against a Spell source, and one damage back to a unit source.",
+      "members": [
+        {
+          "canonicalId": "39i1f0ht2t",
+          "abilityIds": ["39i1f0ht2t-a1"]
+        }
+      ]
+    },
+    {
+      "family": "delayed-ability-trigger-sacrificed-source-incarnation",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/abilities/delayed-triggers.ts and triggers.ts",
+      "status": "resolved",
+      "repro": "Resolve Enhance Potency targeting Potion of Healing, then activate the Potion's sacrifice ability. Paying the cost changes the Potion's incarnation before ability-activated is observed, so delayed-trigger binding rehydration discards the chosen Potion ID and the ability is not copied.",
+      "resolvedBy": "Delayed ability-activation matching now rehydrates a captured object binding from the activated stack item's exact pre-payment LKI incarnation while continuing to reject unrelated later incarnations. The public Enhance Potency suite deals six damage through legal actions, grants the one-shot delayed trigger, sacrifices the rested Potion, processes the copy's target-choice permission, and proves both five-point recoveries resolve.",
+      "members": [
+        {
+          "canonicalId": "df9q1wl8ao",
+          "abilityIds": ["df9q1wl8ao-a2"]
+        }
+      ]
+    },
+    {
+      "family": "other-domain-upkeep-threshold",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Exalted Dorumegian Throne upkeep",
+      "status": "resolved",
+      "repro": "Begin the controller's recollection phase with Exalted Dorumegian Throne and five other domains. The broad conditional parser emits a collection-exists check and sacrifices the Throne even though the printed four-or-fewer threshold is false.",
+      "resolvedBy": "An exact upkeep compiler emits a count of controlled field Domains excluding the source and compares it to four. The compiler regression preserves the full predicate and the public card suite crosses the four/five boundary.",
+      "members": [
+        {
+          "canonicalId": "p4lpnvx7mn",
+          "abilityIds": ["p4lpnvx7mn-a2"]
+        }
+      ]
+    },
+    {
+      "family": "sacrifice-alternative-card-cost",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:alternate sacrifice payment",
+      "status": "resolved",
+      "repro": "Activate Refabrication with two controlled tokens and no reserve payment. The generated paragraph is a resolution-time optional sacrifice of one token, so activation still requires three reserve and cannot use the printed alternative cost.",
+      "resolvedBy": "The compiler now emits typed replace-cost rules for sacrifice-based reserve or memory alternatives, including the exact count and described-card filter. Refabrication's public suite proves atomic underpayment, the two-token sacrifice, and zero reserve payment.",
+      "members": [
+        {
+          "canonicalId": "cri23mf3vs",
+          "abilityIds": ["cri23mf3vs-a1"]
+        }
+      ]
+    },
+    {
+      "family": "self-activation-trigger-functional-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Whenever self-activation trigger",
+      "status": "resolved",
+      "repro": "Activate Provoke Obstinance with Class Bonus and exactly one target. Its self-activation trigger is discovered only after the Action has moved from hand to the Effects Stack, but the generated triggered ability is not functional there and never triggers.",
+      "resolvedBy": "Whenever-you-activate-this-card triggers now remain functional in the Effects Stack. An exact compiler regression preserves the zone and the public Provoke Obstinance suite crosses both the Class Bonus and one-target gates.",
+      "members": [
+        {
+          "canonicalId": "16r0zadf9q",
+          "abilityIds": ["16r0zadf9q-a1"]
+        }
+      ]
+    },
+    {
+      "family": "event-stack-item-target-count",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts:target-count",
+      "status": "resolved",
+      "repro": "Resolve a trigger whose condition counts targets on its bound card-activated stack item. Target-count scans arbitrary object bindings and ignores both its ability selector and stack-item targets, always producing zero for the event stack item.",
+      "resolvedBy": "Target-count now resolves either the bound event stack item or the currently resolving stack item and sums its declared target IDs. A focused engine regression proves a two-target event item and Provoke Obstinance proves the one-target behavior through public activation.",
+      "members": [
+        {
+          "canonicalId": "16r0zadf9q",
+          "abilityIds": ["16r0zadf9q-a1"]
+        }
+      ]
+    },
+    {
+      "family": "inherited-stat-lineage-host",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Inherited Effect stat changes",
+      "status": "resolved",
+      "repro": "Place an action with 'Inherited Effect: This object gets -2 LIFE' in a champion's lineage. The generated continuous effect targets the controller's champion directly while retaining the lineage card as its execution source, so the affected object semantics are not represented by the ability bearer.",
+      "resolvedBy": "Inherited numeric effects now execute from the lineage host and target the typed ability-bearer subject. Exact compiler coverage preserves both fields; Violet Haze, Load Soul, and Demon's Aim public suites prove the host loses two life while unrelated champions do not.",
+      "members": [
+        {
+          "canonicalId": "6g7xgwve1d",
+          "abilityIds": ["6g7xgwve1d-a2"]
+        },
+        {
+          "canonicalId": "71cl4m6c68",
+          "abilityIds": ["71cl4m6c68-a2"]
+        },
+        {
+          "canonicalId": "f15joh23qu",
+          "abilityIds": ["f15joh23qu-a2"]
+        }
+      ]
+    },
+    {
+      "family": "resolved-combat-action-rule-support",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/effect-executor.ts:rule-modification validation",
+      "status": "resolved",
+      "repro": "Resolve Demon's Aim. Its typed forbid-redirect and allow-declare-target effects are rejected at runtime as unsupported even though the rule collector and combat procedures implement both actions.",
+      "resolvedBy": "The effect executor's closed action-rule whitelist now admits redirect and declare-target. Demon's Aim's public suite resolves both rules and proves the resulting target selection and Intercept behavior.",
+      "members": [
+        {
+          "canonicalId": "6g7xgwve1d",
+          "abilityIds": ["6g7xgwve1d-a1"]
+        }
+      ]
+    },
+    {
+      "family": "prospective-attack-keyword-derivation",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/abilities/intrinsic-keywords.ts:GrandArchiveAbilityDerivationContext",
+      "status": "resolved",
+      "repro": "Resolve Demon's Aim, then declare a champion attack against a Stealth unit. The attack-scoped True Sight grant cannot see an attacker until combat exists, but target legality must be established before combat is created.",
+      "resolvedBy": "Attack declaration now carries a prospective attacker through noncached Layer D keyword derivation. An engine ability-layer regression proves the scoped grant before combat, and Demon's Aim attacks a Stealth unit through the public command path.",
+      "members": [
+        {
+          "canonicalId": "6g7xgwve1d",
+          "abilityIds": ["6g7xgwve1d-a1"]
+        }
+      ]
+    },
+    {
+      "family": "other-unit-group-damage-source-exclusion",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:groupDamage",
+      "status": "resolved",
+      "repro": "Resolve Inzali, Unshackled Blaze's attack trigger after paying its Fire-card cost. The generic group-damage parser treats 'each other unit' as 'each unit' and damages Inzali along with the intended recipients.",
+      "resolvedBy": "Group-damage compilation now strips and preserves the word 'other' as a typed not-source filter, including composition with champion exclusions. An exact compiler regression and Inzali's public attack test prove the source survives while every other unit is damaged.",
+      "members": [
+        {
+          "canonicalId": "ot4nmxqsm4",
+          "abilityIds": ["ot4nmxqsm4-a1"]
+        }
+      ]
+    },
+    {
+      "family": "activation-binding-continuous-stat",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/continuous.ts:collectNumericModifiers",
+      "status": "resolved",
+      "repro": "Activate Smash with Obelisk and sacrifice a reserve-two Domain as its additional cost. The Attack object retains the named activation binding in intent, but static numeric derivation replaces its bindings with an empty action context, so X is zero.",
+      "resolvedBy": "Static numeric modifier evaluation now merges the source object's retained activation bindings and variables beneath the current action context. An engine-owned regression derives eight power from the retained sacrifice, and the public Smash with Obelisk suite deals that combat damage.",
+      "members": [
+        {
+          "canonicalId": "2kkvoqk1l7",
+          "abilityIds": ["2kkvoqk1l7-a2"]
+        }
+      ]
+    },
+    {
+      "family": "hosted-effect-printed-source-restriction",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/continuous.ts:collectNumericModifiers",
+      "status": "resolved",
+      "repro": "Link Aqueous Armor to a non-Guardian ally while controlling a Guardian champion. Hosted execution correctly makes the ally the effect subject, but Class Bonus is incorrectly checked against that ally instead of the printed phantasia.",
+      "resolvedBy": "Hosted numeric and characteristic effects now evaluate static restrictions against the printed origin while retaining the linked object as the execution source for effect conditions and subjects. An engine regression derives the linked ally's bonus life, and Aqueous Armor's public suite proves its survival boundary.",
+      "members": [
+        {
+          "canonicalId": "t3q2svd53z",
+          "abilityIds": ["t3q2svd53z-a3"]
+        }
+      ]
+    },
+    {
+      "family": "attack-card-weapon-prohibition",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/effect-executor.ts:rule-modification validation",
+      "status": "resolved",
+      "repro": "Resolve Dominating Strike before its attack declaration. The executor rejects the typed use-weapon-for-attack prohibition, and an attack-anchored duration has no combat instance yet, so it cannot govern the pending declaration.",
+      "resolvedBy": "The executor now admits the combat-supported use-weapon-for-attack action, and the compiler keeps this attack-card rule active while its source remains in its functional intent zone. Exact compiler and public declaration tests prove every offered attack is unarmed.",
+      "members": [
+        {
+          "canonicalId": "svd53zc9p4",
+          "abilityIds": ["svd53zc9p4-a2"]
+        }
+      ]
+    },
+    {
+      "family": "post-counter-action-derived-amount",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Freydis recollection trigger",
+      "status": "resolved",
+      "repro": "Resolve Freydis' recollection trigger with no tactic counters. A precomputed X observes zero before the counter is added, so Glimpse sees the old total.",
+      "resolvedBy": "The exact compiler emits the counter-count amount on the Glimpse instruction after add-counter. The public Freydis test proves the first trigger Glimpses one card.",
+      "members": [
+        {
+          "canonicalId": "7dedg616r0",
+          "abilityIds": ["7dedg616r0-a1"]
+        }
+      ]
+    },
+    {
+      "family": "look-reveal-destination-memory",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:look/reveal/put remainder grammar",
+      "status": "resolved",
+      "repro": "Resolve Galestream Insight and reveal an eligible card. The generic look grammar cannot represent memory as the chosen destination while bottoming the remainder in a chosen order.",
+      "resolvedBy": "The shared grammar now binds the looked set, validates the reveal, moves the chosen card to hand or memory, and orders the exact remainder on the bottom. Galestream's public tests prove both printed paragraphs.",
+      "members": [
+        {
+          "canonicalId": "usa6qyq3ka",
+          "abilityIds": ["usa6qyq3ka-a2", "usa6qyq3ka-a3"]
+        }
+      ]
+    },
+    {
+      "family": "typed-alternative-reserve-costs",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:reserve-cost replacements",
+      "status": "resolved",
+      "repro": "Activate Scry the Stars or Dominating Strike without reserve payment while satisfying its printed banish-or-reveal alternative. The paragraphs resolve as effects instead of replacing the activation cost.",
+      "resolvedBy": "The compiler now emits optional typed replace-cost rules for named graveyard banishment and filtered memory reveals. Public activation tests prove both alternatives are paid during announcement.",
+      "members": [
+        {
+          "canonicalId": "oz23yfzk96",
+          "abilityIds": ["oz23yfzk96-a1"]
+        },
+        {
+          "canonicalId": "svd53zc9p4",
+          "abilityIds": ["svd53zc9p4-a1"]
+        }
+      ]
+    },
+    {
+      "family": "candidate-dependent-granted-starcalling",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Scry the Stars temporary Starcalling",
+      "status": "resolved",
+      "repro": "Resolve Scry the Stars, then inspect a candidate during Glimpse. Eagerly declaring its reserve-cost variable against the source Action loses the looked-at candidate and rejects the Starcalling cost.",
+      "resolvedBy": "The granted keyword retains the candidate-relative reserve-cost amount and evaluates it only for the looked-at card. The public suite Starcalls Dawn's Reversal for its printed reserve cost.",
+      "members": [
+        {
+          "canonicalId": "oz23yfzk96",
+          "abilityIds": ["oz23yfzk96-a2"]
+        }
+      ]
+    },
+    {
+      "family": "activation-target-event-source-identity",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/kernel/observed-events.ts:stack-item-targets-declared",
+      "status": "resolved",
+      "repro": "Activate a Reaction targeting Crimson Tear. The initial target-declaration event omits the activation source identity, so Crimson cannot filter the event as a Reaction activation.",
+      "resolvedBy": "Initial and retargeted stack-item target events now carry the same source subject and sourceId. The compiler emits the typed Reaction filter, and Crimson Tear proves the positive and negative target boundaries.",
+      "members": [
+        {
+          "canonicalId": "9q1wl8ao8b",
+          "abilityIds": ["9q1wl8ao8b-a2"]
+        }
+      ]
+    },
+    {
+      "family": "variable-additional-sacrifice-cost",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:compileCost variable sacrifice",
+      "status": "resolved",
+      "repro": "Activate Horticounter with Y equal to two. The compiler hardcodes one Herb and never declares Y, so the printed X+Y tax cannot be announced faithfully.",
+      "resolvedBy": "Variable sacrifice costs now use a chosen GrandArchiveAmount, bind every sacrificed object, and carry Y into the resolution. The public Horticounter test sacrifices exactly two Herbs and proves the resulting tax.",
+      "members": [
+        {
+          "canonicalId": "vve1szpv86",
+          "abilityIds": ["vve1szpv86-a1", "vve1szpv86-a2"]
+        }
+      ]
+    },
+    {
+      "family": "negated-stack-result-conditional",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Horticounter negation consequence",
+      "status": "resolved",
+      "repro": "Decline Horticounter's X+Y payment. Negate binds the negated stack-item IDs, but effect-succeeded expects a boolean, so the conditional banish and Glimpse never occur.",
+      "resolvedBy": "The consequence now checks the nonempty negated-stack-item binding directly. The public test proves banishment and Glimpse 3 only after successful negation.",
+      "members": [
+        {
+          "canonicalId": "vve1szpv86",
+          "abilityIds": ["vve1szpv86-a2"]
+        }
+      ]
+    },
+    {
+      "family": "material-deck-activation-memory-discount",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Vanitas Dominus Rex material activation",
+      "status": "resolved",
+      "repro": "Deal at least three damage to an opposing champion and activate Vanitas, Dominus Rex from the material deck. The discount modifies reserve even though the activated champion has a memory cost.",
+      "resolvedBy": "The exact material-deck permission now discounts memory cost using the turn's qualifying damage total. The public test deals four champion damage and activates Vanitas with two memory.",
+      "members": [
+        {
+          "canonicalId": "3vkxrw9462",
+          "abilityIds": ["3vkxrw9462-a2"]
+        }
+      ]
+    },
+    {
+      "family": "token-weapon-granted-sacrifice-ability",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts:Tonoris token-weapon grant",
+      "status": "resolved",
+      "repro": "Control Tonoris, Creation's Will and two token weapons. The generic quoted-ability parser emits a card-resolution choice, requires a nonexistent TARGET subtype, and cannot pay sacrifice as an activation cost.",
+      "resolvedBy": "The exact compiler grants every controlled token weapon an activated sacrifice ability, captures its last-known power, targets a weapon, and adds that power through end of turn. Public tests replace a two-token summon and raise the surviving Greatsword from three to six power.",
+      "members": [
+        {
+          "canonicalId": "n2jnltv5kl",
+          "abilityIds": ["n2jnltv5kl-a2", "n2jnltv5kl-a3"]
+        }
+      ]
+    },
+    {
+      "family": "permanent-always-distant-ranger-state",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/state/state-based.ts:ranger-units-always-distant",
+      "status": "resolved",
+      "repro": "Pay Freydis' three-counter ability. The compiler misreads it as a targeted counter-removal resolution, and the engine has no persistent rule making current and future Ranger units distant across normal expiry.",
+      "resolvedBy": "Freydis is now an activated three-counter cost that creates a permanent typed player state. State-based checks make controlled Ranger units distant after entry or control changes, and end cleanup preserves that state. The public test proves the payment, class boundary, and persistence into the next turn.",
+      "members": [
+        {
+          "canonicalId": "7dedg616r0",
+          "abilityIds": ["7dedg616r0-a2"]
+        }
+      ]
+    }
+  ]
+}

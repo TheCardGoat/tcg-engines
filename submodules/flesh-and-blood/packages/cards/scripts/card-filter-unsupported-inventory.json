@@ -1,0 +1,147 @@
+[
+  {
+    "file": "src/cards/attack-reactions/unified-decree.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:An attack reaction card"]
+  },
+  {
+    "file": "src/cards/actions/cleansing-light.ts",
+    "ordinal": 0,
+    "fragments": ["types:Red aura"]
+  },
+  {
+    "file": "src/cards/actions/cleansing-light.ts",
+    "ordinal": 0,
+    "fragments": ["types:Blue aura"]
+  },
+  {
+    "file": "src/cards/actions/mischievous-meeps.ts",
+    "ordinal": 0,
+    "fragments": ["types:Item with cost 2 or less"]
+  },
+  {
+    "file": "src/cards/actions/construct-nitro-mechanoid.ts",
+    "ordinal": 0,
+    "fragments": ["subtypes:<non-literal-array>"]
+  },
+  {
+    "file": "src/cards/actions/blossoming-spellblade.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:Opposing"]
+  },
+  {
+    "file": "src/cards/instants/pulse-of-volthaven.ts",
+    "ordinal": 0,
+    "fragments": ["subtypes:Ice,"]
+  },
+  {
+    "file": "src/cards/instants/pulse-of-volthaven.ts",
+    "ordinal": 1,
+    "fragments": ["subtypes:Lightning,"]
+  },
+  {
+    "file": "src/cards/actions/system-failure.ts",
+    "ordinal": 0,
+    "fragments": ["types:Equipment, item, or weapon"]
+  },
+  {
+    "file": "src/cards/actions/emboldened-blade.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:A defense reaction"]
+  },
+  {
+    "file": "src/cards/instants/slay.ts",
+    "ordinal": 0,
+    "fragments": ["types:Angel ally"]
+  },
+  {
+    "file": "src/cards/actions/scour.ts",
+    "ordinal": 0,
+    "fragments": ["types:Aura tokens and/or auras with cost 0 controlled by target hero"]
+  },
+  {
+    "file": "src/cards/actions/sound-the-alarm.ts",
+    "ordinal": 0,
+    "fragments": ["types:Defense"]
+  },
+  {
+    "file": "src/cards/equipment/dragonscaler-flight-path.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:A weapon or ally attack"]
+  },
+  {
+    "file": "src/cards/actions/spew-shadow.ts",
+    "ordinal": 0,
+    "fragments": ["types:Attack action card with cost 2 or les"]
+  },
+  {
+    "file": "src/cards/actions/spew-shadow.ts",
+    "ordinal": 0,
+    "fragments": ["types:Attack action card with cost 0 or les"]
+  },
+  {
+    "file": "src/cards/instants/genesis.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:An illusionist card"]
+  },
+  {
+    "file": "src/cards/instants/merciful-retribution.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:A non-token light card"]
+  },
+  {
+    "file": "src/cards/blocks/induce-panic.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:The chosen color"]
+  },
+  {
+    "file": "src/cards/actions/glyph-power-spell.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:Card with sigil in its name"]
+  },
+  {
+    "file": "src/cards/actions/high-current-currency.ts",
+    "ordinal": 0,
+    "fragments": ["types:Non-hero permanent"]
+  },
+  {
+    "file": "src/cards/actions/mage-hunter-arrow.ts",
+    "ordinal": 0,
+    "fragments": ["subtypes:Runeblade or wizard"]
+  },
+  {
+    "file": "src/cards/defense-reactions/hunter-or-hunted.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:The named card"]
+  },
+  {
+    "file": "src/cards/instants/cheater-s-charm.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:Attack with 6 or more {p}"]
+  },
+  {
+    "file": "src/cards/actions/thaw.ts",
+    "ordinal": 0,
+    "fragments": ["types:Frostbite"]
+  },
+  {
+    "file": "src/cards/actions/thaw.ts",
+    "ordinal": 1,
+    "fragments": ["types:Ice affliction"]
+  },
+  {
+    "file": "src/cards/actions/freezing-point.ts",
+    "ordinal": 0,
+    "fragments": ["subtypes:Afflictions"]
+  },
+  {
+    "file": "src/cards/actions/tome-of-duplicity.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:A 'non-attack' action card"]
+  },
+  {
+    "file": "src/cards/allies/dominia.ts",
+    "ordinal": 0,
+    "fragments": ["supertypes:A red card"]
+  }
+]

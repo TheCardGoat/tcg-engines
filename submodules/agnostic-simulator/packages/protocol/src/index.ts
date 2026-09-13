@@ -9,3 +9,7 @@ export * from "./interactions.js";
 export * from "./games.js";
 export * from "./chat.js";
 export * from "./animations.js";
+export * from "./viewer-scope.js";
+export * from "./ws-ticket.js";
+
+export * from "./presentation.js";

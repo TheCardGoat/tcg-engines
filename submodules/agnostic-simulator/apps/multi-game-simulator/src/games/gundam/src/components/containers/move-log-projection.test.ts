@@ -2,6 +2,7 @@ import { describe, expect, it } from "vite-plus/test";
 
 import type { TurnTaggedLogEntry, TurnTaggedMoveLog } from "../../game/adapter.ts";
 import {
+  orderGundamEventLogEntries,
   projectGundamLegacyEventLogEntries,
   projectGundamMoveLogEntries,
 } from "./move-log-projection.ts";
@@ -40,6 +41,56 @@ function privateCardIds(value: readonly string[], visibleTo: readonly string[]) 
 }
 
 describe("projectGundamMoveLogEntries", () => {
+  it("uses Gundam terminology and names stat-modifier targets in player logs", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged({
+          type: "resolveEffect",
+          playerId: VIEWER as never,
+          timestamp: 1_700_000_000_000,
+          stateID: 42,
+          sourceCardId: "source-1" as never,
+          outcomes: {
+            cardsExhausted: ["rested-1" as never],
+            cardsMoved: [
+              {
+                cardId: "moved-1" as never,
+                from: "trash",
+                to: "removalArea",
+              },
+            ],
+            statModifiers: [
+              {
+                cardId: "target-1" as never,
+                stat: "ap",
+                amount: -2,
+                duration: "thisTurn",
+              },
+            ],
+          },
+        }),
+      ],
+      VIEWER,
+      "main",
+      (id) => {
+        const names = new Map([
+          ["source-1", "Mark Guilder"],
+          ["rested-1", "Guncannon"],
+          ["target-1", "Gouf"],
+          ["moved-1", "Graze Duel Type"],
+        ]);
+        const name = names.get(id);
+        return name ? ({ name } as never) : null;
+      },
+    );
+
+    expect(entries.map((entry) => entry.message)).toContain("Guncannon was rested.");
+    expect(entries.map((entry) => entry.message)).toContain("Gouf gets AP -2 during this turn.");
+    expect(entries.map((entry) => entry.message)).toContain(
+      "Graze Duel Type moved from trash to removal area.",
+    );
+  });
+
   it("projects Gundam move logs into the agnostic simulator event-log contract", () => {
     const entries = projectGundamMoveLogEntries(
       [
@@ -77,7 +128,7 @@ describe("projectGundamMoveLogEntries", () => {
     expect(entries).toEqual([
       {
         id: "gundam-move-log-42",
-        turn: 3,
+        turn: 4,
         phase: "battle",
         seatId: "player",
         timestamp: "2023-11-14T22:13:20.000Z",
@@ -85,14 +136,14 @@ describe("projectGundamMoveLogEntries", () => {
         tags: ["combat"],
         entityIds: ["attacker-1", "target-1"],
         section: {
-          id: "gundam-combat-3-1",
+          id: "gundam-combat-4-1",
           label: "RX-78-2 Gundam → Zaku II",
           tone: "fight",
         },
       },
       {
         id: "gundam-move-log-42-outcome-0",
-        turn: 3,
+        turn: 4,
         phase: "battle",
         seatId: "player",
         timestamp: "2023-11-14T22:13:20.000Z",
@@ -100,14 +151,14 @@ describe("projectGundamMoveLogEntries", () => {
         tags: ["combat"],
         entityIds: ["attacker-1", "target-1"],
         section: {
-          id: "gundam-combat-3-1",
+          id: "gundam-combat-4-1",
           label: "RX-78-2 Gundam → Zaku II",
           tone: "fight",
         },
       },
       {
         id: "gundam-move-log-42-combat-complete",
-        turn: 3,
+        turn: 4,
         phase: "battle",
         seatId: "player",
         timestamp: "2023-11-14T22:13:20.000Z",
@@ -115,7 +166,7 @@ describe("projectGundamMoveLogEntries", () => {
         tags: ["combat"],
         entityIds: ["attacker-1", "target-1"],
         section: {
-          id: "gundam-combat-3-1",
+          id: "gundam-combat-4-1",
           label: "RX-78-2 Gundam → Zaku II",
           tone: "fight",
         },
@@ -142,12 +193,249 @@ describe("projectGundamMoveLogEntries", () => {
     );
 
     expect(entries[0]).toMatchObject({
-      turn: 5,
+      turn: 6,
       phase: "start",
       seatId: "opponent",
       message: "Opponent started the turn.",
       tags: ["system"],
     });
+  });
+
+  it("places a transition draw in the new turn after its turn-start landmark", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged(
+          {
+            type: "pass",
+            playerId: VIEWER as never,
+            timestamp: 1,
+            context: "action-step",
+            outcomes: {
+              cardsDrawn: {
+                playerId: OPPONENT as never,
+                count: 1,
+                cardIds: privateCardIds([OPPONENT_DRAWN_CARD], [OPPONENT]) as never,
+              },
+            },
+          },
+          3,
+        ),
+        tagged(
+          {
+            type: "turnStart",
+            playerId: OPPONENT as never,
+            activePlayerId: OPPONENT as never,
+            timestamp: 1,
+            turnNumber: 4,
+          },
+          4,
+        ),
+      ],
+      VIEWER,
+      "main",
+    );
+
+    expect(entries.map((entry) => [entry.turn, entry.phase, entry.message])).toEqual([
+      [4, "end", "You passed priority."],
+      [5, "start", "Opponent started the turn."],
+      [5, "draw", "Drew 1 card(s)."],
+    ]);
+  });
+
+  it("keeps an effect-driven draw in its historical phase", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged({
+          type: "resolveEffect",
+          playerId: VIEWER as never,
+          timestamp: 1,
+          sourceCardId: "draw-command" as never,
+          outcomes: {
+            cardsDrawn: {
+              playerId: VIEWER as never,
+              count: 1,
+              cardIds: privateCardIds(["drawn-card"], [VIEWER]) as never,
+            },
+          },
+        }),
+      ],
+      VIEWER,
+      "main",
+    );
+
+    expect(entries.find((entry) => entry.message.startsWith("Drew "))).toMatchObject({
+      phase: "main",
+      turn: 4,
+    });
+  });
+
+  it("keeps combined lifecycle and draw entries in player-readable order", () => {
+    const entries = orderGundamEventLogEntries([
+      {
+        id: "draw",
+        turn: 5,
+        phase: "draw",
+        timestamp: "2023-11-14T22:13:19.000Z",
+        message: "Drew 1 card(s).",
+        tags: ["move"],
+      },
+      {
+        id: "start",
+        turn: 5,
+        phase: "start",
+        timestamp: "2023-11-14T22:13:20.000Z",
+        message: "You started the turn.",
+        tags: ["system"],
+      },
+      {
+        id: "draw-phase",
+        turn: 5,
+        phase: "draw",
+        timestamp: "2023-11-14T22:13:20.000Z",
+        message: "Entered draw.",
+        tags: ["system"],
+      },
+    ]);
+
+    expect(entries.map((entry) => entry.message)).toEqual([
+      "You started the turn.",
+      "Entered draw.",
+      "Drew 1 card(s).",
+    ]);
+  });
+
+  it("buckets action-step passes under the end phase and labels automatic passes", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged({
+          type: "pass",
+          playerId: VIEWER as never,
+          timestamp: 1,
+          context: "action-step",
+          automatic: true,
+        }),
+        tagged({
+          type: "pass",
+          playerId: OPPONENT as never,
+          timestamp: 2,
+          context: "action-step",
+        }),
+      ],
+      VIEWER,
+      // Even when the ambient/post-command phase is the next turn's main
+      // phase, action-step passes belong to the end phase.
+      "main",
+    );
+
+    expect(entries.map((entry) => [entry.message, entry.phase, entry.turn, entry.seatId])).toEqual([
+      ["You passed priority automatically (no actions available).", "end", 4, "player"],
+      ["Opponent passed priority.", "end", 4, "opponent"],
+    ]);
+  });
+
+  it("projects Repair recovery as a card-linked end-phase ability entry", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged(
+          {
+            type: "pass",
+            playerId: VIEWER as never,
+            timestamp: 1,
+            context: "action-step",
+            automatic: true,
+            outcomes: {
+              hpRecovered: [{ cardId: "super-gundam" as never, amount: 2 }],
+            },
+          },
+          0,
+        ),
+      ],
+      VIEWER,
+      "main",
+      (id) => (id === "super-gundam" ? ({ name: "Super Gundam" } as never) : null),
+    );
+
+    expect(entries).toEqual([
+      expect.objectContaining({
+        turn: 1,
+        phase: "end",
+        seatId: "player",
+        message: "You passed priority automatically (no actions available).",
+      }),
+      expect.objectContaining({
+        turn: 1,
+        phase: "end",
+        seatId: "player",
+        message: "Super Gundam recovered 2 HP.",
+        tags: ["ability"],
+        entityIds: ["super-gundam"],
+      }),
+    ]);
+  });
+
+  it("puts first-turn priority passes in Turn 1 instead of setup Messages", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged(
+          {
+            type: "pass",
+            playerId: OPPONENT as never,
+            timestamp: 1,
+            context: "action-step",
+          },
+          0,
+        ),
+        tagged(
+          {
+            type: "pass",
+            playerId: VIEWER as never,
+            timestamp: 2,
+            context: "action-step",
+            automatic: true,
+          },
+          0,
+        ),
+      ],
+      VIEWER,
+      "end",
+    );
+
+    expect(entries.map((entry) => entry.turn)).toEqual([1, 1]);
+  });
+
+  it("keeps automatic Block and battle Action passes visible as individual reasons", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged({
+          type: "pass",
+          playerId: OPPONENT as never,
+          timestamp: 1,
+          context: "block",
+          automatic: true,
+        }),
+        tagged({
+          type: "pass",
+          playerId: OPPONENT as never,
+          timestamp: 2,
+          context: "battle",
+          automatic: true,
+        }),
+        tagged({
+          type: "pass",
+          playerId: VIEWER as never,
+          timestamp: 3,
+          context: "battle",
+        }),
+      ],
+      VIEWER,
+      "battle",
+    );
+
+    expect(entries.map((entry) => entry.message)).toEqual([
+      "Opponent did not block automatically (no legal Blocker available).",
+      "Opponent passed the action window automatically (no actions available).",
+      "You passed the action window.",
+    ]);
   });
 
   it("redacts opponent draw card names and skips deck-to-hand move outcomes", () => {
@@ -180,10 +468,11 @@ describe("projectGundamMoveLogEntries", () => {
     );
 
     expect(entries.map((entry) => entry.message)).toEqual([
-      "Opponent ended the turn.",
+      "Opponent entered the End Phase.",
       "Drew 1 card(s).",
     ]);
-    expect(entries.map((entry) => entry.turn)).toEqual([2, 2]);
+    // The tagged engine turn is zero-based and becomes a one-based UI turn.
+    expect(entries.map((entry) => entry.turn)).toEqual([4, 5]);
     expect(JSON.stringify(entries)).not.toContain("Secret Opponent Card");
     expect(JSON.stringify(entries)).not.toContain(OPPONENT_DRAWN_CARD);
   });
@@ -218,8 +507,12 @@ describe("projectGundamMoveLogEntries", () => {
     );
 
     expect(entries.map((entry) => entry.message)).toEqual([
-      "You ended the turn.",
+      "You entered the End Phase.",
       "Drew 1: Secret Opponent Card.",
+    ]);
+    expect(entries.map((entry) => entry.turn)).toEqual([4, 5]);
+    expect(entries[1]?.cardRefs).toEqual([
+      { id: OPPONENT_DRAWN_CARD, name: "Secret Opponent Card" },
     ]);
   });
 
@@ -247,8 +540,12 @@ describe("projectGundamMoveLogEntries", () => {
     );
 
     expect(entries.map((entry) => entry.message)).toEqual([
-      "Opponent ended the turn.",
+      "Opponent entered the End Phase.",
       "Drew 1: Secret Opponent Card.",
+    ]);
+    expect(entries.map((entry) => entry.turn)).toEqual([4, 5]);
+    expect(entries[1]?.cardRefs).toEqual([
+      { id: OPPONENT_DRAWN_CARD, name: "Secret Opponent Card" },
     ]);
   });
 
@@ -318,8 +615,11 @@ describe("projectGundamMoveLogEntries", () => {
   });
 
   it("groups command resolution, humanizes payment, and suppresses sentinel plumbing", () => {
-    const resolveCard = (id: string) =>
-      id === "command-1" ? ({ name: "Kai's Resolve" } as never) : null;
+    const resolveCard = (id: string) => {
+      if (id === "command-1") return { name: "Kai's Resolve" } as never;
+      if (id === "unit-2") return { name: "Enemy Unit" } as never;
+      return null;
+    };
     const entries = projectGundamMoveLogEntries(
       [
         tagged({
@@ -349,6 +649,18 @@ describe("projectGundamMoveLogEntries", () => {
           sourceCardId: "command-1" as never,
           effectId: "effect-1",
           outcomes: {
+            order: [
+              { kind: "statModifiers", index: 0 },
+              { kind: "effectsResolved", index: 0 },
+            ],
+            statModifiers: [
+              {
+                cardId: "unit-2" as never,
+                stat: "ap",
+                amount: -3,
+                duration: "thisBattle",
+              },
+            ],
             effectsResolved: [{ effectId: "effect-1", sourceCardId: "command-1" as never }],
           },
         }),
@@ -381,14 +693,123 @@ describe("projectGundamMoveLogEntries", () => {
       "Played Kai's Resolve.",
       "Paid 1 resource.",
       "Started resolving Kai's Resolve.",
+      "Enemy Unit gets AP -3 during this battle.",
       "Finished resolving Kai's Resolve.",
       "Deployed unit-1.",
     ]);
-    expect(entries.slice(0, 4).every((entry) => entry.section?.label === "Kai's Resolve")).toBe(
+    expect(entries.slice(0, 5).every((entry) => entry.section?.label === "Kai's Resolve")).toBe(
       true,
     );
-    expect(entries.slice(0, 4).every((entry) => entry.section?.tone === "effect")).toBe(true);
+    expect(entries.slice(0, 5).every((entry) => entry.section?.tone === "effect")).toBe(true);
     expect(JSON.stringify(entries)).not.toContain("__sentinel__");
+  });
+
+  it("attributes a Shield reveal to the Shield owner instead of the command actor", () => {
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged({
+          type: "pass",
+          playerId: OPPONENT as never,
+          timestamp: 1,
+          commandID: "opponent-damage-pass",
+          context: "battle",
+          outcomes: {
+            shieldsRemoved: [
+              {
+                cardId: "luna-base" as never,
+                playerId: VIEWER as never,
+                sourceCardId: "guncannon" as never,
+              },
+            ],
+          },
+        }),
+      ],
+      VIEWER,
+      "battle-phase",
+      (id) => (id === "luna-base" ? ({ name: "Luna Mana & Carry Base" } as never) : null),
+    );
+
+    expect(entries.map((entry) => [entry.seatId, entry.message])).toEqual([
+      ["opponent", "Opponent passed the action window."],
+      ["player", "Revealed Luna Mana & Carry Base from Shields."],
+    ]);
+  });
+
+  it("keeps same-card Burst and triggered-effect lifecycles distinct and complete", () => {
+    const resolveCard = (id: string) =>
+      id === "luna-base" ? ({ name: "Luna Mana & Carry Base" } as never) : null;
+    const entries = projectGundamMoveLogEntries(
+      [
+        tagged({
+          type: "pass",
+          playerId: OPPONENT as never,
+          timestamp: 1,
+          commandID: "shield-damage",
+          context: "battle",
+          outcomes: {
+            shieldsRemoved: [
+              {
+                cardId: "luna-base" as never,
+                playerId: VIEWER as never,
+                sourceCardId: "guncannon" as never,
+              },
+            ],
+            effectsQueued: [
+              {
+                effectId: "luna-burst",
+                sourceCardId: "luna-base" as never,
+                controllerId: VIEWER as never,
+                kind: "burst",
+                timing: "burst",
+              },
+            ],
+          },
+        }),
+        tagged({
+          type: "resolveEffect",
+          playerId: VIEWER as never,
+          timestamp: 2,
+          commandID: "resolve-luna-burst",
+          sourceCardId: "luna-base" as never,
+          effectId: "luna-burst",
+          outcomes: {
+            effectsQueued: [
+              {
+                effectId: "luna-deploy",
+                sourceCardId: "luna-base" as never,
+                controllerId: VIEWER as never,
+                kind: "triggered",
+                timing: "deploy",
+              },
+            ],
+            effectsResolved: [
+              { effectId: "luna-burst", sourceCardId: "luna-base" as never },
+              { effectId: "luna-deploy", sourceCardId: "luna-base" as never },
+            ],
+          },
+        }),
+      ],
+      VIEWER,
+      "battle-phase",
+      resolveCard,
+    );
+
+    expect(entries.map((entry) => [entry.seatId, entry.message])).toEqual([
+      ["opponent", "Opponent passed the action window."],
+      ["player", "Revealed Luna Mana & Carry Base from Shields."],
+      ["player", "Started resolving Luna Mana & Carry Base · Burst."],
+      ["player", "Started resolving Luna Mana & Carry Base · Deploy."],
+      ["player", "Finished resolving Luna Mana & Carry Base · Deploy."],
+      ["player", "Finished resolving Luna Mana & Carry Base · Burst."],
+    ]);
+    expect(entries.map((entry) => entry.section?.label)).toEqual([
+      "Luna Mana & Carry Base effects",
+      "Luna Mana & Carry Base effects",
+      "Luna Mana & Carry Base effects",
+      "Luna Mana & Carry Base effects",
+      "Luna Mana & Carry Base effects",
+      "Luna Mana & Carry Base effects",
+    ]);
   });
 
   it("uses command history instead of the live phase for historical actions", () => {
@@ -469,7 +890,7 @@ describe("projectGundamLegacyEventLogEntries", () => {
     expect(entries).toEqual([
       {
         id: "gundam-legacy-log-10",
-        turn: 3,
+        turn: 4,
         phase: "main",
         seatId: "player",
         timestamp: "2023-11-14T22:13:20.000Z",
@@ -479,7 +900,7 @@ describe("projectGundamLegacyEventLogEntries", () => {
       },
       {
         id: "gundam-legacy-log-11",
-        turn: 3,
+        turn: 4,
         phase: "main",
         seatId: "player",
         timestamp: "2023-11-14T22:13:20.000Z",
@@ -527,7 +948,7 @@ describe("projectGundamLegacyEventLogEntries", () => {
         taggedLegacy({
           id: 21,
           type: "gundam.setup.mulligan",
-          message: "player_two altered 5 cards.",
+          message: "player_two redrew 5 cards.",
           data: {
             values: {
               playerId: OPPONENT,
@@ -549,7 +970,7 @@ describe("projectGundamLegacyEventLogEntries", () => {
     expect(entries).toEqual([
       {
         id: "gundam-legacy-log-20",
-        turn: 3,
+        turn: 0,
         phase: "setup",
         seatId: "player",
         timestamp: "2023-11-14T22:13:20.000Z",
@@ -559,17 +980,17 @@ describe("projectGundamLegacyEventLogEntries", () => {
       },
       {
         id: "gundam-legacy-log-21",
-        turn: 3,
+        turn: 0,
         phase: "setup",
         seatId: "opponent",
         timestamp: "2023-11-14T22:13:20.000Z",
-        message: "Opponent altered 5 cards.",
+        message: "Opponent redrew 5 cards.",
         tags: ["system"],
         entityIds: undefined,
       },
       {
         id: "gundam-legacy-log-22",
-        turn: 3,
+        turn: 0,
         phase: "setup",
         timestamp: "2023-11-14T22:13:20.000Z",
         message: "Setup complete.",
@@ -612,6 +1033,6 @@ describe("projectGundamLegacyEventLogEntries", () => {
       ["draw", "Entered draw."],
       ["end", "You ended the turn."],
     ]);
-    expect(entries[2]?.turn).toBe(2);
+    expect(entries.map((entry) => entry.turn)).toEqual([4, 4, 3]);
   });
 });

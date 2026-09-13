@@ -72,6 +72,11 @@ export interface CardDefeatedEvent {
   defeatedBy: CardInstanceId | null;
   playerId: PlayerId;
   hadAttachedCards?: boolean;
+  /**
+   * When Gear is defeated because its host left the field, the host unit id so
+   * Gear {Defeated} abilities can still resolve `selector: "host"` after detach.
+   */
+  hostId?: CardInstanceId;
 }
 
 export interface CardSpentEvent {

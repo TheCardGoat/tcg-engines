@@ -19,7 +19,7 @@ async function executeWithRetry(
 ): Promise<{ success: boolean; reason?: string; code?: string }> {
   for (let attempt = 0; attempt < 20; attempt += 1) {
     const result = await pom.execute(view, moveId, params);
-    if (result.success || result.code !== "OPTIMISTIC_MOVE_PENDING") {
+    if (result.success || result.code !== "MOVE_PENDING") {
       return result;
     }
     await pom.page.waitForTimeout(50);
@@ -124,38 +124,18 @@ test.describe("Bug 45 - Moana, Kakamora Leader", () => {
     await expect(page.getByRole("button", { name: "Accept effect" })).toHaveCount(0);
     await expect(page.getByRole("button", { name: "Decline effect" })).toHaveCount(0);
 
-    const boardAfterPlay = await pom.getBoard(PLAYER_ONE_VIEW);
-    await page
-      .locator(`[data-card-id="${hathiId}"][aria-label="Colonel Hathi - On the March, cost 5"]`)
-      .click({
-        force: true,
-      });
+    await page.locator(`[data-zone-id="play"][data-card-id="${hathiId}"]`).last().click({
+      force: true,
+    });
 
-    const autoSubmitted = await page
-      .waitForFunction(
-        async ({ targetView, targetStateID }) => {
-          const harness = (
-            window as typeof window & {
-              __lorcanaTestHarness?: {
-                getStatus(view: string): Promise<{ stateID: number }>;
-              };
-            }
-          ).__lorcanaTestHarness;
-          if (!harness) {
-            return false;
-          }
-
-          const status = await harness.getStatus(targetView);
-          return status.stateID !== targetStateID;
-        },
-        { targetView: PLAYER_ONE_VIEW, targetStateID: boardAfterPlay.stateID },
-        { timeout: 1500 },
-      )
+    const confirm = page.getByRole("button", { name: /^Confirm(?: \(\d+\))?$/ });
+    const selectionStillOpen = await confirm
+      .waitFor({ state: "visible", timeout: 1500 })
       .then(() => true)
       .catch(() => false);
 
-    if (!autoSubmitted) {
-      await expect(guidance).toContainText("Colonel Hathi - On the March");
+    if (selectionStillOpen) {
+      await expect(confirm).toHaveAccessibleName("Confirm (1)");
       const beforeConfirm = await pom.getBoard(PLAYER_ONE_VIEW);
       await pom.confirmResolutionSelection();
       await pom.waitForStateChange(beforeConfirm.stateID, PLAYER_ONE_VIEW);
@@ -262,6 +242,12 @@ test.describe("Bug 45 - Moana, Kakamora Leader", () => {
       "play",
       "Kakamora - Long-Range Specialist",
     );
+    const piratePitcherId = findCardIdByLabel(
+      setupBoard,
+      PLAYER_ONE_ID,
+      "play",
+      "Kakamora - Pirate Pitcher",
+    );
     const flotillaId = findCardIdByLabel(
       setupBoard,
       PLAYER_ONE_ID,
@@ -285,7 +271,7 @@ test.describe("Bug 45 - Moana, Kakamora Leader", () => {
       params: {
         targets: {
           kind: "move-to-location",
-          subject: [boardingPartyId, specialistId],
+          subject: [boardingPartyId, specialistId, piratePitcherId],
           location: [flotillaId],
         },
       },
@@ -295,6 +281,28 @@ test.describe("Bug 45 - Moana, Kakamora Leader", () => {
 
     const resolvedBoard = await pom.getBoard(PLAYER_ONE_VIEW);
     expect(resolvedBoard.bagEffects).toHaveLength(0);
-    expect(resolvedBoard.players[PLAYER_ONE_ID]?.lore).toBe(2);
+    expect(resolvedBoard.players[PLAYER_ONE_ID]?.lore).toBe(3);
+
+    const locationCluster = page.locator(
+      `section.location-cluster[data-location-cluster-id="${flotillaId}"]`,
+    );
+    await expect(locationCluster).toHaveCount(1);
+    await locationCluster
+      .locator(`.location-cluster__slot--occupant[data-card-id="${piratePitcherId}"]`)
+      .waitFor({ state: "visible" });
+
+    const occupantCardRects = await locationCluster.evaluate((cluster) =>
+      [...cluster.querySelectorAll<HTMLElement>(".location-cluster__slot--occupant")]
+        .map((slot) => slot.querySelector<HTMLElement>(".card-face")?.getBoundingClientRect())
+        .filter((rect): rect is DOMRect => rect !== undefined)
+        .map((rect) => ({ left: rect.left, right: rect.right })),
+    );
+
+    expect(occupantCardRects).toHaveLength(3);
+    for (let index = 1; index < occupantCardRects.length; index += 1) {
+      expect(occupantCardRects[index]!.left).toBeGreaterThanOrEqual(
+        occupantCardRects[index - 1]!.right - 0.5,
+      );
+    }
   });
 });

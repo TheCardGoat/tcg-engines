@@ -50,6 +50,7 @@ export const taranMagicallyArmed: CharacterCard = {
             upTo: 2,
           },
           owner: "any",
+          requireSameOwner: true,
           selector: "chosen",
           zones: ["discard"],
         },

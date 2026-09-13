@@ -36,4 +36,62 @@ describe("OP14-020 Dracule Mihawk", () => {
     ).toBe("A card effect prevents this card from being played.");
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04DraculeMihawkOp14020020,
+        hand: [op13PortgasDRouge014],
+        character: [op14eb04XDrake016],
+        restedDon: 3,
+      },
+      { leaderCardId: op13GolDRoger003 },
+    );
+    const costId = engine.findCardInZone("south", "character", op14eb04XDrake016);
+    const restedDonBefore = engine.getView("south").players.south.restedDon;
+    const activeDonBefore = engine.getView("south").players.south.activeDon;
+
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon).toBe(activeDonBefore);
+    expect(view.players.south.restedDon).toBe(restedDonBefore);
+    expect(view.players.south.characters.find((card) => card?.instanceId === costId)?.rested).toBe(
+      false,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("applies Character play restriction even without a cost-5 Character for DON!! set", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04DraculeMihawkOp14020020,
+        // Cost-4 Character: rest cost works, but cost-5+ gate for set-active fails.
+        hand: [op13PortgasDRouge014],
+        character: [op13PortgasDRouge014],
+        restedDon: 3,
+      },
+      { leaderCardId: op13GolDRoger003 },
+    );
+    const costId = engine.findCardInZone("south", "character", op13PortgasDRouge014);
+    const blockedCardId = engine.findCardInZone("south", "hand", op13PortgasDRouge014);
+    const restedBefore = engine.getView("south").players.south.restedDon;
+
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
+    engine.resolveDecision("effectCostRestCards", { selectedIds: [costId] }, "south");
+
+    const view = engine.getView("south");
+    // No cost-5+ Character → DON!! stay rested.
+    expect(view.players.south.restedDon).toBe(restedBefore);
+    expect(view.players.south.activeDon).toBe(0);
+    expect(view.players.south.characters.find((card) => card?.instanceId === costId)?.rested).toBe(
+      true,
+    );
+    // "Then" restriction still applies after paying the rest cost.
+    expect(
+      engine.expectFailure({ type: "playCard", seat: "south", instanceId: blockedCardId }).reason,
+    ).toBe("A card effect prevents this card from being played.");
+  });
 });

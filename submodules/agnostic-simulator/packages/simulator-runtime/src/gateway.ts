@@ -1,4 +1,4 @@
-import type { ClientToServerEvents, ServerToClientEvents } from "@tcg/protocol";
+import type { ClientToServerEvents, PlayableGameSlug, ServerToClientEvents } from "@tcg/protocol";
 import { RawGatewayServerMessageSchema, type RawGatewayServerMessage } from "@tcg/protocol/gateway";
 import type { Socket } from "socket.io-client";
 
@@ -18,6 +18,7 @@ export interface OpenGatewayOptions {
 
 export interface RequestGatewayTicketOptions {
   apiBaseUrl: string;
+  gameSlug: PlayableGameSlug;
   matchId?: string;
   playerId?: string;
   fetcher?: typeof fetch;
@@ -27,6 +28,7 @@ export interface RequestGatewayTicketOptions {
 
 export async function requestGatewayTicket({
   apiBaseUrl,
+  gameSlug,
   matchId,
   playerId,
   fetcher = fetch,
@@ -40,6 +42,7 @@ export async function requestGatewayTicket({
   const url = buildGatewayTicketUrl(apiBaseUrl);
   logGatewayDebug("[live-gateway] requesting gateway ticket", {
     url,
+    gameSlug,
     hasMatchParams,
     matchId,
     playerId,
@@ -50,6 +53,7 @@ export async function requestGatewayTicket({
     credentials: "include",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
+      gameSlug,
       ...(matchId ? { matchId } : {}),
       ...(playerId ? { playerId } : {}),
     }),
@@ -92,18 +96,6 @@ export function shouldRefreshAnonymousWelcome(
   payload: { authenticated?: boolean },
 ): boolean {
   return authMode === "required" && payload.authenticated !== true;
-}
-
-export function parseGatewayMessage(data: unknown): GatewayMessage | null {
-  if (typeof data !== "string") {
-    return null;
-  }
-  try {
-    const parsed = RawGatewayServerMessageSchema.safeParse(JSON.parse(data));
-    return parsed.success ? parsed.data : null;
-  } catch {
-    return null;
-  }
 }
 
 export function parseGatewayEvent(

@@ -73,4 +73,35 @@ describe("OP13-100 Jewelry Bonney", () => {
     expect(engine.findCardInZone("north", "character", eb01MsMonday035)).toBe(mondayId);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op13JewelryBonney100,
+      hand: [op13PortgasDRouge014],
+      character: [{ card: eb01MsMonday035, playedOnTurn: 0 }],
+      activeDon: 1,
+      restedDon: 2,
+    });
+    const rougeId = engine.findCardInZone("south", "hand", op13PortgasDRouge014);
+    const readyId = engine.findCardInZone("south", "character", eb01MsMonday035);
+
+    engine.playCard(op13PortgasDRouge014, "south");
+    const afterPlay = engine.getView("south").players.south;
+    const restedAfterPlay = afterPlay.restedDon;
+    const activeAfterPlay = afterPlay.activeDon;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon).toBe(activeAfterPlay);
+    expect(view.players.south.restedDon).toBe(restedAfterPlay);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === rougeId)?.attachedDon,
+    ).toBe(0);
+    expect(view.players.south.leader.attachedDon).toBe(0);
+    expect(view.prompts).toHaveLength(0);
+
+    // whenTriggerCharacterPlayed openers include attack; keep subject-bound declareAttack visible.
+    engine.declareAttack(readyId, engine.leader("north"), "south");
+    expect(engine.getView("south").players.south.restedDon).toBe(restedAfterPlay);
+  });
 });

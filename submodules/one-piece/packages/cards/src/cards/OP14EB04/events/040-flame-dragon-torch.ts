@@ -90,6 +90,7 @@ export const op14eb04FlameDragonTorch040: EventCard = {
             duration: "thisBattle",
           },
         ],
+        optional: true,
       },
     ],
   },

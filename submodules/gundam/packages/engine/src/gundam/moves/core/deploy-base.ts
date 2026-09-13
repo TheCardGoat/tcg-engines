@@ -15,8 +15,10 @@ import type { Card } from "@tcg/gundam-types";
 import type { GundamMoveDefinition } from "../../types.ts";
 import {
   validatePlayFromHand,
+  validatePaymentResourceIds,
   validateDeployTriggerTargets,
   payCardCost,
+  resourcePaymentSelection,
 } from "./play-card-shared.ts";
 import {
   enqueueMoveCompletionFence,
@@ -26,9 +28,39 @@ import {
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { enqueueBaseSectionExcessManagement } from "../../rules/base-section-excess.ts";
+import { computeEffectiveCostInHand } from "../../rules/derived-state.ts";
 
 export const deployBase: GundamMoveDefinition<"deployBase"> = {
   gatedByPendingEffects: true,
+
+  describeProcedure({ G, playerId, partialInput, framework }) {
+    const cardId = (partialInput as { cardId?: string }).cardId;
+    if (!cardId) return [];
+    const paymentCost = computeEffectiveCostInHand(cardId, playerId, G, framework);
+    const selectedPayment = (partialInput as { paymentResourceIds?: readonly string[] })
+      .paymentResourceIds;
+    if (paymentCost > 0 && selectedPayment?.length !== paymentCost) {
+      const activeResources = resourcePaymentSelection(
+        paymentCost,
+        playerId,
+        G,
+        framework,
+        selectedPayment !== undefined,
+      );
+      if (activeResources || selectedPayment !== undefined) {
+        return [
+          {
+            kind: "selectTarget",
+            role: "resource",
+            candidateIds: activeResources ?? [],
+            minTargets: paymentCost,
+            maxTargets: paymentCost,
+          },
+        ];
+      }
+    }
+    return [];
+  },
 
   enumerateCandidates({ G, playerId, framework }) {
     if (framework.state.status.phase !== "main-phase") return [];
@@ -47,7 +79,7 @@ export const deployBase: GundamMoveDefinition<"deployBase"> = {
   validate({ G, playerId, args, framework, validationMode }) {
     if (validationMode === "preflight") return { valid: true };
     const g = G;
-    const { cardId, targets } = args;
+    const { cardId, targets, paymentResourceIds } = args;
 
     if (framework.state.status.phase !== "main-phase") {
       return {
@@ -69,14 +101,23 @@ export const deployBase: GundamMoveDefinition<"deployBase"> = {
     const commonResult = validatePlayFromHand(cardId, playerId, g, framework);
     if (!commonResult.valid) return commonResult;
 
+    const payment = validatePaymentResourceIds(
+      paymentResourceIds,
+      computeEffectiveCostInHand(cardId, playerId, g, framework),
+      playerId,
+      g,
+      framework,
+    );
+    if (!payment.valid) return payment;
+
     return validateDeployTriggerTargets(cardId, playerId, targets ?? [], g, framework);
   },
 
   execute({ G, playerId, args, moveId, framework }) {
     const g = G;
-    const { cardId, targets } = args;
+    const { cardId, targets, paymentResourceIds } = args;
 
-    const paidCost = payCardCost(cardId, playerId, g, framework);
+    const paidCost = payCardCost(cardId, playerId, g, framework, { paymentResourceIds });
 
     framework.zones.moveCard(cardId, { zone: "baseSection", playerId });
     g.turnMetadata.deployedThisTurn.push(cardId);

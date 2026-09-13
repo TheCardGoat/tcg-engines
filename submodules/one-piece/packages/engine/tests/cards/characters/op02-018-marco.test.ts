@@ -80,4 +80,39 @@ describe("OP02-018 Marco", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        character: [{ card: op02Marco018, playedOnTurn: 0 }],
+        hand: [eb01Doma005, op02Blenheim012, eb01MountainGod018],
+        life: [eb01Doma005, eb01Fourtricks025],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const marcoId = engine.findCardInZone("north", "character", op02Marco018);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleBlocker", { selectedIds: [marcoId] }, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    const before = engine.getView("north").players.north;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
 });

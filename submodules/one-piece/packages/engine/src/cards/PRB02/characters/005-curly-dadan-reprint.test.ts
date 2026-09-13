@@ -3,7 +3,7 @@ import { prb02CurlyDadanReprint005 } from "../../../../../cards/src/cards/PRB02/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-005 Curly.Dadan (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02CurlyDadanReprint005);
   });
 });

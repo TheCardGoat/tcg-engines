@@ -70,6 +70,7 @@ const PUBLIC_OPPONENT_MOVES: ReadonlySet<MoveId> = new Set([
   "resolveTrigger",
   "resolveEffectTarget",
   "resolveCardTypeChoice",
+  "resolveChooseEffect",
 ]);
 
 export function createTacticalStrategy(options: TacticalStrategyOptions = {}): AIStrategy {
@@ -544,6 +545,8 @@ function isPublicOpponentChoice(choice: ChoicePrompt, rootView: FilteredMatchVie
       return choice.payload.options.every((option) => visibleIds.has(option.sourceCardId));
     case "chooseGigsToSteal":
       return choice.payload.eligibleDice.every((die) => visibleIds.has(die.dieId));
+    case "preventGigSteal":
+      return false;
     case "chooseCardToMove":
       return choice.payload.cardIds.every((id) => visibleIds.has(id));
     case "chooseCardType":

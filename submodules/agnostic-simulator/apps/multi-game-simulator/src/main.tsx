@@ -1,5 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 
 import { initBrowserObservability } from "./observability/browser";
 import App from "./App";
@@ -16,6 +18,8 @@ if (!appRoot) {
 
 createRoot(appRoot).render(
   <StrictMode>
-    <App />
+    <MantineProvider defaultColorScheme="dark">
+      <App />
+    </MantineProvider>
   </StrictMode>,
 );

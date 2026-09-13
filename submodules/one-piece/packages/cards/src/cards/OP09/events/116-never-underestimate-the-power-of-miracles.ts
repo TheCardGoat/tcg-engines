@@ -51,12 +51,29 @@ export const op09NeverUnderestimateThePowerOfMiracles116: EventCard = {
         actions: [
           {
             action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1, upTo: true },
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
             filters: [
-              { filter: "cardCategory", value: "character" },
-              { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Revolutionary Army", match: "includes" },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Revolutionary Army",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
             ],
           },
         ],

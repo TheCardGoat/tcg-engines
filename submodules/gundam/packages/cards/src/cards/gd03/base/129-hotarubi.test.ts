@@ -109,6 +109,33 @@ describe("Hotarubi (GD03-129)", () => {
     expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
   });
 
+  it("cannot mill from its optional rest cost while the Base is already rested", () => {
+    const unit = createMockUnit({ traits: ["tekkadan"], hp: 5 });
+    const enemy = createMockUnit({ hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd04Reformationist114],
+        baseSection: [{ card: gd03Hotarubi129, exhausted: true }],
+        play: [unit],
+        resourceArea: activeResources(2),
+        deck: 3,
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const baseId = p1.getCardsInZone("baseSection")[0]!;
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+    const deckBefore = p1.getCardsInZone("deck").length;
+
+    expectSuccess(p1.playCommand(gd04Reformationist114, { targets: [unitId, enemyId] }));
+
+    expect(p1.isExhausted(baseId)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardsInZone("deck")).toHaveLength(deckBefore);
+  });
+
   it("does not trigger for a friendly Unit outside Tekkadan and Teiwaz", () => {
     const unit = createMockUnit({ traits: ["earth federation"], hp: 5 });
     const enemy = createMockUnit({ hp: 5 });

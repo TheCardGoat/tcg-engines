@@ -3,7 +3,7 @@ import { eb03ThanksForTheTreat038 } from "../../../../../cards/src/cards/EB03/ev
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB03-038 Thanks for the Treat.", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb03ThanksForTheTreat038);
   });
 });

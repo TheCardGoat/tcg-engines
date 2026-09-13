@@ -1,0 +1,245 @@
+/* Card geometry, artwork fallback, and counters belong to FabBoardCardFace.
+   Board containers supply the available slot dimensions. */
+
+.fab-board-card-face-shell {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 100%;
+  aspect-ratio: 1;
+  min-width: 0;
+}
+
+.fab-board-card-face-shell > * {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Keep the authored frame while art loads or image candidates fail. */
+.fab-board-card-face-shell > .sim-card-face {
+  overflow: hidden;
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Combat owns layout and badges, while every card and thumbnail uses the
+   shared FAB card face for artwork, fallback behavior, and live entity data. */
+:is(
+    .fab-chain-card,
+    .fab-chain-link-avatar,
+    .fab-chain-stack-art,
+    .fab-sidebar-stack-thumbnail,
+    .fab-sidebar-stack-layer-image,
+    .fab-compact-resolution-art,
+    .fab-mobile-chain-card,
+    .fab-chain-mobile-gallery-card
+  )
+  .fab-board-card-face-shell {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+:is(
+    .fab-chain-card,
+    .fab-chain-link-avatar,
+    .fab-chain-stack-art,
+    .fab-sidebar-stack-thumbnail,
+    .fab-sidebar-stack-layer-image,
+    .fab-compact-resolution-art,
+    .fab-mobile-chain-card,
+    .fab-chain-mobile-gallery-card
+  )
+  .fab-board-card-face-shell
+  > .sim-card-face {
+  width: 100% !important;
+  max-width: none;
+  height: 100%;
+  min-height: 0;
+  border-radius: inherit;
+}
+
+.fab-card-counter-row {
+  position: absolute;
+  z-index: 32;
+  /* Keep the shared top-corner band clear for tactical cost and automation controls. */
+  top: 2.25rem;
+  right: 0.22rem;
+  display: flex;
+  max-width: calc(100% - 0.44rem);
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.18rem;
+  pointer-events: none;
+}
+
+.fab-card-counter {
+  display: inline-flex;
+  min-width: 1.55rem;
+  min-height: 1.15rem;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+  border: 1px solid rgb(255 232 151 / 82%);
+  border-radius: 999px;
+  background: rgb(22 13 5 / 96%) url("./assets/icons/counter-marker.svg") 0.24rem center / 0.72rem
+    no-repeat;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 72%);
+  color: #fff8d8;
+  font-size: 0.6rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0.18rem 0.28rem 0.18rem 1.08rem;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.fab-card-counter[data-fab-counter-stacked="true"] {
+  box-shadow:
+    2px 2px 3px -1px rgb(92 65 24 / 92%),
+    4px 4px 5px -2px rgb(51 34 12 / 90%),
+    0 3px 6px rgb(0 0 0 / 72%);
+}
+
+.fab-card-counter[data-fab-counter-icon="defense"] {
+  background-image: url("./assets/icons/defense.svg");
+}
+
+.fab-card-counter[data-fab-counter-icon="power"] {
+  background-image: url("./assets/icons/power.svg");
+}
+
+.fab-card-counter-overflow {
+  min-width: 1.3rem;
+  justify-content: center;
+  padding-inline: 0.28rem;
+  background-image: none;
+}
+
+/* The board uses the same readable treatment as a loading card preview when
+   no artwork can be resolved. It remains a card-level fallback, never an
+   invented printing or a blank tactical tile. */
+.fab-board-card-face-shell > .fab-card-preview-fallback--board {
+  position: absolute;
+  /* Tactical hand faces use layer 30; fallback artwork must cover them. */
+  z-index: 31;
+  inset: 0;
+  flex: initial;
+  gap: 0.3rem;
+  padding: 0.45rem;
+  border-radius: inherit;
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-status {
+  gap: 0.35rem;
+  font-size: 0.48rem;
+  letter-spacing: 0.06em;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-title {
+  font-size: clamp(0.72rem, 1.1vw, 0.92rem);
+  line-height: 1.08;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-type {
+  font-size: 0.58rem;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-stats {
+  gap: 0.2rem;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-stats > div {
+  gap: 0.14rem;
+  padding: 0.12rem 0.22rem;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-stats dt {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-stats dt .fab-official-icon {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-stats dt .fab-pitch-gem {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-stats dt,
+.fab-card-preview-fallback--board .fab-card-preview-fallback-stats dd {
+  font-size: 0.56rem;
+}
+
+.fab-card-preview-fallback--board .fab-card-preview-fallback-rules {
+  gap: 0.3rem;
+  margin-top: 0;
+  font-size: 0.62rem;
+  line-height: 1.24;
+}
+
+@media (min-width: 768px) {
+  .fab-layout-single .sim-card-face[data-card-image-mode="full"] {
+    width: auto !important;
+    height: var(--fab-zone-card-width) !important;
+    max-width: 100% !important;
+    max-height: var(--fab-zone-card-width) !important;
+  }
+
+  /* Every board card reserves its slot before artwork loads. This also
+     contains absolutely positioned hidden artwork and text fallbacks. */
+  .fab-layout-single .fab-board-card-face-shell {
+    width: var(--fab-zone-card-width);
+    height: var(--fab-zone-card-width);
+    border-radius: inherit;
+  }
+
+  .fab-layout-single
+    .fab-board-card-face-shell:has(> .fab-card-preview-fallback--board)
+    > .sim-card-face {
+    width: 100% !important;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .fab-zone-deck .sim-card-face[data-card-image-mode="full"] {
+    width: var(--fab-zone-card-width) !important;
+    aspect-ratio: 1 !important;
+  }
+}
+
+@media (min-width: 768px) {
+  /* A card without generated square board art falls back to its portrait scan.
+     Keep that fallback inside the same tactical hand slot instead of allowing
+     its intrinsic aspect ratio to stretch the row. The image itself remains
+     proportionally cropped by CardFace's intentional cover treatment. */
+  .fab-board[data-card-crop="art-square"] .fab-layout-hand .fab-board-card-face-shell,
+  .fab-board[data-card-crop="art-square"] .fab-layout-hand .sim-card-face {
+    height: var(--fab-hand-card-width) !important;
+    min-height: 0 !important;
+    max-height: var(--fab-hand-card-width) !important;
+    aspect-ratio: 1 !important;
+  }
+
+  .fab-board[data-card-crop="art-square"] .fab-layout-hand .sim-card-face {
+    overflow: hidden;
+  }
+}
+
+.fab-mobile-hero-slot [data-card-interaction] > .fab-board-card-face-shell {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}

@@ -24,11 +24,9 @@ describe("Setup · EX tokens", () => {
     expect(within(yourBase).getAllByRole("button", { name: /EX Base/i })).toHaveLength(1);
     expect(within(opponentBase).getAllByRole("button", { name: /EX Base/i })).toHaveLength(1);
 
-    const opponentResources = await screen.findByRole("region", {
-      name: /opponent resource area/i,
-    });
+    const opponentResources = await screen.findByLabelText("Opponent resources");
     // Opponent resources render face-down, so the EX Resource name is
-    // masked. The 01/01 counter proves exactly one token is seated.
-    expect(opponentResources.textContent ?? "").toMatch(/01\s*\/\s*01/);
+    // masked. The 1/1 counter proves exactly one token is seated.
+    expect(opponentResources.textContent ?? "").toMatch(/1\s*\/\s*1/);
   });
 });

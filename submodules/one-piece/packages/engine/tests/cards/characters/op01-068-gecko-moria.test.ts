@@ -34,5 +34,7 @@ describe("OP01-068 Gecko Moria", () => {
     belowThreshold.declareAttack(ineligibleId, belowThreshold.leader("north"), "south");
 
     expect(belowThreshold.getView("south").players.north.lifeCount).toBe(ineligibleLifeBefore - 1);
+    expect(belowThreshold.getView("south").prompts).toHaveLength(0);
+    expect(belowThreshold.getState().capabilityHistory).toHaveLength(0);
   });
 });

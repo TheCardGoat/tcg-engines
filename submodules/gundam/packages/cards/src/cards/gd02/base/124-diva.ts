@@ -27,15 +27,13 @@ export const gd02Diva124: BaseCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-124.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-124.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-124.webp",
       productName: "Dual Impact [GD02]",
     },
   ],
   reprints: ["GD02-124"],
   selectedPrintingId: "GD02-124",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-124.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-124.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-124.webp",
   legality: "legal",
   level: 3,
   cost: 1,
@@ -91,6 +89,7 @@ export const gd02Diva124: BaseCard = {
             target: {
               owner: "friendly",
               cardType: "unit",
+              count: "all",
               attributeFilters: [
                 {
                   attribute: "color",

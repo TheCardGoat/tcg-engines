@@ -95,7 +95,10 @@ interface ReplayForSave {
   gameId: string;
   matchId: string;
   playerIds: [string, string];
-  steps?: Array<{ acceptedMove: { turnNumber: number; actorId: string } }>;
+  steps?: Array<{
+    acceptedMove: { turnNumber: number; actorId: string } | null;
+    reversal?: { turnNumber: number; actorId: string };
+  }>;
   metadata: {
     totalMoves: number;
     totalTurns: number;
@@ -112,7 +115,10 @@ interface ReplayForSave {
 
 interface ReplayForImport extends ReplayForSave {
   gameType: string;
-  steps?: Array<{ acceptedMove: { turnNumber: number; actorId: string } }>;
+  steps?: Array<{
+    acceptedMove: { turnNumber: number; actorId: string } | null;
+    reversal?: { turnNumber: number; actorId: string };
+  }>;
 }
 
 function openDb(): Promise<IDBDatabase> {
@@ -307,8 +313,8 @@ export function buildSavedReplay(
   savedAt: number,
   viewerPlayerId?: string,
 ): SavedReplay {
-  const firstPlayerId = data.steps?.find((step) => step.acceptedMove.turnNumber === 1)?.acceptedMove
-    .actorId;
+  const firstPlayerId = data.steps?.find((step) => step.acceptedMove?.turnNumber === 1)
+    ?.acceptedMove?.actorId;
   const gameInfo = buildCyberpunkGameInfo(data.metadata.analytics, viewerPlayerId);
 
   return {
@@ -399,9 +405,9 @@ function validateReplayData(value: unknown): ReplayForImport {
       data.steps.some(
         (step) =>
           !isRecord(step) ||
-          !isRecord(step.acceptedMove) ||
-          typeof step.acceptedMove.turnNumber !== "number" ||
-          typeof step.acceptedMove.actorId !== "string",
+          !isRecord(step.acceptedMove ?? step.reversal) ||
+          typeof (step.acceptedMove ?? step.reversal)?.turnNumber !== "number" ||
+          typeof (step.acceptedMove ?? step.reversal)?.actorId !== "string",
       ))
   ) {
     throw new ReplayImportError("replay.json steps are invalid.");

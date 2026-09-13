@@ -80,6 +80,7 @@ export interface MobilePortraitBoardProps extends HTMLAttributes<HTMLDivElement>
   bottomRail: ReactNode;
   overlays?: ReactNode;
   promptActive?: boolean;
+  externalRails?: boolean;
 }
 
 export const MobilePortraitBoard = forwardRef<HTMLDivElement, MobilePortraitBoardProps>(
@@ -96,6 +97,7 @@ export const MobilePortraitBoard = forwardRef<HTMLDivElement, MobilePortraitBoar
       bottomRail,
       overlays,
       promptActive,
+      externalRails = false,
       className,
       children,
       ...props
@@ -110,10 +112,11 @@ export const MobilePortraitBoard = forwardRef<HTMLDivElement, MobilePortraitBoar
         className={cx(classes.root, className)}
         data-prompt-active={promptActive ? "true" : "false"}
         data-zone-summaries={hasZoneSummaries ? "true" : undefined}
+        data-external-rails={externalRails ? "true" : undefined}
         {...props}
       >
         {overlays}
-        <div className={classes.topRail}>{topRail}</div>
+        {externalRails ? topRail : <div className={classes.topRail}>{topRail}</div>}
         <div className={classes.opponentHand}>{opponentHand}</div>
         {hasZoneSummaries ? (
           <div className={classes.opponentZoneSummary}>{opponentZoneSummary}</div>
@@ -125,7 +128,7 @@ export const MobilePortraitBoard = forwardRef<HTMLDivElement, MobilePortraitBoar
           <div className={classes.playerZoneSummary}>{playerZoneSummary}</div>
         ) : null}
         <div className={classes.playerHand}>{playerHand}</div>
-        <div className={classes.bottomRail}>{bottomRail}</div>
+        {externalRails ? bottomRail : <div className={classes.bottomRail}>{bottomRail}</div>}
         {children}
       </div>
     );

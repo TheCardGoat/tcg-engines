@@ -20,7 +20,6 @@ import type {
   LeaveGameMsg,
   MatchmakingAcceptMsg,
   MatchmakingDeclineMsg,
-  MatchmakingPollMsg,
   ProposalAcceptMsg,
   ProposalDeclineMsg,
   ProposalSendMsg,
@@ -49,12 +48,12 @@ import type {
   GatewayErrorPayload,
   GatewayPongPayload,
   GatewayWelcomePayload,
-  GlobalAnnouncementPayload,
   HeartbeatAckPayload,
   LobbyPlayerJoinedPayload,
   LobbyPlayerLeftPayload,
   LobbyRoomCancelledPayload,
   MatchFoundPayload,
+  MatchFinalizationFailedPayload,
   MatchReadyExpiredPayload,
   MatchReadyPayload,
   MatchReadyUpdatePayload,
@@ -99,7 +98,6 @@ export interface ClientToServerEvents {
   heartbeat: (payload: Payload<HeartbeatMsg>) => void;
   activity_update: (payload: Payload<ActivityUpdateMsg>) => void;
   push_state: (payload: Payload<PushStateMsg>) => void;
-  matchmaking_poll: (payload: Payload<MatchmakingPollMsg>) => void;
   matchmaking_accept: (payload: Payload<MatchmakingAcceptMsg>) => void;
   matchmaking_decline: (payload: Payload<MatchmakingDeclineMsg>) => void;
   skip_opponent_turn: (payload: Payload<SkipOpponentTurnMsg>) => void;
@@ -115,6 +113,8 @@ export interface ClientToServerEvents {
 }
 
 export interface ServerToClientEvents {
+  /** Public invalidation only; the authenticated session endpoint projects private state. */
+  match_session_changed: (payload: { matchId: string; revision: number }) => void;
   pong: (payload: GatewayPongPayload) => void;
   welcome: (payload: GatewayWelcomePayload) => void;
   gateway_error: (payload: GatewayErrorPayload) => void;
@@ -129,6 +129,7 @@ export interface ServerToClientEvents {
   move_rejected: (payload: MoveRejectedPayload) => void;
   presence_change: (payload: PresenceChangePayload) => void;
   game_ended: (payload: GameEndedPayload) => void;
+  match_finalization_failed: (payload: MatchFinalizationFailedPayload) => void;
   match_state: (payload: MatchStatePayload) => void;
   heartbeat_ack: (payload: HeartbeatAckPayload) => void;
   matchmaking_status: (payload: MatchmakingStatusPayload) => void;
@@ -153,7 +154,6 @@ export interface ServerToClientEvents {
   tournament_update: (payload: TournamentUpdatePayload) => void;
   event_subscribed: (payload: EventSubscriptionAckPayload) => void;
   event_unsubscribed: (payload: EventSubscriptionAckPayload) => void;
-  global_announcement: (payload: GlobalAnnouncementPayload) => void;
   friend_message: (payload: FriendMessagePayload) => void;
   matchmaking_dashboard_snapshot: (payload: MatchmakingDashboardSnapshotPayload) => void;
 
@@ -170,7 +170,9 @@ export interface ServerToClientEvents {
   "reconnect:response": (payload: Response<GameJoinedPayload, ErrorPayload>) => void;
   "request_game_state_sync:response": (payload: Response<StateSyncPayload, ErrorPayload>) => void;
   "push_state:response": (payload: Response<PushStateResultPayload, ErrorPayload>) => void;
-  "proposal_send:response": (payload: Response<ProposalReceivedPayload, ErrorPayload>) => void;
+  "proposal_send:response": (
+    payload: Response<ProposalReceivedPayload | ProposalResolvedPayload, ErrorPayload>,
+  ) => void;
   "proposal_accept:response": (payload: Response<ProposalResolvedPayload, ErrorPayload>) => void;
   "proposal_decline:response": (payload: Response<ProposalResolvedPayload, ErrorPayload>) => void;
 }
@@ -235,4 +237,6 @@ export interface SocketData {
   userName: string | null;
   /** Game ids this socket is currently a member of (drives Socket.io rooms). */
   joinedGames: Set<string>;
+  /** Scoped live-match authorization resolved during the handshake. */
+  viewerScope: import("./viewer-scope.js").RealtimeViewerScope | null;
 }

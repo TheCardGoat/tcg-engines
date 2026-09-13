@@ -34,7 +34,7 @@ export const op11MermanCombatUltramarine116: EventCard = {
           {
             action: "addToLife",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

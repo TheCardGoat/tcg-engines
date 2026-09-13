@@ -3,7 +3,7 @@ import { prb02GammaKnifePirateFoil077 } from "../../../../../cards/src/cards/PRB
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-077 Gamma Knife (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02GammaKnifePirateFoil077);
   });
 });

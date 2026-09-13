@@ -18,6 +18,7 @@ import {
   createMockResource,
 } from "../index.ts";
 import type { TestCardEntry } from "../index.ts";
+import { asPlayerId, type PlayerId } from "../types/branded.ts";
 import type { GundamGameLogEntry } from "./logging.ts";
 
 function active(card: ReturnType<typeof createMockResource>): TestCardEntry {
@@ -31,6 +32,77 @@ function resources(count: number): TestCardEntry[] {
 function typedLog(entry: { data?: Record<string, unknown> }): GundamGameLogEntry {
   return entry.data as unknown as GundamGameLogEntry;
 }
+
+describe("emitGundamLog — setup mulligan privacy", () => {
+  it("public mulligan log hides card identities; private detail is owner-only", () => {
+    const engine = GundamTestEngine.create(
+      { deck: 12, resourceDeck: 10 },
+      { deck: 12, resourceDeck: 10 },
+      { skipToMainPhase: false },
+    );
+    engine.doMove("chooseFirstPlayer", asPlayerId(PLAYER_ONE), { playerId: PLAYER_ONE });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const handBefore = [...p1.getHand()];
+    engine.doMove("alterHand", asPlayerId(PLAYER_ONE), { wantsRedraw: true });
+    const handAfter = [...p1.getHand()];
+
+    const mulliganLogs = engine
+      .getRuntime()
+      .getGameLogHistory()
+      .map(({ entry }) => entry)
+      .filter((e) => e.type === "gundam.setup.mulligan");
+
+    const publicEntry = mulliganLogs.find(
+      (e) => e.visibleTo === "all" || e.visibleTo === undefined,
+    );
+    const privateEntry = mulliganLogs.find((e) => Array.isArray(e.visibleTo));
+    expect(publicEntry).toBeDefined();
+    expect(privateEntry).toBeDefined();
+
+    const publicTyped = typedLog(publicEntry!);
+    const privateTyped = typedLog(privateEntry!);
+    if (publicTyped.type !== "gundam.setup.mulligan") throw new Error("wrong type");
+    if (privateTyped.type !== "gundam.setup.mulligan") throw new Error("wrong type");
+
+    expect(publicTyped.values.count).toBe(5);
+    expect(publicTyped.values.returnedCardIds).toBeUndefined();
+    expect(publicTyped.values.drawnCardIds).toBeUndefined();
+    expect(publicTyped.visibility.mode).toBe("PUBLIC");
+
+    expect(privateTyped.values.returnedCardIds).toEqual(expect.arrayContaining(handBefore));
+    expect(privateTyped.values.drawnCardIds).toEqual(expect.arrayContaining(handAfter));
+    expect(privateTyped.visibility.mode).toBe("PRIVATE");
+    expect(privateEntry!.visibleTo).toEqual([PLAYER_ONE]);
+  });
+
+  it("surfaces alterHand as a structured mulligan move log with private card fields", () => {
+    const engine = GundamTestEngine.create(
+      { deck: 12, resourceDeck: 10 },
+      { deck: 12, resourceDeck: 10 },
+      { skipToMainPhase: false },
+    );
+    engine.doMove("chooseFirstPlayer", asPlayerId(PLAYER_ONE), { playerId: PLAYER_ONE });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const handBefore = [...p1.getHand()];
+    const result = engine.doMove("alterHand", asPlayerId(PLAYER_ONE), { wantsRedraw: true });
+    expectSuccess(result);
+    if (!result.success) throw new Error("unreachable");
+
+    const mulliganMove = result.moveLogs?.find((log) => log.type === "mulligan");
+    expect(mulliganMove).toBeDefined();
+    if (!mulliganMove || mulliganMove.type !== "mulligan") throw new Error("Expected mulligan");
+    expect(mulliganMove.count).toBe(5);
+    expect(mulliganMove.returnedCardIds).toMatchObject({
+      __private: true,
+      value: expect.arrayContaining(handBefore),
+      visibleTo: [PLAYER_ONE],
+    });
+    expect(mulliganMove.drawnCardIds).toMatchObject({
+      __private: true,
+      visibleTo: [PLAYER_ONE],
+    });
+  });
+});
 
 describe("emitGundamLog — wave 1 move coverage", () => {
   it("deployUnit emits gundam.move.deployUnit", () => {
@@ -246,6 +318,7 @@ describe("emitGundamLog — wave 6 effect coverage", () => {
     const entry = typedLog(logs[0]!);
     if (entry.type !== "gundam.effect.exhausted") throw new Error("wrong type");
     expect(entry.values.cardId).toBe(victimId);
+    expect(logs[0]!.message).toContain("was rested.");
   });
 });
 
@@ -291,6 +364,94 @@ describe("emitGundamLog — wave 5 lifecycle coverage", () => {
       __private: true,
       visibleTo: [PLAYER_TWO],
     });
+  });
+
+  it("stamps the turn-ending passActionStep move log with the turn it ended", () => {
+    const engine = GundamTestEngine.create({}, { deck: 5 });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+
+    const turnBefore = engine.runtime.getState().ctx.status.turn;
+    const result = p1.passActionStep();
+    expectSuccess(result);
+    if (!result.success) throw new Error("unreachable");
+
+    // The final pass empties pendingDecision, so advanceTurn runs inside
+    // the same command — but the pass belongs to the turn that ended,
+    // not the new one.
+    expect(result.state.ctx.status.turn).toBe(turnBefore + 1);
+    const passLog = result.moveLogs?.[0];
+    expect(passLog?.type).toBe("pass");
+    expect(passLog?.turnNumber).toBe(turnBefore);
+  });
+
+  it("passActionStep with { automatic: true } surfaces the flag on the pass move log", () => {
+    const engine = GundamTestEngine.create({}, {});
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    expectSuccess(p1.passPhase());
+
+    // The standby player acts first in the end-phase action step.
+    const result = engine.runtime.executeCommand(
+      {
+        commandID: "test-auto-pass-action-step",
+        move: "passActionStep",
+        prevStateID: engine.runtime.state.ctx._stateID,
+        actorRole: "player",
+        args: { automatic: true },
+      },
+      PLAYER_TWO as PlayerId,
+    );
+    expectSuccess(result);
+    if (!result.success) throw new Error("unreachable");
+
+    const passLog = result.moveLogs?.[0];
+    expect(passLog?.type).toBe("pass");
+    expect(passLog && "automatic" in passLog ? passLog.automatic : undefined).toBe(true);
+
+    const logs = result.logEntries.filter((e) => e.type === "gundam.move.pass");
+    expect(logs).toHaveLength(1);
+    const entry = typedLog(logs[0]!);
+    if (entry.type !== "gundam.move.pass") throw new Error("wrong type");
+    expect(entry.values.context).toBe("action-step");
+    expect(entry.values.automatic).toBe(true);
+  });
+
+  it("automatic Block and battle Action passes surface the flag on public logs", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 2 });
+    const engine = GundamTestEngine.create(
+      {},
+      { play: [attacker] },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p2.getCardsInZone("battleArea")[0]!;
+    expectSuccess(p2.enterBattle(attackerId, "direct"));
+
+    for (const move of ["passBlock", "passBattleAction"] as const) {
+      const result = engine.runtime.executeCommand(
+        {
+          commandID: `test-auto-${move}`,
+          move,
+          prevStateID: engine.runtime.state.ctx._stateID,
+          actorRole: "player",
+          args: { automatic: true },
+        },
+        PLAYER_ONE as PlayerId,
+      );
+      expectSuccess(result);
+      if (!result.success) throw new Error("unreachable");
+
+      const passLog = result.moveLogs?.[0];
+      expect(passLog?.type).toBe("pass");
+      expect(passLog && "automatic" in passLog ? passLog.automatic : undefined).toBe(true);
+      const entry = typedLog(
+        result.logEntries.find((candidate) => candidate.type === "gundam.move.pass")!,
+      );
+      if (entry.type !== "gundam.move.pass") throw new Error("wrong type");
+      expect(entry.values.automatic).toBe(true);
+    }
   });
 });
 

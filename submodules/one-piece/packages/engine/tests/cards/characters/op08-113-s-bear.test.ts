@@ -71,4 +71,43 @@ describe("OP08-113 S-Bear", () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(attackerId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional Life Trigger so trash, play, and K.O. do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+          { card: eb01Fourtricks025, playedOnTurn: 0 },
+        ],
+      },
+      {
+        hand: [eb01Doma005],
+        life: [op08SBear113, eb01Fourtricks025],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const sBearId = engine.findCardInZone("north", "life", op08SBear113);
+    const discardId = engine.findCardInZone("north", "hand", eb01Doma005);
+    const eligibleId = engine.findCardInZone("south", "character", eb01Fourtricks025);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const handBefore = engine.getView("north").players.north.hand.length;
+    const southTrashBefore = engine.getView("north").players.south.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(discardId);
+    expect(view.players.north.hand.length).toBe(handBefore);
+    expect(view.players.north.characters.map((card) => card?.instanceId)).not.toContain(sBearId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(discardId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(sBearId);
+    expect(view.players.south.characters.some((card) => card?.instanceId === eligibleId)).toBe(
+      true,
+    );
+    expect(view.players.south.trash.length).toBe(southTrashBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

@@ -1,5 +1,10 @@
-import type { AnimationPacketV1, EngineInteractionView } from "@tcg/protocol";
+import type { AnimationPlanV2, EngineInteractionView } from "@tcg/protocol";
+import type { ChatPresetKey } from "@tcg/protocol/chat";
+import type { CanonicalEngineMoveLog } from "@tcg/shared/game-engine";
 import type { GameSlug } from "@tcg/simulator-contract";
+import { MatchResolutionSchema } from "@tcg/game-page-contract";
+import type { FilteredMatchView, GundamG } from "@tcg/gundam-engine";
+import type { GundamPresentation } from "@tcg/gundam-server-adapter";
 
 import { playUrl } from "../../../../../runtime/gameRuntimeApi.ts";
 import { buildMountedHref } from "../../../../../routes/router-paths.ts";
@@ -22,18 +27,41 @@ export interface LiveMatchView {
   readonly playerId: string;
   /** Best-known engine state version. Bumped from server messages. */
   version: number;
-  /** Last `state_sync` / `state_update` engine state, if any. */
-  state: Record<string, unknown> | null;
+  /** Last validated `state_sync` / `state_update` player projection, if any. */
+  state: FilteredMatchView<GundamG> | null;
   /** Protocol interaction projection for the controlled seat. */
   interactionView?: EngineInteractionView;
+  /** Server-authoritative eligibility for this seated player only. */
+  canUndo: boolean;
   /** Authoritative, viewer-safe packets delivered by the gateway. */
   animationPackets: readonly LiveAnimationPacket[];
+  /**
+   * Viewer-safe engine move logs accumulated from `state_update` /
+   * `move_accepted` payloads. Drives the battle log in live matches —
+   * the viewer runtime itself never executes commands, and `loadState`
+   * snapshots don't carry the runtime's move-log history.
+   */
+  engineLogRecords: readonly LiveEngineLogRecord[];
+  /**
+   * Viewer-safe presentation overlay accumulated from the bootstrap
+   * resources and every gateway message that carries refreshed
+   * viewer-filtered cards maps (`game_joined`, `state_sync`). Entries are
+   * per-instance and immutable once assigned, so the accumulation unions
+   * earlier and later maps instead of replacing them.
+   */
+  presentation?: GundamPresentation;
   /** Set when `game_ended` arrives. */
   ended: { winnerId: string | null; reason: string | null } | null;
 }
 
+export interface LiveEngineLogRecord {
+  readonly stateVersion: number;
+  readonly timestamp: number;
+  readonly log: CanonicalEngineMoveLog;
+}
+
 export interface LiveAnimationPacket {
-  readonly packet: AnimationPacketV1;
+  readonly plan: AnimationPlanV2;
   readonly stateVersion: number;
   readonly turnNumber: number;
 }
@@ -44,14 +72,6 @@ export interface LiveMatchOverview {
   readonly status: "waiting" | "in_progress" | "completed" | "abandoned";
   readonly currentGameId?: string;
   readonly gameIds: readonly string[];
-}
-
-interface RawLiveMatchOverview {
-  readonly object?: string;
-  readonly matchId?: string;
-  readonly status?: LiveMatchOverview["status"];
-  readonly currentGameId?: string;
-  readonly gameIds?: unknown;
 }
 
 export function createInitialLiveMatchView(input: {
@@ -65,13 +85,19 @@ export function createInitialLiveMatchView(input: {
     playerId: input.playerId,
     version: 0,
     state: null,
+    canUndo: false,
     animationPackets: [],
+    engineLogRecords: [],
     ended: null,
   };
 }
 
 export function buildMatchOverviewUrl(gameSlug: GameSlug, matchId: string): string {
   return playUrl(gameSlug, `/matches/${encodeURIComponent(matchId)}`);
+}
+
+export function buildGundamReplayHref(gameId: string, basename = "/gundam/simulator"): string {
+  return buildMountedHref(`/replay/${encodeURIComponent(gameId)}`, basename);
 }
 
 export async function fetchLiveMatchOverview(
@@ -96,18 +122,13 @@ export async function fetchLiveMatchOverview(
 }
 
 export function parseLiveMatchOverview(value: unknown): LiveMatchOverview {
-  const raw = value as RawLiveMatchOverview;
-  if (!raw || raw.object !== "match" || !raw.matchId) {
-    throw new Error("Match overview response was not a match.");
-  }
+  const resolved = MatchResolutionSchema.parse(value);
   return {
     object: "match",
-    matchId: raw.matchId,
-    status: raw.status ?? "in_progress",
-    currentGameId: raw.currentGameId,
-    gameIds: Array.isArray(raw.gameIds)
-      ? raw.gameIds.filter((gameId): gameId is string => typeof gameId === "string")
-      : [],
+    matchId: resolved.match.matchId,
+    status: resolved.match.status,
+    ...(resolved.currentGameId ? { currentGameId: resolved.currentGameId } : {}),
+    gameIds: resolved.match.gameIds,
   };
 }
 
@@ -122,6 +143,7 @@ export function resolveMatchOverviewDestination(
   }
   const params = new URLSearchParams(search);
   params.delete("gameId");
+  for (const key of ["playerId", "role", "spectate", "ticket", "authToken"]) params.delete(key);
   const query = params.toString();
   const path = `/matches/${encodeURIComponent(overview.matchId)}/games/${encodeURIComponent(gameId)}`;
   const origin = typeof window === "undefined" ? "http://localhost" : window.location.origin;
@@ -167,4 +189,70 @@ function logRuntimeHeaderMismatch(response: Response, context: string): void {
     // eslint-disable-next-line no-console
     console.warn("[gundam-runtime] runtime fingerprint mismatch", { context, server, client });
   }
+}
+
+/**
+ * Wire shape of a chat message delivered by the gateway (`game_chat_history`
+ * / `chat_message`). Mirrors cyberpunk's `RemoteChatMessage`.
+ */
+export interface RemoteChatMessage {
+  id: string;
+  matchId: string;
+  gameId: string;
+  senderPlayerId: string;
+  senderSeat: 0 | 1 | 2;
+  kind: "preset" | "text" | "system";
+  createdAt: string;
+  expiresAt?: string;
+  presetKey?: ChatPresetKey;
+  text?: string;
+  systemEvent?: string;
+}
+
+export function parseRemoteChatMessages(value: unknown): RemoteChatMessage[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value.flatMap((item) => {
+    const parsed = parseRemoteChatMessage(item);
+    return parsed ? [parsed] : [];
+  });
+}
+
+function parseRemoteChatMessage(value: unknown): RemoteChatMessage | null {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+  const raw = value as Record<string, unknown>;
+  if (
+    typeof raw.id !== "string" ||
+    typeof raw.matchId !== "string" ||
+    typeof raw.gameId !== "string" ||
+    typeof raw.senderPlayerId !== "string" ||
+    typeof raw.createdAt !== "string"
+  ) {
+    return null;
+  }
+  if (raw.senderSeat !== 0 && raw.senderSeat !== 1 && raw.senderSeat !== 2) {
+    return null;
+  }
+  const base = {
+    id: raw.id,
+    matchId: raw.matchId,
+    gameId: raw.gameId,
+    senderPlayerId: raw.senderPlayerId,
+    senderSeat: raw.senderSeat as 0 | 1 | 2,
+    createdAt: raw.createdAt,
+    ...(typeof raw.expiresAt === "string" ? { expiresAt: raw.expiresAt } : {}),
+  };
+  if (raw.kind === "preset" && typeof raw.presetKey === "string") {
+    return { ...base, kind: "preset", presetKey: raw.presetKey as ChatPresetKey };
+  }
+  if (raw.kind === "text" && typeof raw.text === "string") {
+    return { ...base, kind: "text", text: raw.text };
+  }
+  if (raw.kind === "system" && typeof raw.systemEvent === "string") {
+    return { ...base, kind: "system", systemEvent: raw.systemEvent };
+  }
+  return null;
 }

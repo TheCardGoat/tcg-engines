@@ -1,0 +1,47 @@
+import type { UnitCard } from "@tcg/gundam-types";
+
+export const gd05AbyssGundam040: UnitCard = {
+  cardNumber: "GD05-040",
+  name: "Abyss Gundam",
+  type: "unit",
+  color: "red",
+  traits: ["earth alliance", "phantom pain"],
+  id: "GD05-040",
+  canonicalId: "GD05-040",
+  externalIds: { bandai: "gundam:gd05-040" },
+  slug: "abyss-gundam-gd05-040",
+  displayName: "Abyss Gundam",
+  rulesText:
+    "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+  set: { code: "GD05", name: "Freedom Ascension [GD05]", packageId: "616105" },
+  printNumber: "GD05-040",
+  printings: [
+    {
+      id: "GD05-040",
+      artId: "GD05-040",
+      setCode: "GD05",
+      collectorNumber: "GD05-040",
+      cardNumber: "GD05-040",
+      set: { code: "GD05", name: "Freedom Ascension [GD05]", packageId: "616105" },
+      rarity: "uncommon",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd05/GD05-040.webp",
+      productName: "Freedom Ascension [GD05]",
+    },
+  ],
+  selectedPrintingId: "GD05-040",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd05/GD05-040.webp",
+  legality: "legal",
+  sourceTitle: "Mobile Suit Gundam SEED Destiny",
+  level: 3,
+  cost: 2,
+  ap: 2,
+  hp: 4,
+  linkCondition: "[Auel Neider]",
+  battlefieldZones: ["space", "earth"],
+  effect:
+    "【Activate･Main】<Support 2> (Rest this Unit. 1 other friendly Unit gets AP+(specified amount) during this turn.)",
+  effects: [],
+  keywordEffects: [{ keyword: "Support", value: 2 }],
+  rarity: "uncommon",
+};

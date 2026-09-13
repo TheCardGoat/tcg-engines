@@ -12,9 +12,22 @@ import type { Transport, ClientMessage, ServerMessage } from "../types/transport
 import type { MatchStaticResources, Player } from "../runtime/static-resources.ts";
 import type { TransportAwareEngine } from "./contracts.ts";
 import type { CommandResult } from "../types/command.ts";
+import type { GameLogEntry } from "../types/game-events.ts";
 
 import { MatchRuntime } from "../runtime/match-runtime.ts";
 import { stripPrivateFields } from "../runtime/private-field.ts";
+
+/** Drop PRIVATE log entries the viewer is not allowed to see. */
+function filterLogEntriesForViewer(
+  entries: readonly GameLogEntry[],
+  viewerId: PlayerId | null,
+): GameLogEntry[] {
+  return entries.filter((entry) => {
+    if (entry.visibleTo === undefined || entry.visibleTo === "all") return true;
+    if (viewerId === null) return false;
+    return entry.visibleTo.includes(viewerId);
+  });
+}
 
 export class ServerEngine implements TransportAwareEngine {
   private runtime: MatchRuntime;
@@ -177,7 +190,7 @@ export class ServerEngine implements TransportAwareEngine {
         stateID,
         view,
         gameEvents: result.gameEvents,
-        logEntries: result.logEntries,
+        logEntries: filterLogEntriesForViewer(result.logEntries, playerId),
         moveLogs: stripPrivateFields(result.moveLogs ?? [], playerId) ?? [],
         animations: result.animations,
         processedCommand: result.processedCommand,
@@ -192,7 +205,7 @@ export class ServerEngine implements TransportAwareEngine {
         stateID,
         view: spectatorView,
         gameEvents: result.gameEvents,
-        logEntries: result.logEntries,
+        logEntries: filterLogEntriesForViewer(result.logEntries, null),
         moveLogs: stripPrivateFields(result.moveLogs ?? [], null) ?? [],
         animations: result.animations,
         processedCommand: result.processedCommand,

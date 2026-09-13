@@ -92,7 +92,7 @@ describe("Side 7 (GD01-124)", () => {
     expectFailure(p1.activateAbility(baseId, 0, { targets: [enemyId] }), "ILLEGAL_TARGET");
   });
 
-  it("places Side 7, lets its controller choose which Base remains, then resolves Deploy", () => {
+  it("places Side 7, trashes the existing Base, then resolves Deploy", () => {
     const establishedBase = createMockBase({ name: "Established Base" });
     const returnedShield = createMockUnit({ name: "Returned Shield" });
     const engine = GundamTestEngine.create({
@@ -119,7 +119,7 @@ describe("Side 7 (GD01-124)", () => {
       minTargets: 1,
       maxTargets: 1,
     });
-    expect(choice.legalTargetIds).toEqual(expect.arrayContaining([establishedBaseId, side7Id]));
+    expect(choice.legalTargetIds).toEqual([establishedBaseId]);
     expect(p1.getBoardView().players[PLAYER_ONE]?.shieldCount).toBe(1);
 
     expectSuccess(p1.resolveEffect({ targets: [establishedBaseId] }));

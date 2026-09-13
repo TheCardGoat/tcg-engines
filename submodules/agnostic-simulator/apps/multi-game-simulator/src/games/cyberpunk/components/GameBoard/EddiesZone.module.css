@@ -1,10 +1,21 @@
-.zone {
+.zoneSlot {
   grid-area: eddies;
+  min-width: 0;
+  min-height: 0;
+}
+
+.zone {
   position: relative;
+  width: auto;
+  height: calc(100% - 2 * var(--zone-gutter));
+  min-height: 0;
   margin: var(--zone-gutter);
   border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 24%);
+  border-radius: 0;
   background:
     linear-gradient(90deg, rgb(245 230 66 / 3%), transparent 38%), var(--board-zone, #090b0f);
+  padding: 0;
+  overflow: visible;
   transition: background 0.15s;
 }
 
@@ -126,6 +137,7 @@
   justify-content: var(--eddies-justify, flex-start);
   min-width: 0;
   overflow: hidden;
+  margin: 0;
 }
 
 .card {
@@ -221,6 +233,15 @@
   pointer-events: none;
 }
 
+.card:not(.spent):not(.revealed) :global(.sim-card-image-frame)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(180deg, rgb(7 9 12 / 68%) 0%, rgb(7 9 12 / 52%) 28%, transparent 66%);
+  pointer-events: none;
+}
+
 .counter {
   position: absolute;
   top: 4px;
@@ -239,6 +260,14 @@
   letter-spacing: 0;
   line-height: 1;
   text-align: center;
+}
+
+.counter > span {
+  display: none;
+}
+
+.counter strong {
+  font: inherit;
 }
 
 .zone.opponent .counter {

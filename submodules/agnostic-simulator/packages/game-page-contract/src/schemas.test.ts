@@ -3,18 +3,21 @@ import { describe, expect, test } from "vitest";
 import type {
   ClientMsg,
   GameSnapshot,
+  LiveMatchBootstrapV1,
   MatchInfo,
-  MatchPageData,
   ReplayFile,
+  ReplayPlaybackV1,
   ServerMsg,
 } from "./index.js";
 import {
   ClientMsgSchema,
   GameSnapshotSchema,
+  GameTypeSchema,
+  LiveMatchBootstrapV1Schema,
   MatchInfoSchema,
-  MatchPageDataSchema,
   REPLAY_FILE_VERSION,
   ReplayFileSchema,
+  ReplayPlaybackV1Schema,
   ServerMsgSchema,
 } from "./index.js";
 
@@ -28,6 +31,9 @@ const sampleSnapshot: GameSnapshot = {
   cardsMaps: {
     cardInstances: { i1: "c1", i2: "c2" },
     owners: { p1: ["i1"], p2: ["i2"] },
+    deckDeclarationsByOwnerId: {
+      p1: { chosenChampionId: "champion-alpha", nested: { revealed: false } },
+    },
   },
 };
 
@@ -53,6 +59,10 @@ const sampleMatch: MatchInfo = {
 };
 
 describe("schemas", () => {
+  test("accepts Grand Archive as a page-contract game", () => {
+    expect(GameTypeSchema.parse("grand-archive")).toBe("grand-archive");
+  });
+
   test("MatchInfo round-trip", () => {
     const parsed = MatchInfoSchema.parse(sampleMatch);
     expect(parsed).toEqual(sampleMatch);
@@ -63,18 +73,101 @@ describe("schemas", () => {
     expect(parsed).toEqual(sampleSnapshot);
   });
 
-  test("MatchPageData round-trip", () => {
-    const data: MatchPageData = {
+  test("LiveMatchBootstrapV1 keeps server-resolved player identity and projected state", () => {
+    const data: LiveMatchBootstrapV1 = {
+      schemaVersion: 1,
       match: sampleMatch,
-      game: sampleSnapshot,
-      viewerSeat: 0,
+      game: {
+        gameId: "g1",
+        gameNumber: 1,
+        status: "in_progress",
+        authority: "server",
+        stateVersion: 7,
+        view: { privateFor: "p1" },
+        resources: { visibleCards: ["i1"] },
+      },
+      viewer: {
+        role: "player",
+        actorId: "p1",
+        seat: 1,
+        userId: "u1",
+        permissions: {
+          act: true,
+          chat: true,
+          propose: true,
+          useManualControls: true,
+          concede: true,
+          spectate: false,
+          viewReplay: false,
+          downloadReplay: false,
+          forkReplay: false,
+        },
+      },
+      capabilities: {
+        actions: true,
+        chat: true,
+        proposals: true,
+        manualControls: true,
+        spectating: true,
+        conceding: true,
+        replay: false,
+      },
+      presence: { players: [{ id: "p1", connected: true }] },
+      history: { recentMoves: [], engineLogs: [], chatMessages: [] },
       realtime: {
-        wsUrl: "wss://gateway.example.com/v1",
-        ticket: "t-abc",
-        protocolVersion: 1,
+        wsUrl: "wss://gateway.example.com",
+        ticket: "ticket",
+        reconnectToken: "scoped-token",
+        expiresAt: "2026-05-06T00:01:00Z",
+        protocolVersion: 2,
       },
     };
-    expect(MatchPageDataSchema.parse(data)).toEqual(data);
+
+    expect(LiveMatchBootstrapV1Schema.parse(data)).toEqual(data);
+  });
+
+  test("LiveMatchBootstrapV1 accepts a read-only anonymous spectator", () => {
+    const parsed = LiveMatchBootstrapV1Schema.parse({
+      schemaVersion: 1,
+      match: sampleMatch,
+      game: {
+        gameId: "g1",
+        gameNumber: 1,
+        status: "in_progress",
+        authority: "server",
+        stateVersion: 7,
+        view: { public: true },
+      },
+      viewer: {
+        role: "spectator",
+        spectatorId: "spectator_session",
+        permissions: {
+          act: false,
+          chat: false,
+          propose: false,
+          useManualControls: false,
+          concede: false,
+          spectate: true,
+          viewReplay: false,
+          downloadReplay: false,
+          forkReplay: false,
+        },
+      },
+      capabilities: {
+        actions: false,
+        chat: false,
+        proposals: false,
+        manualControls: false,
+        spectating: true,
+        conceding: false,
+        replay: false,
+      },
+      presence: { players: [], spectatorCount: 2 },
+      history: { recentMoves: [], engineLogs: [] },
+    });
+
+    expect(parsed.viewer.role).toBe("spectator");
+    expect(parsed.history).not.toHaveProperty("chatMessages");
   });
 
   test("every ClientMsg variant parses", () => {
@@ -119,6 +212,7 @@ describe("schemas", () => {
         patches: [{ op: "replace", path: "/foo", value: "bar" }],
         acceptedMove: moveRecord,
         logs: [{ tag: "lorcana:lore_gained" }],
+        animationPlan: null,
       },
       {
         type: "state_update",
@@ -126,8 +220,14 @@ describe("schemas", () => {
         stateVersion: 6,
         patches: [],
         logs: [],
+        animationPlan: null,
       },
-      { type: "state_sync", gameId: "g1", snapshot: sampleSnapshot },
+      {
+        type: "state_sync",
+        gameId: "g1",
+        snapshot: sampleSnapshot,
+        animationPlan: null,
+      },
       {
         type: "move_rejected",
         gameId: "g1",
@@ -163,8 +263,8 @@ describe("schemas", () => {
       gameId: "g1",
       seed: "seed-1",
       participants: sampleMatch.participants,
-      cardsMaps: sampleSnapshot.cardsMaps,
       initialState: { stub: true },
+      checkpoints: [{ cursor: 0, state: { stub: true } }],
       steps: [
         {
           patches: [{ op: "add", path: "/x", value: 1 }],
@@ -185,6 +285,14 @@ describe("schemas", () => {
       },
     };
     expect(ReplayFileSchema.parse(file)).toEqual(file);
+
+    const playback: ReplayPlaybackV1 = {
+      schemaVersion: 1,
+      trust: "server_authoritative",
+      publishedAt: "2026-05-06T00:02:00Z",
+      replay: file,
+    };
+    expect(ReplayPlaybackV1Schema.parse(playback)).toEqual(playback);
   });
 
   test("rejects unknown ServerMsg type", () => {
@@ -200,8 +308,8 @@ describe("schemas", () => {
         gameId: "g",
         seed: "s",
         participants: [],
-        cardsMaps: { cardInstances: {}, owners: {} },
         initialState: null,
+        checkpoints: [],
         steps: [],
         metadata: { totalMoves: 0, totalTurns: 0, createdAt: "x" },
       }),

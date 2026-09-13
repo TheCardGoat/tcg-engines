@@ -50,6 +50,17 @@ import {
   iter24TempoAwareCommand,
   iter25ThreatAwareTarget,
   iter26BlockerBaitOrder,
+  iter27DirectAssault,
+  iter28DirectAssaultBait,
+  iter29BaseAssault,
+  iter30PressureWindow,
+  iter31Turn8Pressure,
+  iter32Turn10Pressure,
+  iter33BlockTax,
+  iter34BlockerReserve,
+  iter35RaceClock,
+  iter36TurnPlan,
+  iter37RegretMix,
   iterProduction,
 } from "./experiments.ts";
 
@@ -85,6 +96,17 @@ export type BenchStrategyId =
   | "iter-24-tempo-aware-command"
   | "iter-25-threat-aware-target"
   | "iter-26-blocker-bait-order"
+  | "iter-27-direct-assault"
+  | "iter-28-direct-assault-bait"
+  | "iter-29-base-assault"
+  | "iter-30-pressure-window"
+  | "iter-31-turn-8-pressure"
+  | "iter-32-turn-10-pressure"
+  | "iter-33-block-tax"
+  | "iter-34-blocker-reserve"
+  | "iter-35-race-clock"
+  | "iter-36-turn-plan"
+  | "iter-37-regret-mix"
   | "iter-production"
   | "tempo";
 
@@ -120,6 +142,17 @@ export const REGISTERED_STRATEGIES: Readonly<Record<BenchStrategyId, CandidateSt
   "iter-24-tempo-aware-command": iter24TempoAwareCommand,
   "iter-25-threat-aware-target": iter25ThreatAwareTarget,
   "iter-26-blocker-bait-order": iter26BlockerBaitOrder,
+  "iter-27-direct-assault": iter27DirectAssault,
+  "iter-28-direct-assault-bait": iter28DirectAssaultBait,
+  "iter-29-base-assault": iter29BaseAssault,
+  "iter-30-pressure-window": iter30PressureWindow,
+  "iter-31-turn-8-pressure": iter31Turn8Pressure,
+  "iter-32-turn-10-pressure": iter32Turn10Pressure,
+  "iter-33-block-tax": iter33BlockTax,
+  "iter-34-blocker-reserve": iter34BlockerReserve,
+  "iter-35-race-clock": iter35RaceClock,
+  "iter-36-turn-plan": iter36TurnPlan,
+  "iter-37-regret-mix": iter37RegretMix,
   "iter-production": iterProduction,
   tempo: tempoStrategy,
 };

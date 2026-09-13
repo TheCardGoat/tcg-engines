@@ -4,14 +4,10 @@ import { ClockReadout, ConnectionPanel, TurnIndicator } from "@tcg/simulator-ui"
 import { buildMountedHref } from "../routes/router-paths.ts";
 import { projectConnectionPanelDiagnostic } from "../simulator/connection-panel-projection";
 import classes from "./SimulatorUiFixturesPage.module.css";
-
-export type SimulatorUiFixtureState = "connected" | "reconnecting" | "disconnected";
-
-const FIXTURE_STATES: readonly SimulatorUiFixtureState[] = [
-  "connected",
-  "reconnecting",
-  "disconnected",
-];
+import {
+  SIMULATOR_UI_CONNECTION_FIXTURE_STATES,
+  type SimulatorUiFixtureState,
+} from "./simulator-ui-fixture-manifest";
 
 export default function SimulatorUiFixturesPage() {
   const [state, setState] = useState<SimulatorUiFixtureState>("connected");
@@ -31,13 +27,21 @@ export default function SimulatorUiFixturesPage() {
           <h1>Simulator UI fixtures</h1>
           <p>Deterministic connection and clock states for desktop and mobile inspection.</p>
         </div>
-        <a href={buildMountedHref("/")} className={classes.backLink}>
-          Back to fixtures
-        </a>
+        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+          <a
+            href={buildMountedHref("/simulator-ui-fixtures/interaction-prompt")}
+            className={classes.backLink}
+          >
+            Interactive prompts
+          </a>
+          <a href={buildMountedHref("/")} className={classes.backLink}>
+            Back to fixtures
+          </a>
+        </div>
       </header>
 
       <nav className={classes.stateNav} aria-label="Fixture state">
-        {FIXTURE_STATES.map((candidate) => (
+        {SIMULATOR_UI_CONNECTION_FIXTURE_STATES.map((candidate) => (
           <a
             key={candidate}
             href={`${buildMountedHref("/simulator-ui-fixtures")}?state=${candidate}`}
@@ -132,7 +136,7 @@ export default function SimulatorUiFixturesPage() {
 function readFixtureState(): SimulatorUiFixtureState {
   if (typeof window === "undefined") return "connected";
   const requested = new URLSearchParams(window.location.search).get("state");
-  return FIXTURE_STATES.includes(requested as SimulatorUiFixtureState)
+  return SIMULATOR_UI_CONNECTION_FIXTURE_STATES.includes(requested as SimulatorUiFixtureState)
     ? (requested as SimulatorUiFixtureState)
     : "connected";
 }

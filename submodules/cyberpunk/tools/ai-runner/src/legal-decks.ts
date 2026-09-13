@@ -395,7 +395,14 @@ function findByName(cards: CardDefinition[], rawName: string): CardDefinition {
 }
 
 function normalizeName(name: string): string {
-  return name.toLowerCase().replace(/\s+/g, " ").trim();
+  // Legend cards spell "Name: Subtitle" while print-and-play deck lists spell
+  // "Name — Subtitle"; fold colon and every dash variant to a space so both
+  // spellings match.
+  return name
+    .toLowerCase()
+    .replace(/[-‐‑‒–—―:]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function dedupeCards(cards: CardDefinition[]): CardDefinition[] {

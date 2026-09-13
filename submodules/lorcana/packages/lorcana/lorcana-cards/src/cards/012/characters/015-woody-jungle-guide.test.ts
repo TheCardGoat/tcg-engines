@@ -3,6 +3,7 @@ import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-
 import { woodyJungleGuide } from "./015-woody-jungle-guide";
 import { bodyguard } from "../../../helpers/abilities/bodyguard";
 import { rexProtectiveDinosaur } from "./010-rex-protective-dinosaur";
+import { hammPiggyBank } from "./011-hamm-piggy-bank";
 
 const toyCharacter = createMockCharacter({
   id: "woody-jg-toy-char",
@@ -291,6 +292,44 @@ describe("Woody - Jungle Guide", () => {
 
       const woodyId = testEngine.findCardInstanceId(woodyJungleGuide, "play");
       expect(testEngine.asServer().getCard(woodyId).willpower).toBe(woodyJungleGuide.willpower);
+    });
+
+    it("regression: Rex survives 1 damage while Woody grants +1 {W} (bugrep8dMyjc)", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [woodyJungleGuide, { card: rexProtectiveDinosaur, damage: 1 }],
+          deck: 1,
+        },
+        { deck: 1 },
+      );
+
+      // Rex printed W=1 → effective W=2 with Woody; 1 damage is not lethal.
+      expect(testEngine.asPlayerOne().getCard(rexProtectiveDinosaur).willpower).toBe(2);
+      expect(testEngine.asPlayerOne().getCardZone(rexProtectiveDinosaur)).toBe("play");
+      expect(testEngine.asPlayerOne().getDamage(rexProtectiveDinosaur)).toBe(1);
+    });
+
+    it("regression: banishing Woody cascades lethal on Hamm who only survived via +1 {W} (bugrepT4G7GU)", () => {
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          play: [woodyJungleGuide, { card: hammPiggyBank, damage: 3 }],
+          deck: 1,
+        },
+        { deck: 1 },
+      );
+
+      // Hamm printed W=3 → effective W=4 with Woody; 3 damage is not lethal.
+      expect(testEngine.asPlayerOne().getCard(hammPiggyBank).willpower).toBe(4);
+      expect(testEngine.asPlayerOne().getCardZone(hammPiggyBank)).toBe("play");
+
+      const woodyId = testEngine.findCardInstanceId(woodyJungleGuide, "play", "p1");
+      testEngine.getServerEngine().engine.executeMove("manualSetDamage", {
+        args: { cardId: woodyId, damage: woodyJungleGuide.willpower },
+      });
+
+      expect(testEngine.asPlayerOne().getCardZone(woodyJungleGuide)).toBe("discard");
+      // Losing Woody returns Hamm to W=3 with 3 damage → GSC cascade banishes Hamm.
+      expect(testEngine.asPlayerOne().getCardZone(hammPiggyBank)).toBe("discard");
     });
   });
 

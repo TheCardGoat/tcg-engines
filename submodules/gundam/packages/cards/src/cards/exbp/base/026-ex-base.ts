@@ -1,0 +1,48 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase026: BaseCard = {
+  cardNumber: "EXBP-026",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-026",
+  canonicalId: "EXBP-026",
+  externalIds: { bandai: "gundam:exbp-026" },
+  slug: "ex-base-exbp-026",
+  displayName: "EX Base",
+  set: { code: "SC01", name: "Deck Build Box Freedom Ascension [SC01]", packageId: "616301" },
+  printNumber: "EXBP-026",
+  printings: [
+    {
+      id: "EXBP-026",
+      artId: "EXBP-026",
+      setCode: "SC01",
+      collectorNumber: "EXBP-026",
+      cardNumber: "EXBP-026",
+      set: {
+        code: "SC01",
+        name: "Deck Build Box Freedom Ascension [SC01]",
+        packageId: "616301",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/exbp/EXBP-026.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-026.webp?260715",
+      productName: "Deck Build Box Freedom Ascension [SC01]",
+    },
+  ],
+  reprints: ["EXBP-026"],
+  selectedPrintingId: "EXBP-026",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/exbp/EXBP-026.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-026.webp?260715",
+  legality: "legal",
+  sourceTitle: "Mobile Fighter G Gundam",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};
+export const sc01ExBase026 = exbpExBase026;

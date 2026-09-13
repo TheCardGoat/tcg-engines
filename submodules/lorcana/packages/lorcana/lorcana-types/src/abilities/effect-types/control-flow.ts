@@ -235,14 +235,32 @@ export interface RevealAndConditionalEffect {
  * @example "Name a card, then reveal the top card. If it's the named card, put it into your hand."
  * @example "Reveal the top card. If it's a character named Pete, you may play it for free."
  */
+/**
+ * Fallback after reveal-and-route when no route matches (or an optional route is declined).
+ * - A single destination auto-routes (legacy behavior).
+ * - A destinations array suspends for player choice (e.g. top or bottom of deck).
+ */
+export type RevealAndRouteFallback =
+  | RevealRouteDestination
+  | {
+      destinations: Array<
+        | { zone: "deck-top"; min?: number; max?: number; remainder?: boolean }
+        | { zone: "deck-bottom"; min?: number; max?: number; remainder?: boolean }
+      >;
+    };
+
 export interface RevealAndRouteEffect {
   type: "reveal-and-route";
   /** Whose deck to reveal from (default: CONTROLLER) */
   target?: PlayerTarget;
   /** Routes checked in order. First matching route wins. */
   routes: RevealRoute[];
-  /** Where unmatched cards go. If omitted, card stays on deck-top. */
-  fallback?: RevealRouteDestination;
+  /**
+   * Where unmatched (or optionally-declined) cards go.
+   * If omitted, card stays on deck-top.
+   * Use `{ destinations: [...] }` when the player must choose top or bottom.
+   */
+  fallback?: RevealAndRouteFallback;
 }
 
 export interface RevealRoute {

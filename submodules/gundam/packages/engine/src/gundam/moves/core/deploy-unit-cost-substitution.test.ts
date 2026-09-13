@@ -4,8 +4,10 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  activeResources,
   createMockCommand,
   createMockPilot,
+  createMockResource,
   createMockUnit,
   expectSuccess,
 } from "../../../index.ts";
@@ -68,6 +70,89 @@ const preventFriendlyDestruction: CardEffect = {
 };
 
 describe("deployUnit cost substitution", () => {
+  it("offers a conditional alternative level and cost with no additional target", () => {
+    const conditionalOverride: CardEffect = {
+      type: "substitution",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "deployCostOverride",
+            level: 3,
+            cost: 3,
+            condition: { type: "unitCount", owner: "opponent", comparison: "gte", count: 3 },
+          },
+        },
+      ],
+      sourceText:
+        "When playing this card from your hand, if 3 or more enemy Units are in play, play it as if it has 3 Lv. and cost.",
+    };
+    const discountedUnit = createMockUnit({ level: 6, cost: 5, effects: [conditionalOverride] });
+    const enemies = [createMockUnit(), createMockUnit(), createMockUnit()];
+    const engine = GundamTestEngine.create(
+      { hand: [discountedUnit], resourceArea: activeResources(3) },
+      { play: enemies },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getHand()[0]!;
+
+    expect(p1.getMoveProcedure("deployUnit", { cardId: unitId })).toEqual([
+      {
+        kind: "selectMode",
+        modes: [
+          {
+            id: "alternate",
+            label:
+              "When playing this card from your hand, if 3 or more enemy Units are in play, play it as if it has 3 Lv. and cost.",
+          },
+        ],
+      },
+    ]);
+    expectSuccess(p1.deployUnit(unitId, { mode: "alternate" }));
+    expect(p1.getCardZone(unitId)).toBe(`battleArea:${PLAYER_ONE}`);
+    expect(p1.getCardsInZone("resourceArea").every((id) => p1.isExhausted(id))).toBe(true);
+  });
+
+  it("offers Resource selection for a conditional cost override when an EX token is active", () => {
+    const conditionalOverride: CardEffect = {
+      type: "substitution",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "deployCostOverride",
+            level: 3,
+            cost: 3,
+            condition: { type: "unitCount", owner: "opponent", comparison: "gte", count: 3 },
+          },
+        },
+      ],
+      sourceText: "If 3 or more enemy Units are in play, play this at Lv.3 and cost 3.",
+    };
+    const unit = createMockUnit({ level: 6, cost: 5, effects: [conditionalOverride] });
+    const exResource = createMockResource({ name: "EX Resource" });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [unit],
+        resourceArea: [...activeResources(3), { card: exResource, isToken: true }],
+      },
+      { play: [createMockUnit(), createMockUnit(), createMockUnit()] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const unitId = p1.getHand()[0]!;
+    const resourceIds = p1.getCardsInZone("resourceArea");
+
+    expect(p1.getMoveProcedure("deployUnit", { cardId: unitId, mode: "alternate" })).toEqual([
+      {
+        kind: "selectTarget",
+        role: "resource",
+        candidateIds: resourceIds,
+        minTargets: 3,
+        maxTargets: 3,
+      },
+    ]);
+  });
+
   it("publishes the alternate cost and destroys the chosen Link Unit before deploying for free", () => {
     const host = createMockUnit({
       name: "Unicorn Gundam (Unicorn Mode)",

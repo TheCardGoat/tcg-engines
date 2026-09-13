@@ -19,6 +19,7 @@ describe("OP12-072 Zeff", () => {
     const zeffId = engine.findCardInZone("south", "character", op12Zeff072);
 
     engine.playCard(op02Hydra090, "south");
+    engine.acceptLeadingOptional("south");
     const payment = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     if (payment?.kind !== "payCost") throw new Error("Expected Hydra's DON!! return cost.");
     engine.resolveDecision(
@@ -29,5 +30,8 @@ describe("OP12-072 Zeff", () => {
 
     engine.declareAttack(zeffId, engine.leader("north"), "south");
     expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
   });
 });

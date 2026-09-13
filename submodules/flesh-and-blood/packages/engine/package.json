@@ -1,0 +1,71 @@
+{
+  "name": "@tcg/flesh-and-blood-engine",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Flesh and Blood rules engine runtime — match state, turn flow, and game-native dispatch.",
+  "type": "module",
+  "exports": {
+    "./deck-validation": {
+      "types": "./src/deck-validation.ts",
+      "default": "./src/deck-validation.ts"
+    },
+    "./deck-validation-card": {
+      "types": "./src/deck-validation-card.ts",
+      "default": "./src/deck-validation-card.ts"
+    },
+    "./runtime": {
+      "types": "./src/runtime-api.ts",
+      "default": "./src/runtime-api.ts"
+    },
+    "./catalog": {
+      "types": "./src/catalog-api.ts",
+      "default": "./src/catalog-api.ts"
+    },
+    "./simulator": {
+      "types": "./src/simulator-api.ts",
+      "default": "./src/simulator-api.ts"
+    },
+    "./log": {
+      "types": "./src/log/index.ts",
+      "default": "./src/log/index.ts"
+    },
+    "./legal-commands": {
+      "types": "./src/automation/legal-commands.ts",
+      "default": "./src/automation/legal-commands.ts"
+    },
+    "./testing": {
+      "types": "./src/testing/index.ts",
+      "default": "./src/testing/index.ts"
+    },
+    "./automation": {
+      "types": "./src/automation/index.ts",
+      "default": "./src/automation/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack src/deck-validation.ts src/deck-validation-card.ts src/runtime-api.ts src/catalog-api.ts src/simulator-api.ts src/log/index.ts src/automation/legal-commands.ts src/testing/index.ts src/automation/index.ts --dts",
+    "smoke:packed": "pnpm --dir ../types run build && pnpm run build && node --input-type=module -e 'await Promise.all([import(\"./dist/runtime-api.mjs\"), import(\"./dist/catalog-api.mjs\"), import(\"./dist/simulator-api.mjs\"), import(\"./dist/log/index.mjs\"), import(\"./dist/testing/index.mjs\"), import(\"./dist/automation/index.mjs\")]); console.log(\"packed FAB exports import successfully\")'",
+    "bench:test-initialization": "FAB_TEST_INITIALIZATION_BENCHMARK=1 vp test run src/performance/test-initialization-benchmark.local-only.test.ts --reporter=verbose",
+    "bench:runtime": "FAB_RUNTIME_BENCHMARK=1 vp test run src/performance/runtime-benchmark.local-only.test.ts --reporter=verbose",
+    "bench": "pnpm --dir ../types run build && node --experimental-transform-types --no-warnings scripts/bot-bench.ts",
+    "generate:catalog-test-definitions": "node --experimental-transform-types --no-warnings scripts/generate-catalog-test-definitions.mjs && vp fmt scripts/catalog-test-card-specs.mjs scripts/generate-catalog-test-definitions.mjs src/automation/catalog-test-cards.generated.ts",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "test": "vp test run --no-isolate --pool=threads --testTimeout=20000",
+    "test:isolated": "vp test run --isolate --pool=forks --sequence.shuffle --sequence.seed=20260815",
+    "test:smoke": "vp test run src/automation/smoke",
+    "bench:performance": "node --experimental-transform-types --no-warnings scripts/performance-sweep.ts"
+  },
+  "dependencies": {
+    "@tcg/flesh-and-blood-cards": "workspace:*",
+    "@tcg/flesh-and-blood-types": "workspace:*",
+    "mutative": "1.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

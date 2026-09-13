@@ -99,4 +99,41 @@ describe("PRB02-017 Boa Hancock", () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(expensiveId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [prb02BoaHancock017, prb02Otama016, prb02Otama016, eb01Doma005],
+        activeDon: prb02BoaHancock017.cost,
+      },
+      {
+        character: [
+          { card: eb01Doma005, playedOnTurn: 0 },
+          { card: op01MonkeyDLuffy024, playedOnTurn: 0 },
+        ],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const triggerIds = engine
+      .getState()
+      .players.south.hand.filter(
+        (instanceId) => engine.getState().cards[instanceId]?.cardId === prb02Otama016.id,
+      );
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const targetId = engine.findCardInZone("north", "character", eb01Doma005);
+
+    engine.playCard(prb02BoaHancock017, "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.length).toBe(handBefore - 1);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    for (const id of triggerIds) {
+      expect(view.players.south.hand.map((card) => card.instanceId)).toContain(id);
+    }
+    // target still can attack after turn handoff if we advanced - just confirm still on field
+    expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(targetId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

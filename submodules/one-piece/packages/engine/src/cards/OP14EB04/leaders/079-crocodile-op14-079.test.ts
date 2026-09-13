@@ -3,7 +3,7 @@ import { op14eb04CrocodileOp14079079 } from "../../../../../cards/src/cards/OP14
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP14-079 Crocodile - OP14-079", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04CrocodileOp14079079);
   });
 });

@@ -40,7 +40,7 @@ export const op13GolDRoger003: LeaderCard = {
     },
   ],
   effect:
-    "If you have any DON!! cards on your field, 1 DON!! card placed during your DON!! Phase is given to your Leader.\nIf you have 9 or less DON!! cards on your field, give this Leader 2000 power.",
+    "If you have any DON!! cards on your field, 1 DON!! card placed during your DON!! Phase is given to your Leader.\nIf you have 9 or less DON!! cards on your field, give this Leader −2000 power.",
   effects: {
     permanentEffects: [
       {
@@ -69,7 +69,8 @@ export const op13GolDRoger003: LeaderCard = {
           {
             action: "modifyPower",
             target: { player: "self", zones: ["leader"], count: { amount: "all" } },
-            value: 2000,
+            // Printed OP13-003 penalty is −2000 when at 9 or fewer DON!! on field.
+            value: -2000,
             duration: "permanent",
           },
         ],

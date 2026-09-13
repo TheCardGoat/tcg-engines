@@ -51,4 +51,35 @@ describe("OP07-063 Capote", () => {
     engine.endTurn("south");
     engine.declareAttack(eligibleId, engine.leader("south"), "north");
   });
+
+  test("may decline optional On Play so DON!! return and attack lock do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op07Foxy059,
+        hand: [op07Capote063],
+        activeDon: op07Capote063.cost + 1,
+      },
+      {
+        character: [
+          { card: eb01Doma005, playedOnTurn: 0 },
+          { card: op07Foxy071, playedOnTurn: 0 },
+        ],
+      },
+    );
+    const eligibleId = engine.findCardInZone("north", "character", eb01Doma005);
+
+    engine.playCard(op07Capote063, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon + view.players.south.restedDon).toBe(donPoolBefore);
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+    expect(view.prompts).toHaveLength(0);
+    engine.endTurn("south");
+    // Opposing low-cost Character remains free to attack after decline.
+    engine.declareAttack(eligibleId, engine.leader("south"), "north");
+  });
 });

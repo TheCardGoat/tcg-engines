@@ -10,7 +10,12 @@
 
 import type { Card } from "@tcg/gundam-types";
 import type { GundamMoveDefinition } from "../../types.ts";
-import { validatePlayFromHand, payCardCost } from "./play-card-shared.ts";
+import {
+  validatePlayFromHand,
+  validatePaymentResourceIds,
+  payCardCost,
+  resourcePaymentSelection,
+} from "./play-card-shared.ts";
 import { validatePilotPairingTarget, executePilotPairing } from "./pilot-pairing.ts";
 import { computeEffectivePilotPairingCost } from "../../rules/derived-state.ts";
 
@@ -21,7 +26,33 @@ export const assignPilot: GundamMoveDefinition<"assignPilot"> = {
     const g = G;
     const pilotId = (partialInput as { pilotId?: string }).pilotId;
     if (!pilotId) return [];
-    if ((partialInput as { unitId?: string }).unitId) return [];
+    const unitId = (partialInput as { unitId?: string }).unitId;
+    if (unitId) {
+      const paymentCost = computeEffectivePilotPairingCost(pilotId, unitId, playerId, g, framework);
+      const selectedPayment = (partialInput as { paymentResourceIds?: readonly string[] })
+        .paymentResourceIds;
+      if (paymentCost > 0 && selectedPayment?.length !== paymentCost) {
+        const activeResources = resourcePaymentSelection(
+          paymentCost,
+          playerId,
+          g,
+          framework,
+          selectedPayment !== undefined,
+        );
+        if (activeResources || selectedPayment !== undefined) {
+          return [
+            {
+              kind: "selectTarget",
+              role: "resource",
+              candidateIds: activeResources ?? [],
+              minTargets: paymentCost,
+              maxTargets: paymentCost,
+            },
+          ];
+        }
+      }
+      return [];
+    }
 
     const battlefield = framework.zones.getCards({ zone: "battleArea", playerId });
     const candidateIds = battlefield.filter((unitId) => {
@@ -80,7 +111,7 @@ export const assignPilot: GundamMoveDefinition<"assignPilot"> = {
   validate({ G, playerId, args, framework, validationMode }) {
     if (validationMode === "preflight") return { valid: true };
     const g = G;
-    const { pilotId, unitId } = args;
+    const { pilotId, unitId, paymentResourceIds } = args;
 
     if (framework.state.status.phase !== "main-phase") {
       return {
@@ -104,6 +135,15 @@ export const assignPilot: GundamMoveDefinition<"assignPilot"> = {
     const commonResult = validatePlayFromHand(pilotId, playerId, g, framework, { costOverride });
     if (!commonResult.valid) return commonResult;
 
+    const payment = validatePaymentResourceIds(
+      paymentResourceIds,
+      costOverride,
+      playerId,
+      g,
+      framework,
+    );
+    if (!payment.valid) return payment;
+
     // This pilot must not already be assigned to another unit
     const assignedPilots = Object.values(g.pilotAssignments);
     if (assignedPilots.includes(pilotId)) {
@@ -119,11 +159,11 @@ export const assignPilot: GundamMoveDefinition<"assignPilot"> = {
 
   execute({ G, playerId, args, moveId, framework }) {
     const g = G;
-    const { pilotId, unitId } = args;
+    const { pilotId, unitId, paymentResourceIds } = args;
 
     // Pay cost (rule 7-5-2-2-3)
     const costOverride = computeEffectivePilotPairingCost(pilotId, unitId, playerId, g, framework);
-    payCardCost(pilotId, playerId, g, framework, { costOverride });
+    payCardCost(pilotId, playerId, g, framework, { costOverride, paymentResourceIds });
 
     // Perform the pairing: move to battleArea, record assignment, fire
     // WhenPaired triggers, emit PILOT_ASSIGNED.

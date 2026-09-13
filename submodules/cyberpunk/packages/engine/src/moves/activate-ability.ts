@@ -215,8 +215,16 @@ export function canPayCosts(
         }
       }
     }
-    if (cost.cost === "payEddies" && availableEddies(state, playerId) < cost.amount) {
-      return false;
+    if (cost.cost === "payEddies") {
+      let amount = cost.amount;
+      if (cost.reduction) {
+        const count = resolveTarget(cost.reduction.target, ctx).length;
+        amount = Math.max(
+          amount - count * cost.reduction.reductionPerCount,
+          cost.reduction.min ?? 0,
+        );
+      }
+      if (availableEddies(state, playerId) < amount) return false;
     }
   }
   return true;

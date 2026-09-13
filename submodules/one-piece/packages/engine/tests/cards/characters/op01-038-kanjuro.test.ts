@@ -27,7 +27,24 @@ describe("OP01-038 Kanjuro", () => {
     expect(choice.candidates.every((candidate) => candidate.ref.kind === "option")).toBe(true);
     expect(choice.candidates.every((candidate) => candidate.publicInfo === undefined)).toBe(true);
     expect(choice.candidates.map((candidate) => candidate.ref.id)).not.toContain(discardedId);
-    const discardToken = choice.candidates[0]!.ref.id;
+    // The candidate order is deliberately randomized for the opposing chooser;
+    // resolve the opaque token for the target card from the prompt mapping.
+    const prompt = engine
+      .getState()
+      .promptQueue.find(
+        (candidate) =>
+          candidate.status === "pending" &&
+          candidate.resolutionContext?.intent === "effectTrashFromHandSelection",
+      );
+    if (prompt?.resolutionContext?.intent !== "effectTrashFromHandSelection") {
+      throw new Error("Expected a concealed trash-from-hand prompt.");
+    }
+    const discardToken = Object.entries(prompt.resolutionContext.opaqueCandidateIds ?? {}).find(
+      ([, candidateId]) => candidateId === discardedId,
+    )?.[0];
+    if (!discardToken) {
+      throw new Error("Expected the concealed hand card to have an opaque prompt token.");
+    }
     engine.resolveDecision(
       "effectTrashFromHandSelection",
       { selectedIds: [discardToken] },

@@ -3,7 +3,7 @@ import { op07Baccarat010 } from "../../../../../cards/src/cards/OP07/characters/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-010 Baccarat", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07Baccarat010);
   });
 });

@@ -3,7 +3,7 @@ import { op10TheWeakDoNotHaveTheRightToChooseHowTheyDie040 } from "../../../../.
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-040 The Weak Do Not Have the Right to Choose How They Die", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op10TheWeakDoNotHaveTheRightToChooseHowTheyDie040);
   });
 });

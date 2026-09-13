@@ -31,12 +31,6 @@ export const eb02DonquixoteRosinante025: CharacterCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Donquixote Rosinante",
-          },
-        ],
         costs: [
           {
             cost: "restDon",
@@ -72,6 +66,10 @@ export const eb02DonquixoteRosinante025: CharacterCard = {
             revealDestination: "character",
             remainderPosition: "bottom",
             playState: "rested",
+            condition: {
+              condition: "leaderName",
+              name: "Donquixote Rosinante",
+            },
           },
         ],
         optional: true,

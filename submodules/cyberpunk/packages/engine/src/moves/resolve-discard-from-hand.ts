@@ -107,7 +107,9 @@ export const resolveDiscardFromHandMove: MoveDefinition<ResolveDiscardFromHandIn
           contextTargets: payload.contextTargets ?? {},
           boundTargets: payload.boundTargets ?? {},
         };
-        const status = executeAbilityEffects(payload.elseEffects, ctx, operations);
+        const status = executeAbilityEffects(payload.elseEffects, ctx, operations, 0, {
+          nested: true,
+        });
         if (status === "suspended") return;
       }
       resumeCurrentTrigger(state, operations);
@@ -122,7 +124,7 @@ export const resolveDiscardFromHandMove: MoveDefinition<ResolveDiscardFromHandIn
     if (current) {
       current.contextTargets = {
         ...current.contextTargets,
-        discardedCards: cardIds,
+        discardedCards: [...(current.contextTargets["discardedCards"] ?? []), ...cardIds],
       };
     }
     operations.log.emit({
@@ -142,7 +144,7 @@ export const resolveDiscardFromHandMove: MoveDefinition<ResolveDiscardFromHandIn
         contextTargets: payload.contextTargets ?? {},
         boundTargets: payload.boundTargets ?? {},
       };
-      const status = executeAbilityEffects(payload.ifEffects, ctx, operations);
+      const status = executeAbilityEffects(payload.ifEffects, ctx, operations, 0, { nested: true });
       if (status === "suspended") return;
     }
     resumeCurrentTrigger(state, operations);

@@ -59,6 +59,7 @@ export const op11Shu088: CharacterCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

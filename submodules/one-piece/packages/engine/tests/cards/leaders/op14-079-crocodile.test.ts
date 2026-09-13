@@ -69,4 +69,32 @@ describe("OP14-079 Crocodile", () => {
     expect(engine.getView("south").players.north.trash).toEqual([]);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op14eb04CrocodileOp14079079,
+        character: [op14eb04Mr9095, op14eb04MissDoublefingerZala086],
+        deck: [op14eb04Mr9095, op14eb04Mr9095, op14eb04Mr9095],
+      },
+      { character: [op14eb04Diamante066] },
+    );
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

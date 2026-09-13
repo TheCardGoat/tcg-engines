@@ -14,7 +14,6 @@
   import OctagonX from "@lucide/svelte/icons/octagon-x";
   import PaintBucket from "@lucide/svelte/icons/paint-bucket";
   import Settings from "@lucide/svelte/icons/settings";
-  import ShieldCheck from "@lucide/svelte/icons/shield-check";
   import Sparkles from "@lucide/svelte/icons/sparkles";
   import Star from "@lucide/svelte/icons/star";
   import Swords from "@lucide/svelte/icons/swords";
@@ -61,7 +60,7 @@
     label: string;
     /** Real account display name when available (preferred). */
     displayName?: string | null;
-    /** Subscription tier id (tier2..tier5) for badge styling. */
+    /** Subscription tier id (tier2..tier4) for badge styling. */
     subscriptionTier?: string | null;
     bracketId?: string | null;
     mmr?: number | null;
@@ -772,8 +771,6 @@
                       <Sparkles size={10} />
                     {:else if patronConfig.icon === "gem"}
                       <Gem size={10} />
-                    {:else if patronConfig.icon === "shield"}
-                      <ShieldCheck size={10} />
                     {:else}
                       <Star size={10} />
                     {/if}

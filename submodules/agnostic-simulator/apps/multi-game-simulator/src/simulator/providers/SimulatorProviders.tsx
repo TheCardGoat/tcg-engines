@@ -1,6 +1,7 @@
 import { useMemo, type ReactNode } from "react";
-import type { Participant, ViewerSeat } from "@tcg/game-page-contract";
+import type { GameSnapshot, Participant, ViewerSeat } from "@tcg/game-page-contract";
 
+import { liveGameFromSession } from "@tcg/game-page-contract";
 import { participantIsPremium } from "../routeData";
 import { SimulatorAuthContextProvider } from "./auth-context";
 import { SimulatorDiagnosticsContextProvider } from "./diagnostics-context";
@@ -9,7 +10,6 @@ import { SimulatorMatchContextProvider } from "./match-context";
 import { EMPTY_SIMULATOR_PLAYER_SUMMARY, SimulatorPlayersContextProvider } from "./players-context";
 import { SimulatorRouteContextProvider } from "./route-context";
 import { SimulatorRuntimeConnectionContextProvider } from "./runtime-connection-context";
-import { SimulatorGameTransitionProvider } from "./transition-context";
 import { SimulatorUserSettingsContextProvider } from "./user-settings-context";
 import { SimulatorAudioProvider } from "../audio";
 import { SimulatorSettingsProvider } from "../settings";
@@ -72,15 +72,13 @@ export function SimulatorProviders({
             <SimulatorRuntimeConnectionContextProvider value={values.runtime}>
               <SimulatorMatchContextProvider value={values.match}>
                 <SimulatorGameSnapshotContextProvider value={values.game}>
-                  <SimulatorGameTransitionProvider game={values.game.game}>
-                    <SimulatorPlayersContextProvider value={values.players}>
-                      <SimulatorUserSettingsContextProvider value={values.userSettings}>
-                        <SimulatorDiagnosticsContextProvider value={values.diagnostics}>
-                          {children}
-                        </SimulatorDiagnosticsContextProvider>
-                      </SimulatorUserSettingsContextProvider>
-                    </SimulatorPlayersContextProvider>
-                  </SimulatorGameTransitionProvider>
+                  <SimulatorPlayersContextProvider value={values.players}>
+                    <SimulatorUserSettingsContextProvider value={values.userSettings}>
+                      <SimulatorDiagnosticsContextProvider value={values.diagnostics}>
+                        {children}
+                      </SimulatorDiagnosticsContextProvider>
+                    </SimulatorUserSettingsContextProvider>
+                  </SimulatorPlayersContextProvider>
                 </SimulatorGameSnapshotContextProvider>
               </SimulatorMatchContextProvider>
             </SimulatorRuntimeConnectionContextProvider>
@@ -103,11 +101,11 @@ export function buildSimulatorProviderValues(
   };
   const match = buildMatchValue(route);
   const game: SimulatorGameSnapshotContextValue = {
-    game: route.matchPageData?.game ?? null,
+    game: route.matchPageData ? toGameSnapshot(route.matchPageData) : null,
   };
   const players = buildPlayersValue(match);
   const userSettings: SimulatorUserSettingsContextValue = {
-    userSettings: route.matchPageData?.userSettings ?? null,
+    userSettings: null,
     viewerSettings: input.viewerSettings ?? null,
   };
   const diagnostics: SimulatorDiagnosticsContextValue = {
@@ -142,7 +140,8 @@ function buildRouteValue(input: SimulatorProviderInput): SimulatorRouteContextVa
     routeKind: data?.routeKind ?? "other",
     ...(data?.matchId ? { matchId: data.matchId } : {}),
     ...(data?.gameId ? { gameId: data.gameId } : {}),
-    matchPageData: data?.matchPageData ?? null,
+    matchPageData: data?.session ? liveGameFromSession(data.session) : null,
+    session: data?.session ?? null,
     matchResolution: data?.matchResolution ?? null,
     error: data?.error ?? null,
   };
@@ -163,9 +162,35 @@ function buildAuthValue(auth: SimulatorProviderInput["auth"]): SimulatorAuthCont
 
 function buildMatchValue(route: SimulatorRouteContextValue): SimulatorMatchContextValue {
   return {
-    match: route.matchPageData?.match ?? route.matchResolution?.match ?? null,
-    viewerSeat: route.matchPageData?.viewerSeat ?? null,
-    realtime: route.matchPageData?.realtime ?? null,
+    match: route.session?.match ?? route.matchResolution?.match ?? null,
+    viewerSeat: route.session
+      ? route.session.viewer.role === "player"
+        ? route.session.viewer.seat
+        : "spectator"
+      : null,
+    realtime: route.session?.realtime ?? null,
+  };
+}
+
+function toGameSnapshot(
+  bootstrap: NonNullable<SimulatorRouteContextValue["matchPageData"]>,
+): GameSnapshot {
+  const resources = bootstrap.game.resources;
+  const cardsMaps =
+    resources && typeof resources === "object" && "cardsMaps" in resources
+      ? ((resources as { cardsMaps?: GameSnapshot["cardsMaps"] }).cardsMaps ?? {
+          cardInstances: {},
+          owners: {},
+        })
+      : { cardInstances: {}, owners: {} };
+  return {
+    gameId: bootstrap.game.gameId,
+    gameNumber: bootstrap.game.gameNumber,
+    status: bootstrap.game.status,
+    authority: bootstrap.game.authority,
+    stateVersion: bootstrap.game.stateVersion,
+    state: bootstrap.game.view,
+    cardsMaps,
   };
 }
 

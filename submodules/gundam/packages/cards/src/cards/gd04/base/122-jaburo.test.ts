@@ -107,13 +107,14 @@ describe("Jaburo (GD04-122)", () => {
 
     it("rejects enemy Units above Lv.3", () => {
       const costUnit = createMockUnit({ traits: ["earth federation"] });
+      const legalEnemy = createMockUnit({ level: 3 });
       const enemy = createMockUnit({ level: 4 });
       const engine = GundamTestEngine.create(
         { baseSection: [gd04Jaburo122], play: [costUnit] },
-        { play: [enemy] },
+        { play: [legalEnemy, enemy] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[0]!;
+      const enemyId = engine.asPlayer(PLAYER_TWO).getCardsInZone("battleArea")[1]!;
 
       expectFailure(
         p1.activateBaseAbility(gd04Jaburo122, { targets: [enemyId] }),

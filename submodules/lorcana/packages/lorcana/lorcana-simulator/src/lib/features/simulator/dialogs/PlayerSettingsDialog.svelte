@@ -15,7 +15,7 @@
   import CardSleevePicker from "./CardSleevePicker.svelte";
 
   type SupportedLocale = (typeof locales)[number];
-  type SettingsTab = "gameplay" | "playmats" | "sleeves";
+  type SettingsTab = "simulator" | "game" | "account";
 
   interface PlayerSettingsDialogProps {
     open?: boolean;
@@ -83,7 +83,22 @@
     onOpenBugReport,
   }: PlayerSettingsDialogProps = $props();
 
-  let activeTab = $state<SettingsTab>("gameplay");
+  // SETTINGS PARITY: keep in sync with the platform web app's PlayerSettingsDialog.svelte
+  // and GameSettingsFields.svelte (Lorcana); see docs/implementation/settings-inventory-and-plan.md.
+  let activeTab = $state<SettingsTab>("simulator");
+  const sections = $derived([
+    { id: "simulator" as const, label: m["sim.settings.tab.simulator"]({}) },
+    { id: "game" as const, label: m["sim.settings.tab.game"]({}) },
+    { id: "account" as const, label: m["sim.settings.tab.account"]({}) },
+  ]);
+  function moveTab(event: KeyboardEvent): void {
+    const delta = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+    if (!delta && event.key !== "Home" && event.key !== "End") return;
+    event.preventDefault();
+    const index = sections.findIndex((tab) => tab.id === activeTab);
+    activeTab = sections[event.key === "Home" ? 0 : event.key === "End" ? 2 : (index + delta + 3) % 3]!.id;
+    document.getElementById(`player-settings-tab-${activeTab}`)?.focus();
+  }
 
   function getLocaleLabel(locale: SupportedLocale): string {
     return {
@@ -224,38 +239,16 @@
         </Dialog.Description>
       </Dialog.Header>
 
-      <div class="player-settings-tabs" role="tablist">
-        <button
-          type="button"
-          role="tab"
-          class="player-settings-tab"
-          aria-selected={activeTab === "gameplay"}
-          onclick={() => (activeTab = "gameplay")}
-        >
-          {m["sim.settings.tab.gameplay"]({})}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="player-settings-tab"
-          aria-selected={activeTab === "playmats"}
-          onclick={() => (activeTab = "playmats")}
-        >
-          {m["sim.settings.tab.playmats"]({})}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="player-settings-tab"
-          aria-selected={activeTab === "sleeves"}
-          onclick={() => (activeTab = "sleeves")}
-        >
-          {m["sim.settings.tab.sleeves"]({})}
-        </button>
+      <div class="player-settings-tabs" role="tablist" tabindex="-1" aria-label={m["sim.settings.title"]({})} onkeydown={moveTab}>
+        {#each sections as section (section.id)}
+          <button type="button" role="tab" class="player-settings-tab" id={`player-settings-tab-${section.id}`}
+            aria-controls={`player-settings-panel-${section.id}`} aria-selected={activeTab === section.id}
+            tabindex={activeTab === section.id ? 0 : -1} onclick={() => (activeTab = section.id)}>{section.label}</button>
+        {/each}
       </div>
 
       <div class="player-settings-scroll">
-      {#if activeTab === "gameplay"}
+      <div id="player-settings-panel-simulator" role="tabpanel" aria-labelledby="player-settings-tab-simulator" hidden={activeTab !== "simulator"}>
       <div class="grid gap-4">
         <div class="grid gap-1.5">
           <label class="text-xs font-medium uppercase tracking-widest text-slate-400" for="player-language-select">
@@ -323,22 +316,7 @@
           <p class="player-settings-help">{m["sim.settings.cardInfoModeDescription"]({})}</p>
         </div>
 
-        <div class="grid gap-1.5">
-          <label class="text-xs font-medium uppercase tracking-widest text-slate-400" for="player-primary-click-action-select">
-            {m["sim.settings.primaryClickActionLabel"]({})}
-          </label>
-          <select
-            id="player-primary-click-action-select"
-            class="player-settings-select"
-            value={primaryClickAction}
-            onchange={handlePrimaryClickActionSelection}
-          >
-            <option value="challenge">{m["sim.settings.primaryClickAction.challenge"]({})}</option>
-            <option value="quest">{m["sim.settings.primaryClickAction.quest"]({})}</option>
-            <option value="none">{m["sim.settings.primaryClickAction.none"]({})}</option>
-          </select>
-          <p class="player-settings-help">{m["sim.settings.primaryClickActionDescription"]({})}</p>
-        </div>
+
 
         <div class="grid gap-1.5">
           <label class="text-xs font-medium uppercase tracking-widest text-slate-400" for="player-animation-speed-select">
@@ -410,21 +388,7 @@
           <p class="player-settings-help">{m["sim.settings.showZoneCountersDescription"]({})}</p>
         </div>
 
-        <div class="grid gap-1.5">
-          <label
-            class="player-settings-checkbox-row"
-            for="player-priority-nudge-enabled-toggle"
-          >
-            <input
-              id="player-priority-nudge-enabled-toggle"
-              type="checkbox"
-              checked={priorityNudgeEnabled}
-              onchange={handlePriorityNudgeEnabledToggle}
-            />
-            <span>{m["sim.settings.priorityNudgeLabel"]({})}</span>
-          </label>
-          <p class="player-settings-help">{m["sim.settings.priorityNudgeDescription"]({})}</p>
-        </div>
+
 
         {#if import.meta.env.DEV}
           <div class="grid gap-1.5">
@@ -467,17 +431,52 @@
           />
         </div>
       </div>
-      {:else if activeTab === "playmats"}
-        <PlaymatPicker
-          {selectedPlaymat}
-          onSelect={(id) => onPlaymatChange?.(id)}
-        />
-      {:else if activeTab === "sleeves"}
-        <CardSleevePicker
-          {selectedCardBack}
-          onSelect={(id) => onCardBackChange?.(id)}
-        />
-      {/if}
+
+        <h3>{m["sim.settings.tab.playmats"]({})}</h3>
+        <PlaymatPicker {selectedPlaymat} onSelect={(id) => onPlaymatChange?.(id)} />
+        <h3>{m["sim.settings.tab.sleeves"]({})}</h3>
+        <CardSleevePicker {selectedCardBack} onSelect={(id) => onCardBackChange?.(id)} />
+      </div>
+      <div id="player-settings-panel-game" role="tabpanel" aria-labelledby="player-settings-tab-game" hidden={activeTab !== "game"}>
+        <div class="grid gap-4">
+        <div class="grid gap-1.5">
+          <label class="text-xs font-medium uppercase tracking-widest text-slate-400" for="player-primary-click-action-select">
+            {m["sim.settings.primaryClickActionLabel"]({})}
+          </label>
+          <select
+            id="player-primary-click-action-select"
+            class="player-settings-select"
+            value={primaryClickAction}
+            onchange={handlePrimaryClickActionSelection}
+          >
+            <option value="challenge">{m["sim.settings.primaryClickAction.challenge"]({})}</option>
+            <option value="quest">{m["sim.settings.primaryClickAction.quest"]({})}</option>
+            <option value="none">{m["sim.settings.primaryClickAction.none"]({})}</option>
+          </select>
+          <p class="player-settings-help">{m["sim.settings.primaryClickActionDescription"]({})}</p>
+        </div>
+        <div class="grid gap-1.5">
+          <label
+            class="player-settings-checkbox-row"
+            for="player-priority-nudge-enabled-toggle"
+          >
+            <input
+              id="player-priority-nudge-enabled-toggle"
+              type="checkbox"
+              checked={priorityNudgeEnabled}
+              onchange={handlePriorityNudgeEnabledToggle}
+            />
+            <span>{m["sim.settings.priorityNudgeLabel"]({})}</span>
+          </label>
+          <p class="player-settings-help">{m["sim.settings.priorityNudgeDescription"]({})}</p>
+        </div>
+        </div>
+      </div>
+      <div id="player-settings-panel-account" role="tabpanel" aria-labelledby="player-settings-tab-account" hidden={activeTab !== "account"}>
+        <p class="player-settings-help">{m["sim.settings.accountHelp"]({})}</p>
+        <a class="player-settings-hotkeys-button" href="/dashboard/settings">{m["sim.settings.openAccount"]({})}</a>
+      </div>
+
       </div>
 
       <Dialog.Footer class="shrink-0">

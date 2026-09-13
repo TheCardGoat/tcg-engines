@@ -15,5 +15,8 @@ describe("OP12-106 Trafalgar Law", () => {
     engine.declareAttack(attackerId, engine.leader("south"), "north");
     engine.resolveDecision("battleBlocker", { selectedIds: [lawId] }, "south");
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
   });
 });

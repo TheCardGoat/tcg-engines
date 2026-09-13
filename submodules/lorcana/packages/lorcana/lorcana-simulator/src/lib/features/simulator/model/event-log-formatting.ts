@@ -549,7 +549,32 @@ function renderFlatMoveLog(
 ): EventLogSegment[] {
   const inlinePlayedTargets = getInlinePlayedTargetSelection(moveLog);
   if (inlinePlayedTargets) {
-    return inlinePlayedTargets;
+    // The short play summary owns the cards moved to play and any cards
+    // returned as part of the same sequential resolution. Preserve every
+    // other outcome (for example, an entry-exerted result) as a follow-up
+    // message instead of silently dropping it.
+    const remainingOutcomes: MoveOutcomes | undefined = moveLog.outcomes
+      ? {
+          ...moveLog.outcomes,
+          cardsMovedToZone: moveLog.outcomes.cardsMovedToZone?.filter(
+            (move) => move.zone !== "play",
+          ),
+          cardsReturnedToHand: [],
+        }
+      : undefined;
+    const outcomeMessages: LorcanaLogMessage[] = [];
+    appendOutcomeMessages(outcomeMessages, moveLog.playerId, remainingOutcomes);
+    return outcomeMessages.length > 0
+      ? joinSegments(
+          [
+            inlinePlayedTargets,
+            ...outcomeMessages.map((message) =>
+              renderTypedLogMessage(entry, message, viewerSide, locale, resolveCard),
+            ),
+          ],
+          " ",
+        )
+      : inlinePlayedTargets;
   }
 
   const inlineEffectDamage = getInlineGroupedEffectDamage(moveLog);
@@ -847,11 +872,25 @@ function getInlinePlayedTargetSelection(
     return undefined;
   }
 
+  const returnedTargets = (moveLog.outcomes?.cardsReturnedToHand ?? []) as CardInstanceId[];
+  const actionSegments: EventLogSegment[][] = [];
+  if (returnedTargets.length > 0) {
+    actionSegments.push([
+      { kind: "text", text: "returning " },
+      ...joinHumanListSegments(returnedTargets.map((targetId) => [cardSegment(targetId)])),
+      { kind: "text", text: " to hand" },
+    ]);
+  }
+  actionSegments.push([
+    { kind: "text", text: "playing " },
+    ...joinHumanListSegments(playedTargets.map((targetId) => [cardSegment(targetId)])),
+  ]);
+
   return [
     { kind: "text", text: "Resolved " },
     cardSegment(moveLog.sourceCardId),
-    { kind: "text", text: " by playing " },
-    ...joinHumanListSegments(playedTargets.map((targetId) => [cardSegment(targetId)])),
+    { kind: "text", text: " by " },
+    ...joinHumanListSegments(actionSegments),
     { kind: "text", text: "." },
   ];
 }

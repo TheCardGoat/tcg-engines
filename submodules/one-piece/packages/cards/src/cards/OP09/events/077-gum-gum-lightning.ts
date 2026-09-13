@@ -55,6 +55,7 @@ export const op09GumGumLightning077: EventCard = {
             },
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

@@ -19,12 +19,16 @@ export type {
   DispatchSuccess,
   EngineLogRecord,
   EngineSnapshot,
+  EvaluateOpponentTimeoutInput,
   HistoricDecksForRestore,
   MoveHistorySourceAuthority,
+  OpponentTimeoutEvaluation,
   PacketAnimation,
   ServerEngineCreateInput,
   ServerEngineRestoreContext,
   ServerGameEngine,
+  SkipClockResetOptions,
+  TurnSkippedLogInput,
 } from "./types";
 
 export {

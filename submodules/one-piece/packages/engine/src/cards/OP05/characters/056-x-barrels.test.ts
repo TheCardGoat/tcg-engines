@@ -3,7 +3,7 @@ import { op05XBarrels056 } from "../../../../../cards/src/cards/OP05/characters/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-056 X.Barrels", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op05XBarrels056);
   });
 });

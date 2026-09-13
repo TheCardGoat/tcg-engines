@@ -67,6 +67,7 @@ export const op14eb04BulletString078: EventCard = {
             previousActionTargets: true,
           },
         ],
+        optional: true,
       },
     ],
   },

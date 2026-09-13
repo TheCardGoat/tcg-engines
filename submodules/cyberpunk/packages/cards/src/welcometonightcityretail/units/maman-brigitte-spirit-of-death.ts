@@ -4,9 +4,10 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailMamanBrigitteSpiritOfDeath = defineCyberpunkCard({
   id: "5380dea3-4d21-445b-af02-487b45d40395",
   slug: "maman-brigitte-spirit-of-death",
+  subname: "Spirit of Death",
   rulesText: "{Play} You may discard 2 Programs. If you do, bottom-deck a rival unequipped Unit.",
-  name: "Maman Brigitte — Spirit of Death",
-  displayName: "Maman Brigitte — Spirit of Death",
+  name: "Maman Brigitte",
+  displayName: "Maman Brigitte: Spirit of Death",
   canonicalId: "maman-brigitte-spirit-of-death",
   color: "blue",
   classifications: ["Mystic", "Netrunner", "Voodoo Boys"],

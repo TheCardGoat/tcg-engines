@@ -444,15 +444,31 @@ export class CyberpunkTestEngine {
     );
   }
 
-  resolveCardToPlay(card: CardRef, opts?: MoveOpts): CommandSuccess {
+  resolveCardToPlay(
+    card?: CardRef,
+    opts?: { pass?: boolean; attachToId?: string } & MoveOpts,
+  ): CommandSuccess {
     const playerId = opts?.as ?? this.getActivePlayerId();
     const state = this.getState();
     const choice = state.G.turnMetadata.pendingChoice;
     if (!choice || choice.type !== "chooseCardToPlay") {
       throw new Error("No chooseCardToPlay pending choice to resolve");
     }
+    if (opts?.pass) {
+      return this.exec("resolveCardToPlay", { args: { pass: true } }, playerId);
+    }
+    if (!card) throw new Error("Must provide a card or pass:true");
     const cardId = resolveCardRef(state, card, undefined, playerId);
-    return this.exec("resolveCardToPlay", { args: { cardId: cardId as string } }, playerId);
+    return this.exec(
+      "resolveCardToPlay",
+      {
+        args: {
+          cardId: cardId as string,
+          ...(opts?.attachToId ? { attachToId: opts.attachToId } : {}),
+        },
+      },
+      playerId,
+    );
   }
 
   resolveCardToMove(card?: CardRef, opts?: { pass?: boolean } & MoveOpts): CommandSuccess {
@@ -545,6 +561,34 @@ export class CyberpunkTestEngine {
     }
     const playerId = opts?.as ?? choice.chooserId;
     return this.exec("resolveAdjustGig", { args: { value } }, playerId);
+  }
+
+  /**
+   * Resolve a `preventGigSteal` pending choice by discarding one hand card per
+   * prevented Gig. Each pair must satisfy `card.cost === gig.faceValue`.
+   */
+  resolvePreventGigSteal(
+    preventions: Array<{ dieId: string; cardId: string }>,
+    opts?: MoveOpts,
+  ): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "preventGigSteal") {
+      throw new Error("No preventGigSteal pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolvePreventGigSteal", { args: { preventions } }, playerId);
+  }
+
+  /** Decline a `preventGigSteal` pending choice so the steal resolves normally. */
+  declinePreventGigSteal(opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "preventGigSteal") {
+      throw new Error("No preventGigSteal pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolvePreventGigSteal", { args: { pass: true, preventions: [] } }, playerId);
   }
 
   resolve(card: CardRef, targets: ResolveTargets, opts?: MoveOpts): CommandSuccess {
@@ -688,6 +732,19 @@ export class CyberpunkTestEngine {
     }
     const playerId = opts?.as ?? choice.chooserId;
     return this.exec("resolveCardTypeChoice", { args: { cardType } }, playerId);
+  }
+
+  /**
+   * Resolve a modal `chooseEffect` pending choice (e.g. Pyramid Song).
+   */
+  resolveChooseEffect(optionId: string, opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseEffect") {
+      throw new Error("No chooseEffect pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveChooseEffect", { args: { optionId } }, playerId);
   }
 
   // ── Judge moves (test-only state manipulation) ─────────────────────
@@ -1266,11 +1323,17 @@ export class PlayerHandle {
   resolveAttack(opts?: Omit<ResolveAttackOpts, "as">): CommandSuccess {
     return this.engine.resolveAttack({ ...opts, as: this.playerId });
   }
-  resolveCardToPlay(card: CardRef): CommandSuccess {
-    return this.engine.resolveCardToPlay(card, { as: this.playerId });
+  resolveCardToPlay(
+    card?: CardRef,
+    opts?: { pass?: boolean; attachToId?: string },
+  ): CommandSuccess {
+    return this.engine.resolveCardToPlay(card, { ...opts, as: this.playerId });
   }
   resolveCardToMove(card?: CardRef, opts?: { pass?: boolean }): CommandSuccess {
     return this.engine.resolveCardToMove(card, { ...opts, as: this.playerId });
+  }
+  resolveChooseEffect(optionId: string): CommandSuccess {
+    return this.engine.resolveChooseEffect(optionId, { as: this.playerId });
   }
   activateAbility(card: CardRef, abilityIndex: number): CommandSuccess {
     return this.engine.activateAbility(card, abilityIndex, { as: this.playerId });

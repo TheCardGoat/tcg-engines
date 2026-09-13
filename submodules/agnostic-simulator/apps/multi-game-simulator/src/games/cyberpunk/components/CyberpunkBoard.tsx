@@ -42,8 +42,9 @@ import {
 import { connectionUiStatus } from "../engine/live/playerConnectionState";
 import classes from "./CyberpunkBoard.module.css";
 import { useTemporaryRevealedHandCardIds } from "./GameBoard/temporaryHandReveals";
+import { CyberpunkCardContextController } from "./CardContext/CyberpunkCardContextController";
 
-const CYBERPUNK_MOBILE_BREAKPOINT_PX = 900;
+const CYBERPUNK_MOBILE_BREAKPOINT_PX = 767;
 
 export function CyberpunkBoard({ fixture, onSubmitInteraction }: SimulatorRendererProps) {
   const { humanSide } = useEngine();
@@ -52,6 +53,7 @@ export function CyberpunkBoard({ fixture, onSubmitInteraction }: SimulatorRender
   const rivalSide = otherSide(humanSide);
   const [clientReady, setClientReady] = useState(false);
   const isNarrow = useMediaQuery(`(max-width: ${CYBERPUNK_MOBILE_BREAKPOINT_PX}px)`);
+  const isShortCoarseViewport = useMediaQuery("(pointer: coarse) and (max-height: 520px)");
   useEffect(() => {
     setClientReady(true);
   }, []);
@@ -59,7 +61,8 @@ export function CyberpunkBoard({ fixture, onSubmitInteraction }: SimulatorRender
     clientReady &&
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).has("mobile");
-  const mobile = clientReady && (forceMobile || Boolean(isNarrow));
+  const mobile =
+    clientReady && (forceMobile || Boolean(isNarrow) || Boolean(isShortCoarseViewport));
 
   return (
     <div className={classes.root} data-field-card-size={fieldCardSize}>
@@ -68,24 +71,26 @@ export function CyberpunkBoard({ fixture, onSubmitInteraction }: SimulatorRender
           <AttackSelectionProvider>
             <MoveSelectionProvider>
               <DragDropProvider>
-                <DropDispatchBridge />
-                <SelectionReset side={humanSide} />
-                {mobile ? (
-                  <MobileBoard
-                    playerIdentities={boardRuntime.playerIdentities}
-                    playerConnections={boardRuntime.playerConnections}
-                    connectionDiagnostic={boardRuntime.connectionDiagnostic}
-                    onClaimRivalDrop={boardRuntime.onClaimRivalDrop}
-                    liveMatchSidebar={boardRuntime.liveMatchSidebar}
-                  />
-                ) : (
-                  <DesktopBoard
-                    humanSide={humanSide}
-                    rivalSide={rivalSide}
-                    fixture={fixture}
-                    onSubmitInteraction={onSubmitInteraction}
-                  />
-                )}
+                <CyberpunkCardContextController fixture={fixture}>
+                  <DropDispatchBridge />
+                  <SelectionReset side={humanSide} />
+                  {mobile ? (
+                    <MobileBoard
+                      playerIdentities={boardRuntime.playerIdentities}
+                      playerConnections={boardRuntime.playerConnections}
+                      connectionDiagnostic={boardRuntime.connectionDiagnostic}
+                      onClaimRivalDrop={boardRuntime.onClaimRivalDrop}
+                      liveMatchSidebar={boardRuntime.liveMatchSidebar}
+                    />
+                  ) : (
+                    <DesktopBoard
+                      humanSide={humanSide}
+                      rivalSide={rivalSide}
+                      fixture={fixture}
+                      onSubmitInteraction={onSubmitInteraction}
+                    />
+                  )}
+                </CyberpunkCardContextController>
               </DragDropProvider>
             </MoveSelectionProvider>
           </AttackSelectionProvider>
@@ -201,7 +206,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
         <HumanHand side={humanSide} />
       </div>
       {/*
-        Player action panel re-homed from the dedicated right-hand MobileShell
+        Player action panel re-homed from the former dedicated right-hand shell
         column into a floating overlay anchored just above the self hand. The
         shared InteractionPanel (with aria-label="Interaction panel" and the
         interaction-card/submit testids) stays mounted inside
@@ -310,6 +315,13 @@ function choiceIdentityKey(choice: ChoicePrompt | null): string {
         choice.chooserId,
         choice.payload.source?.cardId ?? "no-source",
         choice.payload.revealedCardIds.join(","),
+      ].join(":");
+    case "preventGigSteal":
+      return [
+        choice.type,
+        choice.chooserId,
+        choice.payload.attackerId,
+        choice.payload.stealEntries.map((entry) => entry.dieId).join(","),
       ].join(":");
     default:
       return choice satisfies never;

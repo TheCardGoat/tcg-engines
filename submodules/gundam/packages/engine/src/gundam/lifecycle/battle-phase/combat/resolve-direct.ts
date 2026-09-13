@@ -13,7 +13,10 @@ import type { BattleEffCtx } from "./types.ts";
 import { hasDamagePreventionFor, hasZoneDamagePreventionFor } from "./damage-prevention.ts";
 import { applyBattleDamage } from "./apply-damage.ts";
 import { enqueueShieldAreaCardDestroyedByUnitDamageTrigger } from "./shield-area-destroy-event.ts";
-import { enqueueAttackerDestroyedDefenderTrigger } from "./unit-destroy-event.ts";
+import {
+  enqueueAttackerDestroyedDefenderTrigger,
+  enqueueEnemyCardDestroyedByBattleTrigger,
+} from "./unit-destroy-event.ts";
 
 export function resolveDirectBattle(
   g: GundamG,
@@ -31,6 +34,10 @@ export function resolveDirectBattle(
         kind: "DIRECT_ATTACK",
         payload: { attackerId, attackerPlayerId },
       });
+
+      // Rules 5-5-5 and 8-5-2: a successful direct attack only affects a
+      // Base, Shield, or player when it deals positive battle damage.
+      if (attackerStats.ap <= 0) return;
 
       const baseCards = ctx.framework.zones.getCards({
         zone: "baseSection",
@@ -54,7 +61,9 @@ export function resolveDirectBattle(
         }
 
         // Rule 5-5-5: 0 AP deals no damage — no counter, no event, no destroy check.
-        if (!applyBattleDamage(g, ctx.framework, baseId, attackerStats.ap, attackerId)) return;
+        if (!applyBattleDamage(g, ctx.framework, baseId, attackerStats.ap, attackerId, "direct")) {
+          return;
+        }
 
         const baseStats = getEffectiveStats(baseId, g, ctx.framework.cards, ctx.framework);
         if (g.damage[baseId]! >= baseStats.hp) {
@@ -81,7 +90,9 @@ export function resolveDirectBattle(
             attackerPlayerId,
             defenderPlayerId,
             ctx.framework,
+            { damageType: "battle" },
           );
+          enqueueEnemyCardDestroyedByBattleTrigger(g, attackerId, baseId, attackerPlayerId, ctx);
 
           emitGundamEvent(ctx.framework.events, {
             kind: "UNIT_DEFEATED",
@@ -135,6 +146,7 @@ export function resolveDirectBattle(
         // Burst trigger onto g.pendingEffects so the drain resolves them
         // in tier-0 order. Defender-chosen Burst ordering (within-tier
         // player choice) is still deferred to PR F.
+        const simultaneousGroupId = `direct-battle:${attackerId}:${toRemove.join("|")}`;
         for (const shieldId of toRemove) {
           ctx.framework.zones.moveCard(shieldId, { zone: "trash", playerId: defenderPlayerId });
           enqueueShieldAreaCardDestroyedByUnitDamageTrigger(
@@ -144,7 +156,9 @@ export function resolveDirectBattle(
             attackerPlayerId,
             defenderPlayerId,
             ctx.framework,
+            { damageType: "battle", simultaneousGroupId },
           );
+          enqueueEnemyCardDestroyedByBattleTrigger(g, attackerId, shieldId, attackerPlayerId, ctx);
           emitGundamEvent(ctx.framework.events, {
             kind: "SHIELD_REMOVED",
             payload: { cardId: shieldId, playerId: defenderPlayerId },

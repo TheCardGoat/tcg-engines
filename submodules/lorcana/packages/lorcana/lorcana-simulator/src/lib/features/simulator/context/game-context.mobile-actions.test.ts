@@ -65,7 +65,11 @@ function createGameContextStub(
     pendingErrorReason: () => null,
     pendingMoveError: () => null,
     pendingResolutionAutoOpenStateId: () => null,
-    isOptimisticMovePending: () => false,
+    authoritativeCommandStatus: () => ({ phase: "idle" }),
+    staleRecoveryCompletionCount: () => 0,
+    isMovePending: () => false,
+    requestStateSync: () => {},
+    commandDiagnostic: () => null,
     challengeSourceCardId: () => null,
     challengeMode: () => false,
     animations: () => [],
@@ -729,6 +733,13 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
       label: "Colonel Hathi - On the March",
       cardType: "character",
     });
+    const locationCard = createCardSnapshot({
+      cardId: "tower",
+      ownerId: "player-1",
+      ownerSide: "playerOne",
+      label: "Rapunzel's Tower - Taken by the Vine",
+      cardType: "location",
+    });
     const context = createTargetSelectionContext({
       origin: "bag",
       requestId: "bag-1",
@@ -741,6 +752,8 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
       canDeclineSelection: true,
       expectedSlottedKind: "move-to-location",
       autoResolvedSlots: ["subject"],
+      currentSelection: { targets: [asCardId(locationCard.cardId)] },
+      resolvedTargetIdsBySlot: { location: asCardId(locationCard.cardId) },
       targetDsl: [
         {
           selector: "chosen",
@@ -759,6 +772,29 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
         getOwnerIdForSide: (side) => (side === "playerOne" ? "player-1" : "player-2"),
         boardSnapshot: () =>
           createBoardSnapshot({
+            cards: {
+              [sourceCard.cardId]: {
+                id: asCardId(sourceCard.cardId),
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "play",
+                cardType: "character",
+              },
+              [targetCard.cardId]: {
+                id: asCardId(targetCard.cardId),
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "play",
+                cardType: "character",
+              },
+              [locationCard.cardId]: {
+                id: asCardId(locationCard.cardId),
+                ownerId: asPlayerId("player-1"),
+                controllerId: asPlayerId("player-1"),
+                zone: "play",
+                cardType: "location",
+              },
+            },
             bagEffects: [
               {
                 id: context.requestId,
@@ -774,6 +810,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
         cardSnapshotsById: () => ({
           [sourceCard.cardId]: sourceCard,
           [targetCard.cardId]: targetCard,
+          [locationCard.cardId]: locationCard,
         }),
         pendingResolutionMoves: () => [
           {
@@ -805,6 +842,11 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
       originatesFromOptional: true,
       canDeclineSelection: true,
     });
+    expect(presenter.handleAvailableMovesSelectionCard(targetCard.cardId)).toBe(true);
+    expect(presenter.resolutionSelectionSession?.selectedTargets).toEqual([
+      sourceCard.cardId,
+      targetCard.cardId,
+    ]);
   });
 
   it("auto-accepts stale optional wrappers around target prompts instead of showing Yes and No", () => {
@@ -2406,13 +2448,8 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     ]);
   });
 
-  it("blocks confirmation when an undamaged source is picked but a damaged alternative exists (replay mgGuD8kTITPMhvIEL3wO5ZG turn 22)", () => {
-    // Luisa Madrigal — I CAN TAKE IT: "Move up to 1 damage from chosen
-    // character of yours to this character." If the player picks an
-    // undamaged friendly source while another friendly has damage on it,
-    // the up-to cap collapses to 0; the engine would silently advance the
-    // prompt with amount=0. With a damaged alternative on the board, the
-    // simulator keeps Confirm disabled so the player picks the useful one.
+  it("allows zero damage even when a damaged alternative exists", () => {
+    // CR 6.1.3: up to includes zero regardless of other available targets.
     const sourceCard = createCardSnapshot({
       cardId: "luisa",
       label: "Luisa Madrigal - Confident Climber",
@@ -2457,6 +2494,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
       }),
     );
 
+    presenter.skipActionConfirmation = false;
     expect(
       presenter.startResolutionSelectionSession(
         createPendingResolutionMove(),
@@ -2468,12 +2506,12 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     ).toBe(true);
 
     expect(presenter.handleAvailableMovesSelectionCard(undamagedFriendly.cardId)).toBe(true);
-    expect(presenter.canConfirmResolutionSelection).toBe(false);
+    expect(presenter.canConfirmResolutionSelection).toBe(true);
   });
 
-  it("still blocks confirmation when the prompt is optional and only undamaged sources exist", () => {
-    // The player can decline the optional via the Skip path — keep Confirm
-    // disabled so they don't accidentally submit a 0-damage no-op.
+  it("allows accepting an optional effect with zero damage", () => {
+    // CR 6.1.2–6.1.3: accepting zero must not be replaced with declining
+    // the whole effect, which may have further instructions.
     const sourceCard = createCardSnapshot({
       cardId: "luisa-optional",
       label: "Luisa Madrigal - Confident Climber",
@@ -2512,6 +2550,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
       }),
     );
 
+    presenter.skipActionConfirmation = false;
     expect(
       presenter.startResolutionSelectionSession(
         createPendingResolutionMove(),
@@ -2524,7 +2563,7 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     ).toBe(true);
 
     expect(presenter.handleAvailableMovesSelectionCard(undamagedFriendly.cardId)).toBe(true);
-    expect(presenter.canConfirmResolutionSelection).toBe(false);
+    expect(presenter.canConfirmResolutionSelection).toBe(true);
   });
 
   it("allows confirmation on a mandatory prompt with no damaged alternative (avoids deadlock)", () => {
@@ -3201,6 +3240,8 @@ describe("LorcanaSidebarPresenter mobile actions", () => {
     ).toBe(true);
 
     expect(presenter.handleAvailableMovesSelectionCard(targetCard.cardId)).toBe(true);
+    expect(executed).toEqual([]);
+    expect(presenter.canConfirmResolutionSelection).toBe(true);
     expect(presenter.confirmResolutionSelection()).toBe(true);
 
     expect(executed).toEqual([

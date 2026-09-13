@@ -51,6 +51,8 @@ export const eb01OhComeMyWay038: EventCard = {
             },
           },
         ],
+        // Counter/Main Event play already rests cost DON!! and trashes the card;
+        // post-commit Skip would consume the Event without paying returnDon.
       },
       {
         trigger: "trigger",
@@ -67,6 +69,7 @@ export const eb01OhComeMyWay038: EventCard = {
             amount: 2,
           },
         ],
+        // Life Trigger activation is already chosen; cost is not skippable.
       },
     ],
   },

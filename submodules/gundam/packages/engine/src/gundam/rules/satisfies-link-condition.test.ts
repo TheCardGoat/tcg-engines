@@ -17,7 +17,7 @@ import {
   expectSuccess,
   activeResources,
 } from "../../index.ts";
-import { satisfiesLinkCondition } from "./derived-state.ts";
+import { pilotSatisfiesUnitLinkCondition, satisfiesLinkCondition } from "./derived-state.ts";
 
 function pairAndCheck(linkCondition: string, pilot: ReturnType<typeof createMockPilot>) {
   const unit = createMockUnit({ ap: 2, hp: 3, linkCondition });
@@ -34,6 +34,35 @@ function pairAndCheck(linkCondition: string, pilot: ReturnType<typeof createMock
 }
 
 describe("satisfiesLinkCondition", () => {
+  it("exposes the same name and trait matching for definition-level previews", () => {
+    const namedPilot = createMockPilot({ name: "Kamille Bidan", level: 1, cost: 1 });
+    const traitPilot = createMockPilot({
+      name: "Diffuse Beam Cannon",
+      traits: ["g generation", "durability"],
+      level: 1,
+      cost: 1,
+    });
+
+    expect(
+      pilotSatisfiesUnitLinkCondition(
+        namedPilot,
+        createMockUnit({ linkCondition: "[Kamille Bidan]" }),
+      ),
+    ).toBe(true);
+    expect(
+      pilotSatisfiesUnitLinkCondition(
+        traitPilot,
+        createMockUnit({ linkCondition: "(G Generation) Trait" }),
+      ),
+    ).toBe(true);
+    expect(
+      pilotSatisfiesUnitLinkCondition(
+        namedPilot,
+        createMockUnit({ linkCondition: "[Mikazuki Augus]" }),
+      ),
+    ).toBe(false);
+  });
+
   it("matches `[Pilot Name]` against the pilot's name (case-insensitive substring)", () => {
     const pilot = createMockPilot({ name: "Char Aznable", level: 1, cost: 1 });
     expect(pairAndCheck("[Char Aznable]", pilot)).toBe(true);

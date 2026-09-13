@@ -3,7 +3,7 @@ import { CHAT_PRESET_KEYS, MAX_CHAT_TEXT_LENGTH } from "./chat.js";
 import { InteractionSubmission } from "./interactions.js";
 
 /**
- * Client -> Server gateway WebSocket message schemas.
+ * Client -> server Socket.IO gateway message schemas.
  *
  * Single source of truth for runtime validation at the trust boundary
  * (client → ws-gateway middleware). Internal traffic (ws-gateway → inbox
@@ -25,7 +25,10 @@ export const GatewayPingMessage = z.object({
 export const JoinGameMessage = z.object({
   type: z.literal("join_game"),
   gameId: z.string().min(1),
-  role: z.enum(["player", "spectator"]).default("player"),
+  /** HTTP bootstrap version; the server omits a duplicate snapshot when still current. */
+  stateVersion: z.number().int().min(0).optional(),
+  /** Legacy v1 hint. Protocol v2 derives role from the scoped credential. */
+  role: z.enum(["player", "spectator"]).optional(),
   /** `game_profiles.game_profile_id` when known — correlation only; ticket/session is authoritative. */
   gameProfileId: z.string().min(1).optional(),
   /** Auth account id (`users.id`) when known — correlation only. */
@@ -93,9 +96,24 @@ export const SendFreeTextChatMessage = z.object({
     }),
 });
 
+export const MAX_HEARTBEAT_ROUND_TRIP_MS = 300_000;
+
 export const HeartbeatMessage = z
   .object({
     type: z.literal("heartbeat"),
+    /** Ephemeral probe id used to correlate one client-to-game-server round trip. */
+    correlationId: z.string().uuid().optional(),
+    /** Client wall-clock timestamp echoed by heartbeat_ack for same-clock RTT measurement. */
+    clientSentAt: z.number().int().nonnegative().optional(),
+    /** Previous full-path RTT, reported one heartbeat later for server-side observability. */
+    previousRoundTripMs: z
+      .number()
+      .nonnegative()
+      .finite()
+      .max(MAX_HEARTBEAT_ROUND_TRIP_MS)
+      .optional(),
+    /** Probe id associated with previousRoundTripMs. */
+    previousCorrelationId: z.string().uuid().optional(),
     /** Optional echoes for correlation; connection/ticket is authoritative. */
     gameProfileId: z.string().min(1).optional(),
     userId: z.string().min(1).optional(),
@@ -135,12 +153,22 @@ export const PushStateMessage = z
     state: z.unknown(),
     /** Optional card-instance maps for engines that keep them outside state. */
     cardsMaps: z.unknown().optional(),
+    /** Version this write was derived from; null creates the initial snapshot. */
+    expectedVersion: z.number().int().min(0).nullable(),
     /** Monotonic version — client manages the version counter. */
     version: z.number().int().min(0),
     /** Move type that produced this state (for spectator display). */
     moveType: z.string().min(1),
     /** Actor who made the move. */
     actorId: z.string().min(1),
+    /** Explicit terminal outcome for client-owned states without an engine-specific end marker. */
+    gameEnd: z
+      .object({
+        winnerId: z.string().min(1).optional(),
+        reason: z.string().min(1).max(200),
+      })
+      .strict()
+      .optional(),
     /** Request id used when the client needs durable processing confirmation. */
     correlationId: z.string().min(1).optional(),
     /** Single accepted move delta for normal client-authority actions. */
@@ -196,14 +224,6 @@ export const PushStateMessage = z
       .optional(),
   })
   .strict();
-
-/**
- * Client polls for matchmaking status on reconnect.
- * Server responds with a matchmaking_status WebSocket message.
- */
-export const MatchmakingPollMessage = z.object({
-  type: z.literal("matchmaking_poll"),
-});
 
 /** Client accepts a pending match found by the matchmaking worker. */
 export const MatchmakingAcceptMessage = z.object({
@@ -326,7 +346,6 @@ export const GatewayClientMessage = z.union([
   HeartbeatMessage,
   ActivityUpdateMessage,
   PushStateMessage,
-  MatchmakingPollMessage,
   MatchmakingAcceptMessage,
   MatchmakingDeclineMessage,
   SkipOpponentTurnMessage,
@@ -341,7 +360,6 @@ export const GatewayClientMessage = z.union([
   UnsubscribeMatchmakingDashboardMessage,
 ]);
 
-export type MatchmakingPollMsg = z.infer<typeof MatchmakingPollMessage>;
 export type GatewayPingMsg = z.infer<typeof GatewayPingMessage>;
 export type JoinGameMsg = z.infer<typeof JoinGameMessage>;
 export type ExecuteMoveMsg = z.infer<typeof ExecuteMoveMessage>;

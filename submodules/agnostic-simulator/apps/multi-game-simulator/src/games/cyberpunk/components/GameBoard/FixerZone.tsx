@@ -1,5 +1,6 @@
 import { IconChevronLeft, IconChevronRight, IconMinus, IconPlus } from "@tabler/icons-react";
 import { buildInteractionSubmissionForActionId } from "@tcg/protocol";
+import { AnimatedEntityCollection, AnimatedEntityNode } from "@tcg/simulator-ui";
 import {
   PLAYER_SIDE_TO_ID,
   interactionSubmissionToEngineAction,
@@ -150,40 +151,59 @@ export function FixerZone({
             </button>
           ) : null}
           <div className={classes.diceStack}>
-            {slots.map((die) => {
-              const candidate = isPicker && die.dieId !== null && allowedIds!.has(die.dieId);
-              const stateClass = isPicker
-                ? candidate
-                  ? classes.candidate
-                  : classes.ineligible
-                : "";
-              return (
-                <button
-                  key={die.key}
-                  type="button"
-                  className={`${classes.slotBtn} ${stateClass}`}
-                  data-testid="fixer-die"
-                  data-die-type={die.dieType}
-                  data-die-id={die.dieId ?? undefined}
-                  data-sim-entity-id={die.dieId ?? undefined}
-                  data-candidate={candidate ? "true" : "false"}
-                  disabled={isPicker && !candidate}
-                  onClick={candidate && die.dieId ? () => handlePick(die.dieId!) : undefined}
-                  aria-label={candidate ? `Take ${die.label}` : die.label}
-                >
-                  <span
-                    data-testid="card"
-                    data-card-kind="die"
-                    data-entity-id={die.dieId ?? undefined}
+            <AnimatedEntityCollection>
+              {slots.map((die) => {
+                const candidate = isPicker && die.dieId !== null && allowedIds!.has(die.dieId);
+                const stateClass = isPicker
+                  ? candidate
+                    ? classes.candidate
+                    : classes.ineligible
+                  : "";
+                const button = (
+                  <button
+                    type="button"
+                    className={`${classes.slotBtn} ${stateClass}`}
+                    data-testid="fixer-die"
+                    data-die-type={die.dieType}
+                    data-die-id={die.dieId ?? undefined}
                     data-sim-entity-id={die.dieId ?? undefined}
-                    style={{ display: "contents" }}
-                    aria-hidden
+                    data-candidate={candidate ? "true" : "false"}
+                    disabled={isPicker && !candidate}
+                    onClick={candidate && die.dieId ? () => handlePick(die.dieId!) : undefined}
+                    aria-label={candidate ? `Take ${die.label}` : die.label}
                   >
-                    <DieDisplay dieType={die.dieType} label={die.label} size="sm" />
-                  </span>
-                </button>
-              );
-            })}
+                    <span
+                      data-testid="card"
+                      data-card-kind="die"
+                      data-entity-id={die.dieId ?? undefined}
+                      data-sim-entity-id={die.dieId ?? undefined}
+                      style={{ display: "contents" }}
+                      aria-hidden
+                    >
+                      <DieDisplay dieType={die.dieType} label={die.label} size="sm" />
+                    </span>
+                  </button>
+                );
+                return die.dieId ? (
+                  <AnimatedEntityNode
+                    key={die.key}
+                    entityId={die.dieId}
+                    zoneRef={{
+                      kind: "zone",
+                      id: side === "opponent" ? "opp-fixer" : "p-fixer",
+                    }}
+                    density="mini"
+                    className={classes.animatedSlot}
+                  >
+                    {button}
+                  </AnimatedEntityNode>
+                ) : (
+                  <div key={die.key} className={classes.animatedSlot}>
+                    {button}
+                  </div>
+                );
+              })}
+            </AnimatedEntityCollection>
           </div>
           <ZoneBadge position={titlePosition === "top" ? "top" : "bottom"}>Fixer</ZoneBadge>
         </>

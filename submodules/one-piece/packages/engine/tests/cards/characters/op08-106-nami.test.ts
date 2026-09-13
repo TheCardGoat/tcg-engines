@@ -77,4 +77,32 @@ describe("OP08-106 Nami", () => {
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(costId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op08Nami106, op08CharlottePoire104, op08CharlottePoire104, eb01Doma005],
+        deck: [eb01Fourtricks025, eb01Doma005],
+        activeDon: op08Nami106.cost,
+      },
+      { character: [eb01MountainGod018, op01Shanks120] },
+    );
+    engine.playCard(op08Nami106, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -1,7 +1,8 @@
-import { createMockResource, createMockUnit } from "@tcg/gundam-engine";
+import { gd05DestinyGundam055, st01Guncannon003 } from "@tcg/gundam-cards";
 
 import { createDevRuntime, DEV_PLAYER_TWO, type DevRuntime } from "../dev-runtime.ts";
 import { attachAutoPassBot } from "./auto-pass.ts";
+import { realResourceCards } from "./real-cards.ts";
 
 /**
  * <First Strike> keyword fixture — viewer has a FirstStrike attacker
@@ -11,39 +12,28 @@ import { attachAutoPassBot } from "./auto-pass.ts";
  * before the target's counter-damage, so a lethal hit kills the target
  * and the attacker takes no counter.
  *
- * AP 5 attacker vs HP 4 defender → target dies on the first strike,
- * attacker survives untouched (its HP 4 never eats Dom's AP 3 because
- * Dom was destroyed before its damage window).
+ * Destiny Gundam's 5 AP vs Guncannon's 4 HP means the target is defeated
+ * by First Strike and Destiny Gundam receives no counter-damage.
  */
 export function loadFirstStrikeDemo(): DevRuntime {
   const dev = createDevRuntime({
     skipToMainPhase: true,
     p1: {
-      battleArea: [
-        createMockUnit({
-          cost: 3,
-          level: 3,
-          ap: 5,
-          hp: 4,
-          color: "blue",
-          name: "Gundam FS",
-          keywordEffects: [{ keyword: "FirstStrike" }],
-        }),
-      ],
-      resourceArea: [createMockResource(), createMockResource(), createMockResource()],
+      battleArea: [gd05DestinyGundam055],
+      resourceArea: realResourceCards(3),
       deck: 30,
       resourceDeck: 10,
     },
     p2: {
       battleArea: [
         {
-          card: createMockUnit({ cost: 2, level: 2, ap: 3, hp: 4, color: "red", name: "Dom" }),
+          card: st01Guncannon003,
           // Exhausted so it registers as a legal unit-target (rule
           // 8-1-3 — targets must be rested).
           exhausted: true,
         },
       ],
-      resourceArea: [createMockResource(), createMockResource()],
+      resourceArea: realResourceCards(2),
       deck: 30,
       resourceDeck: 10,
     },

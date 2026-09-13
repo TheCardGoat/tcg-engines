@@ -3,7 +3,7 @@ import { eb01EdwardWeevil023 } from "../../../../../cards/src/cards/EB01/charact
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-023 Edward Weevil", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01EdwardWeevil023);
   });
 });

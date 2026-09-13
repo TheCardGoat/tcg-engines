@@ -1,4 +1,5 @@
 import type { ClientToServerEvents, PlayableGameSlug, ServerToClientEvents } from "@tcg/protocol";
+import { VIEWER_SCOPE_EXPIRED } from "@tcg/protocol";
 import type {
   AuthMethod,
   CredentialsController,
@@ -25,6 +26,10 @@ function isAuthMethod(value: unknown): value is AuthMethod {
   return typeof value === "string" && (AUTH_METHODS as readonly string[]).includes(value);
 }
 
+function isAuthenticationConnectError(error: Error): boolean {
+  return error.message.trim().toLowerCase() === "unauthenticated";
+}
+
 /**
  * Merge a partial patch into a credentials snapshot. `undefined` means "leave
  * unchanged"; `null` means "clear" (normalize to `undefined`). This lets
@@ -39,6 +44,7 @@ function mergeCredentials(
   if (patch.ticket !== undefined) next.ticket = patch.ticket ?? undefined;
   if (patch.token !== undefined) next.token = patch.token ?? undefined;
   if (patch.requireAuth !== undefined) next.requireAuth = patch.requireAuth ?? undefined;
+  if (patch.expiresAt !== undefined) next.expiresAt = patch.expiresAt ?? undefined;
   return next;
 }
 
@@ -147,6 +153,8 @@ interface SocketEntry {
   /** Manager-owned lifecycle listeners, detached on teardown. */
   internalCleanups: Array<() => void>;
   destroyed: boolean;
+  credentialTimer?: ReturnType<typeof setTimeout>;
+  refreshFailures?: number;
 }
 
 export interface GatewayConnectionManager {
@@ -171,6 +179,18 @@ export function createGatewayConnectionManager(
   /** Credentials pushed before the first `acquire()` (e.g. SSR-hydrated values). */
   const pendingCredentials = new Map<PlayableGameSlug, GatewayCredentials>();
 
+  function scheduleCredentialRefresh(entry: SocketEntry): void {
+    clearTimeout(entry.credentialTimer);
+    const expiry = entry.snapshot.expiresAt;
+    if (entry.destroyed || !entry.credentials || !expiry || !Number.isFinite(expiry)) return;
+    entry.credentialTimer = setTimeout(
+      () => {
+        void attemptCredentialRefresh(entry, "scope_renewal");
+      },
+      Math.max(0, expiry - Date.now() - 15 * 60_000),
+    );
+  }
+
   /**
    * Peek the credentials that *would* be sent on the next handshake, without
    * consuming the ticket. Used by the {@link requireAuth} connect gate.
@@ -183,6 +203,7 @@ export function createGatewayConnectionManager(
         : (fresh?.ticket ?? entry.snapshot.ticket),
       token: fresh?.token ?? entry.snapshot.token,
       requireAuth: fresh?.requireAuth ?? entry.snapshot.requireAuth,
+      expiresAt: fresh?.expiresAt !== undefined ? fresh.expiresAt : entry.snapshot.expiresAt,
     };
   }
 
@@ -201,6 +222,7 @@ export function createGatewayConnectionManager(
       if (fresh.token !== undefined) entry.snapshot.token = fresh.token ?? undefined;
       if (fresh.requireAuth !== undefined)
         entry.snapshot.requireAuth = fresh.requireAuth ?? undefined;
+      if (fresh.expiresAt !== undefined) entry.snapshot.expiresAt = fresh.expiresAt ?? undefined;
       // Only adopt a provider-supplied ticket if we have not already consumed one.
       if (!entry.ticketConsumed && fresh.ticket !== undefined) {
         entry.snapshot.ticket = fresh.ticket ?? undefined;
@@ -232,6 +254,10 @@ export function createGatewayConnectionManager(
     if (entry.socket.connected) return;
 
     const creds = peekCredentials(entry);
+    if (creds.expiresAt && creds.expiresAt <= Date.now() && entry.credentials) {
+      if (!entry.refreshAttempted) void attemptCredentialRefresh(entry, "viewer_scope_expired");
+      return;
+    }
     if (creds.requireAuth && !creds.ticket && !creds.token) {
       // Mirrors the web app's connect() gate: never queue into matchmaking as
       // anonymous when the user is signed in but has no live credentials.
@@ -310,30 +336,39 @@ export function createGatewayConnectionManager(
 
   /**
    * Heart of the credential-refresh loop (Half A). Dedupes concurrent calls,
-   * retries at most once, merges the refreshed snapshot, then disconnects +
+   * merges the refreshed snapshot, then disconnects +
    * re-dials on the SAME socket instance so the next handshake re-reads creds.
    * On rejection (or a second unauthenticated welcome handled by the caller)
    * the caller transitions to terminal; this function handles refresh-throw.
    */
-  async function attemptCredentialRefresh(entry: SocketEntry): Promise<void> {
+  async function attemptCredentialRefresh(
+    entry: SocketEntry,
+    reason: GatewayConnectionState["authFailureReason"] = entry.state.get().authFailureReason ??
+      "anonymous_welcome",
+  ): Promise<void> {
     if (entry.destroyed) return;
     if (!entry.credentials) return;
     // Dedupe: a refresh is already in flight. All callers are fire-and-forget,
     // so ride along without starting a second refresh. (`refreshAttempted`
     // already gates callers at the call sites; this guards the in-flight window.)
     if (entry.refreshInFlight) return;
+    clearTimeout(entry.credentialTimer);
 
     entry.refreshAttempted = true;
     entry.wasRefreshing = true;
     entry.state.set({
       authStatus: "refreshing",
-      authFailureReason: entry.state.get().authFailureReason ?? "anonymous_welcome",
+      authFailureReason: reason,
     });
-    onAnalytics?.("ws_credentials_refresh_attempt", { namespace: `/${entry.slug}` });
+    onAnalytics?.("ws_credentials_refresh_attempt", { namespace: `/${entry.slug}`, reason });
 
     const attempt = (async (): Promise<GatewayCredentials> => {
       try {
         const refreshed = await entry.credentials!.refresh();
+        if (entry.destroyed) return refreshed;
+        if (refreshed.expiresAt != null && refreshed.expiresAt <= Date.now()) {
+          throw new Error("Refreshed realtime credentials have already expired.");
+        }
         mergeRefreshedCredentials(entry, refreshed);
         const nextCredentials = peekCredentials(entry);
         onAnalytics?.("ws_credentials_refreshed", {
@@ -350,16 +385,48 @@ export function createGatewayConnectionManager(
         tryConnect(entry);
         return refreshed;
       } catch (err) {
+        if (entry.destroyed) throw err;
         onAnalytics?.("ws_credentials_refresh_failed", {
           namespace: `/${entry.slug}`,
           error: err instanceof Error ? err.message : String(err),
         });
+        entry.refreshFailures = (entry.refreshFailures ?? 0) + 1;
+        const expiresAt = entry.snapshot.expiresAt;
+        const remainingLeaseMs = expiresAt == null ? 0 : expiresAt - Date.now();
+        const canKeepCurrentLease =
+          reason === "scope_renewal" && entry.socket.connected && remainingLeaseMs > 0;
+        if (canKeepCurrentLease) {
+          // A proactive refresh starts while the current viewer scope still has
+          // 15 minutes remaining. A transient HTTP failure must not throw away
+          // that valid realtime session. Keep playing and retry with capped
+          // backoff; the final retry at expiry will fail closed below.
+          entry.state.set({
+            status: "connected",
+            authStatus: "ok",
+            authFailureReason: null,
+            error: null,
+          });
+          const retryDelayMs = Math.min(
+            remainingLeaseMs,
+            5_000 * 2 ** Math.min(entry.refreshFailures - 1, 4),
+          );
+          entry.credentialTimer = setTimeout(() => {
+            void attemptCredentialRefresh(entry, "scope_renewal");
+          }, retryDelayMs);
+          throw err;
+        }
+        if (entry.socket.connected) entry.socket.disconnect();
         entry.state.set({
           status: "disconnected",
           authStatus: "failed",
           authFailureReason: "refresh_failed",
           error: "Credential refresh failed.",
         });
+        if (expiresAt && entry.refreshFailures < 3) {
+          entry.credentialTimer = setTimeout(() => {
+            void attemptCredentialRefresh(entry);
+          }, 5_000 * entry.refreshFailures);
+        }
         throw err;
       }
     })();
@@ -438,6 +505,23 @@ export function createGatewayConnectionManager(
         error: err.message || "Connection error",
         authFailureReason: "connect_error",
       });
+
+      const requireAuth = Boolean(peekCredentials(entry).requireAuth);
+      if (
+        requireAuth &&
+        isAuthenticationConnectError(err) &&
+        entry.credentials &&
+        !entry.refreshAttempted
+      ) {
+        void attemptCredentialRefresh(entry);
+      } else if (
+        requireAuth &&
+        isAuthenticationConnectError(err) &&
+        entry.refreshAttempted &&
+        !entry.refreshInFlight
+      ) {
+        transitionToRefreshExhausted(entry);
+      }
     };
     socket.on("connect_error", onConnectError);
 
@@ -465,6 +549,8 @@ export function createGatewayConnectionManager(
         // A refresh already ran and the gateway still rejects us — go terminal.
         transitionToRefreshExhausted(entry);
       } else if (authenticated) {
+        entry.refreshFailures = 0;
+        scheduleCredentialRefresh(entry);
         // Successful auth after (possibly) a refresh — reset the one-shot.
         if (entry.wasRefreshing) {
           entry.wasRefreshing = false;
@@ -479,6 +565,21 @@ export function createGatewayConnectionManager(
       }
     };
     socket.on("welcome", onWelcome);
+
+    const onGatewayError = (payload: ServerEventPayload<"gateway_error">): void => {
+      if (payload.code !== VIEWER_SCOPE_EXPIRED) return;
+      if (socket.connected) socket.disconnect();
+      if (!entry.refreshAttempted) void attemptCredentialRefresh(entry, "viewer_scope_expired");
+    };
+    socket.on("gateway_error", onGatewayError);
+
+    const onVisible = (): void => {
+      if (globalThis.document?.visibilityState !== "visible") return;
+      if (entry.snapshot.expiresAt && entry.snapshot.expiresAt - Date.now() <= 15 * 60_000) {
+        void attemptCredentialRefresh(entry, "scope_renewal");
+      }
+    };
+    globalThis.document?.addEventListener("visibilitychange", onVisible);
 
     const onPong = (payload: ServerEventPayload<"pong">): void => {
       const t = payload.t;
@@ -523,6 +624,8 @@ export function createGatewayConnectionManager(
     manager.on("reconnect", onReconnect);
 
     entry.internalCleanups.push(
+      () => socket.off("gateway_error", onGatewayError),
+      () => globalThis.document?.removeEventListener("visibilitychange", onVisible),
       () => socket.off("connect", onConnect),
       () => socket.off("disconnect", onDisconnect),
       () => socket.off("connect_error", onConnectError),
@@ -536,6 +639,7 @@ export function createGatewayConnectionManager(
   }
 
   function teardownEntry(entry: SocketEntry, remove: boolean): void {
+    clearTimeout(entry.credentialTimer);
     for (const cleanup of entry.internalCleanups) cleanup();
     entry.internalCleanups = [];
     if (entry.pingTimer) {
@@ -603,6 +707,7 @@ export function createGatewayConnectionManager(
     let joinOptions: JoinOptions | null = null;
     /** Socket id we last emitted `join_game` against; skips same-session dupes. */
     let joinedSocketId: string | null = null;
+    let needsFullSync = false;
     /** Timestamp of the last emit; suppresses rapid re-emits within 2s. */
     let joinInFlightSince: number | null = null;
     /** Internal subscriptions backing the active join intent. */
@@ -622,9 +727,14 @@ export function createGatewayConnectionManager(
       if (joinInFlightSince !== null && now - joinInFlightSince < 2000) return;
       const payload: Record<string, unknown> = {
         gameId: joinOptions.gameId,
-        role: joinOptions.role,
         correlationId: globalThis.crypto.randomUUID(),
       };
+      if (joinOptions.stateVersion !== undefined) {
+        payload.stateVersion = joinOptions.stateVersion;
+      }
+      if (joinOptions.role !== undefined) {
+        payload.role = joinOptions.role;
+      }
       if (joinOptions.gameProfileId !== undefined) {
         payload.gameProfileId = joinOptions.gameProfileId;
       }
@@ -636,6 +746,11 @@ export function createGatewayConnectionManager(
         payload,
       });
       listenerView(entry.socket).emit("join_game", payload);
+      // A reconnect must refresh controls even when the rendered version is unchanged.
+      if (needsFullSync) {
+        listenerView(entry.socket).emit("request_game_state_sync", { gameId: joinOptions.gameId });
+        needsFullSync = false;
+      }
       joinedSocketId = socketId;
       joinInFlightSince = now;
     };
@@ -654,6 +769,12 @@ export function createGatewayConnectionManager(
         event: K,
         payload: Parameters<ClientToServerEvents[K]>[0],
       ): void => {
+        // Background tabs can delay timers. Never buffer an action using expired scope.
+        if (entry.snapshot.expiresAt && entry.snapshot.expiresAt <= Date.now()) {
+          if (entry.socket.connected) entry.socket.disconnect();
+          if (!entry.refreshAttempted) void attemptCredentialRefresh(entry, "viewer_scope_expired");
+          return;
+        }
         logGatewayPacket({
           direction: "send",
           namespace: `/${entry.slug}`,
@@ -722,9 +843,12 @@ export function createGatewayConnectionManager(
         if (!stopJoinAuth) {
           stopJoinAuth = handle.onAuthenticated(performJoin);
           stopJoinDisconnect = handle.onDisconnected(() => {
+            needsFullSync = joinedSocketId !== null || needsFullSync;
             // A reconnect produces a new socket id, so re-arm so the next
             // authenticated signal re-emits the join.
             joinedSocketId = null;
+            // An in-flight join belongs to the old transport, never the new one.
+            joinInFlightSince = null;
           });
         }
       },

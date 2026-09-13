@@ -104,6 +104,32 @@ describe("Zeta Gundam (GD02-069)", () => {
       expectFailure(p1.activateAbility(zetaId, 0), "ABILITY_LIMIT_REACHED");
     });
 
+    it("may pay the Base cost while linked Zeta is already active", () => {
+      const base = createMockBase();
+      const engine = GundamTestEngine.create({
+        hand: [gd02KamilleBidan097],
+        play: [gd02ZetaGundam069],
+        baseSection: [base],
+        resourceArea: activeResources(5),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const zetaId = p1.getCardsInZone("battleArea")[0]!;
+      const baseId = p1.getCardsInZone("baseSection")[0]!;
+
+      expectSuccess(p1.assignPilot(gd02KamilleBidan097, zetaId));
+      expect(p1.isExhausted(zetaId)).toBe(false);
+      expectSuccess(p1.activateAbility(zetaId, 0));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        legalTargetIds: [baseId],
+      });
+      expectSuccess(p1.resolveEffect({ targets: [baseId] }));
+
+      expect(p1.isExhausted(baseId)).toBe(true);
+      expect(p1.isExhausted(zetaId)).toBe(false);
+      expect(p1.getLegalAttackTargets(zetaId)).not.toContain("direct");
+    });
+
     it("cannot activate while paired with a Pilot that does not meet its Link Condition", () => {
       const base = createMockBase();
       const engine = GundamTestEngine.create({

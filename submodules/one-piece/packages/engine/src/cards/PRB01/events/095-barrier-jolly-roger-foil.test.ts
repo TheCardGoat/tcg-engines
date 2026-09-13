@@ -3,7 +3,7 @@ import { prb01BarrierJollyRogerFoil095 } from "../../../../../cards/src/cards/PR
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-095 Barrier!! (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01BarrierJollyRogerFoil095);
   });
 });

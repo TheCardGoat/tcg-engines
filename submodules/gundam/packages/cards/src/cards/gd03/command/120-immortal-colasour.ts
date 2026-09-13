@@ -27,15 +27,13 @@ export const gd03ImmortalColasour120: CommandCard = {
       },
       rarity: "uncommon",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-120.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-120.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-120.webp",
       productName: "Steel Requiem[GD03]",
     },
   ],
   reprints: ["GD03-120"],
   selectedPrintingId: "GD03-120",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-120.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-120.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-120.webp",
   legality: "legal",
   level: 2,
   cost: 1,
@@ -76,34 +74,11 @@ export const gd03ImmortalColasour120: CommandCard = {
                 {
                   action: {
                     action: "setActive",
+                    cantAttackDuration: "thisTurn",
                     target: {
                       owner: "friendly",
                       cardType: "unit",
                       state: "rested",
-                      count: 1,
-                      attributeFilters: [
-                        {
-                          attribute: "or",
-                          filters: [
-                            {
-                              attribute: "trait",
-                              comparison: "includes",
-                              value: "superpower bloc",
-                            },
-                            { attribute: "trait", comparison: "includes", value: "un" },
-                          ],
-                        },
-                      ],
-                    },
-                  },
-                },
-                {
-                  action: {
-                    action: "cantAttack",
-                    duration: "thisTurn",
-                    target: {
-                      owner: "friendly",
-                      cardType: "unit",
                       count: 1,
                       attributeFilters: [
                         {

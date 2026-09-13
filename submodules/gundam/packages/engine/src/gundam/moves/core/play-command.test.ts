@@ -89,6 +89,45 @@ function makeMultiRestCommand(opts: { timing: Array<"main" | "action"> }): Comma
   });
 }
 
+/** Command with a ranged discard alternate cost. */
+function makeRangedAlternateCostCommand(): CommandCard {
+  const effects: CardEffect[] = [
+    {
+      type: "substitution",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "playCostSubstitution",
+            level: 0,
+            cost: 0,
+            discardTarget: {
+              owner: "friendly",
+              zone: "hand",
+              cardType: "unit",
+              count: { min: 1, max: 3 },
+            },
+          },
+        },
+      ],
+      sourceText: "When playing this card, discard 1 to 3 Unit cards.",
+    },
+    {
+      type: "command",
+      activation: { timing: ["main"] },
+      directives: [{ action: { action: "draw", count: 0 } }],
+      sourceText: "【Main】",
+    },
+  ];
+  return createMockCommand({
+    name: "Test Ranged Alternate Cost Command",
+    level: 1,
+    cost: 1,
+    effect: "Discard 1 to 3 Unit cards to play this for free.",
+    effects,
+  });
+}
+
 function active(card: ReturnType<typeof createMockResource>): TestCardEntry {
   return { card, exhausted: false };
 }
@@ -215,6 +254,187 @@ describe("play-command — target legality (rule 10-1-8-1-1)", () => {
       expect(engine.getG().exhausted[rid] ?? false).toBe(false);
     }
   });
+
+  it("does not treat an empty targets array as a resolved discard selection", () => {
+    const cmd = createMockCommand({
+      name: "Discard Then Draw",
+      level: 1,
+      cost: 1,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [
+            { action: { action: "discard", count: 1 } },
+            { action: { action: "draw", count: 2 }, dependsOnPrevious: true },
+          ],
+          sourceText: "Discard 1. If you do, draw 2.",
+        },
+      ],
+    });
+    const fodder = createMockUnit({ name: "Discard Fodder" });
+    const engine = GundamTestEngine.create({
+      hand: [cmd, fodder],
+      resourceArea: resources(1),
+      deck: 5,
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [commandId, fodderId] = p1.getHand();
+    const deckBefore = p1.getBoardView().players[PLAYER_ONE]!.deckCount;
+
+    expectSuccess(p1.playCommand(commandId!, { targets: [] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [fodderId],
+    });
+    expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
+  });
+
+  it("can be played when only the first Then/If-you-do portion has a legal target", () => {
+    const cmd = createMockCommand({
+      name: "Rest Then Damage",
+      level: 1,
+      cost: 1,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [
+            {
+              action: {
+                action: "rest",
+                target: { owner: "friendly", cardType: "unit", state: "active", count: 2 },
+              },
+            },
+            {
+              action: {
+                action: "dealDamage",
+                amount: 3,
+                target: { owner: "opponent", cardType: "unit", count: 1 },
+              },
+              dependsOnPrevious: true,
+            },
+          ],
+          sourceText: "Choose 2 active friendly Units. Rest them. If you do, choose 1 enemy Unit.",
+        },
+      ],
+    });
+    const first = createMockUnit();
+    const second = createMockUnit();
+    const engine = GundamTestEngine.create({
+      hand: [cmd],
+      play: [first, second],
+      resourceArea: resources(1),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [firstId, secondId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.playCommand(cmd));
+    expectSuccess(p1.resolveEffect({ targets: [firstId!, secondId!] }));
+
+    expect(engine.getG().exhausted[firstId!]).toBe(true);
+    expect(engine.getG().exhausted[secondId!]).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("rejects a precommit that omits a later public choose when candidates exist", () => {
+    const cmd = createMockCommand({
+      name: "Rest Then Damage",
+      level: 1,
+      cost: 1,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [
+            {
+              action: {
+                action: "rest",
+                target: { owner: "friendly", cardType: "unit", state: "active", count: 2 },
+              },
+            },
+            {
+              action: {
+                action: "dealDamage",
+                amount: 3,
+                target: { owner: "opponent", cardType: "unit", count: 1 },
+              },
+              dependsOnPrevious: true,
+            },
+          ],
+          sourceText: "Choose 2 active friendly Units. Rest them. If you do, choose 1 enemy Unit.",
+        },
+      ],
+    });
+    const first = createMockUnit();
+    const second = createMockUnit();
+    const enemy = createMockUnit();
+    const engine = GundamTestEngine.create(
+      { hand: [cmd], play: [first, second], resourceArea: resources(1) },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [firstId, secondId] = p1.getCardsInZone("battleArea");
+
+    expectFailure(p1.playCommand(cmd, { targets: [firstId!, secondId!] }), "INVALID_TARGET");
+
+    expectSuccess(p1.playCommand(cmd));
+    expectSuccess(p1.resolveEffect({ targets: [firstId!, secondId!] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "targetSelection" });
+  });
+
+  it("does not require targets for an optional follow-up at play time", () => {
+    const cmd = createMockCommand({
+      name: "Optional Pair Command",
+      pilotName: "Test Pilot",
+      level: 1,
+      cost: 1,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [
+            {
+              action: {
+                action: "statModifier",
+                stat: "ap",
+                amount: -1,
+                duration: "thisTurn",
+                target: { owner: "opponent", cardType: "unit", count: 1 },
+              },
+            },
+            {
+              action: {
+                action: "pairPilot",
+                target: {
+                  owner: "friendly",
+                  cardType: "unit",
+                  attributeFilters: [{ attribute: "trait", comparison: "includes", value: "mf" }],
+                  count: 1,
+                },
+              },
+              optional: true,
+            },
+          ],
+          sourceText: "Choose 1 enemy Unit. It gets AP-1. You may pair this card.",
+        },
+      ],
+    });
+    const enemy = createMockUnit({ ap: 3 });
+    const engine = GundamTestEngine.create(
+      { hand: [cmd], resourceArea: resources(1) },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.playCommand(cmd));
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(2);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
 });
 
 // ── User-chosen targets ────────────────────────────────────────────────────────
@@ -283,6 +503,26 @@ describe("play-command — user-chosen targets", () => {
     const [u1Id, u2Id, u3Id] = p2.getCardsInZone("battleArea");
 
     expectFailure(p1.playCommand(cmd, { targets: [u1Id!, u2Id!, u3Id!] }), "INVALID_TARGET");
+  });
+});
+
+describe("play-command — alternate cost payment", () => {
+  it("discards every selected card for a ranged alternate cost", () => {
+    const command = makeRangedAlternateCostCommand();
+    const firstCost = createMockUnit({ name: "First Cost" });
+    const secondCost = createMockUnit({ name: "Second Cost" });
+    const thirdCost = createMockUnit({ name: "Third Cost" });
+    const engine = GundamTestEngine.create({ hand: [command, firstCost, secondCost, thirdCost] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [commandId, firstCostId, secondCostId, thirdCostId] = p1.getHand();
+
+    expectSuccess(
+      p1.playCommand(commandId!, { mode: "alternate", targets: [firstCostId!, secondCostId!] }),
+    );
+
+    expect(p1.getCardZone(firstCostId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(secondCostId!)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(thirdCostId!)).toBe(`hand:${PLAYER_ONE}`);
   });
 });
 

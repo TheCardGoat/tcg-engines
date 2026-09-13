@@ -5,10 +5,11 @@ export const welcomeToNightCityRetailSaulBrightStormrider = defineCyberpunkCard(
   id: "a29490bb-2836-48b6-a4f9-a44b25c8bfa2",
   canonicalId: "saul-bright-stormrider",
   slug: "saul-bright-stormrider",
+  subname: "Stormrider",
   rulesText:
     "Other friendly Units have +2 power while attacking.\nAt the end of your turn, ready up to 3 friendly Units.",
-  name: "Saul Bright — Stormrider",
-  displayName: "Saul Bright — Stormrider",
+  name: "Saul Bright",
+  displayName: "Saul Bright: Stormrider",
   color: "green",
   classifications: ["Aldecado", "Nomad"],
   set: {

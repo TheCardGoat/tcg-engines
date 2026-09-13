@@ -1,80 +1,133 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op01Nekomamushi048 } from "../../../../cards/src/cards/OP01/characters/048-nekomamushi.ts";
-import { op13JewelryBonney109 } from "../../../../cards/src/cards/OP13/characters/109-jewelry-bonney.ts";
-import { op14eb04Shiryu048 } from "../../../../cards/src/cards/OP14EB04/characters/048-shiryu.ts";
+import {
+  eb01Doma005,
+  eb01Fourtricks025,
+  eb01MountainGod018,
+  op01Kaido094,
+  op13JewelryBonney109,
+  op14eb04Shiryu048,
+} from "@tcg/op-cards";
+
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
-function pendingPrompt(engine: OnePieceTestEngine, intent: string) {
-  return engine
-    .getState()
-    .promptQueue.find(
-      (prompt) => prompt.status === "pending" && prompt.resolutionContext?.intent === intent,
-    );
+/**
+ * OP13-109 Jewelry Bonney:
+ * - Optional replacement: if removed by opponent's effect, may turn top Life face-up instead.
+ * - [Trigger] Draw 2, trash 1 from hand.
+ * Subject is op13JewelryBonney109 — open replacement via opponent On Play bounce (Shiryu).
+ */
+function targetBonneyWithShiryu(engine: OnePieceTestEngine) {
+  const bonneyId = engine.findCardInZone("south", "character", op13JewelryBonney109);
+  engine.playCard(op14eb04Shiryu048, "north");
+  engine.resolveDecision("effectTargetSelection", { selectedIds: [bonneyId] }, "north");
+  return bonneyId;
 }
 
 describe("OP13-109 Jewelry Bonney", () => {
-  test("turns the top Life card face-up instead of being returned by an opponent's effect", () => {
+  test("may turn the top Life face-up instead of opponent-effect removal", () => {
     const engine = OnePieceTestEngine.create(
-      {
-        life: [op01Nekomamushi048],
-        character: [op13JewelryBonney109],
-      },
-      {
-        hand: [op14eb04Shiryu048],
-        activeDon: 10,
-      },
+      { life: [eb01Doma005], character: [op13JewelryBonney109] },
+      { hand: [op14eb04Shiryu048], activeDon: op14eb04Shiryu048.cost },
       { firstPlayer: "south", activeSeat: "north" },
     );
-    const bonneyId = engine.findCardInZone("south", "character", op13JewelryBonney109);
-    const lifeId = engine.findCardInZone("south", "life", op01Nekomamushi048);
+    const lifeId = engine.findCardInZone("south", "life", eb01Doma005);
+    const bonneyId = targetBonneyWithShiryu(engine);
 
-    engine.playCard(op14eb04Shiryu048, "north");
-    const targetPrompt = pendingPrompt(engine, "effectTargetSelection");
-    engine.exec({
-      type: "resolvePrompt",
-      seat: "north",
-      promptId: targetPrompt!.id,
-      selectedIds: [bonneyId],
+    expect(engine.pendingDecision("effectRemovalReplacement", "south").actorId).toBe("south");
+    engine.resolveDecision("effectRemovalReplacement", { optionId: "yes" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(bonneyId);
+    expect(view.players.south.life[0]).toMatchObject({
+      instanceId: lifeId,
+      cardId: eb01Doma005.id,
+      hidden: false,
     });
-
-    const replacementPrompt = pendingPrompt(engine, "effectRemovalReplacement");
-    expect(replacementPrompt).toBeDefined();
-    engine.exec({
-      type: "resolvePrompt",
-      seat: "south",
-      promptId: replacementPrompt!.id,
-      optionId: "yes",
-    });
-
-    expect(engine.findCardInZone("south", "character", op13JewelryBonney109)).toBe(bonneyId);
-    expect(engine.getState().cards[lifeId]?.faceUp).toBe(true);
-    expect(engine.getState().capabilityHistory).toEqual([]);
+    expect(view.prompts).toHaveLength(0);
   });
 
-  test("cannot replace removal when the top Life card is already face-up", () => {
+  test("may decline the replacement and be removed to hand", () => {
+    const engine = OnePieceTestEngine.create(
+      { life: [eb01Doma005], character: [op13JewelryBonney109] },
+      { hand: [op14eb04Shiryu048], activeDon: op14eb04Shiryu048.cost },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const bonneyId = targetBonneyWithShiryu(engine);
+
+    engine.resolveDecision("effectRemovalReplacement", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(bonneyId);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(bonneyId);
+    expect(view.players.south.life[0]).toMatchObject({ hidden: true });
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("cannot replace removal when the top Life is already face-up", () => {
     const engine = OnePieceTestEngine.create(
       {
-        life: [{ card: op01Nekomamushi048, faceUp: true }],
+        life: [{ card: eb01Doma005, faceUp: true }],
         character: [op13JewelryBonney109],
       },
-      {
-        hand: [op14eb04Shiryu048],
-        activeDon: 10,
-      },
+      { hand: [op14eb04Shiryu048], activeDon: op14eb04Shiryu048.cost },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const bonneyId = targetBonneyWithShiryu(engine);
+
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
+      bonneyId,
+    );
+  });
+
+  test("does not replace battle K.O.", () => {
+    const engine = OnePieceTestEngine.create(
+      { life: [eb01Doma005], character: [{ card: op13JewelryBonney109, rested: true }] },
+      { character: [{ card: op01Kaido094, playedOnTurn: 0 }] },
       { firstPlayer: "south", activeSeat: "north" },
     );
     const bonneyId = engine.findCardInZone("south", "character", op13JewelryBonney109);
+    const attackerId = engine.findCardInZone("north", "character", op01Kaido094);
 
-    engine.playCard(op14eb04Shiryu048, "north");
-    engine.exec({
-      type: "resolvePrompt",
-      seat: "north",
-      promptId: pendingPrompt(engine, "effectTargetSelection")!.id,
-      selectedIds: [bonneyId],
-    });
+    engine.declareAttack(attackerId, bonneyId, "north");
 
-    expect(pendingPrompt(engine, "effectRemovalReplacement")).toBeUndefined();
-    expect(engine.findCardInZone("south", "hand", op13JewelryBonney109)).toBe(bonneyId);
-    expect(engine.getState().capabilityHistory).toEqual([]);
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(bonneyId);
+    expect(view.players.south.life[0]).toMatchObject({ hidden: true });
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("Life Trigger draws two then trashes one controller-selected hand card", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        life: [op13JewelryBonney109, eb01Doma005],
+        deck: [eb01Doma005, eb01Fourtricks025, eb01Doma005],
+        hand: [eb01MountainGod018],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const triggerId = engine.findCardInZone("north", "life", op13JewelryBonney109);
+    const firstDrawId = engine.findCardInZone("north", "deck", eb01Doma005);
+    const secondDrawId = engine.findCardInZone("north", "deck", eb01Fourtricks025);
+    const paymentId = engine.findCardInZone("north", "hand", eb01MountainGod018);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const cost = engine.pendingDecision("effectTrashFromHandSelection", "north").steps[0];
+    if (cost?.kind !== "selectEntity") throw new Error("Expected Bonney's hand-trash choice.");
+    expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain(paymentId);
+    engine.resolveDecision("effectTrashFromHandSelection", { selectedIds: [paymentId] }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([firstDrawId, secondDrawId]),
+    );
+    expect(view.players.north.trash.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([triggerId, paymentId]),
+    );
+    expect(view.prompts).toHaveLength(0);
   });
 });

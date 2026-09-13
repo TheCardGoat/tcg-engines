@@ -49,9 +49,10 @@ describe("Zanzibar (GD01-125)", () => {
 
     expectSuccess(p1.deployBase(gd01Zanzibar125));
     expect(p1.getCardZone(returnedShield)).toBe(`hand:${PLAYER_ONE}`);
-    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "targetSelection" });
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected Zanzibar's optional deployment");
+    if (optional?.kind !== "targetSelection")
+      throw new Error("Expected Zanzibar's optional deployment");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
@@ -81,7 +82,8 @@ describe("Zanzibar (GD01-125)", () => {
     expect(p1.getCardZone(eligibleShield)).toBe(`hand:${PLAYER_ONE}`);
     const eligibleShieldId = p1.getHand()[0]!;
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected Zanzibar's optional deployment");
+    if (optional?.kind !== "targetSelection")
+      throw new Error("Expected Zanzibar's optional deployment");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
@@ -102,7 +104,8 @@ describe("Zanzibar (GD01-125)", () => {
 
     expectSuccess(p1.deployBase(gd01Zanzibar125));
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected Zanzibar's optional deployment");
+    if (optional?.kind !== "targetSelection")
+      throw new Error("Expected Zanzibar's optional deployment");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
     expect(p1.getCardZone(zeonUnit)).toBe(`hand:${PLAYER_ONE}`);

@@ -66,6 +66,7 @@ export const eb01MsMonday035: CharacterCard = {
             action: "playThisCard",
           },
         ],
+        optional: true,
       },
     ],
   },

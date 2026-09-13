@@ -1,9 +1,12 @@
+import { Check } from "lucide-react";
+
 import { cn } from "../../lib/utils.ts";
 import type { OpponentStrategyId } from "../../game/match-factory.ts";
 
 interface StrategyOption {
   readonly id: OpponentStrategyId;
   readonly title: string;
+  readonly level: string;
   readonly description: string;
 }
 
@@ -16,19 +19,20 @@ const OPTIONS: readonly StrategyOption[] = [
   {
     id: "pass-only",
     title: "Rookie",
-    description: "Passes every turn. Never deploys or attacks. Ideal for learning the flow.",
+    level: "Learn the flow",
+    description: "Passes every turn and never attacks.",
   },
   {
     id: "greedy-legal",
     title: "Veteran",
-    description:
-      "Plays the highest-priority legal action — deploys units, attacks rested targets, pressures shields.",
+    level: "Active opponent",
+    description: "Deploys Units, attacks rested targets, and pressures Shields.",
   },
   {
     id: "combat-aware",
     title: "Ace",
-    description:
-      "Develops and pairs before combat, then chooses favorable attacks and blocks while preserving board value.",
+    level: "Full challenge",
+    description: "Pairs before combat, chooses favorable attacks, and blocks.",
   },
 ];
 
@@ -45,12 +49,10 @@ export function OpponentPicker({
 }: OpponentPickerProps) {
   return (
     <fieldset className="min-w-0">
-      <legend className="gd-mono text-hud-xs font-bold text-hud-info mb-2 tracking-hud-label uppercase">
-        Opponent AI
-      </legend>
+      <legend className="mb-2 text-sm font-bold text-hud-text">Opponent difficulty</legend>
       <div
         role="radiogroup"
-        aria-label="Opponent AI"
+        aria-label="Opponent difficulty"
         className="grid gap-2 grid-cols-1 sm:grid-cols-3"
       >
         {OPTIONS.map((option) => {
@@ -61,12 +63,12 @@ export function OpponentPicker({
               key={option.id}
               htmlFor={inputId}
               className={cn(
-                "relative flex flex-col gap-1 cursor-pointer pt-2.5 pr-3 pb-2.5 pl-3 clip-hud-6",
-                "bg-[linear-gradient(180deg,rgba(255,255,255,.85),rgba(248,250,254,.95))]",
-                "border transition-[border-color,box-shadow,filter] duration-150",
+                "relative flex min-h-28 cursor-pointer flex-col gap-1 clip-hud-6 border bg-hud-surface/65 px-3 py-3",
+                "transition-[border-color,box-shadow,background-color] duration-150",
+                "focus-within:ring-2 focus-within:ring-hud-info",
                 isSelected
-                  ? "border-hud-accent-hot shadow-[0_0_16px_rgba(45,107,255,.35)]"
-                  : "border-hud-border hover:border-hud-border-hot",
+                  ? "border-hud-accent-hot bg-hud-surface-raised shadow-[0_8px_20px_rgba(0,0,0,.18)]"
+                  : "border-hud-border hover:border-hud-border-hot hover:bg-hud-surface-raised",
               )}
             >
               <input
@@ -78,20 +80,31 @@ export function OpponentPicker({
                 onChange={() => onSelect(option.id)}
                 className="sr-only"
               />
-              <div className="flex items-baseline justify-between gap-2">
+              <div className="flex items-start justify-between gap-2">
                 <span
                   className={cn(
-                    "gd-display font-extrabold tracking-hud-body text-hud-md",
+                    "gd-display text-base font-extrabold tracking-hud-body",
                     isSelected ? "text-hud-accent-hot" : "text-hud-text",
                   )}
                 >
                   {option.title}
                 </span>
-                <span className="gd-mono text-hud-2xs text-hud-text-faint tracking-hud-label">
-                  {option.id}
+                <span
+                  className={cn(
+                    "grid size-5 shrink-0 place-items-center rounded-full border",
+                    isSelected
+                      ? "border-hud-accent-hot bg-hud-accent-hot text-white"
+                      : "border-hud-border text-transparent",
+                  )}
+                  aria-hidden="true"
+                >
+                  <Check className="size-3.5" strokeWidth={3} />
                 </span>
               </div>
-              <span className="text-hud-xs text-hud-text-muted leading-snug">
+              <span className="text-[10px] font-bold uppercase tracking-hud-label text-hud-info-deep">
+                {option.level}
+              </span>
+              <span className="mt-1 text-xs leading-5 text-hud-text-muted">
                 {option.description}
               </span>
             </label>

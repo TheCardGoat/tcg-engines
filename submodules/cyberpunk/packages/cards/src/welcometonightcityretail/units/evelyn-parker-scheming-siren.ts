@@ -5,10 +5,11 @@ import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts"
 export const welcomeToNightCityRetailEvelynParkerSchemingSiren = defineCyberpunkCard({
   id: "a3cc3d15-8e6a-4684-b2ca-c843b4a854e2",
   slug: "evelyn-parker-scheming-siren",
+  subname: "Scheming Siren",
   rulesText:
     "{Attack} Draw 1. Then, if you have more ☆ (Street Cred) than a Rival, discard 1.\n(Units with power 0 don't steal Gigs.)",
-  name: "Evelyn Parker — Scheming Siren",
-  displayName: "Evelyn Parker — Scheming Siren",
+  name: "Evelyn Parker",
+  displayName: "Evelyn Parker: Scheming Siren",
   canonicalId: "evelyn-parker-scheming-siren",
   color: "blue",
   classifications: ["Doll"],

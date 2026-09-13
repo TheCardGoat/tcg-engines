@@ -75,6 +75,23 @@ describe("CardFace · tag strip visibility across scales", () => {
     expect(queryByTestId("stat-current-badges")).toBeNull();
   });
 
+  it("paints cached artwork immediately when a transfer mounts a second card instance", () => {
+    const width = Math.round(CANONICAL_WIDTH * 0.8);
+    const height = Math.round((1024 / 734) * width);
+    const mounted = render(
+      <CardFace
+        card={{ ...card, img: "https://example.com/cached-card.webp" }}
+        width={width}
+        height={height}
+      />,
+    );
+    const image = mounted.container.querySelector("img");
+    const artLayer = image?.parentElement?.parentElement;
+
+    expect(image).not.toBeNull();
+    expect(artLayer?.style.opacity).not.toBe("0");
+  });
+
   it("fails closed when directly given a face-down card with private fields", () => {
     const privateCard: GameCardData = {
       ...card,

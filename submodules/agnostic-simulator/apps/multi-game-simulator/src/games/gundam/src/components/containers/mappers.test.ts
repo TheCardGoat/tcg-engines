@@ -3,7 +3,16 @@ import { describe, expect, it } from "vite-plus/test";
 import type { Card } from "@tcg/gundam-types";
 
 import type { BoardProjection } from "../../game/index.ts";
-import { asCardColor, toGameCardData, zoneCount, mapZone, resolveOpponentId } from "./mappers.ts";
+import {
+  asCardColor,
+  cardDefinitionToGameCardData,
+  mapZone,
+  replacePlayerIdsWithDisplayNames,
+  resolveOpponentId,
+  resolvePlayerDisplayName,
+  toGameCardData,
+  zoneCount,
+} from "./mappers.ts";
 
 function makeView(overrides: Partial<BoardProjection> = {}): BoardProjection {
   return {
@@ -95,6 +104,14 @@ describe("toGameCardData", () => {
         traits: ["Earth Federation", "Gundam"],
         keywordEffects: [{ keyword: "Blocker", value: undefined }],
         effect: "When played: draw 1.",
+        effects: [
+          {
+            type: "triggered",
+            activation: { timing: ["deploy"] },
+            directives: [],
+            sourceText: "【Deploy】Draw 1.",
+          },
+        ],
       }),
     });
     const result = toGameCardData(view, card);
@@ -109,8 +126,24 @@ describe("toGameCardData", () => {
     expect(result.traits).toEqual(["Earth Federation", "Gundam"]);
     expect(result.keywords).toEqual([{ keyword: "Blocker" }]);
     expect(result.effect).toBe("When played: draw 1.");
+    expect(result.effectBlocks).toEqual(["【Deploy】Draw 1."]);
     expect(result.set).toBe("st01");
     expect(result.cardNumber).toBe("ST01-001");
+  });
+
+  it("uses the stamped selectedPrintingId image instead of the default printing", () => {
+    const view = makeView();
+    const card = makeFilteredCard({
+      definition: makeCard({
+        cardNumber: "ST01-001",
+        selectedPrintingId: "ST01-001_p1",
+        printings: [
+          { id: "ST01-001", imageUrl: "https://cdn.example/ST01-001.webp" },
+          { id: "ST01-001_p1", imageUrl: "https://cdn.example/ST01-001_p1.webp" },
+        ],
+      }),
+    });
+    expect(toGameCardData(view, card).img).toBe("https://cdn.example/ST01-001_p1.webp");
   });
 
   it("reads AP/HP from unit definition", () => {
@@ -155,6 +188,48 @@ describe("toGameCardData", () => {
     expect(result.hp).toBe(4);
     expect(result.baseAp).toBe(3);
     expect(result.baseHp).toBe(5);
+  });
+
+  it("prefers engine-projected effective stats over local pilot/meta recompute", () => {
+    const unit = makeFilteredCard({
+      definition: makeCard({ type: "unit", ap: 1, hp: 4 }),
+      meta: {
+        // Engine already folded pilot +2 and constant during-link +2 into 5.
+        effectiveAp: 5,
+        effectiveHp: 4,
+        // Stale permanent modifiers must not be double-counted on top.
+        apModifier: 2,
+      },
+    });
+    const pilot = makeFilteredCard({
+      instanceId: "pilot-001",
+      definition: makeCard({
+        name: "Titans Pilot",
+        type: "pilot",
+        apBonus: 2,
+        hpBonus: 0,
+      } as unknown as Card),
+    });
+    const view = makeView({
+      zones: {
+        zones: {
+          "battleArea:p1": {
+            count: 2,
+            cards: [unit, pilot],
+          },
+        },
+      },
+      G: {
+        pilotAssignments: {
+          "inst-001": "pilot-001",
+        },
+      },
+    });
+    const result = toGameCardData(view, unit);
+    expect(result.ap).toBe(5);
+    expect(result.hp).toBe(4);
+    expect(result.baseAp).toBe(1);
+    expect(result.baseHp).toBe(4);
   });
 
   it("computes effective AP/HP from paired pilot bonuses", () => {
@@ -301,17 +376,89 @@ describe("toGameCardData", () => {
     expect(result.canAttackThisTurn).toBe(false);
   });
 
-  it("exempts Link units from deploy-sickness (rule 3-2-6-3)", () => {
+  it("does not treat a Unit with an unmet Link Condition as a Link Unit", () => {
     const view = makeView();
-    const linkUnit = makeCard({ linkCondition: "Pilot" } as unknown as Card);
     const card = makeFilteredCard({
-      definition: linkUnit,
+      definition: makeCard({ linkCondition: "(G Generation) Trait" } as unknown as Card),
       meta: { deployedThisTurn: true },
     });
     const result = toGameCardData(view, card);
+
+    expect(result.isLinkUnit).toBe(false);
+    expect(result.cantAttack).toBe(true);
+    expect(result.canAttackThisTurn).toBe(false);
+  });
+
+  it("exempts an actual Link Unit from deploy-sickness (rule 3-2-6-3)", () => {
+    const unit = makeFilteredCard({
+      definition: makeCard({ linkCondition: "(G Generation) Trait" } as unknown as Card),
+      meta: { deployedThisTurn: true },
+    });
+    const pilot = makeFilteredCard({
+      instanceId: "pilot-001",
+      definitionId: "st10-010",
+      definition: makeCard({
+        name: "Kamille Bidan",
+        type: "pilot",
+        traits: ["G Generation"],
+      }),
+    });
+    const view = makeView({
+      zones: {
+        zones: {
+          "battleArea:p1": {
+            count: 2,
+            cards: [unit, pilot],
+          },
+        },
+      },
+      G: {
+        pilotAssignments: {
+          "inst-001": "pilot-001",
+        },
+      },
+    });
+    const result = toGameCardData(view, unit);
+
     expect(result.isLinkUnit).toBe(true);
     expect(result.cantAttack).toBe(false);
     expect(result.canAttackThisTurn).toBe(true);
+  });
+
+  it("keeps a paired Unit non-Link when its Pilot misses the Link Condition", () => {
+    const unit = makeFilteredCard({
+      definition: makeCard({ linkCondition: "(G Generation) Trait" } as unknown as Card),
+      meta: { deployedThisTurn: true },
+    });
+    const pilot = makeFilteredCard({
+      instanceId: "pilot-001",
+      definitionId: "st10-011",
+      definition: makeCard({
+        name: "Unmatched Pilot",
+        type: "pilot",
+        traits: ["Earth Federation"],
+      }),
+    });
+    const view = makeView({
+      zones: {
+        zones: {
+          "battleArea:p1": {
+            count: 2,
+            cards: [unit, pilot],
+          },
+        },
+      },
+      G: {
+        pilotAssignments: {
+          "inst-001": "pilot-001",
+        },
+      },
+    });
+    const result = toGameCardData(view, unit);
+
+    expect(result.isLinkUnit).toBe(false);
+    expect(result.cantAttack).toBe(true);
+    expect(result.canAttackThisTurn).toBe(false);
   });
 
   it("derives cantAttack / cantBlock from continuousEffects restrictions", () => {
@@ -529,6 +676,29 @@ describe("toGameCardData", () => {
   });
 });
 
+describe("cardDefinitionToGameCardData", () => {
+  it("renders an actor-authorized Deck candidate face up from its definition", () => {
+    const result = cardDefinitionToGameCardData(
+      makeCard({
+        name: "Revealed Londo Bell Unit",
+        cardNumber: "GD05-020",
+        traits: ["Londo Bell"],
+        imageUrl: "https://example.test/gd05-020.webp",
+      }),
+      "deck-card-1",
+    );
+
+    expect(result).toMatchObject({
+      id: "deck-card-1",
+      name: "Revealed Londo Bell Unit",
+      cardNumber: "GD05-020",
+      highlight: true,
+      img: "https://example.test/gd05-020.webp",
+    });
+    expect(result.faceDown).toBeUndefined();
+  });
+});
+
 describe("mapZone", () => {
   it("returns cards from the named zone", () => {
     const cards = [makeFilteredCard({ instanceId: "a" }), makeFilteredCard({ instanceId: "b" })];
@@ -570,5 +740,29 @@ describe("resolveOpponentId", () => {
       players: [{ playerId: "p1", publicData: {} }],
     } as Partial<BoardProjection> as BoardProjection);
     expect(resolveOpponentId(view, "p1")).toBeNull();
+  });
+});
+
+describe("resolvePlayerDisplayName", () => {
+  it("uses the participant profile name while retaining a safe ID fallback", () => {
+    const participants = [
+      { id: "player-one", displayName: "Amuro" },
+      { id: "player-two", displayName: "Char" },
+    ];
+
+    expect(resolvePlayerDisplayName("player-one", participants)).toBe("Amuro");
+    expect(resolvePlayerDisplayName("missing-player", participants)).toBe("missing-player");
+    expect(resolvePlayerDisplayName("missing-player", participants, "Opponent")).toBe("Opponent");
+  });
+});
+
+describe("replacePlayerIdsWithDisplayNames", () => {
+  it("removes engine player ids from player-facing status text", () => {
+    expect(
+      replacePlayerIdsWithDisplayNames("player_two has no shields remaining", [
+        { id: "player_one", displayName: "You" },
+        { id: "player_two", displayName: "Rival" },
+      ]),
+    ).toBe("Rival has no shields remaining");
   });
 });

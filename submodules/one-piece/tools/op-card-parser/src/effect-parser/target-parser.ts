@@ -1,4 +1,6 @@
 import type { EffectTrigger, Target, TargetFilter, TotalConstraint, Zone } from "@tcg/op-types";
+import { KEYWORD_BRACKET_TO_TYPE } from "./constants.ts";
+import { mapZoneNoun, parseZoneList, parseComparison } from "./helpers.ts";
 
 export function traitAlternativesFilter(
   traits: string[],
@@ -14,7 +16,6 @@ export function traitAlternativesFilter(
     filters: unique.map((value) => ({ filter: "trait", value, ...(match && { match }) })),
   };
 }
-import { mapZoneNoun, parseZoneList, parseComparison } from "./helpers.ts";
 
 export function extractTargetFilters(text: string): {
   zonesText: string;
@@ -347,12 +348,20 @@ export function parseTarget(text: string): Target | null {
     }
   }
 
-  // Name prefix (no "type" after bracket): "[Spandam] Characters"
+  // Name/keyword prefix (no "type" after bracket): "[Spandam] Characters"
+  // or "[Blocker] Characters" (keyword filter, not a card name).
   let nameFilter: TargetFilter | null = null;
+  let keywordFilter: TargetFilter | null = null;
   if (!traitPrefixMatch && !attributeFilter) {
     const namePrefixMatch = /^[[{]([^\]}]+)[\]}]\s+/i.exec(rest);
     if (namePrefixMatch) {
-      nameFilter = { filter: "name", value: namePrefixMatch[1]! };
+      const bracketValue = namePrefixMatch[1]!;
+      const keyword = KEYWORD_BRACKET_TO_TYPE[bracketValue.toLowerCase()];
+      if (keyword) {
+        keywordFilter = { filter: "hasKeyword", value: keyword };
+      } else {
+        nameFilter = { filter: "name", value: bracketValue };
+      }
       rest = rest.slice(namePrefixMatch[0].length);
     }
   }
@@ -376,6 +385,40 @@ export function parseTarget(text: string): Target | null {
     rest = rest.trim();
   }
 
+  // Mixed DON!! + trait-qualified Characters:
+  // "DON!! cards or {Animal} or {SMILE} type Characters with a cost of 3 or less"
+  const mixedDonTraitCharacters =
+    /^DON!!\s+cards?\s+or\s+((?:[[{"\u201c][^\]}"\u201d]+[\]}"\u201d](?:\s+or\s+)?)+)\s+type\s+Characters?(.*)$/i.exec(
+      rest,
+    );
+  if (mixedDonTraitCharacters) {
+    const traitParts = [
+      ...mixedDonTraitCharacters[1]!.matchAll(/[[{"\u201c]([^\]}"\u201d]+)[\]}"\u201d]/g),
+    ].map((entry) => entry[1]!);
+    const traitFilter = traitAlternativesFilter(traitParts, "includes");
+    const suffixFilters = extractTargetFilters(
+      `Characters${mixedDonTraitCharacters[2] ?? ""}`,
+    ).filters;
+    const allFilters = [
+      ...(stateFilter ? [stateFilter] : []),
+      ...(colorFilter ? [colorFilter] : []),
+      ...(attributeFilter ? [attributeFilter] : []),
+      ...(traitFilter ? [traitFilter] : []),
+      ...traitFilters,
+      ...(nameFilter ? [nameFilter] : []),
+      ...(excludeNameFilter ? [excludeNameFilter] : []),
+      ...(excludesSelf ? [{ filter: "excludeSelf" } as const] : []),
+      ...suffixFilters,
+    ];
+    const target: Target = {
+      player,
+      zones: ["costArea", "character"],
+      count: { amount, ...(upTo && { upTo: true }) },
+    };
+    if (allFilters.length > 0) target.filters = allFilters;
+    return target;
+  }
+
   // rest is now "Characters with a cost of 5 or less" or "DON!! cards or Characters" etc.
   const { zonesText, filters, totalConstraint } = extractTargetFilters(rest);
 
@@ -387,6 +430,7 @@ export function parseTarget(text: string): Target | null {
     ...(colorFilter ? [colorFilter] : []),
     ...(attributeFilter ? [attributeFilter] : []),
     ...traitFilters,
+    ...(keywordFilter ? [keywordFilter] : []),
     ...(nameFilter ? [nameFilter] : []),
     ...(excludeNameFilter ? [excludeNameFilter] : []),
     ...(excludesSelf ? [{ filter: "excludeSelf" } as const] : []),

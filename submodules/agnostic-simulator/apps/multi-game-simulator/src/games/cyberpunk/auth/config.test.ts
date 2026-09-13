@@ -24,4 +24,13 @@ describe("Cyberpunk auth config", () => {
       }),
     ).toBe("https://api.example");
   });
+
+  it("uses the configured platform API for auth in port-isolated local stacks", () => {
+    expect(
+      resolveAuthBaseUrl({
+        PROD: false,
+        VITE_API_URL: "http://localhost:41000/v1",
+      }),
+    ).toBe("http://localhost:41000");
+  });
 });

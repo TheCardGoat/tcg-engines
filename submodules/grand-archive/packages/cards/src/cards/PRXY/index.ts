@@ -1,0 +1,13 @@
+export { mantleOfTheAbyss } from "./items/mantle-of-the-abyss.ts";
+export { polarisTwinklingCauldron } from "./items/polaris-twinkling-cauldron.ts";
+export { insigniaOfTheCorhazi } from "./items/insignia-of-the-corhazi.ts";
+export { theDuchesssThornes } from "./items/the-duchesss-thornes.ts";
+export { scepterOfLumina } from "./items/scepter-of-lumina.ts";
+export { zanderDeftExecutor } from "./champions/zander-deft-executor.ts";
+export { clarentReimagined } from "./weapons/clarent-reimagined.ts";
+export { jinzhuoBandsOfVirtue } from "./items/jinzhuo-bands-of-virtue.ts";
+export { reciprocityDorumegiasCall } from "./weapons/reciprocity-dorumegias-call.ts";
+export { viridianProtectiveTrinket } from "./items/viridian-protective-trinket.ts";
+export { stonescaleBand } from "./items/stonescale-band.ts";
+export { sablemereWardensGrip } from "./items/sablemere-wardens-grip.ts";
+export { enduraReimagined } from "./items/endura-reimagined.ts";

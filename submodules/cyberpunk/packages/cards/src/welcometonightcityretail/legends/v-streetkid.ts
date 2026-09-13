@@ -5,10 +5,11 @@ import { goSoloAbility } from "@tcg/cyberpunk-types";
 export const welcomeToNightCityRetailVStreetkid = defineCyberpunkCard({
   id: "81a8dec7-9541-4020-93e1-7d798a57dcbc",
   slug: "v-streetkid",
+  subname: "Streetkid",
   rulesText:
     "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.\n{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
-  name: "V — StreetKid",
-  displayName: "V — StreetKid",
+  name: "V",
+  displayName: "V: Streetkid",
   canonicalId: "v-streetkid",
   color: "red",
   classifications: ["Merc"],

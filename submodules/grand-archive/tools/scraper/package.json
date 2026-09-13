@@ -1,0 +1,22 @@
+{
+  "name": "@tcg/grand-archive-scraper",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vp pack",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "scrape": "node --experimental-transform-types src/cli.ts",
+    "test": "vp test run"
+  },
+  "dependencies": {
+    "@tcg/grand-archive-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

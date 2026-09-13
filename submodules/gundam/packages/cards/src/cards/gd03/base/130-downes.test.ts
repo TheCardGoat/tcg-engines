@@ -60,7 +60,7 @@ describe("Downes (GD03-130)", () => {
 
     expectSuccess(p1.deployBase(gd03Downes130));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
+      kind: "targetSelection",
       controllerId: PLAYER_ONE,
       sourceCardId: p1.getCardsInZone("baseSection")[0],
     });

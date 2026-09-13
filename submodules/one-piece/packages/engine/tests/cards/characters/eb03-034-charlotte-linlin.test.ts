@@ -21,6 +21,7 @@ describe("EB03-034 Charlotte Linlin", () => {
 
     engine.playCard(eb03CharlotteLinlin034);
 
+    engine.acceptLeadingOptional("south");
     const handChoice = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(handChoice?.kind).toBe("selectEntity");
     if (handChoice?.kind !== "selectEntity") {
@@ -32,6 +33,7 @@ describe("EB03-034 Charlotte Linlin", () => {
     ]);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [returnedId] }, "south");
 
+    engine.acceptLeadingOptional("south");
     const addDon = engine.pendingDecision("effectAddDon", "south").steps[0];
     expect(addDon?.kind).toBe("chooseOption");
     if (addDon?.kind !== "chooseOption") throw new Error("Expected Linlin's DON!! choice.");
@@ -65,11 +67,13 @@ describe("EB03-034 Charlotte Linlin", () => {
 
     engine.declareAttack(attackerId, linlinId, "north");
 
+    engine.acceptLeadingOptional("south");
     const cost = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     expect(cost?.kind).toBe("payCost");
     if (cost?.kind !== "payCost") throw new Error("Expected Linlin's DON!! payment.");
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
 
+    engine.acceptLeadingOptional("south");
     const addLife = engine.pendingDecision("effectAddToLifeFromDeck", "south").steps[0];
     expect(addLife?.kind).toBe("chooseOption");
     if (addLife?.kind !== "chooseOption") throw new Error("Expected Linlin's Life choice.");
@@ -83,5 +87,38 @@ describe("EB03-034 Charlotte Linlin", () => {
     expect(view.players.south.donDeckCount).toBe(donDeckBefore + 1);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb03CharlotteLinlin034, rested: true, playedOnTurn: 0 }],
+        deck: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018, eb01Doma005],
+        activeDon: 1,
+        restedDon: 1,
+      },
+      { character: [{ card: eb01MountainGod018, attachedDon: 2, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const linlinId = engine.findCardInZone("south", "character", eb03CharlotteLinlin034);
+    const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
+
+    engine.declareAttack(attackerId, linlinId, "north");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

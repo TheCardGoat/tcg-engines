@@ -5,9 +5,10 @@ export const embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay = defineCyb
   id: "08e6a687-56b7-4ac1-982f-8a8d6d0c0bc5",
   canonicalId: "goro-takemura-losing-his-way",
   slug: "goro-takemura-losing-his-way",
+  subname: "Losing His Way",
   rulesText: "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
-  name: "Goro Takemura — Losing His Way",
-  displayName: "Goro Takemura — Losing His Way",
+  name: "Goro Takemura",
+  displayName: "Goro Takemura: Losing His Way",
   color: "green",
   classifications: ["Arasaka", "Corpo"],
   set: {

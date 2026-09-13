@@ -1,0 +1,4 @@
+interface:
+  display_name: "Simulator Animations"
+  short_description: "Build game-agnostic simulator motion"
+  default_prompt: "Use $simulator-animations to implement and validate this simulator animation change across the shared lifecycle and affected game adapter."

@@ -1,5 +1,9 @@
 import type { CardInstanceId, PlayerId } from "#core";
-import type { RevealAndRouteEffect, RevealRouteDestination } from "@tcg/lorcana-types";
+import type {
+  RevealAndRouteEffect,
+  RevealAndRouteFallback,
+  RevealRouteDestination,
+} from "@tcg/lorcana-types";
 import type { CardPlayedPayload } from "../../../types";
 import { createLorcanaLogProjection } from "../../../types";
 import { emitTriggeredLorcanaEvent } from "../../effects/triggered-abilities";
@@ -24,6 +28,59 @@ export function isRevealAndRouteEffect(effect: unknown): effect is RevealAndRout
 }
 
 const DEFAULT_FALLBACK: RevealRouteDestination = { zone: "deck-top" };
+
+function isMultiDestinationFallback(
+  fallback: RevealAndRouteFallback,
+): fallback is Extract<RevealAndRouteFallback, { destinations: unknown }> {
+  return (
+    typeof fallback === "object" &&
+    fallback !== null &&
+    "destinations" in fallback &&
+    Array.isArray((fallback as { destinations?: unknown }).destinations)
+  );
+}
+
+function applyRevealAndRouteFallback(
+  ctx: PlayCardExecutionContext,
+  cardPlayed: CardPlayedPayload,
+  effect: RevealAndRouteEffect,
+  topCard: CardInstanceId,
+  targetPlayerId: PlayerId,
+  resolutionInput: ActionResolutionInput,
+  resolveNestedEffect: (
+    ctx: PlayCardExecutionContext,
+    cardPlayed: CardPlayedPayload,
+    effect: unknown,
+    resolutionInput: ActionResolutionInput,
+    options?: ActionEffectResolutionOptions,
+  ) => ActionResolutionResult,
+  options?: ActionEffectResolutionOptions,
+): ActionResolutionResult {
+  const fallback = effect.fallback ?? DEFAULT_FALLBACK;
+
+  // Multi-destination fallback: let the player choose (e.g. top or bottom of deck)
+  // via a nested 1-card scry. The revealed card is still on top of the deck.
+  if (isMultiDestinationFallback(fallback)) {
+    markLastEffectPerformed(resolutionInput.eventSnapshot, false);
+    return resolveNestedEffect(
+      ctx,
+      cardPlayed,
+      {
+        type: "scry",
+        amount: 1,
+        target: effect.target ?? "CONTROLLER",
+        destinations: fallback.destinations,
+      },
+      resolutionInput,
+      options,
+    );
+  }
+
+  moveCardToDestination(ctx, topCard, fallback, targetPlayerId);
+  logRevealAndRouteFallback(ctx, cardPlayed, topCard, fallback, targetPlayerId);
+  markLastEffectPerformed(resolutionInput.eventSnapshot, false);
+  return { status: "resolved" };
+}
 
 export function resolveRevealAndRouteEffect(
   ctx: PlayCardExecutionContext,
@@ -87,7 +144,6 @@ export function resolveRevealAndRouteEffect(
 
     // Route matched
     if (route.optional) {
-      const fallback = effect.fallback ?? DEFAULT_FALLBACK;
       const routeEffect =
         route.destination.zone === "play"
           ? {
@@ -132,18 +188,26 @@ export function resolveRevealAndRouteEffect(
 
       if (result.status === "resolved") {
         // Player resolved the optional. Check if card was played or declined.
-        // If card is still in deck (not played), move to fallback.
+        // If card is still in deck (not played), apply fallback (single dest or choose top/bottom).
         if (stillOnDeck) {
-          moveCardToDestination(ctx, topCard, fallback, targetPlayerId);
-          logRevealAndRouteFallback(ctx, cardPlayed, topCard, fallback, targetPlayerId);
-        } else {
-          markLastEffectPerformed(resolutionInput.eventSnapshot, true);
+          return applyRevealAndRouteFallback(
+            ctx,
+            cardPlayed,
+            effect,
+            topCard,
+            targetPlayerId,
+            resolutionInput,
+            resolveNestedEffect,
+            options,
+          );
         }
+
+        markLastEffectPerformed(resolutionInput.eventSnapshot, true);
 
         // Execute side effects for legacy optional play routes that pass them outside
         // the nested effect. Non-play optional routes include side effects in the
         // optional sequence above so they respect the player's accept/decline choice.
-        if (!stillOnDeck && route.destination.zone === "play" && route.sideEffects) {
+        if (route.destination.zone === "play" && route.sideEffects) {
           for (const sideEffect of route.sideEffects) {
             resolveNestedEffect(ctx, cardPlayed, sideEffect, resolutionInput, options);
           }
@@ -187,13 +251,17 @@ export function resolveRevealAndRouteEffect(
     return { status: "resolved" };
   }
 
-  // No route matched: move to fallback
-  const fallback = effect.fallback ?? DEFAULT_FALLBACK;
-  moveCardToDestination(ctx, topCard, fallback, targetPlayerId);
-  logRevealAndRouteFallback(ctx, cardPlayed, topCard, fallback, targetPlayerId);
-  markLastEffectPerformed(resolutionInput.eventSnapshot, false);
-
-  return { status: "resolved" };
+  // No route matched: apply fallback (auto-route or player top/bottom choice)
+  return applyRevealAndRouteFallback(
+    ctx,
+    cardPlayed,
+    effect,
+    topCard,
+    targetPlayerId,
+    resolutionInput,
+    resolveNestedEffect,
+    options,
+  );
 }
 
 function logRevealAndRouteFallback(

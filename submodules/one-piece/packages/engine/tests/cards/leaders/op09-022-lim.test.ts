@@ -79,4 +79,31 @@ describe("OP09-022 Lim", () => {
     ).toBe(true);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Activate: Main so DON!! add and ODYSSEY play do not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op09Lim022,
+      hand: [op09RobLucci038, op09Sabo027, op09Adio023],
+      activeDon: 7,
+      donDeckCount: 1,
+    });
+    const effectPlayId = engine.findCardInZone("south", "hand", op09Sabo027);
+
+    engine.playCard(op09RobLucci038, "south");
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const charsBefore = before.characters.filter(Boolean).length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.hand.map((card) => card.instanceId)).toContain(effectPlayId);
+    expect(after.characters.filter(Boolean).length).toBe(charsBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

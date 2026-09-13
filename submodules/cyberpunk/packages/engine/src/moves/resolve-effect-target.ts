@@ -105,7 +105,9 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
           contextTargets: payload.contextTargets ?? {},
           boundTargets: payload.boundTargets ?? {},
         };
-        const status = executeAbilityEffects(payload.elseEffects, ctx, operations);
+        const status = executeAbilityEffects(payload.elseEffects, ctx, operations, 0, {
+          nested: true,
+        });
         if (status === "suspended") return;
       }
       resumeCurrentTrigger(state, operations);
@@ -176,13 +178,32 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       },
     };
 
-    const selectedEffect = {
-      ...effect,
-      target: { selector: "bound", id: SELECTED_TARGET_BINDING },
-    } as Effect;
+    const selectedEffect =
+      payload.targetPurpose === "attachHost" && "attachTo" in effect
+        ? ({
+            ...effect,
+            attachTo: { selector: "bound", id: SELECTED_TARGET_BINDING },
+          } as Effect)
+        : ({
+            ...effect,
+            target: { selector: "bound", id: SELECTED_TARGET_BINDING },
+          } as Effect);
 
     const eventsBefore = operations.event.getEmittedEvents().length;
     const result = resolveEffect(selectedEffect, ctx, operations);
+    // If the resolved effect declares an outputBinding, publish the selected
+    // target IDs into the trigger's persistent boundTargets so a later effect
+    // in the same ability can reference them (e.g. "play the Gear you just
+    // recovered from trash").
+    if ("outputBinding" in effect && effect.outputBinding) {
+      const current = state.G.turnMetadata.currentTrigger;
+      if (current) {
+        current.boundTargets = {
+          ...current.boundTargets,
+          [effect.outputBinding]: [...targetIds],
+        };
+      }
+    }
     const eventsAfter = operations.event.getEmittedEvents();
     for (let i = eventsBefore; i < eventsAfter.length; i++) {
       const emitted = eventsAfter[i]!;
@@ -199,10 +220,12 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       }
     }
     if (result.status === "resolved" && payload.ifEffects?.length) {
-      const status = executeAbilityEffects(payload.ifEffects, ctx, operations);
+      const status = executeAbilityEffects(payload.ifEffects, ctx, operations, 0, { nested: true });
       if (status === "suspended") return;
     } else if (result.status === "noAction" && payload.elseEffects?.length) {
-      const status = executeAbilityEffects(payload.elseEffects, ctx, operations);
+      const status = executeAbilityEffects(payload.elseEffects, ctx, operations, 0, {
+        nested: true,
+      });
       if (status === "suspended") return;
     }
 

@@ -22,6 +22,7 @@
   "dependencies": {
     "@tcg/gundam-cards": "workspace:*",
     "@tcg/gundam-engine": "workspace:*",
+    "@tcg/gundam-token-data": "workspace:*",
     "@tcg/gundam-types": "workspace:*"
   },
   "devDependencies": {

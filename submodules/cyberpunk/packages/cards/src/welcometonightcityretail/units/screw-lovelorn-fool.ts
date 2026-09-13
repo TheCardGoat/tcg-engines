@@ -5,9 +5,10 @@ export const welcomeToNightCityRetailScrewLovelornFool = defineCyberpunkCard({
   id: "7a62beca-ac54-4c0d-847d-ed85838c5093",
   canonicalId: "screw-lovelorn-fool",
   slug: "screw-lovelorn-fool",
+  subname: "Lovelorn Fool",
   rulesText: "{Defeated} Add another Unit from your trash to your hand.",
-  name: "Screw — Lovelorn Fool",
-  displayName: "Screw — Lovelorn Fool",
+  name: "Screw",
+  displayName: "Screw: Lovelorn Fool",
   color: "red",
   classifications: ["Ganger", "Maelstrom"],
   set: {

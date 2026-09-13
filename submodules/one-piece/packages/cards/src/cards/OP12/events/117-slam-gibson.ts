@@ -28,12 +28,17 @@ export const op12SlamGibson117: EventCard = {
     effects: [
       {
         trigger: "main",
-        costs: [{ cost: "restDon", amount: 5 }],
+        costs: [
+          {
+            cost: "restDon",
+            amount: 5,
+          },
+        ],
         actions: [
           {
             action: "addToLife",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

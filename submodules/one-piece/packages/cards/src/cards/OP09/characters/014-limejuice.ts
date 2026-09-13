@@ -28,7 +28,6 @@ export const op09Limejuice014: CharacterCard = {
   effect:
     "[On Play] Your opponent cannot activate up to 1 [Blocker] Character that has 4000 power or less during this turn.",
   effects: {
-    keywords: ["blocker"],
     effects: [
       {
         trigger: "onPlay",

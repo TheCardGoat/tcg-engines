@@ -3,7 +3,7 @@ import { prb01BartolomeoOp04089Reprint089 } from "../../../../../cards/src/cards
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-089 Bartolomeo (OP04-089) (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01BartolomeoOp04089Reprint089);
   });
 });

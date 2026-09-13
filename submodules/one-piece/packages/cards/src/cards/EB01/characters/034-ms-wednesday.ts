@@ -69,6 +69,7 @@ export const eb01MsWednesday034: CharacterCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

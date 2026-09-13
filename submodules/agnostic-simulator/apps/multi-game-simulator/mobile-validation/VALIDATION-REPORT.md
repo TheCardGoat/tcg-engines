@@ -13,7 +13,7 @@
 - **Broad sweep: 0 failures.** 69 cards completed their primary happy path through native mobile taps; 20 are legitimately reach-only (passive legends, pre-attached gear, opponent-side blocker scenarios, Lag units).
 - **Deep replay: 29 full happy paths completed** with explicit engine-outcome assertions (5/5 call-Legend, 13 play-unit, 10 play-program, 1 sell). 8 cards have genuinely multi-step paths (trash costs, draws, bounce) that a generic single-target picker cannot complete — confirmed these are **driver-completeness limits, not UI bugs** (the mobile ChoiceModal does present the choice).
 - **1 real mobile bug fixed:** mobile field units (and attached gear) omitted `data-definition-id` in the view model — fixed in `MobileBoard.tsx`, restoring desktop/mobile parity and testability.
-- **E2E POM:** added a driver-agnostic `MobileInteractionPom` and corrected two stale "mobile-shell tab" comments that mis-described how the mobile board exposes actions.
+- **E2E POM:** added a driver-agnostic `MobileInteractionPom`. The current simulator now mounts those native controls in `SimulatorViewportShell` rails below the 768px desktop boundary.
 - **No E2E/unit/integration tests were run**, per the objective.
 
 ---
@@ -27,7 +27,7 @@ The existing happy-path E2E/spec harness drives a **generic `InteractionPanel`**
 interactionPanelPresent: false; // the generic panel is NOT in the DOM on mobile
 ```
 
-The two stale comments that claimed the panel was "hidden behind a mobile-shell tab" are **incorrect** for Cyberpunk: below the 900px breakpoint `MobileShell` renders _only_ the board with no tabs (`interactions={null}`, `mobileNavigation="none"`). So "mobile happy path by point-and-click" must drive the **native mobile surface**, which is entirely different from the desktop POM:
+The two stale comments that claimed the panel was "hidden behind a mobile-shell tab" are **incorrect** for Cyberpunk. The legacy `MobileShell` has since been removed: below 768px, `SimulatorViewportShell` mounts the game-owned opponent controls in its top rail, the board in a bounded tabletop, the player actions in its bottom rail, and the full sidebar in a drawer. So "mobile happy path by point-and-click" must still drive the **native mobile surface**, which is entirely different from the desktop POM:
 
 | Action                                 | Desktop surface                                        | Mobile surface (this validation)                                                            |
 | -------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
@@ -266,7 +266,7 @@ Legend: ✅ pass (full path via mobile taps) · 🟡 reach-only (passive/attache
 - `npx tsc --noEmit -p tsconfig.json` → **0 errors in changed files** (`MobileBoard.tsx`, `mobile-interaction-pom.ts`, `render-cyberpunk-simulator.tsx`, `CyberpunkPlaywrightHarnessClient.ts`).
 - Screenshots: `mobile-validation/screenshots/` (probe, verify-gear-attach, verify-mox-inciters, probe-all-is-lost, fail-\* on any failure).
 
-## 10. Skipped checks & baseline note (backpressure)
+## 10. Skipped checks & baseline note
 
 - **No E2E / unit / integration test suites were run**, per the objective (POM edits are edit-only).
 - `npx tsc --noEmit -p tsconfig.json` reports ~4600 errors, **all pre-existing baseline** in unrelated areas (`one-piece/packages/cards`, cyberpunk `card-tests/` referencing a non-existent `resolveSearchDeck`, alpha/spoiler card-test duplicates). **Zero are in files touched by this work.** This baseline is unrelated to mobile validation and out of scope to fix here.

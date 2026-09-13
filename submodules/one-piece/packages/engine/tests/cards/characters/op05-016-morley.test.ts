@@ -10,6 +10,12 @@ import {
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+/**
+ * OP05-016 Morley:
+ * - [When Attacking] if power ≥7000, opponent cannot activate Blocker this battle (not optional).
+ * - [Trigger] optional trash 1 from hand: if Leader multicolored, play this card.
+ * Subject is op05Morley016. Optional decline is the Life Trigger path only.
+ */
 describe("OP05-016 Morley", () => {
   test("has separate Giant and Revolutionary Army types", () => {
     expect(op05Morley016.traits).toEqual(["Giant", "Revolutionary Army"]);
@@ -82,5 +88,35 @@ describe("OP05-016 Morley", () => {
     expect(
       gated.engine.getView("north").players.north.trash.map((card) => card.instanceId),
     ).toEqual(expect.arrayContaining([gated.paymentId, gated.triggerId]));
+  });
+
+  test("may decline Life Trigger optional so hand card stays and Morley is not played", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        leaderCardId: op05BeloBetty002,
+        life: [op05Morley016],
+        hand: [eb01Doma005],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const triggerId = engine.findCardInZone("north", "life", op05Morley016);
+    const paymentId = engine.findCardInZone("north", "hand", eb01Doma005);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    // Optional trash-to-play: decline must not trash the hand card or play Morley.
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(paymentId);
+    expect(view.players.north.characters.some((card) => card?.instanceId === triggerId)).toBe(
+      false,
+    );
+    // Life card still resolved into trash when Trigger effect is declined after activate.
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(triggerId);
+    expect(view.prompts).toHaveLength(0);
   });
 });

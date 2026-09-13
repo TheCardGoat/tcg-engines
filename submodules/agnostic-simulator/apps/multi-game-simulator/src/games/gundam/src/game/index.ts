@@ -30,14 +30,12 @@ export type {
 export { createEngineAdapter } from "./adapter.ts";
 
 export type { GameStore, GameSnapshot } from "./store.ts";
-export type { PendingController } from "./pending.ts";
 
 export type {
   BoardProjection,
   CardInstanceId,
   MoveName,
   PartialInput,
-  PendingState,
   SubmitOutcome,
   ViewerId,
   ZoneId,
@@ -50,20 +48,16 @@ export {
   useInteractionView,
   useLogEntries,
   useMoveLogs,
-  usePacketAnimations,
-  usePending,
+  useAcceptedAnimations,
   useStatus,
   useViewerId,
   useZone,
-  type PendingMoveControls,
 } from "./hooks.ts";
 
 export {
   useCardLegality,
   useCardDisabledReason,
-  useCurrentTargetingStep,
   type CardLegality,
-  type TargetingStep,
 } from "./selectors/cardLegality.ts";
 
 export {
@@ -75,17 +69,19 @@ export {
 export {
   interactionViewHasSourceCard,
   interactionViewSourceCardIds,
-  protocolTargetSelection,
-  type ProtocolTargetSelection,
-  type ProtocolTargetSelectionGroup,
 } from "./selectors/interactionView.ts";
 
 export {
   RIBBON_PHASES,
+  displayTurn,
   phaseLabel,
+  projectGundamControlState,
   stepLabel,
+  useGundamControlState,
   usePhaseLabel,
   usePriorityHolder,
+  type GundamControlState,
+  type GundamPlayerSide,
   type PhaseLabel,
   type PriorityHolder,
 } from "./labels.ts";

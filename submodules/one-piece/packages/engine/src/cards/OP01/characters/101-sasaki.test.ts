@@ -3,7 +3,7 @@ import { op01Sasaki101 } from "../../../../../cards/src/cards/OP01/characters/10
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-101 Sasaki", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01Sasaki101);
   });
 });

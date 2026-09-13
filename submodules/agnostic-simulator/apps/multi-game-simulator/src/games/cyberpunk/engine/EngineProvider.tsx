@@ -1,4 +1,13 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
+import type { SimulatorExternalCommandGate } from "@tcg/simulator-runtime/animation";
 import { buildCyberpunkInteractionView } from "@tcg/cyberpunk-server-adapter/interaction-protocol";
 import {
   AIPlayer,
@@ -18,6 +27,7 @@ import {
   defOf,
 } from "@tcg/cyberpunk-engine";
 import type {
+  AnimationPlanV2,
   EngineInteractionView,
   EntitySelectionInput,
   InteractionAction,
@@ -25,25 +35,13 @@ import type {
   InteractionSubmissionValue,
 } from "@tcg/protocol";
 import { DEFAULT_SCENARIO, getScenario, P1, P2, type ScenarioId } from "./fixtures/scenarios";
-import { AI_SPEED_MS, shouldWaitForAiAnimations, type AiMode, type AiSpeed } from "./aiStatus";
+import { AI_SPEED_MS, type AiMode, type AiSpeed } from "./aiStatus";
 import type { ChatMessage, ChatPresetKey } from "./chat";
 import type { EngineAction } from "../types/e2e";
 import type { CyberpunkAnalyticsEnvelope } from "../components/EndGameModal/postGameApi";
 import { EngineContext } from "./engineContext";
 import { actionToInteractionSubmission } from "./live/actionToInteraction";
 import { otherSide, PLAYER_SIDE_TO_ID, type Side } from "./sides";
-import { useAiAnimationWaitCircuitBreaker } from "./useAiAnimationWaitCircuitBreaker";
-
-function captureSimulatorAnimationRects(): void {
-  if (typeof window === "undefined") {
-    return;
-  }
-  (
-    window as Window & {
-      __simulatorAnimationCaptureRects?: () => void;
-    }
-  ).__simulatorAnimationCaptureRects?.();
-}
 
 // Re-export so consumers that imported `EngineAction` from this module keep
 // compiling. The canonical declaration now lives in `src/types/e2e.ts` so the
@@ -263,7 +261,13 @@ export interface RawEngineEventEntry {
   moveLogs: ReadonlyArray<MoveLog>;
   /** Pre-computed animation timeline for this command, consumed by the shared Motion layer. */
   animationScript: AnimationScript;
+  /** Canonical viewer-safe plan supplied by an authoritative gateway update. */
+  animationPlan?: AnimationPlanV2;
 }
+
+const EMPTY_REMOTE_MOVE_LOGS: ReadonlyArray<MoveLog> = [];
+const EMPTY_REMOTE_ENGINE_EVENTS: ReadonlyArray<RawEngineEventEntry> = [];
+const EMPTY_REMOTE_CHAT_MESSAGES: ReadonlyArray<ChatMessage> = [];
 
 export interface LocalCommandCommit {
   source: "human" | "ai";
@@ -430,8 +434,8 @@ interface EngineProviderProps {
   initialAiMode?: AiMode;
   /** Initial speed bucket. Defaults to "balanced". */
   initialAiSpeed?: AiSpeed;
-  /** Whether simulator animation plans are still resolving for the previous command. */
-  hasPendingAnimations?: boolean;
+  /** Shared command gate owned by the simulator animation scope integration. */
+  animationCommandGate: SimulatorExternalCommandGate;
   /**
    * When true, single-card non-Program target prompts resolve automatically.
    * Useful for smoother practice play, but disabled by dev test fixtures that
@@ -464,6 +468,10 @@ interface EngineProviderProps {
     },
     state: MatchState,
   ) => boolean;
+  /** Viewer-safe legality projection authored by the live game server. */
+  remoteInteractionView?: EngineInteractionView;
+  /** Viewer-safe native prompt paired with the live interaction projection. */
+  remotePrompt?: PlayerPrompt;
   /** Request a server-authority undo through the host surface. */
   requestRemoteUndo?: () => boolean;
   /** Server-authority move logs collected from gateway updates. */
@@ -616,7 +624,25 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
     case "gainGig":
       return eng.gainGig(action.dieId, { as: action.as });
     case "resolveCardToPlay":
-      return eng.resolveCardToPlay(action.cardId, { as: action.as });
+      if (action.pass) {
+        return eng.executeMove("resolveCardToPlay", { args: { pass: true } }, action.as);
+      }
+      return eng.executeMove(
+        "resolveCardToPlay",
+        {
+          args: {
+            cardId: action.cardId,
+            ...(action.attachToId ? { attachToId: action.attachToId } : {}),
+          },
+        },
+        action.as,
+      );
+    case "resolveChooseEffect":
+      return eng.executeMove(
+        "resolveChooseEffect",
+        { args: { optionId: action.optionId } },
+        action.as,
+      );
     case "resolveCardToMove":
       return eng.resolveCardToMove(action.cardId, { pass: action.pass, as: action.as });
     case "concede":
@@ -668,15 +694,17 @@ export function EngineProvider({
   initialHumanSide = "player",
   initialAiMode = "auto",
   initialAiSpeed = "balanced",
-  hasPendingAnimations = false,
+  animationCommandGate,
   autoResolveSingletonCardTargets = true,
   onMatchEnded,
   remoteDispatch,
   remoteSubmitInteraction,
+  remoteInteractionView,
+  remotePrompt,
   requestRemoteUndo,
-  remoteMoveLogs = [],
-  remoteEngineEvents = [],
-  remoteChatMessages = [],
+  remoteMoveLogs = EMPTY_REMOTE_MOVE_LOGS,
+  remoteEngineEvents = EMPTY_REMOTE_ENGINE_EVENTS,
+  remoteChatMessages = EMPTY_REMOTE_CHAT_MESSAGES,
   canSendChat = true,
   remoteFreeTextEnabled = false,
   remoteFreeTextProposalPending = false,
@@ -712,10 +740,6 @@ export function EngineProvider({
   );
   const [aiMode, setAiModeState] = useState<AiMode>(initialAiMode);
   const [aiSpeed, setAiSpeedState] = useState<AiSpeed>(initialAiSpeed);
-  const animationWaitExpired = useAiAnimationWaitCircuitBreaker(
-    hasPendingAnimations,
-    aiMode === "auto" && aiSpeed !== "fast",
-  );
   const [aiTakeover, setAiTakeover] = useState<AiTakeoverState | null>(null);
   const [historyControlsHydrated, setHistoryControlsHydrated] = useState(false);
   const [eventLog, setEventLog] = useState<AiLogEntry[]>([]);
@@ -1128,18 +1152,38 @@ export function EngineProvider({
   const engine = engineRef.current;
   const matchState = engine.getState();
   const engineStateId = matchState.ctx.stateID;
-  const playerPrompt = engine.getPrompt(P1);
-  const opponentPrompt = engine.getPrompt(P2);
-  const playerInteractionView = buildCyberpunkInteractionView({
+  const derivedPlayerPrompt = engine.getPrompt(P1);
+  const derivedOpponentPrompt = engine.getPrompt(P2);
+  const derivedPlayerInteractionView = buildCyberpunkInteractionView({
     actorId: P1,
     stateVersion: engineStateId,
-    prompt: playerPrompt,
+    prompt: derivedPlayerPrompt,
+    state: matchState,
   });
-  const opponentInteractionView = buildCyberpunkInteractionView({
+  const derivedOpponentInteractionView = buildCyberpunkInteractionView({
     actorId: P2,
     stateVersion: engineStateId,
-    prompt: opponentPrompt,
+    prompt: derivedOpponentPrompt,
+    state: matchState,
   });
+  const remoteSide: Side | null = remoteInteractionView
+    ? String(remoteInteractionView.actorId) === String(P1)
+      ? "player"
+      : String(remoteInteractionView.actorId) === String(P2)
+        ? "opponent"
+        : humanSide
+    : null;
+  const playerPrompt = remoteSide === "player" && remotePrompt ? remotePrompt : derivedPlayerPrompt;
+  const opponentPrompt =
+    remoteSide === "opponent" && remotePrompt ? remotePrompt : derivedOpponentPrompt;
+  const playerInteractionView =
+    remoteSide === "player" && remoteInteractionView
+      ? remoteInteractionView
+      : derivedPlayerInteractionView;
+  const opponentInteractionView =
+    remoteSide === "opponent" && remoteInteractionView
+      ? remoteInteractionView
+      : derivedOpponentInteractionView;
   const activeSide: Side = matchState.G.turnMetadata.activePlayerId === P1 ? "player" : "opponent";
   const prioritySide = resolvePrioritySide(
     { player: playerInteractionView, opponent: opponentInteractionView },
@@ -1254,11 +1298,22 @@ export function EngineProvider({
     forceRender();
   }, [aiSideToStep, remoteSubmitInteraction, runRemoteStepFor, runStepFor, forceRender]);
 
+  const animationsBlockCommands = useSyncExternalStore(
+    animationCommandGate.subscribe,
+    animationCommandGate.isBlocked,
+    animationCommandGate.isBlocked,
+  );
+
   const dispatch = useCallback<EngineContextValue["dispatch"]>(
     (action) => {
       const eng = engineRef.current;
       const preMoveState = eng.getState();
-      captureSimulatorAnimationRects();
+      if (animationsBlockCommands) {
+        return {
+          success: false as const,
+          error: "animation-active",
+        };
+      }
       if (remoteDispatch) {
         if (action.type === "undo" || action.type === "undoToTurnStart") {
           if (action.type === "undo" && requestRemoteUndo?.()) {
@@ -1426,7 +1481,25 @@ export function EngineProvider({
             result = eng.gainGig(action.dieId, { as: action.as });
             break;
           case "resolveCardToPlay":
-            result = eng.resolveCardToPlay(action.cardId, { as: action.as });
+            result = action.pass
+              ? eng.executeMove("resolveCardToPlay", { args: { pass: true } }, action.as)
+              : eng.executeMove(
+                  "resolveCardToPlay",
+                  {
+                    args: {
+                      cardId: action.cardId,
+                      ...(action.attachToId ? { attachToId: action.attachToId } : {}),
+                    },
+                  },
+                  action.as,
+                );
+            break;
+          case "resolveChooseEffect":
+            result = eng.executeMove(
+              "resolveChooseEffect",
+              { args: { optionId: action.optionId } },
+              action.as,
+            );
             break;
           case "resolveCardToMove":
             result = eng.resolveCardToMove(action.cardId, {
@@ -1529,6 +1602,7 @@ export function EngineProvider({
       remoteDispatch,
       requestRemoteUndo,
       hasPendingRemoteMove,
+      animationsBlockCommands,
       lockLocalHistoryControls,
       humanSide,
       playerInteractionView,
@@ -1708,7 +1782,7 @@ export function EngineProvider({
     if (lastAiError) {
       return;
     }
-    if (shouldWaitForAiAnimations(aiSpeed, hasPendingAnimations, animationWaitExpired)) {
+    if (animationsBlockCommands) {
       return;
     }
     const delay = AI_SPEED_MS[aiSpeed];
@@ -1725,9 +1799,8 @@ export function EngineProvider({
     aiMode,
     aiSpeed,
     aiSideToStep,
-    animationWaitExpired,
     engineStateId,
-    hasPendingAnimations,
+    animationsBlockCommands,
     lastAiError,
     remoteSubmitInteraction,
     runRemoteStepFor,

@@ -12,12 +12,16 @@ export const tZakuIi007: UnitCard = {
     {
       id: "T-007",
       artId: "T-007",
-      setCode: "T",
+      // Physical product ownership is ST03; `T-007` is the token card-number
+      // namespace, not a standalone product. Official EN-US product evidence:
+      // https://www.gundam-gcg.com/en/products/st03.html
+      setCode: "ST03",
       collectorNumber: "T-007",
       cardNumber: "T-007",
       set: {
-        code: "T",
-        name: "Token Cards",
+        code: "ST03",
+        name: "Zeon's Rush [ST03]",
+        packageId: "616003",
       },
       rarity: "common",
       finish: "standard",

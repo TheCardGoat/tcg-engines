@@ -1,3 +1,4 @@
+import { useGundamGame } from "./context.tsx";
 import { useStatus, useViewerId } from "./hooks.ts";
 import type { ViewerId } from "./types.ts";
 
@@ -28,6 +29,8 @@ const STEP_LABELS: Readonly<Record<string, string>> = {
   "attack-step": "Attack",
   "block-step": "Block",
   "action-step": "Action",
+  "damage-step": "Damage",
+  "battle-end-step": "Battle End",
   "end-step": "End",
   "hand-step": "Discard",
   "cleanup-step": "Cleanup",
@@ -63,6 +66,76 @@ export function phaseLabel(phase: string | undefined): string {
 export function stepLabel(step: string | undefined): string {
   if (!step) return "";
   return STEP_LABELS[step] ?? humanize(step);
+}
+
+export type GundamPlayerSide = "self" | "opponent";
+
+export type GundamControlState =
+  | {
+      readonly kind: "interactive";
+      readonly turnOwner: GundamPlayerSide;
+      readonly priorityHolder: GundamPlayerSide;
+    }
+  | {
+      readonly kind: "resolving";
+      readonly turnOwner: GundamPlayerSide;
+    };
+
+interface GundamControlStatus {
+  readonly phase?: string;
+  readonly step?: string;
+  readonly activePlayer?: string;
+  readonly turnPlayer?: string;
+}
+
+const PLAYER_DECISION_STEPS = new Set(["block-step", "action-step"]);
+
+/**
+ * Present turn ownership and the right to act as separate concepts.
+ *
+ * During battle steps that do not accept player decisions, `activePlayer`
+ * remains useful engine context but must not be advertised as actionable
+ * priority. The neutral resolving state prevents that false affordance.
+ */
+export function projectGundamControlState(
+  status: GundamControlStatus,
+  viewerId: string,
+  hasPendingInteraction = false,
+): GundamControlState {
+  const viewer = String(viewerId);
+  const activePlayer = status.activePlayer ? String(status.activePlayer) : viewer;
+  const turnPlayer = status.turnPlayer ? String(status.turnPlayer) : activePlayer;
+  const turnOwner: GundamPlayerSide = turnPlayer === viewer ? "self" : "opponent";
+  const isAutomaticBattleStep =
+    status.phase === "battle-phase" && !PLAYER_DECISION_STEPS.has(status.step ?? "");
+
+  // A pending effect choice (for example an optional Burst after shield
+  // damage) is player-actionable even in a normally automatic battle step.
+  // Without it, `activePlayer` is engine context rather than priority.
+  if ((isAutomaticBattleStep && !hasPendingInteraction) || !status.activePlayer) {
+    return { kind: "resolving", turnOwner };
+  }
+
+  return {
+    kind: "interactive",
+    turnOwner,
+    priorityHolder: activePlayer === viewer ? "self" : "opponent",
+  };
+}
+
+export function useGundamControlState(): GundamControlState {
+  const status = useStatus();
+  const viewerId = useViewerId();
+  const { adapter } = useGundamGame();
+  return projectGundamControlState(status, String(viewerId), Boolean(adapter.pendingChoice()));
+}
+
+/**
+ * Engine turns are 0-indexed (setup + first turn is turn 0); players read
+ * the first turn as "Turn 1". Use for every player-facing "Turn N".
+ */
+export function displayTurn(turn: number): number {
+  return Math.max(1, turn + 1);
 }
 
 export interface PhaseLabel {

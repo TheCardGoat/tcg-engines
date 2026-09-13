@@ -1,0 +1,189 @@
+{
+  "fetchedAt": "2026-08-08T09:52:15+00:00",
+  "documents": {
+    "errata": [
+      {
+        "file": "references/official-updates/errata/errata-bulletin-1.md",
+        "title": "Errata Bulletin #1",
+        "source": "https://fabtcg.com/articles/errata-bulletin-1/",
+        "htmlSha256": "7f3ffb6de547bfd6f55a7f5c567fb7d17186cf0873222b0b71b5a1a7b6a27d8a"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-10.md",
+        "title": "Errata Bulletin #10",
+        "source": "https://fabtcg.com/articles/errata-bulletin-10/",
+        "htmlSha256": "ce11d46240f010b0a062f45caa81693aa3d8371b1a74900be103cea7144f5ae0"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-3.md",
+        "title": "Errata Bulletin #3",
+        "source": "https://fabtcg.com/articles/errata-bulletin-3/",
+        "htmlSha256": "6f2fdc93829a3aff8a91b674dd7f2bf6f3892816b63b03033e9b89c30b102823"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-4.md",
+        "title": "Errata Bulletin #4",
+        "source": "https://fabtcg.com/articles/errata-bulletin-4/",
+        "htmlSha256": "263bd390d9e101feb122c01b201b6e73d687bea495c0154931e6721ed3b49b66"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-5.md",
+        "title": "Errata Bulletin #5",
+        "source": "https://fabtcg.com/articles/errata-bulletin-5/",
+        "htmlSha256": "55407748270477575c28a382086f85ae5eddb12f31a33cb20b3cceac3a7f5271"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-6.md",
+        "title": "Errata Bulletin #6",
+        "source": "https://fabtcg.com/articles/errata-bulletin-6/",
+        "htmlSha256": "efbb80dcd9d2cd8b3cadca62f85680ccb5bef279e9e6a93b309ee98f83032887"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-7.md",
+        "title": "Errata Bulletin #7",
+        "source": "https://fabtcg.com/articles/errata-bulletin-7/",
+        "htmlSha256": "7b72effd3ebe55658e5c59be6a8d10480e4972dc76b51453eb656431508f648c"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-8.md",
+        "title": "Errata Bulletin #8",
+        "source": "https://fabtcg.com/articles/errata-bulletin-8/",
+        "htmlSha256": "fc5ee009b08dc9c619afb9c4285c7ba97103b24c855746fc7fd0d545710a1623"
+      },
+      {
+        "file": "references/official-updates/errata/errata-bulletin-9.md",
+        "title": "Errata Bulletin #9",
+        "source": "https://fabtcg.com/articles/errata-bulletin-9/",
+        "htmlSha256": "5b2b873cb2ee68850855d0cefd6a21d9fbb8245b293b0b5f7614876272dc0f1f"
+      },
+      {
+        "file": "references/official-updates/errata/functional-errata.md",
+        "title": "Functional Errata (Errata Bulletin #2)",
+        "source": "https://legacy.fabtcg.com/en/resources/rules-and-policy-center/errata-bulletins/functional-errata/",
+        "htmlSha256": "legacy-source-summary"
+      }
+    ],
+    "release-notes": [
+      {
+        "file": "references/official-updates/release-notes/arcane-rising.md",
+        "title": "Arcane Rising",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/arcane-rising/",
+        "htmlSha256": "3b67fe5f69bf444f661df4e6ca1f5c5b36463ea4f062b7a3472ac1daf396506d"
+      },
+      {
+        "file": "references/official-updates/release-notes/bright-lights-round-the-table.md",
+        "title": "Bright Lights + Round the Table",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/bright-lights-round-the-table/",
+        "htmlSha256": "3eab8ae8b8f8cb7a78944734ae04c788fe5ecf9cbec07fefde481e86f2c978d7"
+      },
+      {
+        "file": "references/official-updates/release-notes/compendium-of-rathe.md",
+        "title": "Compendium of Rathe",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/compendium-of-rathe/",
+        "htmlSha256": "6662d62fa4b604b027296b8aedb4f4d6d14c5ed93983381af747f56a0184ad7a"
+      },
+      {
+        "file": "references/official-updates/release-notes/crucible-of-war.md",
+        "title": "Crucible of War",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/crucible-of-war/",
+        "htmlSha256": "4b688acdaa016fbae1acbc5f64e3e612024e94c65000ca4ed959c49fd775a91b"
+      },
+      {
+        "file": "references/official-updates/release-notes/dusk-till-dawn.md",
+        "title": "Dusk till Dawn",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/dusk-till-dawn/",
+        "htmlSha256": "236de82a0f644174b919235addbe10c1cc073f2b02b9b02750be9be87a085910"
+      },
+      {
+        "file": "references/official-updates/release-notes/dynasty.md",
+        "title": "Dynasty",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/dynasty/",
+        "htmlSha256": "1d0138a83d6fc6425caa0cb73bdb16a0000e42fa67bd8b27457a606f228e1631"
+      },
+      {
+        "file": "references/official-updates/release-notes/everfest.md",
+        "title": "Everfest",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/everfest/",
+        "htmlSha256": "b8f62d112045e2e7603dc57b905a1afbbc1a62bd351bbd776f7df21dc49dfc00"
+      },
+      {
+        "file": "references/official-updates/release-notes/heavy-hitters.md",
+        "title": "Heavy Hitters",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/heavy-hitters/",
+        "htmlSha256": "23812c6dd38c41ae7efa2a12fa685a5b40948aed92687a9db9ec3696d6657d2c"
+      },
+      {
+        "file": "references/official-updates/release-notes/high-seas.md",
+        "title": "High Seas",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/high-seas/",
+        "htmlSha256": "d992b555598448baf6194b01abc336d1820ee7703397a25aca32e3894185bf52"
+      },
+      {
+        "file": "references/official-updates/release-notes/mastery-pack-guardian-smash-palace.md",
+        "title": "Mastery Pack: Guardian + Smash Palace",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/mastery-pack-guardian-smash-palace/",
+        "htmlSha256": "5e19304b95e8bb12c3a9131e85bd18e3004af8b52db546b334bbfa4834748f78"
+      },
+      {
+        "file": "references/official-updates/release-notes/monarch.md",
+        "title": "Monarch",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/monarch/",
+        "htmlSha256": "25a451ffb5b88fa957f92dd63c0c2ac49d183c22efe2e38b36ff7bc00679ebc2"
+      },
+      {
+        "file": "references/official-updates/release-notes/omens-of-the-third-age.md",
+        "title": "Omens of the Third Age",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/omens-of-the-third-age/",
+        "htmlSha256": "d1a8295c2a9d3dbbce9febf03990eb94edef9101fc917d1ae551b7be406f333e"
+      },
+      {
+        "file": "references/official-updates/release-notes/outsiders.md",
+        "title": "Outsiders",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/outsiders/",
+        "htmlSha256": "c5ab0ee7691fde1262435adb85bde4a37b427fd747d51fb0d8ee595d72bb1e66"
+      },
+      {
+        "file": "references/official-updates/release-notes/part-the-mistveil.md",
+        "title": "Part the Mistveil",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/part-the-mistveil/",
+        "htmlSha256": "968d4fc32b11f70740a1499bbebfaf6cfb2ab6b576e367a310faafbced9a5155"
+      },
+      {
+        "file": "references/official-updates/release-notes/rosetta-1st-strike.md",
+        "title": "Rosetta + 1st Strike",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/rosetta-1st-strike/",
+        "htmlSha256": "d1ccb1d3707f0cf3403e6576dff0ea259d15e63bbcbefaf5b71ff65be77b03bc"
+      },
+      {
+        "file": "references/official-updates/release-notes/super-slam.md",
+        "title": "Super Slam",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/super-slam/",
+        "htmlSha256": "a549eccadb6698fe13c8d96d116cabd13848cab71551c67f40ecd115aed5a4d2"
+      },
+      {
+        "file": "references/official-updates/release-notes/tales-of-aria.md",
+        "title": "Tales of Aria",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/tales-of-aria/",
+        "htmlSha256": "e84e4a5b6926ce52db030e8dc8bbbafec1f3f50db42d3c12cda5fc77bf71f38e"
+      },
+      {
+        "file": "references/official-updates/release-notes/the-hunted.md",
+        "title": "The Hunted",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/the-hunted/",
+        "htmlSha256": "17121ed99d1f0d7ef38e72142200de7e256d06e110cbed6415e38673dd23a7be"
+      },
+      {
+        "file": "references/official-updates/release-notes/uprising.md",
+        "title": "Uprising",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/uprising/",
+        "htmlSha256": "670bf313080b33ead5b575dea9f7aa002fa800826a00f3e1572507b7499e0b56"
+      },
+      {
+        "file": "references/official-updates/release-notes/welcome-to-rathe.md",
+        "title": "Welcome to Rathe",
+        "source": "https://fabtcg.com/rules-and-policy-center/release-notes/welcome-to-rathe/",
+        "htmlSha256": "335bc15e826c31f94a83783edd55f2e6a9f381f605ad850d68bf8c091018c301"
+      }
+    ]
+  }
+}

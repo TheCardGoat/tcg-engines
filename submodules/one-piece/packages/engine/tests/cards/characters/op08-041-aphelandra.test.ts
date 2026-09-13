@@ -27,6 +27,14 @@ describe("OP08-041 Aphelandra", () => {
     expect(target.candidates.map((candidate) => candidate.ref.id)).toContain(targetId);
     expect(target.candidates.map((candidate) => candidate.ref.id)).not.toContain(expensiveId);
     engine.resolveDecision("effectTargetSelection", { selectedIds: [targetId] }, "south");
+    // Returning Aphelandra as a cost may open Boa Hancock's optional leave reaction.
+    while (engine.hasPendingChoice("south")) {
+      try {
+        engine.decline("south");
+      } catch {
+        break;
+      }
+    }
 
     const view = engine.getView("south");
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(sourceId);

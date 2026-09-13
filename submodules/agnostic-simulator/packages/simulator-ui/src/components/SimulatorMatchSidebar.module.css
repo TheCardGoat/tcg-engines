@@ -1,0 +1,635 @@
+.root {
+  --match-sidebar-accent: var(--game-accent, var(--board-accent, #3b82f6));
+  --match-sidebar-rival: var(--game-rival, #e11d48);
+  --match-sidebar-friendly: var(--game-friendly, var(--match-sidebar-accent));
+  --match-sidebar-border: var(
+    --board-border,
+    var(--border, color-mix(in srgb, currentColor 18%, transparent))
+  );
+  --match-sidebar-surface: var(--board-surface, var(--surface, #0f172a));
+  --match-sidebar-raised: var(
+    --board-surface-soft,
+    var(--surface-soft, color-mix(in srgb, currentColor 6%, transparent))
+  );
+  --match-sidebar-text: var(--board-text, var(--text, #f8fafc));
+  --match-sidebar-muted: var(--board-muted, var(--muted, #94a3b8));
+  --match-sidebar-participant-height: var(--simulator-participant-height, 7.5rem);
+  --match-sidebar-participant-compact-height: var(--simulator-participant-compact-height, 4.5rem);
+  --match-sidebar-automation-height: var(--simulator-automation-height, 4rem);
+  --match-sidebar-actions-height: var(--simulator-action-rail-height, 4rem);
+  --match-sidebar-type-metadata: 0.75rem;
+  --match-sidebar-type-label: 0.6875rem;
+  --match-sidebar-type-value: 0.8125rem;
+  --match-sidebar-type-action: 0.75rem;
+  --match-sidebar-action-control-min-height: 44px;
+  --match-sidebar-action-control-padding-inline: var(--simulator-surface-gap, 0.55rem);
+
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  grid-template-rows:
+    var(--match-sidebar-participant-height)
+    minmax(var(--simulator-activity-min-height, 0px), 1fr)
+    var(--match-sidebar-actions-height)
+    var(--match-sidebar-participant-height);
+  overflow: hidden;
+  border-right: 1px solid var(--match-sidebar-border);
+  background: var(--match-sidebar-surface);
+  color: var(--match-sidebar-text);
+}
+
+.root[data-compact-participants="true"] {
+  --match-sidebar-participant-height: var(--match-sidebar-participant-compact-height);
+}
+
+.identity {
+  min-width: 0;
+}
+
+.meta {
+  overflow: hidden;
+  color: var(--match-sidebar-muted);
+  font-size: var(--match-sidebar-type-metadata);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.participant {
+  --participant-accent: var(--match-sidebar-rival);
+
+  display: grid;
+  height: var(--match-sidebar-participant-height);
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
+  gap: var(--simulator-surface-gap, 0.55rem);
+  border-bottom: 1px solid var(--match-sidebar-border);
+  padding: var(--simulator-surface-inset, 0.65rem 0.75rem);
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--participant-accent) 8%, transparent),
+      transparent 58%
+    ),
+    var(--match-sidebar-raised);
+  overflow: hidden;
+}
+
+.participant[data-has-metrics="false"] {
+  height: var(--match-sidebar-participant-compact-height);
+}
+
+.root .participant[data-has-metrics="false"] {
+  height: var(--match-sidebar-participant-height);
+}
+
+.participant[data-role="self"] {
+  --participant-accent: var(--match-sidebar-friendly);
+
+  border-top: 1px solid var(--match-sidebar-border);
+  border-bottom: 0;
+}
+
+.participant[data-active="true"] {
+  box-shadow: inset 3px 0 0 var(--participant-accent);
+}
+
+.participantLine {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.participant[data-role="opponent"] .participantLine {
+  padding-right: var(--simulator-sidebar-collapse-inset, 0);
+}
+
+.avatar {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--participant-accent);
+  color: white;
+  font-size: var(--match-sidebar-type-label);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.identity {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 0.18rem;
+}
+
+.nameLine {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.nameLine strong {
+  overflow: hidden;
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.priority {
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: 0 0 auto;
+  rotate: 45deg;
+  background: color-mix(in srgb, var(--match-sidebar-muted) 72%, transparent);
+}
+
+.participant[data-priority="true"] .priority {
+  background: var(--participant-accent);
+  box-shadow: 0 0 0.65rem color-mix(in srgb, var(--participant-accent) 55%, transparent);
+}
+
+.status {
+  margin-left: auto;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--participant-accent) 30%, transparent);
+  border-radius: 0.25rem;
+  padding: 0.2rem 0.4rem;
+  color: var(--participant-accent);
+  font-size: var(--match-sidebar-type-label);
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.clock {
+  color: var(--match-sidebar-muted);
+  font-size: var(--match-sidebar-type-value);
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+
+.connection {
+  display: grid;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.participantActions {
+  display: grid;
+  min-width: 2rem;
+  min-height: 2rem;
+  flex: 0 0 auto;
+  place-items: center;
+}
+
+.participantActions > button {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--participant-accent) 28%, transparent);
+  border-radius: 0.375rem;
+  padding: 0;
+  background: color-mix(in srgb, var(--participant-accent) 7%, transparent);
+  color: var(--match-sidebar-text);
+  cursor: pointer;
+}
+
+.participantActions > button:hover {
+  background: color-mix(in srgb, var(--participant-accent) 15%, transparent);
+}
+
+.participantActions > button:focus-visible {
+  outline: 2px solid var(--participant-accent);
+  outline-offset: 2px;
+}
+
+.metrics {
+  display: grid;
+  margin: 0;
+  grid-template-columns: repeat(var(--simulator-match-metric-count, 4), minmax(0, 1fr));
+  gap: 0.25rem;
+}
+
+.metrics > div {
+  min-width: 0;
+  border: 1px solid var(--match-sidebar-border);
+  border-radius: 0.25rem;
+  padding: 0.35rem 0.2rem;
+  background: color-mix(in srgb, var(--match-sidebar-surface) 74%, transparent);
+  text-align: center;
+}
+
+.metrics dt {
+  overflow: hidden;
+  color: var(--match-sidebar-muted);
+  font-size: var(--match-sidebar-type-label);
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.metrics dd {
+  margin: 0.18rem 0 0;
+  overflow: hidden;
+  font-size: var(--match-sidebar-type-value);
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.automationControls,
+.matchActions {
+  min-width: 0;
+  border-bottom: 1px solid var(--match-sidebar-border);
+  overflow: hidden;
+}
+
+.automationControls {
+  position: relative;
+  z-index: 6;
+  height: var(--match-sidebar-automation-height);
+  overflow: visible;
+  background: var(--match-sidebar-raised);
+}
+
+.automationControls:has(.automationControl) {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.automationControl {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  padding-left: 0.65rem;
+}
+
+.automationControl > button {
+  min-height: 2rem;
+  border: 1px solid color-mix(in srgb, var(--match-sidebar-accent) 46%, transparent);
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.45rem;
+  background: color-mix(in srgb, var(--match-sidebar-accent) 10%, transparent);
+  color: var(--match-sidebar-text);
+  font: inherit;
+  font-size: var(--match-sidebar-type-label);
+  font-weight: 850;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.automationControl > button:hover {
+  background: color-mix(in srgb, var(--match-sidebar-accent) 18%, transparent);
+}
+
+.automationControl > button:focus-visible {
+  outline: 2px solid var(--match-sidebar-accent);
+  outline-offset: 2px;
+}
+
+.automationTrigger {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 44px;
+  grid-template-columns: minmax(0, 1fr) 2rem;
+  align-items: center;
+  border: 0;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.automationControls:has(.automationControl) .automationTrigger {
+  grid-template-columns: minmax(0, 1fr) 1.75rem;
+  padding-left: 0.45rem;
+}
+
+.automationTrigger:hover {
+  background: color-mix(in srgb, var(--match-sidebar-accent) 7%, transparent);
+}
+
+.automationTrigger:focus-visible {
+  outline: 2px solid var(--match-sidebar-accent);
+  outline-offset: -3px;
+}
+
+.automationSummary {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.automationChevron {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  justify-self: end;
+  color: var(--match-sidebar-muted);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.automationPanel {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 0.375rem);
+  right: 0.5rem;
+  left: 0.5rem;
+  max-height: min(26rem, calc(100dvh - 14rem));
+  overflow: auto;
+  border: 1px solid var(--match-sidebar-border);
+  border-radius: 0.5rem;
+  background: var(--match-sidebar-surface);
+  box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 34%);
+  color: var(--match-sidebar-text);
+}
+
+.automationPanel:focus-visible {
+  outline: 2px solid var(--match-sidebar-accent);
+  outline-offset: 2px;
+}
+
+.root[data-has-automation="true"] {
+  grid-template-rows:
+    var(--match-sidebar-participant-height)
+    var(--match-sidebar-automation-height)
+    minmax(var(--simulator-activity-min-height, 0px), 1fr)
+    var(--match-sidebar-actions-height)
+    var(--match-sidebar-participant-height);
+}
+
+.root[data-has-context="true"] {
+  grid-template-rows:
+    var(--match-sidebar-participant-height)
+    auto
+    minmax(var(--simulator-activity-min-height, 0px), 1fr)
+    var(--match-sidebar-actions-height)
+    var(--match-sidebar-participant-height);
+}
+
+.root[data-has-automation="true"][data-has-context="true"] {
+  grid-template-rows:
+    var(--match-sidebar-participant-height)
+    var(--match-sidebar-automation-height)
+    auto
+    minmax(var(--simulator-activity-min-height, 0px), 1fr)
+    var(--match-sidebar-actions-height)
+    var(--match-sidebar-participant-height);
+}
+
+.context {
+  min-width: 0;
+  border-bottom: 1px solid var(--match-sidebar-border);
+  background: var(--match-sidebar-raised);
+}
+
+.matchActions {
+  position: relative;
+  z-index: 5;
+  height: var(--match-sidebar-actions-height);
+  border-top: 1px solid var(--match-sidebar-border);
+  border-bottom: 0;
+  overflow: visible;
+}
+
+.actionDock {
+  display: grid;
+  height: 100%;
+  min-width: 0;
+  grid-template-columns: minmax(4.625rem, 0.9fr) minmax(0, 1.35fr) minmax(4.625rem, 0.9fr);
+  align-items: stretch;
+  gap: 0.35rem;
+  padding: 0.45rem;
+  box-sizing: border-box;
+  background: var(--match-sidebar-raised);
+}
+
+.actionDock > div {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+}
+
+.actionDock > div:only-child {
+  grid-column: 1 / -1;
+}
+
+.actionDock > div > :is(button, a),
+.actionDock > div > :global(button),
+.actionDock > div > :global(a) {
+  width: 100%;
+  min-width: 0;
+  min-height: var(--match-sidebar-action-control-min-height, 44px);
+  overflow: hidden;
+  font-size: var(--match-sidebar-type-action);
+  line-height: 1.1;
+  text-overflow: ellipsis;
+}
+
+.actionDock > [data-action="primary"] > :is(button, a),
+.actionDock > [data-action="primary"] > :global(button),
+.actionDock > [data-action="primary"] > :global(a) {
+  font-weight: 850;
+}
+
+.actionDock > [data-action="controls"] {
+  grid-column: span 2;
+}
+
+.actionDock > [data-action="controls"] > * {
+  width: 100%;
+  height: 100%;
+}
+
+.actionDock > [data-action="danger"] > :is(button, a),
+.actionDock > [data-action="danger"] > :global(button),
+.actionDock > [data-action="danger"] > :global(a) {
+  color: var(--match-sidebar-rival);
+}
+
+.actionDock :is(button, a):focus-visible {
+  outline: 2px solid var(--match-sidebar-accent);
+  outline-offset: -3px;
+}
+
+.actionDock :is(button, a):disabled {
+  cursor: not-allowed;
+  opacity: 0.46;
+}
+
+.actionDock :is(button, a):active:not(:disabled) {
+  translate: 0 1px;
+}
+
+.activity {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.activityTabs {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.tabList {
+  display: flex;
+  min-width: 0;
+  min-height: var(--simulator-panel-header-height, 2.5rem);
+  align-items: end;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--match-sidebar-border);
+  padding-inline: 0.65rem;
+}
+
+.tabList button {
+  min-width: 0;
+  min-height: 2.25rem;
+  flex: 1 1 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--match-sidebar-muted);
+  font: inherit;
+  font-size: var(--match-sidebar-type-label);
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tabList button[aria-selected="true"] {
+  border-bottom-color: var(--match-sidebar-accent);
+  color: var(--match-sidebar-text);
+}
+
+.tabList button:focus-visible {
+  outline: 2px solid var(--match-sidebar-accent);
+  outline-offset: -3px;
+}
+
+.tabPanel {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.combinedPanel {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  flex: 1 1 auto;
+  grid-template-rows: minmax(0, 1fr) minmax(7rem, 0.7fr);
+  overflow: hidden;
+}
+
+.combinedLog,
+.combinedChat {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.combinedChat {
+  border-top: 1px solid var(--match-sidebar-border);
+}
+
+@container simulator-sidebar (max-width: 13rem) {
+  .root {
+    --simulator-sidebar-collapse-inset: 2.75rem;
+  }
+
+  .participant {
+    gap: 0.4rem;
+    padding-inline: 0.5rem;
+  }
+
+  .participantLine {
+    gap: 0.4rem;
+  }
+
+  .automationControls:has(.automationControl) {
+    grid-template-columns: minmax(0, 1fr) 2.25rem;
+  }
+
+  .automationControl {
+    padding-left: 0.45rem;
+  }
+
+  .automationControls:has(.automationControl) .automationTrigger {
+    grid-template-columns: 1fr;
+    padding: 0.25rem;
+  }
+
+  .automationSummary {
+    display: none;
+  }
+
+  .automationChevron {
+    width: 1.75rem;
+    height: 1.75rem;
+    justify-self: center;
+  }
+
+  .tabList {
+    gap: 0.1rem;
+    padding-inline: 0.35rem;
+  }
+
+  .tabList button {
+    min-width: 0;
+    flex: 1;
+    letter-spacing: 0.06em;
+  }
+
+  .actionDock {
+    gap: 0.2rem;
+    padding: 0.35rem;
+  }
+}
+
+@media (pointer: coarse) {
+  .tabList button {
+    min-height: 44px;
+    font-size: 0.6875rem;
+  }
+
+  .actionDock {
+    gap: 0.25rem;
+    padding: 0.25rem;
+  }
+}

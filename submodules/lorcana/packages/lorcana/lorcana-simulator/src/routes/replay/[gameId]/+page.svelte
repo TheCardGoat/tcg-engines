@@ -1,7 +1,10 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
+  import { env } from "$env/dynamic/public";
+  import { replaceState } from "$app/navigation";
+  import { page } from "$app/state";
   import { onMount, onDestroy } from "svelte";
   import { Button } from "$lib/design-system/primitives/button";
+  import { resolvePlatformMatchmakingReturnUrl } from "$lib/navigation/platform-matchmaking-url.js";
   import {
     Card,
     CardContent,
@@ -37,6 +40,25 @@
   import ReplayNotesPanel from "@/features/replay/ReplayNotesPanel.svelte";
 
   let { data } = $props();
+
+  function returnToPlatformReplays(): void {
+    window.location.assign(
+      resolvePlatformMatchmakingReturnUrl(
+        new URL(window.location.href),
+        env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+        "replays",
+      ),
+    );
+  }
+
+  function returnToPlatformMatchmaking(): void {
+    window.location.assign(
+      resolvePlatformMatchmakingReturnUrl(
+        new URL(window.location.href),
+        env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+      ),
+    );
+  }
 
   let orchestrator = $state<ReplayOrchestrator | null>(null);
   let loading = $state(true);
@@ -118,7 +140,9 @@
     try {
       console.log("[ReplayPage] loading gameId:", data.gameId);
 
-      const { blob, source } = await loadReplayBlobForPlayback(data.gameId);
+      const { blob, source } = await loadReplayBlobForPlayback(data.gameId, {
+        preferredSource: page.url.searchParams.get("source") === "device" ? "device" : "api",
+      });
       console.log("[ReplayPage] replay blob loaded", {
         source,
         bytes: blob.byteLength,
@@ -165,7 +189,7 @@
       url.searchParams.set("step", String(step));
     }
     const newUrl = step === 0 ? url.pathname : `${url.pathname}?step=${step}`;
-    window.history.replaceState({}, "", newUrl);
+    replaceState(newUrl, {});
   });
 </script>
 
@@ -182,7 +206,7 @@
           <CardDescription class="text-rose-200">{loadError}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button onclick={() => goto("/matchmaking/replays")}>Back to replays</Button>
+          <Button onclick={returnToPlatformReplays}>Back to replays</Button>
         </CardContent>
       </Card>
     </div>
@@ -195,7 +219,7 @@
           variant="ghost"
           size="sm"
           class="size-8 shrink-0 rounded-full border border-white/10 bg-slate-950/80 p-0 text-slate-300 backdrop-blur-md hover:text-slate-100"
-          onclick={() => goto("/matchmaking/replays")}
+          onclick={returnToPlatformReplays}
           title="Back to replays"
         >
           <ArrowLeft class="size-4" />
@@ -355,6 +379,7 @@
       viewerMode="spectator"
       ownerSide={replayOwnerSide}
       boardOverlay={replayControls}
+      onReturnToMatchmaking={returnToPlatformMatchmaking}
     />
 
     <!-- Player picker dialog -->

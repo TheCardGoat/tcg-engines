@@ -1,13 +1,20 @@
-import type { SimulatorEntity } from "@tcg/simulator-contract";
+import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 
-import { CardFace } from "./CardFace";
+import { AnimatedEntityCollection, AnimatedEntitySlot, SimulatorEntityVisual } from "../animation";
+import {
+  cardInteractionStateFromFlags,
+  type CardInteractionStateResolver,
+} from "../interactions/card-interaction";
+import { CardInteractionFrame } from "./CardInteractionFrame";
 
 export interface CompactHandZoneProps {
   entities: SimulatorEntity[];
   selectedId?: string;
+  interactionStateFor?: CardInteractionStateResolver;
   ariaLabel?: string;
   onSelect?: (entity: SimulatorEntity) => void;
   onPlay?: (entity: SimulatorEntity) => void;
+  zone?: SimulatorZone;
 }
 
 const COMPACT_CARD_WIDTH = 60;
@@ -16,9 +23,11 @@ const COMPACT_CARD_SCALE = 0.88;
 export function CompactHandZone({
   entities,
   selectedId,
+  interactionStateFor,
   ariaLabel = "Hand zone",
   onSelect,
   onPlay,
+  zone,
 }: CompactHandZoneProps) {
   const cardStep = computeCardStep(entities.length);
   const spreadWidth =
@@ -34,38 +43,47 @@ export function CompactHandZone({
       aria-label={ariaLabel}
     >
       <div className="relative h-full min-h-[76px]" style={{ minWidth: stageWidth }}>
-        {entities.map((entity, index) => {
-          const selected = entity.id === selectedId;
-          const offsetX = computeOffsetX(index, entities.length, cardStep);
-          const angle = computeAngle(index, entities.length);
-          return (
-            <div
-              key={entity.id}
-              className="compact-hand-card absolute bottom-0 transition-transform duration-200 ease-out will-change-transform"
-              data-card-id={entity.id}
-              data-card-states={entity.states.join(" ")}
-              data-entity-id={entity.id}
-              data-sim-entity-id={entity.id}
-              style={{
-                left: "50%",
-                transform: `translateX(${offsetX - COMPACT_CARD_WIDTH / 2}px) translateY(${selected ? -6 : 0}px) rotate(${angle}deg) scale(${COMPACT_CARD_SCALE})`,
-                transformOrigin: "center 116%",
-                zIndex: computeZIndex(index, entities.length, selected),
-              }}
-              role="listitem"
-            >
-              <CardFace
+        <AnimatedEntityCollection>
+          {entities.map((entity, index) => {
+            const selected = entity.id === selectedId;
+            const interactionState =
+              interactionStateFor?.(entity) ?? cardInteractionStateFromFlags({ selected });
+            const offsetX = computeOffsetX(index, entities.length, cardStep);
+            const angle = computeAngle(index, entities.length);
+            return (
+              <AnimatedEntitySlot
+                key={entity.id}
                 entity={entity}
+                zoneRef={zone ? { kind: "zone", id: zone.id, ownerId: zone.ownerId } : undefined}
                 density="mini"
-                selected={selected}
-                draggable
-                tabIndex={0}
-                onClick={() => onSelect?.(entity)}
-                onDblClick={() => onPlay?.(entity)}
-              />
-            </div>
-          );
-        })}
+                className="compact-hand-card absolute bottom-0 transition-transform duration-200 ease-out will-change-transform"
+                data-card-id={entity.id}
+                data-card-states={entity.states.join(" ")}
+                data-entity-id={entity.id}
+                data-sim-entity-id={entity.id}
+                style={{
+                  left: "50%",
+                  transform: `translateX(${offsetX - COMPACT_CARD_WIDTH / 2}px) translateY(${selected ? -6 : 0}px) rotate(${angle}deg) scale(${COMPACT_CARD_SCALE})`,
+                  transformOrigin: "center 116%",
+                  zIndex: computeZIndex(index, entities.length, selected),
+                }}
+                role="listitem"
+              >
+                <button
+                  type="button"
+                  aria-pressed={interactionState.kind === "selected"}
+                  draggable
+                  onClick={() => onSelect?.(entity)}
+                  onDoubleClick={() => onPlay?.(entity)}
+                >
+                  <CardInteractionFrame state={interactionState}>
+                    <SimulatorEntityVisual entity={entity} density="mini" />
+                  </CardInteractionFrame>
+                </button>
+              </AnimatedEntitySlot>
+            );
+          })}
+        </AnimatedEntityCollection>
       </div>
     </div>
   );

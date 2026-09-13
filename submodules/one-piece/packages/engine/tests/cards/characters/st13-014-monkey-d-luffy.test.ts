@@ -46,4 +46,32 @@ describe("ST13-014 Monkey.D.Luffy", () => {
     expect(view.players.south.leader.power).toBe(5000);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [prb02MonkeyDLuffySt13014PirateFoil014],
+      life: [op09MonkeyDLuffy036],
+    });
+    const sourceId = engine.findCardInZone(
+      "south",
+      "character",
+      prb02MonkeyDLuffySt13014PirateFoil014,
+    );
+    const lifeId = engine.findCardInZone("south", "life", op09MonkeyDLuffy036);
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const leaderPower = engine.getView("south").players.south.leader.power;
+
+    engine.activateEffect(sourceId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(sourceId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(sourceId);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.lifeCount).toBe(lifeBefore);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(lifeId);
+    expect(view.players.south.leader.power).toBe(leaderPower);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

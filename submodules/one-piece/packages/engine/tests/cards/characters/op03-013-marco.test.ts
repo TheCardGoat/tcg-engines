@@ -9,6 +9,10 @@ import {
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+/**
+ * OP03-013 Marco: On Play K.O. ≤3000 power (mandatory map). On K.O. optional:
+ * trash 1 Event from hand → play this card from trash rested.
+ */
 describe("OP03-013 Marco", () => {
   test("on its controller's turn, K.O.s only an opposing power-3000-or-less Character", () => {
     const engine = OnePieceTestEngine.create(
@@ -68,6 +72,31 @@ describe("OP03-013 Marco", () => {
     );
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(marcoId);
+    expect(view.prompts).toHaveLength(0);
+  });
+
+  test("may decline On K.O. so Event stays and Marco stays trashed", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        character: [{ card: op03Marco013, rested: true }],
+        // Event present so the optional is offered (and can be declined).
+        hand: [op02Seaquake021, eb01Doma005],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const marcoId = engine.findCardInZone("north", "character", op03Marco013);
+    const eventId = engine.findCardInZone("north", "hand", op02Seaquake021);
+
+    engine.declareAttack(attackerId, marcoId, "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(eventId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(marcoId);
+    expect(view.players.north.characters.some((c) => c?.instanceId === marcoId)).toBe(false);
     expect(view.prompts).toHaveLength(0);
   });
 });

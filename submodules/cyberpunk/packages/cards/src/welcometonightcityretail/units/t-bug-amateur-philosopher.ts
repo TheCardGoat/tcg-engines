@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailTBugAmateurPhilosopher = defineCyberpunkCard({
   id: "5a5a177c-6ed8-4bd9-8b11-13c2b64414e2",
   slug: "t-bug-amateur-philosopher",
+  subname: "Amateur Philosopher",
   rulesText:
     "{Defeated} Look at all friendly face-down Legends. Then, you may Call a Legend for free. (You can only Call a Legend once per turn.)",
-  name: "T-Bug — Amateur Philosopher",
-  displayName: "T-Bug — Amateur Philosopher",
+  name: "T-Bug",
+  displayName: "T-Bug: Amateur Philosopher",
   canonicalId: "t-bug-amateur-philosopher",
   color: "yellow",
   classifications: ["Merc", "Netrunner"],

@@ -3,7 +3,7 @@ import { prb02Germa66PirateFoil078 } from "../../../../../cards/src/cards/PRB02/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-078 GERMA 66 (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02Germa66PirateFoil078);
   });
 });

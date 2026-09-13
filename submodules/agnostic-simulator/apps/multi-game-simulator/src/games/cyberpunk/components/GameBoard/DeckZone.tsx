@@ -1,6 +1,7 @@
 import type { SimulatorDeckReveal } from "@tcg/simulator-contract";
-import { DeckRevealShelf } from "@tcg/simulator-ui";
+import { DeckStackZone } from "@tcg/simulator-ui";
 
+import { cyberpunkCardZoneToSimulatorZone } from "../../engine/projectSimulator";
 import { CardImage } from "./CardImage";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
@@ -15,6 +16,12 @@ interface DeckZoneProps {
 
 export function DeckZone({ count = 40, opponent = false, side, reveal }: DeckZoneProps) {
   const zoneName = opponent ? "opp-deck" : "p-deck";
+  const resolvedSide = side ?? (opponent ? "opponent" : "player");
+  const zone = {
+    ...cyberpunkCardZoneToSimulatorZone("deck", resolvedSide),
+    count,
+    layoutHint: "stack" as const,
+  };
   const drop = useZoneDroppable(zoneName);
 
   return (
@@ -29,22 +36,23 @@ export function DeckZone({ count = 40, opponent = false, side, reveal }: DeckZon
       data-has-reveal={reveal ? "true" : "false"}
     >
       <div className={classes.inner}>
-        {count > 0 ? (
-          <div className={classes.cardWrap}>
-            <CardImage faceDown alt="Deck" />
-            <span className={classes.count}>{count}</span>
-          </div>
-        ) : (
-          <div className={classes.empty} />
-        )}
-      </div>
-      {reveal ? (
-        <DeckRevealShelf
+        <DeckStackZone
+          zone={zone}
+          entities={[]}
+          entityCount={count}
+          label="Deck"
+          emptyLabel="Deck"
+          density="mini"
           reveal={reveal}
-          compact
-          className={`${classes.revealShelf} ${opponent ? classes.revealShelfOpponent : ""}`}
+          revealPreferredSide={opponent ? "bottom" : "top"}
+          className={classes.stack}
+          renderTopEntity={() => (
+            <div className={classes.cardWrap}>
+              <CardImage faceDown alt="Deck" />
+            </div>
+          )}
         />
-      ) : null}
+      </div>
       <ZoneBadge position={opponent ? "bottom" : "top"} label="Deck">
         Deck
       </ZoneBadge>

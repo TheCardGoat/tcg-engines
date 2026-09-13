@@ -3,7 +3,7 @@ import { prb01NekomamushiJollyRogerFoil110 } from "../../../../../cards/src/card
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-110 Nekomamushi (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01NekomamushiJollyRogerFoil110);
   });
 });

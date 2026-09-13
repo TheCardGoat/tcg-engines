@@ -1,0 +1,43 @@
+import type { UnitCard } from "@tcg/gundam-types";
+
+export const tGundamExia025: UnitCard = {
+  cardNumber: "T-025",
+  name: "Gundam Exia",
+  type: "unit",
+  traits: ["g generation"],
+  id: "T-025",
+  canonicalId: "T-025",
+  externalIds: { bandai: "gundam:t-025" },
+  slug: "gundam-exia-t-025",
+  displayName: "Gundam Exia",
+  rulesText: "-",
+  set: { code: "EB01", name: "Eternal Nexus [EB01]", packageId: "616201" },
+  printNumber: "T-025",
+  printings: [
+    {
+      id: "T-025",
+      artId: "T-025",
+      setCode: "EB01",
+      collectorNumber: "T-025",
+      cardNumber: "T-025",
+      set: { code: "EB01", name: "Eternal Nexus [EB01]", packageId: "616201" },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-025.webp",
+      productName: "Eternal Nexus [EB01]",
+    },
+  ],
+  selectedPrintingId: "T-025",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-025.webp",
+  legality: "legal",
+  sourceTitle: "SD Gundam G Generation ETERNAL",
+  level: 0,
+  cost: 0,
+  ap: 2,
+  hp: 2,
+  effect: "-",
+  effects: [],
+  keywordEffects: [],
+  rarity: "common",
+};
+export const eb01GundamExia025 = tGundamExia025;

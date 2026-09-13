@@ -26,5 +26,6 @@ describe("OP12-031 Tashigi", () => {
     ).toBe(true);
     expect(view.players.south.restedDon).toBe(5);
     expect(view.players.south.leader.attachedDon).toBe(3);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

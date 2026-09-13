@@ -79,6 +79,7 @@ export const op12DonquixoteRosinante061: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
     replacementEffects: [

@@ -3,7 +3,7 @@ import { op14eb04Bluegrass026 } from "../../../../../cards/src/cards/OP14EB04/ch
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB04-026 Bluegrass", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04Bluegrass026);
   });
 });

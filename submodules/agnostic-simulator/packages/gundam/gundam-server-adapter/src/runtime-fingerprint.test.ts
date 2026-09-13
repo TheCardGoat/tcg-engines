@@ -27,6 +27,93 @@ describe("gundamServerAdapter.validateDeckForFormat", () => {
     expect(result.rules.every((rule) => rule.passed)).toBe(true);
   });
 
+  it("accepts a legal BO3 deck while keeping sideboard cards out of main-deck size", () => {
+    const deck = validDeck();
+    const sideboard = sameColorCards(16)
+      .slice(13)
+      .map((card, index) => ({
+        cardId: card.cardNumber,
+        sectionId: "side",
+        quantity: index === 2 ? 2 : 4,
+      }));
+
+    const result = gundamServerAdapter.validateDeckForFormat("bo3", [...deck, ...sideboard]);
+
+    expect(result.label).toBe("Best of Three");
+    expect(result.valid).toBe(true);
+    expect(rule(result, "main-deck-size")?.passed).toBe(true);
+    expect(rule(result, "sideboard-size")).toEqual(expect.objectContaining({ passed: true }));
+  });
+
+  it("rejects a BO3 sideboard that exceeds the shared main-and-sideboard copy limit", () => {
+    const deck = validDeck();
+    const sideboard = deck
+      .slice(0, 3)
+      .map((entry, index) => ({ ...entry, sectionId: "side", quantity: index === 2 ? 2 : 4 }));
+
+    const result = gundamServerAdapter.validateDeckForFormat("bo3", [...deck, ...sideboard]);
+
+    expect(result.valid).toBe(false);
+    expect(rule(result, "copy-limit")).toEqual(expect.objectContaining({ passed: false }));
+    expect(rule(result, "main-deck-size")).toEqual(expect.objectContaining({ passed: true }));
+    expect(rule(result, "sideboard-size")).toEqual(expect.objectContaining({ passed: true }));
+  });
+
+  it("rejects BO3 sideboard cards that add a third deck color", () => {
+    const deck = validDeck();
+    const mainColor = cardByNumber(deck[0]!.cardId).color;
+    const offColorCards = nonResourceCards().filter(
+      (card) => card.color && card.color !== mainColor,
+    );
+    const firstOffColor = offColorCards[0];
+    const secondOffColor = offColorCards.find((card) => card.color !== firstOffColor?.color);
+    if (!firstOffColor || !secondOffColor) {
+      throw new Error("Expected Gundam cards in at least three colors.");
+    }
+    const sideboard = [
+      { cardId: firstOffColor.cardNumber, sectionId: "side", quantity: 4 },
+      { cardId: secondOffColor.cardNumber, sectionId: "side", quantity: 4 },
+      { cardId: firstOffColor.cardNumber, sectionId: "side", quantity: 2 },
+    ];
+
+    const result = gundamServerAdapter.validateDeckForFormat("bo3", [...deck, ...sideboard]);
+
+    expect(result.valid).toBe(false);
+    expect(rule(result, "deck-colors")).toEqual(expect.objectContaining({ passed: false }));
+    expect(rule(result, "sideboard-size")).toEqual(expect.objectContaining({ passed: true }));
+  });
+
+  it("applies card-pool and token checks to BO3 sideboard cards", () => {
+    const deck = validDeck();
+    const sideboard = [
+      { cardId: "GD99-999", sectionId: "side", quantity: 5 },
+      { cardId: tokenCard().cardNumber, sectionId: "side", quantity: 5 },
+    ];
+
+    const result = gundamServerAdapter.validateDeckForFormat("bo3", [...deck, ...sideboard]);
+
+    expect(result.valid).toBe(false);
+    expect(rule(result, "card-pool")).toEqual(expect.objectContaining({ passed: false }));
+    expect(rule(result, "tokens")).toEqual(expect.objectContaining({ passed: false }));
+    expect(rule(result, "sideboard-size")).toEqual(expect.objectContaining({ passed: true }));
+  });
+
+  it("rejects cards assigned to the wrong deck section", () => {
+    const deck = validDeck();
+    const resource = deck.at(-1)!;
+    const main = deck[0]!;
+    const swapped = [
+      { ...main, sectionId: "resource" },
+      ...deck.slice(1, -1),
+      { ...resource, sectionId: "main" },
+    ];
+
+    const result = gundamServerAdapter.validateDeckForFormat("standard", swapped);
+
+    expect(result.valid).toBe(false);
+    expect(rule(result, "deck-sections")).toEqual(expect.objectContaining({ passed: false }));
+  });
+
   it("rejects malformed, unknown, token, under-sized, and over-copy decks", () => {
     const [first, ...rest] = nonResourceCards();
     const token = tokenCard();

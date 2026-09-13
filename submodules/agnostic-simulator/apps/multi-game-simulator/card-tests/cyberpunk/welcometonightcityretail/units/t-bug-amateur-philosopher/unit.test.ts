@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import { CyberpunkTestEngine, P1, P2 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  boxTopperRetailGoroTakemuraHandsUnclean,
-  boxTopperRetailJackieWellesPourOneOutForMe,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  theHeistRetailStarterDeckJackieWellesPourOneOutForMe,
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailTBugAmateurPhilosopher,
 } from "@tcg/cyberpunk-cards";
@@ -11,8 +11,8 @@ import {
 // Legends. Then, you may Call a Legend for free. (You can only Call a Legend
 // once per turn.)"
 const tbug = welcomeToNightCityRetailTBugAmateurPhilosopher; // unit, cost 4, power 4
-const goro = boxTopperRetailGoroTakemuraHandsUnclean; // a face-down friendly Legend
-const jackie = boxTopperRetailJackieWellesPourOneOutForMe; // a second face-down Legend
+const goro = embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean; // a face-down friendly Legend
+const jackie = theHeistRetailStarterDeckJackieWellesPourOneOutForMe; // a second face-down Legend
 
 // T-Bug (power 4) attacks a 5-power spent defender and is defeated, firing its
 // Defeated trigger. The engine handles the look-at privately then suspends on

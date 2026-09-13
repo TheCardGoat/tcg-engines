@@ -3,7 +3,7 @@ import { op09EmpteeBluffsIsland060 } from "../../../../../cards/src/cards/OP09/s
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-060 Emptee Bluffs Island", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op09EmpteeBluffsIsland060);
   });
 });

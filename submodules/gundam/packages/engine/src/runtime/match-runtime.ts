@@ -56,13 +56,19 @@ import { createRandomAPI } from "./random.ts";
 
 import type { GundamBoardView, GundamG, PendingChoicePrompt } from "../gundam/types.ts";
 import { projectGundamBoardView } from "../gundam/projection/project-board.ts";
-import { getEffectiveKeywordEffects } from "../gundam/rules/derived-state.ts";
+import { getEffectiveKeywordEffects, getEffectiveStats } from "../gundam/rules/derived-state.ts";
 import { gundamZones } from "../gundam/zones.ts";
 import { gundamFlow } from "../gundam/flow.ts";
 import { getGundamMoveDefinition, isGundamMoveName } from "../gundam/moves/move-name.ts";
 import { deriveGundamRuntimeCard } from "../gundam/config.ts";
 import { filterMatchView } from "./view-filter.ts";
-import { checkTimeout, settleClocks, updateClockForWaitingState } from "./time-control.ts";
+import {
+  awardDynamicBonuses,
+  checkTimeout,
+  hasClockGraceExpired,
+  settleClocks,
+  updateClockForWaitingState,
+} from "./time-control.ts";
 import { projectGundamMoveLogs } from "./move-log-factory.ts";
 import { buildPacketAnimations } from "./packet-animations.ts";
 
@@ -344,8 +350,15 @@ export class MatchRuntime {
             G: draft.G as object,
             framework: frameworkWrite,
             cards: cardRuntimeAPI,
+            setupCards: this.staticResources.setupCards,
           });
           resolveFlowTransitions(draft as Draft<MatchState>, gundamFlow, buildCtx);
+
+          awardDynamicBonuses(
+            draft as Draft<MatchState<GundamG>>,
+            playerId,
+            envelope.move === "passTurn",
+          );
 
           // 6. Increment state ID
           draft.ctx._stateID++;
@@ -367,7 +380,13 @@ export class MatchRuntime {
       const taggedMoveLogs = moveLogs.map((log) => ({
         ...log,
         stateID: nextState.ctx._stateID,
-        turnNumber: nextState.ctx.status.turn,
+        // Attribute the log to the turn the move was made in, not the
+        // post-command turn: a turn-ending `passActionStep` advances the
+        // turn inside the same command, and stamping `nextState` would
+        // bucket the pass under the new turn. Logs that carry their own
+        // turnNumber (e.g. `turnStart`, set from the lifecycle payload)
+        // keep it.
+        turnNumber: log.turnNumber ?? prevState.ctx.status.turn,
       }));
       const animations: PacketAnimation[] = buildPacketAnimations({
         moveLogs: taggedMoveLogs,
@@ -475,25 +494,83 @@ export class MatchRuntime {
     });
     const framework = this.buildFrameworkReadAPI(this.state as Draft<MatchState<GundamG>>);
 
+    // Deck-look choices authorize the controller (and judges) to see the
+    // looked-at identities while the rest of the deck stays secret. Zone
+    // visibility alone keeps deck cards face-down; surface those cards in
+    // the projection so live clients can render faces without a side-channel
+    // definition lookup (FilteredCardView.definition is the source of truth).
+    this.revealAuthorizedDeckLookCards(view, roleCtx);
+
     // `FilteredCardView.meta` is deliberately game-agnostic and extensible.
-    // Project Gundam's structured effective keywords there so generic live
-    // transports carry the data without teaching shared protocols Gundam nouns.
+    // Project Gundam's derived combat stats and structured effective keywords
+    // there so generic live transports carry the data without teaching shared
+    // protocols Gundam nouns. Constant effects such as 【During Link】 AP
+    // bonuses and granted <Repair> only exist in this derived pass — they are
+    // not stored as permanent meta modifiers.
     for (const zone of Object.values(view.zones.zones)) {
       for (const card of zone.cards) {
         if (card.definition?.type !== "unit") continue;
+        const stats = getEffectiveStats(card.instanceId, this.state.G, framework.cards, framework);
         card.meta = {
           ...card.meta,
+          effectiveAp: stats.ap,
+          effectiveHp: stats.hp,
           effectiveKeywordEffects: getEffectiveKeywordEffects(
             card.instanceId,
             this.state.G,
             framework.cards,
             framework,
+            stats.keywords,
           ),
         };
       }
     }
 
     return view;
+  }
+
+  /**
+   * When a deck-look prompt is pending for this viewer, upgrade the looked-at
+   * deck cards from hidden stubs to full identities in the filtered view.
+   * Opponents still see face-down stubs because `getPendingChoice` withholds
+   * the prompt from non-controllers.
+   */
+  private revealAuthorizedDeckLookCards(
+    view: FilteredMatchView<GundamG>,
+    roleCtx: ViewRoleContext,
+  ): void {
+    // Spectators never receive deck-look prompts, and nothing can be revealed
+    // when no effect is waiting on a choice. Skip the full board projection
+    // that `getPendingChoice` would otherwise trigger on every filtered view.
+    if (roleCtx.role === "spectator") return;
+    if (this.state.G.pendingEffects.length === 0) return;
+
+    const pending = this.getPendingChoice(roleCtx);
+    if (pending?.kind !== "deckLook" || pending.revealedCardIds.length === 0) return;
+
+    const authorized = new Set(pending.revealedCardIds);
+    for (const zone of Object.values(view.zones.zones)) {
+      for (let index = 0; index < zone.cards.length; index++) {
+        const card = zone.cards[index]!;
+        if (!authorized.has(card.instanceId) || !card.faceDown) continue;
+
+        const mapping = this.staticResources.cardsMaps.instances.get(card.instanceId);
+        const definitionId = mapping?.definitionId;
+        // Never project a face-up stub without an identity — that would break
+        // the FilteredCardView hidden-cardback contract and live hydration.
+        if (!definitionId) continue;
+        const definition = this.staticResources.getDefinition(definitionId) ?? null;
+        const meta = this.state.ctx.zones.private.cardMeta[card.instanceId] ?? null;
+
+        zone.cards[index] = {
+          ...card,
+          definition,
+          definitionId,
+          meta,
+          faceDown: false,
+        };
+      }
+    }
   }
 
   // ── Available moves ────────────────────────────────────────────────────
@@ -639,6 +716,7 @@ export class MatchRuntime {
           G: draft.G as object,
           framework: frameworkWrite,
           cards: cardRuntimeAPI,
+          setupCards: this.staticResources.setupCards,
         });
         resolveFlowTransitions(draft as Draft<MatchState>, gundamFlow, buildCtx);
 
@@ -670,7 +748,27 @@ export class MatchRuntime {
     if (!this.canUndo(playerId)) return null;
 
     const entry = this.undoStack.pop()!;
-    this.state = entry.state;
+    // Undo is still an authoritative transition. Restoring the checkpoint
+    // must not rewind the externally-observed state version, otherwise a
+    // stale client can submit a command against a version it saw before the
+    // undone move.
+    const nextStateID = this.state.ctx._stateID + 1;
+    const [restoredState, patches] = create(
+      this.state,
+      (draft) => {
+        const draftGame = draft.G as object;
+        Object.assign(draftGame, structuredClone(entry.state.G));
+        Object.assign(draft.ctx, structuredClone(entry.state.ctx));
+        for (const key of Object.keys(draftGame)) {
+          if (!(key in entry.state.G)) {
+            Reflect.deleteProperty(draftGame, key);
+          }
+        }
+        draft.ctx._stateID = nextStateID;
+      },
+      { enablePatches: true },
+    );
+    this.state = restoredState;
     this.commandHistory.pop();
     this.moveHistory.pop();
     if (entry.moveLogCount > 0) {
@@ -687,14 +785,20 @@ export class MatchRuntime {
 
     return {
       success: true,
-      stateID: entry.state.ctx._stateID,
-      state: entry.state as MatchState,
-      patches: [],
+      stateID: nextStateID,
+      state: restoredState as MatchState,
+      patches,
       gameEvents: [],
       logEntries: [],
-      processedCommand: entry.command,
+      processedCommand: {
+        commandID: `undo-${playerId}-${nextStateID}`,
+        move: "undo",
+        prevStateID: nextStateID - 1,
+        actorRole: "player",
+        args: {},
+      },
       animations: [],
-      undoable: this.undoStack.length > 0,
+      undoable: this.canUndo(playerId),
       moveLogs: [],
     } satisfies CommandSuccess;
   }
@@ -928,6 +1032,8 @@ export class MatchRuntime {
         if (draft.ctx.time.mode !== "chess" && draft.ctx.time.mode !== "dynamic") return false;
         return draft.ctx.time.players[pid as string]?.isInNegativeTime ?? false;
       },
+      hasGraceExpired: (pid: PlayerId, now = clockNow) =>
+        hasClockGraceExpired(draft as unknown as MatchState<GundamG>, pid as string, now),
     };
 
     return {
@@ -940,7 +1046,7 @@ export class MatchRuntime {
 
   private buildFrameworkWriteAPI(
     draft: Draft<MatchState<GundamG>>,
-    playerId: PlayerId,
+    _playerId: PlayerId,
     gameEvents: PublishedGameEvent[],
     logEntries: GameLogEntry[],
     undoBarriersCollected: string[],

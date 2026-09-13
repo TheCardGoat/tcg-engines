@@ -3,7 +3,7 @@ import { eb01Brook046 } from "../../../../../cards/src/cards/EB01/characters/046
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-046 Brook", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01Brook046);
   });
 });

@@ -56,6 +56,10 @@ export const op11TopknotNeptunian107: CharacterCard = {
                 },
               },
             ],
+            condition: {
+              condition: "leaderName",
+              name: "Shirahoshi",
+            },
           },
         ],
         optional: true,

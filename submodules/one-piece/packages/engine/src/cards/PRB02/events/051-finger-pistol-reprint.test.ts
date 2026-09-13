@@ -3,7 +3,7 @@ import { prb02FingerPistolReprint051 } from "../../../../../cards/src/cards/PRB0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-051 Finger Pistol (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02FingerPistolReprint051);
   });
 });

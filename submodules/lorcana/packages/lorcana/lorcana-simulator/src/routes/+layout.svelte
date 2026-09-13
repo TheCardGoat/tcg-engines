@@ -38,6 +38,7 @@
   // });
 
   onMount(() => {
+    document.getElementById('app-boot-screen')?.remove();
     initAnalytics({ gdprStrict: data.gdprStrict ?? true });
     startVitalsReporting();
 
@@ -117,10 +118,17 @@
           await joinDiscordGuild();
         } catch (error) {
           if (error instanceof HttpRequestError) {
+            const errorCode =
+              typeof error.payload === 'object' &&
+              error.payload !== null &&
+              'error' in error.payload &&
+              typeof error.payload.error === 'string'
+                ? error.payload.error
+                : 'UNKNOWN';
             console.error('Failed to join Discord guild:', error.status);
             logOperationalEvent(
               'discord_guild_join_failed',
-              { status: error.status },
+              { status: error.status, error_code: errorCode },
               'warn',
             );
             return;

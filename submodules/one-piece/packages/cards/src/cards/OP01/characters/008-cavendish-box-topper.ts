@@ -41,6 +41,7 @@ export const op01CavendishBoxTopper008: CharacterCard = {
           {
             cost: "addLifeToHand",
             amount: 1,
+            position: "top",
           },
         ],
         actions: [

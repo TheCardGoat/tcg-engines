@@ -91,6 +91,62 @@ If a clause cannot meaningfully exercise one of the rows above (e.g. a card with
 
 `implement-card` requires **at least 8 meaningful tests** beyond the scaffold. This skill agrees: meet that count by covering the rows above for every clause, not by padding with data-shape snapshots.
 
+### Adversarial sensor standard
+
+A test proves an ability only when removing or corrupting that ability would
+make the test fail for the intended reason. Apply these checks to hand-written
+and generated fixtures:
+
+- Make the ability eligible through public moves. A successful
+  `deployUnit`, `assignPilot`, `deployBase`, or `playCommand` is only setup
+  unless the asserted behavior is the printed Deploy, Pair, Burst, or setup
+  ability itself.
+- Assert exact values and boundaries: damage, AP/HP modifier, keyword value,
+  draw/discard count, level threshold, trait/color/owner filter, duration, and
+  source/destination zones.
+- Include a negative that distinguishes "ability did not run" from "test
+  passed": wrong trait, level just above the limit, source active instead of
+  rested, direct attack instead of Unit attack, opponent turn, declined
+  optional, or insufficient prerequisite count.
+- For a batch, mutate at least one exact value and one condition in
+  representative card definitions. Run the focused tests, confirm both fail at
+  their behavioral assertions, restore the definitions, and rerun.
+- Never accept a generated test solely because the fixture gate recognizes
+  `GundamTestEngine.create`. A semantic generator must produce the full
+  behavior sequence; otherwise it must report the card for manual coverage and
+  leave the sibling test missing.
+
+### Choice ownership and staged resolution
+
+- Resolve each prompt with the player named by `pendingChoice.controllerId`.
+  Effects saying "that enemy player discards" must let the opponent choose the
+  discarded identity; the source controller cannot make that choice.
+- When control returns to the source player for a follow-up ("if they don't,
+  you may deploy"), publish a fresh pending effect for that player. Assert both
+  branches and the controller handoff.
+- If an earlier action changes the later candidate set, stage the continuation
+  after that action. Common cases are draw-then-discard, recover-then-discard,
+  rest-then-target, deploy-then-trigger, and modal choices that open another
+  optional or target prompt. Do not precompute or precommit the later target.
+- When two clauses apply to the same chosen card across a state change, carry
+  the resolved identity forward. Do not re-filter for the old state after the
+  first clause changes it.
+
+### Event identity and hidden information
+
+- Distinguish the event card from the event source. Attack observers normally
+  grant or modify the attacking event source; destruction triggers may refer
+  to the defeated event card. Test through the actual attack/destruction
+  sequence so the distinction is observable.
+- For "another Unit" observers, exclude the source and include a negative for
+  the source's own event. For attacks that must target a Unit, include a direct
+  attack negative.
+- Never read a face-down Shield identity or ordered Deck identity before a
+  legal reveal. Assert public counts and revealed destinations.
+- Text that affects the "first" Shield or top card without a player choice must
+  use an automatic engine action. A target-selection prompt would leak hidden
+  identity and is itself a test failure.
+
 ---
 
 ## Engine helpers — use the named ones, do not reinvent

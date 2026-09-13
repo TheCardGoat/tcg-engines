@@ -30,7 +30,6 @@ Allowed import edges (see [`docs/architecture.md`](../architecture.md)):
 simulator → cards, engine, types, token-data
 cards     → types, token-data
 engine    → types, token-data
-website   → (none of the above)
 ```
 
 Reverse edges are bugs. A new edge is a design decision and needs an exec-plan.

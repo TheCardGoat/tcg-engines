@@ -5,10 +5,11 @@ export const welcomeToNightCityRetailViktorVektorYouMightFeelALittlePinch = defi
   id: "647bb074-197f-4059-bac5-251b47c98287",
   canonicalId: "viktor-vektor-you-might-feel-a-little-pinch",
   slug: "viktor-vektor-you-might-feel-a-little-pinch",
+  subname: "You Might Feel a Little Pinch",
   rulesText:
     "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
-  name: "Viktor Vektor — You Might Feel a Little Pinch",
-  displayName: "Viktor Vektor — You Might Feel a Little Pinch",
+  name: "Viktor Vektor",
+  displayName: "Viktor Vektor: You Might Feel a Little Pinch",
   color: "yellow",
   classifications: ["Ripperdoc"],
   set: {

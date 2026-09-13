@@ -46,15 +46,7 @@ export const op01BasilHawkins106: CharacterCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-            self: true,
+            action: "playThisCard",
           },
         ],
       },

@@ -62,6 +62,7 @@ export const op07SlowSlowBeam075: EventCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
     ],
   },

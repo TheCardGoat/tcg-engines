@@ -21,7 +21,7 @@ describe("BotVsBotShell", () => {
       </MemoryRouter>,
     );
 
-    expect(container.querySelector(".motion-animation-stage")).toBeTruthy();
+    expect(container.querySelector("[data-animation-interaction-boundary]")).toBeTruthy();
   });
 
   it("does not mount player-only setup prompts for spectators", () => {

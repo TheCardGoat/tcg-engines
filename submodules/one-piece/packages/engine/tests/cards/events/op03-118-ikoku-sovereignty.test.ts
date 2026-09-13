@@ -99,4 +99,32 @@ describe("OP03-118 Ikoku Sovereignty", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [eb01Doma005, eb01Fourtricks025],
+        life: [op03IkokuSovereignty118],
+        deck: [eb01MountainGod018, eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+
+    const before = engine.getView("north").players.north;
+    const handBefore = before.hand.map((card) => card.instanceId);
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    expect(after.hand.map((card) => card.instanceId)).toEqual(handBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+  });
 });

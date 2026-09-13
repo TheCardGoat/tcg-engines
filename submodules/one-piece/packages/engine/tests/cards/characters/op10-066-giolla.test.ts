@@ -49,4 +49,34 @@ describe("OP10-066 Giolla", () => {
     view = engine.getView("south");
     expect(view.players.south).toMatchObject({ activeDon: 2, restedDon: 2 });
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op10Giolla066], activeDon: 4 },
+      {
+        character: [
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+          { card: eb01Doma005, playedOnTurn: 0 },
+        ],
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const lifeBefore = before.lifeCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    // Declined: no rest 2 DON!!; opposing Character stays active; Life may take the hit.
+    expect(after.activeDon).toBe(4);
+    expect(after.restedDon).toBe(0);
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.lifeCount).toBe(lifeBefore - 1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

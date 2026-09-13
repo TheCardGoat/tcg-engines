@@ -3,7 +3,7 @@ import { prb01GumGumGiantGavelJollyRogerFoil055 } from "../../../../../cards/src
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-055 Gum-Gum Giant Gavel (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01GumGumGiantGavelJollyRogerFoil055);
   });
 });

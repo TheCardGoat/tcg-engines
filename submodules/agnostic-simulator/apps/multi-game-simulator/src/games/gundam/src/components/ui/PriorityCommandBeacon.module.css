@@ -1,0 +1,120 @@
+.beacon {
+  --priority-beacon-accent: var(--color-hud-deep);
+  --priority-beacon-shadow: rgb(5 10 24 / 34%);
+
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  overflow: hidden;
+  background: var(--priority-beacon-accent);
+  color: var(--color-hud-deep);
+  filter: drop-shadow(0 4px 8px var(--priority-beacon-shadow));
+}
+
+.beacon[data-direction="self"] {
+  --priority-beacon-accent: var(--color-hud-accent-deep);
+
+  clip-path: polygon(0 0, 100% 0, 100% 78%, 58% 78%, 50% 100%, 42% 78%, 0 78%);
+  padding-bottom: 0.3rem;
+  animation: priority-beacon-self 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.beacon[data-direction="opponent"] {
+  --priority-beacon-accent: var(--color-hud-danger-deep);
+
+  clip-path: polygon(0 22%, 42% 22%, 50% 0, 58% 22%, 100% 22%, 100% 100%, 0 100%);
+  padding-top: 0.3rem;
+  animation: priority-beacon-opponent 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.beacon[data-state="resolving"] {
+  background: color-mix(in srgb, var(--color-hud-deep) 88%, var(--color-hud-surface));
+  color: var(--color-hud-text-muted);
+  filter: none;
+}
+
+.sweep {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 18%, rgb(255 255 255 / 24%) 48%, transparent 72%);
+  translate: -120% 0;
+  animation: priority-beacon-sweep 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.beacon[data-state="resolving"] .sweep {
+  display: none;
+}
+
+.label {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding-inline: 0.55rem;
+  font-size: 0.625rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.arrow {
+  font-size: 0.9rem;
+  line-height: 0.75;
+}
+
+.compactLabel {
+  display: grid;
+  gap: 0.08rem;
+  line-height: 0.82;
+}
+
+@media (min-width: 640px) {
+  .beacon[data-responsive="true"] .compactLabel {
+    display: none;
+  }
+}
+
+.compactLabel strong {
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+}
+
+.compactLabel small {
+  font-size: 0.475rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+}
+
+@keyframes priority-beacon-self {
+  from {
+    clip-path: polygon(0 0, 100% 0, 100% 88%, 58% 88%, 50% 92%, 42% 88%, 0 88%);
+    filter: drop-shadow(0 2px 4px rgb(5 10 24 / 24%));
+  }
+}
+
+@keyframes priority-beacon-opponent {
+  from {
+    clip-path: polygon(0 12%, 42% 12%, 50% 8%, 58% 12%, 100% 12%, 100% 100%, 0 100%);
+    filter: drop-shadow(0 2px 4px rgb(5 10 24 / 24%));
+  }
+}
+
+@keyframes priority-beacon-sweep {
+  to {
+    translate: 120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beacon,
+  .sweep {
+    animation: none;
+  }
+}

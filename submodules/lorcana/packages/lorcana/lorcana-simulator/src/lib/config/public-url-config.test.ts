@@ -16,13 +16,12 @@ describe("public-url-config", () => {
       apiOrigin: "http://localhost:3000",
       gameServerOrigin: "http://localhost:3001",
       trackerOrigin: "https://new.lorcanito.com",
-      gatewayWsUrl: "ws://localhost:3001/v1/gateway/ws",
       simulatorAssetBaseUrl: "https://new-cdn.lorcanito.com/public/lorcana/simulator",
       lorcanaAssetBaseUrl: "https://new-cdn.lorcanito.com/public/lorcana",
     });
   });
 
-  it("normalizes configured origins and derives the gateway websocket url", () => {
+  it("normalizes configured origins", () => {
     publicEnv.PUBLIC_API_URL = "https://api.example.com/v1/";
     publicEnv.PUBLIC_GAME_SERVER_URL = "https://server.example.com/v1/";
     publicEnv.PUBLIC_SIMULATOR_ASSET_BASE_URL = "https://cdn.example.com/simulator/";
@@ -32,7 +31,6 @@ describe("public-url-config", () => {
       apiOrigin: "https://api.example.com",
       gameServerOrigin: "https://server.example.com",
       trackerOrigin: "https://new.lorcanito.com",
-      gatewayWsUrl: "wss://server.example.com/v1/gateway/ws",
       simulatorAssetBaseUrl: "https://cdn.example.com/simulator",
       lorcanaAssetBaseUrl: "https://cdn.example.com/lorcana",
     });
@@ -45,26 +43,13 @@ describe("public-url-config", () => {
     expect(getPublicUrlConfig()).toMatchObject({
       apiOrigin: "https://new-api.lorcanito.com",
       gameServerOrigin: "https://new-game-server.lorcanito.com",
-      gatewayWsUrl: "wss://new-game-server.lorcanito.com/v1/gateway/ws",
     });
-  });
-
-  it("accepts an explicit websocket gateway url", () => {
-    publicEnv.PUBLIC_GATEWAY_WS_URL = "wss://gateway.example.com/socket";
-
-    expect(getPublicUrlConfig().gatewayWsUrl).toBe("wss://gateway.example.com/socket");
   });
 
   it("rejects invalid API urls with a clear message", () => {
     publicEnv.PUBLIC_API_URL = "not-a-url";
 
     expect(() => getPublicUrlConfig()).toThrow(/Invalid PUBLIC_API_URL/);
-  });
-
-  it("rejects non-websocket gateway urls", () => {
-    publicEnv.PUBLIC_GATEWAY_WS_URL = "https://server.example.com";
-
-    expect(() => getPublicUrlConfig()).toThrow(/Invalid PUBLIC_GATEWAY_WS_URL/);
   });
 
   it("builds asset urls from the configured bases", () => {

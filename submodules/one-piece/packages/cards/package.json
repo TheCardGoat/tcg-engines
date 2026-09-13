@@ -23,6 +23,10 @@
       "types": "./src/index.ts",
       "default": "./src/index.ts"
     },
+    "./preconstructed-decks": {
+      "types": "./src/preconstructed-decks.ts",
+      "default": "./src/preconstructed-decks.ts"
+    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -32,6 +36,10 @@
       ".": {
         "types": "./dist/index.d.mts",
         "default": "./dist/index.mjs"
+      },
+      "./preconstructed-decks": {
+        "types": "./dist/preconstructed-decks.d.mts",
+        "default": "./dist/preconstructed-decks.mjs"
       },
       "./package.json": "./package.json"
     },

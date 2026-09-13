@@ -6,7 +6,7 @@ import type {
   StructuredCardDefinition,
 } from "@tcg/cyberpunk-types";
 import type { MatchState, ActiveEffect } from "../types/match-state.ts";
-import type { PlayerId, CardInstanceId } from "../types/branded.ts";
+import type { PlayerId, CardInstanceId, GigDieId } from "../types/branded.ts";
 import {
   resolveTarget,
   evaluateCondition,
@@ -80,10 +80,42 @@ export function recomputeActiveEffects(state: MatchState): void {
         if (!abilityConditionsOk) continue;
 
         for (const rawEffect of ability.effects) {
+          if (rawEffect.effect === "grantCostModifier") {
+            const abilityConditionsOkForCost =
+              !ability.conditions?.length ||
+              ability.conditions.every((cond) => evaluateCondition(cond, ctx));
+            const effectConditionsOkForCost =
+              !rawEffect.conditions?.length ||
+              rawEffect.conditions.every((cond) => evaluateCondition(cond, ctx));
+            if (!abilityConditionsOkForCost || !effectConditionsOkForCost) continue;
+            if (ability.limits?.includes("firstTimeEachTurn")) {
+              const fired = G.turnMetadata.abilityFiredThisTurn.some(
+                (entry) =>
+                  entry.cardId === sourceCard.instanceId && entry.abilityIndex === abilityIndex,
+              );
+              if (fired) continue;
+            }
+            const costEffect = rawEffect as import("@tcg/cyberpunk-types").GrantCostModifierEffect;
+            scratchStatic.push({
+              id: `static-${sourceCard.instanceId as string}-cost-${scratchStatic.length}`,
+              sourceCardId: sourceCard.instanceId,
+              targetCardId: sourceCard.instanceId,
+              kind: "costModifier",
+              costModifier: costEffect.modifier,
+              appliesTo: costEffect.appliesTo,
+              playerId: sourceCard.controllerId,
+              duration: "continuous",
+              origin: "static",
+              abilityIndex,
+            });
+            continue;
+          }
           if (
             rawEffect.effect !== "modifyPower" &&
             rawEffect.effect !== "multiplyPower" &&
-            rawEffect.effect !== "grantRule"
+            rawEffect.effect !== "grantRule" &&
+            rawEffect.effect !== "grantFightWinAgainst" &&
+            rawEffect.effect !== "grantRivalGoSoloCostIncrease"
           )
             continue;
 
@@ -166,6 +198,33 @@ export function recomputeActiveEffects(state: MatchState): void {
                 origin: "static",
                 abilityIndex,
               });
+            } else if (rawEffect.effect === "grantFightWinAgainst") {
+              const winEffect =
+                rawEffect as import("@tcg/cyberpunk-types").GrantFightWinAgainstEffect;
+              scratchStatic.push({
+                id: `static-${sourceCard.instanceId as string}-${targetId}-${scratchStatic.length}`,
+                sourceCardId: sourceCard.instanceId,
+                targetCardId: targetId as CardInstanceId,
+                kind: "winsFightsAgainst",
+                winsFightsAgainst: { classifications: winEffect.classifications },
+                duration: "continuous",
+                origin: "static",
+                abilityIndex,
+              });
+            } else if (rawEffect.effect === "grantRivalGoSoloCostIncrease") {
+              const costEffect =
+                rawEffect as import("@tcg/cyberpunk-types").GrantRivalGoSoloCostIncreaseEffect;
+              scratchStatic.push({
+                id: `static-${sourceCard.instanceId as string}-${targetId}-${scratchStatic.length}`,
+                sourceCardId: sourceCard.instanceId,
+                targetCardId: targetId as CardInstanceId,
+                kind: "rivalGoSoloCostIncrease",
+                playerId: sourceCard.controllerId,
+                amount: costEffect.amount,
+                duration: "continuous",
+                origin: "static",
+                abilityIndex,
+              });
             }
           }
         }
@@ -216,6 +275,7 @@ export function getEffectivePower(state: MatchState, cardId: string): number {
 
   const activeEffectMod = state.G.activeEffects
     .filter((e) => (e.targetCardId as string) === cardId && e.kind === "powerModifier")
+    .filter((e) => imperativePowerEffectApplies(state, cardId, e))
     .reduce((sum, e) => sum + (e.powerModifier ?? 0), 0);
 
   const activeEffectMul = state.G.activeEffects
@@ -261,6 +321,22 @@ export function getEffectiveRules(state: MatchState, cardId: string): RuleModifi
   }, [] as RuleModifier[]);
 
   return [...new Set([...intrinsic, ...granted, ...gearKeywords])];
+}
+
+export function consumeRuleUse(state: MatchState, cardId: string, rule: RuleModifier): void {
+  const effect = state.G.activeEffects.find(
+    (candidate) =>
+      candidate.origin === "imperative" &&
+      candidate.kind === "grantRule" &&
+      candidate.rule === rule &&
+      (candidate.targetCardId as string) === cardId &&
+      candidate.remainingUses !== undefined,
+  );
+  if (!effect || effect.remainingUses === undefined) return;
+  effect.remainingUses -= 1;
+  if (effect.remainingUses <= 0) {
+    state.G.activeEffects = state.G.activeEffects.filter((candidate) => candidate.id !== effect.id);
+  }
 }
 
 export function getEffectiveKeywords(state: MatchState, cardId: string): string[] {
@@ -310,6 +386,102 @@ export function getGigCount(state: MatchState, playerId: PlayerId): number {
   return player.gigArea.length;
 }
 
+export function findSacrificialAttachedGear(
+  state: MatchState,
+  hostId: string,
+): CardInstanceId | null {
+  const host = state.G.cardIndex[hostId];
+  if (!host) return null;
+  for (const gearId of host.meta.attachedGearIds) {
+    if (getEffectiveRules(state, gearId as string).includes("sacrificeInsteadOfHostDefeat")) {
+      return gearId as CardInstanceId;
+    }
+  }
+  return null;
+}
+
+export function playerHasCallLegendFree(state: MatchState, playerId: PlayerId): boolean {
+  const player = state.G.players[playerId as string];
+  if (!player) return false;
+  for (const zone of ["field", "legendArea"] as const) {
+    for (const cardId of player.zones[zone] ?? []) {
+      if (getEffectiveRules(state, cardId as string).includes("callLegendFree")) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+export function defenderRestrictsStealAbovePower(
+  state: MatchState,
+  defenderPlayerId: PlayerId,
+): boolean {
+  return state.G.activeEffects.some(
+    (effect) =>
+      effect.kind === "grantRule" &&
+      effect.rule === "cantStealGigAbovePower" &&
+      state.G.cardIndex[effect.sourceCardId as string]?.controllerId === defenderPlayerId,
+  );
+}
+
+export function filterGigsByAttackerPowerCap(
+  state: MatchState,
+  thiefId: CardInstanceId,
+  defenderPlayerId: PlayerId,
+  gigIds: readonly string[],
+): GigDieId[] {
+  const restrictAbove = defenderRestrictsStealAbovePower(state, defenderPlayerId);
+  const restrictBelowForLegends = state.G.activeEffects.some(
+    (effect) =>
+      effect.kind === "grantRule" &&
+      effect.rule === "cantStealGigBelowPower" &&
+      state.G.cardIndex[effect.sourceCardId as string]?.controllerId === defenderPlayerId,
+  );
+  if (!restrictAbove && !restrictBelowForLegends) return [...gigIds] as GigDieId[];
+  const power = getEffectivePower(state, thiefId as string);
+  const thief = state.G.cardIndex[thiefId as string];
+  const thiefIsLegend = thief ? defOf(thief).type === "legend" : false;
+  return gigIds.filter((id) => {
+    const die = state.G.gigDice[id];
+    return Boolean(
+      die &&
+      (!restrictAbove || die.faceValue <= power) &&
+      (!restrictBelowForLegends || !thiefIsLegend || die.faceValue >= power),
+    );
+  }) as GigDieId[];
+}
+
 function isKeywordRule(rule: RuleModifier): boolean {
   return rule === "blocker" || rule === "goSolo" || rule === "adrenaline" || rule === "quick";
+}
+
+/**
+ * Honors fight-participation conditions (`attacking`, `fightKind`) stored on an
+ * imperative power-modifier effect when summing effective power. The static-effects
+ * pass already evaluates these for continuous abilities; this mirrors that for
+ * one-shot (played) power buffs so a card like "has +X power while fighting rival
+ * Units this turn" only applies during a fight, not while idle or direct-attacking.
+ */
+function imperativePowerEffectApplies(
+  state: MatchState,
+  cardId: string,
+  effect: ActiveEffect,
+): boolean {
+  const conditions = effect.conditions ?? [];
+  if (conditions.length === 0) return true;
+  const attack = state.G.attackState;
+
+  for (const condition of conditions) {
+    if (condition.condition === "attacking") {
+      if (!attack || (attack.attackerId as string) !== cardId) return false;
+    } else if (condition.condition === "fightKind") {
+      if (!attack) return false;
+      const isParticipant =
+        (attack.attackerId as string) === cardId || (attack.defenderId as string) === cardId;
+      if (!isParticipant) return false;
+      if (condition.kind && attack.kind !== condition.kind) return false;
+    }
+  }
+  return true;
 }

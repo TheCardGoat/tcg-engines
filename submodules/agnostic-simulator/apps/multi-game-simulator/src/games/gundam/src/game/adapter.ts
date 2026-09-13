@@ -1,3 +1,4 @@
+import { buildMulliganRedrawPlan } from "@tcg/gundam-server-adapter";
 import {
   asPlayerId,
   stripPrivateFields,
@@ -9,15 +10,23 @@ import {
   type PacketAnimation,
 } from "@tcg/gundam-engine";
 import {
+  applyGundamPresentationToView,
   buildGundamInteractionView,
+  cardWithPresentationPrinting,
   describeGundamInteractionProcedure,
   gundamTargetInputBinding,
+  resolveGundamPresentationPrintingId,
   seedGundamInteractionSource,
   type GundamPendingChoice,
   type GundamPendingMoveStep,
+  type GundamPresentation,
 } from "@tcg/gundam-server-adapter";
-import type { EngineInteractionView } from "@tcg/protocol";
+import type { AnimationPlanV2, EngineInteractionView } from "@tcg/protocol";
 import type { Card } from "@tcg/gundam-types";
+import {
+  simulatorExternalCommandGateFor,
+  type SimulatorExternalCommandGate,
+} from "@tcg/simulator-runtime/animation";
 
 import {
   type BoardProjection,
@@ -43,11 +52,19 @@ export interface TurnTaggedMoveLog {
   readonly turnNumber: number;
 }
 
-export interface TurnTaggedPacketAnimation {
-  readonly animation: PacketAnimation;
-  readonly stateID: number;
-  readonly turnNumber: number;
-}
+export type TurnTaggedPacketAnimation =
+  | {
+      readonly animation: PacketAnimation;
+      readonly plan?: never;
+      readonly stateID: number;
+      readonly turnNumber: number;
+    }
+  | {
+      readonly animation?: never;
+      readonly plan: AnimationPlanV2;
+      readonly stateID: number;
+      readonly turnNumber: number;
+    };
 
 export interface SimulatorViewerContext {
   readonly role: "player" | "spectator";
@@ -57,9 +74,17 @@ export interface SimulatorViewerContext {
   readonly perspectivePlayerId: ViewerId;
 }
 
+export type EngineCommandGate = Pick<SimulatorExternalCommandGate, "isBlocked" | "subscribe">;
+
 export interface EngineAdapter {
   readonly viewerId: ViewerId;
   readonly viewerContext: SimulatorViewerContext;
+  /**
+   * Read-only command readiness shared by UI automation and the real submit
+   * boundary. Consumers may wait for the gate, but only the animation owner
+   * may change it.
+   */
+  readonly commandGate: EngineCommandGate;
   readonly view: () => BoardProjection;
   readonly interactionView: () => EngineInteractionView;
   readonly describeMove: (
@@ -75,6 +100,18 @@ export interface EngineAdapter {
   readonly canUndo: () => boolean;
   readonly undo: () => SubmitOutcome | null;
   readonly pendingChoice: () => GundamPendingChoice | undefined;
+  /**
+   * Viewer-safe identity of the revealed Shield whose Burst is awaiting a
+   * decision. The full choice remains controller-only.
+   */
+  readonly pendingBurst: () =>
+    | {
+        readonly kind: "burst";
+        readonly effectId: string;
+        readonly controllerId: string;
+        readonly sourceCardId: string;
+      }
+    | undefined;
   readonly moveHistory: () => readonly MoveHistoryEntry[];
   /**
    * Running list of game-log entries accumulated from every successful
@@ -97,17 +134,30 @@ export interface EngineAdapterConfig {
   readonly runtime: MatchRuntime;
   readonly staticResources: MatchStaticResources;
   readonly viewerId: ViewerId;
+  readonly presentation?: GundamPresentation;
+}
+
+let fallbackCommandSequence = 0;
+
+function nextCommandId(): string {
+  if (typeof globalThis.crypto?.randomUUID === "function") {
+    return globalThis.crypto.randomUUID();
+  }
+  fallbackCommandSequence += 1;
+  return `browser-command-${Date.now().toString(36)}-${fallbackCommandSequence.toString(36)}`;
 }
 
 export function createEngineAdapter({
   runtime,
   staticResources,
   viewerId,
+  presentation,
 }: EngineAdapterConfig): EngineAdapter {
   // The viewer is always a participant from this seat — ViewerId and PlayerId
   // are parallel branded strings bound to the same seat identifier, so we
   // re-brand through the engine's public helper rather than casting.
   const playerId = asPlayerId(String(viewerId));
+  const commandGate = simulatorExternalCommandGateFor(runtime);
 
   // Track the latest stateID via command results instead of reading the
   // engine's private `ctx._stateID` field. MatchRuntime.initialize() seeds
@@ -116,20 +166,7 @@ export function createEngineAdapter({
   // engine internals for optimistic-concurrency sequencing.
   let lastStateId = 0;
 
-  // Accumulated game-log entries. Every CommandSuccess envelope carries the
-  // `logEntries` emitted during that command (including lifecycle hooks
-  // like mulligan onEnter / onExit), so appending on each successful submit
-  // / undo is enough — the engine itself holds no long-lived logger we can
-  // subscribe to.
-  const logTrail: TurnTaggedLogEntry[] = [];
-
-  const captureLog = (entries: readonly GameLogEntry[]) => {
-    if (entries.length === 0) return;
-    const turnNumber = runtime.getFilteredView({ role: "player", playerId }).status.turn;
-    for (const entry of entries) {
-      logTrail.push({ entry, turnNumber });
-    }
-  };
+  const localAnimationPlans: TurnTaggedPacketAnimation[] = [];
 
   const isVisibleToViewer = (entry: GameLogEntry): boolean => {
     const { visibleTo } = entry;
@@ -144,8 +181,13 @@ export function createEngineAdapter({
       playerId: viewerId,
       perspectivePlayerId: viewerId,
     },
+    commandGate,
 
-    view: () => runtime.getFilteredView({ role: "player", playerId }),
+    view: () =>
+      applyGundamPresentationToView(
+        runtime.getFilteredView({ role: "player", playerId }),
+        presentation,
+      ),
 
     interactionView: () =>
       buildGundamInteractionView({
@@ -154,6 +196,7 @@ export function createEngineAdapter({
         state: runtime.getState(),
         staticResources,
         pendingChoice: runtime.getPendingChoice({ role: "player", playerId }),
+        publicPendingChoice: runtime.getPendingChoice({ role: "judge" }),
       }),
 
     describeMove: (move, partialInput) => {
@@ -171,9 +214,17 @@ export function createEngineAdapter({
     keyForStep: (move, step) => gundamTargetInputBinding(move, step),
 
     submit: (move, partialInput) => {
+      if (commandGate.isBlocked()) {
+        return {
+          ok: false,
+          errorCode: "animation-active",
+          error: "Commands are blocked while the board transition is active.",
+        };
+      }
+      const previousView = runtime.getFilteredView({ role: "player", playerId });
       const result = runtime.executeCommand(
         {
-          commandID: crypto.randomUUID(),
+          commandID: nextCommandId(),
           move,
           prevStateID: lastStateId,
           actorRole: "player",
@@ -183,6 +234,21 @@ export function createEngineAdapter({
       );
 
       if (result.success) {
+        const mulliganPlan = buildMulliganRedrawPlan({
+          move,
+          partialInput,
+          previousView,
+          nextState: result.state,
+          playerId: String(playerId),
+          stateID: result.stateID,
+        });
+        if (mulliganPlan) {
+          localAnimationPlans.push({
+            plan: mulliganPlan,
+            stateID: result.stateID,
+            turnNumber: result.state.ctx.status.turn,
+          });
+        }
         // NB: don't overwrite `lastStateId` with `result.stateID` here.
         // `runtime.executeCommand` fires `onStateUpdate` listeners
         // synchronously, and some of those listeners (e.g.
@@ -192,7 +258,6 @@ export function createEngineAdapter({
         // callback has already refreshed `lastStateId` to the true
         // current ID. Writing `result.stateID` back would clobber that
         // and the very next submit would fail STALE_STATE.
-        captureLog(result.logEntries);
         // Return the LIVE stateID, not `result.stateID`. If a re-entrant
         // listener advanced the runtime during the submit, the caller
         // would otherwise get a value that's already stale the moment
@@ -205,23 +270,34 @@ export function createEngineAdapter({
     canUndo: () => runtime.canUndo(playerId),
 
     undo: () => {
+      if (commandGate.isBlocked()) {
+        return {
+          ok: false,
+          errorCode: "animation-active",
+          error: "Commands are blocked while the board transition is active.",
+        };
+      }
       const result = runtime.undo(playerId);
       if (!result) return null;
       if (result.success) {
         // Same rationale as in `submit`: let `subscribe` refresh
         // `lastStateId` from the runtime's live stateID.
-        captureLog(result.logEntries);
         return { ok: true, stateId: lastStateId };
       }
       return { ok: false, errorCode: result.errorCode, error: result.error };
     },
 
     pendingChoice: () => runtime.getPendingChoice({ role: "player", playerId }),
+    pendingBurst: () => runtime.getBoardView({ role: "player", playerId }).pendingBurst,
 
     moveHistory: () => runtime.getMoveHistory(),
 
-    logEntries: () => logTrail.filter((t) => isVisibleToViewer(t.entry)),
-    packetAnimations: () => runtime.getPacketAnimationHistory(),
+    logEntries: () =>
+      runtime.getGameLogHistory().filter((tagged) => isVisibleToViewer(tagged.entry)),
+    packetAnimations: () =>
+      [...runtime.getPacketAnimationHistory(), ...localAnimationPlans].sort(
+        (left, right) => left.stateID - right.stateID,
+      ),
     moveLogs: () =>
       runtime.getMoveLogHistory().map((log) => ({
         log: stripPrivateFields(log, String(viewerId)) ?? log,
@@ -232,16 +308,17 @@ export function createEngineAdapter({
     cardDefinitionOf: (instanceId) => {
       const mapping = staticResources.cardsMaps.instances.get(instanceId);
       if (!mapping) return null;
-      return staticResources.getDefinition(mapping.definitionId) ?? null;
+      const definition = staticResources.getDefinition(mapping.definitionId);
+      if (!definition || !presentation) return definition ?? null;
+      const printingId = resolveGundamPresentationPrintingId(presentation, instanceId);
+      return printingId ? cardWithPresentationPrinting(definition, printingId) : definition;
     },
 
     // `runtime.onStateUpdate` fires synchronously from INSIDE
-    // `executeCommand`, before the CommandSuccess returns. But our
-    // `captureLog` runs AFTER `executeCommand` returns, so a naive
-    // passthrough subscription would notify the store while `logTrail` is
-    // still empty. Defer the notification to a microtask so it fires after
-    // the current call stack unwinds — by then both the new engine state
-    // AND any freshly-captured log entries are visible.
+    // `executeCommand`, before the CommandSuccess returns. Defer the
+    // notification to a microtask so nested fixture automation can finish
+    // and the store reads one coherent authoritative state, log, and
+    // animation-history snapshot.
     //
     // Also refresh `lastStateId` here: fixture-level helpers like
     // `attachAutoMulliganKeep` / `attachAutoPassBot` drive the runtime
@@ -263,9 +340,15 @@ export function createEngineAdapter({
     // STALE_STATE.
     subscribe: (onChange) => {
       lastStateId = runtime.getState().ctx._stateID;
+      let notificationQueued = false;
       return runtime.onStateUpdate(() => {
         lastStateId = runtime.getState().ctx._stateID;
-        queueMicrotask(onChange);
+        if (notificationQueued) return;
+        notificationQueued = true;
+        queueMicrotask(() => {
+          notificationQueued = false;
+          onChange();
+        });
       });
     },
   };

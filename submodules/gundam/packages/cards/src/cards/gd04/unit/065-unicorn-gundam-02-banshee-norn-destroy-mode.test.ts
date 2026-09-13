@@ -6,8 +6,10 @@ import {
   activeResources,
   createMockPilot,
   createMockUnit,
+  expectCard,
   expectFailure,
-  expectSuccess,
+  expectLogType,
+  expectPublicLog,
 } from "@tcg/gundam-engine";
 import { gd04UnicornGundam02BansheeNornDestroyMode065 } from "./065-unicorn-gundam-02-banshee-norn-destroy-mode.ts";
 
@@ -22,19 +24,37 @@ describe("Unicorn Gundam 02 Banshee Norn (Destroy Mode) (GD04-065)", () => {
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const attackerId = p1.getCardsInZone("battleArea")[0]!;
-      const [defenderId, otherEnemyId] = p2.getCardsInZone("battleArea");
 
-      expectSuccess(p1.enterBattle(attackerId, defenderId!));
+      p1.must.attack(gd04UnicornGundam02BansheeNornDestroyMode065).into(defender);
 
-      expect(p1.getVisibleCard(defenderId!)?.effectiveAp).toBe(3);
-      expect(p1.getVisibleCard(otherEnemyId!)?.effectiveAp).toBe(4);
+      expectPublicLog(engine, "gundam.move.attackDeclared", {
+        attackerPlayerId: PLAYER_ONE,
+      });
+      expectCard(p2, defender).toHaveAp(3);
+      expectCard(p2, otherEnemy).toHaveAp(4);
 
-      expectSuccess(p2.passBlock());
-      expectSuccess(p2.passBattleAction());
-      expectSuccess(p1.passBattleAction());
+      p2.must.passBlock().passBattleAction();
+      p1.must.passBattleAction();
 
-      expect(p1.getDamage(attackerId)).toBe(3);
+      expectLogType(engine, "gundam.combat.damageDealt", { min: 1 });
+      expectCard(p1, gd04UnicornGundam02BansheeNornDestroyMode065).toHaveDamage(3);
+    });
+
+    it("applies the AP-1 even without a linked Pilot", () => {
+      const defender = createMockUnit({ ap: 3, hp: 6 });
+      const engine = GundamTestEngine.create(
+        { play: [gd04UnicornGundam02BansheeNornDestroyMode065] },
+        { play: [{ card: defender, exhausted: true }] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+
+      expect(
+        p1.getPilotId(p1.unit(gd04UnicornGundam02BansheeNornDestroyMode065).instanceId),
+      ).toBeUndefined();
+      p1.must.attack(gd04UnicornGundam02BansheeNornDestroyMode065).into(defender);
+
+      expectCard(p2, defender).toHaveAp(2);
     });
   });
 
@@ -53,10 +73,13 @@ describe("Unicorn Gundam 02 Banshee Norn (Destroy Mode) (GD04-065)", () => {
         resourceArea: activeResources(6),
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const bansheeId = p1.getCardsInZone("battleArea")[0]!;
-      const [blueAId, blueBId, blueCId, blueDId, whiteCardId] = p1.getCardsInZone("trash");
+      const bansheeId = p1.unit(gd04UnicornGundam02BansheeNornDestroyMode065).instanceId;
 
-      expectSuccess(p1.assignPilot(riddhe, bansheeId));
+      p1.must.assignPilot(riddhe, gd04UnicornGundam02BansheeNornDestroyMode065);
+      const blueAId = p1.cardIn("trash", blueA).instanceId;
+      const blueBId = p1.cardIn("trash", blueB).instanceId;
+      const blueCId = p1.cardIn("trash", blueC).instanceId;
+      const blueDId = p1.cardIn("trash", blueD).instanceId;
       const [costStep] = p1.getMoveProcedure("activateAbility", {
         cardId: bansheeId,
         effectIndex: 0,
@@ -69,23 +92,105 @@ describe("Unicorn Gundam 02 Banshee Norn (Destroy Mode) (GD04-065)", () => {
         maxTargets: 3,
       });
 
+      // Negative path uses instance ids (raw activateAbility does not resolve defs)
       expectFailure(
-        p1.activateAbility(bansheeId, 0, { targets: [blueAId!, blueAId!, blueCId!] }),
+        p1.activateAbility(bansheeId, 0, { targets: [blueAId, blueAId, blueCId] }),
         "DUPLICATE_TARGETS",
       );
-      expect(p1.getCardZone(blueAId!)).toBe(`trash:${PLAYER_ONE}`);
-      expect(p1.isExhausted(bansheeId)).toBe(true);
+      expectCard(p1, blueA).toBeIn("trash");
+      expectCard(p1, gd04UnicornGundam02BansheeNornDestroyMode065).toBeRested();
 
-      expectSuccess(p1.activateAbility(bansheeId, 0, { targets: [blueAId!, blueCId!, blueDId!] }));
+      p1.must.activateAbility(gd04UnicornGundam02BansheeNornDestroyMode065, 0, {
+        targets: [blueA, blueC, blueD],
+      });
 
-      expect(p1.getCardZone(blueAId!)).toBe("removalArea");
-      expect(p1.getCardZone(blueCId!)).toBe("removalArea");
-      expect(p1.getCardZone(blueDId!)).toBe("removalArea");
-      expect(p1.getCardZone(blueBId!)).toBe(`trash:${PLAYER_ONE}`);
-      expect(p1.getCardZone(whiteCardId!)).toBe(`trash:${PLAYER_ONE}`);
-      expect(p1.isExhausted(bansheeId)).toBe(false);
+      expect(p1.getCardZone(blueA)).toBe("removalArea");
+      expect(p1.getCardZone(blueC)).toBe("removalArea");
+      expect(p1.getCardZone(blueD)).toBe("removalArea");
+      expectCard(p1, blueB).toBeIn("trash");
+      expectCard(p1, whiteCard).toBeIn("trash");
+      expectCard(p1, gd04UnicornGundam02BansheeNornDestroyMode065).toBeReady();
       expect(p1.getLegalAttackTargets(bansheeId)).not.toContain("direct");
-      expectFailure(p1.enterBattle(bansheeId, "direct"), "CANNOT_TARGET_PLAYER");
+      expectFailure(
+        p1.enterBattle(gd04UnicornGundam02BansheeNornDestroyMode065, "direct"),
+        "CANNOT_TARGET_PLAYER",
+      );
+    });
+
+    it("cannot activate while unpaired", () => {
+      const blueA = createMockUnit({ color: "blue" });
+      const blueB = createMockUnit({ color: "blue" });
+      const blueC = createMockUnit({ color: "blue" });
+      const engine = GundamTestEngine.create({
+        play: [{ card: gd04UnicornGundam02BansheeNornDestroyMode065, exhausted: true }],
+        trash: [blueA, blueB, blueC],
+        resourceArea: activeResources(6),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const trashIds = p1.getCardsInZone("trash");
+
+      expectFailure(
+        p1.activateAbility(gd04UnicornGundam02BansheeNornDestroyMode065, 0, {
+          targets: trashIds,
+        }),
+        "CONDITIONS_NOT_MET",
+      );
+      expectCard(p1, gd04UnicornGundam02BansheeNornDestroyMode065).toBeRested();
+      expectCard(p1, blueA).toBeIn("trash");
+      expectCard(p1, blueB).toBeIn("trash");
+      expectCard(p1, blueC).toBeIn("trash");
+    });
+
+    it("cannot activate when paired with a Pilot that does not satisfy Link", () => {
+      const wrongPilot = createMockPilot({ name: "Not Riddhe", level: 4, cost: 1 });
+      const blueA = createMockUnit({ color: "blue" });
+      const blueB = createMockUnit({ color: "blue" });
+      const blueC = createMockUnit({ color: "blue" });
+      const engine = GundamTestEngine.create({
+        hand: [wrongPilot],
+        play: [{ card: gd04UnicornGundam02BansheeNornDestroyMode065, exhausted: true }],
+        trash: [blueA, blueB, blueC],
+        resourceArea: activeResources(6),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const trashIds = p1.getCardsInZone("trash");
+
+      p1.must.assignPilot(wrongPilot, gd04UnicornGundam02BansheeNornDestroyMode065);
+      expectFailure(
+        p1.activateAbility(gd04UnicornGundam02BansheeNornDestroyMode065, 0, {
+          targets: trashIds,
+        }),
+        "CONDITIONS_NOT_MET",
+      );
+      expectCard(p1, gd04UnicornGundam02BansheeNornDestroyMode065).toBeRested();
+    });
+
+    it("cannot pay the exile cost with fewer than 3 blue cards in trash", () => {
+      const riddhe = createMockPilot({ name: "Riddhe Marcenas", level: 4, cost: 1 });
+      const blueA = createMockUnit({ color: "blue" });
+      const blueB = createMockUnit({ color: "blue" });
+      const whiteCard = createMockUnit({ color: "white" });
+      const engine = GundamTestEngine.create({
+        hand: [riddhe],
+        play: [{ card: gd04UnicornGundam02BansheeNornDestroyMode065, exhausted: true }],
+        trash: [blueA, blueB, whiteCard],
+        resourceArea: activeResources(6),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const blueAId = p1.cardIn("trash", blueA).instanceId;
+      const blueBId = p1.cardIn("trash", blueB).instanceId;
+      const whiteCardId = p1.cardIn("trash", whiteCard).instanceId;
+
+      p1.must.assignPilot(riddhe, gd04UnicornGundam02BansheeNornDestroyMode065);
+      expectFailure(
+        p1.activateAbility(gd04UnicornGundam02BansheeNornDestroyMode065, 0, {
+          targets: [blueAId, blueBId, whiteCardId],
+        }),
+        "COST_NOT_PAYABLE",
+      );
+      expectCard(p1, gd04UnicornGundam02BansheeNornDestroyMode065).toBeRested();
+      expectCard(p1, blueA).toBeIn("trash");
+      expectCard(p1, whiteCard).toBeIn("trash");
     });
   });
 });

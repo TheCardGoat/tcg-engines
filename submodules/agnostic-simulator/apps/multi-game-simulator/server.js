@@ -5,7 +5,13 @@ import morgan from "morgan";
 const BUILD_PATH = "./build/server/index.js";
 const DEVELOPMENT = process.env.NODE_ENV === "development";
 const PORT = Number.parseInt(process.env.PORT || "8080", 10);
-const simulatorBasenames = ["/cyberpunk/simulator", "/gundam/simulator", "/one-piece/simulator"];
+const simulatorBasenames = [
+  "/cyberpunk/simulator",
+  "/gundam/simulator",
+  "/naruto/simulator",
+  "/one-piece/simulator",
+  "/riftbound/simulator",
+];
 
 const app = express();
 
@@ -40,7 +46,7 @@ if (DEVELOPMENT) {
       `${basename}/assets`,
       express.static("build/client/assets", { immutable: true, maxAge: "1y" }),
     );
-    app.use(basename, express.static("build/client", { maxAge: "1h" }));
+    app.use(basename, express.static("build/client", { maxAge: "1h", redirect: false }));
   }
   app.use(await import(BUILD_PATH).then((mod) => mod.app));
 }

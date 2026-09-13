@@ -4,12 +4,15 @@ import * as HoverCard from "@radix-ui/react-hover-card";
 
 import { useGundamGame } from "../../game/index.ts";
 import { asCardColor, cardImageUrlOf } from "../containers/mappers.ts";
+import { useCardInspect } from "./card/card-inspect-context.tsx";
 import { CardInfoBody, CARD_INFO_CARD_COLOR, CARD_INFO_DIALOG_W } from "./CardInfoDialog.tsx";
 import type { CardType, GameCardData, KeywordEffectEntry } from "./types.ts";
 
 export interface CardLinkProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   readonly cardId: string;
   readonly name: string;
+  /** Render a non-interactive inline trigger when nested inside another control. */
+  readonly hoverOnly?: boolean;
   readonly onHover?: (cardId: string, event: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -55,40 +58,86 @@ function toGameCard(
  * leaves both the trigger AND the content.
  */
 export const CardLink = forwardRef<HTMLButtonElement, CardLinkProps>(function CardLink(
-  { cardId, name, className, onHover, onMouseEnter, onClick, ...rest },
+  {
+    cardId,
+    name,
+    hoverOnly = false,
+    className,
+    onHover,
+    onMouseEnter,
+    onMouseLeave,
+    onFocus,
+    onBlur,
+    onClick,
+    ...rest
+  },
   ref,
 ) {
   const { adapter } = useGundamGame();
+  const inspect = useCardInspect();
   const card = toGameCard(adapter.cardDefinitionOf(cardId), cardId);
   const factionColor = (card?.color && CARD_INFO_CARD_COLOR[card.color]) || "#4cc3ff";
+  const triggerClassName = [
+    "font-body text-hud-info underline decoration-hud-info/40 decoration-dotted underline-offset-2",
+    "hover:text-hud-accent-hot hover:decoration-hud-accent-hot",
+    "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-hud-info",
+    "cursor-pointer bg-transparent border-0 p-0 inline",
+    className ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const showPreview = () => {
+    if (card) inspect?.setHover(card);
+  };
+  const hidePreview = () => inspect?.setHover(null);
 
   return (
     <HoverCard.Root openDelay={80} closeDelay={120}>
       <HoverCard.Trigger asChild>
-        <button
-          ref={ref}
-          type="button"
-          data-card-id={cardId}
-          className={[
-            "font-body text-hud-info underline decoration-hud-info/40 decoration-dotted underline-offset-2",
-            "hover:text-hud-accent-hot hover:decoration-hud-accent-hot",
-            "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-hud-info",
-            "cursor-pointer bg-transparent border-0 p-0 inline",
-            className ?? "",
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          onMouseEnter={(event) => {
-            onHover?.(cardId, event);
-            onMouseEnter?.(event);
-          }}
-          onClick={(event) => {
-            onClick?.(event);
-          }}
-          {...rest}
-        >
-          {name}
-        </button>
+        {hoverOnly ? (
+          <span
+            data-card-id={cardId}
+            className={triggerClassName}
+            onPointerEnter={showPreview}
+            onPointerLeave={hidePreview}
+            onMouseEnter={showPreview}
+            onMouseLeave={hidePreview}
+          >
+            {name}
+          </span>
+        ) : (
+          <button
+            ref={ref}
+            type="button"
+            data-card-id={cardId}
+            className={triggerClassName}
+            onMouseEnter={(event) => {
+              showPreview();
+              onHover?.(cardId, event);
+              onMouseEnter?.(event);
+            }}
+            onMouseLeave={(event) => {
+              hidePreview();
+              onMouseLeave?.(event);
+            }}
+            onPointerEnter={showPreview}
+            onPointerLeave={hidePreview}
+            onFocus={(event) => {
+              showPreview();
+              onFocus?.(event);
+            }}
+            onBlur={(event) => {
+              hidePreview();
+              onBlur?.(event);
+            }}
+            onClick={(event) => {
+              onClick?.(event);
+            }}
+            {...rest}
+          >
+            {name}
+          </button>
+        )}
       </HoverCard.Trigger>
       {card && (
         <HoverCard.Portal>

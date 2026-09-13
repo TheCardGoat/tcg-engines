@@ -99,6 +99,7 @@ export type KnownCardClassification =
   | "6th Street"
   | "AI"
   | "Aldecado"
+  | "Animal"
   | "Arasaka"
   | "Braindance"
   | "Corpo"
@@ -118,6 +119,7 @@ export type KnownCardClassification =
   | "Mystic"
   | "NCPD"
   | "Netrunner"
+  | "Netwatch"
   | "Nomad"
   | "Overclocking"
   | "Plan"
@@ -155,6 +157,8 @@ export const KNOWN_SET_CODES = [
   "theheistretailstarterdeck",
   "welcometonightcitybeta",
   "welcometonightcityretail",
+  "prereleasebeta",
+  "edgerunneropens1",
 ] as const;
 
 export type KnownSetCode = (typeof KNOWN_SET_CODES)[number];
@@ -182,6 +186,8 @@ export type CardRarity =
   | "Epic"
   | "Secret"
   | "Iconic Secret"
+  | "Iconic Other"
+  | "Iconic Legend"
   | "Nova Rare";
 
 /**
@@ -398,14 +404,24 @@ export type RuleModifier =
   | "blocker"
   | "goSolo"
   | "cantAttack"
+  | "cantReady"
   | "cantBeBlocked"
   | "mustAttack"
   | "requiresProgramPlayedThisTurn"
   | "canAttackOnPlayedTurnAgainstUnits"
+  | "canAttackReadyBlockers"
+  | "canAttackReadyUnits"
+  | "cantAttackRival"
   | "canAttackRivalOnPlayedTurn"
   | "adrenaline"
   | "quick"
-  | "stealsOneFewerGig";
+  | "stealsOneFewerGig"
+  | "preventsGigStealByDiscard"
+  | "cantStealGigAbovePower"
+  | "cantStealGigBelowPower"
+  | "cantBeDefeatedInFight"
+  | "sacrificeInsteadOfHostDefeat"
+  | "callLegendFree";
 
 export interface PerCountValue {
   type: "perCount";
@@ -423,7 +439,25 @@ export interface GigValue {
   target: TargetDSL;
 }
 
-export type NumericValue = number | PerCountValue | MaxGigValue | GigValue;
+export interface SourcePowerValue {
+  type: "sourcePower";
+  multiplier?: number;
+}
+
+export interface BasePlusPerCountValue {
+  type: "basePlusPerCount";
+  base: number;
+  multiplier: number;
+  target: TargetDSL;
+}
+
+export type NumericValue =
+  | number
+  | PerCountValue
+  | MaxGigValue
+  | GigValue
+  | SourcePowerValue
+  | BasePlusPerCountValue;
 
 export interface SelfTargetDSL {
   selector: "self";
@@ -445,6 +479,16 @@ export interface BoundTargetDSL {
    */
   cardTypes?: CardType[];
   /**
+   * Optional sub-filter: keep only bound cards that have at least one of the
+   * listed classifications (e.g. "if it's a ROCKER Unit").
+   */
+  classifications?: CardClassification[];
+  /**
+   * Optional sub-filter: keep only bound cards that have at least one of the
+   * listed keywords (e.g. "if it has GO SOLO").
+   */
+  keywords?: CardKeyword[];
+  /**
    * Offer the bound ids as a player choice (suspends into a `chooseTarget`
    * pending choice) instead of applying the effect to all of them. Lets a
    * card say "choose a Unit from among the just-trashed cards."
@@ -459,7 +503,7 @@ export interface BoundTargetDSL {
  * engine side, add the literal here too — TypeScript will then flag every
  * card that consumes it (and reject typos).
  */
-export type ContextKey = "triggerCard" | "triggeredGigs" | "discardedCards";
+export type ContextKey = "triggerCard" | "triggeredGigs" | "discardedCards" | "host";
 
 export interface ContextTargetDSL {
   selector: "context";
@@ -486,6 +530,7 @@ export interface CardTargetDSL {
   cardTypes?: CardType[];
   colors?: CardColor[];
   classifications?: CardClassification[];
+  keywords?: CardKeyword[];
   state?: CardState;
   face?: CardFace;
   minCost?: number;
@@ -493,8 +538,18 @@ export interface CardTargetDSL {
   maxCostOf?: TargetDSL;
   minPower?: number;
   maxPower?: number;
+  /**
+   * Keep only cards tied for the lowest effective power among the candidates.
+   * A tie remains a player choice when the effect asks for one card.
+   */
+  lowestPower?: boolean;
   maxPowerOfGigValueOf?: TargetDSL;
   excludeSelf?: boolean;
+  /**
+   * Exclude cards resolved by this target (e.g. "another Unit" excluding the
+   * defeated host of a Gear Defeated ability).
+   */
+  excludeOf?: TargetDSL;
   hasAttachedCards?: boolean;
   attachedTo?: TargetDSL;
   costEqualsGigValueOf?: TargetDSL;
@@ -547,6 +602,18 @@ export interface AttackerTargetDSL {
   classifications?: CardClassification[];
 }
 
+/**
+ * Resolves to the defending card in the current attack state (the spent rival
+ * Unit that a fight was declared against). Returns an empty array when no fight
+ * is in progress or the attack is a direct attack (no defender). Optional
+ * `classifications` / `cardTypes` filters narrow the resolved defender.
+ */
+export interface DefenderTargetDSL {
+  selector: "defender";
+  cardTypes?: CardType[];
+  classifications?: CardClassification[];
+}
+
 export type TargetDSL =
   | SelfTargetDSL
   | HostTargetDSL
@@ -554,7 +621,8 @@ export type TargetDSL =
   | ContextTargetDSL
   | CardTargetDSL
   | GigTargetDSL
-  | AttackerTargetDSL;
+  | AttackerTargetDSL
+  | DefenderTargetDSL;
 
 export interface StreetCredCondition {
   condition: "streetCred";
@@ -584,6 +652,22 @@ export interface GigCountComparisonCondition {
 
 export interface StreetCredDifferenceCondition {
   condition: "streetCredDifference";
+  controller: RelativePlayer;
+  comparison: Comparison;
+  other: RelativePlayer;
+  value: number;
+}
+
+/**
+ * Directional difference of Gig counts between two players. Unlike
+ * `streetCredDifference`, the subtraction is NOT absolute, so the sign
+ * matters: `controller - other` compared against `value`. Used by cards that
+ * care about who controls strictly more Gigs (e.g. Bonnie and Clyde: "a Rival
+ * controls at least 2 Gigs more than you" → controller rival, other friendly,
+ * difference gte 2).
+ */
+export interface GigCountDifferenceCondition {
+  condition: "gigCountDifference";
   controller: RelativePlayer;
   comparison: Comparison;
   other: RelativePlayer;
@@ -661,6 +745,15 @@ export interface HasEvenAndOddGigValuesCondition {
   controller: RelativePlayer;
 }
 
+/** True when enough of the controller's Gigs meet the requested value filter. */
+export interface HasGigCountCondition {
+  condition: "hasGigCount";
+  controller: RelativePlayer;
+  minValue?: number;
+  comparison: Comparison;
+  value: number;
+}
+
 export interface HasEquippedUnitsOrLegendsCondition {
   condition: "hasEquippedUnitsOrLegends";
   controller: RelativePlayer;
@@ -729,11 +822,53 @@ export interface GigSidesCondition {
   sides: DieType | DieType[];
 }
 
+/**
+ * Boolean negation of another condition. Used for exclusive branches
+ * (e.g. Pyramid Song modal options only when a friendly d4 is NOT min).
+ */
+export interface NotCondition {
+  condition: "not";
+  of: Condition;
+}
+
+/**
+ * True when the first resolved target's requested numeric property has the
+ * given parity. Used by cards that branch on even vs odd Gig values
+ * (e.g. Rogue Amendiares — Preem Solo).
+ */
+export interface TargetParityCondition {
+  condition: "targetParity";
+  target: TargetDSL;
+  property: "gigValue";
+  parity: "even" | "odd";
+}
+
+/**
+ * True when the number of cards published to `discardedCards` this ability
+ * equals the face value of at least one of the controller's Gigs.
+ */
+export interface DiscardedCountMatchesGigCondition {
+  condition: "discardedCountMatchesGig";
+  controller: RelativePlayer;
+}
+
+/**
+ * Compare how many Gig dice remain in a player's fixer area. Used by cards
+ * that replace their play cost when the fixer is empty (e.g. Nocturne OP55 N1).
+ */
+export interface FixerAreaCountCondition {
+  condition: "fixerAreaCount";
+  controller: RelativePlayer;
+  comparison: Comparison;
+  value: number;
+}
+
 export type Condition =
   | StreetCredCondition
   | StreetCredComparisonCondition
   | GigCountComparisonCondition
   | StreetCredDifferenceCondition
+  | GigCountDifferenceCondition
   | StreetCredParityCondition
   | AllFriendlyLegendsFaceUpCondition
   | CardStateCondition
@@ -747,6 +882,7 @@ export type Condition =
   | HasDistinctGigValuesCondition
   | HasMinGigCondition
   | HasEvenAndOddGigValuesCondition
+  | HasGigCountCondition
   | HasEquippedUnitsOrLegendsCondition
   | MatchingGigCondition
   | FightKindCondition
@@ -754,7 +890,11 @@ export type Condition =
   | CardStatCondition
   | CardNameCondition
   | TargetExistsCondition
-  | GigSidesCondition;
+  | GigSidesCondition
+  | NotCondition
+  | TargetParityCondition
+  | DiscardedCountMatchesGigCondition
+  | FixerAreaCountCondition;
 
 export interface SpendCost {
   cost: "spend";
@@ -768,6 +908,16 @@ export interface PayCardCost {
 export interface PayEddiesCost {
   cost: "payEddies";
   amount: number;
+  /**
+   * Reduce the paid amount by `reductionPerCount` for each target resolved by
+   * `target`, floored at `min` (default 0). Used by abilities like Johnny
+   * Silverhand's "-1 €$ for each friendly Gig with 8+ value".
+   */
+  reduction?: {
+    target: TargetDSL;
+    reductionPerCount: number;
+    min?: number;
+  };
 }
 
 export type Cost = SpendCost | PayCardCost | PayEddiesCost;
@@ -824,6 +974,13 @@ export interface ModifyPowerEffect extends EffectBase {
   target: TargetDSL;
   value: NumericValue;
   duration: AbilityDuration;
+  /**
+   * Scope the buff to fights only (e.g. "has +X power while fighting rival Units
+   * this turn"). Unlike `conditions`, this is not evaluated at effect-placing
+   * time, so the modifier is always placed; `getEffectivePower` honors it
+   * dynamically by checking current fight participation.
+   */
+  whileFighting?: boolean;
 }
 
 export interface MultiplyPowerEffect extends EffectBase {
@@ -839,6 +996,26 @@ export interface GrantRuleEffect extends EffectBase {
   rule: RuleModifier;
   // Engine handler does not support "permanent" — rule grants live as ActiveEffects.
   duration: Exclude<AbilityDuration, "permanent">;
+  uses?: number;
+}
+
+export interface GrantFightWinAgainstEffect extends EffectBase {
+  effect: "grantFightWinAgainst";
+  target: TargetDSL;
+  classifications: string[];
+  duration: AbilityDuration;
+}
+
+export interface GrantNextFriendlyFightLossDefeatEffect extends EffectBase {
+  effect: "grantNextFriendlyFightLossDefeat";
+  duration: "turn";
+}
+
+export interface GrantRivalGoSoloCostIncreaseEffect extends EffectBase {
+  effect: "grantRivalGoSoloCostIncrease";
+  target: TargetDSL;
+  amount: number;
+  duration: AbilityDuration;
 }
 
 export interface ReadyEffect extends EffectBase {
@@ -884,7 +1061,7 @@ export interface SearchDeckEffect extends EffectBase {
   player: RelativePlayer;
   lookCount: number;
   target: CardTargetDSL;
-  select: { kind: "all" } | { kind: "upTo"; max: number };
+  select: { kind: "all" } | { kind: "upTo"; max: NumericValue };
   reveal: boolean;
   destination: ScryDestinationZone;
   remainder?: {
@@ -908,7 +1085,8 @@ export interface RivalRevealChoiceEffect extends EffectBase {
 export interface DiscardFromHandEffect extends EffectBase {
   effect: "discardFromHand";
   player: RelativePlayer;
-  amount: number;
+  /** `"all"` discards the entire matching hand with no selection. */
+  amount: number | "all";
   target?: CardTargetDSL;
   logReason?: "costMatchedFriendlyGig";
 }
@@ -919,6 +1097,14 @@ export interface MoveCardEffect extends EffectBase {
   destination: "hand" | "trash" | "field" | "deckBottom";
   attachTo?: TargetDSL;
   free?: boolean;
+  /**
+   * Optional binding id. When the player selects a card via `target.selection`,
+   * the chosen card ids are published into the trigger's persistent
+   * `boundTargets[outputBinding]` (a `string[]`, even when `selection.max` is 1)
+   * so a later effect in the same ability can reference the just-moved card(s)
+   * (e.g. "play the Gear you just recovered").
+   */
+  outputBinding?: string;
 }
 
 export interface PlayCardEffect extends EffectBase {
@@ -926,6 +1112,11 @@ export interface PlayCardEffect extends EffectBase {
   target: TargetDSL;
   free?: boolean;
   attachTo?: TargetDSL;
+  /**
+   * When `optional` free-play is declined, these effects run instead
+   * (e.g. add the revealed card to hand).
+   */
+  elseEffects?: Effect[];
 }
 
 /**
@@ -1047,7 +1238,7 @@ export interface GrantCostModifierEffect extends EffectBase {
   player: RelativePlayer;
   appliesTo: CardTargetDSL;
   modifier: CostModifier;
-  duration: "turn" | "untilSourceNextTurn";
+  duration: "turn" | "untilSourceNextTurn" | "continuous";
   uses?: number;
 }
 
@@ -1069,6 +1260,30 @@ export interface RevealTopCardAndModifyPowerByCostEffect extends EffectBase {
   duration: "turn" | "continuous";
 }
 
+/**
+ * Present a modal choice among labeled effect lists. The engine suspends into a
+ * `chooseEffect` pending choice; the player picks one option whose `effects` are
+ * then applied in order. Options may carry `conditions` — only options whose
+ * conditions all pass are offered. When exactly one option remains after
+ * filtering, it auto-resolves without prompting.
+ */
+export interface ChooseEffectOptionDef {
+  id: string;
+  label: string;
+  effects: Effect[];
+  conditions?: Condition[];
+}
+
+export interface ChooseEffectEffect extends EffectBase {
+  effect: "chooseEffect";
+  options: ChooseEffectOptionDef[];
+  /**
+   * Which player picks the option. Defaults to the ability's controller.
+   * Use `"rival"` when printed text lets a Rival choose the mode for you.
+   */
+  chooser?: RelativePlayer;
+}
+
 export type Effect =
   | DefeatEffect
   | SpendEffect
@@ -1078,6 +1293,9 @@ export type Effect =
   | AdjustGigEffect
   | ModifyPowerEffect
   | GrantRuleEffect
+  | GrantFightWinAgainstEffect
+  | GrantNextFriendlyFightLossDefeatEffect
+  | GrantRivalGoSoloCostIncreaseEffect
   | ReadyEffect
   | ReadyEddiesEffect
   | LookAtEffect
@@ -1105,7 +1323,8 @@ export type Effect =
   | GrantCostModifierEffect
   | RerollGigEffect
   | RevealTopCardTypeEffect
-  | RevealTopCardAndModifyPowerByCostEffect;
+  | RevealTopCardAndModifyPowerByCostEffect
+  | ChooseEffectEffect;
 
 export interface PlayTrigger {
   trigger: "play";
@@ -1177,6 +1396,11 @@ export interface GigStolenEvent {
   target: GigTargetDSL;
   minAmount?: number;
   source?: TargetDSL;
+  /**
+   * When true, the stolen Gig's face value must be strictly less than the
+   * thief's effective power ("a Gig with value less than its power").
+   */
+  valueLessThanSourcePower?: boolean;
 }
 
 export interface GigValueChangedEvent {
@@ -1280,7 +1504,25 @@ export interface CostReducerPerTargetCount {
   min: number;
 }
 
-export type CostModifier = CostReducerPerTargetCount;
+export interface CostReducerFlat {
+  reducer: "flat";
+  amount: number;
+  min: number;
+}
+
+/**
+ * Replace the card's play cost with `amount` when every `conditions` entry
+ * passes. This is a cost replacement (pay the new cost instead), not a
+ * reduction, so it is not floored by the generic "reductions cannot go
+ * below 1" rule — the printed replacement amount is paid as-is.
+ */
+export interface CostReplacement {
+  reducer: "replace";
+  amount: number;
+  conditions: Condition[];
+}
+
+export type CostModifier = CostReducerPerTargetCount | CostReducerFlat | CostReplacement;
 
 export interface StructuredCardData {
   abilities: Ability[];
@@ -1300,18 +1542,6 @@ export interface LegendCardDefinition extends StructuredCardData {}
 export interface UnitCardDefinition extends StructuredCardData {}
 export interface GearCardDefinition extends StructuredCardData {}
 export interface ProgramCardDefinition extends StructuredCardData {}
-
-export type AlphaCardDefinition = StructuredCardDefinition & {
-  set: CardSet & {
-    code: "alpha";
-  };
-};
-
-export type SpoilerCardDefinition = StructuredCardDefinition & {
-  set: CardSet & {
-    code: "spoiler";
-  };
-};
 
 export type PromoCardDefinition = StructuredCardDefinition & {
   set: CardSet & {
@@ -1350,8 +1580,6 @@ export type WelcomeToNightCityRetailCardDefinition = StructuredCardDefinition & 
 };
 
 export interface StructuredCardDefinitionBySetCode {
-  alpha: AlphaCardDefinition;
-  spoiler: SpoilerCardDefinition;
   promo: PromoCardDefinition;
   PRM01: Prm01CardDefinition;
   boxtoppersretail: BoxToppersRetailCardDefinition;

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef } from "react";
 import type { SimulatorAudioCueId } from "@tcg/protocol";
-import type { ScheduledAnimationStep } from "@tcg/simulator-ui";
+import type { CompiledAudioCue } from "@tcg/simulator-runtime/animation";
 import { useSimulatorSettings } from "../settings/SimulatorSettingsProvider";
 import {
   disposeSimulatorSoundService,
@@ -9,10 +9,11 @@ import {
   setSimulatorSoundVolume,
 } from "./sound-service";
 import { collectScheduledSimulatorAudioCues } from "./scheduler";
+import { simulatorAudioDebug } from "./debug";
 
 export interface SimulatorAudioContextValue {
   readonly playCue: (cue: SimulatorAudioCueId) => void;
-  readonly scheduleAnimationSteps: (steps: readonly ScheduledAnimationStep[]) => void;
+  readonly scheduleAnimationSteps: (steps: readonly CompiledAudioCue[]) => void;
   readonly cancelScheduledCues: () => void;
 }
 
@@ -40,7 +41,9 @@ export function SimulatorAudioProvider({ children }: { readonly children: React.
   }, []);
 
   useEffect(() => {
-    initSimulatorSoundService();
+    void initSimulatorSoundService().catch((error: unknown) => {
+      simulatorAudioDebug("initialization-failed", { error: String(error) });
+    });
     return () => {
       cancelScheduledCues();
       disposeSimulatorSoundService();
@@ -59,11 +62,10 @@ export function SimulatorAudioProvider({ children }: { readonly children: React.
   }, []);
 
   const scheduleAnimationSteps = useCallback(
-    (steps: readonly ScheduledAnimationStep[]) => {
-      for (const { cue, delayMs } of collectScheduledSimulatorAudioCues(
-        steps,
-        seenStepKeysRef.current,
-      )) {
+    (steps: readonly CompiledAudioCue[]) => {
+      const scheduled = collectScheduledSimulatorAudioCues(steps, seenStepKeysRef.current);
+      simulatorAudioDebug("scheduled", scheduled);
+      for (const { cue, delayMs } of scheduled) {
         const timer = setTimeout(() => {
           timersRef.current.delete(timer);
           playCue(cue);

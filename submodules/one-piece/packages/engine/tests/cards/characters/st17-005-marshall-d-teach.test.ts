@@ -61,4 +61,32 @@ describe("ST17-005 Marshall.D.Teach", () => {
     ).toBe("This effect has already been used this turn.");
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [prb02MarshallDTeachSt17005PirateFoil005],
+      hand: [eb01Doma005, eb01Fourtricks025],
+      restedDon: 2,
+    });
+    const teachId = engine.findCardInZone(
+      "south",
+      "character",
+      prb02MarshallDTeachSt17005PirateFoil005,
+    );
+    const paymentId = engine.findCardInZone("south", "hand", eb01Doma005);
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const restedBefore = engine.getView("south").players.south.restedDon;
+    const deckBefore = engine.getView("south").players.south.deckCount;
+
+    engine.activateEffect(teachId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(paymentId);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.restedDon).toBe(restedBefore);
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.leader.attachedDon).toBe(0);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

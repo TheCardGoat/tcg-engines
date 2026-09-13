@@ -131,4 +131,54 @@ describe("OP04-055 Plague Rounds", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Main so Ice Oni trash, return, and play do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op04PlagueRounds055, op04IceOni047, op04IceOni047],
+        trash: [op04IceOni047],
+        character: [eb01Doma005],
+        activeDon: 2,
+      },
+      {
+        character: [op01Hajrudin018, eb01MountainGod018],
+      },
+    );
+    const handCostIds = engine
+      .getState()
+      .players.south.hand.filter(
+        (instanceId) => engine.getState().cards[instanceId]?.cardId === op04IceOni047.id,
+      );
+    const ownCostId = engine.findCardInZone("south", "character", eb01Doma005);
+    const opposingCostId = engine.findCardInZone("north", "character", op01Hajrudin018);
+    const selectedPlayId = engine.findCardInZone("south", "trash", op04IceOni047);
+
+    engine.playCard(op04PlagueRounds055);
+    const before = engine.getView("south").players.south;
+    const northCharsBefore = engine
+      .getView("south")
+      .players.north.characters.filter(Boolean).length;
+    const handBefore = before.hand.length;
+    const trashBefore = before.trash.length;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(
+      handCostIds.every((id) => view.players.south.hand.map((c) => c.instanceId).includes(id)),
+    ).toBe(true);
+    expect(view.players.south.characters.some((card) => card?.instanceId === ownCostId)).toBe(true);
+    expect(view.players.north.characters.some((card) => card?.instanceId === opposingCostId)).toBe(
+      true,
+    );
+    expect(view.players.north.characters.filter(Boolean).length).toBe(northCharsBefore);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(selectedPlayId);
+    expect(view.players.south.characters.some((card) => card?.instanceId === selectedPlayId)).toBe(
+      false,
+    );
+    expect(view.players.south.trash.length).toBe(trashBefore); // event already paid into trash on play
+    expect(view.players.south.activeDon + view.players.south.restedDon).toBe(donPoolBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

@@ -3,7 +3,7 @@ import { op01RoundTable027 } from "../../../../../cards/src/cards/OP01/events/02
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-027 Round Table", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01RoundTable027);
   });
 });

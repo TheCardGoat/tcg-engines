@@ -75,6 +75,8 @@ describe("clock-view", () => {
     );
 
     expect(view.isNegative).toBe(true);
+    expect(view.displayMs).toBe(-1_000);
+    expect(view.formattedTime).toBe("0:00");
     expect(view.canSkipOpponent).toBe(false);
     expect(view.canDropOpponent).toBe(true);
     expect(view.urgencyClass).toBe("timer--critical");

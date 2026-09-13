@@ -80,6 +80,9 @@ export const op14eb04Kaido030: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "returnDon",
           player: "self",

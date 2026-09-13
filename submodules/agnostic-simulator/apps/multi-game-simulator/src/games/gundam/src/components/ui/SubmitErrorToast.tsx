@@ -3,7 +3,7 @@ import { useAutoDismissSubmitError, useSubmitError } from "../containers/submit-
 
 /**
  * Top-anchored error toast surfaced when `adapter.submit` returns a
- * failed `SubmitOutcome`. Visual language mirrors `GamePrompt` (hud
+ * failed `SubmitOutcome`. Visual language mirrors the shared prompt (hud
  * clip, surface-panel-strong) but swaps the cyan accent for the danger
  * red used by `MatchOverviewModal` defeat tone and the opponent-turn
  * banner (`rgba(255,45,122,…)`) so the player reads it as an error at a

@@ -19,7 +19,7 @@ async function executeWithRetry(
 ): Promise<{ success: boolean; reason?: string; code?: string }> {
   for (let attempt = 0; attempt < 20; attempt += 1) {
     const result = await pom.execute(PLAYER_ONE_VIEW, moveId, params);
-    if (result.success || result.code !== "OPTIMISTIC_MOVE_PENDING") {
+    if (result.success || result.code !== "MOVE_PENDING") {
       return result;
     }
     await pom.page.waitForTimeout(50);

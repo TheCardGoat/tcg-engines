@@ -3,11 +3,13 @@ import type { PlayableGameSlug } from "@tcg/protocol";
 import { requestGatewayTicket } from "@tcg/simulator-runtime/gateway";
 import type { GameSlug } from "@tcg/simulator-contract";
 import type { AuthSession } from "@tcg/shared/auth";
+import { MatchSessionSchema } from "@tcg/game-page-contract";
 
-import { gameApiBaseUrl } from "../../runtime/gameRuntimeApi";
+import { gameApiBaseUrl, playUrl } from "../../runtime/gameRuntimeApi";
 import { getGatewayManager } from "./gateway-manager";
 
 export interface InitRootSocketArgs {
+  expiresAt?: string;
   /** Better-Auth session (with `.token`) from the root server loader, if any. */
   session: AuthSession | null;
   /** Active game slug, used as the gateway namespace. `null` tears down. */
@@ -23,6 +25,8 @@ export interface InitRootSocketArgs {
   requireAuth?: boolean;
   /** Active live-match id, forwarded when refreshing route-scoped tickets. */
   matchId?: string;
+  /** Active live game id used to rebuild a scoped viewer session on expiry. */
+  gameId?: string;
   /** Active player/profile id, forwarded when refreshing route-scoped tickets. */
   playerId?: string;
 }
@@ -48,6 +52,7 @@ let currentController: CredentialsController | null = null;
  */
 let currentSnapshot: GatewayCredentials = {};
 let currentMatchId: string | undefined;
+let currentGameId: string | undefined;
 let currentPlayerId: string | undefined;
 
 function buildCredentials(
@@ -94,9 +99,13 @@ function shouldForceCredentialHandshake(
 function runtimeApiGameSlug(slug: PlayableGameSlug): GameSlug | null {
   switch (slug) {
     case "cyberpunk":
+    case "flesh-and-blood":
+    case "grand-archive":
     case "gundam":
     case "lorcana":
+    case "naruto":
     case "one-piece":
+    case "riftbound":
     case "platform":
       return slug;
     default:
@@ -119,12 +128,46 @@ function buildCredentialsController(slug: PlayableGameSlug): CredentialsControll
       if (apiGameSlug === null) {
         throw new Error(`Gateway ticket refresh is not supported for ${slug}.`);
       }
-      // Game-agnostic ticket refresh: resolve the per-game runtime-API origin
+      if (currentMatchId && currentGameId) {
+        const refreshingMatchId = currentMatchId;
+        const refreshingGameId = currentGameId;
+        const response = await fetch(
+          playUrl(
+            apiGameSlug,
+            `/matches/${encodeURIComponent(currentMatchId)}/games/${encodeURIComponent(currentGameId)}/session`,
+          ),
+          {
+            headers: { Accept: "application/json" },
+            credentials: "include",
+            signal: AbortSignal.timeout(10_000),
+          },
+        );
+        if (!response.ok) {
+          throw new Error(`Live match bootstrap refresh failed (${response.status}).`);
+        }
+        const bootstrap = MatchSessionSchema.parse(await response.json());
+        if (currentMatchId !== refreshingMatchId || currentGameId !== refreshingGameId) {
+          throw new Error("The active match changed while refreshing realtime access.");
+        }
+        if (!bootstrap.realtime) {
+          throw new Error("The game no longer has an active realtime session.");
+        }
+        currentSnapshot = {
+          ticket: bootstrap.realtime.ticket,
+          token: bootstrap.realtime.reconnectToken,
+          requireAuth: true,
+          expiresAt: Date.parse(bootstrap.realtime.expiresAt),
+        };
+        return currentSnapshot;
+      }
+      // Migration fallback for non-match routes that still use a general
+      // authenticated namespace connection.
       // from the slug, then hit the shared `/v1/gateway/ticket` resolver. No
       // game-specific auth priming or HTTP-error shaping here — those stay in
       // each game's liveGateway wrapper if that game's UI needs them.
       const refreshed = await requestGatewayTicket({
         apiBaseUrl: gameApiBaseUrl(apiGameSlug),
+        gameSlug: apiGameSlug,
         ...(currentMatchId ? { matchId: currentMatchId } : {}),
         ...(currentPlayerId ? { playerId: currentPlayerId } : {}),
       });
@@ -155,7 +198,9 @@ export function initRootSocket({
   authToken,
   requireAuth,
   matchId,
+  gameId,
   playerId,
+  expiresAt,
 }: InitRootSocketArgs): void {
   const manager = getGatewayManager();
 
@@ -165,7 +210,10 @@ export function initRootSocket({
   }
 
   const nextSnapshot = buildCredentials(session, ticket, authToken, requireAuth);
+  if (expiresAt) nextSnapshot.expiresAt = Date.parse(expiresAt);
+  else if (currentSnapshot.expiresAt != null) nextSnapshot.expiresAt = null;
   const nextMatchId = matchId?.trim() || undefined;
+  const nextGameId = gameId?.trim() || undefined;
   const nextPlayerId = playerId?.trim() || undefined;
 
   // Stable slug: keep the existing handle + controller open. Update the
@@ -175,6 +223,7 @@ export function initRootSocket({
     const previousSnapshot = currentSnapshot;
     currentSnapshot = nextSnapshot;
     currentMatchId = nextMatchId;
+    currentGameId = nextGameId;
     currentPlayerId = nextPlayerId;
     const state = currentHandle.getState();
     if (
@@ -195,6 +244,7 @@ export function initRootSocket({
   destroyRootSocket();
   currentSnapshot = nextSnapshot;
   currentMatchId = nextMatchId;
+  currentGameId = nextGameId;
   currentPlayerId = nextPlayerId;
   currentController = buildCredentialsController(gameSlug);
   const namespaceAlreadyExisted = manager.getState(gameSlug).status !== "idle";
@@ -256,6 +306,7 @@ export function destroyRootSocket(): void {
   currentController = null;
   currentSnapshot = {};
   currentMatchId = undefined;
+  currentGameId = undefined;
   currentPlayerId = undefined;
 }
 

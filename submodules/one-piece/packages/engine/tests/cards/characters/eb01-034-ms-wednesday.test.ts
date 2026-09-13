@@ -22,6 +22,7 @@ describe("EB01-034 Ms. Wednesday", () => {
     engine.endTurn("north");
     engine.declareAttack(attackerId, engine.leader("north"), "south");
 
+    engine.acceptLeadingOptional("north");
     const addDon = engine.pendingDecision("effectAddDon", "north").steps[0];
     expect(addDon?.kind).toBe("chooseOption");
     if (addDon?.kind !== "chooseOption") {
@@ -30,6 +31,7 @@ describe("EB01-034 Ms. Wednesday", () => {
     expect(addDon.options.map((option) => option.id)).toEqual(["0", "1"]);
     engine.resolveDecision("effectAddDon", { optionId: "1" }, "north");
 
+    engine.acceptLeadingOptional("north");
     const blocker = engine.pendingDecision("battleBlocker", "north").steps[0];
     expect(blocker?.kind).toBe("selectEntity");
     if (blocker?.kind !== "selectEntity") {

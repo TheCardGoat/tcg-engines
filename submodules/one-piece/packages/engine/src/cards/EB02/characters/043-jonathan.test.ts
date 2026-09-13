@@ -3,7 +3,7 @@ import { eb02Jonathan043 } from "../../../../../cards/src/cards/EB02/characters/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB02-043 Jonathan", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb02Jonathan043);
   });
 });

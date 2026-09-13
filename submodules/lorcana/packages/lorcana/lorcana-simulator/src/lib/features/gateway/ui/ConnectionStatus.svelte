@@ -57,7 +57,7 @@
       endpoint: {
         realtimeConfigured: true,
         namespace: gateway.namespace,
-        path: "/v1/gateway/ws",
+        path: "/socket.io/",
         transport: "websocket",
       },
       connection: {

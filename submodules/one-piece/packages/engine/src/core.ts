@@ -21,7 +21,7 @@ import { createInvariantFailureResult } from "./engine/shared.ts";
 enablePatches();
 
 export { createMatch } from "./engine/match.ts";
-export { getLegalCommands } from "./engine/legal.ts";
+export { getLegalCommands, getPotentialCardCommands } from "./engine/legal.ts";
 
 export function applyCommand(state: MatchState, command: EngineCommand): ApplyCommandResult {
   const previousEventCount = state.eventHistory.length;

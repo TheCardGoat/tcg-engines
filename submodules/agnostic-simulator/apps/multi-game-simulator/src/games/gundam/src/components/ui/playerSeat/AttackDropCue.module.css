@@ -1,0 +1,215 @@
+.target {
+  --attack-cue-color: var(--color-hud-accent-hot);
+  --attack-cue-color-strong: var(--color-hud-accent);
+  --attack-cue-surface: color-mix(in srgb, var(--color-hud-accent-deep) 28%, transparent);
+
+  position: absolute;
+  z-index: 18;
+  pointer-events: none;
+  transform: scale(0.985);
+  transform-origin: center;
+  transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.target::before,
+.target::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.target::before {
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--attack-cue-color) 78%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--attack-cue-color) 10%, transparent),
+      transparent 48%
+    ),
+    linear-gradient(
+      90deg,
+      var(--attack-cue-surface),
+      transparent 36%,
+      transparent 64%,
+      var(--attack-cue-surface)
+    );
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, white 13%, transparent),
+    inset 0 0 18px color-mix(in srgb, var(--attack-cue-color) 16%, transparent),
+    0 8px 22px -12px color-mix(in srgb, var(--attack-cue-color) 62%, transparent);
+  clip-path: polygon(
+    9px 0,
+    calc(100% - 18px) 0,
+    calc(100% - 12px) 6px,
+    100% 6px,
+    100% calc(100% - 9px),
+    calc(100% - 9px) 100%,
+    18px 100%,
+    12px calc(100% - 6px),
+    0 calc(100% - 6px),
+    0 9px
+  );
+  transition:
+    border-color 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 160ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.target::after {
+  top: 0;
+  left: 16%;
+  width: 28%;
+  height: 2px;
+  background: var(--color-hud-danger);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-hud-danger) 65%, transparent);
+}
+
+.unit {
+  inset: -6px;
+}
+
+.player {
+  inset: 3px;
+}
+
+.over {
+  --attack-cue-color: white;
+  --attack-cue-color-strong: var(--color-hud-danger);
+  --attack-cue-surface: color-mix(in srgb, var(--color-hud-danger-deep) 44%, transparent);
+
+  transform: scale(1);
+}
+
+.over::before {
+  border-color: color-mix(in srgb, var(--color-hud-danger) 92%, white 8%);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, white 22%, transparent),
+    inset 0 0 24px color-mix(in srgb, var(--color-hud-danger) 24%, transparent),
+    0 10px 28px -10px color-mix(in srgb, var(--color-hud-danger) 76%, transparent);
+}
+
+.over::after {
+  left: 16%;
+  width: 68%;
+  background: white;
+  box-shadow:
+    0 0 8px white,
+    0 0 16px color-mix(in srgb, var(--color-hud-danger) 72%, transparent);
+}
+
+.cue {
+  position: absolute;
+  left: 50%;
+  z-index: 3;
+  display: grid;
+  min-width: min(180px, calc(100vw - 24px));
+  max-width: min(230px, calc(100vw - 24px));
+  grid-template-columns: 4px minmax(0, 1fr);
+  gap: 0 7px;
+  padding: 5px 9px 5px 7px;
+  border: 1px solid color-mix(in srgb, var(--attack-cue-color) 72%, transparent);
+  background: color-mix(in srgb, #10182d 94%, transparent);
+  color: #f7faff;
+  box-shadow:
+    0 8px 18px -8px rgb(0 0 0 / 72%),
+    0 0 14px color-mix(in srgb, var(--attack-cue-color-strong) 24%, transparent);
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  font-family: var(--font-display);
+  line-height: 1.15;
+  text-align: left;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.unit .cue {
+  left: 0;
+  bottom: calc(100% + 5px);
+  transform: none;
+}
+
+.player .cue {
+  right: 0;
+  left: auto;
+  top: 50%;
+  width: calc(100% - 6px);
+  min-width: 0;
+  transform: translateY(-50%);
+}
+
+.player .eyebrow {
+  font-size: 7px;
+  letter-spacing: 0.12em;
+}
+
+.player .label {
+  font-size: 9px;
+  letter-spacing: 0.04em;
+}
+
+.cueRail {
+  grid-row: 1 / span 2;
+  width: 4px;
+  min-height: 28px;
+  background: var(--attack-cue-color-strong);
+  box-shadow: 0 0 9px color-mix(in srgb, var(--attack-cue-color-strong) 68%, transparent);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 4px), 0 100%);
+}
+
+.eyebrow {
+  min-width: 0;
+  overflow: hidden;
+  color: color-mix(in srgb, var(--attack-cue-color) 82%, white 18%);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  margin-top: 3px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.detail {
+  grid-column: 2;
+  margin-top: 3px;
+  color: #d8e7ff;
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: none;
+}
+
+@media (max-width: 720px) {
+  .cue {
+    min-width: min(152px, calc(100vw - 16px));
+    padding: 4px 7px 4px 6px;
+  }
+
+  .player .cue {
+    width: calc(100% - 4px);
+  }
+
+  .detail {
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .target {
+    transition: none;
+  }
+}

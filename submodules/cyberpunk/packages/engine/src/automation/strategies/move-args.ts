@@ -119,12 +119,16 @@ export function decisionFromMove(available: AvailableMove, picker: ArgPicker): M
       return { kind: "stuck", reason: "resolveAdjustGig must come from a resolver" };
     case "resolveStealGigs":
       return { kind: "stuck", reason: "resolveStealGigs must come from a resolver" };
+    case "resolvePreventGigSteal":
+      return { kind: "stuck", reason: "resolvePreventGigSteal must come from a resolver" };
     case "resolveTrigger":
       return { kind: "stuck", reason: "resolveTrigger must come from a resolver" };
     case "resolveEffectTarget":
       return { kind: "stuck", reason: "resolveEffectTarget must come from a resolver" };
     case "resolveCardTypeChoice":
       return { kind: "stuck", reason: "resolveCardTypeChoice must come from a resolver" };
+    case "resolveChooseEffect":
+      return { kind: "stuck", reason: "resolveChooseEffect must come from a resolver" };
     default:
       return assertNever(moveId, "MoveId in decisionFromMove");
   }

@@ -19,7 +19,7 @@ export function WaitingForOpponentPrompt({ message }: WaitingForOpponentPromptPr
       role="status"
       aria-label={m["sim.setup.waiting.label"]()}
       aria-live="polite"
-      className="gd-display fixed left-1/2 top-1/2 z-[200] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 w-[min(420px,92vw)] surface-panel clip-hud-10 px-6 py-5 text-hud-text [box-shadow:0_0_30px_rgba(76,195,255,.18),0_8px_30px_rgba(0,0,0,.55)] [animation:gd-fade-in_.18s_ease]"
+      className="gd-display absolute left-1/2 top-1/2 z-[200] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 w-[min(420px,92%)] surface-panel clip-hud-10 px-6 py-5 text-hud-text [box-shadow:0_0_30px_rgba(76,195,255,.18),0_8px_30px_rgba(0,0,0,.55)] [animation:gd-fade-in_.18s_ease]"
     >
       <span className="gd-mono text-hud-xs text-hud-info font-bold tracking-hud-label gd-blink">
         ◆ {m["sim.setup.waiting.label"]()}

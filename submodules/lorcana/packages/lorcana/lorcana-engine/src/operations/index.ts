@@ -10,7 +10,11 @@
 export { isCardInPlayZone } from "./zones";
 export { validateNoPendingEffects, hasAnyPendingEffects } from "./pending-effects";
 export { getCardDefinition } from "./cards";
-export { buildStaticContexts, type StaticContexts } from "./static-context";
+export {
+  buildStaticContexts,
+  staticAbilityStateFromCtx,
+  type StaticContexts,
+} from "./static-context";
 export { applyChallengeDamage } from "./damage";
 export { banishAsAbilityCost } from "./banish";
 export { exertCard } from "./exert";

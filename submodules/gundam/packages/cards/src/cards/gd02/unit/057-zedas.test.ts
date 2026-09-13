@@ -118,7 +118,7 @@ describe("Zedas (GD02-057)", () => {
 
       expectSuccess(p1.enterBattle(zedasId, "direct"));
       const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") {
+      if (optional?.kind !== "targetSelection") {
         throw new Error("Expected Zedas to offer its optional destruction");
       }
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
@@ -144,7 +144,7 @@ describe("Zedas (GD02-057)", () => {
 
       expectSuccess(p1.enterBattle(zedasId, "direct"));
       const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") {
+      if (optional?.kind !== "targetSelection") {
         throw new Error("Expected Zedas to offer its optional destruction");
       }
       expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));

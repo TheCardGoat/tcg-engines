@@ -8,7 +8,11 @@ export default defineConfig({
       "tests/index.test.ts",
       "tests/test-engine.test.ts",
       "tests/cards/**/*.test.ts",
-      "src/automation/bot-harness.test.ts",
+      // Comprehensive Rules as executable unit specs (docs/rules-test-coverage.md).
+      "tests/rules/**/*.test.ts",
+      // Command-driven campaign proofs. validateCardAbility-only files use test.skip.
+      "src/cards/**/*.test.ts",
+      "src/automation/**/*.test.ts",
     ],
     isolate: false,
   },

@@ -5,6 +5,7 @@ export type {
   TestCardEntry,
   PlayerTestProxy,
 } from "./test-engine.ts";
+// CardRef types exported with value exports below
 export { registerGundamMatchers, expectSuccess, expectFailure } from "./matchers.ts";
 export {
   createMockUnit,
@@ -42,3 +43,51 @@ export {
   assertResourceInert,
   assertResourceReminderText,
 } from "./resource-shape.ts";
+export {
+  resolveBattle,
+  passBattleWithoutBlock,
+  endTurn,
+  passMainIntoEndAction,
+  zoneCount,
+  getWinner,
+  expectWinner,
+  getPhase,
+  discardToHandLimit,
+} from "./rules-aaa.ts";
+export {
+  resolveCardRef,
+  listCardRefs,
+  makeInstanceRef,
+  isCardInstanceRef,
+  isCardDefinition,
+  cardRefId,
+  otherPlayer,
+  AmbiguousCardRefError,
+  CardRefNotFoundError,
+} from "./card-ref.ts";
+export type { CardInstanceRef, CardRef, CardRefFilter } from "./card-ref.ts";
+export {
+  createFluentMust,
+  playerUnit,
+  playerCardIn,
+  playerRef,
+  playerUnits,
+} from "./player-fluent.ts";
+export type { FluentMust, FluentAttackBuilder } from "./player-fluent.ts";
+export {
+  expectCard,
+  expectPlayer,
+  expectWinnerIs,
+  FluentCardAssert,
+  FluentPlayerAssert,
+} from "./fluent-assert.ts";
+export {
+  getAllGameLogs,
+  getLogsForPlayer,
+  getLogsOfType,
+  expectLogType,
+  expectPublicLog,
+  expectPrivateLog,
+  expectNoPrivateCardIdsInViewerLogs,
+} from "./log-helpers.ts";
+export type { TypedGameLog } from "./log-helpers.ts";

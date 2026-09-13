@@ -31,6 +31,8 @@ const KNOWN_SET_CODE_VALUES: ReadonlySet<string> = new Set([
   "theheistretailstarterdeck",
   "welcometonightcitybeta",
   "welcometonightcityretail",
+  "prereleasebeta",
+  "edgerunneropens1",
 ]);
 const KNOWN_LEGALITIES: ReadonlySet<string> = new Set(["legal"]);
 const KNOWN_COLORS: ReadonlySet<string> = new Set(["blue", "green", "red", "yellow"]);

@@ -3,6 +3,7 @@ import { useEffect, type CSSProperties } from "react";
 import { getGameDefaultIndexPath, listIndexGames } from "../simulator/games";
 import { buildMountedHref } from "../routes/router-paths.ts";
 import classes from "./GameIndex.module.css";
+import { SHARED_SIMULATOR_UI_FIXTURE_COUNT } from "./simulator-ui-fixture-manifest";
 
 export interface GameIndexProps {
   onNavigate: (path: string) => void;
@@ -105,10 +106,10 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
                 <span className={classes.hubText}>
                   <span className={classes.hubName}>Animation fixtures</span>
                   <span className={classes.hubDescription}>
-                    Draw and zone-transfer motion for shared card and zone primitives.
+                    Launch real game fixtures for every shared animation step.
                   </span>
                 </span>
-                <span className={classes.hubBadge}>2 animation fixtures</span>
+                <span className={classes.hubBadge}>7 step types · 4 games</span>
               </a>
             </li>
             <li className={classes.hubItem}>
@@ -132,10 +133,12 @@ export default function GameIndex({ onNavigate }: GameIndexProps) {
                 <span className={classes.hubText}>
                   <span className={classes.hubName}>Shared UI fixtures</span>
                   <span className={classes.hubDescription}>
-                    Connection and clock states across responsive simulator chrome.
+                    Connection, clock, and interactive-prompt states across shared simulator UI.
                   </span>
                 </span>
-                <span className={classes.hubBadge}>3 UI states</span>
+                <span className={classes.hubBadge}>
+                  {SHARED_SIMULATOR_UI_FIXTURE_COUNT} UI states
+                </span>
               </a>
             </li>
             {games.map((game) => {

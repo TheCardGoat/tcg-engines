@@ -3,7 +3,6 @@ import type { ServerToClientEvents } from "@tcg/protocol";
 import type { GameSlug } from "@tcg/simulator-contract";
 import {
   parseGatewayEvent,
-  parseGatewayMessage,
   requestGatewayTicket as requestSharedGatewayTicket,
   type GatewayMessage,
   type GatewayTicket,
@@ -36,16 +35,13 @@ export async function requestGatewayTicket(
   const gameSlug = opts.gameSlug ?? CYBERPUNK_GAME_SLUG;
   return requestSharedGatewayTicket({
     apiBaseUrl: gameApiBaseUrl(gameSlug),
+    gameSlug,
     matchId: opts.matchId,
     playerId: opts.playerId,
     fetcher,
     primeAuthSession,
     createHttpError: createLiveHttpError,
   });
-}
-
-export function parseLiveGatewayMessage(data: unknown): LiveGatewayMessage | null {
-  return parseGatewayMessage(data);
 }
 
 export function parseLiveGatewayEvent(

@@ -31,5 +31,6 @@ describe("OP06-091 Victoria Cindry", () => {
     expect(view.players.south.deckCount).toBe(1);
     expect(view.players.south.trash).toHaveLength(5);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

@@ -31,5 +31,6 @@ describe("OP01-039 Killer", () => {
       killerId,
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

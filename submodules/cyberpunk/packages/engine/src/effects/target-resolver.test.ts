@@ -175,6 +175,34 @@ describe("target resolver DSL additions", () => {
     });
   });
 
+  describe("lowestPower card target filter", () => {
+    it("keeps the rival card with the lowest effective power", () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        { field: [{ card: hostUnit, spent: false }] },
+        {
+          field: [
+            { card: unequippedUnit, spent: false },
+            { card: gear, spent: false },
+          ],
+        },
+      );
+
+      const target = {
+        selector: "card",
+        controller: "rival",
+        zones: ["field"],
+        cardTypes: ["unit", "gear"],
+        lowestPower: true,
+      } satisfies CardTargetDSL;
+
+      const resolvedDefinitions = resolveTarget(target, createContext(engine)).map(
+        (id) => engine.getState().G.cardIndex[id]!.definitionId,
+      );
+
+      expect(resolvedDefinitions).toEqual([unequippedUnit.id]);
+    });
+  });
+
   describe("host target selector", () => {
     it("resolves the Unit hosting the source Gear", () => {
       const engine = CyberpunkTestEngine.createWithFixture({

@@ -4,6 +4,7 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockCommand,
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
@@ -11,6 +12,7 @@ import { gd03ImprovedTechnique109 } from "../command/109-improved-technique.ts";
 import { gd03AzeeGurumin095 } from "./095-azee-gurumin.ts";
 
 describe("Azee Gurumin (GD03-095)", () => {
+  /** @behavioral-proof complete: Burst, effect-damage source, host identity, target, duration, and once-per-turn are public. */
   it("【Burst】 adds this revealed Shield to its owner's hand", () => {
     const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 4 });
     const engine = GundamTestEngine.create(
@@ -77,6 +79,55 @@ describe("Azee Gurumin (GD03-095)", () => {
     expectSuccess(p2.passActionStep());
 
     expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(4);
+  });
+
+  it("gives an enemy Unit AP-1 when the paired Unit receives friendly effect damage", () => {
+    const selfDamage = createMockCommand({
+      name: "Friendly Effect Damage",
+      level: 1,
+      cost: 1,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [
+            {
+              action: {
+                action: "dealDamage",
+                amount: 1,
+                target: { owner: "friendly", cardType: "unit", count: 1 },
+              },
+            },
+          ],
+          sourceText: "【Main】Choose 1 friendly Unit. Deal 1 damage to it.",
+        },
+      ],
+    });
+    const host = createMockUnit({ name: "Azee Host", level: 4, ap: 2, hp: 8 });
+    const enemy = createMockUnit({ name: "Enemy Target", ap: 4, hp: 6 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [gd03AzeeGurumin095, selfDamage],
+        play: [host],
+        resourceArea: activeResources(5),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const hostId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(gd03AzeeGurumin095, hostId));
+    expectSuccess(p1.playCommand(selfDamage, { targets: [hostId] }));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(p1.getDamage(hostId)).toBe(1);
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(3);
   });
 
   it("does not trigger when a different friendly Unit receives enemy effect damage", () => {

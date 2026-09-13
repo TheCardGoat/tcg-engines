@@ -27,15 +27,13 @@ export const gd04JamilSGundamX058: UnitCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-058.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-058.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-058.webp",
       productName: "Phantom Aria [GD04]",
     },
   ],
   reprints: ["GD04-058"],
   selectedPrintingId: "GD04-058",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-058.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-058.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-058.webp",
   legality: "legal",
   level: 3,
   cost: 2,
@@ -48,7 +46,12 @@ export const gd04JamilSGundamX058: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["destroyed"],
-        conditions: [{ type: "duringPair" }, { type: "selfPairedPilotHasTrait", trait: "vulture" }],
+        qualification: {
+          attribute: "trait",
+          comparison: "includes",
+          value: "vulture",
+        },
+        conditions: [{ type: "duringPair" }],
       },
       directives: [
         {

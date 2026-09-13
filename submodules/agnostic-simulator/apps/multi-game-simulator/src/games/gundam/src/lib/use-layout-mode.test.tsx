@@ -2,10 +2,14 @@
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vite-plus/test";
 
-import { useLayoutMode } from "./use-layout-mode.ts";
+import { useCompactLandscapeViewport, useLayoutMode } from "./use-layout-mode.ts";
 
 function Probe() {
-  return <span>{useLayoutMode()}</span>;
+  return (
+    <span>
+      {useLayoutMode()}:{useCompactLandscapeViewport() ? "compact" : "standard"}
+    </span>
+  );
 }
 
 afterEach(cleanup);
@@ -17,6 +21,15 @@ describe("useLayoutMode", () => {
 
     render(<Probe />);
 
-    await waitFor(() => expect(screen.getByText("mobile")).not.toBeNull());
+    await waitFor(() => expect(screen.getByText("mobile:compact")).not.toBeNull());
+  });
+
+  it("keeps portrait phones at the standard field-card size", async () => {
+    Object.defineProperty(window, "innerWidth", { configurable: true, value: 320 });
+    Object.defineProperty(window, "innerHeight", { configurable: true, value: 568 });
+
+    render(<Probe />);
+
+    await waitFor(() => expect(screen.getByText("mobile:standard")).not.toBeNull());
   });
 });

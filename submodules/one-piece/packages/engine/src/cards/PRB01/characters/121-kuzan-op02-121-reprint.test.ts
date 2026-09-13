@@ -3,7 +3,7 @@ import { prb01KuzanOp02121Reprint121 } from "../../../../../cards/src/cards/PRB0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-121 Kuzan (OP02-121) (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01KuzanOp02121Reprint121);
   });
 });

@@ -126,7 +126,7 @@ describe("Gundam Mk-II (Titans) (GD02-003)", () => {
       });
       expectSuccess(p1.resolveEffect({ targets: [unitId] }));
       const optionalChoice = p1.getBoardView().pendingChoice;
-      if (optionalChoice?.kind !== "optional") {
+      if (optionalChoice?.kind !== "targetSelection") {
         throw new Error("Expected a visible optional discard choice");
       }
       expectSuccess(
@@ -165,7 +165,7 @@ describe("Gundam Mk-II (Titans) (GD02-003)", () => {
       });
       expectSuccess(p1.resolveEffect({ targets: [unitId] }));
       const optionalChoice = p1.getBoardView().pendingChoice;
-      if (optionalChoice?.kind !== "optional") {
+      if (optionalChoice?.kind !== "targetSelection") {
         throw new Error("Expected a visible optional discard choice");
       }
       expectSuccess(

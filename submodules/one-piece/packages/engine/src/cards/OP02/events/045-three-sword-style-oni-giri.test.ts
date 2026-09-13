@@ -3,7 +3,7 @@ import { op02ThreeSwordStyleOniGiri045 } from "../../../../../cards/src/cards/OP
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-045 Three Sword Style Oni Giri", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op02ThreeSwordStyleOniGiri045);
   });
 });

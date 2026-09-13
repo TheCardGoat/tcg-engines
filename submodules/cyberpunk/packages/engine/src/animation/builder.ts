@@ -437,6 +437,66 @@ export function buildAnimationScript(
         advance(duration);
         break;
       }
+      case "cardSpent":
+      case "cardReadied": {
+        const duration = ANIMATION_DURATIONS_MS.entityStateChange;
+        steps.push({
+          kind: "entityStateChange",
+          id: id(),
+          startMs: cursor,
+          durationMs: duration,
+          reason: ev.type,
+          cardId: ev.cardId,
+          playerId: ev.playerId,
+          change: ev.type === "cardSpent" ? "spent" : "readied",
+        });
+        advance(duration);
+        break;
+      }
+      case "deckShuffled": {
+        const duration = ANIMATION_DURATIONS_MS.randomization;
+        steps.push({
+          kind: "randomization",
+          id: id(),
+          startMs: cursor,
+          durationMs: duration,
+          reason: ev.type,
+          playerId: ev.playerId,
+          randomization: "shuffle",
+        });
+        advance(duration);
+        break;
+      }
+      case "gigDieRolled": {
+        const duration = ANIMATION_DURATIONS_MS.randomization;
+        steps.push({
+          kind: "randomization",
+          id: id(),
+          startMs: cursor,
+          durationMs: duration,
+          reason: ev.type,
+          playerId: ev.playerId,
+          randomization: "die",
+          dieId: ev.dieId,
+          resultLabel: String(ev.result),
+        });
+        advance(duration);
+        break;
+      }
+      case "gameEnded": {
+        const duration = ANIMATION_DURATIONS_MS.gameResult;
+        steps.push({
+          kind: "gameResult",
+          id: id(),
+          startMs: cursor,
+          durationMs: duration,
+          reason: ev.type,
+          winnerId: ev.winnerId,
+          reasonLabel: ev.reason,
+        });
+        advance(duration);
+        break;
+      }
       case "eddiesSpent": {
         const duration = ANIMATION_DURATIONS_MS.resourceFloat;
         steps.push({

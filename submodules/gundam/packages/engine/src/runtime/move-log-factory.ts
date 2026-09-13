@@ -10,6 +10,7 @@ import type {
   GameEndLog,
   GundamMoveLog,
   GundamMoveOutcomes,
+  MulliganLog,
   PassLog,
   PlayCommandLog,
   ResolveEffectLog,
@@ -17,6 +18,7 @@ import type {
 } from "../types/move-log.ts";
 import type { GundamActionLogMessageKey } from "../gundam/logging.ts";
 import { GundamMoveOutcomeAccumulator } from "./move-outcome-accumulator.ts";
+import { privateField } from "./private-field.ts";
 
 const ACTION_LOG_MESSAGE_KEYS = {
   "gundam.move.deployUnit": true,
@@ -77,6 +79,9 @@ export function buildGundamMoveLog(args: {
   logEntries: readonly GameLogEntry[];
   timestamp: number;
 }): GundamMoveLog | undefined {
+  const mulliganLog = buildMulliganLog(args);
+  if (mulliganLog) return mulliganLog;
+
   const accumulator = new GundamMoveOutcomeAccumulator();
   for (const entry of args.logEntries) {
     accumulator.accumulate(entry);
@@ -93,6 +98,57 @@ export function buildGundamMoveLog(args: {
   }
 
   return convertActionEntry(actionEntry, args.command, args.playerId, outcomes);
+}
+
+/**
+ * Merge PUBLIC + PRIVATE `gundam.setup.mulligan` entries into one structured
+ * move log. Opponents receive count only after `stripPrivateFields`.
+ */
+function buildMulliganLog(args: {
+  command: CommandEnvelope;
+  playerId: PlayerId;
+  logEntries: readonly GameLogEntry[];
+  timestamp: number;
+}): MulliganLog | undefined {
+  if (args.command.move !== "alterHand") return undefined;
+  const mulliganEntries = args.logEntries.filter((entry) => entry.type === "gundam.setup.mulligan");
+  if (mulliganEntries.length === 0) return undefined;
+
+  let count = 0;
+  let actorId = args.playerId;
+  let returnedCardIds: CardInstanceId[] = [];
+  let drawnCardIds: CardInstanceId[] = [];
+  let stateID: number | undefined;
+  let commandID = args.command.commandID;
+
+  for (const entry of mulliganEntries) {
+    const values = valuesOf(entry);
+    if (typeof values.count === "number") count = values.count;
+    const pid = asPlayer(values.playerId);
+    if (pid) actorId = pid;
+    const returned = Array.isArray(values.returnedCardIds)
+      ? values.returnedCardIds.filter((id): id is CardInstanceId => typeof id === "string")
+      : [];
+    const drawn = Array.isArray(values.drawnCardIds)
+      ? values.drawnCardIds.filter((id): id is CardInstanceId => typeof id === "string")
+      : [];
+    if (returned.length > 0) returnedCardIds = returned;
+    if (drawn.length > 0) drawnCardIds = drawn;
+    if (typeof entry.stateID === "number") stateID = entry.stateID;
+  }
+
+  return {
+    type: "mulligan",
+    playerId: actorId,
+    timestamp: args.timestamp,
+    ...(stateID !== undefined ? { stateID } : {}),
+    commandID,
+    count,
+    ...(returnedCardIds.length > 0
+      ? { returnedCardIds: privateField(returnedCardIds, [actorId]) }
+      : {}),
+    ...(drawnCardIds.length > 0 ? { drawnCardIds: privateField(drawnCardIds, [actorId]) } : {}),
+  };
 }
 
 export function projectGundamMoveLogs(args: {
@@ -112,19 +168,35 @@ function buildFromCommand(
   outcomes?: GundamMoveOutcomes,
 ): GundamMoveLog | undefined {
   if (command.move === "passActionStep") {
+    const automatic = automaticPassFromCommand(command);
     return {
       type: "pass",
       playerId,
       timestamp,
       commandID: command.commandID,
       context: "action-step",
+      ...(automatic ? { automatic: true } : {}),
     };
   }
   if (command.move === "passBattleAction") {
-    return { type: "pass", playerId, timestamp, commandID: command.commandID, context: "battle" };
+    return {
+      type: "pass",
+      playerId,
+      timestamp,
+      commandID: command.commandID,
+      context: "battle",
+      ...(automaticPassFromCommand(command) ? { automatic: true } : {}),
+    };
   }
   if (command.move === "passBlock") {
-    return { type: "pass", playerId, timestamp, commandID: command.commandID, context: "block" };
+    return {
+      type: "pass",
+      playerId,
+      timestamp,
+      commandID: command.commandID,
+      context: "block",
+      ...(automaticPassFromCommand(command) ? { automatic: true } : {}),
+    };
   }
   if (command.move === "passTurn") {
     return { type: "pass", playerId, timestamp, commandID: command.commandID, context: "turn" };
@@ -144,6 +216,14 @@ function buildFromCommand(
     };
   }
   return undefined;
+}
+
+function automaticPassFromCommand(command: CommandEnvelope): boolean {
+  return (
+    typeof command.args === "object" &&
+    command.args !== null &&
+    (command.args as { automatic?: unknown }).automatic === true
+  );
 }
 
 function commandTargetIds(command: CommandEnvelope): CardInstanceId[] {
@@ -273,6 +353,7 @@ function convertActionEntry(
             values.context === "action-step"
               ? values.context
               : "action-step",
+          ...(values.automatic === true ? { automatic: true } : {}),
         },
         outcomes,
       );

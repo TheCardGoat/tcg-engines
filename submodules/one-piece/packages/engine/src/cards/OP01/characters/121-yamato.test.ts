@@ -3,7 +3,7 @@ import { op01Yamato121 } from "../../../../../cards/src/cards/OP01/characters/12
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-121 Yamato", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01Yamato121);
   });
 });

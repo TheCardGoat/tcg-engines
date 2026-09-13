@@ -48,7 +48,10 @@ export const op11GumGumKingCobra059: EventCard = {
             target: {
               player: "self",
               zones: ["leader", "character"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
             },
             value: 2000,
             duration: "thisBattle",
@@ -68,10 +71,19 @@ export const op11GumGumKingCobra059: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
-              filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
             },
           },
         ],

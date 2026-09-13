@@ -18,6 +18,7 @@ import {
   arePlayerEffectsNegatedByPermanentEffect,
   getPermanentKeywords,
   getPermanentModifierTotal,
+  getPermanentSetBasePower,
   getPermanentSetCost,
   isRefreshPreventedByPermanentEffect,
 } from "./effects/permanent.ts";
@@ -236,10 +237,16 @@ export function enqueueEffectsForTrigger(
   const source = getInstance(state, sourceInstanceId);
   const blocks = effectBlocksForInstance(state, sourceInstanceId, trigger);
   let enqueued = 0;
+  // Within one enqueue pass, only one block may use a given oncePerTurnKey
+  // (e.g. OP12-081 Koala dual predicates for the same play event).
+  const keysQueuedThisPass = new Set<string>();
 
   for (const [index, block] of blocks.entries()) {
     const effectKey = block.oncePerTurnKey ?? `${trigger}:${index}`;
     if (block.oncePerTurn && source.usedEffectKeys.includes(effectKey)) {
+      continue;
+    }
+    if (block.oncePerTurn && keysQueuedThisPass.has(effectKey)) {
       continue;
     }
     enqueueResolution(state, {
@@ -251,6 +258,9 @@ export function enqueueEffectsForTrigger(
       trashHandIds,
       triggerEvent,
     });
+    if (block.oncePerTurn) {
+      keysQueuedThisPass.add(effectKey);
+    }
     enqueued += 1;
   }
 
@@ -262,27 +272,87 @@ export function enqueueInPlayEffectsForTrigger(
   trigger: EffectBlock["trigger"],
   triggerEvent?: Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"],
   sourceControllers?: readonly MatchSeat[],
+  excludeInstanceIds?: readonly string[],
 ) {
-  for (const source of Object.values(state.cards)) {
-    if (sourceControllers && !sourceControllers.includes(source.controller)) {
-      continue;
+  // 8-6-1: when both players' effect timings are fulfilled at the same time,
+  // the turn player's effects resolve first.
+  const seats = sourceControllers ?? [state.activeSeat, otherSeat(state.activeSeat)];
+  for (const seat of seats) {
+    for (const source of Object.values(state.cards)) {
+      if (source.controller !== seat) {
+        continue;
+      }
+      if (excludeInstanceIds?.includes(source.instanceId)) {
+        continue;
+      }
+      const player = getPlayer(state, source.controller);
+      const isInPlay =
+        (source.zone === "leader" && player.leaderInstanceId === source.instanceId) ||
+        (source.zone === "character" && player.characterArea.includes(source.instanceId)) ||
+        (source.zone === "stage" && player.stageArea === source.instanceId);
+      if (!isInPlay) {
+        continue;
+      }
+      enqueueEffectsForTrigger(
+        state,
+        source.instanceId,
+        source.controller,
+        trigger,
+        undefined,
+        triggerEvent,
+      );
     }
-    const player = getPlayer(state, source.controller);
-    const isInPlay =
-      (source.zone === "leader" && player.leaderInstanceId === source.instanceId) ||
-      (source.zone === "character" && player.characterArea.includes(source.instanceId)) ||
-      (source.zone === "stage" && player.stageArea === source.instanceId);
-    if (!isInPlay) {
-      continue;
-    }
-    enqueueEffectsForTrigger(
+  }
+}
+
+// 8-6-1: one occurrence can fulfill the acting player's "when you ..." trigger
+// and their opponent's mirrored "when your opponent ..." trigger at the same
+// time (e.g. a Counter Event played during the opponent's turn, or an effect
+// that plays a Character during the opponent's turn). Enqueue the turn
+// player's side first even when the acting player is not the turn player.
+export function enqueueMirroredInPlayEffectsForTrigger(
+  state: MatchState,
+  actor: MatchSeat,
+  actorTrigger: EffectBlock["trigger"],
+  opponentTrigger: EffectBlock["trigger"],
+  triggerEvent?: Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"],
+) {
+  for (const seat of [state.activeSeat, otherSeat(state.activeSeat)]) {
+    enqueueInPlayEffectsForTrigger(
       state,
-      source.instanceId,
-      source.controller,
-      trigger,
-      undefined,
+      seat === actor ? actorTrigger : opponentTrigger,
       triggerEvent,
+      [seat],
     );
+  }
+}
+
+// 8-6-1: a K.O. fulfills the K.O.'d card's own [On K.O.] / [When a Character
+// is K.O.'d] effects and every in-play [When a Character is K.O.'d] listener
+// at the same time, so each player's effects enqueue turn player first.
+// 10-2-17-1: callers invoke this while the K.O.'d card is still on the field,
+// so the card's own effects and negation state are evaluated on the field;
+// the card itself is excluded from the in-play listener scan because its own
+// [When a Character is K.O.'d] effects are enqueued directly.
+export function enqueueKoEffectsForTrigger(
+  state: MatchState,
+  targetId: string,
+  targetController: MatchSeat,
+  triggerEvent: Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"],
+) {
+  for (const seat of [state.activeSeat, otherSeat(state.activeSeat)]) {
+    if (targetController === seat) {
+      enqueueEffectsForTrigger(state, targetId, targetController, "onKo", undefined, triggerEvent);
+      enqueueEffectsForTrigger(
+        state,
+        targetId,
+        targetController,
+        "whenCharacterKod",
+        undefined,
+        triggerEvent,
+      );
+    }
+    enqueueInPlayEffectsForTrigger(state, "whenCharacterKod", triggerEvent, [seat], [targetId]);
   }
 }
 
@@ -454,11 +524,26 @@ export function isCardPreventedFromRefreshing(state: MatchState, instanceId: str
   );
 }
 
+// 4-9-2-1: when several effects set the same card's base power, the highest
+// set value applies instead of the printed base; additive power modifiers and
+// given DON!! power then apply on top of that resolved base.
+export function getSetBasePower(state: MatchState, instanceId: string): number | null {
+  let setBasePower = getPermanentSetBasePower(state, instanceId);
+  for (const modifier of Object.values(state.modifiers)) {
+    if (modifier.targetId !== instanceId || modifier.type !== "basePower") {
+      continue;
+    }
+    const value = modifier.value ?? 0;
+    setBasePower = setBasePower === null ? value : Math.max(setBasePower, value);
+  }
+  return setBasePower;
+}
+
 export function getCardPower(state: MatchState, instanceId: string): number {
   const instance = getInstance(state, instanceId);
   const card = getCard(instance.cardId);
   return (
-    basePower(card) +
+    (getSetBasePower(state, instanceId) ?? basePower(card)) +
     (state.activeSeat === instance.controller ? instance.attachedDon * 1000 : 0) +
     getPowerModifierTotal(state, instanceId) +
     getPermanentModifierTotal(state, instanceId, "power")

@@ -5,10 +5,11 @@ export const welcomeToNightCityRetailMistyOlszewskiMenderOfBrokenSpirits = defin
   id: "383abfb4-eedb-47c1-87f0-3ae4973c3619",
   canonicalId: "misty-olszewski-mender-of-broken-spirits",
   slug: "misty-olszewski-mender-of-broken-spirits",
+  subname: "Mender of Broken Spirits",
   rulesText:
     "This Unit can't attack.\nAt the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it.\n(Card types include Unit, Gear, and Program.)",
-  name: "Misty Olszewski — Mender of Broken Spirits",
-  displayName: "Misty Olszewski — Mender of Broken Spirits",
+  name: "Misty Olszewski",
+  displayName: "Misty Olszewski: Mender of Broken Spirits",
   color: "blue",
   classifications: ["Mystic"],
   set: {

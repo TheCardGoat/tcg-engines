@@ -3,6 +3,10 @@ import { eb01Bingoh016, eb01Blueno017, eb01Doma005, eb01ScratchmenApoo015 } from
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+/**
+ * EB01-016 Bingoh: [Activate: Main] You may rest this Character: K.O. up to 1
+ * opposing rested Character with cost ≤1.
+ */
 describe("EB01-016 Bingoh", () => {
   test("rests as its cost and maps only a rested opposing 1-cost Character for K.O.", () => {
     const engine = OnePieceTestEngine.create(
@@ -38,5 +42,26 @@ describe("EB01-016 Bingoh", () => {
       view.players.south.characters.find((card) => card?.instanceId === bingohId)?.rested,
     ).toBe(true);
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eligibleId);
+  });
+
+  test("may decline Activate: Main so Bingoh stays active and no K.O.", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [eb01Bingoh016] },
+      { character: [{ card: eb01Doma005, rested: true }] },
+    );
+    const bingohId = engine.findCardInZone("south", "character", eb01Bingoh016);
+    const eligibleId = engine.findCardInZone("north", "character", eb01Doma005);
+
+    engine.activateEffect(bingohId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    // Rest cost not paid; target still on the field.
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === bingohId)?.rested,
+    ).toBe(false);
+    expect(view.players.north.characters.some((c) => c?.instanceId === eligibleId)).toBe(true);
+    expect(view.players.north.trash.map((c) => c.instanceId)).not.toContain(eligibleId);
+    expect(view.prompts).toHaveLength(0);
   });
 });

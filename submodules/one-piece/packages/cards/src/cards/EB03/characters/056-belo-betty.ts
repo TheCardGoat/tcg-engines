@@ -35,6 +35,7 @@ export const eb03BeloBetty056: CharacterCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: true,
           },
         ],
         actions: [

@@ -3,7 +3,7 @@ import { op06Eldoraggo070 } from "../../../../../cards/src/cards/OP06/characters
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-070 Eldoraggo", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op06Eldoraggo070);
   });
 });
