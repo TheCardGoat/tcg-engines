@@ -1016,6 +1016,10 @@ function LiveGamePage() {
     result?.kind === "win"
       ? `${bootstrap.match.participants.find((participant) => participant.id === result.winnerId)?.displayName ?? "Winner"} wins`
       : "Game ended";
+  const mainMenuHref = matchReturnUrl(
+    "flesh-and-blood",
+    typeof window === "undefined" ? "" : window.location.search,
+  );
   const recoveryActive =
     recovering || Boolean(connection && (!connection.authenticated || !connection.joined));
   const activeRecoveryStage = recoveryStage(connection, recoveryAttempts, terminalRecovery);
@@ -1152,7 +1156,7 @@ function LiveGamePage() {
           }}
           replayStatus={replayStatus}
           onInspectBoard={() => setSummaryOpen(false)}
-          onMainMenu={() => window.location.assign("/flesh-and-blood/simulator/")}
+          onMainMenu={() => window.location.assign(mainMenuHref)}
           onPlayAgain={() => window.location.assign("/flesh-and-blood/matchmaking")}
         />
       ) : null}
@@ -1185,9 +1189,7 @@ function LiveGamePage() {
           <Button variant="default" onClick={() => setSummaryOpen(false)}>
             Inspect board
           </Button>
-          <Button onClick={() => window.location.assign("/flesh-and-blood/simulator/")}>
-            Main menu
-          </Button>
+          <Button onClick={() => window.location.assign(mainMenuHref)}>Main menu</Button>
         </Group>
       </Modal>
       <Modal

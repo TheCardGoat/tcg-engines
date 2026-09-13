@@ -79,7 +79,7 @@
   "flesh-and-blood.charge": "{actorId} charged {chargedName} into {cardName}.",
   "flesh-and-blood.fuse": "{actorId} fused {revealedNames} onto {cardName}.",
   "flesh-and-blood.fragment": "{actorId} fragmented {cardName}.",
-  "flesh-and-blood.usurp": "{actorId} usurped with {cardName}.",
+  "flesh-and-blood.usurp": "{actorId} destroyed {usurpedName} to usurp with {cardName}; {cardName} gets +2 power.",
   "flesh-and-blood.crank": "{actorId} cranked {cardName}.",
   "flesh-and-blood.transcend": "{actorId} transcended {cardName}.",
   "flesh-and-blood.complete-contract": "{actorId} completed a contract with {cardName}.",

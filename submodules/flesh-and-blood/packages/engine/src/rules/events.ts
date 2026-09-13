@@ -451,7 +451,8 @@ export interface FabGameEventDataByName {
     readonly attack: FabObjectSnapshot;
   };
   readonly "counter-removed": CardEventData & { readonly counter: string; readonly amount: number };
-  readonly usurp: ActorCardEventData;
+  /** Usurp records both the Runechant paid as the cost and the played card gaining +2{p}. */
+  readonly usurp: ActorCardEventData & { readonly attack: FabObjectSnapshot };
   readonly crank: ActorCardEventData & {
     /** True when the event records the play-time crank choice (CR 8.3.29). */
     readonly intent: boolean;

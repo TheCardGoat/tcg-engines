@@ -4,7 +4,7 @@ import { AnimatedEntityCollection, AnimatedEntityListItem } from "@tcg/simulator
 
 import type { FabCombatStackEntryView } from "./combatChainView";
 import { FabBoardCardFace } from "./FabBoardCardFace";
-import { fabPreviewOccupancyId, useFabCardPreview, useFabPreviewTarget } from "./FabCardPreview";
+import { useFabCardPreview, useFabPreviewTarget } from "./FabCardPreview";
 import {
   FabOpponentTriggerYieldControl,
   type FabOpponentTriggerYieldAction,
@@ -41,9 +41,6 @@ function CompactResolutionCard({
   const { pin } = useFabCardPreview();
   const previewTarget = useFabPreviewTarget(entry.entity, {
     enabled: interactionMode === "desktop",
-    // The stack rearranges under the pointer while expanded. Occupancy is
-    // released only when the pointer leaves the stack root.
-    clearOnLeave: false,
   });
   return (
     <button
@@ -55,16 +52,16 @@ function CompactResolutionCard({
       {...previewTarget.previewProps}
       onMouseEnter={
         interactionMode === "desktop"
-          ? () => {
-              previewTarget.occupy();
+          ? (event) => {
+              previewTarget.occupy(event);
               onOccupied(entry);
             }
           : undefined
       }
       onFocus={
         interactionMode === "desktop"
-          ? () => {
-              previewTarget.occupy();
+          ? (event) => {
+              previewTarget.occupy(event);
               onOccupied(entry);
             }
           : undefined
@@ -171,16 +168,6 @@ export function CompactResolutionStack({
     activePreviewIdRef.current = entry.entity.id;
     setHover(entry.entity);
   };
-  const leaveStack = (event: {
-    clientX?: number;
-    clientY?: number;
-    relatedTarget: EventTarget | null;
-  }) => {
-    const activePreviewId = activePreviewIdRef.current;
-    if (fabPreviewOccupancyId(event)) return;
-    activePreviewIdRef.current = null;
-    if (activePreviewId) clearHover(activePreviewId);
-  };
   const previewResolvingLayer = () => {
     const top = stack.find((entry) => entry.order === 1) ?? stack[0];
     if (top) occupy(top);
@@ -206,11 +193,10 @@ export function CompactResolutionStack({
       }
       onPointerLeave={
         interactionMode === "desktop"
-          ? (event) => {
+          ? () => {
               setExpanded(false);
-              // Expand rearranges cards under the pointer; dismiss only when
-              // occupancy has actually left the stack.
-              leaveStack(event);
+              const entityId = activePreviewIdRef.current;
+              if (entityId) clearHover(entityId);
             }
           : undefined
       }
@@ -227,7 +213,6 @@ export function CompactResolutionStack({
           ? (event) => {
               if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
                 setExpanded(false);
-                leaveStack(event);
               }
             }
           : undefined

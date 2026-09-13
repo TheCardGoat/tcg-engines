@@ -100,3 +100,14 @@ it("preserves trusted return navigation without leaking session credentials", ()
     );
   }
 });
+it("returns FAB players to matchmaking instead of the standalone simulator", () => {
+  expect(
+    matchReturnUrl(
+      "flesh-and-blood",
+      new URLSearchParams({
+        returnTo: "https://tcg.online/flesh-and-blood/matchmaking",
+      }).toString(),
+    ),
+  ).toBe("https://tcg.online/flesh-and-blood/matchmaking");
+  expect(matchReturnUrl("flesh-and-blood", "")).toBe("/flesh-and-blood/matchmaking");
+});

@@ -770,7 +770,7 @@ describe("CardContextMenuController", () => {
       '[data-card-context-menu] button[aria-label="Show Test Card card image"]',
     ) as HTMLButtonElement;
     act(() => previewToggle.click());
-    expect(onPreviewEntity).toHaveBeenCalledWith(entity);
+    expect(onPreviewEntity).toHaveBeenCalledWith(entity, "pinned");
     expect(previewToggle.getAttribute("aria-expanded")).toBe("true");
     expect(previewToggle.getAttribute("aria-label")).toBe("Hide Test Card card image");
 
@@ -781,6 +781,28 @@ describe("CardContextMenuController", () => {
     act(() => previewToggle.click());
     renderController({ mode: "detailed", stateVersion: 2, onPreviewEntity, onPreviewEnd });
     expect(onPreviewEnd).toHaveBeenCalledTimes(2);
+  });
+
+  test("distinguishes native hover from a click pin and only releases hover on leave", () => {
+    const onPreviewEntity = vi.fn();
+    const onPreviewEnd = vi.fn();
+    renderController({ mode: "detailed", onPreviewEntity, onPreviewEnd });
+    openCard();
+    const toggle = document.querySelector(
+      '[data-card-context-menu] button[aria-label="Show Test Card card image"]',
+    ) as HTMLButtonElement;
+    act(() => toggle.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
+    expect(onPreviewEntity).toHaveBeenLastCalledWith(entity, "hover");
+    act(() => toggle.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
+    expect(onPreviewEnd).toHaveBeenLastCalledWith(entity.id);
+    onPreviewEnd.mockClear();
+    act(() => toggle.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
+    act(() => toggle.click());
+    expect(onPreviewEntity).toHaveBeenLastCalledWith(entity, "pinned");
+    act(() => toggle.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
+    expect(onPreviewEnd).not.toHaveBeenCalled();
+    act(() => toggle.click());
+    expect(onPreviewEnd).toHaveBeenLastCalledWith(undefined);
   });
 
   test("keeps a native preview active when its end callback changes", () => {

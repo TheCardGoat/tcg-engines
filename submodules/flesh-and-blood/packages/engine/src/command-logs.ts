@@ -396,6 +396,10 @@ export const FAB_LOG_FACT_EMITTERS = {
     ];
   },
   destroy: (event) => {
+    // Usurp's dedicated entry names the paid Runechant, the played card, and
+    // its +2{p}. Do not follow it with two generic destroy facts for the same
+    // additional cost.
+    if (event.bindings.usurpCost === true) return [];
     const object = event.data.object;
     const source = event.source;
     if (source && source.instanceId !== object.instanceId) {
@@ -674,7 +678,15 @@ export const FAB_LOG_FACT_EMITTERS = {
   usurp: (event) => [
     {
       key: "flesh-and-blood.usurp",
-      values: { actorId: event.data.actorId, cardName: fabObjectDisplayName(event.data.object) },
+      values: {
+        actorId: event.data.actorId,
+        cardName: fabObjectDisplayName(event.data.attack),
+        usurpedName: fabObjectDisplayName(event.data.object),
+      },
+      objectRefs: {
+        cardName: objectReference(event.data.attack),
+        usurpedName: objectReference(event.data.object),
+      },
       category: "action",
     },
   ],

@@ -203,8 +203,6 @@ export function FabBoardCardFace({
         fill={fill}
         fullImageChrome="edge-to-edge"
         fullImageFit="cover"
-        onHoverEnter={previewTarget.occupy}
-        onHoverLeave={previewTarget.vacate}
         onImageError={
           boardImageCandidate
             ? () => {

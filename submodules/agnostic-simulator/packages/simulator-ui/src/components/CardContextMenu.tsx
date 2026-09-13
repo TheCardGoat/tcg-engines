@@ -107,8 +107,9 @@ export interface CardContextMenuProps {
   onAction: (action: SimulatorCardAction) => void;
   onOpenChange: (open: boolean) => void;
   /** Lets a game route image inspection through its native preview surface. */
-  onPreviewEntity?: (entity: SimulatorEntity) => void;
-  onPreviewEnd?: () => void;
+  onPreviewEntity?: (entity: SimulatorEntity, mode: "hover" | "pinned") => void;
+  /** An entity id ends incidental hover; no id explicitly dismisses inspection. */
+  onPreviewEnd?: (hoverEntityId?: string) => void;
   visualIdentity?: CardContextMenuVisualIdentity;
   /** Uses the owning simulator shell's resolved layout when the controller sits above that shell. */
   layoutOverride?: ActiveLayout;
@@ -146,7 +147,7 @@ export function CardContextMenu({
   const [nativePreviewPinned, setNativePreviewPinned] = useState(false);
   const [nativePreviewHovered, setNativePreviewHovered] = useState(false);
   const nativePreviewPinnedRef = useRef(false);
-  const nativePreviewActive = useRef(false);
+  const nativePreviewActive = useRef<"hover" | "pinned" | null>(null);
   const onPreviewEndRef = useRef(onPreviewEnd);
   onPreviewEndRef.current = onPreviewEnd;
   const usesNativePreview = onPreviewEntity !== undefined;
@@ -180,15 +181,18 @@ export function CardContextMenu({
   const focusAnchor = useCallback(() => {
     anchorElement?.focus({ preventScroll: true });
   }, [anchorElement]);
-  const showNativePreview = useCallback(() => {
-    if (nativePreviewActive.current) return;
-    nativePreviewActive.current = true;
-    onPreviewEntity?.(entity);
-  }, [entity, onPreviewEntity]);
-  const hideNativePreview = useCallback(() => {
+  const showNativePreview = useCallback(
+    (mode: "hover" | "pinned") => {
+      if (nativePreviewActive.current === "pinned" || nativePreviewActive.current === mode) return;
+      nativePreviewActive.current = mode;
+      onPreviewEntity?.(entity, mode);
+    },
+    [entity, onPreviewEntity],
+  );
+  const hideNativePreview = useCallback((hoverEntityId?: string) => {
     if (!nativePreviewActive.current) return;
-    nativePreviewActive.current = false;
-    onPreviewEndRef.current?.();
+    nativePreviewActive.current = null;
+    onPreviewEndRef.current?.(hoverEntityId);
   }, []);
 
   useEffect(() => () => hideNativePreview(), [hideNativePreview]);
@@ -317,7 +321,7 @@ export function CardContextMenu({
                 onPointerEnter={() => {
                   if (usesNativePreview) {
                     setNativePreviewHovered(true);
-                    showNativePreview();
+                    showNativePreview("hover");
                     return;
                   }
                   if (!isMobileLayout) setPreviewHovered(true);
@@ -325,7 +329,7 @@ export function CardContextMenu({
                 onPointerLeave={() => {
                   if (usesNativePreview) {
                     setNativePreviewHovered(false);
-                    if (!nativePreviewPinnedRef.current) hideNativePreview();
+                    if (!nativePreviewPinnedRef.current) hideNativePreview(entity.id);
                     return;
                   }
                   setPreviewHovered(false);
@@ -333,7 +337,7 @@ export function CardContextMenu({
                 onFocus={() => {
                   if (usesNativePreview) {
                     setNativePreviewHovered(true);
-                    showNativePreview();
+                    showNativePreview("hover");
                     return;
                   }
                   if (!isMobileLayout) setPreviewHovered(true);
@@ -341,7 +345,7 @@ export function CardContextMenu({
                 onBlur={() => {
                   if (usesNativePreview) {
                     setNativePreviewHovered(false);
-                    if (!nativePreviewPinnedRef.current) hideNativePreview();
+                    if (!nativePreviewPinnedRef.current) hideNativePreview(entity.id);
                     return;
                   }
                   setPreviewHovered(false);
@@ -356,7 +360,7 @@ export function CardContextMenu({
                     } else {
                       nativePreviewPinnedRef.current = true;
                       setNativePreviewPinned(true);
-                      showNativePreview();
+                      showNativePreview("pinned");
                     }
                     return;
                   }
@@ -853,8 +857,9 @@ export interface CardContextMenuControllerProps {
   className?: string;
   onModeChange: (mode: CardInteractionMode) => void;
   onAction: (action: SimulatorCardAction, entity: SimulatorEntity) => void;
-  onPreviewEntity?: (entity: SimulatorEntity) => void;
-  onPreviewEnd?: () => void;
+  onPreviewEntity?: (entity: SimulatorEntity, mode: "hover" | "pinned") => void;
+  /** An entity id ends incidental hover; no id explicitly dismisses inspection. */
+  onPreviewEnd?: (hoverEntityId?: string) => void;
   visualIdentity?: CardContextMenuVisualIdentity;
   layoutOverride?: ActiveLayout;
 }

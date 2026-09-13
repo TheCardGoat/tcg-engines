@@ -1024,11 +1024,21 @@ describe("Flesh and Blood board", () => {
       ],
     };
 
-    renderTabletop(stateWithoutSource, {
-      readOnly: false,
-      interactionView,
-      onSubmitInteraction: vi.fn(),
-    });
+    const tabletop = () => (
+      <FabPresentationTestProvider>
+        <FleshAndBloodSimulatorProviders>
+          <FleshAndBloodTabletop
+            state={stateWithoutSource}
+            viewerId="player-1"
+            readOnly={false}
+            forceMobileLayout={false}
+            interactionView={interactionView}
+            onSubmitInteraction={vi.fn()}
+          />
+        </FleshAndBloodSimulatorProviders>
+      </FabPresentationTestProvider>
+    );
+    const view = render(tabletop());
 
     const reference = within(screen.getByTestId("interaction-resolution-prompt")).getByRole(
       "button",
@@ -1040,6 +1050,19 @@ describe("Flesh and Blood board", () => {
     expect(
       within(screen.getByTestId("interaction-resolution-prompt")).queryByText(equipmentText!),
     ).toBeNull();
+
+    // A pending prompt must not clear hand inspection on the next board render.
+    const handCard = screen.getByTestId("fab-hand-bottom").querySelector("[data-fab-preview-id]");
+    expect(handCard).not.toBeNull();
+    fireEvent.mouseEnter(handCard!);
+    const preview = screen.getByTestId("fab-card-preview");
+    const inspectedText = preview.textContent;
+    expect(preview.getAttribute("data-visible")).toBe("true");
+    view.rerender(tabletop());
+    expect(preview.getAttribute("data-visible")).toBe("true");
+    expect(preview.textContent).toBe(inspectedText);
+    fireEvent.mouseLeave(handCard!);
+    expect(preview.getAttribute("data-visible")).toBeNull();
     fireEvent.click(
       within(screen.getByTestId("interaction-resolution-prompt")).getByRole("button", {
         name: "Prompt controls",
@@ -4103,6 +4126,104 @@ describe("Flesh and Blood board", () => {
     20_000,
   );
 
+  it("loads card art for hosted deck-search candidates omitted from the state definitions", async () => {
+    const state = createOpeningFixtureState();
+    const slothId = "BMgj68hT9jQHQ6nFqhTDT";
+    const greedId = "MT8LQJTF6w8gPqMzNTrkr";
+    expect(state.cardDefinitions[slothId]).toBeUndefined();
+    expect(state.cardDefinitions[greedId]).toBeUndefined();
+    const prompt = "Search your deck";
+    const interactionView: EngineInteractionView = {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "flesh-and-blood",
+      actorId: "player-1",
+      stateVersion: 9,
+      status: "choosing",
+      resolution: {
+        actingPlayerId: "player-1",
+        pendingCount: 1,
+        currentEffect: { id: "hosted-deck-search", text: { key: prompt } },
+        currentStep: {
+          index: 1,
+          count: 1,
+          text: { key: "Choose a card required by this effect." },
+          requirement: {
+            kind: "entity-selection",
+            text: { key: "Choose a card required by this effect." },
+            required: true,
+          },
+        },
+      },
+      actions: [
+        {
+          id: "answer-hosted-deck-search",
+          requestId: "answer:9",
+          intent: "choose-option",
+          text: { key: prompt },
+          enabled: true,
+          inputs: [
+            {
+              id: "card",
+              kind: "entity-selection",
+              role: "target",
+              entityKinds: ["card"],
+              text: { key: "Choose a card required by this effect." },
+              required: true,
+              min: 1,
+              max: 1,
+              ordered: false,
+              candidates: [
+                { instanceId: "sloth-1", definitionId: slothId, name: "Runechant of Sloth" },
+                { instanceId: "greed-1", definitionId: greedId, name: "Runechant of Greed" },
+              ].map(({ instanceId, definitionId, name }) => ({
+                entity: {
+                  kind: "card" as const,
+                  instanceId,
+                  definitionId,
+                  ownerId: "player-1",
+                  zoneId: "player-1:deck",
+                },
+                text: { key: name },
+                enabled: true,
+              })),
+            },
+          ],
+        },
+      ],
+    };
+
+    render(
+      <FleshAndBloodSimulatorProviders>
+        <FleshAndBloodTabletop
+          state={state}
+          viewerId="player-1"
+          readOnly={false}
+          interactionView={interactionView}
+          onSubmitInteraction={vi.fn()}
+        />
+      </FleshAndBloodSimulatorProviders>,
+    );
+
+    const modal = await screen.findByTestId("target-filter-modal");
+    await waitFor(
+      () => {
+        for (const name of ["Runechant of Sloth", "Runechant of Greed"]) {
+          const card = within(modal).getByRole("listitem", { name: new RegExp(`^${name}`) });
+          expect(card.querySelector("img")?.getAttribute("src")).toMatch(
+            /\/public\/fab\/assets\/board\/[a-f0-9]{64}\.webp$/,
+          );
+        }
+        expect(
+          within(modal)
+            .getByTestId("fab-card-preview-surface")
+            .querySelector("img")
+            ?.getAttribute("src"),
+        ).toMatch(/\/public\/fab\/assets\/full\/[a-f0-9]{64}\.webp$/);
+      },
+      { timeout: 15_000 },
+    );
+  });
+
   it.each(["desktop", "mobile"] as const)(
     "builds a four-card pitch stack in future draw order and auto-places the last card on %s",
     async (layout) => {
@@ -4698,7 +4819,7 @@ describe("Flesh and Blood board", () => {
     fireEvent.mouseEnter(screen.getByTestId("fab-compact-resolution-entry-2"));
     expect(screen.getByTestId("fab-card-preview").getAttribute("data-visible")).toBe("true");
     fireEvent.mouseLeave(screen.getByTestId("fab-compact-resolution-entry-2"));
-    expect(screen.getByTestId("fab-card-preview").getAttribute("data-visible")).toBe("true");
+    expect(screen.getByTestId("fab-card-preview").getAttribute("data-visible")).toBeNull();
     fireEvent.pointerLeave(compactStack);
     expect(screen.getByTestId("fab-card-preview").getAttribute("data-visible")).not.toBe("true");
 

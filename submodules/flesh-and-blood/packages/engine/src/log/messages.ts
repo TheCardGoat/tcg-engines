@@ -388,7 +388,11 @@ export interface FabLogMessageValuesByName {
     readonly revealedNames: string;
   };
   readonly "flesh-and-blood.fragment": { readonly actorId: string; readonly cardName: string };
-  readonly "flesh-and-blood.usurp": { readonly actorId: string; readonly cardName: string };
+  readonly "flesh-and-blood.usurp": {
+    readonly actorId: string;
+    readonly cardName: string;
+    readonly usurpedName: string;
+  };
   readonly "flesh-and-blood.crank": { readonly actorId: string; readonly cardName: string };
   readonly "flesh-and-blood.transcend": { readonly actorId: string; readonly cardName: string };
   readonly "flesh-and-blood.complete-contract": {

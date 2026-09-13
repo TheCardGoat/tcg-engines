@@ -97,6 +97,7 @@ import { FabMobileChoicePreview } from "./FabMobileChoicePreview";
 
 import { useFabCardLocale } from "./FabPresentationCatalog";
 import { useFabCardPresentation } from "./useFabCardPresentation";
+import type { FabPresentationDefinition } from "./cardArt";
 import {
   projectFabAttackTargetCardActions,
   projectFabCardActions,
@@ -1629,6 +1630,7 @@ function FleshAndBloodTabletopContent({
   const animationStatus = FabAnimation.useStatus();
   const {
     setHover: setCardHover,
+    clearHover: clearCardHover,
     pin: pinCardPreview,
     hide: hideCardPreview,
   } = useFabCardPreview();
@@ -2676,9 +2678,6 @@ function FleshAndBloodTabletopContent({
       }
       hideCardPreview();
       setZoneInspection(null);
-      // Dismissing the inspector can expose the pile beneath the pointer and
-      // synchronously restore its hover preview. Clear that post-dismiss pass.
-      globalThis.setTimeout(hideCardPreview, 0);
     },
     [hideCardPreview, interactiveCardActions, state.cards, viewerId, zoneInspection],
   );
@@ -2793,17 +2792,20 @@ function FleshAndBloodTabletopContent({
     ) {
       return [];
     }
-    const definitions = new Map<string, FabCardDefinition>();
+    const definitions = new Map<string, FabPresentationDefinition>();
     for (const candidate of resolutionInput.candidates) {
       const definitionId = candidate.entity.definitionId;
-      const definition = definitionId ? state.cardDefinitions[definitionId] : undefined;
-      if (definitionId && definition) definitions.set(definitionId, definition);
+      if (!definitionId) continue;
+      const definition = state.cardDefinitions[definitionId];
+      const canonicalId = definition?.presentationCanonicalId ?? definitionId;
+      const name = resolveInteractionText(candidate.text ?? { key: definitionId });
+      definitions.set(canonicalId, {
+        canonicalId,
+        name: definition?.presentationName ?? definition?.name ?? name,
+        slug: definition?.slug,
+      });
     }
-    return [...definitions].map(([definitionId, definition]) => ({
-      canonicalId: definition.presentationCanonicalId ?? definitionId,
-      slug: definition.slug,
-      name: definition.presentationName ?? definition.name,
-    }));
+    return [...definitions.values()];
   }, [resolutionInput, state.cardDefinitions]);
   useFabCardPresentation(
     resolutionCandidatePresentationDefinitions,
@@ -2915,7 +2917,7 @@ function FleshAndBloodTabletopContent({
       const definition = definitionId ? state.cardDefinitions[definitionId] : undefined;
       const name = resolveInteractionText(candidate.text ?? { key: instanceId });
       const metadata: FabCardMetadata = {
-        canonicalId: definitionId,
+        canonicalId: definition?.presentationCanonicalId ?? definitionId,
         name,
         type: definition?.cardType ?? "card",
         typeLine: definition?.typeLine,
@@ -3351,11 +3353,12 @@ function FleshAndBloodTabletopContent({
     [closeDesktopCardPreviewAfterAction, onCardSelect],
   );
 
+  const clearCardInteraction = cardInteractions.clear;
   useEffect(() => {
     if (!promptActive) return;
-    cardInteractions.clear();
+    clearCardInteraction();
     hideCardPreview();
-  }, [cardInteractions, hideCardPreview, promptActive]);
+  }, [clearCardInteraction, hideCardPreview, promptActive]);
 
   const dispatch = (action: FabPresentationAction) => {
     if (controlsDisabled) return;
@@ -4069,40 +4072,42 @@ function FleshAndBloodTabletopContent({
           interactionStateFor={interactionStateFor}
           onCardSelect={controlsDisabled ? undefined : onDesktopHandCardSelect}
         />
-        <FabDesktopQuickControls
-          onPassPriority={persistentPassAction}
-          canPassPriority={defenseStagingActive ? canDeclareDefense : canUseMobilePass}
-          showPass={!priorityPromptActive}
-          passLabel={desktopPassLabel}
-          onUndo={onUndo}
-          canUndo={canUndo}
-          disabled={controlsDisabled || state.terminal}
-          priorityCountdownActive={priorityCountdown.armed}
-          priorityControlVisible={priorityCountdown.armed}
-          primaryActionKind={
-            defenseStagingActive
-              ? confirmingNoDefense
-                ? "confirm-no-defense"
-                : "declare-defense"
-              : closingCombatChain
-                ? "close-chain"
-                : "pass"
-          }
-          priorityToggle={
-            <FabPriorityAutomationControl
-              mode={priorityAutomationMode}
-              countdown={
-                priorityCountdown.armed && priorityCountdownWindowKey
-                  ? {
-                      windowKey: priorityCountdownWindowKey,
-                      durationMs: priorityCountdownDurationMs,
-                      onCancel: priorityCountdown.cancel,
-                    }
-                  : undefined
-              }
-            />
-          }
-        />
+        {spectatorReturnHref ? null : (
+          <FabDesktopQuickControls
+            onPassPriority={persistentPassAction}
+            canPassPriority={defenseStagingActive ? canDeclareDefense : canUseMobilePass}
+            showPass={!priorityPromptActive}
+            passLabel={desktopPassLabel}
+            onUndo={onUndo}
+            canUndo={canUndo}
+            disabled={controlsDisabled || state.terminal}
+            priorityCountdownActive={priorityCountdown.armed}
+            priorityControlVisible={priorityCountdown.armed}
+            primaryActionKind={
+              defenseStagingActive
+                ? confirmingNoDefense
+                  ? "confirm-no-defense"
+                  : "declare-defense"
+                : closingCombatChain
+                  ? "close-chain"
+                  : "pass"
+            }
+            priorityToggle={
+              <FabPriorityAutomationControl
+                mode={priorityAutomationMode}
+                countdown={
+                  priorityCountdown.armed && priorityCountdownWindowKey
+                    ? {
+                        windowKey: priorityCountdownWindowKey,
+                        durationMs: priorityCountdownDurationMs,
+                        onCancel: priorityCountdown.cancel,
+                      }
+                    : undefined
+                }
+              />
+            }
+          />
+        )}
       </div>
     </div>
   );
@@ -4451,8 +4456,14 @@ function FleshAndBloodTabletopContent({
         }
         closeDesktopCardPreviewAfterAction();
       }}
-      onPreviewEntity={pinCardPreview}
-      onPreviewEnd={hideCardPreview}
+      onPreviewEntity={(entity, mode) => {
+        if (mode === "pinned") pinCardPreview(entity);
+        else setCardHover(entity);
+      }}
+      onPreviewEnd={(hoverEntityId) => {
+        if (hoverEntityId === undefined) hideCardPreview();
+        else clearCardHover(hoverEntityId);
+      }}
     >
       {tabletopContent}
     </CardContextMenuController>

@@ -85,7 +85,95 @@ describe("FabCardPreview", () => {
     expect(preview.getAttribute("data-visible")).toBe("true");
     expect(preview.getAttribute("data-mode")).toBe("hover");
     expect(preview.textContent).toContain("Deal 3 damage to target hero.");
-    expect(view.queryByRole("button", { name: "Close card preview" })).toBeNull();
+    expect(view.getByRole("button", { name: "Close card preview" })).not.toBeNull();
+  });
+
+  it("closes immediately when the mouse leaves the card or a focused card loses focus", () => {
+    const view = render(
+      <FabCardPreviewProvider>
+        <PreviewTrigger entity={visibleCard} />
+      </FabCardPreviewProvider>,
+    );
+    const trigger = view.getByRole("button", { name: "Show preview" });
+    const preview = view.getByTestId("fab-card-preview");
+    fireEvent.mouseEnter(trigger);
+    expect(preview.getAttribute("data-visible")).toBe("true");
+    fireEvent.mouseLeave(trigger);
+    expect(preview.getAttribute("data-visible")).toBeNull();
+    fireEvent.focus(trigger);
+    expect(preview.getAttribute("data-visible")).toBe("true");
+    fireEvent.blur(trigger);
+    expect(preview.getAttribute("data-visible")).toBeNull();
+  });
+
+  it("moves beside a trigger that would otherwise be covered by the preview", () => {
+    const view = render(
+      <FabCardPreviewProvider>
+        <PreviewTrigger entity={visibleCard} />
+      </FabCardPreviewProvider>,
+    );
+    const trigger = view.getByRole("button", { name: "Show preview" });
+    trigger.getBoundingClientRect = () =>
+      ({ left: 80, right: 196, top: 220, bottom: 240, width: 116, height: 20 }) as DOMRect;
+
+    fireEvent.mouseEnter(trigger);
+
+    expect(view.getByTestId("fab-card-preview").style.getPropertyValue("--fab-preview-left")).toBe(
+      "208px",
+    );
+  });
+
+  it("closes from the preview close button", () => {
+    const view = render(
+      <FabCardPreviewProvider>
+        <PreviewTrigger entity={visibleCard} />
+      </FabCardPreviewProvider>,
+    );
+
+    fireEvent.mouseEnter(view.getByRole("button", { name: "Show preview" }));
+    fireEvent.click(view.getByRole("button", { name: "Close card preview" }));
+
+    expect(view.getByTestId("fab-card-preview").getAttribute("data-visible")).toBeNull();
+  });
+
+  it("keeps a newer card preview when the previous card sends a stale leave", () => {
+    const view = render(
+      <FabCardPreviewProvider>
+        <PreviewTrigger entity={visibleCard} />
+        <PreviewTrigger entity={{ ...visibleCard, id: "next", title: "Next card" }} />
+      </FabCardPreviewProvider>,
+    );
+    const [first, second] = view.getAllByRole("button", { name: "Show preview" });
+    const preview = view.getByTestId("fab-card-preview");
+    fireEvent.mouseEnter(first!);
+    fireEvent.mouseEnter(second!);
+    fireEvent.mouseLeave(first!);
+    expect(preview.getAttribute("data-visible")).toBe("true");
+    expect(preview.textContent).toContain("Next card");
+    fireEvent.mouseLeave(second!);
+    expect(preview.getAttribute("data-visible")).toBeNull();
+  });
+
+  it("keeps an explicit pin when both the opener and preview are left", () => {
+    function PinTrigger() {
+      const { previewProps } = useFabPreviewTarget(visibleCard, { pinOnClick: true });
+      return <button {...previewProps}>Pin card</button>;
+    }
+    const view = render(
+      <FabCardPreviewProvider>
+        <PinTrigger />
+      </FabCardPreviewProvider>,
+    );
+    const trigger = view.getByRole("button", { name: "Pin card" });
+    const preview = view.getByTestId("fab-card-preview");
+    fireEvent.mouseEnter(trigger);
+    fireEvent.mouseLeave(trigger);
+    fireEvent.click(trigger);
+    fireEvent.mouseEnter(preview);
+    fireEvent.mouseLeave(preview);
+    expect(preview.getAttribute("data-mode")).toBe("pinned");
+    fireEvent.keyDown(window, { key: "Escape" });
+    expect(preview.getAttribute("data-visible")).toBeNull();
   });
 
   it("keeps the selected printing when mobile choices share a canonical card", () => {

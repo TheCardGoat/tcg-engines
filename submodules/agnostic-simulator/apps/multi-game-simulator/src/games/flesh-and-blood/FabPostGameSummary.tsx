@@ -683,13 +683,14 @@ export function FabPostGameSummary({
       transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
     >
       <header className="fab-summary-app-header">
-        <a
-          className="fab-summary-brand"
-          href="/flesh-and-blood/simulator/"
-          aria-label="TCG Game summary"
-        >
-          <span aria-hidden="true">TCG</span>
-          <strong aria-hidden="true">Game summary</strong>
+        <a className="fab-summary-brand" href="/" aria-label="The Card Goat home">
+          <img
+            src="https://cdn.tcg.online/public/thecardgoat/branding/icon-square-72.webp"
+            alt=""
+            width="32"
+            height="32"
+          />
+          <strong aria-hidden="true">The Card Goat</strong>
         </a>
         <div className="fab-summary-scope-switch" aria-label="Summary scope">
           <button type="button" aria-pressed={scope === "game"} onClick={() => setScope("game")}>

@@ -244,8 +244,10 @@ describe("FAB post-game summary", () => {
         onPlayAgain={() => {}}
       />,
     );
-    expect(screen.getByRole("link", { name: "TCG Game summary" }).getAttribute("href")).toBe(
-      "/flesh-and-blood/simulator/",
+    const homeLink = screen.getByRole("link", { name: "The Card Goat home" });
+    expect(homeLink.getAttribute("href")).toBe("/");
+    expect(homeLink.querySelector("img")?.getAttribute("src")).toBe(
+      "https://cdn.tcg.online/public/thecardgoat/branding/icon-square-72.webp",
     );
     const chart = screen.getByRole("img", { name: "Life totals by turn" });
     expect(
@@ -396,7 +398,12 @@ describe("FAB post-game summary", () => {
     fireEvent.click(screen.getByRole("button", { name: "Hands" }));
     expect(screen.getByText("Started with")).toBeTruthy();
     expect(screen.getByText("Alpha, Beta")).toBeTruthy();
-    expect(screen.getByText("from arsenal")).toBeTruthy();
+    expect(
+      screen.getByText(
+        (_content, element) =>
+          element?.tagName === "SMALL" && element.textContent === "from Arsenal",
+      ),
+    ).toBeTruthy();
   });
 
   it("reuses hero media and reserves animation for subscribed participants", async () => {

@@ -7,6 +7,8 @@
  */
 import { describe, expect, it } from "vitest";
 import { sendPackingYellow } from "../../cards/src/cards/actions/send-packing.ts";
+import { sinspeakerGloombladeRed } from "../../cards/src/cards/actions/sinspeaker-gloomblade.ts";
+import { runechant } from "../../cards/src/cards/tokens/runechant.ts";
 import { edgeOfAutumn } from "../../cards/src/cards/weapons/edge-of-autumn.ts";
 import { FAB_LOG_FACT_EMITTERS, FAB_LOG_INTENTIONALLY_UNLOGGED } from "./command-logs.ts";
 import { FAB_GAME_EVENT_NAMES } from "./rules/events.ts";
@@ -42,6 +44,42 @@ function noPublicSurfaceNames(game: FabTestEngine, canary: string): void {
 }
 
 describe("FabLog fact coverage", () => {
+  it("records Usurp once with its additional-cost target and attack bonus", () => {
+    const game = FabTestEngine.start(
+      { hero: bravo, hand: [sinspeakerGloombladeRed], arena: [runechant], deck: 4 },
+      { hero: dash, deck: 4 },
+      { autoPassPriority: false },
+    );
+
+    const Bravo = game.as(bravo);
+    Bravo.play(sinspeakerGloombladeRed);
+    Bravo.target(runechant);
+    game.advanceUntil({ stopAt: "defend" });
+
+    expect(
+      publicMessages(game).filter((message) => message.key === "flesh-and-blood.usurp"),
+    ).toEqual([
+      expect.objectContaining({
+        values: {
+          actorId: Bravo.id,
+          cardName: "Sinspeaker Gloomblade",
+          usurpedName: "Runechant",
+        },
+        defaultMessage: `${Bravo.id} destroyed Runechant to usurp with Sinspeaker Gloomblade; Sinspeaker Gloomblade gets +2 power.`,
+      }),
+    ]);
+    expect(
+      publicMessages(game).some(
+        (message) =>
+          message.key === "flesh-and-blood.destroy" ||
+          message.key === "flesh-and-blood.destroy.by-source",
+      ),
+    ).toBe(false);
+    expect(game.renderedPlayerNarrative(Bravo.id)).toContain(
+      "You destroyed Runechant to usurp with Sinspeaker Gloomblade; Sinspeaker Gloomblade gets +2 power.",
+    );
+  });
+
   it("classifies every committable event name as logged or intentionally unlogged", () => {
     const emitted = Object.keys(FAB_LOG_FACT_EMITTERS);
     const unlogged: readonly FabGameEventName[] = [...FAB_LOG_INTENTIONALLY_UNLOGGED];

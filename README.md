@@ -28,6 +28,14 @@ included here.
 - `submodules/riftbound` - Riftbound catalog types, cards, and ingestion
   tooling.
 
+## Simulator Support
+
+- **Supported:** Lorcana, Cyberpunk, Gundam, Naruto (provisional preview
+  rules), One Piece, and — newly added — Flesh and Blood.
+- **Not yet implemented:** Grand Archive, Riftbound, and Star Wars
+  Unlimited. Their engine and card workspaces ship in this repository
+  first, and their simulators are still in development.
+
 ## Requirements
 
 - Node.js 24.x
