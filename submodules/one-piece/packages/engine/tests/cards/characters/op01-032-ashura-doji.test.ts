@@ -45,5 +45,7 @@ describe("OP01-032 Ashura Doji", () => {
         .getView("south")
         .players.south.characters.find((card) => card?.instanceId === belowThresholdId)?.power,
     ).toBe(5000);
+    expect(belowThresholdEngine.getView("south").prompts).toHaveLength(0);
+    expect(belowThresholdEngine.getState().capabilityHistory).toHaveLength(0);
   });
 });

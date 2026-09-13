@@ -67,6 +67,7 @@ export type TargetDescriptor = FilterCarrier & {
   excludeSelf?: boolean;
   excludeTriggerSubject?: boolean;
   requireDifferentTargets?: boolean;
+  requireSameOwner?: true;
   /**
    * Optional cap on the sum of selected targets' ink costs.
    *
@@ -282,6 +283,7 @@ export function normalizeTargetDescriptor(target: unknown): TargetDescriptor | u
         filters: targetRecord.filters,
         excludeSelf: targetRecord.excludeSelf === true,
         requireDifferentTargets: targetRecord.requireDifferentTargets === true,
+        ...(targetRecord.requireSameOwner === true ? { requireSameOwner: true as const } : {}),
         totalCostBudget:
           typeof targetRecord.totalCostBudget === "number" &&
           Number.isFinite(targetRecord.totalCostBudget)

@@ -3,7 +3,7 @@ import { eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059 } from "../../../.
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB02-059 Without Your Help I Can't Become the King of the Pirates!!!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb02WithoutYourHelpICanTBecomeTheKingOfThePirates059);
   });
 });

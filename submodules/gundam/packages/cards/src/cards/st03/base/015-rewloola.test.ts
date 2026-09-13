@@ -169,7 +169,7 @@ describe("Rewloola (ST03-015)", () => {
       expect(p1.getCardZone(st03Rewloola015)).toBe(`baseSection:${PLAYER_ONE}`);
     });
 
-    it("deploys without activating the Deploy effect when no enemy Unit qualifies", () => {
+    it("adds a Shield to hand and skips the Then choose when no enemy Unit qualifies", () => {
       const shield = createMockUnit({ name: "Returned Shield" });
       const tooStrong = createMockUnit({ ap: 6 });
       const engine = GundamTestEngine.create(
@@ -181,10 +181,14 @@ describe("Rewloola (ST03-015)", () => {
         { play: [tooStrong] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const tooStrongId = p2.getCardsInZone("battleArea")[0]!;
       expectSuccess(p1.deployBase(st03Rewloola015));
 
       expect(p1.getCardZone(st03Rewloola015)).toBe(`baseSection:${PLAYER_ONE}`);
-      expect(p1.getBoardView().players[PLAYER_ONE]!.shieldCount).toBe(1);
+      expect(p1.getBoardView().players[PLAYER_ONE]!.shieldCount).toBe(0);
+      expect(p1.getHand()).toHaveLength(1);
+      expect(p2.getDamage(tooStrongId)).toBe(0);
       expect(p1.getBoardView().pendingChoice).toBeUndefined();
     });
 

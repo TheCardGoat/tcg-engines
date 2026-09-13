@@ -1,0 +1,1512 @@
+/**
+ * Board layout: desktop (>=900px) grid + right rail, mobile portrait column,
+ * seam prompt, chain strip, log panel, inspector, overlays.
+ * Card sizing derives from --naruto-card-h (baseline viewport-fit approach).
+ */
+
+.shell {
+  --naruto-card-h: clamp(
+    56px,
+    min(calc((100dvh - 260px) / 5.5), calc((100vw - 340px) / 7.4 / 0.716)),
+    118px
+  );
+  --card-h: var(--naruto-card-h);
+  --card-w: calc(var(--card-h) * 0.716);
+  --cut: clamp(6px, 1vw, 11px);
+  position: relative;
+  background:
+    radial-gradient(ellipse at 8% 4%, rgba(235, 97, 1, 0.12), transparent 28%),
+    radial-gradient(ellipse at 92% 92%, rgba(51, 98, 156, 0.14), transparent 34%),
+    var(--board-layout-bg, #07111f);
+  color: var(--board-text, #f8fbff);
+}
+
+.shell[data-layout="mobile"] {
+  --naruto-card-h: clamp(44px, 13.5vw, 72px);
+}
+
+.boardArea {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.boardColumn {
+  --player-hand-height: calc(var(--naruto-card-h) * 0.68);
+  --opponent-hand-height: calc(var(--naruto-card-h) * 0.34);
+  --seam-height: 9%;
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* The arrow belongs to the board's actual viewport. Keep this host separate
+ * from DesktopBoard's .boardColumn so the overlay has one stable coordinate
+ * system instead of a clipped nested flex column. */
+.attackOverlayHost {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.shell[data-layout="desktop"] .boardColumn {
+  --player-hand-height: var(--naruto-card-h);
+}
+
+.battlefieldColumn {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-rows:
+    var(--opponent-hand-height)
+    minmax(0, 1fr)
+    var(--seam-height)
+    minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.battlefieldColumn > [data-testid^="naruto-hand-"] {
+  align-self: stretch;
+  min-height: 0;
+}
+
+.battlefieldColumn > .half {
+  min-height: 0;
+}
+
+.battlefieldColumn > .seam {
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+/* The local seat uses its spare vertical budget for legible board cards. The
+ * hand and opponent remain compact, so both board states fit at once. */
+.battlefieldColumn > .half:not(.halfTop) {
+  --card-h: clamp(64px, min(calc((100dvh - 260px) / 5.8), calc((100vw - 478px) / 3.58)), 104px);
+  --card-w: calc(var(--card-h) * 0.716);
+  flex: 1 1 auto;
+  justify-content: space-between;
+}
+
+.shell[data-layout="mobile"] .boardColumn {
+  height: 100%;
+  min-height: 0;
+}
+
+/* ---------------------------------------------------------------- halves */
+
+.half {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 12px;
+  margin: 4px 8px;
+  background: #0c1728;
+  border: 1px solid rgba(111, 154, 211, 0.18);
+}
+
+.halfTop {
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.halfActive {
+  border-color: rgba(235, 97, 1, 0.82);
+  box-shadow: inset 0 0 0 1px rgba(235, 97, 1, 0.22);
+}
+
+.seatGrid {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  align-items: stretch;
+  column-gap: 16px;
+  min-height: calc(var(--card-h) * 2 + 20px);
+  width: 100%;
+}
+
+.halfTop .seatGrid {
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: end;
+}
+
+.leaderColumn {
+  display: grid;
+  grid-column: 1;
+  grid-row: 1;
+  place-items: center;
+  min-width: var(--card-w);
+}
+
+.leaderColumn button[data-board-uid] {
+  width: calc(var(--naruto-card-h) * 0.716 * 1.6);
+  height: calc(var(--naruto-card-h) * 1.6);
+}
+
+.halfTop .leaderColumn {
+  grid-column: 2;
+  align-self: end;
+  justify-self: end;
+  place-items: end center;
+}
+
+.laneColumn {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  grid-template-rows: minmax(var(--card-h), 1fr) minmax(var(--card-h), 1fr);
+  row-gap: 8px;
+  min-width: 0;
+}
+
+.halfTop .laneColumn {
+  grid-column: 1;
+}
+
+.halfTop .characterLane {
+  grid-row: 2;
+}
+
+.half:not(.halfTop) .characterLane {
+  transform: translateY(-3px);
+}
+
+.halfTop .supportLane {
+  grid-row: 1;
+}
+
+.characterLane,
+.supportLane {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.supportLane {
+}
+
+.utilityRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: 100%;
+}
+
+.halfTop .utilityRow {
+  --card-h: calc(var(--naruto-card-h) * 0.72);
+  --card-w: calc(var(--card-h) * 0.716);
+  justify-content: flex-start;
+}
+
+.slotRow {
+  display: flex;
+  flex: 1;
+  gap: 8px;
+  justify-content: center;
+  min-height: var(--card-h);
+}
+
+.slotRow > * {
+  flex: 0 0 auto;
+}
+
+.leaderBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.halfTop .leaderBlock {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+
+.half:not(.halfTop) .leaderBlock {
+  transform: translateY(-9px);
+}
+
+.halfTop .leaderBlock > :first-child {
+  grid-row: 2;
+}
+
+.halfTop .leaderBlock > :nth-child(2) {
+  grid-row: 1;
+}
+
+.zoneLabel {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+}
+
+.chakraRow {
+  display: flex;
+  gap: 4px;
+}
+
+/* ------------------------------------------------------------------ seam */
+
+.seam {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 2px 8px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(235, 97, 1, 0.17),
+    rgba(12, 23, 40, 0.96) 28%,
+    rgba(12, 23, 40, 0.96) 72%,
+    rgba(235, 97, 1, 0.17)
+  );
+  border-top: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+  border-bottom: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+}
+
+.supportPlayDropZone {
+  position: relative;
+  isolation: isolate;
+  border-color: rgba(102, 240, 178, 0.82) !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(102, 240, 178, 0.28),
+    0 5px 14px rgba(2, 14, 16, 0.24);
+}
+
+.supportPlayDropZone::before {
+  position: absolute;
+  z-index: 1;
+  inset: 2px;
+  border: 1px solid rgba(178, 255, 215, 0.4);
+  border-radius: inherit;
+  background: linear-gradient(105deg, rgba(11, 93, 62, 0.22), rgba(7, 26, 42, 0.04) 62%);
+  content: "";
+  pointer-events: none;
+}
+
+.supportPlayDropZoneOver {
+  border-color: rgba(218, 255, 233, 0.98) !important;
+  box-shadow:
+    inset 0 0 0 2px rgba(218, 255, 233, 0.72),
+    0 7px 18px rgba(26, 166, 103, 0.32);
+}
+
+.supportPlayDropOverlay {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 9px;
+  border: 1px solid rgba(207, 255, 228, 0.84);
+  border-radius: 999px;
+  background: rgba(7, 45, 34, 0.94);
+  box-shadow: 0 3px 8px rgba(2, 13, 12, 0.28);
+  color: #effff6;
+  font-size: 0.64rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.supportPlayDropGlyph {
+  width: 7px;
+  height: 8px;
+  background: #a4f7c6;
+  clip-path: polygon(16% 0, 100% 50%, 16% 100%);
+}
+
+.seamSticky {
+  position: sticky;
+  top: 0;
+  z-index: 25;
+}
+
+.seamTurn {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--game-accent, #eb6101);
+  white-space: nowrap;
+}
+
+.seamPrompt {
+  flex: 1;
+  min-width: 0;
+}
+
+.seamPromptText {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.seamPromptHint {
+  margin: 0;
+  font-size: 11px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.seamBlockedHint {
+  color: color-mix(in srgb, var(--game-accent, #eb6101) 70%, var(--board-text, #f8fbff));
+}
+
+.chainStrip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.chainLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px 2px 3px;
+  border-radius: 4px;
+  background: rgba(240, 230, 210, 0.1);
+  border: 1px solid rgba(235, 97, 1, 0.45);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.chainLink img {
+  width: 18px;
+  height: 25px;
+  object-fit: contain;
+  border-radius: 2px;
+}
+
+.chainNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--game-accent, #eb6101);
+  color: #1c0b00;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.seamActions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.passButton,
+.endTurnButton {
+  min-height: 44px;
+  padding: 7px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--game-accent, #eb6101);
+  background: var(--game-accent, #eb6101);
+  color: #1c0b00;
+  font-weight: 900;
+  font-size: 13px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.detailsButton {
+  min-height: 44px;
+  padding: 7px 12px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.4));
+  border-radius: 6px;
+  background: #101d30;
+  color: var(--board-text, #f8fbff);
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.mobileRailButton {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.4));
+  border-radius: 7px;
+  background: #101d30;
+  color: var(--board-text, #f8fbff);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mobileRailButton:hover,
+.mobileRailButton:focus-visible {
+  border-color: var(--game-accent, #eb6101);
+  color: var(--game-accent, #eb6101);
+}
+
+.passButton:hover:not(:disabled),
+.endTurnButton:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.passButton:focus-visible,
+.endTurnButton:focus-visible {
+  outline: 3px solid rgba(255, 208, 172, 0.82);
+  outline-offset: -3px;
+}
+
+.passButton:disabled,
+.endTurnButton:disabled {
+  background: transparent;
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+  border-color: var(--board-border, rgba(111, 154, 211, 0.4));
+  cursor: not-allowed;
+}
+
+.cancelChip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px dashed var(--board-muted, rgba(216, 229, 247, 0.55));
+  background: transparent;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancelChip:hover {
+  color: var(--board-text, #f8fbff);
+  border-color: var(--board-text, #f8fbff);
+}
+
+/* ------------------------------------------------------------------ hand */
+
+.handZone {
+  box-sizing: border-box;
+  flex: 0 0 var(--player-hand-height);
+  min-height: 0;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+  padding: 0 8px;
+  overflow: hidden;
+  background: linear-gradient(transparent, rgba(7, 17, 31, 0.98) 26%);
+}
+
+.handZone > [data-testid^="naruto-hand-"] {
+  align-self: flex-start;
+  width: 100%;
+  min-width: 0;
+  height: var(--card-h);
+  overflow: visible;
+}
+
+/* ------------------------------------------------------------ right rail */
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 300px;
+  padding: 8px 10px;
+  border-left: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+  background: #0b1524;
+  overflow-y: auto;
+}
+
+.activityPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 56px 10px 10px;
+  background: var(--board-surface, rgba(13, 27, 46, 0.82));
+}
+
+.matchSidebar {
+  --simulator-participant-height: 7rem;
+  --simulator-action-rail-height: 4rem;
+  --simulator-surface-gap: 0.45rem;
+  --simulator-surface-inset: 0.6rem 0.7rem;
+
+  border-right: 0;
+  background: var(--board-surface, #0b1524);
+}
+
+.sidebarLog {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  padding: 8px 10px 10px;
+}
+
+.sidebarLog .logPanel {
+  height: 100%;
+  max-height: none;
+}
+
+.sidebarTools {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+.matchSidebar .endTurnButton {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+
+.matchControls {
+  display: grid;
+  height: 100%;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.matchControls .activitySecondaryButton {
+  height: 100%;
+  border-width: 0 1px 0 0;
+  border-radius: 0;
+}
+
+.activitySecondaryButton {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.4));
+  border-radius: 8px;
+  background: #101d30;
+  color: var(--board-text, #f8fbff);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.activitySecondaryButton:hover,
+.activitySecondaryButton:focus-visible {
+  border-color: var(--game-accent, #eb6101);
+  color: var(--game-accent, #eb6101);
+}
+
+.activityPanel .railSection {
+  flex: 1;
+  min-height: 0;
+}
+
+.railSection {
+  border: 1px solid rgba(111, 154, 211, 0.2);
+  border-radius: 10px;
+  padding: 10px;
+  background: #0e1a2c;
+}
+
+.railTitle {
+  margin: 0 0 6px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+/* ------------------------------------------------------------- inspector */
+
+.inspector {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 8px;
+}
+
+.inspectorArt {
+  width: 84px;
+  height: 117px;
+  object-fit: contain;
+  border-radius: 7px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.32));
+  background: var(--board-mat-bg, #0d1d34);
+}
+
+.inspectorName {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.inspectorType {
+  margin: 0 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--game-accent, #eb6101);
+}
+
+.inspectorStats {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--board-muted, rgba(216, 229, 247, 0.85));
+}
+
+.inspectorSkill {
+  margin: 2px 0 0;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.inspectorEmpty {
+  margin: 0;
+  font-size: 11px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+}
+
+/* ------------------------------------------------------------------ log */
+
+.logPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 320px;
+  overflow-y: auto;
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.logLine {
+  margin: 0;
+  color: var(--board-text, #f8fbff);
+}
+
+.logNested {
+  padding-left: 14px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.logNested::before {
+  content: "\21B3";
+  margin-right: 5px;
+  color: var(--game-accent, #eb6101);
+}
+
+.logTurn {
+  margin: 4px 0 0;
+  font-weight: 900;
+  color: var(--game-accent, #eb6101);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------- overlays */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(3, 8, 16, 0.72);
+}
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 61;
+  transform: translate(-50%, -50%);
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(80dvh, 640px);
+  overflow-y: auto;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(235, 97, 1, 0.7);
+  background: #0d192b;
+  clip-path: polygon(
+    14px 0,
+    100% 0,
+    100% calc(100% - 14px),
+    calc(100% - 14px) 100%,
+    0 100%,
+    0 14px
+  );
+}
+
+.dialogTitle {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.dialogPrompt {
+  margin: 0 0 12px;
+  font-size: 12px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.choiceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 10px;
+}
+
+.choiceOption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.32));
+  background: #101d30;
+  color: var(--board-text, #f8fbff);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.choiceOption:hover {
+  border-color: var(--game-accent, #eb6101);
+}
+
+.choiceOption img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.endCard {
+  padding: 28px 36px;
+  text-align: center;
+}
+
+.endTitle {
+  margin: 0 0 6px;
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--game-accent, #eb6101);
+}
+
+.endSubtitle {
+  margin: 0 0 18px;
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+}
+
+.mulliganBanner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--game-accent, #eb6101);
+  background: var(--board-mat-bg, #0d1d34);
+}
+
+.mulliganText {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.mulliganHand {
+  display: flex;
+  gap: 6px;
+}
+
+.mulliganHand img {
+  width: 44px;
+  height: 62px;
+  object-fit: contain;
+  border-radius: 3px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.32));
+}
+
+/* ---------------------------------------------------------- attack arrow */
+
+.attackArrow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  pointer-events: none;
+}
+
+.attackPowerBadge {
+  font-size: 15px;
+  font-weight: 900;
+  fill: #fff;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.attackPreviewText {
+  fill: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+.attackAnnouncement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+/* ---------------------------------------------------------------- mobile */
+
+.mobileColumn {
+  --mobile-board-gutter: 4px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr) auto;
+  align-content: stretch;
+  gap: 0;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--mobile-board-gutter);
+}
+
+.mobileSeat {
+  display: grid;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.mobileSeat[data-side="top"] {
+  /* Utility strip, compact supports, then the primary character battlefield. */
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
+.mobileSeat[data-side="bottom"] {
+  /* Characters lead this DOM order; supports face the seam beneath them. */
+  grid-template-rows: minmax(0, 1fr) auto auto;
+}
+
+.mobileCharacterRow,
+.mobileSupportRow {
+  box-sizing: border-box;
+  width: 100%;
+  padding-inline: 0;
+  gap: 4px;
+  justify-content: space-between;
+}
+
+.mobileCharacterRow {
+  --card-w: min(calc((100vw - 24px) / 5), 72px);
+  --card-h: calc(var(--card-w) / 0.716);
+  align-items: center;
+}
+
+/* A seam-facing rule makes the mirrored combat lanes legible at a glance
+ * without restoring redundant "your/opponent characters" labels. */
+.mobileSeat[data-side="top"] .mobileCharacterRow {
+  border-bottom: 1px solid rgba(111, 154, 211, 0.28);
+}
+
+.mobileSeat[data-side="bottom"] .mobileCharacterRow {
+  border-top: 1px solid rgba(111, 154, 211, 0.28);
+}
+
+.mobileSeatActive .mobileCharacterRow {
+  border-color: color-mix(in srgb, var(--game-accent, #eb6101) 58%, transparent);
+}
+
+.mobileSupportRow {
+  /* Supports remain a compact auxiliary lane; characters own the elastic row. */
+  --support-card-h: min(88px, calc((100vw - 24px) / 3.58));
+  min-height: 34px;
+  position: relative;
+  justify-content: space-between;
+}
+
+.mobileSupportRow > * {
+  --card-h: var(--support-card-h);
+  --card-w: auto;
+  width: auto;
+  height: var(--support-card-h);
+  aspect-ratio: 0.716;
+}
+
+.mobileSupportRow > * > button {
+  width: 100%;
+  height: 100%;
+}
+
+.mobileSupportEmpty {
+  display: flex;
+}
+
+.mobileSeat[data-side="top"] .mobileSupportRow {
+  align-items: flex-end;
+}
+
+.mobileSeat[data-side="bottom"] .mobileSupportRow {
+  align-items: flex-start;
+}
+
+.mobileSeatActive .mobileSeatStrip {
+  border-color: var(--game-accent, #eb6101);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--game-accent, #eb6101) 25%, transparent);
+}
+
+.mobileSeatStrip {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) repeat(3, 28px);
+  align-items: center;
+  column-gap: 4px;
+  min-height: 58px;
+  margin-inline: 0;
+  padding: 2px 4px;
+  border: 1px solid rgba(111, 154, 211, 0.18);
+  border-radius: 8px;
+  background: var(--board-surface, #0c1728);
+}
+
+.mobileSeatStripWithHandCount {
+  grid-template-columns: 44px minmax(0, 1fr) repeat(4, 28px);
+}
+
+.mobileResourceGroup {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  gap: 4px;
+}
+
+.mobileSeatStrip :global([data-testid^="naruto-leader-"]) {
+  width: 44px;
+  gap: 0;
+}
+
+.mobileSeatStrip :global([data-testid^="naruto-leader-"]) button {
+  width: 44px;
+  height: 56px;
+}
+
+/* Preserve the compact card artwork while giving the leader a full-width
+ * mobile tap target. The image stays at the card's natural 40×56 ratio. */
+.mobileSeatStrip .mobileLeaderArt {
+  left: 2px;
+  right: 2px;
+  width: auto;
+}
+
+.mobileSeatStrip :global([data-testid^="naruto-life-"]) {
+  display: none;
+}
+
+.mobileResourceGroup :global([data-testid^="naruto-chakra-"]) {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  justify-content: center;
+  gap: 2px;
+}
+
+.mobileResourceGroup .chakraRow > span {
+  width: 32px;
+  /* Matches MobilePlayerRail's 44px control plus its two horizontal borders. */
+  height: 46px;
+}
+
+.mobileResourceGroup .chakraRow :global([data-testid^="naruto-summon-"]) {
+  width: 30px;
+  height: 42px;
+  flex: 0 0 auto;
+}
+
+.mobileSeatStrip :global([data-testid^="naruto-ex-"]),
+.mobileSeatStrip :global([data-testid^="naruto-deck-"]),
+.mobileSeatStrip :global([data-testid^="naruto-trash-"]),
+.mobileSeatStrip :global([data-testid^="naruto-hand-count-"]) {
+  width: 28px;
+  gap: 1px;
+}
+
+.mobileSeatStrip :global([data-testid^="naruto-deck-"]) > :first-child,
+.mobileSeatStrip :global([data-testid^="naruto-ex-"]) > :first-child,
+.mobileSeatStrip :global([data-testid^="naruto-trash-"]) > :first-child,
+.mobileSeatStrip :global([data-testid^="naruto-hand-count-"]) > :first-child {
+  width: 28px;
+  height: 40px;
+}
+
+.mobileSeatStrip :global([data-testid^="naruto-trash-"]) .mobileTrashButton {
+  width: 28px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.mobileTrashFrame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 40px;
+  overflow: hidden;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.32));
+  border-radius: 4px;
+  background: #101d30;
+}
+
+.mobileSeatStrip :global([data-testid^="naruto-deck-"]) > :last-child,
+.mobileSeatStrip :global([data-testid^="naruto-ex-"]) > :last-child,
+.mobileSeatStrip :global([data-testid^="naruto-trash-"]) > :last-child,
+.mobileSeatStrip :global([data-testid^="naruto-hand-count-"]) > :last-child {
+  font-size: 8px;
+}
+
+.mobileHand {
+  --mobile-hand-card-w: clamp(72px, 23vw, 104px);
+  --mobile-hand-card-h: calc(var(--mobile-hand-card-w) / 0.716);
+  flex: 0 0 auto;
+  height: calc(var(--mobile-hand-card-h) + 12px);
+  position: sticky;
+  bottom: 0;
+  z-index: 24;
+  padding: 0 4px 2px;
+  border-top: 1px solid rgba(111, 154, 211, 0.22);
+  background: linear-gradient(transparent, rgba(7, 17, 31, 0.96) 32%);
+  overflow: hidden;
+}
+
+.mobileColumn > .seam {
+  margin: 0;
+  border-radius: 0;
+}
+
+.mobileHandInner {
+  position: relative;
+}
+
+.mobileHandScrollButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 2px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  gap: 1px;
+  padding: 4px 0 3px;
+  border: 0;
+  border-left: 1px solid rgba(235, 97, 1, 0.54);
+  border-radius: 6px 0 0 6px;
+  background: linear-gradient(90deg, rgba(7, 17, 31, 0.28), rgba(7, 17, 31, 0.96) 38%);
+  box-shadow: -8px 0 14px rgba(7, 17, 31, 0.46);
+  color: color-mix(in srgb, var(--game-accent, #eb6101) 78%, var(--board-text, #f8fbff));
+  cursor: pointer;
+}
+
+.mobileHandScrollButtonLeft {
+  right: auto;
+  left: 0;
+  border-right: 1px solid rgba(235, 97, 1, 0.54);
+  border-left: 0;
+  border-radius: 0 6px 6px 0;
+  background: linear-gradient(270deg, rgba(7, 17, 31, 0.28), rgba(7, 17, 31, 0.96) 38%);
+  box-shadow: 8px 0 14px rgba(7, 17, 31, 0.46);
+}
+
+.mobileHandScrollButton svg {
+  width: 14px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.mobileHandScrollCount {
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.mobileHandScrollLabel {
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.mobileHandScrollButton:hover,
+.mobileHandScrollButton:focus-visible {
+  border-left-color: var(--game-accent, #eb6101);
+  background: linear-gradient(90deg, rgba(235, 97, 1, 0.2), rgba(7, 17, 31, 0.98) 38%);
+  color: var(--board-text, #f8fbff);
+}
+
+.mobileHandScrollButtonLeft:hover,
+.mobileHandScrollButtonLeft:focus-visible {
+  border-right-color: var(--game-accent, #eb6101);
+  border-left: 0;
+  background: linear-gradient(270deg, rgba(235, 97, 1, 0.2), rgba(7, 17, 31, 0.98) 38%);
+}
+
+.mobileHandScrollButton:hover .mobileHandScrollLabel,
+.mobileHandScrollButton:focus-visible .mobileHandScrollLabel {
+  color: color-mix(in srgb, var(--game-accent, #eb6101) 72%, var(--board-text, #f8fbff));
+}
+
+.mobileTopRail.mobileTopRail {
+  grid-template-columns: minmax(76px, 0.7fr) minmax(112px, 1.3fr) minmax(88px, 0.9fr);
+}
+
+.mobileBottomRail.mobileBottomRail {
+  box-sizing: border-box;
+  grid-template-columns: minmax(72px, 0.75fr) 0 minmax(178px, 2fr);
+  height: 46px;
+  min-height: 46px;
+  max-height: 46px;
+}
+
+.mobileBottomRailActions.mobileBottomRailActions {
+  grid-template-columns: 0 0 minmax(0, 1fr);
+}
+
+.mobileRailStatus,
+.mobileRailPlayer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  max-width: 100%;
+  padding: 3px 7px;
+  line-height: 1.15;
+}
+
+.mobileRailStatus strong,
+.mobileRailStatus span,
+.mobileRailPlayer strong {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobileRailStatus strong,
+.mobileRailPlayer strong {
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.mobileRailStatus strong {
+  text-transform: capitalize;
+}
+
+.mobileRailStatus span,
+.mobileRailPlayer small {
+  color: var(--board-muted, rgba(216, 229, 247, 0.72));
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.mobileRailActions {
+  display: grid;
+  grid-template-columns: minmax(64px, auto) minmax(106px, 1fr);
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+  padding-left: 6px;
+}
+
+.mobileRailActions[data-has-undo="false"] {
+  grid-template-columns: minmax(106px, 1fr);
+}
+
+.mobileRailUndo {
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.4));
+  border-radius: 6px;
+  background: #101d30;
+  color: var(--board-text, #f8fbff);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.mobileRailUndo:disabled {
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+  cursor: not-allowed;
+}
+
+.mobileRailUndo:hover:not(:disabled),
+.mobileRailUndo:focus-visible {
+  border-color: var(--game-accent, #eb6101);
+  color: var(--game-accent, #eb6101);
+}
+
+.mobileRailActions .endTurnButton {
+  min-width: 0;
+  padding-inline: 6px;
+  font-size: 10px;
+  letter-spacing: 0.03em;
+}
+
+.mobileBottomActionRail {
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  gap: 4px;
+  padding: 3px 4px;
+  overflow-x: auto;
+  background: #081426;
+  scrollbar-width: none;
+}
+
+/* In mobile layout all selected-card actions live in the invariant bottom rail. */
+.shell[data-layout="mobile"] :global([data-testid="naruto-pill-row"]) {
+  display: none;
+}
+
+.mobileBottomActionRail::-webkit-scrollbar {
+  display: none;
+}
+
+.mobileSelectedAction {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 6px 9px;
+  border: 1px solid var(--game-accent, #eb6101);
+  border-radius: 5px;
+  background: rgba(12, 20, 34, 0.96);
+  color: var(--game-accent, #eb6101);
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.mobileSelectedActionBack {
+  border-color: var(--board-border, rgba(111, 154, 211, 0.5));
+  background: #101d30;
+  color: var(--board-text, #f8fbff);
+}
+
+.mobileSelectedAction:disabled {
+  border-color: var(--board-border, rgba(111, 154, 211, 0.4));
+  color: var(--board-muted, rgba(216, 229, 247, 0.55));
+}
+
+.bottomBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  background: rgba(7, 17, 31, 0.97);
+  border-top: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+}
+
+.bottomBarSpacer {
+  flex: 1;
+}
+
+.bottomLogToggle {
+  padding: 7px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.4));
+  background: transparent;
+  color: var(--board-text, #f8fbff);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.drawer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  max-height: 60dvh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid var(--board-border, rgba(111, 154, 211, 0.28));
+  background: var(--board-mat-bg, #0d1d34);
+  padding: 10px 14px calc(12px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+}
+
+.drawerBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  background: rgba(3, 8, 16, 0.6);
+}
+
+@media (max-width: 899px) {
+  .seamSticky {
+    flex-wrap: wrap;
+  }
+
+  .shell[data-layout="mobile"] .seamActions > :global([data-testid="naruto-end-turn"]),
+  .shell[data-layout="mobile"] .seamActions > :global([data-testid="naruto-pass-counter"]) {
+    display: none;
+  }
+}
+
+@media (max-width: 899px) and (max-height: 640px) {
+  .mobileColumn {
+    padding-block: 2px;
+  }
+
+  .mobileCharacterRow {
+    --card-w: min(calc((100vw - 24px) / 5), 54px);
+  }
+
+  .mobileSeatStrip {
+    grid-template-columns: 44px minmax(0, 1fr) repeat(3, 22px);
+    min-height: 46px;
+  }
+
+  .mobileSeatStripWithHandCount {
+    grid-template-columns: 44px minmax(0, 1fr) repeat(4, 22px);
+  }
+
+  .mobileSeatStrip :global([data-testid^="naruto-leader-"]) {
+    width: 44px;
+  }
+
+  .mobileSeatStrip :global([data-testid^="naruto-leader-"]) button {
+    width: 44px;
+    height: 44px;
+  }
+
+  .mobileSeatStrip .mobileLeaderArt {
+    left: 6px;
+    right: 6px;
+    width: auto;
+  }
+
+  .mobileResourceGroup .chakraRow > span {
+    width: 24px;
+    height: 34px;
+  }
+
+  .mobileResourceGroup .chakraRow :global([data-testid^="naruto-summon-"]) {
+    width: 24px;
+    height: 34px;
+  }
+
+  .mobileSeatStrip :global([data-testid^="naruto-ex-"]),
+  .mobileSeatStrip :global([data-testid^="naruto-deck-"]),
+  .mobileSeatStrip :global([data-testid^="naruto-trash-"]),
+  .mobileSeatStrip :global([data-testid^="naruto-hand-count-"]) {
+    width: 22px;
+  }
+
+  .mobileTrashFrame {
+    width: 22px;
+    height: 32px;
+  }
+
+  .mobileSeatStrip :global([data-testid^="naruto-deck-"]) > :first-child,
+  .mobileSeatStrip :global([data-testid^="naruto-ex-"]) > :first-child,
+  .mobileSeatStrip :global([data-testid^="naruto-trash-"]) > :first-child,
+  .mobileSeatStrip :global([data-testid^="naruto-hand-count-"]) > :first-child {
+    width: 22px;
+    height: 32px;
+  }
+
+  .mobileSeatStrip :global([data-testid^="naruto-deck-"]) > :last-child,
+  .mobileSeatStrip :global([data-testid^="naruto-ex-"]) > :last-child,
+  .mobileSeatStrip :global([data-testid^="naruto-trash-"]) > :last-child,
+  .mobileSeatStrip :global([data-testid^="naruto-hand-count-"]) > :last-child {
+    font-size: 7px;
+  }
+
+  .mobileColumn > .seam {
+    gap: 8px;
+    padding-block: 3px;
+  }
+
+  .mobileHand {
+    --mobile-hand-card-w: 56px;
+    padding-block: 2px;
+  }
+
+  .mobileHand.mobileHand :global([data-testid^="naruto-hand-"]) {
+    padding: 2px 6px;
+  }
+
+  .mobileHand.mobileHand :global([data-testid^="naruto-hand-"]) > * {
+    flex-basis: 56px;
+  }
+}
+
+/* turn banner */
+.turnBanner {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 50;
+  pointer-events: none;
+  font-size: clamp(26px, 5vw, 46px);
+  font-weight: 900;
+  color: var(--game-accent, #eb6101);
+  text-transform: uppercase;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8);
+}

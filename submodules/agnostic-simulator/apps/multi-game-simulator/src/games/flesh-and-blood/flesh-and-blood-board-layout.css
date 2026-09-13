@@ -1,0 +1,1012 @@
+/* FAB desktop playmat layout.
+   The DOM owns five semantic rows; CSS only sizes their vertical rhythm.
+   Shared card-zone components own cards. */
+@media (min-width: 768px) {
+  .fab-board:not(.fab-board-mobile) {
+    --fab-card-width: clamp(3.5rem, min(5.25vw, 7.1vh), 4.35rem);
+    --fab-zone-card-width: clamp(2.65rem, min(4vw, 5.8vh), 3.25rem);
+    --fab-hand-card-width: clamp(6.5rem, min(10vw, 13vh), 8.5rem);
+    --fab-hand-card-height: var(--fab-hand-card-width);
+    --fab-board-gap: clamp(0.3rem, 0.8vh, 0.6rem);
+    --fab-board-padding: clamp(0.35rem, 0.65vw, 0.6rem);
+    --fab-effects-edge-width: 2.25rem;
+    --fab-board-grid-rows: calc(var(--fab-hand-card-height) * 0.34) minmax(0, 1fr)
+      minmax(2.75rem, max-content) minmax(0, 1fr) var(--fab-hand-card-height);
+    position: relative;
+    /* Desktop landmarks are fixed across combat and prompt states. Transient
+       surfaces overlay these tracks; they never reclaim space from a hand. */
+    grid-template-rows: var(--fab-board-grid-rows);
+    column-gap: var(--fab-board-gap);
+    row-gap: 0;
+    padding: var(--fab-board-padding);
+  }
+
+  .fab-player {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) !important;
+    grid-template-areas: "layout" !important;
+    min-width: 0;
+    min-height: 0;
+    gap: clamp(0.1rem, 0.25vh, 0.2rem);
+    padding: clamp(0.1rem, 0.25vw, 0.2rem);
+  }
+
+  .fab-player[data-seat-side="top"] {
+    grid-row: 2;
+  }
+
+  .fab-player[data-seat-side="bottom"] {
+    grid-row: 4;
+  }
+
+  .fab-board:not(.fab-board-mobile) > :is(.fab-player, .fab-tabletop-hand, .fab-desktop-hand-area) {
+    position: relative;
+    z-index: 0;
+  }
+
+  /* Only permanent table landmarks participate in the board grid. Combat,
+     effects, and decision surfaces live in this absolute mirror of the board
+     tracks, so mounting a transient panel cannot create or resize a board row. */
+  .fab-board-overlay-layer {
+    position: absolute;
+    z-index: 8;
+    inset: 0;
+    box-sizing: border-box;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-template-rows: var(--fab-board-grid-rows);
+    column-gap: var(--fab-board-gap);
+    row-gap: 0;
+    padding: var(--fab-board-padding);
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .fab-board-overlay-layer > * {
+    pointer-events: auto;
+  }
+
+  .fab-player-header {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-column: 2;
+    align-items: center;
+    align-self: center;
+    gap: 0.35rem;
+    justify-self: end;
+    max-width: calc(100% - var(--fab-zone-card-width) * 1.2);
+  }
+
+  .fab-player-label {
+    grid-column: auto;
+  }
+
+  .fab-life-badge {
+    grid-column: auto;
+    justify-self: center;
+  }
+
+  .fab-turn-indicator {
+    grid-column: auto;
+    justify-self: end;
+  }
+
+  .fab-player > .fab-seat-layout {
+    grid-area: layout !important;
+    display: grid;
+    container-type: size;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    /* Three content-sized rows share the same compact-card rhythm. Center the
+       stack vertically so spare seat height becomes balanced outer space,
+       rather than changing the distance between board rows. */
+    --fab-zone-card-width: min(clamp(3.25rem, min(9vw, 12.5vh), 6rem), 32.5cqh);
+    --fab-card-cluster-gap: clamp(0.1rem, 0.2vw, 0.2rem);
+    align-content: center;
+    gap: var(--fab-card-cluster-gap);
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-rows: repeat(3, max-content) !important;
+    grid-template-areas:
+      "primary"
+      "main"
+      "support" !important;
+  }
+
+  .fab-player[data-seat-side="top"] > .fab-seat-layout {
+    grid-template-areas:
+      "support"
+      "main"
+      "primary" !important;
+    grid-template-rows: repeat(3, max-content) !important;
+  }
+
+  .fab-layout-row {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-template-columns:
+      minmax(calc(var(--fab-zone-card-width) * 2.15), 1fr)
+      minmax(0, 3.35fr)
+      minmax(calc(var(--fab-zone-card-width) * 2.15), 1fr);
+    gap: clamp(0.15rem, 0.45vw, 0.35rem);
+    align-items: stretch;
+  }
+
+  /* Every semantic board band is exactly one row. The opponent assigns its
+     mirrored columns in descending order, which CSS Grid's sparse auto-flow
+     would otherwise split across implicit rows. */
+  .fab-layout-row > * {
+    grid-row: 1;
+  }
+
+  .fab-layout-row-primary {
+    grid-area: primary;
+    /* Unlike the main band, each outer edge contains exactly one card-sized
+       zone. Reserve only that intrinsic width so permanents can use the full
+       space between the two table corners. */
+    grid-template-columns:
+      var(--fab-zone-card-width)
+      minmax(0, 1fr)
+      var(--fab-zone-card-width);
+  }
+
+  .fab-layout-row-primary > .fab-zone-head {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .fab-layout-row-primary > .fab-zone-graveyard {
+    grid-column: 3 !important;
+    justify-self: end;
+  }
+
+  /* Public permanents occupy the table-facing center of each seat. This keeps
+     created aura, item, and ally tokens visible without displacing equipment,
+     piles, or the hero clock. */
+  .fab-layout-row-primary > .fab-zone-permanent {
+    grid-column: 2;
+    width: 100%;
+    justify-self: center;
+    overflow: hidden;
+  }
+
+  .fab-player[data-seat-side="bottom"] .fab-zone-permanent {
+    align-self: end;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-zone-permanent {
+    align-self: start;
+  }
+
+  .fab-permanent-stack-row {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    gap: var(--fab-card-cluster-gap);
+    /* Permanent cards face the shared table: active-player cards start at
+       the left table edge while the opponent's mirror from the right. */
+    justify-content: safe flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-permanent-stack-row {
+    justify-content: safe flex-end;
+  }
+
+  .fab-permanent-stack {
+    position: relative;
+    width: var(--fab-zone-card-width);
+    height: var(--fab-zone-card-width);
+    flex: 0 0 auto;
+  }
+
+  .fab-permanent-stack[data-hosted-count] {
+    height: calc(var(--fab-zone-card-width) + 1.3rem);
+  }
+
+  .fab-permanent-stack > .fab-hosted-cards {
+    width: 100%;
+    height: var(--fab-zone-card-width);
+  }
+
+  .fab-permanent-stack > div {
+    width: 100%;
+    height: 100%;
+  }
+
+  .fab-permanent-stack-zone {
+    width: var(--fab-zone-card-width) !important;
+    height: var(--fab-zone-card-width) !important;
+    min-height: 0 !important;
+    border: 0;
+    padding: 0;
+  }
+
+  .fab-permanent-stack .fab-board-card-face-shell {
+    width: var(--fab-zone-card-width);
+    height: var(--fab-zone-card-width);
+    aspect-ratio: 1 !important;
+  }
+
+  .fab-permanent-stack .sim-card-face {
+    width: var(--fab-zone-card-width) !important;
+    height: var(--fab-zone-card-width) !important;
+  }
+
+  /* The opponent faces across the table: equipment stays on their right,
+     while public piles mirror to their left. */
+  .fab-player[data-seat-side="top"] .fab-layout-row-primary > .fab-zone-head {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-primary > .fab-zone-graveyard {
+    grid-column: 1 !important;
+    justify-self: start;
+  }
+
+  .fab-layout-row-main {
+    grid-area: main;
+  }
+
+  /* Fix all three columns explicitly. Once the opponent swaps the outer
+     columns, auto-placement must not reuse an already mirrored pile column. */
+  .fab-layout-row-main > .fab-layout-equipment {
+    grid-column: 1;
+  }
+
+  .fab-layout-row-main > .fab-layout-center {
+    grid-column: 2;
+  }
+
+  .fab-layout-row-main > .fab-layout-piles {
+    grid-column: 3;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-main > .fab-layout-equipment {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-main > .fab-layout-piles {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-piles > .fab-zone-deck,
+  .fab-player[data-seat-side="top"] .fab-layout-equipment > .fab-zone-arms {
+    order: -1;
+  }
+
+  .fab-layout-row-support {
+    position: relative;
+    grid-area: support;
+    --fab-arsenal-half-width: calc(var(--fab-zone-card-width) * 0.5);
+    /* Keep the arsenal centered across the whole support band. The outer
+       support zones and player meters each get a dedicated intrinsic track,
+       so neither side is clipped when Arsenal contains two rendered cards. */
+    grid-template-columns: auto minmax(0, 1fr) max-content auto;
+  }
+
+  .fab-layout-row-support:has(.fab-zone-arsenal .card-row > :nth-child(2)) {
+    --fab-arsenal-half-width: calc(var(--fab-zone-card-width) + var(--fab-card-cluster-gap) * 0.5);
+  }
+
+  .fab-layout-row-support > .fab-zone-legs {
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .fab-layout-row-support > .fab-zone-banished {
+    grid-column: 4 !important;
+    justify-self: center;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-support > .fab-zone-legs {
+    grid-column: 4;
+    justify-self: center;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-support > .fab-zone-banished {
+    grid-column: 1 !important;
+    justify-self: center;
+  }
+
+  .fab-layout-row-support > .fab-zone-arsenal {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    z-index: 1;
+  }
+
+  /* New Horizon and similar effects can create an additional arsenal zone.
+     Show each card as a distinct compact card rather than silently projecting
+     only the first entity through the single-card slot primitive. */
+  .fab-zone-arsenal .card-row {
+    display: grid;
+    width: calc(var(--fab-zone-card-width) * 2 + var(--fab-card-cluster-gap));
+    max-width: 100%;
+    margin: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* Match every other compact board-card cluster while preserving full card
+       size so decorations stay inside their own grid boxes. */
+    gap: var(--fab-card-cluster-gap);
+    overflow: visible !important;
+  }
+
+  .fab-zone-arsenal .card-row > * {
+    min-width: 0;
+  }
+
+  .fab-zone-arsenal .card-row:has(> :only-child) {
+    width: var(--fab-zone-card-width);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fab-zone-arsenal .card-row .sim-card-face {
+    width: 100%;
+    min-width: 0;
+    height: var(--fab-zone-card-width);
+    max-height: var(--fab-zone-card-width);
+  }
+
+  /* These slots own horizontal placement only. Their absolutely positioned
+     children cannot contribute intrinsic height, leaving Legs, Arsenal, and
+     Banished as the support band's vertical sizing anchors. */
+  .fab-layout-row-support > .fab-support-overlay {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .fab-layout-row-support > .fab-support-overlay-status {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: calc(50% + var(--fab-arsenal-half-width));
+    inset-inline-end: var(--fab-zone-card-width);
+    inline-size: auto;
+    transform: none;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-support > .fab-support-overlay-status {
+    inset-inline-start: var(--fab-zone-card-width);
+    inset-inline-end: calc(50% + var(--fab-arsenal-half-width));
+  }
+
+  .fab-layout-row-support > .fab-support-overlay-status > .fab-player-header {
+    position: absolute;
+    grid-template-columns: max-content;
+    gap: 0;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    width: max-content;
+    min-height: 0;
+    max-height: 100%;
+    max-width: 100%;
+    transform: translate(-50%, -50%);
+    transform-origin: center;
+    overflow: visible;
+  }
+
+  .fab-layout-row-support > .fab-support-overlay-status .fab-life-badge {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .fab-layout-row-support > .fab-support-overlay-status .fab-asset-meters {
+    flex-wrap: nowrap;
+  }
+
+  /* The official icons and values identify each meter; labels duplicate that
+     information in this intentionally compact on-board status treatment. */
+  .fab-layout-row-support > .fab-support-overlay-status .fab-stat-badge-label,
+  .fab-layout-row-support > .fab-support-overlay-status .fab-ap-badge small {
+    display: none;
+  }
+
+  /* At shallow desktop heights, keep the complete meter values in one line.
+     The official icons carry the labels, so the long text labels can recede
+     without allowing this overlay to cross the support-row boundary. */
+  @container (max-height: 10.5rem) {
+    .fab-layout-row-support > .fab-support-overlay-status > .fab-player-header {
+      gap: 0.25rem;
+    }
+
+    .fab-layout-row-support > .fab-support-overlay-status .fab-asset-meters {
+      gap: 0.28rem;
+    }
+
+    .fab-layout-row-support > .fab-support-overlay-status .fab-stat-badge {
+      flex-direction: row;
+      gap: 0.15rem;
+    }
+
+    .fab-layout-row-support > .fab-support-overlay-status .fab-stat-badge-icon {
+      width: 0.85rem !important;
+      height: 0.85rem !important;
+    }
+
+    .fab-layout-row-support > .fab-support-overlay-status .fab-stat-badge-value,
+    .fab-layout-row-support > .fab-support-overlay-status .fab-ap-badge strong {
+      font-size: 0.82rem;
+    }
+
+    .fab-layout-row-support > .fab-support-overlay-status .fab-ap-badge {
+      flex-direction: row;
+      min-width: 1.35rem;
+      padding: 0.1rem 0.28rem;
+    }
+  }
+
+  /* A shallow desktop board has less support-band clearance between the
+     * Arsenal cards and the player meters. Scale the complete meter cluster
+     * as one unit so its rhythm survives without colliding with either zone. */
+  @media (max-height: 54rem) {
+    .fab-layout-row-support > .fab-support-overlay-status > .fab-player-header {
+      transform: translate(-50%, -50%) scale(0.78);
+    }
+  }
+
+  @media (max-height: 44rem) {
+    .fab-layout-row-support > .fab-support-overlay-status > .fab-player-header {
+      transform: translate(-50%, -50%) scale(0.68);
+    }
+  }
+
+  .fab-layout-cell,
+  .fab-layout-column,
+  .fab-layout-pair,
+  .fab-layout-center-cards {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .fab-seat-layout .fab-zone-head,
+  .fab-seat-layout .fab-zone-legs,
+  .fab-seat-layout .fab-zone-arsenal {
+    grid-row: 1 !important;
+  }
+
+  .fab-seat-layout .fab-layout-single::before,
+  .fab-seat-layout .fab-layout-single::after {
+    content: none !important;
+  }
+
+  .fab-layout-cell,
+  .fab-layout-single {
+    display: grid;
+    place-items: center;
+  }
+
+  /* Direct cells otherwise stretch to their board band, while nested
+     equipment cells stay square. Keep every single-card placement cell
+     card-sized and vertically centered. */
+  .fab-layout-single {
+    align-self: center;
+  }
+
+  /* Keep the three equal tracks, but pack their card-sized contents toward
+     the middle band. The resulting separation is the seat row gap only. */
+  .fab-player[data-seat-side="bottom"] .fab-layout-row-primary > .fab-layout-single {
+    align-self: end;
+  }
+
+  .fab-player[data-seat-side="bottom"] .fab-layout-row-support > .fab-layout-single {
+    align-self: start;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-primary > .fab-layout-single {
+    align-self: start;
+  }
+
+  .fab-player[data-seat-side="top"] .fab-layout-row-support > .fab-layout-single {
+    align-self: end;
+  }
+
+  .fab-layout-pair,
+  .fab-layout-center-cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--fab-card-cluster-gap);
+    align-items: center;
+  }
+
+  .fab-layout-equipment {
+    justify-self: start;
+  }
+
+  .fab-layout-piles {
+    justify-self: end;
+  }
+
+  .fab-layout-equipment > :first-child,
+  .fab-layout-piles > :first-child {
+    justify-self: start;
+  }
+
+  .fab-layout-equipment > :last-child,
+  .fab-layout-piles > :last-child {
+    justify-self: end;
+  }
+
+  .fab-layout-center {
+    position: relative;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    gap: 0.15rem;
+    align-items: center;
+  }
+
+  .fab-layout-center-cards {
+    grid-template-columns: repeat(3, max-content);
+    justify-content: center;
+    justify-self: center;
+  }
+
+  .fab-layout-hand {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    align-items: center;
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  /* The bottom hand row is deliberately split: cards use the flexible left
+     track while quick controls own the viewport-facing right edge. */
+  .fab-desktop-hand-area {
+    grid-row: 5;
+    grid-column: 1;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) clamp(4.75rem, 7vw, 6rem);
+    gap: var(--fab-board-gap);
+    align-items: stretch;
+    overflow: clip;
+  }
+
+  .fab-desktop-hand-area .fab-tabletop-hand {
+    grid-row: auto !important;
+    grid-column: auto !important;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+  }
+
+  .fab-desktop-quick-controls {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: stretch;
+    gap: 0.3rem;
+    padding: 0.3rem;
+    border: 1px solid rgb(196 163 90 / 48%);
+    border-radius: 0.5rem;
+    background: rgb(19 13 14 / 94%);
+    box-shadow: 0 0.45rem 1.1rem rgb(0 0 0 / 30%);
+  }
+
+  .fab-desktop-quick-controls button {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    display: inline-flex;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.25rem;
+    border: 1px solid var(--board-border);
+    border-radius: 0.3rem;
+    background: var(--board-surface);
+    color: var(--board-text);
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .fab-desktop-quick-controls .fab-quick-pass {
+    position: relative;
+    padding: 0.35rem 0.25rem 1.35rem;
+    border-color: rgb(224 184 74 / 72%);
+    background: rgb(122 82 24 / 42%);
+    white-space: normal;
+  }
+
+  /* When pass is the sole quick action, keep its familiar bottom-edge
+     placement instead of leaving it stranded at the top of the control rail. */
+  .fab-desktop-quick-controls > .fab-quick-pass:only-child {
+    grid-row: 2;
+  }
+
+  .fab-desktop-quick-controls .fab-quick-pass svg {
+    flex: 0 0 auto;
+  }
+
+  .fab-desktop-quick-controls .fab-quick-pass span {
+    min-width: 0;
+    flex: 1 1 auto;
+    text-align: center;
+  }
+
+  .fab-desktop-quick-controls .fab-quick-step-action {
+    flex-direction: column;
+    padding-bottom: 0.35rem;
+    line-height: 1.1;
+  }
+
+  .fab-desktop-quick-controls .fab-quick-pass kbd {
+    position: absolute;
+    right: 0.25rem;
+    bottom: 0.25rem;
+    background: rgb(19 13 14 / 84%);
+  }
+
+  .fab-desktop-quick-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.42;
+  }
+  .fab-desktop-quick-controls kbd,
+  .fab-match-dock-controls kbd {
+    border: 1px solid currentColor;
+    border-radius: 0.2rem;
+    padding: 0.05rem 0.12rem;
+    font: inherit;
+    font-size: 0.55rem;
+    opacity: 0.8;
+  }
+
+  .fab-tabletop-hand {
+    width: 100%;
+  }
+
+  .fab-tabletop-hand[data-side="top"] {
+    grid-row: 1;
+  }
+
+  .fab-tabletop-hand[data-side="bottom"] {
+    grid-row: 5;
+  }
+
+  .fab-layout-hand > * {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .fab-layout-hand .card-fan-desktop {
+    display: flex !important;
+    width: 100%;
+    height: var(--fab-hand-card-height) !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    gap: clamp(0.3rem, 0.7vw, 0.65rem);
+  }
+
+  .fab-layout-hand .card-fan-item {
+    position: relative !important;
+    inset: auto !important;
+    width: var(--fab-hand-card-width) !important;
+    flex: 0 0 var(--fab-hand-card-width);
+    transform: none !important;
+    transform-origin: center !important;
+  }
+
+  .fab-layout-hand .card-fan-item + .card-fan-item {
+    margin-inline-start: calc(var(--fab-hand-card-width) * var(--fab-hand-overlap, 0) * -1);
+  }
+
+  .fab-layout-hand .card-fan-item:focus-within,
+  .fab-layout-hand .card-fan-item:hover {
+    z-index: 301 !important;
+    transform: translateY(-0.35rem) !important;
+  }
+
+  .fab-board[data-card-crop="art-square"] .fab-layout-hand .card-fan-item > button,
+  .fab-board[data-card-crop="art-square"] .fab-layout-hand .card-fan-item .sim-card-face {
+    width: var(--fab-hand-card-width) !important;
+    flex-basis: var(--fab-hand-card-width) !important;
+  }
+
+  /* FAB commonly draws to four, but effects can create larger hands. Preserve
+     each physical card and its ordering while progressively overlapping the
+     row so no clickable card extends beneath adjacent match controls. */
+  .fab-tabletop-hand[data-side="top"] .card-fan-item {
+    transform: translateY(-50%) !important;
+  }
+
+  .fab-tabletop-hand[data-side="top"] .card-fan-desktop {
+    align-self: flex-start;
+  }
+
+  .fab-tabletop-hand[data-side="bottom"] .card-fan-item {
+    transform: none !important;
+  }
+
+  .fab-tabletop-hand[data-side="bottom"] .card-fan-desktop {
+    align-self: flex-start;
+  }
+
+  .fab-board[data-card-crop="art-square"] .fab-tabletop-hand .sim-card-face .sim-card-image {
+    position: relative !important;
+    inset: auto !important;
+    aspect-ratio: auto !important;
+  }
+
+  .fab-board[data-card-crop="art-square"] .fab-tabletop-hand .sim-card-face .sim-card-image {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    object-fit: cover !important;
+  }
+
+  .fab-layout-hand .card-fan-item[data-highlighted="true"] {
+    z-index: 300 !important;
+    filter: drop-shadow(0 0 0.45rem rgb(224 184 74 / 76%));
+  }
+
+  .fab-layout-hand .card-fan-item[data-highlighted="true"] .sim-card-face {
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: 2px;
+  }
+
+  .fab-layout-single .single-card-zone,
+  .fab-layout-single [data-zone-layout="single-card"],
+  .fab-layout-single .deck-stack-zone,
+  .fab-layout-single .discard-pile-zone,
+  .fab-layout-single [data-zone-layout="deck-stack"],
+  .fab-layout-single [data-zone-layout="discard-pile"] {
+    width: var(--fab-zone-card-width);
+    max-width: var(--fab-zone-card-width);
+    height: var(--fab-zone-card-width);
+    max-height: var(--fab-zone-card-width);
+    min-height: 0 !important;
+  }
+
+  /* Slots own the available height. The FAB board image is a native square,
+     while any non-board fallback keeps its source ratio without stretching. */
+  .fab-layout-single .single-card-zone,
+  .fab-layout-single [data-zone-layout="single-card"] {
+    padding: 0 !important;
+  }
+
+  .fab-layout-single .deck-stack-zone,
+  .fab-layout-single .discard-pile-zone,
+  .fab-layout-single [data-zone-layout="deck-stack"],
+  .fab-layout-single [data-zone-layout="discard-pile"] {
+    padding: 0 !important;
+  }
+
+  /* Empty public piles keep their label centered inside the same compact
+     square as a populated pile, rather than inheriting the primitive's
+     top-aligned stack layout. */
+  .fab-layout-single .discard-pile-zone:has(> .empty-zone),
+  .fab-layout-single [data-zone-layout="discard-pile"]:has(> .empty-zone) {
+    padding: 0 !important;
+  }
+
+  .fab-layout-single .discard-pile-zone > .empty-zone,
+  .fab-layout-single [data-zone-layout="discard-pile"] > .empty-zone {
+    position: absolute;
+    inset: 0;
+    min-height: 0;
+    place-items: center;
+  }
+
+  /* Empty piles and Arsenal use the same square footprint as a populated
+     board card, so their labels retain the board's placement rhythm. */
+  .fab-zone-arsenal .card-row:has(> .empty-zone) {
+    width: var(--fab-zone-card-width);
+    height: var(--fab-zone-card-width);
+  }
+
+  .fab-zone-arsenal .card-row > .empty-zone {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* Keep each weapon column in the center cluster while removing an empty
+     slot's visual placeholder; that leaves the hero exactly centered. */
+  .fab-zone-weapon [data-zone-layout="single-card"][data-count="0"] {
+    visibility: hidden;
+  }
+
+  .fab-inspectable-pile {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  .fab-inspectable-pile:focus-visible {
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: 2px;
+  }
+
+  .fab-zone-availability {
+    position: absolute;
+    z-index: 30;
+    inset-block-start: 0.25rem;
+    inset-inline-start: 0.25rem;
+    max-width: calc(100% - 0.5rem);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--fab-priority-gold, #e0b84a) 72%, white);
+    border-radius: 999px;
+    padding: 0.18rem 0.36rem;
+    background: rgb(19 16 12 / 92%);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 44%);
+    color: #f6dc91;
+    font-size: 0.55rem;
+    font-weight: 900;
+    line-height: 1;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .fab-blood-debt-cue[data-density="desktop"] {
+    position: absolute;
+    z-index: 30;
+    inset-inline-end: 0.2rem;
+    inset-block-end: 0.2rem;
+    max-width: calc(100% - 0.4rem);
+    overflow: hidden;
+    padding: 0.2rem 0.34rem;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 48%);
+    font-size: 0.52rem;
+    text-overflow: ellipsis;
+  }
+
+  /* The pile art is the default visual. Zone names and counts are available
+     on demand without competing with the card title printed in the image. */
+  .fab-inspectable-pile::before,
+  .fab-inspectable-pile .tabletop-pile-count,
+  .fab-inspectable-pile .tabletop-pile-label {
+    opacity: 0;
+    transition: opacity 120ms ease-out;
+  }
+
+  .fab-inspectable-pile:hover::before,
+  .fab-inspectable-pile:focus-visible::before,
+  .fab-inspectable-pile:hover .tabletop-pile-count,
+  .fab-inspectable-pile:focus-visible .tabletop-pile-count,
+  .fab-inspectable-pile:hover .tabletop-pile-label,
+  .fab-inspectable-pile:focus-visible .tabletop-pile-label {
+    opacity: 1;
+  }
+
+  .fab-zone-deck .tabletop-pile-count,
+  .fab-zone-deck .tabletop-pile-label {
+    opacity: 0;
+    transition: opacity 120ms ease-out;
+  }
+
+  .fab-zone-deck:hover .tabletop-pile-count,
+  .fab-zone-deck:focus-within .tabletop-pile-count,
+  .fab-zone-deck:hover .tabletop-pile-label,
+  .fab-zone-deck:focus-within .tabletop-pile-label {
+    opacity: 1;
+  }
+
+  .fab-layout-equipment
+    .sim-card-face[data-fab-card-frame="tactical"]
+    [data-decoration-id="fab-frame-defense"] {
+    z-index: 6;
+    min-width: 1.95rem;
+    min-height: 1.55rem;
+    font-size: 0.78rem;
+  }
+
+  .fab-combat-chain {
+    position: static;
+    z-index: 3;
+    grid-column: 1;
+    grid-row: 3;
+    width: 100%;
+    min-width: min(26rem, 100%);
+    max-height: 6.5rem;
+    align-self: center;
+    justify-self: center;
+    overflow: hidden;
+  }
+
+  .fab-combat-chain-empty,
+  .fab-combat-chain[data-chain-state="closed"] {
+    box-sizing: border-box;
+    width: 100%;
+    height: 2.5rem;
+    min-height: 0;
+    max-height: none;
+    padding: 0;
+    transform: none;
+  }
+
+  .fab-combat-chain--desktop[data-chain-mode="closed"]:has(.fab-chain-stack) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+    align-items: center;
+    height: 4.5rem;
+    padding-inline: 0.65rem;
+  }
+
+  .fab-combat-chain--desktop[data-chain-mode="closed"]:has(.fab-chain-stack)
+    .fab-chain-compact-rail {
+    justify-content: flex-start;
+  }
+
+  .fab-combat-chain--desktop[data-chain-mode="closed"] .fab-chain-stack {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .fab-combat-chain-empty .fab-chain-compact-rail,
+  .fab-combat-chain[data-chain-state="closed"] .fab-chain-compact-rail {
+    align-self: center;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 0;
+    justify-content: center;
+    padding-block: 0.2rem;
+  }
+
+  .fab-combat-chain-empty .fab-chain-compact-label,
+  .fab-combat-chain[data-chain-state="closed"] .fab-chain-compact-label {
+    flex: 0 1 auto;
+  }
+
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-step-progress,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-link-history,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-stack,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-link,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-reactions,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-priority-actions,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .empty-zone,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-empty,
+  .fab-combat-chain--desktop:not(.fab-combat-chain-active) .fab-chain-summary {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop .fab-chain-header {
+    min-height: 1.7rem;
+  }
+
+  .fab-combat-chain-empty .fab-chain-header,
+  .fab-combat-chain[data-chain-state="closed"] .fab-chain-header {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop .fab-chain-equation {
+    min-height: 3.5rem;
+    padding-block: 0.25rem;
+  }
+}

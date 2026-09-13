@@ -36,7 +36,7 @@ export const buttonVariants = cva(
         ghost:
           "bg-transparent text-hud-text-muted border border-transparent hover:bg-hud-surface-raised/40 hover:text-hud-text cursor-pointer",
         cockpit:
-          "pass-btn-active bg-[linear-gradient(180deg,#ff2d7a_0%,#e0186a_60%,#c8155a_100%)] text-white border border-hud-danger/80 cursor-pointer",
+          "pass-btn-active bg-[linear-gradient(180deg,#d61960_0%,#bd1454_60%,#aa104a_100%)] text-white border border-hud-danger/80 cursor-pointer",
       },
       size: {
         sm: "h-6 px-2 text-hud-xs",

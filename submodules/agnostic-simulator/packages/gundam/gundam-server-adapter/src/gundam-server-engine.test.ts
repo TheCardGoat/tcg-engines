@@ -1,9 +1,11 @@
+import { gundamAnimationPlan } from "./gundam-animation.js";
 import { describe, expect, it } from "vite-plus/test";
 import { INTERACTION_PROTOCOL_VERSION, type InteractionSubmission } from "@tcg/protocol";
 import type {
   LocalEngine,
   MatchState,
   MatchStaticResources,
+  PacketAnimation,
   PendingChoicePrompt,
 } from "@tcg/gundam-engine";
 import { GundamServerEngine, gundamPacketAnimation } from "./gundam-server-engine.js";
@@ -65,6 +67,228 @@ describe("GundamServerEngine interaction submission", () => {
   });
 });
 
+describe("GundamServerEngine undo", () => {
+  it("routes the generic undo move to the authoritative runtime undo", () => {
+    const calls: string[] = [];
+    const state = { ctx: { _stateID: 8, status: { turn: 2, gameEnded: false } } } as MatchState;
+    const engine = new GundamServerEngine(
+      {
+        getStateID: () => 8,
+        getState: () => state,
+        canUndo: () => true,
+        undo: (playerId: string) => {
+          calls.push(playerId);
+          return {
+            success: true,
+            stateID: 9,
+            state: { ...state, ctx: { ...state.ctx, _stateID: 9 } },
+            patches: [],
+            gameEvents: [],
+            logEntries: [],
+            processedCommand: {
+              commandID: "undo-p1-9",
+              move: "undo",
+              prevStateID: 8,
+              actorRole: "player",
+              args: {},
+            },
+            animations: [],
+            undoable: false,
+          };
+        },
+      } as unknown as LocalEngine,
+      {} as MatchStaticResources,
+    );
+
+    const result = engine.dispatch("undo", "p1", {}, { gameId: "g1", sourceAuthority: "server" });
+
+    expect(calls).toEqual(["p1"]);
+    expect(result).toMatchObject({ success: true, stateID: 9, undoable: false });
+    if (!result.success) throw new Error("Expected the undo to succeed.");
+    expect(result.acceptedMoveRecord?.transitionType).toBe("undo");
+  });
+});
+
+describe("GundamServerEngine forfeit", () => {
+  it("concedes as the loser and persists a forfeit record for the winner", () => {
+    const calls: Array<{ playerId: string; command: { move: string; args: unknown } }> = [];
+    const liveState = {
+      ctx: {
+        _stateID: 4,
+        playerIds: ["p1", "p2"],
+        status: {
+          turn: 3,
+          gameEnded: false,
+          activePlayer: "p2",
+          winner: undefined,
+          winReason: undefined,
+        },
+        time: { mode: "none" },
+      },
+    } as MatchState;
+    const engine = new GundamServerEngine(
+      {
+        getStateID: () => liveState.ctx._stateID,
+        getState: () => liveState,
+        executeCommand: (command: { move: string; args: unknown }, playerId: string) => {
+          calls.push({ playerId, command });
+          liveState.ctx._stateID = 5;
+          liveState.ctx.status.gameEnded = true;
+          liveState.ctx.status.winner = "p1";
+          liveState.ctx.status.winReason = "p2 conceded";
+          return {
+            success: true,
+            stateID: 5,
+            state: liveState,
+            patches: [],
+            gameEvents: [],
+            logEntries: [],
+            processedCommand: command,
+            animations: [],
+            undoable: false,
+            moveLogs: [],
+          };
+        },
+      } as unknown as LocalEngine,
+      {} as MatchStaticResources,
+    );
+
+    const result = engine.forfeit("p1", "disconnect", {
+      gameId: "g1",
+      sourceAuthority: "server",
+    });
+
+    expect(calls).toEqual([
+      {
+        playerId: "p2",
+        command: expect.objectContaining({ move: "concede", args: {} }),
+      },
+    ]);
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+    expect(result.acceptedMoveRecord).toMatchObject({
+      moveId: "forfeitGame",
+      actorId: "p1",
+      stateVersion: 5,
+    });
+    expect(result.state).toMatchObject({
+      ctx: { status: { gameEnded: true, winner: "p1", winReason: "disconnect" } },
+    });
+    expect(engine.getGameEndResult()).toEqual({ winnerId: "p1", reason: "disconnect" });
+  });
+
+  it("rejects a forfeit to a player who is not seated", () => {
+    const engine = new GundamServerEngine(
+      {
+        getStateID: () => 1,
+        getState: () =>
+          ({
+            ctx: {
+              _stateID: 1,
+              playerIds: ["p1", "p2"],
+              status: { gameEnded: false, activePlayer: "p1" },
+            },
+          }) as MatchState,
+        executeCommand: () => {
+          throw new Error("must not execute");
+        },
+      } as unknown as LocalEngine,
+      {} as MatchStaticResources,
+    );
+
+    const result = engine.forfeit("p3", "timeout", {
+      gameId: "g1",
+      sourceAuthority: "server",
+    });
+
+    expect(result).toMatchObject({
+      success: false,
+      errorCode: "invalid_forfeit_winner",
+      stateID: 1,
+    });
+  });
+});
+
+describe("GundamServerEngine timeout recovery", () => {
+  it("treats a second reserve timeout while the requester holds priority as a force drop", () => {
+    const now = Date.now();
+    const engine = new GundamServerEngine(
+      {
+        getState: () =>
+          ({
+            ctx: {
+              time: {
+                mode: "dynamic",
+                running: false,
+                activePlayerID: "p1",
+                players: {
+                  p1: { reserveMsRemaining: 60_000, timeoutCount: 0, isInNegativeTime: false },
+                  p2: { reserveMsRemaining: 0, timeoutCount: 1, isInNegativeTime: true },
+                },
+                config: { resetTimeOnSkipMs: 45_000, graceMs: 0 },
+              },
+            },
+          }) as MatchState,
+      } as unknown as LocalEngine,
+      {} as MatchStaticResources,
+    );
+
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now,
+      }),
+    ).toEqual({
+      outcome: "timed_out",
+      timeout: "second",
+      stallerPlayerId: "p2",
+      timeoutCount: 1,
+      forceDrop: true,
+      resetTimeOnSkipMs: 45_000,
+    });
+  });
+
+  it("resets the skipped player's clock without incrementing an already-advanced timeout count", () => {
+    const state = {
+      ctx: {
+        time: {
+          mode: "dynamic",
+          running: false,
+          activePlayerID: "p2",
+          players: {
+            p2: {
+              reserveMsRemaining: -1,
+              timeoutCount: 1,
+              isInNegativeTime: true,
+            },
+          },
+          config: { resetTimeOnSkipMs: 60_000, graceMs: 0 },
+        },
+      },
+    } as MatchState;
+    const runtime = { state };
+    const engine = new GundamServerEngine(
+      {
+        getRuntime: () => runtime,
+      } as unknown as LocalEngine,
+      {} as MatchStaticResources,
+    );
+
+    engine.resetPlayerTimeAfterSkip("p2", { resetMs: 30_000, previousTimeoutCount: 0 });
+
+    expect(runtime.state.ctx.time).toMatchObject({
+      players: {
+        p2: {
+          reserveMsRemaining: 30_000,
+          timeoutCount: 1,
+          isInNegativeTime: false,
+        },
+      },
+    });
+  });
+});
+
 describe("gundamPacketAnimation", () => {
   it("preserves native private identities for renderer-level privacy validation", () => {
     const packet = gundamPacketAnimation({
@@ -85,6 +309,59 @@ describe("gundamPacketAnimation", () => {
       ownerId: "p2",
       fromZone: "deck",
       toZone: "hand",
+    });
+  });
+});
+
+describe("gundamAnimationPlan", () => {
+  it("flips a removed Shield from hidden to public during its transfer", () => {
+    const plan = gundamAnimationPlan(
+      "shield-damage",
+      [
+        {
+          id: "shield-1",
+          type: "cardMove",
+          duration: 420,
+          data: {
+            kind: "cardMove",
+            cardId: "shield-1",
+            ownerId: "p2",
+            fromZone: "shieldArea",
+            toZone: "trash",
+          },
+        },
+      ],
+      "p1",
+      { zones: { zones: {} }, players: [] },
+    );
+
+    expect(plan?.steps[0]).toMatchObject({
+      type: "entityTransfer",
+      sourceFace: "hidden",
+      destinationFace: "public",
+    });
+  });
+
+  it("maps an explicit card flip to the shared face-change animation", () => {
+    const plan = gundamAnimationPlan(
+      "reveal",
+      [
+        {
+          id: "reveal-1",
+          type: "cardFlip",
+          duration: 320,
+          data: { kind: "cardFlip", cardId: "shield-1", faceDown: false },
+        },
+      ],
+      "p1",
+      { zones: { zones: {} }, players: [] },
+    );
+
+    expect(plan?.steps[0]).toMatchObject({
+      type: "entityStateChange",
+      change: "face",
+      sourceFace: "hidden",
+      destinationFace: "public",
     });
   });
 });

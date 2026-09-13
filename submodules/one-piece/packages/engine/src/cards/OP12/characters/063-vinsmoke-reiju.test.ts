@@ -16,5 +16,10 @@ describe("OP12-063 Vinsmoke Reiju", () => {
       .getView("south")
       .players.south.characters.find((card) => card?.instanceId === reijuId);
     expect(reiju).toMatchObject({ power: 7000, cost: 9 });
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.characters.filter(Boolean).length).toBeGreaterThan(
+      0,
+    );
   });
 });

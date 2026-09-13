@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailElSombreroNLaVenganzaLenta = defineCyberpunkCard({
   id: "c688ca08-b3b7-441d-b161-78b9a63a8a9e",
   slug: "el-sombrero-n-la-venganza-lenta",
+  subname: "La Venganza Lenta",
   rulesText:
     "{Attack} You may pay 2 €$. If you do, this Unit gains power equal to a friendly max Gig this turn.",
-  name: "El Sombrerón — La Venganza Lenta",
-  displayName: "El Sombrerón — La Venganza Lenta",
+  name: "El Sombrerón",
+  displayName: "El Sombrerón: La Venganza Lenta",
   canonicalId: "el-sombrero-n-la-venganza-lenta",
   color: "red",
   classifications: ["Ganger", "Valentino"],

@@ -1,8 +1,9 @@
-import type { ReactNode } from "react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 
 import { CardFace } from "./CardFace";
 import { projectSimulatorEntityForFace } from "./entity-visibility";
+import { useAnimationNode } from "../animation/hooks/useAnimationNode";
+import { useOptionalAnimationRuntime } from "../animation/provider/contexts";
 
 export interface ResolvingEntityStageProps {
   readonly entity: SimulatorEntity | null;
@@ -13,7 +14,6 @@ export interface ResolvingEntityStageProps {
   readonly labelClassName?: string;
   readonly entityClassName?: string;
   readonly testId?: string;
-  readonly renderEntity?: (entity: SimulatorEntity) => ReactNode;
 }
 
 /**
@@ -29,8 +29,12 @@ export function ResolvingEntityStage({
   labelClassName,
   entityClassName,
   testId = "resolving-entity-stage",
-  renderEntity,
 }: ResolvingEntityStageProps) {
+  const runtime = useOptionalAnimationRuntime();
+  const anchorRef = useAnimationNode(
+    { kind: "anchor", id: anchorId },
+    { presence: "present", density: "normal" },
+  );
   const projected = entity
     ? projectSimulatorEntityForFace(entity, entity.face === "hidden" ? "hidden" : "public")
     : null;
@@ -48,21 +52,24 @@ export function ResolvingEntityStage({
     >
       <span className={labelClassName}>{label}</span>
       <div
+        ref={anchorRef}
         className={entityClassName}
         data-testid={`${testId}-entity`}
         data-sim-anchor-id={anchorId}
       >
-        {projected
-          ? (renderEntity?.(projected) ?? (
-              <CardFace
-                entity={projected}
-                density="normal"
-                fill
-                fullImageChrome="edge-to-edge"
-                fullImageFit="contain"
-              />
-            ))
-          : null}
+        {projected ? (
+          runtime ? (
+            <runtime.entityRenderer entity={projected} density="normal" />
+          ) : (
+            <CardFace
+              entity={projected}
+              density="normal"
+              fill
+              fullImageChrome="edge-to-edge"
+              fullImageFit="contain"
+            />
+          )
+        ) : null}
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { describe, expect, it } from "vite-plus/test";
 import {
   createGundamWebviewReadyMessage,
   resolveGundamWebviewHostOrigin,
+  type GundamPracticeStartedMessage,
 } from "./webviewBridge.ts";
 
 describe("Gundam practice webview bridge", () => {
@@ -15,6 +16,17 @@ describe("Gundam practice webview bridge", () => {
         pointerDragDrop: true,
       },
     });
+  });
+
+  it("carries any deck adjustments to the embedding player", () => {
+    const message: GundamPracticeStartedMessage = {
+      type: "gundam.practice.started.v1",
+      matchId: "match-1",
+      gameId: "game-1",
+      warnings: ["Removed an unknown card from the deck."],
+    };
+
+    expect(message.warnings).toEqual(["Removed an unknown card from the deck."]);
   });
 
   it("targets only the exact HTTP(S) referrer origin", () => {

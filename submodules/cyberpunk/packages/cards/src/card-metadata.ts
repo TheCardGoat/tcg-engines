@@ -19,1380 +19,6 @@ export interface CyberpunkCardMetadataEntry {
 }
 
 export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> = {
-  "boxtoppersretail:goro-takemura-hands-unclean": {
-    i18n: {
-      en: {
-        name: "Goro Takemura — Hands Unclean",
-        displayName: "Goro Takemura — Hands Unclean",
-        rulesText:
-          "[GO SOLO] (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\n[BLOCKER] (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
-      },
-    },
-    printings: [
-      {
-        id: "1b6e44dd-d6e7-46eb-a5e5-24c38eed888b",
-        artId: "1b6e44dd-d6e7-46eb-a5e5-24c38eed888b",
-        collectorNumber: "003",
-        setCode: "boxtoppersretail",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/003.webp",
-      },
-      {
-        id: "2ba68619-7050-44c5-b0ce-b32d48b8f40f",
-        artId: "2ba68619-7050-44c5-b0ce-b32d48b8f40f",
-        collectorNumber: "012",
-        setCode: "embracingpowerretailstarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/012.webp",
-      },
-      {
-        id: "15430373-fafd-479c-84d4-5737c71d0850",
-        artId: "15430373-fafd-479c-84d4-5737c71d0850",
-        collectorNumber: "β003",
-        setCode: "boxtoppersbeta",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b003.webp",
-      },
-      {
-        id: "25b09451-8cc8-4581-898d-3b5ee6ff6b14",
-        artId: "25b09451-8cc8-4581-898d-3b5ee6ff6b14",
-        collectorNumber: "β012",
-        setCode: "embracingpowerbetastarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b012.webp",
-      },
-    ],
-    selectedPrintingId: "1b6e44dd-d6e7-46eb-a5e5-24c38eed888b",
-  },
-  "boxtoppersretail:jackie-welles-pour-one-out-for-me": {
-    i18n: {
-      en: {
-        name: "Jackie Welles — Pour One Out For Me",
-        displayName: "Jackie Welles — Pour One Out For Me",
-        rulesText:
-          "The first time you play a Blue Unit or Blue Gear each turn, you may decrease a friendly Gig by up to 2. If it becomes a min Gig, draw 1.",
-      },
-    },
-    printings: [
-      {
-        id: "e4e17d32-3ec4-4c74-927c-fd0911b86e72",
-        artId: "e4e17d32-3ec4-4c74-927c-fd0911b86e72",
-        collectorNumber: "005",
-        setCode: "boxtoppersretail",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/005.webp",
-      },
-      {
-        id: "a33d3324-fe48-4a9f-80a8-8545a0a4727f",
-        artId: "a33d3324-fe48-4a9f-80a8-8545a0a4727f",
-        collectorNumber: "011",
-        setCode: "theheistretailstarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/011.webp",
-      },
-      {
-        id: "328cd3e4-4177-4d6a-86c0-00d1a5a12b38",
-        artId: "328cd3e4-4177-4d6a-86c0-00d1a5a12b38",
-        collectorNumber: "β005",
-        setCode: "boxtoppersbeta",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b005.webp",
-      },
-      {
-        id: "a0ef9536-ad3b-47f6-8c2a-171aa3b8b181",
-        artId: "a0ef9536-ad3b-47f6-8c2a-171aa3b8b181",
-        collectorNumber: "β011",
-        setCode: "theheistbetastarterdeck",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/theheistbetastarterdeck/b011.webp",
-      },
-    ],
-    selectedPrintingId: "e4e17d32-3ec4-4c74-927c-fd0911b86e72",
-  },
-  "boxtoppersretail:saburo-arasaka-stubborn-patriarch": {
-    i18n: {
-      en: {
-        name: "Saburo Arasaka — Stubborn Patriarch",
-        displayName: "Saburo Arasaka — Stubborn Patriarch",
-        rulesText:
-          "Friendly ARASAKA Units have +1 power while attacking.\n(Units steal an extra Gig for every 10 power.)",
-      },
-    },
-    printings: [
-      {
-        id: "77e482f2-6090-47e9-9d03-be28417cb1cb",
-        artId: "77e482f2-6090-47e9-9d03-be28417cb1cb",
-        collectorNumber: "004",
-        setCode: "boxtoppersretail",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/004.webp",
-      },
-      {
-        id: "6ac7adce-01af-4b5b-956b-698eda0bed14",
-        artId: "6ac7adce-01af-4b5b-956b-698eda0bed14",
-        collectorNumber: "013",
-        setCode: "embracingpowerretailstarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/013.webp",
-      },
-      {
-        id: "0cb4ae83-a7ca-4ca6-9c83-6c0581baae57",
-        artId: "0cb4ae83-a7ca-4ca6-9c83-6c0581baae57",
-        collectorNumber: "β004",
-        setCode: "boxtoppersbeta",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b004.webp",
-      },
-      {
-        id: "54136fbd-ce97-4d23-a8e8-f876e3e64819",
-        artId: "54136fbd-ce97-4d23-a8e8-f876e3e64819",
-        collectorNumber: "β013",
-        setCode: "embracingpowerbetastarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b013.webp",
-      },
-    ],
-    selectedPrintingId: "77e482f2-6090-47e9-9d03-be28417cb1cb",
-  },
-  "boxtoppersretail:v-corporate-exile": {
-    i18n: {
-      en: {
-        name: "V — Corporate Exile",
-        displayName: "V — Corporate Exile",
-        rulesText:
-          "[GO SOLO] (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. When it leaves the field, remove it from the game.)",
-      },
-    },
-    printings: [
-      {
-        id: "f509ebd8-c8b7-4a22-8922-2d71c6df0b6f",
-        artId: "f509ebd8-c8b7-4a22-8922-2d71c6df0b6f",
-        collectorNumber: "006",
-        setCode: "boxtoppersretail",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/006.webp",
-      },
-      {
-        id: "4a5591f9-743e-4186-8deb-560971bb3f82",
-        artId: "4a5591f9-743e-4186-8deb-560971bb3f82",
-        collectorNumber: "012",
-        setCode: "theheistretailstarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/012.webp",
-      },
-      {
-        id: "e44580df-d78d-4b09-bb53-edb1ee32ac96",
-        artId: "e44580df-d78d-4b09-bb53-edb1ee32ac96",
-        collectorNumber: "β006",
-        setCode: "boxtoppersbeta",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b006.webp",
-      },
-      {
-        id: "a6511c82-3a16-41b3-a39a-5194897c8648",
-        artId: "a6511c82-3a16-41b3-a39a-5194897c8648",
-        collectorNumber: "β012",
-        setCode: "theheistbetastarterdeck",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/theheistbetastarterdeck/b012.webp",
-      },
-    ],
-    selectedPrintingId: "f509ebd8-c8b7-4a22-8922-2d71c6df0b6f",
-  },
-  "boxtoppersretail:yorinobu-arasaka-embracing-destruction": {
-    i18n: {
-      en: {
-        name: "Yorinobu Arasaka — Embracing Destruction",
-        displayName: "Yorinobu Arasaka — Embracing Destruction",
-        rulesText:
-          "The first time a friendly ARASAKA Unit attacks each turn, draw 1. Then, if you have less than 20 ☆ (Street Cred), discard 1.",
-      },
-    },
-    printings: [
-      {
-        id: "dc7bb3cf-1005-4584-ad7a-447f0ccf07bf",
-        artId: "dc7bb3cf-1005-4584-ad7a-447f0ccf07bf",
-        collectorNumber: "001",
-        setCode: "boxtoppersretail",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/001.webp",
-      },
-      {
-        id: "f70b75b5-aa2f-4c2d-b8c3-01fcb2a670ec",
-        artId: "f70b75b5-aa2f-4c2d-b8c3-01fcb2a670ec",
-        collectorNumber: "001",
-        setCode: "embracingpowerretailstarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/001.webp",
-      },
-      {
-        id: "12337d92-713c-4c7c-8a16-595a7b4717f1",
-        artId: "12337d92-713c-4c7c-8a16-595a7b4717f1",
-        collectorNumber: "β001",
-        setCode: "boxtoppersbeta",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b001.webp",
-      },
-      {
-        id: "362bef23-c935-4729-a13b-dc3bc646d9b3",
-        artId: "362bef23-c935-4729-a13b-dc3bc646d9b3",
-        collectorNumber: "β001",
-        setCode: "embracingpowerbetastarterdeck",
-        rarity: "Epic",
-        imageUrl:
-          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b001.webp",
-      },
-    ],
-    selectedPrintingId: "dc7bb3cf-1005-4584-ad7a-447f0ccf07bf",
-  },
-  "alpha:armored-minotaur": {
-    i18n: {
-      en: {
-        name: "Armored Minotaur",
-        displayName: "Armored Minotaur",
-        rulesText:
-          "PLAY If you have 12+ * (Street Cred), defeat a rival unit with power 5 or less.",
-      },
-    },
-    printings: [
-      {
-        id: "31ab0503-dd9a-46e3-ab21-31932376ed42",
-        artId: "31ab0503-dd9a-46e3-ab21-31932376ed42",
-        collectorNumber: "α007",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a007.webp",
-      },
-    ],
-    selectedPrintingId: "31ab0503-dd9a-46e3-ab21-31932376ed42",
-  },
-  "alpha:corpo-security": {
-    i18n: {
-      en: {
-        name: "Corpo Security",
-        displayName: "Corpo Security",
-        rulesText:
-          "This unit can't attack. BLOCKER (When a rival unit attacks, you may spend this unit to redirect the attack to it.)",
-      },
-    },
-    printings: [
-      {
-        id: "0e6c2994-b434-4083-b446-622bdbdc9268",
-        artId: "0e6c2994-b434-4083-b446-622bdbdc9268",
-        collectorNumber: "α016",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a016.webp",
-      },
-    ],
-    selectedPrintingId: "0e6c2994-b434-4083-b446-622bdbdc9268",
-  },
-  "alpha:corporate-surveillance": {
-    i18n: {
-      en: {
-        name: "Corporate Surveillance",
-        displayName: "Corporate Surveillance",
-        rulesText: "Spend a rival unit with cost 3 or less. (Discard programs after they resolve.)",
-      },
-    },
-    printings: [
-      {
-        id: "9dfb1a9b-6f0c-40d7-84e2-d8c684f13160",
-        artId: "9dfb1a9b-6f0c-40d7-84e2-d8c684f13160",
-        collectorNumber: "α025",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a025.webp",
-      },
-    ],
-    selectedPrintingId: "9dfb1a9b-6f0c-40d7-84e2-d8c684f13160",
-  },
-  "alpha:delamain-cab": {
-    i18n: {
-      en: {
-        name: "Delamain Cab",
-        displayName: "Delamain Cab",
-      },
-    },
-    printings: [
-      {
-        id: "f85fb4f8-2e61-4dea-9b9c-d02aece7b280",
-        artId: "f85fb4f8-2e61-4dea-9b9c-d02aece7b280",
-        collectorNumber: "α010",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a010.webp",
-      },
-    ],
-    selectedPrintingId: "f85fb4f8-2e61-4dea-9b9c-d02aece7b280",
-  },
-  "alpha:dying-night-v-s-pistol": {
-    i18n: {
-      en: {
-        name: "Dying Night",
-        subname: "V's Pistol",
-        displayName: "Dying Night - V's Pistol",
-        rulesText:
-          "(Equip to a unit or face-up legend.) ATTACK If you have 7+ * (Street Cred), defeat a rival gear card that costs 2 or less.",
-      },
-    },
-    printings: [
-      {
-        id: "5f7f3400-87c7-4794-a7b9-7e74b18ed630",
-        artId: "5f7f3400-87c7-4794-a7b9-7e74b18ed630",
-        collectorNumber: "α022",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a022.webp",
-      },
-    ],
-    selectedPrintingId: "5f7f3400-87c7-4794-a7b9-7e74b18ed630",
-  },
-  "alpha:emergency-atlus": {
-    i18n: {
-      en: {
-        name: "Emergency Atlus",
-        displayName: "Emergency Atlus",
-      },
-    },
-    printings: [
-      {
-        id: "17411d89-56b6-4c24-97eb-8a49ed28c2e6",
-        artId: "17411d89-56b6-4c24-97eb-8a49ed28c2e6",
-        collectorNumber: "α017",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a017.webp",
-      },
-    ],
-    selectedPrintingId: "17411d89-56b6-4c24-97eb-8a49ed28c2e6",
-  },
-  "alpha:evelyn-parker-scheming-siren": {
-    i18n: {
-      en: {
-        name: "Evelyn Parker",
-        subname: "Scheming Siren",
-        displayName: "Evelyn Parker - Scheming Siren",
-        rulesText:
-          "When a rival steals one or more friendly gigs, if this unit is spent, draw a card.",
-      },
-    },
-    printings: [
-      {
-        id: "9a857228-1b5f-4b95-9296-d95a596de2e6",
-        artId: "9a857228-1b5f-4b95-9296-d95a596de2e6",
-        collectorNumber: "α011",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a011.webp",
-      },
-    ],
-    selectedPrintingId: "9a857228-1b5f-4b95-9296-d95a596de2e6",
-  },
-  "alpha:floor-it": {
-    i18n: {
-      en: {
-        name: "Floor It",
-        displayName: "Floor It",
-        rulesText:
-          "Return a spent unit with cost 4 or less to its owner's hand. (Discard programs after they resolve.)",
-      },
-    },
-    printings: [
-      {
-        id: "40d6acaa-ab6a-4ed9-895c-1e330b7fa4d4",
-        artId: "40d6acaa-ab6a-4ed9-895c-1e330b7fa4d4",
-        collectorNumber: "α023",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a023.webp",
-      },
-    ],
-    selectedPrintingId: "40d6acaa-ab6a-4ed9-895c-1e330b7fa4d4",
-  },
-  "alpha:goro-takemura-hands-unclean": {
-    i18n: {
-      en: {
-        name: "Goro Takemura",
-        subname: "Hands Unclean",
-        displayName: "Goro Takemura - Hands Unclean",
-        rulesText:
-          "GO SOLO (Pay this card's cost to play it as a ready unit. It can attack this turn.) BLOCKER (When a rival units attacks, you may spend this unit to redirect the attack to this unit.)",
-      },
-    },
-    printings: [
-      {
-        id: "655c0160-6ac2-4630-9318-7aeffbabedad",
-        artId: "655c0160-6ac2-4630-9318-7aeffbabedad",
-        collectorNumber: "α004",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a004.webp",
-      },
-      {
-        id: "6478bab9-54f1-47cc-9090-95b868b917e2",
-        artId: "6478bab9-54f1-47cc-9090-95b868b917e2",
-        collectorNumber: "α030",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a030.webp",
-      },
-    ],
-    selectedPrintingId: "655c0160-6ac2-4630-9318-7aeffbabedad",
-  },
-  "alpha:goro-takemura-losing-his-way": {
-    i18n: {
-      en: {
-        name: "Goro Takemura",
-        subname: "Losing His Way",
-        displayName: "Goro Takemura - Losing His Way",
-        rulesText:
-          "This unit has +1 power during your turn for each face-up legend in your legends area.",
-      },
-    },
-    printings: [
-      {
-        id: "4a40ce11-128b-4560-9d46-294c859475ff",
-        artId: "4a40ce11-128b-4560-9d46-294c859475ff",
-        collectorNumber: "α018",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a018.webp",
-      },
-    ],
-    selectedPrintingId: "4a40ce11-128b-4560-9d46-294c859475ff",
-  },
-  "alpha:industrial-assembly": {
-    i18n: {
-      en: {
-        name: "Industrial Assembly",
-        displayName: "Industrial Assembly",
-        rulesText:
-          "Increase a friendly gig by 4. Then, if you have 7+ * (Street Cred), draw a card. (Discard programs after they resolve.)",
-      },
-    },
-    printings: [
-      {
-        id: "a190e602-4297-4b39-9641-6c991cce2204",
-        artId: "a190e602-4297-4b39-9641-6c991cce2204",
-        collectorNumber: "α021",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a021.webp",
-      },
-    ],
-    selectedPrintingId: "a190e602-4297-4b39-9641-6c991cce2204",
-  },
-  "alpha:jackie-welles-pour-one-out-for-me": {
-    i18n: {
-      en: {
-        name: "Jackie Welles",
-        subname: "Pour One Out For Me",
-        displayName: "Jackie Welles - Pour One Out For Me",
-        rulesText:
-          "The first time you play a blue unit or blue gear each turn, you may increase a friendly gig by 2. Then, if it's at max value, draw a card.",
-      },
-    },
-    printings: [
-      {
-        id: "e60cdc66-c3e9-46a9-9be4-45424fd65c71",
-        artId: "e60cdc66-c3e9-46a9-9be4-45424fd65c71",
-        collectorNumber: "α002",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a002.webp",
-      },
-    ],
-    selectedPrintingId: "e60cdc66-c3e9-46a9-9be4-45424fd65c71",
-  },
-  "alpha:jackie-welles-ride-or-die-choom": {
-    i18n: {
-      en: {
-        name: "Jackie Welles",
-        subname: "Ride Or Die Choom",
-        displayName: "Jackie Welles - Ride Or Die Choom",
-        rulesText:
-          "This unit has +2 power for each of your friendly gigs. (Units steal an extra gig for every 10 power.)",
-      },
-    },
-    printings: [
-      {
-        id: "a9d250d6-bc4a-4d54-81e8-ea1ab6261d76",
-        artId: "a9d250d6-bc4a-4d54-81e8-ea1ab6261d76",
-        collectorNumber: "α013",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a013.webp",
-      },
-    ],
-    selectedPrintingId: "a9d250d6-bc4a-4d54-81e8-ea1ab6261d76",
-  },
-  "alpha:kiroshi-optics": {
-    i18n: {
-      en: {
-        name: "Kiroshi Optics",
-        displayName: "Kiroshi Optics",
-        rulesText:
-          "(Equip to a unit or face-up legend.) ATTACK Look at a friendly face-down legend without revealing it.",
-      },
-    },
-    printings: [
-      {
-        id: "70b37d1b-84a9-4b79-9772-84c14b37310a",
-        artId: "70b37d1b-84a9-4b79-9772-84c14b37310a",
-        collectorNumber: "α026",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a026.webp",
-      },
-    ],
-    selectedPrintingId: "70b37d1b-84a9-4b79-9772-84c14b37310a",
-  },
-  "alpha:mandibular-upgrade": {
-    i18n: {
-      en: {
-        name: "Mandibular Upgrade",
-        displayName: "Mandibular Upgrade",
-        rulesText:
-          "(Equip to a unit or face-up legend.) BLOCKER (When a rival unit attacks, you may spend this unit to redirect the attack to it.)",
-      },
-    },
-    printings: [
-      {
-        id: "a44f9d62-86f3-4ede-9e0f-50477fa4229c",
-        artId: "a44f9d62-86f3-4ede-9e0f-50477fa4229c",
-        collectorNumber: "α027",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a027.webp",
-      },
-    ],
-    selectedPrintingId: "a44f9d62-86f3-4ede-9e0f-50477fa4229c",
-  },
-  "alpha:mantis-blades": {
-    i18n: {
-      en: {
-        name: "Mantis Blades",
-        displayName: "Mantis Blades",
-        rulesText: "(Equip to a unit or face-up legend.)",
-      },
-    },
-    printings: [
-      {
-        id: "aec0d35f-5014-46fe-a9e5-bbd7f88dc729",
-        artId: "aec0d35f-5014-46fe-a9e5-bbd7f88dc729",
-        collectorNumber: "α019",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a019.webp",
-      },
-    ],
-    selectedPrintingId: "aec0d35f-5014-46fe-a9e5-bbd7f88dc729",
-  },
-  "alpha:mt0d12-flathead": {
-    i18n: {
-      en: {
-        name: "MT0D12 Flathead",
-        displayName: "MT0D12 Flathead",
-        rulesText: "If you have 7+ * (Street Cred), this unit can't be blocked.",
-      },
-    },
-    printings: [
-      {
-        id: "1823a6ee-bff7-47b4-bc58-589ecddee538",
-        artId: "1823a6ee-bff7-47b4-bc58-589ecddee538",
-        collectorNumber: "α012",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a012.webp",
-      },
-    ],
-    selectedPrintingId: "1823a6ee-bff7-47b4-bc58-589ecddee538",
-  },
-  "alpha:reboot-optics": {
-    i18n: {
-      en: {
-        name: "Reboot Optics",
-        displayName: "Reboot Optics",
-        rulesText:
-          "Give a friendly unit +4 power this turn. Defeat it at the end of the turn. (Discard programs after they resolve.)",
-      },
-    },
-    printings: [
-      {
-        id: "a8f8aa7b-4e5b-4f18-b6a2-d0e15f22f85f",
-        artId: "a8f8aa7b-4e5b-4f18-b6a2-d0e15f22f85f",
-        collectorNumber: "α028",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a028.webp",
-      },
-    ],
-    selectedPrintingId: "a8f8aa7b-4e5b-4f18-b6a2-d0e15f22f85f",
-  },
-  "alpha:ruthless-lowlife": {
-    i18n: {
-      en: {
-        name: "Ruthless Lowlife",
-        displayName: "Ruthless Lowlife",
-        rulesText:
-          "When a rival steals one or more friendly gigs, if this unit is spent, the value of those gigs becomes 1.",
-      },
-    },
-    printings: [
-      {
-        id: "3281fd30-51ef-4306-ab20-7819eb1b339d",
-        artId: "3281fd30-51ef-4306-ab20-7819eb1b339d",
-        collectorNumber: "α008",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a008.webp",
-      },
-    ],
-    selectedPrintingId: "3281fd30-51ef-4306-ab20-7819eb1b339d",
-  },
-  "alpha:saburo-arasaka-stubborn-patriach": {
-    i18n: {
-      en: {
-        name: "Saburo Arasaka",
-        subname: "Stubborn Patriarch",
-        displayName: "Saburo Arasaka - Stubborn Patriarch",
-        rulesText:
-          "Your Arasaka units have +1 power when attacking. (Units steal an extra gig for every 10 power.)",
-      },
-    },
-    printings: [
-      {
-        id: "8f659e65-e926-4a20-bde4-76bad5fd4d85",
-        artId: "8f659e65-e926-4a20-bde4-76bad5fd4d85",
-        collectorNumber: "α005",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a005.webp",
-      },
-      {
-        id: "2ffb4de9-2e4b-4eb6-ac49-5859bf487955",
-        artId: "2ffb4de9-2e4b-4eb6-ac49-5859bf487955",
-        collectorNumber: "α029",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a029.webp",
-      },
-    ],
-    selectedPrintingId: "8f659e65-e926-4a20-bde4-76bad5fd4d85",
-  },
-  "alpha:sandevistan": {
-    i18n: {
-      en: {
-        name: "Sandevistan",
-        displayName: "Sandevistan",
-        rulesText:
-          "(Equip to a unit or face-up legend.) PLAY This unit can attack spent units this turn.",
-      },
-    },
-    printings: [
-      {
-        id: "37a6293e-df23-47b5-9d4a-235038004b39",
-        artId: "37a6293e-df23-47b5-9d4a-235038004b39",
-        collectorNumber: "α024",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a024.webp",
-      },
-    ],
-    selectedPrintingId: "37a6293e-df23-47b5-9d4a-235038004b39",
-  },
-  "alpha:satori-sword-of-saburo": {
-    i18n: {
-      en: {
-        name: "Satori",
-        subname: "Sword of Saburo",
-        displayName: "Satori - Sword of Saburo",
-        rulesText:
-          "(Equip to a unit or face-up legend.) ATTACK If this unit wins a fight against a rival unit, draw a card.",
-      },
-    },
-    printings: [
-      {
-        id: "d0cd01e9-2bb5-4cd6-abdf-19f1004a47c9",
-        artId: "d0cd01e9-2bb5-4cd6-abdf-19f1004a47c9",
-        collectorNumber: "α020",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a020.webp",
-      },
-    ],
-    selectedPrintingId: "d0cd01e9-2bb5-4cd6-abdf-19f1004a47c9",
-  },
-  "alpha:secondhand-bombus": {
-    i18n: {
-      en: {
-        name: "Secondhand Bombus",
-        displayName: "Secondhand Bombus",
-        rulesText:
-          "This unit can't attack. BLOCKER (When a rival unit attacks, you may spend this unit to redirect the attack to it.)",
-      },
-    },
-    printings: [
-      {
-        id: "ec4cbe7d-7697-4c27-b843-476de88d69a6",
-        artId: "ec4cbe7d-7697-4c27-b843-476de88d69a6",
-        collectorNumber: "α014",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a014.webp",
-      },
-    ],
-    selectedPrintingId: "ec4cbe7d-7697-4c27-b843-476de88d69a6",
-  },
-  "alpha:swordwise-huscle": {
-    i18n: {
-      en: {
-        name: "Swordwise Huscle",
-        displayName: "Swordwise Huscle",
-      },
-    },
-    printings: [
-      {
-        id: "1dc9c8ef-00e4-4d40-9404-5f1004933bd7",
-        artId: "1dc9c8ef-00e4-4d40-9404-5f1004933bd7",
-        collectorNumber: "α009",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a009.webp",
-      },
-    ],
-    selectedPrintingId: "1dc9c8ef-00e4-4d40-9404-5f1004933bd7",
-  },
-  "alpha:t-bug-amateur-philosopher": {
-    i18n: {
-      en: {
-        name: "T-Bug",
-        subname: "Amateur Philosopher",
-        displayName: "T-Bug - Amateur Philosopher",
-      },
-    },
-    printings: [
-      {
-        id: "826619c7-98c3-4d2d-a278-a2e089469682",
-        artId: "826619c7-98c3-4d2d-a278-a2e089469682",
-        collectorNumber: "α015",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a015.webp",
-      },
-    ],
-    selectedPrintingId: "826619c7-98c3-4d2d-a278-a2e089469682",
-  },
-  "alpha:v-corporate-exile": {
-    i18n: {
-      en: {
-        name: "V",
-        subname: "Corporate Exile",
-        displayName: "V - Corporate Exile",
-        rulesText:
-          "GO SOLO (Pay this card's cost to play it as a ready unit. It can attack this turn.)",
-      },
-    },
-    printings: [
-      {
-        id: "95588c1b-a375-4a05-a1e8-7cf3b215a180",
-        artId: "95588c1b-a375-4a05-a1e8-7cf3b215a180",
-        collectorNumber: "α003",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a003.webp",
-      },
-    ],
-    selectedPrintingId: "95588c1b-a375-4a05-a1e8-7cf3b215a180",
-  },
-  "alpha:viktor-vektor-sit-down-and-relax": {
-    i18n: {
-      en: {
-        name: "Viktor Vektor",
-        subname: "Sit Down and Relax",
-        displayName: "Viktor Vektor - Sit Down and Relax",
-        rulesText:
-          "FLIP Search the top 5 cards of your deck for up yo 2 gear that costs 2 or less each. Reveal them and add them to your hand. (Place the other cards on the bottom of your deck in a random order.)",
-      },
-    },
-    printings: [
-      {
-        id: "ced3a1c6-3e58-4717-a7d9-e4c1d0f2460c",
-        artId: "ced3a1c6-3e58-4717-a7d9-e4c1d0f2460c",
-        collectorNumber: "α006",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a006.webp",
-      },
-    ],
-    selectedPrintingId: "ced3a1c6-3e58-4717-a7d9-e4c1d0f2460c",
-  },
-  "alpha:yorinobu-arasaka-embracing-destruction": {
-    i18n: {
-      en: {
-        name: "Yorinobu Arasaka",
-        subname: "Embracing Destruction",
-        displayName: "Yorinobu Arasaka - Embracing Destruction",
-        rulesText:
-          "The first time a friendly Arasaka unit attacks each turn, draw a card. Then, if you have less than 20 * (Street Cred), discard 1 card from your hand to your trash.",
-      },
-    },
-    printings: [
-      {
-        id: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
-        artId: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
-        collectorNumber: "α001",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a001.webp",
-      },
-      {
-        id: "0df78ba5-116a-4794-b975-7bbf85b95d3b",
-        artId: "0df78ba5-116a-4794-b975-7bbf85b95d3b",
-        collectorNumber: "α031",
-        setCode: "alpha",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/alpha/a031.webp",
-      },
-    ],
-    selectedPrintingId: "eb37f60f-a376-4412-a4cd-7ce5c1b088f6",
-  },
-  "spoiler:adam-smasher-metal-over-meat": {
-    i18n: {
-      en: {
-        name: "Adam Smasher",
-        subname: "Metal Over Meat",
-        displayName: "Adam Smasher - Metal Over Meat",
-        rulesText: "PLAY Defeat all other Units.",
-      },
-    },
-    printings: [
-      {
-        id: "751524e4-9cc0-4598-8775-1dfe0e14624e",
-        artId: "751524e4-9cc0-4598-8775-1dfe0e14624e",
-        collectorNumber: "137",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/137.webp",
-      },
-    ],
-    selectedPrintingId: "751524e4-9cc0-4598-8775-1dfe0e14624e",
-  },
-  "spoiler:afterparty-at-lizzie-s": {
-    i18n: {
-      en: {
-        name: "Afterparty at Lizzie's",
-        displayName: "Afterparty at Lizzie's",
-        rulesText:
-          "Adjust a rival Gig by up to ±2. Then, if a friendly Gig has the same value, draw a card.",
-      },
-    },
-    printings: [
-      {
-        id: "cf90586d-659c-4f83-957b-6b9930cd5ca2",
-        artId: "cf90586d-659c-4f83-957b-6b9930cd5ca2",
-        collectorNumber: "116",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/116.webp",
-      },
-    ],
-    selectedPrintingId: "cf90586d-659c-4f83-957b-6b9930cd5ca2",
-  },
-  "spoiler:alt-cunningham-soulkiller-architect": {
-    i18n: {
-      en: {
-        name: "Alt Cunningham",
-        subname: "Soulkiller Architect",
-        displayName: "Alt Cunningham - Soulkiller Architect",
-        rulesText:
-          "GO SOLO When this Legend steals a Gig, you may remove this Legend from the game. If you do, choose a Program from your trash. Play it for free.",
-      },
-    },
-    printings: [
-      {
-        id: "ba44e0d0-80ee-4ee1-8828-57cdb90aaa5f",
-        artId: "ba44e0d0-80ee-4ee1-8828-57cdb90aaa5f",
-        collectorNumber: "121",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/121.webp",
-      },
-    ],
-    selectedPrintingId: "ba44e0d0-80ee-4ee1-8828-57cdb90aaa5f",
-  },
-  "spoiler:caliber-totentanz-s-top-dog": {
-    i18n: {
-      en: {
-        name: "Caliber",
-        subname: "Totentanz's Top Dog",
-        displayName: "Caliber - Totentanz's Top Dog",
-        rulesText:
-          "DEFEATED A rival discards 1. If the card's cost is equal to the value of a friendly Gig, that rival discards 1 more.",
-      },
-    },
-    printings: [
-      {
-        id: "1dc270af-9d87-4928-adae-52f741641a48",
-        artId: "1dc270af-9d87-4928-adae-52f741641a48",
-        collectorNumber: "036",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/036.webp",
-      },
-    ],
-    selectedPrintingId: "1dc270af-9d87-4928-adae-52f741641a48",
-  },
-  "spoiler:carnage-at-the-colosseum": {
-    i18n: {
-      en: {
-        name: "Carnage At The Colosseum",
-        displayName: "Carnage At The Colosseum",
-        rulesText:
-          "Play this Program for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$. Defeat a rival Unit with less power than a friendly Unit.",
-      },
-    },
-    printings: [
-      {
-        id: "c63be6e4-f51d-42b5-beed-d9842d349a0f",
-        artId: "c63be6e4-f51d-42b5-beed-d9842d349a0f",
-        collectorNumber: "030",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/030.webp",
-      },
-    ],
-    selectedPrintingId: "c63be6e4-f51d-42b5-beed-d9842d349a0f",
-  },
-  "spoiler:chrome-reverie": {
-    i18n: {
-      en: {
-        name: "Chrome Reverie",
-        displayName: "Chrome Reverie",
-        rulesText:
-          "A rival Unit can't attack until your next turn. If you control a min Gig, you may Call a Legend for free. (You can only Call a Legend once per turn.)",
-      },
-    },
-    printings: [
-      {
-        id: "e9f6b84e-15c9-432a-92a8-56537b305410",
-        artId: "e9f6b84e-15c9-432a-92a8-56537b305410",
-        collectorNumber: "131a",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/131a.webp",
-      },
-    ],
-    selectedPrintingId: "e9f6b84e-15c9-432a-92a8-56537b305410",
-  },
-  "spoiler:cyberpsychosis": {
-    i18n: {
-      en: {
-        name: "Cyberpsychosis",
-        displayName: "Cyberpsychosis",
-        rulesText:
-          "You may also play this Program when a Unit attacks by paying this card's cost and spending a friendly Unit or face-up Legend. Give an equipped Unit +2 power this turn for each of its equipped Gear. Defeat the Unit at the end of this turn.",
-      },
-    },
-    printings: [
-      {
-        id: "e55b7a69-2b0b-48eb-a781-7e802b3e7099",
-        artId: "e55b7a69-2b0b-48eb-a781-7e802b3e7099",
-        collectorNumber: "102",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/102.webp",
-      },
-    ],
-    selectedPrintingId: "e55b7a69-2b0b-48eb-a781-7e802b3e7099",
-  },
-  "spoiler:dum-dum-maelstrom-triggerman": {
-    i18n: {
-      en: {
-        name: "Dum Dum",
-        subname: "Maelstrom Triggerman",
-        displayName: "Dum Dum - Maelstrom Triggerman",
-        rulesText:
-          "CALL You may defeat a friendly Gear. If you do, draw 4 cards. Otherwise, draw 1 card.",
-      },
-    },
-    printings: [
-      {
-        id: "fabf7f53-bf0e-4ddf-90ca-e0165ac7b99c",
-        artId: "fabf7f53-bf0e-4ddf-90ca-e0165ac7b99c",
-        collectorNumber: "133",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/133.webp",
-      },
-    ],
-    selectedPrintingId: "fabf7f53-bf0e-4ddf-90ca-e0165ac7b99c",
-  },
-  "spoiler:el-sombreron-la-venganza-lenta": {
-    i18n: {
-      en: {
-        name: "El Sombrerón",
-        subname: "La Venganza Lenta",
-        displayName: "El Sombrerón - La Venganza Lenta",
-        rulesText: "ATTACK While fighting a rival Unit, double this Unit's power.",
-      },
-    },
-    printings: [
-      {
-        id: "5a113aef-cb0e-493b-98e4-bf5326462297",
-        artId: "5a113aef-cb0e-493b-98e4-bf5326462297",
-        collectorNumber: "019",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/019.webp",
-      },
-    ],
-    selectedPrintingId: "5a113aef-cb0e-493b-98e4-bf5326462297",
-  },
-  "spoiler:evelyn-parker-beautiful-enigma": {
-    i18n: {
-      en: {
-        name: "Evelyn Parker",
-        subname: "Beautiful Enigma",
-        displayName: "Evelyn Parker - Beautiful Enigma",
-        rulesText:
-          "CALL Decrease a rival Gig's value by 3. [Spend Icon]: Search the top 3 cards of your deck for up to 1 Braindance Program. Add it to your hand. Bottom-deck the rest.",
-      },
-    },
-    printings: [
-      {
-        id: "2f22896b-5b5e-4c62-9b72-37bc64156d01",
-        artId: "2f22896b-5b5e-4c62-9b72-37bc64156d01",
-        collectorNumber: "122",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/122.webp",
-      },
-    ],
-    selectedPrintingId: "2f22896b-5b5e-4c62-9b72-37bc64156d01",
-  },
-  "spoiler:gilded-maton": {
-    i18n: {
-      en: {
-        name: "Gilded Matón",
-        displayName: "Gilded Matón",
-        rulesText:
-          "PLAY You may defeat a friendly Gear. If you do, defeat a rival Unit with cost 3 or less.",
-      },
-    },
-    printings: [
-      {
-        id: "0360da55-2315-456a-8155-cd25f6ee9ea7",
-        artId: "0360da55-2315-456a-8155-cd25f6ee9ea7",
-        collectorNumber: "045",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/045.webp",
-      },
-    ],
-    selectedPrintingId: "0360da55-2315-456a-8155-cd25f6ee9ea7",
-  },
-  "spoiler:gorilla-arms": {
-    i18n: {
-      en: {
-        name: "Gorilla Arms",
-        displayName: "Gorilla Arms",
-        rulesText:
-          "(Equip to a Unit or face-up Legend.) The first time this Unit steals a Gig each turn, you may steal a rival Gig with the same number of sides.",
-      },
-    },
-    printings: [
-      {
-        id: "925ab8cc-1f72-4e44-8acd-fe2259666da6",
-        artId: "925ab8cc-1f72-4e44-8acd-fe2259666da6",
-        collectorNumber: "111",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/111.webp",
-      },
-    ],
-    selectedPrintingId: "925ab8cc-1f72-4e44-8acd-fe2259666da6",
-  },
-  "spoiler:goro-takemura-vengeful-bodyguard": {
-    i18n: {
-      en: {
-        name: "Goro Takemura",
-        subname: "Vengeful Bodyguard",
-        displayName: "Goro Takemura - Vengeful Bodyguard",
-        rulesText:
-          "CALL Ready this Legend. When a rival Unit attacks, [Spend Icon]: If you have a sided-pair of Gigs, give a friendly Unit with cost 4 or less +1 power and BLOCKER this turn.",
-      },
-    },
-    printings: [
-      {
-        id: "6635333e-b206-42b5-abd7-2e2f4810eb95",
-        artId: "6635333e-b206-42b5-abd7-2e2f4810eb95",
-        collectorNumber: "125",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/125.webp",
-      },
-    ],
-    selectedPrintingId: "6635333e-b206-42b5-abd7-2e2f4810eb95",
-  },
-  "spoiler:hanako-arasaka-in-a-gilded-cage": {
-    i18n: {
-      en: {
-        name: "Hanako Arasaka",
-        subname: "In A Gilded Cage",
-        displayName: "Hanako Arasaka - In A Gilded Cage",
-        rulesText:
-          "PLAY Reveal the top 4 cards of your deck. Then choose a friendly Gig. Add all cards with cost equal to that Gig's value to your hand. Trash the rest.",
-      },
-    },
-    printings: [
-      {
-        id: "7f5ce7f0-de3e-42e5-91e6-96c05e6c1d23",
-        artId: "7f5ce7f0-de3e-42e5-91e6-96c05e6c1d23",
-        collectorNumber: "126",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/126.webp",
-      },
-    ],
-    selectedPrintingId: "7f5ce7f0-de3e-42e5-91e6-96c05e6c1d23",
-  },
-  "spoiler:kerry-eurodyne-the-last-rockerboy": {
-    i18n: {
-      en: {
-        name: "Kerry Eurodyne",
-        subname: "The Last Rockerboy",
-        displayName: "Kerry Eurodyne - The Last Rockerboy",
-        rulesText: "[Spend Icon]: If you have a Gig at max value, draw 2 cards.",
-      },
-    },
-    printings: [
-      {
-        id: "c0e526e4-0cd0-4554-ad3b-8b04d2614a32",
-        artId: "c0e526e4-0cd0-4554-ad3b-8b04d2614a32",
-        collectorNumber: "067",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/067.webp",
-      },
-    ],
-    selectedPrintingId: "c0e526e4-0cd0-4554-ad3b-8b04d2614a32",
-  },
-  "spoiler:maman-brigitte": {
-    i18n: {
-      en: {
-        name: "Maman Brigitte",
-        displayName: "Maman Brigitte",
-        rulesText:
-          "PLAY You may discard 2 Programs. If you do, bottom-deck a rival unequipped Unit.",
-      },
-    },
-    printings: [
-      {
-        id: "61e6b13d-963f-4ac4-b142-24f8c6497a84",
-        artId: "61e6b13d-963f-4ac4-b142-24f8c6497a84",
-        collectorNumber: "118",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/118.webp",
-      },
-    ],
-    selectedPrintingId: "61e6b13d-963f-4ac4-b142-24f8c6497a84",
-  },
-  "spoiler:meredith-stout-stone-cold-corpo": {
-    i18n: {
-      en: {
-        name: "Meredith Stout",
-        subname: "Stone Cold Corpo",
-        displayName: "Meredith Stout - Stone Cold Corpo",
-        rulesText:
-          "When a rival decreases the value of your friendly Gig, you may choose a card from your trash and add it to your hand.",
-      },
-    },
-    printings: [
-      {
-        id: "0d09e470-1130-4ace-a5e7-7094ca9256f4",
-        artId: "0d09e470-1130-4ace-a5e7-7094ca9256f4",
-        collectorNumber: "069",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/069.webp",
-      },
-    ],
-    selectedPrintingId: "0d09e470-1130-4ace-a5e7-7094ca9256f4",
-  },
-  "spoiler:panam-palmer-nomad-cavalry": {
-    i18n: {
-      en: {
-        name: "Panam Palmer",
-        subname: "Nomad Cavalry",
-        displayName: "Panam Palmer - Nomad Cavalry",
-        rulesText:
-          "CALL Ready this Legend. When a friendly Unit attacks, [Spend Icon]: Choose a Gear from this Legend and equip it to that Unit. If you do, ready that Unit.",
-      },
-    },
-    printings: [
-      {
-        id: "963ef785-1bd9-4404-9a49-263589b0a53b",
-        artId: "963ef785-1bd9-4404-9a49-263589b0a53b",
-        collectorNumber: "032",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/032.webp",
-      },
-    ],
-    selectedPrintingId: "963ef785-1bd9-4404-9a49-263589b0a53b",
-  },
-  "spoiler:peace-offering": {
-    i18n: {
-      en: {
-        name: "Peace Offering",
-        displayName: "Peace Offering",
-        rulesText:
-          "You may set a Gig's value to the value of another Gig. Then, if you control a value-pair, draw 1.",
-      },
-    },
-    printings: [
-      {
-        id: "69a586c6-250a-45aa-a8ae-245076b876ed",
-        artId: "69a586c6-250a-45aa-a8ae-245076b876ed",
-        collectorNumber: "101",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/101.webp",
-      },
-    ],
-    selectedPrintingId: "69a586c6-250a-45aa-a8ae-245076b876ed",
-  },
-  "spoiler:placide-voodoo-sentinel": {
-    i18n: {
-      en: {
-        name: "Placide",
-        subname: "Voodoo Sentinel",
-        displayName: "Placide - Voodoo Sentinel",
-        rulesText:
-          "PLAY ATTACK You may discard a Program from your hand. If you do, bottom-deck a rival Unit.",
-      },
-    },
-    printings: [
-      {
-        id: "4b8e26aa-4406-4a4d-9ffc-0ac9f5b774bf",
-        artId: "4b8e26aa-4406-4a4d-9ffc-0ac9f5b774bf",
-        collectorNumber: "073",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/073.webp",
-      },
-    ],
-    selectedPrintingId: "4b8e26aa-4406-4a4d-9ffc-0ac9f5b774bf",
-  },
-  "spoiler:riding-nomad": {
-    i18n: {
-      en: {
-        name: "Riding Nomad",
-        displayName: "Riding Nomad",
-        rulesText: "This Unit can attack spent rival Units the turn it's played.",
-      },
-    },
-    printings: [
-      {
-        id: "a8bce878-99ba-477f-bb71-25a2be401055",
-        artId: "a8bce878-99ba-477f-bb71-25a2be401055",
-        collectorNumber: "042",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/042.webp",
-      },
-    ],
-    selectedPrintingId: "a8bce878-99ba-477f-bb71-25a2be401055",
-  },
-  "spoiler:river-ward-detective-on-the-hunt": {
-    i18n: {
-      en: {
-        name: "River Ward",
-        subname: "Detective on the Hunt",
-        displayName: "River Ward - Detective on the Hunt",
-        rulesText:
-          "CALL Draw a card. When a Unit attacks, [Spend Icon]: Choose a Gear from your hand with cost 2 or less. Equip it for free to a friendly Yellow Unit with no equipped Gears.",
-      },
-    },
-    printings: [
-      {
-        id: "cd02a445-e212-4937-b904-cecbf29f792f",
-        artId: "cd02a445-e212-4937-b904-cecbf29f792f",
-        collectorNumber: "135",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/135.webp",
-      },
-    ],
-    selectedPrintingId: "cd02a445-e212-4937-b904-cecbf29f792f",
-  },
-  "spoiler:royce-don-t-call-me-simon": {
-    i18n: {
-      en: {
-        name: "Royce",
-        subname: "Don't Call Me Simon",
-        displayName: "Royce - Don't Call Me Simon",
-        rulesText:
-          "PLAY Defeat a rival Unit with power 2 or less. If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 3 or less instead.",
-      },
-    },
-    printings: [
-      {
-        id: "396f1873-b2f0-47f0-abda-f9d9e0c20bb5",
-        artId: "396f1873-b2f0-47f0-abda-f9d9e0c20bb5",
-        collectorNumber: "016",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/016.webp",
-      },
-    ],
-    selectedPrintingId: "396f1873-b2f0-47f0-abda-f9d9e0c20bb5",
-  },
-  "spoiler:royce-psycho-on-the-edge": {
-    i18n: {
-      en: {
-        name: "Royce",
-        subname: "Psycho on the Edge",
-        displayName: "Royce - Psycho on the Edge",
-        rulesText: "GO SOLO During your turn, this Legend has +2 power for each equipped Gear.",
-      },
-    },
-    printings: [
-      {
-        id: "def02aa2-5dcb-4bc1-a187-df6207373e6f",
-        artId: "def02aa2-5dcb-4bc1-a187-df6207373e6f",
-        collectorNumber: "131",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/131.webp",
-      },
-    ],
-    selectedPrintingId: "def02aa2-5dcb-4bc1-a187-df6207373e6f",
-  },
-  "spoiler:sandayu-oda-hanako-s-guardian": {
-    i18n: {
-      en: {
-        name: "Sandayu Oda",
-        subname: "Hanako's Guardian",
-        displayName: "Sandayu Oda - Hanako's Guardian",
-        rulesText:
-          "PLAY Spend a rival Unit for each friendly value-pair of Gigs. This Unit can attack rival Units the turn it's played.",
-      },
-    },
-    printings: [
-      {
-        id: "06596a74-abef-4532-8920-2f1631441636",
-        artId: "06596a74-abef-4532-8920-2f1631441636",
-        collectorNumber: "088",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/088.webp",
-      },
-    ],
-    selectedPrintingId: "06596a74-abef-4532-8920-2f1631441636",
-  },
-  "spoiler:v-streetkid": {
-    i18n: {
-      en: {
-        name: "V",
-        subname: "Streetkid",
-        displayName: "V - Streetkid",
-        rulesText:
-          "GO SOLO DEFEATED Discard the top 3 cards of your deck. Then, choose 1 Braindance Program from your trash and add it to your hand.",
-      },
-    },
-    printings: [
-      {
-        id: "07bc3b1c-9d25-4121-8d9f-eef284d4ed16",
-        artId: "07bc3b1c-9d25-4121-8d9f-eef284d4ed16",
-        collectorNumber: "132a",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/132a.webp",
-      },
-      {
-        id: "b1a7082e-5b13-4731-8a90-f1b7c1b8894f",
-        artId: "b1a7082e-5b13-4731-8a90-f1b7c1b8894f",
-        collectorNumber: "132b",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/132b.webp",
-      },
-    ],
-    selectedPrintingId: "07bc3b1c-9d25-4121-8d9f-eef284d4ed16",
-  },
-  "spoiler:zetatech-faceplate": {
-    i18n: {
-      en: {
-        name: "Zetatech Faceplate",
-        displayName: "Zetatech Faceplate",
-        rulesText:
-          "(Equip to a friendly Unit or face-up Legend.) When this Unit or Legend is spent, adjust a Gig by up to 1. Then, if you control 3 or more Gigs with different values, draw 1.",
-      },
-    },
-    printings: [
-      {
-        id: "2bc6dcf3-1690-453e-9ee4-705d08f3fcf6",
-        artId: "2bc6dcf3-1690-453e-9ee4-705d08f3fcf6",
-        collectorNumber: "064",
-        setCode: "spoiler",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/spoiler/064.webp",
-      },
-    ],
-    selectedPrintingId: "2bc6dcf3-1690-453e-9ee4-705d08f3fcf6",
-  },
   "promo:lucyna-kushinada": {
     i18n: {
       en: {
@@ -1414,8 +40,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "PRM01:rebecca-having-a-moment": {
     i18n: {
       en: {
-        name: "Rebecca — Having a Moment",
-        displayName: "Rebecca — Having a Moment",
+        name: "Rebecca",
+        subname: "Having a Moment",
+        displayName: "Rebecca: Having a Moment",
       },
     },
     printings: [
@@ -1441,8 +68,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "theheistretailstarterdeck:dexter-deshawn-one-last-chance": {
     i18n: {
       en: {
-        name: "Dexter DeShawn — One Last Chance",
-        displayName: "Dexter DeShawn — One Last Chance",
+        name: "Dexter DeShawn",
+        subname: "One Last Chance",
+        displayName: "Dexter DeShawn: One Last Chance",
         rulesText:
           "{Play} {Attack} Adjust a Gig by up to 1.\n{Defeated} If your ☆ (Street Cred) differs from a Rival's by 10+, draw 2.",
       },
@@ -1479,8 +107,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "theheistretailstarterdeck:jackie-welles-pour-one-out-for-me": {
     i18n: {
       en: {
-        name: "Jackie Welles — Pour One Out For Me",
-        displayName: "Jackie Welles — Pour One Out For Me",
+        name: "Jackie Welles",
+        subname: "Pour One Out For Me",
+        displayName: "Jackie Welles: Pour One Out For Me",
         rulesText:
           "The first time you play a Blue Unit or Blue Gear each turn, you may decrease a friendly Gig by up to 2. If it becomes a min Gig, draw 1.",
       },
@@ -1516,7 +145,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "e4e17d32-3ec4-4c74-927c-fd0911b86e72",
         collectorNumber: "005",
         setCode: "boxtoppersretail",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/005.webp",
       },
       {
@@ -1524,8 +153,16 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "328cd3e4-4177-4d6a-86c0-00d1a5a12b38",
         collectorNumber: "β005",
         setCode: "boxtoppersbeta",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b005.webp",
+      },
+      {
+        id: "3f37a0e1-e31f-4c6b-b97e-bec9f929432c",
+        artId: "3f37a0e1-e31f-4c6b-b97e-bec9f929432c",
+        collectorNumber: "050",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/050.webp",
       },
     ],
     selectedPrintingId: "a33d3324-fe48-4a9f-80a8-8545a0a4727f",
@@ -1570,10 +207,11 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "theheistretailstarterdeck:v-corporate-exile": {
     i18n: {
       en: {
-        name: "V — Corporate Exile",
-        displayName: "V — Corporate Exile",
+        name: "V",
+        subname: "Corporate Exile",
+        displayName: "V: Corporate Exile",
         rulesText:
-          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
+          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. When it leaves the field, remove it from the game.)",
       },
     },
     printings: [
@@ -1607,7 +245,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "f509ebd8-c8b7-4a22-8922-2d71c6df0b6f",
         collectorNumber: "006",
         setCode: "boxtoppersretail",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/006.webp",
       },
       {
@@ -1615,8 +253,16 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "e44580df-d78d-4b09-bb53-edb1ee32ac96",
         collectorNumber: "β006",
         setCode: "boxtoppersbeta",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b006.webp",
+      },
+      {
+        id: "848e3de6-3a3e-462e-8186-0a214ff03b79",
+        artId: "848e3de6-3a3e-462e-8186-0a214ff03b79",
+        collectorNumber: "053",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/053.webp",
       },
     ],
     selectedPrintingId: "4a5591f9-743e-4186-8deb-560971bb3f82",
@@ -1624,8 +270,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "theheistretailstarterdeck:viktor-vektor-sit-down-and-relax": {
     i18n: {
       en: {
-        name: "Viktor Vektor — Sit Down and Relax",
-        displayName: "Viktor Vektor — Sit Down and Relax",
+        name: "Viktor Vektor",
+        subname: "Sit Down and Relax",
+        displayName: "Viktor Vektor: Sit Down and Relax",
         rulesText:
           "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
       },
@@ -1661,7 +308,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "c9ceb0e7-c803-45d1-8da1-8c85c3b2e7e8",
         collectorNumber: "002",
         setCode: "boxtoppersretail",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/002.webp",
       },
       {
@@ -1669,8 +316,16 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "a33c6299-f1ee-404e-9197-cad5f7e84fce",
         collectorNumber: "β002",
         setCode: "boxtoppersbeta",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b002.webp",
+      },
+      {
+        id: "23b81de3-abe3-4231-8dc3-7656de9d99db",
+        artId: "23b81de3-abe3-4231-8dc3-7656de9d99db",
+        collectorNumber: "040",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/040.webp",
       },
     ],
     selectedPrintingId: "7d539173-4022-402e-a9f4-100338935fd2",
@@ -1678,8 +333,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "embracingpowerretailstarterdeck:goro-takemura-hands-unclean": {
     i18n: {
       en: {
-        name: "Goro Takemura — Hands Unclean",
-        displayName: "Goro Takemura — Hands Unclean",
+        name: "Goro Takemura",
+        subname: "Hands Unclean",
+        displayName: "Goro Takemura: Hands Unclean",
         rulesText:
           "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
       },
@@ -1716,7 +372,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "1b6e44dd-d6e7-46eb-a5e5-24c38eed888b",
         collectorNumber: "003",
         setCode: "boxtoppersretail",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/003.webp",
       },
       {
@@ -1724,8 +380,16 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "15430373-fafd-479c-84d4-5737c71d0850",
         collectorNumber: "β003",
         setCode: "boxtoppersbeta",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b003.webp",
+      },
+      {
+        id: "8bdba66b-a20e-49f3-8e85-2e3d7e0c6a37",
+        artId: "8bdba66b-a20e-49f3-8e85-2e3d7e0c6a37",
+        collectorNumber: "041",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/041.webp",
       },
     ],
     selectedPrintingId: "2ba68619-7050-44c5-b0ce-b32d48b8f40f",
@@ -1733,8 +397,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "embracingpowerretailstarterdeck:goro-takemura-losing-his-way": {
     i18n: {
       en: {
-        name: "Goro Takemura — Losing His Way",
-        displayName: "Goro Takemura — Losing His Way",
+        name: "Goro Takemura",
+        subname: "Losing His Way",
+        displayName: "Goro Takemura: Losing His Way",
         rulesText:
           "{Attack} If all friendly Legends are face-up, this Unit has +5 power this turn.",
       },
@@ -1811,8 +476,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "embracingpowerretailstarterdeck:saburo-arasaka-stubborn-patriarch": {
     i18n: {
       en: {
-        name: "Saburo Arasaka — Stubborn Patriarch",
-        displayName: "Saburo Arasaka — Stubborn Patriarch",
+        name: "Saburo Arasaka",
+        subname: "Stubborn Patriarch",
+        displayName: "Saburo Arasaka: Stubborn Patriarch",
         rulesText:
           "Friendly ARASAKA Units have +1 power while attacking.\n(Units steal an extra Gig for every 10 power.)",
       },
@@ -1849,7 +515,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "77e482f2-6090-47e9-9d03-be28417cb1cb",
         collectorNumber: "004",
         setCode: "boxtoppersretail",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/004.webp",
       },
       {
@@ -1857,8 +523,16 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "0cb4ae83-a7ca-4ca6-9c83-6c0581baae57",
         collectorNumber: "β004",
         setCode: "boxtoppersbeta",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b004.webp",
+      },
+      {
+        id: "46387af0-342b-40c7-82fa-858d08ea473f",
+        artId: "46387af0-342b-40c7-82fa-858d08ea473f",
+        collectorNumber: "047",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/047.webp",
       },
     ],
     selectedPrintingId: "6ac7adce-01af-4b5b-956b-698eda0bed14",
@@ -1866,8 +540,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "embracingpowerretailstarterdeck:yorinobu-arasaka-embracing-destruction": {
     i18n: {
       en: {
-        name: "Yorinobu Arasaka — Embracing Destruction",
-        displayName: "Yorinobu Arasaka — Embracing Destruction",
+        name: "Yorinobu Arasaka",
+        subname: "Embracing Destruction",
+        displayName: "Yorinobu Arasaka: Embracing Destruction",
         rulesText:
           "The first time a friendly ARASAKA Unit attacks each turn, draw 1. Then, if you have less than 20 ☆ (Street Cred), discard 1.",
       },
@@ -1904,7 +579,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "dc7bb3cf-1005-4584-ad7a-447f0ccf07bf",
         collectorNumber: "001",
         setCode: "boxtoppersretail",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersretail/001.webp",
       },
       {
@@ -1912,8 +587,16 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "12337d92-713c-4c7c-8a16-595a7b4717f1",
         collectorNumber: "β001",
         setCode: "boxtoppersbeta",
-        rarity: "Epic",
+        rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/boxtoppersbeta/b001.webp",
+      },
+      {
+        id: "ba15a39b-fc76-474b-a2f0-76e5069a69e4",
+        artId: "ba15a39b-fc76-474b-a2f0-76e5069a69e4",
+        collectorNumber: "034",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/034.webp",
       },
     ],
     selectedPrintingId: "f70b75b5-aa2f-4c2d-b8c3-01fcb2a670ec",
@@ -1949,8 +632,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:adam-smasher-ender-of-legends": {
     i18n: {
       en: {
-        name: "Adam Smasher — Ender of Legends",
-        displayName: "Adam Smasher — Ender of Legends",
+        name: "Adam Smasher",
+        subname: "Ender of Legends",
+        displayName: "Adam Smasher: Ender of Legends",
         rulesText:
           "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\n{Play} Defeat a rival Unit.",
       },
@@ -1973,6 +657,22 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b001.webp",
       },
       {
+        id: "74c794ed-2ca7-4318-bcdd-8e3fe5a11f4e",
+        artId: "74c794ed-2ca7-4318-bcdd-8e3fe5a11f4e",
+        collectorNumber: "β141",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b141.webp",
+      },
+      {
+        id: "10ca370b-deb7-4c58-a9f9-faf4f9708f6d",
+        artId: "10ca370b-deb7-4c58-a9f9-faf4f9708f6d",
+        collectorNumber: "001",
+        setCode: "prereleasebeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/001.webp",
+      },
+      {
         id: "aedbd6fe-19d2-4185-b708-b6393e21da20",
         artId: "aedbd6fe-19d2-4185-b708-b6393e21da20",
         collectorNumber: "008",
@@ -1986,8 +686,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:adam-smasher-metal-over-meat": {
     i18n: {
       en: {
-        name: "Adam Smasher — Metal Over Meat",
-        displayName: "Adam Smasher — Metal Over Meat",
+        name: "Adam Smasher",
+        subname: "Metal Over Meat",
+        displayName: "Adam Smasher: Metal Over Meat",
         rulesText: "{Play} Defeat all other Units.",
       },
     },
@@ -2008,8 +709,45 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Epic",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b041.webp",
       },
+      {
+        id: "59d1ce5c-d616-45d5-9816-576f5f1509f3",
+        artId: "59d1ce5c-d616-45d5-9816-576f5f1509f3",
+        collectorNumber: "β160",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b160.webp",
+      },
     ],
     selectedPrintingId: "d23e322f-ad60-431d-b33e-1e8a813248ff",
+  },
+  "welcometonightcityretail:adrenaline-converter": {
+    i18n: {
+      en: {
+        name: "Adrenaline Converter",
+        displayName: "Adrenaline Converter",
+        rulesText:
+          "(Equip to a friendly Unit or face-up Legend.)\nIf a Rival controls at least 2 more Gigs than you, this Unit has {Adrenaline}. (This Unit can attack the turn it's played.)",
+      },
+    },
+    printings: [
+      {
+        id: "535df2a9-d2af-463c-85dd-dafe67cab8fb",
+        artId: "535df2a9-d2af-463c-85dd-dafe67cab8fb",
+        collectorNumber: "059",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/059.webp",
+      },
+      {
+        id: "ccb79cf1-fc2d-4b52-bea5-b427583bfe1b",
+        artId: "ccb79cf1-fc2d-4b52-bea5-b427583bfe1b",
+        collectorNumber: "β059",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b059.webp",
+      },
+    ],
+    selectedPrintingId: "535df2a9-d2af-463c-85dd-dafe67cab8fb",
   },
   "welcometonightcityretail:afterparty-at-lizzie-s": {
     i18n: {
@@ -2062,6 +800,14 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/mercdemodeck/006.webp",
       },
+      {
+        id: "c28c3d15-1e03-465c-a696-cf395a795abc",
+        artId: "c28c3d15-1e03-465c-a696-cf395a795abc",
+        collectorNumber: "005",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/005.webp",
+      },
     ],
     selectedPrintingId: "d53925ee-df55-4b71-8ca0-13ec3ede2076",
   },
@@ -2093,13 +839,52 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "d1a3c0e0-e0e7-418d-afb4-e6e43400c42e",
   },
+  "welcometonightcityretail:alt-cunningham-mother-of-daemons": {
+    i18n: {
+      en: {
+        name: "Alt Cunningham",
+        subname: "Mother of Daemons",
+        displayName: "Alt Cunningham: Mother of Daemons",
+        rulesText:
+          "When a friendly equipped Unit or Legend is spent, draw 1.\nWhen a rival Unit would steal a Gig, you may discard 1 with cost equal to that Gig's value. If you do, the Gig isn't stolen.",
+      },
+    },
+    printings: [
+      {
+        id: "e782dd02-a136-4bf8-b04b-328c65b84f19",
+        artId: "e782dd02-a136-4bf8-b04b-328c65b84f19",
+        collectorNumber: "042",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/042.webp",
+      },
+      {
+        id: "3d3e0e55-fa7a-40ba-bf30-0204cca88612",
+        artId: "3d3e0e55-fa7a-40ba-bf30-0204cca88612",
+        collectorNumber: "β042",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b042.webp",
+      },
+      {
+        id: "2e2c4d9d-516d-4fb2-a6ba-bee8dede71d3",
+        artId: "2e2c4d9d-516d-4fb2-a6ba-bee8dede71d3",
+        collectorNumber: "β161",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b161.webp",
+      },
+    ],
+    selectedPrintingId: "e782dd02-a136-4bf8-b04b-328c65b84f19",
+  },
   "welcometonightcityretail:alt-cunningham-soulkiller-architect": {
     i18n: {
       en: {
-        name: "Alt Cunningham — Soulkiller Architect",
-        displayName: "Alt Cunningham — Soulkiller Architect",
+        name: "Alt Cunningham",
+        subname: "Soulkiller Architect",
+        displayName: "Alt Cunningham: Soulkiller Architect",
         rulesText:
-          "{Spend} Your next Program this turn plays for -1 €$ for each friendly min Gig, to a minimum of 1 €$.\n1 €$, {Spend} Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
+          "1 €$, {Spend} Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
       },
     },
     printings: [
@@ -2112,6 +897,14 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/106.webp",
       },
       {
+        id: "1d4ce13a-20de-4f4f-8145-0c8e9892f52c",
+        artId: "1d4ce13a-20de-4f4f-8145-0c8e9892f52c",
+        collectorNumber: "155",
+        setCode: "welcometonightcityretail",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/155.webp",
+      },
+      {
         id: "873656f0-c32a-46fb-856f-8a5ee44b8d21",
         artId: "873656f0-c32a-46fb-856f-8a5ee44b8d21",
         collectorNumber: "β106",
@@ -2119,8 +912,136 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b106.webp",
       },
+      {
+        id: "7a6a5336-2b6c-4d8a-b1f0-595a787255ce",
+        artId: "7a6a5336-2b6c-4d8a-b1f0-595a787255ce",
+        collectorNumber: "β155",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b155.webp",
+      },
+      {
+        id: "32d12432-acad-4a11-b8eb-1dd8fb2297f3",
+        artId: "32d12432-acad-4a11-b8eb-1dd8fb2297f3",
+        collectorNumber: "009",
+        setCode: "prereleasebeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/009.webp",
+      },
+      {
+        id: "72a627db-f8a0-4559-9194-2b9e4ceca30c",
+        artId: "72a627db-f8a0-4559-9194-2b9e4ceca30c",
+        collectorNumber: "048",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/048.webp",
+      },
     ],
     selectedPrintingId: "cb23a651-dd1d-48f8-aca3-8d33fef79fdd",
+  },
+  "welcometonightcityretail:animals-wrecker": {
+    i18n: {
+      en: {
+        name: "Animals Wrecker",
+        displayName: "Animals Wrecker",
+        rulesText: "[Flavour Text] Takes a lot of juice to break bones like they do.",
+      },
+    },
+    printings: [
+      {
+        id: "7514dd38-6e2d-43dd-9715-6b3a32615382",
+        artId: "7514dd38-6e2d-43dd-9715-6b3a32615382",
+        collectorNumber: "007",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/007.webp",
+      },
+      {
+        id: "81364914-7121-43fc-9610-f2f9736866d1",
+        artId: "81364914-7121-43fc-9610-f2f9736866d1",
+        collectorNumber: "β007",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b007.webp",
+      },
+    ],
+    selectedPrintingId: "7514dd38-6e2d-43dd-9715-6b3a32615382",
+  },
+  "welcometonightcityretail:appetite-for-destruction": {
+    i18n: {
+      en: {
+        name: "Appetite for Destruction",
+        displayName: "Appetite for Destruction",
+        rulesText:
+          "The next time a friendly Unit wins a fight by 3+ power this turn, it also steals a Gig.",
+      },
+    },
+    printings: [
+      {
+        id: "f274789d-69f2-4acf-a511-f728c67d1a13",
+        artId: "f274789d-69f2-4acf-a511-f728c67d1a13",
+        collectorNumber: "028",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/028.webp",
+      },
+      {
+        id: "d2aed299-7c88-484a-aa8a-e2e2f09bf8a8",
+        artId: "d2aed299-7c88-484a-aa8a-e2e2f09bf8a8",
+        collectorNumber: "β028",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b028.webp",
+      },
+    ],
+    selectedPrintingId: "f274789d-69f2-4acf-a511-f728c67d1a13",
+  },
+  "welcometonightcityretail:arasaka-emergency-radioport": {
+    i18n: {
+      en: {
+        name: "Arasaka Emergency Radioport",
+        displayName: "Arasaka Emergency Radioport",
+        rulesText:
+          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, you may look at a friendly face-down Legend. If that Legend is ARASAKA or has {Go Solo}, you may Call it for free. (You may only Call a Legend once per turn.)",
+      },
+    },
+    printings: [
+      {
+        id: "d2da65d5-fdaf-44f4-a692-a5672d2c1cca",
+        artId: "d2da65d5-fdaf-44f4-a692-a5672d2c1cca",
+        collectorNumber: "023",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/023.webp",
+      },
+      {
+        id: "7ff6a088-1720-45b6-a3cf-30709415df5e",
+        artId: "7ff6a088-1720-45b6-a3cf-30709415df5e",
+        collectorNumber: "β023",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b023.webp",
+      },
+      {
+        id: "49c919ef-61d7-47d3-b855-1d4d7c0f783f",
+        artId: "49c919ef-61d7-47d3-b855-1d4d7c0f783f",
+        collectorNumber: "006",
+        setCode: "embracingpowerretailstarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/006.webp",
+      },
+      {
+        id: "be0d995d-84fc-41c3-bed6-1875caf85fc7",
+        artId: "be0d995d-84fc-41c3-bed6-1875caf85fc7",
+        collectorNumber: "β006",
+        setCode: "embracingpowerbetastarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b006.webp",
+      },
+    ],
+    selectedPrintingId: "d2da65d5-fdaf-44f4-a692-a5672d2c1cca",
   },
   "welcometonightcityretail:augmented-negotiators": {
     i18n: {
@@ -2150,6 +1071,35 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "a195323a-e29e-4c05-8e6c-7f1638c8264c",
+  },
+  "welcometonightcityretail:bonnie-and-clyde": {
+    i18n: {
+      en: {
+        name: "Bonnie and Clyde",
+        displayName: "Bonnie and Clyde",
+        rulesText:
+          "Defeat a rival Unit with power 4 or less. You may defeat 2 instead if a Rival controls at least 2 Gigs more than you.",
+      },
+    },
+    printings: [
+      {
+        id: "26d60270-1b43-4af3-a8b7-1c3db9675cfa",
+        artId: "26d60270-1b43-4af3-a8b7-1c3db9675cfa",
+        collectorNumber: "029",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/029.webp",
+      },
+      {
+        id: "2ca6ae1f-b10c-439d-a929-cd82c3b1158c",
+        artId: "2ca6ae1f-b10c-439d-a929-cd82c3b1158c",
+        collectorNumber: "β029",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b029.webp",
+      },
+    ],
+    selectedPrintingId: "26d60270-1b43-4af3-a8b7-1c3db9675cfa",
   },
   "welcometonightcityretail:bootleg-black-sapphire-show": {
     i18n: {
@@ -2183,8 +1133,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:caliber-totentanz-s-top-dog": {
     i18n: {
       en: {
-        name: "Caliber — Totentanz's Top Dog",
-        displayName: "Caliber — Totentanz's Top Dog",
+        name: "Caliber",
+        subname: "Totentanz's Top Dog",
+        displayName: "Caliber: Totentanz's Top Dog",
         rulesText:
           "{Play} Defeat a rival Unit with cost 2 or less.\n{Defeated} A Rival discards 1. If the card's cost equals the value of a friendly Gig, that Rival discards 1 more.",
       },
@@ -2237,6 +1188,53 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "36128749-4cb1-440d-b4de-4fd463cc2f5c",
+  },
+  "welcometonightcityretail:chrome-fang": {
+    i18n: {
+      en: {
+        name: "Chrome Fang",
+        displayName: "Chrome Fang",
+        rulesText:
+          "{Play} Until your next turn, rival Units can't steal friendly Gigs with value higher than their power.",
+      },
+    },
+    printings: [
+      {
+        id: "40db55a6-0220-4cb9-8854-0e23f7cb91f8",
+        artId: "40db55a6-0220-4cb9-8854-0e23f7cb91f8",
+        collectorNumber: "008",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/008.webp",
+      },
+      {
+        id: "d6dd0114-fdd5-452a-b752-3e58a2e137f5",
+        artId: "d6dd0114-fdd5-452a-b752-3e58a2e137f5",
+        collectorNumber: "β008",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b008.webp",
+      },
+      {
+        id: "0aab2858-fa5e-42f6-997e-39797fefb669",
+        artId: "0aab2858-fa5e-42f6-997e-39797fefb669",
+        collectorNumber: "002",
+        setCode: "embracingpowerretailstarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/002.webp",
+      },
+      {
+        id: "1e80ecfb-a3f2-421d-ac71-c05547366fb6",
+        artId: "1e80ecfb-a3f2-421d-ac71-c05547366fb6",
+        collectorNumber: "β002",
+        setCode: "embracingpowerbetastarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b002.webp",
+      },
+    ],
+    selectedPrintingId: "40db55a6-0220-4cb9-8854-0e23f7cb91f8",
   },
   "welcometonightcityretail:chrome-reverie": {
     i18n: {
@@ -2382,7 +1380,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         name: "Cyberpsychosis",
         displayName: "Cyberpsychosis",
         rulesText:
-          "{Quick} Give an equipped Unit +3 power this turn for each if its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
+          "{Quick} Give an equipped Unit +3 power this turn for each of its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
       },
     },
     printings: [
@@ -2404,6 +1402,35 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "5aafe80b-7c7d-4060-8677-a2881a21dd72",
+  },
+  "welcometonightcityretail:deadman-transmitter": {
+    i18n: {
+      en: {
+        name: "Deadman Transmitter",
+        displayName: "Deadman Transmitter",
+        rulesText:
+          '(Equip to a friendly Unit or face-up Legend.)\nIf this Unit would be defeated, defeat its "DEADMAN TRANSMITTER" instead.',
+      },
+    },
+    printings: [
+      {
+        id: "32957075-42ff-47e3-8252-e78877ef61f7",
+        artId: "32957075-42ff-47e3-8252-e78877ef61f7",
+        collectorNumber: "024",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/024.webp",
+      },
+      {
+        id: "e53bdb8b-5b1f-4f31-ad74-a43a4925c2d1",
+        artId: "e53bdb8b-5b1f-4f31-ad74-a43a4925c2d1",
+        collectorNumber: "β024",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b024.webp",
+      },
+    ],
+    selectedPrintingId: "32957075-42ff-47e3-8252-e78877ef61f7",
   },
   "welcometonightcityretail:delamain-cab": {
     i18n: {
@@ -2458,11 +1485,135 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "5b9cdefa-29f4-4a3a-a426-eea46302ef60",
   },
+  "welcometonightcityretail:delamain-rideshare-ai": {
+    i18n: {
+      en: {
+        name: "Delamain",
+        subname: "Rideshare AI",
+        displayName: "Delamain: Rideshare AI",
+        rulesText: "{Play} Draw 2.\n(Units with power 0 don't steal Gigs.)",
+      },
+    },
+    printings: [
+      {
+        id: "c7eba3a0-63cb-4311-988e-d487a7c0841a",
+        artId: "c7eba3a0-63cb-4311-988e-d487a7c0841a",
+        collectorNumber: "111",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/111.webp",
+      },
+      {
+        id: "32f8d89a-1e4b-46b8-9323-77c297c5b5ae",
+        artId: "32f8d89a-1e4b-46b8-9323-77c297c5b5ae",
+        collectorNumber: "β111",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b111.webp",
+      },
+    ],
+    selectedPrintingId: "c7eba3a0-63cb-4311-988e-d487a7c0841a",
+  },
+  "welcometonightcityretail:detonate": {
+    i18n: {
+      en: {
+        name: "Detonate",
+        displayName: "Detonate",
+        rulesText: "{Quick} Defeat a rival Gear with power 2 or less.",
+      },
+    },
+    printings: [
+      {
+        id: "bec995b7-b76b-4605-9c36-3d7697cdd4f5",
+        artId: "bec995b7-b76b-4605-9c36-3d7697cdd4f5",
+        collectorNumber: "031",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/031.webp",
+      },
+      {
+        id: "0ecf513b-64fd-4932-a004-b02b43b21e88",
+        artId: "0ecf513b-64fd-4932-a004-b02b43b21e88",
+        collectorNumber: "β031",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b031.webp",
+      },
+    ],
+    selectedPrintingId: "bec995b7-b76b-4605-9c36-3d7697cdd4f5",
+  },
+  "welcometonightcityretail:dexter-deshawn-off-the-grid": {
+    i18n: {
+      en: {
+        name: "Dexter DeShawn",
+        subname: "Off the Grid",
+        displayName: "Dexter DeShawn: Off the Grid",
+        rulesText:
+          "{Call} Choose one effect.\nGive a friendly Unit +2 power this turn. // Draw 1.\n{Spend}: Increase a Gig by up to 2.",
+      },
+    },
+    printings: [
+      {
+        id: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
+        artId: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
+        collectorNumber: "002",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/002.webp",
+      },
+      {
+        id: "f4ff466c-22ad-4c50-9f4c-29933e51f739",
+        artId: "f4ff466c-22ad-4c50-9f4c-29933e51f739",
+        collectorNumber: "β002",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b002.webp",
+      },
+      {
+        id: "9d04877f-050d-485d-9447-1bef7ee6ed40",
+        artId: "9d04877f-050d-485d-9447-1bef7ee6ed40",
+        collectorNumber: "β142",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b142.webp",
+      },
+    ],
+    selectedPrintingId: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
+  },
+  "welcometonightcityretail:don-t-fear-the-reaper": {
+    i18n: {
+      en: {
+        name: "(Don't Fear) The Reaper",
+        displayName: "(Don't Fear) The Reaper",
+        rulesText: "Spend all rival Units. Then, defeat a spent Unit.",
+      },
+    },
+    printings: [
+      {
+        id: "e96d3167-5115-4c82-9b35-546cba0aaead",
+        artId: "e96d3167-5115-4c82-9b35-546cba0aaead",
+        collectorNumber: "098",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/098.webp",
+      },
+      {
+        id: "1f173d96-9ca1-4298-b479-71f06ee1f558",
+        artId: "1f173d96-9ca1-4298-b479-71f06ee1f558",
+        collectorNumber: "β098",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b098.webp",
+      },
+    ],
+    selectedPrintingId: "e96d3167-5115-4c82-9b35-546cba0aaead",
+  },
   "welcometonightcityretail:dum-dum-maelstrom-triggerman": {
     i18n: {
       en: {
-        name: "Dum Dum — Maelstrom Triggerman",
-        displayName: "Dum Dum — Maelstrom Triggerman",
+        name: "Dum Dum",
+        subname: "Maelstrom Triggerman",
+        displayName: "Dum Dum: Maelstrom Triggerman",
         rulesText:
           "{Call} You may defeat a friendly Gear. If you do, draw 2. Otherwise, draw 1.\n{Quick} 1 €$, {Spend} Give a friendly Unit +1 power this turn for each of its equipped Gear.",
       },
@@ -2484,14 +1635,31 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b036.webp",
       },
+      {
+        id: "b3b78f89-424e-41b6-9fa9-aea256568dcc",
+        artId: "b3b78f89-424e-41b6-9fa9-aea256568dcc",
+        collectorNumber: "β145",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b145.webp",
+      },
+      {
+        id: "c44fbb15-edf6-466c-95d4-2e718fb100e5",
+        artId: "c44fbb15-edf6-466c-95d4-2e718fb100e5",
+        collectorNumber: "003",
+        setCode: "prereleasebeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/003.webp",
+      },
     ],
     selectedPrintingId: "aaac486c-dbfd-4137-b373-24a2df29522c",
   },
   "welcometonightcityretail:dying-night-v-s-pistol": {
     i18n: {
       en: {
-        name: "Dying Night — V's Pistol",
-        displayName: "Dying Night — V's Pistol",
+        name: "Dying Night",
+        subname: "V's Pistol",
+        displayName: "Dying Night: V's Pistol",
         rulesText:
           '(Equip to a friendly Unit or face-up Legend.)\n{Attack} Decrease a Gig by up to 2. At the end of your turn, if this Unit is named "V", ready 2 Eddies.',
       },
@@ -2544,8 +1712,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:el-sombrero-n-la-venganza-lenta": {
     i18n: {
       en: {
-        name: "El Sombrerón — La Venganza Lenta",
-        displayName: "El Sombrerón — La Venganza Lenta",
+        name: "El Sombrerón",
+        subname: "La Venganza Lenta",
+        displayName: "El Sombrerón: La Venganza Lenta",
         rulesText:
           "{Attack} You may pay 2 €$. If you do, this Unit gains power equal to a friendly max Gig this turn.",
       },
@@ -2627,8 +1796,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:evelyn-parker-beautiful-enigma": {
     i18n: {
       en: {
-        name: "Evelyn Parker — Beautiful Enigma",
-        displayName: "Evelyn Parker — Beautiful Enigma",
+        name: "Evelyn Parker",
+        subname: "Beautiful Enigma",
+        displayName: "Evelyn Parker: Beautiful Enigma",
         rulesText:
           "When a friendly CORPO or GANGER Unit steals 1 or more Gigs, ready 1 Eddie.\n1 €$, {Spend} A rival Unit must attack next turn if it can.",
       },
@@ -2643,6 +1813,14 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/107.webp",
       },
       {
+        id: "56628f3e-fb9d-4e9f-a525-360b08118cfd",
+        artId: "56628f3e-fb9d-4e9f-a525-360b08118cfd",
+        collectorNumber: "156",
+        setCode: "welcometonightcityretail",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/156.webp",
+      },
+      {
         id: "080b22ac-9c3d-48ee-ad4f-4e9579f22adc",
         artId: "080b22ac-9c3d-48ee-ad4f-4e9579f22adc",
         collectorNumber: "β107",
@@ -2650,14 +1828,31 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b107.webp",
       },
+      {
+        id: "22fe9365-6f33-4aeb-b3a4-a78ab563cbe9",
+        artId: "22fe9365-6f33-4aeb-b3a4-a78ab563cbe9",
+        collectorNumber: "β156",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b156.webp",
+      },
+      {
+        id: "989f714b-ed40-44c2-9f4b-819f011bc533",
+        artId: "989f714b-ed40-44c2-9f4b-819f011bc533",
+        collectorNumber: "049",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/049.webp",
+      },
     ],
     selectedPrintingId: "ba766c1d-d929-4a22-bc91-7400784536c8",
   },
   "welcometonightcityretail:evelyn-parker-scheming-siren": {
     i18n: {
       en: {
-        name: "Evelyn Parker — Scheming Siren",
-        displayName: "Evelyn Parker — Scheming Siren",
+        name: "Evelyn Parker",
+        subname: "Scheming Siren",
+        displayName: "Evelyn Parker: Scheming Siren",
         rulesText:
           "{Attack} Draw 1. Then, if you have more ☆ (Street Cred) than a Rival, discard 1.\n(Units with power 0 don't steal Gigs.)",
       },
@@ -2904,8 +2099,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:goro-takemura-vengeful-bodyguard": {
     i18n: {
       en: {
-        name: "Goro Takemura — Vengeful Bodyguard",
-        displayName: "Goro Takemura — Vengeful Bodyguard",
+        name: "Goro Takemura",
+        subname: "Vengeful Bodyguard",
+        displayName: "Goro Takemura: Vengeful Bodyguard",
         rulesText:
           "{Quick} 1 €$, {Spend} Give a friendly Unit with cost 4 or less {Blocker} this turn. If you control a value-pair of Gigs, also give it +1 power this turn.\nWhen a friendly Unit uses {Blocker}, you may discard 1. If you do, draw 1.",
       },
@@ -2927,14 +2123,126 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b071.webp",
       },
+      {
+        id: "af82881d-9e19-46b3-a723-a2ef224687d8",
+        artId: "af82881d-9e19-46b3-a723-a2ef224687d8",
+        collectorNumber: "β150",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b150.webp",
+      },
+      {
+        id: "ff7b01fc-d9fd-4ae7-b141-01f514dee280",
+        artId: "ff7b01fc-d9fd-4ae7-b141-01f514dee280",
+        collectorNumber: "006",
+        setCode: "prereleasebeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/006.webp",
+      },
     ],
     selectedPrintingId: "0f6e52f0-511f-4ae9-a380-5e718b26e58a",
+  },
+  "welcometonightcityretail:gunpoint-diplomacy": {
+    i18n: {
+      en: {
+        name: "Gunpoint Diplomacy",
+        displayName: "Gunpoint Diplomacy",
+        rulesText:
+          "Give a friendly Unit these effects. If you have less ☆ (Street Cred) than a Rival, they instead choose one effect for you.\nThe next time this Unit attacks this turn, it may attack ready Units. // Give this Unit +3 power this turn.",
+      },
+    },
+    printings: [
+      {
+        id: "efc5dfdd-f393-4bbe-a7bc-ac959ba1e6bc",
+        artId: "efc5dfdd-f393-4bbe-a7bc-ac959ba1e6bc",
+        collectorNumber: "032",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/032.webp",
+      },
+      {
+        id: "e3d061b0-fb02-481d-8afa-f4b5bce4ed39",
+        artId: "e3d061b0-fb02-481d-8afa-f4b5bce4ed39",
+        collectorNumber: "β032",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b032.webp",
+      },
+    ],
+    selectedPrintingId: "efc5dfdd-f393-4bbe-a7bc-ac959ba1e6bc",
+  },
+  "welcometonightcityretail:hacked-corpo": {
+    i18n: {
+      en: {
+        name: "Hacked Corpo",
+        displayName: "Hacked Corpo",
+        rulesText: "{Play} Trash 3. Add a Program from among them to your hand.",
+      },
+    },
+    printings: [
+      {
+        id: "7dc71978-0995-4b93-9ba3-83d1118c3c4b",
+        artId: "7dc71978-0995-4b93-9ba3-83d1118c3c4b",
+        collectorNumber: "114",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/114.webp",
+      },
+      {
+        id: "a105464f-997f-4f2b-97dd-3a4f461f0a59",
+        artId: "a105464f-997f-4f2b-97dd-3a4f461f0a59",
+        collectorNumber: "β114",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b114.webp",
+      },
+    ],
+    selectedPrintingId: "7dc71978-0995-4b93-9ba3-83d1118c3c4b",
+  },
+  "welcometonightcityretail:hanako-arasaka-daughter-of-the-emperor": {
+    i18n: {
+      en: {
+        name: "Hanako Arasaka",
+        subname: "Daughter of the Emperor",
+        displayName: "Hanako Arasaka: Daughter of the Emperor",
+        rulesText:
+          "{Spend} Swap a friendly Gig with a rival Gig.\nAt the start of your turn, draw 1 for each friendly value-pair of Gigs.",
+      },
+    },
+    printings: [
+      {
+        id: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
+        artId: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
+        collectorNumber: "072",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/072.webp",
+      },
+      {
+        id: "1435b785-967e-48a7-8ef7-f7fecbb27aaf",
+        artId: "1435b785-967e-48a7-8ef7-f7fecbb27aaf",
+        collectorNumber: "β072",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b072.webp",
+      },
+      {
+        id: "cc3ed2c4-6e6d-47aa-b358-152c56b24bad",
+        artId: "cc3ed2c4-6e6d-47aa-b358-152c56b24bad",
+        collectorNumber: "β151",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b151.webp",
+      },
+    ],
+    selectedPrintingId: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
   },
   "welcometonightcityretail:hanako-arasaka-in-a-gilded-cage": {
     i18n: {
       en: {
-        name: "Hanako Arasaka — In a Gilded Cage",
-        displayName: "Hanako Arasaka — In a Gilded Cage",
+        name: "Hanako Arasaka",
+        subname: "In a Gilded Cage",
+        displayName: "Hanako Arasaka: In a Gilded Cage",
         rulesText:
           "{Play} Search the top 4 cards of your deck. Reveal any number of cards with cost equal to any friendly Gig values and add them to your hand. Bottom-deck the rest.",
       },
@@ -2956,8 +2264,62 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b046.webp",
       },
+      {
+        id: "005dfb9e-7bdd-4cc1-ade2-08dd28ed5998",
+        artId: "005dfb9e-7bdd-4cc1-ade2-08dd28ed5998",
+        collectorNumber: "β162",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b162.webp",
+      },
     ],
     selectedPrintingId: "7386d22f-1065-4043-a6c4-9cee6256fe8a",
+  },
+  "welcometonightcityretail:heywood-ripperdoc": {
+    i18n: {
+      en: {
+        name: "Heywood Ripperdoc",
+        displayName: "Heywood Ripperdoc",
+        rulesText:
+          "{Play} You may defeat a Gear. If its cost equals the value of a friendly Gig, draw 1.",
+      },
+    },
+    printings: [
+      {
+        id: "2fc5ac93-dae5-4af5-a813-77abc0cc8dfd",
+        artId: "2fc5ac93-dae5-4af5-a813-77abc0cc8dfd",
+        collectorNumber: "047",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/047.webp",
+      },
+      {
+        id: "2a6b5b50-b007-40f4-bbdc-90f6bdc3761a",
+        artId: "2a6b5b50-b007-40f4-bbdc-90f6bdc3761a",
+        collectorNumber: "β047",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b047.webp",
+      },
+      {
+        id: "364ef4ac-8b0c-48b1-8cf2-454477abc452",
+        artId: "364ef4ac-8b0c-48b1-8cf2-454477abc452",
+        collectorNumber: "003",
+        setCode: "theheistretailstarterdeck",
+        rarity: "Uncommon",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/003.webp",
+      },
+      {
+        id: "aebf807a-2fbb-4b60-ae4b-36783314871f",
+        artId: "aebf807a-2fbb-4b60-ae4b-36783314871f",
+        collectorNumber: "β003",
+        setCode: "theheistbetastarterdeck",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/theheistbetastarterdeck/b003.webp",
+      },
+    ],
+    selectedPrintingId: "2fc5ac93-dae5-4af5-a813-77abc0cc8dfd",
   },
   "welcometonightcityretail:industrial-assembly": {
     i18n: {
@@ -3010,66 +2372,16 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/arasakademodeck/006.webp",
       },
+      {
+        id: "36728e75-5520-4ba8-a82d-e5d884b18170",
+        artId: "36728e75-5520-4ba8-a82d-e5d884b18170",
+        collectorNumber: "004",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/004.webp",
+      },
     ],
     selectedPrintingId: "9103b5db-bf95-4385-8941-308cb0353c9a",
-  },
-  "welcometonightcityretail:jackie-welles-ride-or-die-choom": {
-    i18n: {
-      en: {
-        name: "Jackie Welles — Ride or Die Choom",
-        displayName: "Jackie Welles — Ride or Die Choom",
-        rulesText:
-          "{Attack} Give this Unit +2 power this turn for each friendly Gig with an even value.\n{Defeated} Draw 1 for each friendly Gig with an odd value.",
-      },
-    },
-    printings: [
-      {
-        id: "12d44604-ad7b-4e82-b517-9edb0be44427",
-        artId: "12d44604-ad7b-4e82-b517-9edb0be44427",
-        collectorNumber: "048",
-        setCode: "welcometonightcityretail",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/048.webp",
-      },
-      {
-        id: "93f68b18-e15c-44be-883b-8db7990646f1",
-        artId: "93f68b18-e15c-44be-883b-8db7990646f1",
-        collectorNumber: "β048",
-        setCode: "welcometonightcitybeta",
-        rarity: "Epic",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b048.webp",
-      },
-    ],
-    selectedPrintingId: "12d44604-ad7b-4e82-b517-9edb0be44427",
-  },
-  "welcometonightcityretail:kerry-eurodyne-axe-attitude-audience": {
-    i18n: {
-      en: {
-        name: "Kerry Eurodyne — Axe, Attitude, Audience",
-        displayName: "Kerry Eurodyne — Axe, Attitude, Audience",
-        rulesText:
-          "When you roll in a Gig from your fixer area, you may ignore the result and reroll it once.\nWhen you roll a min or max value on a Gig, draw 1. If it's a d20, draw 3 instead.",
-      },
-    },
-    printings: [
-      {
-        id: "e54e06c0-3f9c-412a-8dea-942eebecd687",
-        artId: "e54e06c0-3f9c-412a-8dea-942eebecd687",
-        collectorNumber: "037",
-        setCode: "welcometonightcityretail",
-        rarity: "Rare",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/037.webp",
-      },
-      {
-        id: "0557c333-1700-439d-bb85-dfec8d578ded",
-        artId: "0557c333-1700-439d-bb85-dfec8d578ded",
-        collectorNumber: "β037",
-        setCode: "welcometonightcitybeta",
-        rarity: "Rare",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b037.webp",
-      },
-    ],
-    selectedPrintingId: "e54e06c0-3f9c-412a-8dea-942eebecd687",
   },
   "welcometonightcityretail:jacked-in-voodoo-boy": {
     i18n: {
@@ -3099,11 +2411,315 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "8e2f2d0c-0e92-4744-a510-a9c7ac371d81",
   },
+  "welcometonightcityretail:jackie-welles-mama-s-favorite": {
+    i18n: {
+      en: {
+        name: "Jackie Welles",
+        subname: "Mama's Favorite",
+        displayName: "Jackie Welles: Mama's Favorite",
+        rulesText:
+          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\nIf a friendly Unit would be defeated, you may spend 1 €$ to defeat this Legend instead. (Remove it from the game.)",
+      },
+    },
+    printings: [
+      {
+        id: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
+        artId: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
+        collectorNumber: "073",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/073.webp",
+      },
+      {
+        id: "c1f9ae1a-841f-431f-919a-429de14be070",
+        artId: "c1f9ae1a-841f-431f-919a-429de14be070",
+        collectorNumber: "β073",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b073.webp",
+      },
+      {
+        id: "aadd8dc4-bb37-4901-8200-39b8904268a8",
+        artId: "aadd8dc4-bb37-4901-8200-39b8904268a8",
+        collectorNumber: "β152",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b152.webp",
+      },
+      {
+        id: "5620aa1a-94e9-43c4-b89e-fea304e4257c",
+        artId: "5620aa1a-94e9-43c4-b89e-fea304e4257c",
+        collectorNumber: "007",
+        setCode: "prereleasebeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/007.webp",
+      },
+    ],
+    selectedPrintingId: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
+  },
+  "welcometonightcityretail:jackie-welles-ride-or-die-choom": {
+    i18n: {
+      en: {
+        name: "Jackie Welles",
+        subname: "Ride or Die Choom",
+        displayName: "Jackie Welles: Ride or Die Choom",
+        rulesText:
+          "{Attack} Give this Unit +2 power this turn for each friendly Gig with an even value.\n{Defeated} Draw 1 for each friendly Gig with an odd value.",
+      },
+    },
+    printings: [
+      {
+        id: "12d44604-ad7b-4e82-b517-9edb0be44427",
+        artId: "12d44604-ad7b-4e82-b517-9edb0be44427",
+        collectorNumber: "048",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/048.webp",
+      },
+      {
+        id: "93f68b18-e15c-44be-883b-8db7990646f1",
+        artId: "93f68b18-e15c-44be-883b-8db7990646f1",
+        collectorNumber: "β048",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b048.webp",
+      },
+    ],
+    selectedPrintingId: "12d44604-ad7b-4e82-b517-9edb0be44427",
+  },
+  "welcometonightcityretail:japantown-jonin": {
+    i18n: {
+      en: {
+        name: "Japantown Jonin",
+        displayName: "Japantown Jonin",
+        rulesText:
+          "{Play} Give a friendly Unit +2 power this turn.\n(Units with power 0 don't steal Gigs.)",
+      },
+    },
+    printings: [
+      {
+        id: "30619097-d9d7-42fe-bf4c-cd4ae822792d",
+        artId: "30619097-d9d7-42fe-bf4c-cd4ae822792d",
+        collectorNumber: "010",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/010.webp",
+      },
+      {
+        id: "fa9d3c0c-5634-42a1-a665-9173c045fa30",
+        artId: "fa9d3c0c-5634-42a1-a665-9173c045fa30",
+        collectorNumber: "β010",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b010.webp",
+      },
+    ],
+    selectedPrintingId: "30619097-d9d7-42fe-bf4c-cd4ae822792d",
+  },
+  "welcometonightcityretail:johnny-silverhand-never-stop-fighting": {
+    i18n: {
+      en: {
+        name: "Johnny Silverhand",
+        subname: "Never Stop Fighting",
+        displayName: "Johnny Silverhand: Never Stop Fighting",
+        rulesText:
+          "The first time this Unit wins a fight each turn, ready it.\nThis Unit wins all fights against CORPO Units.",
+      },
+    },
+    printings: [
+      {
+        id: "14ab188f-2ce3-4790-8823-5a352371ff1f",
+        artId: "14ab188f-2ce3-4790-8823-5a352371ff1f",
+        collectorNumber: "011",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/011.webp",
+      },
+      {
+        id: "975957a0-9c72-4a67-8260-f86c1c70bfb5",
+        artId: "975957a0-9c72-4a67-8260-f86c1c70bfb5",
+        collectorNumber: "β011",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b011.webp",
+      },
+      {
+        id: "7b113940-7325-4304-b07a-61719b47a49c",
+        artId: "7b113940-7325-4304-b07a-61719b47a49c",
+        collectorNumber: "β159",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b159.webp",
+      },
+    ],
+    selectedPrintingId: "14ab188f-2ce3-4790-8823-5a352371ff1f",
+  },
+  "welcometonightcityretail:johnny-silverhand-rocking-renegade": {
+    i18n: {
+      en: {
+        name: "Johnny Silverhand",
+        subname: "Rocking Renegade",
+        displayName: "Johnny Silverhand: Rocking Renegade",
+        rulesText:
+          "2 €$, {Spend} A friendly Unit can attack spent rival Units the turn it's played. If it's a ROCKER Unit, also give it +2 power this turn. This effect costs -1 €$ for each friendly Gig with 8+ value.",
+      },
+    },
+    printings: [
+      {
+        id: "a8a7d286-0c66-4f01-aca7-45570474d9e4",
+        artId: "a8a7d286-0c66-4f01-aca7-45570474d9e4",
+        collectorNumber: "003",
+        setCode: "welcometonightcityretail",
+        rarity: "Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/003.webp",
+      },
+      {
+        id: "1159e69c-614f-4a8e-be76-d69ee734bd22",
+        artId: "1159e69c-614f-4a8e-be76-d69ee734bd22",
+        collectorNumber: "β003",
+        setCode: "welcometonightcitybeta",
+        rarity: "Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b003.webp",
+      },
+      {
+        id: "4f8fbab4-7aad-4271-8dd6-8cdf68654c5e",
+        artId: "4f8fbab4-7aad-4271-8dd6-8cdf68654c5e",
+        collectorNumber: "β168",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b168.webp",
+      },
+    ],
+    selectedPrintingId: "a8a7d286-0c66-4f01-aca7-45570474d9e4",
+  },
+  "welcometonightcityretail:judy-a-lvarez-braindance-maestro": {
+    i18n: {
+      en: {
+        name: "Judy Álvarez",
+        subname: "Braindance Maestro",
+        displayName: "Judy Álvarez: Braindance Maestro",
+        rulesText:
+          "When you play a BRAINDANCE Program, give a friendly Unit +1 power this turn.\n{Spend} Trash the top card of your deck. If it's a Program, you may add it to your hand.",
+      },
+    },
+    printings: [
+      {
+        id: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
+        artId: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
+        collectorNumber: "108",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/108.webp",
+      },
+      {
+        id: "d74468ab-6024-4ae6-b69a-ac41f6e9cfce",
+        artId: "d74468ab-6024-4ae6-b69a-ac41f6e9cfce",
+        collectorNumber: "β108",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b108.webp",
+      },
+      {
+        id: "0324e335-2f17-496c-9789-59f93ed6d31e",
+        artId: "0324e335-2f17-496c-9789-59f93ed6d31e",
+        collectorNumber: "β157",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b157.webp",
+      },
+      {
+        id: "e902c6ed-7f60-42e1-b3e1-e3804181222f",
+        artId: "e902c6ed-7f60-42e1-b3e1-e3804181222f",
+        collectorNumber: "010",
+        setCode: "prereleasebeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/010.webp",
+      },
+    ],
+    selectedPrintingId: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
+  },
+  "welcometonightcityretail:judy-a-lvarez-nothing-to-doubt": {
+    i18n: {
+      en: {
+        name: "Judy Álvarez",
+        subname: "Nothing to Doubt",
+        displayName: "Judy Álvarez: Nothing to Doubt",
+        rulesText:
+          "1 €$, {Spend} Reveal the top card of your deck. You may play it for free. Otherwise, add it to your hand.",
+      },
+    },
+    printings: [
+      {
+        id: "dcfe8370-9abf-4395-b50b-efea505609ba",
+        artId: "dcfe8370-9abf-4395-b50b-efea505609ba",
+        collectorNumber: "116",
+        setCode: "welcometonightcityretail",
+        rarity: "Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/116.webp",
+      },
+      {
+        id: "98b18e2d-a955-43c7-880c-6233166c673a",
+        artId: "98b18e2d-a955-43c7-880c-6233166c673a",
+        collectorNumber: "β116",
+        setCode: "welcometonightcitybeta",
+        rarity: "Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b116.webp",
+      },
+      {
+        id: "2c0d6f48-0804-4d5f-83c2-f28367ce26d5",
+        artId: "2c0d6f48-0804-4d5f-83c2-f28367ce26d5",
+        collectorNumber: "β171",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b171.webp",
+      },
+    ],
+    selectedPrintingId: "dcfe8370-9abf-4395-b50b-efea505609ba",
+  },
+  "welcometonightcityretail:kerry-eurodyne-axe-attitude-audience": {
+    i18n: {
+      en: {
+        name: "Kerry Eurodyne",
+        subname: "Axe, Attitude, Audience",
+        displayName: "Kerry Eurodyne: Axe, Attitude, Audience",
+        rulesText:
+          "When you roll in a Gig from your fixer area, you may ignore the result and reroll it once.\nWhen you roll a min or max value on a Gig, draw 1. If it's a d20, draw 3 instead.",
+      },
+    },
+    printings: [
+      {
+        id: "e54e06c0-3f9c-412a-8dea-942eebecd687",
+        artId: "e54e06c0-3f9c-412a-8dea-942eebecd687",
+        collectorNumber: "037",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/037.webp",
+      },
+      {
+        id: "0557c333-1700-439d-bb85-dfec8d578ded",
+        artId: "0557c333-1700-439d-bb85-dfec8d578ded",
+        collectorNumber: "β037",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b037.webp",
+      },
+      {
+        id: "5ade304e-8e0e-4484-944a-18d8d08caf9f",
+        artId: "5ade304e-8e0e-4484-944a-18d8d08caf9f",
+        collectorNumber: "β146",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b146.webp",
+      },
+    ],
+    selectedPrintingId: "e54e06c0-3f9c-412a-8dea-942eebecd687",
+  },
   "welcometonightcityretail:kerry-eurodyne-the-last-rockerboy": {
     i18n: {
       en: {
-        name: "Kerry Eurodyne — The Last Rockerboy",
-        displayName: "Kerry Eurodyne — The Last Rockerboy",
+        name: "Kerry Eurodyne",
+        subname: "The Last Rockerboy",
+        displayName: "Kerry Eurodyne: The Last Rockerboy",
         rulesText: "{Spend} If you control a Gig with 8+ value, draw 2.",
       },
     },
@@ -3184,8 +2800,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:la-llorona-ghost-of-the-past": {
     i18n: {
       en: {
-        name: "La Llorona — Ghost of the Past",
-        displayName: "La Llorona — Ghost of the Past",
+        name: "La Llorona",
+        subname: "Ghost of the Past",
+        displayName: "La Llorona: Ghost of the Past",
         rulesText:
           "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nWhen this Unit uses {Blocker}, increase a Gig by up to 3.",
       },
@@ -3210,11 +2827,68 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "e3d1d8a0-1d53-4c85-84ca-66439fd3639a",
   },
+  "welcometonightcityretail:les-e-le-mens": {
+    i18n: {
+      en: {
+        name: "Les Élémens",
+        displayName: "Les Élémens",
+        rulesText: "Bottom-deck a Rival's lowest-power Unit. (If there are multiple, choose 1.)",
+      },
+    },
+    printings: [
+      {
+        id: "14a0b813-d5e3-46e6-a001-aebbd3a95f11",
+        artId: "14a0b813-d5e3-46e6-a001-aebbd3a95f11",
+        collectorNumber: "133",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/133.webp",
+      },
+      {
+        id: "7e86c639-5225-4a91-be33-6ab86c9adfe2",
+        artId: "7e86c639-5225-4a91-be33-6ab86c9adfe2",
+        collectorNumber: "β133",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b133.webp",
+      },
+    ],
+    selectedPrintingId: "14a0b813-d5e3-46e6-a001-aebbd3a95f11",
+  },
+  "welcometonightcityretail:live-with-the-aftermath": {
+    i18n: {
+      en: {
+        name: "Live with the Aftermath",
+        displayName: "Live with the Aftermath",
+        rulesText: "Each player defeats one of their Units.",
+      },
+    },
+    printings: [
+      {
+        id: "f931c82e-a382-4f60-808c-5910ac9850be",
+        artId: "f931c82e-a382-4f60-808c-5910ac9850be",
+        collectorNumber: "068",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/068.webp",
+      },
+      {
+        id: "b2d6aeff-8fa3-4151-9e67-a83188a78197",
+        artId: "b2d6aeff-8fa3-4151-9e67-a83188a78197",
+        collectorNumber: "β068",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b068.webp",
+      },
+    ],
+    selectedPrintingId: "f931c82e-a382-4f60-808c-5910ac9850be",
+  },
   "welcometonightcityretail:lizzy-wizzy-delicate-weapon": {
     i18n: {
       en: {
-        name: "Lizzy Wizzy — Delicate Weapon",
-        displayName: "Lizzy Wizzy — Delicate Weapon",
+        name: "Lizzy Wizzy",
+        subname: "Delicate Weapon",
+        displayName: "Lizzy Wizzy: Delicate Weapon",
         rulesText:
           "{Play} You may play a Program with cost 3 or less from your hand or trash for free. Bottom-deck it after you play it.\n{Blocker}",
       },
@@ -3239,11 +2913,69 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "7072a2d2-ec4f-4575-909e-15a107dfef79",
   },
+  "welcometonightcityretail:maelstrom-goons": {
+    i18n: {
+      en: {
+        name: "Maelstrom Goons",
+        displayName: "Maelstrom Goons",
+        rulesText: "When this Unit steals a Gig, if it's equipped, a Rival discards 1.",
+      },
+    },
+    printings: [
+      {
+        id: "e14bdd12-1214-4104-bfdd-ae023c21527c",
+        artId: "e14bdd12-1214-4104-bfdd-ae023c21527c",
+        collectorNumber: "049",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/049.webp",
+      },
+      {
+        id: "42236397-716c-422c-8868-9f33dd33b089",
+        artId: "42236397-716c-422c-8868-9f33dd33b089",
+        collectorNumber: "β049",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b049.webp",
+      },
+    ],
+    selectedPrintingId: "e14bdd12-1214-4104-bfdd-ae023c21527c",
+  },
+  "welcometonightcityretail:maelstrom-zealots": {
+    i18n: {
+      en: {
+        name: "Maelstrom Zealots",
+        displayName: "Maelstrom Zealots",
+        rulesText:
+          "When this Unit loses a fight, defeat the opposing rival Unit.\n(Units with power 0 don't steal Gigs.)",
+      },
+    },
+    printings: [
+      {
+        id: "43e5568f-a609-4eff-8502-e81ba9134d2c",
+        artId: "43e5568f-a609-4eff-8502-e81ba9134d2c",
+        collectorNumber: "079",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/079.webp",
+      },
+      {
+        id: "ce3770f6-0fa7-41f4-af5f-eacce5846c98",
+        artId: "ce3770f6-0fa7-41f4-af5f-eacce5846c98",
+        collectorNumber: "β079",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b079.webp",
+      },
+    ],
+    selectedPrintingId: "43e5568f-a609-4eff-8502-e81ba9134d2c",
+  },
   "welcometonightcityretail:maman-brigitte-spirit-of-death": {
     i18n: {
       en: {
-        name: "Maman Brigitte — Spirit of Death",
-        displayName: "Maman Brigitte — Spirit of Death",
+        name: "Maman Brigitte",
+        subname: "Spirit of Death",
+        displayName: "Maman Brigitte: Spirit of Death",
         rulesText:
           "{Play} You may discard 2 Programs. If you do, bottom-deck a rival unequipped Unit.",
       },
@@ -3352,7 +3084,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "087c30c2-1a7d-423e-b2f3-a7e1e8cfca12",
         collectorNumber: "007",
         setCode: "embracingpowerretailstarterdeck",
-        rarity: "Uncommon",
+        rarity: "Common",
         imageUrl:
           "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/007.webp",
       },
@@ -3361,7 +3093,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "7e3cd1e0-4438-46e7-a327-0d9846778bb3",
         collectorNumber: "β007",
         setCode: "embracingpowerbetastarterdeck",
-        rarity: "Uncommon",
+        rarity: "Common",
         imageUrl:
           "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b007.webp",
       },
@@ -3373,14 +3105,183 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/arasakademodeck/004.webp",
       },
+      {
+        id: "2ec85468-7593-4af5-b0d9-aecc1bc82366",
+        artId: "2ec85468-7593-4af5-b0d9-aecc1bc82366",
+        collectorNumber: "011",
+        setCode: "prereleasebeta",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/011.webp",
+      },
     ],
     selectedPrintingId: "7ffa8ba4-f187-4ba0-a719-fa8ebf45a03b",
+  },
+  "welcometonightcityretail:maxtac-av": {
+    i18n: {
+      en: {
+        name: "MaxTac AV",
+        displayName: "MaxTac AV",
+        rulesText: "{Play} You may swap a friendly Gig with a rival Gig.",
+      },
+    },
+    printings: [
+      {
+        id: "f1fa787d-e936-42a8-b42f-14999e722793",
+        artId: "f1fa787d-e936-42a8-b42f-14999e722793",
+        collectorNumber: "080",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/080.webp",
+      },
+      {
+        id: "27c1bf13-5f6b-4421-aa76-5789a94c9c1b",
+        artId: "27c1bf13-5f6b-4421-aa76-5789a94c9c1b",
+        collectorNumber: "β080",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b080.webp",
+      },
+      {
+        id: "3b69e0c7-418c-4000-b6f4-f9584bc541e3",
+        artId: "3b69e0c7-418c-4000-b6f4-f9584bc541e3",
+        collectorNumber: "018",
+        setCode: "embracingpowerretailstarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/018.webp",
+      },
+      {
+        id: "5a28466e-e4e1-408d-9d84-2ce48e95d89d",
+        artId: "5a28466e-e4e1-408d-9d84-2ce48e95d89d",
+        collectorNumber: "β018",
+        setCode: "embracingpowerbetastarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b018.webp",
+      },
+    ],
+    selectedPrintingId: "f1fa787d-e936-42a8-b42f-14999e722793",
+  },
+  "welcometonightcityretail:maxtac-heavy": {
+    i18n: {
+      en: {
+        name: "MaxTac Heavy",
+        displayName: "MaxTac Heavy",
+        rulesText: "Play this Unit for -1 €$ for each of a Rival’s Units, to a minimum of 1 €$.",
+      },
+    },
+    printings: [
+      {
+        id: "060f0c56-cbb7-45fd-a0cd-9c7b9d0f8103",
+        artId: "060f0c56-cbb7-45fd-a0cd-9c7b9d0f8103",
+        collectorNumber: "081",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/081.webp",
+      },
+      {
+        id: "0f60c84e-e84f-49a3-b913-0039d8262371",
+        artId: "0f60c84e-e84f-49a3-b913-0039d8262371",
+        collectorNumber: "β081",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b081.webp",
+      },
+    ],
+    selectedPrintingId: "060f0c56-cbb7-45fd-a0cd-9c7b9d0f8103",
+  },
+  "welcometonightcityretail:maxtac-squadron": {
+    i18n: {
+      en: {
+        name: "MaxTac Squadron",
+        displayName: "MaxTac Squadron",
+        rulesText:
+          "At the end of your turn, if this Unit is spent, ready a friendly face-up Legend.",
+      },
+    },
+    printings: [
+      {
+        id: "22b276f4-7cf6-4b14-a220-8368a0839287",
+        artId: "22b276f4-7cf6-4b14-a220-8368a0839287",
+        collectorNumber: "082",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/082.webp",
+      },
+      {
+        id: "f52caed9-3415-4027-a448-2c38b045553b",
+        artId: "f52caed9-3415-4027-a448-2c38b045553b",
+        collectorNumber: "β082",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b082.webp",
+      },
+    ],
+    selectedPrintingId: "22b276f4-7cf6-4b14-a220-8368a0839287",
+  },
+  "welcometonightcityretail:maxtac-suppression-team": {
+    i18n: {
+      en: {
+        name: "MaxTac Suppression Team",
+        displayName: "MaxTac Suppression Team",
+        rulesText: "Rival Units can't attack the turn they're played.",
+      },
+    },
+    printings: [
+      {
+        id: "47f55164-e5da-494e-9d55-02bd0b7f97c1",
+        artId: "47f55164-e5da-494e-9d55-02bd0b7f97c1",
+        collectorNumber: "050",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/050.webp",
+      },
+      {
+        id: "03849cd8-c3d8-4741-ae9e-d85cd9bb488d",
+        artId: "03849cd8-c3d8-4741-ae9e-d85cd9bb488d",
+        collectorNumber: "β050",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b050.webp",
+      },
+    ],
+    selectedPrintingId: "47f55164-e5da-494e-9d55-02bd0b7f97c1",
+  },
+  "welcometonightcityretail:memory-relapse": {
+    i18n: {
+      en: {
+        name: "Memory Relapse",
+        displayName: "Memory Relapse",
+        rulesText:
+          "Spend a rival Unit. It can't ready until your next turn. If your ☆ (Street Cred) is an even number, draw 1.",
+      },
+    },
+    printings: [
+      {
+        id: "ef9f2959-de87-4a54-be45-5c9dcc507aba",
+        artId: "ef9f2959-de87-4a54-be45-5c9dcc507aba",
+        collectorNumber: "100",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/100.webp",
+      },
+      {
+        id: "7a8c2032-e753-43ab-9c3b-adefb4281241",
+        artId: "7a8c2032-e753-43ab-9c3b-adefb4281241",
+        collectorNumber: "β100",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b100.webp",
+      },
+    ],
+    selectedPrintingId: "ef9f2959-de87-4a54-be45-5c9dcc507aba",
   },
   "welcometonightcityretail:meredith-stout-stone-cold-corpo": {
     i18n: {
       en: {
-        name: "Meredith Stout — Stone Cold Corpo",
-        displayName: "Meredith Stout — Stone Cold Corpo",
+        name: "Meredith Stout",
+        subname: "Stone Cold Corpo",
+        displayName: "Meredith Stout: Stone Cold Corpo",
         rulesText:
           "{Blocker}\nThis Unit has +2 power while fighting a Legend.\nWhen a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
       },
@@ -3408,8 +3309,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:misty-olszewski-mender-of-broken-spirits": {
     i18n: {
       en: {
-        name: "Misty Olszewski — Mender of Broken Spirits",
-        displayName: "Misty Olszewski — Mender of Broken Spirits",
+        name: "Misty Olszewski",
+        subname: "Mender of Broken Spirits",
+        displayName: "Misty Olszewski: Mender of Broken Spirits",
         rulesText:
           "This Unit can't attack.\nAt the end of your turn, choose a card type. Then, reveal the top card of your deck. If it's the chosen type, add it to your hand and ready 1 Eddie. Otherwise, trash it.\n(Card types include Unit, Gear, and Program.)",
       },
@@ -3463,6 +3365,35 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "50e8101a-3d0e-45ea-9444-22007f7f9cb0",
   },
+  "welcometonightcityretail:modded-muramasa": {
+    i18n: {
+      en: {
+        name: "Modded Muramasa",
+        displayName: "Modded Muramasa",
+        rulesText:
+          "At the end of your turn, if you have less ☆ (Street Cred) than a Rival, ready this Unit.",
+      },
+    },
+    printings: [
+      {
+        id: "3bd6767b-ef0c-47dd-9f47-d00112a74111",
+        artId: "3bd6767b-ef0c-47dd-9f47-d00112a74111",
+        collectorNumber: "121",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/121.webp",
+      },
+      {
+        id: "2b247956-465f-4b39-8091-a95c90bc8b70",
+        artId: "2b247956-465f-4b39-8091-a95c90bc8b70",
+        collectorNumber: "β121",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b121.webp",
+      },
+    ],
+    selectedPrintingId: "3bd6767b-ef0c-47dd-9f47-d00112a74111",
+  },
   "welcometonightcityretail:mox-inciters": {
     i18n: {
       en: {
@@ -3492,11 +3423,50 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "354fd7d3-070d-4767-989c-5b3efbd9f30d",
   },
+  "welcometonightcityretail:muamar-reyes-el-capita-n": {
+    i18n: {
+      en: {
+        name: "Muamar Reyes",
+        subname: "El Capitán",
+        displayName: "Muamar Reyes: El Capitán",
+        rulesText:
+          "{Call} Choose one effect.\nA friendly Unit can't be defeated in a fight this turn. // Draw 1.\n{Spend} Adjust a Gig by 1.",
+      },
+    },
+    printings: [
+      {
+        id: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
+        artId: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
+        collectorNumber: "038",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/038.webp",
+      },
+      {
+        id: "3d1e6590-5cdc-4605-8b61-915f21f5514d",
+        artId: "3d1e6590-5cdc-4605-8b61-915f21f5514d",
+        collectorNumber: "β038",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b038.webp",
+      },
+      {
+        id: "2e06439f-fab6-4a65-a1fc-e5f4afc84eb0",
+        artId: "2e06439f-fab6-4a65-a1fc-e5f4afc84eb0",
+        collectorNumber: "β147",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b147.webp",
+      },
+    ],
+    selectedPrintingId: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
+  },
   "welcometonightcityretail:nadia-fighting-through-grief": {
     i18n: {
       en: {
-        name: "Nadia — Fighting Through Grief",
-        displayName: "Nadia — Fighting Through Grief",
+        name: "Nadia",
+        subname: "Fighting Through Grief",
+        displayName: "Nadia: Fighting Through Grief",
         rulesText:
           "If a Rival controls more Gigs than you, this Unit can attack their Gig area the turn it's played.",
       },
@@ -3520,6 +3490,93 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "4bab255b-763a-4762-b5e2-430316526b8a",
+  },
+  "welcometonightcityretail:netwatch-netdriver": {
+    i18n: {
+      en: {
+        name: "NetWatch Netdriver",
+        displayName: "NetWatch Netdriver",
+        rulesText:
+          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, draw 1.",
+      },
+    },
+    printings: [
+      {
+        id: "07f119d6-8fb2-4b23-9862-818a7e941010",
+        artId: "07f119d6-8fb2-4b23-9862-818a7e941010",
+        collectorNumber: "129",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/129.webp",
+      },
+      {
+        id: "e2a34251-d2d9-46e0-9840-ca69a358a6ae",
+        artId: "e2a34251-d2d9-46e0-9840-ca69a358a6ae",
+        collectorNumber: "β129",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b129.webp",
+      },
+    ],
+    selectedPrintingId: "07f119d6-8fb2-4b23-9862-818a7e941010",
+  },
+  "welcometonightcityretail:nocturne-op55-n1": {
+    i18n: {
+      en: {
+        name: "Nocturne OP55 N1",
+        displayName: "Nocturne OP55 N1",
+        rulesText:
+          "If your fixer area is empty, play this Program for 1 €$. Choose one effect.\nDraw 2. // A Unit can't attack until your next turn. // A friendly Legend may use {Go Solo} for -2 €$ this turn, to a minimum of 1 €$.",
+      },
+    },
+    printings: [
+      {
+        id: "70c7f11e-e41d-44f2-b5cd-e8568915d6ac",
+        artId: "70c7f11e-e41d-44f2-b5cd-e8568915d6ac",
+        collectorNumber: "134",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/134.webp",
+      },
+      {
+        id: "dfd5d1df-2b47-4ddd-9d6a-35430a892cfc",
+        artId: "dfd5d1df-2b47-4ddd-9d6a-35430a892cfc",
+        collectorNumber: "β134",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b134.webp",
+      },
+    ],
+    selectedPrintingId: "70c7f11e-e41d-44f2-b5cd-e8568915d6ac",
+  },
+  "welcometonightcityretail:octant": {
+    i18n: {
+      en: {
+        name: "Octant",
+        displayName: "Octant",
+        rulesText:
+          "Play this Unit for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$.",
+      },
+    },
+    printings: [
+      {
+        id: "089df0e6-0000-4e6c-b6d3-d9119466b624",
+        artId: "089df0e6-0000-4e6c-b6d3-d9119466b624",
+        collectorNumber: "015",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/015.webp",
+      },
+      {
+        id: "3b8c035e-161d-4a84-bdc8-f76899e8244f",
+        artId: "3b8c035e-161d-4a84-bdc8-f76899e8244f",
+        collectorNumber: "β015",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b015.webp",
+      },
+    ],
+    selectedPrintingId: "089df0e6-0000-4e6c-b6d3-d9119466b624",
   },
   "welcometonightcityretail:offduty-malfini": {
     i18n: {
@@ -3596,7 +3653,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         artId: "9e5a152e-6105-44a4-8db0-9cbf6cda2252",
         collectorNumber: "10",
         setCode: "embracingpowerretailstarterdeck",
-        rarity: "Uncommon",
+        rarity: "Common",
         imageUrl:
           "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/10.webp",
       },
@@ -3623,8 +3680,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:overwatch-panam-s-gift": {
     i18n: {
       en: {
-        name: "Overwatch — Panam's Gift",
-        displayName: "Overwatch — Panam's Gift",
+        name: "Overwatch",
+        subname: "Panam's Gift",
+        displayName: "Overwatch: Panam's Gift",
         rulesText:
           "{Quick} 1 €$, {Spend} Discard 1. Defeat a spent rival Unit with cost equal to or less than the discarded card's cost.",
       },
@@ -3646,14 +3704,90 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Epic",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b093.webp",
       },
+      {
+        id: "775e7d6b-b9d9-48cf-a34d-00ba2b1c0a43",
+        artId: "775e7d6b-b9d9-48cf-a34d-00ba2b1c0a43",
+        collectorNumber: "β165",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b165.webp",
+      },
     ],
     selectedPrintingId: "336131d1-3bc8-4b39-b893-5fce9be8ce7f",
+  },
+  "welcometonightcityretail:pacifica-netrunner": {
+    i18n: {
+      en: {
+        name: "Pacifica Netrunner",
+        displayName: "Pacifica Netrunner",
+        rulesText:
+          "{Play} If your ☆ (Street Cred) is an even number, a rival Unit can't ready until your next turn.",
+      },
+    },
+    printings: [
+      {
+        id: "b43f5006-7388-4189-81ff-343b5428305b",
+        artId: "b43f5006-7388-4189-81ff-343b5428305b",
+        collectorNumber: "084",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/084.webp",
+      },
+      {
+        id: "5131f2e5-fe1b-4a49-b0ba-b85d04c9cd1b",
+        artId: "5131f2e5-fe1b-4a49-b0ba-b85d04c9cd1b",
+        collectorNumber: "β084",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b084.webp",
+      },
+    ],
+    selectedPrintingId: "b43f5006-7388-4189-81ff-343b5428305b",
+  },
+  "welcometonightcityretail:padre-man-of-the-cross": {
+    i18n: {
+      en: {
+        name: "Padre",
+        subname: "Man of the Cross",
+        displayName: "Padre: Man of the Cross",
+        rulesText:
+          "{Call} Choose one effect.\nSpend a rival Unit. // Draw 1.\n{Spend} Set a player's Gig to the same value as another player's Gig.",
+      },
+    },
+    printings: [
+      {
+        id: "c7f0583f-2493-4e1f-9967-977bc0c6fa15",
+        artId: "c7f0583f-2493-4e1f-9967-977bc0c6fa15",
+        collectorNumber: "074",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/074.webp",
+      },
+      {
+        id: "e1f5dc01-9e96-4102-af3f-07ad31f5db15",
+        artId: "e1f5dc01-9e96-4102-af3f-07ad31f5db15",
+        collectorNumber: "β074",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b074.webp",
+      },
+      {
+        id: "abd75b6c-0205-4909-a990-237b4bed70e5",
+        artId: "abd75b6c-0205-4909-a990-237b4bed70e5",
+        collectorNumber: "β153",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b153.webp",
+      },
+    ],
+    selectedPrintingId: "c7f0583f-2493-4e1f-9967-977bc0c6fa15",
   },
   "welcometonightcityretail:panam-palmer-nomad-cavalry": {
     i18n: {
       en: {
-        name: "Panam Palmer — Nomad Cavalry",
-        displayName: "Panam Palmer — Nomad Cavalry",
+        name: "Panam Palmer",
+        subname: "Nomad Cavalry",
+        displayName: "Panam Palmer: Nomad Cavalry",
         rulesText:
           "2 €$, {Spend} Move a Gear from this Legend to an unequipped friendly Unit. If you do, ready that Unit.\nAt the end of your turn, if 5 or more friendly Units and/or Legends are equipped, ready them.",
       },
@@ -3675,8 +3809,62 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Epic",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b075.webp",
       },
+      {
+        id: "20c0d91e-76d5-4904-82e8-53907537aee3",
+        artId: "20c0d91e-76d5-4904-82e8-53907537aee3",
+        collectorNumber: "β154",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b154.webp",
+      },
+      {
+        id: "c7c6c4fa-eb19-43d6-904c-129cf062a8aa",
+        artId: "c7c6c4fa-eb19-43d6-904c-129cf062a8aa",
+        collectorNumber: "008",
+        setCode: "prereleasebeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/008.webp",
+      },
     ],
     selectedPrintingId: "6e4ee31b-82d1-421c-b658-ba3f79520365",
+  },
+  "welcometonightcityretail:panam-palmer-strength-through-family": {
+    i18n: {
+      en: {
+        name: "Panam Palmer",
+        subname: "Strength Through Family",
+        displayName: "Panam Palmer: Strength Through Family",
+        rulesText:
+          "During your turn, you may Call a Legend for free.\n{Attack} Discard 1. If you do, draw 1 for each friendly face-up Legend.",
+      },
+    },
+    printings: [
+      {
+        id: "9231f9ff-1ba5-4c4f-bd78-70e0780b58e5",
+        artId: "9231f9ff-1ba5-4c4f-bd78-70e0780b58e5",
+        collectorNumber: "085",
+        setCode: "welcometonightcityretail",
+        rarity: "Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/085.webp",
+      },
+      {
+        id: "544f8db8-02af-44e5-992e-170f51ffca37",
+        artId: "544f8db8-02af-44e5-992e-170f51ffca37",
+        collectorNumber: "β085",
+        setCode: "welcometonightcitybeta",
+        rarity: "Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b085.webp",
+      },
+      {
+        id: "7d71aedf-dbb6-435f-bece-e522834db122",
+        artId: "7d71aedf-dbb6-435f-bece-e522834db122",
+        collectorNumber: "β170",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Secret",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b170.webp",
+      },
+    ],
+    selectedPrintingId: "9231f9ff-1ba5-4c4f-bd78-70e0780b58e5",
   },
   "welcometonightcityretail:peace-offering": {
     i18n: {
@@ -3704,14 +3892,53 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b101.webp",
       },
+      {
+        id: "98fc95b4-44ec-4de0-bec3-77762792fa0f",
+        artId: "98fc95b4-44ec-4de0-bec3-77762792fa0f",
+        collectorNumber: "006",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/006.webp",
+      },
     ],
     selectedPrintingId: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
+  },
+  "welcometonightcityretail:pepe-najarro-working-doubles": {
+    i18n: {
+      en: {
+        name: "Pepe Najarro",
+        subname: "Working Doubles",
+        displayName: "Pepe Najarro: Working Doubles",
+        rulesText:
+          "{Attack} If you control a value-pair of Gigs, ready up to 2 MERC Legends in your Legends area.",
+      },
+    },
+    printings: [
+      {
+        id: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
+        artId: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
+        collectorNumber: "086",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/086.webp",
+      },
+      {
+        id: "786d5ce2-bfc0-4648-9c7d-323e939a1d34",
+        artId: "786d5ce2-bfc0-4648-9c7d-323e939a1d34",
+        collectorNumber: "β086",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b086.webp",
+      },
+    ],
+    selectedPrintingId: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
   },
   "welcometonightcityretail:placide-voodoo-sentinel": {
     i18n: {
       en: {
-        name: "Placide — Voodoo Sentinel",
-        displayName: "Placide — Voodoo Sentinel",
+        name: "Placide",
+        subname: "Voodoo Sentinel",
+        displayName: "Placide: Voodoo Sentinel",
         rulesText:
           "{Play} {Attack} You may discard 1 Program. If you do, bottom-deck a rival Unit.",
       },
@@ -3741,7 +3968,7 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       en: {
         name: "Psycho Squad",
         displayName: "Psycho Squad",
-        rulesText: "[Flavor] Their protocol stops at “shoot first.”",
+        rulesText: "[Flavour] Their protocol stops at “shoot first.”",
       },
     },
     printings: [
@@ -3788,6 +4015,35 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "d7e0e2e5-6e22-4b45-9e91-50936773e2e1",
+  },
+  "welcometonightcityretail:pyramid-song": {
+    i18n: {
+      en: {
+        name: "Pyramid Song",
+        displayName: "Pyramid Song",
+        rulesText:
+          "Choose one effect. If a friendly d4 is a min Gig, choose both instead.\nGive a rival Unit -5 power this turn. // Bottom-deck a rival Unit with power 0.",
+      },
+    },
+    printings: [
+      {
+        id: "3b1d0570-bb8e-4ea5-9ec7-c698d9c9f94d",
+        artId: "3b1d0570-bb8e-4ea5-9ec7-c698d9c9f94d",
+        collectorNumber: "135",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/135.webp",
+      },
+      {
+        id: "bab79ef1-57fb-4b24-b50a-e08899699862",
+        artId: "bab79ef1-57fb-4b24-b50a-e08899699862",
+        collectorNumber: "β135",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b135.webp",
+      },
+    ],
+    selectedPrintingId: "3b1d0570-bb8e-4ea5-9ec7-c698d9c9f94d",
   },
   "welcometonightcityretail:reboot-optics": {
     i18n: {
@@ -3871,11 +4127,71 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "1ee3ba07-86b0-4309-be55-4b4698f700b8",
   },
+  "welcometonightcityretail:riot-shield": {
+    i18n: {
+      en: {
+        name: "Riot Shield",
+        displayName: "Riot Shield",
+        rulesText:
+          "(Equip to a friendly Unit or face-up Legend.)\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nRivals must pay +2 €$ to use {Go Solo}.",
+      },
+    },
+    printings: [
+      {
+        id: "ce570725-0de7-438a-a9c8-33074a7180ba",
+        artId: "ce570725-0de7-438a-a9c8-33074a7180ba",
+        collectorNumber: "094",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/094.webp",
+      },
+      {
+        id: "fa711a0e-06bb-429b-a43a-89c50fb9d590",
+        artId: "fa711a0e-06bb-429b-a43a-89c50fb9d590",
+        collectorNumber: "β094",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b094.webp",
+      },
+    ],
+    selectedPrintingId: "ce570725-0de7-438a-a9c8-33074a7180ba",
+  },
+  "welcometonightcityretail:rita-wheeler-no-stupid-questions": {
+    i18n: {
+      en: {
+        name: "Rita Wheeler",
+        subname: "No Stupid Questions",
+        displayName: "Rita Wheeler: No Stupid Questions",
+        rulesText:
+          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nThe first time this Unit is spent each turn, draw 1, then discard 1.",
+      },
+    },
+    printings: [
+      {
+        id: "5d795b32-9ad8-4c94-abd4-d01e389db389",
+        artId: "5d795b32-9ad8-4c94-abd4-d01e389db389",
+        collectorNumber: "125",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/125.webp",
+      },
+      {
+        id: "6b5606c9-12a2-46d6-b13f-a672c6bd5f07",
+        artId: "6b5606c9-12a2-46d6-b13f-a672c6bd5f07",
+        collectorNumber: "β125",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b125.webp",
+      },
+    ],
+    selectedPrintingId: "5d795b32-9ad8-4c94-abd4-d01e389db389",
+  },
   "welcometonightcityretail:river-ward-detective-on-the-hunt": {
     i18n: {
       en: {
-        name: "River Ward — Detective on the Hunt",
-        displayName: "River Ward — Detective on the Hunt",
+        name: "River Ward",
+        subname: "Detective on the Hunt",
+        displayName: "River Ward: Detective on the Hunt",
         rulesText:
           "{Quick} {Spend} Play a Gear with cost 2 or less from your hand for free.\nWhen a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
       },
@@ -3897,14 +4213,143 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b039.webp",
       },
+      {
+        id: "e59b67b3-a388-4228-94a3-84ee12e68937",
+        artId: "e59b67b3-a388-4228-94a3-84ee12e68937",
+        collectorNumber: "β148",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b148.webp",
+      },
+      {
+        id: "f6e85d48-0d0b-4cfa-9cdf-1b66f8104328",
+        artId: "f6e85d48-0d0b-4cfa-9cdf-1b66f8104328",
+        collectorNumber: "004",
+        setCode: "prereleasebeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/004.webp",
+      },
     ],
     selectedPrintingId: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
+  },
+  "welcometonightcityretail:rockn-rockerboy": {
+    i18n: {
+      en: {
+        name: "Rockn' Rockerboy",
+        displayName: "Rockn' Rockerboy",
+        rulesText: "[Flavor] Scream your throat raw for something. Anything.",
+      },
+    },
+    printings: [
+      {
+        id: "07aaea5c-5aef-466e-956a-2e68930669c0",
+        artId: "07aaea5c-5aef-466e-956a-2e68930669c0",
+        collectorNumber: "052",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/052.webp",
+      },
+      {
+        id: "58cffb40-0914-4c6b-81cf-cdd8b2b83f17",
+        artId: "58cffb40-0914-4c6b-81cf-cdd8b2b83f17",
+        collectorNumber: "β052",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b052.webp",
+      },
+    ],
+    selectedPrintingId: "07aaea5c-5aef-466e-956a-2e68930669c0",
+  },
+  "welcometonightcityretail:rogue-amendiares-preem-solo": {
+    i18n: {
+      en: {
+        name: "Rogue Amendiares",
+        subname: "Preem Solo",
+        displayName: "Rogue Amendiares: Preem Solo",
+        rulesText:
+          "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\nWhen a friendly Legend steals a Gig, if its value is even, draw 1. If its value is odd, a Rival discards 1.",
+      },
+    },
+    printings: [
+      {
+        id: "2dd7547d-5098-4082-a98b-f39a583a222f",
+        artId: "2dd7547d-5098-4082-a98b-f39a583a222f",
+        collectorNumber: "040",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/040.webp",
+      },
+      {
+        id: "dd2f97c2-5ea6-4564-8b39-4f21ad0a7885",
+        artId: "dd2f97c2-5ea6-4564-8b39-4f21ad0a7885",
+        collectorNumber: "β040",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b040.webp",
+      },
+      {
+        id: "6b75ec33-da55-46c7-a88c-f0fb89263253",
+        artId: "6b75ec33-da55-46c7-a88c-f0fb89263253",
+        collectorNumber: "β149",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b149.webp",
+      },
+      {
+        id: "254975e9-0381-4a1c-96c7-19186a855e48",
+        artId: "254975e9-0381-4a1c-96c7-19186a855e48",
+        collectorNumber: "005",
+        setCode: "prereleasebeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/005.webp",
+      },
+    ],
+    selectedPrintingId: "2dd7547d-5098-4082-a98b-f39a583a222f",
+  },
+  "welcometonightcityretail:rogue-amendiares-queen-of-the-afterlife": {
+    i18n: {
+      en: {
+        name: "Rogue Amendiares",
+        subname: "Queen of the Afterlife",
+        displayName: "Rogue Amendiares: Queen of the Afterlife",
+        rulesText:
+          "The first time another friendly Unit steals a Gig with value less than its power each turn, ready 2 Eddies.\n{Quick} 2 €$,  {Spend} A rival Unit loses power equal to this Unit's power this turn.",
+      },
+    },
+    printings: [
+      {
+        id: "3193a6bd-3e99-4501-9c5c-8d5ea32c779c",
+        artId: "3193a6bd-3e99-4501-9c5c-8d5ea32c779c",
+        collectorNumber: "126",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/126.webp",
+      },
+      {
+        id: "4abedde2-f9db-4451-a2ab-fc7f594ea132",
+        artId: "4abedde2-f9db-4451-a2ab-fc7f594ea132",
+        collectorNumber: "β126",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b126.webp",
+      },
+      {
+        id: "807c871c-bebe-4343-9b68-1f89af5ed0da",
+        artId: "807c871c-bebe-4343-9b68-1f89af5ed0da",
+        collectorNumber: "β166",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b166.webp",
+      },
+    ],
+    selectedPrintingId: "3193a6bd-3e99-4501-9c5c-8d5ea32c779c",
   },
   "welcometonightcityretail:royce-don-t-call-me-simon": {
     i18n: {
       en: {
-        name: "Royce — Don't Call Me Simon",
-        displayName: "Royce — Don't Call Me Simon",
+        name: "Royce",
+        subname: "Don't Call Me Simon",
+        displayName: "Royce: Don't Call Me Simon",
         rulesText:
           "{Play} Defeat a rival Unit with power 2 or less. If you have more ☆ (Street Cred) than a Rival, defeat a rival Unit with power 3 or less instead.",
       },
@@ -3932,8 +4377,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:royce-psycho-on-the-edge": {
     i18n: {
       en: {
-        name: "Royce — Psycho on the Edge",
-        displayName: "Royce — Psycho on the Edge",
+        name: "Royce",
+        subname: "Psycho on the Edge",
+        displayName: "Royce: Psycho on the Edge",
         rulesText:
           "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\nDuring your turn, this Legend has +2 power for each of its equipped Gear.",
       },
@@ -3955,14 +4401,106 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b004.webp",
       },
+      {
+        id: "f712b214-b109-4e69-bc74-4991905024f7",
+        artId: "f712b214-b109-4e69-bc74-4991905024f7",
+        collectorNumber: "β143",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b143.webp",
+      },
+      {
+        id: "cbbe5954-ce33-47aa-83c1-bdda4c7b907f",
+        artId: "cbbe5954-ce33-47aa-83c1-bdda4c7b907f",
+        collectorNumber: "002",
+        setCode: "prereleasebeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/002.webp",
+      },
     ],
     selectedPrintingId: "3e2e228b-dbfb-484b-b82d-6972ff184aab",
+  },
+  "welcometonightcityretail:ruthless-lowlife": {
+    i18n: {
+      en: {
+        name: "Ruthless Lowlife",
+        displayName: "Ruthless Lowlife",
+        rulesText: "This Unit can only attack rival Units. (It can't attack Gig areas.)",
+      },
+    },
+    printings: [
+      {
+        id: "e1b674d0-4ac7-4523-be19-809308871d49",
+        artId: "e1b674d0-4ac7-4523-be19-809308871d49",
+        collectorNumber: "017",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/017.webp",
+      },
+      {
+        id: "23cfc17c-3fab-475b-9a1a-838b98e09bb8",
+        artId: "23cfc17c-3fab-475b-9a1a-838b98e09bb8",
+        collectorNumber: "β017",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b017.webp",
+      },
+      {
+        id: "c4806b05-6476-4c67-95a5-fc9c4ce2aaa2",
+        artId: "c4806b05-6476-4c67-95a5-fc9c4ce2aaa2",
+        collectorNumber: "004",
+        setCode: "embracingpowerretailstarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/004.webp",
+      },
+      {
+        id: "9c59c8d2-586a-4845-b969-43be1fd3b388",
+        artId: "9c59c8d2-586a-4845-b969-43be1fd3b388",
+        collectorNumber: "β004",
+        setCode: "embracingpowerbetastarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b004.webp",
+      },
+    ],
+    selectedPrintingId: "e1b674d0-4ac7-4523-be19-809308871d49",
+  },
+  "welcometonightcityretail:safety-override": {
+    i18n: {
+      en: {
+        name: "Safety Override",
+        displayName: "Safety Override",
+        rulesText:
+          "{Quick} The next time a friendly Unit loses a fight this turn, defeat the opposing rival Unit.",
+      },
+    },
+    printings: [
+      {
+        id: "5d987aa8-baed-45b2-986c-a21e04a53331",
+        artId: "5d987aa8-baed-45b2-986c-a21e04a53331",
+        collectorNumber: "069",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/069.webp",
+      },
+      {
+        id: "af696a54-97bf-475b-b721-9a8bb86227a0",
+        artId: "af696a54-97bf-475b-b721-9a8bb86227a0",
+        collectorNumber: "β069",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b069.webp",
+      },
+    ],
+    selectedPrintingId: "5d987aa8-baed-45b2-986c-a21e04a53331",
   },
   "welcometonightcityretail:sandayu-oda-hanako-s-guardian": {
     i18n: {
       en: {
-        name: "Sandayu Oda — Hanako's Guardian",
-        displayName: "Sandayu Oda — Hanako's Guardian",
+        name: "Sandayu Oda",
+        subname: "Hanako's Guardian",
+        displayName: "Sandayu Oda: Hanako's Guardian",
         rulesText:
           "{Play} Spend a rival Unit for each friendly value-pair of Gigs.\nThis Unit can attack rival Units the turn it's played.",
       },
@@ -3983,6 +4521,14 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         setCode: "welcometonightcitybeta",
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b088.webp",
+      },
+      {
+        id: "b1db8654-6197-4e80-9555-8917dcba6dc7",
+        artId: "b1db8654-6197-4e80-9555-8917dcba6dc7",
+        collectorNumber: "β164",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b164.webp",
       },
     ],
     selectedPrintingId: "f452a0ca-3204-48d5-8565-ec746f27959b",
@@ -4037,8 +4583,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:sasha-yakovleva-won-t-let-you-down": {
     i18n: {
       en: {
-        name: "Sasha Yakovleva — Won't Let You Down",
-        displayName: "Sasha Yakovleva — Won't Let You Down",
+        name: "Sasha Yakovleva",
+        subname: "Won't Let You Down",
+        displayName: "Sasha Yakovleva: Won't Let You Down",
         rulesText:
           "{Go Solo}\n{Attack} Reveal the top card of your deck and add it to your hand. This Unit gains power equal to that card's cost this turn.\n{Defeated} A Rival discards 1.",
       },
@@ -4074,8 +4621,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:satori-sword-of-saburo": {
     i18n: {
       en: {
-        name: "Satori — Sword of Saburo",
-        displayName: "Satori — Sword of Saburo",
+        name: "Satori",
+        subname: "Sword of Saburo",
+        displayName: "Satori: Sword of Saburo",
         rulesText:
           "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit wins a fight against a rival Unit, draw 1.",
       },
@@ -4129,8 +4677,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:saul-bright-stormrider": {
     i18n: {
       en: {
-        name: "Saul Bright — Stormrider",
-        displayName: "Saul Bright — Stormrider",
+        name: "Saul Bright",
+        subname: "Stormrider",
+        displayName: "Saul Bright: Stormrider",
         rulesText:
           "Other friendly Units have +2 power while attacking.\nAt the end of your turn, ready up to 3 friendly Units.",
       },
@@ -4158,8 +4707,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:screw-lovelorn-fool": {
     i18n: {
       en: {
-        name: "Screw — Lovelorn Fool",
-        displayName: "Screw — Lovelorn Fool",
+        name: "Screw",
+        subname: "Lovelorn Fool",
+        displayName: "Screw: Lovelorn Fool",
         rulesText: "{Defeated} Add another Unit from your trash to your hand.",
       },
     },
@@ -4236,6 +4786,53 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "fcbb6d58-6666-4bd3-8ff0-64930fb0f422",
+  },
+  "welcometonightcityretail:shattered-memories": {
+    i18n: {
+      en: {
+        name: "Shattered Memories",
+        displayName: "Shattered Memories",
+        rulesText:
+          "Each player discards their hand and may draw 5.\nIf the total number of discarded cards equals the value of a friendly Gig, draw 2.",
+      },
+    },
+    printings: [
+      {
+        id: "3401c7cf-45c5-4fe4-a883-284a9334262d",
+        artId: "3401c7cf-45c5-4fe4-a883-284a9334262d",
+        collectorNumber: "035",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/035.webp",
+      },
+      {
+        id: "80735f9a-6c20-4d24-9138-b3c0d2e6bf46",
+        artId: "80735f9a-6c20-4d24-9138-b3c0d2e6bf46",
+        collectorNumber: "β035",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b035.webp",
+      },
+      {
+        id: "b03a2e07-73a4-49c4-b4a3-761748a7b09e",
+        artId: "b03a2e07-73a4-49c4-b4a3-761748a7b09e",
+        collectorNumber: "011",
+        setCode: "embracingpowerretailstarterdeck",
+        rarity: "Rare",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerretailstarterdeck/011.webp",
+      },
+      {
+        id: "4adda471-e0c8-4628-aba1-d1ed11eae0af",
+        artId: "4adda471-e0c8-4628-aba1-d1ed11eae0af",
+        collectorNumber: "β011",
+        setCode: "embracingpowerbetastarterdeck",
+        rarity: "Rare",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b011.webp",
+      },
+    ],
+    selectedPrintingId: "3401c7cf-45c5-4fe4-a883-284a9334262d",
   },
   "welcometonightcityretail:sketchy-ripper": {
     i18n: {
@@ -4320,11 +4917,41 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "1c053198-187e-49ab-a9e0-0661b4c3b337",
   },
+  "welcometonightcityretail:synapse-burnout": {
+    i18n: {
+      en: {
+        name: "Synapse Burnout",
+        displayName: "Synapse Burnout",
+        rulesText:
+          "{Quick} A friendly Unit has +1 power for each friendly face-up Legend while fighting rival Units this turn.",
+      },
+    },
+    printings: [
+      {
+        id: "4277845b-1209-46df-8353-8fd36f56148a",
+        artId: "4277845b-1209-46df-8353-8fd36f56148a",
+        collectorNumber: "102",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/102.webp",
+      },
+      {
+        id: "535cec6e-269d-4c2d-860c-5c8eff999c21",
+        artId: "535cec6e-269d-4c2d-860c-5c8eff999c21",
+        collectorNumber: "β102",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b102.webp",
+      },
+    ],
+    selectedPrintingId: "4277845b-1209-46df-8353-8fd36f56148a",
+  },
   "welcometonightcityretail:t-bug-amateur-philosopher": {
     i18n: {
       en: {
-        name: "T-Bug — Amateur Philosopher",
-        displayName: "T-Bug — Amateur Philosopher",
+        name: "T-Bug",
+        subname: "Amateur Philosopher",
+        displayName: "T-Bug: Amateur Philosopher",
         rulesText:
           "{Defeated} Look at all friendly face-down Legends. Then, you may Call a Legend for free. (You can only Call a Legend once per turn.)",
       },
@@ -4395,11 +5022,342 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "bc1401d4-5b9b-495a-853e-0a22a11f6f4c",
   },
+  "welcometonightcityretail:tetratronic-rippler": {
+    i18n: {
+      en: {
+        name: "Tetratronic Rippler",
+        displayName: "Tetratronic Rippler",
+        rulesText:
+          "(Equip to a friendly Unit or face-up Legend.)\nWhen this Unit or Legend is spent, search the top card of your deck. You may trash it. (Otherwise, keep it on the top of your deck.)",
+      },
+    },
+    printings: [
+      {
+        id: "576f82ff-3c4d-4637-aa91-2773de43bbc8",
+        artId: "576f82ff-3c4d-4637-aa91-2773de43bbc8",
+        collectorNumber: "130",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/130.webp",
+      },
+      {
+        id: "74eb81ab-aa0a-4b09-8cfe-94dddd70f4b1",
+        artId: "74eb81ab-aa0a-4b09-8cfe-94dddd70f4b1",
+        collectorNumber: "β130",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b130.webp",
+      },
+      {
+        id: "39747fc8-20a0-4fbb-80d7-2a869b735ac9",
+        artId: "39747fc8-20a0-4fbb-80d7-2a869b735ac9",
+        collectorNumber: "018",
+        setCode: "theheistretailstarterdeck",
+        rarity: "Common",
+        imageUrl:
+          "https://cdn.tcg.online/public/cyberpunk/cards/theheistretailstarterdeck/018.webp",
+      },
+      {
+        id: "7ef4d862-b97f-47be-ba0f-071c8e8354b0",
+        artId: "7ef4d862-b97f-47be-ba0f-071c8e8354b0",
+        collectorNumber: "β018",
+        setCode: "theheistbetastarterdeck",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/theheistbetastarterdeck/b018.webp",
+      },
+    ],
+    selectedPrintingId: "576f82ff-3c4d-4637-aa91-2773de43bbc8",
+  },
+  "welcometonightcityretail:the-heist": {
+    i18n: {
+      en: {
+        name: "The Heist",
+        displayName: "The Heist",
+        rulesText:
+          "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+      },
+    },
+    printings: [
+      {
+        id: "a1e2c25e-fb27-458f-984d-df422f879664",
+        artId: "a1e2c25e-fb27-458f-984d-df422f879664",
+        collectorNumber: "070",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/070.webp",
+      },
+      {
+        id: "709ec425-eda5-4621-b907-94a507a20351",
+        artId: "709ec425-eda5-4621-b907-94a507a20351",
+        collectorNumber: "β070",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b070.webp",
+      },
+    ],
+    selectedPrintingId: "a1e2c25e-fb27-458f-984d-df422f879664",
+  },
+  "welcometonightcityretail:the-relic-experimental-biochip": {
+    i18n: {
+      en: {
+        name: "The Relic",
+        subname: "Experimental Biochip",
+        displayName: "The Relic: Experimental Biochip",
+        rulesText:
+          "{Defeated} Play another Unit with cost 9 or less from your trash for free. Then, bottom-deck this Unit.",
+      },
+    },
+    printings: [
+      {
+        id: "38d14168-c182-4a34-a3b2-1b8380ab6635",
+        artId: "38d14168-c182-4a34-a3b2-1b8380ab6635",
+        collectorNumber: "063",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/063.webp",
+      },
+      {
+        id: "a55809aa-170d-42b4-8768-f0b873fd0dc4",
+        artId: "a55809aa-170d-42b4-8768-f0b873fd0dc4",
+        collectorNumber: "β063",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b063.webp",
+      },
+      {
+        id: "9a4fafb2-b27b-4b3e-9f57-502040898b0f",
+        artId: "9a4fafb2-b27b-4b3e-9f57-502040898b0f",
+        collectorNumber: "β163",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b163.webp",
+      },
+    ],
+    selectedPrintingId: "38d14168-c182-4a34-a3b2-1b8380ab6635",
+  },
+  "welcometonightcityretail:three-mouths-one-desire": {
+    i18n: {
+      en: {
+        name: "Three Mouths, One Desire",
+        displayName: "Three Mouths, One Desire",
+        rulesText:
+          "Search the top 3 cards of your deck. Add 1 to your hand. You may add 1 more for each friendly min Gig. Bottom-deck the rest.",
+      },
+    },
+    printings: [
+      {
+        id: "573a88e9-ac01-4402-8e3d-2420dc4ca949",
+        artId: "573a88e9-ac01-4402-8e3d-2420dc4ca949",
+        collectorNumber: "137",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/137.webp",
+      },
+      {
+        id: "0449bc78-983b-4681-b062-0738de3c487b",
+        artId: "0449bc78-983b-4681-b062-0738de3c487b",
+        collectorNumber: "β137",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b137.webp",
+      },
+    ],
+    selectedPrintingId: "573a88e9-ac01-4402-8e3d-2420dc4ca949",
+  },
+  "welcometonightcityretail:towerfall": {
+    i18n: {
+      en: {
+        name: "Towerfall",
+        displayName: "Towerfall",
+        rulesText:
+          "Choose one effect. If you have less ☆ (Street Cred) than a Rival, choose both instead.\nGive all rival Units -5 power this turn. // Bottom-deck all rival Units with power 0.",
+      },
+    },
+    printings: [
+      {
+        id: "15920617-a06f-4302-9dfb-c85d3470c7eb",
+        artId: "15920617-a06f-4302-9dfb-c85d3470c7eb",
+        collectorNumber: "138",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/138.webp",
+      },
+      {
+        id: "25508f49-7256-47be-bc95-c420c7105c62",
+        artId: "25508f49-7256-47be-bc95-c420c7105c62",
+        collectorNumber: "β138",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b138.webp",
+      },
+      {
+        id: "4d8a1ccb-6d46-45b1-839a-fd3b7fa84b72",
+        artId: "4d8a1ccb-6d46-45b1-839a-fd3b7fa84b72",
+        collectorNumber: "β167",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b167.webp",
+      },
+    ],
+    selectedPrintingId: "15920617-a06f-4302-9dfb-c85d3470c7eb",
+  },
+  "welcometonightcityretail:trauma-team-operatives": {
+    i18n: {
+      en: {
+        name: "Trauma Team Operatives",
+        displayName: "Trauma Team Operatives",
+        rulesText: "Play this Unit for -1 €$ for each Unit in your trash, to a minimum of 1 €$.",
+      },
+    },
+    printings: [
+      {
+        id: "0d6c1f36-628b-4631-a96d-2000f6fb054e",
+        artId: "0d6c1f36-628b-4631-a96d-2000f6fb054e",
+        collectorNumber: "056",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/056.webp",
+      },
+      {
+        id: "df879b77-ca97-4e3d-8879-ecd73ceebf21",
+        artId: "df879b77-ca97-4e3d-8879-ecd73ceebf21",
+        collectorNumber: "β056",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b056.webp",
+      },
+    ],
+    selectedPrintingId: "0d6c1f36-628b-4631-a96d-2000f6fb054e",
+  },
+  "welcometonightcityretail:trust-no-one": {
+    i18n: {
+      en: {
+        name: "Trust No One",
+        displayName: "Trust No One",
+        rulesText: "Decrease a Gig by up to 3. Then, if you control a min Gig, draw 1.",
+      },
+    },
+    printings: [
+      {
+        id: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
+        artId: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
+        collectorNumber: "139",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/139.webp",
+      },
+      {
+        id: "f9a81013-9c64-4e48-8d1d-cd1b41b72ee0",
+        artId: "f9a81013-9c64-4e48-8d1d-cd1b41b72ee0",
+        collectorNumber: "β139",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b139.webp",
+      },
+      {
+        id: "a0d5fd79-b00b-408d-89c5-ff8721da568c",
+        artId: "a0d5fd79-b00b-408d-89c5-ff8721da568c",
+        collectorNumber: "007",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/007.webp",
+      },
+    ],
+    selectedPrintingId: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
+  },
+  "welcometonightcityretail:tyger-s-whisper": {
+    i18n: {
+      en: {
+        name: "Tyger's Whisper",
+        displayName: "Tyger's Whisper",
+        rulesText:
+          "{Play} You may Call a Legend for free. (You can only Call a Legend once per turn.)\n(Units with power 0 don't steal Gigs.)",
+      },
+    },
+    printings: [
+      {
+        id: "28267ce7-17dc-42c4-b8c4-4235a7f3c3df",
+        artId: "28267ce7-17dc-42c4-b8c4-4235a7f3c3df",
+        collectorNumber: "090",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/090.webp",
+      },
+      {
+        id: "4b7d734b-5cc2-4c57-9bcf-7e3b5a0f1f9f",
+        artId: "4b7d734b-5cc2-4c57-9bcf-7e3b5a0f1f9f",
+        collectorNumber: "β090",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b090.webp",
+      },
+    ],
+    selectedPrintingId: "28267ce7-17dc-42c4-b8c4-4235a7f3c3df",
+  },
+  "welcometonightcityretail:unlikely-bond": {
+    i18n: {
+      en: {
+        name: "Unlikely Bond",
+        displayName: "Unlikely Bond",
+        rulesText: "Bottom-deck a ready friendly Unit. If you do, bottom-deck a spent rival Unit.",
+      },
+    },
+    printings: [
+      {
+        id: "b21f86a3-cb77-44a3-bf94-4c5e068ac2c8",
+        artId: "b21f86a3-cb77-44a3-bf94-4c5e068ac2c8",
+        collectorNumber: "140",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/140.webp",
+      },
+      {
+        id: "54575eba-9d21-43fe-b6df-7cd2564dd37b",
+        artId: "54575eba-9d21-43fe-b6df-7cd2564dd37b",
+        collectorNumber: "β140",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b140.webp",
+      },
+    ],
+    selectedPrintingId: "b21f86a3-cb77-44a3-bf94-4c5e068ac2c8",
+  },
+  "welcometonightcityretail:v-roamer-of-the-badlands": {
+    i18n: {
+      en: {
+        name: "V",
+        subname: "Roamer of the Badlands",
+        displayName: "V: Roamer of the Badlands",
+        rulesText:
+          "When this Unit steals a Gig, increase it by up to 5.\nAt the end of your turn, if you control 2 or more Gigs with 8+ value, draw 1.",
+      },
+    },
+    printings: [
+      {
+        id: "c1747b7d-de5c-43eb-a4ed-b632f1861712",
+        artId: "c1747b7d-de5c-43eb-a4ed-b632f1861712",
+        collectorNumber: "020",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/020.webp",
+      },
+      {
+        id: "b460b92c-c0fd-43ed-84db-8615032e47f4",
+        artId: "b460b92c-c0fd-43ed-84db-8615032e47f4",
+        collectorNumber: "β020",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b020.webp",
+      },
+    ],
+    selectedPrintingId: "c1747b7d-de5c-43eb-a4ed-b632f1861712",
+  },
   "welcometonightcityretail:v-streetkid": {
     i18n: {
       en: {
-        name: "V — StreetKid",
-        displayName: "V — StreetKid",
+        name: "V",
+        subname: "Streetkid",
+        displayName: "V: Streetkid",
         rulesText:
           "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.\n{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
       },
@@ -4439,14 +5397,110 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b005b.webp",
       },
+      {
+        id: "20debd66-ff1c-42c3-9869-928cba33ccb5",
+        artId: "20debd66-ff1c-42c3-9869-928cba33ccb5",
+        collectorNumber: "β144",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b144.webp",
+      },
     ],
     selectedPrintingId: "3fc63c58-5954-4744-a5af-047bfc5cb159",
+  },
+  "welcometonightcityretail:valentino-guerrera": {
+    i18n: {
+      en: {
+        name: "Valentino Guerrera",
+        displayName: "Valentino Guerrera",
+        rulesText:
+          "If you have more ☆ (Street Cred) than a Rival, this Unit can attack ready Units with {Blocker}.",
+      },
+    },
+    printings: [
+      {
+        id: "67b82386-5cb0-4ae7-b940-ac0d982b773c",
+        artId: "67b82386-5cb0-4ae7-b940-ac0d982b773c",
+        collectorNumber: "021",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/021.webp",
+      },
+      {
+        id: "8d236321-e94e-41b1-8cb9-c2a533afc112",
+        artId: "8d236321-e94e-41b1-8cb9-c2a533afc112",
+        collectorNumber: "β021",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b021.webp",
+      },
+    ],
+    selectedPrintingId: "67b82386-5cb0-4ae7-b940-ac0d982b773c",
+  },
+  "welcometonightcityretail:valentino-street-racer": {
+    i18n: {
+      en: {
+        name: "Valentino Street Racer",
+        displayName: "Valentino Street Racer",
+        rulesText:
+          "{Play} Give another friendly Unit with cost 5 or less {Adrenaline} this turn. (A Unit with Adrenaline can attack the turn it's played.)",
+      },
+    },
+    printings: [
+      {
+        id: "dc15db71-3443-4de0-b988-c62601bae5e1",
+        artId: "dc15db71-3443-4de0-b988-c62601bae5e1",
+        collectorNumber: "091",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/091.webp",
+      },
+      {
+        id: "c828bc68-23a3-41ef-878b-00b13ccf0cdc",
+        artId: "c828bc68-23a3-41ef-878b-00b13ccf0cdc",
+        collectorNumber: "β091",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b091.webp",
+      },
+    ],
+    selectedPrintingId: "dc15db71-3443-4de0-b988-c62601bae5e1",
+  },
+  "welcometonightcityretail:viktor-vektor-drop-your-illusions": {
+    i18n: {
+      en: {
+        name: "Viktor Vektor",
+        subname: "Drop Your Illusions",
+        displayName: "Viktor Vektor: Drop Your Illusions",
+        rulesText: "Play your first CYBERWARE Gear each turn for -3 €$, to a minimum of 1 €$.",
+      },
+    },
+    printings: [
+      {
+        id: "2285cd3a-7010-4ba4-b23a-ba40aba296f9",
+        artId: "2285cd3a-7010-4ba4-b23a-ba40aba296f9",
+        collectorNumber: "057",
+        setCode: "welcometonightcityretail",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/057.webp",
+      },
+      {
+        id: "ade4a2d5-df74-44fe-ab5f-222dc6e2ce27",
+        artId: "ade4a2d5-df74-44fe-ab5f-222dc6e2ce27",
+        collectorNumber: "β057",
+        setCode: "welcometonightcitybeta",
+        rarity: "Epic",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b057.webp",
+      },
+    ],
+    selectedPrintingId: "2285cd3a-7010-4ba4-b23a-ba40aba296f9",
   },
   "welcometonightcityretail:viktor-vektor-you-might-feel-a-little-pinch": {
     i18n: {
       en: {
-        name: "Viktor Vektor — You Might Feel a Little Pinch",
-        displayName: "Viktor Vektor — You Might Feel a Little Pinch",
+        name: "Viktor Vektor",
+        subname: "You Might Feel a Little Pinch",
+        displayName: "Viktor Vektor: You Might Feel a Little Pinch",
         rulesText:
           "{Play} Play a CYBERWARE Gear with cost 2 or less from your trash for free. Equip it only to another friendly Unit.",
       },
@@ -4470,6 +5524,130 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "4eca7fcd-85c1-43d0-8a07-4227312ab0db",
+  },
+  "welcometonightcityretail:wakako-okada-peace-and-harmony": {
+    i18n: {
+      en: {
+        name: "Wakako Okada",
+        subname: "Peace and Harmony",
+        displayName: "Wakako Okada: Peace and Harmony",
+        rulesText:
+          "{Call} Choose one effect.\nGive a rival Unit -2 power this turn. // Draw 1.\n{Spend}: Decrease a Gig by up to 2.",
+      },
+    },
+    printings: [
+      {
+        id: "8f7a7d0b-5935-4732-a9ba-76b19467d5a0",
+        artId: "8f7a7d0b-5935-4732-a9ba-76b19467d5a0",
+        collectorNumber: "110",
+        setCode: "welcometonightcityretail",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/110.webp",
+      },
+      {
+        id: "33ee09a3-4591-4302-9052-6dd5130861c6",
+        artId: "33ee09a3-4591-4302-9052-6dd5130861c6",
+        collectorNumber: "β110",
+        setCode: "welcometonightcitybeta",
+        rarity: "Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b110.webp",
+      },
+      {
+        id: "16e04a94-086a-4c20-b788-88ac016ec59b",
+        artId: "16e04a94-086a-4c20-b788-88ac016ec59b",
+        collectorNumber: "β158",
+        setCode: "welcometonightcitybeta",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b158.webp",
+      },
+    ],
+    selectedPrintingId: "8f7a7d0b-5935-4732-a9ba-76b19467d5a0",
+  },
+  "welcometonightcityretail:we-gotta-live-together": {
+    i18n: {
+      en: {
+        name: "We Gotta Live Together",
+        displayName: "We Gotta Live Together",
+        rulesText:
+          "If a Rival controls at least 2 more Gigs than you, play this Program for 3 €$.\nPlay up to 2 Units with cost 3 or less from your trash for free.",
+      },
+    },
+    printings: [
+      {
+        id: "63821536-cdf5-4347-812a-0bf72d727596",
+        artId: "63821536-cdf5-4347-812a-0bf72d727596",
+        collectorNumber: "104",
+        setCode: "welcometonightcityretail",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/104.webp",
+      },
+      {
+        id: "3488c7f7-c797-4c3a-8d49-e5cdcf0e8d74",
+        artId: "3488c7f7-c797-4c3a-8d49-e5cdcf0e8d74",
+        collectorNumber: "β104",
+        setCode: "welcometonightcitybeta",
+        rarity: "Uncommon",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b104.webp",
+      },
+    ],
+    selectedPrintingId: "63821536-cdf5-4347-812a-0bf72d727596",
+  },
+  "welcometonightcityretail:westbrook-netrunner": {
+    i18n: {
+      en: {
+        name: "Westbrook Netrunner",
+        displayName: "Westbrook Netrunner",
+        rulesText:
+          "{Play} Until your next turn, rival Legends can't steal friendly Gigs with value less than their power.",
+      },
+    },
+    printings: [
+      {
+        id: "5801d086-7e87-4645-95e2-68239230098d",
+        artId: "5801d086-7e87-4645-95e2-68239230098d",
+        collectorNumber: "127",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/127.webp",
+      },
+      {
+        id: "1e2413a0-aa80-4883-806a-d8e9ed32bbca",
+        artId: "1e2413a0-aa80-4883-806a-d8e9ed32bbca",
+        collectorNumber: "β127",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b127.webp",
+      },
+    ],
+    selectedPrintingId: "5801d086-7e87-4645-95e2-68239230098d",
+  },
+  "welcometonightcityretail:wild-in-the-streets": {
+    i18n: {
+      en: {
+        name: "Wild in the Streets",
+        displayName: "Wild in the Streets",
+        rulesText: "Defeat a spent Unit.",
+      },
+    },
+    printings: [
+      {
+        id: "54f0308f-8fb2-4861-a414-c15ca24426c3",
+        artId: "54f0308f-8fb2-4861-a414-c15ca24426c3",
+        collectorNumber: "105",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/105.webp",
+      },
+      {
+        id: "bc78db9f-337e-437e-b247-f1aa798c48d0",
+        artId: "bc78db9f-337e-437e-b247-f1aa798c48d0",
+        collectorNumber: "β105",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b105.webp",
+      },
+    ],
+    selectedPrintingId: "54f0308f-8fb2-4861-a414-c15ca24426c3",
   },
   "welcometonightcityretail:wraith-marauders": {
     i18n: {
@@ -4503,8 +5681,9 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
   "welcometonightcityretail:yorinobu-arasaka-steel-dragon": {
     i18n: {
       en: {
-        name: "Yorinobu Arasaka — Steel Dragon",
-        displayName: "Yorinobu Arasaka — Steel Dragon",
+        name: "Yorinobu Arasaka",
+        subname: "Steel Dragon",
+        displayName: "Yorinobu Arasaka: Steel Dragon",
         rulesText:
           "{Play} You may play a Unit with cost 4 or less from your hand or trash for free. It can attack rival Units this turn.\nThe first time an ARASAKA Unit is defeated each turn, draw 1.",
       },
@@ -4528,6 +5707,35 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
       },
     ],
     selectedPrintingId: "c057ccc4-bb15-4efd-8115-8d223568134b",
+  },
+  "welcometonightcityretail:zetatech-berserk": {
+    i18n: {
+      en: {
+        name: "Zetatech Berserk",
+        displayName: "Zetatech Berserk",
+        rulesText:
+          "Play this Gear for -1 €$ for each friendly face-up Legend, to a minimum of 1 €$.",
+      },
+    },
+    printings: [
+      {
+        id: "8b8bcfcd-37c8-4bca-8c25-17a3b3363349",
+        artId: "8b8bcfcd-37c8-4bca-8c25-17a3b3363349",
+        collectorNumber: "096",
+        setCode: "welcometonightcityretail",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/096.webp",
+      },
+      {
+        id: "36735ea2-1489-4e7a-810f-20dab24d503b",
+        artId: "36735ea2-1489-4e7a-810f-20dab24d503b",
+        collectorNumber: "β096",
+        setCode: "welcometonightcitybeta",
+        rarity: "Common",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b096.webp",
+      },
+    ],
+    selectedPrintingId: "8b8bcfcd-37c8-4bca-8c25-17a3b3363349",
   },
   "welcometonightcityretail:zetatech-faceplate": {
     i18n: {
@@ -4575,177 +5783,4 @@ export const cyberpunkCardMetadata: Record<string, CyberpunkCardMetadataEntry> =
     ],
     selectedPrintingId: "79cdc9a5-d94d-4df4-9f88-aa02fb0357b3",
   },
-  "welcometonightcityretail:appetite-for-destruction": {
-    i18n: {
-      en: {
-        name: "Appetite for Destruction",
-        displayName: "Appetite for Destruction",
-        rulesText:
-          "The next time a friendly Unit wins a fight by 3+ power this turn, it also steals a Gig.",
-      },
-    },
-    printings: [
-      {
-        id: "f274789d-69f2-4acf-a511-f728c67d1a13",
-        artId: "f274789d-69f2-4acf-a511-f728c67d1a13",
-        collectorNumber: "028",
-        setCode: "welcometonightcityretail",
-        rarity: "Uncommon",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/028.webp",
-      },
-      {
-        id: "d2aed299-7c88-484a-aa8a-e2e2f09bf8a8",
-        artId: "d2aed299-7c88-484a-aa8a-e2e2f09bf8a8",
-        collectorNumber: "β028",
-        setCode: "welcometonightcitybeta",
-        rarity: "Uncommon",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b028.webp",
-      },
-    ],
-    selectedPrintingId: "f274789d-69f2-4acf-a511-f728c67d1a13",
-  },
-  "welcometonightcityretail:hanako-arasaka-daughter-of-the-emperor": {
-    i18n: {
-      en: {
-        name: "Hanako Arasaka — Daughter of the Emperor",
-        displayName: "Hanako Arasaka — Daughter of the Emperor",
-        rulesText:
-          "{Spend} Swap a friendly Gig with a rival Gig.\nAt the start of your turn, draw 1 for each friendly value-pair of Gigs.",
-      },
-    },
-    printings: [
-      {
-        id: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
-        artId: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
-        collectorNumber: "072",
-        setCode: "welcometonightcityretail",
-        rarity: "Rare",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/072.webp",
-      },
-      {
-        id: "1435b785-967e-48a7-8ef7-f7fecbb27aaf",
-        artId: "1435b785-967e-48a7-8ef7-f7fecbb27aaf",
-        collectorNumber: "β072",
-        setCode: "welcometonightcitybeta",
-        rarity: "Rare",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b072.webp",
-      },
-    ],
-    selectedPrintingId: "2c4a77e8-0fda-4ec1-9519-1d15e0f172b3",
-  },
-  "welcometonightcityretail:pepe-najarro-working-doubles": {
-    i18n: {
-      en: {
-        name: "Pepe Najarro — Working Doubles",
-        displayName: "Pepe Najarro — Working Doubles",
-        rulesText:
-          "{Attack} If you control a value-pair of Gigs, ready up to 2 MERC Legends in your Legends area.",
-      },
-    },
-    printings: [
-      {
-        id: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
-        artId: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
-        collectorNumber: "086",
-        setCode: "welcometonightcityretail",
-        rarity: "Uncommon",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/086.webp",
-      },
-      {
-        id: "786d5ce2-bfc0-4648-9c7d-323e939a1d34",
-        artId: "786d5ce2-bfc0-4648-9c7d-323e939a1d34",
-        collectorNumber: "β086",
-        setCode: "welcometonightcitybeta",
-        rarity: "Uncommon",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b086.webp",
-      },
-    ],
-    selectedPrintingId: "0de81196-f1d3-4fd0-ae6a-062dae3f3f2c",
-  },
-  "welcometonightcityretail:rita-wheeler-no-stupid-questions": {
-    i18n: {
-      en: {
-        name: "Rita Wheeler — No Stupid Questions",
-        displayName: "Rita Wheeler — No Stupid Questions",
-        rulesText:
-          "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nThe first time this Unit is spent each turn, draw 1, then discard 1.",
-      },
-    },
-    printings: [
-      {
-        id: "5d795b32-9ad8-4c94-abd4-d01e389db389",
-        artId: "5d795b32-9ad8-4c94-abd4-d01e389db389",
-        collectorNumber: "125",
-        setCode: "welcometonightcityretail",
-        rarity: "Common",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/125.webp",
-      },
-      {
-        id: "6b5606c9-12a2-46d6-b13f-a672c6bd5f07",
-        artId: "6b5606c9-12a2-46d6-b13f-a672c6bd5f07",
-        collectorNumber: "β125",
-        setCode: "welcometonightcitybeta",
-        rarity: "Common",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b125.webp",
-      },
-    ],
-    selectedPrintingId: "5d795b32-9ad8-4c94-abd4-d01e389db389",
-  },
-  "welcometonightcityretail:live-with-the-aftermath": {
-    i18n: {
-      en: {
-        name: "Live with the Aftermath",
-        displayName: "Live with the Aftermath",
-        rulesText: "Each player defeats one of their Units.",
-      },
-    },
-    printings: [
-      {
-        id: "f931c82e-a382-4f60-808c-5910ac9850be",
-        artId: "f931c82e-a382-4f60-808c-5910ac9850be",
-        collectorNumber: "068",
-        setCode: "welcometonightcityretail",
-        rarity: "Common",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/068.webp",
-      },
-      {
-        id: "b2d6aeff-8fa3-4151-9e67-a83188a78197",
-        artId: "b2d6aeff-8fa3-4151-9e67-a83188a78197",
-        collectorNumber: "β068",
-        setCode: "welcometonightcitybeta",
-        rarity: "Common",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b068.webp",
-      },
-    ],
-    selectedPrintingId: "f931c82e-a382-4f60-808c-5910ac9850be",
-  },
-  "welcometonightcityretail:octant": {
-    i18n: {
-      en: {
-        name: "Octant",
-        displayName: "Octant",
-        rulesText:
-          "Play this Unit for -1 €$ for each friendly Gig with 8+ value, to a minimum of 1 €$.",
-      },
-    },
-    printings: [
-      {
-        id: "089df0e6-0000-4e6c-b6d3-d9119466b624",
-        artId: "089df0e6-0000-4e6c-b6d3-d9119466b624",
-        collectorNumber: "015",
-        setCode: "welcometonightcityretail",
-        rarity: "Common",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/015.webp",
-      },
-      {
-        id: "3b8c035e-161d-4a84-bdc8-f76899e8244f",
-        artId: "3b8c035e-161d-4a84-bdc8-f76899e8244f",
-        collectorNumber: "β015",
-        setCode: "welcometonightcitybeta",
-        rarity: "Common",
-        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b015.webp",
-      },
-    ],
-    selectedPrintingId: "089df0e6-0000-4e6c-b6d3-d9119466b624",
-  },
-} satisfies Record<string, CyberpunkCardMetadataEntry>;
+};

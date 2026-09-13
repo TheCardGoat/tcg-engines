@@ -5,6 +5,7 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   createMockCommand,
+  createMockResource,
   createMockUnit,
   expectSuccess,
 } from "../../index.ts";
@@ -93,5 +94,94 @@ describe("activateTiming Burst eligibility", () => {
       sourceCardId: shieldId,
       directiveIndex: -1,
     });
+  });
+});
+
+describe("activateTiming indirect Command activation", () => {
+  it("does not record a paired Special Move replay when its first public target is missing", () => {
+    const host = createMockUnit({
+      effects: [
+        {
+          type: "triggered",
+          activation: { timing: ["attack"] },
+          directives: [{ action: { action: "activatePairedCardTiming", timing: "main" } }],
+          sourceText: "【Attack】Activate 【Main】 on the card paired with this Unit.",
+        },
+      ],
+    });
+    const specialMove = createMockCommand({
+      name: "Test Special Move",
+      traits: ["special move"],
+      pilotName: "Test Pilot",
+      level: 1,
+      cost: 1,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [
+            {
+              action: {
+                action: "dealDamage",
+                amount: 2,
+                target: { owner: "opponent", cardType: "unit", count: 1 },
+              },
+            },
+          ],
+          sourceText: "【Main】Choose 1 enemy Unit. Deal 2 damage to it.",
+        },
+      ],
+    });
+    const observer = createMockUnit({
+      effects: [
+        {
+          type: "triggered",
+          activation: {
+            timing: ["onCommandEffectActivated"],
+            conditions: [
+              { type: "eventPlayerIsSelf" },
+              {
+                type: "eventCardMatches",
+                target: {
+                  owner: "friendly",
+                  cardType: "command",
+                  attributeFilters: [
+                    { attribute: "trait", comparison: "includes", value: "special move" },
+                  ],
+                },
+              },
+            ],
+          },
+          directives: [
+            {
+              action: {
+                action: "grantKeyword",
+                keyword: "Suppression",
+                duration: "thisTurn",
+                target: { owner: "self", cardType: "unit" },
+              },
+            },
+          ],
+          sourceText:
+            "When you activate a (Special Move) Command's 【Main】/【Action】, this Unit gains <Suppression> during this turn.",
+        },
+      ],
+    });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [specialMove],
+        play: [host, observer],
+        resourceArea: [{ card: createMockResource(), exhausted: false }],
+      },
+      { shieldArea: [createMockUnit()] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [hostId, observerId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.playCommandAsPilot(specialMove, hostId!));
+    expectSuccess(p1.enterBattle(hostId!, "direct"));
+
+    expect(p1.getVisibleCard(observerId!)?.keywords).not.toContain("Suppression");
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 });

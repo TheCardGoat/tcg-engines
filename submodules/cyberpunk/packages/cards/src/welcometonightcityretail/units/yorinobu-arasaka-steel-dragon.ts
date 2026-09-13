@@ -5,10 +5,11 @@ export const welcomeToNightCityRetailYorinobuArasakaSteelDragon = defineCyberpun
   id: "6cf6456d-d020-4c6c-9041-66d503a01a0a",
   canonicalId: "yorinobu-arasaka-steel-dragon",
   slug: "yorinobu-arasaka-steel-dragon",
+  subname: "Steel Dragon",
   rulesText:
     "{Play} You may play a Unit with cost 4 or less from your hand or trash for free. It can attack rival Units this turn.\nThe first time an ARASAKA Unit is defeated each turn, draw 1.",
-  name: "Yorinobu Arasaka — Steel Dragon",
-  displayName: "Yorinobu Arasaka — Steel Dragon",
+  name: "Yorinobu Arasaka",
+  displayName: "Yorinobu Arasaka: Steel Dragon",
   color: "red",
   classifications: ["Arasaka", "Corpo"],
   set: {

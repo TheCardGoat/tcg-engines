@@ -64,9 +64,17 @@ export const op01MonkeyDLuffy003: LeaderCard = {
               filters: [
                 {
                   filter: "anyOf",
-                  groups: [
-                    [{ filter: "trait", value: "Supernovas", match: "includes" }],
-                    [{ filter: "trait", value: "Straw Hat Crew", match: "includes" }],
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Supernova",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Straw Hat Crew",
+                      match: "includes",
+                    },
                   ],
                 },
                 {

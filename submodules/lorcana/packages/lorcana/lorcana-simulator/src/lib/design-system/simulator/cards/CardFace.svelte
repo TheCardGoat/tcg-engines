@@ -363,12 +363,12 @@ const damageIndicatorClass = $derived(
 
   <!-- Selection Indicator -->
   {#if isSelected}
-    <div class="selection-indicator absolute -inset-1 border-2 border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.6)] pointer-events-none animate-selection-pulse z-20"></div>
+    <div class="selection-indicator absolute -inset-1 border-2 border-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.6)] pointer-events-none z-20"></div>
   {/if}
 
   <!-- Playable Glow -->
   {#if isPlayable && !isValidTarget}
-    <div class="playable-glow absolute inset-0 pointer-events-none animate-playable-pulse"></div>
+    <div class="playable-glow absolute inset-0 pointer-events-none"></div>
   {/if}
 
   <!-- Valid Target Indicator -->
@@ -539,36 +539,13 @@ const damageIndicatorClass = $derived(
     box-shadow:
       inset 0 0 10px rgba(56, 189, 248, 0.35),
       0 0 10px rgba(56, 189, 248, 0.22);
-    animation: valid-target-breathe 1.6s ease-in-out infinite;
-  }
-
-  @keyframes valid-target-breathe {
-    0%,
-    100% {
-      opacity: 0.6;
-    }
-    50% {
-      opacity: 1;
-    }
   }
 
   /* Questing State */
   .card-face--questing .card-frame {
-    animation: questing-pulse 1s ease-in-out infinite;
-  }
-
-  @keyframes questing-pulse {
-    0%,
-    100% {
-      box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.3),
-        0 0 10px var(--questing-glow);
-    }
-    50% {
-      box-shadow:
-        0 4px 12px rgba(0, 0, 0, 0.3),
-        0 0 25px var(--questing-glow);
-    }
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.3),
+      0 0 10px var(--questing-glow);
   }
 
   /* Invalid Target State */

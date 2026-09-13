@@ -1,6 +1,6 @@
 import type { DiceImageColor, DicierStyle, DieType } from "../../engine";
 
-export const DICE_ASSET_CDN = "https://r2.tcg.online/public/assets";
+export const DICE_ASSET_CDN = "https://cdn.tcg.online/public/assets";
 
 const DICIER_VARIANTS = [
   "Block-Dark",

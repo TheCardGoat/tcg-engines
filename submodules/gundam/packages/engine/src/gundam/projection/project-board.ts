@@ -20,7 +20,7 @@ import {
   getEffectiveKeywordEffects,
   getEffectiveStats,
 } from "../rules/derived-state.ts";
-import { buildPendingChoicePrompt } from "../effects/pending-effects.ts";
+import { buildPendingChoicePrompt, priorityHead } from "../effects/pending-effects.ts";
 import { buildReadAPI } from "../../runtime/match-runtime.queries.ts";
 import { projectTimerView } from "../../runtime/view-filter.ts";
 
@@ -52,21 +52,40 @@ export function projectGundamBoardView(
   // answer the prompt) or to a judge. Spectators and the non-controller
   // opponent already know that a choice is pending via pendingEffectCount.
   const pendingChoice = computeRoleScopedPendingChoice(g, state, roleCtx, staticResources);
+  const pendingBurst = computePublicPendingBurst(g, state);
 
   return {
     players: playerViews,
     gameSegment: ctx.status.gameSegment,
     phase: ctx.status.phase,
     step: ctx.status.step,
+    turn: ctx.status.turn,
     activePlayer: ctx.status.activePlayer as string | undefined,
     turnPlayer: ctx.status.turnPlayer as string | undefined,
     pendingDecision: (ctx.status.pendingDecision ?? []) as string[],
     pendingCombat: g.turnMetadata.pendingCombat,
     pendingEffectCount: g.pendingEffects.length,
+    pendingBurst,
     pendingChoice,
     timerView: projectTimerView(state, Date.now()),
     winner: ctx.status.winner as string | undefined,
     stateId: ctx._stateID,
+  };
+}
+
+function computePublicPendingBurst(
+  g: GundamG,
+  state: MatchState<GundamG>,
+): GundamBoardView["pendingBurst"] {
+  const turnPlayerId = (state.ctx.status.turnPlayer ??
+    state.ctx.status.activePlayer) as unknown as string;
+  const head = priorityHead(g, turnPlayerId);
+  if (head?.kind !== "burst") return undefined;
+  return {
+    kind: "burst",
+    effectId: head.id,
+    controllerId: head.controllerId,
+    sourceCardId: head.sourceCardId,
   };
 }
 

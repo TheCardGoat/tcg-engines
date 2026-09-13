@@ -4,7 +4,7 @@ import type {
   PendingChoiceType,
   ChooseTargetSubType,
 } from "../types/match-state.ts";
-import type { PlayerId } from "../types/branded.ts";
+import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import { MOVE_IDS, type MoveId } from "../moves/index.ts";
 import type {
   CardColor,
@@ -24,6 +24,7 @@ import { DIE_MAX_VALUES } from "../types/gig-die.ts";
 import { isReactStep } from "../moves/is-react-step.ts";
 import { canActivateAbility, canHostActivatedAbility } from "../moves/activate-ability.ts";
 import { computeEffectiveCost } from "../moves/compute-effective-cost.ts";
+import { goSoloCost } from "../moves/go-solo.ts";
 import { availableEddies } from "../moves/eddie-resources.ts";
 
 const KNOWN_MOVE_IDS: ReadonlySet<MoveId> = new Set(MOVE_IDS);
@@ -95,6 +96,7 @@ export type ChoicePrompt =
   | ChooseEffectChoicePrompt
   | ChooseTriggerChoicePrompt
   | ChooseGigsToStealChoicePrompt
+  | PreventGigStealChoicePrompt
   | ChooseCardToPlayChoicePrompt
   | ChooseCardToMoveChoicePrompt
   | ChooseCardTypeChoicePrompt
@@ -269,6 +271,19 @@ export interface ChooseGigsToStealChoicePrompt {
   };
 }
 
+export interface PreventGigStealChoicePrompt {
+  type: "preventGigSteal";
+  chooserId: string;
+  payload: {
+    attackerId: string;
+    rivalId: string;
+    /** Each Gig about to be stolen, with its current face value. */
+    stealEntries: Array<{ dieId: string; value: number }>;
+    /** Each discard-eligible hand card, with its play cost. */
+    handEntries: Array<{ cardId: string; cost: number }>;
+  };
+}
+
 export interface ChooseCardToPlayChoicePrompt {
   type: "chooseCardToPlay";
   chooserId: string;
@@ -279,6 +294,7 @@ export interface ChooseCardToPlayChoicePrompt {
     free?: boolean;
     attachTo?: unknown;
     resolvedAttachToId?: string;
+    canDecline?: boolean;
   };
 }
 
@@ -416,15 +432,30 @@ function toAvailableMove(moveId: MoveId, state: MatchState, playerId: PlayerId):
         moveId,
         inputSpec: { type: "selectCard", candidates: getCallableLegends(state, playerId) },
       };
-    case "attackUnit":
+    case "attackUnit": {
+      const attackers = getReadyAttackers(state, playerId);
+      const canAttackReadyBlockers = attackers.some((id) =>
+        getEffectiveRules(state, id).includes("canAttackReadyBlockers"),
+      );
+      const canAttackReadyUnits = attackers.some((id) =>
+        getEffectiveRules(state, id).includes("canAttackReadyUnits"),
+      );
       return {
         moveId,
         inputSpec: {
           type: "selectPair",
-          fromCandidates: getReadyAttackers(state, playerId),
-          toCandidates: getSpentDefenders(state, playerId),
+          fromCandidates: attackers,
+          toCandidates: [
+            ...getSpentDefenders(state, playerId),
+            ...(canAttackReadyUnits
+              ? getOpponentReadyUnits(state, playerId)
+              : canAttackReadyBlockers
+                ? getOpponentReadyBlockers(state, playerId)
+                : []),
+          ],
         },
       };
+    }
     case "attackRival":
       return {
         moveId,
@@ -465,9 +496,11 @@ function toAvailableMove(moveId: MoveId, state: MatchState, playerId: PlayerId):
     case "resolveDiscardFromHand":
     case "resolveAdjustGig":
     case "resolveStealGigs":
+    case "resolvePreventGigSteal":
     case "resolveTrigger":
     case "resolveEffectTarget":
     case "resolveCardTypeChoice":
+    case "resolveChooseEffect":
       return { moveId, inputSpec: { type: "none" } };
   }
 }
@@ -561,6 +594,7 @@ function getReadyAttackers(
       if (!card || card.meta.spent) return false;
       const rules = getEffectiveRules(state, id as string);
       if (rules.includes("cantAttack")) return false;
+      if (opts?.excludeUnitOnlyAttackers && rules.includes("cantAttackRival")) return false;
       if (
         rules.includes("requiresProgramPlayedThisTurn") &&
         !hasPlayedProgramThisTurn(state, playerId)
@@ -615,6 +649,27 @@ function getReadyBlockers(state: MatchState, playerId: PlayerId): string[] {
     .map((id) => id as string);
 }
 
+function getOpponentReadyBlockers(state: MatchState, playerId: PlayerId): string[] {
+  const opponentId = getOpponentId(state, playerId);
+  const opponent = state.G.players[opponentId as string];
+  if (!opponent) return [];
+  return opponent.zones.field
+    .filter((id) => isReadyFieldBlocker(state, id as string))
+    .map((id) => id as string);
+}
+
+function getOpponentReadyUnits(state: MatchState, playerId: PlayerId): string[] {
+  const opponentId = getOpponentId(state, playerId);
+  const opponent = state.G.players[opponentId as string];
+  if (!opponent) return [];
+  return opponent.zones.field
+    .filter((id) => {
+      const card = state.G.cardIndex[id as string];
+      return Boolean(card && !card.meta.spent);
+    })
+    .map((id) => id as string);
+}
+
 function getGoSoloLegends(state: MatchState, playerId: PlayerId): string[] {
   if (state.G.gamePhase !== "main") return [];
   if ((state.G.turnMetadata.activePlayerId as string) !== (playerId as string)) return [];
@@ -626,7 +681,10 @@ function getGoSoloLegends(state: MatchState, playerId: PlayerId): string[] {
       const card = state.G.cardIndex[id as string];
       if (!card || card.meta.faceDown) return false;
       const def = defOf(card);
-      return def.keywords.includes("goSolo") && availableEddies(state, playerId) >= (def.cost ?? 0);
+      return (
+        def.keywords.includes("goSolo") &&
+        availableEddies(state, playerId) >= goSoloCost(state, id as CardInstanceId, playerId)
+      );
     })
     .map((id) => id as string);
 }
@@ -707,6 +765,7 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
           free: choice.payload.free,
           attachTo: choice.payload.attachTo,
           resolvedAttachToId: choice.payload.resolvedAttachToId ?? undefined,
+          canDecline: choice.payload.canDecline,
         },
       };
     }
@@ -792,6 +851,23 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
               return die ? { dieId: id as string, faceValue: die.faceValue } : null;
             })
             .filter((d): d is EligibleGigDie => d !== null),
+        },
+      };
+    case "preventGigSteal":
+      return {
+        type: "preventGigSteal",
+        chooserId,
+        payload: {
+          attackerId: choice.payload.attackerId as string,
+          rivalId: choice.payload.rivalId as string,
+          stealEntries: choice.payload.stealEntries.map((entry) => ({
+            dieId: entry.dieId as string,
+            value: entry.value,
+          })),
+          handEntries: choice.payload.handEntries.map((entry) => ({
+            cardId: entry.cardId as string,
+            cost: entry.cost,
+          })),
         },
       };
     case "scry": {

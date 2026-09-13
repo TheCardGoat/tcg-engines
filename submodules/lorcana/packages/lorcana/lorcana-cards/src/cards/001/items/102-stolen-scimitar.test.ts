@@ -1,5 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { LorcanaMultiplayerTestEngine } from "@tcg/lorcana-engine/testing";
+import { aladdinGenieMischievousPals } from "../../013/characters";
 import { aladdinHeroicOutlaw, jetsamUrsulasSpy } from "../characters";
 import { stolenScimitar } from "./102-stolen-scimitar";
 
@@ -18,6 +19,24 @@ describe("Stolen Scimitar", () => {
     expect(testEngine.asPlayerOne().isExerted(stolenScimitar)).toEqual(true);
     expect(testEngine.asPlayerOne().getCardStrength(aladdinHeroicOutlaw)).toEqual(
       aladdinHeroicOutlaw.strength + 2,
+    );
+  });
+
+  // CR 5.2.6.1: ampersand names count as either half for "named Aladdin".
+  it("gives Aladdin & Genie +2 strength this turn", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [stolenScimitar, aladdinGenieMischievousPals],
+    });
+
+    const result = testEngine.asPlayerOne().activateAbility(stolenScimitar, {
+      ability: "SLASH",
+      targets: [aladdinGenieMischievousPals],
+    });
+
+    expect(result).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().isExerted(stolenScimitar)).toEqual(true);
+    expect(testEngine.asPlayerOne().getCardStrength(aladdinGenieMischievousPals)).toEqual(
+      aladdinGenieMischievousPals.strength + 2,
     );
   });
 

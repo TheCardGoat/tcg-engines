@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailSandayuOdaHanakoSGuardian = defineCyberpunkCard({
   id: "9611a3ba-d365-453f-89ed-c986a1948edc",
   slug: "sandayu-oda-hanako-s-guardian",
+  subname: "Hanako's Guardian",
   rulesText:
     "{Play} Spend a rival Unit for each friendly value-pair of Gigs.\nThis Unit can attack rival Units the turn it's played.",
-  name: "Sandayu Oda — Hanako's Guardian",
-  displayName: "Sandayu Oda — Hanako's Guardian",
+  name: "Sandayu Oda",
+  displayName: "Sandayu Oda: Hanako's Guardian",
   canonicalId: "sandayu-oda-hanako-s-guardian",
   color: "green",
   classifications: ["Arasaka", "Merc"],

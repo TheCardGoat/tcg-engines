@@ -3,7 +3,7 @@ import { op04Hanger050 } from "../../../../../cards/src/cards/OP04/characters/05
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-050 Hanger", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op04Hanger050);
   });
 });

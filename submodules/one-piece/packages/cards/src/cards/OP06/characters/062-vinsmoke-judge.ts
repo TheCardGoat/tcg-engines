@@ -109,6 +109,7 @@ export const op06VinsmokeJudge062: CharacterCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

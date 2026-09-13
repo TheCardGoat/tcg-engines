@@ -36,5 +36,6 @@ describe("OP10-074 Pica", () => {
       picaId,
     );
     expect(engine.getView("north").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

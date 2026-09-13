@@ -104,9 +104,99 @@ describe("While conditions", () => {
       { type: "unitCount", owner: "friendly", comparison: "gte", count: 2 },
     ]);
   });
+
+  test("While a named friendly Unit is in play preserves its battle-area condition", () => {
+    const [effect] = parseEffect(
+      'While you have a Unit with "Ad Balloon" in its card name in play, this Unit can\'t receive enemy battle damage.',
+    );
+
+    expect(effect.activation.conditions).toEqual([
+      {
+        type: "cardInZone",
+        owner: "friendly",
+        zone: "battleArea",
+        cardType: "unit",
+        comparison: "gte",
+        count: 1,
+        hasName: "Ad Balloon",
+      },
+    ]);
+  });
 });
 
 describe("During your turn / opponent's turn", () => {
+  test("parses a paired Pilot's permanent trait-token stat bonus", () => {
+    const [effect] = parseEffect("All your (League Militaire) Unit tokens get AP+1.", "pilot");
+    expect(effect).toMatchObject({
+      type: "constant",
+      activation: { conditions: [{ type: "duringPair" }] },
+      directives: [
+        {
+          action: {
+            action: "statModifier",
+            stat: "ap",
+            amount: 1,
+            duration: "permanent",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              count: "all",
+              isToken: true,
+              attributeFilters: [
+                { attribute: "trait", comparison: "includes", value: "league militaire" },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("parses a trash-count cannot-attack constant", () => {
+    const [effect] = parseEffect(
+      "This Unit can't attack while there are 6 or less cards in your trash.",
+    );
+    expect(effect).toEqual({
+      type: "constant",
+      activation: {
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "trash",
+            comparison: "lte",
+            count: 6,
+          },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "cantAttack",
+            duration: "permanent",
+            target: { owner: "self", cardType: "unit" },
+          },
+        },
+      ],
+      sourceText: "This Unit can't attack while there are 6 or less cards in your trash.",
+    });
+  });
+
+  test("parses an opponent-discard this-turn hand cost reduction", () => {
+    const [effect] = parseEffect(
+      "During a turn where your opponent has discarded due to one of your effects, this card in your hand gets cost -2.",
+    );
+    expect(effect).toEqual({
+      type: "constant",
+      activation: { conditions: [{ type: "opponentDiscardedByYourEffectThisTurn" }] },
+      directives: [
+        { action: { action: "costReduction", amount: 2, target: { owner: "self", zone: "hand" } } },
+      ],
+      sourceText:
+        "During a turn where your opponent has discarded due to one of your effects, this card in your hand gets cost -2.",
+    });
+  });
+
   test("During your turn produces Constant with friendly isTurn precondition", () => {
     const [effect] = parseEffect("During your turn, this Unit gets AP+1 this turn.");
     expect(effect.type).toBe("constant");

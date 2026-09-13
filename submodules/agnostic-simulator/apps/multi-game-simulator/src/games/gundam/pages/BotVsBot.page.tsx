@@ -20,10 +20,8 @@ import {
   GundamTargetingProvider,
 } from "../src/components/containers/index.ts";
 import { SubmitErrorToast } from "../src/components/ui/SubmitErrorToast.tsx";
-import { CardHoverPreview } from "../src/components/ui/card/CardHoverPreview.tsx";
 import { CardInspectProvider } from "../src/components/ui/card/card-inspect-context.tsx";
 import { DualModeProvider } from "../src/components/ui/dual-mode-context.tsx";
-import { PendingEffectSelectionProvider } from "../src/components/ui/pending-effect-selection-context.tsx";
 import { CardInspectDialog } from "../src/components/ui/CardInspectDialogContainer.tsx";
 import { GundamBoardLayout } from "../src/components/ui/GundamBoardLayout.tsx";
 import { GameTable } from "../src/components/ui/GameTable.tsx";
@@ -213,18 +211,15 @@ export function BotVsBotShell({ runtime, staticResources, viewerId }: BotVsBotSh
       <SubmitErrorProvider>
         <HintsProvider>
           <GundamTargetingProvider>
-            <PendingEffectSelectionProvider>
-              <DualModeProvider>
-                <CardInspectProvider>
-                  <GundamSharedAnimationLayer runtime={runtime}>
-                    {matchTree}
-                  </GundamSharedAnimationLayer>
-                  <CardHoverPreview />
-                  <CardInspectDialog />
-                  <SpectatorBadge />
-                </CardInspectProvider>
-              </DualModeProvider>
-            </PendingEffectSelectionProvider>
+            <DualModeProvider>
+              <CardInspectProvider>
+                <GundamSharedAnimationLayer runtime={runtime}>
+                  {matchTree}
+                </GundamSharedAnimationLayer>
+                <CardInspectDialog />
+                <SpectatorBadge />
+              </CardInspectProvider>
+            </DualModeProvider>
           </GundamTargetingProvider>
         </HintsProvider>
       </SubmitErrorProvider>

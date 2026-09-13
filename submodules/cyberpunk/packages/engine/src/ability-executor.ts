@@ -22,6 +22,7 @@ import {
 import { resolveEffect } from "./effects/handlers/index.ts";
 import type { ResolutionContext } from "./effects/target-resolver.ts";
 import { defOf } from "./state/lookups.ts";
+import { getEffectivePower } from "./active-effects/index.ts";
 import {
   abilityCostBindingId,
   availableEddies,
@@ -407,7 +408,10 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
     }
     operations.game.setPendingChoice({
       type: "chooseTarget",
-      chooserId: current.sourcePlayerId,
+      chooserId:
+        selection?.chooser === "rival"
+          ? state.ctx.playerIds.find((id) => id !== current.sourcePlayerId)!
+          : current.sourcePlayerId,
       effectId: current.id,
       payload: {
         type: "effectTarget",
@@ -491,6 +495,17 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
     current.costsPaid = true;
   }
 
+  // Nested bodies (chooseEffect options, partial expansions, if/else follow-ups)
+  // keep their own resume index so they cannot clobber the outer ability index.
+  if (current.continuation) {
+    const cont = current.continuation;
+    const contStatus = executeAbilityEffects(cont.effects, ctx, operations, cont.nextIndex, {
+      nested: true,
+    });
+    if (contStatus === "suspended") return;
+    current.continuation = undefined;
+  }
+
   const status = executeAbilityEffects(ability.effects, ctx, operations, current.nextEffectIndex);
   if (status === "suspended") return;
 
@@ -517,12 +532,26 @@ function passesEventFilter(
     const filter = ability.trigger.event;
     const card = state.G.cardIndex[event.cardId as string];
     if (!card) return false;
+    if (filter.player) {
+      const playedController = card.controllerId as string;
+      if (filter.player === "friendly" && playedController !== (sourcePlayerId as string)) {
+        return false;
+      }
+      if (filter.player === "rival" && playedController === (sourcePlayerId as string)) {
+        return false;
+      }
+    }
     const cardDef = defOf(card);
     if (filter.target.cardTypes && !filter.target.cardTypes.includes(cardDef.type)) {
       return false;
     }
     if (filter.target.colors && !filter.target.colors.includes(cardDef.color)) {
       return false;
+    }
+    if (filter.target.classifications) {
+      const cardClassifications = cardDef.classifications ?? [];
+      const hasMatch = filter.target.classifications.some((c) => cardClassifications.includes(c));
+      if (!hasMatch) return false;
     }
   }
 
@@ -818,6 +847,13 @@ function passesEventFilter(
         if ((die.faceValue % 2 === 0) !== wantEven) return false;
       }
     }
+    if (filter.valueLessThanSourcePower) {
+      if (!event.sourceCardId || !event.dieId) return false;
+      const stolen = state.G.gigDice[event.dieId as string];
+      if (!stolen) return false;
+      const thiefPower = getEffectivePower(state, event.sourceCardId as string);
+      if (stolen.faceValue >= thiefPower) return false;
+    }
   }
 
   return true;
@@ -855,6 +891,11 @@ function cardMatchesEventFilter(
       const hasMatch = filter.classifications.some((c) => cardClassifications.includes(c));
       if (!hasMatch) return false;
     }
+    if (filter.keywords && filter.keywords.length > 0) {
+      const cardKeywords = def.keywords ?? [];
+      const hasMatch = filter.keywords.some((keyword) => cardKeywords.includes(keyword));
+      if (!hasMatch) return false;
+    }
     if (filter.colors && !filter.colors.includes(def.color)) return false;
     if (filter.hasAttachedCards !== undefined) {
       const hasAttachedCards = attachedCardsOverride ?? card.meta.attachedGearIds.length > 0;
@@ -868,6 +909,13 @@ function cardMatchesEventFilter(
       if (filter.controller === "rival" && controller === (sourcePlayerId as string)) {
         return false;
       }
+    }
+    if (
+      filter.excludeSelf &&
+      abilityCardId &&
+      (card.instanceId as string) === (abilityCardId as string)
+    ) {
+      return false;
     }
     return true;
   }
@@ -883,20 +931,33 @@ function buildContextTargets(event: GameEvent): Record<string, string[]> {
   if (event.type === "attackDeclared" && event.attackerId) {
     ctx["triggerCard"] = [event.attackerId as string];
   }
+  if (event.type === "cardPlayed" && event.cardId) {
+    ctx["triggerCard"] = [event.cardId as string];
+  }
   if (event.type === "cardSpent" && event.cardId) {
     ctx["triggerCard"] = [event.cardId as string];
   }
   if (event.type === "cardDefeated" && event.cardId) {
     ctx["triggerCard"] = [event.cardId as string];
+    if (event.hostId) {
+      ctx["host"] = [event.hostId as string];
+    }
   }
   if (event.type === "blockerActivated" && event.blockerId) {
     ctx["triggerCard"] = [event.blockerId as string];
   }
   if (event.type === "gigStolen" && event.dieId) {
     ctx["triggeredGigs"] = [event.dieId as string];
+    if (event.sourceCardId) {
+      ctx["triggerCard"] = [event.sourceCardId as string];
+    }
   }
   if (event.type === "gigDieRolled" && event.dieId) {
     ctx["triggeredGigs"] = [event.dieId as string];
+  }
+  if (event.type === "attackResolved" && event.attackKind === "fight") {
+    ctx["fightAttacker"] = [event.attackerId as string];
+    if (event.defenderId) ctx["fightDefender"] = [event.defenderId as string];
   }
   return ctx;
 }
@@ -936,7 +997,9 @@ export function executeAbilityEffects(
   ctx: ResolutionContext,
   operations: Operations,
   startIndex = 0,
+  opts: { nested?: boolean } = {},
 ): AbilityExecutionStatus {
+  if (!effects || effects.length === 0) return "resolved";
   for (let i = startIndex; i < effects.length; i++) {
     const effect = effects[i]!;
     if (effect.conditions && effect.conditions.length > 0) {
@@ -957,7 +1020,13 @@ export function executeAbilityEffects(
     if (result.status === "suspended") {
       const current = ctx.state.G.turnMetadata.currentTrigger;
       if (current) {
-        current.nextEffectIndex = i + 1;
+        if (opts.nested) {
+          // Preserve outer ability nextEffectIndex; only advance the nested frame.
+          current.continuation = { effects, nextIndex: i + 1 };
+        } else {
+          current.nextEffectIndex = i + 1;
+          current.continuation = undefined;
+        }
       }
       return "suspended";
     }
@@ -970,8 +1039,16 @@ export function executeAbilityEffects(
     enqueueTriggerEventsSince(eventsBefore, ctx.state, operations);
 
     if (result.status === "partial" && result.remaining.length > 0) {
-      const status = executeAbilityEffects(result.remaining, ctx, operations);
-      if (status === "suspended") return "suspended";
+      const status = executeAbilityEffects(result.remaining, ctx, operations, 0, { nested: true });
+      if (status === "suspended") {
+        // Partial expansion replaces this effect slot; advance the outer list past it
+        // so resume does not re-enter chooseEffect after the nested body finishes.
+        const current = ctx.state.G.turnMetadata.currentTrigger;
+        if (current && !opts.nested) {
+          current.nextEffectIndex = i + 1;
+        }
+        return "suspended";
+      }
       return "resolved";
     }
   }
@@ -1062,6 +1139,15 @@ function describeConditionFailure(condition: Condition): string {
       return `${relativePlayerText(condition.controller)} does not control a min Gig`;
     case "hasEvenAndOddGigValues":
       return `${relativePlayerText(condition.controller)} does not control both even and odd Gig values`;
+    case "hasGigCount": {
+      const gigDescription =
+        condition.minValue === undefined
+          ? "matching Gigs"
+          : `Gigs with value ${condition.minValue} or higher`;
+      return `${relativePlayerText(condition.controller)} does not control ${comparisonText(
+        condition.comparison,
+      )} ${condition.value} ${gigDescription}`;
+    }
     case "hasEquippedUnitsOrLegends":
       return `${relativePlayerText(condition.controller)} does not control ${condition.minCount} equipped Units and/or Legends`;
     case "matchingGig":
@@ -1082,6 +1168,10 @@ function describeConditionFailure(condition: Condition): string {
       return `${relativePlayerText(condition.controller)} Street Cred does not differ from ${relativePlayerText(
         condition.other,
       )} Street Cred by ${comparisonText(condition.comparison)} ${condition.value}`;
+    case "gigCountDifference":
+      return `${relativePlayerText(condition.controller)} Gig count is not ${comparisonText(
+        condition.comparison,
+      )} ${relativePlayerText(condition.other)} Gig count plus ${condition.value}`;
     case "streetCredParity":
       return `${relativePlayerText(condition.controller)} Street Cred is not ${condition.parity}`;
     case "allFriendlyLegendsFaceUp":
@@ -1112,6 +1202,16 @@ function describeConditionFailure(condition: Condition): string {
       return "the required target does not exist";
     case "gigSides":
       return "the required gig die sides are not present";
+    case "not":
+      return "negated condition is true";
+    case "targetParity":
+      return `the target gig value is not ${condition.parity}`;
+    case "discardedCountMatchesGig":
+      return `discarded card count does not match a ${relativePlayerText(condition.controller)} Gig value`;
+    case "fixerAreaCount":
+      return `${relativePlayerText(condition.controller)} fixer area count is not ${comparisonText(
+        condition.comparison,
+      )} ${condition.value}`;
     default:
       return assertNever(condition);
   }
@@ -1163,7 +1263,9 @@ function canPayAbilityCosts(ability: Ability, ctx: ResolutionContext): boolean {
         break;
       }
       case "payEddies": {
-        if (availableEddies(ctx.state, ctx.sourcePlayerId) < cost.amount) return false;
+        if (availableEddies(ctx.state, ctx.sourcePlayerId) < computePayEddiesAmount(cost, ctx)) {
+          return false;
+        }
         break;
       }
       default:
@@ -1171,6 +1273,20 @@ function canPayAbilityCosts(ability: Ability, ctx: ResolutionContext): boolean {
     }
   }
   return true;
+}
+
+function computePayEddiesAmount(
+  cost: Extract<AbilityCost, { cost: "payEddies" }>,
+  ctx: ResolutionContext,
+): number {
+  let amount = cost.amount;
+  if (cost.reduction) {
+    const count = resolveTarget(cost.reduction.target, ctx).length;
+    amount -= count * cost.reduction.reductionPerCount;
+    const min = cost.reduction.min ?? 0;
+    amount = Math.max(amount, min);
+  }
+  return amount;
 }
 
 function payAbilityCosts(ability: Ability, ctx: ResolutionContext, operations: Operations): void {
@@ -1196,7 +1312,11 @@ function payAbilityCosts(ability: Ability, ctx: ResolutionContext, operations: O
         break;
       }
       case "payEddies": {
-        operations.game.spendEddies(ctx.sourcePlayerId, cost.amount, "abilityCost");
+        operations.game.spendEddies(
+          ctx.sourcePlayerId,
+          computePayEddiesAmount(cost, ctx),
+          "abilityCost",
+        );
         break;
       }
       default:

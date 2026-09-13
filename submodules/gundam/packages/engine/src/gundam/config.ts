@@ -27,6 +27,7 @@ export function createInitialGundamG(playerIds: string[]): GundamG {
     turnMetadata: {
       attackedThisTurn: [],
       deployedThisTurn: [],
+      activatedCommandThisTurn: [],
     },
     pendingEffects: [],
     continuousEffects: [],

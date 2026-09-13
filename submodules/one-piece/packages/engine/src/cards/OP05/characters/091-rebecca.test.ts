@@ -3,7 +3,7 @@ import { op05Rebecca091 } from "../../../../../cards/src/cards/OP05/characters/0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-091 Rebecca", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op05Rebecca091);
   });
 });

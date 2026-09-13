@@ -194,6 +194,8 @@ export type {
   ErrorMessage,
   ErrorCode,
   ConnectionState,
+  AuthoritativeCommandRecoveryCause,
+  AuthoritativeCommandStatus,
   Transport,
   ProtocolValidationResult,
 } from "./protocol-types";
@@ -214,10 +216,6 @@ export {
   compactCoreNetworkView,
   normalizeNetworkView,
 } from "./network-state";
-
-// WebSocket Transport (Phase 5)
-export type { WebSocketTransportConfig, ServerWebSocketConfig } from "./websocket-transport";
-export { WebSocketTransport, createWebSocketServer } from "./websocket-transport";
 
 // In-Memory Transport (Phase 5)
 export type {

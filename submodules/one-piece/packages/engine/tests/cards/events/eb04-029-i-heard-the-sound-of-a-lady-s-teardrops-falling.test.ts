@@ -128,4 +128,39 @@ describe("EB04-029 I Heard the Sound...of a Lady's Teardrops Falling", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        leaderCardId: op02Sanji026,
+        hand: [op14eb04IHeardTheSoundOfALadySTeardropsFalling029, eb01Doma005, eb01Fourtricks025],
+        character: [eb01Sanji014, eb01Doma005],
+        activeDon: 1,
+        life: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const eventId = engine.findCardInZone(
+      "north",
+      "hand",
+      op14eb04IHeardTheSoundOfALadySTeardropsFalling029,
+    );
+    const selectedCostId = engine.findCardInZone("north", "hand", eb01Doma005);
+    const lifeBeforeAttack = engine.getView("north").players.north.lifeCount;
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(selectedCostId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(selectedCostId);
+    // without counter power, may lose life
+    expect(view.players.north.lifeCount).toBe(lifeBeforeAttack - 1);
+  });
 });

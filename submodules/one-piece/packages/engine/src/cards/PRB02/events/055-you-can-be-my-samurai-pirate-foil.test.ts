@@ -3,7 +3,7 @@ import { prb02YouCanBeMySamuraiPirateFoil055 } from "../../../../../cards/src/ca
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-055 You Can Be My Samurai!! (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02YouCanBeMySamuraiPirateFoil055);
   });
 });

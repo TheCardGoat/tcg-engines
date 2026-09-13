@@ -69,6 +69,17 @@ export interface ServerEngineConfig {
    * Used for the deserialization fast path (restoreAuthoritativeSnapshot follows immediately).
    */
   _skipInitialization?: boolean;
+  /**
+   * Optional hook called after a client command succeeds and before its
+   * authoritative state is recorded and broadcast.
+   */
+  postProcessClientCommand?: (
+    runtime: MatchRuntime,
+    playerId: string,
+    command: CommandEnvelope,
+  ) => void;
+  /** Evaluated against the pre-command state. */
+  shouldPostProcessClientCommand?: (playerId: string, command: CommandEnvelope) => boolean;
 }
 
 export interface StateSnapshot {
@@ -98,12 +109,16 @@ export class ServerEngine implements GameEngine {
   private stateUpdateHandlers: Array<(stateID: number) => void> = [];
   private debug: boolean = false;
   private staticResources: MatchStaticResources;
+  private postProcessClientCommand?: ServerEngineConfig["postProcessClientCommand"];
+  private shouldPostProcessClientCommand?: ServerEngineConfig["shouldPostProcessClientCommand"];
   private undoStack: UndoStackEntry[] = [];
   private static readonly UNDO_STACK_MAX_ENTRIES = 25;
 
   constructor(config: ServerEngineConfig) {
     this.debug = config.debugMode ?? false;
     this.staticResources = config.staticResources;
+    this.postProcessClientCommand = config.postProcessClientCommand;
+    this.shouldPostProcessClientCommand = config.shouldPostProcessClientCommand;
 
     if (config._skipInitialization) {
       // Fast path: skip game initialization and static resource round-trip.
@@ -178,6 +193,8 @@ export class ServerEngine implements GameEngine {
       const previousStateID = this.runtime.getCurrentStateID();
       const runtimeSnapshotBeforeMove = this.runtime.createRuntimeSnapshot();
       const commandTimestamp = Date.now();
+      const shouldPostProcess =
+        this.shouldPostProcessClientCommand?.(playerId, message.command) ?? true;
       const result = this.runtime.processCommand(
         message.command,
         playerId,
@@ -187,6 +204,9 @@ export class ServerEngine implements GameEngine {
       );
 
       if (result.success) {
+        if (shouldPostProcess) {
+          this.postProcessClientCommand?.(this.runtime, playerId, message.command);
+        }
         const processedResult = this.withPacketAnimations(
           result,
           previousState,
@@ -697,19 +717,19 @@ export class ServerEngine implements GameEngine {
       transitionType,
     });
 
-    if (actorRole === "player") {
-      this.moveHistory.push({
-        moveId,
-        input,
-        playerId,
-        role: "player",
-        timestamp,
-        stateID: newStateID,
-        turnNumber: previousState.ctx.status.turn,
-        transitionType,
-        newStateID,
-      });
-    }
+    // Player commands and judge/server commands (forfeitGame) must both
+    // appear in move history so adapters can persist an accepted-move record.
+    this.moveHistory.push({
+      moveId,
+      input,
+      playerId,
+      role: actorRole,
+      timestamp,
+      stateID: newStateID,
+      turnNumber: previousState.ctx.status.turn,
+      transitionType,
+      newStateID,
+    });
 
     this.updateUndoStackAfterMove({
       actorRole,

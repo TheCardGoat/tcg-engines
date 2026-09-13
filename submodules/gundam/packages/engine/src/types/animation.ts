@@ -41,6 +41,8 @@ export interface DamageAnimation {
   targetId: string;
   amount: number;
   damageType: string;
+  /** Authoritative combat route, retained even when resolution moves the target. */
+  attackKind?: "direct" | "fight";
 }
 
 export interface ShakeAnimation {

@@ -1,7 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ReactNode } from "react";
 
-import { asMoveName, usePending, type MoveName } from "../../game/index.ts";
+import { asMoveName, type MoveName } from "../../game/index.ts";
+import { useGundamInteractionDraft } from "../../game/interaction-draft.tsx";
 
 /**
  * Dual-Mode Card Decision Context (rule 3-4-6-2).
@@ -54,7 +55,7 @@ export const DualModeContext = createContext<DualModeContextValue>(DEFAULT);
 
 export function DualModeProvider({ children }: { readonly children: ReactNode }) {
   const [pending, setPending] = useState<DualModePending | null>(null);
-  const pendingMove = usePending();
+  const draft = useGundamInteractionDraft();
   const begin = useCallback((p: DualModePending) => setPending(p), []);
   const cancel = useCallback(() => setPending(null), []);
   // Commit a half-pick: start the chosen move via the normal pending
@@ -66,9 +67,9 @@ export function DualModeProvider({ children }: { readonly children: ReactNode })
       const move = mode === "cmd" ? pending.cmdMove : pending.pilotMove;
       const cardId = pending.cardId;
       setPending(null);
-      pendingMove.startForCard(move, cardId);
+      draft.begin(move, { cardId: [cardId] });
     },
-    [pending, pendingMove],
+    [draft, pending],
   );
 
   // Esc cancels the lift — matches the inline-targeting affordance

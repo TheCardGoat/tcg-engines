@@ -53,19 +53,25 @@ export const st01MonkeyDLuffy001: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
-        oncePerTurn: true,
         actions: [
           {
             action: "giveDon",
             target: {
               player: "self",
               zones: ["leader", "character"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
             },
-            count: { amount: 1, upTo: true },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
             donState: "rested",
           },
         ],
+        oncePerTurn: true,
       },
     ],
   },

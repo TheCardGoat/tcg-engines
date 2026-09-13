@@ -54,9 +54,21 @@ export const entities: SimulatorEntity[] = [
     ],
     traits: ["Scout", "Hacker"],
     frameStyle: { color: "#4ad9ff" },
-    overlayBadges: [
-      { label: "+2", color: "#16a34a", position: "tr" },
-      { label: "A", color: "#eab308", position: "bl" },
+    decorations: [
+      {
+        id: "power-bonus",
+        slot: "top-end",
+        ariaLabel: "Power plus two",
+        content: { kind: "text", text: "+2" },
+        tone: "positive",
+      },
+      {
+        id: "active",
+        slot: "bottom-start",
+        ariaLabel: "Active",
+        content: { kind: "text", text: "A" },
+        tone: "warning",
+      },
     ],
   },
   {
@@ -398,7 +410,10 @@ export const fixture: HarnessFixture = {
   coreComponents: [
     { name: "CardFace", responsibility: "Renders public and hidden entity faces." },
     { name: "BoardBlock", responsibility: "Maps layout blocks to zones, seats, and counters." },
-    { name: "MotionAnimationSurface", responsibility: "Coordinates plan-based Motion playback." },
+    {
+      name: "SimulatorAnimationRoot",
+      responsibility: "Coordinates typed presentation state and Motion playback.",
+    },
   ],
   eventLog,
   targetingIntents,

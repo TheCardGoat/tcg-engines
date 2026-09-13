@@ -47,7 +47,7 @@ describe("Financier (GD04-110)", () => {
       expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
     });
 
-    it("deploys into an occupied section and lets the player choose which Base remains", () => {
+    it("deploys into an occupied section and requires the existing Base to be trashed", () => {
       const existingBase = createMockBase({ name: "Existing Base" });
       const engine = GundamTestEngine.create({
         hand: [gd04Financier110],
@@ -65,7 +65,7 @@ describe("Financier (GD04-110)", () => {
       expect(visibleBases).toHaveLength(2);
       expect(p1.getBoardView().pendingChoice).toMatchObject({
         kind: "targetSelection",
-        legalTargetIds: expect.arrayContaining([existingBaseId, exBaseId]),
+        legalTargetIds: [existingBaseId],
       });
 
       expectSuccess(p1.resolveEffect({ targets: [existingBaseId] }));

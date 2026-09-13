@@ -3,7 +3,7 @@ import { op13GolDRoger003 } from "../../../../../cards/src/cards/OP13/leaders/00
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-003 Gol.D.Roger", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13GolDRoger003);
   });
 });

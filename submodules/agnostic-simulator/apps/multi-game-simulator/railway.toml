@@ -2,10 +2,20 @@
 # Production traffic reaches this service through the reverse proxy:
 #   /cyberpunk/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
 #   /gundam/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
+#   /grand-archive/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
+#   /naruto/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM (staging only)
 #   /one-piece/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
+#   /flesh-and-blood/simulator -> MULTI_GAME_SIMULATOR_UPSTREAM
 #
 # The host serves multiple mounted simulator paths, so Vite assets are built
 # from /assets and routed through the same reverse-proxied service.
+#
+# REQUIRED SERVER-SIDE VARIABLE:
+#   GAME_RUNTIME_API_INTERNAL_URLS = JSON map for platform plus every served
+#   game slug. Point all entries at
+#   http://${{shared/api.RAILWAY_PRIVATE_DOMAIN}}:8080 in the current production
+#   environment. Production SSR never falls back to the browser-visible public
+#   API map.
 #
 # Browser SigNoz telemetry is build-time Vite config. Set these variables in
 # the Railway build environment to enable frontend error/warn, trace, document
@@ -28,6 +38,8 @@ watchPatterns = [
   "submodules/agnostic-simulator/packages/cyberpunk/**",
   "submodules/agnostic-simulator/packages/engine-core/**",
   "submodules/agnostic-simulator/packages/game-page-contract/**",
+  "submodules/agnostic-simulator/packages/grand-archive/**",
+  "submodules/agnostic-simulator/packages/naruto/**",
   "submodules/agnostic-simulator/packages/protocol/**",
   "submodules/agnostic-simulator/packages/shared/**",
   "submodules/agnostic-simulator/packages/simulator-contract/**",
@@ -47,6 +59,13 @@ watchPatterns = [
   "submodules/cyberpunk/pnpm-lock.yaml",
   "submodules/cyberpunk/pnpm-workspace.yaml",
   "submodules/cyberpunk/tsconfig.json",
+  "submodules/flesh-and-blood/packages/cards/**",
+  "submodules/flesh-and-blood/packages/engine/**",
+  "submodules/flesh-and-blood/packages/types/**",
+  "submodules/flesh-and-blood/package.json",
+  "submodules/flesh-and-blood/pnpm-lock.yaml",
+  "submodules/flesh-and-blood/pnpm-workspace.yaml",
+  "submodules/flesh-and-blood/tsconfig.json",
   "submodules/gundam/packages/cards/**",
   "submodules/gundam/packages/engine/**",
   "submodules/gundam/packages/token-data/**",
@@ -56,6 +75,7 @@ watchPatterns = [
   "submodules/gundam/pnpm-lock.yaml",
   "submodules/gundam/pnpm-workspace.yaml",
   "submodules/gundam/tsconfig.json",
+  "submodules/grand-archive/**",
   "submodules/one-piece/packages/cards/**",
   "submodules/one-piece/packages/engine/**",
   "submodules/one-piece/packages/types/**",
@@ -64,6 +84,7 @@ watchPatterns = [
   "submodules/one-piece/pnpm-lock.yaml",
   "submodules/one-piece/pnpm-workspace.yaml",
   "submodules/one-piece/tsconfig.json",
+  "submodules/naruto/**",
 ]
 
 [deploy]
@@ -71,9 +92,28 @@ healthcheckPath = "/cyberpunk/simulator/"
 healthcheckTimeout = 60
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 3
-numReplicas = 1
 sleepApplication = false
 
 [deploy.teardown]
 overlapSeconds = 30
 drainingSeconds = 30
+
+[environments.production.deploy]
+sleepApplication = false
+
+[environments.production.deploy.multiRegionConfig.us-east4-eqdc4a]
+numReplicas = 1
+
+[environments.production.deploy.limitOverride.containers]
+cpu = 8
+memoryBytes = 8000000000
+
+[environments.staging.deploy]
+sleepApplication = true
+
+[environments.staging.deploy.multiRegionConfig.europe-west4-drams3a]
+numReplicas = 1
+
+[environments.staging.deploy.limitOverride.containers]
+cpu = 2
+memoryBytes = 2000000000

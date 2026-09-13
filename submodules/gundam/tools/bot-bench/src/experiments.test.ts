@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 
-import type { CandidateStrategy } from "@tcg/gundam-engine";
+import { combatAwareStrategy, type CandidateStrategy } from "@tcg/gundam-engine";
 import type { PlayerId } from "../../../packages/engine/src/types/branded.ts";
 import {
   GundamTestEngine,
@@ -22,6 +22,19 @@ import {
   iter24TempoAwareCommand,
   iter25ThreatAwareTarget,
   iter26BlockerBaitOrder,
+  iter27DirectAssault,
+  iter28DirectAssaultBait,
+  iter29BaseAssault,
+  iter30PressureWindow,
+  iter31Turn8Pressure,
+  iter32Turn10Pressure,
+  iter33BlockTax,
+  iter34BlockerReserve,
+  iter35RaceClock,
+  iter36TurnPlan,
+  iter37RegretMix,
+  deterministicPolicyRoll,
+  evaluateAttackPlans,
 } from "./experiments.ts";
 
 function context(
@@ -46,9 +59,9 @@ function context(
   };
 }
 
-function firstAttack(engine: GundamTestEngine, strategy: CandidateStrategy) {
+function firstAttack(engine: GundamTestEngine, strategy: CandidateStrategy, turnNumber = 0) {
   return strategy
-    .selectCandidates(context(engine))
+    .selectCandidates({ ...context(engine), turnNumber })
     .find((candidate) => candidate.family === "enterBattle");
 }
 
@@ -202,6 +215,446 @@ describe("selective-combat experiments: attack ranking", () => {
       attackerId: instanceId(engine, PLAYER_ONE, "Cheap"),
       target: "direct",
     });
+  });
+
+  it("applies direct pressure while a favorable enemy Unit target remains", () => {
+    const attacker = createMockUnit({ name: "Attacker", cost: 3, ap: 5, hp: 5 });
+    const target = createMockUnit({ name: "Rested Target", cost: 5, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, combatAwareStrategy)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+    expect(firstAttack(engine, iter27DirectAssault)).toMatchObject({
+      family: "enterBattle",
+      attackerId: instanceId(engine, PLAYER_ONE, "Attacker"),
+      target: "direct",
+    });
+  });
+
+  it("combines direct pressure with a cheap Blocker-bait attacker", () => {
+    const cheap = createMockUnit({ name: "Cheap", cost: 1, ap: 2, hp: 2 });
+    const expensive = createMockUnit({ name: "Expensive", cost: 5, ap: 6, hp: 6 });
+    const restedTarget = createMockUnit({ name: "Rested Target", cost: 6, ap: 1, hp: 4 });
+    const blocker = createMockUnit({
+      name: "Blocker",
+      cost: 2,
+      ap: 1,
+      hp: 4,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const engine = GundamTestEngine.create(
+      { play: [cheap, expensive] },
+      {
+        play: [blocker, { card: restedTarget, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter28DirectAssaultBait)).toMatchObject({
+      family: "enterBattle",
+      attackerId: instanceId(engine, PLAYER_ONE, "Cheap"),
+      target: "direct",
+    });
+  });
+
+  it("pressures an opposing Base before taking a favorable Unit combat", () => {
+    const attacker = createMockUnit({ name: "Attacker", cost: 3, ap: 4, hp: 5 });
+    const target = createMockUnit({ name: "Rested Target", cost: 6, ap: 1, hp: 3 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }],
+        baseSection: [createMockBase({ hp: 8 })],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter29BaseAssault)).toMatchObject({
+      family: "enterBattle",
+      target: "direct",
+    });
+  });
+
+  it("returns to canonical Unit targeting after the Base is destroyed", () => {
+    const attacker = createMockUnit({ name: "Attacker", cost: 3, ap: 4, hp: 5 });
+    const target = createMockUnit({ name: "Rested Target", cost: 6, ap: 1, hp: 3 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter29BaseAssault)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+  });
+
+  it("pressures Shields from board parity when two attacks survive Blockers", () => {
+    const light = createMockUnit({ name: "Light", cost: 1, ap: 2, hp: 2 });
+    const heavy = createMockUnit({ name: "Heavy", cost: 4, ap: 6, hp: 6 });
+    const target = createMockUnit({ name: "Rested Target", cost: 5, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [light, heavy] },
+      {
+        play: [{ card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter30PressureWindow)).toMatchObject({
+      family: "enterBattle",
+      attackerId: instanceId(engine, PLAYER_ONE, "Light"),
+      target: "direct",
+    });
+  });
+
+  it("keeps Unit control when only one direct attack can connect", () => {
+    const attacker = createMockUnit({ name: "Attacker", cost: 3, ap: 5, hp: 5 });
+    const target = createMockUnit({ name: "Rested Target", cost: 5, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter30PressureWindow)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+  });
+
+  it("does not open a Base when no follow-up can get past the active Blocker", () => {
+    const breaker = createMockUnit({ name: "Breaker", cost: 3, ap: 5, hp: 5 });
+    const followUp = createMockUnit({ name: "Follow Up", cost: 2, ap: 3, hp: 3 });
+    const target = createMockUnit({ name: "Rested Target", cost: 20, ap: 1, hp: 4 });
+    const blocker = createMockUnit({
+      name: "Blocker",
+      cost: 2,
+      ap: 2,
+      hp: 4,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const engine = GundamTestEngine.create(
+      { play: [breaker, followUp] },
+      {
+        play: [blocker, { card: target, exhausted: true }],
+        baseSection: [createMockBase({ hp: 4 })],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter30PressureWindow)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+  });
+
+  it("breaks a Base with the smallest sufficient attacker before the Shield follow-up", () => {
+    const exactBreaker = createMockUnit({ name: "Exact Breaker", cost: 2, ap: 4, hp: 4 });
+    const heavy = createMockUnit({ name: "Heavy", cost: 5, ap: 7, hp: 7 });
+    const target = createMockUnit({ name: "Rested Target", cost: 5, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [exactBreaker, heavy] },
+      {
+        play: [{ card: target, exhausted: true }],
+        baseSection: [createMockBase({ hp: 4 })],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter30PressureWindow)).toMatchObject({
+      family: "enterBattle",
+      attackerId: instanceId(engine, PLAYER_ONE, "Exact Breaker"),
+      target: "direct",
+    });
+  });
+
+  it("keeps canonical Unit control before the late-pressure clock", () => {
+    const attacker = createMockUnit({ name: "Attacker", cost: 3, ap: 5, hp: 5 });
+    const target = createMockUnit({ name: "Rested Target", cost: 5, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter31Turn8Pressure, 7)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+  });
+
+  it("switches to direct pressure when the configured turn clock expires", () => {
+    const attacker = createMockUnit({ name: "Attacker", cost: 3, ap: 5, hp: 5 });
+    const target = createMockUnit({ name: "Rested Target", cost: 5, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter31Turn8Pressure, 8)).toMatchObject({
+      family: "enterBattle",
+      target: "direct",
+    });
+    expect(firstAttack(engine, iter32Turn10Pressure, 9)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+    expect(firstAttack(engine, iter32Turn10Pressure, 10)).toMatchObject({
+      family: "enterBattle",
+      target: "direct",
+    });
+  });
+
+  it("leads with the least valuable direct attacker predicted to consume a Blocker", () => {
+    const bait = createMockUnit({ name: "Bait", cost: 3, ap: 5, hp: 2 });
+    const heavy = createMockUnit({ name: "Heavy", cost: 6, ap: 7, hp: 7 });
+    const target = createMockUnit({ name: "Rested Target", cost: 20, ap: 1, hp: 4 });
+    const blocker = createMockUnit({
+      name: "Blocker",
+      cost: 2,
+      ap: 3,
+      hp: 4,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const engine = GundamTestEngine.create(
+      { play: [bait, heavy] },
+      {
+        play: [blocker, { card: target, exhausted: true }],
+        baseSection: [createMockBase({ hp: 5 })],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, combatAwareStrategy)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+    expect(firstAttack(engine, iter33BlockTax)).toMatchObject({
+      family: "enterBattle",
+      attackerId: instanceId(engine, PLAYER_ONE, "Bait"),
+      target: "direct",
+    });
+  });
+
+  it("does not bait a Blocker that the defensive model should preserve", () => {
+    const light = createMockUnit({ name: "Light", cost: 1, ap: 1, hp: 1 });
+    const heavy = createMockUnit({ name: "Heavy", cost: 6, ap: 7, hp: 7 });
+    const target = createMockUnit({ name: "Rested Target", cost: 20, ap: 1, hp: 4 });
+    const blocker = createMockUnit({
+      name: "Valuable Blocker",
+      cost: 8,
+      ap: 0,
+      hp: 1,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const engine = GundamTestEngine.create(
+      { play: [light, heavy] },
+      {
+        play: [blocker, { card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter33BlockTax)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Target"),
+    });
+  });
+
+  it("takes the direct line when its visible race clock is faster", () => {
+    const probe = createMockUnit({ name: "Probe", cost: 1, ap: 2, hp: 2 });
+    const closer = createMockUnit({ name: "Closer", cost: 4, ap: 6, hp: 6 });
+    const target = createMockUnit({ name: "Rested Target", cost: 6, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      {
+        play: [probe, closer],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+      { play: [{ card: target, exhausted: true }], shieldArea: [createMockUnit()] },
+    );
+
+    expect(firstAttack(engine, iter35RaceClock)).toMatchObject({
+      family: "enterBattle",
+      attackerId: instanceId(engine, PLAYER_ONE, "Probe"),
+      target: "direct",
+    });
+  });
+
+  it("keeps Unit control when the opponent owns the faster visible race", () => {
+    const attacker = createMockUnit({ name: "Attacker", cost: 4, ap: 6, hp: 6 });
+    const target = createMockUnit({ name: "Rested Threat", cost: 7, ap: 1, hp: 5 });
+    const extraThreat = createMockUnit({ name: "Extra Threat", cost: 4, ap: 5, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }, extraThreat],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter35RaceClock)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Rested Threat"),
+    });
+  });
+
+  it("assumes a visible Blocker absorbs the highest-AP blockable attacker", () => {
+    const heavy = createMockUnit({ name: "Clock Heavy", cost: 5, ap: 6, hp: 6 });
+    const light = createMockUnit({ name: "Clock Light", cost: 1, ap: 1, hp: 2 });
+    const target = createMockUnit({ name: "Clock Target", cost: 8, ap: 1, hp: 5 });
+    const blocker = createMockUnit({
+      name: "Clock Blocker",
+      cost: 2,
+      ap: 2,
+      hp: 4,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const engine = GundamTestEngine.create(
+      { play: [heavy, light] },
+      {
+        play: [blocker, { card: target, exhausted: true }],
+        baseSection: [createMockBase({ hp: 6 })],
+      },
+    );
+
+    const parent = context(engine);
+    const attacks = combatAwareStrategy
+      .selectCandidates(parent)
+      .filter((candidate) => candidate.family === "enterBattle");
+    expect(evaluateAttackPlans(parent, attacks)).toMatchObject({
+      ownTurnsToDefeat: 7,
+      opponentTurnsToDefeat: 1,
+    });
+  });
+
+  it("selects the pressure plan when it converts the whole attack step into lethal", () => {
+    const probe = createMockUnit({ name: "Plan Probe", cost: 1, ap: 2, hp: 2 });
+    const closer = createMockUnit({ name: "Plan Closer", cost: 4, ap: 6, hp: 6 });
+    const target = createMockUnit({ name: "Plan Target", cost: 6, ap: 1, hp: 4 });
+    const engine = GundamTestEngine.create(
+      { play: [probe, closer], shieldArea: [createMockUnit(), createMockUnit()] },
+      { play: [{ card: target, exhausted: true }], shieldArea: [createMockUnit()] },
+    );
+
+    expect(firstAttack(engine, iter36TurnPlan)).toMatchObject({
+      family: "enterBattle",
+      attackerId: instanceId(engine, PLAYER_ONE, "Plan Probe"),
+      target: "direct",
+    });
+  });
+
+  it("selects the control plan when pressure is slow and a valuable kill is available", () => {
+    const attacker = createMockUnit({ name: "Control Attacker", cost: 4, ap: 7, hp: 7 });
+    const target = createMockUnit({ name: "Control Target", cost: 8, ap: 1, hp: 6 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      {
+        play: [{ card: target, exhausted: true }],
+        shieldArea: [createMockUnit(), createMockUnit(), createMockUnit(), createMockUnit()],
+      },
+    );
+
+    expect(firstAttack(engine, iter36TurnPlan)).toMatchObject({
+      family: "enterBattle",
+      target: instanceId(engine, PLAYER_TWO, "Control Target"),
+    });
+  });
+
+  it("keeps regret-bounded variation deterministic and inside legal candidates", () => {
+    const attacker = createMockUnit({ name: "Mixed Attacker", cost: 3, ap: 4, hp: 4 });
+    const target = createMockUnit({ name: "Mixed Target", cost: 3, ap: 2, hp: 3 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { play: [{ card: target, exhausted: true }], shieldArea: [createMockUnit()] },
+    );
+    const parent = context(engine);
+    const first = iter37RegretMix.selectCandidates(parent);
+    const second = iter37RegretMix.selectCandidates(parent);
+
+    expect(second).toEqual(first);
+    expect(first.every((candidate) => parent.candidates.includes(candidate))).toBe(true);
+    const rolls = Array.from({ length: 32 }, (_, index) =>
+      deterministicPolicyRoll(`state-${index}`),
+    );
+    expect(rolls.some((roll) => roll < 0.5)).toBe(true);
+    expect(rolls.some((roll) => roll >= 0.5)).toBe(true);
+  });
+});
+
+describe("selective-combat experiments: Blocker sequencing", () => {
+  it("reserves one Blocker for a larger Base-breaking attacker later this turn", () => {
+    const blocker = createMockUnit({
+      name: "Blocker",
+      cost: 2,
+      ap: 3,
+      hp: 4,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const probe = createMockUnit({ name: "Probe", cost: 1, ap: 2, hp: 5 });
+    const breaker = createMockUnit({ name: "Breaker", cost: 5, ap: 5, hp: 3 });
+    const engine = GundamTestEngine.create(
+      { play: [blocker], baseSection: [createMockBase({ hp: 5 })] },
+      { play: [probe, breaker] },
+    );
+    const blockerId = instanceId(engine, PLAYER_ONE, "Blocker");
+    engine.getG().turnMetadata.pendingCombat = {
+      stage: "block-step",
+      attackerId: instanceId(engine, PLAYER_TWO, "Probe"),
+      attackerPlayerId: PLAYER_TWO,
+      target: "direct",
+    };
+    const candidates = [{ family: "declareBlock" as const, blockerId }];
+
+    expect(combatAwareStrategy.selectCandidates(context(engine, candidates))).toEqual([
+      { family: "declareBlock", blockerId },
+    ]);
+    expect(iter34BlockerReserve.selectCandidates(context(engine, candidates))).toEqual([]);
+  });
+
+  it("still blocks immediately when no stronger attacker remains", () => {
+    const blocker = createMockUnit({
+      name: "Blocker",
+      cost: 2,
+      ap: 3,
+      hp: 4,
+      keywordEffects: [{ keyword: "Blocker" }],
+    });
+    const attacker = createMockUnit({ name: "Attacker", cost: 2, ap: 3, hp: 3 });
+    const engine = GundamTestEngine.create(
+      { play: [blocker], shieldArea: [createMockUnit()] },
+      { play: [attacker] },
+    );
+    const blockerId = instanceId(engine, PLAYER_ONE, "Blocker");
+    engine.getG().turnMetadata.pendingCombat = {
+      stage: "block-step",
+      attackerId: instanceId(engine, PLAYER_TWO, "Attacker"),
+      attackerPlayerId: PLAYER_TWO,
+      target: "direct",
+    };
+    const candidates = [{ family: "declareBlock" as const, blockerId }];
+
+    expect(iter34BlockerReserve.selectCandidates(context(engine, candidates))).toEqual([
+      { family: "declareBlock", blockerId },
+    ]);
   });
 });
 

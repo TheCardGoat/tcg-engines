@@ -29,6 +29,9 @@ describe("OP04-020 Issho", () => {
     ).toBe(4);
 
     engine.endTurn("south");
+    // End-of-turn (1) is optional ("You may rest…"); accept then choose the Character.
+    // Resting exactly 1 DON!! auto-pays when a single active DON!! is available.
+    engine.accept("south");
 
     const decision = engine.pendingDecision("effectTargetSelection", "south");
     const step = decision.steps[0];
@@ -53,5 +56,32 @@ describe("OP04-020 Issho", () => {
     expect(view.activeSeat).toBe("north");
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline the end-of-turn rest cost without resting DON!! or restanding a Character", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op04Issho020,
+        character: [{ card: eb01MountainGod018, rested: true }],
+        activeDon: 2,
+      },
+      {},
+    );
+    const restedId = engine.findCardInZone("south", "character", eb01MountainGod018);
+
+    engine.attachDon(engine.leader("south"), 1, "south");
+    engine.endTurn("south");
+
+    const optional = engine.pendingDecision("effectOptional", "south");
+    expect(optional.kind).toBe("confirm");
+    engine.decline("south");
+
+    const view = engine.getView("south");
+    expect(view.players.south).toMatchObject({ activeDon: 1, restedDon: 0 });
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === restedId)?.rested,
+    ).toBe(true);
+    expect(view.activeSeat).toBe("north");
+    expect(view.prompts).toHaveLength(0);
   });
 });

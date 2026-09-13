@@ -4,41 +4,88 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   createMockUnit,
+  expectCard,
   expectFailure,
-  expectSuccess,
+  expectLogType,
+  expectPublicLog,
 } from "@tcg/gundam-engine";
 import { gd04ZoloatLeagueMilitaire016 } from "./016-zoloat-league-militaire.ts";
 
 describe("Zoloat (League Militaire) (GD04-016)", () => {
-  it("<Blocker> redirects an enemy attack to this Unit", () => {
-    const attacker = createMockUnit({ ap: 1, hp: 5 });
-    const engine = GundamTestEngine.create(
-      { play: [gd04ZoloatLeagueMilitaire016] },
-      { play: [attacker] },
-      { initialActivePlayer: PLAYER_TWO },
-    );
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const p2 = engine.asPlayer(PLAYER_TWO);
-    const zoloatId = p1.getCardsInZone("battleArea")[0]!;
-    const attackerId = p2.getCardsInZone("battleArea")[0]!;
+  describe("<Blocker> (Rest this Unit to change the attack target to it.)", () => {
+    it("redirects an enemy attack to this Unit and rests it", () => {
+      const attacker = createMockUnit({ ap: 1, hp: 5 });
+      const engine = GundamTestEngine.create(
+        { play: [gd04ZoloatLeagueMilitaire016] },
+        { play: [attacker] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
 
-    expectSuccess(p2.enterBattle(attackerId, "direct"));
-    expectSuccess(p1.declareBlock(zoloatId));
-    expectSuccess(p1.passBattleAction());
-    expectSuccess(p2.passBattleAction());
+      expectCard(p1, gd04ZoloatLeagueMilitaire016).toShowKeyword("Blocker");
+      p2.must.attack(attacker).into("direct");
+      p1.must.declareBlock(gd04ZoloatLeagueMilitaire016);
+      expectPublicLog(engine, "gundam.move.blockDeclared", {
+        blockerPlayerId: PLAYER_ONE,
+      });
+      expect(p1.getBoardView().pendingCombat).toMatchObject({
+        blockerId: p1.unit(gd04ZoloatLeagueMilitaire016).instanceId,
+        stage: "blocker-declared",
+      });
+      expectCard(p1, gd04ZoloatLeagueMilitaire016).toBeRested();
+      p1.must.passBattleAction();
+      p2.must.passBattleAction();
 
-    expect(p1.isExhausted(zoloatId)).toBe(true);
-    expect(p1.getDamage(zoloatId)).toBe(1);
+      expectLogType(engine, "gundam.combat.damageDealt", { min: 1 });
+      expectCard(p1, gd04ZoloatLeagueMilitaire016).toHaveDamage(1);
+    });
+
+    it("cannot block a High-Maneuver attacker", () => {
+      const highManeuver = createMockUnit({
+        ap: 1,
+        hp: 5,
+        keywordEffects: [{ keyword: "HighManeuver" }],
+      });
+      const engine = GundamTestEngine.create(
+        { play: [gd04ZoloatLeagueMilitaire016] },
+        { play: [highManeuver] },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+
+      p2.must.attack(highManeuver).into("direct");
+      expectFailure(p1.declareBlock(gd04ZoloatLeagueMilitaire016), "CANNOT_BLOCK_HIGH_MANEUVER");
+      expectCard(p1, gd04ZoloatLeagueMilitaire016).toBeReady();
+    });
   });
 
-  it("cannot choose the enemy player as its attack target", () => {
-    const engine = GundamTestEngine.create(
-      { play: [gd04ZoloatLeagueMilitaire016], deck: 5 },
-      { deck: 5 },
-    );
-    const p1 = engine.asPlayer(PLAYER_ONE);
-    const zoloatId = p1.getCardsInZone("battleArea")[0]!;
+  describe("This Unit can't choose the enemy player as its attack target.", () => {
+    it("rejects a direct attack against the enemy player", () => {
+      const engine = GundamTestEngine.create(
+        { play: [gd04ZoloatLeagueMilitaire016], deck: 5 },
+        { deck: 5 },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
 
-    expectFailure(p1.enterBattle(zoloatId, "direct"), "CANNOT_TARGET_PLAYER");
+      expectFailure(p1.enterBattle(gd04ZoloatLeagueMilitaire016, "direct"), "CANNOT_TARGET_PLAYER");
+      expect(
+        p1.getVisibleCard(p1.unit(gd04ZoloatLeagueMilitaire016).instanceId)?.restrictions,
+      ).toContain("cannot-target-player");
+    });
+
+    it("may still attack a rested enemy Unit", () => {
+      const defender = createMockUnit({ ap: 1, hp: 3 });
+      const engine = GundamTestEngine.create(
+        { play: [gd04ZoloatLeagueMilitaire016], deck: 5 },
+        { play: [{ card: defender, exhausted: true }], deck: 5 },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+
+      p1.must.attack(gd04ZoloatLeagueMilitaire016).into(defender);
+      expect(p1.getBoardView().pendingCombat?.target).toBe(p2.unit(defender).instanceId);
+    });
   });
 });

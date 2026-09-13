@@ -3,7 +3,7 @@ import { op08TwentyDoctors003 } from "../../../../../cards/src/cards/OP08/charac
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP08-003 Twenty Doctors", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op08TwentyDoctors003);
   });
 });

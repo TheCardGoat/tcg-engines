@@ -4,7 +4,46 @@ import type { Action, Duration, EffectTrigger, Keyword } from "@tcg/op-types";
 export type MatchSeat = "north" | "south";
 export type Viewer = MatchSeat | "judge" | "spectator";
 export type MatchStatus = "setup" | "active" | "finished";
-export type MatchPhase = "setup" | "refresh" | "draw" | "don" | "main" | "end" | "finished";
+
+/**
+ * Why a finished match ended. `null` while the match is still ongoing.
+ *
+ * - `leaderDamage`: a Leader took damage while its controller had 0 Life
+ *   (1-2-1-1-1, judged by rule processing 1-2-2/9-2-1-1).
+ * - `emptyDeck`: a player's deck reached 0 cards (1-2-1-1-2, judged by rule
+ *   processing 1-2-2/9-2-1-2).
+ * - `concession`: a player conceded (1-2-3); never produced by card effects
+ *   and never replaceable (1-2-4).
+ * - `effectWin`: a card effect declared its controller the winner (1-2-5),
+ *   including replacement effects that turn a defeat into a win.
+ * - `judgeDecision`: the judge declared the winner out of band.
+ * - `draw`: the game is a draw (11-1); `winner` stays `null`.
+ */
+export type MatchFinishReason =
+  | "leaderDamage"
+  | "emptyDeck"
+  | "concession"
+  | "effectWin"
+  | "judgeDecision"
+  | "draw";
+/**
+ * Turn and match phases. `"battle"` is an explicit phase nested inside the
+ * turn player's Main Phase: it is entered when an attack is declared
+ * (`state.battle` becomes non-null) and left when the battle finishes, which
+ * restores `"main"`. The battle step machine lives on `BattleState.step`.
+ * Main-phase-only commands (playCard, attachDon, declareAttack,
+ * activateEffect) are therefore illegal during battle by phase construction,
+ * not by a separately remembered `state.battle === null` guard.
+ */
+export type MatchPhase =
+  | "setup"
+  | "refresh"
+  | "draw"
+  | "don"
+  | "main"
+  | "battle"
+  | "end"
+  | "finished";
 export type CardZone =
   | "leader"
   | "deck"
@@ -109,7 +148,10 @@ export interface ModifierState {
   id: string;
   sourceInstanceId: string | null;
   targetId: string;
-  type: "power" | "cost" | "keyword" | "flag" | "attackRestriction";
+  // 4-9-2-1: "basePower" modifiers set a card's base power to an absolute
+  // value; competing set values resolve to the highest rather than summing
+  // like additive "power" modifiers. ("baseCost" may join per 4-9-2-2.)
+  type: "power" | "basePower" | "cost" | "keyword" | "flag" | "attackRestriction";
   value?: number;
   keyword?: Keyword;
   flag?:
@@ -152,6 +194,53 @@ export interface PromptOption {
   targetId?: string;
   enabled?: boolean;
 }
+
+// What remains of an effect-driven play once the 3-7-6-1 replacement choice
+// trash resolved and the played Character entered the freed slot.
+export type EffectPlayReplacementContinuation =
+  | {
+      kind: "playAction";
+      action: Extract<Action, { action: "play" }>;
+      remainingIds: string[];
+      playedIds: string[];
+      previousActionTargetIds?: string[];
+    }
+  | {
+      kind: "searchPlay";
+      action: Extract<Action, { action: "search" }>;
+      lookedIds: string[];
+      playedIds: string[];
+      remainingIds: string[];
+      sourceCardId: string | null;
+    }
+  | {
+      kind: "revealFromLifePlay";
+      action: Extract<Action, { action: "revealFromLife" }>;
+    }
+  | {
+      kind: "playThisCard";
+    }
+  | {
+      kind: "playCardCost";
+      trigger: EffectTrigger;
+      blockIndex: number;
+      selectedIds: string[];
+      trashHandIds?: string[];
+      costPaymentIdsByType?: {
+        giveDon?: string[];
+        restCards?: string[];
+        returnCharacter?: string[];
+      };
+      triggerEvent?: {
+        instanceId: string;
+        effectController: MatchSeat;
+        targetInstanceId?: string;
+        amount?: number;
+        sourceInstanceId?: string;
+        sourceFromZone?: CardZone;
+        toZone?: CardZone;
+      };
+    };
 
 export type PromptResolutionContext =
   | {
@@ -782,6 +871,27 @@ export type PromptResolutionContext =
       maximum: number;
     }
   | {
+      // 3-7-6-1: playing a Character into a full Character area first trashes
+      // 1 of the player's Characters as rule processing (not a K.O., 10-2-1-3).
+      intent: "playCharacterReplacement";
+      controller: MatchSeat;
+      instanceId: string;
+      candidateIds: string[];
+    }
+  | {
+      // 3-7-6-1 for effect-driven plays: the playing player trashes 1 of
+      // their Characters as rule processing (3-7-6-1-1, 10-2-1-3), then the
+      // effect play completes into the freed slot.
+      intent: "effectPlayCharacterReplacement";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      playingSeat: MatchSeat;
+      instanceId: string;
+      candidateIds: string[];
+      playState?: "rested" | "active";
+      continuation: EffectPlayReplacementContinuation;
+    }
+  | {
       intent: "judge";
       issueId?: string | null;
     };
@@ -833,6 +943,7 @@ export interface SetupState {
   };
   mulliganUsed: Record<MatchSeat, boolean>;
   mulliganDecided: Record<MatchSeat, boolean>;
+  lifePlaced: Record<MatchSeat, boolean>;
 }
 
 export interface EngineCapabilityIssue {
@@ -986,6 +1097,12 @@ export interface PlayerState {
   activeDon: number;
   restedDon: number;
   donDeckCount: number;
+  /**
+   * How many times this seat has begun a turn as the active player.
+   * Used for 6-5-6-1 (neither player can battle on their first turn).
+   * Incremented in `beginTurn`; mid-game fixtures seed it from turnNumber.
+   */
+  turnsStarted: number;
 }
 
 export interface EngineEvent {
@@ -1107,6 +1224,7 @@ export interface MatchState {
   promptQueue: PromptState[];
   battle: BattleState | null;
   winner: MatchSeat | null;
+  finishReason: MatchFinishReason | null;
   setup: SetupState;
   idCounter: number;
   eventSequence: number;
@@ -1146,6 +1264,7 @@ export type GameCommand =
   | ({ type: "mulligan" } & GameCommandBase)
   | ({ type: "keepHand" } & GameCommandBase)
   | ({ type: "startGame" } & GameCommandBase)
+  | ({ type: "concede" } & GameCommandBase)
   | ({ type: "endTurn" } & GameCommandBase)
   | ({
       type: "playCard";
@@ -1225,6 +1344,32 @@ export interface LegalCommandDescriptor {
   slotChoices?: number[];
   promptId?: string;
   options?: PromptOption[];
+}
+
+export type OnePieceCardActionInvalidReasonCode =
+  | "not-active-player"
+  | "wrong-phase"
+  | "pending-prompt"
+  | "invalid-zone-or-controller"
+  | "insufficient-don"
+  | "card-restriction"
+  | "no-open-slot"
+  | "missing-main-effect"
+  | "rested-or-restricted"
+  | "missing-target"
+  | "cost-unpayable"
+  | "already-used"
+  | "conditions-unmet";
+
+/**
+ * Engine-owned catalog entry for a structurally applicable card action.
+ * Unlike LegalCommandDescriptor, disabled entries remain visible so clients
+ * can explain why a familiar One Piece action is unavailable right now.
+ */
+export interface PotentialCardCommandDescriptor extends LegalCommandDescriptor {
+  enabled: boolean;
+  disabledReason?: string;
+  disabledReasonCode?: OnePieceCardActionInvalidReasonCode;
 }
 
 export type ProjectedDecisionKind =
@@ -1447,6 +1592,7 @@ export interface PlayerView {
   turnNumber: number;
   phase: MatchPhase;
   winner: MatchSeat | null;
+  finishReason: MatchFinishReason | null;
   players: Record<MatchSeat, ProjectedPlayerState>;
   prompts: ProjectedPrompt[];
   decisions: ProjectedDecision[];

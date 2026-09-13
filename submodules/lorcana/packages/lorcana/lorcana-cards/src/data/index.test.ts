@@ -6,6 +6,7 @@ import {
   getCardForPrinting,
   getLocalizedCardSync,
   getLorcanaShortIdResolution,
+  lorcanaLegacyShortIdAliases,
   printings,
   resolveCurrentLorcanaShortId,
   resolveLorcanaStableIdentity,
@@ -63,6 +64,56 @@ describe("card printing lookup integrity", () => {
     expect(resolveCurrentLorcanaShortId("oD3")).toBe("69M");
     expect(resolveCurrentLorcanaShortId("PX4")).toBe("3zi");
     expect(resolveCurrentLorcanaShortId("R01")).toBe("wWJ");
+  });
+
+  it("preserves published Set 12 short ids after regenerated ids change", () => {
+    const expectedAliases = {
+      "0LB": "rxX",
+      "1z1": "h1q",
+      GBS: "YA5",
+      K5K: "7b7",
+      Wxj: "huu",
+      Zfj: "RHn",
+      aEL: "6Vg",
+      d9j: "Iy7",
+      kOA: "0O9",
+      u1R: "ED6",
+      wqr: "jT4",
+      // Production orphan short ids observed in matchmaking (pre-regeneration)
+      UC4: "Z65",
+      Fdq: "iqR",
+      zdO: "j0D",
+      "35B": "It2",
+      "876": "Zxd",
+      rvl: "kCm",
+      fHl: "rdT",
+      qoz: "556",
+      "0w8": "Fyk",
+      Zl0: "QKW",
+      g6Q: "j3h",
+    };
+
+    for (const [legacyShortId, currentShortId] of Object.entries(expectedAliases)) {
+      expect(resolveCurrentLorcanaShortId(legacyShortId)).toBe(currentShortId);
+      expect(resolveLorcanaStableIdentity(legacyShortId)).toMatchObject({
+        kind: "legacy-alias",
+        legacyShortId,
+        shortId: currentShortId,
+      });
+    }
+  });
+
+  it("keeps every checked-in legacy alias aligned with the active printing registry", () => {
+    const invalidAliases = Object.entries(lorcanaLegacyShortIdAliases).flatMap(
+      ([legacyShortId, alias]) => {
+        const activeShortId = cardsAuxKv.printingIdToShortId[alias.printingId];
+        return activeShortId === alias.shortId
+          ? []
+          : [`${legacyShortId}: expected ${activeShortId ?? "missing"}, got ${alias.shortId}`];
+      },
+    );
+
+    expect(invalidAliases).toEqual([]);
   });
 
   it("accepts recycled ids as current cards when they exist in the active catalog", () => {

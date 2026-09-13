@@ -11,6 +11,8 @@ export interface GundamPracticeStartedMessage {
   readonly type: "gundam.practice.started.v1";
   readonly matchId: string;
   readonly gameId: string;
+  /** Construction-rule violations omitted from the launched practice deck. */
+  readonly warnings: readonly string[];
 }
 
 export interface GundamPracticeErrorMessage {

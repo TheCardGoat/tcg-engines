@@ -8,7 +8,6 @@ import type {
   Ability,
   AbilityLimit,
   AbilityTrigger,
-  AlphaCardDefinition,
   AttachmentDefinition,
   CardDefinition,
   CardKeyword,
@@ -19,11 +18,10 @@ import type {
   CostModifier,
   Effect,
   GigTargetDSL,
-  NumericValue,
+  PerCountValue,
   PromoCardDefinition,
   StructuredCardDefinitionBySetCode,
   StructuredSetCode,
-  SpoilerCardDefinition,
   StructuredCardDefinition,
   TargetDSL,
   TheHeistRetailStarterDeckCardDefinition,
@@ -66,7 +64,7 @@ function contextTarget(key: ContextKey): TargetDSL {
   };
 }
 
-function perCount(multiplier: number, target: TargetDSL): NumericValue {
+function perCount(multiplier: number, target: TargetDSL): PerCountValue {
   return {
     type: "perCount",
     multiplier,
@@ -146,6 +144,37 @@ function hasEvenAndOddGigValuesCondition(): Condition {
   };
 }
 
+function fixerAreaEmpty(): Condition {
+  return {
+    condition: "fixerAreaCount",
+    controller: "friendly",
+    comparison: "eq",
+    value: 0,
+  };
+}
+
+function rivalHasAtLeastNMoreGigs(value: number): Condition {
+  return {
+    condition: "gigCountDifference",
+    controller: "rival",
+    comparison: "gte",
+    other: "friendly",
+    value,
+  };
+}
+
+function hasGigCountCondition(args: {
+  controller: "friendly" | "rival";
+  minValue?: number;
+  comparison: "eq" | "gt" | "gte" | "lt" | "lte";
+  value: number;
+}): Condition {
+  return {
+    condition: "hasGigCount",
+    ...args,
+  };
+}
+
 function matchingGigValueCondition(target: TargetDSL, controller: "friendly" | "rival"): Condition {
   return {
     condition: "matchingGig",
@@ -167,6 +196,67 @@ function duringFriendlyTurn(): Condition {
     condition: "turn",
     player: "friendly",
   };
+}
+
+function lessStreetCredThanRival(): Condition {
+  return {
+    condition: "streetCredComparison",
+    controller: "friendly",
+    comparison: "lt",
+    other: "rival",
+  };
+}
+
+function drawCards(player: "friendly" | "rival", amount: number): Effect {
+  return {
+    effect: "draw",
+    player,
+    amount,
+  };
+}
+
+function friendlyUnitTarget(selection?: { min: number; max: number }): CardTargetDSL {
+  return cardTarget({
+    controller: "friendly",
+    zones: ["field"],
+    cardTypes: ["unit"],
+    ...(selection ? { selection: { mode: "choose", min: selection.min, max: selection.max } } : {}),
+  });
+}
+
+function rivalUnitTarget(selection?: { min: number; max: number }): CardTargetDSL {
+  return cardTarget({
+    controller: "rival",
+    zones: ["field"],
+    cardTypes: ["unit"],
+    ...(selection ? { selection: { mode: "choose", min: selection.min, max: selection.max } } : {}),
+  });
+}
+
+function anyGigTarget(): GigTargetDSL {
+  return {
+    selector: "gig",
+    amount: 1,
+    selection: { mode: "choose", min: 1, max: 1 },
+  };
+}
+
+function chooseOneOrDraw(option: { id: string; label: string; effects: Effect[] }): Effect {
+  return {
+    effect: "chooseEffect",
+    options: [
+      option,
+      {
+        id: "draw",
+        label: "Draw 1",
+        effects: [drawCards("friendly", 1)],
+      },
+    ],
+  };
+}
+
+function spendSelfCost(): Cost {
+  return { cost: "spend", target: SELF_TARGET };
 }
 
 function attackingCondition(target: TargetDSL): Condition {
@@ -287,6 +377,10 @@ function stripTrailingReminders(text: string, reminderText: string[]): string {
     /\s*\(Discard programs after they resolve\.\)$/i,
     /\s*\(Units steal an extra gig for every 10 power\.\)$/i,
     /\s*\(You can only Call a Legend once per turn\.\)$/i,
+    /\s*\(You may only Call a Legend once per turn\.\)$/i,
+    /\s*\(This Unit can attack the turn it's played\.\)$/i,
+    /\s*\(Units with power 0 don't steal Gigs\.\)$/i,
+    /\s*\(Otherwise, keep it on the top of your deck\.\)$/i,
   ];
 
   let working = text;
@@ -323,7 +417,11 @@ function parseKeywordAbilities(
       /(^GO SOLO(?:\s*\([^)]*\))?)(?=\s|$|[A-Z])/i,
     );
     working = result.text;
-    abilities.push(goSoloAbility({ text: result.match ?? "GO SOLO" }));
+    if (result.match) {
+      abilities.push(goSoloAbility({ text: result.match }));
+    } else if (card.keywords.includes("goSolo")) {
+      abilities.push(goSoloAbility({ text: "GO SOLO" }));
+    }
   }
 
   if (/BLOCKER(?:\s*\([^)]*\))?/i.test(working)) {
@@ -343,12 +441,14 @@ function parseKeywordAbilities(
       /(^ADRENALINE(?:\s*\([^)]*\))?|(?<=\.\s)(ADRENALINE(?:\s*\([^)]*\))?))/i,
     );
     working = result.text;
-    abilities.push(
-      adrenalineAbility({
-        text: result.match ?? "ADRENALINE",
-        host: card.type === "gear",
-      }),
-    );
+    if (result.match) {
+      abilities.push(
+        adrenalineAbility({
+          text: result.match,
+          host: card.type === "gear",
+        }),
+      );
+    }
   }
 
   if (/QUICK(?:\s*\([^)]*\))?/i.test(working)) {
@@ -357,7 +457,9 @@ function parseKeywordAbilities(
       /(^QUICK(?:\s*\([^)]*\))?|(?<=\.\s)(QUICK(?:\s*\([^)]*\))?))/i,
     );
     working = result.text;
-    abilities.push(quickAbility({ text: result.match ?? "QUICK", host: card.type === "gear" }));
+    if (result.match) {
+      abilities.push(quickAbility({ text: result.match, host: card.type === "gear" }));
+    }
   }
 
   return {
@@ -403,6 +505,210 @@ function deriveKeywords(abilities: readonly Ability[]): CardKeyword[] {
 
 function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | null {
   const source = gearHostOrSelf(card);
+
+  if (
+    /^Choose one effect\.\s*Draw 2\.\s*\/\/\s*A Unit can't attack until your next turn\.\s*\/\/\s*A friendly Legend may use GO SOLO for -2 €\$ this turn, to a minimum of 1 €\$\.$/i.test(
+      text,
+    )
+  ) {
+    const cantAttack: Effect = {
+      effect: "grantRule",
+      target: cardTarget({
+        zones: ["field"],
+        cardTypes: ["unit"],
+        selection: { mode: "choose", min: 1, max: 1 },
+      }),
+      rule: "cantAttack",
+      duration: "untilSourceNextTurn",
+    };
+    const goSoloDiscount: Effect = {
+      effect: "grantCostModifier",
+      player: "friendly",
+      appliesTo: cardTarget({
+        controller: "friendly",
+        zones: ["legendArea"],
+        cardTypes: ["legend"],
+        keywords: ["goSolo"],
+      }),
+      modifier: {
+        reducer: "flat",
+        amount: 2,
+        min: 1,
+      },
+      duration: "turn",
+    };
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "chooseEffect",
+            options: [
+              {
+                id: "draw",
+                label: "Draw 2",
+                effects: [drawCards("friendly", 2)],
+              },
+              {
+                id: "cant-attack",
+                label: "A Unit can't attack until your next turn",
+                effects: [cantAttack],
+              },
+              {
+                id: "go-solo",
+                label:
+                  "A friendly Legend may use Go Solo for -2 €$ this turn, to a minimum of 1 €$",
+                effects: [goSoloDiscount],
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^The first time another friendly Unit steals a Gig with value less than its power each turn, ready 2 Eddies\.\s*2 €\$,\s*SPEND A rival Unit loses power equal to this Unit's power this turn\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text: "The first time another friendly Unit steals a Gig with value less than its power each turn, ready 2 Eddies.",
+        trigger: {
+          trigger: "event",
+          event: {
+            event: "gigStolen",
+            player: "friendly",
+            target: {
+              selector: "gig",
+              controller: "rival",
+              amount: 1,
+            },
+            minAmount: 1,
+            source: cardTarget({
+              controller: "friendly",
+              zones: ["field"],
+              cardTypes: ["unit"],
+              excludeSelf: true,
+            }),
+            valueLessThanSourcePower: true,
+          },
+        },
+        source: SELF_TARGET,
+        limits: ["firstTimeEachTurn"],
+        effects: [
+          {
+            effect: "readyEddies",
+            player: "friendly",
+            amount: 2,
+          },
+        ],
+      }),
+      activatedAbility({
+        text: "2 €$, SPEND A rival Unit loses power equal to this Unit's power this turn.",
+        source: SELF_TARGET,
+        costs: [{ cost: "payEddies", amount: 2 }, spendSelfCost()],
+        effects: [
+          {
+            effect: "modifyPower",
+            target: rivalUnitTarget({ min: 1, max: 1 }),
+            value: { type: "sourcePower", multiplier: -1 },
+            duration: "turn",
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^Choose one effect\. If you have less (?:☆|\*) \(Street Cred\) than a Rival, choose both instead\.\s*Give all rival Units -5 power this turn\.\s*\/\/\s*Bottom-deck all rival Units with power 0\.$/i.test(
+      text,
+    )
+  ) {
+    const lessCred = lessStreetCredThanRival();
+    const powerDown: Effect = {
+      effect: "modifyPower",
+      target: cardTarget({
+        controller: "rival",
+        zones: ["field"],
+        cardTypes: ["unit"],
+      }),
+      value: -5,
+      duration: "turn",
+    };
+    const bottomDeck: Effect = {
+      effect: "moveCard",
+      target: cardTarget({
+        controller: "rival",
+        zones: ["field"],
+        cardTypes: ["unit"],
+        maxPower: 0,
+      }),
+      destination: "deckBottom",
+    };
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "chooseEffect",
+            options: [
+              {
+                id: "both",
+                label: "Both effects (less Street Cred than a Rival)",
+                conditions: [lessCred],
+                effects: [powerDown, bottomDeck],
+              },
+              {
+                id: "power-down",
+                label: "Give all rival Units -5 power this turn",
+                conditions: [{ condition: "not", of: lessCred }],
+                effects: [powerDown],
+              },
+              {
+                id: "bottom-deck",
+                label: "Bottom-deck all rival Units with power 0",
+                conditions: [{ condition: "not", of: lessCred }],
+                effects: [bottomDeck],
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (/^Play up to 2 Units with cost (\d+) or less from your trash for free\.$/i.test(text)) {
+    const maxCost = Number.parseInt(
+      /^Play up to 2 Units with cost (\d+) or less from your trash for free\.$/i.exec(text)![1]!,
+      10,
+    );
+    const trashUnit: CardTargetDSL = cardTarget({
+      controller: "friendly",
+      zones: ["trash"],
+      cardTypes: ["unit"],
+      maxCost,
+    });
+    const playFromTrash: Effect = {
+      effect: "playCard",
+      target: trashUnit,
+      free: true,
+      optional: true,
+    };
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source: SELF_TARGET,
+        effects: [playFromTrash, playFromTrash],
+      }),
+    ];
+  }
 
   if (
     /^SPEND Swap a friendly Gig with a rival Gig\. At the start of your turn, draw 1 for each friendly value-pair of Gigs\.$/i.test(
@@ -1518,6 +1824,709 @@ function parseSpecialAbilities(card: CardDefinition, text: string): Ability[] | 
   }
 
   if (
+    /^CALL Choose one effect\. Give a friendly Unit \+2 power this turn\. \/\/ Draw 1\. SPEND:? Increase a Gig by up to 2\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text: "CALL Choose one effect. Give a friendly Unit +2 power this turn. // Draw 1.",
+        trigger: { trigger: "call" },
+        source: SELF_TARGET,
+        effects: [
+          chooseOneOrDraw({
+            id: "buff",
+            label: "Give a friendly Unit +2 power this turn",
+            effects: [
+              {
+                effect: "modifyPower",
+                target: friendlyUnitTarget({ min: 1, max: 1 }),
+                value: 2,
+                duration: "turn",
+              },
+            ],
+          }),
+        ],
+      }),
+      activatedAbility({
+        text: "SPEND: Increase a Gig by up to 2.",
+        source: SELF_TARGET,
+        bindings: [{ id: "selectedGig", target: anyGigTarget() }],
+        costs: [spendSelfCost()],
+        effects: [
+          {
+            effect: "adjustGig",
+            target: boundTarget("selectedGig"),
+            maxAmount: 2,
+            direction: "increase",
+            chooseUpTo: true,
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^PLAY Until your next turn, rival Units can't steal friendly Gigs with value higher than their power\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source,
+        effects: [
+          {
+            effect: "grantRule",
+            target: SELF_TARGET,
+            rule: "cantStealGigAbovePower",
+            duration: "untilSourceNextTurn",
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^When this Unit or Legend is spent, you may look at a friendly face-down Legend\. If that Legend is ARASAKA or has GO SOLO, you may Call it for free\.$/i.test(
+      text,
+    )
+  ) {
+    const faceDownLegend = cardTarget({
+      controller: "friendly",
+      zones: ["legendArea"],
+      cardTypes: ["legend"],
+      face: "faceDown",
+      selection: { mode: "choose", min: 0, max: 1 },
+    });
+    return [
+      triggeredAbility({
+        text,
+        trigger: {
+          trigger: "event",
+          event: {
+            event: "cardSpent",
+            player: "friendly",
+            target: HOST_TARGET,
+          },
+        },
+        source: HOST_TARGET,
+        bindings: [{ id: "selectedLegend", target: faceDownLegend }],
+        effects: [
+          {
+            effect: "lookAt",
+            target: boundTarget("selectedLegend"),
+            revealToOpponent: false,
+          },
+          {
+            effect: "callLegend",
+            player: "friendly",
+            target: boundTarget("selectedLegend"),
+            free: true,
+            optional: true,
+            conditions: [
+              {
+                condition: "targetExists",
+                target: {
+                  selector: "bound",
+                  id: "selectedLegend",
+                  classifications: ["Arasaka"],
+                },
+              },
+            ],
+          },
+          {
+            effect: "callLegend",
+            player: "friendly",
+            target: boundTarget("selectedLegend"),
+            free: true,
+            optional: true,
+            conditions: [
+              {
+                condition: "targetExists",
+                target: {
+                  selector: "bound",
+                  id: "selectedLegend",
+                  keywords: ["goSolo"],
+                },
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (/^If this Unit would be defeated, defeat its "DEADMAN TRANSMITTER" instead\.$/i.test(text)) {
+    return [
+      staticAbility({
+        text,
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "grantRule",
+            target: SELF_TARGET,
+            rule: "sacrificeInsteadOfHostDefeat",
+            duration: "continuous",
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^Give a friendly Unit these effects\. If you have less (?:☆|\*) \(Street Cred\) than a Rival, they instead choose one effect for you\. The next time this Unit attacks this turn, it may attack ready Units\. \/\/ Give this Unit \+3 power this turn\.$/i.test(
+      text,
+    )
+  ) {
+    const lessCred = lessStreetCredThanRival();
+    const readyAttack: Effect = {
+      effect: "grantRule",
+      target: boundTarget("selectedUnit"),
+      rule: "canAttackReadyUnits",
+      duration: "turn",
+    };
+    const plusPower: Effect = {
+      effect: "modifyPower",
+      target: boundTarget("selectedUnit"),
+      value: 3,
+      duration: "turn",
+    };
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source: SELF_TARGET,
+        bindings: [{ id: "selectedUnit", target: friendlyUnitTarget({ min: 1, max: 1 }) }],
+        effects: [
+          {
+            effect: "chooseEffect",
+            chooser: "rival",
+            options: [
+              {
+                id: "both",
+                label: "Attack ready Units this turn and get +3 power",
+                conditions: [{ condition: "not", of: lessCred }],
+                effects: [readyAttack, plusPower],
+              },
+              {
+                id: "ready-attack",
+                label: "The next time this Unit attacks this turn, it may attack ready Units",
+                conditions: [lessCred],
+                effects: [readyAttack],
+              },
+              {
+                id: "plus-power",
+                label: "Give this Unit +3 power this turn",
+                conditions: [lessCred],
+                effects: [plusPower],
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^Each player discards their hand and may draw 5\. If the total number of discarded cards equals the value of a friendly Gig, draw 2\.$/i.test(
+      text,
+    )
+  ) {
+    const mayDrawFive = (chooser: "friendly" | "rival"): Effect => ({
+      effect: "chooseEffect",
+      chooser,
+      options: [
+        {
+          id: "draw",
+          label: "Draw 5",
+          effects: [drawCards(chooser, 5)],
+        },
+        {
+          id: "skip",
+          label: "Do not draw",
+          effects: [],
+        },
+      ],
+    });
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source: SELF_TARGET,
+        effects: [
+          { effect: "discardFromHand", player: "friendly", amount: "all" },
+          { effect: "discardFromHand", player: "rival", amount: "all" },
+          mayDrawFive("friendly"),
+          mayDrawFive("rival"),
+          {
+            effect: "draw",
+            player: "friendly",
+            amount: 2,
+            conditions: [{ condition: "discardedCountMatchesGig", controller: "friendly" }],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^CALL Choose one effect\. A friendly Unit can't be defeated in a fight this turn\. \/\/ Draw 1\. SPEND:? Adjust a Gig by 1\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text: "CALL Choose one effect. A friendly Unit can't be defeated in a fight this turn. // Draw 1.",
+        trigger: { trigger: "call" },
+        source: SELF_TARGET,
+        effects: [
+          chooseOneOrDraw({
+            id: "protect",
+            label: "A friendly Unit can't be defeated in a fight this turn",
+            effects: [
+              {
+                effect: "grantRule",
+                target: friendlyUnitTarget({ min: 1, max: 1 }),
+                rule: "cantBeDefeatedInFight",
+                duration: "turn",
+              },
+            ],
+          }),
+        ],
+      }),
+      activatedAbility({
+        text: "SPEND Adjust a Gig by 1.",
+        source: SELF_TARGET,
+        bindings: [{ id: "selectedGig", target: anyGigTarget() }],
+        costs: [spendSelfCost()],
+        effects: [
+          {
+            effect: "adjustGig",
+            target: boundTarget("selectedGig"),
+            maxAmount: 1,
+            direction: "either",
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (/^When this Unit steals a Gig, if it's equipped, a Rival discards 1\.$/i.test(text)) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: {
+          trigger: "event",
+          event: {
+            event: "gigStolen",
+            player: "friendly",
+            target: RIVAL_GIG_TARGET,
+            minAmount: 1,
+            source: SELF_TARGET,
+          },
+        },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "discardFromHand",
+            player: "rival",
+            amount: 1,
+            conditions: [
+              {
+                condition: "targetExists",
+                target: cardTarget({
+                  controller: "friendly",
+                  cardTypes: ["gear"],
+                  attachedTo: SELF_TARGET,
+                }),
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^Play your first CYBERWARE Gear each turn for -3 €\$ , to a minimum of 1 €\$\.$/i.test(text) ||
+    /^Play your first CYBERWARE Gear each turn for -3 €\$, to a minimum of 1 €\$\.$/i.test(text)
+  ) {
+    return [
+      staticAbility({
+        text,
+        limits: ["firstTimeEachTurn"],
+        effects: [
+          {
+            effect: "grantCostModifier",
+            player: "friendly",
+            appliesTo: cardTarget({
+              controller: "friendly",
+              zones: ["hand"],
+              cardTypes: ["gear"],
+              classifications: ["Cyberware"],
+            }),
+            modifier: {
+              reducer: "flat",
+              amount: 3,
+              min: 1,
+            },
+            duration: "continuous",
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^If a Rival controls at least 2 more Gigs than you, this Unit has ADRENALINE\.$/i.test(text)
+  ) {
+    return [
+      staticAbility({
+        text,
+        source: HOST_TARGET,
+        effects: [
+          {
+            effect: "grantRule",
+            target: HOST_TARGET,
+            rule: "adrenaline",
+            duration: "continuous",
+            conditions: [
+              {
+                condition: "gigCountDifference",
+                controller: "rival",
+                comparison: "gte",
+                other: "friendly",
+                value: 2,
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^CALL Choose one effect\. Spend a rival Unit\. \/\/ Draw 1\. SPEND:? Set a player's Gig to the same value as another player's Gig\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text: "CALL Choose one effect. Spend a rival Unit. // Draw 1.",
+        trigger: { trigger: "call" },
+        source: SELF_TARGET,
+        effects: [
+          chooseOneOrDraw({
+            id: "spend",
+            label: "Spend a rival Unit",
+            effects: [
+              {
+                effect: "spend",
+                target: rivalUnitTarget({ min: 1, max: 1 }),
+              },
+            ],
+          }),
+        ],
+      }),
+      activatedAbility({
+        text: "SPEND Set a player's Gig to the same value as another player's Gig.",
+        source: SELF_TARGET,
+        bindings: [
+          {
+            id: "selectedGigs",
+            target: {
+              selector: "gig",
+              amount: 2,
+              selection: { mode: "choose", min: 2, max: 2 },
+            },
+          },
+        ],
+        costs: [spendSelfCost()],
+        effects: [
+          {
+            effect: "copyGigValue",
+            source: boundTarget("selectedGigs", 0),
+            target: boundTarget("selectedGigs", 1),
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (/^PLAY You may swap a friendly Gig with a rival Gig\.$/i.test(text)) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source,
+        bindings: [
+          {
+            id: "friendlyGig",
+            target: {
+              ...FRIENDLY_GIG_TARGET,
+              selection: { mode: "choose", min: 1, max: 1 },
+            },
+          },
+          {
+            id: "rivalGig",
+            target: {
+              ...RIVAL_GIG_TARGET,
+              selection: { mode: "choose", min: 1, max: 1 },
+            },
+          },
+        ],
+        effects: [
+          {
+            effect: "swapGigs",
+            friendly: boundTarget("friendlyGig"),
+            rival: boundTarget("rivalGig"),
+            optional: true,
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^During your turn, you may Call a Legend for free\. ATTACK Discard 1\. If you do, draw 1 for each friendly face-up Legend\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      staticAbility({
+        text: "During your turn, you may Call a Legend for free.",
+        effects: [
+          {
+            effect: "grantRule",
+            target: SELF_TARGET,
+            rule: "callLegendFree",
+            duration: "continuous",
+            conditions: [duringFriendlyTurn()],
+          },
+        ],
+      }),
+      triggeredAbility({
+        text: "ATTACK Discard 1. If you do, draw 1 for each friendly face-up Legend.",
+        trigger: { trigger: "attack" },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "ifYouDo",
+            doEffect: {
+              effect: "discardFromHand",
+              player: "friendly",
+              amount: 1,
+              optional: true,
+            },
+            ifEffects: [
+              {
+                effect: "draw",
+                player: "friendly",
+                amount: perCount(
+                  1,
+                  cardTarget({
+                    controller: "friendly",
+                    zones: ["legendArea"],
+                    cardTypes: ["legend"],
+                    face: "faceUp",
+                  }),
+                ),
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (/^Spend all rival Units\. Then, defeat a spent Unit\.$/i.test(text)) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "spend",
+            target: cardTarget({
+              controller: "rival",
+              zones: ["field"],
+              cardTypes: ["unit"],
+            }),
+          },
+          {
+            effect: "defeat",
+            target: cardTarget({
+              zones: ["field"],
+              cardTypes: ["unit"],
+              state: "spent",
+              selection: { mode: "choose", min: 1, max: 1 },
+            }),
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^CALL Choose one effect\. Give a rival Unit -2 power this turn\. \/\/ Draw 1\. SPEND:? Decrease a Gig by up to 2\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text: "CALL Choose one effect. Give a rival Unit -2 power this turn. // Draw 1.",
+        trigger: { trigger: "call" },
+        source: SELF_TARGET,
+        effects: [
+          chooseOneOrDraw({
+            id: "weaken",
+            label: "Give a rival Unit -2 power this turn",
+            effects: [
+              {
+                effect: "modifyPower",
+                target: rivalUnitTarget({ min: 1, max: 1 }),
+                value: -2,
+                duration: "turn",
+              },
+            ],
+          }),
+        ],
+      }),
+      activatedAbility({
+        text: "SPEND: Decrease a Gig by up to 2.",
+        source: SELF_TARGET,
+        bindings: [{ id: "selectedGig", target: anyGigTarget() }],
+        costs: [spendSelfCost()],
+        effects: [
+          {
+            effect: "adjustGig",
+            target: boundTarget("selectedGig"),
+            maxAmount: 2,
+            direction: "decrease",
+            chooseUpTo: true,
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (/^PLAY Draw 2\.$/i.test(text)) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source,
+        effects: [drawCards("friendly", 2)],
+      }),
+    ];
+  }
+
+  if (
+    /^At the end of your turn, if you have less (?:☆|\*) \(Street Cred\) than a Rival, ready this Unit\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: {
+          trigger: "event",
+          event: { event: "turnEnded", player: "friendly" },
+        },
+        source: SELF_TARGET,
+        effects: [
+          {
+            effect: "ready",
+            target: SELF_TARGET,
+            conditions: [lessStreetCredThanRival()],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^When this Unit or Legend is spent, search the top card of your deck\. You may trash it\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: {
+          trigger: "event",
+          event: {
+            event: "cardSpent",
+            player: "friendly",
+            target: HOST_TARGET,
+          },
+        },
+        source: HOST_TARGET,
+        effects: [
+          {
+            effect: "searchDeck",
+            player: "friendly",
+            lookCount: 1,
+            target: cardTarget({
+              controller: "friendly",
+              zones: ["deck"],
+            }),
+            select: { kind: "upTo", max: 1 },
+            reveal: false,
+            destination: "trash",
+            remainder: { zone: "deckTop" },
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
+    /^PLAY You may defeat a Gear\. If its cost equals the value of a friendly Gig, draw 1\.$/i.test(
+      text,
+    )
+  ) {
+    return [
+      triggeredAbility({
+        text,
+        trigger: { trigger: "play" },
+        source,
+        bindings: [
+          {
+            id: "selectedGear",
+            target: cardTarget({
+              cardTypes: ["gear"],
+              selection: { mode: "choose", min: 0, max: 1 },
+            }),
+          },
+        ],
+        effects: [
+          {
+            effect: "defeat",
+            target: boundTarget("selectedGear"),
+            optional: true,
+          },
+          {
+            effect: "draw",
+            player: "friendly",
+            amount: 1,
+            conditions: [
+              {
+                condition: "costMatchesGig",
+                target: boundTarget("selectedGear"),
+                controller: "friendly",
+              },
+            ],
+          },
+        ],
+      }),
+    ];
+  }
+
+  if (
     /^A rival Unit can't attack until your next turn\. If you control a min Gig, you may Call a Legend for free\.$/i.test(
       text,
     )
@@ -1619,6 +2628,49 @@ function parseTriggeredByPrefix(
             target: source,
             rule: "canAttackOnPlayedTurnAgainstUnits",
             duration: "turn",
+          },
+        ],
+      });
+    }
+
+    if (/^You may Call a Legend for free\.$/i.test(body)) {
+      return triggeredAbility({
+        text: fullText,
+        trigger: { trigger: "play" },
+        source,
+        effects: [
+          {
+            effect: "callLegend",
+            player: "friendly",
+            free: true,
+            optional: true,
+            target: cardTarget({
+              controller: "friendly",
+              zones: ["legendArea"],
+              cardTypes: ["legend"],
+              face: "faceDown",
+              selection: { mode: "choose", min: 1, max: 1 },
+            }),
+          },
+        ],
+      });
+    }
+
+    if (
+      /^Until your next turn, rival Legends can't steal friendly Gigs with value less than their power\.$/i.test(
+        body,
+      )
+    ) {
+      return triggeredAbility({
+        text: fullText,
+        trigger: { trigger: "play" },
+        source,
+        effects: [
+          {
+            effect: "grantRule",
+            target: SELF_TARGET,
+            rule: "cantStealGigBelowPower",
+            duration: "untilSourceNextTurn",
           },
         ],
       });
@@ -1960,6 +3012,59 @@ function parseEventAbility(card: CardDefinition, text: string): Ability {
     });
   }
 
+  if (
+    /^When a friendly Legend steals a Gig, if its value is even, draw 1\. If its value is odd, a Rival discards 1\.$/i.test(
+      text,
+    )
+  ) {
+    const stolenGig: TargetDSL = contextTarget("triggeredGigs");
+    return triggeredAbility({
+      text,
+      trigger: {
+        trigger: "event",
+        event: {
+          event: "gigStolen",
+          player: "friendly",
+          target: RIVAL_GIG_TARGET,
+          minAmount: 1,
+          source: cardTarget({
+            controller: "friendly",
+            cardTypes: ["legend"],
+          }),
+        },
+      },
+      source: SELF_TARGET,
+      effects: [
+        {
+          effect: "draw",
+          player: "friendly",
+          amount: 1,
+          conditions: [
+            {
+              condition: "targetParity",
+              target: stolenGig,
+              property: "gigValue",
+              parity: "even",
+            },
+          ],
+        },
+        {
+          effect: "discardFromHand",
+          player: "rival",
+          amount: 1,
+          conditions: [
+            {
+              condition: "targetParity",
+              target: stolenGig,
+              property: "gigValue",
+              parity: "odd",
+            },
+          ],
+        },
+      ],
+    });
+  }
+
   throw new Error(`Unsupported event ability for ${card.slug}: ${text}`);
 }
 
@@ -2078,6 +3183,178 @@ function parseStaticAbility(card: CardDefinition, text: string): Ability {
 
 function parseDirectEffectAbility(card: CardDefinition, text: string): Ability {
   const source = gearHostOrSelf(card);
+
+  const defeatRivalGear = /^Defeat a rival Gear with power (\d+) or less\.$/i.exec(text);
+  if (defeatRivalGear) {
+    return triggeredAbility({
+      text,
+      trigger: { trigger: "play" },
+      source,
+      effects: [
+        {
+          effect: "defeat",
+          target: cardTarget({
+            controller: "rival",
+            zones: ["field"],
+            cardTypes: ["gear"],
+            maxPower: Number.parseInt(defeatRivalGear[1]!, 10),
+            selection: { mode: "choose", min: 1, max: 1 },
+          }),
+        },
+      ],
+    });
+  }
+
+  if (
+    /^Spend a rival Unit\. It can't ready until your next turn\. If your (?:☆|\*) \(Street Cred\) is an even number, draw 1\.$/i.test(
+      text,
+    )
+  ) {
+    return triggeredAbility({
+      text,
+      trigger: { trigger: "play" },
+      source,
+      bindings: [
+        {
+          id: "unit",
+          target: rivalUnitTarget({ min: 1, max: 1 }),
+        },
+      ],
+      effects: [
+        { effect: "spend", target: boundTarget("unit") },
+        {
+          effect: "grantRule",
+          target: boundTarget("unit"),
+          rule: "cantReady",
+          duration: "untilSourceNextTurn",
+        },
+        {
+          effect: "draw",
+          player: "friendly",
+          amount: 1,
+          conditions: [{ condition: "streetCredParity", controller: "friendly", parity: "even" }],
+        },
+      ],
+    });
+  }
+
+  const searchTopAddMinGigs =
+    /^Search the top (\d+) cards of your deck\. Add 1 to your hand\. You may add 1 more for each friendly min Gig\. Bottom-deck the rest\.$/i.exec(
+      text,
+    );
+  if (searchTopAddMinGigs) {
+    return triggeredAbility({
+      text,
+      trigger: { trigger: "play" },
+      source,
+      effects: [
+        {
+          effect: "searchDeck",
+          player: "friendly",
+          lookCount: Number.parseInt(searchTopAddMinGigs[1]!, 10),
+          target: cardTarget({
+            controller: "friendly",
+            zones: ["deck"],
+          }),
+          select: {
+            kind: "upTo",
+            max: {
+              type: "basePlusPerCount",
+              base: 1,
+              multiplier: 1,
+              target: {
+                selector: "gig",
+                controller: "friendly",
+                amount: "all",
+                minValue: 1,
+                maxValue: 1,
+              },
+            },
+          },
+          reveal: false,
+          destination: "hand",
+          remainder: { zone: "deckBottom", order: "random" },
+        },
+      ],
+    });
+  }
+
+  if (card.slug === "les-e-le-mens") {
+    return triggeredAbility({
+      text,
+      trigger: { trigger: "play" },
+      source,
+      effects: [
+        {
+          effect: "moveCard",
+          target: cardTarget({
+            controller: "rival",
+            zones: ["field"],
+            cardTypes: ["unit"],
+            lowestPower: true,
+            selection: { mode: "choose", min: 1, max: 1 },
+          }),
+          destination: "deckBottom",
+        },
+      ],
+    });
+  }
+
+  if (card.slug === "unlikely-bond") {
+    return triggeredAbility({
+      text,
+      trigger: { trigger: "play" },
+      source,
+      effects: [
+        {
+          effect: "ifYouDo",
+          doEffect: {
+            effect: "moveCard",
+            target: cardTarget({
+              controller: "friendly",
+              zones: ["field"],
+              cardTypes: ["unit"],
+              state: "ready",
+              selection: { mode: "choose", min: 1, max: 1 },
+            }),
+            destination: "deckBottom",
+          },
+          ifEffects: [
+            {
+              effect: "moveCard",
+              target: cardTarget({
+                controller: "rival",
+                zones: ["field"],
+                cardTypes: ["unit"],
+                state: "spent",
+                selection: { mode: "choose", min: 1, max: 1 },
+              }),
+              destination: "deckBottom",
+            },
+          ],
+        },
+      ],
+    });
+  }
+
+  if (card.slug === "wild-in-the-streets") {
+    return triggeredAbility({
+      text,
+      trigger: { trigger: "play" },
+      source,
+      effects: [
+        {
+          effect: "defeat",
+          target: cardTarget({
+            zones: ["field"],
+            cardTypes: ["unit"],
+            state: "spent",
+            selection: { mode: "choose", min: 1, max: 1 },
+          }),
+        },
+      ],
+    });
+  }
 
   if (
     /^Sell the top card of your deck\. If you control a Gig with an even value and a Gig with an odd value, draw 2\.$/i.test(
@@ -2221,6 +3498,9 @@ function parseMainAbility(card: CardDefinition, text: string): Ability[] {
   }
 
   try {
+    if (/^\[(?:Flavor|Flavour)(?: Text)?\]/i.test(text)) {
+      return [];
+    }
     const cantAttackPrefix = /^(This Unit can't attack\.)\s+([\s\S]+)$/i.exec(text);
     if (cantAttackPrefix) {
       const cantAttackAbility = parseStaticAbility(card, cantAttackPrefix[1]!);
@@ -2246,7 +3526,7 @@ function parseMainAbility(card: CardDefinition, text: string): Ability[] {
       return specialAbilities;
     }
 
-    const triggeredPrefix = /^(PLAY|ATTACK|FLIP|CALL|DEFEATED)\s+(.+)$/.exec(text);
+    const triggeredPrefix = /^(PLAY|ATTACK|FLIP|CALL|DEFEATED)\s+(.+)$/i.exec(text);
     if (triggeredPrefix) {
       const trigger = triggeredPrefix[1]!.toLowerCase() as
         | "play"
@@ -2255,6 +3535,54 @@ function parseMainAbility(card: CardDefinition, text: string): Ability[] {
         | "call"
         | "defeated";
       return [parseTriggeredByPrefix(card, trigger, triggeredPrefix[2]!, text)];
+    }
+
+    if (card.slug === "v-roamer-of-the-badlands") {
+      return [
+        triggeredAbility({
+          text: "When this Unit steals a Gig, increase it by up to 5.",
+          trigger: {
+            trigger: "event",
+            event: {
+              event: "gigStolen",
+              player: "friendly",
+              target: FRIENDLY_GIG_TARGET,
+              minAmount: 1,
+              source: SELF_TARGET,
+            },
+          },
+          source: SELF_TARGET,
+          effects: [
+            {
+              effect: "adjustGig",
+              target: contextTarget("triggeredGigs"),
+              maxAmount: 5,
+              direction: "increase",
+              chooseUpTo: true,
+            },
+          ],
+        }),
+        triggeredAbility({
+          text: "At the end of your turn, if you control 2 or more Gigs with 8+ value, draw 1.",
+          trigger: { trigger: "event", event: { event: "turnEnded", player: "friendly" } },
+          source: SELF_TARGET,
+          effects: [
+            {
+              effect: "draw",
+              player: "friendly",
+              amount: 1,
+              conditions: [
+                hasGigCountCondition({
+                  controller: "friendly",
+                  minValue: 8,
+                  comparison: "gte",
+                  value: 2,
+                }),
+              ],
+            },
+          ],
+        }),
+      ];
     }
 
     if (/^(When|The first time)/i.test(text)) {
@@ -2276,11 +3604,7 @@ function parseMainAbility(card: CardDefinition, text: string): Ability[] {
   }
 }
 
-const LEGACY_SET_CODES = [
-  "alpha",
-  "spoiler",
-  "promo",
-] as const satisfies readonly StructuredSetCode[];
+const LEGACY_SET_CODES = ["promo"] as const satisfies readonly StructuredSetCode[];
 
 const LEGACY_SET_CODE_SET: ReadonlySet<string> = new Set(LEGACY_SET_CODES);
 
@@ -2289,8 +3613,6 @@ function isLegacySetCode(setCode: string): boolean {
 }
 
 const STRUCTURED_SET_CODES = [
-  "alpha",
-  "spoiler",
   "promo",
   "PRM01",
   "boxtoppersretail",
@@ -2345,41 +3667,105 @@ export function parseStructuredCard(card: CardDefinition): StructuredCardDefinit
 }
 
 function parseCostModifier(text: string): { text: string; modifier?: CostModifier } {
-  const match =
+  const programGigMatch =
     /^Play this Program for -(\d+) €\$ for each friendly Gig with (\d+)\+ value, to a minimum of (\d+) €\$\.\s*/.exec(
       text,
     );
-  if (!match) {
-    return { text };
-  }
-  const modifier: CostModifier = {
-    reducer: "perTargetCount",
-    reductionPerCount: Number.parseInt(match[1]!, 10),
-    target: {
-      selector: "gig",
-      controller: "friendly",
-      amount: "all",
-      minValue: Number.parseInt(match[2]!, 10),
-    },
-    min: Number.parseInt(match[3]!, 10),
-  };
-  return { text: normalizeText(text.slice(match[0].length)), modifier };
-}
-
-export function parseAlphaCard(card: CardDefinition): AlphaCardDefinition {
-  if (card.set.code !== "alpha") {
-    throw new Error(`Expected an alpha card, received ${card.slug} from ${card.set.code}`);
+  if (programGigMatch) {
+    const modifier: CostModifier = {
+      reducer: "perTargetCount",
+      reductionPerCount: Number.parseInt(programGigMatch[1]!, 10),
+      target: {
+        selector: "gig",
+        controller: "friendly",
+        amount: "all",
+        minValue: Number.parseInt(programGigMatch[2]!, 10),
+      },
+      min: Number.parseInt(programGigMatch[3]!, 10),
+    };
+    return { text: normalizeText(text.slice(programGigMatch[0].length)), modifier };
   }
 
-  return parseStructuredCard(card) as AlphaCardDefinition;
-}
-
-export function parseSpoilerCard(card: CardDefinition): SpoilerCardDefinition {
-  if (card.set.code !== "spoiler") {
-    throw new Error(`Expected a spoiler card, received ${card.slug} from ${card.set.code}`);
+  const unitTrashMatch =
+    /^Play this Unit for -(\d+) €\$ for each Unit in your trash, to a minimum of (\d+) €\$\.\s*/i.exec(
+      text,
+    );
+  if (unitTrashMatch) {
+    const modifier: CostModifier = {
+      reducer: "perTargetCount",
+      reductionPerCount: Number.parseInt(unitTrashMatch[1]!, 10),
+      target: cardTarget({
+        controller: "friendly",
+        zones: ["trash"],
+        cardTypes: ["unit"],
+      }),
+      min: Number.parseInt(unitTrashMatch[2]!, 10),
+    };
+    return { text: normalizeText(text.slice(unitTrashMatch[0].length)), modifier };
   }
 
-  return parseStructuredCard(card) as SpoilerCardDefinition;
+  const gearLegendMatch =
+    /^Play this Gear for -(\d+) €\$ for each friendly face-up Legend, to a minimum of (\d+) €\$\.\s*/i.exec(
+      text,
+    );
+  if (gearLegendMatch) {
+    const modifier: CostModifier = {
+      reducer: "perTargetCount",
+      reductionPerCount: Number.parseInt(gearLegendMatch[1]!, 10),
+      target: cardTarget({
+        controller: "friendly",
+        zones: ["legendArea"],
+        cardTypes: ["legend"],
+        face: "faceUp",
+      }),
+      min: Number.parseInt(gearLegendMatch[2]!, 10),
+    };
+    return { text: normalizeText(text.slice(gearLegendMatch[0].length)), modifier };
+  }
+
+  const rivalUnitMatch =
+    /^Play this Unit for -(\d+) €\$ for each of a Rival['’]s Units, to a minimum of (\d+) €\$\.\s*/i.exec(
+      text,
+    );
+  if (rivalUnitMatch) {
+    const modifier: CostModifier = {
+      reducer: "perTargetCount",
+      reductionPerCount: Number.parseInt(rivalUnitMatch[1]!, 10),
+      target: cardTarget({
+        controller: "rival",
+        zones: ["field"],
+        cardTypes: ["unit"],
+      }),
+      min: Number.parseInt(rivalUnitMatch[2]!, 10),
+    };
+    return { text: normalizeText(text.slice(rivalUnitMatch[0].length)), modifier };
+  }
+
+  const emptyFixerMatch =
+    /^If your fixer area is empty, play this Program for (\d+) €\$\.\s*/i.exec(text);
+  if (emptyFixerMatch) {
+    const modifier: CostModifier = {
+      reducer: "replace",
+      amount: Number.parseInt(emptyFixerMatch[1]!, 10),
+      conditions: [fixerAreaEmpty()],
+    };
+    return { text: normalizeText(text.slice(emptyFixerMatch[0].length)), modifier };
+  }
+
+  const rivalGigLeadMatch =
+    /^If a Rival controls at least (\d+) more Gigs than you, play this Program for (\d+) €\$\.\s*/i.exec(
+      text,
+    );
+  if (rivalGigLeadMatch) {
+    const modifier: CostModifier = {
+      reducer: "replace",
+      amount: Number.parseInt(rivalGigLeadMatch[2]!, 10),
+      conditions: [rivalHasAtLeastNMoreGigs(Number.parseInt(rivalGigLeadMatch[1]!, 10))],
+    };
+    return { text: normalizeText(text.slice(rivalGigLeadMatch[0].length)), modifier };
+  }
+
+  return { text };
 }
 
 export function parsePromoCard(card: CardDefinition): PromoCardDefinition {
@@ -2435,14 +3821,6 @@ export function parseStructuredSetCards<TSetCode extends StructuredSetCode>(
       },
     )
     .map((card) => parseStructuredCard(card) as StructuredCardDefinitionBySetCode[TSetCode]);
-}
-
-export function parseAlphaCards(cards: CardDefinition[]): AlphaCardDefinition[] {
-  return parseStructuredSetCards(cards, "alpha");
-}
-
-export function parseSpoilerCards(cards: CardDefinition[]): SpoilerCardDefinition[] {
-  return parseStructuredSetCards(cards, "spoiler");
 }
 
 export function parsePromoCards(cards: CardDefinition[]): PromoCardDefinition[] {

@@ -64,4 +64,22 @@ describe("Gun EZ (GD04-015)", () => {
       "INVALID_TARGET",
     );
   });
+
+  it("rejects a rested enemy Unit", () => {
+    const friendly = createMockUnit({ traits: ["league militaire"], ap: 2, hp: 3, level: 2 });
+    const enemy = createMockUnit({ ap: 2, hp: 3, level: 3 });
+    const engine = GundamTestEngine.create(
+      { hand: [gd04GunEz015], play: [friendly], resourceArea: activeResources(3) },
+      { play: [{ card: enemy, exhausted: true }] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const [friendlyId] = p1.getCardsInZone("battleArea");
+    const [enemyId] = p2.getCardsInZone("battleArea");
+
+    expectFailure(
+      p1.deployUnit(gd04GunEz015, { targets: [friendlyId!, enemyId!] }),
+      "INVALID_TARGET",
+    );
+  });
 });

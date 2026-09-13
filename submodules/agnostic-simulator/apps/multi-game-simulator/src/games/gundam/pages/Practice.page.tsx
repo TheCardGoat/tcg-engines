@@ -3,7 +3,9 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { playUrl } from "../../../runtime/gameRuntimeApi";
 import {
+  buildGundamPracticeLiveMatchSearch,
   gundamDeckToHistoric,
+  gundamDocumentCardsToHistoric,
   resolveGundamPracticePayload,
   type GundamPracticePayload,
 } from "../src/engine/practice/deckPayload.ts";
@@ -31,20 +33,15 @@ export function buildGundamSimulatorLiveMatchPath(
  * the user clicks "Open practice" on `/gundam/matchmaking`.
  *
  * Flow:
- *   1) POST `/v1/games/gundam/play/quick-match` with
- *      `authority: server`, both seats using the seed-aggro starter.
- *   2) The API creates the runtime match, primes `matches` +
+ *   1) Resolve the human deck document and either an inline curated opponent
+ *      or an immutable saved bot-deck reference.
+ *   2) POST `/v1/games/gundam/play/quick-match` with `authority: server`.
+ *      Saved bot decks are authorized, validated, and snapshotted by the API.
+ *   3) The API creates the runtime match, primes `matches` +
  *      `match_games`, and returns `{ matchId, gameId, playerId,
  *      wsTicket, authToken }`.
- *   3) Redirect to `/matches/:matchId/games/:gameId` with the ticket carried in the
- *      query string so the live-match route can connect without a
- *      second auth round trip.
- *
- * Kept dead-simple on purpose — the matchmaking page does not yet
- * support per-player deck import for Gundam. When deck-builder
- * support lands, this route grows a `?payload=` branch (mirroring
- * cyberpunk's `WebviewPracticePage`) that decodes a base64-url
- * matchmaking payload into the bot/player decks.
+ *   4) Redirect to `/matches/:matchId/games/:gameId`; the canonical bootstrap
+ *      resolves the authenticated seat and issues scoped realtime access.
  */
 export function PracticePage() {
   const navigate = useNavigate();
@@ -77,13 +74,9 @@ export function PracticePage() {
           type: "gundam.practice.started.v1",
           matchId: res.matchId,
           gameId: res.gameId,
+          warnings: resolved.payload.warnings,
         });
-        const params = new URLSearchParams({
-          ticket: res.wsTicket ?? "",
-          playerId: res.playerId,
-          returnTo: getMatchmakingReturnUrl(),
-        });
-        if (res.authToken) params.set("authToken", res.authToken);
+        const params = buildGundamPracticeLiveMatchSearch(search, getMatchmakingReturnUrl());
         void navigate(
           buildGundamSimulatorLiveMatchPath(res.matchId, res.gameId, params.toString()),
           {
@@ -145,8 +138,17 @@ interface QuickMatchResponse {
 }
 
 async function launchServerPractice(payload: GundamPracticePayload): Promise<QuickMatchResponse> {
-  const playerDeck = gundamDeckToHistoric(payload.playerDeck);
-  const botDeck = gundamDeckToHistoric(payload.botDeck);
+  const playerDeck = payload.playerDocumentCards
+    ? gundamDocumentCardsToHistoric(payload.playerDocumentCards)
+    : gundamDeckToHistoric(payload.playerDeck, payload.playerPrintingSelections);
+  const botDeckSource =
+    payload.botDeckSource.kind === "inline"
+      ? {
+          kind: "inline" as const,
+          deck: gundamDeckToHistoric(payload.botDeckSource.deck),
+          deckListId: payload.botDeckSource.deckListId,
+        }
+      : payload.botDeckSource;
   const response = await fetch(playUrl("gundam", "/quick-match"), {
     method: "POST",
     credentials: "include",
@@ -155,10 +157,11 @@ async function launchServerPractice(payload: GundamPracticePayload): Promise<Qui
       gameType: "gundam",
       authority: "server",
       playerDeck,
-      botDeck,
+      botDeckSource,
       botStrategyId: payload.botStrategyId,
       deckListId: `${payload.playerDeckListId}_${Date.now()}`,
-      botDeckListId: payload.botDeckListId,
+      setupPresentation: payload.playerSetupPresentation,
+      ...(payload.playerDeckVersionId ? { deckVersionId: payload.playerDeckVersionId } : {}),
     }),
   });
   if (!response.ok) {
@@ -172,9 +175,6 @@ async function launchServerPractice(payload: GundamPracticePayload): Promise<Qui
   const body = (await response.json()) as QuickMatchResponse;
   if (body.object !== "quick_match" || !body.matchId || !body.gameId || !body.playerId) {
     throw new Error("Quick match response did not include a playable match.");
-  }
-  if (!body.wsTicket && !body.authToken) {
-    throw new Error("Quick match response did not include a gateway ticket.");
   }
   return body;
 }

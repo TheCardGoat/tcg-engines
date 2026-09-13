@@ -1,0 +1,2430 @@
+/* Desktop combat bridge.
+ *
+ * The board keeps its closed-chain grid tracks while an active chain is
+ * positioned over their seam. This deliberately preserves player-board
+ * geometry: only the combat-chain surface changes state. */
+/* The simulator switches to its desktop board at 768px. Keep the detailed
+ * combat bridge aligned with that boundary: a narrower desktop still needs
+ * the public attack, defense, and stack state rather than a summary rail. */
+@media (min-width: 768px) {
+  /* Keep an inert zero-size board-center anchor for entity transfers without
+     painting a closed combat surface or reserving an arena seam for it. */
+  .fab-combat-chain--desktop.fab-combat-chain-empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    grid-column: auto;
+    grid-row: auto;
+    width: 0;
+    height: 0;
+    min-width: 0;
+    max-height: 0;
+    overflow: hidden;
+    border: 0;
+    padding: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .fab-board {
+    /* The combat bridge and pending stack are one matched pair of tabletop
+       surfaces. This leaves room for a full stack card, its header, and only
+       the padding needed to keep it readable. */
+    --fab-combat-surface-height: clamp(12rem, 24vh, 13.5rem);
+    /* The top hand track is 0.34 of a card high while the bottom track is one
+       card high. Half of that 0.66-card difference is the exact center-row
+       offset, independent of the flexible arena and effects-row heights. */
+    --fab-combat-surface-center: calc(50% - (var(--fab-hand-card-height) * 0.33));
+  }
+
+  /* A pending stack is supporting match state, not a third board row. Keep it
+     in the center-right of the arena even before a combat-chain overlay exists
+     (for example, while the player is ordering simultaneous triggers). */
+  .fab-board > .fab-compact-resolution-panel {
+    position: absolute;
+    z-index: 28;
+    top: var(--fab-combat-surface-center);
+    right: clamp(0.75rem, 2.5vw, 2.5rem);
+    left: auto;
+    display: grid;
+    width: clamp(9rem, 13vw, 10rem);
+    height: var(--fab-combat-surface-height);
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: visible;
+    border: 1px solid rgb(178 51 48 / 55%);
+    border-radius: 0.7rem;
+    background: #120c0e;
+    box-shadow: 0 10px 26px rgb(0 0 0 / 28%);
+    transform: translateY(-50%);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active) {
+    position: relative;
+    isolation: isolate;
+  }
+
+  /* Card interaction rings and badges own local elevation inside each seat.
+     Keep those seat surfaces in a lower stacking context so an actionable
+     card cannot paint its border over the expanded combat-chain bridge. */
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > :is(.fab-player, .fab-hand, .fab-desktop-hand-area) {
+    z-index: 0;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-player[data-seat-side="top"] {
+    grid-row: 2;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-player[data-seat-side="bottom"] {
+    grid-row: 4;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active {
+    --fab-chain-header-height: 1.75rem;
+    --fab-chain-history-width: 2.75rem;
+    --fab-chain-history-gutter: 0.5rem;
+    --fab-chain-history-attack-gap: 0.25rem;
+    --fab-chain-progress-width: 1.25rem;
+    --fab-chain-body-gutter: 0.75rem;
+
+    position: absolute !important;
+    z-index: 20;
+    /* An absolutely positioned grid item with a grid row uses that row as its
+       containing block. Clear the inherited row so 50% means board center. */
+    grid-row: auto;
+    align-self: auto;
+    justify-self: stretch;
+    /* Leave the same effects control exposed at both board edges. Absolute
+       children resolve their start edge after the board's inline padding, so
+       compensate there to keep the chain centered in the visible board. */
+    inset-inline-start: calc(var(--fab-effects-edge-width) - var(--fab-board-padding));
+    inset-inline-end: var(--fab-effects-edge-width);
+    top: var(--fab-combat-surface-center);
+    display: grid;
+    width: auto;
+    height: var(--fab-combat-surface-height);
+    max-height: none;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0;
+    overflow: hidden;
+    padding: 0;
+    border-color: rgb(178 51 48 / 55%);
+    border-radius: 0.7rem;
+    background: #120c0e;
+    box-shadow: 0 10px 26px rgb(0 0 0 / 28%);
+    transform: translateY(-50%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active[data-placement="top"] {
+    top: clamp(0.75rem, 11%, 5.5rem);
+    transform: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active[data-placement="bottom"] {
+    top: auto;
+    bottom: clamp(0.75rem, 11%, 5.5rem);
+    transform: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active[data-minimized="true"] {
+    height: var(--fab-chain-header-height);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active[data-minimized="true"]
+    :is(.fab-chain-stage, .fab-chain-link-history) {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(90deg, rgb(74 20 25 / 32%), transparent 42%, rgb(28 20 22 / 38%));
+    content: "";
+  }
+
+  /* Combat consumes the same interaction-agency signal as the seats. The owner-facing
+     edge lights up, so the overlay preserves agency without adding copy. */
+  .fab-board[data-agency-owner="opponent"] > .fab-combat-chain--desktop.fab-combat-chain-active {
+    border-top-color: var(--fab-priority-opponent);
+    box-shadow:
+      inset 0 3px 0 var(--fab-priority-opponent),
+      0 10px 26px rgb(0 0 0 / 28%);
+  }
+
+  .fab-board[data-agency-owner="self"] > .fab-combat-chain--desktop.fab-combat-chain-active {
+    border-bottom-color: var(--fab-priority-self);
+    box-shadow:
+      inset 0 -3px 0 var(--fab-priority-self),
+      0 10px 26px rgb(0 0 0 / 28%);
+  }
+
+  .fab-board[data-agency-owner]:not([data-agency-owner="none"])
+    > .fab-combat-chain--desktop.fab-combat-chain-active::after {
+    position: absolute;
+    z-index: 12;
+    left: 50%;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    filter: drop-shadow(0 0.2rem 0.35rem rgb(0 0 0 / 42%));
+    content: "";
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .fab-board[data-agency-owner="opponent"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active::after {
+    top: 0;
+    border-bottom: 10px solid var(--fab-priority-opponent);
+  }
+
+  .fab-board[data-agency-owner="self"] > .fab-combat-chain--desktop.fab-combat-chain-active::after {
+    bottom: 0;
+    border-top: 10px solid var(--fab-priority-self);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header {
+    display: grid;
+    min-height: var(--fab-chain-header-height);
+    /* Informational context stays left, the equation flexes, and panel
+     * controls keep their intrinsic width on the right. */
+    grid-template-columns: auto minmax(0, 1fr) max-content;
+    align-items: center;
+    gap: clamp(0.45rem, 1vw, 0.8rem);
+    padding: 0.1rem 0.75rem;
+    border-bottom: 1px solid rgb(214 101 88 / 18%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+    justify-self: start;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-title {
+    font-size: 0.61rem;
+    white-space: nowrap;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header-meta {
+    justify-content: end;
+    flex-wrap: nowrap;
+    justify-self: end;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.16rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header-control {
+    display: inline-grid;
+    width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border: 1px solid rgb(224 184 74 / 32%);
+    border-radius: 0.35rem;
+    padding: 0;
+    background: rgb(26 20 18 / 94%);
+    color: rgb(244 231 214 / 82%);
+    cursor: pointer;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header-control:hover {
+    border-color: rgb(224 184 74 / 68%);
+    color: rgb(248 219 128);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header-control:focus-visible {
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: 2px;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-header-meta .fab-chain-pass-btn {
+    min-width: 0;
+    min-height: 1.55rem;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.62rem;
+    white-space: nowrap;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-step-badge {
+    box-sizing: border-box;
+    height: 1.25rem;
+    gap: 0.2rem;
+    padding-inline: 0.38rem;
+    padding-block: 0;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-inspection-badge {
+    display: inline-flex;
+    height: 1.55rem;
+    align-items: center;
+    gap: 0.28rem;
+    padding: 0 0.5rem;
+    border: 1px solid rgb(94 163 223 / 62%);
+    border-radius: 0.38rem;
+    background: rgb(20 44 67 / 88%);
+    color: rgb(176 216 251);
+    font-size: 0.52rem;
+    font-weight: 650;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-inspection-badge strong {
+    padding-inline-start: 0.28rem;
+    border-inline-start: 1px solid rgb(142 191 235 / 42%);
+    color: rgb(226 241 255);
+    font-size: inherit;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-step-badge
+    .fab-chain-step-progress-marker {
+    width: 0.7rem;
+    height: 0.7rem;
+    border: 0;
+    background: transparent;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-priority {
+    white-space: nowrap;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-keywords {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-step-progress {
+    position: static;
+    z-index: 3;
+    display: grid;
+    width: auto;
+    min-height: 0;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 1 / -1;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    padding: 0;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-step-progress-item {
+    font-size: 0.46rem;
+    justify-content: center;
+    cursor: help;
+    outline: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-step-progress-item
+    .fab-chain-step-progress-marker {
+    transform: scale(0.85);
+    transform-origin: center;
+    transition: transform 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-step-progress-item[data-status="current"]
+    .fab-chain-step-progress-marker {
+    transform: scale(1);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-step-progress-item::before {
+    position: absolute;
+    z-index: 12;
+    top: 50%;
+    right: auto;
+    left: calc(100% + 0.5rem);
+    width: max-content;
+    max-width: 14rem;
+    padding: 0.42rem 0.55rem;
+    border: 1px solid rgb(218 177 91 / 40%);
+    border-radius: 0.4rem;
+    background: rgb(18 12 14 / 98%);
+    box-shadow: 0 5px 14px rgb(0 0 0 / 42%);
+    color: rgb(244 231 214 / 92%);
+    content: attr(data-tooltip);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.35;
+    opacity: 0;
+    pointer-events: none;
+    text-align: left;
+    text-transform: none;
+    transform: translate(-0.25rem, -50%);
+    transition:
+      opacity 120ms ease-out,
+      transform 120ms ease-out;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-step-progress-item:is(:hover, :focus-visible)::before {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-step-progress-item:focus-visible
+    .fab-chain-step-progress-marker {
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: 2px;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-step-progress-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-step-progress-item:not(:last-child)::after {
+    top: calc(50% + 0.54rem);
+    left: calc(50% - 0.5px);
+    width: 1px;
+    height: calc(100% - 1.08rem);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-priority-actions,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-summary {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-history {
+    position: absolute;
+    z-index: 3;
+    top: calc(var(--fab-chain-header-height) + var(--fab-chain-body-gutter));
+    right: var(--fab-chain-history-gutter);
+    bottom: var(--fab-chain-body-gutter);
+    display: block;
+    width: calc(var(--fab-chain-history-width) + var(--fab-chain-history-attack-gap));
+    min-height: 0;
+    height: auto;
+  }
+
+  .fab-resolution-stack {
+    position: absolute;
+    z-index: 28;
+    top: 50%;
+    left: 50%;
+    width: min(64rem, calc(100% - 2rem));
+    min-width: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  .fab-board[data-agency-owner="opponent"] > .fab-resolution-stack .fab-chain-stack--priority {
+    border-top-color: var(--fab-priority-opponent);
+    box-shadow:
+      inset 0 3px 0 var(--fab-priority-opponent),
+      0 0.8rem 2rem rgb(0 0 0 / 48%);
+  }
+
+  .fab-board[data-agency-owner="self"] > .fab-resolution-stack .fab-chain-stack--priority {
+    border-bottom-color: var(--fab-priority-self);
+    box-shadow:
+      inset 0 -3px 0 var(--fab-priority-self),
+      0 0.8rem 2rem rgb(0 0 0 / 48%);
+  }
+
+  .fab-resolution-stack[data-combat-mode="between-links"] {
+    top: calc(50% - 1.55rem);
+  }
+
+  .fab-resolution-stack[data-minimized="true"] {
+    width: min(28rem, calc(100% - 2rem));
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active) > .fab-resolution-stack {
+    top: var(--fab-combat-surface-center);
+  }
+
+  .fab-board > .fab-resolution-stack[data-placement="top"] {
+    top: calc(var(--fab-hand-card-height) * 0.42);
+    transform: translate(-50%, 0);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority {
+    z-index: 4;
+    min-width: 0;
+    margin: 0;
+    gap: 0.42rem;
+    border: 1px solid rgb(224 184 74 / 62%);
+    border-radius: 0.72rem;
+    padding: 0.55rem 0.62rem 0.68rem;
+    background:
+      linear-gradient(120deg, rgb(224 184 74 / 11%), transparent 62%), rgb(11 10 12 / 96%);
+    box-shadow: 0 1rem 2.6rem rgb(0 0 0 / 72%);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-width: 0;
+    padding: 0 0.08rem;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-heading-title {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.28rem;
+    color: rgb(248 219 128);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-help {
+    position: relative;
+    display: inline-grid;
+    width: 1.7rem;
+    height: 1.7rem;
+    place-items: center;
+    margin: -0.5rem -0.35rem -0.5rem -0.25rem;
+    color: rgb(244 231 214 / 64%);
+    cursor: help;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-help::after {
+    position: absolute;
+    z-index: 8;
+    top: calc(100% + 0.25rem);
+    left: 50%;
+    width: max-content;
+    max-width: 12rem;
+    padding: 0.32rem 0.45rem;
+    color: rgb(255 247 230);
+    font-size: 0.58rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    line-height: 1.3;
+    text-transform: none;
+    pointer-events: none;
+    visibility: hidden;
+    content: attr(data-tooltip);
+    background: rgb(20 16 17 / 98%);
+    border: 1px solid rgb(224 184 74 / 48%);
+    border-radius: 0.4rem;
+    box-shadow: 0 0.4rem 1rem rgb(0 0 0 / 48%);
+    opacity: 0;
+    transform: translate(-50%, 0.2rem);
+    transition:
+      opacity 120ms ease,
+      transform 120ms ease,
+      visibility 120ms ease;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-help:hover::after,
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-help:focus-visible::after {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-help:focus-visible {
+    border-radius: 50%;
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: -0.22rem;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-heading-count {
+    min-width: 0;
+    color: rgb(244 231 214 / 68%);
+    font-size: 0.58rem;
+    font-weight: 650;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-heading-meta {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.3rem;
+    margin-left: auto;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-control {
+    display: inline-grid;
+    width: 1.75rem;
+    height: 1.75rem;
+    place-items: center;
+    border: 1px solid rgb(224 184 74 / 34%);
+    border-radius: 0.42rem;
+    padding: 0;
+    background: rgb(26 20 18 / 94%);
+    color: rgb(244 231 214 / 82%);
+    cursor: pointer;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-control:hover {
+    border-color: rgb(224 184 74 / 68%);
+    color: rgb(248 219 128);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-control:focus-visible {
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: 2px;
+  }
+
+  .fab-resolution-stack[data-minimized="true"] .fab-chain-stack--priority {
+    padding-block: 0.42rem;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-scroller {
+    display: flex;
+    justify-content: safe center;
+    gap: clamp(0.65rem, 1.4vw, 1.15rem);
+    min-width: 0;
+    overflow-x: auto;
+    padding: 0.2rem 0.25rem 0.1rem;
+    scrollbar-color: rgb(224 184 74 / 42%) transparent;
+    scrollbar-width: thin;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-entry {
+    position: relative;
+    flex: 0 0 clamp(6.4rem, 8vw, 7.4rem);
+    width: clamp(6.4rem, 8vw, 7.4rem);
+    height: auto;
+    min-width: 6.4rem;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-entry:not(:last-child)::after {
+    position: absolute;
+    z-index: 3;
+    right: calc(clamp(0.65rem, 1.4vw, 1.15rem) * -0.64);
+    top: 45%;
+    width: 0.42rem;
+    height: 0.42rem;
+    border-right: 2px solid rgb(208 177 101 / 70%);
+    border-top: 2px solid rgb(208 177 101 / 70%);
+    content: "";
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-entry:not(:last-child)::before {
+    position: absolute;
+    z-index: 2;
+    right: calc(clamp(0.65rem, 1.4vw, 1.15rem) * -0.72);
+    top: 45%;
+    width: clamp(0.65rem, 1.4vw, 1.15rem);
+    border-top: 1px solid rgb(208 177 101 / 46%);
+    content: "";
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-btn {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1.35rem;
+    align-items: stretch;
+    gap: 0;
+    min-height: 0;
+    border-color: rgb(198 163 86 / 44%);
+    border-radius: 0.58rem;
+    padding: 0;
+    background: rgb(14 11 13 / 96%);
+    text-align: left;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-art {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.5rem 0.5rem 0 0;
+    aspect-ratio: 1;
+    background: rgb(0 0 0 / 28%);
+  }
+
+  .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-entry[data-resolves-next="true"]
+    .fab-chain-stack-btn {
+    border-color: rgb(245 203 84 / 96%);
+    background: rgb(35 25 13 / 98%);
+    box-shadow:
+      0 0.5rem 1.25rem rgb(0 0 0 / 62%),
+      0 0 0 1px rgb(245 203 84 / 32%);
+    transform: translateY(-0.2rem);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-order {
+    top: 0.28rem;
+    left: 0.28rem;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-color: rgb(224 184 74 / 82%);
+    border-radius: 50%;
+    background: rgb(20 14 9 / 94%);
+    color: rgb(248 219 128);
+    font-size: 0.64rem;
+    letter-spacing: 0;
+  }
+
+  .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-entry[data-resolves-next="true"]
+    .fab-chain-stack-order {
+    border-color: rgb(245 203 84 / 100%);
+    background: rgb(112 75 16 / 98%);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-copy {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    min-height: 1.35rem;
+    min-width: 0;
+    margin: 0;
+    place-items: center;
+    padding: 0.2rem 0.4rem;
+    background: rgb(14 11 13 / 98%);
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-owner {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    white-space: nowrap;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-owner {
+    color: rgb(255 247 230 / 88%);
+    font-size: 0.59rem;
+    font-weight: 750;
+    line-height: 1.1;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-role {
+    top: 0.32rem;
+    right: 0.3rem;
+    bottom: auto;
+    width: 1.3rem;
+    height: 1.3rem;
+    border: 0;
+    background: transparent;
+  }
+
+  .fab-resolution-stack .fab-chain-stack--priority .fab-chain-stack-resolution {
+    position: absolute;
+    z-index: 3;
+    top: 0.38rem;
+    right: auto;
+    left: 50%;
+    display: block;
+    border-radius: 999px;
+    padding: 0.16rem 0.3rem;
+    background: rgb(12 10 9 / 88%);
+    color: rgb(227 209 162 / 82%);
+    font-size: 0.38rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-entry[data-resolves-next="true"]
+    .fab-chain-stack-resolution {
+    background: rgb(112 75 16 / 94%);
+    color: rgb(250 214 107);
+  }
+
+  .fab-board:has(.fab-resolution-stack) .fab-combat-chain--desktop {
+    opacity: 0.68;
+    filter: saturate(0.72);
+  }
+
+  /* During combat, the chain and pending stack are peer tabletop zones. Keep
+     them in one quiet row instead of floating the stack over the chain. */
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
+    > :is(.fab-resolution-stack, .fab-compact-resolution-panel)
+  ) {
+    --fab-combat-stage-inset: clamp(0.75rem, 2.5vw, 2.5rem);
+    --fab-combat-stage-gap: clamp(0.55rem, 1vw, 0.8rem);
+    --fab-stack-panel-width: clamp(8.75rem, 11vw, 10.5rem);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
+    > .fab-compact-resolution-panel[data-stack-count="2"]
+  ) {
+    --fab-stack-panel-width: clamp(9.5rem, 13vw, 11.5rem);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
+    > .fab-compact-resolution-panel[data-stack-count="3"]
+  ) {
+    --fab-stack-panel-width: clamp(10.5rem, 15vw, 13rem);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
+    > .fab-resolution-stack
+  ) {
+    --fab-stack-panel-width: clamp(14rem, 22vw, 18rem);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active):has(
+    > .fab-resolution-stack[data-minimized="true"]
+  ) {
+    --fab-stack-panel-width: clamp(10rem, 17vw, 13rem);
+  }
+
+  .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+    > .fab-combat-chain--desktop.fab-combat-chain-active {
+    right: calc(
+      var(--fab-combat-stage-inset) + var(--fab-stack-panel-width) + var(--fab-combat-stage-gap)
+    );
+    left: var(--fab-combat-stage-inset);
+    min-width: 0;
+    opacity: 1;
+    filter: none;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active) > .fab-resolution-stack {
+    top: var(--fab-combat-surface-center);
+    right: var(--fab-combat-stage-inset);
+    left: auto;
+    width: var(--fab-stack-panel-width);
+    height: var(--fab-combat-surface-height);
+    transform: translateY(-50%);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-compact-resolution-panel {
+    position: absolute;
+    z-index: 28;
+    top: var(--fab-combat-surface-center);
+    right: var(--fab-combat-stage-inset);
+    left: auto;
+    display: grid;
+    width: var(--fab-stack-panel-width);
+    height: var(--fab-combat-surface-height);
+    grid-template-rows: auto minmax(0, 1fr);
+    overflow: visible;
+    border: 1px solid rgb(178 51 48 / 55%);
+    border-radius: 0.7rem;
+    background: #120c0e;
+    box-shadow: 0 10px 26px rgb(0 0 0 / 28%);
+    transform: translateY(-50%);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-compact-resolution-panel[data-placement="top"] {
+    top: clamp(0.75rem, 11%, 5.5rem);
+    transform: none;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-compact-resolution-panel[data-placement="bottom"] {
+    top: auto;
+    bottom: clamp(0.75rem, 11%, 5.5rem);
+    transform: none;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-compact-resolution-panel[data-minimized="true"] {
+    height: var(--fab-chain-header-height, 2.45rem);
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .fab-board[data-agency-owner="opponent"]:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-compact-resolution-panel {
+    border-top-color: var(--fab-priority-opponent);
+    box-shadow:
+      inset 0 3px 0 var(--fab-priority-opponent),
+      0 10px 26px rgb(0 0 0 / 28%);
+  }
+
+  .fab-board[data-agency-owner="self"]:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-compact-resolution-panel {
+    border-bottom-color: var(--fab-priority-self);
+    box-shadow:
+      inset 0 -3px 0 var(--fab-priority-self),
+      0 10px 26px rgb(0 0 0 / 28%);
+  }
+
+  /* Ordering is a focused decision floating over combat. It shares the
+     combat surface's center without reserving space or resizing that surface. */
+  .fab-board-overlay-layer:has(> .fab-trigger-order-panel) {
+    --fab-trigger-panel-width: clamp(11.5rem, 18vw, 14rem);
+  }
+
+  .fab-board-overlay-layer > .fab-trigger-order-panel {
+    position: absolute;
+    z-index: 30;
+    top: var(--fab-combat-surface-center);
+    left: 50%;
+    display: grid;
+    width: min(var(--fab-trigger-panel-width), calc(100% - (var(--fab-board-padding) * 2)));
+    height: var(--fab-combat-surface-height);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    overflow: hidden;
+    border: 1px solid rgb(224 184 74 / 58%);
+    border-radius: 0.7rem;
+    background: #120c0e;
+    box-shadow:
+      inset 0 0 0 1px rgb(224 184 74 / 7%),
+      0 10px 26px rgb(0 0 0 / 34%);
+    transform: translate(-50%, -50%);
+  }
+
+  .fab-board-overlay-layer:has(> .fab-pitch-order-panel) {
+    --fab-pitch-panel-width: clamp(25rem, 39vw, 34rem);
+  }
+
+  .fab-board-overlay-layer > .fab-pitch-order-panel {
+    position: absolute;
+    z-index: 30;
+    top: var(--fab-combat-surface-center);
+    left: 50%;
+    width: min(var(--fab-pitch-panel-width), calc(100% - (var(--fab-board-padding) * 2)));
+    height: min(9.75rem, var(--fab-combat-surface-height));
+    transform: translate(-50%, -50%);
+  }
+
+  .fab-trigger-order-heading,
+  .fab-trigger-order-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.45rem;
+    padding-inline: 0.65rem;
+  }
+
+  .fab-trigger-order-heading {
+    min-height: var(--simulator-panel-header-height, 2.5rem);
+    border-bottom: 1px solid rgb(224 184 74 / 18%);
+    color: rgb(248 231 188 / 96%);
+    font-size: 0.61rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .fab-trigger-order-heading > :last-child {
+    color: rgb(244 231 214 / 58%);
+    font-size: 0.54rem;
+    font-weight: 650;
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .fab-trigger-order-list {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    align-items: flex-start;
+    justify-content: safe center;
+    gap: 0.35rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-color: rgb(224 184 74 / 45%) rgb(255 255 255 / 5%);
+    scrollbar-width: thin;
+    margin: 0;
+    padding: 0.5rem 0.625rem 0.3rem;
+    list-style: none;
+  }
+
+  .fab-trigger-order-entry {
+    position: relative;
+    flex: 0 0 clamp(5.5rem, 8vw, 6.2rem);
+    min-width: clamp(5.5rem, 8vw, 6.2rem);
+    transition: transform 140ms ease;
+  }
+
+  .fab-trigger-order-entry + .fab-trigger-order-entry {
+    margin-left: 0;
+  }
+
+  .fab-trigger-order-card {
+    position: relative;
+    display: grid;
+    width: 100%;
+    aspect-ratio: 1;
+    align-items: stretch;
+    overflow: hidden;
+    border: 1px solid rgb(198 163 86 / 54%);
+    border-radius: 0.52rem;
+    padding: 0;
+    background: linear-gradient(145deg, rgb(42 29 22 / 98%), rgb(20 14 16 / 99%));
+    color: rgb(248 239 224 / 92%);
+    box-shadow: 0 0.45rem 0.9rem rgb(0 0 0 / 48%);
+    cursor: grab;
+    text-align: left;
+  }
+
+  .fab-trigger-order-card:active {
+    cursor: grabbing;
+  }
+
+  .fab-trigger-order-card:hover {
+    border-color: rgb(236 198 92 / 86%);
+    transform: translateY(-0.1rem);
+  }
+
+  .fab-trigger-order-card:focus-visible {
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: 2px;
+  }
+
+  .fab-trigger-order-card:disabled {
+    cursor: default;
+    opacity: 0.58;
+  }
+
+  .fab-trigger-order-art {
+    position: relative;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    overflow: hidden;
+    place-items: center;
+    border: 0;
+    border-radius: inherit;
+    background: rgb(67 34 29 / 72%);
+    color: rgb(248 219 128 / 80%);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .fab-trigger-order-art > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fab-trigger-order-grip {
+    position: absolute;
+    z-index: 3;
+    top: 0.3rem;
+    right: 0.3rem;
+    display: grid;
+    width: 1.45rem;
+    height: 1.45rem;
+    place-items: center;
+    border: 1px solid rgb(248 219 128 / 64%);
+    border-radius: 50%;
+    background: rgb(18 12 10 / 88%);
+    color: rgb(255 229 150 / 92%);
+    box-shadow: 0 0.2rem 0.5rem rgb(0 0 0 / 48%);
+    pointer-events: none;
+  }
+
+  .fab-trigger-order-footer {
+    min-height: var(--simulator-action-rail-height, 2.75rem);
+    border-top: 1px solid rgb(224 184 74 / 16%);
+    color: rgb(218 203 183 / 62%);
+    font-size: 0.52rem;
+  }
+
+  .fab-trigger-order-swap,
+  .fab-trigger-order-confirm {
+    display: inline-flex;
+    min-height: 1.6rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    border-radius: 0.38rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.54rem;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .fab-trigger-order-swap {
+    border: 1px solid rgb(224 184 74 / 38%);
+    background: rgb(32 23 19 / 92%);
+    color: rgb(244 226 190 / 84%);
+  }
+
+  .fab-trigger-order-confirm {
+    border: 1px solid rgb(224 184 74 / 76%);
+    background: linear-gradient(180deg, rgb(130 88 24), rgb(82 50 16));
+    color: rgb(255 244 211);
+  }
+
+  .fab-trigger-order-swap:hover {
+    border-color: rgb(224 184 74 / 72%);
+    background: rgb(48 33 23 / 96%);
+    color: rgb(255 239 204);
+  }
+
+  .fab-trigger-order-confirm:hover {
+    border-color: rgb(255 224 125);
+    background: linear-gradient(180deg, rgb(154 105 29), rgb(96 59 19));
+  }
+
+  .fab-trigger-order-swap:focus-visible,
+  .fab-trigger-order-confirm:focus-visible {
+    outline: 2px solid rgb(255 224 125);
+    outline-offset: 2px;
+  }
+
+  .fab-trigger-order-swap:disabled,
+  .fab-trigger-order-confirm:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  @media (max-width: 1050px) {
+    .fab-board-overlay-layer:has(> .fab-trigger-order-panel) {
+      --fab-trigger-panel-width: clamp(10.5rem, 22vw, 12rem);
+    }
+
+    .fab-trigger-order-entry {
+      flex-basis: 5.6rem;
+    }
+
+    .fab-trigger-order-entry + .fab-trigger-order-entry {
+      margin-left: -2.8rem;
+    }
+  }
+
+  .fab-compact-resolution-panel-heading {
+    display: flex;
+    min-height: var(--fab-chain-header-height, 2.45rem);
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    padding: 0.38rem 0.62rem;
+    border-bottom: 1px solid rgb(214 101 88 / 18%);
+    color: rgb(244 231 214 / 92%);
+    font-size: 0.61rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .fab-compact-resolution-panel-heading > :last-child {
+    color: rgb(244 231 214 / 64%);
+    font-size: 0.54rem;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .fab-compact-resolution-panel-heading-title {
+    margin: 0;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+
+  .fab-compact-resolution-panel-heading-meta,
+  .fab-compact-resolution-panel-controls {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .fab-compact-resolution-panel-heading-meta {
+    gap: 0.35rem;
+  }
+
+  .fab-compact-resolution-panel-controls {
+    gap: 0.16rem;
+  }
+
+  .fab-compact-resolution-panel-control {
+    display: inline-grid;
+    width: 1.55rem;
+    height: 1.55rem;
+    place-items: center;
+    border: 1px solid rgb(224 184 74 / 32%);
+    border-radius: 0.35rem;
+    padding: 0;
+    background: rgb(26 20 18 / 94%);
+    color: rgb(244 231 214 / 82%);
+    cursor: pointer;
+  }
+
+  .fab-compact-resolution-panel-control:hover {
+    border-color: rgb(224 184 74 / 68%);
+    color: rgb(248 219 128);
+  }
+
+  .fab-compact-resolution-panel-control:focus-visible {
+    outline: 2px solid var(--fab-priority-gold, #e0b84a);
+    outline-offset: 2px;
+  }
+
+  .fab-compact-resolution-panel > .fab-compact-resolution-stack {
+    --fab-compact-stack-card-width: clamp(5.8rem, 7vw, 6.35rem);
+    --fab-compact-stack-card-height: calc(var(--fab-compact-stack-card-width) * 1.397);
+    position: relative;
+    top: auto;
+    right: auto;
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    overflow: visible;
+    transform: none;
+  }
+
+  .fab-compact-resolution-panel > .fab-compact-resolution-stack::before {
+    display: none;
+  }
+
+  .fab-compact-resolution-panel > .fab-compact-resolution-stack > li {
+    /* Motion owns transform while a card travels from hand to stack. Center
+       the destination with layout coordinates so its measured/animated
+       position is also its resting position; a translate(-50%, -50%) here
+       gets temporarily replaced by Motion and makes the card snap sideways
+       when the transfer finishes. */
+    top: calc(
+      (100% - var(--fab-compact-stack-card-width)) / 2 -
+        var(--fab-compact-stack-center-correction, 0rem) +
+        ((var(--fab-compact-stack-order) - 1) * 0.7rem)
+    );
+    left: calc((100% - var(--fab-compact-stack-card-width)) / 2);
+    width: var(--fab-compact-stack-card-width);
+    transform: none;
+  }
+
+  .fab-compact-resolution-panel > .fab-compact-resolution-stack[data-stack-count="2"] {
+    --fab-compact-stack-center-correction: 0.35rem;
+  }
+
+  .fab-compact-resolution-panel > .fab-compact-resolution-stack[data-stack-count="3"] {
+    --fab-compact-stack-center-correction: 0.7rem;
+  }
+
+  .fab-compact-resolution-panel .fab-compact-resolution-card {
+    min-height: 0;
+    overflow: visible;
+    aspect-ratio: 1;
+  }
+
+  .fab-compact-resolution-panel .fab-compact-resolution-art {
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  .fab-compact-resolution-panel .fab-compact-resolution-owner {
+    position: absolute;
+    z-index: 3;
+    right: 0.28rem;
+    bottom: 0.28rem;
+    display: inline-flex;
+    width: auto;
+    height: auto;
+    min-height: 1.05rem;
+    padding: 0.18rem 0.35rem;
+    border: 1px solid rgb(245 226 190 / 24%);
+    border-radius: 0.34rem;
+    background: rgb(12 9 10 / 88%);
+    color: rgb(255 247 230 / 90%);
+    font-size: 0.57rem;
+    font-weight: 750;
+    box-shadow: 0 0.2rem 0.55rem rgb(0 0 0 / 38%);
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not([data-stack-count="1"]) {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 0.55rem;
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not(
+      [data-stack-count="1"]
+    )[data-stack-count]
+    > li[data-stack-order] {
+    position: relative;
+    inset: auto;
+    display: flex;
+    width: 100%;
+    min-height: 0;
+    flex: 1 1 0;
+    z-index: calc(4 - var(--fab-compact-stack-order));
+    transform: none;
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not(
+      [data-stack-count="1"]
+    )[data-stack-count]
+    > li[data-stack-order="1"] {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not(
+      [data-stack-count="1"]
+    )[data-stack-count]
+    > li[data-stack-order="2"] {
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"][data-stack-count]
+    > li[data-stack-order="3"] {
+    align-items: flex-end;
+    justify-content: flex-start;
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not(
+      [data-stack-count="1"]
+    )[data-stack-count="2"]
+    > li[data-stack-order="2"] {
+    align-items: flex-end;
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not([data-stack-count="1"])
+    .fab-compact-resolution-card {
+    width: var(--fab-compact-stack-card-width);
+    flex: 0 0 auto;
+  }
+
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not([data-stack-count="1"])
+    > li:has(.fab-compact-resolution-card:hover),
+  .fab-compact-resolution-panel
+    > .fab-compact-resolution-stack[data-expanded="true"]:not([data-stack-count="1"])
+    > li:has(.fab-compact-resolution-card:focus-visible) {
+    z-index: 5;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack[data-minimized="true"] {
+    height: auto;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority {
+    display: grid;
+    height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0;
+    overflow: hidden;
+    padding: 0;
+    border-color: rgb(178 51 48 / 55%);
+    border-radius: 0.7rem;
+    background: #120c0e;
+    box-shadow: 0 10px 26px rgb(0 0 0 / 28%);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-heading {
+    min-height: var(--fab-chain-header-height, 2.45rem);
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    padding: 0.38rem 0.62rem;
+    border-bottom: 1px solid rgb(214 101 88 / 18%);
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-heading-title {
+    color: rgb(244 231 214 / 92%);
+    font-size: 0.61rem;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-heading-count {
+    font-size: 0.54rem;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-scroller {
+    align-items: center;
+    justify-content: safe center;
+    gap: 0.45rem;
+    min-height: 0;
+    padding: 0.55rem;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-entry {
+    flex-basis: clamp(5.4rem, 7.2vw, 6.7rem);
+    width: clamp(5.4rem, 7.2vw, 6.7rem);
+    min-width: 5.4rem;
+  }
+
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-entry:not(:last-child)::before,
+  .fab-board:has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    > .fab-resolution-stack
+    .fab-chain-stack--priority
+    .fab-chain-stack-entry:not(:last-child)::after {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active {
+      --fab-chain-header-height: 3.45rem;
+      --fab-chain-history-width: 2.2rem;
+      --fab-chain-history-gutter: 0.3rem;
+      --fab-chain-progress-width: 1rem;
+      --fab-chain-body-gutter: 0.4rem;
+    }
+
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+      .fab-chain-header {
+      grid-template-columns: auto minmax(max-content, 1fr) auto;
+      grid-template-rows: auto;
+    }
+
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+      .fab-chain-header-left {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+      .fab-chain-equation {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+    }
+
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+      .fab-chain-header-meta {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+      .fab-chain-column {
+      padding: 0 0.15rem 0 1rem;
+    }
+
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+      .fab-chain-column::before {
+      left: 0.35rem;
+    }
+
+    .fab-board:has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel))
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+      .fab-chain-column
+      > .fab-chain-label {
+      left: -0.12rem;
+    }
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-history-scroller {
+    height: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0.2rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.1rem 0 0.15rem;
+    scrollbar-color: rgb(196 163 90 / 42%) transparent;
+    scrollbar-width: thin;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-tab {
+    display: grid;
+    width: var(--fab-chain-history-width);
+    min-width: 0;
+    min-height: 1.35rem;
+    flex: 0 0 auto;
+    grid-template-columns: 1rem 1.35rem;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.12rem;
+    margin-inline-start: var(--fab-chain-history-attack-gap);
+    padding: 0.18rem 0.1rem;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    border-inline-start-color: color-mix(
+      in srgb,
+      var(--fab-priority-gold, #e0b84a) 28%,
+      transparent
+    );
+    border-radius: 0.38rem;
+    background: rgb(18 12 14 / 34%);
+    color: rgb(224 210 205 / 70%);
+    opacity: 0.82;
+    transform: none;
+    transition:
+      background-color 150ms ease-out,
+      border-color 150ms ease-out,
+      color 150ms ease-out,
+      opacity 150ms ease-out,
+      transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-link-tab:not([data-selected="true"]):is(:hover, :focus-visible) {
+    background: rgb(54 36 38 / 52%);
+    color: rgb(244 231 214 / 92%);
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-tab[data-selected="true"] {
+    z-index: 2;
+    width: 100%;
+    margin-inline-start: 0;
+    padding-inline-start: calc(0.1rem + var(--fab-chain-history-attack-gap));
+    border-color: var(--fab-priority-gold, #e0b84a);
+    border-inline-start-color: transparent;
+    border-radius: 0 0.42rem 0.42rem 0;
+    background: #120c0e;
+    box-shadow:
+      inset -1px 0 color-mix(in srgb, var(--fab-priority-gold, #e0b84a) 32%, transparent),
+      0.22rem 0.3rem 0.65rem rgb(0 0 0 / 34%);
+    color: rgb(255 247 230 / 96%);
+    opacity: 1;
+    transform: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-link-tab[data-selected="true"]:not([data-active="true"]) {
+    border-color: color-mix(in srgb, var(--fab-priority-gold, #e0b84a) 46%, transparent);
+    border-inline-start-color: transparent;
+    background: #101d2a;
+    box-shadow:
+      inset -1px 0 rgb(142 205 247 / 38%),
+      0 0.28rem 0.65rem rgb(0 0 0 / 28%);
+    color: #c4e6ff;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-tab::before,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-tab::after,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-avatar,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-tab-name {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-tab-index {
+    position: static;
+    width: auto;
+    height: auto;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    color: inherit;
+    font-size: 0.5rem;
+    justify-self: center;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link-tab-outcome {
+    position: static;
+    display: grid;
+    width: 1.35rem;
+    grid-template-columns: 0.75rem 0.55rem;
+    align-items: center;
+    justify-content: start;
+    gap: 0.05rem;
+    margin-left: 0;
+    font-size: 0.53rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-stage {
+    position: relative;
+    display: grid;
+    min-height: 0;
+    grid-row: 2;
+    margin-inline-end: calc(var(--fab-chain-history-width) + var(--fab-chain-history-gutter));
+    border-inline-end: 1px solid
+      color-mix(in srgb, var(--fab-priority-gold, #e0b84a) 46%, transparent);
+    grid-template-columns:
+      var(--fab-chain-progress-width)
+      var(--fab-chain-body-gutter)
+      minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    column-gap: 0;
+    row-gap: 0.2rem;
+    padding: var(--fab-chain-body-gutter) var(--fab-chain-history-gutter)
+      var(--fab-chain-body-gutter) var(--fab-chain-body-gutter);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-stage[data-inspecting-history="true"] {
+    border-inline-end-color: #4e9bd3;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link {
+    display: grid;
+    min-width: 0;
+    min-height: 0;
+    grid-column: 3;
+    grid-row: 1;
+    grid-template-columns: max-content max-content;
+    justify-content: safe center;
+    align-items: center;
+    column-gap: clamp(0.4rem, 1vw, 0.8rem);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-inline: clamp(0.5rem, 2vw, 1.5rem);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-link:has(> .fab-chain-targets) {
+    grid-template-columns: max-content max-content max-content;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-column {
+    display: flex;
+    position: relative;
+    flex: 0 1 auto;
+    min-width: min-content;
+    min-height: 0;
+    align-items: center;
+    padding: 0 0 0 1.35rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-attacker {
+    grid-column: 1;
+    justify-content: flex-end;
+    justify-self: end;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defender {
+    grid-column: 2;
+    justify-content: flex-start;
+    justify-self: start;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-targets {
+    grid-column: 2;
+    justify-self: center;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-link:has(> .fab-chain-targets)
+    > .fab-chain-defender {
+    grid-column: 3;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-column > .fab-chain-label {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.22rem;
+    padding: 0.28rem 0.14rem;
+    background: #120c0e;
+    color: rgb(210 192 187 / 78%);
+    transform: translate(-50%, -50%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-attacker > .fab-chain-label {
+    background: rgb(47 14 20 / 96%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-lane-content {
+    display: flex;
+    min-width: 0;
+    min-height: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.18rem;
+    border: 0;
+    padding: 0;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-attacker
+    .fab-chain-lane-content
+    > div {
+    flex: 0 0 auto;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-attacker
+    .fab-chain-lane-content
+    > div
+    + div {
+    margin-left: clamp(-4.2rem, -7vh, -3.1rem);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-lane-icon {
+    width: 0.78rem;
+    height: 0.78rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-lane-label-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-count {
+    min-width: 1rem;
+    border-radius: 999px;
+    padding: 0.05rem 0.2rem;
+    background: rgb(255 255 255 / 7%);
+    color: rgb(229 216 211 / 82%);
+    font-size: 0.48rem;
+    line-height: 1rem;
+    text-align: center;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-damage-desktop,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defending-hero {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-targets > .fab-chain-label {
+    background: rgb(34 23 16 / 96%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card {
+    position: relative;
+    width: clamp(7.25rem, 15.5vh, 8.4rem);
+    min-width: 0;
+    max-width: none;
+    /* The bridge uses a native square art asset; card rules text is already
+       represented by the visible stat and keyword affordances. */
+    aspect-ratio: 1;
+    /* Keyword chip tooltips must escape the card tile; the art rounds its own
+       corners instead of relying on the card to clip them. */
+    overflow: visible;
+    justify-content: end;
+    padding: 0;
+    border: 0;
+    background: #171114;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-name,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-stats {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: 0.12rem 0.15rem;
+    background: rgb(10 8 9 / 84%);
+    font-size: 0.5rem;
+  }
+
+  /* The card art and its lane label are more legible in this shallow stage
+     than repeating the printed name and stat underneath every card. */
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-name,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-stats {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-contribution {
+    position: absolute;
+    z-index: 3;
+    top: auto;
+    bottom: 0.28rem;
+    transform: none;
+    display: grid;
+    width: 1.9rem;
+    height: 1.9rem;
+    place-items: center;
+    border: 1px solid rgb(255 255 255 / 50%);
+    border-radius: 999px;
+    background: rgb(7 7 9 / 88%);
+    box-shadow: 0 3px 8px rgb(0 0 0 / 48%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-contribution[data-stat="power"] {
+    right: auto;
+    left: 0.28rem;
+    border-color: rgb(250 204 21 / 76%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-contribution[data-stat="defense"] {
+    right: 0.28rem;
+    left: auto;
+    border-color: rgb(96 165 250 / 80%);
+    z-index: 8;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-contribution .fab-stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.12rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-contribution
+    .fab-stat-badge-icon {
+    width: 0.85rem;
+    height: 0.85rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-contribution
+    .fab-stat-badge-value {
+    font-size: 0.82rem;
+    line-height: 1;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-keywords {
+    position: absolute;
+    z-index: 4;
+    top: 0.22rem;
+    right: 0.22rem;
+    display: flex;
+    gap: 0.16rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-keywords .fab-chain-keyword {
+    width: 1.6rem;
+    height: 1.6rem;
+    justify-content: center;
+    border-radius: 999px;
+    padding: 0;
+    background: var(--fab-keyword-background);
+    border: 1px solid var(--fab-keyword-border);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 62%);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-keywords
+    .fab-chain-keyword-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* Keyword chips share the board's attr(data-tooltip) affordance so the hint
+     appears immediately on hover instead of waiting out the native title delay. */
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-keywords .fab-chain-keyword {
+    position: relative;
+    outline: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-keywords
+    .fab-chain-keyword::after {
+    position: absolute;
+    z-index: 40;
+    top: calc(100% + 0.3rem);
+    right: 0;
+    width: max-content;
+    max-width: 12rem;
+    padding: 0.42rem 0.55rem;
+    border: 1px solid rgb(218 177 91 / 40%);
+    border-radius: 0.4rem;
+    background: rgb(18 12 14 / 98%);
+    box-shadow: 0 5px 14px rgb(0 0 0 / 42%);
+    color: rgb(244 231 214 / 92%);
+    content: attr(data-tooltip);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.35;
+    opacity: 0;
+    pointer-events: none;
+    text-align: left;
+    text-transform: none;
+    transform: translate(0, -0.15rem);
+    transition:
+      opacity 120ms ease-out,
+      transform 120ms ease-out;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-keywords
+    .fab-chain-keyword:is(:hover, :focus-visible)::after {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-card-keywords
+    .fab-chain-keyword:focus-visible {
+    box-shadow:
+      0 0 0 2px rgb(28 12 15 / 92%),
+      0 0 0 4px var(--fab-priority-gold, #e0b84a);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-power-readout,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defense-readout {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack {
+    display: flex;
+    width: auto;
+    min-width: min-content;
+    max-width: none;
+    height: auto;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack > div {
+    flex: 0 0 clamp(7.25rem, 15.5vh, 8.4rem);
+    width: clamp(7.25rem, 15.5vh, 8.4rem);
+    aspect-ratio: 1;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack .fab-chain-card {
+    width: 100%;
+    max-width: 8.4rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack > div + div {
+    margin-left: clamp(-4.2rem, -7vh, -3.1rem);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defense-slot {
+    display: grid;
+    flex: 0 0 clamp(7.25rem, 15.5vh, 8.4rem);
+    width: clamp(7.25rem, 15.5vh, 8.4rem);
+    aspect-ratio: 1;
+    place-content: center;
+    justify-items: center;
+    gap: 0.35rem;
+    border: 1px dashed var(--board-border, #3a2020);
+    border-radius: 0.5rem;
+    padding: 0.65rem;
+    background: var(--board-surface-soft, #1a1212cf);
+    color: var(--board-muted, #a89898);
+    text-align: center;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defense-slot svg {
+    color: var(--fab-practice-gold, #d8b45a);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defense-slot strong {
+    color: color-mix(in srgb, var(--board-text, #fef2f2) 88%, var(--board-muted, #a89898));
+    font-size: 0.62rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defense-slot span {
+    color: var(--board-muted, #a89898);
+    font-size: 0.5rem;
+    line-height: 1.3;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-equation {
+    position: static;
+    display: flex;
+    width: auto;
+    min-width: max-content;
+    min-height: 0;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.4rem;
+    border: 0;
+    padding: 0.05rem 0.2rem;
+    background: transparent;
+    white-space: nowrap;
+    transform: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-eq-power strong,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-eq-defense strong,
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-eq-damage strong {
+    font-size: 0.82rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-equation .fab-eq-op {
+    padding-bottom: 0;
+    font-size: 0.72rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-equation .fab-eq-damage {
+    min-width: 1.8rem;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.18rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-equation
+    .fab-eq-damage[data-outcome="hit"] {
+    color: var(--fab-damage);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-equation
+    .fab-eq-damage[data-outcome="blocked"] {
+    color: var(--fab-defense);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-equation small {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-equation
+    .fab-eq-damage
+    .fab-eq-result-label {
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    color: currentColor;
+    font-size: 0.52rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-reactions {
+    display: none;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-reaction-row {
+    flex-wrap: nowrap;
+    align-items: end;
+    gap: 0;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-reaction-row .fab-chain-card {
+    width: clamp(3.25rem, 6.7vh, 4.6rem);
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active
+    .fab-chain-reaction-row
+    .fab-chain-card
+    + .fab-chain-card {
+    margin-left: -1rem;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-reactions-empty {
+    display: none;
+  }
+}
+/* The desktop combat surfaces share one containing block inside the board's
+ * absolute overlay layer. While combat is active it owns placement, available
+ * width, and the chain/stack split without participating in the board grid. */
+.fab-desktop-combat-workspace {
+  display: contents;
+  pointer-events: none;
+}
+
+/* The workspace owns a broad positioning rectangle. Only its rendered combat
+ * and stack surfaces should intercept input; empty grid space must leave arena
+ * cards clickable so players can configure or activate Instants in response
+ * windows. */
+.fab-desktop-combat-workspace > * {
+  pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+  .fab-board-overlay-layer:has(> .fab-desktop-combat-workspace[data-active="true"]) {
+    --fab-combat-stage-inset: clamp(0.75rem, 2.5vw, 2.5rem);
+    --fab-combat-stage-gap: clamp(0.55rem, 1vw, 0.8rem);
+    --fab-stack-panel-width: clamp(8.75rem, 18%, 10.5rem);
+    isolation: isolate;
+  }
+
+  .fab-board-overlay-layer > .fab-desktop-combat-workspace[data-active="true"] {
+    position: absolute;
+    z-index: 20;
+    top: var(--fab-combat-surface-center);
+    inset-inline: var(--fab-combat-stage-inset);
+    display: grid;
+    width: auto;
+    height: var(--fab-combat-surface-height);
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    gap: var(--fab-combat-stage-gap);
+    overflow: visible;
+    transform: translateY(-50%);
+    container-name: fab-combat-workspace;
+    container-type: inline-size;
+  }
+
+  .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]:has(
+      > .fab-combat-chain--desktop.fab-combat-chain-active
+    ):has(> :is(.fab-resolution-stack, .fab-compact-resolution-panel)) {
+    grid-template-columns: minmax(0, 1fr) var(--fab-stack-panel-width);
+  }
+
+  .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]:has(
+      > .fab-compact-resolution-panel[data-stack-count="2"]
+    ) {
+    --fab-stack-panel-width: clamp(9.5rem, 20%, 11.5rem);
+  }
+
+  .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]:has(
+      > .fab-compact-resolution-panel[data-stack-count="3"]
+    ) {
+    --fab-stack-panel-width: clamp(10.5rem, 22%, 13rem);
+  }
+
+  .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]:has(> .fab-resolution-stack) {
+    --fab-stack-panel-width: clamp(14rem, 28%, 18rem);
+  }
+
+  .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]:has(
+      > .fab-resolution-stack[data-minimized="true"]
+    ) {
+    --fab-stack-panel-width: clamp(10rem, 20%, 13rem);
+  }
+
+  .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"][data-placement="top"] {
+    top: clamp(0.75rem, 11%, 5.5rem);
+    transform: none;
+  }
+
+  .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"][data-placement="bottom"] {
+    top: auto;
+    bottom: clamp(0.75rem, 11%, 5.5rem);
+    transform: none;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active {
+    position: relative !important;
+    z-index: 1;
+    inset: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  /* The workspace keeps the full combat-stage height so a resolution stack
+     can remain beside the chain. Once the chain is minimized, opt this child
+     out of the grid's full-height stretch and leave only its status header on
+     the board seam. */
+  .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active[data-minimized="true"] {
+    height: var(--fab-chain-header-height);
+    align-self: center;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-minimized="true"]
+    > :is(.fab-resolution-stack, .fab-compact-resolution-panel) {
+    height: var(--fab-chain-header-height, 1.75rem);
+    min-height: 0;
+    align-self: center;
+    overflow: hidden;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-minimized="true"]
+    > .fab-resolution-stack
+    .fab-chain-stack--priority {
+    height: 100%;
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-minimized="true"]
+    > .fab-resolution-stack
+    .fab-chain-stack-heading {
+    height: 100%;
+    min-height: 0;
+    flex-wrap: nowrap;
+    padding-block: 0;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-minimized="true"]
+    > .fab-resolution-stack
+    .fab-chain-stack-control {
+    width: 1.45rem;
+    height: 1.45rem;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-placement="top"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active[data-minimized="true"] {
+    align-self: start;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-placement="top"][data-minimized="true"]
+    > :is(.fab-resolution-stack, .fab-compact-resolution-panel) {
+    align-self: start;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-placement="bottom"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active[data-minimized="true"] {
+    align-self: end;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"][data-placement="bottom"][data-minimized="true"]
+    > :is(.fab-resolution-stack, .fab-compact-resolution-panel) {
+    align-self: end;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-combat-chain--desktop:not(.fab-combat-chain-active) {
+    display: none;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"]
+    > :is(.fab-resolution-stack, .fab-compact-resolution-panel) {
+    position: relative;
+    z-index: 2;
+    inset: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    grid-row: 1;
+    display: grid;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    grid-template-rows: minmax(0, 1fr);
+    overflow: visible;
+    border: 1px solid rgb(178 51 48 / 55%);
+    border-radius: 0.7rem;
+    background: #120c0e;
+    box-shadow: 0 10px 26px rgb(0 0 0 / 28%);
+    transform: none;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"] > .fab-compact-resolution-panel {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"]:not(
+      :has(> .fab-combat-chain--desktop.fab-combat-chain-active)
+    )
+    > :is(.fab-resolution-stack, .fab-compact-resolution-panel) {
+    width: var(--fab-stack-panel-width);
+    justify-self: end;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-resolution-stack
+    .fab-chain-stack--priority {
+    display: grid;
+    height: 100%;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0;
+    overflow: hidden;
+    padding: 0;
+    border: 0;
+    border-radius: calc(0.7rem - 1px);
+    background: #120c0e;
+    box-shadow: none;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-resolution-stack
+    .fab-chain-stack-heading {
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0.1rem 0.75rem;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-resolution-stack
+    .fab-chain-stack-scroller {
+    align-items: center;
+    justify-content: safe center;
+    gap: 0.45rem;
+    min-height: 0;
+    padding: 0.55rem;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"] > .fab-resolution-stack .fab-chain-stack-entry {
+    aspect-ratio: auto;
+  }
+
+  .fab-desktop-combat-workspace[data-active="true"] > .fab-resolution-stack .fab-chain-stack-btn {
+    justify-content: stretch;
+  }
+
+  .fab-board[data-agency-owner="opponent"]
+    > .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]
+    > :is(.fab-combat-chain--desktop, .fab-compact-resolution-panel, .fab-resolution-stack) {
+    border-top-color: var(--fab-priority-opponent);
+    box-shadow:
+      inset 0 3px 0 var(--fab-priority-opponent),
+      0 10px 26px rgb(0 0 0 / 28%);
+  }
+
+  .fab-board[data-agency-owner="self"]
+    > .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]
+    > :is(.fab-combat-chain--desktop, .fab-compact-resolution-panel, .fab-resolution-stack) {
+    border-bottom-color: var(--fab-priority-self);
+    box-shadow:
+      inset 0 -3px 0 var(--fab-priority-self),
+      0 10px 26px rgb(0 0 0 / 28%);
+  }
+
+  .fab-board[data-agency-owner]:not([data-agency-owner="none"])
+    > .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active::after {
+    position: absolute;
+    z-index: 12;
+    left: 50%;
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    filter: drop-shadow(0 0.2rem 0.35rem rgb(0 0 0 / 42%));
+    content: "";
+    pointer-events: none;
+    transform: translateX(-50%);
+  }
+
+  .fab-board[data-agency-owner="opponent"]
+    > .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active::after {
+    top: 0;
+    border-bottom: 10px solid var(--fab-priority-opponent);
+  }
+
+  .fab-board[data-agency-owner="self"]
+    > .fab-board-overlay-layer
+    > .fab-desktop-combat-workspace[data-active="true"]
+    > .fab-combat-chain--desktop.fab-combat-chain-active::after {
+    bottom: 0;
+    border-top: 10px solid var(--fab-priority-self);
+  }
+
+  @container fab-combat-workspace (max-width: 48rem) {
+    .fab-desktop-combat-workspace[data-active="true"] {
+      --fab-combat-stage-gap: 0.55rem;
+      --fab-stack-panel-width: clamp(7.25rem, 21cqw, 9rem);
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"]
+      > .fab-combat-chain--desktop.fab-combat-chain-active {
+      --fab-chain-header-height: 1.75rem;
+      --fab-chain-history-width: 2.2rem;
+      --fab-chain-history-gutter: 0.3rem;
+      --fab-chain-progress-width: 1rem;
+      --fab-chain-body-gutter: 0.4rem;
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-header {
+      grid-template-columns: auto minmax(max-content, 1fr) auto;
+      grid-template-rows: minmax(0, 1fr);
+      padding-block: 0.1rem;
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-header-left {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-equation {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: center;
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-header-meta {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-card {
+      width: clamp(5.5rem, 18cqw, 7.25rem);
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"]
+      > .fab-compact-resolution-panel
+      > .fab-compact-resolution-stack {
+      --fab-compact-stack-card-width: clamp(4.75rem, 15cqw, 5.8rem);
+    }
+  }
+
+  @container fab-combat-workspace (max-width: 36rem) {
+    .fab-desktop-combat-workspace[data-active="true"] {
+      --fab-combat-stage-gap: 0.4rem;
+      --fab-stack-panel-width: clamp(6.5rem, 23cqw, 7.5rem);
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"]
+      > .fab-combat-chain--desktop.fab-combat-chain-active {
+      --fab-chain-history-width: 2rem;
+      --fab-chain-history-gutter: 0.2rem;
+      --fab-chain-body-gutter: 0.25rem;
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-title {
+      font-size: 0.55rem;
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-card {
+      width: clamp(4.75rem, 20cqw, 5.6rem);
+    }
+
+    .fab-desktop-combat-workspace[data-active="true"]
+      > .fab-compact-resolution-panel
+      > .fab-compact-resolution-stack {
+      --fab-compact-stack-card-width: clamp(4.25rem, 17cqw, 4.9rem);
+    }
+  }
+}

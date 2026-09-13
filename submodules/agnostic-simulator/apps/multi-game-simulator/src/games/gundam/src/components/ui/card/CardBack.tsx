@@ -1,5 +1,8 @@
 import { m } from "../../../lib/i18n/messages.ts";
 
+const GUNDAM_CARD_BACK_IMAGE =
+  "https://cdn.tcg.online/public/gundam/simulator/gundam_card_back_blue.webp";
+
 export interface CardBackProps {
   readonly width: number;
   readonly height: number;
@@ -47,33 +50,13 @@ export function CardBack({
         clipPath: `polygon(${chamfer}px 0, 100% 0, 100% calc(100% - ${chamfer}px), calc(100% - ${chamfer}px) 100%, 0 100%, 0 ${chamfer}px)`,
       }}
     >
-      <div
-        className="absolute inset-[10%] border"
-        style={{
-          borderColor: accent ? `${tint}44` : "rgba(211,186,132,.18)",
-          clipPath: `polygon(${chamfer / 2}px 0, 100% 0, 100% calc(100% - ${chamfer / 2}px), calc(100% - ${chamfer / 2}px) 100%, 0 100%, 0 ${chamfer / 2}px)`,
-        }}
+      <img
+        src={GUNDAM_CARD_BACK_IMAGE}
+        alt=""
+        draggable={false}
+        className="absolute inset-0 h-full w-full object-cover"
       />
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{
-          width: width * 0.36,
-          height: width * 0.36,
-          background: accent
-            ? `radial-gradient(circle, ${tint}cc 0%, ${tint}66 55%, ${tint}22 100%)`
-            : "radial-gradient(circle, #d3ba84 0%, #8b6f3a 55%, #3a2b15 100%)",
-          boxShadow: accent
-            ? `inset 0 0 6px rgba(0,0,0,.6), 0 0 8px ${tint}55`
-            : "inset 0 0 6px rgba(0,0,0,.6), 0 0 8px rgba(211,186,132,.3)",
-        }}
-      />
-      <div
-        className="absolute inset-0 pointer-events-none mix-blend-overlay opacity-30"
-        style={{
-          background:
-            "repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0, rgba(255,255,255,.05) 1px, transparent 1px, transparent 3px)",
-        }}
-      />
+      {highlight ? <div className="pointer-events-none absolute inset-0 bg-hud-info/10" /> : null}
     </div>
   );
 }

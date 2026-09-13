@@ -51,6 +51,7 @@ describe("Ming Lee - Giant Red Panda", () => {
 
     expect(testEngine.asPlayerOne().isExerted(mingLeeGiantRedPanda)).toBe(false);
     expect(testEngine.asPlayerOne().quest(mingLeeGiantRedPanda)).not.toBeSuccessfulCommand();
+    expect(testEngine.asPlayerTwo().getCardZone(challengedCharacter)).toBe("discard");
 
     expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
 

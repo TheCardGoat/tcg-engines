@@ -19,6 +19,25 @@ interface HistoricalPhaseIndex {
   readonly byStateId: ReadonlyMap<number, MoveHistoryEntry>;
 }
 
+interface EffectProjectionMeta {
+  readonly effectId: string;
+  readonly sourceCardId: string;
+  readonly controllerId?: string;
+  readonly kind?: string;
+  readonly timing?: string;
+}
+
+interface ProjectedOutcome {
+  readonly message: string;
+  readonly tags: SimulatorEventLogEntry["tags"];
+  readonly entityIds?: readonly string[];
+  readonly cardRefs?: SimulatorEventLogEntry["cardRefs"];
+  readonly playerId?: string;
+  readonly effectId?: string;
+  readonly dedupeKey?: string;
+  readonly orderKey?: string;
+}
+
 export function projectGundamMoveLogEntries(
   logs: readonly TurnTaggedMoveLog[],
   viewerId: string,
@@ -27,6 +46,8 @@ export function projectGundamMoveLogEntries(
   options: ProjectionOptions = {},
 ): SimulatorEventLogEntry[] {
   const phaseIndex = buildHistoricalPhaseIndex(options.moveHistory ?? []);
+  const effectMeta = collectEffectProjectionMeta(logs);
+  const effectIdsBySource = collectEffectIdsBySource(effectMeta);
   const effectSections = new Map<string, LogSection>();
   let activeCombat: LogSection | null = null;
   let combatOrdinal = 0;
@@ -35,40 +56,72 @@ export function projectGundamMoveLogEntries(
     const log = entry.log;
     const baseId = `gundam-move-log-${log.commandID ?? log.stateID ?? `${entry.turnNumber}-${index}`}`;
     const historicalPhase = phaseForMove(log, phase, phaseIndex);
+    const eventTurn = turnForMoveLog(entry);
     if (log.type === "attack") {
       combatOrdinal += 1;
-      activeCombat = combatSection(log, entry.turnNumber, combatOrdinal, resolveCard);
+      activeCombat = combatSection(log, eventTurn, combatOrdinal, resolveCard);
     } else if (activeCombat && endsActiveCombat(log)) {
       activeCombat = null;
     }
-    const effectSection = sectionForEffect(log, resolveCard, effectSections);
+    const effectSection = sectionForEffect(
+      log,
+      resolveCard,
+      effectSections,
+      effectMeta,
+      effectIdsBySource,
+    );
     const section = activeCombat && belongsToActiveCombat(log) ? activeCombat : effectSection;
-    const eventTurn = turnForMoveLog(entry);
+    const resolvedEffectName =
+      log.type === "resolveEffect"
+        ? effectDisplayName(
+            effectMeta.get(log.effectId ?? ""),
+            log.sourceCardId,
+            resolveCard,
+            effectIdsBySource,
+          )
+        : undefined;
     const baseEntry = entryFor({
       id: baseId,
       log,
       turn: eventTurn,
       phase: historicalPhase,
       viewerId,
-      message: primaryMessage(log, viewerId, resolveCard),
+      message: primaryMessage(log, viewerId, resolveCard, resolvedEffectName),
       tags: primaryTags(log),
       entityIds: primaryEntityIds(log),
       section,
     });
-    const outcomeEntries = outcomeMessages(log, viewerId, resolveCard, options).map(
-      (outcome, outcomeIndex) =>
-        entryFor({
-          id: `${baseId}-outcome-${outcomeIndex}`,
-          log,
-          turn: eventTurn,
-          phase: historicalPhase,
-          viewerId,
-          message: outcome.message,
-          tags: outcome.tags,
-          entityIds: outcome.entityIds,
-          section,
-        }),
-    );
+    const outcomeEntries = outcomeMessages(
+      log,
+      viewerId,
+      resolveCard,
+      options,
+      effectMeta,
+      effectIdsBySource,
+    ).map((outcome, outcomeIndex) => {
+      const outcomeSection = outcome.effectId
+        ? sectionForEffectId(
+            outcome.effectId,
+            resolveCard,
+            effectSections,
+            effectMeta,
+            effectIdsBySource,
+          )
+        : section;
+      return entryFor({
+        id: `${baseId}-outcome-${outcomeIndex}`,
+        log,
+        turn: outcomeTurn(log, outcome, eventTurn),
+        phase: outcomePhase(log, outcome, historicalPhase),
+        viewerId,
+        message: outcome.message,
+        tags: outcome.tags,
+        entityIds: outcome.entityIds,
+        cardRefs: outcome.cardRefs,
+        section: outcomeSection,
+        playerId: outcome.playerId,
+      });
+    });
 
     const combatCompleted = activeCombat !== null && hasCombatOutcome(log);
     const completionEntry = combatCompleted
@@ -86,17 +139,48 @@ export function projectGundamMoveLogEntries(
       : null;
     if (combatCompleted) activeCombat = null;
 
-    return completionEntry
-      ? [baseEntry, ...outcomeEntries, completionEntry]
-      : [baseEntry, ...outcomeEntries];
+    const entries =
+      log.type === "resolveEffect"
+        ? [...outcomeEntries, baseEntry]
+        : [baseEntry, ...outcomeEntries];
+    return completionEntry ? [...entries, completionEntry] : entries;
   });
-  return collapsePairedActionWindowPasses(projected);
+  return collapsePairedActionWindowPasses(placeTransitionDrawsAfterTurnStart(projected));
+}
+
+export function orderGundamEventLogEntries(
+  entries: readonly SimulatorEventLogEntry[],
+): SimulatorEventLogEntry[] {
+  const ordered = [...entries].sort(
+    (left, right) => Date.parse(left.timestamp) - Date.parse(right.timestamp),
+  );
+  const transitionIndexesByTurn = new Map<number, number[]>();
+
+  ordered.forEach((entry, index) => {
+    if (turnTransitionRank(entry.message) === undefined) return;
+    const indexes = transitionIndexesByTurn.get(entry.turn) ?? [];
+    indexes.push(index);
+    transitionIndexesByTurn.set(entry.turn, indexes);
+  });
+
+  for (const indexes of transitionIndexesByTurn.values()) {
+    const transitions = indexes
+      .map((index) => ordered[index]!)
+      .sort(
+        (left, right) => turnTransitionRank(left.message)! - turnTransitionRank(right.message)!,
+      );
+    indexes.forEach((index, transitionIndex) => {
+      ordered[index] = transitions[transitionIndex]!;
+    });
+  }
+
+  return ordered;
 }
 
 function turnForMoveLog(entry: TurnTaggedMoveLog): number {
-  return entry.log.type === "pass" && entry.log.context === "turn"
-    ? Math.max(0, entry.turnNumber - 1)
-    : entry.turnNumber;
+  // Gundam's engine counts gameplay turns from zero, while the shared event
+  // log reserves turn zero for setup Messages.
+  return entry.turnNumber + 1;
 }
 
 export function projectGundamLegacyEventLogEntries(
@@ -122,8 +206,7 @@ export function projectGundamLegacyEventLogEntries(
           : currentPhase;
     const base = {
       id: `gundam-legacy-log-${entry.id}`,
-      turn:
-        entry.type === "gundam.turn.ended" ? Math.max(0, tagged.turnNumber - 1) : tagged.turnNumber,
+      turn: turnForLegacyLog(tagged),
       phase: entryPhase,
       timestamp: timestampFromNumber(entry.timestamp),
       ...(playerId ? { seatId: playerId === viewerId ? "player" : "opponent" } : {}),
@@ -203,6 +286,17 @@ export function projectGundamLegacyEventLogEntries(
   });
 }
 
+function turnForLegacyLog(tagged: TurnTaggedLogEntry): number {
+  if (tagged.entry.type.startsWith("gundam.setup.")) return 0;
+  // Legacy entries are tagged after a command finishes. A turn-ending command
+  // has already advanced the engine counter, so that value is the one-based
+  // display number of the turn that just ended.
+  if (tagged.entry.type === "gundam.turn.ended") {
+    return Math.max(1, tagged.turnNumber);
+  }
+  return tagged.turnNumber + 1;
+}
+
 function entryFor(args: {
   readonly id: string;
   readonly log: GundamMoveLog;
@@ -212,17 +306,21 @@ function entryFor(args: {
   readonly message: string;
   readonly tags: SimulatorEventLogEntry["tags"];
   readonly entityIds?: readonly string[];
+  readonly cardRefs?: SimulatorEventLogEntry["cardRefs"];
   readonly section?: LogSection | null;
+  readonly playerId?: string;
 }): SimulatorEventLogEntry {
+  const playerId = args.playerId ?? String(args.log.playerId);
   return {
     id: args.id,
     turn: args.turn,
     phase: args.phase,
-    seatId: String(args.log.playerId) === args.viewerId ? "player" : "opponent",
+    seatId: playerId === args.viewerId ? "player" : "opponent",
     timestamp: timestampFor(args.log),
     message: args.message,
     tags: args.tags,
     entityIds: unique(args.entityIds),
+    ...(args.cardRefs && args.cardRefs.length > 0 ? { cardRefs: args.cardRefs } : {}),
     ...(args.section ? { section: args.section } : {}),
   };
 }
@@ -246,7 +344,12 @@ function playerName(playerId: string, viewerId: string): string {
   return playerId === viewerId ? "You" : "Opponent";
 }
 
-function primaryMessage(log: GundamMoveLog, viewerId: string, resolveCard: CardResolver): string {
+function primaryMessage(
+  log: GundamMoveLog,
+  viewerId: string,
+  resolveCard: CardResolver,
+  resolvedEffectName?: string,
+): string {
   switch (log.type) {
     case "deployUnit":
       return `Deployed ${cardName(log.cardId, resolveCard)}.`;
@@ -270,22 +373,32 @@ function primaryMessage(log: GundamMoveLog, viewerId: string, resolveCard: CardR
         resolveCard,
       )}.`;
     case "resolveEffect":
-      return `Finished resolving ${cardName(log.sourceCardId, resolveCard)}.`;
+      return `Finished resolving ${resolvedEffectName ?? cardName(log.sourceCardId, resolveCard)}.`;
     case "pass": {
       const actor = playerName(String(log.playerId), viewerId);
       switch (log.context) {
         case "block":
-          return `${actor} did not block.`;
+          return log.automatic
+            ? `${actor} did not block automatically (no legal Blocker available).`
+            : `${actor} did not block.`;
         case "battle":
-          return `${actor} passed the action window.`;
+          return log.automatic
+            ? `${actor} passed the action window automatically (no actions available).`
+            : `${actor} passed the action window.`;
         case "action-step":
-          return `${actor} passed priority.`;
+          return log.automatic
+            ? `${actor} passed priority automatically (no actions available).`
+            : `${actor} passed priority.`;
         case "turn":
-          return `${actor} ended the turn.`;
+          return `${actor} entered the End Phase.`;
       }
     }
     case "turnStart":
       return `${playerName(String(log.activePlayerId), viewerId)} started the turn.`;
+    case "mulligan":
+      return log.count > 0
+        ? `Finished mulligan (redraw count: ${log.count}).`
+        : "Kept the opening hand.";
     case "gameEnd":
       return `Game ended: ${log.reason}.`;
     default: {
@@ -381,7 +494,11 @@ function phaseForMove(log: GundamMoveLog, fallback: string, history: HistoricalP
   if (log.type === "attack" || log.type === "block") return "battle";
   if (log.type === "pass") {
     if (log.context === "block" || log.context === "battle") return "battle";
-    if (log.context === "turn") return "end";
+    // `action-step` is the end-phase priority window; `turn` ends the
+    // turn. Both belong in the end bucket regardless of the phase the
+    // post-command move history records (a turn-ending pass is stamped
+    // with the next turn's main phase).
+    if (log.context === "action-step" || log.context === "turn") return "end";
   }
   const historical =
     (log.commandID ? history.byCommandId.get(log.commandID) : undefined) ??
@@ -426,7 +543,6 @@ function endsActiveCombat(log: GundamMoveLog): boolean {
   return (
     log.type === "deployUnit" ||
     log.type === "deployBase" ||
-    log.type === "playCommand" ||
     log.type === "assignPilot" ||
     log.type === "turnStart" ||
     log.type === "gameEnd" ||
@@ -448,20 +564,18 @@ function sectionForEffect(
   log: GundamMoveLog,
   resolveCard: CardResolver,
   sections: Map<string, LogSection>,
+  effectMeta: ReadonlyMap<string, EffectProjectionMeta>,
+  effectIdsBySource: ReadonlyMap<string, ReadonlySet<string>>,
 ): LogSection | null {
   if (log.type === "resolveEffect") {
-    const effectKey = log.effectId ? `effect:${log.effectId}` : null;
-    const sourceKey = `source:${String(log.sourceCardId)}`;
-    const existing = (effectKey ? sections.get(effectKey) : undefined) ?? sections.get(sourceKey);
-    if (existing) return existing;
-    const created: LogSection = {
-      id: `gundam-effect-${log.effectId ?? log.commandID ?? log.stateID ?? log.sourceCardId}`,
+    if (log.effectId) {
+      return sectionForEffectId(log.effectId, resolveCard, sections, effectMeta, effectIdsBySource);
+    }
+    return {
+      id: `gundam-effect-${log.commandID ?? log.stateID ?? log.sourceCardId}`,
       label: cardName(log.sourceCardId, resolveCard),
       tone: "effect",
     };
-    if (effectKey) sections.set(effectKey, created);
-    sections.set(sourceKey, created);
-    return created;
   }
 
   const queued = (log.outcomes?.effectsQueued ?? []).filter(
@@ -472,20 +586,105 @@ function sectionForEffect(
   );
   const first = queued[0] ?? resolved[0];
   if (!first) return null;
-  const sourceKey = `source:${String(first.sourceCardId)}`;
-  const existing = sections.get(`effect:${first.effectId}`) ?? sections.get(sourceKey);
-  const section: LogSection =
-    existing ??
-    ({
-      id: `gundam-effect-${log.commandID ?? log.stateID ?? first.effectId}`,
-      label: cardName(first.sourceCardId, resolveCard),
-      tone: "effect",
-    } satisfies LogSection);
-  for (const effect of [...queued, ...resolved]) {
-    sections.set(`effect:${effect.effectId}`, section);
-    sections.set(`source:${String(effect.sourceCardId)}`, section);
+  return sectionForEffectId(first.effectId, resolveCard, sections, effectMeta, effectIdsBySource);
+}
+
+function sectionForEffectId(
+  effectId: string,
+  resolveCard: CardResolver,
+  sections: Map<string, LogSection>,
+  effectMeta: ReadonlyMap<string, EffectProjectionMeta>,
+  effectIdsBySource: ReadonlyMap<string, ReadonlySet<string>>,
+): LogSection {
+  const meta = effectMeta.get(effectId);
+  const sourceCardId = meta?.sourceCardId ?? effectId;
+  const existing = sections.get(sourceCardId);
+  if (existing) return existing;
+  const sourceEffectCount = effectIdsBySource.get(sourceCardId)?.size ?? 0;
+  const sourceName = cardName(sourceCardId, resolveCard);
+  const created: LogSection = {
+    id: `gundam-effect-${sourceCardId}`,
+    label: sourceEffectCount > 1 ? `${sourceName} effects` : sourceName,
+    tone: "effect",
+  };
+  sections.set(sourceCardId, created);
+  return created;
+}
+
+function collectEffectProjectionMeta(
+  logs: readonly TurnTaggedMoveLog[],
+): ReadonlyMap<string, EffectProjectionMeta> {
+  const meta = new Map<string, EffectProjectionMeta>();
+  for (const { log } of logs) {
+    for (const effect of log.outcomes?.effectsQueued ?? []) {
+      if (isInternalEffectSource(effect.sourceCardId)) continue;
+      meta.set(effect.effectId, {
+        effectId: effect.effectId,
+        sourceCardId: String(effect.sourceCardId),
+        controllerId: String(effect.controllerId),
+        kind: effect.kind,
+        timing: effect.timing,
+      });
+    }
+    for (const effect of log.outcomes?.effectsResolved ?? []) {
+      if (isInternalEffectSource(effect.sourceCardId) || meta.has(effect.effectId)) continue;
+      meta.set(effect.effectId, {
+        effectId: effect.effectId,
+        sourceCardId: String(effect.sourceCardId),
+      });
+    }
   }
-  return section;
+  return meta;
+}
+
+function collectEffectIdsBySource(
+  meta: ReadonlyMap<string, EffectProjectionMeta>,
+): ReadonlyMap<string, ReadonlySet<string>> {
+  const idsBySource = new Map<string, Set<string>>();
+  for (const effect of meta.values()) {
+    const ids = idsBySource.get(effect.sourceCardId) ?? new Set<string>();
+    ids.add(effect.effectId);
+    idsBySource.set(effect.sourceCardId, ids);
+  }
+  return idsBySource;
+}
+
+function effectDisplayName(
+  meta: EffectProjectionMeta | undefined,
+  sourceCardId: string,
+  resolveCard: CardResolver,
+  effectIdsBySource: ReadonlyMap<string, ReadonlySet<string>>,
+): string {
+  const card = cardName(sourceCardId, resolveCard);
+  if ((effectIdsBySource.get(sourceCardId)?.size ?? 0) <= 1) return card;
+  return `${card} · ${effectKindLabel(meta?.kind, meta?.timing)}`;
+}
+
+function effectKindLabel(kind: string | undefined, timing: string | undefined): string {
+  if (timing) return formatEffectTiming(timing);
+  switch (kind) {
+    case "burst":
+      return "Burst";
+    case "command":
+      return "Command";
+    case "activated":
+      return "Activated effect";
+    case "triggered":
+      return "Triggered effect";
+    case "ruleManagement":
+      return "Rule effect";
+    default:
+      return "Effect";
+  }
+}
+
+function formatEffectTiming(timing: string): string {
+  return timing
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .split(/[-_]/g)
+    .filter(Boolean)
+    .map((part) => `${part.slice(0, 1).toUpperCase()}${part.slice(1)}`)
+    .join(" ");
 }
 
 function outcomeMessages(
@@ -493,40 +692,48 @@ function outcomeMessages(
   viewerId: string,
   resolveCard: CardResolver,
   options: ProjectionOptions,
-): Array<{
-  readonly message: string;
-  readonly tags: SimulatorEventLogEntry["tags"];
-  readonly entityIds?: readonly string[];
-}> {
+  effectMeta: ReadonlyMap<string, EffectProjectionMeta>,
+  effectIdsBySource: ReadonlyMap<string, ReadonlySet<string>>,
+): ProjectedOutcome[] {
   const outcomes = log.outcomes;
   if (!outcomes) return [];
-  const messages: Array<{
-    readonly message: string;
-    readonly tags: SimulatorEventLogEntry["tags"];
-    readonly entityIds?: readonly string[];
-  }> = [];
+  const messages: ProjectedOutcome[] = [];
 
-  for (const damage of outcomes.damageDealt ?? []) {
+  for (const [index, damage] of (outcomes.damageDealt ?? []).entries()) {
     messages.push({
       message: `${cardName(damage.targetId, resolveCard)} took ${damage.amount} damage.`,
       tags: ["combat"],
       entityIds: unique([damage.sourceCardId, damage.targetId]),
+      orderKey: `damageDealt:${index}`,
     });
   }
 
-  for (const shield of outcomes.shieldsRemoved ?? []) {
+  for (const [index, recovery] of (outcomes.hpRecovered ?? []).entries()) {
     messages.push({
-      message: `${cardName(shield.cardId, resolveCard)} lost a shield.`,
+      message: `${cardName(recovery.cardId, resolveCard)} recovered ${recovery.amount} HP.`,
+      tags: ["ability"],
+      entityIds: [String(recovery.cardId)],
+      orderKey: `hpRecovered:${index}`,
+    });
+  }
+
+  for (const [index, shield] of (outcomes.shieldsRemoved ?? []).entries()) {
+    messages.push({
+      message: `Revealed ${cardName(shield.cardId, resolveCard)} from Shields.`,
       tags: ["combat"],
       entityIds: unique([shield.sourceCardId, shield.cardId]),
+      playerId: String(shield.playerId),
+      orderKey: `shieldsRemoved:${index}`,
     });
   }
 
-  for (const defeated of outcomes.unitsDefeated ?? []) {
+  for (const [index, defeated] of (outcomes.unitsDefeated ?? []).entries()) {
     messages.push({
       message: `${cardName(defeated.cardId, resolveCard)} was defeated.`,
       tags: ["combat"],
       entityIds: unique([defeated.defeatedBy, defeated.cardId]),
+      playerId: String(defeated.ownerId),
+      orderKey: `unitsDefeated:${index}`,
     });
   }
 
@@ -545,6 +752,19 @@ function outcomeMessages(
           : `Drew ${outcomes.cardsDrawn.count} card(s).`,
       tags: ["move"],
       entityIds: visibleIds,
+      cardRefs: visibleIds.map((id) => ({ id, name: cardName(id, resolveCard) })),
+      ...(outcomes.cardsDrawn.playerId ? { playerId: String(outcomes.cardsDrawn.playerId) } : {}),
+      orderKey: "cardsDrawn",
+    });
+  }
+
+  if (outcomes.shieldsAddedToHand) {
+    const { count, playerId } = outcomes.shieldsAddedToHand;
+    messages.push({
+      message: `Added ${count} ${count === 1 ? "Shield" : "Shields"} to hand.`,
+      tags: ["move"],
+      playerId: String(playerId),
+      orderKey: "shieldsAddedToHand",
     });
   }
 
@@ -555,89 +775,160 @@ function outcomeMessages(
         outcomes.resourcesSpent.exRemovedCount,
       ),
       tags: ["move"],
+      orderKey: "resourcesSpent",
     });
   }
 
-  for (const id of outcomes.cardsDiscarded ?? []) {
+  for (const [index, id] of (outcomes.cardsDiscarded ?? []).entries()) {
     messages.push({
       message: `Discarded ${cardName(id, resolveCard)}.`,
       tags: ["move"],
       entityIds: [String(id)],
+      orderKey: `cardsDiscarded:${index}`,
     });
   }
 
-  for (const id of outcomes.unitsRested ?? []) {
+  for (const [index, id] of (outcomes.unitsRested ?? []).entries()) {
     messages.push({
       message: `${cardName(id, resolveCard)} was rested for cost.`,
       tags: ["move"],
       entityIds: [String(id)],
+      orderKey: `unitsRested:${index}`,
     });
   }
 
-  for (const moved of outcomes.cardsMoved ?? []) {
+  for (const [index, moved] of (outcomes.cardsMoved ?? []).entries()) {
     if (isDeckToHandMove(moved.from, moved.to)) {
       continue;
     }
     messages.push({
       message: `${cardName(moved.cardId, resolveCard)} moved${
-        moved.from ? ` from ${moved.from}` : ""
-      } to ${moved.to}.`,
+        moved.from ? ` from ${formatEngineLabel(moved.from)}` : ""
+      } to ${formatEngineLabel(moved.to)}.`,
       tags: ["move"],
       entityIds: [String(moved.cardId)],
+      orderKey: `cardsMoved:${index}`,
     });
   }
 
-  for (const id of outcomes.cardsReturnedToHand ?? []) {
+  for (const [index, id] of (outcomes.cardsReturnedToHand ?? []).entries()) {
     messages.push({
       message: `${cardName(id, resolveCard)} returned to hand.`,
       tags: ["move"],
       entityIds: [String(id)],
+      orderKey: `cardsReturnedToHand:${index}`,
     });
   }
 
-  for (const id of outcomes.cardsExhausted ?? []) {
+  for (const [index, id] of (outcomes.cardsExhausted ?? []).entries()) {
     messages.push({
-      message: `${cardName(id, resolveCard)} was exhausted.`,
+      message: `${cardName(id, resolveCard)} was rested.`,
       tags: ["move"],
       entityIds: [String(id)],
+      orderKey: `cardsExhausted:${index}`,
     });
   }
 
-  for (const id of outcomes.cardsReadied ?? []) {
+  for (const [index, modifier] of (outcomes.statModifiers ?? []).entries()) {
+    const amount = modifier.amount >= 0 ? `+${modifier.amount}` : String(modifier.amount);
+    messages.push({
+      message: `${cardName(modifier.cardId, resolveCard)} gets ${modifier.stat.toUpperCase()} ${amount} during ${formatEffectDuration(modifier.duration)}.`,
+      tags: ["ability"],
+      entityIds: [String(modifier.cardId)],
+      orderKey: `statModifiers:${index}`,
+    });
+  }
+
+  for (const [index, id] of (outcomes.cardsReadied ?? []).entries()) {
     messages.push({
       message: `${cardName(id, resolveCard)} was readied.`,
       tags: ["move"],
       entityIds: [String(id)],
+      orderKey: `cardsReadied:${index}`,
     });
   }
 
-  for (const placed of outcomes.resourcesPlaced ?? []) {
+  for (const [index, placed] of (outcomes.resourcesPlaced ?? []).entries()) {
     messages.push({
       message: `${cardName(placed.cardId, resolveCard)} was placed as a ${placed.state} resource.`,
       tags: ["move"],
       entityIds: [String(placed.cardId)],
+      playerId: String(placed.playerId),
+      orderKey: `resourcesPlaced:${index}`,
     });
   }
 
-  for (const effect of outcomes.effectsQueued ?? []) {
+  for (const [index, effect] of (outcomes.effectsQueued ?? []).entries()) {
     if (isInternalEffectSource(effect.sourceCardId)) continue;
+    const meta = effectMeta.get(effect.effectId);
     messages.push({
-      message: `Started resolving ${cardName(effect.sourceCardId, resolveCard)}.`,
+      message: `Started resolving ${effectDisplayName(
+        meta,
+        String(effect.sourceCardId),
+        resolveCard,
+        effectIdsBySource,
+      )}.`,
       tags: ["ability"],
       entityIds: [String(effect.sourceCardId)],
+      playerId: String(effect.controllerId),
+      effectId: effect.effectId,
+      dedupeKey: `effect-started:${effect.effectId}`,
+      orderKey: `effectsQueued:${index}`,
     });
   }
 
-  for (const effect of outcomes.effectsResolved ?? []) {
-    if (log.type === "resolveEffect" || isInternalEffectSource(effect.sourceCardId)) continue;
+  for (const [index, effect] of (outcomes.effectsResolved ?? []).entries()) {
+    if (
+      (log.type === "resolveEffect" && effect.effectId === log.effectId) ||
+      isInternalEffectSource(effect.sourceCardId)
+    ) {
+      continue;
+    }
+    const meta = effectMeta.get(effect.effectId);
     messages.push({
-      message: `Finished resolving ${cardName(effect.sourceCardId, resolveCard)}.`,
+      message: `Finished resolving ${effectDisplayName(
+        meta,
+        String(effect.sourceCardId),
+        resolveCard,
+        effectIdsBySource,
+      )}.`,
       tags: ["ability"],
       entityIds: [String(effect.sourceCardId)],
+      ...(meta?.controllerId ? { playerId: meta.controllerId } : {}),
+      effectId: effect.effectId,
+      dedupeKey: `effect-finished:${effect.effectId}`,
+      orderKey: `effectsResolved:${index}`,
     });
   }
 
-  return dedupeOutcomeMessages(messages);
+  const deduped = dedupeOutcomeMessages(messages);
+  if (outcomes.order?.length) {
+    const rank = new Map(
+      outcomes.order.map((entry, index) => [
+        entry.index === undefined ? entry.kind : `${entry.kind}:${entry.index}`,
+        index,
+      ]),
+    );
+    return deduped
+      .map((message, index) => ({ message, index }))
+      .sort(
+        (left, right) =>
+          (rank.get(left.message.orderKey ?? "") ?? Number.MAX_SAFE_INTEGER) -
+            (rank.get(right.message.orderKey ?? "") ?? Number.MAX_SAFE_INTEGER) ||
+          left.index - right.index,
+      )
+      .map(({ message }) => message);
+  }
+  if (log.type !== "resolveEffect") return deduped;
+
+  // A resolved effect can synchronously queue and finish a nested triggered
+  // effect. Present its lifecycle around the nested outcomes rather than
+  // listing card movement/recovery before saying the triggered effect began.
+  const nestedStarts = deduped.filter((message) =>
+    message.dedupeKey?.startsWith("effect-started:"),
+  );
+  const remaining = deduped.filter((message) => !message.dedupeKey?.startsWith("effect-started:"));
+  return [...nestedStarts, ...remaining];
 }
 
 function resourcePaymentMessage(regularCount: number, exRemovedCount: number): string {
@@ -651,13 +942,14 @@ function isInternalEffectSource(sourceCardId: unknown): boolean {
   return String(sourceCardId).startsWith("__");
 }
 
-function dedupeOutcomeMessages<T extends { readonly message: string }>(
+function dedupeOutcomeMessages<T extends { readonly message: string; readonly dedupeKey?: string }>(
   messages: readonly T[],
 ): T[] {
   const seen = new Set<string>();
   return messages.filter((message) => {
-    if (seen.has(message.message)) return false;
-    seen.add(message.message);
+    const key = message.dedupeKey ?? message.message;
+    if (seen.has(key)) return false;
+    seen.add(key);
     return true;
   });
 }
@@ -699,6 +991,66 @@ function unique(values: readonly (string | undefined)[] | undefined): string[] |
   return ids.length > 0 ? ids : undefined;
 }
 
+function formatEffectDuration(duration: string): string {
+  return formatEngineLabel(duration).replace(/^during\s+/, "");
+}
+
+function outcomeTurn(log: GundamMoveLog, outcome: ProjectedOutcome, eventTurn: number): number {
+  // The final End Phase priority pass is attributed to the turn in which it
+  // was submitted, but the draw produced by that transition belongs to the
+  // next turn's Draw Phase.
+  return log.type === "pass" && outcome.orderKey === "cardsDrawn" ? eventTurn + 1 : eventTurn;
+}
+
+function outcomePhase(
+  log: GundamMoveLog,
+  outcome: ProjectedOutcome,
+  historicalPhase: string,
+): string {
+  return log.type === "pass" && outcome.orderKey === "cardsDrawn" ? "draw" : historicalPhase;
+}
+
+function placeTransitionDrawsAfterTurnStart(
+  entries: readonly SimulatorEventLogEntry[],
+): SimulatorEventLogEntry[] {
+  const deferredDraws = new Map<number, SimulatorEventLogEntry[]>();
+  const ordered: SimulatorEventLogEntry[] = [];
+
+  for (const entry of entries) {
+    if (entry.phase === "draw" && entry.message.startsWith("Drew ")) {
+      const turnDraws = deferredDraws.get(entry.turn) ?? [];
+      turnDraws.push(entry);
+      deferredDraws.set(entry.turn, turnDraws);
+      continue;
+    }
+
+    ordered.push(entry);
+    if (entry.phase === "start" && entry.message.endsWith("started the turn.")) {
+      ordered.push(
+        ...(deferredDraws.get(entry.turn) ?? []).map((draw) => ({
+          ...draw,
+          timestamp: entry.timestamp,
+        })),
+      );
+      deferredDraws.delete(entry.turn);
+    }
+  }
+
+  for (const draws of deferredDraws.values()) ordered.push(...draws);
+  return ordered;
+}
+
+function turnTransitionRank(message: string): number | undefined {
+  if (message.endsWith("started the turn.")) return 0;
+  if (message === "Entered draw.") return 1;
+  if (message.startsWith("Drew ")) return 2;
+  return undefined;
+}
+
+function formatEngineLabel(value: string): string {
+  return value.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase();
+}
+
 function valuesOf(entry: TurnTaggedLogEntry["entry"]): Record<string, unknown> {
   const values = (entry.data as { values?: unknown } | undefined)?.values;
   return typeof values === "object" && values !== null ? (values as Record<string, unknown>) : {};
@@ -735,7 +1087,18 @@ function prettifyLegacyMessage(
       : cardName(value, resolveCard);
     out = out.replaceAll(value, replacement);
   }
-  return out;
+  return collapseSelfChoice(out);
+}
+
+/**
+ * Raw engine ids never repeat in a sentence, but pretty names do:
+ * "player_one chose player_one to go first." becomes "You chose You…".
+ * Collapse the self-referential form after the id rewrite.
+ */
+function collapseSelfChoice(message: string): string {
+  return message
+    .replace(/^(\w+) chose \1 to go first\.$/, "$1 chose to go first.")
+    .replace(/^(\w+) redrew 0 cards\.$/, "$1 kept the opening hand.");
 }
 
 function isPlayerValueKey(key: string): boolean {

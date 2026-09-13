@@ -109,6 +109,96 @@ describe("buildGundamMoveLog", () => {
     });
   });
 
+  it("keeps stat modifier outcomes attached to the resolving move", () => {
+    const log = buildGundamMoveLog({
+      command: command("resolveEffect"),
+      playerId: PLAYER_ONE,
+      timestamp: 100,
+      logEntries: [
+        entry(
+          "gundam.pending.resolved",
+          { effectId: "effect_1", sourceCardId: "source_1" },
+          "system",
+        ),
+        entry("gundam.effect.statModified", {
+          cardId: "target_1",
+          stat: "ap",
+          amount: -2,
+          duration: "thisTurn",
+        }),
+      ],
+    });
+
+    expect(log?.outcomes?.statModifiers).toEqual([
+      { cardId: "target_1", stat: "ap", amount: -2, duration: "thisTurn" },
+    ]);
+  });
+
+  it("builds mulligan logs with private returned/drawn card ids", () => {
+    const log = buildGundamMoveLog({
+      command: command("alterHand"),
+      playerId: PLAYER_ONE,
+      timestamp: 100,
+      logEntries: [
+        entry("gundam.setup.mulligan", { playerId: PLAYER_ONE, count: 5 }),
+        {
+          id: 2,
+          stateID: 2,
+          timestamp: 100,
+          type: "gundam.setup.mulligan",
+          message: "",
+          data: {
+            type: "gundam.setup.mulligan",
+            values: {
+              playerId: PLAYER_ONE,
+              count: 5,
+              returnedCardIds: ["ret_1", "ret_2", "ret_3", "ret_4", "ret_5"],
+              drawnCardIds: ["draw_1", "draw_2", "draw_3", "draw_4", "draw_5"],
+            },
+            visibility: { mode: "PRIVATE", visibleTo: [PLAYER_ONE] },
+            category: "action",
+          },
+          visibleTo: [PLAYER_ONE],
+        },
+      ],
+    });
+
+    if (log?.type !== "mulligan") throw new Error("Expected mulligan log");
+    expect(log.count).toBe(5);
+    expect(log.returnedCardIds).toMatchObject({
+      __private: true,
+      value: ["ret_1", "ret_2", "ret_3", "ret_4", "ret_5"],
+      visibleTo: [PLAYER_ONE],
+    });
+    expect(log.drawnCardIds).toMatchObject({
+      __private: true,
+      value: ["draw_1", "draw_2", "draw_3", "draw_4", "draw_5"],
+      visibleTo: [PLAYER_ONE],
+    });
+
+    const opponentView = stripPrivateFields(log, "player_two");
+    const ownerView = stripPrivateFields(log, PLAYER_ONE);
+    expect(opponentView?.count).toBe(5);
+    expect(opponentView?.returnedCardIds).toBeUndefined();
+    expect(opponentView?.drawnCardIds).toBeUndefined();
+    expect(JSON.stringify(opponentView)).not.toContain("ret_1");
+    expect(ownerView?.returnedCardIds).toEqual(["ret_1", "ret_2", "ret_3", "ret_4", "ret_5"]);
+    expect(ownerView?.drawnCardIds).toEqual(["draw_1", "draw_2", "draw_3", "draw_4", "draw_5"]);
+  });
+
+  it("builds keep-hand mulligan logs without private card fields", () => {
+    const log = buildGundamMoveLog({
+      command: command("alterHand"),
+      playerId: PLAYER_ONE,
+      timestamp: 100,
+      logEntries: [entry("gundam.setup.mulligan", { playerId: PLAYER_ONE, count: 0 })],
+    });
+    if (log?.type !== "mulligan") throw new Error("Expected mulligan log");
+    expect(log.count).toBe(0);
+    expect(log.returnedCardIds).toBeUndefined();
+    expect(log.drawnCardIds).toBeUndefined();
+  });
+
   it("keeps drawn card details as field-level private data", () => {
     const log = buildGundamMoveLog({
       command: command("activateAbility"),
@@ -172,5 +262,54 @@ describe("buildGundamMoveLog", () => {
       sourceCardId: "supporter_1",
       resolution: { kind: "targetSelection", targets: ["receiver_1"] },
     });
+  });
+
+  it("marks every safe pass context as automatic from emitted logs and command fallback", () => {
+    const cases = [
+      ["passBlock", "block"],
+      ["passBattleAction", "battle"],
+      ["passActionStep", "action-step"],
+    ] as const;
+
+    for (const [move, context] of cases) {
+      const fromEntry = buildGundamMoveLog({
+        command: commandWithArgs(move, { automatic: true }),
+        playerId: PLAYER_ONE,
+        timestamp: 100,
+        logEntries: [
+          entry("gundam.move.pass", {
+            playerId: PLAYER_ONE,
+            context,
+            automatic: true,
+          }),
+        ],
+      });
+      const fromCommand = buildGundamMoveLog({
+        command: commandWithArgs(move, { automatic: true }),
+        playerId: PLAYER_ONE,
+        timestamp: 100,
+        logEntries: [],
+      });
+
+      expect(fromEntry).toMatchObject({ type: "pass", context, automatic: true });
+      expect(fromCommand).toMatchObject({ type: "pass", context, automatic: true });
+    }
+  });
+
+  it("leaves manual action-step passes unflagged", () => {
+    const log = buildGundamMoveLog({
+      command: command("passActionStep"),
+      playerId: PLAYER_ONE,
+      timestamp: 100,
+      logEntries: [
+        entry("gundam.move.pass", {
+          playerId: PLAYER_ONE,
+          context: "action-step",
+        }),
+      ],
+    });
+
+    expect(log).toMatchObject({ type: "pass", context: "action-step" });
+    expect(log && "automatic" in log ? log.automatic : undefined).toBeUndefined();
   });
 });

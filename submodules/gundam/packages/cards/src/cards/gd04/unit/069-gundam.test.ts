@@ -69,6 +69,7 @@ describe("∀ Gundam (GD04-069)", () => {
 
     expectSuccess(p1.assignPilot(gd04LoranCehack097, turnAId!));
     expectSuccess(p1.activateAbility(payerId!, 0));
+    expectSuccess(p1.activateAbility(payerId!, 0));
 
     expect(p1.isExhausted(chosenMilitiaId!)).toBe(true);
     expect(p1.isExhausted(otherMilitiaId!)).toBe(true);
@@ -88,5 +89,6 @@ describe("∀ Gundam (GD04-069)", () => {
 
     expect(p1.isExhausted(chosenMilitiaId!)).toBe(false);
     expect(p1.isExhausted(otherMilitiaId!)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
   });
 });

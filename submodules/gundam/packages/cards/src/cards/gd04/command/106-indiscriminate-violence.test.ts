@@ -105,6 +105,53 @@ describe("Indiscriminate Violence (GD04-106)", () => {
     );
   });
 
+  it("honors an explicit EX Resource selection even when regular Resources can cover the cost", () => {
+    const placeExResource = createMockCommand({
+      name: "Place EX Resource",
+      level: 0,
+      cost: 0,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [{ action: { action: "placeExResource", count: 1, state: "active" } }],
+          sourceText: "【Main】Place 1 EX Resource.",
+        },
+      ],
+    });
+    const academyOne = createMockUnit({ name: "Academy One", traits: ["academy"] });
+    const academyTwo = createMockUnit({ name: "Academy Two", traits: ["academy"] });
+    const engine = GundamTestEngine.create({
+      hand: [placeExResource, gd04IndiscriminateViolence106],
+      play: [academyOne, academyTwo],
+      // Level 5 via 5 Resources; 4 rested + 1 active regular, then place EX.
+      // Auto-pay would spend the regular; selecting EX must still unlock 1–2 Units.
+      resourceArea: [
+        ...activeResources(4).map((entry) => ({ ...entry, exhausted: true })),
+        ...activeResources(1),
+      ],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [placeExResourceId, commandId] = p1.getHand();
+    const [academyOneId, academyTwoId] = p1.getCardsInZone("battleArea");
+
+    expectSuccess(p1.playCommand(placeExResourceId!));
+    const resourceIds = p1.getCardsInZone("resourceArea");
+    const exResourceId = resourceIds.find((id) => id.startsWith("ex_resource_token_"))!;
+    const regularId = resourceIds.find(
+      (id) => !p1.isExhausted(id) && !id.startsWith("ex_resource_token_"),
+    )!;
+
+    expectSuccess(
+      p1.playCommand(commandId!, {
+        targets: [academyOneId!, academyTwoId!],
+        paymentResourceIds: [exResourceId],
+      }),
+    );
+    expect(p1.getCardZone(exResourceId)).toBeUndefined();
+    expect(p1.isExhausted(regularId)).toBe(false);
+  });
+
   it("can be paired as Norea Du Noc instead of activating the Command effect", () => {
     const host = createMockUnit({ name: "Pilot Host" });
     const engine = GundamTestEngine.create({

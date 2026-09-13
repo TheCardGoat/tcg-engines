@@ -108,19 +108,23 @@ export const MOVE_BINDINGS: Readonly<Record<GundamMoveName, MoveBinding>> = {
   // `execute` reads (rule 10-1-8 — targets pre-committed at play time).
   deployUnit: {
     seedPrimaryCard: seedAsCardId,
-    keyForSelectTarget: targetsMulti,
+    keyForSelectTarget: (step) =>
+      step.role === "resource" ? { key: "paymentResourceIds", multi: true } : targetsMulti(step),
   },
   deployBase: {
     seedPrimaryCard: seedAsCardId,
-    keyForSelectTarget: targetsMulti,
+    keyForSelectTarget: (step) =>
+      step.role === "resource" ? { key: "paymentResourceIds", multi: true } : targetsMulti(step),
   },
   playCommand: {
     seedPrimaryCard: seedAsCardId,
-    keyForSelectTarget: targetsMulti,
+    keyForSelectTarget: (step) =>
+      step.role === "resource" ? { key: "paymentResourceIds", multi: true } : targetsMulti(step),
   },
   activateAbility: {
     seedPrimaryCard: seedAsCardId,
-    keyForSelectTarget: targetsMulti,
+    keyForSelectTarget: (step) =>
+      step.role === "resource" ? { key: "paymentResourceIds", multi: true } : targetsMulti(step),
   },
 
   // Pair-pilot: the primary click is the pilot card; the subsequent
@@ -129,6 +133,7 @@ export const MOVE_BINDINGS: Readonly<Record<GundamMoveName, MoveBinding>> = {
     seedPrimaryCard: (cardId) => ({ pilotId: cardId }),
     keyForSelectTarget: (step) => {
       if (step.role === "unit") return { key: "unitId", multi: false };
+      if (step.role === "resource") return { key: "paymentResourceIds", multi: true };
       return genericTargetKey(step);
     },
   },
@@ -142,6 +147,7 @@ export const MOVE_BINDINGS: Readonly<Record<GundamMoveName, MoveBinding>> = {
     seedPrimaryCard: seedAsCardId,
     keyForSelectTarget: (step) => {
       if (step.role === "unit") return { key: "unitId", multi: false };
+      if (step.role === "resource") return { key: "paymentResourceIds", multi: true };
       return genericTargetKey(step);
     },
   },

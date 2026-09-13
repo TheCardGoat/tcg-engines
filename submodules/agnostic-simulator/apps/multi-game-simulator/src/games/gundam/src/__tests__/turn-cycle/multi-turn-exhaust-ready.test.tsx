@@ -26,24 +26,23 @@ describe("Turn-cycle · Multi-turn exhaust → ready", () => {
     const hand = screen.getByRole("list", { name: /your hand/i });
     expect(within(hand).getAllByRole("listitem")).toHaveLength(1);
 
-    const resources = screen.getByRole("region", { name: /your resource area/i });
-    expect(resources.textContent ?? "").toMatch(/03\s*\/\s*03/);
+    expect(screen.getByLabelText("Your resources").textContent ?? "").toMatch(/3\s*\/\s*3/);
 
-    // Deploy the cost-1 RX-78-2 (hand 1 → 0, resources 03/03 → 02/03).
+    // Deploy the cost-1 GM (hand 1 → 0, Resources 3/3 → 2/3).
     // deployUnit auto-submits on click — no confirm step.
-    await user.click(within(hand).getByRole("listitem", { name: /RX-78-2/i }));
+    await user.click(within(hand).getByRole("listitem", { name: /^GM \(cost 1\)$/i }));
 
     await waitFor(() => {
-      expect(resources.textContent ?? "").toMatch(/02\s*\/\s*03/);
+      expect(screen.getByLabelText("Your resources").textContent ?? "").toMatch(/2\s*\/\s*3/);
       expect(within(hand).queryAllByRole("listitem")).toHaveLength(0);
     });
 
-    // End viewer turn 1. The opponent bot auto-pass-turns through its
-    // own turn, and control returns to the viewer. Query by the stable
-    // primary-action testid — the unified PriorityActionButton's
-    // accessible name is phase-dependent.
-    const primary = screen.getByTestId("primary-action") as HTMLButtonElement;
-    await user.click(primary);
+    // End viewer turn 1. Deploying the fixture's only card leaves no
+    // remaining legal action, so the pass occurs without confirmation.
+    // The opponent bot then auto-passes its own turn and returns control
+    // to the viewer. Query by the stable primary-action testid because
+    // the unified button's accessible name is phase-dependent.
+    await user.click(screen.getByTestId("primary-action"));
 
     // Control returned to the viewer — the primary action button goes
     // disabled while the opponent is active and re-enables only when
@@ -59,10 +58,10 @@ describe("Turn-cycle · Multi-turn exhaust → ready", () => {
 
     // Turn 2: draw-phase adds +1 card, resource-phase adds +1 resource
     // on top of the 3 carried over, and active-step readies them all
-    // → 04/04.
+    // → 4/4.
     await waitFor(
       () => {
-        expect(resources.textContent ?? "").toMatch(/04\s*\/\s*04/);
+        expect(screen.getByLabelText("Your resources").textContent ?? "").toMatch(/4\s*\/\s*4/);
         expect(within(hand).getAllByRole("listitem")).toHaveLength(1);
       },
       { timeout: 15_000 },

@@ -86,6 +86,12 @@
   justify-content: center;
 }
 
+.animatedSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Transparent button wrapper for each die slot. DieDisplay controls the visual;
    this class just resets button defaults and carries picker-state classes. */
 .slotBtn {

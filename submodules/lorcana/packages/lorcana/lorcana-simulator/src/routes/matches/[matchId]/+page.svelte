@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
+  import { env } from "$env/dynamic/public";
   import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "$lib/design-system/primitives/card";
   import { Button } from "$lib/design-system/primitives/button";
   import AntiRamp from "@tcg/shared/ads/AntiRamp";
+  import { resolvePlatformMatchmakingReturnUrl } from "$lib/navigation/platform-matchmaking-url.js";
 
   let { data } = $props();
 </script>
@@ -19,7 +20,17 @@
       <CardDescription class="text-rose-200">{data.error ?? "Match not found."}</CardDescription>
     </CardHeader>
     <CardContent>
-      <Button onclick={() => goto("/matchmaking")}>Back to matchmaking</Button>
+      <Button
+        onclick={() =>
+          window.location.assign(
+            resolvePlatformMatchmakingReturnUrl(
+              new URL(window.location.href),
+              env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+            ),
+          )}
+        >
+          Back to matchmaking
+        </Button>
     </CardContent>
   </Card>
 </main>

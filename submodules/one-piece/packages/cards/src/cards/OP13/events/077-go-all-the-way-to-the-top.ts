@@ -28,51 +28,57 @@ export const op13GoAllTheWayToTheTop077: EventCard = {
     effects: [
       {
         trigger: "main",
-        costs: [{ cost: "restDon", amount: 3 }],
+        costs: [
+          {
+            cost: "restDon",
+            amount: 3,
+          },
+        ],
         actions: [
           {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "basePower",
-                  comparison: "lte",
-                  value: 4000,
-                },
-              ],
-            },
-            condition: {
+            action: "conditional",
+            predicate: {
               condition: "donGiven",
               player: "self",
             },
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
-              },
-              filters: [
-                {
-                  filter: "basePower",
-                  comparison: "lte",
-                  value: 3000,
+            whenTrue: [
+              {
+                action: "ko",
+                target: {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "basePower",
+                      comparison: "lte",
+                      value: 4000,
+                    },
+                  ],
                 },
-              ],
-            },
-            condition: {
-              condition: "donGiven",
-              player: "self",
-            },
+              },
+              {
+                action: "ko",
+                target: {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "basePower",
+                      comparison: "lte",
+                      value: 3000,
+                    },
+                  ],
+                },
+              },
+            ],
           },
         ],
         optional: true,

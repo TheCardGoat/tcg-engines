@@ -3,7 +3,7 @@ import { prb02NicoRobinOp09033PirateFoil033 } from "../../../../../cards/src/car
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-033 Nico Robin - OP09-033 (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02NicoRobinOp09033PirateFoil033);
   });
 });

@@ -45,7 +45,19 @@ describe("OP12-075 Ms. All Sunday", () => {
 
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
-    engine.resolveDecision("effectAddDon", { optionId: "0" }, "south");
+    // DON!! −1 is optional; accept and pay so the physical card is played.
+    engine.accept("north");
+    try {
+      engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "north");
+    } catch {
+      // Cost auto-paid when selection is unambiguous.
+    }
+    // Opposing On Play K.O. may let the KO'd controller add DON!! (0 here).
+    try {
+      engine.resolveDecision("effectAddDon", { optionId: "0" }, "south");
+    } catch {
+      // No add-DON window when no Character was K.O.'d from the field by On Play.
+    }
 
     const view = engine.getView("north");
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(sundayId);

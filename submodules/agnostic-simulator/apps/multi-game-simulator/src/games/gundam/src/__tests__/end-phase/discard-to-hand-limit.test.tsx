@@ -19,14 +19,19 @@ describe("End-phase · Discard to hand limit", () => {
     const hand = screen.getByRole("list", { name: /your hand/i });
     expect(within(hand).getAllByRole("listitem")).toHaveLength(12);
 
-    await user.click(within(hand).getByRole("listitem", { name: /Unit 01/i }));
-    await user.click(within(hand).getByRole("listitem", { name: /Unit 02/i }));
+    await user.click(within(hand).getByRole("listitem", { name: /^GM /i }));
+    expect(screen.getByText("Choose 2 cards to discard.")).toBeTruthy();
+    expect(screen.getByRole("button", { name: /^confirm$/i }).hasAttribute("disabled")).toBe(true);
+    expect(screen.queryByText(/ACTION REJECTED/)).toBeNull();
+    expect(screen.queryByText(/player_one_ST/)).toBeNull();
+    await user.click(within(hand).getByRole("listitem", { name: /Demi Trainer/i }));
+    await user.click(screen.getByRole("button", { name: /^confirm$/i }));
 
     await waitFor(() => {
       expect(within(hand).queryAllByRole("listitem")).toHaveLength(10);
     });
-    expect(within(hand).queryByRole("listitem", { name: /Unit 01/i })).toBeNull();
-    expect(within(hand).queryByRole("listitem", { name: /Unit 02/i })).toBeNull();
+    expect(within(hand).queryByRole("listitem", { name: /^GM /i })).toBeNull();
+    expect(within(hand).queryByRole("listitem", { name: /Demi Trainer/i })).toBeNull();
   });
 
   it("cancelling the discard prompt leaves the hand at 12", async () => {
@@ -36,7 +41,7 @@ describe("End-phase · Discard to hand limit", () => {
     const hand = screen.getByRole("list", { name: /your hand/i });
     expect(within(hand).getAllByRole("listitem")).toHaveLength(12);
 
-    await user.click(within(hand).getByRole("listitem", { name: /Unit 01/i }));
+    await user.click(within(hand).getByRole("listitem", { name: /^GM /i }));
     await user.click(await screen.findByRole("button", { name: /^cancel$/i }));
 
     // Hand unchanged.

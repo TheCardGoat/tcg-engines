@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { base } from "$app/paths";
   import { onMount } from "svelte";
   import { toast } from "svelte-sonner";
   import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "$lib/design-system/primitives/card";
@@ -23,7 +24,9 @@
     savePracticeSession(data.session);
 
     // Navigate to the server-synced match page (gateway + spectator support)
-    void goto(`/match/${data.session.gameId}`, { replaceState: true });
+    const target = new URL(`${base}/match/${encodeURIComponent(data.session.gameId)}`, window.location.origin);
+    if (data.returnTo) target.searchParams.set("returnTo", data.returnTo);
+    void goto(`${target.pathname}${target.search}`, { replaceState: true });
   });
 </script>
 
@@ -35,7 +38,7 @@
         <CardDescription class="text-rose-200">{data.message}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Button onclick={() => goto("/sandbox/simulator/vs-ai")}>Back to setup</Button>
+        <Button onclick={() => goto(`${base}/sandbox/simulator/vs-ai`)}>Back to setup</Button>
       </CardContent>
     </Card>
   </div>

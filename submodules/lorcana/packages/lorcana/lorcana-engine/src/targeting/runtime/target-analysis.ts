@@ -129,6 +129,12 @@ export type TargetAnalysis = {
   // separate "chosen" steps). In that case the same card may appear more than once in the target
   // list because each slot is an independent selection (Lorcana rule 6.1.3).
   allowDuplicateTargets: boolean;
+  /** Per-descriptor owner constraints, including capacity for availability checks. */
+  sameOwnerTargetGroups?: {
+    candidateIds: CardInstanceId[];
+    minSelections: number;
+    maxSameOwnerSelections: number;
+  }[];
 };
 
 export type NormalizedTargetSelection = {
@@ -1835,6 +1841,27 @@ export function analyzeEffectTargets(
     declaredMaxSelections: explicitDescriptorCount > 0 ? Math.max(1, maxSelections) : 0,
     requiresExplicitSelection: explicitDescriptorCount > 0,
     allowsDeferredResolutionWithoutInitialSelection: hasDeferredHandDiscardSelection,
+    sameOwnerTargetGroups: chosenCardTargetDescriptors
+      .filter((descriptor) => descriptor.requireSameOwner)
+      .map((descriptor) => {
+        const candidateIds = resolveActionChosenTargetCandidates(
+          [descriptor],
+          playerId,
+          ctx,
+          sourceCardId,
+          options?.eventSnapshot,
+        );
+        const ownerCounts = new Map<PlayerId, number>();
+        for (const id of candidateIds) {
+          const owner = ctx.framework.state._zonesPrivate?.cardIndex?.[id]?.ownerID;
+          if (owner) ownerCounts.set(owner, (ownerCounts.get(owner) ?? 0) + 1);
+        }
+        return {
+          candidateIds,
+          minSelections: descriptorMinSelections(descriptor),
+          maxSameOwnerSelections: Math.max(0, ...ownerCounts.values()),
+        };
+      }),
     // Multiple independent chosen descriptors means each slot is its own selection —
     // the same card may legally appear in more than one slot (rule 6.1.3).
     // However, if any descriptor has requireDifferentTargets, duplicates are still forbidden.
@@ -1915,6 +1942,21 @@ export function validateAndNormalizeTargetSelection(
       error: "Too many targets selected",
       errorCode: "TOO_MANY_TARGETS",
     };
+  }
+
+  for (const { candidateIds: candidates } of analysis.sameOwnerTargetGroups ?? []) {
+    const selected = cardIds.filter((id) => candidates.includes(id));
+    if (selected.length < 2) continue;
+    const owners = selected.map(
+      (id) => context?.ctx.framework.state._zonesPrivate?.cardIndex?.[id]?.ownerID,
+    );
+    if (owners.some((owner) => !owner || owner !== owners[0])) {
+      return {
+        valid: false,
+        error: "Chosen cards must belong to the same player",
+        errorCode: "TARGETS_MUST_SHARE_OWNER",
+      };
+    }
   }
 
   const forcedTargetValidation = validateForcedEffectTargetSelection({

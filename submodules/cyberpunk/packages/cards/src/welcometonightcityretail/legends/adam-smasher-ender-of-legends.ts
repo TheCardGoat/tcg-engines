@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailAdamSmasherEnderOfLegends = defineCyberpunkCard({
   id: "eff41c12-b872-4101-9779-00e691532893",
   slug: "adam-smasher-ender-of-legends",
+  subname: "Ender of Legends",
   rulesText:
     "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\n{Play} Defeat a rival Unit.",
-  name: "Adam Smasher — Ender of Legends",
-  displayName: "Adam Smasher — Ender of Legends",
+  name: "Adam Smasher",
+  displayName: "Adam Smasher: Ender of Legends",
   canonicalId: "adam-smasher-ender-of-legends",
   color: "red",
   classifications: ["Arasaka", "Merc"],

@@ -8,8 +8,10 @@ import type { EffectDuration } from "@tcg/gundam-types";
 export function cleanHtml(raw: string): string {
   return raw
     .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/\r\n?/g, "\n")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
+    .replace(/・/g, "·")
     .replace(/･/g, "·") // normalize middle dots
     .replace(/•/g, "·")
     .replace(/\n{2,}/g, "\n")

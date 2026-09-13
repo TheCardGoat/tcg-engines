@@ -15,6 +15,7 @@ import { DiscardPileZone } from "./DiscardPileZone";
 import { EmptyZone } from "./EmptyZone";
 import { HandZone } from "./HandZone";
 import { PriorityRing } from "./PriorityRing";
+import { ResourceCardZone } from "./ResourceCardZone";
 import { SingleCardZone } from "./SingleCardZone";
 import { TabletopActionButton } from "./TabletopActionButton";
 import { TabletopCounterBadge } from "./TabletopCounterBadge";
@@ -95,13 +96,19 @@ export const CardImageStates: Story = {
     <StoryFrame title="CardImage states">
       <StoryGrid>
         <StoryCase title="cover">
-          <CardImage src={cardImageSrc} alt="Signal Runner cover art" fit="cover" />
+          <div className="aspect-[5/7] w-full">
+            <CardImage className="object-cover" src={cardImageSrc} alt="Signal Runner cover art" />
+          </div>
         </StoryCase>
         <StoryCase title="contain">
-          <CardImage src={cardImageSrc} alt="Signal Runner contained art" fit="contain" />
+          <div className="aspect-[5/7] w-full">
+            <CardImage src={cardImageSrc} alt="Signal Runner contained art" />
+          </div>
         </StoryCase>
         <StoryCase title="custom aspect ratio">
-          <CardImage src={cardImageSrc} alt="Wide card art" aspectRatio={16 / 9} />
+          <div className="aspect-video w-full">
+            <CardImage src={cardImageSrc} alt="Wide card art" />
+          </div>
         </StoryCase>
       </StoryGrid>
     </StoryFrame>
@@ -205,6 +212,23 @@ export const TabletopZoneStates: Story = {
             entities={entities.slice(2, 3)}
             entityCount={3}
             label="Discard"
+          />
+        </StoryCase>
+        <StoryCase title="physical resources">
+          <ResourceCardZone
+            zone={{
+              ...zones[1]!,
+              id: "resource-zone",
+              label: "Resources",
+              role: "resource",
+              layoutHint: "row",
+            }}
+            entities={[
+              entities[0]!,
+              { ...entities[1]!, id: "rested-resource", states: ["rested"] },
+            ]}
+            entityCount={2}
+            availableCount={1}
           />
         </StoryCase>
       </StoryGrid>

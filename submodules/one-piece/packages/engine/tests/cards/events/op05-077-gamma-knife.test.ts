@@ -20,6 +20,7 @@ describe("OP05-077 Gamma Knife", () => {
 
     engine.playCard(op05GammaKnife077);
 
+    engine.acceptLeadingOptional("south");
     const costDecision = engine.pendingDecision("effectCostReturnDon", "south");
     const costStep = costDecision.steps[0];
     expect(costStep?.kind).toBe("payCost");
@@ -59,6 +60,7 @@ describe("OP05-077 Gamma Knife", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
+    engine.acceptLeadingOptional("north");
     const donDecision = engine.pendingDecision("effectAddDon", "north");
     expect(donDecision.steps[0]).toMatchObject({
       kind: "chooseOption",
@@ -76,5 +78,36 @@ describe("OP05-077 Gamma Knife", () => {
     });
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional Main so DON!! return and power reduction do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op05GammaKnife077],
+        activeDon: 3,
+      },
+      {
+        character: [op05Pell014],
+      },
+    );
+    const targetId = engine.findCardInZone("north", "character", op05Pell014);
+    const powerBefore = engine
+      .getView("south")
+      .players.north.characters.find((card) => card?.instanceId === targetId)?.power;
+
+    engine.playCard(op05GammaKnife077, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(
+      engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
+        ?.power,
+    ).toBe(powerBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

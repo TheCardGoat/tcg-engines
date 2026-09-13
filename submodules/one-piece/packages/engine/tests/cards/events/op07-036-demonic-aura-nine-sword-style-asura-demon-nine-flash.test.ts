@@ -70,4 +70,41 @@ describe("OP07-036 Demonic Aura Nine-Sword Style Asura Demon Nine Flash", () => 
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional rest so own and opposing rest do not apply after power", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op07DemonicAuraNineSwordStyleAsuraDemonNineFlash036],
+        character: [eb01Fourtricks025],
+        activeDon: 2,
+      },
+      {
+        character: [eb01MountainGod018],
+      },
+    );
+    const costId = engine.findCardInZone("south", "character", eb01Fourtricks025);
+    const targetId = engine.findCardInZone("north", "character", eb01MountainGod018);
+    const powerBefore = engine.getView("south").players.south.leader.power;
+
+    engine.playCard(op07DemonicAuraNineSwordStyleAsuraDemonNineFlash036);
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    // Power from Main already applied; decline the optional rest package.
+    const powered = engine.getView("south").players.south.leader.power;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.leader.power).toBe(powered);
+    expect(view.players.south.leader.power).toBe(powerBefore! + 3000);
+    expect(view.players.south.characters.find((card) => card?.instanceId === costId)?.rested).toBe(
+      false,
+    );
+    expect(
+      view.players.north.characters.find((card) => card?.instanceId === targetId)?.rested,
+    ).toBe(false);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

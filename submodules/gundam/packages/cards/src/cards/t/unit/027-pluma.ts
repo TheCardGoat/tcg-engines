@@ -1,0 +1,43 @@
+import type { UnitCard } from "@tcg/gundam-types";
+
+export const tPluma027: UnitCard = {
+  cardNumber: "T-027",
+  name: "Pluma",
+  type: "unit",
+  traits: ["calamity war"],
+  id: "T-027",
+  canonicalId: "T-027",
+  externalIds: { bandai: "gundam:t-027" },
+  slug: "pluma-t-027",
+  displayName: "Pluma",
+  rulesText: "-",
+  set: { code: "GD05", name: "Freedom Ascension [GD05]", packageId: "616105" },
+  printNumber: "T-027",
+  printings: [
+    {
+      id: "T-027",
+      artId: "T-027",
+      setCode: "GD05",
+      collectorNumber: "T-027",
+      cardNumber: "T-027",
+      set: { code: "GD05", name: "Freedom Ascension [GD05]", packageId: "616105" },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-027.webp",
+      productName: "Freedom Ascension [GD05]",
+    },
+  ],
+  selectedPrintingId: "T-027",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-027.webp",
+  legality: "legal",
+  sourceTitle: "Mobile Suit Gundam: Iron-Blooded Orphans",
+  level: 0,
+  cost: 0,
+  ap: 2,
+  hp: 1,
+  effect: "-",
+  effects: [],
+  keywordEffects: [],
+  rarity: "common",
+};
+export const gd05Pluma027 = tPluma027;

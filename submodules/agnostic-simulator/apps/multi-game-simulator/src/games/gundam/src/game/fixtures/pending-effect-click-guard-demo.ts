@@ -1,5 +1,11 @@
 import { createMockResource, createMockUnit } from "@tcg/gundam-engine";
-import { gd04OverwhelmingPressure109, st04StrikerPack012 } from "@tcg/gundam-cards";
+import {
+  gd01Kshatriya044,
+  gd01MaridaCruz093,
+  gd04OverwhelmingPressure109,
+  st01Gm005,
+  st04StrikerPack012,
+} from "@tcg/gundam-cards";
 
 import { createDevRuntime, type DevRuntime } from "../dev-runtime.ts";
 
@@ -53,6 +59,29 @@ export function loadStrikerPackChoiceDemo(): DevRuntime {
       resourceDeck: 10,
     },
     p2: {
+      deck: 30,
+      resourceDeck: 10,
+    },
+  });
+}
+
+/**
+ * Regression fixture for GD01-044's optional second target. Its When Paired
+ * effect must resolve after selecting the sole enemy Unit: card text says
+ * "Choose 1 to 2", so the unavailable second target is not required.
+ */
+export function loadKshatriyaSingleTargetDemo(): DevRuntime {
+  return createDevRuntime({
+    skipToMainPhase: true,
+    p1: {
+      hand: [gd01MaridaCruz093],
+      battleArea: [gd01Kshatriya044],
+      resourceArea: Array.from({ length: 4 }, () => createMockResource()),
+      deck: 30,
+      resourceDeck: 10,
+    },
+    p2: {
+      battleArea: [st01Gm005],
       deck: 30,
       resourceDeck: 10,
     },

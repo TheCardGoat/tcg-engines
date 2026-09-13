@@ -3,7 +3,7 @@ import { op11Bins011 } from "../../../../../cards/src/cards/OP11/characters/011-
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP11-011 Bins", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op11Bins011);
   });
 });

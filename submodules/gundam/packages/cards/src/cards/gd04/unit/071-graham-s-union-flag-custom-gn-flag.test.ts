@@ -194,10 +194,7 @@ describe("Graham's Union Flag Custom Ⅱ (GN Flag) (GD04-071)", () => {
       const unitId = p1.getCardsInZone("battleArea")[0]!;
       const superpowerId = p1.getCardsInZone("trash")[0]!;
 
-      expectFailure(
-        p1.activateAbility(unitId, 0, { targets: [superpowerId] }),
-        "WRONG_TARGET_COUNT",
-      );
+      expectFailure(p1.activateAbility(unitId, 0, { targets: [superpowerId] }), "NO_LEGAL_TARGETS");
 
       expect(p1.getCardZone(superpowerId)).toBe(`trash:${PLAYER_ONE}`);
       expect(p1.isExhausted(unitId)).toBe(true);

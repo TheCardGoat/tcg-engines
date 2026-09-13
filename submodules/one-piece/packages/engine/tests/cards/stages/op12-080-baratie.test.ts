@@ -121,4 +121,29 @@ describe("OP12-080 Baratie", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op12Sanji041,
+      stage: op12Baratie080,
+      deck: [
+        op12Concasser059,
+        op13Higuma013,
+        op12LuffyIsTheManWhoWillBeKingOfThePirates079,
+        op13Otama043,
+      ],
+    });
+    const stageId = engine.findCardInZone("south", "stage", op12Baratie080);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const handBefore = engine.getView("south").players.south.hand.length;
+
+    engine.activateEffect(stageId, "activateMain");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.stage?.instanceId).toBe(stageId);
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

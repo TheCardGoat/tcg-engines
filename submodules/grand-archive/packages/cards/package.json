@@ -1,0 +1,42 @@
+{
+  "name": "@tcg/grand-archive-cards",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./catalog": {
+      "types": "./src/catalog.ts",
+      "default": "./src/catalog.ts"
+    },
+    "./cards": {
+      "types": "./src/cards/index.ts",
+      "default": "./src/cards/index.ts"
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "coverage:cards": "node --experimental-transform-types --no-warnings scripts/card-coverage.ts",
+    "coverage:cards:check": "node --experimental-transform-types --no-warnings scripts/card-coverage.ts --check",
+    "coverage:cards:write": "node --experimental-transform-types --no-warnings scripts/card-coverage.ts --write",
+    "coverage:cards:next": "node --experimental-transform-types --no-warnings scripts/card-coverage.ts --next-cluster",
+    "generate:cards": "node --experimental-transform-types --no-warnings scripts/generate-card-objects.ts && vp fmt scripts/generate-card-objects.ts src/cards src/generated/grand-archive-card-registry.ts",
+    "test": "vp test run"
+  },
+  "dependencies": {
+    "@tcg/grand-archive-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@tcg/grand-archive-engine": "workspace:*",
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

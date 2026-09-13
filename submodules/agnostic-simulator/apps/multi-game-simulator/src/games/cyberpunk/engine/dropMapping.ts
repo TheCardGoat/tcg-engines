@@ -132,8 +132,11 @@ export function mapDropToAction(event: CardDropEvent, ctx: DropContext): EngineA
       }
       return { type: "sellCard", cardId: source.cardId, as };
     }
-    // Field → opponent rival info: direct attack.
-    if (source.zone === "p-field" && target.zone === "opp-pinfo") {
+    // Field → either opponent scoring surface: direct attack.
+    if (
+      source.zone === "p-field" &&
+      (target.zone === "opp-pinfo" || target.zone === "opp-gigArea")
+    ) {
       if (!interactionViewCanAttackRival(ctx.interactionView, source.cardId)) {
         return null;
       }

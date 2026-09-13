@@ -67,9 +67,15 @@ interface SetupFirstPlayerChosenValues {
 }
 interface SetupMulliganValues {
   playerId: PlayerId;
-  /** Count of cards swapped. Actual cardIds belong under PRIVATE overrides. */
+  /**
+   * Cards redrawn (0 = kept opening hand). Public entries never list
+   * identities; PRIVATE detail may include `returnedCardIds` / `drawnCardIds`.
+   */
   count: number;
-  cardIds?: CardId[];
+  /** Cards returned to the deck (PRIVATE detail only — never on public entry). */
+  returnedCardIds?: CardId[];
+  /** Replacement cards drawn (PRIVATE detail only — never on public entry). */
+  drawnCardIds?: CardId[];
 }
 type SetupDoneValues = Record<string, never>;
 
@@ -127,6 +133,9 @@ interface BlockDeclaredValues {
 interface MovePassValues {
   playerId: PlayerId;
   context: "action-step" | "block" | "battle" | "turn";
+  /** Present when a client auto-passed on the player's behalf (no legal
+   * alternatives available) — see `AutomaticPassArgs.automatic`. */
+  automatic?: boolean;
 }
 interface ConcedeValues {
   playerId: PlayerId;
@@ -156,6 +165,9 @@ interface CombatDamageDealtValues {
   /** Absent for damage from non-card sources (rare — effects normally
    * propagate a source). Optional to mirror the event payload shape. */
   sourceCardId?: CardId;
+  /** Present for battle damage so animation consumers retain whether
+   * the attack was direct after the combat state has been cleared. */
+  attackKind?: "direct" | "fight";
 }
 interface CombatShieldRemovedValues {
   cardId: CardId;
@@ -189,6 +201,10 @@ interface EffectCardsDiscardedValues {
 interface EffectReturnedToHandValues {
   cardId: CardId;
   playerId: PlayerId;
+}
+interface EffectShieldsAddedToHandValues {
+  playerId: PlayerId;
+  count: number;
 }
 interface EffectMovedToZoneValues {
   cardId: CardId;
@@ -238,6 +254,8 @@ interface PendingEnqueuedValues {
   sourceCardId: CardId;
   controllerId: PlayerId;
   kind: string;
+  /** Printed timing such as deploy, burst, or attack when one identifies the trigger. */
+  timing?: string;
   /** commandID of the originating move; undefined for engine-synthesised entries. */
   moveGroupId?: string;
 }
@@ -339,6 +357,7 @@ export interface GundamLogMessageMap {
   "gundam.effect.cardsDrawn": EffectCardsDrawnValues;
   "gundam.effect.cardsDiscarded": EffectCardsDiscardedValues;
   "gundam.effect.returnedToHand": EffectReturnedToHandValues;
+  "gundam.effect.shieldsAddedToHand": EffectShieldsAddedToHandValues;
   "gundam.effect.movedToZone": EffectMovedToZoneValues;
   "gundam.effect.exhausted": EffectExhaustedValues;
   "gundam.effect.readied": EffectReadiedValues;
@@ -411,7 +430,11 @@ export type GundamGameLogEntry = {
  * narrow by `entry.data.type`. Storage-layer `visibleTo` is derived
  * from `entry.visibility.mode`.
  */
-export function emitGundamLog(framework: FrameworkWriteAPI, entry: GundamGameLogEntry): void {
+export function emitGundamLog(
+  framework: FrameworkWriteAPI,
+  entry: GundamGameLogEntry,
+  playerId?: BrandedPlayerId,
+): void {
   const visibleTo = entry.visibility.mode === "PRIVATE" ? entry.visibility.visibleTo : undefined;
   // PUBLIC_WITH_OVERRIDES: leave message empty so the UI renders per-viewer
   // using data.visibility.overrides. Pre-rendering from unredacted values
@@ -424,6 +447,7 @@ export function emitGundamLog(framework: FrameworkWriteAPI, entry: GundamGameLog
   const logEntry: LogEntry = {
     type: entry.type,
     message,
+    ...(playerId ? { playerId } : {}),
     data: entry as unknown as Record<string, unknown>,
     visibleTo,
   };

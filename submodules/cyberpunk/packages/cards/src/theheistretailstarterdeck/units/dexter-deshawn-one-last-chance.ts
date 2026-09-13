@@ -5,10 +5,11 @@ export const theHeistRetailStarterDeckDexterDeshawnOneLastChance = defineCyberpu
   id: "f61b944a-32e3-4085-894b-7bd498325156",
   canonicalId: "dexter-deshawn-one-last-chance",
   slug: "dexter-deshawn-one-last-chance",
+  subname: "One Last Chance",
   rulesText:
     "{Play} {Attack} Adjust a Gig by up to 1.\n{Defeated} If your ☆ (Street Cred) differs from a Rival's by 10+, draw 2.",
-  name: "Dexter DeShawn — One Last Chance",
-  displayName: "Dexter DeShawn — One Last Chance",
+  name: "Dexter DeShawn",
+  displayName: "Dexter DeShawn: One Last Chance",
   color: "yellow",
   classifications: ["Fixer"],
   set: {

@@ -57,12 +57,22 @@ function revealedCard(container: HTMLElement): HTMLElement {
 }
 
 describe("DeckRevealShelf card preview", () => {
-  test("opens the card inspector from a revealed miniature hover", () => {
+  test("opens a revealed-card surface from the deck trigger", () => {
     vi.useFakeTimers();
     const container = renderShelf(<DeckRevealShelf reveal={reveal} />);
 
     act(() => {
-      revealedCard(container).dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
+      container
+        .querySelector<HTMLElement>('[data-testid="deck-reveal-shelf"]')
+        ?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    const revealPopover = document.body.querySelector('[data-testid="deck-reveal-popover"]');
+    expect(revealPopover).toBeTruthy();
+    expect(revealPopover?.textContent).toContain("Top revealed");
+
+    act(() => {
+      revealedCard(document.body).dispatchEvent(new MouseEvent("mouseover", { bubbles: true }));
       vi.advanceTimersByTime(350);
     });
 
@@ -72,16 +82,18 @@ describe("DeckRevealShelf card preview", () => {
     expect(document.body.textContent).toContain("Signal Runner");
   });
 
-  test("opens the card inspector from a revealed miniature touch tap", () => {
+  test("opens the revealed-card surface from a touch tap", () => {
     const container = renderShelf(<DeckRevealShelf reveal={reveal} />);
     const tap = new Event("pointerdown", { bubbles: true });
     Object.defineProperty(tap, "pointerType", { value: "touch" });
 
     act(() => {
-      revealedCard(container).dispatchEvent(tap);
+      const trigger = container.querySelector<HTMLElement>('[data-testid="deck-reveal-shelf"]');
+      trigger?.dispatchEvent(tap);
+      trigger?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
 
-    expect(document.body.querySelector('[data-testid="card-inspector-popover"]')).toBeTruthy();
+    expect(document.body.querySelector('[data-testid="deck-reveal-popover"]')).toBeTruthy();
     expect(document.body.textContent).toContain("Signal Runner");
   });
 });

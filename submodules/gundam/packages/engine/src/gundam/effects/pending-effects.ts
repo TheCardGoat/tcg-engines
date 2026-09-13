@@ -34,6 +34,7 @@ import type {
   ReadonlyGundamG,
   PendingChoicePrompt,
   PendingEffect,
+  PendingTargetSelectionPrompt,
   PostResolveAction,
 } from "../types.ts";
 import type { AttributeFilter } from "@tcg/gundam-types";
@@ -41,6 +42,7 @@ import {
   buildTargetResolutionContext,
   computeEffectiveCostInTrash,
   getAvailableResources,
+  hasRestriction,
   isLinkUnit,
 } from "../rules/derived-state.ts";
 import {
@@ -51,8 +53,17 @@ import {
 import { emitGundamEvent } from "../events.ts";
 import { emitGundamLog } from "../logging.ts";
 import { EVENT_TIMING_MAP } from "./event-timings.ts";
-import { executeCardEffect, type EffectExecutionContext } from "./executor.ts";
-import { extractActionFilters } from "./target-legality.ts";
+import {
+  enqueueAfterResolutionEffect,
+  executeCardEffect,
+  type EffectExecutionContext,
+} from "./executor.ts";
+import {
+  classifyTargetFilter,
+  extractActionFilters,
+  firstSegmentActivationGateSatisfied,
+  getFilterCountBounds,
+} from "./target-legality.ts";
 
 /**
  * Generate a PendingEffect id from a counter that lives on `G` so it is
@@ -126,6 +137,7 @@ export function enqueuePendingEffect(
       sourceCardId: stamped.sourceCardId,
       controllerId: stamped.controllerId,
       kind: stamped.kind,
+      timing: stamped.effect.activation?.timing?.[0],
       moveGroupId: stamped.originatingMoveId,
     },
     visibility: { mode: "PUBLIC" },
@@ -216,36 +228,51 @@ function pendingTargetResolutionOptions(pe: DeepReadonly<PendingEffect>) {
  * and `【When Linked】` check the **pilot** against the qualification —
  * the bracketed phrase qualifies which pilot triggers the ability.
  *
- * Events we don't have qualification data for resolve to `undefined`,
- * which means "no qualification check needed" — the caller treats that
- * as a pass. When a card ships with a qualification for an event type
- * not covered here, we fail closed (return null) so the trigger won't
- * silently fire ungated.
+ * A `During Pair` / `During Link` qualifier always describes the paired
+ * Pilot, regardless of the event that caused the trigger. Destroyed events
+ * carry the former Pilot explicitly because the assignment may already be
+ * gone; live sources resolve it from the current assignment.
+ *
+ * Events without a resolvable qualification actor fail closed so a new
+ * qualified timing cannot silently fire ungated.
  */
 function resolveQualificationActorId(
   effect: CardEffect,
+  g: GundamG,
+  sourceCardId: string,
+  framework: FrameworkReadAPI,
   event: TriggerEventLike,
-): string | undefined | null {
+): string | null {
+  if (
+    effect.activation.conditions?.some(
+      (condition) => condition.type === "duringPair" || condition.type === "duringLink",
+    )
+  ) {
+    const formerPairedPilotId = (event as { pairedPilotId?: string }).pairedPilotId;
+    if (formerPairedPilotId) return formerPairedPilotId;
+
+    const sourceDefinition = framework.cards.getDefinition(sourceCardId) as Card | undefined;
+    if (sourceDefinition?.type === "pilot") {
+      return Object.values(g.pilotAssignments).includes(sourceCardId) ? sourceCardId : null;
+    }
+    return g.pilotAssignments[sourceCardId] ?? null;
+  }
+
   switch (event.type) {
     case "pilotPaired":
       // The qualification is on the pilot (e.g. "White Base Team Pilot").
-      return (event as { pilotId?: string }).pilotId;
+      return (event as { pilotId?: string }).pilotId ?? null;
     case "attackDeclared":
       // Reserved: if any card prints a qualification on its attack
       // trigger, it would check the attacker. No catalog card uses this
       // today, but having the mapping keeps the fallback safe.
-      return (event as { attackerId?: string }).attackerId;
+      return (event as { attackerId?: string }).attackerId ?? null;
     case "unitDestroyed":
-      // A `During Pair·X Pilot` qualifier describes the paired Pilot,
-      // even though the trigger event belongs to the destroyed Unit.
-      // Other Destroyed qualifications continue to describe the dying
-      // card itself.
-      if (effect.activation.conditions?.some((condition) => condition.type === "duringPair")) {
-        return (event as { pairedPilotId?: string }).pairedPilotId ?? null;
-      }
-      return (event as { cardId?: string }).cardId;
+      return (event as { cardId?: string }).cardId ?? null;
+    case "turnEnded":
+      return (event as { cardId?: string }).cardId ?? null;
     default:
-      return undefined;
+      return null;
   }
 }
 
@@ -266,7 +293,7 @@ function effectQualificationMet(
 ): boolean {
   const qualification = effect.activation.qualification as AttributeFilter | undefined;
   if (!qualification) return true;
-  const actorId = resolveQualificationActorId(effect, event);
+  const actorId = resolveQualificationActorId(effect, g, sourceCardId, framework, event);
   if (!actorId) return false;
   const actor = framework.cards.get(actorId);
   if (!actor) return false;
@@ -322,6 +349,13 @@ function effectConditionsMet(
       const matches = evaluateTargetFilter(condition.target, [sourceCard], tgtCtx);
       return matches.length > 0;
     }
+    if (condition.type === "eventAttackTargetsUnit") {
+      return (
+        event.type === "attackDeclared" &&
+        typeof event.targetId === "string" &&
+        event.targetId !== "direct"
+      );
+    }
     if (condition.type === "eventDefeatedCardMatches") {
       const defeatedCardId = event.defeatedCardId as string | undefined;
       if (!defeatedCardId) return false;
@@ -370,6 +404,9 @@ function effectConditionsMet(
       if (damagedBy !== undefined) return damagedBy !== controllerId;
       return event.playerId !== undefined && event.playerId !== controllerId;
     }
+    if (condition.type === "eventDamageType") {
+      return event.damageType === condition.damageType;
+    }
     return evaluateCondition(condition, tgtCtx);
   });
 }
@@ -415,10 +452,10 @@ function deriveKind(effect: CardEffect): PendingEffect["kind"] {
   return "triggered";
 }
 
-function hasLegalRequiredTargets(
+export function hasLegalRequiredTargets(
   effect: CardEffect,
   kind: PendingEffect["kind"],
-  g: GundamG,
+  g: ReadonlyGundamG,
   controllerId: string,
   sourceCardId: string,
   framework: FrameworkReadAPI,
@@ -441,33 +478,17 @@ function hasLegalRequiredTargets(
     framework,
     pendingTargetResolutionOptions(probe),
   );
-  if (choice?.kind === "targetSelection") {
-    const candidates = gatherTargetableCards(framework, Object.keys(g.players));
-    const filters = collectTargetSelectionFilters(
-      effect.directives as readonly Directive[],
-      tgtCtx,
-      { requiredOnly: true },
+  if (choice?.kind === "chooseOne") {
+    return (
+      legalChooseOneOptionIndexes(choice.directive, probe, { g, framework }, tgtCtx).length > 0
     );
-    const directTargetsExist = requiredTargetAssignmentExists(
-      coalesceTargetGroups(
-        filters.map(({ filter, actionType, allowPartialWhenShort }) => {
-          const legalTargetIds = evaluateTargetFilter(filter, candidates, tgtCtx);
-          const { minTargets, maxTargets } = filterCountBoundsForCandidates(
-            filter,
-            legalTargetIds.length,
-            allowPartialWhenShort,
-          );
-          return {
-            filter,
-            actionType,
-            legalTargetIds,
-            minTargets,
-            maxTargets,
-          };
-        }),
-      ),
-    );
-    if (!directTargetsExist) return false;
+  }
+  // Rules 10-1-8-1-2 / 10-2-2 / 10-3-3-1: only the first printed portion
+  // (before Then / If you do) can refuse activation. Later chooses are
+  // resolved when their instruction appears. Private-zone selections
+  // (hand, deck, shields) are not 10-2-2-1 targets.
+  if (!firstSegmentActivationGateSatisfied(effect.directives as readonly Directive[], tgtCtx)) {
+    return false;
   }
 
   const replayTimings = collectActivateTimingReplays(
@@ -595,7 +616,11 @@ export function enqueueOwnCardTriggers(
     if (!hasLegalRequiredTargets(effect, kind, g, controllerId, sourceCardId, framework, event))
       continue;
     if (!markTriggeredOncePerTurnUse(effect, sourceCardId, i, framework)) continue;
-
+    // Keep the printed Burst effect as-is. 【Burst】"Activate this card's
+    // 【Main】/【Action】" must run through `activateTiming` so
+    // `enqueueIndirectCommandActivation` still records
+    // `activatedCommandThisTurn` and emits `commandEffectActivated` for
+    // observers (e.g. GD05-089 Master Asia).
     enqueuePendingEffect(
       g,
       {
@@ -605,6 +630,8 @@ export function enqueueOwnCardTriggers(
         effect,
         effectIndex: i,
         kind,
+        // Rule 13-2-5-2: every 【Burst】 is optional — including "Add this
+        // card to your hand." Declining still puts the Shield in trash.
         optionalActivation: kind === "burst",
         trigger: event,
         chosenTargets: opts.chosenTargets,
@@ -737,7 +764,13 @@ export function enqueueObserverTriggers(
         // its paired Pilot are enqueued explicitly before they leave play.
         // Effects that observe a battle destruction use the distinct
         // `onDestroyByBattle` timing and `attackerDestroyedDefender` event.
-        if (event.type === "unitDestroyed" && effectTimings.includes("destroyed")) continue;
+        if (
+          event.type === "unitDestroyed" &&
+          effectTimings.includes("destroyed") &&
+          !explicitlyObservesCardEvent(effect)
+        ) {
+          continue;
+        }
         // Rules 8-2-2 and 13-2-7: plain `attack` is the attacking Unit's
         // own keyword timing, not a board-wide observer timing. The
         // attacker and its paired Pilot are enqueued explicitly by the
@@ -815,13 +848,37 @@ export function enqueueDelayedTriggers(
 
   for (const entry of g.continuousEffects) {
     if (entry.payload.kind !== "delayed-trigger") continue;
-    if (entry.payload.eventType !== event.type) continue;
+    if (
+      entry.payload.eventType !== event.type &&
+      !entry.payload.additionalEventTypes?.some((eventType) => eventType === event.type)
+    ) {
+      continue;
+    }
+    if (
+      entry.payload.eventDamageType !== undefined &&
+      entry.payload.eventDamageType !== event.damageType
+    ) {
+      continue;
+    }
+    if (
+      entry.payload.oncePerSimultaneousGroup &&
+      event.simultaneousGroupId !== undefined &&
+      g.pendingEffects.some(
+        (pending) =>
+          pending.sourceCardId === entry.sourceId &&
+          pending.trigger?.delayedTriggerId === entry.id &&
+          pending.trigger?.simultaneousGroupId === event.simultaneousGroupId,
+      )
+    ) {
+      continue;
+    }
 
     const controllerId = entry.targetId;
     const sourceCardId = entry.sourceId;
     if (event.type === "turnEnded" && event.cardId !== sourceCardId) continue;
     const eventCard = framework.cards.get(event.cardId);
     if (!eventCard) continue;
+    if (entry.payload.eventCardIds && !entry.payload.eventCardIds.includes(event.cardId)) continue;
 
     const tgtCtx = buildTargetResolutionContext(g, controllerId, framework, { sourceCardId });
     if (entry.payload.eventSourceIds) {
@@ -869,7 +926,7 @@ export function enqueueDelayedTriggers(
         effect: entry.payload.effect,
         effectIndex: -1,
         kind,
-        trigger: event,
+        trigger: { ...event, delayedTriggerId: entry.id },
         originatingMoveId: opts.originatingMoveId,
       },
       framework,
@@ -1006,6 +1063,9 @@ export function requiresPlayerChoice(
     // decision to halt for.
     return resolution !== null && resolution.maxTargets > 0;
   }
+  if (choice?.kind === "chooseOne" && runtime) {
+    return legalChooseOneOptionIndexes(choice.directive, pe, runtime).length > 0;
+  }
   return choice !== null;
 }
 
@@ -1014,6 +1074,20 @@ function shouldFizzleTargetSelectionHead(
   runtime: ChoiceRuntimeContext,
 ): boolean {
   if (pe.kind === "sentinel") return false;
+  if (pe.committedTargetAnswers && Object.keys(pe.committedTargetAnswers).length > 0) {
+    return false;
+  }
+  const tgtCtx = buildTargetResolutionContext(
+    runtime.g,
+    pe.controllerId,
+    runtime.framework,
+    pendingTargetResolutionOptions(pe),
+  );
+  // First-portion public choose is empty: the effect does not activate
+  // (10-2-2 / 10-3-3-1). Drop it so later heads can drain.
+  if (!firstSegmentActivationGateSatisfied(pe.effect.directives as readonly Directive[], tgtCtx)) {
+    return true;
+  }
   const choice = findChoiceDirective(pe, runtime);
   if (choice?.kind !== "targetSelection") return false;
   const resolution = evaluateLegalTargets(pe, runtime.g, runtime.framework);
@@ -1038,6 +1112,27 @@ type ChoiceMatch =
     };
 
 export type ChoiceDirective = ChoiceMatch & { directiveIndex: number };
+
+function targetSelectionCanBeChosen(
+  filter: TargetFilter,
+  runtime: ChoiceRuntimeContext,
+  tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
+): boolean {
+  const kind = classifyTargetFilter(filter);
+  const { min } = getFilterCountBounds(filter);
+  if (min <= 0) return true;
+  const candidates = evaluateTargetFilter(
+    filter,
+    gatherTargetableCards(runtime.framework, Object.keys(runtime.g.players)),
+    tgtCtx,
+  );
+  if (kind === "targetChoice") return candidates.length >= min;
+  // Private-zone selections still prompt when any card exists so the
+  // player can do as much as possible (1-3-2). Zero candidates is not a
+  // choice — skip the prompt (10-3-3-1).
+  if (kind === "privateSelection") return candidates.length > 0;
+  return true;
+}
 
 /**
  * Locate the first directive on `pe` that requires controller input, or
@@ -1084,10 +1179,25 @@ export function findChoiceDirective(
       )
     : undefined;
   let previousDeclined = false;
+  let previousDirectiveProducesTargets = false;
 
   for (let i = 0; i < directives.length; i++) {
     const directive = directives[i]!;
     if (pe.committedTargetAnswers?.[i] !== undefined) continue;
+    if (
+      !("condition" in directive) &&
+      !("kind" in directive) &&
+      (directive as EffectDirective).action.action === "drawIfTargetMatches" &&
+      previousDirectiveProducesTargets
+    ) {
+      // drawIfTargetMatches consumes the immediately preceding action's
+      // resolved targets. Its filter verifies that result; it is not a new
+      // printed selection, including when the preceding action targets all
+      // matching cards automatically.
+      previousDirectiveProducesTargets =
+        extractActionFilters((directive as EffectDirective).action).length > 0;
+      continue;
+    }
     if (!("condition" in directive) && !("kind" in directive)) {
       const effectDirective = directive as EffectDirective;
       if (effectDirective.dependsOnPrevious && previousDeclined) continue;
@@ -1116,17 +1226,36 @@ export function findChoiceDirective(
       pe,
       runtime,
     );
-    if (!found) continue;
-    if (found.kind === "deckLook" && runtime) {
-      const action = found.directive.action;
-      if (action.action !== "lookAtTopDeck") continue;
-      const deckCards = runtime.framework.zones.getCards({
-        zone: "deck",
-        playerId: pe.controllerId,
-      });
-      if (deckCards.length === 0 || action.count <= 0) continue;
+    if (found) {
+      if (found.kind === "deckLook" && runtime) {
+        const action = found.directive.action;
+        if (action.action !== "lookAtTopDeck") continue;
+        const deckCards = runtime.framework.zones.getCards({
+          zone: "deck",
+          playerId: pe.controllerId,
+        });
+        if (deckCards.length === 0 || action.count <= 0) continue;
+      }
+      if (
+        found.kind === "targetSelection" &&
+        runtime &&
+        tgtCtx &&
+        !targetSelectionCanBeChosen(found.filter, runtime, tgtCtx)
+      ) {
+        // Rule 10-3-3-1: a choose that cannot be fulfilled does not
+        // activate. Do not halt (or fizzle earlier committed portions)
+        // for an empty later Then / If-you-do selection.
+        previousDeclined = true;
+        previousDirectiveProducesTargets = false;
+        continue;
+      }
+      return { ...found, directiveIndex: i };
     }
-    return { ...found, directiveIndex: i };
+
+    previousDirectiveProducesTargets =
+      !("condition" in directive) &&
+      !("kind" in directive) &&
+      extractActionFilters((directive as EffectDirective).action).length > 0;
   }
   return null;
 }
@@ -1138,6 +1267,30 @@ function directiveCanResolve(
   tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
 ): boolean {
   const action = directive.action;
+  if (
+    action.action === "pairSourceFromZone" &&
+    runtime.framework.cards.getZone(pe.sourceCardId)?.split(":")[0] !== action.requiredZone
+  ) {
+    return false;
+  }
+  if (action.action === "pairSourceFromZone") {
+    const candidates = gatherTargetableCards(runtime.framework, Object.keys(runtime.g.players));
+    const legalTargetCount = evaluateTargetFilter(action.target, candidates, tgtCtx).filter(
+      (unitId) => canPairPilotToUnit(unitId, runtime.g, runtime.framework),
+    ).length;
+    return legalTargetCount >= filterCountBounds(action.target).minTargets;
+  }
+  if (action.action === "resolveThenQueue" && !action.first) {
+    return hasLegalRequiredTargets(
+      action.followUp,
+      "triggered",
+      runtime.g,
+      pe.controllerId,
+      pe.sourceCardId,
+      runtime.framework,
+      pe.trigger,
+    );
+  }
   if (action.action === "payResources") {
     return getAvailableResources(pe.controllerId, runtime.g, runtime.framework) >= action.count;
   }
@@ -1185,6 +1338,54 @@ function directiveCanResolve(
     const { minTargets } = filterCountBounds(filter);
     return evaluateTargetFilter(filter, candidates, tgtCtx).length >= minTargets;
   });
+}
+
+function modalDirectivesCanResolve(
+  directives: readonly DeepReadonly<Directive>[],
+  pe: DeepReadonly<PendingEffect>,
+  runtime: ChoiceRuntimeContext,
+  tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
+): boolean {
+  for (const directive of directives) {
+    if ("condition" in directive) {
+      const branch = evaluateCondition(directive.condition as EffectCondition, tgtCtx)
+        ? directive.thenDirectives
+        : (directive.elseDirectives ?? []);
+      if (!modalDirectivesCanResolve(branch, pe, runtime, tgtCtx)) return false;
+      continue;
+    }
+    if ("kind" in directive) {
+      if (
+        legalChooseOneOptionIndexes(
+          directive as DeepReadonly<ChooseOneDirective>,
+          pe,
+          runtime,
+          tgtCtx,
+        ).length === 0
+      ) {
+        return false;
+      }
+      continue;
+    }
+    if (directive.optional) continue;
+  }
+  return firstSegmentActivationGateSatisfied(directives as readonly Directive[], tgtCtx);
+}
+
+export function legalChooseOneOptionIndexes(
+  directive: DeepReadonly<ChooseOneDirective>,
+  pe: DeepReadonly<PendingEffect>,
+  runtime: ChoiceRuntimeContext,
+  tgtCtx = buildTargetResolutionContext(
+    runtime.g,
+    pe.controllerId,
+    runtime.framework,
+    pendingTargetResolutionOptions(pe),
+  ),
+): number[] {
+  return directive.options.flatMap((option, index) =>
+    modalDirectivesCanResolve(option.directives, pe, runtime, tgtCtx) ? [index] : [],
+  );
 }
 
 function optionalBranchCanResolve(
@@ -1323,6 +1524,15 @@ function findChoiceInList(
       pe,
       runtime,
     );
+    if (
+      found?.kind === "targetSelection" &&
+      runtime &&
+      tgtCtx &&
+      !targetSelectionCanBeChosen(found.filter, runtime, tgtCtx)
+    ) {
+      previousDeclined = true;
+      continue;
+    }
     if (found) return found;
   }
   return null;
@@ -1399,6 +1609,49 @@ export function buildPendingChoicePrompt(
   const prompt = head.effect.sourceText ?? "";
 
   if (choice.kind === "optional" || choice.kind === "activationOptional") {
+    // Keep activationOptional (Burst may-activate) as a pure optional prompt.
+    // Combining it with the first target selection collapsed the printed
+    // accept/decline into one gesture, but broke the two-step resolve path
+    // and the large suite of Burst tests that assert an explicit optional
+    // choice (rule 13-2-5-2). Inner "you may" directives still combine below.
+    if (choice.kind === "optional") {
+      const acceptedHead = {
+        ...head,
+        committedOptionalAnswers: {
+          ...head.committedOptionalAnswers,
+          [choice.directiveIndex]: true,
+        },
+      };
+      const resolution = evaluateLegalTargets(acceptedHead, g, framework);
+      if (
+        resolution &&
+        resolution.choice.directiveIndex === choice.directiveIndex &&
+        resolution.groups.length === 1 &&
+        resolution.maxTargets > 0 &&
+        requiredTargetAssignmentExists(resolution.groups)
+      ) {
+        return {
+          kind: "targetSelection",
+          effectId: head.id,
+          controllerId: head.controllerId,
+          sourceCardId: head.sourceCardId,
+          directiveIndex: resolution.choice.directiveIndex,
+          actionKind: resolution.choice.directive.action.action,
+          candidateSet: targetChoiceCandidateSet(
+            head,
+            resolution.choice.directive.action.action,
+            framework,
+          ),
+          optionalDirectiveIndex: choice.directiveIndex,
+          filter: resolution.choice.filter,
+          minTargets: resolution.minTargets,
+          maxTargets: resolution.maxTargets,
+          legalTargetIds: resolution.legalTargetIds,
+          groups: resolution.groups,
+          prompt,
+        };
+      }
+    }
     return {
       kind: "optional",
       effectId: head.id,
@@ -1410,13 +1663,19 @@ export function buildPendingChoicePrompt(
   }
 
   if (choice.kind === "chooseOne") {
+    const legalOptionIndexes = new Set(
+      legalChooseOneOptionIndexes(choice.directive, head, { g, framework }),
+    );
+    if (legalOptionIndexes.size === 0) return undefined;
     return {
       kind: "chooseOne",
       effectId: head.id,
       controllerId: head.controllerId,
       sourceCardId: head.sourceCardId,
       directiveIndex: choice.directiveIndex,
-      options: choice.directive.options.map((o, idx) => ({ index: idx, label: o.label ?? "" })),
+      options: choice.directive.options.flatMap((option, index) =>
+        legalOptionIndexes.has(index) ? [{ index, label: option.label ?? "" }] : [],
+      ),
       prompt,
     };
   }
@@ -1469,12 +1728,41 @@ export function buildPendingChoicePrompt(
     controllerId: head.controllerId,
     sourceCardId: head.sourceCardId,
     directiveIndex: resolution.choice.directiveIndex,
+    actionKind: resolution.choice.directive.action.action,
+    candidateSet: targetChoiceCandidateSet(
+      head,
+      resolution.choice.directive.action.action,
+      framework,
+    ),
     filter: resolution.choice.filter,
     minTargets: resolution.minTargets,
     maxTargets: resolution.maxTargets,
     legalTargetIds: resolution.legalTargetIds,
     groups: resolution.groups,
     prompt,
+  };
+}
+
+function targetChoiceCandidateSet(
+  pendingEffect: DeepReadonly<PendingEffect>,
+  actionKind: EffectAction["action"],
+  framework: FrameworkReadAPI,
+): PendingTargetSelectionPrompt["candidateSet"] {
+  if (pendingEffect.choiceCandidateSet) {
+    return {
+      kind: pendingEffect.choiceCandidateSet.kind,
+      zone: pendingEffect.choiceCandidateSet.zone,
+      cardIds: [...pendingEffect.choiceCandidateSet.cardIds],
+    };
+  }
+  if (actionKind !== "discard" && actionKind !== "discardChosen") return undefined;
+  return {
+    kind: "zone",
+    zone: "hand",
+    cardIds: framework.zones.getCards({
+      zone: "hand",
+      playerId: pendingEffect.controllerId,
+    }),
   };
 }
 
@@ -1708,7 +1996,15 @@ export function evaluateLegalTargets(
   const filters = collectTargetSelectionFilters(segment.directives, tgtCtx);
   const groups = coalesceTargetGroups(
     filters.map(({ filter, actionType, allowPartialWhenShort }) => {
-      const legalTargetIds = evaluateTargetFilter(filter, cards, tgtCtx) as readonly string[];
+      const matchingTargetIds = evaluateTargetFilter(filter, cards, tgtCtx) as readonly string[];
+      // Rule 3-3-4 and pairing restrictions are implicit in every effect
+      // that pairs a Pilot. Printed target text names the Unit qualities,
+      // but cannot override the shared one-Pilot-per-Unit legality rules.
+      const legalTargetIds =
+        (actionType === "pairPilot" || actionType === "pairSourceFromZone") &&
+        filter.cardType === "unit"
+          ? matchingTargetIds.filter((unitId) => canPairPilotToUnit(unitId, g, framework))
+          : matchingTargetIds;
       const { minTargets, maxTargets } = filterCountBoundsForCandidates(
         filter,
         legalTargetIds.length,
@@ -1728,6 +2024,17 @@ export function evaluateLegalTargets(
     groups,
     directiveIndexes: segment.directiveIndexes,
   };
+}
+
+function canPairPilotToUnit(
+  unitId: string,
+  g: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+): boolean {
+  return (
+    !g.pilotAssignments[unitId] &&
+    !hasRestriction(unitId, "cannot-pair-pilot", g, framework.cards, framework)
+  );
 }
 
 /**
@@ -1895,7 +2202,9 @@ interface CollectedTargetFilter {
 
 function actionAllowsPartialWhenShort(action: EffectAction): boolean {
   if (action.action === "discard") return true;
-  if (action.action === "resolveThenQueue") return actionAllowsPartialWhenShort(action.first);
+  if (action.action === "resolveThenQueue") {
+    return action.first ? actionAllowsPartialWhenShort(action.first) : false;
+  }
   return false;
 }
 
@@ -1978,8 +2287,15 @@ function filterCountBoundsForCandidates(
   allowPartialWhenShort: boolean,
 ): { minTargets: number; maxTargets: number } {
   const bounds = filterCountBounds(filter);
-  if (!allowPartialWhenShort || legalTargetCount >= bounds.minTargets) return bounds;
   const available = Math.min(legalTargetCount, bounds.maxTargets);
+  // A range such as "choose 1 to 2" remains legal with one candidate, but
+  // the player cannot select a nonexistent second card. Publishing max: 2
+  // would violate the interaction protocol's candidate-bound invariant and
+  // leave the simulator's Confirm button disabled.
+  if (legalTargetCount >= bounds.minTargets) {
+    return { minTargets: bounds.minTargets, maxTargets: available };
+  }
+  if (!allowPartialWhenShort) return bounds;
   return { minTargets: available, maxTargets: available };
 }
 
@@ -2052,6 +2368,7 @@ export function drainPendingEffects(ctx: LifecycleContext): TransitionCheckResul
     const head = g.pendingEffects[idx]!;
     if (shouldFizzleTargetSelectionHead(head, { g, framework: ctx.framework })) {
       g.pendingEffects.splice(idx, 1);
+      runPostActions(head.postActions, ctx);
       resolvedAny = true;
       continue;
     }
@@ -2092,6 +2409,7 @@ export function drainPendingEffects(ctx: LifecycleContext): TransitionCheckResul
       }
       if (!execCtx.postActionState?.deferredToFollowUp) {
         runPostActions(head.postActions, ctx);
+        enqueueAfterResolutionEffect(execCtx);
       }
     } finally {
       g.pendingEffectCurrentMoveId = prevMoveId;
@@ -2166,11 +2484,23 @@ export function buildExecCtx(
     deckLookAnswers?: Record<number, import("../types.ts").DeckLookAnswer>;
   } = {},
 ): EffectExecutionContext {
+  const afterResolutionEffect =
+    pe.afterResolutionEffect ??
+    (pe.effect.afterResolution
+      ? {
+          type: "triggered" as const,
+          activation: { timing: [] },
+          directives: pe.effect.afterResolution,
+          sourceText: `After resolving: ${pe.effect.sourceText}`,
+        }
+      : undefined);
   return {
     G: ctx.G as GundamG,
     sourcePlayerId: pe.controllerId,
+    effectOriginPlayerId: pe.effectOriginPlayerId ?? pe.controllerId,
     sourceCardId: pe.sourceCardId,
     sourceIdentityCardId: pe.sourceIdentityCardId,
+    commandActivationOrigin: pe.commandActivationOrigin,
     framework: ctx.framework,
     chosenTargets: pe.chosenTargets,
     chosenTargetsByDirective: pe.committedTargetAnswers,
@@ -2182,6 +2512,7 @@ export function buildExecCtx(
     deckLookAnswers: opts.deckLookAnswers,
     postActions: pe.postActions,
     postActionState: {},
+    afterResolutionEffect,
     triggerContext:
       pe.trigger?.type === "unitDeployed" || pe.trigger?.type === "baseDeployed"
         ? {
@@ -2203,6 +2534,9 @@ export function buildExecCtx(
               paidResources: pe.trigger.paidResources as number | undefined,
               paidExResources: pe.trigger.paidExResources as number | undefined,
               damagedBy: pe.trigger.damagedBy as string | undefined,
+              destroyedBy: pe.trigger.destroyedBy as string | undefined,
+              damageType: pe.trigger.damageType as "battle" | "effect" | undefined,
+              attackTargetId: pe.trigger.targetId as string | undefined,
             }
           : undefined,
   };

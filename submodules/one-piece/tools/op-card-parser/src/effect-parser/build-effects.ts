@@ -742,6 +742,63 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       continue;
     }
 
+    // "When this Leader attacks or is attacked, <actions>"
+    const dualLeaderAttackMatch =
+      /^When\s+this\s+Leader\s+attacks\s+or\s+is\s+attacked,\s*(.+)$/is.exec(
+        seg.rawActionText.trim(),
+      );
+    if (dualLeaderAttackMatch && seg.triggers.length === 0) {
+      const dualActions = parseActions(dualLeaderAttackMatch[1]!);
+      if (dualActions.unparsed === "" && dualActions.parsed.length > 0) {
+        effectBlocks.push(
+          {
+            trigger: "whenAttacking",
+            actions: dualActions.parsed,
+            ...(seg.oncePerTurn && { oncePerTurn: true }),
+          },
+          {
+            trigger: "onOpponentAttack",
+            eventFilter: { targetSelf: true },
+            actions: dualActions.parsed,
+            ...(seg.oncePerTurn && { oncePerTurn: true }),
+          },
+        );
+        continue;
+      }
+    }
+
+    // "When a card is trashed from your hand by your "Trait" type card's effect, draw cards equal to the number of cards trashed."
+    const handTrashByTraitMatch =
+      /^When\s+a\s+card\s+is\s+trashed\s+from\s+your\s+hand\s+by\s+your\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])\s+type\s+card[''\u2019]?s\s+effect,\s*draw\s+cards?\s+equal\s+to\s+the\s+number\s+of\s+cards?\s+trashed\.?$/is.exec(
+        seg.rawActionText.trim(),
+      );
+    if (handTrashByTraitMatch && seg.triggers.length === 0) {
+      effectBlocks.push({
+        trigger: "whenCardsTrashedFromHandByEffect",
+        eventFilter: {
+          player: "self",
+          causedBy: "self",
+          sourceFilters: [
+            {
+              filter: "trait",
+              value: handTrashByTraitMatch[1]!,
+              match: "includes",
+            },
+          ],
+          minimumAmount: 1,
+        },
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 0,
+            amountFromTriggerEvent: true,
+          },
+        ],
+      });
+      continue;
+    }
+
     const dependentOptionalThenMatch =
       /^(.+?)\.\s*Then,\s*you\s+may\s+(.+?)\.\s*If\s+you\s+do,\s*(.+)$/is.exec(seg.rawActionText);
     if (dependentOptionalThenMatch && seg.triggers.length === 1) {
@@ -811,9 +868,11 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
     }
 
     // Extract inline "If <condition>, ..." from the start of action text
-    const canBeActivatedTiming = /^This\s+effect\s+can\s+be\s+activated\s+when\b/i.test(
-      seg.rawActionText,
-    );
+    const canBeActivatedTiming =
+      /^This\s+effect\s+can\s+be\s+activated\s+when\b/i.test(seg.rawActionText) ||
+      /^This\s+effect\s+can\s+be\s+activated\s+at\s+the\s+start\s+of\s+your\s+turn\b/i.test(
+        seg.rawActionText,
+      );
     let actionText = seg.rawActionText;
     const sourceSelfBattleKo =
       /^When\s+this\s+Character\s+battles\s+and\s+K\.O\.\u2019?'?s\s+your\s+opponent[''\u2019]s\s+Character,/i.test(

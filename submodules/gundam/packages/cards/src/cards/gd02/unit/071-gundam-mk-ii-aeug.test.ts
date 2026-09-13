@@ -106,7 +106,7 @@ describe("Gundam Mk-II (AEUG) (GD02-071)", () => {
     const unitId = p1.getCardsInZone("battleArea")[0]!;
 
     const pairChoice = p1.getBoardView().pendingChoice;
-    if (pairChoice?.kind !== "optional") {
+    if (pairChoice?.kind !== "targetSelection") {
       throw new Error("Expected the visible choice to pair an AEUG Pilot");
     }
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [pairChoice.directiveIndex]: true } }));
@@ -136,7 +136,7 @@ describe("Gundam Mk-II (AEUG) (GD02-071)", () => {
     expectSuccess(p1.deployUnit(gd02GundamMkIiAeug071));
     const unitId = p1.getCardsInZone("battleArea")[0]!;
     const pairChoice = p1.getBoardView().pendingChoice;
-    if (pairChoice?.kind !== "optional") {
+    if (pairChoice?.kind !== "targetSelection") {
       throw new Error("Expected the visible choice to pair an AEUG Pilot");
     }
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [pairChoice.directiveIndex]: false } }));

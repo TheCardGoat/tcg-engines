@@ -1,8 +1,11 @@
-import { useMemo, useEffect, useLayoutEffect, useState } from "react";
-import type { SimulatorTargetingIntent } from "@tcg/simulator-contract";
-import { TargetingOverlay } from "@tcg/simulator-ui";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-import { asMoveName, usePending, useBoardProjection } from "../../game/index.ts";
+import { useBoardProjection } from "../../game/index.ts";
+import { useGundamInteractionDraft } from "../../game/interaction-draft.tsx";
+import {
+  isDedicatedUnitAttackTargeting,
+  useGundamAttackInteraction,
+} from "../attack-interactions.ts";
 import type { DOMRectLike } from "../ui/types.ts";
 import { findCardByInstanceId } from "./mappers.ts";
 
@@ -17,19 +20,13 @@ function toRectLike(r: DOMRect): DOMRectLike {
   };
 }
 
-const GUNDAM_DIRECT_ZONE_ID = "gundam-direct-opp";
-const GUNDAM_ZONE_SELECTOR = (zoneId: string) =>
-  zoneId === GUNDAM_DIRECT_ZONE_ID ? '[data-direct-target="opp"]' : `[data-zone-id="${zoneId}"]`;
 const EMPTY_CANDIDATE_IDS: readonly string[] = [];
 
 export function measureRect(id: string): DOMRectLike | null {
   // `data-sim-entity-id`/`data-card-id` are rendered on the battle-area
-  // CardFace, the CardHoverPreview (aria-hidden), and Comms-log CardLinks (<button>).
-  // `querySelector` returns the first in DOM order — the sidebar log
-  // precedes the board, so a naive query anchors the arrow to the log
-  // link. Mirror `test/queries.ts → findCardsById`'s exclusions.
-  // `CSS` isn't always present in jsdom — fall back to a manual escape,
-  // matching `test/queries.ts → findCardsById`.
+  // CardFace, the CardHoverPreview (aria-hidden), and Comms-log CardLinks.
+  // Select the actual board visual rather than whichever duplicate renders
+  // first in DOM order.
   const escaped =
     typeof CSS !== "undefined" && typeof CSS.escape === "function"
       ? CSS.escape(id)
@@ -47,44 +44,29 @@ export function measureRect(id: string): DOMRectLike | null {
 }
 
 export function AttackTargetingOverlayContainer() {
-  const pending = usePending();
+  const draft = useGundamInteractionDraft();
   const view = useBoardProjection();
+  const attackInteraction = useGundamAttackInteraction();
   const [hoveredTargetId, setHoveredTargetId] = useState<string | null>(null);
   const [rects, setRects] = useState<Record<string, DOMRectLike>>({});
+  const scrollRestoreRef = useRef<{
+    readonly board: HTMLElement;
+    readonly scrollTop: number;
+  } | null>(null);
 
-  const state = pending.state;
-  const enterBattle = asMoveName("enterBattle");
-  const isEnterBattleTargeting =
-    state.status === "collecting" &&
-    state.move === enterBattle &&
-    state.steps[0]?.kind === "selectTarget" &&
-    state.steps[0]?.role === "attackTarget";
-
-  const attackerId =
-    state.status === "collecting"
-      ? (state.partialInput.attackerId as string | undefined)
-      : undefined;
-
-  const step =
-    state.status === "collecting" && state.steps[0]?.kind === "selectTarget"
-      ? state.steps[0]
-      : null;
-  const candidateIds: readonly string[] =
-    isEnterBattleTargeting && step ? step.candidateIds : EMPTY_CANDIDATE_IDS;
+  const attackerId = draft.sourceId;
+  const isUnitTargeting = isDedicatedUnitAttackTargeting(
+    draft,
+    attackInteraction.unitTargetingAttackerId,
+  );
+  const candidateIds: readonly string[] = isUnitTargeting
+    ? [...draft.candidateIds].filter((candidateId) => candidateId !== "direct")
+    : EMPTY_CANDIDATE_IDS;
   const candidateKey = candidateIds.join(",");
 
   useEffect(() => {
     setHoveredTargetId(null);
   }, [attackerId]);
-
-  // The DIRECT_TARGET sentinel has no card on the board to anchor onto
-  // — it represents an attack on the opponent player. We anchor it to
-  // the opponent's PlayerSeatPlate (shields + base column), which is
-  // tagged with `data-direct-target="opp"`.
-  function measureDirectRect(): DOMRectLike | null {
-    const el = document.querySelector<HTMLElement>('[data-direct-target="opp"]');
-    return el ? toRectLike(el.getBoundingClientRect()) : null;
-  }
 
   function buildRects(): Record<string, DOMRectLike> {
     if (!attackerId) return {};
@@ -92,140 +74,155 @@ export function AttackTargetingOverlayContainer() {
     const attackerRect = measureRect(attackerId);
     if (attackerRect) next[attackerId] = attackerRect;
     for (const id of candidateIds) {
-      if (id === "direct") continue;
-      const r = measureRect(id);
-      if (r) next[id] = r;
-    }
-    if (candidateIds.includes("direct")) {
-      const dr = measureDirectRect();
-      if (dr) next["direct"] = dr;
+      const rect = measureRect(id);
+      if (rect) next[id] = rect;
     }
     return next;
   }
 
+  function revealFirstTarget() {
+    const board = document.querySelector<HTMLElement>(".gundam-simulator-root [data-sim-board]");
+    const firstTarget = candidateIds[0];
+    const targetRect = firstTarget ? measureRect(firstTarget) : null;
+    if (board && targetRect && board.scrollHeight > board.clientHeight) {
+      const boardRect = board.getBoundingClientRect();
+      // Leave room for the fixed instruction and the target's name above it.
+      const visibleTop = boardRect.top + 100;
+      if (targetRect.top < visibleTop || targetRect.bottom > boardRect.bottom) {
+        board.scrollTop += targetRect.top - visibleTop;
+      }
+    }
+  }
+
   useLayoutEffect(() => {
-    if (!isEnterBattleTargeting || !attackerId) {
+    if (!isUnitTargeting || !attackerId) {
       setRects({});
+      const restore = scrollRestoreRef.current;
+      if (restore) {
+        scrollRestoreRef.current = null;
+        restore.board.scrollTop = restore.scrollTop;
+      }
       return;
     }
+    const board = document.querySelector<HTMLElement>(".gundam-simulator-root [data-sim-board]");
+    if (board) scrollRestoreRef.current ??= { board, scrollTop: board.scrollTop };
+    revealFirstTarget();
     setRects(buildRects());
-  }, [isEnterBattleTargeting, attackerId, candidateKey]);
+  }, [isUnitTargeting, attackerId, candidateKey]);
 
   useEffect(() => {
-    if (!isEnterBattleTargeting) return;
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") pending.cancel();
-    }
-    function onResize() {
+    if (!isUnitTargeting) return;
+    let resizeFrame = 0;
+    function updateRects() {
       setRects(buildRects());
     }
-    window.addEventListener("keydown", onKeyDown);
+    function onResize() {
+      cancelAnimationFrame(resizeFrame);
+      // The responsive board restores its seat scroll in the first frame.
+      // Reveal the target afterward using the final card geometry.
+      resizeFrame = requestAnimationFrame(() => {
+        resizeFrame = requestAnimationFrame(() => {
+          revealFirstTarget();
+          updateRects();
+        });
+      });
+    }
     window.addEventListener("resize", onResize);
+    window.addEventListener("scroll", updateRects, true);
+    const board = document.querySelector(".gundam-simulator-root [data-sim-board]");
+    const observer = new ResizeObserver(onResize);
+    if (board) observer.observe(board);
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
+      observer.disconnect();
       window.removeEventListener("resize", onResize);
+      window.removeEventListener("scroll", updateRects, true);
+      cancelAnimationFrame(resizeFrame);
     };
-  }, [isEnterBattleTargeting, attackerId, candidateKey, pending]);
+  }, [attackerId, candidateKey, isUnitTargeting]);
 
-  const attackerCard = attackerId ? findCardByInstanceId(view, attackerId) : null;
-  const attackerDef = attackerCard?.definition as { name?: string; ap?: number } | null | undefined;
-  const attackerRect = attackerId ? rects[attackerId] : undefined;
-  const attackerDamage = typeof attackerDef?.ap === "number" ? attackerDef.ap : 0;
-
-  const { targetRects, targetEntityIds, targetZoneIds } = useMemo(() => {
-    const nextTargetRects: Record<string, DOMRectLike> = {};
-    const nextTargetEntityIds: string[] = [];
-    const nextTargetZoneIds: string[] = [];
-
-    for (const id of candidateIds) {
-      if (id === "direct") continue;
-      const rect = rects[id];
-      if (!rect) continue;
-      nextTargetEntityIds.push(id);
-      nextTargetRects[id] = rect;
+  useEffect(() => {
+    if (!isUnitTargeting) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") attackInteraction.cancelUnitTargeting();
     }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [attackInteraction, isUnitTargeting]);
 
-    // `direct` is a sentinel from `listLegalAttackTargets` (see
-    // enter-battle.ts, `DIRECT_TARGET`). It's surfaced as a regular target
-    // anchored to the opponent's PlayerSeatPlate — the player drags the
-    // arrow over the opponent's shields/base column and clicks to commit,
-    // matching the official Gundam digital UI.
-    const directAvailable = candidateIds.includes("direct");
-    const directRect = directAvailable ? rects["direct"] : undefined;
-    if (directAvailable && directRect) {
-      nextTargetZoneIds.push(GUNDAM_DIRECT_ZONE_ID);
-      nextTargetRects["direct"] = directRect;
-    }
-
-    return {
-      targetRects: nextTargetRects,
-      targetEntityIds: nextTargetEntityIds,
-      targetZoneIds: nextTargetZoneIds,
-    };
-  }, [candidateIds, rects]);
-
-  const targetingIntents = useMemo<SimulatorTargetingIntent[]>(
-    () => [
-      {
-        id: `gundam-attack-${attackerId ?? "pending"}`,
-        sourceEntityId: attackerId ?? "",
-        targetEntityIds,
-        targetZoneIds,
-        preview: { damage: attackerDamage },
-      },
-    ],
-    [attackerDamage, attackerId, targetEntityIds, targetZoneIds],
-  );
-
-  if (!isEnterBattleTargeting || !attackerId) return null;
-  if (!attackerCard || !attackerDef || !attackerRect) return null;
-  if (targetEntityIds.length === 0 && targetZoneIds.length === 0) return null;
+  if (!isUnitTargeting || !attackerId || candidateIds.length === 0) return null;
+  if (!rects[attackerId]) return null;
 
   return (
     <>
       <div
-        className="fixed inset-0 z-[400] cursor-default bg-[rgba(26,37,66,.38)]"
-        onClick={() => pending.cancel()}
+        className="fixed inset-0 z-[400] cursor-default bg-transparent"
+        data-testid="attack-targeting-dismiss-layer"
+        onClick={attackInteraction.cancelUnitTargeting}
       />
-      <TargetingOverlay
-        targetingIntents={targetingIntents}
-        containerSelector=".board-bg"
-        zoneSelector={GUNDAM_ZONE_SELECTOR}
-        className="z-[403]"
-      />
-      {candidateIds.map((id) => {
-        const r = targetRects[id];
-        if (!r) return null;
-        const pad = 6;
-        const isHovered = hoveredTargetId === id;
-        const targetCard = id === "direct" ? null : findCardByInstanceId(view, id);
+      <div
+        className="fixed left-1/2 top-4 z-[404] flex items-center gap-3 -translate-x-1/2 border border-amber-200/80 bg-hud-deep/95 px-3 py-1 font-display text-xs font-black uppercase tracking-hud-label text-amber-50 shadow-[0_0_28px_rgba(255,190,35,.45)]"
+        data-testid="attack-unit-targeting-instruction"
+      >
+        <span role="status">Select enemy Unit</span>
+        <button
+          type="button"
+          className="min-h-11 shrink-0 rounded border border-hud-border bg-hud-surface-raised px-3 font-body text-sm font-semibold normal-case tracking-normal text-hud-text hover:bg-hud-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-hud-accent"
+          onClick={attackInteraction.cancelUnitTargeting}
+        >
+          Cancel
+        </button>
+      </div>
+      {candidateIds.map((id, index) => {
+        const rect = rects[id];
+        if (!rect) return null;
+        const pad = 7;
+        const targetCard = findCardByInstanceId(view, id);
         const targetDefinition = targetCard?.definition as { name?: string } | null | undefined;
-        const targetLabel =
-          id === "direct"
-            ? "Attack opponent directly"
-            : `Attack ${targetDefinition?.name ?? "target unit"}`;
+        const targetName = targetDefinition?.name ?? "enemy Unit";
+        const isHovered = hoveredTargetId === id;
+        const viewportWidth =
+          typeof window === "undefined" ? Number.POSITIVE_INFINITY : window.innerWidth;
+        const labelPositionClass =
+          rect.left < 128
+            ? "left-2"
+            : viewportWidth - rect.right < 128
+              ? "right-2"
+              : "left-1/2 -translate-x-1/2";
         return (
           <button
             type="button"
             key={id}
+            autoFocus={index === 0}
             data-testid={`attack-target-${id}`}
-            aria-label={targetLabel}
+            aria-label={`Attack ${targetName}`}
             onMouseEnter={() => setHoveredTargetId(id)}
             onMouseLeave={() => setHoveredTargetId(null)}
-            onClick={(e) => {
-              e.stopPropagation();
-              pending.provide("target", id);
+            onClick={(event) => {
+              event.stopPropagation();
+              draft.toggleEntity(draft.input!.id, id);
             }}
-            className="fixed z-[404] cursor-crosshair border-0 bg-transparent p-0"
+            onKeyDown={(event) => {
+              if (event.key !== "Enter" && event.key !== " ") return;
+              event.preventDefault();
+              event.stopPropagation();
+              draft.toggleEntity(draft.input!.id, id);
+            }}
+            className="fixed z-[404] cursor-crosshair border-2 border-amber-200/80 bg-amber-300/5 p-0 shadow-[0_0_28px_rgba(255,190,35,.32)]"
             style={{
-              left: r.left - pad,
-              top: r.top - pad,
-              width: r.width + pad * 2,
-              height: r.height + pad * 2,
-              outline: isHovered ? "2px solid rgba(90,141,255,.75)" : undefined,
-              outlineOffset: 2,
+              left: rect.left - pad,
+              top: rect.top - pad,
+              width: rect.width + pad * 2,
+              height: rect.height + pad * 2,
+              outline: isHovered ? "3px solid rgba(255,255,255,.9)" : undefined,
+              outlineOffset: 3,
             }}
-          />
+          >
+            <span
+              className={`pointer-events-none absolute top-0 max-w-[calc(100vw-16px)] -translate-y-[calc(100%+6px)] overflow-hidden text-ellipsis whitespace-nowrap border border-amber-100/80 bg-hud-deep/95 px-2 py-1 font-display text-[10px] font-black uppercase tracking-[0.12em] text-amber-50 shadow-lg ${labelPositionClass}`}
+            >
+              Attack {targetName}
+            </span>
+          </button>
         );
       })}
     </>

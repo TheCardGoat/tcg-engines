@@ -93,6 +93,11 @@ export function resolveForEachOpponentEffect(
     const isLastOpponent = opponentId === opponentIds[opponentIds.length - 1];
     const result = resolveActionEffect(ctx, cardPlayed, effect.effect, resolutionInput, {
       ...options,
+      // An optional wrapper was accepted by its chooser before execution reached
+      // this per-opponent consequence. Do not let that earlier choice make the
+      // opponent's mandatory child effect declineable. An explicitly optional
+      // child will establish its own optional context when it resolves.
+      originatesFromOptional: undefined,
       continuation: isLastOpponent ? options?.continuation : undefined,
     });
 

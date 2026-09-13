@@ -8,6 +8,7 @@ import {
   createMockLocation,
 } from "@tcg/lorcana-engine/testing";
 import { mauiHalfshark } from "./124-maui-half-shark";
+import { bePrepared } from "../../001/actions/128-be-prepared";
 
 const actionInDiscard = createMockAction({
   id: "maui-test-action-in-discard",
@@ -209,6 +210,41 @@ describe("Maui - Half-Shark", () => {
 
       expect(testEngine.asPlayerOne().getBagCount()).toBe(0);
       expect(testEngine.getLore(PLAYER_ONE)).toBe(loreBefore);
+    });
+
+    it("gains 1 lore from WAYFINDING when Be Prepared banishes Maui (bugrepoxz2jcrs)", () => {
+      const ownFiller = createMockCharacter({
+        id: "maui-be-prepared-own-filler",
+        name: "Own Filler",
+        cost: 2,
+        willpower: 4,
+        strength: 2,
+      });
+      const oppFiller = createMockCharacter({
+        id: "maui-be-prepared-opp-filler",
+        name: "Opp Filler",
+        cost: 2,
+        willpower: 4,
+        strength: 2,
+      });
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          hand: [bePrepared],
+          inkwell: bePrepared.cost,
+          play: [mauiHalfshark, ownFiller],
+          deck: 3,
+        },
+        {
+          play: [oppFiller],
+          deck: 3,
+        },
+      );
+
+      const loreBefore = testEngine.getLore(PLAYER_ONE);
+      expect(testEngine.asPlayerOne().playCard(bePrepared)).toBeSuccessfulCommand();
+      // WAYFINDING must still fire even though Be Prepared banishes Maui mid-resolution.
+      expect(testEngine.getLore(PLAYER_ONE)).toBe(loreBefore + 1);
+      expect(testEngine.asPlayerOne().getCardZone(mauiHalfshark)).toBe("discard");
     });
   });
 });

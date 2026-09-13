@@ -40,5 +40,7 @@ describe("OP11-028 Lord of the Coast", () => {
 
     expect(engine.findCardInZone("south", "trash", op14eb04Killer005)).toBe(targetId);
     expect(engine.getState().capabilityHistory).toEqual([]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
   });
 });

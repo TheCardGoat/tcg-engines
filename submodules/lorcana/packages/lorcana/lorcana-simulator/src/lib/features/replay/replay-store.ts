@@ -5,6 +5,8 @@
  * Expired entries are purged lazily on each save.
  */
 
+import { firstPlayerIdFromReplaySteps, type PersistedReplayStep } from "./fetch-replay.js";
+
 const DB_NAME = "lorcana-replays";
 const DB_VERSION = 1;
 const STORE_NAME = "replays";
@@ -197,7 +199,7 @@ export async function purgeExpiredReplays(existingDb?: IDBDatabase): Promise<num
 export async function migrateReplayMetadata(
   meta: SavedReplayMeta,
   decompressBlob: (compressed: ArrayBuffer) => Promise<{
-    steps?: Array<{ acceptedMove: { turnNumber: number; actorId: string } }>;
+    steps?: readonly PersistedReplayStep[];
     metadata: {
       durationMs?: number;
       endReason?: string;
@@ -220,9 +222,7 @@ export async function migrateReplayMetadata(
     return meta;
   }
 
-  const firstPlayerId =
-    meta.firstPlayerId ??
-    data.steps?.find((s) => s.acceptedMove.turnNumber === 1)?.acceptedMove.actorId;
+  const firstPlayerId = meta.firstPlayerId ?? firstPlayerIdFromReplaySteps(data.steps);
 
   const enriched: SavedReplay = {
     ...meta,
@@ -254,7 +254,7 @@ export async function saveReplayFromApi(
     gameId: string;
     matchId: string;
     playerIds: [string, string];
-    steps?: Array<{ acceptedMove: { turnNumber: number; actorId: string } }>;
+    steps?: readonly PersistedReplayStep[];
     metadata: {
       totalMoves: number;
       totalTurns: number;
@@ -272,8 +272,7 @@ export async function saveReplayFromApi(
   const compressed = await fetchBlob(gameId);
   const data = await decompressBlob(compressed);
 
-  const firstPlayerId = data.steps?.find((s) => s.acceptedMove.turnNumber === 1)?.acceptedMove
-    .actorId;
+  const firstPlayerId = firstPlayerIdFromReplaySteps(data.steps);
 
   await saveReplay({
     gameId: data.gameId,

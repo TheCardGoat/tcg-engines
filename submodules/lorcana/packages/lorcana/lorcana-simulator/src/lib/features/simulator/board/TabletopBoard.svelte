@@ -105,6 +105,7 @@ type CardTargetDialogState = Pick<
 	| "canDecline"
 	| "declineLabel"
 	| "playCardEntryModeChoice"
+	| "promptLabel"
 > & { mode: "resolution-target" | "action" };
 
 interface PendingEffectsPopoverItem {
@@ -162,7 +163,7 @@ interface PendingEffectsPopoverItem {
 	onDropOpponent?: (() => void) | null;
 	onReportOpponent?: (() => void) | null;
 	canReportOpponent?: boolean;
-	gatewayStatus?: import("@/features/gateway/gateway-client.js").ConnectionStatus | null;
+	gatewayStatus?: import("@/features/gateway/gateway-client.svelte.js").ConnectionStatus | null;
 	/** True when the server announced a deploy before the socket closed. */
 	serverInitiatedClose?: boolean;
 	/** True when the gateway rejected the connection with a terminal auth error. */
@@ -174,6 +175,7 @@ interface PendingEffectsPopoverItem {
 	onReturnToMatchmaking?: (() => void | Promise<void>) | null;
 	/** Optional overlay rendered between the two player lanes (e.g. replay controls). */
 	boardOverlay?: Snippet;
+	interactionLocked?: boolean;
 }
 
 interface PointerPosition {
@@ -213,6 +215,7 @@ let {
 	onNextGame = null,
 	onReturnToMatchmaking = null,
 	boardOverlay,
+	interactionLocked = false,
 }: TabletopBoardProps = $props();
 
 const board = useLorcanaBoardPresenter();
@@ -270,7 +273,6 @@ const prioritySide = $derived(board.prioritySide);
 const topIsTurnPlayer = $derived(board.topIsTurnPlayer);
 const bottomIsTurnPlayer = $derived(board.bottomIsTurnPlayer);
 const activeSide = $derived(sidebar.activeSide);
-const guidanceAnchor = $derived(sidebar.guidancePosition);
 const topSummary = $derived(board.getPlayerSummary(topSide));
 const bottomSummary = $derived(board.getPlayerSummary(bottomSide));
 const isCompactLayout = $derived(layoutMode !== "desktop");
@@ -546,6 +548,16 @@ const targetSelectionState = $derived.by(() => {
 
 	return null;
 });
+const guidanceTargetsHand = $derived(
+	targetSelectionState?.mode === "resolution-target"
+		? targetSelectionState.allowedZones.includes("hand")
+		: targetSelectionState?.mode === "action"
+			? getActionTargetSelectionModalZones(targetSelectionState, board.cardSnapshotsById).includes(
+					"hand",
+				)
+			: false,
+);
+const guidanceAnchor = $derived(guidanceTargetsHand ? "top" : sidebar.guidancePosition);
 
 function asRecord(value: unknown): Record<string, unknown> | null {
 	return value !== null && typeof value === "object"
@@ -615,6 +627,7 @@ function createActionTargetDialogSessionKey(
 
 function createActionTargetDialogState(
 	state: ActionAvailableMovesSelectionState,
+	force = false,
 ): CardTargetDialogState | null {
 	const entryCandidateCardIds = state.entries.flatMap((entry) =>
 		entry.kind === "card" && typeof entry.cardId === "string" ? [entry.cardId] : [],
@@ -636,6 +649,7 @@ function createActionTargetDialogState(
 			: getActionTargetSelectionModalZones(state, board.cardSnapshotsById);
 
 	if (
+		!force &&
 		!shouldUseTargetSelectionModal({
 			allowedZones,
 			candidatePlayerIds: [],
@@ -690,8 +704,10 @@ const genericTargetModalState = $derived.by(
 const dialogTargetState = $derived.by(
 	(): CardTargetDialogState | null =>
 		genericTargetModalState ??
-		(userForcedTargetDialogOpen && targetSelectionState?.mode === "resolution-target"
-			? targetSelectionState
+		(userForcedTargetDialogOpen && targetSelectionState
+			? targetSelectionState.mode === "resolution-target"
+				? targetSelectionState
+				: createActionTargetDialogState(targetSelectionState, true)
 			: null),
 );
 const scrySelectionState = $derived.by(() => {
@@ -1547,11 +1563,13 @@ $effect(() => {
 
 <div
   class="tabletop-container w-full h-full relative"
+  class:interaction-locked={interactionLocked}
+  aria-busy={interactionLocked}
   data-layout-mode={layoutMode}
   data-accessible-controls={accessibleMobileControls ? "true" : undefined}
   role="presentation"
   bind:this={tabletopRef}
-  onpointerdown={handleTabletopPointerDown}
+  onpointerdown={interactionLocked ? undefined : handleTabletopPointerDown}
   style:--quest-rotation-duration="{questRotationDurationMs}ms"
 >
   <PendingEffectsPopover
@@ -1982,7 +2000,6 @@ $effect(() => {
     <ActivePlayerGuidance
       items={activePlayerGuidance}
       anchor={guidanceAnchor}
-      isBottomHandExpanded={!isBottomHandTucked && !isMobileLayout}
       isTopHandExpanded={!isTopHandTucked && !isMobileLayout}
       onToggleAnchor={toggleGuidancePosition}
       canOpenTargetModal={canOpenTargetModal}
@@ -2059,6 +2076,13 @@ $effect(() => {
 </div>
 
 <style>
+	.interaction-locked .board-scroll-area,
+	.interaction-locked .chrome-slot--hand,
+	.interaction-locked .desktop-hand-toggle {
+		pointer-events: none;
+		user-select: none;
+	}
+
   .tabletop-container {
     --hand-guidance-offset: 3rem;
     --hand-guidance-clearance: 1.65rem;

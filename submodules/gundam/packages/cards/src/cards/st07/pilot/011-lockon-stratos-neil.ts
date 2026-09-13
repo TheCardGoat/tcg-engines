@@ -27,8 +27,7 @@ export const st07LockonStratosNeil011: PilotCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-011.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-011.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/st07/ST07-011.webp",
       productName: "Celestial Drive [ST07]",
     },
     {
@@ -44,8 +43,7 @@ export const st07LockonStratosNeil011: PilotCard = {
       },
       rarity: "common",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-011_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-011_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/st07/ST07-011_p1.webp",
       productName: "Celestial Drive [ST07] Bonus Pack",
     },
     {
@@ -61,15 +59,13 @@ export const st07LockonStratosNeil011: PilotCard = {
       },
       rarity: "common",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-011_p2.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-011_p2.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/st07/ST07-011_p2.webp",
       productName: "Newtype Challenge 2026 Mission 2",
     },
   ],
   reprints: ["ST07-011", "ST07-011_p1", "ST07-011_p2"],
   selectedPrintingId: "ST07-011",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/st07/ST07-011.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/ST07-011.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/st07/ST07-011.webp",
   legality: "legal",
   level: 4,
   cost: 1,
@@ -96,7 +92,7 @@ export const st07LockonStratosNeil011: PilotCard = {
       type: "triggered",
       activation: {
         timing: ["whenPaired"],
-        conditions: [{ type: "duringPair" }, { type: "selfHasTrait", trait: "cb" }],
+        conditions: [{ type: "linkedUnitHasTrait", trait: "cb" }],
       },
       directives: [
         {

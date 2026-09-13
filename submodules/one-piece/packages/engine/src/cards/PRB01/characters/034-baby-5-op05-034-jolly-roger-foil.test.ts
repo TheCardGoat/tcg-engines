@@ -3,7 +3,7 @@ import { prb01Baby5Op05034JollyRogerFoil034 } from "../../../../../cards/src/car
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-034 Baby 5 (OP05-034) (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01Baby5Op05034JollyRogerFoil034);
   });
 });

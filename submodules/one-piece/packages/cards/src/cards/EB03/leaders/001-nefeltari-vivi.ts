@@ -91,9 +91,19 @@ export const eb03NefeltariVivi001: LeaderCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
-        eventFilter: {
+        target: {
           player: "self",
-          filters: [{ filter: "baseCost", comparison: "gte", value: 4 }],
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
+          filters: [
+            {
+              filter: "baseCost",
+              comparison: "gte",
+              value: 4,
+            },
+          ],
         },
         replacementAction: {
           action: "trashFromHand",

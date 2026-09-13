@@ -113,7 +113,7 @@ describe("Rey Za Burrel (GD04-093)", () => {
       expect(p1.getDamage(hostId)).toBe(8);
     });
 
-    it("does not reduce damage from its controller's own effect", () => {
+    it("reduces damage from its controller's own effect", () => {
       const damageCommand = effectDamageCommand();
       const host = createMockUnit({
         name: "ZAFT Link Host",
@@ -135,7 +135,7 @@ describe("Rey Za Burrel (GD04-093)", () => {
       expectSuccess(engine.asPlayer(PLAYER_TWO).passActionStep());
       expectSuccess(p1.playCommand(damageCommand, { targets: [hostId] }));
 
-      expect(p1.getDamage(hostId)).toBe(5);
+      expect(p1.getDamage(hostId)).toBe(3);
     });
   });
 });

@@ -60,4 +60,39 @@ describe("OP09-080 Thousand Sunny", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        stage: op09ThousandSunny080,
+        character: [op13Higuma013, op13SunnyKun026],
+        donDeckCount: 2,
+      },
+      {
+        hand: [op09SpecialMuggyBall058, op09SpecialMuggyBall058],
+        activeDon: 4,
+      },
+    );
+    const strawHatCrewId = engine.findCardInZone("south", "character", op13SunnyKun026);
+    engine.endTurn("south");
+    engine.playCard(op09SpecialMuggyBall058, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [strawHatCrewId] }, "south");
+
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

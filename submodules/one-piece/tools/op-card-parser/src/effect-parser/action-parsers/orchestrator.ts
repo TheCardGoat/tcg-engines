@@ -1177,6 +1177,45 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     }
   }
 
+  // "Reveal 1 card from the top of your Life cards. If that card is a "Trait" type Character card with a cost of N or less, you may play that card."
+  if (preParsed.length === 0) {
+    const revealLifeTraitMatch =
+      /^Reveal\s+1\s+card\s+from\s+the\s+top\s+of\s+your\s+Life\s+cards?\.\s*If\s+that\s+card\s+is\s+an?\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])\s+type\s+(Character|Event|Stage)\s+cards?\s+with\s+a\s+cost\s+of\s+(\d+)(?:\s+or\s+(less|more))?,\s+you\s+may\s+play\s+that\s+card\.?$/i.exec(
+        textAfterSearch.trim().replace(/\.+$/, ""),
+      );
+    if (revealLifeTraitMatch) {
+      const comparison =
+        revealLifeTraitMatch[4]?.toLowerCase() === "less"
+          ? ("lte" as const)
+          : revealLifeTraitMatch[4]?.toLowerCase() === "more"
+            ? ("gte" as const)
+            : ("eq" as const);
+      preParsed.push({
+        action: "revealFromLife",
+        player: "self",
+        conditionalPlay: {
+          filters: [
+            {
+              filter: "trait",
+              value: revealLifeTraitMatch[1]!,
+              match: "includes",
+            },
+            {
+              filter: "cardCategory",
+              value: revealLifeTraitMatch[2]!.toLowerCase() as "character" | "event" | "stage",
+            },
+            {
+              filter: "cost",
+              comparison,
+              value: parseInt(revealLifeTraitMatch[3]!, 10),
+            },
+          ],
+        },
+      } as unknown as Action);
+      textAfterSearch = "";
+    }
+  }
+
   // Try "Choose up to 1 X and up to 1 Y from <source>. Play 1 card and play the other card rested."
   if (preParsed.length === 0) {
     const chooseAndPlayMatch =
@@ -1305,6 +1344,94 @@ export function parseActions(rawActionText: string): ParseActionsResult {
         } as Action);
       }
       textAfterSearch = "";
+    }
+  }
+
+  // "you may trash any number of Event or Stage cards from your hand. This Leader gains +N power ... for every card trashed"
+  if (preParsed.length === 0) {
+    const trashCategoryForPowerMatch =
+      /^(?:you\s+may\s+)?trash\s+any\s+number\s+of\s+(Event|Stage)(?:\s+or\s+(Event|Stage))?\s+cards?\s+from\s+your\s+hand\.\s*(This\s+(?:Leader|Character))\s+gains?\s+\+(\d+)\s+power\s+(during\s+this\s+(?:turn|battle))\s+for\s+every\s+card\s+trashed$/i.exec(
+        textAfterSearch.trim().replace(/\.+$/, ""),
+      );
+    if (trashCategoryForPowerMatch) {
+      const categories = [trashCategoryForPowerMatch[1]!, trashCategoryForPowerMatch[2]]
+        .filter((value): value is string => Boolean(value))
+        .map((value) => value.toLowerCase() as "event" | "stage");
+      preParsed.push({
+        action: "trashFromHand",
+        player: "self",
+        amount: "all",
+        upTo: true,
+        filters: [
+          {
+            filter: "anyOf",
+            groups: categories.map((value) => [{ filter: "cardCategory" as const, value }]),
+          },
+        ],
+      } as Action);
+      const selfZone = /Leader/i.test(trashCategoryForPowerMatch[3]!) ? "leader" : "character";
+      preParsed.push({
+        action: "modifyPower",
+        target: {
+          player: "self",
+          zones: [selfZone],
+          count: { amount: 1 },
+          self: true,
+        },
+        value: 0,
+        valuePerPreviousActionTarget: parseInt(trashCategoryForPowerMatch[4]!, 10),
+        duration: parseFullDuration(trashCategoryForPowerMatch[5]!),
+      } as Action);
+      textAfterSearch = "";
+    }
+  }
+
+  // "rest any number of your DON!! cards. For every DON!! card rested this way, <target> gains +N power ..."
+  if (preParsed.length === 0) {
+    const restDonForPowerMatch =
+      /^(?:you\s+may\s+)?rest\s+any\s+number\s+of\s+your\s+DON!!\s+cards?\.\s*For\s+every\s+DON!!\s+card\s+rested\s+this\s+way,\s*(.+?)\s+gains?\s+\+(\d+)\s+power\s+(during\s+this\s+(?:turn|battle))\.?$/i.exec(
+        textAfterSearch.trim().replace(/\.+$/, ""),
+      );
+    if (restDonForPowerMatch) {
+      const targetText = restDonForPowerMatch[1]!.trim();
+      let target = parseModifyPowerTarget(targetText);
+      // "this Leader or up to 1 of your "Trait" type Characters"
+      const leaderOrTraitChar =
+        /^this\s+Leader\s+or\s+up\s+to\s+(\d+)\s+of\s+your\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])\s+type\s+Characters?$/i.exec(
+          targetText,
+        );
+      if (leaderOrTraitChar) {
+        target = {
+          player: "self",
+          zones: ["leader", "character"],
+          count: { amount: parseInt(leaderOrTraitChar[1]!, 10), upTo: true },
+          filters: [
+            {
+              filter: "anyOf",
+              groups: [
+                [{ filter: "cardCategory", value: "leader" }],
+                [
+                  { filter: "cardCategory", value: "character" },
+                  {
+                    filter: "trait",
+                    value: leaderOrTraitChar[2]!,
+                    match: "includes",
+                  },
+                ],
+              ],
+            },
+          ],
+        };
+      }
+      if (target) {
+        preParsed.push({
+          action: "restDonForPower",
+          target,
+          valuePerDon: parseInt(restDonForPowerMatch[2]!, 10),
+          duration: parseFullDuration(restDonForPowerMatch[3]!),
+        } as Action);
+        textAfterSearch = "";
+      }
     }
   }
 
@@ -1617,6 +1744,16 @@ export function parseActions(rawActionText: string): ParseActionsResult {
     if (compoundRest) {
       textAfterSearch = "";
       preParsed.push(...compoundRest);
+    }
+  }
+
+  // "Set <Characters> and up to N of your Leader as active" must stay intact —
+  // generic "and up to" splitting would orphan the Leader half.
+  if (preParsed.length === 0) {
+    const compoundSetActive = parseCompoundSetActiveActions(textAfterSearch);
+    if (compoundSetActive) {
+      textAfterSearch = "";
+      preParsed.push(...compoundSetActive);
     }
   }
 
@@ -2136,10 +2273,11 @@ function splitActionClauses(text: string): string[] {
   const thenParts = text.split(/(?:\.\s*Then,\s*|,\s+then\s+|\s+and\s+then\s+)/i);
   const sentenceParts: string[] = [];
   for (const tp of thenParts) {
-    // Split on ". This Character/Leader/Stage" and ". If"
+    // Split on ". This Character/Leader/Stage", ". If", and pronoun continuations
+    // such as ". It gains +1000 power during this turn".
     sentenceParts.push(
       ...tp.split(
-        /\.\s+(?=(?:This\s+(?:Character|Leader|Stage)|If\s+(?:the|you|your|that|this|there))\s)/i,
+        /\.\s+(?=(?:This\s+(?:Character|Leader|Stage)|If\s+(?:the|you|your|that|this|there)|It\s+gains?\b|That\s+(?:card|Character|Leader)\s+gains?\b)\s)/i,
       ),
     );
   }

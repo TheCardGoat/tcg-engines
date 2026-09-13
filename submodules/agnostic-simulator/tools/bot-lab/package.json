@@ -12,7 +12,10 @@
   "dependencies": {
     "@tcg/bot-core": "workspace:*",
     "@tcg/cyberpunk-engine": "link:../../../cyberpunk/packages/engine",
+    "@tcg/gundam-cards": "link:../../../gundam/packages/cards",
     "@tcg/gundam-engine": "link:../../../gundam/packages/engine",
+    "@tcg/gundam-token-data": "link:../../../gundam/packages/token-data",
+    "@tcg/gundam-types": "link:../../../gundam/packages/types",
     "@tcg/lorcana-engine": "link:../../../lorcana/packages/lorcana/lorcana-engine",
     "@tcg/op-engine": "link:../../../one-piece/packages/engine"
   },

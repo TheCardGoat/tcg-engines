@@ -4,6 +4,8 @@ import { gearScenarios } from "./gears";
 import { legendScenarios } from "./legends";
 import { programScenarios } from "./programs";
 import { unitScenarios } from "./units";
+import { wtnc22QaScenarios } from "./wtnc-22-qa";
+import { releaseSep2026QaScenarios } from "./release-sep-2026-qa";
 
 export type { Scenario, ScenarioGroup, ScenarioId } from "./types";
 export { P1, P2 } from "./shared";
@@ -14,6 +16,8 @@ const SCENARIOS: Scenario[] = [
   ...gearScenarios,
   ...legendScenarios,
   ...unitScenarios,
+  ...wtnc22QaScenarios,
+  ...releaseSep2026QaScenarios,
 ];
 
 export function getScenario(id: ScenarioId): Scenario {
@@ -60,6 +64,9 @@ export const SCENARIO_GROUPS: readonly { id: ScenarioGroup; label: string }[] = 
   { id: "unit-gig-condition", label: "Unit · Gig Condition" },
   { id: "unit-vanilla", label: "Unit · Vanilla" },
   { id: "unit-rush", label: "Unit · Rush" },
+  { id: "unit-fight-trigger", label: "Unit · Fight Trigger" },
+  { id: "unit-gig-prevention", label: "Unit · Gig Prevention" },
+  { id: "release-qa", label: "Release · Visual QA" },
 ];
 
 export const DEFAULT_SCENARIO: ScenarioId = "openingMain";

@@ -1,8 +1,48 @@
 import "../../cards/src/index.ts";
 
-export { applyCommand, createMatch, getLegalCommands, replayMatch } from "./core.ts";
+export {
+  applyCommand,
+  createMatch,
+  getLegalCommands,
+  getPotentialCardCommands,
+  replayMatch,
+} from "./core.ts";
 export { cardZoneSummary, projectStateForSeat } from "./projection.ts";
-export { commandFromDescriptor, greedyStrategy } from "./automation/bot-strategies.ts";
+export { finalizeDraw, placeStartingLife } from "./state.ts";
+export {
+  commandFromDescriptor,
+  greedyStrategy,
+  passOnlyStrategy,
+} from "./automation/bot-strategies.ts";
+export type {
+  OnePieceBotAgent,
+  OnePieceBotDecisionContext,
+  OnePieceBotPromptResolver,
+  OnePieceBotStrategy,
+  OnePieceBotStrategyLike,
+} from "./automation/bot-strategies.ts";
+export {
+  aggressiveAgent,
+  aggressivePromptResolver,
+  aggressiveStrategy,
+  AGGRESSIVE_POLICY,
+  BALANCED_POLICY,
+  createHeuristicAgent,
+  createHeuristicPromptResolver,
+  createHeuristicStrategy,
+  heuristicAgent,
+  heuristicPromptResolver,
+  heuristicStrategy,
+  computeDonReserve,
+  effectiveLeaderAttackBias,
+  scoreAttachDon,
+  scoreCharacterAttack,
+  scoreCharacterPlay,
+  scoreEventPlay,
+  scoreLeaderAttack,
+  type HeuristicPolicy,
+  type HeuristicStyle,
+} from "./automation/heuristic-strategy.ts";
 export { resolveBotPromptCommand, runBotMatch } from "./automation/bot-harness.ts";
 export {
   DEFAULT_ONE_PIECE_AUTOMATED_ACTION_STRATEGY_ID,
@@ -18,7 +58,15 @@ export {
   ST01_LEADER_CARD_ID,
   ST01_MAIN_DECK,
 } from "./starter-decks.ts";
-export { NORTH, OnePieceTestEngine, PLAYER_ONE, PLAYER_TWO, SOUTH } from "./testing/test-engine.ts";
+export { TEST_DECKS, type TestDeckDefinition, type TestDeckId } from "./automation/test-decks.ts";
+export {
+  NORTH,
+  OnePieceTestEngine,
+  OnePieceTestPlayer,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  SOUTH,
+} from "./testing/test-engine.ts";
 export {
   createTestMatchState,
   extractCardId,
@@ -46,6 +94,7 @@ export type {
   JudgeCommand,
   LegalCommandDescriptor,
   MatchConfig,
+  MatchFinishReason,
   MatchPhase,
   MatchPlayerConfig,
   MatchSeat,
@@ -54,6 +103,8 @@ export type {
   ModifierState,
   PlayerState,
   PlayerView,
+  PotentialCardCommandDescriptor,
+  OnePieceCardActionInvalidReasonCode,
   ProjectedCard,
   ProjectedActionCandidate,
   ProjectedDecision,

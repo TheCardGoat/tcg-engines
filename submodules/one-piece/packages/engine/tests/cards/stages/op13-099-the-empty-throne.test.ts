@@ -65,4 +65,33 @@ describe("OP13-099 The Empty Throne", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      stage: op13TheEmptyThrone099,
+      hand: [
+        op13StEthanbaronVNusjuro080,
+        op13StShepherdJuPeter084,
+        op13TheWorldSEquilibriumCannotBeMaintainedForever097,
+      ],
+      trash: Array.from({ length: 19 }, () => op13Higuma013),
+      activeDon: 6,
+    });
+    const stageId = engine.findCardInZone("south", "stage", op13TheEmptyThrone099);
+    const eligibleId = engine.findCardInZone("south", "hand", op13StEthanbaronVNusjuro080);
+    const activeDonBefore = engine.getView("south").players.south.activeDon;
+    const handBefore = engine.getView("south").players.south.hand.length;
+
+    engine.activateEffect(stageId, "activateMain");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon).toBe(activeDonBefore);
+    expect(view.players.south.restedDon).toBe(0);
+    expect(view.players.south.stage?.rested).toBe(false);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(eligibleId);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(eligibleId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

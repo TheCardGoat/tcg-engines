@@ -1,10 +1,9 @@
 export type UserRole = "user" | "donor" | "moderator" | "admin";
 
-export type SubscriptionTier = "free" | "tier1" | "tier2" | "tier3" | "tier4" | "tier5" | "tier6";
+export type SubscriptionTier = "free" | "tier2" | "tier3" | "tier4";
 
 export interface AuthUser {
   id: string;
-  email: string;
   name: string;
   image?: string | null;
   username?: string | null;

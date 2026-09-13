@@ -7,7 +7,7 @@
 
 import { unzipSync } from "fflate";
 import { saveReplay } from "./replay-store.js";
-import type { PersistedReplayData } from "./fetch-replay.js";
+import { firstPlayerIdFromReplaySteps, type PersistedReplayData } from "./fetch-replay.js";
 
 const TTL_MS = 14 * 24 * 60 * 60 * 1000;
 
@@ -71,8 +71,7 @@ export async function importReplayFromFile(file: File): Promise<string> {
   const { data, raw } = await readZipAsReplayData(file);
   const compressed = await gzipBytes(raw);
 
-  const firstPlayerId = data.steps?.find((s) => s.acceptedMove.turnNumber === 1)?.acceptedMove
-    .actorId;
+  const firstPlayerId = firstPlayerIdFromReplaySteps(data.steps);
 
   await saveReplay({
     gameId: data.gameId,

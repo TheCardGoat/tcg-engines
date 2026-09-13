@@ -73,6 +73,84 @@ describe("resolution amount selection", () => {
     });
   });
 
+  it("treats ampersand team names as matching either name part for self-replacement", () => {
+    const selection = buildResolutionAmountSelectionState({
+      payload: {
+        effect: {
+          type: "remove-damage",
+          amount: { type: "up-to", value: 2 },
+          selfReplacement: {
+            condition: {
+              type: "selected-target-name",
+              name: "Darkwing Duck",
+            },
+            value: 4,
+          },
+        },
+      },
+      selectedTargets: ["team"],
+      cardSnapshotsById: {
+        team: {
+          cardId: "team",
+          definitionId: "UbM",
+          facePresentation: "faceUp",
+          isMasked: false,
+          label: "Darkwing Duck & Launchpad - St. Canard's Finest",
+          ownerId: "player-one",
+          ownerSide: "playerOne",
+          zoneId: "play",
+          damage: 4,
+        },
+      },
+    });
+
+    expect(selection).toEqual({
+      label: "Damage to remove",
+      min: 0,
+      max: 4,
+      value: 4,
+    });
+  });
+
+  it("does not boost amount for solo Launchpad when the condition names Darkwing Duck", () => {
+    const selection = buildResolutionAmountSelectionState({
+      payload: {
+        effect: {
+          type: "remove-damage",
+          amount: { type: "up-to", value: 2 },
+          selfReplacement: {
+            condition: {
+              type: "selected-target-name",
+              name: "Darkwing Duck",
+            },
+            value: 4,
+          },
+        },
+      },
+      selectedTargets: ["launchpad"],
+      cardSnapshotsById: {
+        launchpad: {
+          cardId: "launchpad",
+          definitionId: "launchpad",
+          facePresentation: "faceUp",
+          isMasked: false,
+          label: "Launchpad - Hideout Defender",
+          ownerId: "player-one",
+          ownerSide: "playerOne",
+          zoneId: "play",
+          damage: 4,
+        },
+      },
+    });
+
+    expect(selection).toEqual({
+      label: "Damage to remove",
+      min: 0,
+      max: 2,
+      value: 2,
+    });
+  });
+
   it("clamps move-damage selections to the chosen source's damage", () => {
     const selection = buildResolutionAmountSelectionState({
       payload: {

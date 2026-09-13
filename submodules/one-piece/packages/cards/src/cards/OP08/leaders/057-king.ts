@@ -87,6 +87,7 @@ export const op08King057: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

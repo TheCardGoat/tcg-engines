@@ -3,6 +3,10 @@ import { eb01Doma005, eb01MountainGod018, op03Napoleon117, op04Sanji104 } from "
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
+/**
+ * OP04-104 Sanji: Blocker keyword; [Trigger] optional trash 1 from hand → play this card.
+ * No When Attacking ability — optional decline is Life Trigger only.
+ */
 describe("OP04-104 Sanji", () => {
   test("uses Blocker through the public battle decision", () => {
     const engine = OnePieceTestEngine.create(
@@ -53,6 +57,30 @@ describe("OP04-104 Sanji", () => {
     expect(view.players.north.characters.some((card) => card?.instanceId === sanjiId)).toBe(true);
     expect(view.players.north.trash.map((card) => card.instanceId)).toContain(discardId);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(sanjiId);
+    expect(view.prompts).toHaveLength(0);
+  });
+  test("may decline Life Trigger optional so hand stays and Sanji is not played", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { life: [op04Sanji104], hand: [op03Napoleon117, eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const sanjiId = engine.findCardInZone("north", "life", op04Sanji104);
+    const discardId = engine.findCardInZone("north", "hand", op03Napoleon117);
+    const otherId = engine.findCardInZone("north", "hand", eb01Doma005);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([discardId, otherId]),
+    );
+    expect(view.players.north.characters.some((card) => card?.instanceId === sanjiId)).toBe(false);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(sanjiId);
     expect(view.prompts).toHaveLength(0);
   });
 });

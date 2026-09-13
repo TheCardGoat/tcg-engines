@@ -33,5 +33,6 @@ describe("OP03-032 Buggy", () => {
     expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
       buggyId,
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

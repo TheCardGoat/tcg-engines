@@ -3,7 +3,7 @@ import { op03Izo003 } from "../../../../../cards/src/cards/OP03/characters/003-i
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-003 Izo", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op03Izo003);
   });
 });

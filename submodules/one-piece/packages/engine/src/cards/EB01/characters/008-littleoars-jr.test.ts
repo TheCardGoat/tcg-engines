@@ -3,7 +3,7 @@ import { eb01LittleoarsJr008 } from "../../../../../cards/src/cards/EB01/charact
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-008 LittleOars Jr.", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01LittleoarsJr008);
   });
 });

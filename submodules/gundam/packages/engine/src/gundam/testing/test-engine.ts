@@ -19,7 +19,7 @@ import {
   type OpenInSimulatorResult,
 } from "@tcg/engine-core/test-simulator";
 import type { CommandEnvelope, CommandResult } from "../../types/command.ts";
-import type { PlayerId } from "../../types/branded.ts";
+import type { PlayerId, CardInstanceId } from "../../types/branded.ts";
 import type { MatchState } from "../../types/match-state.ts";
 import type { FilteredMatchView, ViewRoleContext } from "../../types/projection.ts";
 import type { ZoneRef } from "../../types/zone-types.ts";
@@ -29,10 +29,21 @@ import type { GundamG, GundamCardMeta, GundamBoardView, GundamRuntimeCard } from
 import { createMockUnit, createMockResource } from "./card-mocks.ts";
 import { getActivatedEffects, isSupportActivatedEffect } from "../rules/derived-state.ts";
 import { enqueueOwnCardTriggers } from "../effects/pending-effects.ts";
+import { handleSetActiveAction } from "../effects/handlers/combat.ts";
+import type { EffectExecutionContext } from "../effects/executor.ts";
 import { listLegalAttackTargets } from "../moves/core/enter-battle.ts";
+import {
+  createFluentMust,
+  playerCardIn,
+  playerRef,
+  playerUnit,
+  playerUnits,
+} from "./player-fluent.ts";
+import type { CardInstanceRef, CardRef, CardRefFilter } from "./card-ref.ts";
 
 import { MatchRuntime } from "../../runtime/match-runtime.ts";
 import { LocalEngine } from "../../engine/local-engine.ts";
+import { defaultGundamSetupCards } from "@tcg/gundam-token-data";
 import { createStaticResources } from "../../runtime/static-resources.ts";
 import type { MatchStaticResources, Player } from "../../runtime/static-resources.ts";
 import { serializeState } from "../../runtime/match-runtime.serialization.ts";
@@ -120,11 +131,9 @@ export class GundamTestEngine {
   ): GundamTestEngine {
     const { seed = "gundam-test-seed", skipToMainPhase = true, initialActivePlayer } = opts;
 
-    // Build card catalog (definition ID = cardNumber)
     const catalog = new Map<string, Card>();
     const p1Cards = collectCards(PLAYER_ONE, p1State);
     const p2Cards = collectCards(PLAYER_TWO, p2State);
-
     for (const { card } of [...p1Cards, ...p2Cards]) {
       catalog.set(card.cardNumber, card);
     }
@@ -132,17 +141,25 @@ export class GundamTestEngine {
     const p1: Player = {
       id: PLAYER_ONE as PlayerId,
       name: "Player One",
-      deck: p1Cards.filter((c) => c.zone === "deck").map((c) => c.card.cardNumber),
-      resourceDeck: p1Cards.filter((c) => c.zone === "resourceDeck").map((c) => c.card.cardNumber),
+      deck: p1Cards.filter((card) => card.zone === "deck").map((card) => card.card.cardNumber),
+      resourceDeck: p1Cards
+        .filter((card) => card.zone === "resourceDeck")
+        .map((card) => card.card.cardNumber),
     };
     const p2: Player = {
       id: asPlayerId(PLAYER_TWO),
       name: "Player Two",
-      deck: p2Cards.filter((c) => c.zone === "deck").map((c) => c.card.cardNumber),
-      resourceDeck: p2Cards.filter((c) => c.zone === "resourceDeck").map((c) => c.card.cardNumber),
+      deck: p2Cards.filter((card) => card.zone === "deck").map((card) => card.card.cardNumber),
+      resourceDeck: p2Cards
+        .filter((card) => card.zone === "resourceDeck")
+        .map((card) => card.card.cardNumber),
     };
 
-    const staticResources = createStaticResources([p1, p2], catalog);
+    const staticResources = createStaticResources(
+      [p1, p2],
+      catalog,
+      defaultGundamSetupCards([p1.id, p2.id]),
+    );
 
     const localEngine = new LocalEngine(staticResources);
     localEngine.initialize(
@@ -152,8 +169,6 @@ export class GundamTestEngine {
     );
 
     const engine = new GundamTestEngine(localEngine);
-
-    // Inject fixture state
     engine.applyFixture(p1Cards, p2Cards, p1State, p2State);
 
     if (skipToMainPhase) {
@@ -181,7 +196,11 @@ export class GundamTestEngine {
       });
     }
 
-    const staticResources = createStaticResources(players, new Map());
+    const staticResources = createStaticResources(
+      players,
+      new Map(),
+      defaultGundamSetupCards(players.map((player) => player.id)),
+    );
     const localEngine = new LocalEngine(staticResources);
     localEngine.initialize(players, seed);
     return new GundamTestEngine(localEngine);
@@ -195,7 +214,6 @@ export class GundamTestEngine {
     _p1State: TestPlayerState,
     _p2State: TestPlayerState,
   ): void {
-    // Place cards into zones for both players
     for (const [playerId, cards] of [
       [PLAYER_ONE, p1Cards],
       [PLAYER_TWO, p2Cards],
@@ -625,6 +643,36 @@ export class GundamTestEngine {
   }
 
   /**
+   * Ready (set active) an exhausted card by driving the production
+   * `setActive` effect handler (`handleSetActiveAction`) rather than
+   * mutating private state. This keeps `G.exhausted`, the card metadata
+   * projection, and the `setActiveByEffect` trigger/event wiring in the
+   * exact sync the real game rules, so enumeration/validation tests that
+   * need a mid-step ready observe the same state a live match would.
+   *
+   * Use it when a fixture cannot express the readying through a timed card
+   * effect (e.g. readying the attacked Unit during the block step to prove
+   * rule 8-3-3 still bars it from blocking).
+   */
+  readyCard(cardId: string, ownerId?: GundamPlayerId): void {
+    const state = this.runtime.getState();
+    const entry = state.ctx.zones.private.cardIndex[cardId];
+    if (!entry) {
+      throw new Error(`readyCard: unknown card "${cardId}"`);
+    }
+    const owner = ownerId ?? (entry.ownerID as unknown as GundamPlayerId);
+    this.runtime.runTestMutation(asPlayerId(owner), ({ G, framework }) => {
+      const ctx = {
+        G,
+        framework,
+        sourcePlayerId: owner,
+        sourceCardId: undefined,
+      } satisfies EffectExecutionContext;
+      handleSetActiveAction([cardId as CardInstanceId], ctx);
+    });
+  }
+
+  /**
    * Destroy a unit/base in play by moving it to trash and enqueuing its
    * `unitDestroyed` triggers (rule 10-1-6-1 / 10-1-6-4). Mirrors the
    * lifecycle hook invoked by combat's `handleUnitDefeated` path but
@@ -984,33 +1032,89 @@ export class GundamTestEngine {
 // =============================================================================
 
 export class GundamPlayerActions {
-  constructor(
-    protected readonly runtime: MatchRuntime,
-    readonly playerId: GundamPlayerId,
-    private readonly nextId: () => number,
-  ) {}
+  /** Exposed for fluent card-ref resolution and advanced harnesses. */
+  readonly runtime: MatchRuntime;
+  readonly playerId: GundamPlayerId;
+  private readonly nextId: () => number;
+
+  constructor(runtime: MatchRuntime, playerId: GundamPlayerId, nextId: () => number) {
+    this.runtime = runtime;
+    this.playerId = playerId;
+    this.nextId = nextId;
+  }
+
+  /**
+   * Fluent Act API: throws on illegal moves, resolves card definitions when unique.
+   * @see docs/fluent-test-api-plan.md
+   */
+  get must() {
+    return createFluentMust(this);
+  }
+
+  /** Unique Unit in battleArea matching the definition (or throw). */
+  unit(card: Card | string, filter: CardRefFilter = {}): CardInstanceRef {
+    return playerUnit(this, card, filter);
+  }
+
+  /** Unique card in a named zone matching the definition (or throw). */
+  cardIn(zone: string, card: Card | string, filter: CardRefFilter = {}): CardInstanceRef {
+    return playerCardIn(this, zone, card, filter);
+  }
+
+  /** Resolve any CardRef for this player. */
+  ref(card: CardRef, filter: CardRefFilter = {}): CardInstanceRef {
+    return playerRef(this, card, filter);
+  }
+
+  /** All matching units (may be empty). */
+  units(card: Card | string, filter: CardRefFilter = {}): CardInstanceRef[] {
+    return playerUnits(this, card, filter);
+  }
+
+  handCount(): number {
+    return this.getHand().length;
+  }
+
+  deckCount(): number {
+    return this.getBoardView().players[this.playerId]?.deckCount ?? 0;
+  }
+
+  shieldCount(): number {
+    return this.getBoardView().players[this.playerId]?.shieldCount ?? 0;
+  }
 
   // ── Moves ─────────────────────────────────────────────────────────────────
 
   deployUnit(
     card: Card | string,
-    opts: { mode?: "normal" | "alternate"; targets?: string[] } = {},
+    opts: { mode?: "normal" | "alternate"; targets?: string[]; paymentResourceIds?: string[] } = {},
   ): CommandResult {
     return this.execute("deployUnit", { cardId: this.resolveId(card), ...opts });
   }
 
-  deployBase(card: Card | string, opts: { targets?: string[] } = {}): CommandResult {
+  deployBase(
+    card: Card | string,
+    opts: { targets?: string[]; paymentResourceIds?: string[] } = {},
+  ): CommandResult {
     return this.execute("deployBase", { cardId: this.resolveId(card), ...opts });
   }
 
-  playCommand(card: Card | string, opts: { targets?: string[] } = {}): CommandResult {
+  playCommand(
+    card: Card | string,
+    opts: { mode?: "normal" | "alternate"; targets?: string[]; paymentResourceIds?: string[] } = {},
+  ): CommandResult {
     return this.execute("playCommand", { cardId: this.resolveId(card), ...opts });
   }
 
-  assignPilot(pilot: Card | string, unit: Card | string): CommandResult {
+  assignPilot(
+    pilot: Card | string,
+    unit: Card | string,
+    opts: { paymentResourceIds?: string[] } = {},
+  ): CommandResult {
     return this.execute("assignPilot", {
       pilotId: this.resolveId(pilot),
       unitId: this.resolveId(unit),
+      ...opts,
     });
   }
 
@@ -1019,10 +1123,15 @@ export class GundamPlayerActions {
    * 3-4-6-2), pairing it with `unit` instead of activating its command
    * effect.
    */
-  playCommandAsPilot(card: Card | string, unit: Card | string): CommandResult {
+  playCommandAsPilot(
+    card: Card | string,
+    unit: Card | string,
+    opts: { paymentResourceIds?: string[] } = {},
+  ): CommandResult {
     return this.execute("playCommandAsPilot", {
       cardId: this.resolveId(card),
       unitId: this.resolveId(unit),
+      ...opts,
     });
   }
 
@@ -1097,6 +1206,13 @@ export class GundamPlayerActions {
     return this.execute("passActionStep", {});
   }
 
+  /**
+   * End-phase hand-step: discard named cards so hand size ≤ 10 (rules 4-8-4 / 7-6-5-1).
+   */
+  discardToHandLimit(cardIds: readonly string[]): CommandResult {
+    return this.execute("discardToHandLimit", { cardIds: [...cardIds] });
+  }
+
   concede(): CommandResult {
     return this.execute("concede", {});
   }
@@ -1104,7 +1220,7 @@ export class GundamPlayerActions {
   activateAbility(
     card: Card | string,
     effectIndex: number,
-    opts: { targets?: string[] } = {},
+    opts: { targets?: string[]; paymentResourceIds?: string[] } = {},
   ): CommandResult {
     return this.execute("activateAbility", { cardId: this.resolveId(card), effectIndex, ...opts });
   }
@@ -1121,7 +1237,7 @@ export class GundamPlayerActions {
    */
   activateBaseAbility(
     base: Card | string,
-    opts: { effectIndex?: number; targets?: string[] } = {},
+    opts: { effectIndex?: number; targets?: string[]; paymentResourceIds?: string[] } = {},
   ): CommandResult {
     const baseId = this.resolveId(base);
     let effectIndex = opts.effectIndex;
@@ -1146,6 +1262,7 @@ export class GundamPlayerActions {
       cardId: baseId,
       effectIndex,
       ...(opts.targets ? { targets: opts.targets } : {}),
+      ...(opts.paymentResourceIds ? { paymentResourceIds: opts.paymentResourceIds } : {}),
     });
   }
 

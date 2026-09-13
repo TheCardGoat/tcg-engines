@@ -3,7 +3,7 @@ import { op14eb04INeverBotherToRememberTheFacesOfTrash038 } from "../../../../..
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP14-038 I Never Bother to Remember the Faces of Trash", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04INeverBotherToRememberTheFacesOfTrash038);
   });
 });

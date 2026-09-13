@@ -57,6 +57,7 @@ export const eb03Baby5036: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

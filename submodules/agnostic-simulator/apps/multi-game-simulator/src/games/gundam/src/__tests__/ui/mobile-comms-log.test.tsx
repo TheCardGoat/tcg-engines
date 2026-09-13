@@ -20,20 +20,23 @@ afterEach(() => {
   setViewportWidth(1024);
 });
 
-describe("Mobile top rail · game log", () => {
-  it("opens a dedicated log sheet instead of the full match sidebar", async () => {
+describe("Mobile top rail · match panel", () => {
+  it("opens the full match sidebar drawer with the game log", async () => {
     setViewportWidth(390);
     const user = userEvent.setup();
     renderSimulator(loadSetupDefault);
 
     await user.click(await screen.findByRole("button", { name: /i go first/i }));
-    await user.click(await screen.findByRole("button", { name: /^comms log$/i }));
+    await user.click(await screen.findByRole("button", { name: /open match activity/i }));
 
-    const sheet = await screen.findByRole("dialog", { name: /game log/i });
-    const log = within(sheet).getByRole("log", { name: /comms log/i });
+    const drawer = await screen.findByRole("dialog", {
+      name: /gundam activity and utilities/i,
+    });
+    const log = within(drawer).getByRole("log", { name: /comms log/i });
 
-    expect(within(log).getByText(/you chose you to go first/i)).not.toBeNull();
-    expect(within(sheet).queryByRole("region", { name: /ai opponent controls/i })).toBeNull();
-    expect(within(sheet).getByRole("button", { name: /close game log/i })).not.toBeNull();
+    expect(within(log).getByText(/you chose to go first/i)).not.toBeNull();
+    await user.click(within(drawer).getByRole("tab", { name: /more/i }));
+    expect(within(drawer).getByRole("slider", { name: /sound volume/i })).not.toBeNull();
+    expect(within(drawer).getByRole("button", { name: /^close$/i })).not.toBeNull();
   });
 });

@@ -1,17 +1,33 @@
-import { createContext, useContext } from "react";
-import type { EngineInteractionView } from "@tcg/protocol";
-import type { PlayerPrompt } from "@tcg/cyberpunk-engine";
+import { createContext, createElement, useContext, useMemo, type ReactNode } from "react";
+import type { MatchState, PlayerPrompt } from "@tcg/cyberpunk-engine";
+import { INTERACTION_PROTOCOL_VERSION, type EngineInteractionView } from "@tcg/protocol";
 import type { EngineContextValue } from "./EngineProvider";
 import type { Side } from "./sides";
 
 export const EngineContext = createContext<EngineContextValue | null>(null);
+const EnginePresentationStateContext = createContext<MatchState | null>(null);
+
+export function EnginePresentationStateProvider({
+  state,
+  children,
+}: {
+  readonly state: MatchState;
+  readonly children: ReactNode;
+}) {
+  return createElement(EnginePresentationStateContext.Provider, { value: state }, children);
+}
 
 export function useEngine(): EngineContextValue {
   const ctx = useContext(EngineContext);
-  if (!ctx) {
+  const presentationState = useContext(EnginePresentationStateContext);
+  const resolved = useMemo(
+    () => (ctx && presentationState ? { ...ctx, matchState: presentationState } : ctx),
+    [ctx, presentationState],
+  );
+  if (!resolved) {
     throw new Error("useEngine must be used inside EngineProvider");
   }
-  return ctx;
+  return resolved;
 }
 
 /**
@@ -19,7 +35,12 @@ export function useEngine(): EngineContextValue {
  * (e.g. inside dnd-kit's DragOverlay portal). Returns `null` instead of throwing.
  */
 export function useEngineOptional(): EngineContextValue | null {
-  return useContext(EngineContext);
+  const ctx = useContext(EngineContext);
+  const presentationState = useContext(EnginePresentationStateContext);
+  return useMemo(
+    () => (ctx && presentationState ? { ...ctx, matchState: presentationState } : ctx),
+    [ctx, presentationState],
+  );
 }
 
 const IDLE_PROMPT: PlayerPrompt = {
@@ -29,7 +50,7 @@ const IDLE_PROMPT: PlayerPrompt = {
 };
 
 const IDLE_INTERACTION_VIEW: EngineInteractionView = {
-  protocolVersion: 1,
+  protocolVersion: INTERACTION_PROTOCOL_VERSION,
   gameSlug: "cyberpunk",
   actorId: "idle",
   stateVersion: 0,

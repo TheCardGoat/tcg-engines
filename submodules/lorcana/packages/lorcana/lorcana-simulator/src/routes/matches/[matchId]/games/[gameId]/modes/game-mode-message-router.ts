@@ -38,10 +38,9 @@ export interface LiveMovePayload {
   /** Card instance mapping — provided in state_update for client-authority games */
   cardsMaps?: unknown;
   /**
-   * Present only on the terminal move that ends a game. Bundled with the
-   * engine snapshot that flips the board to "finished" so UI code can
-   * update matchContext in the same render pass — no post-game modal
-   * flicker between state_update and the follow-up game_ended packet.
+   * Present when the server can bundle completed match progression with the
+   * terminal engine snapshot. Otherwise `game_ended` and `match_state`
+   * reconcile match navigation after the finished board arrives.
    */
   matchInfo?: LiveMatchInfo;
 }
@@ -85,7 +84,7 @@ export interface MessageRouterRefs {
 }
 
 /**
- * Construct an acceptedMove entry from raw WS packet fields.
+ * Construct an acceptedMove entry from gateway event payload fields.
  *
  * - For move_accepted: pass actorId from msg.actorId directly.
  * - For state_update: actorId is absent at the top level — callers should

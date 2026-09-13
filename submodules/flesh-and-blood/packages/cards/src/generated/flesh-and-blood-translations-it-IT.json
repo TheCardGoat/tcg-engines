@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "game": "flesh-and-blood",
+  "locale": "it-IT",
+  "provenance": {
+    "source": "fab-cube",
+    "sourceUrl": "https://github.com/the-fab-cube/flesh-and-blood-cards",
+    "sourceRef": "usurp-the-shadow-throne",
+    "locale": "it-IT",
+    "fetchedAt": "2026-09-11T04:33:18.000Z",
+    "sourceVersion": "9fb8c73011311720bc7add61fb8eaab00b131bc3",
+    "sha256": "fa7f8e51f67a18ea7db56457c73ff9bbef557173537eafae5d7c6c27eb59f002",
+    "productionEligible": false
+  },
+  "catalogSha256": "5d08485a19fdcbd7c82f048a8626027bf3703241c189905f41059eb2f19d4c64",
+  "sets": [
+    {
+      "setId": "1HP",
+      "name": "History Pack 1 – Black Label"
+    }
+  ],
+  "cards": [
+    {
+      "canonicalId": "N77hdGp96fNQnzc79hqN9",
+      "name": "Occhio di Ophidia",
+      "functionalTextHtml": "**Leggendaria** *(Puoi avere solo 1 Occhio di Ophidia nel tuo mazzo.)*\n\nQuando lanci Occhio di Ophidia, **opta 2**.",
+      "functionalTextPlain": "Leggendaria (Puoi avere solo 1 Occhio di Ophidia nel tuo mazzo.)\nQuando lanci Occhio di Ophidia, opta 2.",
+      "typeText": "Generica Risorsa - Gemma"
+    },
+    {
+      "canonicalId": "pBpLPQ7kg6mkBpNMMPdCD",
+      "name": "Cuore di Fyendal",
+      "functionalTextHtml": "**Leggendaria** *(Puoi avere solo 1 Cuore di Fyendal nel tuo mazzo.)*\n\nQuando lanci Cuore di Fyendal, se hai meno {h} del tuo avversario, guadagna 1{h}.",
+      "functionalTextPlain": "Leggendaria (Puoi avere solo 1 Cuore di Fyendal nel tuo mazzo.)\nQuando lanci Cuore di Fyendal, se hai meno {h} del tuo avversario, guadagna 1{h}.",
+      "typeText": "Generica Risorsa - Gemma"
+    },
+    {
+      "canonicalId": "pkMGCRh9fDT98dRgnQF8W",
+      "name": "Frammento del Cavaliere Oscuro",
+      "functionalTextHtml": "**Specializzazione leggendaria di Viserai** *(Puoi avere solo 1 Frammento del Cavaliere Oscuro nel tuo mazzo, e solo se il tuo eroe è Viserai.)*\n\nQuando lanci Frammento del Cavaliere Oscuro, crea una pedina Canto Runico.",
+      "functionalTextPlain": "Specializzazione leggendaria di Viserai (Puoi avere solo 1 Frammento del Cavaliere Oscuro nel tuo mazzo, e solo se il tuo eroe è Viserai.)\nQuando lanci Frammento del Cavaliere Oscuro, crea una pedina Canto Runico.",
+      "typeText": "Lamederune Ressource - Pierre précieuse"
+    }
+  ]
+}

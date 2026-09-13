@@ -28,15 +28,13 @@ export const gd0113thTacticalTestingSector130: BaseCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-130.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-130.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-130.webp",
       productName: "Newtype Rising [GD01]",
     },
   ],
   reprints: ["GD01-130"],
   selectedPrintingId: "GD01-130",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-130.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-130.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-130.webp",
   legality: "legal",
   level: 3,
   cost: 1,
@@ -60,26 +58,28 @@ export const gd0113thTacticalTestingSector130: BaseCard = {
       type: "activated",
       activation: {
         timing: ["activate:main"],
-        conditions: [
-          {
+      },
+      cost: { restSelf: true },
+      directives: [
+        {
+          condition: {
             type: "unitCount",
             owner: "friendly",
             comparison: "gte",
             count: 1,
             hasTrait: "academy",
           },
-        ],
-      },
-      cost: { restSelf: true },
-      directives: [
-        {
-          action: {
-            action: "statModifier",
-            stat: "ap",
-            amount: -1,
-            duration: "thisTurn",
-            target: { owner: "opponent", cardType: "unit", count: 1 },
-          },
+          thenDirectives: [
+            {
+              action: {
+                action: "statModifier",
+                stat: "ap",
+                amount: -1,
+                duration: "thisTurn",
+                target: { owner: "opponent", cardType: "unit", count: 1 },
+              },
+            },
+          ],
         },
       ],
       sourceText:

@@ -5,10 +5,11 @@ export const welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience = defineCy
   id: "5a441989-2997-40a2-a72e-08ca1442a7f3",
   canonicalId: "kerry-eurodyne-axe-attitude-audience",
   slug: "kerry-eurodyne-axe-attitude-audience",
+  subname: "Axe, Attitude, Audience",
   rulesText:
     "When you roll in a Gig from your fixer area, you may ignore the result and reroll it once.\nWhen you roll a min or max value on a Gig, draw 1. If it's a d20, draw 3 instead.",
-  name: "Kerry Eurodyne — Axe, Attitude, Audience",
-  displayName: "Kerry Eurodyne — Axe, Attitude, Audience",
+  name: "Kerry Eurodyne",
+  displayName: "Kerry Eurodyne: Axe, Attitude, Audience",
   color: "yellow",
   classifications: ["Rocker", "Samurai"],
   set: {

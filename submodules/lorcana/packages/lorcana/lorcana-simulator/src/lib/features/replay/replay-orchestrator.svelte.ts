@@ -19,11 +19,12 @@ import {
   createSpectatorHistoryEntries,
   extractMatchState,
 } from "../spectator/spectator-match-orchestrator.svelte.js";
-import type {
-  PersistedReplayData,
-  PersistedReplayMetadata,
-  PersistedReplayStep,
-  ReplayChatMessage,
+import {
+  persistedReplayStepPosition,
+  type PersistedReplayData,
+  type PersistedReplayMetadata,
+  type PersistedReplayStep,
+  type ReplayChatMessage,
 } from "./fetch-replay.js";
 
 // ---------------------------------------------------------------------------
@@ -116,7 +117,10 @@ export class ReplayOrchestrator {
     this.#cardsMaps = cardsMaps;
     this.#playerIds = replayData.playerIds;
     this.#chatMessages = replayData.chatMessages ?? [];
-    this.#stepTimestamps = [0, ...replayData.steps.map((s) => s.acceptedMove.timestamp)];
+    this.#stepTimestamps = [
+      0,
+      ...replayData.steps.map((s) => persistedReplayStepPosition(s).timestamp),
+    ];
     this.#metadata = replayData.metadata;
     this.#steps = replayData.steps;
 
@@ -145,7 +149,7 @@ export class ReplayOrchestrator {
 
     let currentState: unknown = state;
     for (const step of replayData.steps) {
-      const turnNumber = step.acceptedMove.turnNumber;
+      const turnNumber = persistedReplayStepPosition(step).turnNumber;
 
       if (step.patches.length === 0) {
         this.#states.push(currentState as LorcanaMatchState);
@@ -173,8 +177,9 @@ export class ReplayOrchestrator {
       } as LorcanaMatchState;
     }
 
-    // Build move log from step data — acceptedMove already has the shape spectator history expects
-    const acceptedMoves = replayData.steps.map((step) => step.acceptedMove);
+    const acceptedMoves = replayData.steps.flatMap((step) =>
+      step.acceptedMove ? [step.acceptedMove] : [],
+    );
 
     const engineLogs = buildReplayEngineLogs(replayData.steps);
 
@@ -268,8 +273,8 @@ export class ReplayOrchestrator {
     // Step 0 = initial state (no move); step N corresponds to steps[N-1]
     const stepData = clamped > 0 ? this.#steps[clamped - 1] : null;
     if (stepData) {
-      console.group(`[Replay] Step ${clamped} — ${stepData.acceptedMove.moveId}`);
-      console.log("Move:", stepData.acceptedMove);
+      console.group(`[Replay] Step ${clamped} — ${stepData.acceptedMove?.moveId ?? "reversal"}`);
+      console.log("Move:", stepData.acceptedMove ?? stepData.reversal);
       console.log("Logs:", stepData.logs);
       console.log("Patches (state diff):", stepData.patches);
       console.groupEnd();
@@ -382,8 +387,8 @@ function buildReplayEngineLogs(steps: readonly PersistedReplayStep[]): ReplayEng
   for (const step of steps) {
     for (const log of step.logs) {
       engineLogs.push({
-        stateVersion: step.acceptedMove.stateVersion,
-        log: enrichChoiceSelectionLog(log, step.acceptedMove.input, choiceLabelsByEffectId),
+        stateVersion: persistedReplayStepPosition(step).stateVersion,
+        log: enrichChoiceSelectionLog(log, step.acceptedMove?.input, choiceLabelsByEffectId),
       });
     }
 

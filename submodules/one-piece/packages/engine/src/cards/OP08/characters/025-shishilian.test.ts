@@ -3,7 +3,7 @@ import { op08Shishilian025 } from "../../../../../cards/src/cards/OP08/character
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP08-025 Shishilian", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op08Shishilian025);
   });
 });

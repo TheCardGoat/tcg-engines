@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailLizzyWizzyDelicateWeapon = defineCyberpunkCard({
   id: "6b078eff-4cef-4beb-a299-ed388a72ce45",
   slug: "lizzy-wizzy-delicate-weapon",
+  subname: "Delicate Weapon",
   rulesText:
     "{Play} You may play a Program with cost 3 or less from your hand or trash for free. Bottom-deck it after you play it.\n{Blocker}",
-  name: "Lizzy Wizzy — Delicate Weapon",
-  displayName: "Lizzy Wizzy — Delicate Weapon",
+  name: "Lizzy Wizzy",
+  displayName: "Lizzy Wizzy: Delicate Weapon",
   canonicalId: "lizzy-wizzy-delicate-weapon",
   color: "blue",
   classifications: ["Rocker"],

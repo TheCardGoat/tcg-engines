@@ -52,6 +52,10 @@ function visibleCardIds(value: unknown): string[] {
   return [];
 }
 
+function formatEngineLabel(value: string): string {
+  return value.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase();
+}
+
 function outcomeItems(
   outcomes: GundamMoveOutcomes | undefined,
   resolveCard: EngineAdapter["cardDefinitionOf"],
@@ -154,7 +158,10 @@ function outcomeItems(
           `moved-${moved.cardId}`,
           cardNode(moved.cardId, resolveCard, renderCardLink, `moved-${moved.cardId}`),
         ),
-        segment("text", ` moved${moved.from ? ` from ${moved.from}` : ""} to ${moved.to}.`),
+        segment(
+          "text",
+          ` moved${moved.from ? ` from ${formatEngineLabel(moved.from)}` : ""} to ${formatEngineLabel(moved.to)}.`,
+        ),
       ]),
     );
   }
@@ -172,7 +179,21 @@ function outcomeItems(
     items.push(
       sentence([
         segment(`exhausted-${id}`, cardNode(id, resolveCard, renderCardLink, `exhausted-${id}`)),
-        segment("text", " was exhausted."),
+        segment("text", " was rested."),
+      ]),
+    );
+  }
+
+  for (const modifier of outcomes.statModifiers ?? []) {
+    const amount = modifier.amount >= 0 ? `+${modifier.amount}` : String(modifier.amount);
+    const duration = formatEngineLabel(modifier.duration);
+    items.push(
+      sentence([
+        segment(
+          `stat-${modifier.cardId}`,
+          cardNode(modifier.cardId, resolveCard, renderCardLink, `stat-${modifier.cardId}`),
+        ),
+        segment("text", ` gets ${modifier.stat.toUpperCase()} ${amount} during ${duration}.`),
       ]),
     );
   }
@@ -298,6 +319,10 @@ function primaryItem(
       return `Passed (${log.context}).`;
     case "turnStart":
       return `${prettyPlayer(String(log.activePlayerId), viewerId, prettyNames)} started the turn.`;
+    case "mulligan":
+      return log.count > 0
+        ? `Finished mulligan (redraw count: ${log.count}).`
+        : "Kept the opening hand.";
     case "gameEnd":
       return `Game ended: ${log.reason}.`;
     default: {

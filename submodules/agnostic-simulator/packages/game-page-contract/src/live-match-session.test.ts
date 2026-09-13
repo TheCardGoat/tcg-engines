@@ -1,9 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { GatewayConnectionState, GatewayHandle } from "@tcg/gateway-client";
+import { GatewayClientMessage } from "@tcg/protocol";
 
 import { createLiveMatchSession } from "./live-match-session.js";
 import type { LiveMatchSessionConfig } from "./live-match-session.js";
+import type { LiveMatchBootstrapV1 } from "./page-data.js";
 
 type AnyHandler = (event: string, payload: unknown) => void;
 type StateHandler = (state: GatewayConnectionState) => void;
@@ -110,14 +112,67 @@ function createConfig(overrides: Partial<LiveMatchSessionConfig> = {}): {
   const handle = createFakeHandle();
   const config: LiveMatchSessionConfig = {
     handle,
-    gameId: "game_1",
-    matchId: "match_1",
-    resolveRole: () => "player",
-    resolveGameProfileId: () => "profile_1",
+    bootstrap: testBootstrap("player"),
     onGameEvent: vi.fn(),
     ...overrides,
   };
   return { config, handle };
+}
+
+function testBootstrap(role: "player" | "spectator"): LiveMatchBootstrapV1 {
+  const permissions = {
+    act: role === "player",
+    chat: role === "player",
+    propose: role === "player",
+    useManualControls: false,
+    concede: role === "player",
+    viewReplay: true,
+    spectate: role === "spectator",
+    downloadReplay: true,
+    forkReplay: false,
+  };
+  return {
+    schemaVersion: 1,
+    match: {
+      matchId: "match_1",
+      gameType: "lorcana",
+      format: "best_of_1",
+      matchType: "casual",
+      status: "in_progress",
+      participants: [{ id: "profile_1", seat: 1, displayName: "Player" }],
+      gameIds: ["game_1"],
+    },
+    game: {
+      gameId: "game_1",
+      gameNumber: 1,
+      status: "in_progress",
+      authority: "server",
+      stateVersion: 0,
+      view: {},
+    },
+    viewer:
+      role === "player"
+        ? { role, userId: "user_1", actorId: "profile_1", seat: 1, permissions }
+        : { role, spectatorId: "spectator_1", permissions },
+    capabilities: {
+      actions: role === "player",
+      chat: role === "player",
+      proposals: role === "player",
+      manualControls: false,
+      spectating: true,
+      conceding: role === "player",
+      replay: false,
+    },
+    presence: { players: [], spectatorCount: 0 },
+    history: { recentMoves: [], engineLogs: [] },
+    realtime: {
+      wsUrl: "ws://localhost/lorcana",
+      ticket: "ticket",
+      reconnectToken: "reconnect",
+      expiresAt: new Date(Date.now() + 60_000).toISOString(),
+      protocolVersion: 2,
+    },
+  };
 }
 
 describe("createLiveMatchSession", () => {
@@ -128,25 +183,20 @@ describe("createLiveMatchSession", () => {
     vi.useRealTimers();
   });
 
-  it("start calls handle.join with resolved role and gameProfileId", () => {
+  it("start identifies the game and advertises the HTTP bootstrap version", () => {
     const onDiagnostic = vi.fn();
     const { config, handle } = createConfig({
-      resolveRole: () => "spectator",
-      resolveGameProfileId: () => "profile_7",
+      bootstrap: testBootstrap("spectator"),
       onDiagnostic,
     });
     const session = createLiveMatchSession(config);
     session.start();
 
-    expect(handle.join).toHaveBeenCalledWith({
-      gameId: "game_1",
-      role: "spectator",
-      gameProfileId: "profile_7",
-    });
+    expect(handle.join).toHaveBeenCalledWith({ gameId: "game_1", stateVersion: 0 });
     expect(onDiagnostic).toHaveBeenCalledWith(
       expect.objectContaining({
         type: "join_game_emit",
-        details: { gameId: "game_1", role: "spectator", gameProfileId: "profile_7" },
+        details: { gameId: "game_1", role: "spectator" },
       }),
     );
   });
@@ -159,6 +209,16 @@ describe("createLiveMatchSession", () => {
     handle.dispatch("state_update", { gameId: "game_1", stateVersion: 3 });
 
     expect(onGameEvent).toHaveBeenCalledWith("state_update", { gameId: "game_1", stateVersion: 3 });
+  });
+
+  it("wires server-event listeners before emitting the join", () => {
+    const { config, handle } = createConfig();
+
+    createLiveMatchSession(config).start();
+
+    expect(handle.onAny.mock.invocationCallOrder[0]).toBeLessThan(
+      handle.join.mock.invocationCallOrder[0]!,
+    );
   });
 
   it("game_joined initializes the presence map from the payload players", () => {
@@ -471,7 +531,7 @@ describe("createLiveMatchSession", () => {
   it("heartbeat emits at the configured interval when authenticated", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-06-01T12:00:00.000Z"));
-    const buildHeartbeatPayload = vi.fn(() => ({ activity: { idle: false } }));
+    const buildHeartbeatPayload = vi.fn(() => ({ activity: { idle: false, tabVisible: true } }));
     const { config, handle } = createConfig({
       buildHeartbeatPayload,
       heartbeatIntervalMs: 100,
@@ -491,15 +551,53 @@ describe("createLiveMatchSession", () => {
     expect(handle.emit).not.toHaveBeenCalledWith("heartbeat", expect.anything());
 
     vi.advanceTimersByTime(100);
-    expect(handle.emit).toHaveBeenCalledWith("heartbeat", { activity: { idle: false } });
+    expect(handle.emit).toHaveBeenCalledWith("heartbeat", {
+      activity: { idle: false, tabVisible: true },
+      clientSentAt: new Date("2026-06-01T12:00:00.100Z").getTime(),
+      correlationId: expect.any(String),
+    });
     expect(buildHeartbeatPayload).toHaveBeenCalledTimes(1);
     expect(session.getState().lastHeartbeatSentAt).toBe("2026-06-01T12:00:00.100Z");
 
-    // Subsequent intervals continue to emit.
-    vi.advanceTimersByTime(100);
+    const firstProbe = handle.emit.mock.calls[0]?.[1] as {
+      clientSentAt: number;
+      correlationId: string;
+    };
+    vi.advanceTimersByTime(25);
+    handle.heartbeatAck({
+      serverTime: "2026-06-01T12:00:00.125Z",
+      stateVersions: {},
+      clientSentAt: firstProbe.clientSentAt,
+      correlationId: firstProbe.correlationId,
+    });
+
+    // Subsequent heartbeats report the previous browser-observed full-path RTT.
+    vi.advanceTimersByTime(75);
     expect(handle.emit).toHaveBeenCalledTimes(2);
+    expect(handle.emit).toHaveBeenLastCalledWith(
+      "heartbeat",
+      expect.objectContaining({
+        previousCorrelationId: firstProbe.correlationId,
+        previousRoundTripMs: 25,
+      }),
+    );
     expect(buildHeartbeatPayload).toHaveBeenCalledTimes(2);
+    // Validate real session output at the same strict boundary as gateway ingress,
+    // including the second probe's previous-round-trip telemetry fields.
+    for (const [type, payload] of handle.emit.mock.calls) {
+      expect(GatewayClientMessage.parse({ ...payload, type })).toEqual({ ...payload, type });
+    }
     expect(session.getState().lastHeartbeatSentAt).toBe("2026-06-01T12:00:00.200Z");
+
+    vi.advanceTimersByTime(100);
+    expect(handle.emit).toHaveBeenCalledTimes(3);
+    expect(handle.emit).toHaveBeenLastCalledWith(
+      "heartbeat",
+      expect.not.objectContaining({
+        previousCorrelationId: expect.anything(),
+        previousRoundTripMs: expect.anything(),
+      }),
+    );
   });
 
   it("heartbeat_ack updates lastHeartbeatAckAt and records a diagnostic", () => {

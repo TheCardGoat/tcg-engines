@@ -1,6 +1,10 @@
 export { processEffectAction, canPayCosts, payCosts } from "./effects/actions.ts";
 export { evaluateConditions } from "./effects/conditions.ts";
-export { enqueueEffectsForTrigger, enqueueInPlayEffectsForTrigger } from "./shared.ts";
+export {
+  enqueueEffectsForTrigger,
+  enqueueInPlayEffectsForTrigger,
+  enqueueMirroredInPlayEffectsForTrigger,
+} from "./shared.ts";
 export {
   processEffectBlock,
   processQueuedEffectAction,

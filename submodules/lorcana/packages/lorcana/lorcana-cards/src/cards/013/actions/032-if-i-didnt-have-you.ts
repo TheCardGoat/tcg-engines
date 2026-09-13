@@ -45,7 +45,7 @@ export const ifIDidntHaveYou: ActionCard = {
           {
             type: "draw",
             amount: 2,
-            target: "CHOSEN_PLAYER",
+            target: "OPPONENT",
           },
         ],
       },

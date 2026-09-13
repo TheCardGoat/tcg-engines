@@ -54,19 +54,31 @@ describe("OP14-072 Baby 5", () => {
 
   test("may decline the On K.O. DON return and Life addition", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [op14eb04Baby5072], deck: [eb01Doma005], activeDon: 1 },
+      {
+        character: [op14eb04Baby5072, { card: eb01Fourtricks025, playedOnTurn: 0 }],
+        deck: [eb01Doma005],
+        activeDon: 1,
+      },
       { hand: [op02Vista011], activeDon: op02Vista011.cost },
       { firstPlayer: "south", activeSeat: "north" },
     );
     const babyId = engine.findCardInZone("south", "character", op14eb04Baby5072);
     const lifeBefore = engine.getView("south").players.south.lifeCount;
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+    const deckBefore = engine.getView("south").players.south.deckCount;
 
     engine.playCard(op02Vista011, "north");
     engine.resolveDecision("effectTargetSelection", { selectedIds: [babyId] }, "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south).toMatchObject({ activeDon: 1, lifeCount: lifeBefore, deckCount: 1 });
+    expect(view.players.south.activeDon).toBe(1);
+    expect(view.players.south.lifeCount).toBe(lifeBefore);
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(babyId);
     expect(view.prompts).toHaveLength(0);
+    engine.endTurn("north");
+    expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
   });
 });

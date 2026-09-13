@@ -49,3 +49,5 @@ export function hasCard(id: string): boolean {
 }
 
 export * from "./cards/index.ts";
+export * from "./deck-validation.ts";
+export * from "./preconstructed-decks.ts";

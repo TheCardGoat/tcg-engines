@@ -1,61 +1,24 @@
-import { createMockCommand, createMockResource, createMockUnit } from "@tcg/gundam-engine";
-import type { CardEffect, CommandCard } from "@tcg/gundam-types";
+import { gd01InterceptOrders099, st01Gm005, st01Guntank004, st03Gouf009 } from "@tcg/gundam-cards";
 
 import { createDevRuntime, type DevRuntime } from "../dev-runtime.ts";
+import { realResourceCards } from "./real-cards.ts";
 
 /**
- * Play-command fixture — drops the viewer into main-phase with a cost-1
- * command in hand that rests one enemy Unit, and an opponent Unit on the
- * board for it to target. Mirrors the `makeRestCommand({ timing: ["main"] })`
- * helper used by
- * `packages/engine/src/gundam/moves/core/play-command.test.ts`.
- *
- * A default `createMockCommand()` ships with no `effects`, so
- * `findPlayableCommandEffect` (see `play-command.ts`) rejects it. We
- * attach a real command effect with a "main" timing + a single-target
- * opponent-unit directive so the engine surfaces `playCommand` in the
- * viewer's available moves and drives a target-selection step.
+ * Production-card fixture for GD01-099 Intercept Orders. The opponent board
+ * deliberately offers three eligible Units with different frames and stats,
+ * so QA can exercise both the one- and two-target paths.
  */
-function makeRestCommand(): CommandCard {
-  const effect: CardEffect = {
-    type: "command",
-    activation: { timing: ["main"] },
-    directives: [
-      {
-        action: {
-          action: "rest",
-          target: {
-            owner: "opponent",
-            cardType: "unit",
-            count: 1,
-          },
-        },
-      },
-    ],
-    sourceText: "Rest 1 enemy Unit.",
-  };
-  return createMockCommand({
-    name: "Stand By",
-    cost: 1,
-    level: 1,
-    effect: effect.sourceText,
-    effects: [effect],
-  });
-}
-
 export function loadCommandRestDemo(): DevRuntime {
   return createDevRuntime({
     skipToMainPhase: true,
     p1: {
-      hand: [makeRestCommand()],
-      resourceArea: [createMockResource(), createMockResource(), createMockResource()],
+      hand: [gd01InterceptOrders099],
+      resourceArea: realResourceCards(4),
       deck: 30,
       resourceDeck: 10,
     },
     p2: {
-      battleArea: [
-        createMockUnit({ cost: 2, level: 2, ap: 2, hp: 4, color: "red", name: "Zaku II" }),
-      ],
+      battleArea: [st01Gm005, st01Guntank004, st03Gouf009],
       deck: 30,
       resourceDeck: 10,
     },

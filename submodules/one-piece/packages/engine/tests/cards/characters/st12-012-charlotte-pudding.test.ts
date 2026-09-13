@@ -16,5 +16,6 @@ describe("ST12-012 Charlotte Pudding", () => {
       false,
     );
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

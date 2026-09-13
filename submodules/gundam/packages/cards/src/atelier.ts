@@ -1,4 +1,4 @@
-import type { Card, CardPrinting, CardRarity, PrintFinish } from "@tcg/gundam-types";
+import type { Card, CardPrinting, CardRarity, CardSet, PrintFinish } from "@tcg/gundam-types";
 import * as cardExports from "./cards/index.ts";
 
 /**
@@ -88,6 +88,8 @@ export interface GundamPrintingInfo {
   artId: string;
   canonicalId: string;
   setCode: string;
+  /** Richer set metadata so consumers can rebuild a full {@link CardPrinting}. */
+  set: CardSet;
   collectorNumber: string;
   rarity: CardRarity;
   finish: PrintFinish;
@@ -128,6 +130,7 @@ function toPrintingInfo(canonicalId: string, printing: CardPrinting): GundamPrin
     artId: printing.artId,
     canonicalId,
     setCode: printing.setCode,
+    set: printing.set,
     collectorNumber: printing.collectorNumber,
     rarity: printing.rarity,
     finish: printing.finish,
@@ -166,6 +169,29 @@ const printingInfosByCanonicalId: ReadonlyMap<string, GundamPrintingInfo[]> = ((
   }
   return map;
 })();
+
+/**
+ * Canonical ids of every authored EX Base token card (`EXB-*` booster and
+ * `EXBP-*` promo). Each is a distinct artwork of the same gameplay setup
+ * token; setup-slot presentation may offer any of them. The free slot
+ * default is the booster-pack `EXB-001` card (`defaultGundamPrintingId`
+ * resolves its standard-finish printing).
+ */
+export const GUNDAM_EX_BASE_CANONICAL_IDS: readonly string[] = allGundamCards
+  .filter((card) => card.cardNumber.startsWith("EXB-") || card.cardNumber.startsWith("EXBP-"))
+  .map((card) => card.canonicalId)
+  .sort();
+
+/**
+ * Canonical ids of every authored EX Resource token card (`EXR-*` booster
+ * and `EXRP-*` promo). Each is a distinct artwork of the same gameplay
+ * setup token; setup-slot presentation may offer any of them. The free slot
+ * default is the booster-pack `EXR-001` card.
+ */
+export const GUNDAM_EX_RESOURCE_CANONICAL_IDS: readonly string[] = allGundamCards
+  .filter((card) => card.cardNumber.startsWith("EXR-") || card.cardNumber.startsWith("EXRP-"))
+  .map((card) => card.canonicalId)
+  .sort();
 
 /**
  * Resolve the canonical card id for any authored Gundam card id or card number.

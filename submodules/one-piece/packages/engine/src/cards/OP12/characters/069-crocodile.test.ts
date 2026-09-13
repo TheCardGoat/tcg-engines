@@ -45,4 +45,37 @@ describe("OP12-069 Crocodile", () => {
     expect(view.players.south.donDeckCount).toBe(donDeckBefore + 1);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op01Crocodile062,
+        character: [op12Crocodile069],
+        activeDon: 2,
+      },
+      {
+        character: [
+          { card: eb02Komei034, playedOnTurn: 0 },
+          { card: eb02Komei034, playedOnTurn: 0 },
+        ],
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const attackerId = engine
+      .getView("north")
+      .players.north.characters.filter((card) => card?.cardId === eb02Komei034.id)
+      .map((card) => card!.instanceId)[0]!;
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+    const activeDonBefore = engine.getView("south").players.south.activeDon;
+
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+    expect(view.players.south.activeDon).toBe(activeDonBefore);
+    // without the power grant, the leader may take damage depending on attacker power
+    expect(view.players.south.lifeCount).toBeLessThanOrEqual(lifeBefore);
+  });
 });

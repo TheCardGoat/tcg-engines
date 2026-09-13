@@ -7,6 +7,8 @@ import {
   emitLog,
   enqueueEffectsForTrigger,
   enqueueInPlayEffectsForTrigger,
+  enqueueKoEffectsForTrigger,
+  enqueueMirroredInPlayEffectsForTrigger,
   getCardForInstance,
   getCardCounter,
   getCardPower,
@@ -28,7 +30,7 @@ import {
 import { findKoReplacement } from "./effects/replacements.ts";
 import { matchesTargetFilter } from "./effects/targeting.ts";
 import { cleanupBattleModifiers, createChoicePrompt, moveCard } from "./state.ts";
-import type { GameCommand, MatchSeat, MatchState, PromptOption } from "./types.ts";
+import type { CardZone, GameCommand, MatchSeat, MatchState, PromptOption } from "./types.ts";
 
 function battleKoReplacementSource(state: MatchState, targetId: string) {
   const battle = state.battle;
@@ -51,14 +53,6 @@ function koBattleCharacter(state: MatchState) {
   const target = getInstance(state, battle.targetId);
   const defendingSeat = target.controller;
   const attachedDon = target.attachedDon;
-  if (target.attachedDon > 0) {
-    getPlayer(state, defendingSeat).restedDon += target.attachedDon;
-    target.attachedDon = 0;
-  }
-  moveCard(state, battle.targetId, target.owner, "trash", {
-    faceUp: true,
-    publicKnowledge: true,
-  });
   const triggerEvent = {
     instanceId: battle.targetId,
     instanceController: defendingSeat,
@@ -67,16 +61,17 @@ function koBattleCharacter(state: MatchState) {
     koCause: "battle" as const,
     attachedDon,
   };
-  enqueueEffectsForTrigger(state, battle.targetId, defendingSeat, "onKo", undefined, triggerEvent);
-  enqueueEffectsForTrigger(
-    state,
-    battle.targetId,
-    defendingSeat,
-    "whenCharacterKod",
-    undefined,
-    triggerEvent,
-  );
-  enqueueInPlayEffectsForTrigger(state, "whenCharacterKod", triggerEvent);
+  // 10-2-17-1/10-2-17-2: [On K.O.] effects activate on the field before the
+  // card is trashed, then resolve while the card is in the trash.
+  enqueueKoEffectsForTrigger(state, battle.targetId, defendingSeat, triggerEvent);
+  if (target.attachedDon > 0) {
+    getPlayer(state, defendingSeat).restedDon += target.attachedDon;
+    target.attachedDon = 0;
+  }
+  moveCard(state, battle.targetId, target.owner, "trash", {
+    faceUp: true,
+    publicKnowledge: true,
+  });
   enqueueInPlayEffectsForTrigger(state, "whenCharacterRemoved", triggerEvent);
   battle.result = "ko";
   emitLog(state, "system", `${cardName(getCardForInstance(state, battle.targetId))} is K.O.'d.`, {
@@ -141,6 +136,40 @@ export function finalizeBattleCleanup(state: MatchState, battleId: string) {
   }
   cleanupBattleModifiers(state, battle.id);
   state.battle = null;
+  // Battles are declared from the Main Phase, so leaving one returns the turn
+  // to Main unless the match already ended mid-battle.
+  if (state.phase === "battle") {
+    state.phase = "main";
+    emitEvent(state, "phaseChanged", "system", {
+      data: {
+        seat: state.activeSeat,
+        phase: "main",
+      },
+    });
+  }
+}
+
+// Rules 7-1-1-4, 7-1-2-3, and 7-1-3-3: at the end of the Attack, Block, and
+// Counter Steps, if the attacking card or the attack target has moved areas,
+// the battle proceeds to the End of the Battle instead of the next step.
+export function endBattleIfParticipantLeftArea(state: MatchState): boolean {
+  const battle = state.battle;
+  if (!battle) {
+    return false;
+  }
+  const attacker = getInstance(state, battle.attackerId);
+  const target = getInstance(state, battle.targetId);
+  const inBattleArea = (zone: CardZone) => zone === "leader" || zone === "character";
+  if (inBattleArea(attacker.zone) && inBattleArea(target.zone)) {
+    return false;
+  }
+  battle.result = "no_damage";
+  emitLog(state, "system", "The battle ends because the battling card left the area.", {
+    eventId: battle.id,
+    visibility: "public",
+  });
+  completeBattleResolution(state);
+  return true;
 }
 
 export function beginBattleCounterStep(state: MatchState) {
@@ -265,6 +294,9 @@ function enqueueBattleDamageEffects(state: MatchState, battle: NonNullable<Match
     undefined,
     triggerEvent,
   );
+  // 8-6-1: attacks are declared only by the turn player, so enqueueing the
+  // attacker's "when you deal damage" side before the defender's "when you
+  // take damage" side already resolves the turn player's effects first.
   enqueueInPlayEffectsForTrigger(state, "whenYouDealDamage", triggerEvent, [attacker.controller]);
   enqueueInPlayEffectsForTrigger(
     state,
@@ -301,6 +333,7 @@ export function continueLeaderDamage(state: MatchState) {
     state.status = "finished";
     state.phase = "finished";
     state.winner = otherSeat(defendingSeat);
+    state.finishReason = "leaderDamage";
     battle.result = "hit";
     battle.damageRemaining = 0;
     emitEvent(state, "winnerDeclared", state.winner, {
@@ -402,6 +435,9 @@ export function continueLeaderDamage(state: MatchState) {
 export function finalizeBattle(state: MatchState) {
   const battle = state.battle;
   if (!battle) {
+    return;
+  }
+  if (endBattleIfParticipantLeftArea(state)) {
     return;
   }
 
@@ -555,24 +591,34 @@ export function continueEffectDamage(
       sourceInstanceId,
       targetInstanceId: target.leaderInstanceId,
     };
-    enqueueInPlayEffectsForTrigger(state, "whenYouDealDamage", dealtDamageEvent, [controller]);
-    enqueueInPlayEffectsForTrigger(
-      state,
-      "whenYouTakeDamage",
-      {
-        instanceId: target.leaderInstanceId,
-        effectController: controller,
-        targetInstanceId: target.leaderInstanceId,
-        sourceInstanceId,
-      },
-      [targetSeat],
-    );
+    const takenDamageEvent = {
+      instanceId: target.leaderInstanceId,
+      effectController: controller,
+      targetInstanceId: target.leaderInstanceId,
+      sourceInstanceId,
+    };
+    // 8-6-1: an effect can deal damage while its controller is not the turn
+    // player (e.g. an [On K.O.] effect during the opponent's turn), and both
+    // players' damage triggers coincide, so the turn player's side enqueues
+    // first.
+    const enqueueDealtDamage = () =>
+      enqueueInPlayEffectsForTrigger(state, "whenYouDealDamage", dealtDamageEvent, [controller]);
+    const enqueueTakenDamage = () =>
+      enqueueInPlayEffectsForTrigger(state, "whenYouTakeDamage", takenDamageEvent, [targetSeat]);
+    if (controller !== state.activeSeat && targetSeat === state.activeSeat) {
+      enqueueTakenDamage();
+      enqueueDealtDamage();
+    } else {
+      enqueueDealtDamage();
+      enqueueTakenDamage();
+    }
     return;
   }
   if (target.life.length === 0) {
     state.status = "finished";
     state.phase = "finished";
     state.winner = controller;
+    state.finishReason = "leaderDamage";
     emitEvent(state, "winnerDeclared", controller, {
       sourceCardId: getInstance(state, sourceInstanceId).cardId,
       sourceInstanceId,
@@ -709,7 +755,11 @@ export function canAttackWith(state: MatchState, seat: MatchSeat, attackerId: st
   ) {
     return false;
   }
-  if (state.turnNumber === 1 && state.activeSeat === state.config.firstPlayer) {
+  // 6-5-6-1: Neither player can battle on their first turn (per seat, not by
+  // absolute game-turn index — extra turns must not let the second player
+  // battle on their first active turn).
+  const turnsStarted = getPlayer(state, seat).turnsStarted;
+  if (typeof turnsStarted !== "number" || Number.isNaN(turnsStarted) || turnsStarted < 2) {
     return false;
   }
   if (attacker.zone === "character" && attacker.playedOnTurn === state.turnNumber) {
@@ -802,6 +852,13 @@ export function beginAttack(
     damageRemaining: null,
     result: "pending",
   };
+  state.phase = "battle";
+  emitEvent(state, "phaseChanged", "system", {
+    data: {
+      seat,
+      phase: "battle",
+    },
+  });
   emitEvent(state, "attackDeclared", seat, {
     sourceCardId: attacker.cardId,
     sourceInstanceId: attackerId,
@@ -827,6 +884,9 @@ export function beginAttack(
     targetInstanceId: targetId,
   };
   enqueueEffectsForTrigger(state, attackerId, seat, "whenAttacking", undefined, attackEvent);
+  // "When your opponent attacks" can only live on the defending player's
+  // in-play cards, and the attacking (turn) player's [When Attacking] effects
+  // enqueue above, so 8-6-1 turn-player-first ordering already holds.
   enqueueInPlayEffectsForTrigger(state, "onOpponentAttack", attackEvent, [otherSeat(seat)]);
   enqueueResolution(state, { kind: "battleBlockStep", battleId: state.battle.id });
 }
@@ -975,12 +1035,13 @@ export function resolvePrompt(
           });
           enqueueEffectsForTrigger(state, instanceId, command.seat, "counter", undefined);
           const triggerEvent = { instanceId, effectController: command.seat };
-          enqueueInPlayEffectsForTrigger(state, "whenYouActivateEvent", triggerEvent, [
+          enqueueMirroredInPlayEffectsForTrigger(
+            state,
             command.seat,
-          ]);
-          enqueueInPlayEffectsForTrigger(state, "whenOpponentActivatesEvent", triggerEvent, [
-            otherSeat(command.seat),
-          ]);
+            "whenYouActivateEvent",
+            "whenOpponentActivatesEvent",
+            triggerEvent,
+          );
         }
       }
 

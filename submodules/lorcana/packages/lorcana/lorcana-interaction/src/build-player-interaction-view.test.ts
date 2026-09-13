@@ -162,6 +162,96 @@ function targetContext(
 }
 
 describe("buildPlayerInteractionView", () => {
+  it("treats card as a wildcard even alongside a concrete card type", () => {
+    const context = targetContext({
+      targetDsl: [
+        {
+          selector: "chosen",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["card", "item"],
+          count: 1,
+        },
+      ],
+    });
+    const view = buildPlayerInteractionView(withPendingPrompt(context), PLAYER_ONE);
+    expect(view.interactions.flatMap((i) => (i.kind === "select-card" ? [i.cardId] : []))).toEqual([
+      TARGET_A,
+      TARGET_B,
+    ]);
+  });
+
+  it("scopes ownership to the active descriptor and stays on a multi-card group until filled", () => {
+    const context = targetContext({
+      targetDsl: [
+        { selector: "chosen", owner: "any", zones: ["play"], cardTypes: ["location"], count: 1 },
+        {
+          selector: "chosen",
+          owner: "any",
+          zones: ["play"],
+          cardTypes: ["character"],
+          count: 2,
+          requireSameOwner: true,
+        },
+        { selector: "chosen", owner: "you", zones: ["hand"], count: 1 },
+      ],
+      cardCandidateIds: [LOCATION_A, SOURCE_CARD, TARGET_A, TARGET_B, HAND_A],
+      minSelections: 4,
+      maxSelections: 4,
+    });
+    const board = withPendingPrompt(context);
+    board.cards[LOCATION_A] = {
+      ...board.cards[LOCATION_A]!,
+      ownerId: PLAYER_TWO,
+      controllerId: PLAYER_TWO,
+    };
+    const candidates = (selected: CardInstanceId[]) =>
+      buildPlayerInteractionView(board, PLAYER_ONE, {
+        pendingSelectedCardIds: selected,
+      }).interactions.flatMap((i) => (i.kind === "select-card" ? [i.cardId] : []));
+    // The earlier opponent-owned location must not restrict the character group.
+    expect(candidates([LOCATION_A])).toEqual([SOURCE_CARD, TARGET_A, TARGET_B]);
+    expect(candidates([LOCATION_A, SOURCE_CARD])).toEqual([TARGET_A]);
+    expect(candidates([LOCATION_A, SOURCE_CARD, TARGET_A])).toEqual([HAND_A]);
+  });
+
+  it("limits further picks to the first selected owner only when required", () => {
+    for (const constrained of [false, true]) {
+      const context = targetContext({
+        targetDsl: [
+          {
+            selector: "chosen",
+            owner: "any",
+            zones: ["play"],
+            cardTypes: ["card"],
+            count: { upTo: 2 },
+            ...(constrained ? { requireSameOwner: true } : {}),
+          },
+        ],
+        cardCandidateIds: [SOURCE_CARD, TARGET_A, TARGET_B],
+        minSelections: 0,
+        maxSelections: 2,
+      });
+      const board = withPendingPrompt(context);
+      for (const first of [TARGET_A, TARGET_B]) {
+        const view = buildPlayerInteractionView(board, PLAYER_ONE, {
+          pendingSelectedCardIds: [first],
+        });
+        const candidates = view.interactions.flatMap((i) =>
+          i.kind === "select-card" ? [i.cardId] : [],
+        );
+        expect(view.activePrompt?.selectedCardIds).toEqual([first]);
+        expect(candidates).toEqual(
+          constrained
+            ? first === TARGET_A
+              ? [SOURCE_CARD]
+              : []
+            : [SOURCE_CARD, first === TARGET_A ? TARGET_B : TARGET_A],
+        );
+      }
+    }
+  });
+
   it("returns an empty view when no prompt is active", () => {
     const view = buildPlayerInteractionView(emptyBoard(), PLAYER_ONE);
     expect(view.activePrompt).toBeNull();
@@ -1013,6 +1103,7 @@ describe("buildPlayerInteractionView", () => {
         withPendingPrompt(
           moveToLocationContext({
             currentSelection: { targets: [LOCATION_A] },
+            resolvedTargetIdsBySlot: { location: LOCATION_A },
             originatesFromOptional: true,
             autoResolvedSlots: ["subject"],
             cardCandidateIds: [TARGET_A],
@@ -1045,6 +1136,12 @@ describe("buildPlayerInteractionView", () => {
         targetCardId: LOCATION_A,
         locked: true,
       });
+      expect(view.activePrompt?.activeSlotIndex).toBe(0);
+      expect(
+        view.interactions
+          .filter((interaction) => interaction.kind === "select-card")
+          .map((interaction) => interaction.cardId),
+      ).toEqual([TARGET_A]);
       expect(view.submission.canCancel).toBe(true);
       expect(view.submission.cancelPayload).toEqual({ resolveOptional: false });
       expect(view.submission.canSubmit).toBe(true);

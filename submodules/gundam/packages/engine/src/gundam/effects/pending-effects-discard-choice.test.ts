@@ -65,17 +65,24 @@ describe("pending effects — filtered discard choice", () => {
     const [, firstEligibleId, secondEligibleId, ineligibleId] = p1.getHand();
 
     expectSuccess(p1.deployUnit(source));
-    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
+      actionKind: "discard",
+      optionalDirectiveIndex: 0,
       legalTargetIds: [firstEligibleId, secondEligibleId],
+      candidateSet: {
+        kind: "zone",
+        zone: "hand",
+        cardIds: [firstEligibleId, secondEligibleId, ineligibleId],
+      },
     });
-    expectFailure(p1.resolveEffect({ targets: [ineligibleId!] }), "ILLEGAL_TARGET");
+    expectFailure(
+      p1.resolveEffect({ optionalAnswers: { 0: true }, targets: [ineligibleId!] }),
+      "ILLEGAL_TARGET",
+    );
     expect(p1.getCardsInZone("trash")).toHaveLength(0);
 
-    expectSuccess(p1.resolveEffect({ targets: [secondEligibleId!] }));
+    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true }, targets: [secondEligibleId!] }));
 
     expect(p1.getCardsInZone("trash")).toEqual([secondEligibleId]);
     expect(p1.getHand()).toEqual(expect.arrayContaining([firstEligibleId, ineligibleId]));

@@ -23,6 +23,7 @@ import {
 // Lucyna Kushinada — promo card, single printing, rarity null. The whole promo
 // set is alt-art, so this is a "promo-only" card: every printing is alt-art.
 const LUCYNA_PROMO_CARD_ID = "3f2e5d58-dea3-4090-8fe7-0f5f4af2d333";
+const LUCYNA_CANONICAL_ID = "lucyna-kushinada";
 const LUCYNA_PROMO_PRINTING_ID = "14dc2e38-a373-4b25-be12-e74b1f79e3b2";
 
 // Mandibular Upgrade — welcometonightcityretail gear, rarity Common across
@@ -106,8 +107,11 @@ describe("CYBERPUNK_ALT_ART_SET_CODES + isCyberpunkAlternateArtPrinting", () => 
 
 describe("getCyberpunkCanonicalForCardId", () => {
   it("resolves an authored card id to its canonical merged id", () => {
-    // The promo card is single-set, so canonical == its own id.
-    expect(getCyberpunkCanonicalForCardId(LUCYNA_PROMO_CARD_ID)).toBe(LUCYNA_PROMO_CARD_ID);
+    expect(getCyberpunkCanonicalForCardId(LUCYNA_PROMO_CARD_ID)).toBe(LUCYNA_CANONICAL_ID);
+  });
+
+  it("resolves the stable canonical slug to itself", () => {
+    expect(getCyberpunkCanonicalForCardId(LUCYNA_CANONICAL_ID)).toBe(LUCYNA_CANONICAL_ID);
   });
 
   it("returns null for a truly-unknown card id (strict rejection preserved)", () => {
@@ -157,7 +161,7 @@ describe("getCyberpunkPrintingInfosForCanonical + getCyberpunkPrintingInfo", () 
     const info = getCyberpunkPrintingInfo(LUCYNA_PROMO_PRINTING_ID);
     expect(info).not.toBeNull();
     expect(info!.printingId).toBe(LUCYNA_PROMO_PRINTING_ID);
-    expect(info!.canonicalId).toBe(LUCYNA_PROMO_CARD_ID);
+    expect(info!.canonicalId).toBe(LUCYNA_CANONICAL_ID);
 
     // Consistency with the canonical-scoped enumeration.
     const canonicalInfos = getCyberpunkPrintingInfosForCanonical(info!.canonicalId);

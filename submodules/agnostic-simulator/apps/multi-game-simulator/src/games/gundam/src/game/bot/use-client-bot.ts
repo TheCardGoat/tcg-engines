@@ -4,7 +4,7 @@ import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 
 import type { DevRuntimeBotHandle } from "../dev-runtime.ts";
 import type { SnapshotBotConfig } from "../snapshot.ts";
-import { BOT_ATTACHERS } from "./bot-registry.ts";
+import { attachFixtureStrategy, BOT_ATTACHERS } from "./bot-registry.ts";
 
 /**
  * Attach a bot to a reconstructed-from-snapshot `MatchRuntime` on the
@@ -19,9 +19,9 @@ import { BOT_ATTACHERS } from "./bot-registry.ts";
  * version only disposed strategy-bot handles, leaking
  * `runtime.onStateUpdate` listeners for every auto-pass fixture.
  *
- * Fixtures absent from the registry intentionally lose their bot
- * behavior after hydration — see the registry's docs for the
- * trade-off and the current allowlist.
+ * Named browser labs can explicitly select the interactive strategy
+ * attacher through `botConfig.driver`; otherwise the fixture registry
+ * preserves authored automation after hydration.
  */
 export function useClientBot(
   fixtureName: string,
@@ -38,7 +38,8 @@ export function useClientBot(
   const botConfigKey = botConfig ? JSON.stringify(botConfig) : "";
 
   useEffect(() => {
-    const attacher = BOT_ATTACHERS[fixtureName];
+    const attacher =
+      botConfig?.driver === "strategy" ? attachFixtureStrategy : BOT_ATTACHERS[fixtureName];
     if (!attacher) return;
     // Bot attachers are async — they dynamic-import the bot impls so
     // the production bundle doesn't carry all bot code on the

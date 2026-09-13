@@ -6,10 +6,11 @@ export const welcomeToNightCityRetailLaLloronaGhostOfThePast = defineCyberpunkCa
   id: "1b516742-cdf3-4597-8ba1-be787240ab3b",
   canonicalId: "la-llorona-ghost-of-the-past",
   slug: "la-llorona-ghost-of-the-past",
+  subname: "Ghost of the Past",
   rulesText:
     "{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)\nWhen this Unit uses {Blocker}, increase a Gig by up to 3.",
-  name: "La Llorona — Ghost of the Past",
-  displayName: "La Llorona — Ghost of the Past",
+  name: "La Llorona",
+  displayName: "La Llorona: Ghost of the Past",
   color: "red",
   classifications: ["Ganger", "Valentino"],
   set: {

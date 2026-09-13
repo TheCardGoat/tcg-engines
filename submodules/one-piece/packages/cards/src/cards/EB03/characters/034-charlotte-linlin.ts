@@ -95,6 +95,7 @@ export const eb03CharlotteLinlin034: CharacterCard = {
             position: "top",
           },
         ],
+        optional: true,
       },
     ],
   },

@@ -30,8 +30,13 @@ function valuesForAction(
     case "sellCard":
     case "callLegend":
     case "goSolo":
-    case "resolveCardToPlay":
       return { cardId: action.cardId };
+    case "resolveCardToPlay":
+      return action.pass
+        ? { pass: true }
+        : withOptional(withOptional({}, "cardId", action.cardId), "attachToId", action.attachToId);
+    case "resolveChooseEffect":
+      return { optionId: action.optionId };
     case "attackUnit":
       return { attackerId: action.attackerId, defenderId: action.defenderId };
     case "attackRival":

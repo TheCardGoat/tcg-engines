@@ -49,6 +49,7 @@ export const eb01Kyros040: LeaderCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: true,
           },
         ],
         actions: [

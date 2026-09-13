@@ -103,6 +103,44 @@ function createTestContext(args?: {
 }
 
 describe("target-availability", () => {
+  for (const constrained of [false, true]) {
+    for (const sameOwner of [false, true]) {
+      for (const optionalCount of [false, true]) {
+        it(`checks required owner-consistent capacity (constraint ${constrained}, same owner ${sameOwner}, up to ${optionalCount})`, () => {
+          const first = "owner-capacity-first" as CardInstanceId;
+          const second = "owner-capacity-second" as CardInstanceId;
+          const ctx = createTestContext({
+            definitions: {
+              [first]: { id: "first", cardType: "character" },
+              [second]: { id: "second", cardType: "character" },
+            },
+            zoneCards: {
+              [`discard:${PLAYER_ONE}`]: sameOwner ? [first, second] : [first],
+              [`discard:${PLAYER_TWO}`]: sameOwner ? [] : [second],
+            },
+          });
+          const effect = {
+            type: "put-on-bottom",
+            target: {
+              selector: "chosen",
+              owner: "any",
+              zones: ["discard"],
+              cardTypes: ["card"],
+              count: optionalCount ? { upTo: 2 } : 2,
+              requireSameOwner: constrained,
+            },
+          };
+          const availability = analyzeTargetSelectionAvailability(effect, PLAYER_ONE, ctx);
+          expect(availability.canSatisfyRequiredSelection).toBe(
+            !constrained || sameOwner || optionalCount,
+          );
+          expect(availability.shouldAutoRejectForNoValidTargets).toBe(
+            constrained && !sameOwner && !optionalCount,
+          );
+        });
+      }
+    }
+  }
   it("excludes the return-from-discard source from source: other target candidates", () => {
     const source = "alien-self" as CardInstanceId;
     const other = "alien-other" as CardInstanceId;

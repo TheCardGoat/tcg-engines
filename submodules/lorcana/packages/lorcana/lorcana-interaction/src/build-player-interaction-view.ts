@@ -490,7 +490,16 @@ function getFixedMoveToLocationId(
   if (context.targetDsl.length !== 1) {
     return null;
   }
-  return getProjectedAtLocationId(board, context.sourceCardId);
+  const engineResolvedLocation = context.resolvedTargetIdsBySlot?.location;
+  if (engineResolvedLocation) {
+    return engineResolvedLocation;
+  }
+  const acknowledgedLocation = (context.currentSelection.targets ?? []).find(
+    (cardId) => board && getProjectedCardType(board, cardId as CardInstanceId) === "location",
+  );
+  return acknowledgedLocation
+    ? (acknowledgedLocation as CardInstanceId)
+    : getProjectedAtLocationId(board, context.sourceCardId);
 }
 
 function computeActiveSlotIndex(
@@ -857,7 +866,22 @@ function computeTargetDslIndex(
     return 0;
   }
 
-  return Math.min(selectedCardIds.length, context.targetDsl.length - 1);
+  let start = 0;
+  for (let index = 0; index < context.targetDsl.length - 1; index += 1) {
+    start += flatTargetCapacity(context.targetDsl[index]!, context.cardCandidateIds.length);
+    if (selectedCardIds.length < start) return index;
+  }
+  return context.targetDsl.length - 1;
+}
+
+function flatTargetCapacity(target: LorcanaTargetDSL, candidateCount: number): number {
+  const count = "count" in target ? target.count : undefined;
+  if (count === undefined) return 1;
+  if (typeof count === "number") return Math.max(0, count);
+  if (count === "all" || "atLeast" in count) return candidateCount;
+  if ("exactly" in count) return Math.max(0, count.exactly);
+  if ("upTo" in count) return Math.max(0, count.upTo);
+  return Math.max(0, count.between[1]);
 }
 
 function filterCardCandidatesForActiveSlot(params: {
@@ -896,6 +920,18 @@ function filterCardCandidatesForActiveSlot(params: {
 
   const selected = new Set<string>(selectedCardIds.map(String));
 
+  // Flat selections concatenate descriptor groups. Earlier groups may have a
+  // different owner; only this group's first pick constrains subsequent picks.
+  // Explicit slots hold one card each, so there is no within-slot owner pair.
+  const groupStart = context.targetDsl
+    .slice(0, targetDslIndex)
+    .reduce(
+      (total, descriptor) =>
+        total + flatTargetCapacity(descriptor, context.cardCandidateIds.length),
+      0,
+    );
+  const firstGroupSelection = context.expectedSlottedKind ? undefined : selectedCardIds[groupStart];
+
   return context.cardCandidateIds.filter((cardId) => {
     if (selected.has(String(cardId))) {
       return false;
@@ -904,6 +940,11 @@ function filterCardCandidatesForActiveSlot(params: {
     const card = board.cards[String(cardId)];
     if (!card) {
       return false;
+    }
+
+    if ("requireSameOwner" in target && target.requireSameOwner && firstGroupSelection) {
+      const firstSelected = board.cards[String(firstGroupSelection)];
+      if (!firstSelected || card.ownerId !== firstSelected.ownerId) return false;
     }
 
     if (hasExcludeSelf(target) && String(cardId) === String(context.sourceCardId)) {
@@ -935,6 +976,8 @@ function filterCardCandidatesForActiveSlot(params: {
 }
 
 function getAllowedCardTypes(target: LorcanaTargetDSL): LorcanaCardType[] {
+  // Match target-resolver: "card" permits every type, including in mixed lists.
+  if (getTargetCardTypes(target)?.includes("card")) return [];
   const cardTypes = getTargetCardTypes(target)?.filter(isLorcanaCardType) ?? [];
   if ("cardType" in target && isLorcanaCardType(target.cardType)) {
     return [...new Set([...cardTypes, target.cardType])];

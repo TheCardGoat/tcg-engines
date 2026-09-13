@@ -11,6 +11,7 @@ import {
   getInstance,
   getKeywords,
   getPlayer,
+  getSetBasePower,
   otherSeat,
 } from "../shared.ts";
 import type { MatchSeat, MatchState } from "../types.ts";
@@ -74,7 +75,13 @@ export function matchesTargetFilter(
     }
     case "power":
     case "basePower": {
-      const value = filter.filter === "power" ? getCardPower(state, candidateId) : basePower(card);
+      // 4-9-2-1: a "base power" filter reads the card's base power, so an
+      // effect-set base power (getSetBasePower) replaces the printed value,
+      // while current-power modifiers (given DON!!, +/- power) do not.
+      const value =
+        filter.filter === "power"
+          ? getCardPower(state, candidateId)
+          : (getSetBasePower(state, candidateId) ?? basePower(card));
       switch (filter.comparison) {
         case "eq":
           return { supported: true, matches: value === filter.value };

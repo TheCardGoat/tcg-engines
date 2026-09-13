@@ -46,6 +46,7 @@ export const op06Kuzan045: CharacterCard = {
               },
             },
             position: "bottom",
+            order: "any",
           },
         ],
       },

@@ -84,13 +84,42 @@ function getCardDamage(cardSnapshotsById: CardSnapshotMap, cardId: string | unde
     : 0;
 }
 
+function normalizePrintedName(name: string): string {
+  return name.normalize("NFD").replace(/\p{M}/gu, "").trim().toLowerCase();
+}
+
+/**
+ * Match a board-card label against a printed name check.
+ * Labels are typically "Name - Version". Ampersand team names (CR 5.2.6.1)
+ * also count as either half (e.g. "Darkwing Duck & Launchpad" is named Darkwing Duck).
+ */
 function cardMatchesPrintedName(card: LorcanaCardSnapshot | undefined, name: string): boolean {
   if (!card || card.isMasked) {
     return false;
   }
 
   const label = card.label.trim();
-  return label === name || label.startsWith(`${name} - `);
+  if (label.length === 0) {
+    return false;
+  }
+
+  const printedName = label.includes(" - ") ? label.slice(0, label.indexOf(" - ")).trim() : label;
+  const normalizedTarget = normalizePrintedName(name);
+  if (normalizedTarget.length === 0) {
+    return false;
+  }
+
+  const candidates = new Set<string>([printedName]);
+  if (printedName.includes(" & ")) {
+    for (const part of printedName.split(" & ")) {
+      const trimmed = part.trim();
+      if (trimmed.length > 0) {
+        candidates.add(trimmed);
+      }
+    }
+  }
+
+  return [...candidates].some((candidate) => normalizePrintedName(candidate) === normalizedTarget);
 }
 
 function getSelectedTargetSelfReplacementAmount(

@@ -22,5 +22,7 @@ describe("OP10-046 Kyros", () => {
     expect(engine.getView("south").players.south.hand.map((card) => card.instanceId)).toContain(
       ownId,
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

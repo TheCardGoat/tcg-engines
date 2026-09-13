@@ -30,6 +30,7 @@ describe("EB03-031 Vinsmoke Reiju", () => {
 
     engine.playCard(eb03VinsmokeReiju031, "south");
 
+    engine.acceptLeadingOptional("south");
     const cost = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     expect(cost?.kind).toBe("payCost");
     if (cost?.kind !== "payCost") {
@@ -37,6 +38,7 @@ describe("EB03-031 Vinsmoke Reiju", () => {
     }
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
 
+    engine.acceptLeadingOptional("south");
     const event = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(event?.kind).toBe("selectEntity");
     if (event?.kind !== "selectEntity") {
@@ -75,5 +77,34 @@ describe("EB03-031 Vinsmoke Reiju", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(eventId);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op12Sanji041,
+      hand: [eb03VinsmokeReiju031],
+      trash: [op03SanjiSPilaf056, op05ItSAWasteOfHumanLife058],
+      deck: [eb01Doma005, eb01Fourtricks025, eb01MountainGod018],
+      character: [{ card: op04PageOne053, attachedDon: 1 }],
+      activeDon: 6,
+    });
+
+    engine.playCard(eb03VinsmokeReiju031, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -54,7 +54,7 @@ export interface ClockView {
   /** Signed reserve after client-side interpolation. Negative in negative time. */
   displayMs: number;
   isNegative: boolean;
-  /** mm:ss with optional leading minus ("1:23" or "-0:05"). */
+  /** Player-facing mm:ss display, clamped at "0:00" after expiry. */
   formattedTime: string;
   urgencyClass: "" | "timer--warning" | "timer--danger" | "timer--critical";
   /** True when the owning player's clock is in the final 10s of positive reserve. */
@@ -164,7 +164,7 @@ export function deriveClockView(
   return {
     displayMs,
     isNegative,
-    formattedTime: formatClockTime(displayMs),
+    formattedTime: formatClockTime(Math.max(0, displayMs)),
     urgencyClass,
     shouldPlayLowTimeTick,
     decisionCapExceeded,

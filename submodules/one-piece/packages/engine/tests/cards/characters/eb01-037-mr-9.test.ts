@@ -23,6 +23,7 @@ describe("EB01-037 Mr. 9", () => {
 
     engine.declareAttack(firstAttackerId, engine.leader("north"), "south");
 
+    engine.acceptLeadingOptional("north");
     const ko = engine.pendingDecision("effectTargetSelection", "north").steps[0];
     expect(ko?.kind).toBe("selectEntity");
     if (ko?.kind !== "selectEntity") {

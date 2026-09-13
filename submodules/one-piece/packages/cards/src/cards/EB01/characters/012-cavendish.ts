@@ -54,6 +54,7 @@ export const eb01Cavendish012: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Supernovas",
+                match: "includes",
               },
               {
                 condition: "notHasCard",
@@ -96,6 +97,7 @@ export const eb01Cavendish012: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Supernovas",
+                match: "includes",
               },
               {
                 condition: "notHasCard",

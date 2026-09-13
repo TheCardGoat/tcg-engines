@@ -13,7 +13,8 @@ vi.mock("./lib/gateway/root-socket", () => ({
   initRootSocket: initRootSocketMock,
 }));
 
-vi.mock("./simulator/routeData", () => ({
+vi.mock("./simulator/routeData", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("./simulator/routeData")>()),
   fetchSharedSimulatorRouteData: fetchSharedSimulatorRouteDataMock,
 }));
 
@@ -48,6 +49,7 @@ function makeClientLoaderArgs(
 
 beforeEach(async () => {
   vi.clearAllMocks();
+  initRootSocketMock.mockReturnValue(undefined);
   fetchSharedSimulatorRouteDataMock.mockResolvedValue({ matchPageData: null });
   resolveGatewayTicketMock.mockResolvedValue({
     status: "ticket_failed",
@@ -59,142 +61,49 @@ beforeEach(async () => {
 });
 
 describe("root auth bootstrap", () => {
-  it("uses live-match URL gateway credentials for required root socket auth without a session", async () => {
-    const serverData = await loader(
-      makeLoaderArgs(
-        "https://tcg.online/cyberpunk/simulator/matches/match_1/games/game_1?playerId=player_1&ticket=url_ticket&authToken=url_token",
-      ),
-    );
-
-    expect(resolveGatewayTicketMock).not.toHaveBeenCalled();
-    expect(serverData.authBootstrap).toMatchObject({
-      status: "ready",
-      requireAuth: true,
-      hasSession: false,
-      hasTicket: true,
-      hasToken: true,
-      matchId: "match_1",
-      playerId: "player_1",
-    });
-    expect(serverData.urlGatewayCredentials).toEqual({
-      ticket: "url_ticket",
-      authToken: "url_token",
-    });
-
-    await clientLoader(makeClientLoaderArgs(serverData));
-
-    expect(initRootSocketMock).toHaveBeenCalledWith({
-      session: null,
-      gameSlug: "cyberpunk",
-      ticket: "url_ticket",
-      authToken: "url_token",
-      requireAuth: true,
-      matchId: "match_1",
-      playerId: "player_1",
+  it("prevents caching viewer-specific server-rendered sessions", async () => {
+    const { headers } = await import("./root");
+    expect(headers()).toEqual({
+      "Cache-Control": "private, no-store",
+      Vary: "Cookie, Authorization",
     });
   });
 
-  it("keeps required live-player routes closed when no session or URL credentials exist", async () => {
-    const serverData = await loader(
-      makeLoaderArgs(
-        "https://tcg.online/cyberpunk/simulator/matches/match_1/games/game_1?playerId=player_1",
-      ),
-    );
-
-    expect(resolveGatewayTicketMock).toHaveBeenCalledOnce();
-    expect(serverData.authBootstrap).toMatchObject({
-      status: "ticket_failed",
-      requireAuth: true,
-      hasSession: false,
-      hasTicket: false,
-      hasToken: false,
-      matchId: "match_1",
-      playerId: "player_1",
-    });
+  it("opens the Naruto gateway namespace for multiplayer", async () => {
+    const serverData = await loader(makeLoaderArgs("https://tcg.online/naruto/simulator"));
 
     await clientLoader(makeClientLoaderArgs(serverData));
 
+    expect(initRootSocketMock).toHaveBeenCalledWith(
+      expect.objectContaining({ gameSlug: "naruto" }),
+    );
+  });
+
+  it("initializes the active Riftbound root gateway", async () => {
+    const serverData = await loader(makeLoaderArgs("https://tcg.online/riftbound/simulator"));
+
+    const clientData = await clientLoader(makeClientLoaderArgs(serverData));
+
     expect(initRootSocketMock).toHaveBeenCalledWith({
       session: null,
-      gameSlug: "cyberpunk",
+      gameSlug: "riftbound",
       ticket: undefined,
       authToken: undefined,
-      requireAuth: true,
-      matchId: "match_1",
-      playerId: "player_1",
+      requireAuth: false,
     });
+    expect(clientData.rootSocketReady).toBe(true);
   });
 
-  it("requires auth for seated live-match route data without a playerId query", async () => {
-    fetchSharedSimulatorRouteDataMock.mockResolvedValueOnce({
-      matchPageData: { viewerSeat: 0 },
-    });
-
+  it("leaves live-session identity and connection ownership to the route", async () => {
     const serverData = await loader(
-      makeLoaderArgs("https://tcg.online/cyberpunk/simulator/matches/match_1/games/game_1"),
+      makeLoaderArgs(
+        "https://tcg.online/flesh-and-blood/simulator/matches/m1/games/g1?playerId=forged&ticket=forged",
+      ),
     );
-
-    expect(resolveGatewayTicketMock).toHaveBeenCalledWith({
-      request: expect.any(Request),
-      gameSlug: "cyberpunk",
-      matchId: "match_1",
-      playerId: undefined,
-      requireAuth: true,
-    });
-    expect(serverData.authBootstrap).toMatchObject({
-      status: "ticket_failed",
-      requireAuth: true,
-      hasSession: false,
-      hasTicket: false,
-      hasToken: false,
-      matchId: "match_1",
-    });
-  });
-
-  it("does not request a player-scoped ticket for signed-in spectators", async () => {
-    fetchSharedSimulatorRouteDataMock.mockResolvedValueOnce({
-      matchPageData: { viewerSeat: "spectator" },
-    });
-    resolveGatewayTicketMock.mockResolvedValueOnce({
-      status: "ready",
-      ticket: { ticket: "spectator_ticket", authToken: "spectator_token" },
-    });
-
-    const serverData = await loader(
-      makeLoaderArgs("https://tcg.online/cyberpunk/simulator/matches/match_1/games/game_1", {
-        status: "ready",
-        session: {
-          session: { token: "session_token" },
-          user: { id: "spectator_user" },
-        },
-      }),
-    );
-
-    expect(resolveGatewayTicketMock).toHaveBeenCalledWith({
-      request: expect.any(Request),
-      gameSlug: "cyberpunk",
-      matchId: undefined,
-      playerId: undefined,
-      requireAuth: true,
-    });
-    expect(serverData.authBootstrap).toMatchObject({
-      status: "ready",
-      requireAuth: true,
-      hasSession: true,
-      hasTicket: true,
-      hasToken: true,
-    });
-
+    expect(fetchSharedSimulatorRouteDataMock).not.toHaveBeenCalled();
+    expect(resolveGatewayTicketMock).not.toHaveBeenCalled();
+    expect(serverData.sessionRoute).toBe(true);
     await clientLoader(makeClientLoaderArgs(serverData));
-
-    expect(initRootSocketMock).toHaveBeenCalledWith({
-      session: { token: "session_token" },
-      gameSlug: "cyberpunk",
-      ticket: "spectator_ticket",
-      authToken: "spectator_token",
-      requireAuth: true,
-      matchId: undefined,
-      playerId: undefined,
-    });
+    expect(initRootSocketMock).not.toHaveBeenCalled();
   });
 });

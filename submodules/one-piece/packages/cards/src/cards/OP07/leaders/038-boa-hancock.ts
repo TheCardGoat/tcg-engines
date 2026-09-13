@@ -68,6 +68,7 @@ export const op07BoaHancock038: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

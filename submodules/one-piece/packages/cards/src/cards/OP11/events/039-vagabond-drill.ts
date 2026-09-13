@@ -42,9 +42,17 @@ export const op11VagabondDrill039: EventCard = {
               filters: [
                 {
                   filter: "anyOf",
-                  groups: [
-                    [{ filter: "trait", value: "Fish-Man", match: "includes" }],
-                    [{ filter: "trait", value: "Merfolk", match: "includes" }],
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Fish-Man",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Merfolk",
+                      match: "includes",
+                    },
                   ],
                 },
               ],
@@ -80,8 +88,17 @@ export const op11VagabondDrill039: EventCard = {
             target: {
               player: "opponent",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
-              filters: [{ filter: "cost", comparison: "lte", value: 4 }],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
             },
           },
         ],

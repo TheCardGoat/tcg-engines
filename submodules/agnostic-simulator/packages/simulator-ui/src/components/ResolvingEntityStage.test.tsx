@@ -3,6 +3,7 @@ import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { describe, expect, it, vi } from "vite-plus/test";
 
 import { ResolvingEntityStage } from "./ResolvingEntityStage.js";
+import { createSimulatorAnimationScope } from "../animation/provider/createSimulatorAnimationScope.js";
 
 const privateEntity: SimulatorEntity = {
   id: "secret-command",
@@ -20,14 +21,27 @@ const privateEntity: SimulatorEntity = {
 describe("ResolvingEntityStage", () => {
   it("never exposes hidden identity to its renderer or DOM", () => {
     const renderEntity = vi.fn((entity: SimulatorEntity) => <span>{entity.title}</span>);
+    const Animation = createSimulatorAnimationScope<{ entity: SimulatorEntity }>();
     const markup = renderToStaticMarkup(
-      <ResolvingEntityStage
-        entity={privateEntity}
-        active
-        anchorId="resolution:opponent"
-        label="Resolving"
-        renderEntity={renderEntity}
-      />,
+      <Animation.Root
+        sessionKey="test"
+        initialState={{ entity: privateEntity }}
+        initialVersion={1}
+        projection={{
+          getEntity: (state) => state.entity,
+          getZone: () => null,
+        }}
+        entityRenderer={({ entity }) => renderEntity(entity)}
+        viewerSeatId="player"
+        animationSpeed="off"
+      >
+        <ResolvingEntityStage
+          entity={privateEntity}
+          active
+          anchorId="resolution:opponent"
+          label="Resolving"
+        />
+      </Animation.Root>,
     );
 
     expect(renderEntity).toHaveBeenCalledWith(

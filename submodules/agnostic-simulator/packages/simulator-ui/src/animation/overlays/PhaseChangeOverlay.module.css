@@ -1,0 +1,157 @@
+.positioner {
+  --phase-change-accent: #c4a35a;
+
+  position: fixed;
+  width: min(46rem, calc(100vw - 2rem));
+  transform: translate(-50%, -50%);
+}
+
+.positioner[data-combat-step="true"] {
+  width: min(var(--phase-change-anchor-width, 20rem), calc(100vw - 2rem));
+  transform: translate(-50%, -50%);
+}
+
+.announcement {
+  display: grid;
+  width: 100%;
+  align-items: center;
+  grid-template-columns: minmax(2.5rem, 1fr) auto minmax(2.5rem, 1fr);
+  filter: drop-shadow(0 0.9rem 1.4rem rgb(0 0 0 / 52%));
+}
+
+.rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--phase-change-accent) 32%, transparent) 28%,
+    color-mix(in srgb, var(--phase-change-accent) 88%, white 12%)
+  );
+}
+
+.rule:last-child {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--phase-change-accent) 88%, white 12%),
+    color-mix(in srgb, var(--phase-change-accent) 32%, transparent) 72%,
+    transparent
+  );
+}
+
+.plaque {
+  position: relative;
+  display: grid;
+  min-width: clamp(13rem, 24vw, 19rem);
+  min-height: clamp(5rem, 9vw, 7rem);
+  padding: 0.8rem clamp(1.5rem, 3vw, 2.5rem) 1rem;
+  overflow: hidden;
+  background:
+    linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--phase-change-accent) 20%, transparent),
+        transparent
+      )
+      top / 100% 1px no-repeat,
+    linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in srgb, var(--phase-change-accent) 42%, white 8%),
+        transparent
+      )
+      bottom / 100% 1px no-repeat,
+    linear-gradient(180deg, rgb(26 17 19 / 96%), rgb(10 8 11 / 96%));
+  color: #fffaf0;
+  place-content: center;
+  text-align: center;
+}
+
+.plaque::before,
+.plaque::after {
+  position: absolute;
+  top: 50%;
+  width: 0.45rem;
+  aspect-ratio: 1;
+  background: color-mix(in srgb, var(--phase-change-accent) 84%, white 16%);
+  content: "";
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.plaque::before {
+  left: 0.15rem;
+}
+
+.plaque::after {
+  right: 0.15rem;
+}
+
+.context {
+  color: color-mix(in srgb, var(--phase-change-accent) 55%, #fffaf0 45%);
+  font-size: clamp(0.62rem, 1vw, 0.76rem);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: 0.42rem;
+  font-size: clamp(2.1rem, 4.8vw, 4.25rem);
+  font-weight: 950;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.positioner[data-combat-step="true"] .announcement {
+  grid-template-columns: minmax(1.25rem, 1fr) auto minmax(1.25rem, 1fr);
+  filter: drop-shadow(0 0.5rem 0.75rem rgb(0 0 0 / 42%));
+}
+
+.positioner[data-combat-step="true"] .plaque {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 2.25rem;
+  align-items: center;
+  padding: 0.45rem 0.8rem 0.5rem;
+  white-space: nowrap;
+}
+
+.positioner[data-combat-step="true"] .title {
+  margin-top: 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  overflow-wrap: normal;
+  white-space: nowrap;
+  word-break: normal;
+}
+
+@media (max-width: 640px) {
+  .positioner {
+    width: calc(100vw - 1rem);
+  }
+
+  .positioner[data-combat-step="true"] {
+    width: min(var(--phase-change-anchor-width, 17rem), calc(100vw - 1rem));
+  }
+
+  .announcement {
+    grid-template-columns: 1rem minmax(0, 1fr) 1rem;
+  }
+
+  .plaque {
+    min-width: 0;
+    min-height: 4rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .title {
+    font-size: 1.25rem;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+  }
+}

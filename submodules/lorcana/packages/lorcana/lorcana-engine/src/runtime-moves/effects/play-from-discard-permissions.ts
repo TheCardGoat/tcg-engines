@@ -52,6 +52,27 @@ export function hasActivePlayFromDiscardPermission(
   );
 }
 
+export function consumePlayFromDiscardPermission(
+  state: PlayFromDiscardPermissionsState,
+  playerId: PlayerId,
+  permission: PlayFromDiscardPermission,
+): void {
+  const permissions = state.permissionsByPlayer[playerId];
+  if (!permissions) {
+    return;
+  }
+
+  const permissionIndex = permissions.indexOf(permission);
+  if (permissionIndex === -1) {
+    return;
+  }
+
+  permissions.splice(permissionIndex, 1);
+  if (permissions.length === 0) {
+    delete state.permissionsByPlayer[playerId];
+  }
+}
+
 export function pruneExpiredPlayFromDiscardPermissions(
   state: PlayFromDiscardPermissionsState | undefined,
   currentTurn: number,

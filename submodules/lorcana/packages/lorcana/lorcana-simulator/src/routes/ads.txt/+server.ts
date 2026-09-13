@@ -7,7 +7,12 @@ export const GET: RequestHandler = async ({ fetch }) => {
   const UPSTREAM_URL = env.UPSTREAM_ADS_TXT_URL;
 
   if (!UPSTREAM_URL) {
-    throw error(500, "ads.txt upstream is not configured (missing UPSTREAM_ADS_TXT_URL)");
+    return new Response(null, {
+      status: 204,
+      headers: {
+        "Cache-Control": "public, max-age=86400",
+      },
+    });
   }
 
   const res = await fetch(UPSTREAM_URL);

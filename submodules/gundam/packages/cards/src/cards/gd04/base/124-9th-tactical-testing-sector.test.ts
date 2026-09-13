@@ -4,6 +4,7 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockCommand,
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
@@ -11,6 +12,7 @@ import { gd04GundvLva025 } from "../unit/025-gundv-lva.ts";
 import { gd049thTacticalTestingSector124 } from "./124-9th-tactical-testing-sector.ts";
 
 describe("9th Tactical Testing Sector (GD04-124)", () => {
+  /** @behavioral-proof complete: Burst, Deploy, EX Resource controller, Academy filter, target, and AP duration are public. */
   it("【Deploy】 adds 1 shield to hand", () => {
     const engine = GundamTestEngine.create({
       hand: [gd049thTacticalTestingSector124],
@@ -120,5 +122,34 @@ describe("9th Tactical Testing Sector (GD04-124)", () => {
     expect(p1.getResourceCount()).toBe(resourcesBefore + 1);
     expect(p1.getVisibleCard(chosenAcademyUnitId!)?.effectiveAp).toBe(5);
     expect(p1.getVisibleCard(otherAcademyUnitId!)?.effectiveAp).toBe(3);
+  });
+
+  it("does not trigger when the opponent places an EX Resource", () => {
+    const placeExResource = createMockCommand({
+      level: 0,
+      cost: 0,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["main"] },
+          directives: [{ action: { action: "placeExResource", state: "active" } }],
+          sourceText: "【Main】Place 1 EX Resource.",
+        },
+      ],
+    });
+    const academyUnit = createMockUnit({ traits: ["academy"], ap: 3 });
+    const engine = GundamTestEngine.create(
+      { baseSection: [gd049thTacticalTestingSector124], play: [academyUnit] },
+      { hand: [placeExResource], resourceArea: activeResources(1) },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const academyUnitId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p2.playCommand(placeExResource));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getVisibleCard(academyUnitId)?.effectiveAp).toBe(3);
   });
 });

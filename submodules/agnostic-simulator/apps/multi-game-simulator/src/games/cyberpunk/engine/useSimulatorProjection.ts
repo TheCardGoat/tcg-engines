@@ -140,6 +140,8 @@ function selectionToValues(
         if (selection.orderedIds.length > 0) values[input.id] = selection.orderedIds;
         break;
       }
+      case "entity-partition":
+        break;
       case "number": {
         const id = selection.optionIds[0];
         const value = id ? Number.parseInt(id, 10) : NaN;

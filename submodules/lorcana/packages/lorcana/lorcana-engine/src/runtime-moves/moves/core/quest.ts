@@ -44,6 +44,7 @@ import {
   getCardDefinition,
   hasAnyPendingEffects,
   isCardInPlayZone,
+  staticAbilityStateFromCtx,
   validateNoPendingEffects,
 } from "../../../operations";
 import { getOrBuildMoveRegistry } from "../../rules/move-registry-cache";
@@ -115,7 +116,7 @@ function validateQuestCard(
         (e) => e.payload.keyword === "QuestWhileDrying",
       ) ||
         hasStaticSelfRestriction({
-          state: ctx.framework.state,
+          state: staticAbilityStateFromCtx(ctx),
           cardId,
           restriction: "can-quest-turn-played",
           getDefinitionByInstanceId: (instanceId) =>
@@ -158,9 +159,12 @@ function validateQuestCard(
     };
   }
 
+  // Include G so turnMetadata conditions (e.g. Willie's put-card-under-self-this-turn) evaluate.
+  const staticState = staticAbilityStateFromCtx(ctx);
+
   if (
     hasStaticSelfRestriction({
-      state: ctx.framework.state,
+      state: staticState,
       cardId,
       restriction: "cant-quest",
       getDefinitionByInstanceId: (instanceId) =>
@@ -169,7 +173,7 @@ function validateQuestCard(
     })
   ) {
     const bypass = getStaticSelfRestrictionBypass({
-      state: ctx.framework.state,
+      state: staticState,
       cardId,
       restriction: "cant-quest",
       getDefinitionByInstanceId: (instanceId) =>
@@ -193,7 +197,7 @@ function validateQuestCard(
 
   if (
     hasStaticCardRestriction({
-      state: ctx.framework.state,
+      state: staticState,
       cardId,
       restriction: "cant-quest",
       registry,
@@ -387,7 +391,7 @@ export const quest: LorcanaMoveDefinition<"quest"> = {
             "gain-keyword",
           ).some((e) => e.payload.keyword === "QuestWhileDrying");
           const hasCanQuestTurnPlayed = hasStaticSelfRestriction({
-            state: ctx.framework.state,
+            state: staticAbilityStateFromCtx(ctx),
             cardId: cardId as CardInstanceId,
             restriction: "can-quest-turn-played",
             getDefinitionByInstanceId: (instanceId) =>
@@ -416,9 +420,10 @@ export const quest: LorcanaMoveDefinition<"quest"> = {
         ) {
           return false;
         }
+        const staticState = staticAbilityStateFromCtx(ctx);
         if (
           hasStaticSelfRestriction({
-            state: ctx.framework.state,
+            state: staticState,
             cardId: cardId as CardInstanceId,
             restriction: "cant-quest",
             getDefinitionByInstanceId: (instanceId) =>
@@ -426,7 +431,7 @@ export const quest: LorcanaMoveDefinition<"quest"> = {
           })
         ) {
           const bypass = getStaticSelfRestrictionBypass({
-            state: ctx.framework.state,
+            state: staticState,
             cardId: cardId as CardInstanceId,
             restriction: "cant-quest",
             getDefinitionByInstanceId: (instanceId) =>
@@ -442,7 +447,7 @@ export const quest: LorcanaMoveDefinition<"quest"> = {
 
         if (
           hasStaticCardRestriction({
-            state: ctx.framework.state,
+            state: staticState,
             cardId: cardId as CardInstanceId,
             restriction: "cant-quest",
             registry,

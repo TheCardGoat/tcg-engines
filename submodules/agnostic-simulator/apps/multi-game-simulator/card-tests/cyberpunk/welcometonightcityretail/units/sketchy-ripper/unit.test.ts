@@ -1,9 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
-import { CyberpunkTestEngine, P1 } from "@cyberpunk-engine/testing/index.ts";
+import { CyberpunkTestEngine, P1, P2 } from "@cyberpunk-engine/testing/index.ts";
 import {
   welcomeToNightCityRetailSketchyRipper,
   welcomeToNightCityRetailKiroshiOptics,
-  welcomeToNightCityRetailMantisBlades,
   welcomeToNightCityRetailSwordwiseHuscle,
   welcomeToNightCityRetailMoxInciters,
 } from "@tcg/cyberpunk-cards";
@@ -23,11 +22,11 @@ describe("Sketchy Ripper", () => {
         { gigArea: [{ dieType: "d4", faceValue: 1 }] },
         { preserveDeckOrder: true },
       );
-      const p2GigsBefore = engine.getGigCount("p2");
+      const p2GigsBefore = engine.getGigCount(P2);
       engine.attackRival(ripper, { as: P1 });
       // Power 0 -> no Gigs stolen. A scry (search) prompt opens instead.
       expect(engine.getPrompt(P1).choice?.type).toBe("scry");
-      const p2GigsAfter = engine.getGigCount("p2");
+      const p2GigsAfter = engine.getGigCount(P2);
       expect(p2GigsAfter).toBe(p2GigsBefore);
     });
 

@@ -41,6 +41,7 @@ export const eb03SSnake059: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Egghead",
+                match: "includes",
               },
               {
                 condition: "lifeCount",

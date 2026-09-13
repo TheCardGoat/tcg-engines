@@ -5,8 +5,9 @@ export const welcomeToNightCityRetailPepeNajarroWorkingDoubles = defineCyberpunk
   id: "0974a7af-dcd7-44d9-b57a-b6a4719afcd6",
   canonicalId: "pepe-najarro-working-doubles",
   slug: "pepe-najarro-working-doubles",
-  name: "Pepe Najarro — Working Doubles",
-  displayName: "Pepe Najarro — Working Doubles",
+  subname: "Working Doubles",
+  name: "Pepe Najarro",
+  displayName: "Pepe Najarro: Working Doubles",
   rulesText:
     "{Attack} If you control a value-pair of Gigs, ready up to 2 MERC Legends in your Legends area.",
   color: "green",

@@ -34,15 +34,15 @@ function parseInitialState(raw: string) {
 describe("Replay Debugger", () => {
   debugReplayIt("verifies validation of passTurn at step 119", async () => {
     const gameId = "mgzc1BwLK-aClC34OHFH1Ct";
+    const apiKey = process.env.MATCH_MANAGEMENT_API_KEY;
+    if (!apiKey) throw new Error("MATCH_MANAGEMENT_API_KEY is required for raw replay debugging");
     const response = await fetch(
-      `${API_ORIGIN}/v1/play/replays/${encodeURIComponent(gameId)}/data`,
-      { redirect: "follow" },
+      `${API_ORIGIN}/internal/runtime/games/${encodeURIComponent(gameId)}/replay-data`,
+      { headers: { "x-api-key": apiKey }, redirect: "follow" },
     );
     console.log("Fetch Status:", response.status);
-    const compressed = new Uint8Array(await response.arrayBuffer());
-    const json = Bun.gunzipSync(compressed);
-    const text = new TextDecoder().decode(json);
-    const replay = JSON.parse(text) as any;
+    const payload = (await response.json()) as { replay: any };
+    const replay = payload.replay;
 
     console.log("Replay keys:", Object.keys(replay));
     console.log("Initial state length:", replay.initialState.length);

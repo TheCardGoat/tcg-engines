@@ -41,6 +41,7 @@ export type EffectTiming =
   | "onUnitEffectCostPaid" // When a player pays resources for one of their Unit effects
   | "onApReducedByEnemy" // When this unit's AP is reduced by an enemy effect
   | "onExResourcePlaced" // When you place an EX Resource
+  | "onExResourceExiled" // When one of your EX Resources is exiled from the game
   | "onEnemyLinkUnitDestroyed" // When an enemy Link Unit is destroyed
   | "onDestroyByBattle" // When this Unit destroys an enemy Unit with battle damage (attacker side)
   | "onBattleDamageDealtToUnit" // When this Unit deals battle damage to an enemy Unit
@@ -238,6 +239,18 @@ export type AttributeFilter =
       value: string;
     }
   | {
+      /** Match the color of the Pilot currently paired with a Unit. */
+      attribute: "pairedPilotColor";
+      comparison: "eq" | "neq";
+      value: CardColor;
+    }
+  | {
+      /** Match the level of the Pilot currently paired with a Unit. */
+      attribute: "pairedPilotLevel";
+      comparison: "eq" | "lt" | "lte" | "gt" | "gte";
+      value: number | SourceStatRef;
+    }
+  | {
       /**
        * "Pilot paired with a Unit whose level is N" predicate. Matches a
        * Pilot in play by looking up the Unit currently paired to it.
@@ -300,7 +313,11 @@ export interface TargetFilter {
   highest?: "level" | "cost" | "ap" | "hp";
   /** Restrict matches to cards with the lowest value of this numeric property among candidates. */
   lowest?: "level" | "cost" | "ap" | "hp";
+  /** Candidate's owner must have the greatest number of Units among all opponents. */
+  ownerHasMostUnits?: boolean;
   hasKeyword?: KeywordEffect;
+  /** Restrict matches to cards that do not currently have this keyword. */
+  lacksKeyword?: KeywordEffect;
   hasAnyKeyword?: boolean;
   isLinkUnit?: boolean;
   isToken?: boolean;
@@ -312,6 +329,12 @@ export interface TargetFilter {
    * the source at evaluation time.
    */
   excludeSource?: boolean;
+  /**
+   * Explicit instance ids to exclude from the candidate set. Used by
+   * rules-management (battle-area excess) when multiple Units enter the
+   * board in the same effect resolution and all must remain (11-4-2-2).
+   */
+  excludeInstanceIds?: readonly string[];
   /**
    * Combat-participation predicate for "battling" phrasings.
    *
@@ -341,13 +364,18 @@ export interface TargetFilter {
    * nest another `isBattling.opponentMatches` (depth-of-1 only).
    */
   isBattling?: boolean | { opponentMatches: TargetFilter };
+  /** Match the defending card currently being attacked (never the attacker). */
+  isBeingAttacked?: boolean;
 }
+
+/** A target filter that can only describe Unit candidates. */
+export type UnitTargetFilter = Omit<TargetFilter, "cardType"> & { cardType: "unit" };
 
 // ── Token Spec ────────────────────────────────────────────────────────────────
 // Inline token definition found in card text:
 // [Gundam]((White Base Team)·AP3·HP3) → { name:"Gundam", traits:["white base team"], ap:3, hp:3 }
 
-export type UnitRestriction = "cannotSetActive" | "cannotPairPilot";
+export type UnitRestriction = "cannotSetActive" | "cannotPairPilot" | "cannotActivateBlocker";
 
 export interface TokenSpec {
   name: string;
@@ -378,8 +406,21 @@ export interface TokenSpec {
 
 export type EffectCondition =
   | {
-      type: "unitCount";
+      /** Number of players other than the effect controller. */
+      type: "enemyPlayerCount";
+      comparison: "eq" | "lt" | "lte" | "gt" | "gte";
+      count: number;
+    }
+  | {
+      /** Number of face-down Shield cards controlled by a player. */
+      type: "shieldCount";
       owner: "friendly" | "opponent";
+      comparison: "eq" | "lt" | "lte" | "gt" | "gte";
+      count: number;
+    }
+  | {
+      type: "unitCount";
+      owner: "friendly" | "opponent" | "any";
       comparison: "eq" | "lt" | "lte" | "gt" | "gte";
       count: number;
       /**
@@ -392,6 +433,8 @@ export type EffectCondition =
       hasTrait?: string | readonly string[];
       /** Restrict the count to Units carrying this printed or effective keyword. */
       hasKeyword?: KeywordEffect;
+      /** Additional structured Unit predicates, such as a paired Pilot trait. */
+      attributeFilters?: AttributeFilter[];
       isToken?: boolean;
       /** True when "another" is used — the unit owning this effect is excluded from the count */
       excludeSelf?: boolean;
@@ -432,10 +475,25 @@ export type EffectCondition =
       attributeFilters?: AttributeFilter[];
     }
   | {
+      /** A Command matching this filter was activated during the current turn. */
+      type: "activatedCommandThisTurn";
+      owner: "friendly" | "opponent";
+      target: TargetFilter;
+    }
+  | {
       type: "handCount";
       owner: "friendly" | "opponent";
       comparison: "eq" | "lt" | "lte" | "gt" | "gte";
       count: number;
+    }
+  | {
+      /** The opponent discarded through an effect originating from you this turn. */
+      type: "opponentDiscardedByYourEffectThisTurn";
+    }
+  | {
+      /** A friendly Unit was destroyed by a friendly card with this trait during this turn. */
+      type: "friendlyUnitDestroyedByFriendlyTraitThisTurn";
+      trait: string;
     }
   | { type: "selfIsDamaged" }
   | { type: "selfIsAttacking" }
@@ -560,6 +618,10 @@ export type EffectCondition =
       target: TargetFilter;
     }
   | {
+      /** True when an observed attack event targets an opposing Unit rather than the player. */
+      type: "eventAttackTargetsUnit";
+    }
+  | {
       /**
        * True when the Unit defeated by the triggering battle event matches
        * the supplied filter. Pair-sensitive predicates use the Pilot that
@@ -592,6 +654,11 @@ export type EffectCondition =
   | {
       /** True when the damage event came from the source controller's opponent. */
       type: "eventDamageSourceIsOpponent";
+    }
+  | {
+      /** Restricts a triggered effect to battle or effect damage events. */
+      type: "eventDamageType";
+      damageType: "battle" | "effect";
     }
   | {
       /**
@@ -656,24 +723,46 @@ export type EffectCondition =
 
 export type EffectAction =
   | { action: "draw"; count: number }
+  /** Draw cards for the player recorded as destroying the triggering card. */
+  | { action: "drawEventDestroyer"; count: number }
   | {
       /** Draw first, then open a player choice over the updated hand. */
       action: "drawThenDiscard";
       drawCount: number;
       discardCount: number;
+      activateDiscardedCommand?: { trait: string; timing: "main" | "action" };
+    }
+  | {
+      /** Draw and then discard once for each opposing player. */
+      action: "drawThenDiscardByOpponentCount";
     }
   | {
       /**
-       * Resolve an action, evaluate an optional condition against the
+       * Optionally resolve an action, evaluate a condition against the
        * resulting public state, then enqueue a normal follow-up effect.
-       * This is the generic sequencing primitive for printed "Do A. Then,
-       * if ..., choose ..." text whose later targets are not legal until A
-       * has finished.
+       * With `first`, this models printed "Do A. Then, if ..., choose ..."
+       * text whose later targets are not legal until A has finished. Without
+       * `first`, it stages a fresh player-input window after a modal choice.
        */
       action: "resolveThenQueue";
-      first: EffectAction;
+      first?: EffectAction;
       condition?: EffectCondition;
       followUp: CardEffect;
+    }
+  | {
+      /**
+       * Stage a fresh effect whose choices belong to the opposing player.
+       * The queued effect treats that opponent as "you"; queueing the same
+       * action from it hands a follow-up choice back to the original player.
+       */
+      action: "queueEffectForOpponent";
+      effect: CardEffect;
+    }
+  | {
+      /** Queue one independently controlled copy of an effect for every player in scope. */
+      action: "queueEffectForPlayers";
+      scope: "all" | "opponents";
+      effect: CardEffect;
     }
   | { action: "drawIfTargetMatches"; count: number; target: TargetFilter }
   | { action: "drawAll"; count: number }
@@ -690,7 +779,24 @@ export type EffectAction =
        */
       action: "createDelayedTrigger";
       duration: EffectDuration;
-      eventType: "attackerDestroyedDefender" | "battleDamageDealtToUnit" | "turnEnded";
+      eventType:
+        | "attackerDestroyedDefender"
+        | "enemyCardDestroyedByBattle"
+        | "battleDamageDealtToUnit"
+        | "unitDestroyed"
+        | "turnEnded";
+      /** Additional event paths that satisfy the same delayed condition. */
+      additionalEventTypes?: readonly (
+        | "attackerDestroyedDefender"
+        | "battleDamageDealtToUnit"
+        | "shieldAreaCardDestroyedByBattle"
+        | "unitDestroyed"
+        | "turnEnded"
+      )[];
+      eventDamageType?: "battle" | "effect";
+      oncePerSimultaneousGroup?: boolean;
+      /** Unit chosen now to receive the delayed effect. */
+      target?: TargetFilter;
       eventCardFilter: TargetFilter;
       eventSourceFilter?: TargetFilter;
       effect: CardEffect;
@@ -698,6 +804,12 @@ export type EffectAction =
   | {
       /** Continuous replacement: matching Units enter the battle area rested. */
       action: "deployRested";
+      target: TargetFilter;
+    }
+  | {
+      /** Continuous replacement whose level ceiling is 1 plus friendly name matches. */
+      action: "deployRestedByFriendlyNameCount";
+      names: readonly string[];
       target: TargetFilter;
     }
   | {
@@ -710,6 +822,7 @@ export type EffectAction =
       /** Discard cards explicitly selected through the pending-choice protocol. */
       action: "discardChosen";
       target: TargetFilter;
+      activateDiscardedCommand?: { trait: string; timing: "main" | "action" };
     }
   | {
       /**
@@ -748,6 +861,16 @@ export type EffectAction =
       target: TargetFilter;
     }
   | {
+      action: "millDeckThenStatModifierIfLevel";
+      count: number;
+      owner: TargetOwner;
+      minLevel: number;
+      stat: "ap" | "hp";
+      amount: number;
+      duration: EffectDuration;
+      target: TargetFilter;
+    }
+  | {
       /**
        * Apply a stat modifier whose magnitude is `amountPerMatch` multiplied
        * by the number of cards matching `countFilter`.
@@ -770,6 +893,12 @@ export type EffectAction =
       stat: "ap" | "hp";
       amountPerUniqueName: number;
       duration: EffectDuration;
+      target: TargetFilter;
+    }
+  | {
+      /** Constant AP/HP bonus equal to the damage currently marked on the card. */
+      action: "statModifierByDamageReceived";
+      stat: "ap" | "hp";
       target: TargetFilter;
     }
   | { action: "dealDamage"; amount: number; target: TargetFilter }
@@ -802,6 +931,16 @@ export type EffectAction =
       action: "dealDamageEventSource";
       amount: number;
       sourceFilter?: TargetFilter;
+    }
+  | {
+      /** Deal damage to the first card in the opposing player's Shield Area. */
+      action: "dealDamageToFirstOpponentShield";
+      amount: number;
+    }
+  | {
+      /** Destroy the first cards in the opposing player's Shield Area without choosing hidden cards. */
+      action: "destroyTopOpponentShields";
+      count: number;
     }
   | {
       /**
@@ -864,12 +1003,28 @@ export type EffectAction =
       amount: number;
       sourceFilter?: TargetFilter;
     }
-  | { action: "rest"; target: TargetFilter; allowSubstitution?: boolean }
+  | {
+      action: "rest";
+      target: TargetFilter;
+      allowSubstitution?: boolean;
+      /** Resolve this instruction only when the enclosing play paid one or more EX Resources. */
+      requiresPaidExResources?: boolean;
+    }
   | {
       /** Typed marker consumed by the generic Base-rest substitution path. */
       action: "substituteBaseRestWithSelf";
     }
-  | { action: "setActive"; target: TargetFilter }
+  | {
+      /** Typed marker for a Base that may rest instead of a friendly Unit. */
+      action: "substituteUnitRestWithSelf";
+      sourceUnitTrait: string;
+    }
+  | {
+      action: "setActive";
+      target: TargetFilter;
+      /** Apply the printed attack restriction to the same chosen cards after readying them. */
+      cantAttackDuration?: EffectDuration;
+    }
   /** "Change the attack target of the battling enemy Unit to it." */
   | { action: "changeAttackTarget"; target: TargetFilter }
   | { action: "returnToHand"; target: TargetFilter }
@@ -879,7 +1034,9 @@ export type EffectAction =
    */
   | { action: "placeInTrash"; target: TargetFilter }
   /** Return the Pilot that was paired with the triggering Unit to its owner's hand. */
-  | { action: "returnPairedPilotToHand" }
+  | { action: "returnPairedPilotToHand"; color?: CardColor }
+  /** Return the card paired with the triggering Unit to its owner's deck. */
+  | { action: "returnPairedCardToDeck"; position: "top" | "bottom" }
   | {
       action: "returnToDeck";
       target: TargetFilter;
@@ -888,8 +1045,17 @@ export type EffectAction =
       shuffle?: boolean;
     }
   | { action: "destroy"; target: TargetFilter }
+  /**
+   * Begin a Unit-vs-Unit battle that performs only its damage step. Unlike an
+   * ordinary attack, this does not rest the source or open attack/block/action
+   * windows; it still applies battle damage, First Strike, prevention, and
+   * battle-destruction triggers.
+   */
+  | { action: "beginDamageStepBattle"; target: TargetFilter }
   | { action: "destroyEventCard" }
   | { action: "exile"; target: TargetFilter }
+  /** Exile the card whose effect is resolving (for example, from 【Destroyed】). */
+  | { action: "exileSelf" }
   | { action: "deploy"; target: TargetFilter }
   /**
    * "Place the top N cards of the specified player's deck into that player's trash."
@@ -906,6 +1072,12 @@ export type EffectAction =
    */
   | { action: "millDeck"; count: number; owner: TargetOwner }
   | {
+      /** Mill cards, then choose one matching card from only that mill to return to hand. */
+      action: "millDeckThenAddToHand";
+      count: number;
+      target: TargetFilter;
+    }
+  | {
       action: "deployFromTrash";
       target?: TargetFilter;
       levelAtMost?: number;
@@ -917,7 +1089,9 @@ export type EffectAction =
   | { action: "addSelfToHand" }
   /** "Deploy this card." — Base Burst clause */
   | { action: "deploySelf" }
-  | { action: "addShieldToHand"; count: number }
+  /** Deploy this physical card as a Unit with the printed effect's AP/HP override. */
+  | { action: "deploySelfAsUnit"; ap: number; hp: number }
+  | { action: "addShieldToHand"; count: number; target?: TargetFilter }
   | { action: "addFromTrash"; target: TargetFilter }
   | {
       /** Place the top normal Resource from the controller's resource deck. */
@@ -933,6 +1107,7 @@ export type EffectAction =
       action: "placeExResource";
       count?: number;
       state: "active" | "rested";
+      recipients?: "source" | "all";
     }
   | {
       /** Deploy new EX Base token(s) into the source controller's base section. */
@@ -962,23 +1137,47 @@ export type EffectAction =
       /** If present, player may reveal a matching card and add it to hand */
       tutorFilter?: TargetFilter;
       /** Where a tutored matching card goes. Defaults to hand. */
-      tutorDestination?: "hand" | "battleArea";
+      tutorDestination?: "hand" | "battleArea" | "deckTop";
     }
   /** "Activate this card's 【Main】." — Burst redirects to another timing */
   | { action: "activateTiming"; timing: "main" | "action" }
+  /** Activate the paired card's printed Main or Action effect. */
+  | { action: "activatePairedCardTiming"; timing: "main" | "action" }
   | { action: "pairPilot"; target: TargetFilter }
+  | {
+      action: "pairSourceFromZone";
+      target: UnitTargetFilter;
+      /**
+       * The source card must currently be in this zone to pair.
+       *
+       * Command cards whose text says "pair this card from your trash"
+       * use this guard so replaying their Main while they are paired does
+       * not make the in-play card a legal source for the trash instruction.
+       */
+      requiredZone: Zone;
+    }
   | { action: "pairEventCardAsPilot"; target: TargetFilter }
   | {
       action: "grantKeyword";
       keyword: KeywordEffect;
       /** The keyword's numeric parameter, e.g. 3 in <Breach 3> */
       keywordValue?: number;
+      /** Multiply `keywordValue` by the number of matching cards in play. */
+      countFilter?: TargetFilter;
       duration: EffectDuration;
       target: TargetFilter;
     }
   | {
       /** Grant a keyword to the card carried by the triggering event. */
       action: "grantKeywordEventCard";
+      keyword: KeywordEffect;
+      keywordValue?: number;
+      duration: EffectDuration;
+      sourceFilter?: TargetFilter;
+    }
+  | {
+      /** Grant a keyword to the card that caused the triggering event. */
+      action: "grantKeywordEventSource";
       keyword: KeywordEffect;
       keywordValue?: number;
       duration: EffectDuration;
@@ -1042,6 +1241,8 @@ export type EffectAction =
       sourceCardType?: CardType;
       /** Restrict prevention to damage originating from an opposing player's card. */
       source?: "enemy";
+      /** Prevent only damage whose original amount is at or below this threshold. */
+      maxDamageAmount?: number;
       /**
        * How long the prevention persists. Defaults to "permanent" when
        * omitted (preserves the original handler behavior). Cards printing
@@ -1052,9 +1253,9 @@ export type EffectAction =
     }
   | {
       /**
-       * Reduce the next damage the target receives. `exResourceAmount`
-       * applies instead of `amount` when the resolving Command was paid
-       * with one or more EX Resources.
+       * Reduce damage the target receives. `exResourceAmount` applies
+       * instead of `amount` when the resolving Command was paid with one
+       * or more EX Resources.
        */
       action: "reduceNextDamage";
       amount: number;
@@ -1063,6 +1264,12 @@ export type EffectAction =
       damageType?: "battle" | "effect";
       source?: "enemy";
       duration: EffectDuration;
+      /**
+       * Consume the reduction after it applies. Defaults to true for
+       * one-shot effects; set false for text such as "during this turn,
+       * whenever" that applies to every matching damage event.
+       */
+      consuming?: boolean;
     }
   | {
       /** Battle damage the target would receive is dealt to redirectTo instead. */
@@ -1101,7 +1308,13 @@ export type EffectAction =
   /** "It can't attack during this turn" */
   | { action: "cantAttack"; duration: EffectDuration; target: TargetFilter }
   /** "It may attack on the turn it is deployed." */
-  | { action: "allowAttackDeployedThisTurn"; duration: EffectDuration; target: TargetFilter }
+  | {
+      action: "allowAttackDeployedThisTurn";
+      duration: EffectDuration;
+      target: TargetFilter;
+      /** When present, same-turn attack permission is limited to these targets. */
+      attackTarget?: TargetFilter;
+    }
   /** "This Unit can't choose the enemy player as its attack target." */
   | { action: "cantTargetPlayer"; whose: "opponent" | "friendly" }
   /**
@@ -1169,6 +1382,20 @@ export type EffectAction =
       level: number;
       cost: number;
       destroyTarget: TargetFilter;
+    }
+  | {
+      /** Conditional alternative level and cost for deploying this Unit from hand. */
+      action: "deployCostOverride";
+      level: number;
+      cost: number;
+      condition: EffectCondition;
+    }
+  | {
+      /** Optional Command play substitution paid by discarding a hand card. */
+      action: "playCostSubstitution";
+      level: number;
+      cost: number;
+      discardTarget: TargetFilter;
     }
   | {
       action: "costReductionByCount";
@@ -1293,16 +1520,13 @@ export interface ConditionalDirective {
 //
 // === Authoring constraints (read before nesting prompts inside options) ===
 //
-//   1. **No nested player-input directives inside an option.** The pending-
-//      effect queue halts on a chooseOne, the controller answers via
-//      `resolveEffect({ chooseOneAnswers })`, and the executor then runs
-//      the chosen branch in one pass. A nested `optional`, counted target
-//      selection, or another `chooseOne` inside an option WILL NOT halt a
-//      second time — the executor silently defaults (option 0 / accept /
-//      no-target). If a card prints "Choose one: [draw 1] / [destroy a unit;
-//      then choose one of your units to take 1 damage]", the engine cannot
-//      represent the inner choice today; flag it for a multi-pass refactor
-//      rather than encoding a hidden default.
+//   1. **Stage nested input with `resolveThenQueue`.** The pending-effect queue
+//      halts on a chooseOne, the controller answers via
+//      `resolveEffect({ chooseOneAnswers })`, and the executor then runs the
+//      chosen branch in one pass. A direct nested `optional`, counted target
+//      selection, or another `chooseOne` inside an option cannot halt again.
+//      Wrap the follow-up CardEffect in a `resolveThenQueue` action without
+//      `first` so it is enqueued as the next visible interaction window.
 //
 //   2. **`chooseOneAnswers` is keyed by top-level directive index.** Same
 //      semantics as `optionalAnswers`: nested directives inherit the index
@@ -1315,11 +1539,9 @@ export interface ChooseOneOption {
   /** Short label for UI / logs (e.g. "Sword Strike Gundam"). */
   label?: string;
   /**
-   * Directives to execute if this option is picked. See the authoring
-   * constraints on `ChooseOneDirective` — these directives must NOT
-   * contain further player-input prompts (nested `optional`, counted
-   * target selection, or another `chooseOne`); the executor cannot
-   * halt a second time after the modal answer.
+   * Directives to execute if this option is picked. Further player input must
+   * be staged through `resolveThenQueue`; direct nested prompts cannot halt a
+   * second time after the modal answer.
    */
   directives: Directive[];
 }
@@ -1361,6 +1583,14 @@ export interface CardEffect {
   cost?: EffectCost;
   /** WHAT happens: ordered list of actions / conditional branches to execute */
   directives: Directive[];
+  /**
+   * Instructions introduced by "After activating this card's ..." that are
+   * evaluated only after the primary effect has resolved and its lifecycle
+   * cleanup has run. This is distinct from `directives`: a played Command is
+   * in trash by this point, while an indirectly activated paired Command
+   * remains in the battle area.
+   */
+  afterResolution?: Directive[];
   /** Present only on Command cards that have a 【Pilot】 restriction */
   pilotKeyword?: PilotKeyword;
   /** The original raw text segment that produced this effect — for UI / debug */

@@ -101,7 +101,7 @@ Each entry must include `mmrBefore` and `mmrAfter` for ranked matches. These
 are how the simulator detects "ranked rating changed" without a separate
 endpoint.
 
-### Gateway WebSocket (`/v1/gateway/ws`)
+### Socket.IO gateway (`/lorcana`, path `/socket.io/`)
 
 Server emits `match_found`, `match_ready`, `match_ready_update`,
 `match_ready_expired`, `matchmaking_status`, `matchmaking_cancelled`. None

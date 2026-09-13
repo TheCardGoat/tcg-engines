@@ -29,7 +29,7 @@ describe("Gundam X Divider (GD03-051)", () => {
 
       expectSuccess(p1.assignPilot(pilot, gd03GundamXDivider051));
       expect(p1.getBoardView().pendingChoice).toMatchObject({
-        kind: "optional",
+        kind: "targetSelection",
         directiveIndex: 0,
       });
       expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));

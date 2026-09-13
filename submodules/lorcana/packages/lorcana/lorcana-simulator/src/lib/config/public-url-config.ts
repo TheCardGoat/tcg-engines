@@ -82,18 +82,10 @@ function normalizeConfiguredUrl(
   return parsedUrl.toString().replace(/\/$/, "");
 }
 
-function deriveGatewayWsUrl(gameServerOrigin: string): string {
-  const httpBase = new URL(gameServerOrigin);
-  const wsUrl = new URL("/v1/gateway/ws", httpBase);
-  wsUrl.protocol = httpBase.protocol === "https:" ? "wss:" : "ws:";
-  return wsUrl.toString();
-}
-
 export interface PublicUrlConfig {
   apiOrigin: string;
   gameServerOrigin: string;
   trackerOrigin: string;
-  gatewayWsUrl: string;
   simulatorAssetBaseUrl: string;
   lorcanaAssetBaseUrl: string;
 }
@@ -131,19 +123,10 @@ export function getPublicUrlConfig(): PublicUrlConfig {
     allowedProtocols: ["http:", "https:"],
   });
 
-  const gatewayWsUrl = env.PUBLIC_GATEWAY_WS_URL?.trim().length
-    ? normalizeConfiguredUrl(env.PUBLIC_GATEWAY_WS_URL, {
-        envName: "PUBLIC_GATEWAY_WS_URL",
-        fallback: deriveGatewayWsUrl(gameServerOrigin),
-        allowedProtocols: ["ws:", "wss:"],
-      })
-    : deriveGatewayWsUrl(gameServerOrigin);
-
   return {
     apiOrigin,
     gameServerOrigin,
     trackerOrigin,
-    gatewayWsUrl,
     simulatorAssetBaseUrl,
     lorcanaAssetBaseUrl,
   };
@@ -159,10 +142,6 @@ export function getGameServerOrigin(): string {
 
 export function getTrackerOrigin(): string {
   return getPublicUrlConfig().trackerOrigin;
-}
-
-export function getGatewayWsUrl(): string {
-  return getPublicUrlConfig().gatewayWsUrl;
 }
 
 export function getSimulatorAssetBaseUrl(): string {
@@ -183,7 +162,7 @@ export function buildLorcanaAssetUrl(path: string): string {
   return `${getLorcanaAssetBaseUrl()}/${relativePath}`;
 }
 
-const FALLBACK_CDN_ORIGIN = "https://r2.tcg.online";
+const FALLBACK_CDN_ORIGIN = "https://cdn.tcg.online";
 
 export function getCdnFallbackUrl(url: string): string | null {
   // Collect the distinct origins from both asset base URLs so that both

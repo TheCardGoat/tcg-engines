@@ -4,14 +4,12 @@ import {
   embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
   theHeistRetailStarterDeckVCorporateExile,
   embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
-  welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
   welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
 import type { CommandSuccess } from "../src/types/commands.ts";
 import type { GameEndedLog } from "../src/logging/index.ts";
 
-const riverWard = welcomeToNightCityRetailRiverWardDetectiveOnTheHunt;
 const goro = embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean;
 const goroUnit = embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay;
 const vCorporate = theHeistRetailStarterDeckVCorporateExile;

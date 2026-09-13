@@ -117,6 +117,7 @@ describe("Gundam TCG Setup Flow (rules 6-2-1 through 6-2-4)", () => {
     const deckAfter = engine.getCardsInZone({ zone: "deck", playerId: PLAYER_ONE });
     expect(engine).toHaveCardCountInZone({ zone: "hand", playerId: PLAYER_ONE }, INITIAL_HAND_SIZE);
     expect(deckAfter.length).toBe(deckBefore.length);
+    expect(handAfter.filter((cardId) => handBefore.includes(cardId))).toEqual([]);
 
     // The same cards should still exist across hand + deck after returning and redrawing.
     const cardsBefore = [...handBefore, ...deckBefore].sort();

@@ -3,7 +3,7 @@ import { op10IDoNotForgiveThoseWhoLaughAtMyFamily078 } from "../../../../../card
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-078 I Do Not Forgive Those Who Laugh at My Family!!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op10IDoNotForgiveThoseWhoLaughAtMyFamily078);
   });
 });

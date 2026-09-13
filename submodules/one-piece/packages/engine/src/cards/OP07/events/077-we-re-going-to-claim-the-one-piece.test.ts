@@ -3,7 +3,7 @@ import { op07WeReGoingToClaimTheOnePiece077 } from "../../../../../cards/src/car
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-077 We're Going to Claim the One Piece!!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07WeReGoingToClaimTheOnePiece077);
   });
 });

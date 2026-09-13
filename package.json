@@ -8,15 +8,21 @@
     "ci:agnostic": "pnpm --dir submodules/agnostic-simulator run ci-check-full",
     "ci:cyberpunk:check": "pnpm --dir submodules/cyberpunk run ci-check",
     "ci:cyberpunk": "pnpm --dir submodules/cyberpunk run ci-check-full",
+    "ci:flesh-and-blood:check": "pnpm --dir submodules/flesh-and-blood run ci-check",
+    "ci:flesh-and-blood": "pnpm --dir submodules/flesh-and-blood run ci-check-full",
     "ci:gundam:check": "pnpm --dir submodules/gundam run ci-check",
     "ci:gundam": "pnpm --dir submodules/gundam run ci-check-full",
     "ci:lorcana:check": "pnpm --dir submodules/lorcana run ci-check",
     "ci:lorcana": "pnpm --dir submodules/lorcana run ci-check-full",
+    "ci:naruto:check": "pnpm --dir submodules/naruto run ci-check",
+    "ci:naruto": "pnpm --dir submodules/naruto run ci-check-full",
     "ci:one-piece:check": "pnpm --dir submodules/one-piece run ci-check",
     "ci:one-piece": "pnpm --dir submodules/one-piece run ci-check-full",
+    "ci:riftbound:check": "pnpm --dir submodules/riftbound run ci-check",
+    "ci:riftbound": "pnpm --dir submodules/riftbound run ci-check-full",
     "ci:star-wars-unlimited:check": "pnpm --dir submodules/star-wars-unlimited run ci-check",
     "ci:star-wars-unlimited": "pnpm --dir submodules/star-wars-unlimited run ci-check-full",
-    "ci:public": "pnpm run ci:cyberpunk:check && pnpm run ci:gundam:check && pnpm run ci:lorcana:check && pnpm run ci:one-piece:check && pnpm run ci:star-wars-unlimited:check && pnpm run ci:agnostic:check"
+    "ci:public": "pnpm run ci:cyberpunk:check && pnpm run ci:flesh-and-blood:check && pnpm run ci:gundam:check && pnpm run ci:lorcana:check && pnpm run ci:naruto:check && pnpm run ci:one-piece:check && pnpm run ci:riftbound:check && pnpm run ci:star-wars-unlimited:check && pnpm run ci:agnostic:check"
   },
   "volta": {
     "node": "24.12.0",

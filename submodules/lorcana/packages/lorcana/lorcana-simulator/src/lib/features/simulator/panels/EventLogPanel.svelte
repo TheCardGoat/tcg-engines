@@ -55,7 +55,19 @@
       label: snapshot?.label,
     };
   });
-  const groups = $derived(buildActivityFeed(entries, chatMessages, viewerSide, resolveCard));
+  const resolvePlayerSideLabel = $derived((side: LorcanaPlayerSide) => {
+    if (!sidebar) return null;
+    return side === sidebar.topSide ? sidebar.headerPlayerLabel : sidebar.footerPlayerLabel;
+  });
+  const groups = $derived(
+    buildActivityFeed(
+      entries,
+      chatMessages,
+      viewerSide,
+      resolveCard,
+      resolvePlayerSideLabel,
+    ),
+  );
   const entryById = $derived(
     new Map<string, MoveLogEntrySnapshot>(visibleEntries.map((entry) => [entry.id, entry])),
   );

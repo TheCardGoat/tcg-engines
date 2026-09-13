@@ -5,8 +5,9 @@ export const welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor = defineC
   id: "380b5e52-2651-4cde-8222-1db2ae6469e2",
   canonicalId: "hanako-arasaka-daughter-of-the-emperor",
   slug: "hanako-arasaka-daughter-of-the-emperor",
-  name: "Hanako Arasaka — Daughter of the Emperor",
-  displayName: "Hanako Arasaka — Daughter of the Emperor",
+  subname: "Daughter of the Emperor",
+  name: "Hanako Arasaka",
+  displayName: "Hanako Arasaka: Daughter of the Emperor",
   rulesText:
     "{Spend} Swap a friendly Gig with a rival Gig.\nAt the start of your turn, draw 1 for each friendly value-pair of Gigs.",
   color: "green",

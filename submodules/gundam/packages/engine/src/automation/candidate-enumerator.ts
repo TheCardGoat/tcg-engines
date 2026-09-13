@@ -16,6 +16,7 @@ import {
 } from "./move-binding.ts";
 import {
   buildPendingChoicePrompt,
+  evaluateLegalTargets,
   findChoiceDirective,
   priorityHead,
 } from "../gundam/effects/pending-effects.ts";
@@ -147,6 +148,51 @@ interface WalkContext {
 }
 
 /**
+ * Return one deterministic, validator-compatible selection for a grouped
+ * pending-effect target choice.  `resolveEffect.describeProcedure` exposes a
+ * flattened union for the UI's multi-picker, but a single card may be legal
+ * for more than one printed clause.  Picking the first N cards from that
+ * union can therefore fail `assignTargetsToGroups` even though a legal choice
+ * exists (for example: "Choose 1 of your Units and 1 enemy Unit").
+ */
+function firstGroupedTargetSelection(ctx: WalkContext): readonly string[] | null {
+  const g = ctx.state.G as unknown as GundamG;
+  const turnPlayerId = (ctx.state.ctx.status.turnPlayer ??
+    ctx.state.ctx.status.activePlayer) as unknown as string;
+  const pending = priorityHead(g, turnPlayerId);
+  if (!pending || pending.controllerId !== (ctx.playerId as unknown as string)) return null;
+
+  const resolution = evaluateLegalTargets(pending, g, buildReadAPI(ctx.state, ctx.staticResources));
+  if (!resolution) return null;
+  const groups = resolution.groups;
+
+  const picked: string[] = [];
+  const used = new Set<string>();
+  function chooseGroup(groupIndex: number): boolean {
+    if (groupIndex === groups.length) return true;
+    const group = groups[groupIndex]!;
+    const candidates = group.legalTargetIds.filter((id) => !used.has(id));
+
+    function chooseFromGroup(start: number, remaining: number): boolean {
+      if (remaining === 0) return chooseGroup(groupIndex + 1);
+      for (let index = start; index <= candidates.length - remaining; index++) {
+        const targetId = candidates[index]!;
+        used.add(targetId);
+        picked.push(targetId);
+        if (chooseFromGroup(index + 1, remaining - 1)) return true;
+        picked.pop();
+        used.delete(targetId);
+      }
+      return false;
+    }
+
+    return chooseFromGroup(0, group.minTargets);
+  }
+
+  return chooseGroup(0) ? picked : null;
+}
+
+/**
  * DFS the move's procedure, expanding each step into concrete
  * partial-input permutations until we hit a `confirm` (or an empty
  * step array — some moves skip straight to execute-time validation).
@@ -184,6 +230,17 @@ function walkProcedure(
     const candidateIds = step.candidateIds;
 
     if (multi) {
+      // Pending effects may contain several target groups. Preserve their
+      // individual filters instead of treating the UI's flattened candidate
+      // list as one pool; see `firstGroupedTargetSelection` above.
+      if (moveName === "resolveEffect") {
+        const grouped = firstGroupedTargetSelection(ctx);
+        if (grouped !== null) {
+          walkProcedure(ctx, moveName, { ...partialInput, [key]: grouped }, depth + 1);
+          return;
+        }
+      }
+
       // Multi-select: build a deterministic combination.
       // If partialInput already has selections for this key (from
       // seedPrimaryCardInput), incorporate them and fill up to minTargets
@@ -284,19 +341,8 @@ export function enumerateGundamBotCandidates(
     staticResources,
   );
 
-  // `resolveEffect` is listed in every step's `validMoves` because the
-  // pending-effect queue can halt at any time, but its own validator
-  // rejects when the queue is empty. Skip enumeration in that case so
-  // the bot doesn't waste a fallback attempt on a guaranteed-to-fail
-  // submission.
-  const hasPendingEffects =
-    ((state.G as { pendingEffects?: readonly unknown[] }).pendingEffects?.length ?? 0) > 0;
-
   for (const move of available) {
     if (options.moveNameFilter && !options.moveNameFilter.includes(move.moveName)) {
-      continue;
-    }
-    if (move.moveName === "resolveEffect" && !hasPendingEffects) {
       continue;
     }
 
@@ -331,7 +377,7 @@ export function enumerateGundamBotCandidates(
     // single no-arg candidate. Fan out both the accept and decline forms
     // here so policies can rank them (the default policy runs a
     // directive-intent classifier; bespoke strategies can override).
-    if (move.moveName === "resolveEffect" && hasPendingEffects) {
+    if (move.moveName === "resolveEffect") {
       const optionalDirectiveIndex = findOptionalHeadDirectiveIndex(state, playerId);
       if (optionalDirectiveIndex !== null) {
         for (const accepted of [true, false] as const) {

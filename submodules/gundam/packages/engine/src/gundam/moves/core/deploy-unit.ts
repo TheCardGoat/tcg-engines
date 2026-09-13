@@ -20,8 +20,10 @@ import type { GundamMoveDefinition, ReadonlyGundamG } from "../../types.ts";
 import type { FrameworkReadAPI } from "../../../types/move-types.ts";
 import {
   validatePlayFromHand,
+  validatePaymentResourceIds,
   validateDeployTriggerTargets,
   payCardCost,
+  resourcePaymentSelection,
 } from "./play-card-shared.ts";
 import {
   enqueueMoveCompletionFence,
@@ -30,12 +32,18 @@ import {
 } from "../../effects/pending-effects.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
-import { buildTargetResolutionContext } from "../../rules/derived-state.ts";
+import {
+  buildTargetResolutionContext,
+  computeEffectiveCostInHand,
+} from "../../rules/derived-state.ts";
 import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
 import { gatherAllCardsForTargeting, getFilterCountBounds } from "../../effects/target-legality.ts";
 import { handleDestroyAction, isDestructionPreventedFor } from "../../effects/handlers/combat.ts";
+import { enqueueBattleAreaExcessManagement } from "../../rules/battle-area-excess.ts";
 
 type DeployCostSubstitution = Extract<EffectAction, { action: "deployCostSubstitution" }>;
+type DeployCostOverride = Extract<EffectAction, { action: "deployCostOverride" }>;
+type DeployCostAlternative = DeployCostSubstitution | DeployCostOverride;
 
 export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
   gatedByPendingEffects: true,
@@ -45,40 +53,72 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
     if (!cardId) return [];
     const definition = framework.cards.getDefinition(cardId) as Card | undefined;
     const substitution = findDeployCostSubstitution(definition);
-    if (!substitution) return [];
-
     const normal = validatePlayFromHand(cardId, playerId, G, framework).valid;
-    const alternateBase = validatePlayFromHand(cardId, playerId, G, framework, {
-      costOverride: substitution.action.cost,
-      levelOverride: substitution.action.level,
-    }).valid;
-    const candidates = alternateBase
-      ? deploySubstitutionCandidates(cardId, playerId, G, framework, substitution.action)
-      : [];
+    const alternateBase = substitution
+      ? validatePlayFromHand(cardId, playerId, G, framework, {
+          costOverride: substitution.action.cost,
+          levelOverride: substitution.action.level,
+        }).valid
+      : false;
+    const candidates =
+      alternateBase && substitution
+        ? deploySubstitutionCandidates(cardId, playerId, G, framework, substitution.action)
+        : [];
     const alternate =
-      candidates.length >= getFilterCountBounds(substitution.action.destroyTarget).min;
+      substitution !== undefined &&
+      alternateBase &&
+      isDeployAlternativeAvailable(substitution.action, candidates, playerId, G, framework, cardId);
     const mode = (partialInput as { mode?: string }).mode;
 
-    if (mode === undefined) {
+    if (substitution && mode === undefined) {
       const modes: { id: string; label: string }[] = [];
       if (normal) modes.push({ id: "normal", label: "Pay printed Lv. and cost." });
       if (alternate) modes.push({ id: "alternate", label: substitution.sourceText });
       return modes.length > 0 ? [{ kind: "selectMode", modes }] : [];
     }
 
-    if (mode === "alternate") {
-      const selected = ((partialInput as { targets?: readonly string[] }).targets ?? []).filter(
-        (id) => candidates.includes(id),
+    if (mode === "alternate" && substitution) {
+      if (substitution.action.action === "deployCostSubstitution") {
+        const selected = ((partialInput as { targets?: readonly string[] }).targets ?? []).filter(
+          (id) => candidates.includes(id),
+        );
+        const { min, max } = getFilterCountBounds(substitution.action.destroyTarget);
+        if (selected.length < min || selected.length > max) {
+          return [
+            {
+              kind: "selectTarget",
+              role: "cost",
+              candidateIds: candidates,
+              minTargets: min,
+              maxTargets: Number.isFinite(max) ? max : candidates.length,
+            },
+          ];
+        }
+      }
+    }
+
+    const paymentCost =
+      mode === "alternate" && substitution
+        ? substitution.action.cost
+        : computeEffectiveCostInHand(cardId, playerId, G, framework);
+    const selectedPayment = (partialInput as { paymentResourceIds?: readonly string[] })
+      .paymentResourceIds;
+    if (paymentCost > 0 && selectedPayment?.length !== paymentCost) {
+      const activeResources = resourcePaymentSelection(
+        paymentCost,
+        playerId,
+        G,
+        framework,
+        selectedPayment !== undefined,
       );
-      const { min, max } = getFilterCountBounds(substitution.action.destroyTarget);
-      if (selected.length < min || selected.length > max) {
+      if (activeResources || selectedPayment !== undefined) {
         return [
           {
             kind: "selectTarget",
-            role: "cost",
-            candidateIds: candidates,
-            minTargets: min,
-            maxTargets: Number.isFinite(max) ? max : candidates.length,
+            role: "resource",
+            candidateIds: activeResources ?? [],
+            minTargets: paymentCost,
+            maxTargets: paymentCost,
           },
         ];
       }
@@ -108,8 +148,14 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
       });
       if (
         alternate.valid &&
-        deploySubstitutionCandidates(cardId, playerId, g, framework, substitution.action).length >=
-          getFilterCountBounds(substitution.action.destroyTarget).min
+        isDeployAlternativeAvailable(
+          substitution.action,
+          deploySubstitutionCandidates(cardId, playerId, g, framework, substitution.action),
+          playerId,
+          g,
+          framework,
+          cardId,
+        )
       ) {
         out.push(cardId);
       }
@@ -120,7 +166,7 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
   validate({ G, playerId, args, framework, validationMode }) {
     if (validationMode === "preflight") return { valid: true };
     const g = G;
-    const { cardId, mode, targets } = args;
+    const { cardId, mode, targets, paymentResourceIds } = args;
 
     if (framework.state.status.phase !== "main-phase") {
       return {
@@ -156,6 +202,14 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
         levelOverride: substitution.action.level,
       });
       if (!commonResult.valid) return commonResult;
+      const payment = validatePaymentResourceIds(
+        paymentResourceIds,
+        substitution.action.cost,
+        playerId,
+        g,
+        framework,
+      );
+      if (!payment.valid) return payment;
       const candidates = deploySubstitutionCandidates(
         cardId,
         playerId,
@@ -164,6 +218,25 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
         substitution.action,
       );
       const selected = (targets ?? []).filter((id) => candidates.includes(id));
+      if (substitution.action.action === "deployCostOverride") {
+        if (
+          !isDeployAlternativeAvailable(
+            substitution.action,
+            candidates,
+            playerId,
+            g,
+            framework,
+            cardId,
+          )
+        ) {
+          return {
+            valid: false,
+            error: "Alternate deployment condition is not met",
+            errorCode: "INVALID_MODE",
+          };
+        }
+        return validateDeployTriggerTargets(cardId, playerId, targets ?? [], g, framework);
+      }
       const { min, max } = getFilterCountBounds(substitution.action.destroyTarget);
       if (new Set(selected).size !== selected.length) {
         return {
@@ -185,17 +258,25 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
 
     const commonResult = validatePlayFromHand(cardId, playerId, g, framework);
     if (!commonResult.valid) return commonResult;
+    const payment = validatePaymentResourceIds(
+      paymentResourceIds,
+      computeEffectiveCostInHand(cardId, playerId, g, framework),
+      playerId,
+      g,
+      framework,
+    );
+    if (!payment.valid) return payment;
 
     return validateDeployTriggerTargets(cardId, playerId, targets ?? [], g, framework);
   },
 
   execute({ G, playerId, args, moveId, framework }) {
     const g = G;
-    const { cardId, mode, targets } = args;
+    const { cardId, mode, targets, paymentResourceIds } = args;
     const definition = framework.cards.getDefinition(cardId) as Card | undefined;
     const substitution = findDeployCostSubstitution(definition);
     const substitutionTargets =
-      mode === "alternate" && substitution
+      mode === "alternate" && substitution?.action.action === "deployCostSubstitution"
         ? deploySubstitutionCandidates(cardId, playerId, g, framework, substitution.action).filter(
             (id) => (targets ?? []).includes(id),
           )
@@ -207,8 +288,9 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
       mode === "alternate" && substitution
         ? payCardCost(cardId, playerId, g, framework, {
             costOverride: substitution.action.cost,
+            paymentResourceIds,
           })
-        : payCardCost(cardId, playerId, g, framework);
+        : payCardCost(cardId, playerId, g, framework, { paymentResourceIds });
     if (substitutionTargets.length > 0) {
       handleDestroyAction(substitutionTargets as CardInstanceId[], {
         G: g,
@@ -238,6 +320,9 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
       visibility: { mode: "PUBLIC" },
       category: "action",
     });
+
+    // Rule 11-4: settle battle-area excess before Deploy triggers continue.
+    enqueueBattleAreaExcessManagement(g, playerId, cardId, framework, moveId);
 
     // Enqueue 【Deploy】 effects onto g.pendingEffects; the flow engine's
     // onTransitionCheck drains auto-resolvable heads and halts on any
@@ -270,13 +355,13 @@ export const deployUnit: GundamMoveDefinition<"deployUnit"> = {
 
 function findDeployCostSubstitution(
   definition: Card | undefined,
-): { action: DeployCostSubstitution; sourceText: string } | undefined {
+): { action: DeployCostAlternative; sourceText: string } | undefined {
   for (const effect of (definition?.effects ?? []) as CardEffect[]) {
     if (effect.type !== "substitution") continue;
     for (const directive of effect.directives) {
       if (!("action" in directive)) continue;
       const action = (directive as EffectDirective).action;
-      if (action.action === "deployCostSubstitution") {
+      if (action.action === "deployCostSubstitution" || action.action === "deployCostOverride") {
         return { action, sourceText: effect.sourceText };
       }
     }
@@ -289,8 +374,9 @@ function deploySubstitutionCandidates(
   playerId: string,
   G: ReadonlyGundamG,
   framework: FrameworkReadAPI,
-  action: DeployCostSubstitution,
+  action: DeployCostAlternative,
 ): string[] {
+  if (action.action === "deployCostOverride") return [];
   const ctx = buildTargetResolutionContext(G, playerId, framework, { sourceCardId });
   const matching = evaluateTargetFilter(
     action.destroyTarget,
@@ -300,9 +386,26 @@ function deploySubstitutionCandidates(
   return matching.filter((cardId) => !isDestructionPreventedFor(cardId, playerId, G, framework));
 }
 
+function isDeployAlternativeAvailable(
+  action: DeployCostAlternative,
+  candidates: readonly string[],
+  playerId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+  sourceCardId: string,
+): boolean {
+  if (action.action === "deployCostOverride") {
+    return evaluateCondition(
+      action.condition,
+      buildTargetResolutionContext(G, playerId, framework, { sourceCardId }),
+    );
+  }
+  return candidates.length >= getFilterCountBounds(action.destroyTarget).min;
+}
+
 function shouldDeployRested(
   cardId: string,
-  playerId: string,
+  _playerId: string,
   g: Parameters<GundamMoveDefinition<"deployUnit">["execute"]>[0]["G"],
   framework: Parameters<GundamMoveDefinition<"deployUnit">["execute"]>[0]["framework"],
 ): boolean {
@@ -330,6 +433,21 @@ function shouldDeployRested(
         for (const directive of effect.directives) {
           if (!("action" in directive)) continue;
           const action = (directive as EffectDirective).action;
+          if (action.action === "deployRestedByFriendlyNameCount") {
+            const matches = evaluateTargetFilter(action.target, [deployed], ctx);
+            if (!matches.includes(cardId as never)) continue;
+            const sourceOwner = framework.cards.getOwner(sourceId);
+            const friendlyUnits = sourceOwner
+              ? framework.zones.getCards({ zone: "battleArea", playerId: sourceOwner })
+              : [];
+            const namedCount = friendlyUnits.filter((friendlyId) => {
+              const friendlyDef = framework.cards.getDefinition(friendlyId) as Card | undefined;
+              return action.names.some((name) => friendlyDef?.name.includes(name));
+            }).length;
+            const deployedDef = framework.cards.getDefinition(cardId) as Card | undefined;
+            if (deployedDef?.type === "unit" && deployedDef.level <= namedCount + 1) return true;
+            continue;
+          }
           if (action.action !== "deployRested") continue;
           const matches = evaluateTargetFilter(action.target, [deployed], ctx);
           if (matches.includes(cardId as never)) {

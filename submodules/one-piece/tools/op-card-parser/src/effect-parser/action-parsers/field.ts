@@ -45,6 +45,52 @@ export function parseCompoundSetActiveActions(text: string): SetActiveAction[] |
     .trim()
     .replace(/\.+$/, "")
     .replace(/\s+at\s+the\s+end\s+of\s+this\s+turn$/i, "");
+  // "set up to N ... Characters and up to 1 of your Leader as active"
+  const upToLeaderMatch =
+    /^set\s+(.+?)\s+and\s+up\s+to\s+(\d+)\s+of\s+your\s+Leader\s+as\s+active$/i.exec(stripped);
+  if (upToLeaderMatch) {
+    const characterTarget = parseTarget(upToLeaderMatch[1]!);
+    if (characterTarget) {
+      return [
+        { action: "setActive", target: characterTarget },
+        {
+          action: "setActive",
+          target: {
+            player: "self",
+            zones: ["leader"],
+            count: {
+              amount: parseInt(upToLeaderMatch[2]!, 10),
+              upTo: true,
+            },
+          },
+        },
+      ];
+    }
+  }
+  // "set up to N ... Characters and up to M of your DON!! cards as active"
+  const upToDonMatch =
+    /^set\s+(.+?)\s+and\s+up\s+to\s+(\d+)\s+of\s+your\s+DON!!\s+cards?\s+as\s+active$/i.exec(
+      stripped,
+    );
+  if (upToDonMatch) {
+    const characterTarget = parseTarget(upToDonMatch[1]!);
+    if (characterTarget) {
+      return [
+        { action: "setActive", target: characterTarget },
+        {
+          action: "setActive",
+          target: {
+            player: "self",
+            zones: ["costArea"],
+            count: {
+              amount: parseInt(upToDonMatch[2]!, 10),
+              upTo: true,
+            },
+          },
+        },
+      ];
+    }
+  }
   const match = /^set\s+(.+?)\s+and\s+your\s+Leader\s+as\s+active$/i.exec(stripped);
   if (!match) {
     return null;

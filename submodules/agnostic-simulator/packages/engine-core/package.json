@@ -18,7 +18,8 @@
     "./package.json": "./package.json"
   },
   "publishConfig": {
-    "access": "public",
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.mts",
     "exports": {
       ".": {
         "types": "./dist/index.d.mts",
@@ -30,8 +31,7 @@
       },
       "./package.json": "./package.json"
     },
-    "main": "./dist/index.mjs",
-    "types": "./dist/index.d.mts"
+    "access": "public"
   },
   "scripts": {
     "build": "vp pack",

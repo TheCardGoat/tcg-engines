@@ -1,0 +1,694 @@
+{
+  "totals": {
+    "cards": 4896,
+    "fullyParsed": 4885,
+    "partial": 4,
+    "fullyUnparsed": 7,
+    "percentFullyParsed": 99.8
+  },
+  "sets": [
+    {
+      "set": "IAR",
+      "total": 44,
+      "parsed": 44,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AOL",
+      "total": 1,
+      "parsed": 1,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "DDD",
+      "total": 3,
+      "parsed": 3,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "MPW",
+      "total": 22,
+      "parsed": 22,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "OMN",
+      "total": 214,
+      "parsed": 214,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AZS",
+      "total": 26,
+      "parsed": 26,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AHA",
+      "total": 27,
+      "parsed": 27,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "PEN",
+      "total": 323,
+      "parsed": 323,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AAC",
+      "total": 8,
+      "parsed": 8,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ARR",
+      "total": 9,
+      "parsed": 9,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "SUP",
+      "total": 238,
+      "parsed": 238,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "APS",
+      "total": 27,
+      "parsed": 27,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "SMP",
+      "total": 31,
+      "parsed": 31,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "BDD",
+      "total": 6,
+      "parsed": 6,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "MPG",
+      "total": 68,
+      "parsed": 68,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "APR",
+      "total": 1,
+      "parsed": 1,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AVS",
+      "total": 1,
+      "parsed": 1,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ASR",
+      "total": 10,
+      "parsed": 10,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "SEA",
+      "total": 223,
+      "parsed": 223,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AGB",
+      "total": 26,
+      "parsed": 26,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AMX",
+      "total": 8,
+      "parsed": 8,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AST",
+      "total": 8,
+      "parsed": 8,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ARK",
+      "total": 8,
+      "parsed": 8,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "CIN",
+      "total": 25,
+      "parsed": 25,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "FNG",
+      "total": 24,
+      "parsed": 24,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "HNT",
+      "total": 195,
+      "parsed": 195,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AJV",
+      "total": 10,
+      "parsed": 10,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AIO",
+      "total": 6,
+      "parsed": 6,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AUA",
+      "total": 19,
+      "parsed": 19,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "FLR",
+      "total": 21,
+      "parsed": 21,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "OSC",
+      "total": 17,
+      "parsed": 17,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ROS",
+      "total": 157,
+      "parsed": 157,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AUR",
+      "total": 18,
+      "parsed": 18,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "TER",
+      "total": 17,
+      "parsed": 17,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AAZ",
+      "total": 6,
+      "parsed": 6,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ASB",
+      "total": 5,
+      "parsed": 5,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ENG",
+      "total": 29,
+      "parsed": 29,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "MST",
+      "total": 185,
+      "parsed": 185,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AKO",
+      "total": 5,
+      "parsed": 5,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "BET",
+      "total": 25,
+      "parsed": 25,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "HVY",
+      "total": 195,
+      "parsed": 195,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "EVO",
+      "total": 222,
+      "parsed": 222,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "TCC",
+      "total": 67,
+      "parsed": 67,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "DTD",
+      "total": 214,
+      "parsed": 214,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ARA",
+      "total": 26,
+      "parsed": 26,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "AZL",
+      "total": 21,
+      "parsed": 21,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "BEN",
+      "total": 14,
+      "parsed": 14,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "KAT",
+      "total": 5,
+      "parsed": 5,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "OUT",
+      "total": 143,
+      "parsed": 143,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "DYN",
+      "total": 239,
+      "parsed": 239,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "DRO",
+      "total": 18,
+      "parsed": 18,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "FAI",
+      "total": 25,
+      "parsed": 25,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "UPR",
+      "total": 189,
+      "parsed": 189,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "DVR",
+      "total": 13,
+      "parsed": 13,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "RVD",
+      "total": 9,
+      "parsed": 9,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "EVR",
+      "total": 191,
+      "parsed": 191,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ELE",
+      "total": 236,
+      "parsed": 236,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "BOL",
+      "total": 28,
+      "parsed": 28,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "CHN",
+      "total": 28,
+      "parsed": 28,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "LEV",
+      "total": 25,
+      "parsed": 25,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "MON",
+      "total": 230,
+      "parsed": 230,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "PSM",
+      "total": 2,
+      "parsed": 2,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "CRU",
+      "total": 163,
+      "parsed": 163,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "ARC",
+      "total": 218,
+      "parsed": 218,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "BVO",
+      "total": 28,
+      "parsed": 28,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "KSU",
+      "total": 24,
+      "parsed": 24,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "RNR",
+      "total": 27,
+      "parsed": 27,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "TEA",
+      "total": 22,
+      "parsed": 22,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "WTR",
+      "total": 123,
+      "parsed": 123,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "IRA",
+      "total": 12,
+      "parsed": 12,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "FAB",
+      "total": 2,
+      "parsed": 2,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "HER",
+      "total": 2,
+      "parsed": 2,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "JDG",
+      "total": 12,
+      "parsed": 12,
+      "partial": 0,
+      "unparsedCards": []
+    },
+    {
+      "set": "LGS",
+      "total": 7,
+      "parsed": 4,
+      "partial": 1,
+      "unparsedCards": [
+        {
+          "collector": "LGS099",
+          "name": "Shitty Xmas Present",
+          "segments": ["Put a Cracked Bauble from outside the game on top of target hero's deck."]
+        },
+        {
+          "collector": "LGS355",
+          "name": "Spirit of Christmas",
+          "segments": [
+            "Each hero chooses another hero. The chosen hero creates an Agility, Might, Vigor, and Gold token."
+          ]
+        },
+        {
+          "collector": "LGS360",
+          "name": "Cracker Bauble",
+          "segments": [
+            "When this is pitched, you and target opponent randomly choose opposite ends of this and pull them until this breaks in half. Then each hero creates the token on the back of their half, and this ceases to exist."
+          ]
+        }
+      ]
+    },
+    {
+      "set": "LSS",
+      "total": 20,
+      "parsed": 12,
+      "partial": 3,
+      "unparsedCards": [
+        {
+          "collector": "LSS001",
+          "name": "Ruu'di, Gem Keeper",
+          "segments": [
+            "You may only have PSA graded cards in your deck.",
+            "Once per Turn Action - {r}: Reveal the top card of your deck. If it's graded Gem Mint 10, put it into your hand, otherwise each opponent may draw a card. Go again"
+          ]
+        },
+        {
+          "collector": "LSS002",
+          "name": "Go Bananas",
+          "segments": [
+            "Name an action card. Open and reveal a booster pack of Flesh and Blood and put all cards with the chosen name into your hand. If the booster pack does not contain a card with the chosen name, you may repeat this process."
+          ]
+        },
+        {
+          "collector": "LSS003",
+          "name": "Taylor",
+          "segments": [
+            "You may have equipment of any class or talent in your inventory. Each equipment in your starting inventory must have a different name.",
+            "At the start of your turn, you may banish an equipment you control. If you do, equip a card of the same subtype from your inventory."
+          ]
+        },
+        {
+          "collector": "LSS004",
+          "name": "Yorick, Weaver of Tales",
+          "segments": [
+            "At the start of the game, all heroes shuffle their starting decks together. All heroes share the same deck and graveyard this game."
+          ]
+        },
+        {
+          "collector": "LSS005",
+          "name": "Tales of Adventure",
+          "segments": [
+            "Each other hero chooses and creates a token that hasn't been chosen; Aether Ashwing, Embodiment of Earth, Embodiment of Lightning, Ponder, Quicken, Runechant, Seismic Surge, Soul Shackle, Spectral Shield, Zen State.",
+            "You create a Copper, Silver, and Gold."
+          ]
+        },
+        {
+          "collector": "LSS006",
+          "name": "Good Deeds Don't Go Unnoticed",
+          "segments": [
+            "At the start of each other hero's turn, choose 1; they draw a card, they gain {r}, they gain 1{h}, or their next attack this turn gains +1{p}.",
+            "At the start of your turn, destroy this. If another hero drew a card from this, you draw a card, then repeat for {r}, {h}, and {p}."
+          ]
+        },
+        {
+          "collector": "LSS007",
+          "name": "Pink Visor",
+          "segments": [
+            "Once per Turn Action - {r}: The next card you reveal this turn has its grade increased by 1. Go again"
+          ]
+        },
+        {
+          "collector": "LSS023",
+          "name": "Drinking Buddy",
+          "segments": [
+            "When this attacks, each hero may search their deck for an item with Potion or Brew in its name and put it into the arena. Each hero that does, shuffles their deck. If two or more heroes put a card into the arena this way, this gets go again."
+          ]
+        }
+      ]
+    }
+  ],
+  "topUnparsedPatterns": [
+    {
+      "pattern": "at the start of each other hero's turn, choose N; they draw a card, they gain {r}, they gain N{h}, or their next attack this turn gains +N{p}.",
+      "count": 1,
+      "example": "At the start of each other hero's turn, choose 1; they draw a card, they gain {r}, they gain 1{h}, or their next attack this turn gains +1{p}."
+    },
+    {
+      "pattern": "at the start of the game, all heroes shuffle their starting decks together. all heroes share the same deck and graveyard this game.",
+      "count": 1,
+      "example": "At the start of the game, all heroes shuffle their starting decks together. All heroes share the same deck and graveyard this game."
+    },
+    {
+      "pattern": "at the start of your turn, destroy this. if another hero drew a card from this, you draw a card, then repeat for {r}, {h}, and {p}.",
+      "count": 1,
+      "example": "At the start of your turn, destroy this. If another hero drew a card from this, you draw a card, then repeat for {r}, {h}, and {p}."
+    },
+    {
+      "pattern": "at the start of your turn, you may banish an equipment you control. if you do, equip a card of the same subtype from your inventory.",
+      "count": 1,
+      "example": "At the start of your turn, you may banish an equipment you control. If you do, equip a card of the same subtype from your inventory."
+    },
+    {
+      "pattern": "each hero chooses another hero. the chosen hero creates an agility, might, vigor, and gold token.",
+      "count": 1,
+      "example": "Each hero chooses another hero. The chosen hero creates an Agility, Might, Vigor, and Gold token."
+    },
+    {
+      "pattern": "each other hero chooses and creates a token that hasn't been chosen; aether ashwing, embodiment of earth, embodiment of lightning, ponder, quicken, runechant, seismic surge, soul shackle, spectral shield, zen state.",
+      "count": 1,
+      "example": "Each other hero chooses and creates a token that hasn't been chosen; Aether Ashwing, Embodiment of Earth, Embodiment of Lightning, Ponder, Quicken, Runechant, Seismic Surge, Soul Shackle, Spectral Shield, Zen State."
+    },
+    {
+      "pattern": "name an action card. open and reveal a booster pack of flesh and blood and put all cards with the chosen name into your hand. if the booster pack does not contain a card with the chosen name, you may repeat this process.",
+      "count": 1,
+      "example": "Name an action card. Open and reveal a booster pack of Flesh and Blood and put all cards with the chosen name into your hand. If the booster pack does not contain a card with the chosen name, you may repeat this process."
+    },
+    {
+      "pattern": "once per turn action - {r}: reveal the top card of your deck. if it's graded gem mint N, put it into your hand, otherwise each opponent may draw a card. go again",
+      "count": 1,
+      "example": "Once per Turn Action - {r}: Reveal the top card of your deck. If it's graded Gem Mint 10, put it into your hand, otherwise each opponent may draw a card. Go again"
+    },
+    {
+      "pattern": "once per turn action - {r}: the next card you reveal this turn has its grade increased by N. go again",
+      "count": 1,
+      "example": "Once per Turn Action - {r}: The next card you reveal this turn has its grade increased by 1. Go again"
+    },
+    {
+      "pattern": "put a cracked bauble from outside the game on top of target hero's deck.",
+      "count": 1,
+      "example": "Put a Cracked Bauble from outside the game on top of target hero's deck."
+    },
+    {
+      "pattern": "when this attacks, each hero may search their deck for an item with potion or brew in its name and put it into the arena. each hero that does, shuffles their deck. if two or more heroes put a card into the arena this way, this gets go again.",
+      "count": 1,
+      "example": "When this attacks, each hero may search their deck for an item with Potion or Brew in its name and put it into the arena. Each hero that does, shuffles their deck. If two or more heroes put a card into the arena this way, this gets go again."
+    },
+    {
+      "pattern": "when this is pitched, you and target opponent randomly choose opposite ends of this and pull them until this breaks in half. then each hero creates the token on the back of their half, and this ceases to exist.",
+      "count": 1,
+      "example": "When this is pitched, you and target opponent randomly choose opposite ends of this and pull them until this breaks in half. Then each hero creates the token on the back of their half, and this ceases to exist."
+    },
+    {
+      "pattern": "you create a copper, silver, and gold.",
+      "count": 1,
+      "example": "You create a Copper, Silver, and Gold."
+    },
+    {
+      "pattern": "you may have equipment of any class or talent in your inventory. each equipment in your starting inventory must have a different name.",
+      "count": 1,
+      "example": "You may have equipment of any class or talent in your inventory. Each equipment in your starting inventory must have a different name."
+    },
+    {
+      "pattern": "you may only have psa graded cards in your deck.",
+      "count": 1,
+      "example": "You may only have PSA graded cards in your deck."
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { processCardSpentEventsSince, processEventTriggers } from "../ability-ex
 import { getDefinitionFor } from "../state/lookups.ts";
 import { availableEddies } from "./eddie-resources.ts";
 import { isReactStep } from "./is-react-step.ts";
+import { playerHasCallLegendFree } from "../active-effects/index.ts";
 
 export interface CallLegendInput extends MoveInput {
   args: {
@@ -21,8 +22,9 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
       return false;
     if (!isReactStep(state, playerId) && player.calledLegendThisTurn) return false;
     if (isReactStep(state, playerId) && player.calledLegendThisRivalTurn) return false;
-    if (availableEddies(state as import("../types/match-state.ts").MatchState, playerId) < 1)
-      return false;
+    const matchState = state as import("../types/match-state.ts").MatchState;
+    const callCost = playerHasCallLegendFree(matchState, playerId) ? 0 : 1;
+    if (availableEddies(matchState, playerId) < callCost) return false;
 
     return player.zones.legendArea.some((id) => {
       const card = state.G.cardIndex[id as string];
@@ -43,10 +45,12 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
     if (!isDefending && state.G.turnMetadata.activePlayerId !== playerId) {
       return { valid: false, error: "Not your turn", errorCode: "NOT_YOUR_TURN" };
     }
-    if (availableEddies(state as import("../types/match-state.ts").MatchState, playerId) < 1)
+    const matchState = state as import("../types/match-state.ts").MatchState;
+    const callCost = playerHasCallLegendFree(matchState, playerId) ? 0 : 1;
+    if (availableEddies(matchState, playerId) < callCost)
       return {
         valid: false,
-        error: "Not enough eddies (need 1)",
+        error: callCost === 0 ? "Not enough eddies" : "Not enough eddies (need 1)",
         errorCode: "INSUFFICIENT_EDDIES",
       };
 
@@ -113,7 +117,15 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
     const legendId = input.args.legendId as CardInstanceId;
 
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
-    operations.game.spendEddies(playerId, 1, "callLegend");
+    const callCost = playerHasCallLegendFree(
+      state as import("../types/match-state.ts").MatchState,
+      playerId,
+    )
+      ? 0
+      : 1;
+    if (callCost > 0) {
+      operations.game.spendEddies(playerId, callCost, "callLegend");
+    }
     operations.card.setMeta(legendId, { faceDown: false });
     if (isReactStep(state, playerId)) {
       operations.game.markCalledLegendThisRivalTurn(playerId);

@@ -2,7 +2,7 @@ import type { GameSlug } from "@tcg/simulator-contract";
 import { playUrl } from "../../../runtime/gameRuntimeApi";
 import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 import type { CyberpunkGameAnalyticsRecord } from "../components/EndGameModal/postGameApi";
-import { isReplayStoreAvailable, loadReplayData } from "./replayStore";
+import { ReplayPlaybackV1Schema, type ReplayReversal } from "@tcg/game-page-contract";
 
 export interface ReplayPlayerInfo {
   id: string;
@@ -33,11 +33,10 @@ export interface ReplayMoveRecord {
   timestamp: number;
 }
 
-export interface PersistedReplayStep {
-  patches: unknown[];
-  logs: unknown[];
-  acceptedMove: ReplayMoveRecord;
-}
+export type PersistedReplayStep = { patches: unknown[]; logs: unknown[] } & (
+  | { acceptedMove: ReplayMoveRecord; reversal?: never }
+  | { acceptedMove: null; reversal: ReplayReversal }
+);
 
 export interface PersistedReplayData {
   version: 2;
@@ -52,7 +51,7 @@ export interface PersistedReplayData {
   metadata: PersistedReplayMetadata;
 }
 
-export type ReplayBlobSource = "indexed-db" | "api";
+export type ReplayBlobSource = "api";
 
 export interface ReplayBlobLoadResult {
   blob: ArrayBuffer;
@@ -60,13 +59,11 @@ export interface ReplayBlobLoadResult {
 }
 
 interface ReplayBlobLoaderDeps {
-  isReplayStoreAvailable?: () => boolean;
-  loadReplayData?: (gameId: string) => Promise<ArrayBuffer | null>;
   fetchReplayBlob?: (gameId: string) => Promise<ArrayBuffer>;
 }
 
 export function buildReplayDataUrl(gameSlug: GameSlug, gameId: string): string {
-  return playUrl(gameSlug, `/replays/${encodeURIComponent(gameId)}/data`);
+  return playUrl(gameSlug, `/replays/${encodeURIComponent(gameId)}`);
 }
 
 export async function fetchReplayBlob(
@@ -80,28 +77,12 @@ export async function loadReplayBlobForPlayback(
   gameId: string,
   deps: ReplayBlobLoaderDeps = {},
 ): Promise<ReplayBlobLoadResult> {
-  const canUseStore = deps.isReplayStoreAvailable ?? isReplayStoreAvailable;
-  const loadLocalReplay = deps.loadReplayData ?? loadReplayData;
   const fetchRemoteReplay = deps.fetchReplayBlob ?? fetchReplayBlob;
-
-  if (canUseStore()) {
-    try {
-      const localBlob = await loadLocalReplay(gameId);
-      if (localBlob) {
-        return { blob: localBlob, source: "indexed-db" };
-      }
-    } catch (error) {
-      console.warn("[CyberpunkReplay] IndexedDB load failed; falling back to API", {
-        gameId,
-        error,
-      });
-    }
-  }
 
   try {
     return { blob: await fetchRemoteReplay(gameId), source: "api" };
   } catch (error) {
-    console.error("[CyberpunkReplay] API fetch failed after IndexedDB miss/unavailable", {
+    console.error("[CyberpunkReplay] API fetch failed", {
       gameId,
       error,
     });
@@ -110,14 +91,57 @@ export async function loadReplayBlobForPlayback(
 }
 
 export async function decompressReplayBlob(compressed: ArrayBuffer): Promise<PersistedReplayData> {
-  const stream = new Blob([compressed])
-    .stream()
-    .pipeThrough(
-      new DecompressionStream("gzip") as unknown as ReadableWritablePair<Uint8Array, Uint8Array>,
-    );
+  const playback = ReplayPlaybackV1Schema.parse(
+    JSON.parse(new TextDecoder().decode(compressed)) as unknown,
+  );
+  const replay = playback.replay;
+  const playerIds = replay.participants.map((participant) => participant.id);
+  if (playerIds.length < 2) throw new Error("Replay is missing player participants.");
+  return {
+    version: 2,
+    gameId: replay.gameId,
+    matchId: replay.matchId,
+    gameType: replay.gameType,
+    seed: replay.seed,
+    playerIds: [playerIds[0]!, playerIds[1]!],
+    cardsMaps: readReplayCardsMaps(playback.resources),
+    initialState: JSON.stringify(replay.initialState),
+    steps: replay.steps.map((step) => ({
+      patches: step.patches,
+      logs: step.logs,
+      ...(step.acceptedMove === null
+        ? { acceptedMove: null, reversal: step.reversal }
+        : {
+            acceptedMove: {
+              ...step.acceptedMove,
+              ...(step.acceptedMove.payload !== undefined
+                ? { input: step.acceptedMove.payload }
+                : {}),
+            },
+          }),
+    })),
+    metadata: {
+      ...replay.metadata,
+      completedAt: replay.metadata.completedAt ?? playback.publishedAt,
+      players: [toReplayPlayer(replay.participants[0]!), toReplayPlayer(replay.participants[1]!)],
+      authority: playback.trust === "server_authoritative" ? "server" : "client",
+    },
+  };
+}
 
-  const decompressed = await new Response(stream).text();
-  return JSON.parse(decompressed) as PersistedReplayData;
+function readReplayCardsMaps(resources: unknown): PersistedReplayData["cardsMaps"] {
+  if (!resources || typeof resources !== "object" || !("cardsMaps" in resources)) {
+    return { cardInstances: {}, owners: {} };
+  }
+  const cardsMaps = (resources as { cardsMaps?: unknown }).cardsMaps;
+  if (!cardsMaps || typeof cardsMaps !== "object") return { cardInstances: {}, owners: {} };
+  const value = cardsMaps as { cardInstances?: unknown; owners?: unknown };
+  if (!value.cardInstances || !value.owners) return { cardInstances: {}, owners: {} };
+  return cardsMaps as PersistedReplayData["cardsMaps"];
+}
+
+function toReplayPlayer(participant: { id: string; displayName: string }): ReplayPlayerInfo {
+  return { id: participant.id, displayName: participant.displayName, username: null };
 }
 
 async function requestArrayBuffer(url: string): Promise<ArrayBuffer> {

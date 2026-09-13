@@ -3,6 +3,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { CardEffects, CharacterCard } from "@tcg/op-types";
 import { buildCardEffects } from "../src/effect-parser/index.ts";
+import { joinPrintedAbilityText } from "../src/printed-text.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PACKAGE_DIR = join(__dirname, "..");
@@ -147,17 +148,10 @@ async function loadCard(file: string): Promise<CharacterCard> {
 }
 
 function printedText(card: CharacterCard): string {
-  const storedEffectText = card.effect ?? card.i18n.en.effect;
-  const trimmedEffectText = storedEffectText?.trim();
-  const effectText =
-    trimmedEffectText && !/^(?:NULL|-)$/i.test(trimmedEffectText) ? trimmedEffectText : undefined;
-  const triggerText =
-    card.trigger && !/(?:^|\n)\s*\[Trigger\]/i.test(effectText ?? "")
-      ? `[Trigger] ${card.trigger}`
-      : undefined;
-  return [effectText, triggerText]
-    .filter((text): text is string => Boolean(text?.trim()))
-    .join("\n");
+  return joinPrintedAbilityText({
+    effect: card.effect ?? card.i18n.en.effect,
+    trigger: card.trigger,
+  });
 }
 
 function auditStatus(

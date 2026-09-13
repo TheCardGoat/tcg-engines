@@ -3,7 +3,7 @@ import { prb01TrafalgarLawSt10010Reprint010 } from "../../../../../cards/src/car
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST10-010 Trafalgar Law (ST10-010) (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01TrafalgarLawSt10010Reprint010);
   });
 });

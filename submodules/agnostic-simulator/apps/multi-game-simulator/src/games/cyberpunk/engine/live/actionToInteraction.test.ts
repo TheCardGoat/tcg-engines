@@ -1,12 +1,12 @@
 import { describe, expect, test } from "vite-plus/test";
-import type { EngineInteractionView } from "@tcg/protocol";
+import { INTERACTION_PROTOCOL_VERSION, type EngineInteractionView } from "@tcg/protocol";
 
 import { actionToInteractionSubmission } from "./actionToInteraction";
 
 describe("actionToInteractionSubmission", () => {
   test("serializes resolveScry with protocol input ids", () => {
     const view: EngineInteractionView = {
-      protocolVersion: 1,
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
       gameSlug: "cyberpunk",
       actorId: "p1",
       stateVersion: 7,
@@ -30,10 +30,12 @@ describe("actionToInteractionSubmission", () => {
             {
               kind: "entity-selection",
               id: "selectedCardIds",
+              text: { key: "cyberpunk.choice.scry.selectedCards" },
               role: "source",
               entityKinds: ["card"],
               min: 0,
               max: 1,
+              ordered: false,
               candidates: [
                 {
                   entity: { kind: "card", instanceId: "card-1" },

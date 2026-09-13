@@ -11,6 +11,7 @@ import {
 import { gd04PsychoGundamMk004 } from "./004-psycho-gundam-mk.ts";
 
 describe("Psycho Gundam Mk-Ⅱ (GD04-004)", () => {
+  /** @behavioral-proof complete: Repair, Pilot trait, friendly blue Unit, controller, draw, and once-per-turn gates are public. */
   describe("<Repair 2>", () => {
     it("recovers 2 HP at the end of its controller's turn", () => {
       const engine = GundamTestEngine.create({
@@ -63,6 +64,51 @@ describe("Psycho Gundam Mk-Ⅱ (GD04-004)", () => {
     const redUnitId = p1.getCardsInZone("battleArea")[1]!;
 
     expectSuccess(p1.assignPilot(pilot, redUnitId));
+
+    expect(p1.getCardsInZone("hand")).toHaveLength(0);
+    expect(p1.getCardsInZone("deck")).toHaveLength(1);
+  });
+
+  it("does not draw when a Pilot without Cyber-Newtype is paired with a friendly blue Unit", () => {
+    const blueUnit = createMockUnit({ color: "blue" });
+    const pilot = createMockPilot({ traits: ["newtype"] });
+    const deckCard = createMockUnit({ name: "Deck Card" });
+    const engine = GundamTestEngine.create({
+      play: [gd04PsychoGundamMk004, blueUnit],
+      hand: [pilot],
+      deck: [deckCard],
+      resourceArea: activeResources(8),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const blueUnitId = p1.getCardsInZone("battleArea")[1]!;
+
+    expectSuccess(p1.assignPilot(pilot, blueUnitId));
+
+    expect(p1.getCardsInZone("hand")).toHaveLength(0);
+    expect(p1.getCardsInZone("deck")).toHaveLength(1);
+  });
+
+  it("does not draw when an opponent pairs a Cyber-Newtype Pilot with their blue Unit", () => {
+    const blueUnit = createMockUnit({ color: "blue" });
+    const pilot = createMockPilot({ traits: ["cyber-newtype"] });
+    const deckCard = createMockUnit({ name: "Deck Card" });
+    const engine = GundamTestEngine.create(
+      {
+        play: [gd04PsychoGundamMk004],
+        deck: [deckCard],
+      },
+      {
+        play: [blueUnit],
+        hand: [pilot],
+        resourceArea: activeResources(1),
+      },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const blueUnitId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p2.assignPilot(pilot, blueUnitId));
 
     expect(p1.getCardsInZone("hand")).toHaveLength(0);
     expect(p1.getCardsInZone("deck")).toHaveLength(1);

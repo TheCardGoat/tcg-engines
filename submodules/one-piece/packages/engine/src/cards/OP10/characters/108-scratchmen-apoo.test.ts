@@ -20,5 +20,9 @@ describe("OP10-108 Scratchmen Apoo", () => {
     const blocker = engine.pendingDecision("battleBlocker", "south").steps[0];
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Apoo's conditional Blocker.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(apooId);
+
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
+    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
   });
 });

@@ -34,4 +34,31 @@ describe('EB04-039 Eustass"Captain"Kid', () => {
     expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(killerId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op14eb04EustassCaptainKidEb04039039, op01Killer039, eb01Doma005],
+      activeDon: op14eb04EustassCaptainKidEb04039039.cost,
+      donDeckCount: 2,
+    });
+    const kidId = engine.findCardInZone("south", "hand", op14eb04EustassCaptainKidEb04039039);
+    const killerId = engine.findCardInZone("south", "hand", op01Killer039);
+
+    engine.playCard(op14eb04EustassCaptainKidEb04039039, "south");
+    engine.resolveDecision("effectAddDon", { optionId: "1" }, "south");
+
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const handBefore = engine.getView("south").players.south.hand.length;
+    engine.activateEffect(kidId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(kidId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(kidId);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(killerId);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(killerId);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

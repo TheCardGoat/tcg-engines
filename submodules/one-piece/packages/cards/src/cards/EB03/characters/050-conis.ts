@@ -21,6 +21,7 @@ export const eb03Conis050: CharacterCard = {
   rarity: "C",
   setId: "EB03",
   cost: 2,
+  power: 0,
   counter: 1000,
   traits: ["Sky Island"],
   attribute: "wisdom",

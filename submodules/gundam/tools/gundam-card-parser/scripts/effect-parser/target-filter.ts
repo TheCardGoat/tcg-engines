@@ -10,6 +10,56 @@ import { parseCardType, parseKeywordEffectName } from "./helpers.ts";
  *   "1 enemy Link Unit"
  */
 export function parseTargetFilter(desc: string): TargetFilter {
+  const pairedPilotM = desc.match(
+    /^(?:choose\s+)?(?:\d+\s+)?Pilot paired with an enemy Unit that is Lv\.?\s*(\d+) or lower$/i,
+  );
+  if (pairedPilotM) {
+    return {
+      owner: "opponent",
+      cardType: "pilot",
+      count: 1,
+      attributeFilters: [
+        {
+          attribute: "pairedUnitLevel",
+          comparison: "lte",
+          value: Number.parseInt(pairedPilotM[1], 10),
+        },
+      ],
+    };
+  }
+  const unitPairedWithTraitPilotM = desc.match(
+    /^(?:choose\s+)?(\d+)\s+(?:(?:of your|friendly)\s+)?Units? paired with an? \(([^)]+)\) Pilot\.?$/i,
+  );
+  if (unitPairedWithTraitPilotM) {
+    return {
+      owner: "friendly",
+      cardType: "unit",
+      count: Number.parseInt(unitPairedWithTraitPilotM[1], 10),
+      attributeFilters: [
+        {
+          attribute: "pairedPilotTrait",
+          comparison: "includes",
+          value: unitPairedWithTraitPilotM[2].toLowerCase(),
+        },
+      ],
+    };
+  }
+  if (/enemy Base\/enemy Shield this Unit is battling/i.test(desc)) {
+    return {
+      owner: "opponent",
+      attributeFilters: [
+        {
+          attribute: "or",
+          filters: [
+            { attribute: "zone", comparison: "eq", value: "baseSection" },
+            { attribute: "zone", comparison: "eq", value: "shieldArea" },
+          ],
+        },
+      ],
+      isBattling: true,
+    };
+  }
+
   // Extract and peel off any "battling [descriptor]" sub-clause before the
   // rest of the rules run, so that attributes inside the sub-clause
   // (keywords, Lv., trait parens, etc.) don't leak onto the outer filter.
@@ -20,7 +70,14 @@ export function parseTargetFilter(desc: string): TargetFilter {
   // Plural ("battling enemy Units") is not expressible by the predicate
   // (it narrows one combatant, not a set); we skip emission and leave the
   // clause in place so a human notices. See isBattlingExtraction below.
-  const extraction = extractBattlingClause(desc);
+  // Parenthesized keyword reminder text is explanatory, not a trait filter.
+  // Preserve actual trait markers such as `(Titans)` while removing only a
+  // trailing sentence-like reminder beginning with While/When.
+  const withoutReminderText = desc.replace(
+    /\s+\(\s*(?:while|when|at the end)\s+[^)]*[.!?]\s*\)\s*$/i,
+    "",
+  );
+  const extraction = extractBattlingClause(withoutReminderText);
   const workingDesc = extraction.stripped;
   const lower = workingDesc.toLowerCase();
   const filter: TargetFilter = { owner: "any" };
@@ -28,18 +85,27 @@ export function parseTargetFilter(desc: string): TargetFilter {
   // Owner
   if (lower.includes("opponent")) filter.owner = "opponent";
   else if (lower.includes("enemy")) filter.owner = "opponent";
+  else if (/belonging to another player/i.test(workingDesc)) filter.owner = "opponent";
   else if (
     lower.includes("friendly") ||
     lower.includes("your") ||
     lower.match(/\bone of (your|my)\b/)
   )
     filter.owner = "friendly";
-  else if (lower.includes("this unit") || lower.includes("this card")) filter.owner = "self";
+  else if (
+    lower.includes("this unit") ||
+    lower.includes("this base") ||
+    lower.includes("this card")
+  )
+    filter.owner = "self";
   else if (/^it\b/.test(lower.trim())) filter.owner = "self";
 
   // Card type
-  const ct = parseCardType(workingDesc);
-  if (ct) filter.cardType = ct;
+  if (/\bUnits?\/Bases?\b/i.test(workingDesc)) filter.cardType = ["unit", "base"];
+  else {
+    const ct = parseCardType(workingDesc);
+    if (ct) filter.cardType = ct;
+  }
 
   // Count — "all" → "all", "1 to 2" → {min,max}, "1" → number
   if (/^all\b/i.test(workingDesc.trim())) {
@@ -54,15 +120,31 @@ export function parseTargetFilter(desc: string): TargetFilter {
   }
 
   // State
-  const states: Array<"active" | "rested" | "damaged"> = [];
-  if (lower.includes("damaged")) states.push("damaged");
+  const states: Array<"active" | "rested" | "damaged" | "undamaged"> = [];
+  if (lower.includes("undamaged")) states.push("undamaged");
+  else if (lower.includes("damaged")) states.push("damaged");
   if (lower.includes("active") && !lower.includes("set it as active")) states.push("active");
   if (lower.includes("rested")) states.push("rested");
   if (states.length === 1) filter.state = states[0];
   else if (states.length > 1) filter.state = states;
+  if (/\bis being attacked\b/i.test(workingDesc)) filter.isBeingAttacked = true;
 
   // Attribute filters (numeric and string predicates)
   const attributeFilters: AttributeFilter[] = [];
+
+  // Color — "1 of your green Units", "a blue Command card", etc.
+  // Keep this tied to a card noun so incidental color words elsewhere in a
+  // sentence do not become target restrictions.
+  const colorM = workingDesc.match(
+    /\b(blue|green|red|white|purple)\s+(?!Base Team\b)(?:\([^)]+\)\s+)?(?:[A-Za-z-]+\s+)*(?:Units?|Bases?|Pilots?|Command cards?|cards?)\b/i,
+  );
+  if (colorM) {
+    attributeFilters.push({
+      attribute: "color",
+      comparison: "eq",
+      value: colorM[1].toLowerCase(),
+    });
+  }
 
   const excludedNameM = workingDesc.match(/without "([^"]+)" in its card name/i);
   if (excludedNameM)
@@ -86,6 +168,11 @@ export function parseTargetFilter(desc: string): TargetFilter {
   const hpLeastM = workingDesc.match(/(\d+)\s+or\s+more\s+HP/i);
   if (hpLeastM)
     attributeFilters.push({ attribute: "hp", comparison: "gte", value: parseInt(hpLeastM[1]) });
+  const hpExactM = workingDesc.match(/with\s+(\d+)\s+HP/i);
+  if (hpExactM)
+    // Units at 0 HP leave play, so the printed "with 1 HP" threshold is
+    // represented by the engine's inclusive surviving-HP predicate.
+    attributeFilters.push({ attribute: "hp", comparison: "lte", value: parseInt(hpExactM[1]) });
 
   // AP filter
   const apMostM = workingDesc.match(/(\d+)\s+or\s+less\s+AP/i);
@@ -102,6 +189,28 @@ export function parseTargetFilter(desc: string): TargetFilter {
   const lvLeastM = workingDesc.match(/Lv\.?\s*(\d+)\s+or\s+higher/i);
   if (lvLeastM)
     attributeFilters.push({ attribute: "level", comparison: "gte", value: parseInt(lvLeastM[1]) });
+  const lvExactM = workingDesc.match(
+    /(?:that is|whose Lv\.? is)?\s*Lv\.?\s*(\d+)(?!\s+or\s+(?:lower|higher))/i,
+  );
+  if (lvExactM)
+    attributeFilters.push({ attribute: "level", comparison: "eq", value: parseInt(lvExactM[1]) });
+
+  // A printed "Lv.N or lower or has M or less AP" is a disjunction, not
+  // two simultaneous constraints. Keep non-numeric filters outside it.
+  if (/\bor has\b/i.test(workingDesc)) {
+    const numericFilters = attributeFilters.filter(
+      (filter) =>
+        filter.attribute === "level" || filter.attribute === "ap" || filter.attribute === "hp",
+    );
+    if (numericFilters.length >= 2) {
+      attributeFilters.splice(
+        0,
+        attributeFilters.length,
+        ...attributeFilters.filter((filter) => !numericFilters.includes(filter)),
+        { attribute: "or", filters: numericFilters },
+      );
+    }
+  }
   // Source-stat comparisons — "equal to or lower than this Unit['s Lv./AP/HP]",
   // "less than this Unit's AP", etc. The RHS is emitted as a SourceStatRef
   // sentinel; the engine resolves it against the source's stat (or, for
@@ -160,7 +269,7 @@ export function parseTargetFilter(desc: string): TargetFilter {
       stat: "ap",
     },
     {
-      re: /ap\s+(?:is\s+)?equal to or lower than this unit(?:'s ap)?/i,
+      re: /ap\s+(?:is\s+)?equal to or (?:lower|less) than this unit(?:'s ap)?/i,
       attribute: "ap",
       comparison: "lte",
       stat: "ap",
@@ -265,6 +374,15 @@ export function parseTargetFilter(desc: string): TargetFilter {
       });
   }
 
+  const effectTimingM = workingDesc.match(/with (?:a )?【(Destroyed)】 effect/i);
+  if (effectTimingM) {
+    attributeFilters.push({
+      attribute: "effectTiming",
+      comparison: "includes",
+      value: effectTimingM[1].toLowerCase() as "destroyed",
+    });
+  }
+
   if (attributeFilters.length > 0) filter.attributeFilters = attributeFilters;
 
   // Zone — "this card in your hand" targets self while in the Hand zone
@@ -279,31 +397,54 @@ export function parseTargetFilter(desc: string): TargetFilter {
   if (lower.includes("from your trash")) {
     filter.zone = "trash";
   }
+  if (
+    filter.cardType === "resource" &&
+    /\b(?:your|friendly) Resources?\b/i.test(workingDesc) &&
+    filter.zone === undefined
+  ) {
+    filter.zone = "resourceArea";
+  }
 
   // Link unit
-  if (lower.includes("link unit")) filter.isLinkUnit = true;
+  if (/other than Link Units?/i.test(workingDesc)) filter.isLinkUnit = false;
+  else if (lower.includes("link unit") || lower.includes("linked unit")) filter.isLinkUnit = true;
 
   // Token
   if (lower.includes("token")) filter.isToken = true;
   if (lower.includes("other than unit tokens")) filter.isToken = false;
 
   if (/highest Lv\.?/i.test(workingDesc)) filter.highest = "level";
+  if (/lowest HP/i.test(workingDesc)) filter.lowest = "hp";
 
-  if (/\bother(?:\s+\([^)]+\))?\s+units?\b/.test(lower)) filter.excludeSource = true;
+  if (/no (?:a )?paired Pilot|has no Pilot paired with it/i.test(workingDesc)) {
+    (filter.attributeFilters ??= []).push({ attribute: "paired", comparison: "eq", value: false });
+  }
+  if (/paired with a Pilot/i.test(workingDesc)) {
+    (filter.attributeFilters ??= []).push({ attribute: "paired", comparison: "eq", value: true });
+  }
+
+  const sourceExclusionText = lower
+    .replace(/\banother player\b/g, "")
+    .replace(/\bother than unit tokens?\b/g, "")
+    .replace(/\bother than link units?\b/g, "");
+  if (/\b(?:other|another)\b(?=[\s\S]*?\bunits?\b)/.test(sourceExclusionText)) {
+    filter.excludeSource = true;
+  }
 
   // Keyword has
   const kwMatch = workingDesc.match(/<([\w\s-]+?)(?:\s+\d+)?>/);
   if (kwMatch) {
     const kw = parseKeywordEffectName(kwMatch[1]);
-    if (kw) filter.hasKeyword = kw;
+    if (kw) {
+      if (/\bwithout\s+<[^>]+>/i.test(workingDesc)) filter.lacksKeyword = kw;
+      else filter.hasKeyword = kw;
+    }
   }
 
   // Attach isBattling LAST so the outer filter is shaped first. A recursive
   // call is used for the relational sub-form; opponentMatches itself is a
   // TargetFilter, parsed from the nested descriptor with the same rules.
-  if (extraction.isBattling !== undefined) {
-    filter.isBattling = extraction.isBattling;
-  } else if (extraction.opponentDescriptor !== undefined) {
+  if (extraction.opponentDescriptor !== undefined) {
     const sub = parseTargetFilter(extraction.opponentDescriptor);
     filter.isBattling = { opponentMatches: sub };
   }
@@ -336,7 +477,6 @@ export function parseTargetFilter(desc: string): TargetFilter {
  */
 interface BattlingExtraction {
   stripped: string;
-  isBattling?: true;
   opponentDescriptor?: string;
 }
 
@@ -353,16 +493,23 @@ function extractBattlingClause(desc: string): BattlingExtraction {
   const body = m[1].trim();
   const bodyLower = body.toLowerCase();
 
-  // Self-form: "battling this Unit" / "battling this card".
-  if (/^this\s+(?:unit|card)\b/i.test(body)) {
+  // Self-form: "battling this Unit" / "battling this card". The candidate
+  // must be battling the source, not merely participating in any battle.
+  const selfMatch = body.match(/^this\s+(?:unit|card)\b/i);
+  if (selfMatch) {
     const stripped = spliceOut(desc, m.index, m[0].length);
-    return { stripped, isBattling: true };
+    return { stripped, opponentDescriptor: selfMatch[0] };
   }
 
   // Relational singular: must start with a/an/the. Reject plurals like
   // "battling enemy Units" — the first non-article word ending in `s`
   // (and not "this"/"base"/"shield"/etc.) is a strong plural signal.
   const articleM = body.match(/^(a|an|the)\s+(.+)$/i);
+  const oneOfYourM = body.match(/^one of your\s+(.+)$/i);
+  if (oneOfYourM) {
+    const stripped = spliceOut(desc, m.index, m[0].length);
+    return { stripped, opponentDescriptor: `friendly ${oneOfYourM[1]}` };
+  }
   if (!articleM) {
     // Neither "this Unit" nor an article-led descriptor — skip emission
     // and leave the clause in place for downstream logging/inspection.

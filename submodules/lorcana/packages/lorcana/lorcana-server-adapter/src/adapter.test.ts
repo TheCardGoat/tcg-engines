@@ -46,6 +46,36 @@ describe("lorcanaServerAdapter.getCanonicalCardId", () => {
   });
 });
 
+describe("lorcanaServerAdapter.getPublicGameScore", () => {
+  it("extracts both players' current lore from a spectator projection", () => {
+    expect(
+      lorcanaServerAdapter.getPublicGameScore?.({
+        players: {
+          player_1: { lore: 7, handCount: 4 },
+          player_2: { lore: 11, handCount: 3 },
+        },
+      }),
+    ).toEqual({
+      kind: "lore",
+      players: {
+        player_1: 7,
+        player_2: 11,
+      },
+    });
+  });
+
+  it("does not expose malformed or negative score values", () => {
+    expect(
+      lorcanaServerAdapter.getPublicGameScore?.({
+        players: {
+          player_1: { lore: -1 },
+          player_2: { lore: "12" },
+        },
+      }),
+    ).toBeUndefined();
+  });
+});
+
 describe("lorcanaServerAdapter.validateDeckForFormat", () => {
   it("preserves structured rule details for adapter consumers", () => {
     const result = lorcanaServerAdapter.validateDeckForFormat("attack-of-the-vine", [

@@ -31,13 +31,24 @@ export const op05Conis104: CharacterCard = {
     effects: [
       {
         trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "self",
+            zones: ["stage"],
+          },
+        ],
         actions: [
           {
             action: "returnToDeck",
             target: {
               player: "self",
               zones: ["stage"],
-              count: { amount: 1 },
+              count: {
+                amount: 1,
+              },
             },
             position: "bottom",
           },

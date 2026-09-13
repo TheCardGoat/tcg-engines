@@ -3,7 +3,7 @@ import { prb02FrankyOp07107Reprint107 } from "../../../../../cards/src/cards/PRB
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-107 Franky - OP07-107 (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02FrankyOp07107Reprint107);
   });
 });

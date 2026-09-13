@@ -208,17 +208,47 @@ describe("buildAnimationScript", () => {
     expect(ids).toEqual(["step-0", "step-1"]);
   });
 
-  it("ignores events that have no current mapping", () => {
+  it("ignores turn boundary events already represented by phase changes", () => {
     const events: GameEvent[] = [
       { type: "turnStarted", playerId: pid("p1"), turnNumber: 1 },
       { type: "turnEnded", playerId: pid("p1"), turnNumber: 1 },
-      { type: "gameEnded", winnerId: pid("p1"), reason: "concede" },
-      { type: "deckShuffled", playerId: pid("p1") },
     ];
 
     const script = buildAnimationScript(events);
     expect(script.steps).toEqual([]);
     expect(script.totalDurationMs).toBe(0);
+  });
+
+  it("emits semantic state, randomization, and result steps", () => {
+    const events: GameEvent[] = [
+      { type: "cardSpent", cardId: cid("unit"), playerId: pid("p1") },
+      { type: "cardReadied", cardId: cid("unit"), playerId: pid("p1") },
+      { type: "deckShuffled", playerId: pid("p1") },
+      {
+        type: "gigDieRolled",
+        dieId: dieId("d8"),
+        dieType: "d8",
+        result: 6,
+        playerId: pid("p1"),
+        origin: "gainGig",
+      },
+      { type: "gameEnded", winnerId: pid("p1"), reason: "seven gigs" },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    expect(script.steps).toMatchObject([
+      { kind: "entityStateChange", change: "spent", cardId: "unit" },
+      { kind: "entityStateChange", change: "readied", cardId: "unit" },
+      { kind: "randomization", randomization: "shuffle" },
+      { kind: "randomization", randomization: "die", dieId: "d8", resultLabel: "6" },
+      { kind: "gameResult", winnerId: "p1", reasonLabel: "seven gigs" },
+    ]);
+    expect(script.totalDurationMs).toBe(
+      ANIMATION_DURATIONS_MS.entityStateChange * 2 +
+        ANIMATION_DURATIONS_MS.randomization * 2 +
+        ANIMATION_DURATIONS_MS.gameResult,
+    );
   });
 
   it("emits a cardLand after a unit's cardMove to field", () => {

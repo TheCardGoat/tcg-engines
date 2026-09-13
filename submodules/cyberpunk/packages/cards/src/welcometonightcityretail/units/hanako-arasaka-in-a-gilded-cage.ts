@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailHanakoArasakaInAGildedCage = defineCyberpunkCard({
   id: "2902da45-ec28-4971-a731-ea1eda4c6ba1",
   slug: "hanako-arasaka-in-a-gilded-cage",
+  subname: "In a Gilded Cage",
   rulesText:
     "{Play} Search the top 4 cards of your deck. Reveal any number of cards with cost equal to any friendly Gig values and add them to your hand. Bottom-deck the rest.",
-  name: "Hanako Arasaka — In a Gilded Cage",
-  displayName: "Hanako Arasaka — In a Gilded Cage",
+  name: "Hanako Arasaka",
+  displayName: "Hanako Arasaka: In a Gilded Cage",
   canonicalId: "hanako-arasaka-in-a-gilded-cage",
   color: "yellow",
   classifications: ["Arasaka", "Corpo", "Netrunner"],

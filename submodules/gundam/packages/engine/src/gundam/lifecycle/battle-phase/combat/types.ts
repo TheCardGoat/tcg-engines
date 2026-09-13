@@ -7,4 +7,6 @@ export type BattleEffCtx = {
   sourceCardId: string;
   framework: FrameworkWriteAPI;
   battleDestroyBreachValue?: number;
+  /** Every Unit destruction caused during the battle damage step is battle damage. */
+  destructionDamageType: "battle";
 };

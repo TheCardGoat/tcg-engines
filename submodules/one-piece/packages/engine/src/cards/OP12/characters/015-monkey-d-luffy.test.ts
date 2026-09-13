@@ -76,4 +76,38 @@ describe("OP12-015 Monkey.D.Luffy", () => {
     expect(view.players.south.leader.attachedDon).toBe(1);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [
+        op12MonkeyDLuffy015,
+        op08PhoenixBrand055,
+        op08PhoenixBrand055,
+        op08PhoenixBrand055,
+        eb01Doma005,
+        eb01MountainGod018,
+      ],
+      activeDon: op12MonkeyDLuffy015.cost,
+      restedDon: 1,
+    });
+    const eligibleId = engine.findCardInZone("south", "hand", eb01Doma005);
+
+    engine.playCard(op12MonkeyDLuffy015, "south");
+    const afterPlay = engine.getView("south").players.south;
+    const handAfterPlay = afterPlay.hand.length;
+    const restedAfterPlay = afterPlay.restedDon;
+    const activeAfterPlay = afterPlay.activeDon;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(eligibleId);
+    expect(view.players.south.hand.length).toBe(handAfterPlay);
+    expect(view.players.south.restedDon).toBe(restedAfterPlay);
+    expect(view.players.south.activeDon).toBe(activeAfterPlay);
+    expect(view.players.south.leader.attachedDon).toBe(0);
+    expect(view.players.south.characters.some((card) => card?.instanceId === eligibleId)).toBe(
+      false,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

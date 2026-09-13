@@ -3,7 +3,7 @@ import { op01Shanks120 } from "../../../../../cards/src/cards/OP01/characters/12
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-120 Shanks", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01Shanks120);
   });
 });

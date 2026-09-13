@@ -18,27 +18,27 @@ semantic review or command-driven behavior proof.
 | EB01 | EB01-038 | EB01-038 | Oh Come My Way | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/events/038-oh-come-my-way.ts` |
 | EB01 | EB01-039 | EB01-039 | Conquerer of Three Worlds Ragnaraku | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/events/039-conquerer-of-three-worlds-ragnaraku.ts` |
 | EB01 | EB01-050 | EB01-050 | ...I Want to Live!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/events/050-i-want-to-live.ts` |
-| EB01 | EB01-051 | EB01-051 | Finger Pistol | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB01/events/051-finger-pistol.ts` |
-| EB01 | EB01-059 | EB01-059 | Kingdom Come | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB01/events/059-kingdom-come.ts` |
-| EB01 | EB01-060 | EB01-060 | Did Someone Say...Kami? | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB01/events/060-did-someone-say-kami.ts` |
-| EB02 | EB02-007 | EB02-007 | Cloven Rose Blizzard | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/events/007-cloven-rose-blizzard.ts` |
+| EB01 | EB01-051 | EB01-051 | Finger Pistol | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/events/051-finger-pistol.ts` |
+| EB01 | EB01-059 | EB01-059 | Kingdom Come | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/events/059-kingdom-come.ts` |
+| EB01 | EB01-060 | EB01-060 | Did Someone Say...Kami? | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/events/060-did-someone-say-kami.ts` |
+| EB02 | EB02-007 | EB02-007 | Cloven Rose Blizzard | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/007-cloven-rose-blizzard.ts` |
 | EB02 | EB02-008 | EB02-008 | The Peak | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/008-the-peak.ts` |
 | EB02 | EB02-020 | EB02-020 | We Are! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/020-we-are.ts` |
-| EB02 | EB02-021 | EB02-021 | Gum-Gum Giant Pistol | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/events/021-gum-gum-giant-pistol.ts` |
-| EB02 | EB02-030 | EB02-030 | And That's When Somebody Makes Fun of Their Friend's Dream!!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/events/030-and-that-s-when-somebody-makes-fun-of-their-friend-s-dream.ts` |
+| EB02 | EB02-021 | EB02-021 | Gum-Gum Giant Pistol | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/021-gum-gum-giant-pistol.ts` |
+| EB02 | EB02-030 | EB02-030 | And That's When Somebody Makes Fun of Their Friend's Dream!!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/030-and-that-s-when-somebody-makes-fun-of-their-friend-s-dream.ts` |
 | EB02 | EB02-031 | EB02-031 | Hope | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/031-hope.ts` |
-| EB02 | EB02-039 | EB02-039 | GERMA 66 | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/events/039-germa-66.ts` |
+| EB02 | EB02-039 | EB02-039 | GERMA 66 | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/039-germa-66.ts` |
 | EB02 | EB02-040 | EB02-040 | BRAND NEW WORLD | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/040-brand-new-world.ts` |
 | EB02 | EB02-050 | EB02-050 | Kokoro no Chizu | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/050-kokoro-no-chizu.ts` |
-| EB02 | EB02-051 | EB02-051 | Three-Pace Hum Soul Notch Slash | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/events/051-three-pace-hum-soul-notch-slash.ts` |
+| EB02 | EB02-051 | EB02-051 | Three-Pace Hum Soul Notch Slash | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/051-three-pace-hum-soul-notch-slash.ts` |
 | EB02 | EB02-058 | EB02-058 | UUUUUS! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/058-uuuuus.ts` |
-| EB02 | EB02-059 | EB02-059 | Without Your Help I Can't Become the King of the Pirates!!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/events/059-without-your-help-i-can-t-become-the-king-of-the-pirates.ts` |
+| EB02 | EB02-059 | EB02-059 | Without Your Help I Can't Become the King of the Pirates!!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/events/059-without-your-help-i-can-t-become-the-king-of-the-pirates.ts` |
 | EB03 | EB03-011 | EB03-011 | But If We Ever See Each Other Again... Will You Call Me Your Shipmate?!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB03/events/011-but-if-we-ever-see-each-other-again-will-you-call-me-your-shipmate.ts` |
 | EB03 | EB03-020 | EB03-020 | There You Are, Sore Loser! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB03/events/020-there-you-are-sore-loser.ts` |
-| EB03 | EB03-029 | EB03-029 | Insolent Fool!! Stand Down!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB03/events/029-insolent-fool-stand-down.ts` |
-| EB03 | EB03-038 | EB03-038 | Thanks for the Treat. | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB03/events/038-thanks-for-the-treat.ts` |
+| EB03 | EB03-029 | EB03-029 | Insolent Fool!! Stand Down!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB03/events/029-insolent-fool-stand-down.ts` |
+| EB03 | EB03-038 | EB03-038 | Thanks for the Treat. | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB03/events/038-thanks-for-the-treat.ts` |
 | EB03 | EB03-049 | EB03-049 | I Knew You People Were Behind This. | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB03/events/049-i-knew-you-people-were-behind-this.ts` |
-| EB03 | EB03-060 | EB03-060 | Will You Be My Servant? | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB03/events/060-will-you-be-my-servant.ts` |
+| EB03 | EB03-060 | EB03-060 | Will You Be My Servant? | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB03/events/060-will-you-be-my-servant.ts` |
 | OP01 | OP01-026 | OP01-026 | Gum-Gum Fire-Fist Pistol Red Hawk | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP01/events/026-gum-gum-fire-fist-pistol-red-hawk.ts` |
 | OP01 | OP01-027 | OP01-027 | Round Table | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP01/events/027-round-table.ts` |
 | OP01 | OP01-028 | OP01-028 | Green Star Rafflesia | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP01/events/028-green-star-rafflesia.ts` |
@@ -163,50 +163,50 @@ semantic review or command-driven behavior proof.
 | OP07 | OP07-057 | OP07-057 | Perfume Femur | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/057-perfume-femur.ts` |
 | OP07 | OP07-075 | OP07-075 | Slow-Slow Beam | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/075-slow-slow-beam.ts` |
 | OP07 | OP07-076 | OP07-076 | Slow-Slow Beam Sword | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/076-slow-slow-beam-sword.ts` |
-| OP07 | OP07-077 | OP07-077 | We're Going to Claim the One Piece!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP07/events/077-we-re-going-to-claim-the-one-piece.ts` |
+| OP07 | OP07-077 | OP07-077 | We're Going to Claim the One Piece!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/077-we-re-going-to-claim-the-one-piece.ts` |
 | OP07 | OP07-078 | OP07-078 | Megaton Nine-Tails Rush | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/078-megaton-nine-tails-rush.ts` |
 | OP07 | OP07-094 | OP07-094 | Shave | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/094-shave.ts` |
 | OP07 | OP07-095 | OP07-095 | Iron Body | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/095-iron-body.ts` |
 | OP07 | OP07-096 | OP07-096 | Tempest Kick | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/096-tempest-kick.ts` |
 | OP07 | OP07-114 | OP07-114 | He Possesses the World's Most Brilliant Mind | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/114-he-possesses-the-world-s-most-brilliant-mind.ts` |
-| OP07 | OP07-115 | OP07-115 | I Re-Quasar Helllp!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP07/events/115-i-re-quasar-helllp.ts` |
+| OP07 | OP07-115 | OP07-115 | I Re-Quasar Helllp!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/115-i-re-quasar-helllp.ts` |
 | OP07 | OP07-116 | OP07-116 | Blaze Slice | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/events/116-blaze-slice.ts` |
-| OP08 | OP08-017 | OP08-017 | I'd Never Shoot You!!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/017-i-d-never-shoot-you.ts` |
-| OP08 | OP08-018 | OP08-018 | Cloven Rose | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/018-cloven-rose.ts` |
-| OP08 | OP08-019 | OP08-019 | Munch-Munch Mutation | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/019-munch-munch-mutation.ts` |
+| OP08 | OP08-017 | OP08-017 | I'd Never Shoot You!!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/017-i-d-never-shoot-you.ts` |
+| OP08 | OP08-018 | OP08-018 | Cloven Rose | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/018-cloven-rose.ts` |
+| OP08 | OP08-019 | OP08-019 | Munch-Munch Mutation | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/019-munch-munch-mutation.ts` |
 | OP08 | OP08-036 | OP08-036 | Electrical Luna | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/036-electrical-luna.ts` |
 | OP08 | OP08-037 | OP08-037 | Garchu | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/037-garchu.ts` |
 | OP08 | OP08-038 | OP08-038 | We Would Never Sell a Comrade to an Enemy!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/038-we-would-never-sell-a-comrade-to-an-enemy.ts` |
-| OP08 | OP08-053 | OP08-053 | Thank You...for Loving Me!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/053-thank-you-for-loving-me.ts` |
-| OP08 | OP08-054 | OP08-054 | You Can't Take Our King This Early in the Game. | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/054-you-can-t-take-our-king-this-early-in-the-game.ts` |
-| OP08 | OP08-055 | OP08-055 | Phoenix Brand | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/055-phoenix-brand.ts` |
-| OP08 | OP08-075 | OP08-075 | Candy Maiden | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/075-candy-maiden.ts` |
-| OP08 | OP08-076 | OP08-076 | It's to Die For | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/076-it-s-to-die-for.ts` |
-| OP08 | OP08-077 | OP08-077 | Conquest of the Sea | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/077-conquest-of-the-sea.ts` |
+| OP08 | OP08-053 | OP08-053 | Thank You...for Loving Me!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/053-thank-you-for-loving-me.ts` |
+| OP08 | OP08-054 | OP08-054 | You Can't Take Our King This Early in the Game. | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/054-you-can-t-take-our-king-this-early-in-the-game.ts` |
+| OP08 | OP08-055 | OP08-055 | Phoenix Brand | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/055-phoenix-brand.ts` |
+| OP08 | OP08-075 | OP08-075 | Candy Maiden | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/075-candy-maiden.ts` |
+| OP08 | OP08-076 | OP08-076 | It's to Die For | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/076-it-s-to-die-for.ts` |
+| OP08 | OP08-077 | OP08-077 | Conquest of the Sea | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/077-conquest-of-the-sea.ts` |
 | OP08 | OP08-094 | OP08-094 | Imperial Flame | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/094-imperial-flame.ts` |
 | OP08 | OP08-095 | OP08-095 | Iron Body Fang Flash | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/095-iron-body-fang-flash.ts` |
-| OP08 | OP08-096 | OP08-096 | People's Dreams Don't Ever End!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/096-people-s-dreams-don-t-ever-end.ts` |
-| OP08 | OP08-097 | OP08-097 | Heliceratops | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/097-heliceratops.ts` |
+| OP08 | OP08-096 | OP08-096 | People's Dreams Don't Ever End!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/096-people-s-dreams-don-t-ever-end.ts` |
+| OP08 | OP08-097 | OP08-097 | Heliceratops | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/097-heliceratops.ts` |
 | OP08 | OP08-115 | OP08-115 | The Earth Will Not Lose! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/115-the-earth-will-not-lose.ts` |
-| OP08 | OP08-116 | OP08-116 | Burn Bazooka | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/events/116-burn-bazooka.ts` |
+| OP08 | OP08-116 | OP08-116 | Burn Bazooka | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/116-burn-bazooka.ts` |
 | OP08 | OP08-117 | OP08-117 | Burn Blade | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/events/117-burn-blade.ts` |
 | OP09 | OP09-018 | OP09-018 | Get Out of Here! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/018-get-out-of-here.ts` |
-| OP09 | OP09-019 | OP09-019 | Nobody Hurts a Friend of Mine!!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/019-nobody-hurts-a-friend-of-mine.ts` |
+| OP09 | OP09-019 | OP09-019 | Nobody Hurts a Friend of Mine!!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/019-nobody-hurts-a-friend-of-mine.ts` |
 | OP09 | OP09-020 | OP09-020 | Come On!! We'll Fight You!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/020-come-on-we-ll-fight-you.ts` |
 | OP09 | OP09-039 | OP09-039 | Gum-Gum Cuatro Jet Cross Shock Bazooka | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/039-gum-gum-cuatro-jet-cross-shock-bazooka.ts` |
 | OP09 | OP09-040 | OP09-040 | Thunder Lance Flip Caliber Phoenix Shot | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/040-thunder-lance-flip-caliber-phoenix-shot.ts` |
-| OP09 | OP09-041 | OP09-041 | Soul Franky Swing Arm Boxing Solid | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/041-soul-franky-swing-arm-boxing-solid.ts` |
+| OP09 | OP09-041 | OP09-041 | Soul Franky Swing Arm Boxing Solid | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/041-soul-franky-swing-arm-boxing-solid.ts` |
 | OP09 | OP09-057 | OP09-057 | Cross Guild | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/057-cross-guild.ts` |
-| OP09 | OP09-058 | OP09-058 | Special Muggy Ball | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/058-special-muggy-ball.ts` |
-| OP09 | OP09-059 | OP09-059 | Murder at the Steam Bath | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/059-murder-at-the-steam-bath.ts` |
+| OP09 | OP09-058 | OP09-058 | Special Muggy Ball | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/058-special-muggy-ball.ts` |
+| OP09 | OP09-059 | OP09-059 | Murder at the Steam Bath | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/059-murder-at-the-steam-bath.ts` |
 | OP09 | OP09-077 | OP09-077 | Gum-Gum Lightning | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/077-gum-gum-lightning.ts` |
-| OP09 | OP09-078 | OP09-078 | Gum-Gum Giant | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/078-gum-gum-giant.ts` |
+| OP09 | OP09-078 | OP09-078 | Gum-Gum Giant | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/078-gum-gum-giant.ts` |
 | OP09 | OP09-079 | OP09-079 | Gum-Gum Jump Rope | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/079-gum-gum-jump-rope.ts` |
 | OP09 | OP09-096 | OP09-096 | My Era...Begins!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/096-my-era-begins.ts` |
-| OP09 | OP09-097 | OP09-097 | Black Vortex | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/097-black-vortex.ts` |
-| OP09 | OP09-098 | OP09-098 | Black Hole | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/098-black-hole.ts` |
+| OP09 | OP09-097 | OP09-097 | Black Vortex | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/097-black-vortex.ts` |
+| OP09 | OP09-098 | OP09-098 | Black Hole | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/098-black-hole.ts` |
 | OP09 | OP09-115 | OP09-115 | Ice Block Partisan | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/115-ice-block-partisan.ts` |
-| OP09 | OP09-116 | OP09-116 | Never Underestimate the Power of Miracles!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/events/116-never-underestimate-the-power-of-miracles.ts` |
+| OP09 | OP09-116 | OP09-116 | Never Underestimate the Power of Miracles!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/116-never-underestimate-the-power-of-miracles.ts` |
 | OP09 | OP09-117 | OP09-117 | Dereshi! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/events/117-dereshi.ts` |
 | OP10 | OP10-018 | OP10-018 | Ten-Layer Igloo | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/018-ten-layer-igloo.ts` |
 | OP10 | OP10-019 | OP10-019 | Divine Departure | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/019-divine-departure.ts` |
@@ -216,93 +216,93 @@ semantic review or command-driven behavior proof.
 | OP10 | OP10-041 | OP10-041 | Radio Knife | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/041-radio-knife.ts` |
 | OP10 | OP10-059 | OP10-059 | Fo...llow...Me...and...I...Will...Gui...de...You | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/059-fo-llow-me-and-i-will-gui-de-you.ts` |
 | OP10 | OP10-060 | OP10-060 | Barrier-Barrier Pistol | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/060-barrier-barrier-pistol.ts` |
-| OP10 | OP10-061 | OP10-061 | Special Long-Range Attack!! Bagworm | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP10/events/061-special-long-range-attack-bagworm.ts` |
+| OP10 | OP10-061 | OP10-061 | Special Long-Range Attack!! Bagworm | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/061-special-long-range-attack-bagworm.ts` |
 | OP10 | OP10-078 | OP10-078 | I Do Not Forgive Those Who Laugh at My Family!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/078-i-do-not-forgive-those-who-laugh-at-my-family.ts` |
-| OP10 | OP10-079 | OP10-079 | God Thread | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP10/events/079-god-thread.ts` |
-| OP10 | OP10-080 | OP10-080 | Little Black Bears | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP10/events/080-little-black-bears.ts` |
+| OP10 | OP10-079 | OP10-079 | God Thread | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/079-god-thread.ts` |
+| OP10 | OP10-080 | OP10-080 | Little Black Bears | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/080-little-black-bears.ts` |
 | OP10 | OP10-096 | OP10-096 | There's No Longer Any Need for the Seven Warlords of the Sea!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/096-there-s-no-longer-any-need-for-the-seven-warlords-of-the-sea.ts` |
-| OP10 | OP10-097 | OP10-097 | Gum-Gum Rhino Schneider | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP10/events/097-gum-gum-rhino-schneider.ts` |
-| OP10 | OP10-098 | OP10-098 | Liberation | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP10/events/098-liberation.ts` |
+| OP10 | OP10-097 | OP10-097 | Gum-Gum Rhino Schneider | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/097-gum-gum-rhino-schneider.ts` |
+| OP10 | OP10-098 | OP10-098 | Liberation | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/098-liberation.ts` |
 | OP10 | OP10-115 | OP10-115 | Let's Meet Again in the New World | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/115-let-s-meet-again-in-the-new-world.ts` |
-| OP10 | OP10-116 | OP10-116 | Damned Punk | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP10/events/116-damned-punk.ts` |
+| OP10 | OP10-116 | OP10-116 | Damned Punk | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/116-damned-punk.ts` |
 | OP10 | OP10-117 | OP10-117 | ROOM | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/events/117-room.ts` |
 | OP11 | OP11-018 | OP11-018 | Honesty Impact | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/018-honesty-impact.ts` |
-| OP11 | OP11-019 | OP11-019 | Glorp Web!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/019-glorp-web.ts` |
+| OP11 | OP11-019 | OP11-019 | Glorp Web!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/019-glorp-web.ts` |
 | OP11 | OP11-020 | OP11-020 | X Calibur | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/020-x-calibur.ts` |
-| OP11 | OP11-037 | OP11-037 | Ancient Weapon Poseidon | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/037-ancient-weapon-poseidon.ts` |
+| OP11 | OP11-037 | OP11-037 | Ancient Weapon Poseidon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/037-ancient-weapon-poseidon.ts` |
 | OP11 | OP11-038 | OP11-038 | Gum-Gum Elephant Gatling | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/038-gum-gum-elephant-gatling.ts` |
-| OP11 | OP11-039 | OP11-039 | Vagabond Drill | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/039-vagabond-drill.ts` |
-| OP11 | OP11-059 | OP11-059 | Gum-Gum King Cobra | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/059-gum-gum-king-cobra.ts` |
+| OP11 | OP11-039 | OP11-039 | Vagabond Drill | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/039-vagabond-drill.ts` |
+| OP11 | OP11-059 | OP11-059 | Gum-Gum King Cobra | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/059-gum-gum-king-cobra.ts` |
 | OP11 | OP11-060 | OP11-060 | Let's Crash This Wedding!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/060-let-s-crash-this-wedding.ts` |
-| OP11 | OP11-061 | OP11-061 | Gum-Gum Jet Culverin | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/061-gum-gum-jet-culverin.ts` |
-| OP11 | OP11-079 | OP11-079 | When Two Men Are Fighting the Last Thing I Need Is Some Half-Hearted Assistance!!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/079-when-two-men-are-fighting-the-last-thing-i-need-is-some-half-hearted-assistance.ts` |
+| OP11 | OP11-061 | OP11-061 | Gum-Gum Jet Culverin | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/061-gum-gum-jet-culverin.ts` |
+| OP11 | OP11-079 | OP11-079 | When Two Men Are Fighting the Last Thing I Need Is Some Half-Hearted Assistance!!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/079-when-two-men-are-fighting-the-last-thing-i-need-is-some-half-hearted-assistance.ts` |
 | OP11 | OP11-080 | OP11-080 | Gear Two | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/080-gear-two.ts` |
-| OP11 | OP11-081 | OP11-081 | Cognac Mama-Mash | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/081-cognac-mama-mash.ts` |
-| OP11 | OP11-097 | OP11-097 | After All These Years I'm Losing My Edge!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/097-after-all-these-years-i-m-losing-my-edge.ts` |
-| OP11 | OP11-098 | OP11-098 | Blue Hole | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/098-blue-hole.ts` |
+| OP11 | OP11-081 | OP11-081 | Cognac Mama-Mash | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/081-cognac-mama-mash.ts` |
+| OP11 | OP11-097 | OP11-097 | After All These Years I'm Losing My Edge!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/097-after-all-these-years-i-m-losing-my-edge.ts` |
+| OP11 | OP11-098 | OP11-098 | Blue Hole | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/098-blue-hole.ts` |
 | OP11 | OP11-099 | OP11-099 | I'm Gonna Be a Navy Officer!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/099-i-m-gonna-be-a-navy-officer.ts` |
 | OP11 | OP11-114 | OP11-114 | Gum-Gum Fire-Fist Pistol Red Hawk | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/114-gum-gum-fire-fist-pistol-red-hawk.ts` |
 | OP11 | OP11-115 | OP11-115 | You're Just Not My Type! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/115-you-re-just-not-my-type.ts` |
-| OP11 | OP11-116 | OP11-116 | Merman Combat Ultramarine | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/events/116-merman-combat-ultramarine.ts` |
+| OP11 | OP11-116 | OP11-116 | Merman Combat Ultramarine | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/events/116-merman-combat-ultramarine.ts` |
 | OP12 | OP12-037 | OP12-037 | Demon Aura Nine Sword Style Asura Blades Drawn Dead Man's Game | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/037-demon-aura-nine-sword-style-asura-blades-drawn-dead-man-s-game.ts` |
 | OP12 | OP12-038 | OP12-038 | Two-Sword Style Rashomon | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/038-two-sword-style-rashomon.ts` |
-| OP12 | OP12-039 | OP12-039 | Luffy Is the Man Who Will Become the King of Pirates!!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/039-luffy-is-the-man-who-will-become-the-king-of-pirates.ts` |
+| OP12 | OP12-039 | OP12-039 | Luffy Is the Man Who Will Become the King of Pirates!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/039-luffy-is-the-man-who-will-become-the-king-of-pirates.ts` |
 | OP12 | OP12-057 | OP12-057 | Ice Block Pheasant Peck | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/057-ice-block-pheasant-peck.ts` |
-| OP12 | OP12-058 | OP12-058 | I Will Make Whitebeard the King of the Pirates | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/058-i-will-make-whitebeard-the-king-of-the-pirates.ts` |
+| OP12 | OP12-058 | OP12-058 | I Will Make Whitebeard the King of the Pirates | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/058-i-will-make-whitebeard-the-king-of-the-pirates.ts` |
 | OP12 | OP12-059 | OP12-059 | Concasser | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/059-concasser.ts` |
 | OP12 | OP12-060 | OP12-060 | Boeuf Burst | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/060-boeuf-burst.ts` |
-| OP12 | OP12-077 | OP12-077 | The "Extinguishes All Sound Created by Your Influence" Technique | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/077-the-extinguishes-all-sound-created-by-your-influence-technique.ts` |
-| OP12 | OP12-078 | OP12-078 | Brochette Blow | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/078-brochette-blow.ts` |
+| OP12 | OP12-077 | OP12-077 | The "Extinguishes All Sound Created by Your Influence" Technique | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/077-the-extinguishes-all-sound-created-by-your-influence-technique.ts` |
+| OP12 | OP12-078 | OP12-078 | Brochette Blow | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/078-brochette-blow.ts` |
 | OP12 | OP12-079 | OP12-079 | Luffy Is the Man Who Will Be King of the Pirates!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/079-luffy-is-the-man-who-will-be-king-of-the-pirates.ts` |
-| OP12 | OP12-096 | OP12-096 | Ursa Shock | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/096-ursa-shock.ts` |
+| OP12 | OP12-096 | OP12-096 | Ursa Shock | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/096-ursa-shock.ts` |
 | OP12 | OP12-097 | OP12-097 | Captains Assembled | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/097-captains-assembled.ts` |
-| OP12 | OP12-098 | OP12-098 | Hair Removal Fist | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/098-hair-removal-fist.ts` |
+| OP12 | OP12-098 | OP12-098 | Hair Removal Fist | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/098-hair-removal-fist.ts` |
 | OP12 | OP12-115 | OP12-115 | I Love You!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/115-i-love-you.ts` |
-| OP12 | OP12-116 | OP12-116 | We'll Ring the Bell Waiting for You!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/116-we-ll-ring-the-bell-waiting-for-you.ts` |
-| OP12 | OP12-117 | OP12-117 | Slam Gibson | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/events/117-slam-gibson.ts` |
+| OP12 | OP12-116 | OP12-116 | We'll Ring the Bell Waiting for You!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/116-we-ll-ring-the-bell-waiting-for-you.ts` |
+| OP12 | OP12-117 | OP12-117 | Slam Gibson | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/events/117-slam-gibson.ts` |
 | OP13 | OP13-019 | OP13-019 | But Ace Here Said You Deserved It!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/019-but-ace-here-said-you-deserved-it.ts` |
 | OP13 | OP13-020 | OP13-020 | Meteor Fist | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/020-meteor-fist.ts` |
-| OP13 | OP13-021 | OP13-021 | Gum-Gum Gatling Gun | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/events/021-gum-gum-gatling-gun.ts` |
-| OP13 | OP13-038 | OP13-038 | Gum-Gum Elephant Gun | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/events/038-gum-gum-elephant-gun.ts` |
+| OP13 | OP13-021 | OP13-021 | Gum-Gum Gatling Gun | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/021-gum-gum-gatling-gun.ts` |
+| OP13 | OP13-038 | OP13-038 | Gum-Gum Elephant Gun | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/038-gum-gum-elephant-gun.ts` |
 | OP13 | OP13-039 | OP13-039 | Gum-Gum Snake Shot | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/039-gum-gum-snake-shot.ts` |
 | OP13 | OP13-040 | OP13-040 | I Know You're Strong... So I'll Go All Out from the Very Start!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/040-i-know-you-re-strong-so-i-ll-go-all-out-from-the-very-start.ts` |
-| OP13 | OP13-057 | OP13-057 | If I Bowed Down to Power, What's the Point in Living? | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/events/057-if-i-bowed-down-to-power-what-s-the-point-in-living.ts` |
+| OP13 | OP13-057 | OP13-057 | If I Bowed Down to Power, What's the Point in Living? | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/057-if-i-bowed-down-to-power-what-s-the-point-in-living.ts` |
 | OP13 | OP13-058 | OP13-058 | Phoenix Pyreapple | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/058-phoenix-pyreapple.ts` |
-| OP13 | OP13-059 | OP13-059 | Brilliant Punk | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/events/059-brilliant-punk.ts` |
+| OP13 | OP13-059 | OP13-059 | Brilliant Punk | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/059-brilliant-punk.ts` |
 | OP13 | OP13-075 | OP13-075 | Guess We'll Have Another Scrap. You Can Only Risk Death While You're Still Alive!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/075-guess-we-ll-have-another-scrap-you-can-only-risk-death-while-you-re-still-alive.ts` |
 | OP13 | OP13-076 | OP13-076 | Divine Departure | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/076-divine-departure.ts` |
 | OP13 | OP13-077 | OP13-077 | Go All the Way to the Top!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/077-go-all-the-way-to-the-top.ts` |
 | OP13 | OP13-096 | OP13-096 | The Five Elders Are at Your Service!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/096-the-five-elders-are-at-your-service.ts` |
-| OP13 | OP13-097 | OP13-097 | The World's Equilibrium Cannot Be Maintained Forever | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/events/097-the-world-s-equilibrium-cannot-be-maintained-forever.ts` |
-| OP13 | OP13-098 | OP13-098 | Never Existed... in the First Place... | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/events/098-never-existed-in-the-first-place.ts` |
+| OP13 | OP13-097 | OP13-097 | The World's Equilibrium Cannot Be Maintained Forever | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/097-the-world-s-equilibrium-cannot-be-maintained-forever.ts` |
+| OP13 | OP13-098 | OP13-098 | Never Existed... in the First Place... | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/098-never-existed-in-the-first-place.ts` |
 | OP13 | OP13-115 | OP13-115 | Paper Art Afterimage | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/115-paper-art-afterimage.ts` |
 | OP13 | OP13-116 | OP13-116 | The One Who Is the Most Free Is the Pirate King!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/116-the-one-who-is-the-most-free-is-the-pirate-king.ts` |
 | OP13 | OP13-117 | OP13-117 | Gum-Gum Dawn Stamp | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/events/117-gum-gum-dawn-stamp.ts` |
 | OP14EB04 | EB04-019 | EB04-019 | Eleclaw | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/019-eleclaw.ts` |
 | OP14EB04 | EB04-020 | EB04-020 | Shark Brick Fist | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/020-shark-brick-fist.ts` |
 | OP14EB04 | EB04-028 | EB04-028 | Ice Time | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/028-ice-time.ts` |
-| OP14EB04 | EB04-029 | EB04-029 | I Heard the Sound...of a Lady's Teardrops Falling | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/029-i-heard-the-sound-of-a-lady-s-teardrops-falling.ts` |
+| OP14EB04 | EB04-029 | EB04-029 | I Heard the Sound...of a Lady's Teardrops Falling | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/029-i-heard-the-sound-of-a-lady-s-teardrops-falling.ts` |
 | OP14EB04 | EB04-040 | EB04-040 | Flame Dragon Torch | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/040-flame-dragon-torch.ts` |
 | OP14EB04 | EB04-041 | EB04-041 | Stealth Black | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/041-stealth-black.ts` |
 | OP14EB04 | OP14-017 | OP14-017 | Chambres | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/017-chambres.ts` |
-| OP14EB04 | OP14-018 | OP14-018 | Time for the Counterattack | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/018-time-for-the-counterattack.ts` |
-| OP14EB04 | OP14-019 | OP14-019 | I Have a Plan to Take Down One of the Four Emperors!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/019-i-have-a-plan-to-take-down-one-of-the-four-emperors.ts` |
+| OP14EB04 | OP14-018 | OP14-018 | Time for the Counterattack | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/018-time-for-the-counterattack.ts` |
+| OP14EB04 | OP14-019 | OP14-019 | I Have a Plan to Take Down One of the Four Emperors!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/019-i-have-a-plan-to-take-down-one-of-the-four-emperors.ts` |
 | OP14EB04 | OP14-036 | OP14-036 | Strive to Surpass me, Roronoa Zoro!!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/036-strive-to-surpass-me-roronoa-zoro.ts` |
 | OP14EB04 | OP14-037 | OP14-037 | For Fun | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/037-for-fun.ts` |
 | OP14EB04 | OP14-038 | OP14-038 | I Never Bother to Remember the Faces of Trash | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/038-i-never-bother-to-remember-the-faces-of-trash.ts` |
-| OP14EB04 | OP14-057 | OP14-057 | Don't Worry!! I'm Here!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/057-don-t-worry-i-m-here.ts` |
-| OP14EB04 | OP14-058 | OP14-058 | Ocean Current Shoulder Throw | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/058-ocean-current-shoulder-throw.ts` |
-| OP14EB04 | OP14-059 | OP14-059 | Please Take Me with You!! I Can Be of Great Help to You!! | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/059-please-take-me-with-you-i-can-be-of-great-help-to-you.ts` |
-| OP14EB04 | OP14-076 | OP14-076 | Ever White | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/076-ever-white.ts` |
-| OP14EB04 | OP14-077 | OP14-077 | Penta-Chromatic String | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/077-penta-chromatic-string.ts` |
-| OP14EB04 | OP14-078 | OP14-078 | Bullet String | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/078-bullet-string.ts` |
+| OP14EB04 | OP14-057 | OP14-057 | Don't Worry!! I'm Here!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/057-don-t-worry-i-m-here.ts` |
+| OP14EB04 | OP14-058 | OP14-058 | Ocean Current Shoulder Throw | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/058-ocean-current-shoulder-throw.ts` |
+| OP14EB04 | OP14-059 | OP14-059 | Please Take Me with You!! I Can Be of Great Help to You!! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/059-please-take-me-with-you-i-can-be-of-great-help-to-you.ts` |
+| OP14EB04 | OP14-076 | OP14-076 | Ever White | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/076-ever-white.ts` |
+| OP14EB04 | OP14-077 | OP14-077 | Penta-Chromatic String | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/077-penta-chromatic-string.ts` |
+| OP14EB04 | OP14-078 | OP14-078 | Bullet String | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/078-bullet-string.ts` |
 | OP14EB04 | OP14-096 | OP14-096 | Ground Death | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/096-ground-death.ts` |
 | OP14EB04 | OP14-097 | OP14-097 | Hurry Up and Make Me the Pirate King! | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/097-hurry-up-and-make-me-the-pirate-king.ts` |
-| OP14EB04 | OP14-098 | OP14-098 | Crescent Cutlass | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/098-crescent-cutlass.ts` |
+| OP14EB04 | OP14-098 | OP14-098 | Crescent Cutlass | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/098-crescent-cutlass.ts` |
 | OP14EB04 | OP14-099 | OP14-099 | Disappointed? | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/099-disappointed.ts` |
-| OP14EB04 | OP14-116 | OP14-116 | Salamander | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/116-salamander.ts` |
-| OP14EB04 | OP14-117 | OP14-117 | Brick Bat | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/117-brick-bat.ts` |
-| OP14EB04 | OP14-118 | OP14-118 | You'll Frighten Me... | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/118-you-ll-frighten-me.ts` |
+| OP14EB04 | OP14-116 | OP14-116 | Salamander | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/116-salamander.ts` |
+| OP14EB04 | OP14-117 | OP14-117 | Brick Bat | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/117-brick-bat.ts` |
+| OP14EB04 | OP14-118 | OP14-118 | You'll Frighten Me... | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/events/118-you-ll-frighten-me.ts` |
 | PRB01 | OP01-029_p2 | OP01-029 | Radical Beam!! (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/029-radical-beam-jolly-roger-foil.ts` |
 | PRB01 | OP02-089_p2 | OP02-089 | Judgment of Hell (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/089-judgment-of-hell-jolly-roger-foil.ts` |
 | PRB01 | OP02-117_p6 | OP02-117 | Ice Age (Textured Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/117-ice-age-textured-foil.ts` |
@@ -319,14 +319,14 @@ semantic review or command-driven behavior proof.
 | PRB01 | OP05-115_p2 | OP05-115 | Two-Hundred Million Volts Amaru (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/115-two-hundred-million-volts-amaru-jolly-roger-foil.ts` |
 | PRB01 | OP06-038_p2 | OP06-038 | The Billion-fold World Trichiliocosm (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/038-the-billion-fold-world-trichiliocosm-jolly-roger-foil.ts` |
 | PRB01 | OP06-056_p2 | OP06-056 | Ama no Murakumo Sword (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/056-ama-no-murakumo-sword-jolly-roger-foil.ts` |
-| PRB01 | ST01-014_p2 | ST01-014 | Guard Point (Jolly Roger Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB01/events/014-guard-point-jolly-roger-foil.ts` |
+| PRB01 | ST01-014_p2 | ST01-014 | Guard Point (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/014-guard-point-jolly-roger-foil.ts` |
 | PRB01 | ST04-016 | ST04-016 | Blast Breath (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/016-blast-breath-jolly-roger-foil.ts` |
 | PRB01 | ST06-014 | ST06-014 | Shockwave (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/014-shockwave-jolly-roger-foil.ts` |
 | PRB01 | ST09-014 | ST09-014 | Narikabura Arrow (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/events/014-narikabura-arrow-jolly-roger-foil.ts` |
 | PRB02 | EB01-009_p1 | EB01-009 | Just Shut Up and Come with Us!!!! (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/009-just-shut-up-and-come-with-us-pirate-foil.ts` |
 | PRB02 | EB01-038_p1 | EB01-038 | Oh Come My Way (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/038-oh-come-my-way-pirate-foil.ts` |
-| PRB02 | EB01-051_r1 | EB01-051 | Finger Pistol (Reprint) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/051-finger-pistol-reprint.ts` |
-| PRB02 | EB01-060_p1 | EB01-060 | Did Someone Say...Kami? (Pirate Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/060-did-someone-say-kami-pirate-foil.ts` |
+| PRB02 | EB01-051_r1 | EB01-051 | Finger Pistol (Reprint) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/051-finger-pistol-reprint.ts` |
+| PRB02 | EB01-060_p1 | EB01-060 | Did Someone Say...Kami? (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/060-did-someone-say-kami-pirate-foil.ts` |
 | PRB02 | OP01-055_p1 | OP01-055 | You Can Be My Samurai!! (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/055-you-can-be-my-samurai-pirate-foil.ts` |
 | PRB02 | OP02-068_r1 | OP02-068 | Gum-Gum Rain (Reprint) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/068-gum-gum-rain-reprint.ts` |
 | PRB02 | OP03-072_r1 | OP03-072 | Gum-Gum Jet Gatling (Reprint) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/072-gum-gum-jet-gatling-reprint.ts` |
@@ -343,20 +343,20 @@ semantic review or command-driven behavior proof.
 | PRB02 | OP07-056_p1 | OP07-056 | Slave Arrow (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/056-slave-arrow-pirate-foil.ts` |
 | PRB02 | OP07-076_p1 | OP07-076 | Slow-Slow Beam Sword (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/076-slow-slow-beam-sword-pirate-foil.ts` |
 | PRB02 | OP07-114_p1 | OP07-114 | He Possesses the World's Most Brilliant Mind (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/114-he-possesses-the-world-s-most-brilliant-mind-pirate-foil.ts` |
-| PRB02 | OP08-076_p1 | OP08-076 | It's to Die For (Pirate Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/076-it-s-to-die-for-pirate-foil.ts` |
+| PRB02 | OP08-076_p1 | OP08-076 | It's to Die For (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/076-it-s-to-die-for-pirate-foil.ts` |
 | PRB02 | OP09-020_r2 | OP09-020 | Come On!! We'll Fight You!! (Manga) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/020-come-on-we-ll-fight-you-manga.ts` |
 | PRB02 | OP09-057_r2 | OP09-057 | Cross Guild (Manga) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/057-cross-guild-manga.ts` |
 | PRB02 | OP09-077_p1 | OP09-077 | Gum-Gum Lightning (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/077-gum-gum-lightning-pirate-foil.ts` |
-| PRB02 | OP09-078_r1 | OP09-078 | Gum-Gum Giant (Reprint) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/078-gum-gum-giant-reprint.ts` |
+| PRB02 | OP09-078_r1 | OP09-078 | Gum-Gum Giant (Reprint) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/078-gum-gum-giant-reprint.ts` |
 | PRB02 | OP09-079_p1 | OP09-079 | Gum-Gum Jump Rope (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/079-gum-gum-jump-rope-pirate-foil.ts` |
 | PRB02 | OP09-096_r1 | OP09-096 | My Era...Begins!! (Reprint) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/096-my-era-begins-reprint.ts` |
-| PRB02 | OP09-097_p1 | OP09-097 | Black Vortex (Pirate Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/097-black-vortex-pirate-foil.ts` |
-| PRB02 | OP09-098_p1 | OP09-098 | Black Hole (Pirate Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/098-black-hole-pirate-foil.ts` |
+| PRB02 | OP09-097_p1 | OP09-097 | Black Vortex (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/097-black-vortex-pirate-foil.ts` |
+| PRB02 | OP09-098_p1 | OP09-098 | Black Hole (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/098-black-hole-pirate-foil.ts` |
 | PRB02 | OP10-018_OO8g5lU | OP10-018 | Ten-Layer Igloo (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/018-ten-layer-igloo-pirate-foil.ts` |
-| PRB02 | OP10-079_p1 | OP10-079 | God Thread (Pirate Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/079-god-thread-pirate-foil.ts` |
+| PRB02 | OP10-079_p1 | OP10-079 | God Thread (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/079-god-thread-pirate-foil.ts` |
 | PRB02 | ST12-017 | ST12-017 | Plastic Surgery Shot - ST12-017 (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/017-plastic-surgery-shot-st12-017-pirate-foil.ts` |
-| PRB02 | ST13-019 | ST13-019 | The Three Brothers' Bond (Pirate Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/events/019-the-three-brothers-bond-pirate-foil.ts` |
+| PRB02 | ST13-019 | ST13-019 | The Three Brothers' Bond (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/019-the-three-brothers-bond-pirate-foil.ts` |
 | PRB02 | ST14-016 | ST14-016 | I Have My Crew!! (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/events/016-i-have-my-crew-pirate-foil.ts` |
-| ST01 | ST01-014 | ST01-014 | Guard Point | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |
-| ST01 | ST01-015 | ST01-015 | Gum-Gum Jet Pistol | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |
-| ST01 | ST01-016 | ST01-016 | Diable Jambe | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |
+| ST01 | ST01-014 | ST01-014 | Guard Point | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |
+| ST01 | ST01-015 | ST01-015 | Gum-Gum Jet Pistol | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |
+| ST01 | ST01-016 | ST01-016 | Diable Jambe | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |

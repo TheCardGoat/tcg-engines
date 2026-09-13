@@ -1,3 +1,5 @@
+import type { SettingsGameSlug } from "@tcg/game-page-contract/settings";
+
 /**
  * Shared authentication types
  *
@@ -13,12 +15,10 @@ export type UserRole = "user" | "donor" | "moderator" | "admin";
 /**
  * Subscription tier levels.
  *
- * `"free"` is the implicit default for users with no Stripe subscription
- * (new signups, and anyone who has cancelled). It is intentionally distinct
- * from `"tier1"`, which is a contribution-only paid tier that ranks just
- * above "free" in tier ordering without implying functional perks.
+ * `"free"` is the implicit default for users with no active membership.
+ * The only paid membership levels are tier2, tier3, and tier4.
  */
-export type SubscriptionTier = "free" | "tier1" | "tier2" | "tier3" | "tier4" | "tier5" | "tier6";
+export type SubscriptionTier = "free" | "tier2" | "tier3" | "tier4";
 
 /**
  * User type from Better Auth session
@@ -29,7 +29,6 @@ export type SubscriptionTier = "free" | "tier1" | "tier2" | "tier3" | "tier4" | 
  */
 export interface AuthUser {
   id: string;
-  email: string;
   /** Primary identifier from the OAuth provider (e.g. Discord username). Read-only. */
   name: string;
   image?: string | null;
@@ -41,7 +40,11 @@ export interface AuthUser {
    * `user.additionalFields` on the API. Patched optimistically on save.
    */
   displayUsername?: string | null;
+  /** Account-wide game used for personalized entry points and navigation. */
+  preferredGame?: SettingsGameSlug | null;
   emailVerified: boolean;
+  /** True for a recoverability-free guest identity created without credentials. */
+  isAnonymous: boolean;
   role: UserRole;
   subscriptionTier: SubscriptionTier;
   subscriptionExpiresAt?: Date | null;
@@ -67,7 +70,7 @@ export function isModerator(user: AuthUser | null): boolean {
  * Check if user has required subscription tier or higher
  */
 export function hasSubscriptionTier(user: AuthUser | null, minTier: SubscriptionTier): boolean {
-  const tiers: SubscriptionTier[] = ["free", "tier1", "tier2", "tier3", "tier4", "tier5", "tier6"];
+  const tiers: SubscriptionTier[] = ["free", "tier2", "tier3", "tier4"];
   const userTierIndex = tiers.indexOf(user?.subscriptionTier ?? "free");
   const minTierIndex = tiers.indexOf(minTier);
   return userTierIndex >= minTierIndex;
@@ -132,3 +135,28 @@ export interface SessionResult {
   user: AuthUser | null;
   session: AuthSession | null;
 }
+
+/**
+ * Canonical platform authentication context.
+ *
+ * Better Auth proves that a credential maps to a session. The platform API
+ * additionally requires that session's user to exist in the canonical users
+ * table before any product surface may treat the request as authenticated.
+ */
+export type CanonicalAuthContext =
+  | {
+      status: "authenticated";
+      user: AuthUser;
+      session: AuthSession;
+    }
+  | {
+      status: "anonymous";
+      user: null;
+      session: null;
+    }
+  | {
+      status: "invalid";
+      reason: "canonical_user_missing";
+      user: null;
+      session: null;
+    };

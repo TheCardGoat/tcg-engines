@@ -1,6 +1,6 @@
 // Verify the mobile driver end-to-end against unitMoxIncitersRetail.
-// Expected happy path: Mox Inciters is in hand; tap it -> tray shows play ->
-// tap play -> it enters the field (Mox Inciters is a BLOCKER + must-attack unit).
+// Expected happy path: Mox Inciters is in hand; tap it -> card menu shows play
+// -> tap play -> it enters the field (Mox Inciters is a BLOCKER + must-attack unit).
 const { chromium } = require("@playwright/test");
 const D = require(__dirname + "/lib/mobile-driver.cjs");
 
@@ -27,11 +27,11 @@ void (async () => {
     console.log("SUPPORTED_MOVES", JSON.stringify(moves));
 
     // Native mobile: tap the hand card.
-    const tray = await D.tapHandCard(page, defId);
-    console.log("TRAY", JSON.stringify(tray));
+    const menu = await D.tapHandCard(page, defId);
+    console.log("HAND_CARD_MENU", JSON.stringify(menu));
 
     // Tap play if available.
-    if (tray.actions.includes("hand-action-play")) {
+    if (menu.actions.includes("card-action-playCard")) {
       await D.tapHandAction(page, "play");
       await D.sleep(200);
       // may open a target choice (Mox Inciters must-attack -> select-action not target)

@@ -37,6 +37,13 @@ export function createCardReadAPI(
   _zoneConfigs: Record<string, ZoneConfig>,
   deriveRuntimeCard: DeriveRuntimeCardFn,
 ): CardReadAPI {
+  function getDefinitionOverride(meta: BaseCardMeta): Card | undefined {
+    const override = meta.definitionOverride;
+    return override && typeof override === "object" && "type" in override
+      ? (override as Card)
+      : undefined;
+  }
+
   function get(cardId: string): RuntimeCard | undefined {
     const indexEntry = zones.private.cardIndex[cardId];
     if (!indexEntry) return undefined;
@@ -44,10 +51,10 @@ export function createCardReadAPI(
     const instanceData = cardMaps.instances.get(cardId);
     if (!instanceData) return undefined;
 
-    const definition = cardMaps.definitions.get(instanceData.definitionId);
-    if (!definition) return undefined;
-
     const meta = zones.private.cardMeta[cardId] ?? {};
+    const definition =
+      getDefinitionOverride(meta) ?? cardMaps.definitions.get(instanceData.definitionId);
+    if (!definition) return undefined;
 
     return deriveRuntimeCard(
       cardId as CardInstanceId,
@@ -73,7 +80,8 @@ export function createCardReadAPI(
   function getDefinition(cardId: string): Card | undefined {
     const instanceData = cardMaps.instances.get(cardId);
     if (!instanceData) return undefined;
-    return cardMaps.definitions.get(instanceData.definitionId);
+    const meta = zones.private.cardMeta[cardId] ?? {};
+    return getDefinitionOverride(meta) ?? cardMaps.definitions.get(instanceData.definitionId);
   }
 
   function getMeta(cardId: string): BaseCardMeta | undefined {

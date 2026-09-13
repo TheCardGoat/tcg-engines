@@ -31,5 +31,29 @@ describe("OP13-015 Makino", () => {
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === luffyId)
         ?.power,
     ).toBe(basePower);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [op13Makino015, op11MonkeyDLuffy118],
+    });
+    const makinoId = engine.findCardInZone("south", "character", op13Makino015);
+    const luffyId = engine.findCardInZone("south", "character", op11MonkeyDLuffy118);
+    const basePower = engine
+      .getView("south")
+      .players.south.characters.find((card) => card?.instanceId === luffyId)?.power;
+
+    engine.activateEffect(makinoId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === makinoId)?.rested,
+    ).toBe(false);
+    expect(view.players.south.characters.find((card) => card?.instanceId === luffyId)?.power).toBe(
+      basePower,
+    );
+    expect(view.prompts).toHaveLength(0);
   });
 });

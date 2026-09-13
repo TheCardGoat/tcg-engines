@@ -125,6 +125,7 @@ export function buildTargetResolutionContext(
   // and fall back to shieldArea cards only when no base exists.
   const pendingCombat = G.turnMetadata.pendingCombat;
   let currentBattleParticipantIds: ReadonlySet<CardInstanceId> | undefined;
+  let currentBattleDefenderIds: ReadonlySet<CardInstanceId> | undefined;
   let battleOpponents: ReadonlyMap<CardInstanceId, readonly CardInstanceId[]> | undefined;
   if (pendingCombat) {
     const ids = new Set<CardInstanceId>();
@@ -165,6 +166,7 @@ export function buildTargetResolutionContext(
       opponents.set(dId, [attackerId]);
     }
     currentBattleParticipantIds = ids;
+    currentBattleDefenderIds = new Set(defenderIds);
     battleOpponents = opponents;
   }
 
@@ -174,9 +176,19 @@ export function buildTargetResolutionContext(
     eventSourceCardId: opts?.eventSourceCardId as CardInstanceId | undefined,
     selfIdentityCardId: selfIdentityId as CardInstanceId,
     opponentPlayerId: opponentPlayerId as PlayerId,
+    opponentDiscardedByYourEffectThisTurn:
+      G.turnMetadata.opponentDiscardEffectOriginPlayerIds?.includes(sourcePlayerId) === true,
+    friendlyUnitDestroyedByFriendlyCardTraitsThisTurn: new Set(
+      G.turnMetadata.friendlyUnitDestroyedByFriendlyCardTraits?.[sourcePlayerId] ?? [],
+    ),
     activePlayerId,
     currentBattleParticipantIds,
+    currentBattleDefenderIds,
     deployedThisTurnIds: new Set(G.turnMetadata.deployedThisTurn as CardInstanceId[]),
+    activatedCommandThisTurnIds: new Set(
+      G.turnMetadata.activatedCommandThisTurn as CardInstanceId[],
+    ),
+    allPlayerIds: framework.state.playerIds as PlayerId[],
     battleOpponents,
     isDirectAttack: pendingCombat?.target === "direct" && pendingCombat.blockerId === undefined,
 
@@ -710,6 +722,13 @@ export function getEffectiveStats(
                 if (action.stat === "ap") ap += amount;
                 else if (action.stat === "hp") hp += amount;
               }
+            } else if (action.action === "statModifierByDamageReceived") {
+              const matchedIds = evaluateTargetFilter(action.target, allBattleAreaCards, ctx);
+              if (matchedIds.includes(cardId as CardInstanceId)) {
+                const amount = G.damage[cardId] ?? 0;
+                if (action.stat === "ap") ap += amount;
+                else hp += amount;
+              }
             } else if (action.action === "statModifierByUniqueNameCount") {
               const matchedIds = evaluateTargetFilter(action.target, allBattleAreaCards, ctx);
               if (matchedIds.includes(cardId as CardInstanceId)) {
@@ -759,6 +778,9 @@ export function getEffectiveStats(
                 }
                 if (action.restrictions.includes("cannotPairPilot")) {
                   restrictions.add("cannot-pair-pilot");
+                }
+                if (action.restrictions.includes("cannotActivateBlocker")) {
+                  restrictions.add("cannot-activate-blocker");
                 }
               }
             }
@@ -841,15 +863,30 @@ export function satisfiesLinkCondition(
   cards: CardReadAPI,
 ): boolean {
   const unitDef = cards.getDefinition(unitId) as Card | undefined;
-  if (!unitDef || unitDef.type !== "unit") return false;
+  const pilotDef = cards.getDefinition(pilotId) as Card | undefined;
+  return pilotSatisfiesUnitLinkCondition(pilotDef, unitDef);
+}
 
-  const unit = unitDef as UnitCard;
+/**
+ * Definition-level Link Condition matcher for rules-aware previews.
+ *
+ * Runtime legality continues to use {@link satisfiesLinkCondition}; this
+ * definition form lets the Gundam UI explain the outcome of an otherwise
+ * legal Pair choice before it is submitted without copying Link parsing into
+ * the presentation layer.
+ */
+export function pilotSatisfiesUnitLinkCondition(
+  pilotDef: Card | undefined,
+  unitDef: Card | undefined,
+): boolean {
+  if (!unitDef || unitDef.type !== "unit" || !pilotDef) return false;
+
   // Rule 3-2-6-1/2: Link Unit status requires the Unit to HAVE a link
   // condition AND the paired Pilot satisfies it. A Unit printed without
   // a link condition is never a Link Unit, regardless of who's paired.
-  if (!unit.linkCondition) return false;
+  if (!unitDef.linkCondition) return false;
 
-  const condition = unit.linkCondition;
+  const condition = unitDef.linkCondition;
   const nameRequirements = [...condition.matchAll(/\[([^\]]+)\]/g)].map((m) => m[1]!.toLowerCase());
   const traitRequirements = [...condition.matchAll(/\(([^)]+)\)/g)].map((m) => m[1]!.toLowerCase());
 
@@ -857,8 +894,6 @@ export function satisfiesLinkCondition(
     return false; // malformed condition — fail safe
   }
 
-  const pilotDef = cards.getDefinition(pilotId) as Card | undefined;
-  if (!pilotDef) return false;
   // Accept either a real Pilot card OR a Command card carrying the
   // 【Pilot】 keyword (rule 3-3-9-2 / 13-1-1: a Command with the Pilot
   // keyword can be paired as a Pilot and inherits its name & traits for
@@ -1014,7 +1049,10 @@ export function getKeywordValue(
             if (action.action !== "grantKeyword" || action.keyword !== keyword) continue;
             const matchedIds = evaluateTargetFilter(action.target, allCards, ctx);
             if (matchedIds.includes(cardId as CardInstanceId)) {
-              total += action.keywordValue ?? 1;
+              const multiplier = action.countFilter
+                ? evaluateTargetFilter(action.countFilter, allCards, ctx).length
+                : 1;
+              total += (action.keywordValue ?? 1) * multiplier;
             }
           }
         }

@@ -149,6 +149,9 @@ export interface TargetDSL<TFilter = unknown, TContext extends BaseContext = Bas
   /** All selected targets must be different cards */
   requireDifferentTargets?: boolean;
 
+  /** The chosen cards must belong to one player (e.g. chosen player's discard). */
+  requireSameOwner?: true;
+
   /**
    * Cap the sum of selected targets' ink cost.
    *

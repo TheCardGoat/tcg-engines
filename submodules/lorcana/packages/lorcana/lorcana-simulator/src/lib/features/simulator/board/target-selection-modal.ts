@@ -7,7 +7,11 @@ import type {
 
 export type TargetSelectionModalPolicyState = Pick<
   ResolutionTargetAvailableMovesSelectionState,
-  "allowedZones" | "candidatePlayerIds" | "categoryId" | "playCardEntryModeChoice"
+  | "allowedZones"
+  | "candidatePlayerIds"
+  | "categoryId"
+  | "playCardEntryModeChoice"
+  | "hasPlayCardEntryModeCandidate"
 >;
 
 const TARGET_ZONE_LABELS = {
@@ -38,9 +42,13 @@ function selectionUsesCardTargetModal(selectionState: TargetSelectionModalPolicy
     return true;
   }
 
-  // Bodyguard cards played from hand require an entry-mode choice (ready vs exerted).
-  // The normal hand-zone board-click flow has no UI for this choice, so force the modal.
-  if (selectionState.playCardEntryModeChoice !== undefined) {
+  // If any legal hand card needs a ready/exerted decision, start in the modal
+  // before the player chooses it. Previously we switched from the hand to a
+  // modal after the click, which made the selection look like it had been lost.
+  if (
+    selectionState.hasPlayCardEntryModeCandidate === true ||
+    selectionState.playCardEntryModeChoice !== undefined
+  ) {
     return true;
   }
 
@@ -92,8 +100,14 @@ export function shouldAutoOpenTargetSelectionModal(
 }
 
 export function getTargetSelectionModalTitle(
-  selectionState: Pick<TargetSelectionModalPolicyState, "allowedZones"> & { title: string },
+  selectionState: Pick<TargetSelectionModalPolicyState, "allowedZones"> & {
+    title: string;
+    promptLabel?: string;
+  },
 ): string {
+  if (selectionState.promptLabel) {
+    return selectionState.promptLabel;
+  }
   if (selectionState.allowedZones.length === 1 && selectionState.allowedZones[0] !== "play") {
     return `${TARGET_ZONE_LABELS[selectionState.allowedZones[0]]} targets`;
   }

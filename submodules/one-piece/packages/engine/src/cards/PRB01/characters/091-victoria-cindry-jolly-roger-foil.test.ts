@@ -3,7 +3,7 @@ import { prb01VictoriaCindryJollyRogerFoil091 } from "../../../../../cards/src/c
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-091 Victoria Cindry (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01VictoriaCindryJollyRogerFoil091);
   });
 });

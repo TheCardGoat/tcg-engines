@@ -46,6 +46,10 @@ export interface TargetResolutionContext {
   selfIdentityCardId: CardInstanceId;
   /** Opponent of the source player */
   opponentPlayerId: PlayerId;
+  /** Whether this source player caused an opponent discard this turn. */
+  opponentDiscardedByYourEffectThisTurn: boolean;
+  /** Traits of friendly cards whose effects destroyed one of this player's Units this turn. */
+  friendlyUnitDestroyedByFriendlyCardTraitsThisTurn?: ReadonlySet<string>;
 
   // ── Card accessors ──
 
@@ -64,6 +68,10 @@ export interface TargetResolutionContext {
   getHandCount(playerId: PlayerId): number;
   /** Card ids deployed during the current turn. */
   deployedThisTurnIds?: ReadonlySet<CardInstanceId>;
+  /** Command card ids activated during the current turn. */
+  activatedCommandThisTurnIds?: ReadonlySet<CardInstanceId>;
+  /** All players participating in this game. */
+  allPlayerIds?: readonly PlayerId[];
 
   // ── Extended card metadata accessors ──
   // RuntimeCard.meta is a loose bag; these helpers let the DSL read
@@ -139,6 +147,8 @@ export interface TargetResolutionContext {
    * `TargetFilter.isBattling` predicate.
    */
   currentBattleParticipantIds?: ReadonlySet<CardInstanceId>;
+  /** Defending card ids in the current combat, excluding the attacker. */
+  currentBattleDefenderIds?: ReadonlySet<CardInstanceId>;
 
   /**
    * Per-card opponents in the current attack. For each combatant id, the
@@ -332,6 +342,27 @@ export function evaluateAttributeFilter(
       const has = ctx.getCardTraits(pilot).some((t) => t.toLowerCase() === lower);
       return filter.comparison === "includes" ? has : !has;
     }
+    case "pairedPilotColor": {
+      if (ctx.getCardType(card) !== "unit") return false;
+      const pilotId = ctx.getPairedPilotId(card);
+      if (pilotId === undefined) return false;
+      const pilot = ctx.getCardById(pilotId);
+      if (pilot === undefined) return false;
+      const matches = ctx.getCardColor(pilot) === filter.value;
+      return filter.comparison === "eq" ? matches : !matches;
+    }
+    case "pairedPilotLevel": {
+      if (ctx.getCardType(card) !== "unit") return false;
+      const pilotId = ctx.getPairedPilotId(card);
+      if (pilotId === undefined) return false;
+      const pilot = ctx.getCardById(pilotId);
+      const rhs = resolveNumericRhs(filter.value, ctx);
+      return (
+        pilot !== undefined &&
+        rhs !== undefined &&
+        compare(ctx.getCardLevel(pilot), filter.comparison, rhs)
+      );
+    }
     case "pairedUnitLevel": {
       const unit = findUnitPairedWithPilot(card, ctx);
       const rhs = resolveNumericRhs(filter.value, ctx);
@@ -420,6 +451,11 @@ function cardMatchesFilter(
     if (excludedIds.has(card.instanceId)) return false;
   }
 
+  // Explicit instance exclusion (e.g. multi-Unit battle-area excess).
+  if (filter.excludeInstanceIds && filter.excludeInstanceIds.length > 0) {
+    if (filter.excludeInstanceIds.includes(card.instanceId)) return false;
+  }
+
   // Card type
   if (filter.cardType !== undefined) {
     const cardType = ctx.getCardType(card);
@@ -469,6 +505,10 @@ function cardMatchesFilter(
   if (filter.hasKeyword !== undefined) {
     const keywords = ctx.getCardKeywords(card);
     if (!keywords.includes(filter.hasKeyword)) return false;
+  }
+  if (filter.lacksKeyword !== undefined) {
+    const keywords = ctx.getCardKeywords(card);
+    if (keywords.includes(filter.lacksKeyword)) return false;
   }
   if (filter.hasAnyKeyword !== undefined) {
     const hasAnyKeyword = ctx.getCardKeywords(card).length > 0;
@@ -520,6 +560,11 @@ function cardMatchesFilter(
     }
   }
 
+  if (filter.isBeingAttacked !== undefined) {
+    const isBeingAttacked = ctx.currentBattleDefenderIds?.has(card.instanceId) ?? false;
+    if (isBeingAttacked !== filter.isBeingAttacked) return false;
+  }
+
   // Attribute filters (ANDed)
   if (filter.attributeFilters !== undefined) {
     for (const af of filter.attributeFilters) {
@@ -551,6 +596,24 @@ export function evaluateTargetFilter(
     if (cardMatchesFilter(card, filter, ownerResolved, ctx)) {
       result.push(card.instanceId);
     }
+  }
+
+  if (filter.ownerHasMostUnits && result.length > 0) {
+    const counts = new Map<PlayerId, number>();
+    for (const playerId of ctx.allPlayerIds ?? [ctx.opponentPlayerId]) {
+      if (playerId === ctx.sourcePlayerId) continue;
+      counts.set(
+        playerId,
+        ctx
+          .getCardsInZone(playerId, "battleArea")
+          .filter((card) => ctx.getCardType(card) === "unit").length,
+      );
+    }
+    const most = Math.max(...counts.values());
+    return result.filter((id) => {
+      const card = ctx.getCardById(id);
+      return card !== undefined && (counts.get(card.ownerId as PlayerId) ?? -1) === most;
+    });
   }
 
   if (filter.highest !== undefined && result.length > 1) {
@@ -693,9 +756,27 @@ export function evaluateCondition(
   ctx: TargetResolutionContext,
 ): boolean {
   switch (condition.type) {
+    case "enemyPlayerCount":
+      return compare(
+        ctx.allPlayerIds?.filter((playerId) => playerId !== ctx.sourcePlayerId).length ?? 1,
+        condition.comparison,
+        condition.count,
+      );
+    case "shieldCount": {
+      const playerId = condition.owner === "friendly" ? ctx.sourcePlayerId : ctx.opponentPlayerId;
+      return compare(
+        ctx.getCardsInZone(playerId, "shieldArea").length,
+        condition.comparison,
+        condition.count,
+      );
+    }
+
     // ── Unit count ──
     case "unitCount": {
-      const units = getBattleAreaCards(condition.owner, ctx);
+      const units =
+        condition.owner === "any"
+          ? [...getBattleAreaCards("friendly", ctx), ...getBattleAreaCards("opponent", ctx)]
+          : getBattleAreaCards(condition.owner, ctx);
       const traitMatches = compileTraitPredicate(condition.hasTrait);
       let count = 0;
       for (const u of units) {
@@ -709,6 +790,11 @@ export function evaluateCondition(
         if (
           condition.hasKeyword !== undefined &&
           !ctx.getCardKeywords(u).includes(condition.hasKeyword)
+        )
+          continue;
+        if (
+          condition.attributeFilters !== undefined &&
+          !condition.attributeFilters.every((filter) => evaluateAttributeFilter(filter, u, ctx))
         )
           continue;
         if (condition.isToken !== undefined && ctx.isToken(u) !== condition.isToken) continue;
@@ -766,12 +852,36 @@ export function evaluateCondition(
       return compare(count, condition.comparison, condition.count);
     }
 
+    case "activatedCommandThisTurn": {
+      const ownerId = condition.owner === "friendly" ? ctx.sourcePlayerId : ctx.opponentPlayerId;
+      const activatedCommandContext: TargetResolutionContext = {
+        ...ctx,
+        // An activated Command remains a Command for activation-history
+        // conditions even when its current paired identity is Pilot.
+        getCardType: (card) => card.definition.type,
+      };
+      for (const cardId of ctx.activatedCommandThisTurnIds ?? []) {
+        const card = ctx.getCardById(cardId);
+        if (!card || card.ownerId !== ownerId) continue;
+        if (evaluateTargetFilter(condition.target, [card], activatedCommandContext).length > 0)
+          return true;
+      }
+      return false;
+    }
+
     // ── Hand count ──
     case "handCount": {
       const playerId = condition.owner === "friendly" ? ctx.sourcePlayerId : ctx.opponentPlayerId;
       const handSize = ctx.getHandCount(playerId);
       return compare(handSize, condition.comparison, condition.count);
     }
+    case "opponentDiscardedByYourEffectThisTurn":
+      return ctx.opponentDiscardedByYourEffectThisTurn;
+    case "friendlyUnitDestroyedByFriendlyTraitThisTurn":
+      return (
+        ctx.friendlyUnitDestroyedByFriendlyCardTraitsThisTurn?.has(condition.trait.toLowerCase()) ??
+        false
+      );
 
     // ── Self-referencing conditions ──
     // Rule 3-3-9-1: when the source is a pilot, "this Unit" in the
@@ -879,6 +989,10 @@ export function evaluateCondition(
       // Event-scoped condition. The pending-effect/executor layer evaluates
       // this with trigger context; the pure target DSL has no event payload.
       return false;
+    case "eventAttackTargetsUnit":
+      // Event-scoped condition. The pending-effect/executor layer evaluates
+      // the attack target carried by the trigger payload.
+      return false;
     case "eventDefeatedCardMatches":
       // Event-scoped condition. The pending-effect/executor layer evaluates
       // this with the defeated-card snapshot carried by the battle event.
@@ -898,6 +1012,10 @@ export function evaluateCondition(
     case "eventDamageSourceIsOpponent":
       // Event-scoped condition. The pending-effect/executor layer evaluates
       // this with trigger context; the pure target DSL has no event payload.
+      return false;
+    case "eventDamageType":
+      // Event-scoped condition. The pending-effect/executor layer evaluates
+      // this with the damage type carried by the trigger payload.
       return false;
     case "linkedUnitHasTrait": {
       // Only meaningful for pilot sources: `selfIdentityCardId` is rebound

@@ -69,7 +69,6 @@ describe("Julieta Madrigal - Excellent Cook [Set 009]", () => {
         testEngine.asPlayerOne().playCard(julietaMadrigalExcellentCook),
       ).toBeSuccessfulCommand();
 
-      const bagId = testEngine.asPlayerOne().getBagEffects()[0]!.id;
       expect(
         testEngine.asPlayerOne().resolvePendingByCard(julietaMadrigalExcellentCook, {
           resolveOptional: true,
@@ -77,16 +76,10 @@ describe("Julieta Madrigal - Excellent Cook [Set 009]", () => {
         }),
       ).toBeSuccessfulCommand();
 
-      // May have a second optional pending for the draw
-      const remainingBags = testEngine.asPlayerOne().getBagEffects();
-      if (remainingBags.length > 0) {
-        const drawBagId = remainingBags[0]!.id;
-        expect(
-          testEngine
-            .asPlayerOne()
-            .resolvePendingByCard(julietaMadrigalExcellentCook, { resolveOptional: true }),
-        ).toBeSuccessfulCommand();
-      }
+      // Second "you may draw" is an independent surface (pending, not bag).
+      expect(
+        testEngine.asPlayerOne().resolveNextPending({ resolveOptional: true }),
+      ).toBeSuccessfulCommand();
 
       // Played Julieta (hand -1) + drew a card (hand +1) = net 0 change
       expect(testEngine.getCardInstanceIdsInZone("hand", PLAYER_ONE).length).toBe(handCountBefore);

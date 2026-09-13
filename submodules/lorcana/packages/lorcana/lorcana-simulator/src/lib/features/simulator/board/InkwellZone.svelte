@@ -27,7 +27,6 @@ interface InkwellZoneProps {
 	seat: LorcanaTableSeat;
 	onClick?: () => void;
 	onCounterClick?: () => void;
-	hasItemsInPlay?: boolean;
 }
 
 let {
@@ -36,7 +35,6 @@ let {
 	seat,
 	onClick,
 	onCounterClick,
-	hasItemsInPlay,
 }: InkwellZoneProps = $props();
 
 const board = useLorcanaBoardPresenter();
@@ -56,7 +54,7 @@ const droppable = createOptionalDroppable({
 	},
 });
 
-const MAX_VISIBLE_HIDDEN_CARDS = $derived(hasItemsInPlay ? 6 : 12);
+const MAX_VISIBLE_HIDDEN_CARDS = 12;
 const effectiveTotal = $derived(Math.max(totalCards, cards.length));
 const hasRevealedCards = $derived(cards.length > 0);
 const visibleRevealedCards = $derived.by(() =>

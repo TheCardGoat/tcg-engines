@@ -34,7 +34,7 @@ export const op12TheExtinguishesAllSoundCreatedByYourInfluenceTechnique077: Even
             action: "modifyPower",
             target: {
               player: "self",
-              zones: ["leader", "character"],
+              zones: ["leader", "character", "stage", "costArea"],
               count: {
                 amount: 1,
                 upTo: true,
@@ -53,9 +53,10 @@ export const op12TheExtinguishesAllSoundCreatedByYourInfluenceTechnique077: Even
             action: "grantKeyword",
             target: {
               player: "self",
-              zones: ["leader", "character"],
+              zones: ["leader", "character", "stage", "costArea"],
               count: {
                 amount: 1,
+                upTo: true,
               },
             },
             keyword: "unblockable",

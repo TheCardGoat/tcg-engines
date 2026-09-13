@@ -78,7 +78,7 @@ describe("Gaia's Rick Dom (GQ) (ST06-003)", () => {
 
     it("cannot target an enemy Unit", () => {
       const engine = GundamTestEngine.create(
-        { play: [st06GaiaSRickDomGq003] },
+        { play: [st06GaiaSRickDomGq003, createMockUnit()] },
         { play: [createMockUnit()] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);

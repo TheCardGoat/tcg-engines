@@ -43,6 +43,7 @@ export const op05Viola079: CharacterCard = {
               chosenBy: "opponent",
             },
             position: "bottom",
+            order: "any",
           },
         ],
       },

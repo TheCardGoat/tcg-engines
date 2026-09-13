@@ -89,6 +89,7 @@ export function ChatPanel({
           onScroll={onScroll}
           className={classes.scroll}
           role="log"
+          aria-label="Chat messages"
           aria-live="polite"
           data-testid="chat-messages"
         >

@@ -62,7 +62,7 @@ describe("Palace Athene (GD03-009)", () => {
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectSuccess(p1.deployUnit(gd03PalaceAthene009));
-    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "targetSelection" });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
 
     expect(p1.getCardsInZone("trash")).toEqual(trashIds);

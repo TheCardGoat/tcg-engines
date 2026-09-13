@@ -10,12 +10,14 @@ import {
 } from "$lib";
 import type { LorcanaGameContext } from "@/features/simulator/context/game-context.svelte.js";
 import type { PlayerInteractionView } from "@tcg/lorcana-interaction";
+import type { AuthoritativeCommandStatus } from "@tcg/lorcana-engine";
 import { LorcanaMultiplayerSimulatorAdapter } from "@/features/simulator-devtools/harness/lorcana-multiplayer-simulator-adapter.js";
 import {
 	PLAYER_ONE,
 	PLAYER_TWO,
 	type CanonicalPlayerId,
 	type LorcanaBrowserHarness,
+	type LorcanaBrowserHarnessAutomatedActionResult,
 	type LorcanaBrowserHarnessConfig,
 	type LorcanaBrowserHarnessExecuteResult,
 	type LorcanaBrowserStatus,
@@ -33,6 +35,7 @@ import {
 	normalizeBrowserTransportConfig,
 } from "@tcg/lorcana-engine/testing";
 import { tick } from "svelte";
+import { MatchChatController } from "@/features/match-chat/match-chat-controller.svelte.js";
 
 interface Props {
 	browserTransport?: BrowserTransportConfig;
@@ -41,6 +44,9 @@ interface Props {
 	view?: LorcanaSimulatorView;
 	aiBot?: false | { initialPlayMode?: AiPlayMode; strategyId?: string };
 	visualSetup?: false | ((harness: LorcanaBrowserHarness) => Promise<void> | void);
+	commandStatusOverride?: AuthoritativeCommandStatus | null;
+	staleRecoveryCompletionCountOverride?: number | null;
+	enableMatchChat?: boolean;
 }
 
 const ZONE_IDS: readonly LorcanaZoneId[] = [
@@ -60,6 +66,9 @@ let {
 	view = "playerOne",
 	aiBot = {},
 	visualSetup = false,
+	commandStatusOverride = null,
+	staleRecoveryCompletionCountOverride = null,
+	enableMatchChat = false,
 }: Props = $props();
 
 const aiOrchestratorStore = createHumanVsAiContext(null);
@@ -77,6 +86,8 @@ let serializedInteractionPrompt = $state<string>(
 let debugStateId = $state<number | null>(null);
 let visualSetupStatus = $state<"idle" | "running" | "done" | "error">("idle");
 let visualSetupError = $state("");
+let recoveredFeedbackOverride = $state<number | null>(null);
+let recoveredFeedbackScheduled = false;
 
 const currentView = $derived(
 	viewOverride ?? (LORCANA_SIMULATOR_VIEWS.includes(view) ? view : "playerOne"),
@@ -85,6 +96,11 @@ const normalizedBrowserTransport = $derived(
 	normalizeBrowserTransportConfig(browserTransport),
 );
 const aiBotEnabled = $derived(aiBot !== false);
+const harnessChatController = new MatchChatController({
+	gameId: "regression-fixture",
+	canSend: true,
+	sendMessage: () => {},
+});
 
 const testEngine = $derived.by(() => {
 	void resetRevision;
@@ -347,8 +363,39 @@ async function getBoard(targetView: LorcanaSimulatorView) {
 	return adapter.getBoard(targetView);
 }
 
+async function takeAutomatedActionForCurrentActor(): Promise<LorcanaBrowserHarnessAutomatedActionResult> {
+	const server = testEngine.asServer();
+	const result = await server.takeAutomatedActionForCurrentActor();
+	if (result.finalResult.success && gameContextRef) {
+		gameContextRef.refreshFromReadModel("harness:takeAutomatedAction");
+	}
+
+	const state = server.getState();
+	return {
+		success: result.finalResult.success,
+		fallbackTaken: result.fallbackTaken,
+		gameOver: server.isGameOver(),
+		winner: server.getWinner() ?? undefined,
+		bagCount: state.G.triggeredAbilities?.bag.items.length ?? 0,
+		pendingCount: state.G.pendingEffects.length,
+	};
+}
+
 let gameContextRef = $state<LorcanaGameContext | null>(null);
 let interactionViewRef = $state<PlayerInteractionView | null>(null);
+
+$effect(() => {
+	if (
+		!gameContextRef ||
+		staleRecoveryCompletionCountOverride === null ||
+		recoveredFeedbackScheduled
+	) return;
+	recoveredFeedbackScheduled = true;
+	const timer = setTimeout(() => {
+		recoveredFeedbackOverride = staleRecoveryCompletionCountOverride;
+	}, 1_200);
+	return () => clearTimeout(timer);
+});
 
 async function runAnimation(): Promise<boolean> {
 	return false;
@@ -407,6 +454,7 @@ const browserHarness: LorcanaBrowserHarness = {
 	getConfig,
 	reset,
 	execute,
+	takeAutomatedActionForCurrentActor,
 	getBoard,
 	getStatus: async (targetView) => getStatus(targetView),
 	runAnimation,
@@ -470,6 +518,9 @@ $effect(() => {
     {serverGameplaySettings}
     bind:gameContext={gameContextRef}
     bind:interactionView={interactionViewRef}
+    {commandStatusOverride}
+    staleRecoveryCompletionCountOverride={recoveredFeedbackOverride}
+    matchChatController={enableMatchChat ? harnessChatController : null}
   />
 
   <LorcanaDebugControls

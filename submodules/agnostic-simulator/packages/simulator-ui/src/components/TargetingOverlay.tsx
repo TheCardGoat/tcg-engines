@@ -12,7 +12,7 @@ interface TargetingLine {
   y1: number;
   x2: number;
   y2: number;
-  preview?: { damage?: number; banish?: boolean };
+  preview?: { damage?: number; banish?: boolean; label?: string };
 }
 
 interface Rect {
@@ -25,6 +25,8 @@ export interface TargetingOverlayProps {
   containerSelector?: string;
   entitySelector?: (entityId: string) => string;
   zoneSelector?: (zoneId: string) => string;
+  showSpotlight?: boolean;
+  arrowColor?: string;
   className?: string;
 }
 
@@ -41,6 +43,8 @@ export function TargetingOverlay({
   containerSelector = ".board-mat",
   entitySelector = DEFAULT_ENTITY_SELECTOR,
   zoneSelector = DEFAULT_ZONE_SELECTOR,
+  showSpotlight = true,
+  arrowColor,
   className,
 }: TargetingOverlayProps) {
   const [lines, setLines] = useState<TargetingLine[]>([]);
@@ -134,14 +138,16 @@ export function TargetingOverlay({
       className={`targeting-overlay pointer-events-none absolute inset-0${className ? ` ${className}` : " z-20"}`}
       aria-hidden="true"
     >
-      <TargetingSpotlight
-        sourceX={spotlightSource.x}
-        sourceY={spotlightSource.y}
-        targetX={spotlightTarget.x}
-        targetY={spotlightTarget.y}
-        width={containerW}
-        height={containerH}
-      />
+      {showSpotlight ? (
+        <TargetingSpotlight
+          sourceX={spotlightSource.x}
+          sourceY={spotlightSource.y}
+          targetX={spotlightTarget.x}
+          targetY={spotlightTarget.y}
+          width={containerW}
+          height={containerH}
+        />
+      ) : null}
       <svg
         className="targeting-overlay-svg absolute inset-0"
         width={containerW}
@@ -157,6 +163,7 @@ export function TargetingOverlay({
             y2={line.y2}
             curved
             animated
+            color={arrowColor}
           />
         ))}
       </svg>
@@ -168,6 +175,7 @@ export function TargetingOverlay({
             y={line.y2}
             damage={line.preview.damage}
             banish={line.preview.banish}
+            label={line.preview.label}
           />
         ) : null,
       )}

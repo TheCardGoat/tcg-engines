@@ -2,7 +2,7 @@
   "name": "@tcg/game-page-contract",
   "version": "0.1.0",
   "private": true,
-  "description": "Cross-deployable schema for the live-match, replay, and practice pages. Every game (Lorcana, Gundam, Cyberpunk, Riftbound) implements this contract so the three pages share one URL shape, one HTTP surface, one WebSocket envelope, and one replay file format.",
+  "description": "Cross-deployable schema for the live-match, replay, and practice pages. Every game (Lorcana, Gundam, Cyberpunk, Riftbound) implements this contract so the three pages share one URL shape, one HTTP surface, one Socket.IO envelope, and one replay file format.",
   "files": [
     "src/"
   ],
@@ -18,9 +18,15 @@
     "./page-data": "./src/page-data.ts",
     "./settings": "./src/settings.ts",
     "./replay": "./src/replay.ts",
+    "./replay-fork": "./src/replay-fork.ts",
+    "./replay-materializer": "./src/replay-materializer.ts",
+    "./debug-export": "./src/debug-export.ts",
     "./ws": "./src/ws.ts",
     "./json-patch": "./src/json-patch.ts",
     "./deck-codec": "./src/deck-codec.ts",
+    "./deck-document": "./src/deck-document.ts",
+    "./deck-document-json": "./src/deck-document-json.ts",
+    "./deck-legality-report": "./src/deck-legality-report.ts",
     "./connection-diagnostic": "./src/connection-diagnostic.ts",
     "./schemas": "./src/schemas.ts"
   },

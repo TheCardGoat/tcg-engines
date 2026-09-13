@@ -60,6 +60,7 @@ export const op09GumGumJumpRope079: EventCard = {
             amount: 1,
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

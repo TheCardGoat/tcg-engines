@@ -63,6 +63,7 @@ export const op14eb04IsshoEb04022022: CharacterCard = {
               chosenBy: "opponent",
             },
             position: "bottom",
+            order: "any",
             condition: {
               condition: "handCount",
               player: "opponent",

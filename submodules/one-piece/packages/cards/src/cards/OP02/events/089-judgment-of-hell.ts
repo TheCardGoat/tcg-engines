@@ -49,6 +49,7 @@ export const op02JudgmentOfHell089: EventCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

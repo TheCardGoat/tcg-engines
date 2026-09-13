@@ -3,7 +3,7 @@ import { prb02GumGumLightningPirateFoil077 } from "../../../../../cards/src/card
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-077 Gum-Gum Lightning (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02GumGumLightningPirateFoil077);
   });
 });

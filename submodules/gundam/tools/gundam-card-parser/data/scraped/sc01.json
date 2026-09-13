@@ -1,0 +1,1379 @@
+[
+  {
+    "id": "EXB-001_p7",
+    "code": "EXB-001",
+    "name": "EX Base",
+    "rarity": "C",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXB-001_p7.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXB-001_p7.webp?260715"
+    },
+    "sourceTitle": "-",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "exb",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "EXBP-025",
+    "code": "EXBP-025",
+    "name": "EX Base",
+    "rarity": "P",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-025.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-025.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Char's Counterattack",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "exbp",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "EXBP-026",
+    "code": "EXBP-026",
+    "name": "EX Base",
+    "rarity": "P",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-026.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-026.webp?260715"
+    },
+    "sourceTitle": "Mobile Fighter G Gundam",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "exbp",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "EXBP-027",
+    "code": "EXBP-027",
+    "name": "EX Base",
+    "rarity": "P",
+    "cardType": "EX BASE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": 3,
+    "effect": "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-027.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXBP-027.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing: Endless Waltz",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "exbp",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "EXR-001_p7",
+    "code": "EXR-001",
+    "name": "EX Resource",
+    "rarity": "C",
+    "cardType": "EX RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(At the start of the game, the second-turn player places 1 active EX Resource into their resource area.)\n(Rest an EX Resource then exile it from the game when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EXR-001_p7.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EXR-001_p7.webp?260715"
+    },
+    "sourceTitle": "-",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "exr",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-002_p3",
+    "code": "GD01-002",
+    "name": "Unicorn Gundam (Destroy Mode)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "When playing this card from your hand, you may destroy 1 of your Link Units with \"Unicorn Mode\" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.\n【Attack】Choose 1 enemy Unit. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-002_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-002_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-004_p3",
+    "code": "GD01-004",
+    "name": "Guncannon",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 3,
+    "effect": "<Repair 1> (At the end of your turn, this Unit recovers the specified number of HP.)\n【When Paired】Choose 1 enemy Unit with 2 or less HP. Rest it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "(White Base Team) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-004_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-004_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-005_p4",
+    "code": "GD01-005",
+    "name": "Unicorn Gundam (Unicorn Mode)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【During Link】【Destroyed】Return this Unit's paired Pilot to its owner's hand. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Civilian)",
+    "link": "[Banagher Links]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-005_p4.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-005_p4.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-008_p3",
+    "code": "GD01-008",
+    "name": "Guntank",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 rested enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-008_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-008_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-025_p2",
+    "code": "GD01-025",
+    "name": "Gundam Deathscythe",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Green",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【When Paired･(Operation Meteor) Pilot】Place 1 rested Resource. Then, this Unit gains <First Strike> during this turn.\n\r\n(While this Unit is attacking, it deals damage before the enemy Unit.)",
+    "zone": "Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Duo Maxwell]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-025_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-025_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-029_p2",
+    "code": "GD01-029",
+    "name": "Shenlong Gundam",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 4> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Attack】Choose 1 enemy Unit with <Blocker> that is Lv.3 or lower. Destroy it.",
+    "zone": "Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Chang Wufei]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-029_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-029_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-030_p2",
+    "code": "GD01-030",
+    "name": "Rick Dom",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "<Breach 2> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to a card in that opponent's shield area.)",
+    "zone": "Space",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-030_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-030_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-035_p1",
+    "code": "GD01-035",
+    "name": "Zaku Ⅱ",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-035_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-035_p1.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-051_p3",
+    "code": "GD01-051",
+    "name": "Kshatriya",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Red",
+    "ap": 3,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "(Cyber-Newtype) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-051_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-051_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-052_p1",
+    "code": "GD01-052",
+    "name": "Geara Zulu (Guards Type)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Red",
+    "ap": 2,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-052_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-052_p1.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-065_p3",
+    "code": "GD01-065",
+    "name": "Freedom Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 6,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【During Pair】【Once per Turn】When you pair a Pilot with this Unit or one of your white Units, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-065_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-065_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-069_p2",
+    "code": "GD01-069",
+    "name": "Strike Rouge",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Activate･Main】【Once per Turn】①：Choose 1 of your rested white Units with <Blocker>. Set it as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Triple Ship Alliance)",
+    "link": "(Orb) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-069_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-069_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-086_p3",
+    "code": "GD01-086",
+    "name": "Gundam Lfrith",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 2,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Vanadis Institute)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-086_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-086_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-088_p4",
+    "code": "GD01-088",
+    "name": "Banagher Links",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Draw 1.",
+    "zone": "-",
+    "trait": "(Civilian) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p4.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-088_p4.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-090_p4",
+    "code": "GD01-090",
+    "name": "Duo Maxwell",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】This Unit's AP can't be reduced by enemy effects.",
+    "zone": "-",
+    "trait": "(Operation Meteor)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-090_p4.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-090_p4.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-093_p3",
+    "code": "GD01-093",
+    "name": "Marida Cruz",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Attack】Choose 1 enemy Unit whose Lv. is equal to or lower than this Unit. Deal 1 damage to it.",
+    "zone": "-",
+    "trait": "(Neo Zeon) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-093_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-093_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-096_p3",
+    "code": "GD01-096",
+    "name": "Cagalli Yula Athha",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nWhile this Unit is white, it gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "-",
+    "trait": "(Orb)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-096_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-096_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-100_p6",
+    "code": "GD01-100",
+    "name": "A Show of Resolve",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p6.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-100_p6.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-107_p4",
+    "code": "GD01-107",
+    "name": "First Contact",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Place 1 EX Resource.\n【Main】Place 1 rested Resource.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p4.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-107_p4.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-111_p4",
+    "code": "GD01-111",
+    "name": "Battle of Aces",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 2 damage to it.\n【Main】/【Action】Choose 1 damaged enemy Unit. Deal 3 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-111_p4.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-111_p4.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-118_p7",
+    "code": "GD01-118",
+    "name": "Overflowing Affection",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Draw 2. Then, discard 1.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p7.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-118_p7.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD01-126_p1",
+    "code": "GD01-126",
+    "name": "Underground Desert Base",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 6,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.",
+    "zone": "Earth",
+    "trait": "(Maganac Corps) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD01-126_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD01-126_p1.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD02-037_p2",
+    "code": "GD02-037",
+    "name": "Gundam Virsago",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Red",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 1> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Deploy】If there are 3 or less enemy Shields, choose 1 enemy Unit with 5 or less AP. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(New UNE)",
+    "link": "[Shagia Frost]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-037_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-037_p2.webp?260715"
+    },
+    "sourceTitle": "After War Gundam X",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd02",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD02-055_p2",
+    "code": "GD02-055",
+    "name": "Gundam Gusion Rebake",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 5,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Akihiro Altland]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-055_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-055_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd02",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD02-058_p2",
+    "code": "GD02-058",
+    "name": "Ryusei-Go (Graze Custom Ⅱ)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Deploy】Choose 1 of your Units. Deal 1 damage to it. If you do, draw 1. Then, discard 1.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan)",
+    "link": "(Tekkadan) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD02-058_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD02-058_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd02",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD03-055_p2",
+    "code": "GD03-055",
+    "name": "Gundam Hajiroboshi (2nd Form)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【When Paired･Purple Pilot】Choose 1 enemy Unit that is Lv.2 or lower. Destroy it.",
+    "zone": "Space Earth",
+    "trait": "(Civilian) (Gundam Frame)",
+    "link": "[Wistario Afam]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-055_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-055_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD03-068_p1",
+    "code": "GD03-068",
+    "name": "Gundam Hajiroboshi",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Purple",
+    "ap": 3,
+    "hp": 3,
+    "effect": "While a friendly Base is in play, this Unit gains <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(Civilian) (Gundam Frame)",
+    "link": "[Wistario Afam]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-068_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-068_p1.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD03-097_p1",
+    "code": "GD03-097",
+    "name": "Wistario Afam",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Once per Turn】During your turn, when this Unit destroys an enemy Unit with battle damage, look at the top 2 cards of your deck and return 1 to the top. Place the remaining card into your trash.",
+    "zone": "-",
+    "trait": "(Civilian)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-097_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-097_p1.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "GD03-129_p1",
+    "code": "GD03-129",
+    "name": "Hotarubi",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\nDuring your turn, when one of your friendly (Tekkadan)/(Teiwaz) Units receives effect damage, you may rest this Base. If you do, place the top card of your deck into your trash.",
+    "zone": "Space",
+    "trait": "(Tekkadan) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/GD03-129_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/GD03-129_p1.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "gd03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "R-001_p7",
+    "code": "R-001",
+    "name": "Resource",
+    "rarity": "C",
+    "cardType": "RESOURCE",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": null,
+    "hp": null,
+    "effect": "(Rest a Resource when paying a cost.)",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p7.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/R-001_p7.webp?260715"
+    },
+    "sourceTitle": "-",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "r",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST01-001_p8",
+    "code": "ST01-001",
+    "name": "Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【During Pair】During your turn, all your Units get AP+1.",
+    "zone": "Space Earth",
+    "trait": "(Earth Federation) (White Base Team)",
+    "link": "[Amuro Ray]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p8.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-001_p8.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST01-010_p5",
+    "code": "ST01-010",
+    "name": "Amuro Ray",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 enemy Unit with 5 or less HP. Rest it.",
+    "zone": "-",
+    "trait": "(Earth Federation) (White Base Team) (Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010_p5.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-010_p5.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST01-014_p8",
+    "code": "ST01-014",
+    "name": "Unforeseen Incident",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. It gets AP-3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p8.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST01-014_p8.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam the Witch from Mercury",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST02-001_p4",
+    "code": "ST02-001",
+    "name": "Wing Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 5,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\nThis Unit may choose an active enemy Unit that is Lv.4 or lower as its attack target.",
+    "zone": "Space Earth",
+    "trait": "(Operation Meteor)",
+    "link": "[Heero Yuy]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p4.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-001_p4.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st02",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST02-010_p6",
+    "code": "ST02-010",
+    "name": "Heero Yuy",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】This Unit gets AP+1 and HP+1.",
+    "zone": "-",
+    "trait": "(Operation Meteor)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST02-010_p6.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST02-010_p6.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Wing",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st02",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST03-001_p2",
+    "code": "ST03-001",
+    "name": "Sinanju",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Red",
+    "ap": 5,
+    "hp": 4,
+    "effect": "During your turn, when this Unit destroys an enemy shield area card with battle damage, choose 1 enemy Unit. Deal 2 damage to it.\n【During Pair】This Unit gains <High-Maneuver>.\n\r\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(Neo Zeon)",
+    "link": "[Full Frontal]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-001_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-001_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST03-010_p3",
+    "code": "ST03-010",
+    "name": "Full Frontal",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "6",
+    "cost": 1,
+    "color": "Red",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】You may deploy 1 (Neo Zeon)/(Zeon) Unit card that is Lv.4 or lower from your hand.",
+    "zone": "-",
+    "trait": "(Neo Zeon) (Cyber-Newtype)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-010_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-010_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST03-013_p5",
+    "code": "ST03-013",
+    "name": "Close Combat",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "2",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Main】.\n【Main】/【Action】Choose 1 enemy Unit. Deal 2 damage to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-013_p5.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-013_p5.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST03-015_p2",
+    "code": "ST03-015",
+    "name": "Rewloola",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Red",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 enemy Unit with 5 or less AP. Deal 1 damage to it.",
+    "zone": "Space",
+    "trait": "(Neo Zeon) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST03-015_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST03-015_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam Unicorn",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st03",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST04-001_p5",
+    "code": "ST04-001",
+    "name": "Aile Strike Gundam",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【When Paired･Lv.4 or Higher Pilot】Choose 1 enemy Unit with 4 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance)",
+    "link": "[Kira Yamato]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p5.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-001_p5.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st04",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST04-010_p7",
+    "code": "ST04-010",
+    "name": "Kira Yamato",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 enemy Unit. It gets AP-2 during this battle.",
+    "zone": "-",
+    "trait": "(Earth Alliance) (Coordinator)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p7.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-010_p7.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st04",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST04-015_p6",
+    "code": "ST04-015",
+    "name": "Archangel",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Choose 1 friendly Unit with <Blocker>. Set it as active. It can't attack during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Earth Alliance) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p6.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST04-015_p6.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam SEED",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st04",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST05-001_p3",
+    "code": "ST05-001",
+    "name": "Gundam Barbatos 4th Form",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "Purple",
+    "ap": 4,
+    "hp": 5,
+    "effect": "While this is damaged, it gains <Suppression>.\n\r\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【Deploy】Choose 1 of your other Units. Deal 1 damage to it. It gets AP+1 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(Tekkadan) (Gundam Frame)",
+    "link": "[Mikazuki Augus]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-001_p3.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-001_p3.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st05",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST05-010_p5",
+    "code": "ST05-010",
+    "name": "Mikazuki Augus",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Purple",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 of your Units and 1 enemy Unit. Deal 1 damage to them.",
+    "zone": "-",
+    "trait": "(Tekkadan) (Alaya-Vijnana)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010_p5.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-010_p5.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st05",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST05-014_p5",
+    "code": "ST05-014",
+    "name": "Fatal Strike",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "Purple",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit. Deal 1 damage to it.\n【Main】Choose 1 enemy Unit that is Lv.3 or lower. Destroy it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p5.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST05-014_p5.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam IRON-BLOODED ORPHANS",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st05",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  },
+  {
+    "id": "ST08-015_p2",
+    "code": "ST08-015",
+    "name": "Davao",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\r\n【Activate･Main】【Once per Turn】②：Choose 1 of your Units. It recovers 2 HP.",
+    "zone": "Earth",
+    "trait": "(Earth Federation) (Stronghold)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST08-015_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST08-015_p2.webp?260715"
+    },
+    "sourceTitle": "Mobile Suit Gundam: Hathaway's Flash",
+    "getIt": "Deck Build Box Freedom Ascension [SC01]",
+    "set": {
+      "id": "st08",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301"
+    }
+  }
+]

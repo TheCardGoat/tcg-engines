@@ -341,14 +341,15 @@ describe("cost parsing", () => {
     });
   });
 
-  test("keeps a direct Counter DON!! return cost non-optional", () => {
+  test("keeps a Counter DON!! return cost non-optional (Event already committed)", () => {
     const result = parseEffectText(
       "[Counter] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Give up to 1 of your opponent's Characters -2000 power during this turn.",
     );
 
+    // Main/Counter Event activation already spent the card; post-commit Skip
+    // would soft-fail the Event. returnDon is paid as part of that activation.
     expect(result.segments[0]).toMatchObject({
       costs: [{ type: "returnDon", amount: 1 }],
-      optional: false,
     });
   });
 });

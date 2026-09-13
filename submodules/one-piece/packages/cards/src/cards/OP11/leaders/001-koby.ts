@@ -50,8 +50,16 @@ export const op11Koby001: LeaderCard = {
             target: {
               player: "self",
               zones: ["character"],
-              count: { amount: "all" },
-              filters: [{ filter: "trait", value: "SWORD", match: "includes" }],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "SWORD",
+                  match: "includes",
+                },
+              ],
             },
             keyword: "rushCharacter",
             duration: "permanent",
@@ -61,15 +69,27 @@ export const op11Koby001: LeaderCard = {
     ],
     replacementEffects: [
       {
-        replacedEvent: "ko",
-        eventFilter: {
+        replacedEvent: "removeFromField",
+        target: {
           player: "self",
-          causedBy: "opponent",
+          zones: ["character"],
+          count: {
+            amount: 1,
+          },
           filters: [
-            { filter: "trait", value: "Navy", match: "includes" },
-            { filter: "basePower", comparison: "lte", value: 7000 },
+            {
+              filter: "trait",
+              value: "Navy",
+              match: "includes",
+            },
+            {
+              filter: "basePower",
+              comparison: "lte",
+              value: 7000,
+            },
           ],
         },
+        source: "opponentEffect",
         replacementAction: {
           action: "returnToDeck",
           target: {

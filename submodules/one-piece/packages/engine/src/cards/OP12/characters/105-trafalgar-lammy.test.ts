@@ -16,5 +16,10 @@ describe("OP12-105 Trafalgar Lammy", () => {
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === lawId)
         ?.power,
     ).toBe(9000);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.characters.filter(Boolean).length).toBeGreaterThan(
+      0,
+    );
   });
 });

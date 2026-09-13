@@ -82,4 +82,38 @@ describe("OP07-055 Snake Dance", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Life Trigger so Character returns do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }, op05Hack012],
+      },
+      {
+        life: [op07SnakeDance055],
+        character: [eb01Doma005, eb01Fourtricks025],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const ownCostId = engine.findCardInZone("north", "character", eb01Doma005);
+    const opponentId = engine.findCardInZone("south", "character", op05Hack012);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const ownCharsBefore = engine.getView("north").players.north.characters.filter(Boolean).length;
+    const oppCharsBefore = engine.getView("north").players.south.characters.filter(Boolean).length;
+    const handBefore = engine.getView("north").players.north.hand.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.characters.some((card) => card?.instanceId === ownCostId)).toBe(true);
+    expect(view.players.south.characters.some((card) => card?.instanceId === opponentId)).toBe(
+      true,
+    );
+    expect(view.players.north.characters.filter(Boolean).length).toBe(ownCharsBefore);
+    expect(view.players.south.characters.filter(Boolean).length).toBe(oppCharsBefore);
+    expect(view.players.north.hand.length).toBe(handBefore);
+    expect(view.players.north.hand.map((card) => card.instanceId)).not.toContain(ownCostId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

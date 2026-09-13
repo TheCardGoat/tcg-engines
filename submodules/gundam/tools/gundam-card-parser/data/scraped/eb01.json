@@ -1,0 +1,2918 @@
+[
+  {
+    "id": "EB01-001",
+    "code": "EB01-001",
+    "name": "Gundam Astray Red Frame Custom (EX)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Activate･Main】【Once per Turn】Exile 2 Command cards from your trash from the game：Choose 1 damaged enemy Unit that is Lv.7 or lower. Rest it. It won't be set as active during the start phase of your opponent's next turn.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Lowe Guele]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-001.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-001.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-001_p1",
+    "code": "EB01-001",
+    "name": "Gundam Astray Red Frame Custom (EX)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Activate･Main】【Once per Turn】Exile 2 Command cards from your trash from the game：Choose 1 damaged enemy Unit that is Lv.7 or lower. Rest it. It won't be set as active during the start phase of your opponent's next turn.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Lowe Guele]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-001_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-001_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-002",
+    "code": "EB01-002",
+    "name": "Hi-Nu Gundam (EX)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 5,
+    "effect": "【Deploy】If another friendly (G Generation) Unit is in play, choose 1 Unit belonging to each enemy player. Rest them.\n【During Link】【Attack】【Once per Turn】If 3 or more other rested Units are in play, set this Unit as active.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-002.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-002.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-002_p1",
+    "code": "EB01-002",
+    "name": "Hi-Nu Gundam (EX)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 5,
+    "effect": "【Deploy】If another friendly (G Generation) Unit is in play, choose 1 Unit belonging to each enemy player. Rest them.\n【During Link】【Attack】【Once per Turn】If 3 or more other rested Units are in play, set this Unit as active.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-002_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-002_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-003",
+    "code": "EB01-003",
+    "name": "Narrative Gundam A-Packs (EX)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\nAt the end of your turn, if this Unit is rested, rest all Units. If this effect rested 3 or more Units, draw 1.",
+    "zone": "Space",
+    "trait": "(G Generation)",
+    "link": "[Jona Basta]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-003.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-003.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-003_p1",
+    "code": "EB01-003",
+    "name": "Narrative Gundam A-Packs (EX)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\nAt the end of your turn, if this Unit is rested, rest all Units. If this effect rested 3 or more Units, draw 1.",
+    "zone": "Space",
+    "trait": "(G Generation)",
+    "link": "[Jona Basta]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-003_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-003_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-004",
+    "code": "EB01-004",
+    "name": "Gundam Barbatos Lupus Rex (EX)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 5,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【Once per Turn】During your turn, when this Unit recovers HP, choose 1 rested enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-004.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-004.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-004_p1",
+    "code": "EB01-004",
+    "name": "Gundam Barbatos Lupus Rex (EX)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 5,
+    "effect": "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\n【Once per Turn】During your turn, when this Unit recovers HP, choose 1 rested enemy Unit. Deal 1 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-004_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-004_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-005",
+    "code": "EB01-005",
+    "name": "Zeta Gundam Ⅲ P2 Type",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "Blue",
+    "ap": 6,
+    "hp": 4,
+    "effect": "【Deploy】Choose 1 rested Unit belonging to another player. Set it as active. Draw 1.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Support) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-005.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-005.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-006",
+    "code": "EB01-006",
+    "name": "Gundam Astray Gold Frame Amatsu",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 of your Units. It gains <Repair 1> during this turn.\n\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-006.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-006.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-006_p1",
+    "code": "EB01-006",
+    "name": "Gundam Astray Gold Frame Amatsu",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Deploy】Choose 1 of your Units. It gains <Repair 1> during this turn.\n\r\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-006_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-006_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-007",
+    "code": "EB01-007",
+    "name": "Gundam TR-1 \"Hazel-Rah\"",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 4,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-007.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-007.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-008",
+    "code": "EB01-008",
+    "name": "Gundam Delta Kai",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy・Development 1】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\n■Choose 1 friendly Unit. It recovers 2 HP.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-008.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-008.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-009",
+    "code": "EB01-009",
+    "name": "Gundam Full Armor (Thunderbolt) (EX)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】All enemy players each choose 1 of their active Units. Rest them.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Io Fleming]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-009.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-009.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-009_p1",
+    "code": "EB01-009",
+    "name": "Gundam Full Armor (Thunderbolt) (EX)",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】All enemy players each choose 1 of their active Units. Rest them.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Io Fleming]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-009_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-009_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-010",
+    "code": "EB01-010",
+    "name": "Gundam Barbatos 6th Form",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Blue",
+    "ap": 5,
+    "hp": 2,
+    "effect": "【Deploy・Development 3】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\n■Choose 1 rested enemy Unit. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-010.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-010.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-011",
+    "code": "EB01-011",
+    "name": "Beginning Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-011.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-011.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-012",
+    "code": "EB01-012",
+    "name": "Dom Bein Nichts",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Support) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-012.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-012.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-013",
+    "code": "EB01-013",
+    "name": "Red Gundam(0085)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": 4,
+    "effect": "【Attack】If an enemy player has 6 or more cards in their hand, this Unit gets AP+2 during this turn.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-013.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-013.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-014",
+    "code": "EB01-014",
+    "name": "Gouf Vijayanta",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "During your opponent's turn, this Unit can't receive effect damage from enemy Units that are Lv.5 or lower.",
+    "zone": "Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-014.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-014.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-015",
+    "code": "EB01-015",
+    "name": "Prototype Asshimar TR-3 \"Kehaar\"",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 4,
+    "effect": "【Destroyed】If there are 2 or more other rested Units in play, choose 1 rested enemy Unit. Deal 1 damage to it.",
+    "zone": "Space",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-015.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-015.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-016",
+    "code": "EB01-016",
+    "name": "Tornado Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-016.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-016.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-017",
+    "code": "EB01-017",
+    "name": "Haro",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Destroyed】If this Unit is destroyed with battle damage, you and the player who destroyed this Unit draw 1.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-017.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-017.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-018",
+    "code": "EB01-018",
+    "name": "Gundam Astray Blue Frame Second L",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Attack】Choose 1 friendly Unit. It recovers 1 HP.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-018.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-018.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-019",
+    "code": "EB01-019",
+    "name": "Gundam Pixy",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 4,
+    "effect": "【Attack】If there are 2 or more other rested Units in play, this Unit gains <High-Maneuver> during this battle.\n\n(This Unit can't be blocked.)",
+    "zone": "Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-019.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-019.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-020",
+    "code": "EB01-020",
+    "name": "Gundam Mk-Ⅲ",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Blue",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【During Link】【Activate･Action】【Once per Turn】Choose 1 Unit. It recovers 1 HP.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Durability) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-020.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-020.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-021",
+    "code": "EB01-021",
+    "name": "Build Strike Gundam (Full Package) (EX)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 4> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【When Paired･(G Generation) Pilot】If there are 2 or more (G Generation) Unit cards in your trash, place 1 rested Resource.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Reiji]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-021.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-021.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-021_p1",
+    "code": "EB01-021",
+    "name": "Build Strike Gundam (Full Package) (EX)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 4> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【When Paired･(G Generation) Pilot】If there are 2 or more (G Generation) Unit cards in your trash, place 1 rested Resource.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Reiji]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-021_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-021_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-022",
+    "code": "EB01-022",
+    "name": "Gundam Exia (EX)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Green",
+    "ap": 6,
+    "hp": 5,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【During Pair･(G Generation) Pilot】At the end of your turn, you may destroy this Unit. If you do, deploy 3 [Gundam Exia]((G Generation)･AP2･HP2) Unit tokens.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-022.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-022.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-022_p1",
+    "code": "EB01-022",
+    "name": "Gundam Exia (EX)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Green",
+    "ap": 6,
+    "hp": 5,
+    "effect": "<Breach 5> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【During Pair･(G Generation) Pilot】At the end of your turn, you may destroy this Unit. If you do, deploy 3 [Gundam Exia]((G Generation)･AP2･HP2) Unit tokens.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-022_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-022_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-023",
+    "code": "EB01-023",
+    "name": "Le Cygne (EX)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Attack】All players each look at the top card of their deck. If it is a card that is Lv.5 or higher, they may reveal it and add it to their hand. They return any remaining card to the top or bottom of their deck.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Asuna Elmarit]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-023.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-023.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-023_p1",
+    "code": "EB01-023",
+    "name": "Le Cygne (EX)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Attack】All players each look at the top card of their deck. If it is a card that is Lv.5 or higher, they may reveal it and add it to their hand. They return any remaining card to the top or bottom of their deck.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Asuna Elmarit]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-023_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-023_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-024",
+    "code": "EB01-024",
+    "name": "GQuuuuuuX (Omega Psycommu)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "<Breach 3> (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)\n【Attack】Choose 1 enemy Unit with <Blocker> that is Lv.5 or lower. Deal 2 damage to it.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-024.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-024.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-025",
+    "code": "EB01-025",
+    "name": "Tallgeese Ⅱ",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Deploy・Development 2】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\n■All players place 1 EX Resource.\n【During Pair】While your opponent has an EX Resource, this Unit can't receive battle damage from enemy Units that are Lv.5 or lower.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-025.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-025.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-025_p1",
+    "code": "EB01-025",
+    "name": "Tallgeese Ⅱ",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 5,
+    "hp": 4,
+    "effect": "【Deploy・Development 2】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\r\n■All players place 1 EX Resource.\n【During Pair】While your opponent has an EX Resource, this Unit can't receive battle damage from enemy Units that are Lv.5 or lower.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-025_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-025_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-026",
+    "code": "EB01-026",
+    "name": "Gundam Astaroth Origin",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Durability) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-026.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-026.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-027",
+    "code": "EB01-027",
+    "name": "Tallgeese",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "【Deploy・Development 2】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\n■Choose 1 friendly (G Generation) Unit. It gains <Breach 1> during this turn.\n\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-027.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-027.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-028",
+    "code": "EB01-028",
+    "name": "Gundam Plutone",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Once per Turn】When another Unit attacks an enemy Unit, if this Unit is rested, the attacking Unit gains <Breach 2> during this battle.\n\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Chall Acustica]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-028.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-028.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-029",
+    "code": "EB01-029",
+    "name": "Gundam Astaroth Rinascimento (EX)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 4,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【Deploy】If 5 or more enemy Units are in play, deal 2 damage to all Units with <Blocker> that are Lv.4 or lower.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Support) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-029.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-029.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-030",
+    "code": "EB01-030",
+    "name": "Big-Rang",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "Green",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【Deploy】Look at the top 3 cards of your deck. You may reveal 1 (G Generation) Unit card that is Lv.3 among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-030.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-030.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-031",
+    "code": "EB01-031",
+    "name": "Oggo",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "This Unit may choose an active enemy Unit that is Lv.3 or lower as its attack target.",
+    "zone": "Space",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-031.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-031.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-032",
+    "code": "EB01-032",
+    "name": "Gundam Ez8 High Mobility Custom",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-032.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-032.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-033",
+    "code": "EB01-033",
+    "name": "Taurus (Sanc Kingdom)",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 3,
+    "effect": "【Activate･Action】【Once per Turn】①：Choose 1 other Unit that is being attacked. It gets AP+1 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-033.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-033.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-034",
+    "code": "EB01-034",
+    "name": "Gundam Lfrith Ur",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 2,
+    "hp": 2,
+    "effect": "【When Linked】Look at the top 3 cards of your deck. You may reveal 1 (G Generation) Unit card that is Lv.3 among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-034.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-034.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-035",
+    "code": "EB01-035",
+    "name": "Gundam Lfrith Thorn",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": 3,
+    "hp": 3,
+    "effect": "When another friendly (G Generation) Unit that is Lv.3 is deployed, this Unit gains <Breach 1> during this turn.\n\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Support) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-035.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-035.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-036",
+    "code": "EB01-036",
+    "name": "Darilbalde",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 3,
+    "effect": "During your turn, all other (G Generation) Units that are Lv.3 get AP+1.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-036.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-036.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-037",
+    "code": "EB01-037",
+    "name": "Zudah Unit 1",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 4,
+    "hp": 1,
+    "effect": "During your turn, while this Unit is battling an enemy Unit with <Blocker>, this Unit can't receive battle damage.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Jean Luc Duvall]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-037.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-037.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-038",
+    "code": "EB01-038",
+    "name": "G-Self",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "Green",
+    "ap": 3,
+    "hp": 2,
+    "effect": "【Deploy】Place 1 EX Resource.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-038.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-038.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-039",
+    "code": "EB01-039",
+    "name": "Rising Freedom Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "Green",
+    "ap": 4,
+    "hp": 4,
+    "effect": "When playing this card from your hand, if 3 or more enemy Units are in play, play it as if it has 3 Lv. and cost.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Support) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-039.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-039.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-040",
+    "code": "EB01-040",
+    "name": "Gundam Epyon",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "Green",
+    "ap": 6,
+    "hp": 6,
+    "effect": "【Deploy】If there are 2 or more enemy players, choose 1 to 3 friendly Units. They gain <Breach 3> during this turn.\n\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-040.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-040.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-041",
+    "code": "EB01-041",
+    "name": "Strike Freedom Gundam (EX)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "White",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【Deploy】Choose 1 Unit with 4 or less HP belonging to each enemy player. Return them to their owners' hands.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-041.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-041.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-041_p1",
+    "code": "EB01-041",
+    "name": "Strike Freedom Gundam (EX)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 6,
+    "color": "White",
+    "ap": 5,
+    "hp": 5,
+    "effect": "<High-Maneuver> (This Unit can't be blocked.)\n【Deploy】Choose 1 Unit with 4 or less HP belonging to each enemy player. Return them to their owners' hands.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-041_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-041_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-042",
+    "code": "EB01-042",
+    "name": "Psycho Haro (EX)",
+    "rarity": "LR",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "White",
+    "ap": 6,
+    "hp": 6,
+    "effect": "While this Unit is rested, all Units gain <Blocker>.\n\n(Rest this Unit to change the attack target to it.)\n【Attack】Units that are Lv.7 or lower can't activate <Blocker> during this battle.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-042.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-042.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-042_p1",
+    "code": "EB01-042",
+    "name": "Psycho Haro (EX)",
+    "rarity": "LR +",
+    "cardType": "UNIT",
+    "level": "8",
+    "cost": 7,
+    "color": "White",
+    "ap": 6,
+    "hp": 6,
+    "effect": "While this Unit is rested, all Units gain <Blocker>.\n\r\n(Rest this Unit to change the attack target to it.)\n【Attack】Units that are Lv.7 or lower can't activate <Blocker> during this battle.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-042_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-042_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-043",
+    "code": "EB01-043",
+    "name": "Blue Destiny Unit-1 (EX)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【Attack】If a friendly Unit with <Blocker> is in play, choose 1 enemy Unit that is Lv.5 or lower. It gets AP-2 during this battle.",
+    "zone": "Earth",
+    "trait": "(G Generation)",
+    "link": "[Yuu Kajima]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-043.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-043.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-043_p1",
+    "code": "EB01-043",
+    "name": "Blue Destiny Unit-1 (EX)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 5,
+    "hp": 3,
+    "effect": "【Attack】If a friendly Unit with <Blocker> is in play, choose 1 enemy Unit that is Lv.5 or lower. It gets AP-2 during this battle.",
+    "zone": "Earth",
+    "trait": "(G Generation)",
+    "link": "[Yuu Kajima]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-043_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-043_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-044",
+    "code": "EB01-044",
+    "name": "Justice Gundam (EX)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】If there are 2 or more enemy players, choose 1 Unit belonging to an enemy player with the most Units. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Durability) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-044.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-044.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-044_p1",
+    "code": "EB01-044",
+    "name": "Justice Gundam (EX)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 5,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)\n【Deploy】If there are 2 or more enemy players, choose 1 Unit belonging to an enemy player with the most Units. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Durability) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-044_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-044_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-045",
+    "code": "EB01-045",
+    "name": "Psycho Zaku (EX)",
+    "rarity": "R",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 6,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【When Paired】Choose 1 enemy Unit with <Repair>. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Daryl Lorenz]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-045.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-045.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-045_p1",
+    "code": "EB01-045",
+    "name": "Psycho Zaku (EX)",
+    "rarity": "R +",
+    "cardType": "UNIT",
+    "level": "7",
+    "cost": 5,
+    "color": "White",
+    "ap": 4,
+    "hp": 6,
+    "effect": "<Suppression> (Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)\n【When Paired】Choose 1 enemy Unit with <Repair>. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Daryl Lorenz]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-045_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-045_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-046",
+    "code": "EB01-046",
+    "name": "Striker Custom (EX)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【During Pair】【Attack】Choose 1 enemy Unit that is Lv.4 or higher. It gets AP-2 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Ittou Tsurugi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-046.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-046.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-046_p1",
+    "code": "EB01-046",
+    "name": "Striker Custom (EX)",
+    "rarity": "U +",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【During Pair】【Attack】Choose 1 enemy Unit that is Lv.4 or higher. It gets AP-2 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Ittou Tsurugi]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-046_p1.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-046_p1.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-047",
+    "code": "EB01-047",
+    "name": "Casval's Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "【When Paired・Development 1】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\n■This Unit gains <High-Maneuver> during this turn.\n\n(This Unit can't be blocked.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-047.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-047.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-048",
+    "code": "EB01-048",
+    "name": "S Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Attack) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-048.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-048.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-049",
+    "code": "EB01-049",
+    "name": "Pale Rider (Ground Heavy Equipment Type)",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 4,
+    "color": "White",
+    "ap": 5,
+    "hp": 4,
+    "effect": "While a friendly (G Generation) Unit with <Blocker> is in play, this Unit gains <Suppression>.\n\n(Damage to Shields by an attack is dealt to the first 2 cards simultaneously.)",
+    "zone": "Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-049.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-049.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-050",
+    "code": "EB01-050",
+    "name": "Saikoro Gundam",
+    "rarity": "U",
+    "cardType": "UNIT",
+    "level": "6",
+    "cost": 6,
+    "color": "White",
+    "ap": 5,
+    "hp": 6,
+    "effect": "【Attack】Place the top card of your deck into your trash. If you placed a card that is Lv.3 or higher with this effect, choose 1 enemy Unit. It gets AP-2 during this battle.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-050.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-050.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-051",
+    "code": "EB01-051",
+    "name": "Ze'Gok",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "1",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-051.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-051.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-052",
+    "code": "EB01-052",
+    "name": "Hildolfr",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": 2,
+    "effect": "【Deploy】If 3 or more enemy Units are in play, choose 1 enemy Unit with 2 or less HP. Return it to its owner's hand.",
+    "zone": "Earth",
+    "trait": "(G Generation)",
+    "link": "(G Generation) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-052.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-052.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-053",
+    "code": "EB01-053",
+    "name": "Gundam GP00",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 2,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-053.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-053.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-054",
+    "code": "EB01-054",
+    "name": "Gaplant TR-5 \"Hrairoo\" Unit 1",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "<Blocker> (Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-054.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-054.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-055",
+    "code": "EB01-055",
+    "name": "Dom Gross Beil",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 2,
+    "hp": 3,
+    "effect": "If there are 2 or more enemy players and this Unit is rested, friendly Shields can't receive battle damage from enemy Units.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-055.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-055.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-056",
+    "code": "EB01-056",
+    "name": "Gundam Geminass 01",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": 4,
+    "hp": 3,
+    "effect": "-",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-056.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-056.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-057",
+    "code": "EB01-057",
+    "name": "Gundam Geminass 02",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 3,
+    "effect": "【Deploy】You may choose 1 active friendly Unit that is Lv.3. Rest it. If you do, choose 1 enemy Unit that is Lv.2 or lower. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-057.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-057.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-058",
+    "code": "EB01-058",
+    "name": "Extreme Gundam",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": 3,
+    "hp": 4,
+    "effect": "If there are 2 or more enemy players, this Unit gains <Blocker>.\n\n(Rest this Unit to change the attack target to it.)",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-058.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-058.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-059",
+    "code": "EB01-059",
+    "name": "Psycho Zaku",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Link】【Attack】【Once per Turn】All players each choose 1 of their Resources. Set them as active.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Daryl Lorenz]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-059.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-059.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-060",
+    "code": "EB01-060",
+    "name": "Gundam Aquarius",
+    "rarity": "C",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 4,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【When Paired・Development 3】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\n■Choose 1 enemy Unit that is Lv.4 or lower. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "(Support) Trait",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-060.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-060.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-061",
+    "code": "EB01-061",
+    "name": "Ellis Claude",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】If a friendly (G Generation) Unit is in play, choose 1 enemy Unit that is Lv.3 or lower. Rest it.",
+    "zone": "-",
+    "trait": "(G Generation) (Support)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-061.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-061.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-062",
+    "code": "EB01-062",
+    "name": "Jona Basta",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】【Once per Turn】Choose 1 enemy player. They may draw 1. If they draw with this effect, draw 1.",
+    "zone": "-",
+    "trait": "(G Generation) (Durability)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-062.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-062.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-063",
+    "code": "EB01-063",
+    "name": "Io Fleming",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nIf there are 2 or more other rested Units in play, this Unit gains <Repair 2>.\n\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "-",
+    "trait": "(G Generation) (Durability)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-063.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-063.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-064",
+    "code": "EB01-064",
+    "name": "Rondo Gina Sahaku",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\nWhile this Unit has <Repair>, it gains <Breach 1>.\n\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "-",
+    "trait": "(G Generation) (Attack)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-064.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-064.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-065",
+    "code": "EB01-065",
+    "name": "Meir Siva",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Linked】Choose 1 friendly (G Generation) Unit. It gains <Breach 1> during this turn.\n\n(When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+    "zone": "-",
+    "trait": "(G Generation) (Attack)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-065.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-065.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-066",
+    "code": "EB01-066",
+    "name": "Reiji",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 friendly (G Generation) Unit. During this turn, it may choose an active enemy Unit with <Blocker> as its attack target.",
+    "zone": "-",
+    "trait": "(G Generation) (Support)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-066.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-066.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-067",
+    "code": "EB01-067",
+    "name": "Asuna Elmarit",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Look at the top 3 cards of your deck. You may reveal 1 (G Generation) Unit card among them and return it to the top of your deck. Return the remaining cards randomly to the bottom of your deck.",
+    "zone": "-",
+    "trait": "(G Generation) (Support)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-067.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-067.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-068",
+    "code": "EB01-068",
+    "name": "Chall Acustica",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Destroyed】You may return the card paired with this Unit to the top of its owner's deck.",
+    "zone": "-",
+    "trait": "(G Generation) (Attack)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-068.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-068.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-069",
+    "code": "EB01-069",
+    "name": "Beside Pain",
+    "rarity": "R",
+    "cardType": "PILOT",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【Attack】Choose 1 friendly Unit with <Blocker>. It gets AP+2 during this turn.",
+    "zone": "-",
+    "trait": "(G Generation) (Durability)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-069.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-069.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-070",
+    "code": "EB01-070",
+    "name": "Daryl Lorenz",
+    "rarity": "U",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】【Activate･Action】【Once per Turn】①：If it is your opponent's turn, choose 1 Unit. It gets AP+1 during this battle.",
+    "zone": "-",
+    "trait": "(G Generation) (Support)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-070.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-070.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-071",
+    "code": "EB01-071",
+    "name": "Ittou Tsurugi",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 2,
+    "hp": 1,
+    "effect": "【Burst】Add this card to your hand.\n【During Link】This Unit gets AP+1.",
+    "zone": "-",
+    "trait": "(G Generation) (Attack)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-071.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-071.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-072",
+    "code": "EB01-072",
+    "name": "Yuu Kajima",
+    "rarity": "C",
+    "cardType": "PILOT",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 2,
+    "effect": "【Burst】Add this card to your hand.\n【When Paired】Choose 1 active friendly Unit with <Blocker> and 1 enemy Unit that is Lv.4 or lower. Rest them.",
+    "zone": "-",
+    "trait": "(G Generation) (Attack)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-072.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-072.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-073",
+    "code": "EB01-073",
+    "name": "Character Requests",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "6",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Draw 1.\n【Main】If there are 6 or more rested Units in play, draw 2.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-073.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-073.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-074",
+    "code": "EB01-074",
+    "name": "Eternal Road",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Choose 1 enemy Unit with 3 or less HP. Rest it.\n【Main】/【Action】Choose 1 active friendly (G Generation) Unit. Rest it. If you do, all enemy players each choose 1 of their active Units. Rest them.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-074.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-074.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-075",
+    "code": "EB01-075",
+    "name": "Fierce Enemy Assault",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】/【Action】Choose 1 to 2 enemy Units with 2 or less HP. Rest them.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-075.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-075.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-076",
+    "code": "EB01-076",
+    "name": "Gerbera Straight",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Blue",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 friendly (G Generation) Unit. It recovers 3 HP.\n【Pilot】[Lowe Guele]",
+    "zone": "-",
+    "trait": "(G Generation) (Durability)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-076.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-076.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-077",
+    "code": "EB01-077",
+    "name": "Master League Begins",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Action】Choose 1 rested friendly (G Generation) Unit. Change a battling enemy Unit's attack target to it.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-077.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-077.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-078",
+    "code": "EB01-078",
+    "name": "Premium Unit Assembly",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "1",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】All players each look at the top card of their deck. If it is a Unit card, they may reveal it and add it to their hand. They return any remaining card to the top or bottom of their deck.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-078.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-078.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-079",
+    "code": "EB01-079",
+    "name": "Modification",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": null,
+    "effect": "【Main】Choose 1 friendly (G Generation) Unit. It can't receive battle damage from enemy Units that are Lv.3 or lower during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-079.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-079.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-080",
+    "code": "EB01-080",
+    "name": "Sturm Faust",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "Green",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 (G Generation) Unit. During this turn, it may choose an active enemy Unit as its attack target.\n【Pilot】[Jean Luc Duvall]",
+    "zone": "-",
+    "trait": "(G Generation) (Support)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-080.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-080.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-081",
+    "code": "EB01-081",
+    "name": "MAP Weapon",
+    "rarity": "R",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Add this card to your hand.\n【Main】/【Action】Choose 1 to 2 enemy Units with 2 or less HP. Return them to their owners' hands.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-081.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-081.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-082",
+    "code": "EB01-082",
+    "name": "Warship Cruise",
+    "rarity": "U",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Burst】Activate this card's 【Action】.\n【Action】Choose 1 Unit that is Lv.3 or lower belonging to each enemy player. Return them to their owners' hands.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-082.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-082.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-083",
+    "code": "EB01-083",
+    "name": "SP Conversion Chips",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "3",
+    "cost": 1,
+    "color": "White",
+    "ap": null,
+    "hp": null,
+    "effect": "【Action】If it is your opponent's turn, choose 1 Unit. It gets AP+3 during this turn.",
+    "zone": "-",
+    "trait": "-",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-083.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-083.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-084",
+    "code": "EB01-084",
+    "name": "30cm Cannon (APFSDS Round)",
+    "rarity": "C",
+    "cardType": "COMMAND",
+    "level": "4",
+    "cost": 1,
+    "color": "White",
+    "ap": 1,
+    "hp": 1,
+    "effect": "【Main】/【Action】Choose 1 Unit with <Blocker>. Set it as active. It can't attack during this turn.\n【Pilot】[Demeziere Sonnen]",
+    "zone": "-",
+    "trait": "(G Generation) (Attack)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-084.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-084.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-085",
+    "code": "EB01-085",
+    "name": "Kudelia Aina Bernstein & Isaribi",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "5",
+    "cost": 1,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, you may choose 1 active friendly blue (G Generation) Unit and 1 enemy Unit. Rest them.",
+    "zone": "Space",
+    "trait": "(G Generation) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-085.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-085.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-086",
+    "code": "EB01-086",
+    "name": "Kycilia Zabi & Gwazine",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "4",
+    "cost": 2,
+    "color": "Blue",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Once per Turn】When a friendly (G Generation) Unit links, it gains <Repair 2> during this turn.\n\n(At the end of your turn, this Unit recovers the specified number of HP.)",
+    "zone": "Space",
+    "trait": "(G Generation) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-086.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-086.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-087",
+    "code": "EB01-087",
+    "name": "Marina Ismail & Ptolemaios 2",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\n【Once per Turn】During your turn, when a friendly green (G Generation) Unit destroys an enemy Unit with battle damage, choose 1 friendly Unit. It recovers 2 HP.",
+    "zone": "Space Earth",
+    "trait": "(G Generation) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-087.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-087.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-088",
+    "code": "EB01-088",
+    "name": "Miorine Rembran & Academy Ship",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 1,
+    "color": "Green",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand.\n\nAll friendly (G Generation) Units that are Lv.3 get AP+1 during your opponent's turn.",
+    "zone": "Space",
+    "trait": "(G Generation) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-088.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-088.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-089",
+    "code": "EB01-089",
+    "name": "Lacus Clyne & Eternal",
+    "rarity": "U",
+    "cardType": "BASE",
+    "level": "3",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": 5,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, choose 1 rested friendly white (G Generation) Unit. Set it as active. It can't attack during this turn.",
+    "zone": "Space",
+    "trait": "(G Generation) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-089.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-089.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "EB01-090",
+    "code": "EB01-090",
+    "name": "Tiffa Adill & Freeden",
+    "rarity": "C",
+    "cardType": "BASE",
+    "level": "2",
+    "cost": 2,
+    "color": "White",
+    "ap": null,
+    "hp": 4,
+    "effect": "【Burst】Deploy this card.\n【Deploy】Add 1 of your Shields to your hand. Then, if it is your turn, choose 1 Unit with 2 or less HP belonging to each enemy player. Return them to their owners' hands.",
+    "zone": "Earth",
+    "trait": "(G Generation) (Warship)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/EB01-090.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/EB01-090.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "ST10-006_p2",
+    "code": "ST10-006",
+    "name": "Phoenix Gundam (Power Unleashed) (EX)",
+    "rarity": "LR ++",
+    "cardType": "UNIT",
+    "level": "5",
+    "cost": 3,
+    "color": "White",
+    "ap": 4,
+    "hp": 4,
+    "effect": "【During Pair】During your turn, when this Unit destroys an enemy Unit with battle damage, choose 1 enemy Unit with 3 or less HP. Return it to its owner's hand.",
+    "zone": "Space Earth",
+    "trait": "(G Generation)",
+    "link": "[Mark Guilder]",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/ST10-006_p2.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/ST10-006_p2.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "st10",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  },
+  {
+    "id": "T-025",
+    "code": "T-025",
+    "name": "Gundam Exia",
+    "rarity": "C",
+    "cardType": "UNIT・TOKEN",
+    "level": "-",
+    "cost": null,
+    "color": "-",
+    "ap": 2,
+    "hp": 2,
+    "effect": "-",
+    "zone": "-",
+    "trait": "(G Generation)",
+    "link": "-",
+    "images": {
+      "small": "https://www.gundam-gcg.com/en/images/cards/card/T-025.webp?260715",
+      "large": "https://www.gundam-gcg.com/en/images/cards/card/T-025.webp?260715"
+    },
+    "sourceTitle": "SD Gundam G Generation ETERNAL",
+    "getIt": "Eternal Nexus [EB01]",
+    "set": {
+      "id": "t",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201"
+    }
+  }
+]

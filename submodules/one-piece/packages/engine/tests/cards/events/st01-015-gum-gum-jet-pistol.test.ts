@@ -19,5 +19,7 @@ describe("ST01-015 Gum-Gum Jet Pistol", () => {
       targetId,
     );
     expect(engine.getView("north").players.north.activeDon).toBe(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

@@ -72,11 +72,12 @@ export const op14eb04Queen032: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Animal Kingdom Pirates",
+              match: "includes",
             },
           },
         ],
-        optional: true,
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

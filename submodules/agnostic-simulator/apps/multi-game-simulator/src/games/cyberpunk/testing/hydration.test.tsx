@@ -2,7 +2,7 @@
 
 import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
-import type { EngineInteractionView } from "@tcg/protocol";
+import { INTERACTION_PROTOCOL_VERSION, type EngineInteractionView } from "@tcg/protocol";
 import { act, type ReactElement } from "react";
 import { hydrateRoot, type Root } from "react-dom/client";
 import { renderToString } from "react-dom/server";
@@ -29,7 +29,7 @@ function buildUndoablePassTurnControl(): ReactElement {
   const engine = getScenario("gameStart").build();
   const matchState = engine.getState();
   const interactionView: EngineInteractionView = {
-    protocolVersion: 1,
+    protocolVersion: INTERACTION_PROTOCOL_VERSION,
     gameSlug: "cyberpunk",
     actorId: "player",
     stateVersion: matchState.ctx.stateID,

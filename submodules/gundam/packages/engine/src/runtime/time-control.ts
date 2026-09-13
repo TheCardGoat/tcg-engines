@@ -1,4 +1,4 @@
-import { create } from "mutative";
+import { create, type Draft } from "mutative";
 
 import type { PlayerId } from "../types/branded.ts";
 import type {
@@ -168,8 +168,26 @@ export function checkTimeout<G extends object>(
   const decisionCapExceeded =
     maxDecisionTimeMs != null && isActivePlayer && windowMs > maxDecisionTimeMs;
 
-  if (!playerState.isInNegativeTime && !decisionCapExceeded) return null;
+  const reserveExpired = hasClockGraceExpired(state, playerId, now);
+  if (!reserveExpired && !decisionCapExceeded) return null;
   return playerState.timeoutCount >= 1 ? "second" : "first";
+}
+
+export function hasClockGraceExpired<G extends object>(
+  state: MatchState<G>,
+  playerId: string,
+  now: number = Date.now(),
+): boolean {
+  const time = state.ctx.time;
+  if (time.mode !== "chess" && time.mode !== "dynamic") return false;
+
+  const playerState = time.players[playerId];
+  if (!playerState) return false;
+
+  const isActive = time.running && time.activePlayerID === playerId;
+  if (!playerState.isInNegativeTime && !isActive) return false;
+  const elapsedMs = isActive && time.startedAtMs != null ? Math.max(0, now - time.startedAtMs) : 0;
+  return playerState.reserveMsRemaining - elapsedMs <= -time.config.graceMs;
 }
 
 export function resetPlayerTimeAfterSkip<G extends object>(
@@ -259,22 +277,30 @@ export function updateClockForWaitingState<G extends object>(
   }) as MatchState<G>;
 }
 
-export function awardDynamicActionBonus<G extends object>(
-  state: MatchState<G>,
+export function awardDynamicBonuses<G extends object>(
+  state: Draft<MatchState<G>>,
   playerId: string,
-): MatchState<G> {
-  if (state.ctx.time.mode !== "dynamic") return state;
+  turnPassed: boolean,
+): void {
+  if (state.ctx.time.mode !== "dynamic") return;
 
-  return create(state, (draft) => {
-    if (draft.ctx.time.mode !== "dynamic") return;
-    const playerState = draft.ctx.time.players[playerId];
-    if (!playerState) return;
-    playerState.actionBonusMsGranted += draft.ctx.time.config.perActionBonusMs;
+  const playerState = state.ctx.time.players[playerId];
+  if (!playerState) return;
+
+  const config = state.ctx.time.config;
+  playerState.actionBonusMsGranted += config.perActionBonusMs;
+  playerState.reserveMsRemaining = Math.min(
+    config.reserveCapMs,
+    playerState.reserveMsRemaining + config.perActionBonusMs,
+  );
+
+  if (turnPassed) {
+    playerState.turnPassBonusMsGranted += config.perTurnPassBonusMs;
     playerState.reserveMsRemaining = Math.min(
-      draft.ctx.time.config.reserveCapMs,
-      playerState.reserveMsRemaining + draft.ctx.time.config.perActionBonusMs,
+      config.reserveCapMs,
+      playerState.reserveMsRemaining + config.perTurnPassBonusMs,
     );
-  }) as MatchState<G>;
+  }
 }
 
 export function getOpponentId<G extends object>(

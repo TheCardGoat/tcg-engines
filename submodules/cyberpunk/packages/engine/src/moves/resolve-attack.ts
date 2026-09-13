@@ -1,7 +1,15 @@
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
-import type { ActiveEffect, AttackState, FightResult, MatchState } from "../types/match-state.ts";
-import type { PlayerId } from "../types/branded.ts";
+import type {
+  ActiveEffect,
+  AttackState,
+  FightResult,
+  MatchState,
+  PreventGigStealPendingChoice,
+} from "../types/match-state.ts";
+import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import {
+  filterGigsByAttackerPowerCap,
+  findSacrificialAttachedGear,
   getEffectivePower,
   getEffectiveRules,
   markDefeatAtEndOfTurnIfAttacked,
@@ -85,8 +93,14 @@ function executeFight(
   const attackerPower = getEffectivePower(state, attack.attackerId as string);
   const defenderPower = getEffectivePower(state, attack.defenderId as string);
 
+  const autoWinner = fightAutoWinner(state, attack);
+
   let result: FightResult;
-  if (attackerPower > defenderPower) {
+  if (autoWinner === "attacker") {
+    result = "attackerWins";
+  } else if (autoWinner === "defender") {
+    result = "defenderWins";
+  } else if (attackerPower > defenderPower) {
     result = "attackerWins";
   } else if (defenderPower > attackerPower) {
     result = "defenderWins";
@@ -155,6 +169,66 @@ function removeFromGameIfGoSolo(
   delete state.G.cardIndex[cardId as string];
 }
 
+/**
+ * Defeat a host card and fire {Defeated} on both the host and any attached Gear
+ * that left the field with it (e.g. The Relic — Experimental Biochip).
+ */
+function defeatHostAndAttachedGear(
+  state: MatchState,
+  operations: import("../operations/index.ts").Operations,
+  hostId: import("../types/branded.ts").CardInstanceId,
+  defeatedBy: import("../types/branded.ts").CardInstanceId | null,
+  playerId: PlayerId,
+): void {
+  const sacrificialGearId = findSacrificialAttachedGear(state, hostId as string);
+  if (sacrificialGearId) {
+    operations.card.detachGear(sacrificialGearId);
+    operations.zone.moveCard(sacrificialGearId, "trash", playerId);
+    const gear = state.G.cardIndex[sacrificialGearId as string];
+    const gearEvent = {
+      type: "cardDefeated" as const,
+      cardId: sacrificialGearId,
+      defeatedBy,
+      playerId: gear?.controllerId ?? playerId,
+      hadAttachedCards: false,
+      hostId,
+    };
+    operations.event.emit(gearEvent);
+    processEventTriggers(gearEvent, state, operations);
+    return;
+  }
+  const host = state.G.cardIndex[hostId as string];
+  const attachedGearIds = [...(host?.meta.attachedGearIds ?? [])];
+  const hadAttachedCards = attachedGearIds.length > 0;
+  operations.card.moveAttachedGear(hostId, "trash", { detachAfterMove: true });
+  operations.zone.moveCard(hostId, "trash", playerId);
+  const hostEvent = {
+    type: "cardDefeated" as const,
+    cardId: hostId,
+    defeatedBy,
+    playerId,
+    hadAttachedCards,
+  };
+  operations.event.emit(hostEvent);
+  processEventTriggers(hostEvent, state, operations);
+  removeFromGameIfGoSolo(state, hostId);
+
+  for (const gearId of attachedGearIds) {
+    const gear = state.G.cardIndex[gearId as string];
+    if (!gear) continue;
+    const gearEvent = {
+      type: "cardDefeated" as const,
+      cardId: gearId as import("../types/branded.ts").CardInstanceId,
+      defeatedBy,
+      playerId: gear.controllerId,
+      hadAttachedCards: false,
+      hostId,
+    };
+    operations.event.emit(gearEvent);
+    processEventTriggers(gearEvent, state, operations);
+  }
+}
+
 function executeDefeat(
   state: MatchState,
   playerId: PlayerId,
@@ -169,42 +243,18 @@ function executeDefeat(
   if (
     (result === "attackerWins" || result === "mutual") &&
     defenderId &&
-    protectedCardId !== (defenderId as string)
+    protectedCardId !== (defenderId as string) &&
+    !getEffectiveRules(state, defenderId as string).includes("cantBeDefeatedInFight")
   ) {
-    const hadAttachedCards =
-      (state.G.cardIndex[defenderId as string]?.meta.attachedGearIds.length ?? 0) > 0;
-    operations.card.moveAttachedGear(defenderId, "trash", { detachAfterMove: true });
-    operations.zone.moveCard(defenderId, "trash", attack.rivalId);
-    const event = {
-      type: "cardDefeated" as const,
-      cardId: defenderId,
-      defeatedBy: attack.attackerId,
-      playerId: attack.rivalId,
-      hadAttachedCards,
-    };
-    operations.event.emit(event);
-    processEventTriggers(event, state, operations);
-    removeFromGameIfGoSolo(state, defenderId);
+    defeatHostAndAttachedGear(state, operations, defenderId, attack.attackerId, attack.rivalId);
   }
 
   if (
     (result === "defenderWins" || result === "mutual") &&
-    protectedCardId !== (attack.attackerId as string)
+    protectedCardId !== (attack.attackerId as string) &&
+    !getEffectiveRules(state, attack.attackerId as string).includes("cantBeDefeatedInFight")
   ) {
-    const hadAttachedCards =
-      (state.G.cardIndex[attack.attackerId as string]?.meta.attachedGearIds.length ?? 0) > 0;
-    operations.card.moveAttachedGear(attack.attackerId, "trash", { detachAfterMove: true });
-    operations.zone.moveCard(attack.attackerId, "trash", playerId);
-    const event = {
-      type: "cardDefeated" as const,
-      cardId: attack.attackerId,
-      defeatedBy: defenderId,
-      playerId,
-      hadAttachedCards,
-    };
-    operations.event.emit(event);
-    processEventTriggers(event, state, operations);
-    removeFromGameIfGoSolo(state, attack.attackerId);
+    defeatHostAndAttachedGear(state, operations, attack.attackerId, defenderId, playerId);
   }
 
   const fightResolvedEvent = {
@@ -224,6 +274,8 @@ function executeDefeat(
     attackerPower - defenderPower,
   );
   processEventTriggers(fightResolvedEvent, state, operations);
+
+  consumeNextFriendlyFightLossDefeat(state, operations, attack, result);
 
   operations.game.setAttackState(null);
 }
@@ -273,6 +325,55 @@ function scheduleGigStealsForDecisiveFightWin(
       resolvedBindings: { winningUnit: [attack.attackerId as string] },
     });
   }
+}
+
+function fightAutoWinner(
+  state: import("../types/match-state.ts").MatchState,
+  attack: AttackState,
+): "attacker" | "defender" | null {
+  if (!attack.defenderId) return null;
+  const attackerDef = getDefinitionFor(state.G, attack.attackerId as string);
+  const defenderDef = getDefinitionFor(state.G, attack.defenderId as string);
+  const attackerClasses = new Set<string>(attackerDef?.classifications ?? []);
+  const defenderClasses = new Set<string>(defenderDef?.classifications ?? []);
+
+  for (const effect of state.G.activeEffects) {
+    if (effect.kind !== "winsFightsAgainst") continue;
+    const targets = effect.winsFightsAgainst?.classifications ?? [];
+    if (targets.length === 0) continue;
+    const targetsDefender = targets.some((label) => defenderClasses.has(label));
+    const targetsAttacker = targets.some((label) => attackerClasses.has(label));
+    if ((effect.targetCardId as string) === (attack.attackerId as string) && targetsDefender) {
+      return "attacker";
+    }
+    if ((effect.targetCardId as string) === (attack.defenderId as string) && targetsAttacker) {
+      return "defender";
+    }
+  }
+  return null;
+}
+
+function consumeNextFriendlyFightLossDefeat(
+  state: MatchState,
+  operations: import("../operations/index.ts").Operations,
+  attack: AttackState,
+  result: FightResult,
+): void {
+  if (result !== "attackerWins" && result !== "defenderWins") return;
+  const winnerId = result === "attackerWins" ? attack.attackerId : attack.defenderId;
+  const loserId = result === "attackerWins" ? attack.defenderId : attack.attackerId;
+  if (!winnerId || !loserId) return;
+  const loser = state.G.cardIndex[loserId as string];
+  const winner = state.G.cardIndex[winnerId as string];
+  if (!loser || !winner) return;
+  const effect = state.G.activeEffects.find(
+    (e) =>
+      e.kind === "defeatRivalOnNextFriendlyFightLoss" &&
+      (e.playerId as string) === (loser.controllerId as string),
+  );
+  if (!effect) return;
+  operations.game.removeActiveEffect(effect.id);
+  defeatHostAndAttachedGear(state, operations, winnerId, effect.sourceCardId, winner.controllerId);
 }
 
 function consumeNextRivalFightProtection(
@@ -344,12 +445,21 @@ function executeSteal(
     return;
   }
 
-  const gigsToSteal = getProjectedDirectAttackGigStealCount(state, attack) ?? 0;
+  const eligibleDieIds = filterGigsByAttackerPowerCap(
+    state,
+    attack.attackerId,
+    attack.rivalId,
+    opponent.gigArea,
+  );
+  const gigsToSteal = Math.min(
+    getProjectedDirectAttackGigStealCount(state, attack) ?? 0,
+    eligibleDieIds.length,
+  );
 
   if (
     input.args.gigIdsToSteal === undefined &&
     gigsToSteal > 0 &&
-    opponent.gigArea.length > gigsToSteal
+    eligibleDieIds.length > gigsToSteal
   ) {
     operations.game.setPendingChoice({
       type: "chooseGigsToSteal",
@@ -359,18 +469,32 @@ function executeSteal(
         count: gigsToSteal,
         attackerId: attack.attackerId,
         rivalId: attack.rivalId,
-        eligibleDieIds: [...opponent.gigArea],
+        eligibleDieIds,
       },
     });
     return;
   }
 
-  const gigIds = input.args.gigIdsToSteal ?? opponent.gigArea.slice(0, gigsToSteal);
+  const gigIds = input.args.gigIdsToSteal ?? eligibleDieIds.slice(0, gigsToSteal);
+  const resolvedGigIds = gigIds
+    .slice(0, gigsToSteal)
+    .map((id) => id as import("../types/branded.ts").GigDieId);
+  const prevention = buildGigStealPrevention(
+    state,
+    attack,
+    resolvedGigIds,
+    attackerName,
+    attackerPower,
+  );
+  if (prevention) {
+    operations.game.setPendingChoice(prevention);
+    return;
+  }
   performGigSteal({
     state,
     operations,
     attack,
-    gigIds: gigIds.slice(0, gigsToSteal).map((id) => id as import("../types/branded.ts").GigDieId),
+    gigIds: resolvedGigIds,
     playerId,
     attackerName,
     attackerPower,
@@ -423,6 +547,108 @@ export function performGigSteal(opts: {
     params: { attackerName, attackerPower, count: stolenCount },
     playerId,
   });
+}
+
+/**
+ * Builds a `preventGigSteal` pending choice for the defender when they control
+ * a card with the `preventsGigStealByDiscard` rule (e.g. Alt Cunningham —
+ * Mother of Daemons) and at least one of the stolen Gigs can be matched by a
+ * discardable hand card whose cost equals its face value. Returns `null` when
+ * no prevention source is present or no Gig can be prevented, so the steal
+ * proceeds uninterrupted.
+ */
+export function buildGigStealPrevention(
+  state: MatchState,
+  attack: AttackState,
+  gigIds: readonly GigDieId[],
+  attackerName: string,
+  attackerPower: number,
+): PreventGigStealPendingChoice | null {
+  if (gigIds.length === 0) return null;
+  const defenderId = attack.rivalId;
+  const defender = state.G.players[defenderId as string];
+  if (!defender) return null;
+
+  let sourceCardId: CardInstanceId | undefined;
+  for (const zone of ["field", "legendArea"] as const) {
+    for (const cardId of defender.zones[zone] ?? []) {
+      if (getEffectiveRules(state, cardId as string).includes("preventsGigStealByDiscard")) {
+        sourceCardId = cardId as CardInstanceId;
+        break;
+      }
+    }
+    if (sourceCardId) break;
+  }
+  if (!sourceCardId) return null;
+
+  const stealEntries = gigIds
+    .map((dieId) => {
+      const die = state.G.gigDice[dieId as string];
+      return die ? { dieId, value: die.faceValue } : null;
+    })
+    .filter((entry): entry is { dieId: GigDieId; value: number } => entry !== null);
+
+  const handEntries: Array<{ cardId: CardInstanceId; cost: number }> = [];
+  for (const cardId of defender.zones.hand ?? []) {
+    const def = getDefinitionFor(state.G, cardId as string);
+    if (def && typeof def.cost === "number") {
+      handEntries.push({ cardId: cardId as CardInstanceId, cost: def.cost });
+    }
+  }
+
+  const stealValues = new Set(stealEntries.map((entry) => entry.value));
+  const canPreventAny = handEntries.some((entry) => stealValues.has(entry.cost));
+  if (!canPreventAny) return null;
+
+  return {
+    type: "preventGigSteal",
+    chooserId: defenderId,
+    effectId: sourceCardId as string,
+    payload: {
+      attackerId: attack.attackerId,
+      rivalId: defenderId,
+      attackerName,
+      attackerPower,
+      stealEntries,
+      handEntries,
+    },
+  };
+}
+
+/**
+ * Builds the same prevention choice for a Unit-attributed card effect. Card
+ * effects resume through the trigger executor, so their resolution metadata
+ * is retained on the pending choice instead of manufacturing an attack state.
+ */
+export function buildEffectGigStealPrevention(input: {
+  state: MatchState;
+  thiefId: CardInstanceId;
+  defenderId: PlayerId;
+  gigIds: readonly GigDieId[];
+  sourcePlayerId: PlayerId;
+  sourceCardId: CardInstanceId;
+}): PreventGigStealPendingChoice | null {
+  const thief = input.state.G.cardIndex[input.thiefId as string];
+  const thiefDef = getDefinitionFor(input.state.G, input.thiefId as string);
+  if (!thief || thiefDef.type !== "unit") return null;
+
+  const choice = buildGigStealPrevention(
+    input.state,
+    {
+      attackerId: input.thiefId,
+      rivalId: input.defenderId,
+    } as AttackState,
+    input.gigIds,
+    thiefDef.displayName,
+    getEffectivePower(input.state, input.thiefId as string),
+  );
+  if (!choice) return null;
+
+  choice.payload.effectSteal = {
+    sourcePlayerId: input.sourcePlayerId,
+    sourceCardId: input.sourceCardId,
+  };
+  return choice;
 }
 
 export function getProjectedDirectAttackGigStealCount(

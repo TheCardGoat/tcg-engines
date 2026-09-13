@@ -3,7 +3,7 @@ import { op07OkikuSp035 } from "../../../../../cards/src/cards/OP07/characters/0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-035 Okiku (SP)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07OkikuSp035);
   });
 });

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy, untrack } from 'svelte';
-  import { goto } from '$app/navigation';
+  import { env } from '$env/dynamic/public';
   import { LorcanaTabletopSimulator } from '$lib';
   import { PracticeMatchOrchestrator } from '@/features/practice-match/practice-match-orchestrator.svelte.js';
   import { createHumanVsAiContext } from '@/features/simulator-devtools/vs-ai/context.js';
@@ -10,7 +10,7 @@
     clearPracticeSession,
     saveRankedMatchSession,
   } from '@/features/practice-match/practice-match-storage.js';
-  import { acquirePlayerTicket, connectAndJoin, fetchQuickMatchTicket } from './connect-gateway.js';
+  import { connectAndJoin, type MatchGatewayConnection } from './connect-gateway.js';
   import { createMessageRouter } from './game-mode-message-router.js';
   import {
     buildVisualSettings,
@@ -20,11 +20,12 @@
     type PlayerMatchMetadata,
   } from './game-mode-setup.js';
   import type { GamePageData } from '../+page.server.js';
+  import { resolvePlatformMatchmakingReturnUrl } from '$lib/navigation/platform-matchmaking-url.js';
   import type { CardsMaps, LorcanaServerAuthoritativeSnapshot } from '@tcg/lorcana-engine';
   import type { MatchChatController } from '@/features/match-chat/match-chat-controller.svelte.js';
   import type { LorcanaPlayerSettingsMap } from '$lib/features/simulator/model/player-visual-settings.js';
-  import type { GatewayClientStore } from '@/features/gateway/gateway-client.svelte.js';
   import type { PracticeMatchRecentHistory } from '@/features/practice-match/types.js';
+  import MatchConnectionState from '../MatchConnectionState.svelte';
 
   type ServerData = Extract<GamePageData, { mode: 'server' }>;
   let { data }: { data: ServerData } = $props();
@@ -32,13 +33,13 @@
   // AI context must be set at component init time (Svelte context system)
   const aiCtx = createHumanVsAiContext();
 
-  let loadError = $state<string | null>(null);
+  let loadError = $state(false);
   let practiceOrchestrator = $state<PracticeMatchOrchestrator | null>(null);
   let matchChatController = $state<MatchChatController | null>(null);
   let playerVisualSettings = $state<LorcanaPlayerSettingsMap>({});
   let playerMetadataMap = $state<Record<string, PlayerMatchMetadata>>({});
 
-  let gateway = $state<GatewayClientStore | null>(null);
+  let gateway = $state<MatchGatewayConnection | null>(null);
   let gatewayStatus = $derived(gateway?.status ?? null);
   let connectionEmoji = $derived(
     gatewayStatus === 'connected' ? '\u{1F7E2}' :
@@ -61,14 +62,9 @@
     if (!cid || !practiceOrchestrator) return;
     if (cid === lastConnectionId) return;
     if (lastConnectionId !== null) {
-      const session = loadPracticeSession(data.gameId);
       gateway!.send({
         type: 'reconnect',
         gameId: data.gameId,
-        ...(session?.gameProfileId ? { gameProfileId: session.gameProfileId } : {}),
-        ...(session?.userId ?? authSession.user?.id
-          ? { userId: session?.userId ?? authSession.user?.id }
-          : {}),
         lastReceivedVersion: 0,
       });
     }
@@ -102,7 +98,16 @@
   async function handleReturnToMatchmaking(): Promise<void> {
     await practiceOrchestrator?.flushPendingState("return");
     clearPracticeSession();
-    await goto('/matchmaking');
+    window.location.assign(
+      resolvePlatformMatchmakingReturnUrl(
+        new URL(window.location.href),
+        env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+      ),
+    );
+  }
+
+  function handleRetryConnection(): void {
+    window.location.reload();
   }
 
   onMount(() => {
@@ -113,48 +118,39 @@
       playerMetadataMap = buildPlayerMetadataMap(match.participants);
 
       let session = loadPracticeSession(gameId);
-      if (!session) {
-        // localStorage holds only one session at a time — reconstruct from server
-        // context if the authenticated user is a participant.
-        const userId = authSession.user?.id;
-        const myParticipant = userId
-          ? match.participants.find((p) => p.userId === userId)
-          : undefined;
-        if (myParticipant) {
-          saveRankedMatchSession({ matchId, gameId, gameProfileId: myParticipant.id, userId });
-          session = loadPracticeSession(gameId);
-        }
+      const serverViewer = data.bootstrap.viewer;
+      if (
+        serverViewer.role === 'player' &&
+        (!session || session.gameProfileId !== serverViewer.actorId)
+      ) {
+        saveRankedMatchSession({
+          matchId,
+          gameId,
+          gameProfileId: serverViewer.actorId,
+          userId: serverViewer.userId,
+        });
+        session = loadPracticeSession(gameId);
       }
       if (!session) {
-        loadError = 'No session found for this match. You may need to rejoin from matchmaking.';
+        loadError = true;
         return;
       }
 
-      const { ticket, authToken, error: ticketError } = await acquirePlayerTicket({
-        wsTicket: session.wsTicket,
-        fetchQuickMatchTicket: session.wsTicket
-          ? () => fetchQuickMatchTicket(session.matchId, session.gameProfileId)
-          : undefined,
-      });
-
-      if (ticketError) {
-        loadError = ticketError;
+      const realtime = data.bootstrap.realtime;
+      if (!realtime || data.bootstrap.viewer.role !== 'player') {
+        loadError = true;
         return;
       }
 
       const result = await connectAndJoin({
-        ticket,
-        authToken,
-        gameId,
-        role: 'player',
+        bootstrap: data.bootstrap,
         matchType: match.matchType,
-        gameProfileId: session.gameProfileId,
-        userId: session.userId ?? authSession.user?.id,
         onMessage: handleMessage,
       });
 
       if (result.error) {
-        loadError = result.error;
+        console.error('[bot-match-mode] failed to join game', result.error);
+        loadError = true;
         return;
       }
 
@@ -177,7 +173,8 @@
 
       if (joinedMsg.state != null) {
         if (!cardsMaps) {
-          loadError = 'Match state is missing card data (cardsMaps). The match may have expired.';
+          console.error('[bot-match-mode] restored match state is missing card data');
+          loadError = true;
           return;
         }
         const restoredSnapshot: LorcanaServerAuthoritativeSnapshot = {
@@ -229,9 +226,11 @@
 </svelte:head>
 
 {#if loadError}
-  <div class="grid h-full place-items-center px-4 text-rose-300">
-    {loadError}
-  </div>
+  <MatchConnectionState
+    error={loadError}
+    onRetry={handleRetryConnection}
+    onBack={() => void handleReturnToMatchmaking()}
+  />
 {:else if practiceOrchestrator}
   {#key practiceOrchestrator.orchestrator.sessionRevision}
     <LorcanaTabletopSimulator
@@ -251,7 +250,8 @@
     />
   {/key}
 {:else}
-  <div class="grid h-full place-items-center px-4 text-slate-400">
-    Connecting to match...
-  </div>
+  <MatchConnectionState
+    onRetry={handleRetryConnection}
+    onBack={() => void handleReturnToMatchmaking()}
+  />
 {/if}

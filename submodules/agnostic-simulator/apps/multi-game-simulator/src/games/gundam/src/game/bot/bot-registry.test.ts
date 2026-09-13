@@ -7,14 +7,17 @@ describe("fixture bot registry", () => {
     const autoPassFixtures = [
       "attack-trigger-buff-demo",
       "attack-trigger-draw-demo",
+      "base-combat-demo",
       "battle-ready-demo",
+      "direct-player-demo",
       "block-step-demo",
       "burst-shield-demo",
       "first-strike-demo",
       "high-maneuver-demo",
       "link-unit-deploy-demo",
       "mutual-destruction-demo",
-      "step-interrupt-demo",
+      "st10-defense-action-lab",
+      "st10-shield-assault-lab",
       "suppression-demo",
     ];
 

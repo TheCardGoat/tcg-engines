@@ -1,6 +1,9 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { page } from '$app/state';
+  import { env } from '$env/dynamic/public';
+  import { resolvePlatformMatchmakingReturnUrl } from '$lib/navigation/platform-matchmaking-url.js';
 
   type Vibe = 'lavalamp' | 'crt' | 'starwell' | 'vaporwave' | 'inkdrip';
 
@@ -201,7 +204,12 @@
         <span>wake me up</span>
         <span aria-hidden="true">↗</span>
       </button>
-      <button type="button" class="btn ghost" onclick={() => goto('/matchmaking')}>
+      <button
+        type="button"
+        class="btn ghost"
+        onclick={() =>
+          goto(resolvePlatformMatchmakingReturnUrl(page.url, env.PUBLIC_PLATFORM_MATCHMAKING_URL))}
+      >
         <span>back to matchmaking</span>
         <span aria-hidden="true">⟵</span>
       </button>

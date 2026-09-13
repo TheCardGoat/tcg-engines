@@ -61,10 +61,19 @@ export const op10SpecialLongRangeAttackBagworm061: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
-              filters: [{ filter: "cost", comparison: "lte", value: 2 }],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 2,
+                },
+              ],
             },
           },
         ],

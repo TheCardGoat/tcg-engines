@@ -34,5 +34,34 @@ describe("OP12-090 Belo Betty", () => {
     expect(view.players.north.characters.find((card) => card?.instanceId === targetId)?.cost).toBe(
       targetCost + 2,
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: op12BeloBetty090, playedOnTurn: 0 }],
+        deck: [eb01Doma005, eb01MountainGod018, eb01Doma005],
+      },
+      { character: [eb01Doma005] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const bettyId = engine.findCardInZone("south", "character", op12BeloBetty090);
+    const targetId = engine.findCardInZone("north", "character", eb01Doma005);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const targetCost = engine
+      .getView("south")
+      .players.north.characters.find((card) => card?.instanceId === targetId)?.cost;
+
+    engine.declareAttack(bettyId, engine.leader("north"), "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.north.characters.find((card) => card?.instanceId === targetId)?.cost).toBe(
+      targetCost,
+    );
   });
 });

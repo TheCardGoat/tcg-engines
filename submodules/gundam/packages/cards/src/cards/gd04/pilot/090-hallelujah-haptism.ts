@@ -27,15 +27,13 @@ export const gd04HallelujahHaptism090: PilotCard = {
       },
       rarity: "uncommon",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-090.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-090.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-090.webp",
       productName: "Phantom Aria [GD04]",
     },
   ],
   reprints: ["GD04-090"],
   selectedPrintingId: "GD04-090",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd04/GD04-090.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD04-090.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd04/GD04-090.webp",
   legality: "legal",
   level: 4,
   cost: 1,
@@ -67,7 +65,11 @@ export const gd04HallelujahHaptism090: PilotCard = {
             type: "oncePerTurn",
           },
         ],
-        conditions: [{ type: "duringLink" }, { type: "isTurn", whose: "friendly" }],
+        conditions: [
+          { type: "duringLink" },
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
+        ],
       },
       directives: [
         {
@@ -77,6 +79,7 @@ export const gd04HallelujahHaptism090: PilotCard = {
             return: "chooseTop",
             tutorFilter: {
               owner: "friendly",
+              count: 1,
               attributeFilters: [{ attribute: "trait", comparison: "includes", value: "cb" }],
             },
           },

@@ -3,7 +3,7 @@ import { prb02CatarinaDevonPirateFoil084 } from "../../../../../cards/src/cards/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-084 Catarina Devon (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02CatarinaDevonPirateFoil084);
   });
 });

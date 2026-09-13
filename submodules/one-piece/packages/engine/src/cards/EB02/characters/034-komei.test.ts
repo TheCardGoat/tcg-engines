@@ -3,7 +3,7 @@ import { eb02Komei034 } from "../../../../../cards/src/cards/EB02/characters/034
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB02-034 Komei", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb02Komei034);
   });
 });

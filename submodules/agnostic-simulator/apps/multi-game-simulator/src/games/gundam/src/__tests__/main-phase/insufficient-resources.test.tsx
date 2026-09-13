@@ -8,7 +8,7 @@ import { loadInsufficientResourcesDemo } from "../../game/fixtures/insufficient-
 
 /**
  * RTL port of `e2e/main-phase/insufficient-resources.spec.ts`.
- * A cost-3 / level-3 hand card with only two ready resources must not
+ * A cost-3 / Lv.4 hand card with only two ready Resources must not
  * open the confirm prompt, stays in hand, and doesn't land on the board.
  */
 describe("Main-phase · Deploy blocked · insufficient resources", () => {
@@ -17,15 +17,15 @@ describe("Main-phase · Deploy blocked · insufficient resources", () => {
     renderSimulator(loadInsufficientResourcesDemo);
 
     const hand = screen.getByRole("list", { name: /your hand/i });
-    const gp01 = within(hand).getByRole("listitem", { name: /Gundam GP01/i });
+    const gundam = within(hand).getByRole("listitem", { name: /^Gundam \(cost 3\)$/i });
 
-    expect(within(hand).getAllByRole("listitem")).toHaveLength(1);
+    expect(within(hand).getAllByRole("listitem")).toHaveLength(3);
 
     // No confirm prompt at boot.
     expect(screen.queryByRole("button", { name: /^confirm$/i })).toBeNull();
 
     // Click is a no-op — enumerateCandidates rejected the card.
-    await user.click(gp01);
+    await user.click(gundam);
 
     // Microtask tick to rule out an async prompt opening.
     await Promise.resolve();
@@ -33,16 +33,16 @@ describe("Main-phase · Deploy blocked · insufficient resources", () => {
     expect(screen.queryByRole("button", { name: /^confirm$/i })).toBeNull();
 
     // Hand still holds the card; its instance hasn't moved out of the hand.
-    const gp01Item = within(hand).queryByRole("listitem", { name: /Gundam GP01/i });
-    expect(gp01Item).not.toBeNull();
-    const gp01Id = gp01Item?.querySelector<HTMLElement>("[data-card-id]")?.dataset.cardId;
-    expect(gp01Id).toBeTruthy();
+    const gundamItem = within(hand).queryByRole("listitem", { name: /^Gundam \(cost 3\)$/i });
+    expect(gundamItem).not.toBeNull();
+    const gundamId = gundamItem?.querySelector<HTMLElement>("[data-card-id]")?.dataset.cardId;
+    expect(gundamId).toBeTruthy();
 
     // `data-card-id` also appears on the CardHoverPreview (aria-hidden)
     // and Comms-log CardLinks (role="log") — filter those along with the
     // hand, then assert the card never made it to the battle area.
     const onBattleArea = [
-      ...document.querySelectorAll<HTMLElement>(`[data-card-id="${gp01Id}"]`),
+      ...document.querySelectorAll<HTMLElement>(`[data-card-id="${gundamId}"]`),
     ].filter((el) => {
       if (hand.contains(el)) return false;
       if (el.closest("[aria-hidden='true']")) return false;

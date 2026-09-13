@@ -119,7 +119,7 @@ function getKeywordValue(card: LorcanaCardDefinition, keyword: string): number |
 
 1. `generates full name from name + version` - "Elsa" + "Ice Queen" = "Elsa - Ice Queen"
 2. `handles dual-ink cards (Rule 6.2.3.1)` - Cards with two ink types
-3. `handles cards with two names using ampersand (Rule 6.2.4.1)` - "Flotsam & Jetsam" matches both names
+3. `handles cards with two names using ampersand (Rule 5.2.6.1)` - "Flotsam & Jetsam" matches both names
 
 ### Keywords
 

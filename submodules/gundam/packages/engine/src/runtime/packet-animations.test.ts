@@ -1,4 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
+import { createMockBase, createMockUnit } from "../gundam/testing/card-mocks.ts";
+import { GundamTestEngine, PLAYER_ONE, PLAYER_TWO } from "../gundam/testing/test-engine.ts";
+import { asPlayerId } from "../types/branded.ts";
 import type { CtxStatus } from "../types/match-state.ts";
 import type { GundamMoveLog } from "../types/move-log.ts";
 import { buildPacketAnimations } from "./packet-animations.ts";
@@ -184,6 +187,140 @@ describe("buildPacketAnimations", () => {
             sourceId: "attacker-1",
             targetId: "target-1",
             amount: 2,
+          }),
+        }),
+      ]),
+    );
+  });
+
+  it("emits semantic stat modifier packets from authoritative outcomes", () => {
+    const packets = buildPacketAnimations({
+      moveLogs: [
+        {
+          type: "resolveEffect",
+          commandID: "diffuse-beam-cannon",
+          timestamp: 1,
+          playerId: "p1",
+          sourceCardId: "st10-015",
+          outcomes: {
+            statModifiers: [
+              {
+                cardId: "enemy-unit",
+                stat: "ap",
+                amount: -3,
+                duration: "thisBattle",
+              },
+            ],
+          },
+        },
+      ] as unknown as GundamMoveLog[],
+      previousStatus: status(),
+      nextStatus: status(),
+    });
+
+    expect(packets).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: {
+            kind: "generic",
+            name: "statModified",
+            params: {
+              cardId: "enemy-unit",
+              stat: "ap",
+              amount: -3,
+              duration: "thisBattle",
+            },
+          },
+        }),
+      ]),
+    );
+  });
+
+  it("retains direct combat context when a Base damage target has moved", () => {
+    const packets = buildPacketAnimations({
+      moveLogs: [
+        {
+          type: "attack",
+          commandID: "direct-attack",
+          timestamp: 1,
+          playerId: "p1",
+          attackerId: "attacker-1",
+          targetId: "direct",
+          outcomes: {
+            damageDealt: [{ targetId: "destroyed-base", amount: 4 }],
+            unitsDefeated: [{ cardId: "destroyed-base", ownerId: "p2" }],
+          },
+        },
+      ] as unknown as GundamMoveLog[],
+      previousStatus: status(),
+      nextStatus: status(),
+    });
+
+    expect(packets).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: expect.objectContaining({
+            kind: "damage",
+            targetId: "destroyed-base",
+            attackKind: "direct",
+          }),
+        }),
+      ]),
+    );
+  });
+
+  it("carries direct combat context through the battle-pass damage outcome", () => {
+    const attacker = createMockUnit({ ap: 4, hp: 5 });
+    const base = createMockBase({ hp: 4 });
+    const engine = GundamTestEngine.create({ play: [attacker] }, { baseSection: [base] });
+    const attackerId = engine.getCardsInZone({
+      zone: "battleArea",
+      playerId: asPlayerId(PLAYER_ONE),
+    })[0]!;
+    const baseId = engine.getCardsInZone({
+      zone: "baseSection",
+      playerId: asPlayerId(PLAYER_TWO),
+    })[0]!;
+
+    const result = engine.resolveCombat({ attackerId, target: "direct" });
+
+    expect(result.success).toBe(true);
+    if (!result.success) throw new Error("Expected direct combat to resolve successfully");
+    expect(engine.getCardsInZone({ zone: "trash", playerId: asPlayerId(PLAYER_TWO) })).toContain(
+      baseId,
+    );
+    expect(result.moveLogs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          type: "pass",
+          context: "battle",
+          outcomes: expect.objectContaining({
+            damageDealt: expect.arrayContaining([
+              expect.objectContaining({
+                sourceCardId: attackerId,
+                targetId: baseId,
+                amount: 4,
+                attackKind: "direct",
+              }),
+            ]),
+          }),
+        }),
+      ]),
+    );
+
+    const packets = buildPacketAnimations({
+      moveLogs: result.moveLogs ?? [],
+      previousStatus: status(),
+      nextStatus: status(),
+    });
+    expect(packets).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: expect.objectContaining({
+            kind: "damage",
+            sourceId: attackerId,
+            targetId: baseId,
+            attackKind: "direct",
           }),
         }),
       ]),

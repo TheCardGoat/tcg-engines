@@ -95,11 +95,36 @@ describe("Snapshot roundtrip · engine semantics", () => {
     expect(match.runtime.getState().ctx._stateID).toBeGreaterThan(stateIdBefore);
   });
 
+  it("allocates a fresh game-log id after restoring historical logs", () => {
+    const p1 = asPlayerId(DEV_PLAYER_ONE) as PlayerId;
+    const dev = loadBurstShieldDemo();
+    const snapshot = snapshotFromDevRuntime("burst-shield-demo", dev);
+    const match = reconstructFromSnapshot(snapshot);
+    const restoredIds = snapshot.gameLogHistory.map(({ entry }) => entry.id);
+
+    const state = match.runtime.getState();
+    const result = match.runtime.executeCommand(
+      {
+        commandID: crypto.randomUUID(),
+        move: "passBlock",
+        prevStateID: state.ctx._stateID,
+        actorRole: "player",
+        args: {},
+      },
+      p1,
+    );
+
+    expect(result.success, `passBlock rejected: ${JSON.stringify(result)}`).toBe(true);
+    const ids = match.runtime.getGameLogHistory().map(({ entry }) => entry.id);
+    expect(new Set(ids)).toHaveLength(ids.length);
+    expect(Math.max(...ids)).toBeGreaterThanOrEqual(Math.max(...restoredIds) + 1);
+  });
+
   it("AFTER viewer passBlock, opponent's available moves match between original and reconstructed runtimes", () => {
     const p1 = asPlayerId(DEV_PLAYER_ONE) as PlayerId;
     const p2 = asPlayerId(DEV_PLAYER_TWO) as PlayerId;
 
-    // Original runtime: simulate the test's PASS BLOCK click.
+    // Original runtime: simulate the test's SKIP BLOCK click.
     const dev = loadBurstShieldDemo();
     const originalState = dev.runtime.getState();
     dev.runtime.executeCommand(
@@ -155,7 +180,7 @@ describe("Snapshot roundtrip · engine semantics", () => {
     // as `useClientBot` does on the client.
     const unsubscribe = attachAutoPassBot(match.runtime, match.staticResources, DEV_PLAYER_TWO);
 
-    // Simulate viewer's PASS BLOCK.
+    // Simulate viewer's SKIP BLOCK.
     const state = match.runtime.getState();
     match.runtime.executeCommand(
       {
@@ -268,7 +293,7 @@ describe("Snapshot roundtrip · registry coverage", () => {
     expect(result.success, `deployUnit rejected: ${JSON.stringify(result)}`).toBe(true);
 
     const after = match.runtime.getState();
-    expect(after.ctx.zones.private.zoneCards[`hand:${DEV_PLAYER_ONE}`] ?? []).toHaveLength(0);
+    expect(after.ctx.zones.private.zoneCards[`hand:${DEV_PLAYER_ONE}`] ?? []).toHaveLength(2);
     expect(after.ctx.zones.private.zoneCards[`battleArea:${DEV_PLAYER_ONE}`]).toContain(handId);
   });
 });

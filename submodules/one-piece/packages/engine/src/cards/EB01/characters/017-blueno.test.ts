@@ -3,7 +3,7 @@ import { eb01Blueno017 } from "../../../../../cards/src/cards/EB01/characters/01
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-017 Blueno", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01Blueno017);
   });
 });

@@ -20,20 +20,16 @@ export {
 } from "./live-connection-context";
 export { useSimulatorRoute } from "./route-context";
 export { useSimulatorRuntimeConnection } from "./runtime-connection-context";
-export { useSimulatorTransition } from "./transition-context";
 export { useSimulatorUserSettings } from "./user-settings-context";
 export type {
-  SimulatorAuthoritativeGameUpdateInput,
   SimulatorAuthContextValue,
   SimulatorDiagnosticsContextValue,
   SimulatorGameSnapshotContextValue,
-  SimulatorGameTransitionAnimation,
   SimulatorMatchContextValue,
   SimulatorPlayerSummary,
   SimulatorPlayersContextValue,
   SimulatorProviderInput,
   SimulatorRouteContextValue,
   SimulatorRuntimeConnectionContextValue,
-  SimulatorTransitionContextValue,
   SimulatorUserSettingsContextValue,
 } from "./types";

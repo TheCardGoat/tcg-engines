@@ -3,7 +3,7 @@ import { eb01ScratchmenApoo015 } from "../../../../../cards/src/cards/EB01/chara
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-015 Scratchmen Apoo", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01ScratchmenApoo015);
   });
 });

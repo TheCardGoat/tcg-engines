@@ -13,6 +13,7 @@ import {
   PLAYER_TWO,
   createMockUnit,
   expectSuccess,
+  requiresPlayerChoice,
 } from "../../index.ts";
 import type { PendingEffect } from "../types.ts";
 
@@ -199,6 +200,62 @@ describe("Pending choice — descriptor (PR F.1)", () => {
     expect(choice.prompt).toBe("You may draw 1.");
   });
 
+  it("combines an optional battle-damage redirect with its destination choice", () => {
+    const redirectEffect: CardEffect = {
+      type: "triggered",
+      activation: { timing: ["attack"] },
+      directives: [
+        {
+          optional: true,
+          action: {
+            action: "redirectBattleDamage",
+            duration: "thisBattle",
+            target: { owner: "self", cardType: "unit" },
+            redirectTo: {
+              owner: "friendly",
+              cardType: "unit",
+              count: 1,
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "academy" }],
+            },
+          },
+        },
+      ],
+      sourceText: "You may choose 1 of your Academy Units to receive battle damage instead.",
+    };
+    const host = createMockUnit({ name: "Linked Host" });
+    const firstAcademy = createMockUnit({ name: "First Academy Unit", traits: ["academy"] });
+    const secondAcademy = createMockUnit({ name: "Second Academy Unit", traits: ["academy"] });
+    const engine = GundamTestEngine.create({ play: [host, firstAcademy, secondAcademy] });
+    const [hostId, firstAcademyId, secondAcademyId] = engine
+      .asPlayer(PLAYER_ONE)
+      .getCardsInZone("battleArea");
+
+    engine.getG().pendingEffects.push(
+      makePending({
+        effect: redirectEffect,
+        controllerId: PLAYER_ONE,
+        sourceCardId: hostId!,
+        kind: "triggered",
+      }),
+    );
+
+    expect(engine.getPendingChoice()).toMatchObject({
+      kind: "targetSelection",
+      optionalDirectiveIndex: 0,
+      directiveIndex: 0,
+      minTargets: 1,
+      maxTargets: 1,
+      legalTargetIds: [firstAcademyId, secondAcademyId],
+      groups: [
+        {
+          minTargets: 1,
+          maxTargets: 1,
+          legalTargetIds: [firstAcademyId, secondAcademyId],
+        },
+      ],
+    });
+  });
+
   it("emits a deckLook prompt with the revealed top-deck ids", () => {
     const top = createMockUnit({ name: "Top" });
     const second = createMockUnit({ name: "Second" });
@@ -239,13 +296,28 @@ describe("Pending choice — descriptor (PR F.1)", () => {
     );
     const p1 = engine.asPlayer(PLAYER_ONE);
     const sourceId = p1.getCardsInZone("battleArea")[0]!;
+    const discardId = p1.getCardsInZone("hand")[0]!;
 
     expectSuccess(p1.activateAbility(sourceId, 0));
 
     expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
+      kind: "targetSelection",
       controllerId: PLAYER_ONE,
       directiveIndex: 0,
+      optionalDirectiveIndex: 0,
+      legalTargetIds: [discardId],
+    });
+
+    expectSuccess(
+      p1.resolveEffect({
+        optionalAnswers: { 0: true },
+        targets: [discardId],
+      }),
+    );
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "deckLook",
+      controllerId: PLAYER_ONE,
+      directiveIndex: 1,
     });
   });
 
@@ -264,6 +336,84 @@ describe("Pending choice — descriptor (PR F.1)", () => {
       );
     // Triggered without a target filter — auto-drains; nothing to ask.
     expect(engine.getPendingChoice()).toBeUndefined();
+  });
+
+  it("returns undefined instead of an empty modal when every staged option lost its target", () => {
+    const targetlessModal: CardEffect = {
+      type: "triggered",
+      activation: { timing: ["deploy"] },
+      directives: [
+        {
+          kind: "chooseOne",
+          options: [
+            {
+              label: "Return an enemy Unit",
+              directives: [
+                {
+                  action: {
+                    action: "resolveThenQueue",
+                    followUp: {
+                      type: "triggered",
+                      activation: { timing: [] },
+                      directives: [
+                        {
+                          action: {
+                            action: "returnToHand",
+                            target: { owner: "opponent", cardType: "unit", count: 1 },
+                          },
+                        },
+                      ],
+                      sourceText: "Return an enemy Unit.",
+                    },
+                  },
+                },
+              ],
+            },
+            {
+              label: "Rest an enemy Unit",
+              directives: [
+                {
+                  action: {
+                    action: "resolveThenQueue",
+                    followUp: {
+                      type: "triggered",
+                      activation: { timing: [] },
+                      directives: [
+                        {
+                          action: {
+                            action: "rest",
+                            target: { owner: "opponent", cardType: "unit", count: 1 },
+                          },
+                        },
+                      ],
+                      sourceText: "Rest an enemy Unit.",
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      sourceText: "Choose one.",
+    };
+    const engine = GundamTestEngine.create({}, {});
+    const pending = makePending({
+      effect: targetlessModal,
+      controllerId: PLAYER_ONE,
+      kind: "triggered",
+    });
+    engine.getG().pendingEffects.push(pending);
+
+    expect(engine.getPendingChoice()).toBeUndefined();
+    expect(
+      requiresPlayerChoice(pending, {
+        g: engine.getG(),
+        framework: engine.runtime.getFrameworkReadAPI(),
+      }),
+    ).toBe(false);
+    engine.tickFlow(PLAYER_ONE);
+    expect(engine.getG().pendingEffects).toHaveLength(0);
   });
 
   it("ranged count maps to minTargets / maxTargets correctly", () => {
@@ -346,6 +496,46 @@ describe("Pending choice — role-scoped visibility", () => {
 
     // Judge sees full descriptor.
     expect(runtime.getBoardView({ role: "judge" }).pendingChoice?.kind).toBe("targetSelection");
+  });
+
+  it("publishes only the revealed Burst identity to every viewer", () => {
+    const engine = GundamTestEngine.create({ deck: 3 }, {});
+    engine.getG().pendingEffects.push(
+      makePending({
+        id: "burst-choice",
+        effect: optionalDrawEffect,
+        controllerId: PLAYER_ONE,
+        sourceCardId: "revealed-shield",
+        kind: "burst",
+      }),
+    );
+
+    const runtime = engine.getRuntime();
+    const controllerView = runtime.getBoardView({
+      role: "player",
+      playerId: PLAYER_ONE as never,
+    });
+    const opponentView = runtime.getBoardView({
+      role: "player",
+      playerId: PLAYER_TWO as never,
+    });
+    const spectatorView = runtime.getBoardView({ role: "spectator" });
+
+    expect(controllerView.pendingChoice).toMatchObject({
+      kind: "optional",
+      effectId: "burst-choice",
+      sourceCardId: "revealed-shield",
+    });
+    expect(opponentView.pendingChoice).toBeUndefined();
+    expect(spectatorView.pendingChoice).toBeUndefined();
+    expect(controllerView.pendingBurst).toEqual({
+      kind: "burst",
+      effectId: "burst-choice",
+      controllerId: PLAYER_ONE,
+      sourceCardId: "revealed-shield",
+    });
+    expect(opponentView.pendingBurst).toEqual(controllerView.pendingBurst);
+    expect(spectatorView.pendingBurst).toEqual(controllerView.pendingBurst);
   });
 });
 

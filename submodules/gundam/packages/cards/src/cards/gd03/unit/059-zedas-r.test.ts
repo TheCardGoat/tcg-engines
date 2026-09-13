@@ -30,7 +30,7 @@ describe("Zedas R (GD03-059)", () => {
 
     expectSuccess(p1.enterBattle(zedasId!, defenderId));
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    if (optional?.kind !== "targetSelection") throw new Error("Expected the Vagan exile choice");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
@@ -77,7 +77,7 @@ describe("Zedas R (GD03-059)", () => {
 
     expectSuccess(p1.enterBattle(zedasId!, defenderId));
     const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") throw new Error("Expected the Vagan exile choice");
+    if (optional?.kind !== "targetSelection") throw new Error("Expected the Vagan exile choice");
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
 
     expect(p1.getCardsInZone("trash")).toContain(trashId);

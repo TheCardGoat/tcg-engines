@@ -64,6 +64,25 @@ describe("Mickey Mouse & Minnie Mouse - Adventuring Duo", () => {
     expect(testEngine.getCardsUnder(mickeyMouseMinnieMouseAdventuringDuo)).toHaveLength(2);
   });
 
+  it("cannot use one dual-named character to satisfy both Duo Shift targets", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [mickeyMouseMinnieMouseAdventuringDuo],
+      play: [mickeyMouseMinnieMouseAdventuringDuo],
+      inkwell: 0,
+    });
+    const shiftTarget = testEngine.findCardInstanceId(
+      mickeyMouseMinnieMouseAdventuringDuo,
+      "play",
+      PLAYER_ONE,
+    );
+
+    expect(
+      testEngine.asPlayerOne().playCard(mickeyMouseMinnieMouseAdventuringDuo, {
+        cost: { cost: "shift", shiftTarget },
+      }),
+    ).not.toBeSuccessfulCommand();
+  });
+
   it("surfaces both Duo Shift targets as selectable shift options", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       hand: [mickeyMouseMinnieMouseAdventuringDuo],

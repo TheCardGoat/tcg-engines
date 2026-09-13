@@ -4,7 +4,7 @@ import { fetchReplay, ReplayNotFoundError } from "./fetch.ts";
 import { renderReplaySummary, renderTurn } from "./render.ts";
 import { extractTurn } from "./turn-extractor.ts";
 
-const DEFAULT_API_ORIGIN = "https://cyberpunk-api.tcg.online";
+const DEFAULT_API_ORIGIN = "https://api.tcg.online";
 
 interface CliOptions {
   replayId: string | null;

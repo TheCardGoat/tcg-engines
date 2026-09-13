@@ -23,5 +23,6 @@ describe("ST01-013 Roronoa Zoro", () => {
       7000,
     );
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

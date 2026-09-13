@@ -10,6 +10,7 @@ import { gd03Messala003 } from "./003-messala.ts";
 import { gd03GundamHeavyarmsCustom029 } from "./029-gundam-heavyarms-custom.ts";
 
 describe("Gundam Heavyarms Custom (GD03-029)", () => {
+  /** @behavioral-proof complete: controller turn, self destroy source, battle destruction, and Blocker filtering are public. */
   it("during your turn, when this Unit destroys an enemy Unit by battle damage, deals 2 to all enemy Blocker Units", () => {
     // Heavyarms (AP 4) attacks a 1-HP defender → defender dies.
     // The new `onDestroyByBattle` event fires on the attacker, gated on
@@ -62,6 +63,27 @@ describe("Gundam Heavyarms Custom (GD03-029)", () => {
     expectSuccess(p1.passBattleAction());
 
     // Defender survived (4 damage, 8 HP) — the trigger never fires.
+    expect(p2.getDamage(blockerId!)).toBe(0);
+  });
+
+  it("does not fire when another friendly Unit destroys an enemy Unit", () => {
+    const friendlyAttacker = createMockUnit({ ap: 4, hp: 4 });
+    const fragileDefender = createMockUnit({ ap: 1, hp: 1 });
+    const engine = GundamTestEngine.create(
+      { play: [gd03GundamHeavyarmsCustom029, friendlyAttacker] },
+      { play: [{ card: fragileDefender, exhausted: true }, gd03Messala003] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[1]!;
+    const [defenderId, blockerId] = p2.getCardsInZone("battleArea");
+
+    expectSuccess(p1.enterBattle(attackerId, defenderId!));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardZone(defenderId!)).toBe(`trash:${PLAYER_TWO}`);
     expect(p2.getDamage(blockerId!)).toBe(0);
   });
 

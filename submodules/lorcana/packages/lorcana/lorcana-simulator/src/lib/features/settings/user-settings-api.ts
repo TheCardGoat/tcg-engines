@@ -49,6 +49,7 @@ export async function updateUserSettings(payload: {
     `${getApiOrigin()}/v1/users/me/settings`,
     {
       method: "PUT",
+      keepalive: true,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     },
@@ -63,6 +64,7 @@ export async function updateUserVisualSettings(
     `${getApiOrigin()}/v1/users/me/settings`,
     {
       method: "PUT",
+      keepalive: true,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     },

@@ -10,7 +10,7 @@ import { hasSubscriptionTier, type SubscriptionTier } from "./types";
  * and editable from one place.
  */
 export const FEATURES = {
-  /** Hide ads in-app. Anonymous users and tier1 see ads; tier2+ are ad-free. */
+  /** Hide ads in-app. Anonymous and free users see ads; paid members are ad-free. */
   adFree: { minTier: "tier2" },
   /** Use Enchanted (alternate) art selections in matches. */
   enchantedArt: { minTier: "tier4" },

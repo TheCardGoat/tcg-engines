@@ -1,6 +1,6 @@
 {
   "source": "https://www.gundam-gcg.com/en/cards/",
-  "scrapedAt": "2026-05-08T13:29:14.765Z",
+  "scrapedAt": "2026-07-26T07:42:33.107Z",
   "sets": [
     {
       "id": "gd01",
@@ -25,6 +25,12 @@
       "name": "Phantom Aria [GD04]",
       "packageId": "616104",
       "count": 194
+    },
+    {
+      "id": "gd05",
+      "name": "Freedom Ascension [GD05]",
+      "packageId": "616105",
+      "count": 197
     },
     {
       "id": "st01",
@@ -81,10 +87,28 @@
       "count": 39
     },
     {
+      "id": "st10",
+      "name": "Generation Pulse [ST10]",
+      "packageId": "616010",
+      "count": 35
+    },
+    {
+      "id": "eb01",
+      "name": "Eternal Nexus [EB01]",
+      "packageId": "616201",
+      "count": 108
+    },
+    {
+      "id": "sc01",
+      "name": "Deck Build Box Freedom Ascension [SC01]",
+      "packageId": "616301",
+      "count": 51
+    },
+    {
       "id": "other-product-card",
       "name": "Other Product Card",
       "packageId": "616701",
-      "count": 42
+      "count": 54
     },
     {
       "id": "edition-beta",
@@ -102,7 +126,7 @@
       "id": "promotion-card",
       "name": "Promotion card",
       "packageId": "616901",
-      "count": 168
+      "count": 179
     }
   ]
 }

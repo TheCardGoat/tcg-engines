@@ -41,9 +41,17 @@ export const op14eb04DonTWorryIMHere057: EventCard = {
               filters: [
                 {
                   filter: "anyOf",
-                  groups: [
-                    [{ filter: "trait", value: "Fish-Man", match: "includes" }],
-                    [{ filter: "trait", value: "Merfolk", match: "includes" }],
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Fish-Man",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Merfolk",
+                      match: "includes",
+                    },
                   ],
                 },
               ],
@@ -55,7 +63,13 @@ export const op14eb04DonTWorryIMHere057: EventCard = {
       },
       {
         trigger: "trigger",
-        actions: [{ action: "draw", player: "self", amount: 2 }],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
+        ],
       },
     ],
   },

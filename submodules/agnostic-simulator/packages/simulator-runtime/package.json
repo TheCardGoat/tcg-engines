@@ -30,17 +30,17 @@
       "types": "./src/gateway.ts",
       "default": "./src/gateway.ts"
     },
-    "./live-transition": {
-      "types": "./src/live-transition.ts",
-      "default": "./src/live-transition.ts"
+    "./replay-playback": {
+      "types": "./src/replay-playback.ts",
+      "default": "./src/replay-playback.ts"
     },
-    "./animation-adapter": {
-      "types": "./src/animation-adapter.ts",
-      "default": "./src/animation-adapter.ts"
+    "./replay-library": {
+      "types": "./src/replay-library.ts",
+      "default": "./src/replay-library.ts"
     },
-    "./animation-playback": {
-      "types": "./src/animation-playback.ts",
-      "default": "./src/animation-playback.ts"
+    "./animation": {
+      "types": "./src/animation/index.ts",
+      "default": "./src/animation/index.ts"
     }
   },
   "scripts": {
@@ -51,7 +51,9 @@
     "lint": "vp lint ./src"
   },
   "dependencies": {
+    "@tcg/game-page-contract": "link:../game-page-contract",
     "@tcg/protocol": "link:../protocol",
+    "@tcg/simulator-contract": "link:../simulator-contract",
     "socket.io-client": "catalog:",
     "socket.io-msgpack-parser": "catalog:"
   },

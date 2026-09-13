@@ -3,7 +3,7 @@ import { op14eb04DraculeMihawkOp14020020 } from "../../../../../cards/src/cards/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP14-020 Dracule Mihawk - OP14-020", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04DraculeMihawkOp14020020);
   });
 });

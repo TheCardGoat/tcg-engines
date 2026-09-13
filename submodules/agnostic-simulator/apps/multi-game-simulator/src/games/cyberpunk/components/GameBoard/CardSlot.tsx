@@ -44,9 +44,8 @@ export function CardSlot({
             traits: [],
             imageUrl,
           }}
-          imageClassName={classes.image}
+          className={classes.image}
           alt={label ?? "card"}
-          fill
         />
       ) : (
         label && <span className={classes.label}>{label}</span>

@@ -1,0 +1,43 @@
+{
+  "source": "engine TEST_DECKS",
+  "decks": [
+    {
+      "id": "red-aggro",
+      "path": "decks/playable/red-aggro.json",
+      "leaderId": "OP01-001"
+    },
+    {
+      "id": "blue-control",
+      "path": "decks/playable/blue-control.json",
+      "leaderId": "OP03-040"
+    },
+    {
+      "id": "green-midrange",
+      "path": "decks/playable/green-midrange.json",
+      "leaderId": "OP01-031"
+    },
+    {
+      "id": "purple-ramp",
+      "path": "decks/playable/purple-ramp.json",
+      "leaderId": "OP01-091"
+    },
+    {
+      "id": "black-removal",
+      "path": "decks/playable/black-removal.json",
+      "leaderId": "OP03-076"
+    },
+    {
+      "id": "yellow-trigger",
+      "path": "decks/playable/yellow-trigger.json",
+      "leaderId": "OP03-099"
+    }
+  ],
+  "metaPlayableMap": {
+    "blue-yellow-nami": "blue-control",
+    "purple-enel": "purple-ramp",
+    "green-blue-luffy": "green-midrange",
+    "black-yellow-blackbeard": "black-removal",
+    "purple-yellow-rosinante": "yellow-trigger"
+  },
+  "note": "Limitless OP16 meta decks live under decks/meta. Many OP15/OP16 printings are not yet in the catalog; play uses engine TEST_DECK archetype stand-ins mapped by meta share order."
+}

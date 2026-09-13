@@ -39,6 +39,7 @@ export const eb02Franky037: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
+                match: "includes",
               },
               {
                 condition: "donFieldComparison",
@@ -68,6 +69,7 @@ export const eb02Franky037: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Straw Hat Crew",
+                match: "includes",
               },
               {
                 condition: "donFieldComparison",

@@ -1,12 +1,15 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from "vite-plus/test";
 import { waitFor } from "@testing-library/react";
-import { asPlayerId, type PlayerId } from "@tcg/gundam-engine";
 
 import { renderSimulator } from "../../test/renderSimulator.tsx";
-import { findCardsById, findInstanceIdsByName } from "../../test/queries.ts";
-import { loadBlockStepDemo } from "../../game/fixtures/block-step-demo.ts";
-import { DEV_PLAYER_ONE } from "../../game/dev-runtime.ts";
+import { findCardsById } from "../../test/queries.ts";
+import { createDevRuntime, DEV_PLAYER_ONE } from "../../game/dev-runtime.ts";
+import {
+  realResourceCards,
+  st01Gundam001,
+  st01Guntank004,
+} from "../../game/fixtures/real-cards.ts";
 
 /**
  * End-to-end coverage for the damage badge. The code path has existed
@@ -15,69 +18,45 @@ import { DEV_PLAYER_ONE } from "../../game/dev-runtime.ts";
  * regressions in the `G.damage` plumbing (keyed by `data-card-id`) would
  * otherwise only surface in manual QA.
  *
- * Fixture: `block-step-demo` lands the viewer mid-attack as the defender
- * (Zaku II AP 2 vs. GM Jim HP 3). When the viewer passes block, the
- * attack resolves for 2 damage; Jim survives with 1 HP remaining.
+ * The visual state uses two production Units with different damage values so
+ * QA can compare the badge across card frames and counter widths.
  */
 describe("Damage badge · integration", () => {
   it("renders the damage badge on a unit that survived an attack", async () => {
-    const { dev } = renderSimulator(loadBlockStepDemo);
-    const p1 = asPlayerId(DEV_PLAYER_ONE) as PlayerId;
-
-    const jimIds = findInstanceIdsByName(dev, /GM Jim/);
-    expect(jimIds.length).toBeGreaterThanOrEqual(1);
-    const jimId = jimIds[0]!;
-
-    // Viewer is defender at block-step; pass it to let the attack land.
-    const state = dev.runtime.getState();
-    const result = dev.runtime.executeCommand(
-      {
-        commandID: crypto.randomUUID(),
-        move: "passBlock",
-        prevStateID: state.ctx._stateID,
-        actorRole: "player",
-        args: {},
-      },
-      p1,
+    const { dev } = renderSimulator(() =>
+      createDevRuntime({
+        skipToMainPhase: true,
+        p1: {
+          battleArea: [
+            { card: st01Guntank004, damage: 2 },
+            { card: st01Gundam001, damage: 1 },
+          ],
+          resourceArea: realResourceCards(4),
+          deck: 30,
+          resourceDeck: 10,
+        },
+        p2: { deck: 30, resourceDeck: 10 },
+      }),
     );
-    expect(result.success, `passBlock rejected: ${JSON.stringify(result)}`).toBe(true);
 
-    // Block-step → action-step. Both players hold priority; the viewer
-    // still has to pass to drain the action-step before damage resolves
-    // (the auto-pass bot handles p2 only).
-    const afterBlockState = dev.runtime.getState();
-    const actionStepResult = dev.runtime.executeCommand(
-      {
-        commandID: crypto.randomUUID(),
-        move: "passActionStep",
-        prevStateID: afterBlockState.ctx._stateID,
-        actorRole: "player",
-        args: {},
-      },
-      p1,
-    );
-    expect(
-      actionStepResult.success,
-      `passActionStep rejected: ${JSON.stringify(actionStepResult)}`,
-    ).toBe(true);
+    const battleIds =
+      dev.runtime.getState().ctx.zones.private.zoneCards[`battleArea:${DEV_PLAYER_ONE}`] ?? [];
+    expect(battleIds).toHaveLength(2);
+    const [guntankId, gundamId] = battleIds;
 
-    // Damage resolution is the next step the engine runs; wait for the
-    // engine G.damage map to carry Jim's 2-damage hit (the auto-pass bot
-    // closes out p2's pass on the same phase).
     await waitFor(() => {
-      const G = dev.runtime.getState().G as { damage?: Record<string, number> };
-      expect(G.damage?.[jimId]).toBe(2);
-    });
-
-    // Engine's damage map now carries the dealt damage (2 ≤ HP 3, so Jim
-    // survives). Wait for the projection to propagate through React.
-    await waitFor(() => {
-      const node = findCardsById(jimId)[0];
-      expect(node, "expected Jim's card face in the DOM").toBeDefined();
+      const node = findCardsById(guntankId)[0];
+      expect(node, "expected Guntank's card face in the DOM").toBeDefined();
       const damageCounter = node!.querySelector("[data-testid='damage-counter-overlay']");
       expect(damageCounter).not.toBeNull();
       expect(damageCounter!.textContent).toBe("DMG2");
       expect(damageCounter!.getAttribute("aria-label")).toBe("This card has taken 2 damage.");
+    });
+
+    await waitFor(() => {
+      const node = findCardsById(gundamId!)[0];
+      const damageCounter = node?.querySelector("[data-testid='damage-counter-overlay']");
+      expect(damageCounter?.textContent).toBe("DMG1");
     });
   });
 });

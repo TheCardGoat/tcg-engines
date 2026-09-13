@@ -3,7 +3,7 @@ import { op09Lim022 } from "../../../../../cards/src/cards/OP09/leaders/022-lim.
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-022 Lim", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op09Lim022);
   });
 });

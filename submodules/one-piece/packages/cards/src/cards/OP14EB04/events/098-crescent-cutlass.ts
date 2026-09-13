@@ -35,27 +35,25 @@ export const op14eb04CrescentCutlass098: EventCard = {
             conditions: [
               {
                 condition: "existsOnField",
-                player: "self",
                 zone: "character",
-                filters: [{ filter: "cost", comparison: "eq", value: 0 }],
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "eq",
+                    value: 0,
+                  },
+                ],
               },
               {
                 condition: "existsOnField",
-                player: "opponent",
                 zone: "character",
-                filters: [{ filter: "cost", comparison: "eq", value: 0 }],
-              },
-              {
-                condition: "existsOnField",
-                player: "self",
-                zone: "character",
-                filters: [{ filter: "cost", comparison: "gte", value: 8 }],
-              },
-              {
-                condition: "existsOnField",
-                player: "opponent",
-                zone: "character",
-                filters: [{ filter: "cost", comparison: "gte", value: 8 }],
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "gte",
+                    value: 8,
+                  },
+                ],
               },
             ],
           },
@@ -66,8 +64,16 @@ export const op14eb04CrescentCutlass098: EventCard = {
             target: {
               player: "self",
               zones: ["character"],
-              count: { amount: "all" },
-              filters: [{ filter: "trait", value: "Baroque Works", match: "includes" }],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Baroque Works",
+                  match: "includes",
+                },
+              ],
             },
             value: 3,
             duration: "untilEndOfOpponentNextEndPhase",

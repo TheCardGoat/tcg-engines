@@ -1,4 +1,4 @@
-import type { MatchState } from "@tcg/cyberpunk-engine";
+import type { MatchState, PlayerPrompt } from "@tcg/cyberpunk-engine";
 import type {
   EngineInteractionView,
   InteractionSubmission,
@@ -9,23 +9,20 @@ import {
   ConnectionPanel as SharedConnectionPanel,
   EventLogPanel,
   InteractionPanel,
-  MobileShell,
+  SimulatorActivityTabs,
+  SimulatorMatchSidebar,
+  SimulatorViewportShell,
+  type SimulatorMatchActions,
+  type SimulatorMatchParticipant,
 } from "@tcg/simulator-ui";
 import { safeStringify } from "@tcg/simulator-runtime/debug";
-import {
-  useEffect,
-  useMemo,
-  useState,
-  type ComponentType,
-  type FormEvent,
-  type ReactNode,
-} from "react";
-import { notifications } from "@mantine/notifications";
+import { createSimulatorExternalCommandGate } from "@tcg/simulator-runtime/animation";
+import { useMemo, useState, type ComponentType, type ReactNode } from "react";
 import type { SimulatorRendererPackage, SimulatorRendererProps } from "@tcg/simulator-contract";
 import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
-import { IconMessageCircle, IconX } from "@tabler/icons-react";
 
-import { AiControlPanel } from "../components/AiControlPanel";
+import { DeferredAiControlPanel } from "../components/AiControlPanel/DeferredAiControlPanel";
+import { SimulatorBotQuickControls } from "../../../simulator/SimulatorBotQuickControls";
 import { CyberpunkBoardRuntimeProvider } from "../components/BoardRuntimeContext";
 import type {
   LiveMatchSidebarConfig,
@@ -33,16 +30,23 @@ import type {
 } from "../components/BoardRuntimeContext";
 import { ConnectionPanel } from "../components/ConnectionDiagnostics";
 import { CardNameToken } from "../components/CardDisplay/CardNameToken";
-import { ChatPanel, mapChatMessage } from "../components/ChatPanel/ChatPanel";
+import { mapChatMessage } from "../components/ChatPanel/ChatPanel";
+import { DeferredChatPanel } from "../components/ChatPanel/DeferredChatPanel";
 import { EndGameModal } from "../components/EndGameModal";
-import { GameStateProvider } from "../components/GameBoard";
-import { UserConfigButton } from "../components/UserConfig/UserConfigDialog";
+import { ConfirmDialog, GameStateProvider, PassTurnControl } from "../components/GameBoard";
+import {
+  CyberpunkSettingsFields,
+  UserConfigButton,
+  UserConfigDialog,
+} from "../components/UserConfig/UserConfigDialog";
 import { CyberpunkSharedAnimationLayer } from "../animation";
 import { cyberpunkRendererPackage } from "../cyberpunkRenderer";
 import { useGameClock } from "../components/GameBoard/useGameClock";
 import {
   EngineProvider,
+  PLAYER_SIDE_TO_ID,
   formatPlayerIdentityMeta,
+  otherSide,
   useEngine,
   type AISideConfig,
   type AiMode,
@@ -67,16 +71,19 @@ import {
   type SimulatorConnectionDiagnosticInput,
 } from "@tcg/game-page-contract/connection-diagnostic";
 import { projectMoveLogEntries } from "../engine/moveLogProjection";
+import {
+  SimulatorOpponentParticipantActions,
+  SimulatorSelfParticipantActions,
+} from "../../../simulator/participant-actions";
 import { connectionUiStatus, isConnectionDisconnected } from "../engine/live/playerConnectionState";
 import { useOpponentPresence } from "../engine/live/useOpponentPresence";
 import { useSimulatorProjection } from "../engine/useSimulatorProjection";
-import { apiUrl } from "../../../runtime/gameRuntimeApi";
 import { projectConnectionPanelDiagnostic } from "../../../simulator/connection-panel-projection";
 import classes from "./BoardShared.module.css";
 import sidebarClasses from "./Sidebar.module.css";
 
 const EVENT_LOG_ENTRY_CAP = 200;
-const CYBERPUNK_SHELL_BREAKPOINT_PX = 900;
+const CYBERPUNK_SHELL_BREAKPOINT_PX = 767;
 
 type RendererPackage = ComponentType<SimulatorRendererProps>;
 
@@ -111,6 +118,8 @@ export interface BoardSharedPageProps {
     },
     state: MatchState,
   ) => boolean;
+  remoteInteractionView?: EngineInteractionView;
+  remotePrompt?: PlayerPrompt;
   requestRemoteUndo?: () => boolean;
   remoteMoveLogs?: ReadonlyArray<MoveLog>;
   remoteEngineEvents?: ReadonlyArray<RawEngineEventEntry>;
@@ -138,7 +147,7 @@ export interface BoardSharedPageProps {
 }
 
 export function BoardSharedPage(props: BoardSharedPageProps) {
-  const [hasPendingAnimations, setHasPendingAnimations] = useState(false);
+  const animationCommandGate = useMemo(() => createSimulatorExternalCommandGate(), []);
   const {
     rendererPackage: rendererPackageProp,
     scenarioId,
@@ -152,6 +161,8 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
     postGameSurface,
     remoteDispatch,
     remoteSubmitInteraction,
+    remoteInteractionView,
+    remotePrompt,
     requestRemoteUndo,
     remoteMoveLogs,
     remoteEngineEvents,
@@ -186,11 +197,13 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
       initialHumanSide={initialHumanSide}
       initialAiMode={initialAiMode}
       initialAiSpeed={initialAiSpeed}
-      hasPendingAnimations={hasPendingAnimations}
+      animationCommandGate={animationCommandGate}
       autoResolveSingletonCardTargets={autoResolveSingletonCardTargets}
       onMatchEnded={onMatchEnded}
       remoteDispatch={remoteDispatch}
       remoteSubmitInteraction={remoteSubmitInteraction}
+      remoteInteractionView={remoteInteractionView}
+      remotePrompt={remotePrompt}
       requestRemoteUndo={requestRemoteUndo}
       remoteMoveLogs={remoteMoveLogs}
       remoteEngineEvents={remoteEngineEvents}
@@ -219,7 +232,7 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
           liveMatchSidebar,
         }}
       >
-        <CyberpunkSharedAnimationLayer onAnimationPendingChange={setHasPendingAnimations}>
+        <CyberpunkSharedAnimationLayer commandGate={animationCommandGate}>
           <BoardSharedContent
             rendererPackage={rendererPackage}
             postGameSurface={postGameSurface}
@@ -260,15 +273,25 @@ function BoardSharedContent({
   const eventLogEntries = projectMoveLogEntries(matchState, moveLogs, humanSide).slice(
     -EVENT_LOG_ENTRY_CAP,
   );
-  const eventLogChatMessages = chatMessages.map((message) => mapChatMessage(message, humanSide));
   const eventLogCopyText = formatCyberpunkEventLogReadableCopy(eventLogEntries);
   const rawEventLogCopyText = formatCyberpunkEventLogRawCopy(eventLogEntries, moveLogs);
   const eventLogPanel = (
     <EventLogPanel
       embedded
+      showHeader={false}
       entries={eventLogEntries}
       renderMessage={renderEventLogMessage}
-      chatMessages={eventLogChatMessages}
+      copyText={eventLogCopyText}
+      rawCopyText={rawEventLogCopyText}
+    />
+  );
+  const combinedEventLogPanel = (
+    <EventLogPanel
+      embedded
+      showHeader={false}
+      entries={eventLogEntries}
+      chatMessages={chatMessages.map((message) => mapChatMessage(message, humanSide))}
+      renderMessage={renderEventLogMessage}
       copyText={eventLogCopyText}
       rawCopyText={rawEventLogCopyText}
     />
@@ -282,74 +305,86 @@ function BoardSharedContent({
   // wants the dedicated panel.
 
   const sidebar = (
-    <SidebarContent
-      playerIdentities={playerIdentities}
-      playerConnections={playerConnections}
-      connectionDiagnostic={connectionDiagnostic}
-      onClaimRivalDrop={onClaimRivalDrop}
-      postGameSurface={postGameSurface}
-      eventLogPanel={eventLogPanel}
-      liveMatchSidebar={liveMatchSidebar}
-    />
+    <GameStateProvider>
+      <SidebarContent
+        playerIdentities={playerIdentities}
+        playerConnections={playerConnections}
+        connectionDiagnostic={connectionDiagnostic}
+        onClaimRivalDrop={onClaimRivalDrop}
+        postGameSurface={postGameSurface}
+        eventLogPanel={eventLogPanel}
+        combinedEventLogPanel={combinedEventLogPanel}
+        liveMatchSidebar={liveMatchSidebar}
+      />
+    </GameStateProvider>
+  );
+
+  const tabletop = (
+    <section className={classes.boardViewport} aria-label={fixture.boardLayout.title}>
+      {BoardRenderer ? (
+        <BoardRenderer fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
+      ) : (
+        <>
+          <Board
+            table={fixture.table}
+            entities={fixture.entities}
+            layout={fixture.boardLayout}
+            label={fixture.name}
+          />
+          <div className="border-t border-[var(--board-border)] p-3">
+            <InteractionPanel fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
+          </div>
+        </>
+      )}
+    </section>
   );
 
   return (
-    <main className={classes.pageShell}>
-      {BoardRenderer ? (
-        <MobileShell
-          hasLog
-          layoutBreakpoint={CYBERPUNK_SHELL_BREAKPOINT_PX}
-          mobileNavigation="none"
-          mobileNavigationBreakpoint={CYBERPUNK_SHELL_BREAKPOINT_PX}
-          sidebar={sidebar}
-          board={
-            <section className={classes.boardViewport} aria-label={fixture.boardLayout.title}>
-              <BoardRenderer fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
-            </section>
-          }
-          interactions={null}
-          log={eventLogPanel}
-        />
-      ) : (
-        <MobileShell
-          hasLog
-          layoutBreakpoint={CYBERPUNK_SHELL_BREAKPOINT_PX}
-          sidebar={sidebar}
-          board={
-            <section className={classes.boardViewport} aria-label={fixture.boardLayout.title}>
-              <Board
-                table={fixture.table}
-                entities={fixture.entities}
-                layout={fixture.boardLayout}
-                label={fixture.name}
-              />
-              {/*
-                Generic-renderer fallback has no inline overlay host (the shared
-                Board does not own a floating action slot), so the interaction
-                panel is stacked inside the board section instead of occupying a
-                dedicated MobileShell column. MobileShell still collapses to two
-                columns because interactions is null.
-              */}
-              <div className="border-t border-[var(--board-border)] p-3">
-                <InteractionPanel fixture={fixture} onSubmitInteraction={onSubmitInteraction} />
-              </div>
-            </section>
-          }
-          interactions={null}
-          log={eventLogPanel}
-        />
-      )}
+    <SimulatorViewportShell
+      className={classes.pageShell}
+      data-game="cyberpunk"
+      data-theme="dark"
+      mobileBreakpoint={CYBERPUNK_SHELL_BREAKPOINT_PX}
+      sidebar={sidebar}
+      mobilePanel={
+        <div className={sidebarClasses.mobileActivityPanel}>
+          <SimulatorActivityTabs
+            log={eventLogPanel}
+            chat={<DeferredChatPanel />}
+            combined={combinedEventLogPanel}
+          />
+          <div className={sidebarClasses.mobileUtilityBar}>
+            <UserConfigButton />
+          </div>
+        </div>
+      }
+      mobilePanelLabel="Cyberpunk activity and utilities"
+      mobileTopRail={
+        BoardRenderer
+          ? undefined
+          : ({ openSidebar }) => (
+              <button type="button" className={classes.fallbackMobileRail} onClick={openSidebar}>
+                Match panel
+              </button>
+            )
+      }
+      mobileBottomRail={
+        BoardRenderer ? undefined : <div className={classes.fallbackMobileRail}>Tabletop</div>
+      }
+      tabletop={tabletop}
+    >
       {gameEnded && (
         <GameStateProvider>
           <EndGameModal />
         </GameStateProvider>
       )}
-    </main>
+    </SimulatorViewportShell>
   );
 }
 
 interface SidebarContentProps extends BoardSharedContentProps {
   eventLogPanel: ReactNode;
+  combinedEventLogPanel: ReactNode;
 }
 
 function SidebarContent({
@@ -359,9 +394,37 @@ function SidebarContent({
   onClaimRivalDrop,
   postGameSurface,
   eventLogPanel,
+  combinedEventLogPanel,
   liveMatchSidebar,
 }: SidebarContentProps) {
   const isDeckBuilderPractice = postGameSurface === "deck-builder-practice";
+  const {
+    matchState,
+    humanSide,
+    prioritySide,
+    aiMode,
+    aiStrategies,
+    aiTakeover,
+    interactionViews,
+    setAiMode,
+    stepOnce,
+    takeOverAiSide,
+    releaseAiTakeover,
+  } = useEngine();
+  const clock = useGameClock(prioritySide, { paused: matchState.G.gameEnded });
+  const matchActions = useCyberpunkMatchActions();
+  const [practiceConfigurationOpen, setPracticeConfigurationOpen] = useState(false);
+  const rivalSide = otherSide(humanSide);
+  const controlledBotSide = aiTakeover?.side ?? rivalSide;
+  const canTakeControl = aiTakeover !== null || aiStrategies[controlledBotSide] !== null;
+  const botInteractionView = interactionViews[controlledBotSide];
+  const canStepBot =
+    aiMode === "step" &&
+    aiTakeover === null &&
+    aiStrategies[controlledBotSide] !== null &&
+    (botInteractionView.status === "choosing" ||
+      (botInteractionView.status === "ready" &&
+        botInteractionView.actions.some((action) => action.enabled)));
   const humanSidebar = useMemo(
     () => (liveMatchSidebar ? resolveHumanMatchSidebar(liveMatchSidebar, playerConnections) : null),
     [liveMatchSidebar, playerConnections],
@@ -374,93 +437,168 @@ function SidebarContent({
         model={humanSidebar}
         connectionDiagnostic={connectionDiagnostic}
         eventLogPanel={eventLogPanel}
+        combinedEventLogPanel={combinedEventLogPanel}
         onClaimRivalDrop={onClaimRivalDrop}
+        matchActions={matchActions.actions}
+        matchActionConfirmation={matchActions.confirmation}
       />
     );
   }
 
+  const activeSide =
+    matchState.G.turnMetadata.activePlayerId === PLAYER_SIDE_TO_ID.player ? "player" : "opponent";
+  const toPracticeParticipant = (
+    side: Side,
+    role: "self" | "opponent",
+  ): SimulatorMatchParticipant => {
+    const identity = playerIdentities?.[side];
+    return {
+      id: identity?.id ?? side,
+      role,
+      name: identity?.displayName ?? (role === "self" ? "You" : "Rival"),
+      shortLabel: role === "self" ? "YOU" : "OP",
+      clock: clock[side].time,
+      active: activeSide === side,
+      priority: prioritySide === side,
+      status: prioritySide === side ? "Priority" : "Waiting",
+      meta: formatPlayerIdentityMeta(identity) || (role === "self" ? "Local player" : "Rival"),
+    };
+  };
+
   return (
-    <div
-      className={sidebarClasses.sidebar}
-      data-testid="cyberpunk-practice-sidebar"
-      data-practice-surface={isDeckBuilderPractice ? "deck-builder" : "simulator"}
-    >
-      <div className={sidebarClasses.controlsSection}>
-        <AiControlPanel
-          compact
-          embedded
-          hideDecisionLog
-          scenarioActionsVariant={isDeckBuilderPractice ? "hidden" : "details"}
-        />
-      </div>
-      <div className={sidebarClasses.presenceSection}>
-        <ConnectionPanel
-          embedded
-          playerIdentities={playerIdentities}
-          playerConnections={playerConnections}
-          connectionDiagnostic={connectionDiagnostic}
-          onClaimRivalDrop={onClaimRivalDrop}
-        />
-      </div>
-      <div className={sidebarClasses.logPanel}>
-        <EventLogChatOverlay eventLogPanel={eventLogPanel} />
-      </div>
-    </div>
+    <>
+      <SimulatorMatchSidebar
+        className={sidebarClasses.sharedSidebar}
+        data-testid="cyberpunk-practice-sidebar"
+        data-practice-surface={isDeckBuilderPractice ? "deck-builder" : "simulator"}
+        opponent={toPracticeParticipant(rivalSide, "opponent")}
+        self={{
+          ...toPracticeParticipant(humanSide, "self"),
+          actions: (
+            <SimulatorSelfParticipantActions
+              gameConfiguration={{
+                settings: <CyberpunkSettingsFields />,
+                requiresConfirmation: false,
+                onSelect: () => setPracticeConfigurationOpen(true),
+              }}
+              support={{
+                source: "cyberpunk-practice-participant-menu",
+                gameSlug: "cyberpunk",
+                stateVersion: matchState.ctx.stateID,
+                turn: matchState.G.turnMetadata.turnNumber,
+              }}
+            />
+          ),
+        }}
+        automation={{
+          label: "Bot controls",
+          panelLabel: "Bot strategy and pacing controls",
+          summary: (
+            <span className={sidebarClasses.automationSummary}>
+              <span>{aiTakeover ? "Seat control" : "Bot playback"}</span>
+              <strong>
+                {aiTakeover
+                  ? "You control bot"
+                  : aiMode === "step"
+                    ? "Paused · step"
+                    : "Auto-running"}
+              </strong>
+            </span>
+          ),
+          control: (
+            <SimulatorBotQuickControls
+              pacing={aiMode}
+              takeoverActive={aiTakeover !== null}
+              canTakeover={canTakeControl}
+              canStep={canStepBot}
+              disabled={matchState.G.gameEnded}
+              testIdPrefix="cyberpunk-practice-quick"
+              onToggleTakeover={() => {
+                if (aiTakeover) {
+                  releaseAiTakeover();
+                  return;
+                }
+                takeOverAiSide(controlledBotSide);
+              }}
+              onChangePacing={setAiMode}
+              onStep={stepOnce}
+            />
+          ),
+          details: (
+            <div className={sidebarClasses.sharedModeControls}>
+              <DeferredAiControlPanel
+                compact
+                embedded
+                hideDecisionLog
+                scenarioActionsVariant={isDeckBuilderPractice ? "hidden" : "details"}
+              />
+            </div>
+          ),
+        }}
+        activity={{
+          log: eventLogPanel,
+          chat: <DeferredChatPanel />,
+          combined: combinedEventLogPanel,
+          combinedLabel: "All",
+          secondary: (
+            <div className={sidebarClasses.sharedUtilities}>
+              <ConnectionPanel
+                embedded
+                playerIdentities={playerIdentities}
+                playerConnections={playerConnections}
+                connectionDiagnostic={connectionDiagnostic}
+                onClaimRivalDrop={onClaimRivalDrop}
+              />
+            </div>
+          ),
+        }}
+        actions={matchActions.actions}
+      />
+      {matchActions.confirmation}
+      <UserConfigDialog
+        opened={practiceConfigurationOpen}
+        onClose={() => setPracticeConfigurationOpen(false)}
+      />
+    </>
   );
 }
 
-function EventLogChatOverlay({ eventLogPanel }: { eventLogPanel: ReactNode }) {
-  const [chatControlsOpen, setChatControlsOpen] = useState(false);
+function useCyberpunkMatchActions(): {
+  readonly actions: SimulatorMatchActions;
+  readonly confirmation: ReactNode;
+} {
+  const { dispatch, humanSide, matchState } = useEngine();
+  const [confirmingConcede, setConfirmingConcede] = useState(false);
 
-  useEffect(() => {
-    if (!chatControlsOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setChatControlsOpen(false);
-      }
-    };
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [chatControlsOpen]);
-
-  return (
-    <div
-      className={sidebarClasses.eventLogChatFrame}
-      data-chat-open={chatControlsOpen ? "true" : "false"}
-    >
-      {eventLogPanel}
-      <div className={sidebarClasses.eventLogChatOverlay}>
-        {chatControlsOpen ? (
-          <div className={sidebarClasses.eventLogChatPopover}>
-            <div className={sidebarClasses.eventLogChatPopoverHeader}>
-              <span>Chat</span>
-              <span className={sidebarClasses.eventLogChatEscHint}>Esc</span>
-              <button
-                type="button"
-                className={sidebarClasses.eventLogChatCloseButton}
-                aria-label="Close chat popover"
-                title="Close chat controls"
-                onClick={() => setChatControlsOpen(false)}
-              >
-                <IconX size={14} stroke={2.4} aria-hidden="true" />
-              </button>
-            </div>
-            <ChatPanel compact showMessages={false} />
-          </div>
-        ) : null}
-        <button
-          type="button"
-          className={sidebarClasses.floatingChatButton}
-          aria-label={chatControlsOpen ? "Close chat controls" : "Open chat controls"}
-          aria-expanded={chatControlsOpen}
-          title={chatControlsOpen ? "Close chat controls" : "Open chat controls"}
-          onClick={() => setChatControlsOpen((open) => !open)}
-        >
-          <IconMessageCircle size={18} stroke={2.35} aria-hidden="true" />
-        </button>
-      </div>
-    </div>
+  const actions: SimulatorMatchActions = {
+    className: sidebarClasses.matchActionDock,
+    controls: <PassTurnControl compact compactLabelStyle="action" actionsOnly />,
+    danger: (
+      <button
+        type="button"
+        className={`${sidebarClasses.sidebarActionButton} ${sidebarClasses.sidebarDangerButton}`}
+        disabled={matchState.G.gameEnded}
+        onClick={() => setConfirmingConcede(true)}
+      >
+        Concede
+      </button>
+    ),
+  };
+  const confirmation = (
+    <ConfirmDialog
+      opened={confirmingConcede && !matchState.G.gameEnded}
+      title="Concede match?"
+      body="This concedes the match and cannot be undone."
+      cancelLabel="Keep playing"
+      confirmLabel="Concede"
+      onCancel={() => setConfirmingConcede(false)}
+      onConfirm={() => {
+        setConfirmingConcede(false);
+        dispatch({ type: "concede", as: PLAYER_SIDE_TO_ID[humanSide] });
+      }}
+    />
   );
+  return { actions, confirmation };
 }
 
 interface HumanMatchSidebarModel {
@@ -472,71 +610,31 @@ interface HumanMatchSidebarModel {
   opponentConnection?: PlayerConnectionBySide[Side];
 }
 
-const REPORT_REASONS = [
-  { value: "stalling", label: "Stalling" },
-  { value: "abusive_chat", label: "Abusive chat" },
-  { value: "exploit", label: "Exploit" },
-  { value: "collusion", label: "Collusion" },
-  { value: "inappropriate_name", label: "Inappropriate name" },
-  { value: "intentional_disconnect", label: "Intentional disconnect" },
-  { value: "other", label: "Other" },
-] as const;
-
-type SupportDialog = "bug" | "feature" | "feedback";
-
-const SUPPORT_DIALOG_COPY: Record<
-  SupportDialog,
-  { title: string; description: string; placeholder: string; successTitle: string }
-> = {
-  bug: {
-    title: "Report bug",
-    description: "Tell us what went wrong. This includes the match context automatically.",
-    placeholder: "What happened?",
-    successTitle: "Bug report submitted",
-  },
-  feature: {
-    title: "Request feature",
-    description: "Tell us what would make this match experience better.",
-    placeholder: "What should we add or improve?",
-    successTitle: "Feature request submitted",
-  },
-  feedback: {
-    title: "Share feedback",
-    description: "Tell us what would make the simulator more useful.",
-    placeholder: "What should we improve?",
-    successTitle: "Feedback submitted",
-  },
-};
-
 function HumanMatchSidebar({
   config,
   model,
   connectionDiagnostic,
   eventLogPanel,
+  combinedEventLogPanel,
   onClaimRivalDrop,
+  matchActions,
+  matchActionConfirmation,
 }: {
   config: LiveMatchSidebarConfig;
   model: HumanMatchSidebarModel;
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
   eventLogPanel: ReactNode;
+  combinedEventLogPanel: ReactNode;
   onClaimRivalDrop?: () => void;
+  matchActions: SimulatorMatchActions;
+  matchActionConfirmation: ReactNode;
 }) {
   const { matchState, prioritySide } = useEngine();
   const clock = useGameClock(prioritySide, { paused: matchState.G.gameEnded });
   const opponentPresence = useOpponentPresence(model.opponentConnection);
-  const [actionMenuOpen, setActionMenuOpen] = useState(false);
-  const [friendState, setFriendState] = useState<"idle" | "loading" | "done">("idle");
-  const [reportOpen, setReportOpen] = useState(false);
-  const [reportReason, setReportReason] =
-    useState<(typeof REPORT_REASONS)[number]["value"]>("stalling");
-  const [reportDetails, setReportDetails] = useState("");
-  const [reportState, setReportState] = useState<"idle" | "loading" | "done">("idle");
-  const [supportDialog, setSupportDialog] = useState<SupportDialog | null>(null);
-  const [supportText, setSupportText] = useState("");
-  const [supportState, setSupportState] = useState<"idle" | "loading">("idle");
+  const [gameConfigurationOpen, setGameConfigurationOpen] = useState(false);
   const opponentScore = scoreForSeat(config, model.opponent.seat);
   const selfScore = scoreForSeat(config, model.self.seat);
-  const canAddFriend = Boolean(model.opponent.userId);
   const opponentDisconnected = isConnectionDisconnected(model.opponentConnection);
   const opponentTimeoutExpired = Boolean(
     !matchState.G.gameEnded &&
@@ -562,438 +660,190 @@ function HumanMatchSidebar({
     selfConnectionStatus.status === "reconnecting" ||
     selfConnectionStatus.status === "disconnected";
 
-  async function addOpponentFriend(): Promise<void> {
-    if (!model.opponent.userId || friendState === "loading" || friendState === "done") {
-      return;
-    }
-    setFriendState("loading");
-    try {
-      const response = await fetch(
-        apiUrl("platform", `/friends/by-user/${encodeURIComponent(model.opponent.userId)}`),
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
+  const activeSide =
+    matchState.G.turnMetadata.activePlayerId === PLAYER_SIDE_TO_ID.player ? "player" : "opponent";
+  const toHumanParticipant = (
+    role: "self" | "opponent",
+    participant: LiveMatchSidebarParticipant,
+    side: Side,
+    connection: PlayerConnectionBySide[Side] | undefined,
+    score: number | undefined,
+  ): SimulatorMatchParticipant => ({
+    id: participant.id,
+    role,
+    testId: `human-sidebar-${role}`,
+    name: participant.displayName,
+    shortLabel: role === "self" ? "YOU" : initialsFor(participant.displayName),
+    clock: clock[side].time,
+    active: activeSide === side,
+    priority: prioritySide === side,
+    status: prioritySide === side ? "Priority" : connectionLabel(connection).label,
+    meta: [formatPlayerIdentityMeta(participant), participant.deckName].filter(Boolean).join(" · "),
+    connection: (
+      <CyberpunkConnectionIndicator
+        role={role}
+        participant={participant}
+        side={side}
+        connection={connection}
+        connectionDiagnostic={connectionDiagnostic}
+      />
+    ),
+    actions:
+      role === "opponent" ? (
+        <SimulatorOpponentParticipantActions
+          participant={{
+            kind: "human",
+            gameProfileId: participant.id,
+            userId: participant.userId,
+            displayName: participant.displayName,
+            connected: connectionUiStatus(connection) === "connected",
+          }}
+          match={{ matchId: config.matchId, gameId: config.gameId, gameSlug: "cyberpunk" }}
+        />
+      ) : (
+        <SimulatorSelfParticipantActions
+          gameConfiguration={{
+            settings: <CyberpunkSettingsFields />,
+            label: "Game configuration",
+            requiresConfirmation: false,
+            onSelect: () => setGameConfigurationOpen(true),
+          }}
+          support={{
+            source: "cyberpunk-live-participant-menu",
+            gameSlug: "cyberpunk",
             matchId: config.matchId,
             gameId: config.gameId,
-          }),
-        },
-      );
-      if (!response.ok) {
-        throw new Error(await readResponseMessage(response, "Could not add friend."));
-      }
-      setFriendState("done");
-      notifications.show({
-        color: "green",
-        title: "Friend added",
-        message: `${model.opponent.displayName} is now in your friends list.`,
-      });
-    } catch (error) {
-      setFriendState("idle");
-      notifications.show({
-        color: "red",
-        title: "Friend request failed",
-        message: error instanceof Error ? error.message : "Could not add friend.",
-      });
-    }
-  }
-
-  function openSupportDialog(kind: SupportDialog): void {
-    setActionMenuOpen(false);
-    setSupportDialog(kind);
-    setSupportText("");
-    setSupportState("idle");
-  }
-
-  async function submitSupport(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault();
-    if (!supportDialog || supportState === "loading" || supportText.trim().length === 0) {
-      return;
-    }
-
-    const text = supportText.trim();
-    setSupportState("loading");
-    try {
-      const isBug = supportDialog === "bug";
-      const response = await fetch(
-        apiUrl("platform", isBug ? "/feedback/bug-reports" : "/feedback"),
-        {
-          method: "POST",
-          credentials: "include",
-          headers: { "content-type": "application/json" },
-          body: isBug
-            ? JSON.stringify({
-                description: text,
-                source: "cyberpunk-live-match-sidebar",
-                context: {
-                  gameId: config.gameId,
-                  gameSlug: "cyberpunk",
-                  matchId: config.matchId,
-                  stateVersion: matchState.ctx.stateID,
-                  turn: matchState.G.turnMetadata.turnNumber,
-                  platform: window.innerWidth < 768 ? "mobile" : "desktop",
-                },
-              })
-            : JSON.stringify({
-                message: supportDialog === "feature" ? `Feature request: ${text}` : text,
-                source: "cyberpunk-live-match-sidebar",
-              }),
-        },
-      );
-      if (!response.ok) {
-        throw new Error(await readResponseMessage(response, "Could not send this right now."));
-      }
-      notifications.show({
-        color: "green",
-        title: SUPPORT_DIALOG_COPY[supportDialog].successTitle,
-        message: "Thanks. The team will review it.",
-      });
-      setSupportDialog(null);
-      setSupportText("");
-    } catch (error) {
-      notifications.show({
-        color: "red",
-        title: "Support request failed",
-        message: error instanceof Error ? error.message : "Could not send this right now.",
-      });
-    } finally {
-      setSupportState("idle");
-    }
-  }
-
-  async function submitReport(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault();
-    if (reportState === "loading") {
-      return;
-    }
-    setReportState("loading");
-    try {
-      const response = await fetch(apiUrl("platform", "/moderation/player-reports"), {
-        method: "POST",
-        credentials: "include",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          reportedGameProfileId: model.opponent.id,
-          matchId: config.matchId,
-          gameId: config.gameId,
-          reason: reportReason,
-          details: reportDetails.trim() || undefined,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error(await readResponseMessage(response, "Could not submit report."));
-      }
-      setReportState("done");
-      setReportOpen(false);
-      notifications.show({
-        color: "green",
-        title: "Report submitted",
-        message: "Thanks. Moderators will review this match.",
-      });
-    } catch (error) {
-      setReportState("idle");
-      notifications.show({
-        color: "red",
-        title: "Report failed",
-        message: error instanceof Error ? error.message : "Could not submit report.",
-      });
-    }
-  }
+            stateVersion: matchState.ctx.stateID,
+            turn: matchState.G.turnMetadata.turnNumber,
+          }}
+        />
+      ),
+    metrics:
+      typeof score === "number" ? [{ id: "score", label: "Score", value: score }] : undefined,
+  });
 
   return (
-    <div
-      className={`${sidebarClasses.sidebar} ${sidebarClasses.humanSidebar ?? ""}`}
-      data-testid="cyberpunk-human-match-sidebar"
-    >
-      <div className={sidebarClasses.humanTop}>
-        <PlayerSummaryCard
-          role="opponent"
-          participant={model.opponent}
-          side={model.opponentSide}
-          connection={model.opponentConnection}
-          connectionDiagnostic={connectionDiagnostic}
-          score={opponentScore}
-        />
-        <div className={sidebarClasses.actionMenuWrap}>
-          <button
-            type="button"
-            className={sidebarClasses.sidebarActionButton}
-            aria-expanded={actionMenuOpen}
-            aria-controls="cyberpunk-player-actions-menu"
-            onClick={() => setActionMenuOpen((open) => !open)}
-          >
-            Player actions
-          </button>
-          {actionMenuOpen ? (
-            <div
-              id="cyberpunk-player-actions-menu"
-              className={sidebarClasses.actionMenu}
-              role="menu"
-              aria-label="Player actions"
-            >
-              <button
-                type="button"
-                role="menuitem"
-                onClick={() => {
-                  setActionMenuOpen(false);
-                  void addOpponentFriend();
-                }}
-                disabled={!canAddFriend || friendState === "loading" || friendState === "done"}
-              >
-                {friendState === "done"
-                  ? "Friend added"
-                  : friendState === "loading"
-                    ? "Adding..."
-                    : "Add friend"}
-              </button>
-              <button
-                type="button"
-                role="menuitem"
-                className={sidebarClasses.actionMenuDanger}
-                onClick={() => {
-                  setActionMenuOpen(false);
-                  setReportOpen(true);
-                }}
-              >
-                Report player
-              </button>
-              <button type="button" role="menuitem" onClick={() => openSupportDialog("bug")}>
-                Report bug
-              </button>
-              <button type="button" role="menuitem" onClick={() => openSupportDialog("feature")}>
-                Request feature
-              </button>
-              <button type="button" role="menuitem" onClick={() => openSupportDialog("feedback")}>
-                Share feedback
-              </button>
-            </div>
-          ) : null}
-          {showDropControl ? (
-            <div className={sidebarClasses.dropControl}>
-              <button
-                type="button"
-                className={`${sidebarClasses.sidebarActionButton} ${sidebarClasses.sidebarDangerButton}`}
-                onClick={onClaimRivalDrop}
-                disabled={!canDropOpponent}
-              >
-                Drop opponent
-              </button>
-              {dropStatusText ? <span>{dropStatusText}</span> : null}
-            </div>
-          ) : null}
-        </div>
-        <details className={sidebarClasses.sidebarDrawer}>
-          <summary>Details</summary>
-          <PlayerDetails participant={model.opponent} />
-        </details>
-      </div>
-
-      <div className={sidebarClasses.humanLogPanel}>
-        <EventLogChatOverlay eventLogPanel={eventLogPanel} />
-      </div>
-
-      <div className={sidebarClasses.humanBottom}>
-        {showSelfConnectionAlert ? (
-          <section
-            className={sidebarClasses.selfConnectionAlert}
-            data-status={selfConnectionStatus.status}
-            role="status"
-            aria-live="polite"
-          >
-            <span className={sidebarClasses.selfConnectionAlertKicker}>
-              {selfConnectionStatus.status === "reconnecting" ? "Reconnecting" : "Connection lost"}
-            </span>
-            <strong>Actions are paused.</strong>
-            <span>Wait for this to clear before trying a move, pass, undo, or mulligan again.</span>
-          </section>
-        ) : null}
-        <PlayerSummaryCard
-          role="self"
-          participant={model.self}
-          side={model.selfSide}
-          connection={model.selfConnection}
-          connectionDiagnostic={connectionDiagnostic}
-          score={selfScore}
-        />
-        <div className={sidebarClasses.selfActions}>
-          <UserConfigButton />
-          {config.returnUrl ? (
-            <a className={sidebarClasses.returnLink} href={config.returnUrl}>
-              Matchmaking
-            </a>
-          ) : null}
-        </div>
-      </div>
-
-      {reportOpen ? (
-        <div
-          className={sidebarClasses.reportOverlay}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cyberpunk-report-title"
-        >
-          <form className={sidebarClasses.reportDialog} onSubmit={submitReport}>
-            <header className={sidebarClasses.reportHeader}>
-              <span id="cyberpunk-report-title">Report {model.opponent.displayName}</span>
-              <button type="button" onClick={() => setReportOpen(false)} aria-label="Close report">
-                x
-              </button>
-            </header>
-            <label className={sidebarClasses.reportField}>
-              <span>Reason</span>
-              <select
-                value={reportReason}
-                onChange={(event) =>
-                  setReportReason(event.currentTarget.value as typeof reportReason)
-                }
-              >
-                {REPORT_REASONS.map((reason) => (
-                  <option key={reason.value} value={reason.value}>
-                    {reason.label}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className={sidebarClasses.reportField}>
-              <span>Details</span>
-              <textarea
-                value={reportDetails}
-                onChange={(event) => setReportDetails(event.currentTarget.value)}
-                maxLength={2000}
-                rows={4}
-                placeholder="What happened?"
-              />
-            </label>
-            <div className={sidebarClasses.reportActions}>
-              <button type="button" onClick={() => setReportOpen(false)}>
-                Cancel
-              </button>
-              <button type="submit" disabled={reportState === "loading"}>
-                {reportState === "loading" ? "Submitting..." : "Submit report"}
-              </button>
-            </div>
-          </form>
-        </div>
-      ) : null}
-
-      {supportDialog ? (
-        <div
-          className={sidebarClasses.reportOverlay}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cyberpunk-support-title"
-        >
-          <form className={sidebarClasses.reportDialog} onSubmit={submitSupport}>
-            <header className={sidebarClasses.reportHeader}>
-              <span id="cyberpunk-support-title">{SUPPORT_DIALOG_COPY[supportDialog].title}</span>
-              <button
-                type="button"
-                onClick={() => setSupportDialog(null)}
-                aria-label="Close support dialog"
-              >
-                x
-              </button>
-            </header>
-            <p className={sidebarClasses.reportDescription}>
-              {SUPPORT_DIALOG_COPY[supportDialog].description}
-            </p>
-            <label className={sidebarClasses.reportField}>
-              <span>{supportDialog === "bug" ? "Description" : "Message"}</span>
-              <textarea
-                value={supportText}
-                onChange={(event) => setSupportText(event.currentTarget.value)}
-                maxLength={supportDialog === "bug" ? 5000 : 2000}
-                rows={5}
-                placeholder={SUPPORT_DIALOG_COPY[supportDialog].placeholder}
-              />
-            </label>
-            <div className={sidebarClasses.reportActions}>
-              <button type="button" onClick={() => setSupportDialog(null)}>
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={supportState === "loading" || supportText.trim().length === 0}
-              >
-                {supportState === "loading" ? "Sending..." : "Send"}
-              </button>
-            </div>
-          </form>
-        </div>
-      ) : null}
+    <div className={sidebarClasses.sharedSidebarFrame} data-testid="cyberpunk-human-match-sidebar">
+      <SimulatorMatchSidebar
+        className={sidebarClasses.sharedSidebar}
+        opponent={toHumanParticipant(
+          "opponent",
+          model.opponent,
+          model.opponentSide,
+          model.opponentConnection,
+          opponentScore,
+        )}
+        self={toHumanParticipant(
+          "self",
+          model.self,
+          model.selfSide,
+          model.selfConnection,
+          selfScore,
+        )}
+        activity={{
+          log: eventLogPanel,
+          chat: <DeferredChatPanel />,
+          combined: combinedEventLogPanel,
+          secondary: (
+            <>
+              <div className={sidebarClasses.sharedModeControls}>
+                {showDropControl ? (
+                  <div className={sidebarClasses.dropControl}>
+                    <button
+                      type="button"
+                      className={`${sidebarClasses.sidebarActionButton} ${sidebarClasses.sidebarDangerButton}`}
+                      onClick={onClaimRivalDrop}
+                      disabled={!canDropOpponent}
+                    >
+                      Drop opponent
+                    </button>
+                    {dropStatusText ? <span>{dropStatusText}</span> : null}
+                  </div>
+                ) : null}
+                <details className={sidebarClasses.sidebarDrawer}>
+                  <summary>Opponent details</summary>
+                  <PlayerDetails participant={model.opponent} />
+                </details>
+              </div>
+              <div className={sidebarClasses.sharedUtilities}>
+                {showSelfConnectionAlert ? (
+                  <section
+                    className={sidebarClasses.selfConnectionAlert}
+                    data-status={selfConnectionStatus.status}
+                    role="status"
+                    aria-live="polite"
+                  >
+                    <span className={sidebarClasses.selfConnectionAlertKicker}>
+                      {selfConnectionStatus.status === "reconnecting"
+                        ? "Reconnecting"
+                        : "Connection lost"}
+                    </span>
+                    <strong>Actions are paused.</strong>
+                    <span>Wait for this to clear before trying a board action again.</span>
+                  </section>
+                ) : null}
+                <div className={sidebarClasses.selfActions}>
+                  {config.returnUrl ? (
+                    <a className={sidebarClasses.returnLink} href={config.returnUrl}>
+                      Matchmaking
+                    </a>
+                  ) : null}
+                </div>
+              </div>
+            </>
+          ),
+        }}
+        actions={matchActions}
+      />
+      {matchActionConfirmation}
+      <UserConfigDialog
+        opened={gameConfigurationOpen}
+        onClose={() => setGameConfigurationOpen(false)}
+      />
     </div>
   );
 }
 
-function PlayerSummaryCard({
+function CyberpunkConnectionIndicator({
   role,
   participant,
   side,
   connection,
   connectionDiagnostic,
-  score,
 }: {
-  role: "self" | "opponent";
-  participant: LiveMatchSidebarParticipant;
-  side: Side;
-  connection?: PlayerConnectionBySide[Side];
-  connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
-  score: number | undefined;
+  readonly role: "self" | "opponent";
+  readonly participant: LiveMatchSidebarParticipant;
+  readonly side: Side;
+  readonly connection?: PlayerConnectionBySide[Side];
+  readonly connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
 }) {
   const connectionStatus = connectionLabel(connection);
-  const meta = formatPlayerIdentityMeta(participant);
   const copyPayload = useMemo(
     () =>
       connectionDiagnostic ? buildSimulatorConnectionDiagnostic(connectionDiagnostic) : undefined,
     [connectionDiagnostic],
   );
   return (
-    <section
-      className={sidebarClasses.playerCard}
-      data-role={role}
-      data-side={side}
-      data-testid={`human-sidebar-${role}`}
-    >
-      <div className={sidebarClasses.playerHeader}>
-        <div className={sidebarClasses.playerAvatar} aria-hidden>
-          {initialsFor(participant.displayName)}
-        </div>
-        <div className={sidebarClasses.playerTitleBlock}>
-          <span className={sidebarClasses.playerKicker}>
-            {role === "self" ? "You" : "Opponent"} · Seat {participant.seat}
-          </span>
-          <span className={sidebarClasses.playerName}>{participant.displayName}</span>
-        </div>
-        <div className={sidebarClasses.connectionStatusControl}>
-          <SharedConnectionPanel
-            embedded
-            indicatorOnly
-            popoverAlign="end"
-            copyPayload={copyPayload}
-            sides={[
-              {
-                side,
-                label: participant.displayName,
-                playerId: participant.id,
-                self: role === "self",
-                connection: {
-                  status: connectionStatus.status,
-                  latencyMs: connection?.latencyMs,
-                  disconnectCount: connection?.disconnectCount,
-                },
-              },
-            ]}
-            diagnostic={projectConnectionPanelDiagnostic(connectionDiagnostic)}
-          />
-        </div>
-      </div>
-      <div className={sidebarClasses.playerMeta}>
-        {typeof score === "number" ? <span>Score {score}</span> : null}
-        {meta ? <span>{meta}</span> : null}
-        {participant.deckName ? <span>{participant.deckName}</span> : null}
-      </div>
-    </section>
+    <SharedConnectionPanel
+      embedded
+      indicatorOnly
+      popoverAlign="end"
+      copyPayload={copyPayload}
+      sides={[
+        {
+          side,
+          label: participant.displayName,
+          playerId: participant.id,
+          self: role === "self",
+          connection: {
+            status: connectionStatus.status,
+            latencyMs: connection?.latencyMs,
+            disconnectCount: connection?.disconnectCount,
+          },
+        },
+      ]}
+      diagnostic={projectConnectionPanelDiagnostic(connectionDiagnostic)}
+    />
   );
 }
 
@@ -1085,27 +935,6 @@ function initialsFor(name: string): string {
   const first = parts[0]?.[0] ?? "?";
   const second = parts.length > 1 ? parts[1]?.[0] : parts[0]?.[1];
   return `${first}${second ?? ""}`.toUpperCase();
-}
-
-async function readResponseMessage(response: Response, fallback: string): Promise<string> {
-  try {
-    const payload = (await response.json()) as {
-      message?: string;
-      error?: { message?: string } | string;
-    };
-    if (typeof payload.error === "object" && payload.error?.message) {
-      return payload.error.message;
-    }
-    if (payload.message) {
-      return payload.message;
-    }
-    if (typeof payload.error === "string") {
-      return payload.error;
-    }
-  } catch {
-    // Keep the caller's fallback when the response body is not JSON.
-  }
-  return fallback;
 }
 
 function formatCyberpunkEventLogReadableCopy(entries: readonly SimulatorEventLogEntry[]): string {

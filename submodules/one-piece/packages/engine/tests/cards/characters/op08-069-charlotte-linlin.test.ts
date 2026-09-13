@@ -72,4 +72,38 @@ describe("OP08-069 Charlotte Linlin", () => {
     expect(view.players.south.donDeckCount).toBe(donDeckBefore + 1);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op08CharlotteLinlin069, eb01Doma005, eb01Fourtricks025],
+        life: [eb01Doma005, eb01Fourtricks025],
+        deck: [eb01Doma005, eb01Fourtricks025, eb01Doma005],
+        activeDon: 10,
+      },
+      {
+        character: [op08CountNiwatori071, op08CharlotteSmoothie065],
+        life: [eb01Doma005],
+        deck: [eb01Doma005, eb01Fourtricks025, eb01Doma005],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    engine.playCard(op08CharlotteLinlin069, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

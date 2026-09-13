@@ -6,11 +6,11 @@ import {
   type LorcanaClient,
   type LorcanaMatchState,
 } from "@tcg/lorcana-engine";
-import type { GatewayClientStore } from "../gateway/gateway-client.svelte.js";
-import { GatewayTransport } from "../gateway/gateway-transport.js";
+import { GatewayTransport, type GatewayTransportClient } from "../gateway/gateway-transport.js";
 import type { IdleStore } from "../gateway/idle-store.svelte.js";
 import type { LorcanaPlayerSide } from "../simulator/model/contracts.js";
 import { isLorcanaSimulatorMoveId } from "../simulator/model/contracts.js";
+import { trackEvent } from "$lib/analytics/analytics.js";
 import {
   SpectatorReadModel,
   createSpectatorHistoryEntries,
@@ -19,7 +19,7 @@ import {
 } from "../spectator/spectator-match-orchestrator.svelte.js";
 
 export interface HvHPlayerOrchestratorOptions {
-  gateway: GatewayClientStore;
+  gateway: GatewayTransportClient;
   /** Authoritative game ID from the URL / server — used as the Redis key. */
   gameId: string;
   state: LorcanaMatchState;
@@ -44,7 +44,7 @@ export class HvHPlayerOrchestrator {
   readonly readModel = new SpectatorReadModel();
 
   readonly #client: LorcanaClient;
-  readonly #gateway: GatewayClientStore;
+  readonly #gateway: GatewayTransportClient;
   readonly #cardsMaps: CardsMaps;
   readonly #gameProfileId: string;
   readonly #userId: string | undefined;
@@ -73,6 +73,20 @@ export class HvHPlayerOrchestrator {
       matchID: options.state.ctx.matchID,
       initialState: options.state,
       idleStore: options.idleStore,
+      onRecoveryTelemetry: (event) => {
+        const params = {
+          cause: event.cause,
+          move_type: event.moveType,
+          ...("durationMs" in event ? { duration_ms: event.durationMs } : {}),
+        };
+        if (event.type === "started") {
+          trackEvent("game_state_recovery_started", params);
+        } else if (event.type === "completed") {
+          trackEvent("game_state_recovery_completed", params);
+        } else {
+          trackEvent("game_state_recovery_failed", params);
+        }
+      },
     });
 
     this.#client = createLorcanaClient({
@@ -84,6 +98,10 @@ export class HvHPlayerOrchestrator {
       role: "player",
       transport,
       goingFirst: authoritativeGoingFirst,
+      // Server-authority projections intentionally omit secret deck order.
+      // Optimistic execution would need that authoritative hidden state to
+      // simulate draws, so wait for the server's projected response instead.
+      skipOptimisticState: true,
     });
     this.#client.connectSync();
 
@@ -116,6 +134,7 @@ export class HvHPlayerOrchestrator {
       gameProfileId: this.#gameProfileId,
       ...(this.#userId ? { userId: this.#userId } : {}),
     });
+    void this.#client.dispose();
   }
 
   /**

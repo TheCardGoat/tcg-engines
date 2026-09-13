@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
+import { AnimatedEntityCollection, AnimatedEntityNode } from "@tcg/simulator-ui";
 import { Card, type CardGearAttachment } from "./Card";
 import { useDragDrop } from "./DragDropContext";
 import { useZoneDroppable } from "./useZoneDroppable";
@@ -139,57 +140,66 @@ export function FieldZone({
         data-scroll-axis={scrollAxis}
         data-scrollable={isScrollable ? "true" : "false"}
       >
-        {units.map((unit, i) => (
-          <div
-            key={unit.cardId ?? i}
-            className={`${classes.card} ${unit.tapped ? classes.tapped : ""}`}
-            style={{
-              ["--attached-gear-count" as string]: unit.gear?.length ?? 0,
-            }}
-            data-testid="field-unit"
-            data-card-id={unit.cardId}
-            data-instance-id={unit.cardId}
-            data-definition-id={unit.definitionId}
-            data-sim-entity-id={unit.cardId}
-            data-card-name={unit.name}
-            data-card-type={unit.cardType}
-            data-card-color={unit.color}
-            data-cost={unit.cost ?? undefined}
-            data-effective-cost={unit.effectiveCost ?? unit.cost ?? undefined}
-            data-power={unit.effectivePower ?? unit.power ?? undefined}
-            data-spent={unit.tapped ? "true" : "false"}
-            data-has-lag={unit.hasLag ? "true" : "false"}
-            data-ready={unit.tapped ? "false" : "true"}
-            data-gear-count={unit.gear?.length ?? 0}
-          >
-            <Card
-              imageUrl={unit.imageUrl}
-              name={unit.name}
-              definitionId={unit.definitionId}
-              cardType={unit.cardType}
-              color={unit.color}
-              gear={unit.gear}
-              zone={zoneName}
-              index={i}
-              tapped={unit.tapped}
-              hasLag={unit.hasLag}
-              acceptsDrop
-              cardId={unit.cardId}
-              side={side}
-              effectiveRules={unit.effectiveRules}
-              rulesText={unit.rulesText}
-              classifications={unit.classifications}
-              keywords={unit.keywords}
-              hasSellTag={unit.hasSellTag}
-              cost={unit.cost}
-              effectiveCost={unit.effectiveCost}
-              costEffects={unit.costEffects}
-              power={unit.power}
-              effectivePower={unit.effectivePower}
-              activeEffects={unit.activeEffects}
-            />
-          </div>
-        ))}
+        <AnimatedEntityCollection>
+          {units.map((unit, i) => (
+            <AnimatedEntityNode
+              key={unit.cardId ?? `field-${i}`}
+              entityId={unit.cardId ?? `field-${i}`}
+              zoneRef={{
+                kind: "zone",
+                id: `${side === "player" ? "p" : "opp"}-field`,
+                ownerId: String(side),
+              }}
+              density="normal"
+              className={`${classes.card} ${unit.tapped ? classes.tapped : ""}`}
+              style={{
+                ["--attached-gear-count" as string]: unit.gear?.length ?? 0,
+              }}
+              data-testid="field-unit"
+              data-card-id={unit.cardId}
+              data-instance-id={unit.cardId}
+              data-definition-id={unit.definitionId}
+              data-sim-entity-id={unit.cardId}
+              data-card-name={unit.name}
+              data-card-type={unit.cardType}
+              data-card-color={unit.color}
+              data-cost={unit.cost ?? undefined}
+              data-effective-cost={unit.effectiveCost ?? unit.cost ?? undefined}
+              data-power={unit.effectivePower ?? unit.power ?? undefined}
+              data-spent={unit.tapped ? "true" : "false"}
+              data-has-lag={unit.hasLag ? "true" : "false"}
+              data-ready={unit.tapped ? "false" : "true"}
+              data-gear-count={unit.gear?.length ?? 0}
+            >
+              <Card
+                imageUrl={unit.imageUrl}
+                name={unit.name}
+                definitionId={unit.definitionId}
+                cardType={unit.cardType}
+                color={unit.color}
+                gear={unit.gear}
+                zone={zoneName}
+                index={i}
+                tapped={unit.tapped}
+                hasLag={unit.hasLag}
+                acceptsDrop
+                cardId={unit.cardId}
+                side={side}
+                effectiveRules={unit.effectiveRules}
+                rulesText={unit.rulesText}
+                classifications={unit.classifications}
+                keywords={unit.keywords}
+                hasSellTag={unit.hasSellTag}
+                cost={unit.cost}
+                effectiveCost={unit.effectiveCost}
+                costEffects={unit.costEffects}
+                power={unit.power}
+                effectivePower={unit.effectivePower}
+                activeEffects={unit.activeEffects}
+              />
+            </AnimatedEntityNode>
+          ))}
+        </AnimatedEntityCollection>
       </div>
     </div>
   );

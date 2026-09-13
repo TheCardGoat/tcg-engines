@@ -1,9 +1,11 @@
 import type { PageServerLoad } from "./$types";
 import { z } from "zod";
+import { env } from "$env/dynamic/public";
 import { DEFAULT_OG_IMAGE } from "$lib/config/site";
 import { getServerApiUrl } from "$lib/config/api.server";
 import { getPublicOrigin } from "$lib/server/site";
 import { serverFetch } from "$lib/server/fetch-with-cf";
+import { buildPlatformMatchmakingRedirect } from "$lib/navigation/platform-matchmaking-url.js";
 
 const WinnerSchema = z.object({
   outcomeId: z.string(),
@@ -76,7 +78,10 @@ export const load: PageServerLoad = async ({ url }) => {
       title: "Events & Giveaways | The Card Goat Online",
       description:
         "See every community event we have run, the prizes we gave away, and the players who won. The Card Goat Online is proud to give back to the TCG community.",
-      canonicalUrl: `${origin}/matchmaking/events`,
+      canonicalUrl: buildPlatformMatchmakingRedirect(
+        new URL(`${origin}/matchmaking/events`),
+        env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+      ),
       ogImage: `${origin}${DEFAULT_OG_IMAGE}`,
     },
   };

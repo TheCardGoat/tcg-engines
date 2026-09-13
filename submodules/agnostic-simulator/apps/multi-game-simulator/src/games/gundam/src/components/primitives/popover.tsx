@@ -40,7 +40,7 @@ export const PopoverContent = forwardRef<
       sideOffset={sideOffset}
       collisionPadding={10}
       className={cn(
-        "z-[200] font-body text-hud-text",
+        "gd-dark-surface z-[200] font-body text-hud-text",
         "data-[state=open]:[animation:gd-fade-in_.15s_ease]",
         "focus:outline-none",
         className,

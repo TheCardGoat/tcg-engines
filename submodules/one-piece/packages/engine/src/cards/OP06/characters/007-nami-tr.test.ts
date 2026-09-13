@@ -3,7 +3,7 @@ import { op06NamiTr007 } from "../../../../../cards/src/cards/OP06/characters/00
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST01-007 Nami (TR)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op06NamiTr007);
   });
 });

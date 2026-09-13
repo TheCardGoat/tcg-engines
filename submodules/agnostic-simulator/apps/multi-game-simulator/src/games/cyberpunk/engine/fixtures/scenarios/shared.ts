@@ -286,6 +286,24 @@ export const SCENARIO_SEEDS: Record<ScenarioId, string> = {
   unitPsychoSquadRetail: "scenario:unitPsychoSquadRetail",
   unitViktorVektorYouMightFeelALittlePinchRetail:
     "scenario:unitViktorVektorYouMightFeelALittlePinchRetail",
+  progBonnieAndClyde: "scenario:progBonnieAndClyde",
+  progBonnieAndClydeSingleTarget: "scenario:progBonnieAndClydeSingleTarget",
+  progTheHeist: "scenario:progTheHeist",
+  progTheHeistFreePlay: "scenario:progTheHeistFreePlay",
+  progTrustNoOne: "scenario:progTrustNoOne",
+  legendJudyAlvarezBraindanceMaestro: "scenario:legendJudyAlvarezBraindanceMaestro",
+  unitAltCunninghamMotherOfDaemons: "scenario:unitAltCunninghamMotherOfDaemons",
+  unitMaelstromZealots: "scenario:unitMaelstromZealots",
+  cyberpunkAllFourCards: "scenario:cyberpunkAllFourCards",
+  retailReleaseAug2026AllCards: "scenario:retailReleaseAug2026AllCards",
+  retailReleaseAug2026PlayBench: "scenario:retailReleaseAug2026PlayBench",
+  retailScrapedReleaseAug2026Qa: "scenario:retailScrapedReleaseAug2026Qa",
+  retailScrapedReleaseAug2026VStealQa: "scenario:retailScrapedReleaseAug2026VStealQa",
+  retailWtnc22FixerCallQa: "scenario:retailWtnc22FixerCallQa",
+  retailWtnc22CombatStealQa: "scenario:retailWtnc22CombatStealQa",
+  retailWtnc22CostGearQa: "scenario:retailWtnc22CostGearQa",
+  retailWtnc22TurnTriggerQa: "scenario:retailWtnc22TurnTriggerQa",
+  retailReleaseSep2026ScrapedCardsQa: "scenario:retailReleaseSep2026ScrapedCardsQa",
 };
 
 export function scenarioSeed(id: ScenarioId): string {

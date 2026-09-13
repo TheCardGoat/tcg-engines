@@ -26,5 +26,6 @@ describe("EB01-045 Brook", () => {
         ?.rested,
     ).toBe(true);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

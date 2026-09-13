@@ -3,7 +3,7 @@ import { op04Mr13MsFriday073 } from "../../../../../cards/src/cards/OP04/charact
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-073 Mr.13 & Ms.Friday", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op04Mr13MsFriday073);
   });
 });

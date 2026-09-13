@@ -26,6 +26,7 @@ describe("OP01-118 Ulti-Mortar", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
 
+    // Counter Event is already committed; returnDon is mandatory (no effectOptional Skip).
     const costDecision = engine.pendingDecision("effectCostReturnDon", "north");
     const costStep = costDecision.steps[0];
     expect(costStep?.kind).toBe("payCost");
@@ -104,6 +105,7 @@ describe("OP01-118 Ulti-Mortar", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
+    engine.acceptLeadingOptional("north");
     const donDecision = engine.pendingDecision("effectAddDon", "north");
     const donStep = donDecision.steps[0];
     expect(donStep?.kind).toBe("chooseOption");
@@ -119,5 +121,30 @@ describe("OP01-118 Ulti-Mortar", () => {
     expect(view.players.north.trash.map((card) => card.cardId)).toContain(op01UltiMortar118.id);
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("does not offer a post-commit Skip after the Counter Event is activated", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: op01Hajrudin018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [op01UltiMortar118],
+        deck: [eb01Doma005],
+        activeDon: 4,
+        life: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", op01Hajrudin018);
+    const eventId = engine.findCardInZone("north", "hand", op01UltiMortar118);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+
+    // Next step must be mandatory returnDon — not effectOptional.
+    expect(engine.pendingDecision("effectCostReturnDon", "north").steps[0]?.kind).toBe("payCost");
+    expect(() => engine.pendingDecision("effectOptional", "north")).toThrow(
+      /Could not find a pending effectOptional/,
+    );
   });
 });

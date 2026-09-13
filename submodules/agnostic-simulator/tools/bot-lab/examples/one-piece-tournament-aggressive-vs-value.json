@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "game": "one-piece",
+  "candidateId": "aggressive",
+  "parentStrategyId": "value-ranked",
+  "informationPolicy": "oracle",
+  "hypothesis": "Tournament: aggressive life-race heuristic outperforms value-ranked across randomized archetype pairings.",
+  "engineRevision": "fnv1a32:eb58c0c2",
+  "cardCatalogHash": "fnv1a32:fa100c22",
+  "adapterVersion": "2",
+  "changes": {
+    "suite": "tournament",
+    "candidate": "aggressive",
+    "baseline": "value-ranked"
+  },
+  "evaluation": {
+    "suiteId": "tournament",
+    "seedBase": "op-tournament-aggressive-value-v1",
+    "minimumBlocks": 28,
+    "maximumBlocks": 56,
+    "batchSize": 14,
+    "confidenceLevel": 0.95,
+    "minimumMeanImprovement": 0.02,
+    "maximumCellRegression": 0.15
+  }
+}

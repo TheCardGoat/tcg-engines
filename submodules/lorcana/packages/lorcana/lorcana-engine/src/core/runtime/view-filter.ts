@@ -66,12 +66,11 @@ function filterZones(
   const filteredPublic = { ...zones.public };
   const filteredReveals = filterReveals(zones.reveals.active, role, playerID);
 
-  // Spectators never see private zone contents
-  // Players start with public zone cards visible to them
+  // Every non-judge viewer starts with the public board. Face-down public
+  // cards use opaque projection ids so the immutable public card map cannot
+  // turn board position into hidden identity.
   let filteredPrivate: ZoneRuntimeState["private"] =
-    role === "player"
-      ? filterPublicZoneCards(zones, zoneRegistry)
-      : { zoneCards: {}, cardIndex: {}, cardMeta: {} };
+    role === "judge" ? zones.private : filterPublicZoneCards(zones, zoneRegistry, filteredReveals);
 
   if (role === "judge") {
     // Judge sees all (subject to match policy)
@@ -83,10 +82,11 @@ function filterZones(
       filterPrivateZonesForPlayer(zones, zoneRegistry, playerID),
     );
   }
-  // Spectators never see private zone contents
 
-  // Add revealed card index/meta for visible reveal windows.
-  addVisibleReveals(filteredPrivate, zones, filteredReveals);
+  if (role !== "judge") {
+    // Add revealed card index/meta for visible reveal windows.
+    addVisibleReveals(filteredPrivate, zones, filteredReveals);
+  }
 
   return {
     public: filteredPublic,
@@ -94,6 +94,64 @@ function filterZones(
     reveals: {
       active: filteredReveals,
     },
+  };
+}
+
+function hiddenProjectionCardId(zoneId: string, index: number): string {
+  const [zoneName, ownerId = "shared"] = zoneId.split(":", 2);
+  return `hidden:${zoneName}:${ownerId}:${index}`;
+}
+
+function projectFaceDownMeta(meta: Record<string, unknown> | undefined): Record<string, unknown> {
+  const state = meta?.state;
+  return state === "ready" || state === "exerted" ? { state } : {};
+}
+
+function isRevealedToViewer(cardId: string, reveals: ZoneRevealWindow[]): boolean {
+  return reveals.some((reveal) => reveal.cardIDs.includes(cardId));
+}
+
+function filterPublicZoneCards(
+  zones: ZoneRuntimeState,
+  zoneRegistry: ZoneRegistry,
+  reveals: ZoneRevealWindow[],
+): ZoneRuntimeState["private"] {
+  const filteredZoneCards: Record<string, string[]> = {};
+  const filteredCardIndex: ZoneRuntimeState["private"]["cardIndex"] = {};
+  const filteredCardMeta: ZoneRuntimeState["private"]["cardMeta"] = {};
+
+  for (const [zoneId, cardIds] of Object.entries(zones.private.zoneCards)) {
+    const zoneDef = zoneRegistry[zoneId];
+    if (!zoneDef || zoneDef.visibility !== "public") {
+      continue;
+    }
+
+    filteredZoneCards[zoneId] = cardIds.map((cardId, index) => {
+      const identityVisible = zoneDef.faceDown !== true || isRevealedToViewer(cardId, reveals);
+      const projectedCardId = identityVisible ? cardId : hiddenProjectionCardId(zoneId, index);
+      const indexEntry = zones.private.cardIndex[cardId];
+
+      if (indexEntry) {
+        filteredCardIndex[projectedCardId] = {
+          ...indexEntry,
+          index,
+        };
+      }
+
+      const meta = zones.private.cardMeta[cardId];
+      const projectedMeta = identityVisible ? meta : projectFaceDownMeta(meta);
+      if (projectedMeta && Object.keys(projectedMeta).length > 0) {
+        filteredCardMeta[projectedCardId] = projectedMeta;
+      }
+
+      return projectedCardId;
+    });
+  }
+
+  return {
+    zoneCards: filteredZoneCards,
+    cardIndex: filteredCardIndex,
+    cardMeta: filteredCardMeta,
   };
 }
 
@@ -120,17 +178,7 @@ function filterPrivateZonesForPlayer(
     if (!zoneDef) continue;
 
     if (zoneDef.visibility === "public") {
-      // Public zones: all cards visible
-      filteredZoneCards[zoneId] = cardIds;
-      for (const cardId of cardIds) {
-        const indexEntry = zones.private.cardIndex[cardId];
-        if (indexEntry) {
-          filteredCardIndex[cardId] = indexEntry;
-        }
-        if (zones.private.cardMeta[cardId]) {
-          filteredCardMeta[cardId] = zones.private.cardMeta[cardId];
-        }
-      }
+      continue;
     } else if (zoneDef.visibility === "private") {
       // Private zones: only owner can see cards.
       // Keep owner-scoped zones with an empty array so patch adds/removals target
@@ -159,52 +207,11 @@ function filterPrivateZonesForPlayer(
     } else if (zoneDef.visibility === "secret" && zoneDef.ownerScoped) {
       const ownerID = zoneId.split(":", 2)[1];
       if (ownerID === playerID) {
-        // Owner-scoped secret zones are still hidden, but we keep an empty
-        // array so patch operations have a resolvable container, while retaining
-        // card index entries so owner-facing clients can keep authoritative order.
+        // Secret means hidden even from the owner. Keep only the empty
+        // container; the public summary carries the count. In particular, do
+        // not retain authoritative cardIndex entries whose indexes reveal the
+        // deck order when combined with the public card map.
         filteredZoneCards[zoneId] = [];
-        for (const cardId of cardIds) {
-          const indexEntry = zones.private.cardIndex[cardId];
-          if (indexEntry) {
-            filteredCardIndex[cardId] = indexEntry;
-          }
-          if (zones.private.cardMeta[cardId]) {
-            filteredCardMeta[cardId] = zones.private.cardMeta[cardId];
-          }
-        }
-      }
-    }
-  }
-
-  return {
-    zoneCards: filteredZoneCards,
-    cardIndex: filteredCardIndex,
-    cardMeta: filteredCardMeta,
-  };
-}
-
-function filterPublicZoneCards(
-  zones: ZoneRuntimeState,
-  zoneRegistry: ZoneRegistry,
-): ZoneRuntimeState["private"] {
-  const filteredZoneCards: Record<string, string[]> = {};
-  const filteredCardIndex: ZoneRuntimeState["private"]["cardIndex"] = {};
-  const filteredCardMeta: ZoneRuntimeState["private"]["cardMeta"] = {};
-
-  for (const [zoneId, cardIds] of Object.entries(zones.private.zoneCards)) {
-    const zoneDef = zoneRegistry[zoneId];
-    if (!zoneDef || zoneDef.visibility !== "public") {
-      continue;
-    }
-
-    filteredZoneCards[zoneId] = [...cardIds];
-    for (const cardId of cardIds) {
-      const indexEntry = zones.private.cardIndex[cardId];
-      if (indexEntry) {
-        filteredCardIndex[cardId] = indexEntry;
-      }
-      if (zones.private.cardMeta[cardId]) {
-        filteredCardMeta[cardId] = zones.private.cardMeta[cardId];
       }
     }
   }
@@ -560,6 +567,30 @@ export function verifyNoSecretLeakage(
       ];
       if (filteredCards && filteredCards.length > 0) {
         violations.push(`Secret zone ${zoneId} contents leaked`);
+      }
+
+      const originalCards = originalState.ctx.zones.private.zoneCards[zoneId] ?? [];
+      const filteredCardIndex =
+        (filteredState.ctx.zones as ZoneRuntimeState).private?.cardIndex ?? {};
+      const filteredCardMeta =
+        (filteredState.ctx.zones as ZoneRuntimeState).private?.cardMeta ?? {};
+      const visibleReveals = filterReveals(
+        originalState.ctx.zones.reveals.active,
+        roleCtx.role,
+        roleCtx.playerID,
+      );
+      const revealedCardIds = new Set(visibleReveals.flatMap((reveal) => reveal.cardIDs));
+
+      for (const cardId of originalCards) {
+        if (revealedCardIds.has(cardId)) {
+          continue;
+        }
+        if (cardId in filteredCardIndex) {
+          violations.push(`Secret card ${cardId} leaked through cardIndex in zone ${zoneId}`);
+        }
+        if (cardId in filteredCardMeta) {
+          violations.push(`Secret card ${cardId} leaked through cardMeta in zone ${zoneId}`);
+        }
       }
     }
   }

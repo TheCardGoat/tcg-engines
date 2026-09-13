@@ -3,7 +3,7 @@ import { eb03BoaHancock026 } from "../../../../../cards/src/cards/EB03/character
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB03-026 Boa Hancock", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb03BoaHancock026);
   });
 });

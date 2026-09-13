@@ -21,6 +21,7 @@ export const welcomeToNightCityRetailAppetiteForDestruction = defineCyberpunkCar
   ram: 4,
   type: "program",
   cost: 3,
+  reminderText: ["Discard programs after they resolve."],
   abilities: [
     {
       kind: "triggered",

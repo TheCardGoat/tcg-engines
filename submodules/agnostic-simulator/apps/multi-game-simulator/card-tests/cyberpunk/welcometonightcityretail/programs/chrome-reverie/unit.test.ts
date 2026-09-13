@@ -8,7 +8,7 @@ import {
   expectNotAttackCandidate,
 } from "@cyberpunk-engine/testing/index.ts";
 import {
-  boxTopperRetailGoroTakemuraHandsUnclean,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
   welcomeToNightCityRetailChromeReverie,
 } from "@tcg/cyberpunk-cards";
 
@@ -28,7 +28,9 @@ describe("Chrome Reverie", () => {
         hand: [chromeReverie],
         eddies: chromeReverie.cost,
         gigArea: [{ dieType: "d4", faceValue: 1 }], // min Gig, so the Legend choice follows
-        legendArea: [{ card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true }],
+        legendArea: [
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+        ],
       },
       {
         field: [{ card: rivalAttacker, spent: false, hasLag: false }],
@@ -79,7 +81,9 @@ describe("Chrome Reverie", () => {
         hand: [chromeReverie],
         eddies: chromeReverie.cost,
         gigArea: [{ dieType: "d4", faceValue: 1 }], // min Gig
-        legendArea: [{ card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true }],
+        legendArea: [
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+        ],
       },
       {
         field: [{ card: rivalAttacker, spent: false, hasLag: false }],
@@ -97,13 +101,15 @@ describe("Chrome Reverie", () => {
     // Program's cost was paid) and assert the free call leaves them untouched.
     const eddiesBeforeCall = engine.getEddies(P1);
     // Take the free Legend call (choose the face-down Legend).
-    engine.resolveEffectTarget(boxTopperRetailGoroTakemuraHandsUnclean, {
+    engine.resolveEffectTarget(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, {
       as: P1,
       zone: "legendArea",
     });
 
     // The Legend is flipped face-up (observable) and no extra eddies were spent.
-    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(false);
+    expect(
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean).meta.faceDown,
+    ).toBe(false);
     expect(engine.getEddies(P1)).toBe(eddiesBeforeCall);
   });
 
@@ -113,7 +119,9 @@ describe("Chrome Reverie", () => {
         hand: [chromeReverie],
         eddies: chromeReverie.cost,
         gigArea: [{ dieType: "d6", faceValue: 3 }], // not a min Gig
-        legendArea: [{ card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true }],
+        legendArea: [
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+        ],
       },
       {
         field: [{ card: rivalAttacker, spent: false, hasLag: false }],
@@ -126,7 +134,9 @@ describe("Chrome Reverie", () => {
     // No min Gig => the callLegend branch is gated off. The Legend stays
     // face-down and the Program resolves fully to trash.
     expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
-    expect(engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean).meta.faceDown).toBe(true);
+    expect(
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean).meta.faceDown,
+    ).toBe(true);
     expect(
       engine.getCardsInZone("trash", P1).some((card) => card.definitionId === chromeReverie.id),
     ).toBe(true);
@@ -151,7 +161,10 @@ describe("Chrome Reverie", () => {
 
     const choice = engine.getState().G.turnMetadata.pendingChoice;
     expect(choice?.type).toBe("chooseTarget");
-    const eligibleIds = (choice?.payload.eligibleIds ?? []) as string[];
+    if (!choice || choice.type !== "chooseTarget") {
+      throw new Error(`expected a chooseTarget pending choice, got ${choice?.type}`);
+    }
+    const eligibleIds = choice.payload.eligibleIds ?? [];
     const rivalAttackerId = engine.getCard(rivalAttacker, "field", P2).instanceId as string;
     const rivalOtherId = engine.getCard(rivalOther, "field", P2).instanceId as string;
     expect(eligibleIds).toContain(rivalAttackerId);

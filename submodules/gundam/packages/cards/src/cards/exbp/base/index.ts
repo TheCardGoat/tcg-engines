@@ -10,3 +10,6 @@ export { exbpExBase009 } from "./009-ex-base.ts";
 export { exbpExBase010 } from "./010-ex-base.ts";
 export { exbpExBase011 } from "./011-ex-base.ts";
 export { exbpExBase019 } from "./019-ex-base.ts";
+export { exbpExBase025 } from "./025-ex-base.ts";
+export { exbpExBase026 } from "./026-ex-base.ts";
+export { exbpExBase027 } from "./027-ex-base.ts";

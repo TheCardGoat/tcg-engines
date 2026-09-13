@@ -24,5 +24,6 @@ describe("OP13-013 Higuma", () => {
     expect(engine.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(
       eligibleId,
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

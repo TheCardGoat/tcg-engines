@@ -33,15 +33,7 @@ export const op01Carrot009: CharacterCard = {
         trigger: "trigger",
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: "hand",
-            },
-            count: {
-              amount: 1,
-            },
-            self: true,
+            action: "playThisCard",
           },
         ],
       },

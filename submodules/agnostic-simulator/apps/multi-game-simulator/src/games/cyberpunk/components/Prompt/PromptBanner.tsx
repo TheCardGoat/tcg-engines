@@ -9,6 +9,7 @@ import {
   IconMinus,
   IconPlus,
 } from "@tabler/icons-react";
+import { InteractionResolutionPrompt, interactionBoundsCopy } from "@tcg/simulator-ui";
 import {
   defOf,
   getEffectivePower,
@@ -309,7 +310,8 @@ export function PromptBanner({
   const showTargetModalAction =
     (mode === "select-target" || selectedPlayTargetRequestId !== null) &&
     targetModalRequestId !== null &&
-    hasTargetModalAction;
+    hasTargetModalAction &&
+    targetPromptPresentation.presentation === "drawer";
   const targetModalButton = showTargetModalAction ? (
     <button
       type="button"
@@ -468,9 +470,9 @@ export function PromptBanner({
   }, [confirmingPassWithAttackers, passPhase]);
 
   if (mode === "view") {
-    // No banner when this side is just observing — the dimmed half-board +
-    // active-side accent already communicate "not your move."
-    return null;
+    return (
+      <InteractionResolutionPrompt view={interactionView} viewerId={PLAYER_SIDE_TO_ID[side]} />
+    );
   }
 
   if (
@@ -479,7 +481,7 @@ export function PromptBanner({
       modalAction &&
       modalAction.id !== "resolveTrigger" &&
       !modalMinimized) ||
-      targetModalOpen)
+      (targetPromptPresentation.presentation === "drawer" && targetModalOpen))
   ) {
     return null;
   }
@@ -546,7 +548,8 @@ export function PromptBanner({
             Take a gig die
           </p>
           <p className={classes.actionMessage} data-testid="prompt-banner-message">
-            Bigger die = higher Street Cred ceiling, more variance. First to 6 gigs wins.
+            Bigger die = higher Street Cred ceiling, more variance. Start your turn with 7 gigs to
+            win.
           </p>
           <div className={classes.verbs} data-testid="prompt-banner-verbs">
             {allowed.map((dieId) => {
@@ -829,6 +832,16 @@ export function PromptBanner({
             });
           }
         : null;
+    const declineCardToPlay =
+      choice?.type === "chooseCardToPlay" && choice.payload.canDecline
+        ? () => {
+            dispatch({
+              type: "resolveCardToPlay",
+              pass: true,
+              as: PLAYER_SIDE_TO_ID[side],
+            });
+          }
+        : null;
     const stagedTargets =
       effectCardTargetSelection?.side === side ? effectCardTargetSelection : null;
     const stagedTargetCount = stagedTargets?.targetIds.length ?? 0;
@@ -899,7 +912,8 @@ export function PromptBanner({
         adjustGigOptions.length > 0 ||
         stagedTargets ||
         declineTargetChoice ||
-        declineCardToMove ? (
+        declineCardToMove ||
+        declineCardToPlay ? (
           <div className={classes.verbs} data-testid="prompt-banner-verbs">
             {inlineGigTargetIds.map((dieId) => {
               const selected = selectedInlineGigIds.includes(dieId);
@@ -977,20 +991,22 @@ export function PromptBanner({
                 </button>
               </>
             ) : null}
-            {declineTargetChoice || declineCardToMove ? (
+            {declineTargetChoice || declineCardToMove || declineCardToPlay ? (
               <button
                 type="button"
                 className={classes.verb}
                 data-testid="prompt-target-pass"
-                onClick={declineTargetChoice ?? declineCardToMove ?? undefined}
+                onClick={declineTargetChoice ?? declineCardToMove ?? declineCardToPlay ?? undefined}
               >
                 {choice?.type === "chooseTarget" &&
                 choice.payload.type === "discardFromHand" &&
                 choice.payload.canDecline
                   ? "Skip effect"
-                  : choice?.type === "chooseTarget" && choice.payload.min === 0
-                    ? "Take none"
-                    : "Pass"}
+                  : choice?.type === "chooseCardToPlay" && choice.payload.canDecline
+                    ? "Add to hand"
+                    : choice?.type === "chooseTarget" && choice.payload.min === 0
+                      ? "Take none"
+                      : "Pass"}
               </button>
             ) : null}
           </div>
@@ -1678,10 +1694,14 @@ function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>):
         }
         const n = choice.payload.min ?? 1;
         const max = choice.payload.max ?? n;
-        if (n === 0) {
-          return `Choose up to ${max} target${max === 1 ? "" : "s"}, or take none`;
-        }
-        return `${n} target${n === 1 ? "" : "s"} required${choice.payload.canDecline ? ", or pass" : ""}`;
+        return interactionBoundsCopy(
+          {
+            required: n > 0 && !choice.payload.canDecline,
+            min: n,
+            max,
+          },
+          "target",
+        );
       }
       if (choice.payload.type === "adjustGig") {
         const max = choice.payload.maxAmount ?? 0;
@@ -1735,11 +1755,15 @@ function chooseCardToPlayCopy(prompt: ReturnType<typeof useNativePromptPresentat
   }
   const cards = choice.payload.cards;
   const allGear = cards.length > 0 && cards.every((card) => card.type === "gear");
+  const declineSuffix = choice.payload.canDecline ? ", or add it to hand" : "";
   if (allGear && choice.payload.free && choice.payload.resolvedAttachToId) {
-    return "Play selected Gear for free";
+    return `Play selected Gear for free${declineSuffix}`;
   }
   if (allGear && choice.payload.free) {
-    return "Choose Gear to play for free";
+    return `Choose Gear to play for free${declineSuffix}`;
+  }
+  if (choice.payload.free) {
+    return `Play for free${declineSuffix}`;
   }
   return "Choose a card to play";
 }
@@ -1771,6 +1795,7 @@ function effectTargetChoiceCopy(
   const allUnits = cards.length > 0 && cards.every((card) => card.type === "unit");
   const allGear = cards.length > 0 && cards.every((card) => card.type === "gear");
   const allTrash = cards.length > 0 && cards.every((card) => card.zone === "trash");
+  const sourceName = choice.payload.source?.displayName;
 
   if (allUnits && choice.payload.targetPurpose === "attachHost") {
     return {
@@ -1786,6 +1811,23 @@ function effectTargetChoiceCopy(
         ? "Pick the Cyberware Gear to play for free."
         : "Pick the Gear to play from trash.",
     };
+  }
+
+  if (sourceName === "Unlikely Bond") {
+    const allReady = cards.every((card) => !card.spent);
+    const allSpent = cards.every((card) => card.spent);
+    if (allReady) {
+      return {
+        title: "Choose ready friendly Unit",
+        subtitle: "First, pick the ready friendly Unit to bottom-deck.",
+      };
+    }
+    if (allSpent) {
+      return {
+        title: "Choose spent rival Unit",
+        subtitle: "Now, pick the spent rival Unit to bottom-deck.",
+      };
+    }
   }
 
   return null;

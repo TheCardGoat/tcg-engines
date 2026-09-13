@@ -27,3 +27,25 @@ promotion requires at least 200 paired blocks. Without `--dry-run`, it updates t
 
 Full reports and replays belong in temporary or ignored artifact directories. The compact current
 promotion record is the committed source of truth used by production registries.
+
+## One Piece suites
+
+Adapter v2 uses ST01 plus the six mono-color automation archetypes from
+`@tcg/op-engine` (`test-decks.ts`):
+
+| suiteId      | Purpose                                                               |
+| ------------ | --------------------------------------------------------------------- |
+| `smoke`      | Fast multi-deck sanity (3 pairs)                                      |
+| `promotion`  | Full mirror + cyclic cross matrix (14 pairs)                          |
+| `tournament` | Fixed randomized cross pairings (7 pairs), Gundam-style holdout shape |
+
+Example manifests: `examples/one-piece-smoke.json`,
+`examples/one-piece-tournament-*.json`. Regenerate manifests after engine or
+catalog changes so `engineRevision` / `cardCatalogHash` match `doctor`.
+
+```sh
+pnpm bot-lab doctor --game one-piece
+pnpm bot-lab evaluate --game one-piece \
+  --candidate submodules/agnostic-simulator/tools/bot-lab/examples/one-piece-tournament-heuristic-vs-value.json \
+  --out /tmp/op-tournament-report.json
+```

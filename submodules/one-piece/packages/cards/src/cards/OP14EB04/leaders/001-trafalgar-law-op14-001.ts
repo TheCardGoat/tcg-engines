@@ -54,15 +54,6 @@ export const op14eb04TrafalgarLawOp14001001: LeaderCard = {
               count: {
                 amount: 2,
               },
-              filters: [
-                {
-                  filter: "anyOf",
-                  groups: [
-                    [{ filter: "trait", value: "Supernovas", match: "includes" }],
-                    [{ filter: "trait", value: "Heart Pirates", match: "includes" }],
-                  ],
-                },
-              ],
             },
             duration: "thisTurn",
           },

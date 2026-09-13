@@ -53,11 +53,9 @@ export const op04Diamante028: CharacterCard = {
             amount: 1,
           },
           {
-            condition: "donFieldCount",
-            player: "self",
+            condition: "activeDonCount",
             comparison: "gte",
             value: 2,
-            state: "active",
           },
         ],
         actions: [

@@ -167,6 +167,15 @@ export function buildPacketAnimations({
     }
 
     for (const damage of log.outcomes?.damageDealt ?? []) {
+      const attackKind =
+        damage.attackKind ??
+        (log.type === "attack"
+          ? log.targetId === "direct"
+            ? "direct"
+            : "fight"
+          : log.type === "block"
+            ? "fight"
+            : undefined);
       animations.push({
         id: `${prefix}:damage:${damage.targetId}:${animations.length}`,
         type: "damage",
@@ -183,8 +192,29 @@ export function buildPacketAnimations({
           targetId: String(damage.targetId),
           amount: damage.amount,
           damageType: "battle",
+          ...(attackKind ? { attackKind } : {}),
         },
       });
+    }
+
+    for (const recovery of log.outcomes?.hpRecovered ?? []) {
+      animations.push(
+        generic(`${prefix}:hp-recovered:${recovery.cardId}`, "hpRecovered", {
+          cardId: String(recovery.cardId),
+          amount: recovery.amount,
+        }),
+      );
+    }
+
+    for (const modifier of log.outcomes?.statModifiers ?? []) {
+      animations.push(
+        generic(`${prefix}:stat-modified:${modifier.cardId}:${modifier.stat}`, "statModified", {
+          cardId: String(modifier.cardId),
+          stat: modifier.stat,
+          amount: modifier.amount,
+          duration: modifier.duration,
+        }),
+      );
     }
 
     const spent = log.outcomes?.resourcesSpent;

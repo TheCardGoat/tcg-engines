@@ -925,7 +925,7 @@ export const legendScenarios: Scenario[] = [
           hand: [c.welcomeToNightCityRetailMoxInciters],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
-            { card: c.boxTopperRetailVCorporateExile, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
             {
               card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
               faceDown: false,
@@ -961,7 +961,7 @@ export const legendScenarios: Scenario[] = [
           hand: [],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
-            { card: c.boxTopperRetailGoroTakemuraHandsUnclean, faceDown: false },
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
             {
               card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
@@ -1000,7 +1000,10 @@ export const legendScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
           ],
           legendArea: [
-            { card: c.boxTopperRetailSaburoArasakaStubbornPatriarch, faceDown: false },
+            {
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
+              faceDown: false,
+            },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           eddies: 4,
@@ -1035,7 +1038,10 @@ export const legendScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
           ],
           legendArea: [
-            { card: c.boxTopperRetailYorinobuArasakaEmbracingDestruction, faceDown: false },
+            {
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
+              faceDown: false,
+            },
             {
               card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
               faceDown: false,
@@ -1070,7 +1076,7 @@ export const legendScenarios: Scenario[] = [
           hand: [c.welcomeToNightCityRetailFloorIt, c.welcomeToNightCityRetailDyingNightVSPistol],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
-            { card: c.boxTopperRetailJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           eddies: 4,
@@ -1435,7 +1441,7 @@ export const legendScenarios: Scenario[] = [
   {
     id: "legendQaArasakaPressure",
     group: "legend-qa",
-    label: "Legend QA 2 · box-topper Goro, Saburo, Yorinobu",
+    label: "Legend QA 2 · Goro, Saburo, Yorinobu",
     description:
       "Three-Legend QA board. Happy path: attack with Armored Minotaur to validate Saburo's Arasaka power boost and Yorinobu's first-Arasaka-attack draw/discard trigger; Go Solo with Goro as a ready BLOCKER threat. Edge case: attack with Mox Inciters second to confirm non-Arasaka units do not retrigger Yorinobu.",
     build: () =>
@@ -1447,13 +1453,13 @@ export const legendScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailMoxInciters, spent: false },
           ],
           legendArea: [
-            { card: c.boxTopperRetailGoroTakemuraHandsUnclean, faceDown: false },
+            { card: c.embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
             {
-              card: c.boxTopperRetailSaburoArasakaStubbornPatriarch,
+              card: c.embracingPowerRetailStarterDeckSaburoArasakaStubbornPatriarch,
               faceDown: false,
             },
             {
-              card: c.boxTopperRetailYorinobuArasakaEmbracingDestruction,
+              card: c.embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction,
               faceDown: false,
             },
           ],
@@ -1693,9 +1699,9 @@ export const legendScenarios: Scenario[] = [
   {
     id: "legendQaVStreetkidAndPrintParity",
     group: "legend-qa",
-    label: "Legend QA 7 · V StreetKid, box-topper V, box-topper Jackie",
+    label: "Legend QA 7 · V StreetKid, V Corporate Exile, Jackie",
     description:
-      "Three-Legend QA board for the remaining V StreetKid line plus alternate-print parity. Happy path: call V StreetKid to trash 3 and recover Afterparty at Lizzie's, Go Solo with box-topper V, and play Dying Night to validate box-topper Jackie. Edge case: the two V Legends are different names and should remain distinct cards in the Legend area.",
+      "Three-Legend QA board for the remaining V StreetKid line. Happy path: call V StreetKid to trash 3 and recover Afterparty at Lizzie's, Go Solo with V - Corporate Exile, and play Dying Night to validate Jackie Welles. Edge case: the two V Legends are different names and should remain distinct cards in the Legend area.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -1714,8 +1720,8 @@ export const legendScenarios: Scenario[] = [
           ],
           legendArea: [
             { card: c.welcomeToNightCityRetailVStreetkid, faceDown: true },
-            { card: c.boxTopperRetailVCorporateExile, faceDown: false },
-            { card: c.boxTopperRetailJackieWellesPourOneOutForMe, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
           ],
           eddies: 8,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
@@ -1791,6 +1797,35 @@ export const legendScenarios: Scenario[] = [
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
         { seed: scenarioSeed("legendQaEmbracingPowerPrints"), autoGainGig: false },
+      ),
+  },
+
+  // ── Legend: Passive + activated (Judy Álvarez — Braindance Maestro) ──────
+  {
+    id: "legendJudyAlvarezBraindanceMaestro",
+    group: "legend-passive",
+    label: "Judy Álvarez — Braindance Maestro · BRAINDANCE play trigger + Spend trash-recover",
+    description:
+      "P1 has Judy Álvarez face-up. P1 holds Trust No One (BRAINDANCE Program) to trigger the +1 power buff. Tests the passive trigger and Spend ability.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailTrustNoOne],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailJudyALvarezBraindanceMaestro, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+          ],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendJudyAlvarezBraindanceMaestro"), autoGainGig: false },
       ),
   },
 ];

@@ -54,6 +54,7 @@ export const eb01ConquererOfThreeWorldsRagnaraku039: EventCard = {
             },
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

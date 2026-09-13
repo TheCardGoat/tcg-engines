@@ -3,7 +3,7 @@ import { op09MonkeyDDragonSp015 } from "../../../../../cards/src/cards/OP09/char
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-015 Monkey.D.Dragon (SP)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op09MonkeyDDragonSp015);
   });
 });

@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = defineCyberpunkCard({
   id: "12475e77-0e16-420e-a935-65eb74290de8",
   slug: "alt-cunningham-soulkiller-architect",
+  subname: "Soulkiller Architect",
   rulesText:
-    "{Spend} Your next Program this turn plays for -1 €$ for each friendly min Gig, to a minimum of 1 €$.\n1 €$, {Spend} Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
-  name: "Alt Cunningham — Soulkiller Architect",
-  displayName: "Alt Cunningham — Soulkiller Architect",
+    "1 €$, {Spend} Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
+  name: "Alt Cunningham",
+  displayName: "Alt Cunningham: Soulkiller Architect",
   canonicalId: "alt-cunningham-soulkiller-architect",
   color: "blue",
   classifications: ["Merc", "Netrunner"],

@@ -5,10 +5,12 @@ import {
   hasStaticSelfRestriction,
 } from "../runtime-moves/rules/static-ability-utils";
 import { spendInk } from "../runtime-moves/rules/play-card-rules";
+import { staticAbilityStateFromCtx } from "./static-context";
 
 type Ctx = Parameters<typeof spendInk>[0] & {
   framework: { state: Parameters<typeof hasStaticSelfRestriction>[0]["state"] };
   cards: { getDefinition: (id: string) => unknown };
+  G?: Parameters<typeof hasStaticSelfRestriction>[0]["state"]["G"];
 };
 
 /**
@@ -32,8 +34,10 @@ export function applyStaticRestrictionBypass(
   const getDefinitionByInstanceId = (id: CardInstanceId) =>
     ctx.cards.getDefinition(id) as LorcanaCard | undefined;
 
+  const staticState = staticAbilityStateFromCtx(ctx);
+
   const bypass = getStaticSelfRestrictionBypass({
-    state: ctx.framework.state,
+    state: staticState,
     cardId: params.cardId,
     restriction: params.restriction,
     getDefinitionByInstanceId,
@@ -43,7 +47,7 @@ export function applyStaticRestrictionBypass(
   }
 
   const restricted = hasStaticSelfRestriction({
-    state: ctx.framework.state,
+    state: staticState,
     cardId: params.cardId,
     restriction: params.restriction,
     getDefinitionByInstanceId,

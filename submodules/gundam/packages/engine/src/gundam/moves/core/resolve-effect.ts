@@ -26,12 +26,13 @@
 import type { ChooseOneDirective, Directive } from "@tcg/gundam-types";
 import type { DeepReadonly } from "../../../types/move-types.ts";
 import type { GundamMoveDefinition, PendingEffect } from "../../types.ts";
-import { executeCardEffect } from "../../effects/executor.ts";
+import { enqueueAfterResolutionEffect, executeCardEffect } from "../../effects/executor.ts";
 import {
   assignTargetsToGroups,
   buildExecCtx,
   evaluateLegalTargets,
   findChoiceDirective,
+  legalChooseOneOptionIndexes,
   peersAtHead,
   priorityHead,
   priorityHeadIndex,
@@ -68,6 +69,10 @@ function collectChooseOneDirectives(
 }
 
 export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
+  available({ G }) {
+    return G.pendingEffects.length > 0;
+  },
+
   validate({ G, playerId, args, framework, validationMode }) {
     if (validationMode === "preflight") return { valid: true };
     const g = G;
@@ -170,7 +175,20 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
     // Evaluate the directive hypothetically (chosenTargets: undefined) so
     // a pre-committed effect still reports its directive kind correctly.
     const committedTargets = suppliedTargets ?? target.chosenTargets;
-    const choice = findChoiceDirective({ ...target, chosenTargets: undefined }, { g, framework });
+    let choice = findChoiceDirective({ ...target, chosenTargets: undefined }, { g, framework });
+    const optionalAnswer =
+      choice?.kind === "optional" ? args?.optionalAnswers?.[choice.directiveIndex] : undefined;
+    const targetValidationPending =
+      choice?.kind === "optional" && optionalAnswer === true
+        ? {
+            ...target,
+            chosenTargets: undefined,
+            committedOptionalAnswers: {
+              ...target.committedOptionalAnswers,
+              [choice.directiveIndex]: true,
+            },
+          }
+        : { ...target, chosenTargets: undefined };
     if (
       choice?.kind === "activationOptional" &&
       typeof args?.optionalAnswers?.[choice.directiveIndex] !== "boolean"
@@ -180,6 +198,20 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
         error: "Pending effect requires an explicit accept or decline answer",
         errorCode: "MISSING_OPTIONAL_ANSWER",
       };
+    }
+    if (
+      choice?.kind === "activationOptional" &&
+      args?.optionalAnswers?.[choice.directiveIndex] === true
+    ) {
+      // Accept-only is legal: clear the activation gate and return so the next
+      // projection can ask for targets / deck routing. Combined accept+targets
+      // in one submit still works via the branch below when targets are present.
+      if (args?.targets === undefined) {
+        return { valid: true };
+      }
+      const acceptedTarget = { ...target, optionalActivation: false, chosenTargets: undefined };
+      choice = findChoiceDirective(acceptedTarget, { g, framework });
+      Object.assign(targetValidationPending, { optionalActivation: false });
     }
     if (
       choice?.kind === "optional" &&
@@ -241,6 +273,17 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
           errorCode: "MISSING_CHOOSE_ONE_ANSWER",
         };
       }
+      const legalOptions = legalChooseOneOptionIndexes(choice.directive, target, {
+        g,
+        framework,
+      });
+      if (!legalOptions.includes(answeredIdx)) {
+        return {
+          valid: false,
+          error: `chooseOne option ${answeredIdx} has no legal targets`,
+          errorCode: "NO_LEGAL_TARGETS",
+        };
+      }
     }
 
     if (choice?.kind === "deckLook") {
@@ -272,11 +315,14 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
           errorCode: "DUPLICATE_TARGETS",
         };
       }
-      const resolution = evaluateLegalTargets(
-        { ...target, chosenTargets: undefined },
-        g,
-        framework,
-      );
+      if (choice?.kind === "optional" && optionalAnswer === false) {
+        return {
+          valid: false,
+          error: "Declined optional effects cannot include targets",
+          errorCode: "TARGETS_WITH_DECLINED_OPTIONAL",
+        };
+      }
+      const resolution = evaluateLegalTargets(targetValidationPending, g, framework);
       if (resolution) {
         const { legalTargetIds, minTargets, maxTargets } = resolution;
         const legalSet = new Set<string>(legalTargetIds);
@@ -416,26 +462,27 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
         // on the following projection cycle. If it has no further input,
         // the normal post-move drain resolves it immediately.
         pending.optionalActivation = false;
+        if (args?.targets === undefined) return;
+      }
+      if (!accepted) {
+        g.pendingEffects.splice(idx, 1);
+        const lifecycleCtx = { G: g, framework, cards };
+        runPostActions(pending.postActions, lifecycleCtx);
+        emitGundamLog(framework, {
+          type: "gundam.pending.resolved",
+          values: {
+            effectId: pending.id,
+            sourceCardId: pending.sourceCardId,
+            moveGroupId: pending.originatingMoveId,
+          },
+          visibility: { mode: "PUBLIC" },
+          category: "system",
+        });
         return;
       }
-
-      g.pendingEffects.splice(idx, 1);
-      const lifecycleCtx = { G: g, framework, cards };
-      runPostActions(pending.postActions, lifecycleCtx);
-      emitGundamLog(framework, {
-        type: "gundam.pending.resolved",
-        values: {
-          effectId: pending.id,
-          sourceCardId: pending.sourceCardId,
-          moveGroupId: pending.originatingMoveId,
-        },
-        visibility: { mode: "PUBLIC" },
-        category: "system",
-      });
-      return;
     }
 
-    const currentChoice = findChoiceDirective(pending, { g, framework });
+    let currentChoice = findChoiceDirective(pending, { g, framework });
     if (currentChoice?.kind === "optional") {
       const answer = args?.optionalAnswers?.[currentChoice.directiveIndex];
       if (typeof answer !== "boolean") return;
@@ -443,7 +490,8 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
         ...pending.committedOptionalAnswers,
         [currentChoice.directiveIndex]: answer,
       };
-      return;
+      if (!answer || args?.targets === undefined) return;
+      currentChoice = findChoiceDirective(pending, { g, framework });
     }
 
     if (currentChoice?.kind === "targetSelection" && pending.chosenTargets === undefined) {
@@ -509,6 +557,7 @@ export const resolveEffect: GundamMoveDefinition<"resolveEffect"> = {
       executeCardEffect(pending.effect, execCtx, { skipPairLinkRecheck: true });
       if (!execCtx.postActionState?.deferredToFollowUp) {
         runPostActions(pending.postActions, lifecycleCtx);
+        enqueueAfterResolutionEffect(execCtx);
       }
     } finally {
       g.pendingEffectCurrentMoveId = prevMoveId;

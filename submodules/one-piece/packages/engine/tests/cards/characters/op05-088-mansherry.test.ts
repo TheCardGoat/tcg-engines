@@ -99,4 +99,37 @@ describe("OP05-088 Mansherry", () => {
       }).accepted,
     ).toBe(false);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [op05Mansherry088],
+      trash: [
+        eb01Spandine043,
+        eb01Laboon048,
+        eb01TBone049,
+        eb01Laboon047,
+        eb02AllHuntGrount042,
+        eb01Doma005,
+      ],
+      activeDon: 1,
+    });
+    const mansherryId = engine.findCardInZone("south", "character", op05Mansherry088);
+    engine.activateEffect(mansherryId, "activateMain", "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

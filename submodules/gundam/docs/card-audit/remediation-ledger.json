@@ -1,0 +1,2497 @@
+{
+  "entries": [
+    {
+      "cardNumber": "EB01-001",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/eb01/unit/001-gundam-astray-red-frame-custom-ex.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-005",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/005-zeta-gundam-p2-type.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-006",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/006-gundam-astray-gold-frame-amatsu.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-008",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/008-gundam-delta-kai.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-010",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/010-gundam-barbatos-6th-form.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-013",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/013-red-gundam-0085.test.ts"]
+    },
+    {
+      "cardNumber": "GD01-016",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/cards/src/cards/gd01/unit/016-jegan.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-074",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd02/unit/074-gundam-aerial-rebuild.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD01-070",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/cards/src/cards/gd01/unit/070-gundam-aerial.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-014",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/cards/src/cards/gd03/unit/014-hizack-custom.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-049",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd03/unit/049-gundam-exia-trans-am.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-058",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/cards/src/cards/gd03/unit/058-farsia.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-075",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd03/unit/075-super-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-105",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd03/command/105-bridge-crew.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-030",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/cards/src/cards/gd03/unit/030-gundam-kyrios-tail-unit-flight-mode.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-082",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/cards/src/cards/gd03/unit/082-union-flag.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-047",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd02/unit/047-gaza-c.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-058",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd02/unit/058-ryusei-go-graze-custom.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-073",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd02/unit/073-carta-s-graze-ritter-ground-type.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-086",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/pilot/086-jerid-messa.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-107",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd02/command/107-all-range-attack.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-107",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd03/command/107-over-the-river-and-through-the-woods.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-022",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd04/unit/022-kikeroga-ms-mode-gq.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-053",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd04/unit/053-rey-s-blaze-zaku-phantom.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-050",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd05/unit/050-gundam-exia-repair.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-037",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/unit/037-bertigo.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-112",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd03/command/112-warped-intent.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-036",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "packages/cards/src/cards/gd04/unit/036-gundam-throne-eins.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-110",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd03/command/110-eliminate-target.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-024",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd04/unit/024-gundam-aerial-rebuild.ts",
+        "packages/cards/src/cards/gd04/unit/024-gundam-aerial-rebuild.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-041",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd04/unit/041-gundam-throne-drei.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-087",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd04/pilot/087-elan-ceres-enhanced-person-number-5.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-007",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/target-filter.ts",
+        "packages/cards/src/cards/gd05/unit/007-asshimar.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-039",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/target-filter.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/039-chaos-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-067",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "packages/cards/src/cards/gd03/unit/067-rouei.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-063",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd04/unit/063-gn-armor-type-e.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-083",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "packages/cards/src/cards/gd05/pilot/083-cagalli-yula-athha.ts",
+        "packages/cards/src/cards/gd05/pilot/083-cagalli-yula-athha.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-119",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/target-filter.ts",
+        "packages/cards/src/cards/gd05/command/119-a-wind-against-fires.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-069",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "packages/cards/src/cards/gd03/unit/069-graham-s-union-flag-custom.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-074",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd03/unit/074-tieren-taozi.ts",
+        "packages/cards/src/cards/gd03/unit/074-tieren-taozi.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-088",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/pilot/088-asemu-asuno.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-098",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/pilot/098-quattro-bajeena.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-084",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/pilot/084-paptimus-scirocco.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-089",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/pilot/089-bernard-wiseman.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-096",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd03/pilot/096-jamil-neate.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-019",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd03/unit/019-gundam-age-2-normal.ts",
+        "packages/cards/src/cards/gd03/unit/019-gundam-age-2-normal.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-085",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/pilot/085-christina-mackenzie.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-096",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/pilot/096-desil-galette.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-050",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/050-destiny-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-081",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd02/unit/081-methuss.ts",
+        "packages/cards/src/cards/gd02/unit/081-methuss.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-083",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd02/unit/083-graze-ritter-ground-type.ts",
+        "packages/cards/src/cards/gd02/unit/083-graze-ritter-ground-type.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-095",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/pilot/095-lafter-frankland.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-064",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd02/unit/064-gundam-leopard.ts",
+        "packages/cards/src/cards/gd02/unit/064-gundam-leopard.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-071",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/unit/071-gundam-mk-ii-aeug.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "ST10-013",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/st10/command/013-tactical-training.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-014",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/st10/command/014-unlocking-the-development-diagram.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "ST10-012",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/st10/pilot/012-mark-guilder.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-011",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/st10/pilot/011-kamille-bidan.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-016",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/st10/base/016-luna-mana-carry-base.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-001",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/st10/unit/001-zeta-gundam-ex.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-002",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/st10/unit/002-zeta-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-006",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "packages/cards/src/cards/st10/unit/006-phoenix-gundam-power-unleashed-ex.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "ST10-007",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/st10/unit/007-gundam-barbatos-4th-form.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-008",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/st10/unit/008-gundam-barbatos-1st-form.test.ts"]
+    },
+    {
+      "cardNumber": "ST10-015",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "packages/cards/src/cards/st10/command/015-diffuse-beam-cannon.ts",
+        "packages/cards/src/cards/st10/command/015-diffuse-beam-cannon.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-001",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/001-v2-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "GD02-121",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/base/121-dominion.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-122",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/base/122-alexandria.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-123",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/base/123-sodon.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-110",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd02/command/110-awakened-power.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-113",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/command/113-sisterly-care.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-116",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/command/116-comrades-come-first.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-119",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/command/119-persistent-and-fortudinous.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-120",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd02/command/120-aspiring-pilot.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-051",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd03/unit/051-gundam-x-divider.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-130",
+      "status": "closed",
+      "fidelityDisposition": "audit_normalization",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/audit-gundam-catalog.ts",
+        "packages/cards/src/cards/gd03/base/130-downes.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-118",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/command/118-world-distortion.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-083",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/command/083-sp-conversion-chips.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-084",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/command/084-30cm-cannon-apfsds-round.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-077",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/command/077-master-league-begins.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-082",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/command/082-warship-cruise.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-086",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/base/086-kycilia-zabi-gwazine.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-090",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/base/090-tiffa-adill-freeden.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-028",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/028-gundam-plutone.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-033",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/033-taurus-sanc-kingdom.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-057",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/057-gyunei-s-jagd-doga.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-105",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd05/command/105-exclusively-defense-oriented-policy.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-120",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/command/120-shining-finger.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-098",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/098-heero-yuy.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-072",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/eb01/pilot/072-yuu-kajima.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-062",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/eb01/pilot/062-jona-basta.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-059",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/059-psycho-zaku.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-070",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/pilot/070-daryl-lorenz.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-025",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/025-tallgeese.test.ts"]
+    },
+    {
+      "cardNumber": "GD03-103",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/gd03/command/103-field-directive.test.ts"]
+    },
+    {
+      "cardNumber": "GD02-124",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd02/base/124-diva.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-129",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/base/129-argama.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-085",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/eb01/base/085-kudelia-aina-bernstein-isaribi.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-087",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/base/087-marina-ismail-ptolemaios-2.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-089",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/base/089-lacus-clyne-eternal.test.ts"]
+    },
+    {
+      "cardNumber": "GD02-021",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/unit/021-gundam-age-1-normal.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-104",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/command/104-turning-point-of-history.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-070",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/unit/070-gundam-kimaris.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-033",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd03/unit/033-providence-gundam.ts",
+        "packages/cards/src/cards/gd03/unit/033-providence-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-035",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/header.ts",
+        "tools/gundam-card-parser/tests/effect-parser/header.test.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/target-filter.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "tools/gundam-card-parser/tests/effect-parser/target-filter.test.ts",
+        "packages/cards/src/cards/gd03/unit/035-gfred.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-048",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/conditions.ts",
+        "packages/cards/src/cards/gd03/unit/048-gfred.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-037",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd02/unit/037-gundam-virsago.ts",
+        "packages/cards/src/cards/gd02/unit/037-gundam-virsago.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-020",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/token-spec.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/conditions.ts",
+        "tools/audit-gundam-catalog.ts",
+        "tools/gundam-card-parser/tests/effect-parser/constant.test.ts",
+        "packages/cards/src/cards/gd03/unit/020-zaku-fz.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-071",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/unit/071-z-gundam-biosensor.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-064",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/unit/064-defurse.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-024",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/024-gundam-age-2-normal-sp-ver.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD01-005",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd01/unit/005-unicorn-gundam-unicorn-mode.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-059",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/unit/059-zedas-r.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD01-112",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd01/command/112-extreme-hatred.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-072",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/unit/072-aile-strike-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-104",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/command/104-reccoa-s-shadow.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-114",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/command/114-look-of-determination.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-117",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/conditions.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/command/117-orga-s-order.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-113",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/command/113-human-karma.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-115",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/command/115-distant-reunion.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-001",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/unit/001-gundam-nt-1.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-034",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/034-gundam-kyrios.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-023",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/target-filter.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/023-gundam-kyrios-tail-booster.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-015",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/015-gun-ez.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-017",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/017-zeong.ts",
+        "packages/cards/src/cards/gd04/unit/017-zeong.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-025",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/025-gundv-lva.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-126",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/base/126-cyclops-team.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-011",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/011-victory-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-080",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/080-alvatore.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-065",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/065-landman-rodi.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-041",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/constant.test.ts",
+        "packages/cards/src/cards/gd05/unit/041-gaia-gundam-ma-mode.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-003",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd05/unit/003-waldfeld-s-murasame.ts",
+        "packages/cards/src/cards/gd05/unit/003-waldfeld-s-murasame.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-061",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/constant.test.ts",
+        "packages/cards/src/cards/gd04/unit/061-g-falcon.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-060",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd04/unit/060-esperansa.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-121",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/command/121-unheralded-attack.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-128",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/base/128-armory-one.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-083",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/constant.test.ts",
+        "packages/cards/src/cards/gd04/pilot/083-marbet-fingerhat.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-088",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd04/pilot/088-tokwan.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-054",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd04/unit/054-gundam-virtue-trans-am.ts",
+        "tools/gundam-card-parser/tests/effect-parser/header.test.ts",
+        "packages/cards/src/cards/gd04/unit/054-gundam-virtue-trans-am.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-126",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd04/base/126-izuma-colony.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-096",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd04/pilot/096-ennil-el.ts",
+        "tools/gundam-card-parser/tests/effect-parser/header.test.ts",
+        "packages/cards/src/cards/gd04/pilot/096-ennil-el.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-095",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/pilot/095-lunamaria-hawke.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-039",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/039-rozen-zulu.ts",
+        "packages/cards/src/cards/gd04/unit/039-rozen-zulu.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-044",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd04/unit/044-gadeel.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-051",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd04/unit/051-gundam-airmaster-burst.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-008",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/conditions.ts",
+        "tools/gundam-card-parser/tests/effect-parser/conditions.test.ts",
+        "packages/cards/src/cards/gd05/unit/008-dijeh.ts",
+        "packages/cards/src/cards/gd05/unit/008-dijeh.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-123",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/conditions.ts",
+        "tools/gundam-card-parser/tests/effect-parser/conditions.test.ts",
+        "packages/cards/src/cards/gd04/base/123-a-baoa-qu.ts",
+        "packages/cards/src/cards/gd04/base/123-a-baoa-qu.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-073",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/unit/073-graze-ein.ts",
+        "packages/cards/src/cards/gd03/unit/073-graze-ein.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-076",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/unit/076-freedom-gundam-meteor.ts",
+        "packages/cards/src/cards/gd03/unit/076-freedom-gundam-meteor.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-129",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd03/base/129-hotarubi.ts",
+        "packages/cards/src/cards/gd03/base/129-hotarubi.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-125",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd03/base/125-peacemillion.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-029",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/029-gundam-dynames-gn-full-shield.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-128",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/base/128-doritea.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-093",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd04/pilot/093-rey-za-burrel.ts",
+        "packages/cards/src/cards/gd04/pilot/093-rey-za-burrel.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-101",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/command/101-kindhearted.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-121",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/base/121-reineforce-jr.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-119",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/target-filter.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/command/119-fighting-alone.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-033",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/033-master-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-070",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/070-tallgeese.ts",
+        "packages/cards/src/cards/gd05/unit/070-tallgeese.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-053",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd05/unit/053-quess-s-jagd-doga.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-046",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd05/unit/046-abyss-gundam-ma-mode.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-036",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/036-haow-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-128",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/base/128-hammerhead.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-130",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/base/130-sleipnir.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-125",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd02/base/125-gwadan.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-075",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd02/unit/075-rick-dias-red.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-057",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd02/unit/057-zedas.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-094",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd02/pilot/094-garrod-ran-tiffa-adill.ts",
+        "packages/cards/src/cards/gd02/pilot/094-garrod-ran-tiffa-adill.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD02-111",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd02/command/111-decisive-last-resort.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-050",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/unit/050-gundam-barbatos-lupus.ts",
+        "packages/cards/src/cards/gd03/unit/050-gundam-barbatos-lupus.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD03-054",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd03/unit/054-zeydra.ts",
+        "packages/cards/src/cards/gd03/unit/054-zeydra.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-092",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd05/pilot/092-auel-neider.ts",
+        "packages/cards/src/cards/gd05/pilot/092-auel-neider.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "ST07-009",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/st07/pilot/009-setsuna-f-seiei.ts",
+        "packages/cards/src/cards/st07/pilot/009-setsuna-f-seiei.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-107",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/command/107-interwoven-blessings.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-110",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd05/command/110-darkness-finger.ts",
+        "packages/cards/src/cards/gd05/command/110-darkness-finger.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-102",
+      "status": "closed",
+      "fidelityDisposition": "runtime_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/gd05/command/102-wings-of-light.ts",
+        "packages/cards/src/cards/gd05/command/102-wings-of-light.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-109",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/engine/src/gundam/moves/core/play-command.ts",
+        "packages/cards/src/cards/gd05/command/109-felsi-s-plea.ts",
+        "packages/cards/src/cards/gd05/command/109-felsi-s-plea.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-116",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/command/116-reliable-big-brother.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-115",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/command/115-backup.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-035",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/035-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-128",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/base/128-gundam-fight.test.ts",
+        "packages/cards/src/cards/gd01/base/130-13th-tactical-testing-sector.test.ts",
+        "packages/cards/src/cards/st06/base/014-clan-battle.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-106",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/command/106-mutual-attraction.ts",
+        "packages/cards/src/cards/gd05/command/106-mutual-attraction.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-049",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/049-gundam-dx.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD04-067",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd04/unit/067-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-002",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/002-strike-freedom-gundam.ts",
+        "packages/cards/src/cards/gd05/unit/002-strike-freedom-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-034",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/034-gaia-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-104",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/command/104-at-the-risk-of-one-s-life.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "ST01-015",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/st01/base/015-white-base.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "ST07-001",
+      "status": "closed",
+      "fidelityDisposition": "parser_bug",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/st07/unit/001-gundam-exia.ts",
+        "packages/cards/src/cards/st07/unit/001-gundam-exia.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-002",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/002-hi-nu-gundam-ex.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-003",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/engine/src/gundam/effects/pending-effects.ts",
+        "packages/cards/src/cards/eb01/unit/003-narrative-gundam-a-packs-ex.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-004",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/engine/src/gundam/lifecycle/end-phase/end-step.ts",
+        "packages/cards/src/cards/eb01/unit/004-gundam-barbatos-lupus-rex-ex.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-017",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/types/src/effects.ts",
+        "packages/engine/src/gundam/effects/handlers/combat.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/eb01/unit/017-haro.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-015",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/015-prototype-asshimar-tr-3-kehaar.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-018",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/eb01/unit/018-gundam-astray-blue-frame-second-l.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-011",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/011-calamity-gundam-raider-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-012",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/012-forbidden-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-015",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/015-m1-astray-shrike.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-018",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/types/src/effects.ts",
+        "packages/engine/src/gundam/moves/core/play-card-shared.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd05/unit/018-gundam-calibarn.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-020",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/020-nu-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-125",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/cards/src/cards/gd05/base/125-ra-cailum.ts",
+        "packages/cards/src/cards/gd05/base/125-ra-cailum.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-022",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/header.ts",
+        "tools/gundam-card-parser/tests/effect-parser/header.test.ts",
+        "packages/cards/src/cards/gd05/unit/022-gundam-schwarzette.ts",
+        "packages/cards/src/cards/gd05/unit/022-gundam-schwarzette.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-017",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "packages/types/src/effects.ts",
+        "packages/engine/src/gundam/effects/executor.ts",
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/017-nu-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-019",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/019-re-gz.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-023",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/023-re-gz-bws.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-025",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/025-demi-barding.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-029",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/029-kayra-s-re-gz.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-060",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/060-gundam-flauros-ryusei-go.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-074",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/074-noin-s-taurus.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-072",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/072-rising-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-059",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/059-gundam-barbatos-lupus.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-061",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/061-geara-doga.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-071",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/071-gundam-sandrock-custom-ew.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-079",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/079-gundam-heavyarms-custom-ew.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-068",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/068-shining-gundam-super-mode.ts",
+        "packages/cards/src/cards/gd05/unit/068-shining-gundam-super-mode.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-066",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/steps.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/066-shining-gundam.ts",
+        "packages/cards/src/cards/gd05/unit/066-shining-gundam.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-081",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/pilot/081-kira-yamato.ts",
+        "packages/cards/src/cards/gd05/pilot/081-kira-yamato.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-082",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/082-andrew-waldfeld.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-085",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/085-amuro-ray.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-087",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/087-lauda-neill.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-091",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/segments.ts",
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/pilot/091-sting-oakley.ts",
+        "packages/cards/src/cards/gd05/pilot/091-sting-oakley.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-094",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/094-quess-paraya.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-093",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/093-char-aznable.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-095",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/095-gyunei-guss.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-099",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/099-trowa-barton.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-100",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/100-quatre-raberba-winner.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-108",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/command/108-overcoming-hardships.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-111",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/command/111-airframe-seizure.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-114",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/command/114-widespread-annihilation.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-116",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/command/116-veteran-s-pride.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-117",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/command/117-become-a-shield.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-126",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/conditions.ts",
+        "tools/gundam-card-parser/tests/effect-parser/conditions.test.ts",
+        "packages/cards/src/cards/gd05/base/126-quiet-zero.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-127",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/base/127-girty-lue.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-130",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/base/130-presidential-office.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-019",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/019-gundam-pixy.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-020",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/020-gundam-mk.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-021",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "packages/cards/src/cards/eb01/unit/021-build-strike-gundam-full-package-ex.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-023",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/023-le-cygne-ex.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-024",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/024-gquuuuuux-omega-psycommu.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-027",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/027-tallgeese.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-029",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/029-gundam-astaroth-rinascimento-ex.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-030",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/030-big-rang.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-031",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/031-oggo.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-038",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/038-g-self.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-039",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/039-rising-freedom-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-043",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/043-blue-destiny-unit-1-ex.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-045",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/045-psycho-zaku-ex.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-052",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/052-hildolfr.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-057",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/057-gundam-geminass-02.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-060",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/unit/060-gundam-aquarius.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-065",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/pilot/065-meir-siva.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-067",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/scripts/effect-parser/actions.ts",
+        "packages/engine/src/gundam/effects/handlers/deck.ts",
+        "packages/cards/src/cards/eb01/pilot/067-asuna-elmarit.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-069",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/pilot/069-beside-pain.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-073",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/command/073-character-requests.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-079",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/command/079-modification.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-081",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/eb01/command/081-map-weapon.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-028",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/028-kayra-s-jegan.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-064",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/gd05/unit/064-force-impulse-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-073",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": ["packages/cards/src/cards/gd05/unit/073-altron-gundam-ew.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-075",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/gd05/unit/075-royal-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-096",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/096-chad-chadan.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-088",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/gd05/pilot/088-prospera-mercury.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-090",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/gd05/pilot/090-stellar-loussier.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-103",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/gd05/command/103-not-with-scattershot.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-115",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/gd05/command/115-newtype-labs-director.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-034",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/unit/034-gundam-lfrith-ur.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-046",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/unit/046-striker-custom-ex.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-049",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "packages/cards/src/cards/eb01/unit/049-pale-rider-ground-heavy-equipment-type.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-047",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/unit/047-casval-s-gundam.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-061",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/pilot/061-ellis-claude.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-064",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/pilot/064-rondo-gina-sahaku.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-063",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/multi-segment.test.ts",
+        "packages/cards/src/cards/eb01/pilot/063-io-fleming.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "EB01-071",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/pilot/071-ittou-tsurugi.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-066",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/pilot/066-reiji.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-075",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/command/075-fierce-enemy-assault.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-076",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/command/076-gerbera-straight.test.ts"]
+    },
+    {
+      "cardNumber": "EB01-080",
+      "status": "closed",
+      "behavioralProof": "public_test_added",
+      "evidence": ["packages/cards/src/cards/eb01/command/080-sturm-faust.test.ts"]
+    },
+    {
+      "cardNumber": "GD05-054",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/unit/054-alpha-azieru.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-084",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/pilot/084-odelo-henrik.test.ts"
+      ]
+    },
+    {
+      "cardNumber": "GD05-129",
+      "status": "closed",
+      "behavioralProof": "public_test_reverified",
+      "evidence": [
+        "tools/gundam-card-parser/tests/effect-parser/actions.test.ts",
+        "packages/cards/src/cards/gd05/base/129-axis.test.ts"
+      ]
+    }
+  ]
+}

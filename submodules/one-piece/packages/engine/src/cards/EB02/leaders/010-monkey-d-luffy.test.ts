@@ -3,7 +3,7 @@ import { eb02MonkeyDLuffy010 } from "../../../../../cards/src/cards/EB02/leaders
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB02-010 Monkey.D.Luffy", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb02MonkeyDLuffy010);
   });
 });

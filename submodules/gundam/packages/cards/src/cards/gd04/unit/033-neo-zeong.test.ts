@@ -13,6 +13,7 @@ import type { CommandCard } from "@tcg/gundam-types";
 import { gd04NeoZeong033 } from "./033-neo-zeong.ts";
 
 describe("Neo Zeong (GD04-033)", () => {
+  /** @behavioral-proof complete: self/friendly deploy ownership and trait gates, target/damage, and Link trait projection are public. */
   function restNeoZeonCommand(): CommandCard {
     return createMockCommand({
       effects: [
@@ -157,5 +158,44 @@ describe("Neo Zeong (GD04-033)", () => {
     expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
 
     expect(engine.asPlayer(PLAYER_TWO).getDamage(enemyId)).toBe(3);
+  });
+
+  it("does not deal damage when a friendly non-Neo Zeon Unit is deployed while not linked", () => {
+    const civilian = createMockUnit({ name: "Friendly Civilian", traits: ["civilian"] });
+    const enemy = createMockUnit({ name: "Enemy Target", hp: 6 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [civilian],
+        play: [gd04NeoZeong033],
+        resourceArea: activeResources(9),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(civilian));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p2.getDamage(enemyId)).toBe(0);
+  });
+
+  it("does not react when the opponent deploys a Neo Zeon Unit", () => {
+    const enemyNeoZeon = createMockUnit({ name: "Enemy Neo Zeon", traits: ["neo zeon"] });
+    const friendlyTarget = createMockUnit({ name: "Friendly Target", hp: 6 });
+    const engine = GundamTestEngine.create(
+      { play: [gd04NeoZeong033, friendlyTarget] },
+      { hand: [enemyNeoZeon], resourceArea: activeResources(1) },
+      { initialActivePlayer: PLAYER_TWO },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const friendlyTargetId = p1.getCardsInZone("battleArea")[1]!;
+
+    expectSuccess(p2.deployUnit(enemyNeoZeon));
+
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getDamage(friendlyTargetId)).toBe(0);
   });
 });

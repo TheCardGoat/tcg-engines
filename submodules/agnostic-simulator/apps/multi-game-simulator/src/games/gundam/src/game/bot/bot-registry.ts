@@ -31,9 +31,9 @@ export interface AttachedBot {
 }
 
 /**
- * Optional bag passed from `useClientBot` into the attacher. Only
- * `vs-ai-match` reads anything off this today (strategy id from the
- * snapshot); other attachers ignore it.
+ * Optional bag passed from `useClientBot` into the attacher. Interactive
+ * browser labs and VS-AI matches use it to restore strategy and pacing;
+ * authored auto-pass attachers ignore it.
  */
 export interface BotAttacherArgs {
   readonly botConfig?: SnapshotBotConfig;
@@ -45,9 +45,15 @@ type BotAttacher = (
   args?: BotAttacherArgs,
 ) => Promise<AttachedBot>;
 
-const attachStrategy: BotAttacher = async (runtime, staticResources) => {
-  const { attachStrategyBot } = await import("./strategy-bot.ts");
-  const handle = attachStrategyBot(runtime, staticResources, DEV_PLAYER_TWO);
+export const attachFixtureStrategy: BotAttacher = async (runtime, staticResources, args) => {
+  const [{ attachStrategyBot }, { getSafeGundamAutomatedActionStrategyOption }] = await Promise.all(
+    [import("./strategy-bot.ts"), import("@tcg/gundam-engine")],
+  );
+  const strategy = getSafeGundamAutomatedActionStrategyOption(args?.botConfig?.strategy).strategy;
+  const handle = attachStrategyBot(runtime, staticResources, DEV_PLAYER_TWO, {
+    strategy,
+    ...(args?.botConfig?.speed ? { speed: args.botConfig.speed } : {}),
+  });
   return { handle, dispose: () => handle.dispose() };
 };
 
@@ -110,6 +116,18 @@ const attachAuto: BotAttacher = async (runtime, staticResources) => {
   return { dispose: unsubscribe };
 };
 
+const attachAutoBoth: BotAttacher = async (runtime, staticResources) => {
+  const { attachAutoPassBot } = await import("../fixtures/auto-pass.ts");
+  const unsubA = attachAutoPassBot(runtime, staticResources, DEV_PLAYER_ONE);
+  const unsubB = attachAutoPassBot(runtime, staticResources, DEV_PLAYER_TWO);
+  return {
+    dispose: () => {
+      unsubA();
+      unsubB();
+    },
+  };
+};
+
 const attachAutoPlusTurn: BotAttacher = async (runtime, staticResources) => {
   const [{ attachAutoPassBot }, { attachAutoPassTurnBot }] = await Promise.all([
     import("../fixtures/auto-pass.ts"),
@@ -126,23 +144,26 @@ const attachAutoPlusTurn: BotAttacher = async (runtime, staticResources) => {
 };
 
 export const BOT_ATTACHERS: Readonly<Record<string, BotAttacher>> = {
-  // Only `vs-ai-demo` surfaces a strategy bot to the UI (returns on
-  // `dev.bot`). Other fixtures' auto-pass bots are wired below so
-  // hydrated matches keep their progression behavior. Each entry
-  // mirrors exactly the `attachX` calls in the fixture factory.
-  "vs-ai-demo": attachStrategy,
+  // Authored fixture automation is wired below so hydrated matches keep
+  // their progression behavior. Named browser-lab routes can override any
+  // entry with `attachFixtureStrategy` through their snapshot configuration.
+  "vs-ai-demo": attachFixtureStrategy,
   "vs-ai-match": attachVsAiMatch,
   "bot-vs-bot": attachBotVsBot,
   "multi-turn-demo": attachAutoPlusTurn,
   "attack-trigger-buff-demo": attachAuto,
   "attack-trigger-draw-demo": attachAuto,
+  "base-combat-demo": attachAuto,
   "battle-ready-demo": attachAuto,
+  "direct-player-demo": attachAuto,
   "block-step-demo": attachAuto,
   "burst-shield-demo": attachAuto,
   "first-strike-demo": attachAuto,
   "high-maneuver-demo": attachAuto,
   "link-unit-deploy-demo": attachAuto,
   "mutual-destruction-demo": attachAuto,
-  "step-interrupt-demo": attachAuto,
+  "st10-defense-action-lab": attachAuto,
+  "st10-development-lab": attachAutoBoth,
+  "st10-shield-assault-lab": attachAuto,
   "suppression-demo": attachAuto,
 };

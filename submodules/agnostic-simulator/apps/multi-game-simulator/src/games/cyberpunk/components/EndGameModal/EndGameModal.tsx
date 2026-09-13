@@ -18,6 +18,11 @@ import {
 } from "@tabler/icons-react";
 import { PostGameModal } from "@tcg/simulator-ui";
 import { useSimulatorAudio } from "../../../../simulator/audio";
+import {
+  isBrowserReplayStorageAvailable,
+  listDeviceReplays,
+} from "@tcg/simulator-runtime/replay-library";
+import { downloadHostedReplay, saveHostedReplayOnDevice } from "../../../../runtime/replayActions";
 import { useEngine } from "../../engine";
 import { PLAYER_SIDE_TO_ID } from "../../engine/sides";
 import { useGameState } from "../GameBoard/gameStateContext";
@@ -30,14 +35,6 @@ import {
   type CyberpunkGameAnalyticsRecord,
   type CyberpunkPlayerAnalytics,
 } from "./postGameApi";
-import { downloadReplayZip } from "../../replay/downloadReplay";
-import { decompressReplayBlob, fetchReplayBlob } from "../../replay/fetchReplay";
-import {
-  ReplayStorageQuotaError,
-  isReplaySaved,
-  isReplayStoreAvailable,
-  saveReplayFromApi,
-} from "../../replay/replayStore";
 import {
   closePostGameModal,
   createInitialPostGameModalState,
@@ -45,11 +42,12 @@ import {
   syncPostGameModalState,
 } from "./postGameModalState";
 import classes from "./EndGameModal.module.css";
+import { cyberpunkSimulatorPath } from "../../pages/simulatorPaths";
 
 const PLATFORM_MATCHMAKING_URL = "https://tcg.online/cyberpunk/matchmaking";
 
 const neutralReasons: Readonly<Record<string, string>> = {
-  gig_victory: "Gig victory: first to 6 gigs",
+  gig_victory: "Gig victory: start your turn with 7 gigs",
   overtime_majority: "Overtime: Street Cred majority",
 };
 
@@ -103,7 +101,7 @@ export function EndGameModal() {
   const celebratedAudioKeyRef = useRef<string | null>(null);
   const { playCue } = useSimulatorAudio();
   const isDeckBuilderPractice = postGameSurface === "deck-builder-practice";
-  const canUseReplayStore = isReplayStoreAvailable();
+  const canUseReplayStore = isBrowserReplayStorageAvailable();
   const canUseReplayActions = !isDeckBuilderPractice && Boolean(postGameContext?.gameId);
 
   const outcome: "win" | "loss" | "draw" =
@@ -200,10 +198,10 @@ export function EndGameModal() {
     let cancelled = false;
     const gameId = postGameContext.gameId;
 
-    isReplaySaved(gameId)
-      .then((saved) => {
+    listDeviceReplays("cyberpunk")
+      .then((savedReplays) => {
         if (!cancelled) {
-          setReplaySaved(saved);
+          setReplaySaved(savedReplays.some((replay) => replay.gameId === gameId));
         }
       })
       .catch((error) => {
@@ -260,7 +258,7 @@ export function EndGameModal() {
     setReplayDownloading(true);
     setReplayStatus(null);
     try {
-      await downloadReplayZip(postGameContext.gameId, analytics);
+      await downloadHostedReplay("cyberpunk", postGameContext.gameId);
     } catch (error) {
       console.error("[CyberpunkPostGame] Failed to download replay:", error);
       setReplayStatus("Replay download failed.");
@@ -274,18 +272,13 @@ export function EndGameModal() {
     setReplaySaving(true);
     setReplayStatus(null);
     try {
-      await saveReplayFromApi(
-        postGameContext.gameId,
-        fetchReplayBlob,
-        decompressReplayBlob,
-        viewerPlayerId,
-      );
+      await saveHostedReplayOnDevice("cyberpunk", postGameContext.gameId);
       setReplaySaved(true);
       setReplayStatus("Replay saved.");
     } catch (error) {
       console.error("[CyberpunkPostGame] Failed to save replay:", error);
       setReplayStatus(
-        error instanceof ReplayStorageQuotaError
+        error instanceof DOMException && error.name === "QuotaExceededError"
           ? "Replay storage is full. Delete older saved replays and try again."
           : "Replay save failed.",
       );
@@ -306,6 +299,7 @@ export function EndGameModal() {
             gameId: postGameContext.gameId,
             gameSlug: "cyberpunk",
             matchId: postGameContext.matchId,
+            playerCount: analytics?.players?.length ?? 2,
             stateVersion: matchState.ctx.stateID,
             winnerId: analytics?.summary.winnerId,
             endReason: analytics?.summary.endReason ?? winReason ?? undefined,
@@ -439,6 +433,19 @@ export function EndGameModal() {
           <button
             type="button"
             className={classes.replayButton}
+            onClick={() =>
+              window.location.assign(
+                cyberpunkSimulatorPath(
+                  `/replay/${encodeURIComponent(postGameContext?.gameId ?? "")}`,
+                ),
+              )
+            }
+          >
+            Watch replay
+          </button>
+          <button
+            type="button"
+            className={classes.replayButton}
             onClick={() => void downloadReplay()}
             disabled={replayDownloading}
           >
@@ -463,7 +470,11 @@ export function EndGameModal() {
               ) : (
                 <IconDeviceFloppy size={15} />
               )}
-              {replaySaved ? "Replay saved" : replaySaving ? "Saving replay" : "Save replay"}
+              {replaySaved
+                ? "Saved on this device"
+                : replaySaving
+                  ? "Saving replay"
+                  : "Save on this device"}
             </button>
           )}
           {replayStatus && <span className={classes.replayStatus}>{replayStatus}</span>}
@@ -785,14 +796,14 @@ function DeckMatchupPlayer({
   return (
     <article className={classes.deckMatchupPlayer}>
       <div className={classes.deckMatchupPlayerHeader}>
-        <span>{getDeckPerspectiveLabel(player, viewerPlayerId)}</span>
+        <span>{getPlayerPerspectiveLabel(player, viewerPlayerId)}</span>
         <div className={classes.colorSymbols} aria-label={player.deckColors.join(", ")}>
           {player.deckColors.map((color) => (
             <i key={color} data-color={color} />
           ))}
         </div>
       </div>
-      <h3>{player.deckName ?? "Unknown deck"}</h3>
+      <h3>{getPlayerName(player)}</h3>
       <div className={classes.deckStats}>
         <Metric label="RAM" value={getTotalRam(player)} />
         <Metric label="Legends" value={legends.length} />
@@ -901,7 +912,7 @@ function PlayerScore({
         <span>{player.seat === 1 ? "Runner 1" : "Runner 2"}</span>
         {isWinner && <IconTrophy size={17} />}
       </div>
-      <h3>{player.displayName ?? `Player ${player.seat}`}</h3>
+      <h3>{getPlayerName(player)}</h3>
       <div className={classes.scoreMetrics}>
         <Metric label="Gigs" value={player.final.gigs} />
         <Metric label="Street Cred" value={player.final.streetCred} />
@@ -955,7 +966,7 @@ function topCardsByImpact(
         card.timesAbilityActivated;
       if (score <= 0) continue;
       entries.push({
-        player: player.displayName ?? `Player ${player.seat}`,
+        player: getPlayerName(player),
         cardName: card.displayName,
         score,
         value:
@@ -984,21 +995,25 @@ function resolveViewerPlayerId(playerIds: unknown, humanSide: "player" | "oppone
 
 function formatDeckMatchupSummary(analytics: CyberpunkGameAnalyticsRecord): string {
   const [first, second] = analytics.players;
-  return `${first.deckName ?? "Unknown deck"} vs ${second.deckName ?? "Unknown deck"} · ${getTotalRam(
+  return `${getPlayerName(first)} vs ${getPlayerName(second)} · ${getTotalRam(
     first,
   )}/${getTotalRam(second)} RAM · ${getLegendSummaries(first).length}/${
     getLegendSummaries(second).length
   } legends`;
 }
 
-function getDeckPerspectiveLabel(
+function getPlayerPerspectiveLabel(
   player: CyberpunkPlayerAnalytics,
   viewerPlayerId: string | undefined,
 ): string {
   if (viewerPlayerId) {
-    return player.playerId === viewerPlayerId ? "Your deck" : "Opponent deck";
+    return player.playerId === viewerPlayerId ? "You" : "Opponent";
   }
   return `Player ${player.seat}`;
+}
+
+function getPlayerName(player: CyberpunkPlayerAnalytics): string {
+  return player.displayName ?? player.username ?? `Player ${player.seat}`;
 }
 
 function getTotalRam(player: CyberpunkPlayerAnalytics): number {
@@ -1048,7 +1063,7 @@ function getPlayerTiming(player: CyberpunkPlayerAnalytics): {
     .map((turn) => turn.durationMs)
     .filter((duration) => Number.isFinite(duration) && duration > 0);
   const totalThinkingMs = ownTurnDurations.reduce((sum, duration) => sum + duration, 0);
-  const ownTurns = ownTurnDurations.length;
+  const ownTurns = player.perTurn.length;
   return {
     totalThinkingMs,
     avgThinkingMs: ownTurns > 0 ? totalThinkingMs / ownTurns : 0,

@@ -14,7 +14,10 @@ export type AnimationStepKind =
   | "combat"
   | "combatRedirect"
   | "gigMove"
-  | "phaseChange";
+  | "phaseChange"
+  | "entityStateChange"
+  | "randomization"
+  | "gameResult";
 
 export type ResourceKind = "eddies" | "gig";
 
@@ -168,6 +171,27 @@ export interface PhaseChangeStep extends BaseStep {
   turnNumber?: number;
 }
 
+export interface EntityStateChangeStep extends BaseStep {
+  kind: "entityStateChange";
+  cardId: CardInstanceId;
+  playerId: PlayerId;
+  change: "spent" | "readied";
+}
+
+export interface RandomizationStep extends BaseStep {
+  kind: "randomization";
+  playerId: PlayerId;
+  randomization: "shuffle" | "die";
+  dieId?: GigDieId;
+  resultLabel?: string;
+}
+
+export interface GameResultStep extends BaseStep {
+  kind: "gameResult";
+  winnerId: PlayerId | null;
+  reasonLabel: string;
+}
+
 export type AnimationStep =
   | CardMoveStep
   | CardExitStep
@@ -181,7 +205,10 @@ export type AnimationStep =
   | CombatStep
   | CombatRedirectStep
   | GigMoveStep
-  | PhaseChangeStep;
+  | PhaseChangeStep
+  | EntityStateChangeStep
+  | RandomizationStep
+  | GameResultStep;
 
 export interface AnimationScript {
   steps: AnimationStep[];

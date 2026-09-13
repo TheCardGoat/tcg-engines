@@ -30,5 +30,6 @@ describe("PRB02-014 Sabo", () => {
     expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
       saboId,
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

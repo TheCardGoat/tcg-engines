@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import {
+  DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID,
+  getSafeGundamAutomatedActionStrategyOption,
+} from "@tcg/gundam-engine";
 
 import { SimulatorApp } from "../src/SimulatorApp.tsx";
 import { useClientBot } from "../src/game/bot/use-client-bot.ts";
@@ -19,6 +23,9 @@ import {
 import { SAMPLE_DECKS, type SampleDeckId } from "../src/data/sample-decks/index.ts";
 import type { OpponentStrategyId } from "../src/game/match-factory.ts";
 import { VsAiSetup } from "../src/components/vs-ai-setup/index.ts";
+import { ResourceAreaAnimationFixtureControls } from "../src/components/ui/ResourceAreaAnimationFixtureControls.tsx";
+import { useRegisterSimulatorDebugExportSource } from "../../../simulator/debug-export/SimulatorDebugExportContext.tsx";
+import { LocalSimulatorDebugHistoryRecorder } from "../../../simulator/debug-export/local-debug-history.ts";
 
 const VALID_STRATEGIES: ReadonlySet<OpponentStrategyId> = new Set([
   "combat-aware",
@@ -91,7 +98,7 @@ export type VsAiLoaderData = { readonly snapshot: MatchSnapshot | null };
  * subscriptions don't keep the discarded runtime alive beyond the
  * request.
  */
-async function loadVsAiSnapshot(url: URL): Promise<VsAiLoaderData> {
+export async function loadVsAiSnapshot(url: URL, routeFixtureId?: string): Promise<VsAiLoaderData> {
   const matchArgs = readVsAiMatchArgs(url);
 
   // Branch 1: real-deck match via URL params.
@@ -110,7 +117,7 @@ async function loadVsAiSnapshot(url: URL): Promise<VsAiLoaderData> {
   // non-parameterised fixtures — a bare `?fixture=vs-ai-match` would
   // crash inside the factory without arg validation, so it falls to
   // branch 3.
-  const raw = url.searchParams.get("fixture");
+  const raw = routeFixtureId ?? url.searchParams.get("fixture");
   const isKnown = raw !== null && Object.hasOwn(FIXTURES, raw);
   const isParameterized = isKnown && PARAMETERIZED_FIXTURES.has(raw as FixtureName);
   if (isKnown && !isParameterized) {
@@ -118,10 +125,29 @@ async function loadVsAiSnapshot(url: URL): Promise<VsAiLoaderData> {
     const factory = await resolveFixture(fixtureName);
     const dev = factory();
     try {
-      return { snapshot: snapshotFromDevRuntime(fixtureName, dev) };
+      const browserLabBotConfig: SnapshotBotConfig | undefined =
+        routeFixtureId !== undefined && url.searchParams.get("ai") !== "off"
+          ? {
+              driver: "strategy",
+              strategy: getSafeGundamAutomatedActionStrategyOption(
+                url.searchParams.get("strategy") ?? DEFAULT_GUNDAM_AUTOMATED_ACTION_STRATEGY_ID,
+              ).id,
+            }
+          : undefined;
+      return {
+        snapshot: snapshotFromDevRuntime(
+          fixtureName,
+          dev,
+          browserLabBotConfig ? { botConfig: browserLabBotConfig } : {},
+        ),
+      };
     } finally {
       dev.bot?.dispose();
     }
+  }
+
+  if (routeFixtureId !== undefined) {
+    throw new Error(`Unknown Gundam fixture: ${routeFixtureId}`);
   }
 
   // Branch 3: no match — render the setup screen. Keep this the
@@ -136,6 +162,7 @@ type SnapshotLoadState =
 
 export function VsAiPage() {
   const location = useLocation();
+  const { fixtureId: routeFixtureId } = useParams<{ fixtureId?: string }>();
   const [loadState, setLoadState] = useState<SnapshotLoadState>({ status: "loading" });
   const [restartRevision, setRestartRevision] = useState(0);
   const restartScenario = useCallback(() => setRestartRevision((revision) => revision + 1), []);
@@ -144,7 +171,7 @@ export function VsAiPage() {
     let cancelled = false;
     setLoadState({ status: "loading" });
     const url = new URL(`${location.pathname}${location.search}`, window.location.origin);
-    loadVsAiSnapshot(url)
+    loadVsAiSnapshot(url, routeFixtureId)
       .then(({ snapshot }) => {
         if (!cancelled) setLoadState({ status: "ready", snapshot });
       })
@@ -159,7 +186,7 @@ export function VsAiPage() {
     return () => {
       cancelled = true;
     };
-  }, [location.pathname, location.search, restartRevision]);
+  }, [location.pathname, location.search, restartRevision, routeFixtureId]);
 
   if (loadState.status === "loading") {
     return <RouteStatus title="Loading match" message="Preparing the Gundam simulator." />;
@@ -204,6 +231,49 @@ function VsAiMatch({
   readonly onRestartScenario: () => void;
 }) {
   const match = useMemo(() => reconstructFromSnapshot(snapshot), [snapshot]);
+  const debugHistory = useMemo(() => {
+    const localId = `gundam-practice-${snapshot.fixtureName}`;
+    return new LocalSimulatorDebugHistoryRecorder(
+      { slug: "gundam", gameId: localId, matchId: localId },
+      match.runtime.getState(),
+    );
+  }, [match.runtime, snapshot.fixtureName]);
+  useRegisterSimulatorDebugExportSource(debugHistory);
+
+  useEffect(() => {
+    let recordedMoves = match.runtime.getMoveHistory().length;
+    return match.runtime.onStateUpdate(() => {
+      const moves = match.runtime.getMoveHistory();
+      const commands = match.runtime.getCommandHistory();
+      const moveLogs = match.runtime.getMoveLogHistory();
+      const gameLogs = match.runtime.getGameLogHistory();
+      for (const move of moves.slice(recordedMoves)) {
+        const processedCommand = commands.find((command) => command.commandID === move.commandID);
+        const domainEvents = [
+          ...moveLogs
+            .filter((log) => log.stateID === move.stateID && log.commandID === move.commandID)
+            .map((log) => ({ kind: "move-log", log })),
+          ...gameLogs
+            .filter(({ entry }) => entry.stateID === move.stateID)
+            .map(({ entry, turnNumber }) => ({ kind: "game-log", entry, turnNumber })),
+        ];
+        debugHistory.record({
+          stateAfter: match.runtime.getState(),
+          stateVersion: move.stateID,
+          turnNumber: move.turnNumber,
+          actorId: String(move.playerId),
+          moveId: move.moveId,
+          commandId: move.commandID,
+          input: move.args,
+          ...(processedCommand ? { processedCommand } : {}),
+          timestamp: move.timestamp,
+          domainEvents,
+        });
+      }
+      recordedMoves = moves.length;
+    });
+  }, [debugHistory, match.runtime]);
+
   const bot = useClientBot(
     match.fixtureName,
     match.hasBot,
@@ -218,12 +288,17 @@ function VsAiMatch({
   }, [match]);
 
   return (
-    <SimulatorApp
-      runtime={match.runtime}
-      staticResources={match.staticResources}
-      viewerId={match.p1Id}
-      bot={bot}
-      onRestartScenario={onRestartScenario}
-    />
+    <>
+      <SimulatorApp
+        runtime={match.runtime}
+        staticResources={match.staticResources}
+        viewerId={match.p1Id}
+        bot={bot}
+        onRestartScenario={onRestartScenario}
+      />
+      {match.fixtureName === "resource-area-animation-demo" ? (
+        <ResourceAreaAnimationFixtureControls runtime={match.runtime} />
+      ) : null}
+    </>
   );
 }

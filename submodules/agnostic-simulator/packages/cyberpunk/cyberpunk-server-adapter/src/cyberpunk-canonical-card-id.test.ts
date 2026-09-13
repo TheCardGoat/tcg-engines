@@ -3,13 +3,13 @@ import { cards, getMergedCyberpunkCards } from "@tcg/cyberpunk-cards";
 import { cyberpunkServerAdapter } from "./adapter.js";
 
 describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
-  it("resolves a known canonical id to itself (delegates to the atelier helper)", () => {
-    // The merged card pool is keyed by canonical id, so a merged card's id is
-    // a fixed point of the canonicalization. This proves the adapter delegates
-    // to getCyberpunkCanonicalForCardId without hard-coding a fragile UUID.
+  it("resolves a merged card id to its stable canonical id", () => {
+    // Authored card ids may be UUIDs, while deck and Atelier identities use the
+    // stable canonical slug. This proves the adapter delegates to the shared
+    // identity helper without hard-coding either representation.
     const canonical = getMergedCyberpunkCards()[0];
     expect(canonical).toBeDefined();
-    expect(cyberpunkServerAdapter.getCanonicalCardId(canonical.id)).toBe(canonical.id);
+    expect(cyberpunkServerAdapter.getCanonicalCardId(canonical.id)).toBe(canonical.canonicalId);
   });
 
   it("returns null for an unknown id so callers can fall back to the raw publicId", () => {
@@ -27,6 +27,20 @@ describe("cyberpunkServerAdapter.getCanonicalCardId", () => {
     expect(result.rules).toContainEqual(
       expect.objectContaining({ kind: "card-pool", passed: true }),
     );
+  });
+
+  it("accepts an unambiguous accent-folded display slug from legacy deck rows", () => {
+    const result = cyberpunkServerAdapter.validateDeckForFormat("alpha", [
+      { cardId: "gilded-maton", quantity: 1 },
+    ]);
+
+    expect(result.rules).toContainEqual(
+      expect.objectContaining({ kind: "card-pool", passed: true }),
+    );
+    expect(cyberpunkServerAdapter.getCardById("gilded-maton")?.label).toBe("Gilded Matón");
+    expect(
+      cyberpunkServerAdapter.metadata?.normalizeTemplate([{ cardId: "gilded-maton", quantity: 4 }]),
+    ).toEqual([expect.objectContaining({ cardId: "gilded-maton" })]);
   });
 
   it("recognizes canonical deck ids during the shared playability preflight", () => {

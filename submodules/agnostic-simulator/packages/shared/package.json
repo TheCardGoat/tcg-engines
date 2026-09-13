@@ -47,6 +47,7 @@
     "@discord/embedded-app-sdk": "catalog:",
     "@logtape/logtape": "^2.0.4",
     "@tcg/card-model": "link:../card-model",
+    "@tcg/game-page-contract": "link:../game-page-contract",
     "@tcg/protocol": "link:../protocol"
   },
   "devDependencies": {

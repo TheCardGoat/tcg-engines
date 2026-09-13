@@ -28,7 +28,12 @@ export const op14eb04OceanCurrentShoulderThrow058: EventCard = {
     effects: [
       {
         trigger: "main",
-        costs: [{ cost: "restDon", amount: 3 }],
+        costs: [
+          {
+            cost: "restDon",
+            amount: 3,
+          },
+        ],
         actions: [
           {
             action: "play",
@@ -60,7 +65,7 @@ export const op14eb04OceanCurrentShoulderThrow058: EventCard = {
           {
             action: "returnToHand",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

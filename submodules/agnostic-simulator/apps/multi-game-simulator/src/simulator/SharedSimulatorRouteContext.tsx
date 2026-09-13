@@ -6,10 +6,11 @@ import {
   useSimulatorPlayers,
   useSimulatorRoute,
   type SimulatorPlayerSummary,
+  type SimulatorRouteContextValue,
 } from "./providers";
 import type { SharedSimulatorRouteData } from "./routeData";
 
-export interface SharedSimulatorRouteContextValue extends SharedSimulatorRouteData {
+export interface SharedSimulatorRouteContextValue extends SimulatorRouteContextValue {
   currentPlayer: SimulatorPlayerSummary;
   opponentPlayer: SimulatorPlayerSummary;
 }

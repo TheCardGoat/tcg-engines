@@ -32,7 +32,7 @@ describe("findDualModeMatchInInteractionView", () => {
 
 function viewWithActions(actions: InteractionAction[]): EngineInteractionView {
   return {
-    protocolVersion: 1,
+    protocolVersion: 2,
     gameSlug: "gundam",
     actorId: "p1",
     stateVersion: 1,

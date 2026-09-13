@@ -27,7 +27,11 @@ describe("PlayZoneCardBands", () => {
     expect(band.getAttribute("aria-hidden")).toBe("false");
     // Blocker + Repair collapsed into the Lorcana-style hover stack;
     // damage is omitted, so the stack count remains 2 instead of 3.
-    expect(getByLabelText("2 tags")).toBeTruthy();
+    const collapsedTags = getByLabelText("2 tags");
+    expect(collapsedTags).toBeTruthy();
+    const icon = collapsedTags.querySelector("svg");
+    expect(icon?.classList.contains("h-4")).toBe(true);
+    expect(icon?.getAttribute("stroke-width")).toBe("2.25");
   });
 
   it("top band is aria-hidden when there are no tags", () => {

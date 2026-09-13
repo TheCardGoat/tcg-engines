@@ -16,7 +16,7 @@ export type AdFreeUserState = {
  * via `$derived` from the hydrated `authSession`, keeping subscription state
  * consistent between SSR and CSR.
  *
- * Anonymous users and tier1 see ads. tier2+ are ad-free (see FEATURES.adFree).
+ * Anonymous and free users see ads. Paid members are ad-free (see FEATURES.adFree).
  */
 export function computeAdFreeState(user: AuthUser | null, isLoading: boolean): AdFreeUserState {
   if (typeof window === "undefined") {

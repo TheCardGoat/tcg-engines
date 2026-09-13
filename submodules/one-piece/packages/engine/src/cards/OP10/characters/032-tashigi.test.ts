@@ -24,5 +24,6 @@ describe("OP10-032 Tashigi", () => {
       view.players.south.characters.find((card) => card?.instanceId === tashigiId)?.rested,
     ).toBe(true);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

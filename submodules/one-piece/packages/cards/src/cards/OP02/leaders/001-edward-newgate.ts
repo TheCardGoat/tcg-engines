@@ -52,6 +52,7 @@ export const op02EdwardNewgate001: LeaderCard = {
               amount: 1,
             },
             destination: "hand",
+            position: "top",
           },
         ],
       },

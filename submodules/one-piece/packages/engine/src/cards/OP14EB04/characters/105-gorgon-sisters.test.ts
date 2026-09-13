@@ -74,4 +74,38 @@ describe("OP14-105 Gorgon Sisters", () => {
       engine.getView("north").players.north.characters.map((card) => card?.instanceId),
     ).toContain(triggerId);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op07BoaHancock038,
+      hand: [
+        eb03Marguerite027,
+        op07Marguerite054,
+        op07Salome043,
+        op14eb04GorgonSisters105,
+        eb01Doma005,
+      ],
+      character: [op14eb04GorgonSisters105, eb01Doma005],
+      restedDon: 3,
+    });
+    const sourceId = engine.findCardInZone("south", "character", op14eb04GorgonSisters105);
+    const characterId = engine.findCardInZone("south", "character", eb01Doma005);
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const restedBefore = engine.getView("south").players.south.restedDon;
+
+    engine.activateEffect(sourceId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.restedDon).toBe(restedBefore);
+    expect(view.players.south.leader.attachedDon).toBe(0);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === sourceId)?.attachedDon,
+    ).toBe(0);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === characterId)?.attachedDon,
+    ).toBe(0);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

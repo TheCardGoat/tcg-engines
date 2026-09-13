@@ -58,6 +58,10 @@ export const op11LongJawNeptunian103: CharacterCard = {
                 },
               ],
             },
+            condition: {
+              condition: "leaderName",
+              name: "Shirahoshi",
+            },
           },
         ],
         optional: true,

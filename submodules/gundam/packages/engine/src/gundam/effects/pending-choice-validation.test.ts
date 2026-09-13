@@ -346,8 +346,9 @@ describe("resolveEffect — deck-look answers", () => {
     );
 
     expect(p1.getBoardView().pendingChoice).toMatchObject({
-      kind: "optional",
+      kind: "targetSelection",
       directiveIndex: 0,
+      optionalDirectiveIndex: 0,
     });
     expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
     expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(deckBefore);
@@ -394,14 +395,17 @@ describe("resolveEffect — deck-look answers", () => {
       }),
     );
 
-    expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional", directiveIndex: 0 });
-    expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: true } }));
-
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
+      optionalDirectiveIndex: 0,
       legalTargetIds: expect.arrayContaining([discardId, keptId]),
     });
-    expectSuccess(p1.resolveEffect({ targets: [discardId!] }));
+    expectSuccess(
+      p1.resolveEffect({
+        optionalAnswers: { 0: true },
+        targets: [discardId!],
+      }),
+    );
 
     const deckLook = p1.getBoardView().pendingChoice;
     if (deckLook?.kind !== "deckLook") throw new Error("Expected a staged Deck look");

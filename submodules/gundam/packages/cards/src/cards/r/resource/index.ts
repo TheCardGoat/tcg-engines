@@ -41,3 +41,4 @@ export { rResource037 } from "./037-resource.ts";
 export { rResource038 } from "./038-resource.ts";
 export { rResource039 } from "./039-resource.ts";
 export { rResource040 } from "./040-resource.ts";
+export { rResource041 } from "./041-resource.ts";

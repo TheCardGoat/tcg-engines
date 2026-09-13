@@ -1,8 +1,10 @@
-import type { CardInstanceId } from "../types/branded.ts";
+import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { defOf } from "../state/lookups.ts";
 import { availableEddies } from "./eddie-resources.ts";
+import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
+import type { MatchState } from "../types/match-state.ts";
 
 export interface GoSoloInput extends MoveInput {
   args: {
@@ -24,8 +26,8 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
       const def = defOf(card);
       return (
         def.keywords.includes("goSolo") &&
-        availableEddies(state as import("../types/match-state.ts").MatchState, playerId) >=
-          (def.cost ?? 0)
+        availableEddies(state as MatchState, playerId) >=
+          goSoloCost(state as MatchState, id as CardInstanceId, playerId)
       );
     });
   },
@@ -55,8 +57,8 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
     if (!def.keywords.includes("goSolo")) {
       return { valid: false, error: "Card does not have GO SOLO", errorCode: "NO_GO_SOLO" };
     }
-    const cost = def.cost ?? 0;
-    if (availableEddies(state as import("../types/match-state.ts").MatchState, playerId) < cost) {
+    const cost = goSoloCost(state as MatchState, cardId as CardInstanceId, playerId);
+    if (availableEddies(state as MatchState, playerId) < cost) {
       return { valid: false, error: "Not enough eddies", errorCode: "INSUFFICIENT_EDDIES" };
     }
 
@@ -69,9 +71,10 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
     if (!card) return;
 
     const def = defOf(card);
-    const cost = def.cost ?? 0;
+    const cost = goSoloCost(state as MatchState, cardId as CardInstanceId, playerId);
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
     operations.game.spendEddies(playerId, cost, "goSolo");
+    consumeCostModifierUse(state as MatchState, cardId as CardInstanceId, playerId);
     operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
     operations.card.moveAttachedGear(cardId as CardInstanceId, "field");
     operations.card.ready(cardId as CardInstanceId);
@@ -104,3 +107,16 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
     });
   },
 };
+
+export function goSoloCost(state: MatchState, cardId: CardInstanceId, playerId: PlayerId): number {
+  return computeEffectiveCost(state, cardId, playerId) + rivalGoSoloCostIncrease(state, playerId);
+}
+
+function rivalGoSoloCostIncrease(state: MatchState, playerId: PlayerId): number {
+  return state.G.activeEffects
+    .filter(
+      (e) =>
+        e.kind === "rivalGoSoloCostIncrease" && (e.playerId as string) !== (playerId as string),
+    )
+    .reduce((sum, e) => sum + (e.amount ?? 0), 0);
+}

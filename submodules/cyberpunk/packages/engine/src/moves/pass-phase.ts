@@ -230,7 +230,8 @@ function defeatCardsMarkedForEndTurn(state: MatchState, operations: Operations):
   for (const cardId of getCardsMarkedForEndTurnDefeat(state)) {
     const card = state.G.cardIndex[cardId as string];
     if (!card || card.zone !== "field") continue;
-    const hadAttachedCards = card.meta.attachedGearIds.length > 0;
+    const attachedGearIds = [...card.meta.attachedGearIds];
+    const hadAttachedCards = attachedGearIds.length > 0;
     operations.card.moveAttachedGear(cardId, "trash", { detachAfterMove: true });
     operations.zone.moveCard(cardId, "trash", card.controllerId);
     const event = {
@@ -242,6 +243,21 @@ function defeatCardsMarkedForEndTurn(state: MatchState, operations: Operations):
     };
     operations.event.emit(event);
     processEventTriggers(event, state, operations);
+
+    for (const gearId of attachedGearIds) {
+      const gear = state.G.cardIndex[gearId as string];
+      if (!gear) continue;
+      const gearEvent = {
+        type: "cardDefeated" as const,
+        cardId: gearId,
+        hostId: cardId,
+        defeatedBy: null,
+        playerId: gear.controllerId,
+        hadAttachedCards: false,
+      };
+      operations.event.emit(gearEvent);
+      processEventTriggers(gearEvent, state, operations);
+    }
   }
 }
 

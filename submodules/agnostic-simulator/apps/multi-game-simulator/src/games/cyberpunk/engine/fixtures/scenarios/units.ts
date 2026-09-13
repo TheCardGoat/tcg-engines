@@ -2085,4 +2085,377 @@ export const unitScenarios: Scenario[] = [
         },
       ),
   },
+
+  // ── Unit: Gig prevention (Alt Cunningham — Mother of Daemons) ────────────
+  {
+    id: "unitAltCunninghamMotherOfDaemons",
+    group: "unit-gig-prevention",
+    label: "Alt Cunningham — Mother of Daemons · spend trigger draw + Gig theft prevention",
+    description:
+      "P1 has Alt Cunningham equipped on field. Rival can attack with Delamain Cab (steals Gigs). Tests the spend trigger (draw when equipped ally spent) and the Gig theft prevention reaction.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailCorpoSecurity],
+          trash: [c.welcomeToNightCityRetailCorporateSurveillance],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailAltCunninghamMotherOfDaemons,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 8,
+          gigArea: [
+            { dieType: "d4", faceValue: 2 },
+            { dieType: "d6", faceValue: 5 },
+          ],
+        },
+        {
+          hand: [c.welcomeToNightCityRetailBonnieAndClyde],
+          trash: [c.welcomeToNightCityRetailCorporateSurveillance],
+          field: [{ card: c.welcomeToNightCityRetailDelamainCab, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("unitAltCunninghamMotherOfDaemons"), autoGainGig: false },
+      ),
+  },
+
+  // ── Unit: Fight trigger (Maelstrom Zealots) ──────────────────────────────
+  {
+    id: "unitMaelstromZealots",
+    group: "unit-fight-trigger",
+    label: "Maelstrom Zealots · loses fight but defeats the opposing Unit",
+    description:
+      "P1 has Maelstrom Zealots (power 0) on field. Rival attacks with Corpo Security (power 2) — Maelstrom loses the fight but its trigger defeats the attacker. Tests fight participant trigger and power-0 Gig steal prevention.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailMaelstromZealots, spent: false, hasLag: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d8", faceValue: 7 }],
+        },
+        { seed: scenarioSeed("unitMaelstromZealots"), autoGainGig: false },
+      ),
+  },
+
+  // ── Combined QA: all 4 new cards on one board ────────────────────────────
+  {
+    id: "cyberpunkAllFourCards",
+    group: "unit-play-trigger",
+    label: "All 4 New Cards · Trust No One, Judy, Alt Cunningham, Maelstrom Zealots",
+    description:
+      "P1 (active) has all four new cards present: Trust No One in hand (playable BRAINDANCE to trigger Judy), Judy Álvarez face-up in legend area, Alt Cunningham (equipped) and Maelstrom Zealots on field. Trash has CorporateSurveillance (BRAINDANCE) for Judy's spend-to-recover. P2 has Delamain Cab and Corpo Security as attackers to test Alt's gig prevention and Maelstrom's fight-loser-defeats-opponent.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailTrustNoOne],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailAltCunninghamMotherOfDaemons,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+            { card: c.welcomeToNightCityRetailMaelstromZealots, spent: false },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailJudyALvarezBraindanceMaestro, faceDown: false },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+          ],
+          trash: [c.welcomeToNightCityRetailCorporateSurveillance],
+          eddies: 10,
+          gigArea: [{ dieType: "d8", faceValue: 5 }],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailDelamainCab, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false },
+            { card: c.embracingPowerRetailStarterDeckMinotaur, spent: true },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("cyberpunkAllFourCards"), autoGainGig: false },
+      ),
+  },
+
+  // ── Aug 2026 release: all 8 new cards (visual QA) ────────────────────────
+  {
+    id: "retailReleaseAug2026AllCards",
+    group: "unit-play-trigger",
+    label: "Aug 2026 release · all 8 new cards (visual)",
+    description:
+      "Single board with every new retail card rendered: Johnny (face-up legend), Jackie Mama's Favorite as GO SOLO on field, Judy / MaxTac / Pacifica / Valentino on field, The Relic equipped on Judy, Pyramid Song in hand. Even Street Cred (6) and a ready rival Blocker make labels inspectable. Open with ?ai=off.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailPyramidSong],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailJackieWellesMamaSFavorite,
+              spent: false,
+              hasLag: false,
+              faceDown: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailJudyALvarezNothingToDoubt,
+              spent: false,
+              hasLag: false,
+              attachedGears: [c.welcomeToNightCityRetailTheRelicExperimentalBiochip],
+            },
+            {
+              card: c.welcomeToNightCityRetailMaxtacSuppressionTeam,
+              spent: false,
+              hasLag: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailPacificaNetrunner,
+              spent: false,
+              hasLag: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailValentinoGuerrera,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [
+            {
+              card: c.welcomeToNightCityRetailJohnnySilverhandRockingRenegade,
+              faceDown: false,
+              spent: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailJudyALvarezBraindanceMaestro,
+              faceDown: false,
+              spent: false,
+            },
+          ],
+          deck: [
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailFieldOperator,
+            c.welcomeToNightCityRetailMoxInciters,
+          ],
+          trash: [c.welcomeToNightCityRetailSwordwiseHuscle],
+          eddies: 12,
+          gigArea: [
+            { dieType: "d6", faceValue: 2 },
+            { dieType: "d8", faceValue: 4 },
+          ],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: false, hasLag: false },
+            { card: c.welcomeToNightCityRetailDelamainCab, spent: true, hasLag: false },
+            { card: c.welcomeToNightCityRetailFieldOperator, spent: false, hasLag: true },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          hand: [c.welcomeToNightCityRetailRidingNomad],
+          eddies: 6,
+          gigArea: [
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d10", faceValue: 3 },
+          ],
+        },
+        { seed: scenarioSeed("retailReleaseAug2026AllCards"), autoGainGig: false },
+      ),
+  },
+  {
+    id: "retailReleaseAug2026PlayBench",
+    group: "unit-play-trigger",
+    label: "Aug 2026 release · ability play bench",
+    description:
+      "Interactive board for the 8 new cards: Pyramid Song + Pacifica + Relic in hand (eddies for plays); Johnny face-up to activate onto a Rocker; Jackie face-up for GO SOLO; Judy ready to spend-scry; MaxTac + Valentino ready; rival has a power-0 unit, a Blocker, and a unit in hand for MaxTac's play lock. Friendly d4 is min Gig for Pyramid Song's both-modes path. Open with ?ai=off.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailPyramidSong,
+            c.welcomeToNightCityRetailPacificaNetrunner,
+            c.welcomeToNightCityRetailTheRelicExperimentalBiochip,
+          ],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
+              spent: false,
+              hasLag: true,
+            },
+            {
+              card: c.welcomeToNightCityRetailJudyALvarezNothingToDoubt,
+              spent: false,
+              hasLag: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailMaxtacSuppressionTeam,
+              spent: false,
+              hasLag: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailValentinoGuerrera,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [
+            {
+              card: c.welcomeToNightCityRetailJohnnySilverhandRockingRenegade,
+              faceDown: false,
+              spent: false,
+            },
+            {
+              card: c.welcomeToNightCityRetailJackieWellesMamaSFavorite,
+              faceDown: false,
+              spent: false,
+            },
+          ],
+          deck: [
+            c.welcomeToNightCityRetailFieldOperator,
+            c.welcomeToNightCityRetailMoxInciters,
+            c.welcomeToNightCityRetailCorpoSecurity,
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+          ],
+          trash: [
+            c.welcomeToNightCityRetailSwordwiseHuscle,
+            c.welcomeToNightCityRetailEmergencyAtlus,
+          ],
+          eddies: 14,
+          gigArea: [
+            // even Street Cred (1+3+4+8=16) for Pacifica; min d4 for Pyramid Song dual mode
+            { dieType: "d4", faceValue: 1 },
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d8", faceValue: 4 },
+            { dieType: "d10", faceValue: 8 },
+          ],
+        },
+        {
+          hand: [c.welcomeToNightCityRetailRidingNomad, c.welcomeToNightCityRetailFieldOperator],
+          field: [
+            // power-0 target for Pyramid Song bottom-deck line
+            {
+              card: c.welcomeToNightCityRetailMaelstromZealots,
+              spent: true,
+              hasLag: false,
+            },
+            // ready Blocker for Valentino rule-text context
+            {
+              card: c.welcomeToNightCityRetailCorpoSecurity,
+              spent: false,
+              hasLag: false,
+            },
+            // high-power unit for Pyramid Song -5 line
+            {
+              card: c.welcomeToNightCityRetailDelamainCab,
+              spent: true,
+              hasLag: false,
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [
+            { dieType: "d6", faceValue: 3 },
+            { dieType: "d12", faceValue: 5 },
+          ],
+        },
+        {
+          seed: scenarioSeed("retailReleaseAug2026PlayBench"),
+          autoGainGig: false,
+          preserveDeckOrder: true,
+        },
+      ),
+  },
+  {
+    id: "retailScrapedReleaseAug2026Qa",
+    group: "unit-play-trigger",
+    label: "Aug 2026 scraped release · six-card QA board",
+    description:
+      "Human QA fixture for the newly scraped release. Animals Wrecker, Rockn' Rockerboy, and V — Roamer of the Badlands are ready; Les Élémens, Unlikely Bond, and Wild in the Streets are playable. Try Unlikely Bond to choose a ready friendly Unit, then a spent rival Unit. The companion V steal fixture begins after the defender passes the reaction window.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [
+            c.welcomeToNightCityRetailLesELeMens,
+            c.welcomeToNightCityRetailUnlikelyBond,
+            c.welcomeToNightCityRetailWildInTheStreets,
+          ],
+          deck: 20,
+          field: [
+            { card: c.welcomeToNightCityRetailAnimalsWrecker, spent: false, hasLag: false },
+            { card: c.welcomeToNightCityRetailRocknRockerboy, spent: false, hasLag: false },
+            {
+              card: c.welcomeToNightCityRetailVRoamerOfTheBadlands,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          eddies: 14,
+          gigArea: [
+            { dieType: "d8", faceValue: 8 },
+            { dieType: "d10", faceValue: 8 },
+          ],
+        },
+        {
+          field: [
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true, hasLag: false },
+            { card: c.welcomeToNightCityRetailFieldOperator, spent: true, hasLag: false },
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: true, hasLag: false },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d8", faceValue: 2 }],
+        },
+        {
+          seed: scenarioSeed("retailScrapedReleaseAug2026Qa"),
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
+    id: "retailScrapedReleaseAug2026VStealQa",
+    group: "unit-play-trigger",
+    label: "Aug 2026 scraped release · V Gig-steal QA",
+    description:
+      "Human QA continuation for V — Roamer of the Badlands. The direct attack has connected and the defender has passed reactions. Choose the rival d8 Gig, then use V's prompted control to increase that stolen Gig by up to 5.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailVRoamerOfTheBadlands,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 9,
+          gigArea: [{ dieType: "d10", faceValue: 8 }],
+        },
+        {
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 4,
+          gigArea: [{ dieType: "d8", faceValue: 2 }],
+        },
+        {
+          seed: scenarioSeed("retailScrapedReleaseAug2026VStealQa"),
+          autoGainGig: false,
+        },
+      );
+      engine.attackRival(c.welcomeToNightCityRetailVRoamerOfTheBadlands, { as: P1 });
+      engine.resolveAttack({ as: P1 });
+      engine.resolveAttack({ as: P2, pass: true });
+      return engine;
+    },
+  },
 ];

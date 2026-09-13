@@ -1,22 +1,25 @@
-import { gd01TheWitchAndTheBride117 } from "@tcg/gundam-cards";
-import { createMockResource, createMockUnit } from "@tcg/gundam-engine";
+import {
+  gd01TheWitchAndTheBride117,
+  st01Guncannon003,
+  st01Gundam001,
+  st01Guntank004,
+} from "@tcg/gundam-cards";
 
 import { createDevRuntime, type DevRuntime } from "../dev-runtime.ts";
+import { realResourceCards } from "./real-cards.ts";
 
-/** A real Command effect that visibly returns an opponent Unit to its hand. */
+/** A real Command effect with a varied opponent board for return-to-hand QA. */
 export function loadReturnToHandDemo(): DevRuntime {
   return createDevRuntime({
     skipToMainPhase: true,
     p1: {
       hand: [gd01TheWitchAndTheBride117],
-      resourceArea: Array.from({ length: 5 }, () => createMockResource()),
+      resourceArea: realResourceCards(5),
       deck: 30,
       resourceDeck: 10,
     },
     p2: {
-      battleArea: [
-        createMockUnit({ cost: 2, level: 2, ap: 2, hp: 4, color: "red", name: "Zaku II" }),
-      ],
+      battleArea: [st01Guncannon003, st01Gundam001, st01Guntank004],
       deck: 30,
       resourceDeck: 10,
     },

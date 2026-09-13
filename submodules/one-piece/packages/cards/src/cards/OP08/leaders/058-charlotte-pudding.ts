@@ -49,6 +49,7 @@ export const op08CharlottePudding058: LeaderCard = {
           {
             cost: "turnLifeFaceUp",
             count: 2,
+            faceUp: true,
           },
         ],
         actions: [

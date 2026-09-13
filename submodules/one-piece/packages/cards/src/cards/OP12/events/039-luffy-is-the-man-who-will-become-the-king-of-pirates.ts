@@ -37,12 +37,6 @@ export const op12LuffyIsTheManWhoWillBecomeTheKingOfPirates039: EventCard = {
               count: {
                 amount: 1,
               },
-              filters: [
-                {
-                  filter: "name",
-                  value: "Roronoa Zoro",
-                },
-              ],
             },
           },
         ],

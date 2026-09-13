@@ -58,6 +58,7 @@ export const eb01Mr9037: CharacterCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

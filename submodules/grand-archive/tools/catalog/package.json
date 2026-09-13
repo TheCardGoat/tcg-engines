@@ -1,0 +1,24 @@
+{
+  "name": "@tcg/grand-archive-catalog",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vp pack",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "generate": "node --experimental-transform-types src/cli.ts generate",
+    "verify:catalog": "node --experimental-transform-types src/cli.ts verify",
+    "generate:manifest": "node --experimental-transform-types src/generation-manifest.ts",
+    "test": "vp test run"
+  },
+  "dependencies": {
+    "@tcg/grand-archive-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

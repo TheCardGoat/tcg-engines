@@ -83,6 +83,7 @@ export function createGatewayStatePusher(config: GatewayStatePusherConfig) {
         type: "push_state",
         gameId,
         state: { engineSnapshot },
+        expectedVersion: version === 0 ? null : version - 1,
         version,
         moveType,
         actorId,

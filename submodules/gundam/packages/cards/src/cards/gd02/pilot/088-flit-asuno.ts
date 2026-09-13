@@ -27,8 +27,7 @@ export const gd02FlitAsuno088: PilotCard = {
       },
       rarity: "rare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-088.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-088.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-088.webp",
       productName: "Dual Impact [GD02]",
     },
     {
@@ -44,8 +43,7 @@ export const gd02FlitAsuno088: PilotCard = {
       },
       rarity: "rare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-088_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-088_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-088_p1.webp",
       productName: "Dual Impact [GD02]",
     },
     {
@@ -61,15 +59,13 @@ export const gd02FlitAsuno088: PilotCard = {
       },
       rarity: "rare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-088_p2.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-088_p2.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-088_p2.webp",
       productName: "Booster Release Event",
     },
   ],
   reprints: ["GD02-088", "GD02-088_p1", "GD02-088_p2"],
   selectedPrintingId: "GD02-088",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-088.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-088.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-088.webp",
   legality: "legal",
   level: 3,
   cost: 1,
@@ -106,6 +102,7 @@ export const gd02FlitAsuno088: PilotCard = {
             randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
+              count: 1,
               attributeFilters: [
                 {
                   attribute: "or",

@@ -41,6 +41,13 @@ const RARITY_MAP: Record<string, CardRarity> = {
   R: "rare",
   Rare: "rare",
   LR: "legendRare",
+  // GD05 introduced legacy/limited parallel labels whose final letter keeps
+  // the base-card rarity. They are cosmetic printings, not new gameplay
+  // rarities, so normalize them to the same catalog rarity as their base
+  // printing.
+  LKC: "common",
+  LKU: "uncommon",
+  LKR: "rare",
   LegendRare: "legendRare",
   "Legend Rare": "legendRare",
   P: "promo",
@@ -115,10 +122,7 @@ function parseCost(raw: number | null): number {
 }
 
 function parseSourceTitle(raw: string | null): string | undefined {
-  if (!raw) return undefined;
-  const cleaned = raw.trim();
-  if (!cleaned || cleaned === "-") return undefined;
-  return normalizeSourceTitle(cleaned);
+  return normalizeSourceTitle(raw);
 }
 
 function normalizeCardId(value: string): string {
@@ -210,10 +214,17 @@ function catalogMetadata(raw: RawGundamCard, rarity: CardRarity) {
   };
 }
 
-function normalizeSourceTitle(value: string): string {
-  const normalized = value
+export function normalizeSourceTitle(value: string | null | undefined): string | undefined {
+  const trimmed = value?.trim();
+  if (!trimmed || trimmed === "-") return undefined;
+
+  const normalized = trimmed
     .replace(/Hathaway"s/g, "Hathaway's")
-    .replace(/^Mobile Suit Gundam Mobile Suit Gundam GQuuuuuuX$/i, "Mobile Suit Gundam GQuuuuuuX");
+    .replace(/^Mobile Suit Gundam Mobile Suit Gundam GQuuuuuuX$/i, "Mobile Suit Gundam GQuuuuuuX")
+    .replace(
+      /^Mobile Suit Gundam: Char's Counterattack Mobile Suit Gundam: Hathaway's Flash$/i,
+      "Mobile Suit Gundam: Char's Counterattack / Mobile Suit Gundam: Hathaway's Flash",
+    );
 
   const lower = normalized.toLowerCase();
   if (lower === "mobile suit gundam uc") return "Mobile Suit Gundam Unicorn";
@@ -284,6 +295,15 @@ function parsePilotName(effect: string | null): string | undefined {
     ?.trim();
 }
 
+function parseAlternateNames(effect: string | null): string[] | undefined {
+  if (!effect) return undefined;
+  const names = Array.from(
+    cleanHtml(effect).matchAll(/This card['’]s name is also treated as \[([^\]]+)\]\.?/gi),
+    (match) => match[1].trim(),
+  ).filter(Boolean);
+  return names.length > 0 ? [...new Set(names)] : undefined;
+}
+
 // ── Normalizers ───────────────────────────────────────────────────────────────
 
 export function normalizeUnit(raw: RawGundamCard): UnitCard {
@@ -306,6 +326,7 @@ export function normalizeUnit(raw: RawGundamCard): UnitCard {
       raw.link.trim() !== "-" && { linkCondition: raw.link }),
     ...(battlefieldZones !== undefined && { battlefieldZones }),
     ...(raw.effect !== null && raw.effect !== undefined && { effect: raw.effect }),
+    ...(parseAlternateNames(raw.effect) ? { alternateNames: parseAlternateNames(raw.effect) } : {}),
     keywordEffects: parseKeywordEffects(raw.effect),
     rarity,
   };
@@ -326,6 +347,7 @@ export function normalizePilot(raw: RawGundamCard): PilotCard {
     apBonus: parseStat(raw.ap),
     hpBonus: parseStat(raw.hp),
     ...(raw.effect !== null && raw.effect !== undefined && { effect: raw.effect }),
+    ...(parseAlternateNames(raw.effect) ? { alternateNames: parseAlternateNames(raw.effect) } : {}),
     keywordEffects: parseKeywordEffects(raw.effect),
     rarity,
   };
@@ -396,6 +418,7 @@ export function normalizeResource(raw: RawGundamCard): ResourceCard {
 const TYPE_MAP: Record<string, (raw: RawGundamCard) => Card> = {
   UNIT: normalizeUnit,
   "UNIT TOKEN": normalizeUnit,
+  "UNIT・TOKEN": normalizeUnit,
   Unit: normalizeUnit,
   unit: normalizeUnit,
   PILOT: normalizePilot,

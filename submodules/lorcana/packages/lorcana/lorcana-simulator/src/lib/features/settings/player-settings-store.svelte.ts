@@ -7,17 +7,38 @@ export type AnimationSpeed = "off" | "fast" | "normal" | "slow";
 export type HotkeyMode = "off" | "confirm-only" | "on";
 export type CardInfoMode = "detailed" | "quick";
 
-const PLAYER_LOCALE_STORAGE_KEY = "lorcana.simulator.playerLocale";
-const HOTKEYS_ENABLED_STORAGE_KEY = "lorcana.simulator.hotkeysEnabled";
-const CARD_PREVIEW_DELAY_STORAGE_KEY = "lorcana.simulator.cardPreviewDelay";
-const PRIMARY_CLICK_ACTION_STORAGE_KEY = "lorcana.simulator.primaryClickAction";
-const ANIMATION_SPEED_STORAGE_KEY = "lorcana.simulator.animationSpeed";
-const SOUND_VOLUME_STORAGE_KEY = "lorcana.simulator.soundVolume";
-const ACCESSIBLE_MOBILE_CONTROLS_STORAGE_KEY = "lorcana.simulator.accessibleMobileControls";
-const SHOW_ZONE_COUNTERS_STORAGE_KEY = "lorcana.simulator.showZoneCounters";
+// SETTINGS PARITY: keep in sync with the platform web app's player-settings.svelte.ts.
+// Canonical browser keys match matchmaking; old keys are read only for migration.
+const legacyKeys: Record<string, string> = {
+  "matchmaking.player.locale": "lorcana.simulator.playerLocale",
+  "matchmaking.player.hotkeyMode": "lorcana.simulator.hotkeysEnabled",
+  "matchmaking.player.cardPreviewMode": "lorcana.simulator.cardPreviewDelay",
+  "matchmaking.player.primaryClickAction": "lorcana.simulator.primaryClickAction",
+  "matchmaking.player.animationSpeed": "lorcana.simulator.animationSpeed",
+  "matchmaking.player.soundVolume": "lorcana.simulator.soundVolume",
+  "matchmaking.player.accessibleMobileControls": "lorcana.simulator.accessibleMobileControls",
+  "matchmaking.player.showZoneCounters": "lorcana.simulator.showZoneCounters",
+  "matchmaking.lorcana.selectedPlaymat": "lorcana.simulator.selectedPlaymat",
+  "matchmaking.lorcana.selectedCardBack": "lorcana.simulator.selectedCardBack",
+};
+function readSetting(key: string): string | null {
+  const stored = localStorage.getItem(key);
+  if (stored !== null) return stored;
+  const legacy = legacyKeys[key];
+  return legacy ? localStorage.getItem(legacy) : null;
+}
+
+const PLAYER_LOCALE_STORAGE_KEY = "matchmaking.player.locale";
+const HOTKEYS_ENABLED_STORAGE_KEY = "matchmaking.player.hotkeyMode";
+const CARD_PREVIEW_DELAY_STORAGE_KEY = "matchmaking.player.cardPreviewMode";
+const PRIMARY_CLICK_ACTION_STORAGE_KEY = "matchmaking.player.primaryClickAction";
+const ANIMATION_SPEED_STORAGE_KEY = "matchmaking.player.animationSpeed";
+const SOUND_VOLUME_STORAGE_KEY = "matchmaking.player.soundVolume";
+const ACCESSIBLE_MOBILE_CONTROLS_STORAGE_KEY = "matchmaking.player.accessibleMobileControls";
+const SHOW_ZONE_COUNTERS_STORAGE_KEY = "matchmaking.player.showZoneCounters";
 const PRIORITY_NUDGE_ENABLED_STORAGE_KEY = "lorcana.simulator.priorityNudgeEnabled";
-const SELECTED_PLAYMAT_STORAGE_KEY = "lorcana.simulator.selectedPlaymat";
-const SELECTED_CARD_BACK_STORAGE_KEY = "lorcana.simulator.selectedCardBack";
+const SELECTED_PLAYMAT_STORAGE_KEY = "matchmaking.lorcana.selectedPlaymat";
+const SELECTED_CARD_BACK_STORAGE_KEY = "matchmaking.lorcana.selectedCardBack";
 const CARD_INFO_MODE_STORAGE_KEY = "lorcana.simulator.cardInfoMode";
 
 export const DEFAULT_PLAYER_SETTINGS = {
@@ -205,7 +226,7 @@ export class PlayerSettingsStore {
 
   /** Hydrate every field from localStorage. Call once after construction. */
   initialize(): void {
-    const storedHotkeysEnabled = localStorage.getItem(HOTKEYS_ENABLED_STORAGE_KEY);
+    const storedHotkeysEnabled = readSetting(HOTKEYS_ENABLED_STORAGE_KEY);
     if (
       storedHotkeysEnabled === "off" ||
       storedHotkeysEnabled === "confirm-only" ||
@@ -218,7 +239,7 @@ export class PlayerSettingsStore {
       this.hotkeyMode = "off";
     }
 
-    const storedCardPreviewMode = localStorage.getItem(CARD_PREVIEW_DELAY_STORAGE_KEY);
+    const storedCardPreviewMode = readSetting(CARD_PREVIEW_DELAY_STORAGE_KEY);
     if (
       storedCardPreviewMode === "disabled" ||
       storedCardPreviewMode === "immediate" ||
@@ -227,7 +248,7 @@ export class PlayerSettingsStore {
       this.cardPreviewMode = storedCardPreviewMode;
     }
 
-    const storedPrimaryClickAction = localStorage.getItem(PRIMARY_CLICK_ACTION_STORAGE_KEY);
+    const storedPrimaryClickAction = readSetting(PRIMARY_CLICK_ACTION_STORAGE_KEY);
     if (
       storedPrimaryClickAction === "challenge" ||
       storedPrimaryClickAction === "quest" ||
@@ -236,7 +257,7 @@ export class PlayerSettingsStore {
       this.primaryClickAction = storedPrimaryClickAction;
     }
 
-    const storedAnimationSpeed = localStorage.getItem(ANIMATION_SPEED_STORAGE_KEY);
+    const storedAnimationSpeed = readSetting(ANIMATION_SPEED_STORAGE_KEY);
     if (
       storedAnimationSpeed === "off" ||
       storedAnimationSpeed === "fast" ||
@@ -246,7 +267,7 @@ export class PlayerSettingsStore {
       this.animationSpeed = storedAnimationSpeed;
     }
 
-    const storedSoundVolume = localStorage.getItem(SOUND_VOLUME_STORAGE_KEY);
+    const storedSoundVolume = readSetting(SOUND_VOLUME_STORAGE_KEY);
     if (storedSoundVolume !== null) {
       const parsed = Number(storedSoundVolume);
       if (!Number.isNaN(parsed)) {
@@ -254,30 +275,28 @@ export class PlayerSettingsStore {
       }
     }
 
-    const storedAccessibleMobileControls = localStorage.getItem(
-      ACCESSIBLE_MOBILE_CONTROLS_STORAGE_KEY,
-    );
+    const storedAccessibleMobileControls = readSetting(ACCESSIBLE_MOBILE_CONTROLS_STORAGE_KEY);
     if (storedAccessibleMobileControls === "true") {
       this.accessibleMobileControls = true;
     } else if (storedAccessibleMobileControls === "false") {
       this.accessibleMobileControls = false;
     }
 
-    const storedShowZoneCounters = localStorage.getItem(SHOW_ZONE_COUNTERS_STORAGE_KEY);
+    const storedShowZoneCounters = readSetting(SHOW_ZONE_COUNTERS_STORAGE_KEY);
     if (storedShowZoneCounters === "true") {
       this.showZoneCounters = true;
     } else if (storedShowZoneCounters === "false") {
       this.showZoneCounters = false;
     }
 
-    const storedPriorityNudgeEnabled = localStorage.getItem(PRIORITY_NUDGE_ENABLED_STORAGE_KEY);
+    const storedPriorityNudgeEnabled = readSetting(PRIORITY_NUDGE_ENABLED_STORAGE_KEY);
     if (storedPriorityNudgeEnabled === "true") {
       this.priorityNudgeEnabled = true;
     } else if (storedPriorityNudgeEnabled === "false") {
       this.priorityNudgeEnabled = false;
     }
 
-    const storedLocale = localStorage.getItem(PLAYER_LOCALE_STORAGE_KEY);
+    const storedLocale = readSetting(PLAYER_LOCALE_STORAGE_KEY);
     if (storedLocale && locales.includes(storedLocale as SupportedLocale)) {
       const nextLocale = storedLocale as SupportedLocale;
       this.selectedLocale = nextLocale;
@@ -288,17 +307,17 @@ export class PlayerSettingsStore {
       localStorage.setItem(PLAYER_LOCALE_STORAGE_KEY, this.selectedLocale);
     }
 
-    const storedPlaymat = localStorage.getItem(SELECTED_PLAYMAT_STORAGE_KEY);
+    const storedPlaymat = readSetting(SELECTED_PLAYMAT_STORAGE_KEY);
     if (storedPlaymat) {
       this.selectedPlaymat = storedPlaymat;
     }
 
-    const storedCardBack = localStorage.getItem(SELECTED_CARD_BACK_STORAGE_KEY);
+    const storedCardBack = readSetting(SELECTED_CARD_BACK_STORAGE_KEY);
     if (storedCardBack) {
       this.selectedCardBack = storedCardBack;
     }
 
-    const storedCardInfoMode = localStorage.getItem(CARD_INFO_MODE_STORAGE_KEY);
+    const storedCardInfoMode = readSetting(CARD_INFO_MODE_STORAGE_KEY);
     if (storedCardInfoMode === "detailed" || storedCardInfoMode === "quick") {
       this.cardInfoMode = storedCardInfoMode;
     }
@@ -389,34 +408,45 @@ export class PlayerSettingsStore {
 
   // ── Server sync (debounced) ─────────────────────────────────────────
 
+  #flushOnPageHide = () => this.flushPendingSave();
+
   #scheduleSave(partial: Partial<ServerGameplaySettings>): void {
     if (!this.#saveToServer) return;
 
     Object.assign(this.#pendingServerUpdate, partial);
+    if (typeof window !== "undefined")
+      window.addEventListener("pagehide", this.#flushOnPageHide, { once: true });
 
     if (this.#debounceTimer) clearTimeout(this.#debounceTimer);
-    this.#debounceTimer = setTimeout(() => {
-      const update = { ...this.#pendingServerUpdate };
-      this.#pendingServerUpdate = {};
-      const { primaryClickAction, cardInfoMode, priorityNudgeEnabled, ...playerSettings } = update;
-      this.#saveToServer?.({
-        ...(Object.keys(playerSettings).length > 0 ? { playerSettings } : {}),
-        ...(primaryClickAction !== undefined ||
-        cardInfoMode !== undefined ||
-        priorityNudgeEnabled !== undefined
-          ? {
-              gameSettings: {
-                lorcana: {
-                  simulator: {
-                    ...(primaryClickAction !== undefined ? { primaryClickAction } : {}),
-                    ...(cardInfoMode !== undefined ? { cardInfoMode } : {}),
-                    ...(priorityNudgeEnabled !== undefined ? { priorityNudgeEnabled } : {}),
-                  },
+    this.#debounceTimer = setTimeout(() => this.flushPendingSave(), 500);
+  }
+
+  flushPendingSave(): void {
+    if (typeof window !== "undefined")
+      window.removeEventListener("pagehide", this.#flushOnPageHide);
+    if (this.#debounceTimer) clearTimeout(this.#debounceTimer);
+    this.#debounceTimer = null;
+    if (Object.keys(this.#pendingServerUpdate).length === 0) return;
+    const update = { ...this.#pendingServerUpdate };
+    this.#pendingServerUpdate = {};
+    const { primaryClickAction, cardInfoMode, priorityNudgeEnabled, ...playerSettings } = update;
+    this.#saveToServer?.({
+      ...(Object.keys(playerSettings).length > 0 ? { playerSettings } : {}),
+      ...(primaryClickAction !== undefined ||
+      cardInfoMode !== undefined ||
+      priorityNudgeEnabled !== undefined
+        ? {
+            gameSettings: {
+              lorcana: {
+                simulator: {
+                  ...(primaryClickAction !== undefined ? { primaryClickAction } : {}),
+                  ...(cardInfoMode !== undefined ? { cardInfoMode } : {}),
+                  ...(priorityNudgeEnabled !== undefined ? { priorityNudgeEnabled } : {}),
                 },
               },
-            }
-          : {}),
-      });
-    }, 500);
+            },
+          }
+        : {}),
+    });
   }
 }

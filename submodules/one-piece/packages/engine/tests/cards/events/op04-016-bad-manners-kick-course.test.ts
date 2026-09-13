@@ -107,4 +107,41 @@ describe("OP04-016 Bad Manners Kick Course", () => {
     engine.endTurn("south");
     expect(opposingCharacterPower(engine, attackerId)).toBe(powerBefore);
   });
+
+  test("may decline optional Counter so hand trash and power gain do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [op04BadMannersKickCourse016, eb01Doma005],
+        character: [eb01Fourtricks025],
+        life: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const eventId = engine.findCardInZone("north", "hand", op04BadMannersKickCourse016);
+    const costId = engine.findCardInZone("north", "hand", eb01Doma005);
+    const characterId = engine.findCardInZone("north", "character", eb01Fourtricks025);
+    const charPowerBefore = engine
+      .getView("north")
+      .players.north.characters.find((card) => card?.instanceId === characterId)?.power;
+    const leaderPowerBefore = engine.getView("north").players.north.leader.power;
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    // Declining optional: trash cost is not paid; +3000 power never applies.
+    // Counter Event is still consumed into trash after the counter step.
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(costId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(costId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+    expect(
+      view.players.north.characters.find((card) => card?.instanceId === characterId)?.power,
+    ).toBe(charPowerBefore);
+    expect(view.players.north.leader.power).toBe(leaderPowerBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

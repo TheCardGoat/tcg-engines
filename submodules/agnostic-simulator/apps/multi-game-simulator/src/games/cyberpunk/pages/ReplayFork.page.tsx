@@ -8,6 +8,7 @@ import { loadCyberpunkReplay } from "../replay/loadReplay";
 import type { CyberpunkReplayOrchestrator } from "../replay/replayOrchestrator";
 import classes from "./Replay.module.css";
 import { cyberpunkSimulatorPath } from "./simulatorPaths";
+import { parseNonNegativeIntegerQuery } from "../../../runtime/replayQuery.ts";
 
 type LoadState =
   | { status: "loading" }
@@ -18,7 +19,14 @@ export function ReplayForkPage() {
   const { gameId = "" } = useParams<{ gameId: string }>();
   const [searchParams] = useSearchParams();
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
-  const step = useMemo(() => Number(searchParams.get("step") ?? "0"), [searchParams]);
+  const step = useMemo(
+    () => parseNonNegativeIntegerQuery(searchParams.get("step")) ?? 0,
+    [searchParams],
+  );
+  const stateVersion = useMemo(
+    () => parseNonNegativeIntegerQuery(searchParams.get("stateVersion")),
+    [searchParams],
+  );
   const humanSide = useMemo(() => readForkSide(searchParams), [searchParams]);
 
   useEffect(() => {
@@ -27,7 +35,9 @@ export function ReplayForkPage() {
     loadCyberpunkReplay(gameId)
       .then((orchestrator) => {
         if (cancelled) return;
-        if (Number.isFinite(step)) {
+        if (stateVersion !== null) {
+          orchestrator.goToStateVersion(stateVersion);
+        } else {
           orchestrator.goToStep(step);
         }
         setLoadState({ status: "ready", orchestrator });
@@ -43,7 +53,7 @@ export function ReplayForkPage() {
     return () => {
       cancelled = true;
     };
-  }, [gameId, step]);
+  }, [gameId, stateVersion, step]);
 
   useEffect(() => {
     return () => {

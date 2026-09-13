@@ -11,5 +11,5 @@ export { battlePhaseDamageStepOnEnter } from "./battle-phase/damage-step.ts";
 export { battleEndStepOnEnter } from "./battle-phase/battle-end-step.ts";
 export { actionStepOnEnter, actionStepEndIf } from "./end-phase/action-step.ts";
 export { endStepOnEnter } from "./end-phase/end-step.ts";
-export { handStepEndIf } from "./end-phase/hand-step.ts";
+export { handStepEndIf, handStepOnEnter } from "./end-phase/hand-step.ts";
 export { cleanupStepOnEnter } from "./end-phase/cleanup-step.ts";

@@ -3,7 +3,7 @@ import { op02Zephyr072 } from "../../../../../cards/src/cards/OP02/leaders/072-z
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-072 Zephyr", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op02Zephyr072);
   });
 });

@@ -66,4 +66,34 @@ describe("OP13-081 Koala", () => {
     expect(state.players.south.restedDon).toBe(0);
     expect(state.capabilityHistory).toEqual([]);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op13Koala081],
+        trash: [op01Nekomamushi048, op01XDrake054],
+        deck: [op01XDrake054],
+        restedDon: 1,
+      },
+      {},
+      { firstPlayer: "south", activeSeat: "south" },
+    );
+    const koalaId = engine.findCardInZone("south", "character", op13Koala081);
+    const nekomamushiId = engine.findCardInZone("south", "trash", op01Nekomamushi048);
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const restedBefore = engine.getView("south").players.south.restedDon;
+    const leaderId = engine.leader("south");
+
+    engine.activateEffect(koalaId, "activateMain");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const state = engine.getState();
+    expect(state.players.south.trash).toContain(nekomamushiId);
+    expect(engine.getView("south").players.south.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").players.south.deckCount).toBe(deckBefore);
+    expect(engine.getView("south").players.south.restedDon).toBe(restedBefore);
+    expect(state.cards[leaderId]?.attachedDon).toBe(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -5,6 +5,7 @@ import type { ServerMessage, ClientMessage } from "../types/transport.ts";
 import { InMemoryTransport } from "./in-memory-transport.ts";
 import { ServerEngine } from "./server-engine.ts";
 import { ClientEngine } from "./client-engine.ts";
+import { defaultGundamSetupCards } from "@tcg/gundam-token-data";
 import { createStaticResources, type Player } from "../runtime/static-resources.ts";
 import { createMockUnit, createMockResource, PLAYER_ONE, PLAYER_TWO } from "../index.ts";
 
@@ -30,7 +31,11 @@ function createTestMatch() {
     resourceDeck: [],
   };
 
-  const staticResources = createStaticResources([p1, p2], catalog);
+  const staticResources = createStaticResources(
+    [p1, p2],
+    catalog,
+    defaultGundamSetupCards([p1.id, p2.id]),
+  );
   const server = new ServerEngine(staticResources);
   server.initialize([p1, p2], "test-seed");
 

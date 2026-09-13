@@ -17,6 +17,19 @@ describe("classifyDirectiveIntent: always-accept", () => {
     ["draw", { action: "draw", count: 1 }],
     ["addSelfToHand", { action: "addSelfToHand" }],
     ["returnPairedPilotToHand", { action: "returnPairedPilotToHand" }],
+    [
+      "millDeckThenStatModifierIfLevel",
+      {
+        action: "millDeckThenStatModifierIfLevel",
+        count: 1,
+        owner: "self",
+        minLevel: 3,
+        stat: "ap",
+        amount: -2,
+        duration: "thisBattle",
+        target: { owner: "opponent" },
+      },
+    ],
     ["addShieldToHand", { action: "addShieldToHand", count: 1 }],
     ["deploySelf", { action: "deploySelf" }],
     ["activateTiming", { action: "activateTiming", timing: "main" }],
@@ -43,6 +56,12 @@ describe("classifyDirectiveIntent: always-decline", () => {
     expect(classifyDirectiveIntent({ action: "millDeck", count: 3, owner: "opponent" })).toBe(
       "accept",
     );
+  });
+});
+
+describe("classifyDirectiveIntent: context-dependent", () => {
+  it("exileSelf → neutral so an optional follow-up benefit is accepted by default", () => {
+    expect(classifyDirectiveIntent({ action: "exileSelf" })).toBe("neutral");
   });
 });
 
@@ -151,6 +170,16 @@ describe("classifyDirectiveIntent: stat modifier sign × owner", () => {
 });
 
 describe("classifyDirectiveIntent: move-level substitutions", () => {
+  it("leaves continuous deploy-rested replacement to the move procedure", () => {
+    expect(
+      classifyDirectiveIntent({
+        action: "deployRestedByFriendlyNameCount",
+        names: ["Char Aznable"],
+        target: { owner: "opponent", zone: "battleArea", cardType: "unit" },
+      }),
+    ).toBe("neutral");
+  });
+
   it("leaves deploy-cost substitution to the move procedure", () => {
     expect(
       classifyDirectiveIntent({

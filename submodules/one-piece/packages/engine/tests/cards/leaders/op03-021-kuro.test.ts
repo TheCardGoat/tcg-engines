@@ -71,4 +71,35 @@ describe("OP03-021 Kuro", () => {
     expect(view.players.south).toMatchObject({ activeDon: 0, restedDon: 3 });
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op03Kuro021,
+        character: [op03Genzo046, op03Carne045, op03Usopp041, eb01Doma005],
+        activeDon: 3,
+      },
+      { character: [eb01Doma005, { card: op01Urashima092, rested: true }] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackTargetId = engine.findCardInZone("north", "character", op01Urashima092);
+    engine.declareAttack(engine.leader("south"), attackTargetId, "south");
+    engine.activateEffect(engine.leader("south"), "activateMain", "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

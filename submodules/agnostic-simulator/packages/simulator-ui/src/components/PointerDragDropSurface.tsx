@@ -12,8 +12,9 @@ import {
   type DragMoveEvent,
   type DragStartEvent,
   type DropAnimation,
+  type DropAnimationKeyframeResolver,
 } from "@dnd-kit/core";
-import { useRef, useState, type ReactNode } from "react";
+import { useMemo, useRef, useState, type ReactNode, type RefObject } from "react";
 
 const DEFAULT_DROP_ANIMATION: DropAnimation = {
   duration: 220,
@@ -36,7 +37,11 @@ export interface PointerDragDropSurfaceProps<TSource> {
   readonly dropAnimation?: DropAnimation | null;
   readonly onDragStart?: (source: TSource | null, event: DragStartEvent) => void;
   readonly onDragCancel?: () => void;
-  readonly onDragEnd?: (source: TSource | null, overId: string | null, event: DragEndEvent) => void;
+  readonly onDragEnd?: (
+    source: TSource | null,
+    overId: string | null,
+    event: DragEndEvent,
+  ) => boolean | void;
 }
 
 /**
@@ -60,12 +65,14 @@ export function PointerDragDropSurface<TSource>({
   onDragEnd,
 }: PointerDragDropSurfaceProps<TSource>) {
   const [activeSource, setActiveSource] = useState<TSource | null>(null);
+  const acceptedDropRef = useRef(false);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: activationDistance } }),
     useSensor(KeyboardSensor),
   );
 
   const handleDragStart = (event: DragStartEvent) => {
+    acceptedDropRef.current = false;
     const source = decodeSource(String(event.active.id));
     setActiveSource(source);
     onDragStart?.(source, event);
@@ -79,8 +86,8 @@ export function PointerDragDropSurface<TSource>({
   const handleDragEnd = (event: DragEndEvent) => {
     const source = decodeSource(String(event.active.id));
     const overId = event.over ? String(event.over.id) : null;
+    acceptedDropRef.current = onDragEnd?.(source, overId, event) === true;
     setActiveSource(null);
-    onDragEnd?.(source, overId, event);
   };
 
   return (
@@ -98,6 +105,7 @@ export function PointerDragDropSurface<TSource>({
         renderOverlay={renderOverlay}
         className={overlayClassName}
         dropAnimation={dropAnimation}
+        acceptedDropRef={acceptedDropRef}
       />
     </DndContext>
   );
@@ -108,6 +116,7 @@ interface VelocityTiltOverlayProps<TSource> {
   readonly renderOverlay: (source: TSource) => ReactNode;
   readonly className?: string;
   readonly dropAnimation: DropAnimation | null;
+  readonly acceptedDropRef: RefObject<boolean>;
 }
 
 function VelocityTiltOverlay<TSource>({
@@ -115,10 +124,15 @@ function VelocityTiltOverlay<TSource>({
   renderOverlay,
   className,
   dropAnimation,
+  acceptedDropRef,
 }: VelocityTiltOverlayProps<TSource>) {
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const last = useRef({ x: 0, time: 0 });
   const tilt = useRef(0);
+  const resolvedDropAnimation = useMemo(
+    () => dropAnimationForAcceptedHandoff(dropAnimation, acceptedDropRef),
+    [acceptedDropRef, dropAnimation],
+  );
 
   const applyTilt = (degrees: number) => {
     overlayRef.current?.style.setProperty("--drag-tilt", `${degrees.toFixed(2)}deg`);
@@ -151,7 +165,7 @@ function VelocityTiltOverlay<TSource>({
   });
 
   return (
-    <DragOverlay dropAnimation={dropAnimation}>
+    <DragOverlay dropAnimation={resolvedDropAnimation}>
       {source ? (
         <div ref={overlayRef} className={className}>
           {renderOverlay(source)}
@@ -159,4 +173,38 @@ function VelocityTiltOverlay<TSource>({
       ) : null}
     </DragOverlay>
   );
+}
+
+const defaultDropKeyframes: DropAnimationKeyframeResolver = ({ transform }) => [
+  { transform: cssTransform(transform.initial) },
+  { transform: cssTransform(transform.final) },
+];
+
+function dropAnimationForAcceptedHandoff(
+  dropAnimation: DropAnimation | null,
+  acceptedDropRef: RefObject<boolean>,
+): DropAnimation | null {
+  if (!dropAnimation || typeof dropAnimation === "function") return dropAnimation;
+  const resolveKeyframes = dropAnimation.keyframes ?? defaultDropKeyframes;
+
+  return {
+    ...dropAnimation,
+    keyframes: (parameters) => {
+      const keyframes = resolveKeyframes(parameters).filter(
+        (keyframe) => keyframe !== undefined,
+      ) as Keyframe[];
+      const firstKeyframe = keyframes[0];
+      if (!acceptedDropRef.current || firstKeyframe === undefined) return keyframes;
+      return [firstKeyframe, firstKeyframe];
+    },
+  };
+}
+
+function cssTransform(transform: {
+  readonly x: number;
+  readonly y: number;
+  readonly scaleX: number;
+  readonly scaleY: number;
+}): string {
+  return `translate3d(${transform.x}px, ${transform.y}px, 0) scaleX(${transform.scaleX}) scaleY(${transform.scaleY})`;
 }

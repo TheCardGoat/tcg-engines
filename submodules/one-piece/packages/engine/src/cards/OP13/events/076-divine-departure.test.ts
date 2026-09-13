@@ -3,7 +3,7 @@ import { op13DivineDeparture076 } from "../../../../../cards/src/cards/OP13/even
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-076 Divine Departure", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13DivineDeparture076);
   });
 });

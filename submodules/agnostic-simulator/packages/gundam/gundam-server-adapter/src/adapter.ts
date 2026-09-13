@@ -26,7 +26,9 @@ import {
   gundamExtractCardsMapsFromSnapshot,
   gundamRestoreEngine,
   gundamSerializeEngine,
+  remintGundamPresentation,
 } from "./gundam-engine-lifecycle.js";
+import { gundamDeckInterchangeAdapter } from "./gundam-deck-document.js";
 import { GUNDAM_RUNTIME_FINGERPRINT } from "./runtime-fingerprint.js";
 
 /**
@@ -52,6 +54,10 @@ export const gundamServerAdapter: GameAdapter = {
   buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps {
     const cardInstances: Record<string, string> = {};
     const owners: Record<string, string[]> = {};
+    const instanceSections: Record<string, string> = {};
+    const printingIdByInstanceId: Record<string, string> = {};
+    let hasSections = false;
+    let hasPresentation = false;
     for (const { owner, deck } of decks) {
       const ownerInstances: string[] = [];
       // Per-owner monotonic counter so duplicate cardId rows in the same
@@ -62,11 +68,28 @@ export const gundamServerAdapter: GameAdapter = {
           const instanceId = `${owner}-${entry.cardId}-${counter++}`;
           cardInstances[instanceId] = entry.cardId;
           ownerInstances.push(instanceId);
+          if (entry.sectionId) {
+            instanceSections[instanceId] = entry.sectionId;
+            hasSections = true;
+          }
+          if (entry.printingId) {
+            printingIdByInstanceId[instanceId] = entry.printingId;
+            hasPresentation = true;
+          }
         }
       }
       owners[owner] = ownerInstances;
     }
-    return { cardInstances, owners };
+    const maps: CardsMaps = {
+      cardInstances,
+      owners,
+      ...(hasSections ? { instanceSections } : {}),
+      ...(hasPresentation ? { presentation: { printingIdByInstanceId } } : {}),
+    };
+    if (hasPresentation) {
+      maps.presentation = remintGundamPresentation(maps);
+    }
+    return maps;
   },
 
   getCardById(publicId: string): CardSummary | null {
@@ -118,19 +141,37 @@ export const gundamServerAdapter: GameAdapter = {
   },
 
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult {
-    if (formatId !== "standard") {
+    if (formatId !== "standard" && formatId !== "bo3") {
       throw new Error(`Unknown Gundam format: ${formatId}`);
     }
 
-    const rules = validateStandardDeck(deck);
+    const sectionRules = validateDeckSections(formatId, deck);
+    // BO3 sideboard entries share the card pool, token, copy-limit, and
+    // color rules with the main deck. `validateStandardDeck` keeps the three
+    // section sizes distinct while applying those per-card checks to the
+    // complete construction deck.
+    const rules = [...sectionRules, ...validateStandardDeck(deck)];
+    if (formatId === "bo3") {
+      const sideboardCount = deck
+        .filter((entry) => entry.sectionId === "side")
+        .reduce((sum, entry) => sum + entry.quantity, 0);
+      rules.push({
+        kind: "sideboard-size",
+        passed: sideboardCount === 10,
+        message: `Sideboard has ${sideboardCount}/10 cards`,
+        details: { count: sideboardCount, expected: 10 },
+      });
+    }
 
     return {
       formatId,
-      label: "Standard",
+      label: formatId === "bo3" ? "Best of Three" : "Standard",
       valid: rules.every((rule) => rule.passed),
       rules,
     };
   },
+
+  deckInterchange: gundamDeckInterchangeAdapter,
 
   metadata: {
     projectionVersion: 1,
@@ -142,6 +183,7 @@ export const gundamServerAdapter: GameAdapter = {
         pluralLabel: "Deck colors",
         kind: "individual",
         order: 10,
+        ranking: { specialistSkill: true, mastery: true },
       },
       {
         type: "color-combination",
@@ -149,6 +191,7 @@ export const gundamServerAdapter: GameAdapter = {
         pluralLabel: "Deck color combinations",
         kind: "combination",
         order: 20,
+        ranking: { specialistSkill: true, mastery: true },
       },
     ],
     projectDeck(deck) {
@@ -195,6 +238,47 @@ export const gundamServerAdapter: GameAdapter = {
   extractCardsMapsFromSnapshot: gundamExtractCardsMapsFromSnapshot,
 };
 
+function validateDeckSections(
+  formatId: "standard" | "bo3",
+  deck: ReadonlyArray<DeckCard>,
+): DeckFormatResult["rules"] {
+  const misplaced: DeckCard[] = [];
+  const unsupported: DeckCard[] = [];
+
+  for (const entry of deck) {
+    const canonicalId =
+      entry.canonicalId ??
+      (entry.printingId ? getGundamCanonicalForCardId(entry.printingId) : null) ??
+      getGundamCanonicalForCardId(entry.cardId) ??
+      entry.cardId;
+    const card = getGundamCardDefinition(canonicalId);
+    if (!card) continue;
+    const sectionId = entry.sectionId ?? (card.type === "resource" ? "resource" : "main");
+    if (sectionId !== "main" && sectionId !== "resource" && sectionId !== "side") {
+      unsupported.push(entry);
+    } else if (
+      (sectionId === "resource" && card.type !== "resource") ||
+      (sectionId !== "resource" && card.type === "resource")
+    ) {
+      misplaced.push(entry);
+    } else if (formatId === "standard" && sectionId === "side") {
+      unsupported.push(entry);
+    }
+  }
+
+  return [
+    {
+      kind: "deck-sections",
+      passed: misplaced.length === 0 && unsupported.length === 0,
+      message:
+        misplaced.length === 0 && unsupported.length === 0
+          ? "Cards are in valid Gundam deck sections"
+          : "Cards must be in their matching Gundam deck sections",
+      details: { misplaced, unsupported },
+    },
+  ];
+}
+
 function validateStandardDeck(deck: ReadonlyArray<DeckCard>): DeckFormatResult["rules"] {
   const rules: DeckFormatResult["rules"] = [];
   const nonResourceCounts = new Map<string, number>();
@@ -204,38 +288,41 @@ function validateStandardDeck(deck: ReadonlyArray<DeckCard>): DeckFormatResult["
     (entry) => !Number.isInteger(entry.quantity) || entry.quantity <= 0,
   );
   const tokenEntries: DeckCard[] = [];
-  const nonResourceEntries: DeckCard[] = [];
-  const resourceEntries: DeckCard[] = [];
+  let mainCount = 0;
+  let resourceCount = 0;
 
   for (const entry of deck) {
     if (!Number.isInteger(entry.quantity) || entry.quantity <= 0) {
       continue;
     }
 
-    const card = getGundamCardDefinition(entry.cardId);
+    const canonicalId =
+      entry.canonicalId ??
+      (entry.printingId ? getGundamCanonicalForCardId(entry.printingId) : null) ??
+      getGundamCanonicalForCardId(entry.cardId) ??
+      entry.cardId;
+    const card = getGundamCardDefinition(canonicalId);
     if (!card) {
       unknownEntries.push(entry);
       continue;
     }
+    const sectionId = entry.sectionId ?? (card.type === "resource" ? "resource" : "main");
     if (isDeckListToken(card.cardNumber)) {
       tokenEntries.push(entry);
       continue;
     }
     if (card.type === "resource") {
-      resourceEntries.push(entry);
+      if (sectionId === "resource") resourceCount += entry.quantity;
       continue;
     }
 
-    nonResourceEntries.push(entry);
+    if (sectionId === "main") mainCount += entry.quantity;
     if (card.color) mainDeckColors.add(card.color);
     nonResourceCounts.set(
-      card.cardNumber,
-      (nonResourceCounts.get(card.cardNumber) ?? 0) + entry.quantity,
+      card.canonicalId,
+      (nonResourceCounts.get(card.canonicalId) ?? 0) + entry.quantity,
     );
   }
-
-  const mainCount = nonResourceEntries.reduce((sum, entry) => sum + entry.quantity, 0);
-  const resourceCount = resourceEntries.reduce((sum, entry) => sum + entry.quantity, 0);
 
   rules.push({
     kind: "card-pool",

@@ -19,12 +19,14 @@ describe("OP08-057 King", () => {
 
     engine.activateEffect(engine.leader("south"), "activateMain", "south");
 
+    engine.acceptLeadingOptional("south");
     const choice = engine.pendingDecision("effectActionChoice", "south").steps[0];
     expect(choice?.kind).toBe("chooseOption");
     if (choice?.kind !== "chooseOption") throw new Error("Expected King's effect branch choice.");
     expect(choice.options.map((option) => option.id)).toEqual(["0", "1"]);
     engine.resolveDecision("effectActionChoice", { optionId: "1" }, "south");
 
+    engine.acceptLeadingOptional("south");
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(target?.kind).toBe("selectEntity");
     if (target?.kind !== "selectEntity") throw new Error("Expected King's cost target choice.");

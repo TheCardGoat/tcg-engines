@@ -141,20 +141,24 @@ describe("OP05-032 Pica", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("may decline the replacement when battle would K.O. it", () => {
-    const engine = OnePieceTestEngine.create(
-      { character: [{ card: op05Pica032, rested: true }, eb01MountainGod018] },
-      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
-      { firstPlayer: "south", activeSeat: "north" },
-    );
+  test("may decline the End of Your Turn optional so it stays rested", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [{ card: op05Pica032, rested: true }],
+      activeDon: 1,
+    });
     const picaId = engine.findCardInZone("south", "character", op05Pica032);
-    const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
+    const activeDonBefore = engine.getView("south").players.south.activeDon;
+    const restedDonBefore = engine.getView("south").players.south.restedDon;
 
-    engine.declareAttack(attackerId, picaId, "north");
-    engine.resolveDecision("battleKoReplacement", { optionId: "no" }, "south");
+    engine.endTurn("south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(picaId);
+    expect(view.players.south.activeDon).toBe(activeDonBefore);
+    expect(view.players.south.restedDon).toBe(restedDonBefore);
+    expect(view.players.south.characters.find((card) => card?.instanceId === picaId)?.rested).toBe(
+      true,
+    );
     expect(view.prompts).toHaveLength(0);
   });
 });

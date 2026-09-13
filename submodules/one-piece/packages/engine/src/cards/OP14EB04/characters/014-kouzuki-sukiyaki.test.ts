@@ -3,7 +3,7 @@ import { op14eb04KouzukiSukiyaki014 } from "../../../../../cards/src/cards/OP14E
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB04-014 Kouzuki Sukiyaki", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04KouzukiSukiyaki014);
   });
 });

@@ -214,3 +214,54 @@ describe("composeStrategy: chooseOne ranking via directive-intent", () => {
     expect(only.chooseOneAnswers?.[0]).toBe(1);
   });
 });
+
+describe("composeStrategy: optional directive intent", () => {
+  it("accepts a context-dependent self-exile by default", () => {
+    const optionalExileEffect: CardEffect = {
+      type: "triggered",
+      activation: {},
+      directives: [{ optional: true, action: { action: "exileSelf" } }],
+      sourceText: "You may exile this card.",
+    };
+    const engine = GundamTestEngine.create({}, {});
+    const pending: PendingEffect = {
+      id: "pe_optional_exile",
+      controllerId: PLAYER_ONE,
+      sourceCardId: "unused",
+      effect: optionalExileEffect,
+      effectIndex: 0,
+      kind: "triggered",
+    };
+    engine.getG().pendingEffects.push(pending);
+
+    const candidates = enumerateGundamBotCandidates(
+      engine.runtime.getState(),
+      PLAYER_ONE as PlayerId,
+      engine.runtime.getStaticResources(),
+    );
+    const strategy = composeStrategy("test-default", {});
+    const picked = strategy
+      .selectCandidates({
+        playerId: PLAYER_ONE as PlayerId,
+        state: engine.runtime.getState(),
+        view: engine.runtime.getFilteredView({
+          role: "player",
+          playerId: PLAYER_ONE as PlayerId,
+        }),
+        candidates,
+        turnNumber: 0,
+        pendingChoice:
+          engine.runtime.getPendingChoice({
+            role: "player",
+            playerId: PLAYER_ONE as PlayerId,
+          }) ?? null,
+        cards: engine.runtime.getCardReadAPI(),
+      })
+      .filter((candidate) => candidate.family === "resolveEffect");
+
+    expect(picked).toHaveLength(1);
+    const [only] = picked;
+    if (only?.family !== "resolveEffect") throw new Error("type narrow");
+    expect(only.optionalAnswers?.[0]).toBe(true);
+  });
+});

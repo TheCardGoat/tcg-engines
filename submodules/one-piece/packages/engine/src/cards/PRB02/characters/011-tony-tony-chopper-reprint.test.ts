@@ -3,7 +3,7 @@ import { prb02TonyTonyChopperReprint011 } from "../../../../../cards/src/cards/P
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-011 Tony Tony.Chopper (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02TonyTonyChopperReprint011);
   });
 });

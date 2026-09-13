@@ -4,8 +4,9 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { loadGundamReplay } from "../replay/loadReplay.ts";
 import type { GundamReplayOrchestrator } from "../replay/replayOrchestrator.ts";
 import { SimulatorApp } from "../src/SimulatorApp.tsx";
-import { createLiveMatchViewerEngine } from "../src/engine/live/liveState.ts";
+import { createReplayViewerEngine } from "../src/engine/live/liveState.ts";
 import { asViewerId } from "../src/game/types.ts";
+import { parseNonNegativeIntegerQuery } from "../../../runtime/replayQuery.ts";
 
 type LoadState =
   | { readonly status: "loading" }
@@ -16,7 +17,8 @@ export function ReplayForkPage() {
   const { gameId = "" } = useParams<{ gameId: string }>();
   const [search] = useSearchParams();
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
-  const step = Number.parseInt(search.get("step") ?? "0", 10);
+  const step = parseNonNegativeIntegerQuery(search.get("step")) ?? 0;
+  const stateVersion = parseNonNegativeIntegerQuery(search.get("stateVersion"));
   const side = search.get("side") === "playerTwo" ? "playerTwo" : "playerOne";
 
   useEffect(() => {
@@ -66,7 +68,9 @@ export function ReplayForkPage() {
     );
   }
 
-  return <ReplayForkBoard orchestrator={loadState.orchestrator} step={step} side={side} />;
+  const resolvedStep =
+    stateVersion !== null ? loadState.orchestrator.cursorForStateVersion(stateVersion) : step;
+  return <ReplayForkBoard orchestrator={loadState.orchestrator} step={resolvedStep} side={side} />;
 }
 
 function ReplayForkBoard({
@@ -79,10 +83,11 @@ function ReplayForkBoard({
   readonly side: "playerOne" | "playerTwo";
 }) {
   const state = useMemo(() => orchestrator.stateAt(step), [orchestrator, step]);
-  const playerIds = readPlayerIds(state);
+  const playerIds =
+    "ctx" in state ? state.ctx.playerIds : state.players.map(({ playerId }) => playerId);
   const viewerId = side === "playerTwo" ? (playerIds[1] ?? playerIds[0]) : playerIds[0];
   const { runtime, staticResources, viewerPlayerId } = useMemo(
-    () => createLiveMatchViewerEngine(state),
+    () => createReplayViewerEngine(state),
     [state],
   );
 
@@ -92,17 +97,11 @@ function ReplayForkBoard({
         runtime={runtime}
         staticResources={staticResources}
         viewerId={asViewerId(viewerId ?? viewerPlayerId)}
+        presentation={orchestrator.presentation}
       />
-      <div className="fixed left-4 top-4 z-50 rounded-md border border-cyan-300/30 bg-slate-950/90 px-3 py-2 font-mono text-[11px] text-cyan-100 shadow-lg">
+      <div className="fixed left-4 top-4 z-50 rounded-md border border-cyan-300/30 bg-slate-950/90 px-3 py-2 font-mono text-hud-xs text-cyan-100 shadow-lg">
         Forked replay step {Math.max(0, step)} as {side === "playerTwo" ? "P2" : "P1"}
       </div>
     </>
   );
-}
-
-function readPlayerIds(state: Record<string, unknown>): readonly string[] {
-  const ctx = state.ctx as { playerIds?: unknown } | undefined;
-  return Array.isArray(ctx?.playerIds)
-    ? ctx.playerIds.filter((id): id is string => typeof id === "string")
-    : [];
 }

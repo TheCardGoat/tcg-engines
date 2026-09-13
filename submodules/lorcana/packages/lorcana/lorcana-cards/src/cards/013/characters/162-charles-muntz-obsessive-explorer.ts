@@ -107,8 +107,19 @@ export const charlesMuntzObsessiveExplorer: CharacterCard = {
             ],
           },
         ],
+        // Printed: "Otherwise, put it on either the top or the bottom of your deck."
+        // Multi-destination fallback suspends for player choice (top or bottom).
         fallback: {
-          zone: "deck-bottom",
+          destinations: [
+            {
+              zone: "deck-top",
+              max: 1,
+            },
+            {
+              zone: "deck-bottom",
+              remainder: true,
+            },
+          ],
         },
       },
       text: "FIND THAT BIRD! Whenever this character quests, look at the top card of your deck. If it's a character card named Kevin, you may reveal it and put it into your hand to gain 3 lore. Otherwise, put it on either the top or the bottom of your deck.",

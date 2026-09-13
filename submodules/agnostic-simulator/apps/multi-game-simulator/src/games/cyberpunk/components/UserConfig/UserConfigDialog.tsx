@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
+import { SimulatorSettingsDialog } from "../../../../simulator/participant-actions/SimulatorParticipantActions";
 import {
   useUserConfig,
   useSetUserConfig,
@@ -9,7 +9,6 @@ import {
   type DicierStyle,
   type FieldCardSize,
 } from "../../engine";
-import { useSimulatorSettings } from "../../../../simulator/settings";
 import classes from "./UserConfigDialog.module.css";
 
 // ── option lists ────────────────────────────────────────────────────────────
@@ -61,177 +60,151 @@ const FIELD_CARD_SIZES: ReadonlyArray<{ value: FieldCardSize; label: string; des
 
 // ── dialog ──────────────────────────────────────────────────────────────────
 
-function UserConfigDialogContent({ onClose }: { onClose: () => void }) {
+// SETTINGS PARITY: keep in sync with the platform web app's GameSettingsFields.svelte (Cyberpunk).
+export function CyberpunkSettingsFields() {
   const config = useUserConfig();
   const setConfig = useSetUserConfig();
-  const {
-    settings: { soundVolume },
-    setSoundVolume,
-  } = useSimulatorSettings();
-
   return (
-    <div className={classes.dialog} role="dialog" aria-label="Simulator settings">
-      <header className={classes.header}>
-        <span className={classes.title}>Simulator Settings</span>
-        <button type="button" className={classes.closeBtn} aria-label="Close" onClick={onClose}>
-          ✕
-        </button>
-      </header>
-
-      <div className={classes.body}>
-        {/* ── dice display mode ── */}
-        <fieldset className={classes.fieldset}>
-          <legend className={classes.legend}>Dice Display</legend>
-          <div className={classes.radioGroup}>
-            {DISPLAY_MODES.map(({ value, label, desc }) => (
-              <label
-                key={value}
-                className={`${classes.radioRow} ${config.diceDisplayMode === value ? classes.radioRowActive : ""}`}
-              >
-                <input
-                  type="radio"
-                  className={classes.radioInput}
-                  name="diceDisplayMode"
-                  value={value}
-                  checked={config.diceDisplayMode === value}
-                  onChange={() => setConfig({ diceDisplayMode: value })}
-                />
-                <div className={classes.radioLabel}>
-                  <span className={classes.radioTitle}>{label}</span>
-                  <span className={classes.radioDesc}>{desc}</span>
-                </div>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
-        {/* ── image color (only when mode = image) ── */}
-        {config.diceDisplayMode === "image" && (
-          <fieldset className={classes.fieldset}>
-            <legend className={classes.legend}>Dice Color</legend>
-            <div className={classes.colorGrid}>
-              {IMAGE_COLORS.map(({ value, label }) => (
-                <button
-                  key={value}
-                  type="button"
-                  aria-label={label}
-                  aria-pressed={config.diceImageColor === value}
-                  className={`${classes.colorChip} ${classes[`color_${value}`] ?? ""} ${config.diceImageColor === value ? classes.colorChipActive : ""}`}
-                  onClick={() => setConfig({ diceImageColor: value })}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </fieldset>
-        )}
-
-        {/* ── font style (only when mode = font) ── */}
-        {config.diceDisplayMode === "font" && (
-          <fieldset className={classes.fieldset}>
-            <legend className={classes.legend}>Font Style</legend>
-            <select
-              className={classes.select}
-              value={config.dicierStyle}
-              onChange={(e) => setConfig({ dicierStyle: e.target.value as DicierStyle })}
+    <div className={classes.body}>
+      {/* ── dice display mode ── */}
+      <fieldset className={classes.fieldset}>
+        <legend className={classes.legend}>Dice Display</legend>
+        <div className={classes.radioGroup}>
+          {DISPLAY_MODES.map(({ value, label, desc }) => (
+            <label
+              key={value}
+              className={`${classes.radioRow} ${config.diceDisplayMode === value ? classes.radioRowActive : ""}`}
             >
-              {DICIER_STYLES.map(({ value, label }) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </fieldset>
-        )}
+              <input
+                type="radio"
+                className={classes.radioInput}
+                name="diceDisplayMode"
+                value={value}
+                checked={config.diceDisplayMode === value}
+                onChange={() => setConfig({ diceDisplayMode: value })}
+              />
+              <div className={classes.radioLabel}>
+                <span className={classes.radioTitle}>{label}</span>
+                <span className={classes.radioDesc}>{desc}</span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
+      {/* ── image color (only when mode = image) ── */}
+      {config.diceDisplayMode === "image" && (
         <fieldset className={classes.fieldset}>
-          <legend className={classes.legend}>Sound Volume</legend>
-          <div className={classes.sliderRow}>
-            <input
-              type="range"
-              className={classes.slider}
-              min={0}
-              max={100}
-              step={1}
-              value={soundVolume}
-              aria-label="Sound volume"
-              onChange={(e) => setSoundVolume(e.currentTarget.valueAsNumber)}
-            />
-            <span className={classes.sliderValue}>{soundVolume}%</span>
-          </div>
-        </fieldset>
-
-        <fieldset className={classes.fieldset}>
-          <legend className={classes.legend}>Field Card Size</legend>
-          <div className={classes.segmentedGroup}>
-            {FIELD_CARD_SIZES.map(({ value, label, desc }) => (
-              <label
+          <legend className={classes.legend}>Dice Color</legend>
+          <div className={classes.colorGrid}>
+            {IMAGE_COLORS.map(({ value, label }) => (
+              <button
                 key={value}
-                className={`${classes.segmentedOption} ${config.fieldCardSize === value ? classes.segmentedOptionActive : ""}`}
-                title={desc}
+                type="button"
+                aria-label={label}
+                aria-pressed={config.diceImageColor === value}
+                className={`${classes.colorChip} ${classes[`color_${value}`] ?? ""} ${config.diceImageColor === value ? classes.colorChipActive : ""}`}
+                onClick={() => setConfig({ diceImageColor: value })}
               >
-                <input
-                  type="radio"
-                  className={classes.segmentedInput}
-                  name="fieldCardSize"
-                  value={value}
-                  checked={config.fieldCardSize === value}
-                  onChange={() => setConfig({ fieldCardSize: value })}
-                />
-                <span>{label}</span>
-              </label>
+                {label}
+              </button>
             ))}
           </div>
         </fieldset>
+      )}
 
+      {/* ── font style (only when mode = font) ── */}
+      {config.diceDisplayMode === "font" && (
         <fieldset className={classes.fieldset}>
-          <legend className={classes.legend}>Animation Pacing</legend>
-          <div className={classes.radioGroup}>
-            {ANIMATION_PACING.map(({ value, label, desc }) => (
-              <label
-                key={value}
-                className={`${classes.radioRow} ${config.animationPacing === value ? classes.radioRowActive : ""}`}
-              >
-                <input
-                  type="radio"
-                  className={classes.radioInput}
-                  name="animationPacing"
-                  value={value}
-                  checked={config.animationPacing === value}
-                  onChange={() => setConfig({ animationPacing: value })}
-                />
-                <div className={classes.radioLabel}>
-                  <span className={classes.radioTitle}>{label}</span>
-                  <span className={classes.radioDesc}>{desc}</span>
-                </div>
-              </label>
+          <legend className={classes.legend}>Font Style</legend>
+          <select
+            className={classes.select}
+            value={config.dicierStyle}
+            onChange={(e) => setConfig({ dicierStyle: e.target.value as DicierStyle })}
+          >
+            {DICIER_STYLES.map(({ value, label }) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
             ))}
-          </div>
+          </select>
         </fieldset>
-      </div>
+      )}
+
+      <fieldset className={classes.fieldset}>
+        <legend className={classes.legend}>Field Card Size</legend>
+        <div className={classes.segmentedGroup}>
+          {FIELD_CARD_SIZES.map(({ value, label, desc }) => (
+            <label
+              key={value}
+              className={`${classes.segmentedOption} ${config.fieldCardSize === value ? classes.segmentedOptionActive : ""}`}
+              title={desc}
+            >
+              <input
+                type="radio"
+                className={classes.segmentedInput}
+                name="fieldCardSize"
+                value={value}
+                checked={config.fieldCardSize === value}
+                onChange={() => setConfig({ fieldCardSize: value })}
+              />
+              <span>{label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset className={classes.fieldset}>
+        <legend className={classes.legend}>Animation Pacing</legend>
+        <div className={classes.radioGroup}>
+          {ANIMATION_PACING.map(({ value, label, desc }) => (
+            <label
+              key={value}
+              className={`${classes.radioRow} ${config.animationPacing === value ? classes.radioRowActive : ""}`}
+            >
+              <input
+                type="radio"
+                className={classes.radioInput}
+                name="animationPacing"
+                value={value}
+                checked={config.animationPacing === value}
+                onChange={() => setConfig({ animationPacing: value })}
+              />
+              <div className={classes.radioLabel}>
+                <span className={classes.radioTitle}>{label}</span>
+                <span className={classes.radioDesc}>{desc}</span>
+              </div>
+            </label>
+          ))}
+        </div>
+      </fieldset>
     </div>
   );
 }
 
 // ── trigger button + overlay ─────────────────────────────────────────────────
 
+export function UserConfigDialog({
+  opened,
+  onClose,
+}: {
+  readonly opened: boolean;
+  readonly onClose: () => void;
+}) {
+  return opened ? (
+    <SimulatorSettingsDialog
+      gameConfiguration={{
+        settings: <CyberpunkSettingsFields />,
+        onSelect: () => window.location.assign("/cyberpunk/simulator"),
+      }}
+      accountSettingsHref="/dashboard/settings"
+      onClose={onClose}
+    />
+  ) : null;
+}
+
 export function UserConfigButton() {
   const [open, setOpen] = useState(false);
-  const overlay = open ? (
-    <div
-      role="presentation"
-      className={classes.overlay}
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) {
-          setOpen(false);
-        }
-      }}
-    >
-      <div>
-        <UserConfigDialogContent onClose={() => setOpen(false)} />
-      </div>
-    </div>
-  ) : null;
 
   return (
     <>
@@ -245,7 +218,7 @@ export function UserConfigButton() {
         ⚙ Settings
       </button>
 
-      {overlay ? createPortal(overlay, document.body) : null}
+      <UserConfigDialog opened={open} onClose={() => setOpen(false)} />
     </>
   );
 }

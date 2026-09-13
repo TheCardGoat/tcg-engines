@@ -55,7 +55,9 @@
   border-radius: 5px;
   pointer-events: none;
   z-index: 50;
-  animation: card-armable 1.4s ease-in-out infinite;
+  box-shadow:
+    0 0 10px rgb(74 217 255 / 60%),
+    0 0 20px rgb(74 217 255 / 25%);
 }
 
 .armable:hover {
@@ -94,7 +96,6 @@
     0 0 16px rgb(245 230 66 / 90%),
     0 0 34px rgb(245 230 66 / 44%),
     inset 0 0 14px rgb(245 230 66 / 28%);
-  animation: card-pulse 0.9s ease-in-out infinite;
 }
 
 .selectable[data-choice-selected="true"] .unit::after {
@@ -152,7 +153,6 @@
     0 0 16px rgb(255 47 146 / 82%),
     0 0 34px rgb(255 47 146 / 38%),
     inset 0 0 16px rgb(255 47 146 / 24%);
-  animation: attack-target-pop 0.82s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .validAttackDropTarget::after {
@@ -184,7 +184,10 @@
   border-radius: 4px;
   pointer-events: none;
   z-index: 65;
-  animation: card-pulse 1s ease-in-out infinite;
+  box-shadow:
+    0 0 14px rgb(245 230 66 / 80%),
+    0 0 28px rgb(245 230 66 / 34%),
+    inset 0 0 12px rgb(245 230 66 / 24%);
 }
 
 .peekedFaceDown {
@@ -249,7 +252,6 @@
     0 0 16px rgb(245 230 66 / 82%),
     0 0 34px rgb(245 230 66 / 34%),
     inset 0 0 16px rgb(245 230 66 / 22%);
-  animation: attach-target-pop 0.92s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .validGearDropTarget::after {
@@ -295,7 +297,6 @@
     0 0 16px rgb(74 217 255 / 82%),
     0 0 34px rgb(74 217 255 / 36%),
     inset 0 0 16px rgb(74 217 255 / 22%);
-  animation: program-target-pop 0.92s cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
 .validProgramDropTarget::after {
@@ -321,91 +322,6 @@
 
 .validProgramDropTarget.dropOver {
   filter: brightness(1.32) saturate(1.32) contrast(1.1);
-}
-
-@keyframes card-armable {
-  0%,
-  100% {
-    box-shadow:
-      0 0 10px rgb(74 217 255 / 60%),
-      0 0 20px rgb(74 217 255 / 25%);
-  }
-
-  50% {
-    box-shadow:
-      0 0 18px rgb(74 217 255 / 95%),
-      0 0 36px rgb(74 217 255 / 50%);
-  }
-}
-
-@keyframes card-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 14px rgb(245 230 66 / 80%),
-      0 0 28px rgb(245 230 66 / 34%),
-      inset 0 0 12px rgb(245 230 66 / 24%);
-  }
-
-  50% {
-    box-shadow:
-      0 0 24px rgb(245 230 66 / 100%),
-      0 0 46px rgb(245 230 66 / 58%),
-      inset 0 0 18px rgb(245 230 66 / 36%);
-  }
-}
-
-@keyframes attack-target-pop {
-  0%,
-  100% {
-    opacity: 0.82;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-
-@keyframes attach-target-pop {
-  0%,
-  100% {
-    opacity: 0.84;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-}
-
-@keyframes program-target-pop {
-  0%,
-  100% {
-    opacity: 0.84;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .validAttackDropTarget .unit::before {
-    animation: none;
-  }
-
-  .validGearDropTarget .unit::before {
-    animation: none;
-  }
-
-  .validProgramDropTarget .unit::before {
-    animation: none;
-  }
 }
 
 .unit {
@@ -460,7 +376,6 @@
     0 0 16px rgb(245 230 66 / 90%),
     0 0 34px rgb(245 230 66 / 42%),
     inset 0 0 14px rgb(245 230 66 / 24%);
-  animation: gear-target-pulse 0.9s ease-in-out infinite;
 }
 
 .gear.selectable .gearHitTarget::after {
@@ -498,23 +413,6 @@
 .gearHitTarget:focus-visible {
   outline: 2px solid #f5e642;
   outline-offset: 2px;
-}
-
-@keyframes gear-target-pulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 14px rgb(245 230 66 / 78%),
-      0 0 28px rgb(245 230 66 / 32%),
-      inset 0 0 12px rgb(245 230 66 / 22%);
-  }
-
-  50% {
-    box-shadow:
-      0 0 24px rgb(245 230 66 / 100%),
-      0 0 46px rgb(245 230 66 / 56%),
-      inset 0 0 18px rgb(245 230 66 / 34%);
-  }
 }
 
 /* Stretches the .stack vertically to include the visible gear strips so the
@@ -1035,124 +933,4 @@
   font-size: 16px;
   letter-spacing: 0;
   text-shadow: 0 0 8px rgb(245 230 66 / 54%);
-}
-
-.actionMenu {
-  position: fixed;
-  z-index: 5000;
-  display: grid;
-  min-width: 142px;
-  max-width: min(220px, calc(100vw - 24px));
-  padding: 5px;
-  border: 1px solid rgb(74 217 255 / 76%);
-  border-radius: 4px;
-  background:
-    linear-gradient(135deg, rgb(74 217 255 / 16%), rgb(7 9 12 / 96%) 42%), rgb(7 9 12 / 98%);
-  box-shadow:
-    0 0 0 1px rgb(7 9 12 / 90%),
-    0 10px 32px rgb(0 0 0 / 58%),
-    0 0 22px rgb(74 217 255 / 30%);
-  pointer-events: auto;
-}
-
-.actionMenu::before {
-  content: "";
-  position: absolute;
-  left: var(--menu-arrow-left, 50%);
-  top: -5px;
-  width: 9px;
-  height: 9px;
-  border-top: 1px solid rgb(74 217 255 / 76%);
-  border-left: 1px solid rgb(74 217 255 / 76%);
-  background: rgb(7 9 12 / 98%);
-  transform: translateX(-50%) rotate(45deg);
-}
-
-.actionMenu[data-side="top"]::before {
-  top: auto;
-  bottom: -5px;
-  border-top: 0;
-  border-left: 0;
-  border-right: 1px solid rgb(74 217 255 / 76%);
-  border-bottom: 1px solid rgb(74 217 255 / 76%);
-}
-
-.actionMenuItem {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  min-height: 30px;
-  padding: 6px 10px;
-  border: 0;
-  border-radius: 2px;
-  background: transparent;
-  color: #d9fbff;
-  cursor: pointer;
-  font-family: Rajdhani, sans-serif;
-  font-size: 13px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1.1;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.actionMenuHotkey {
-  display: inline-flex;
-  flex: 0 0 auto;
-  min-width: 19px;
-  height: 19px;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgb(74 217 255 / 52%);
-  border-radius: 2px;
-  background: rgb(74 217 255 / 10%);
-  color: #f5e642;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0;
-  line-height: 1;
-  text-shadow: 0 0 8px rgb(245 230 66 / 44%);
-}
-
-.actionMenuItem:hover,
-.actionMenuItem:focus-visible {
-  background: rgb(245 230 66 / 16%);
-  color: #f5e642;
-  outline: none;
-  text-shadow: 0 0 10px rgb(245 230 66 / 58%);
-}
-
-.actionMenuItem:active {
-  transform: translateY(1px);
-}
-
-@media (hover: none), (pointer: coarse), (max-width: 768px) {
-  .actionMenu {
-    padding: 8px;
-    min-width: 170px;
-    max-width: min(260px, calc(100vw - 18px));
-    gap: 6px;
-  }
-
-  .actionMenuItem {
-    min-height: 44px;
-    padding: 10px 12px;
-    gap: 12px;
-    border-radius: 4px;
-    touch-action: manipulation;
-    font-size: 14px;
-    letter-spacing: 0.06em;
-  }
-
-  .actionMenuHotkey {
-    min-width: 22px;
-    height: 22px;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-size: 11px;
-  }
 }

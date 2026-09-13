@@ -15,6 +15,7 @@ export interface ResolvePlatformAuthSessionOptions {
   request: Request;
   fetcher?: typeof fetch;
   sessionUrl?: string;
+  onSetCookie?: (cookie: string) => void;
 }
 
 export function getPlatformAuthBaseUrl(): string {
@@ -25,13 +26,14 @@ export function getPlatformAuthBaseUrl(): string {
 }
 
 export function getPlatformSessionUrl(): string {
-  return `${getPlatformAuthBaseUrl()}/api/auth/get-session`;
+  return `${getPlatformAuthBaseUrl()}/v1/auth/session`;
 }
 
 export async function resolvePlatformAuthSession({
   request,
   fetcher = fetch,
   sessionUrl = getPlatformSessionUrl(),
+  onSetCookie,
 }: ResolvePlatformAuthSessionOptions): Promise<PlatformAuthSessionResult> {
   const cookieHeader = request.headers.get("cookie");
   if (!cookieHeader) {
@@ -59,6 +61,8 @@ export async function resolvePlatformAuthSession({
     });
     return result;
   }
+
+  for (const cookie of res.headers.getSetCookie()) onSetCookie?.(cookie);
 
   if (!res.ok) {
     const result = {
@@ -108,7 +112,8 @@ export function parsePlatformAuthSession(value: unknown): SessionResult | null {
     return null;
   }
 
-  const candidate = value as Partial<SessionResult>;
+  const candidate = value as Partial<SessionResult> & { status?: unknown };
+  if (candidate.status !== "authenticated") return null;
   const user = normalizeAuthUser(candidate.user);
   if (!user) {
     return null;
@@ -129,7 +134,10 @@ function normalizeAuthBaseUrl(value: string | undefined, fallback: string): stri
   if (!trimmed) {
     return fallback;
   }
-  return trimmed.replace(/\/api\/auth\/?$/i, "").replace(/\/$/, "");
+  return trimmed
+    .replace(/\/api\/auth\/?$/i, "")
+    .replace(/\/v1\/?$/i, "")
+    .replace(/\/$/, "");
 }
 
 function normalizeAuthUser(value: unknown): AuthUser | null {
@@ -143,7 +151,6 @@ function normalizeAuthUser(value: unknown): AuthUser | null {
 
   return {
     id: candidate.id,
-    email: typeof candidate.email === "string" ? candidate.email : "",
     name: typeof candidate.name === "string" ? candidate.name : candidate.id,
     image: optionalString(candidate.image),
     username: optionalString(candidate.username),
@@ -213,15 +220,7 @@ function isUserRole(value: unknown): value is AuthUser["role"] {
 }
 
 function isSubscriptionTier(value: unknown): value is AuthUser["subscriptionTier"] {
-  return (
-    value === "free" ||
-    value === "tier1" ||
-    value === "tier2" ||
-    value === "tier3" ||
-    value === "tier4" ||
-    value === "tier5" ||
-    value === "tier6"
-  );
+  return value === "free" || value === "tier2" || value === "tier3" || value === "tier4";
 }
 
 function logAuthSessionResult(details: Record<string, unknown>): void {

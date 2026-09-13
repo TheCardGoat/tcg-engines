@@ -45,20 +45,38 @@ export const op11Jinbe021: LeaderCard = {
     effects: [
       {
         trigger: "endOfYourTurn",
-        conditions: [{ condition: "handCount", player: "self", comparison: "lte", value: 6 }],
+        conditions: [
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "lte",
+            value: 6,
+          },
+        ],
         actions: [
           {
             action: "setActive",
             target: {
               player: "self",
               zones: ["character"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
               filters: [
                 {
                   filter: "anyOf",
-                  groups: [
-                    [{ filter: "trait", value: "Fish-Man", match: "includes" }],
-                    [{ filter: "trait", value: "Merfolk", match: "includes" }],
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Fish-Man",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Merfolk",
+                      match: "includes",
+                    },
                   ],
                 },
               ],
@@ -69,7 +87,10 @@ export const op11Jinbe021: LeaderCard = {
             target: {
               player: "self",
               zones: ["costArea"],
-              count: { amount: 1, upTo: true },
+              count: {
+                amount: 1,
+                upTo: true,
+              },
             },
           },
         ],

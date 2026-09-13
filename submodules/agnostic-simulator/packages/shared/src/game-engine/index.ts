@@ -11,6 +11,7 @@ export type {
 
 export type {
   AcceptedMoveRecord,
+  AnalyticsFactBatchRecord,
   BotActionOptions,
   BotActionResult,
   BotDecisionDiagnostics,
@@ -18,27 +19,37 @@ export type {
   DispatchFailure,
   DispatchResult,
   DispatchSuccess,
+  ReversedActionRecord,
   EngineLogRecord,
   EngineSnapshot,
+  EvaluateOpponentTimeoutInput,
   HistoricDecksForRestore,
   MoveHistorySourceAuthority,
+  OpponentTimeoutEvaluation,
   PacketAnimation,
   PublicGameEndPlayerSummary,
   PublicGameEndSummary,
   ServerEngineCreateInput,
   ServerEngineRestoreContext,
   ServerGameEngine,
+  SkipClockResetOptions,
+  TurnSkippedLogInput,
 } from "./types.js";
 
 export {
   composeCanonicalMoveLogForViewer,
+  composePlayerNarrativeForViewer,
   createCanonicalEngineMoveLog,
   createEngineLogMessage,
   isCanonicalEngineMoveLog,
+  isCanonicalPlayerNarrativeLog,
   selectVisibleEngineLogForViewer,
 } from "./move-logs.js";
 export type {
   CanonicalEngineMoveLog,
+  CanonicalPlayerNarrativeEntry,
+  CanonicalPlayerNarrativeLog,
   EngineLogMessage,
   EngineLogMessageValue,
+  VisiblePlayerNarrativeLog,
 } from "./move-logs.js";

@@ -52,6 +52,59 @@ const stagedAbility: CardEffect = {
 };
 
 describe("resolveThenQueue nested choice ordering", () => {
+  it("can stage a fresh target choice without resolving a prerequisite action", () => {
+    const source = createMockUnit({
+      name: "Modal Follow-up Source",
+      effects: [
+        {
+          type: "activated",
+          activation: { timing: ["activate:main"] },
+          directives: [
+            {
+              action: {
+                action: "resolveThenQueue",
+                followUp: {
+                  type: "triggered",
+                  activation: { timing: [] },
+                  directives: [
+                    {
+                      action: {
+                        action: "dealDamage",
+                        amount: 1,
+                        target: { owner: "opponent", cardType: "unit", count: 1 },
+                      },
+                    },
+                  ],
+                  sourceText: "Choose 1 enemy Unit. Deal 1 damage to it.",
+                },
+              },
+            },
+          ],
+          sourceText: "Choose an option that requires a follow-up target.",
+        },
+      ],
+    });
+    const enemy = createMockUnit({ name: "Enemy Unit", hp: 4 });
+    const engine = GundamTestEngine.create({ play: [source] }, { play: [enemy] });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.activateAbility(sourceId, 0));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      sourceCardId: sourceId,
+      legalTargetIds: [enemyId],
+    });
+    expect(p2.getDamage(enemyId)).toBe(0);
+
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(p2.getDamage(enemyId)).toBe(1);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
   it("resolves the prerequisite, its substitution, and the follow-up before an unrelated choice", () => {
     const source = createMockUnit({ name: "Staged Source", effects: [stagedAbility] });
     const substitute = createMockUnit({

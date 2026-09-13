@@ -1,2 +1,3 @@
 apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/MobileBoard.module.css
 apps/multi-game-simulator/src/games/cyberpunk/components/Welcome/Welcome.module.css
+apps/multi-game-simulator/src/games/flesh-and-blood/hero-special-ui/text-fixtures.md

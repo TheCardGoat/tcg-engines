@@ -1,0 +1,2 @@
+# Railway deployment trigger for the dedicated Lorcana simulator service.
+socket-io-cutover-2026-07-23

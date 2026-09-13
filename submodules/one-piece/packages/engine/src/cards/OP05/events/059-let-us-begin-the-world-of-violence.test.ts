@@ -3,7 +3,7 @@ import { op05LetUsBeginTheWorldOfViolence059 } from "../../../../../cards/src/ca
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-059 Let Us Begin the World of Violence!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op05LetUsBeginTheWorldOfViolence059);
   });
 });

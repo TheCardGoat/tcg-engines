@@ -171,15 +171,15 @@ async function resolveWoodyDiscardReturn(
 async function resolveWoodyFreePlay(
   pom: LorcanaSimulatorPom,
   cardName: RegExp | string,
-  options: { inlineTarget?: boolean } = {},
+  options: { enterExerted?: boolean } = {},
 ): Promise<void> {
   const beforeChoice = await pom.getBoard(PLAYER_ONE_VIEW);
-  if (options.inlineTarget) {
-    const target =
-      typeof cardName === "string" ? cardByName(pom.page, cardName) : pom.page.getByLabel(cardName);
-    await target.click({ force: true });
-  } else {
-    await chooseCardFromTargetDialog(pom, cardName);
+  const picker = pom.page.locator(".card-target-dialog");
+  await chooseCardFromTargetDialog(pom, cardName);
+  if (options.enterExerted !== undefined) {
+    await picker
+      .getByRole("button", { name: options.enterExerted ? "Play Exerted" : "Play Ready" })
+      .click();
   }
   await pom.waitForStateChange(beforeChoice.stateID, PLAYER_ONE_VIEW);
 }
@@ -433,7 +433,10 @@ test.describe("Set 13 visual card gallery", () => {
     await pom.goto({ fixture: SET_13_WOODY_HELPING_FIXTURE, view: PLAYER_ONE_VIEW });
 
     await playCardFromHand(pom, cardLabel(woodyHelpingAFriend), woodyHelpingAFriend.cost);
-    await chooseWoodyBranch(pom, "Option 1");
+    await chooseWoodyBranch(
+      pom,
+      "Return a character with cost 2 or less from your discard to your hand.",
+    );
     await resolveWoodyDiscardReturn(pom, simbaProtectiveCub.name);
 
     await expect(pom.asBottomPlayer()).toHaveCardInZone({
@@ -463,7 +466,7 @@ test.describe("Set 13 visual card gallery", () => {
     await pom.goto({ fixture: SET_13_WOODY_HELPING_FIXTURE, view: PLAYER_ONE_VIEW });
 
     await playCardFromHand(pom, cardLabel(woodyHelpingAFriend), woodyHelpingAFriend.cost);
-    await chooseWoodyBranch(pom, "Option 2");
+    await chooseWoodyBranch(pom, "Play a character with cost 2 or less from your hand for free.");
 
     await expect(pom.asBottomPlayer()).toHaveCardInZone({
       card: cardLabel(minnieMouseAlwaysClassy),
@@ -493,19 +496,33 @@ test.describe("Set 13 visual card gallery", () => {
 
     await playCardFromHand(pom, cardLabel(woodyHelpingAFriend), woodyHelpingAFriend.cost);
     await expect(page.getByTestId("choice-resolution-overlay")).toHaveCount(0);
+    await expect(
+      page.getByText("Return a character with cost 2 or less from your discard to your hand"),
+    ).toBeVisible();
     await resolveWoodyDiscardReturn(pom, simbaProtectiveCub.name);
-    await resolveWoodyFreePlay(pom, cardLabel(minnieMouseAlwaysClassy), {
-      inlineTarget: true,
-    });
+    await expect(
+      page.getByText("Play a character with cost 2 or less from your hand for free"),
+    ).toBeVisible();
+    // The modal remains open for Simba's rules-required Bodyguard choice;
+    // selecting its entry mode submits the play without returning to the hand.
+    await resolveWoodyFreePlay(pom, cardLabel(simbaProtectiveCub), { enterExerted: true });
 
     await expect(pom.asBottomPlayer()).toHaveCardInZone({
       card: cardLabel(simbaProtectiveCub),
-      zone: "hand",
+      zone: "play",
     });
     await expect(pom.asBottomPlayer()).toHaveCardInZone({
       card: cardLabel(minnieMouseAlwaysClassy),
-      zone: "play",
+      zone: "hand",
     });
+    const finalBoard = await pom.getBoard(PLAYER_ONE_VIEW);
+    const simbaInPlayId = findCardIdByLabel(
+      finalBoard,
+      PLAYER_ONE_ID,
+      "play",
+      cardLabel(simbaProtectiveCub),
+    );
+    expect(finalBoard.cards[simbaInPlayId]?.exerted).toBe(true);
     await expect(pom.asBottomPlayer()).toHaveCardInZone({
       card: cardLabel(buzzLightyearGrounded),
       zone: "play",

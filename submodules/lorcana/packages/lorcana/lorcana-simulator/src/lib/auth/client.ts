@@ -20,7 +20,6 @@ type AuthClientResult<TData = object> = Promise<{
 }>;
 
 type LorcanaAuthClient = {
-  getSession: () => AuthClientResult<{ user: object; session: object }>;
   signIn: {
     social: (input: {
       provider: "discord";

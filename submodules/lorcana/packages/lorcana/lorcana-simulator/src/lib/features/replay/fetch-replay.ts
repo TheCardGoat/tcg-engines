@@ -8,7 +8,8 @@ import { getApiOrigin } from "$lib/config/public-url-config.js";
 import { requestArrayBuffer } from "$lib/data/transport/http-client.js";
 import type { PlayerMatchMetadata } from "@/features/simulator/model/player-match-metadata.js";
 import type { GameAnalyticsSummary } from "@/features/simulator/post-game/notes-api.js";
-import { isReplayStoreAvailable, loadReplayData } from "./replay-store.js";
+import { ReplayPlaybackV1Schema, type ReplayReversal } from "@tcg/game-page-contract";
+import { loadReplayFromDevice } from "@tcg/simulator-runtime/replay-library";
 
 export interface ReplayPlayerInfo {
   id: string;
@@ -41,10 +42,22 @@ export interface ReplayMoveRecord {
   timestamp: number;
 }
 
-export interface PersistedReplayStep {
-  patches: unknown[];
-  logs: unknown[];
-  acceptedMove: ReplayMoveRecord;
+export type PersistedReplayStep = { patches: unknown[]; logs: unknown[] } & (
+  | { acceptedMove: ReplayMoveRecord; reversal?: never }
+  | { acceptedMove: null; reversal: ReplayReversal }
+);
+
+export function persistedReplayStepPosition(
+  step: PersistedReplayStep,
+): ReplayMoveRecord | ReplayReversal {
+  return step.acceptedMove ?? step.reversal;
+}
+
+export function firstPlayerIdFromReplaySteps(
+  steps: readonly PersistedReplayStep[] | undefined,
+): string | undefined {
+  const opening = steps?.find((step) => persistedReplayStepPosition(step).turnNumber === 1);
+  return opening ? persistedReplayStepPosition(opening).actorId : undefined;
 }
 
 export interface ReplayChatMessage {
@@ -71,9 +84,13 @@ export interface PersistedReplayData {
   metadata: PersistedReplayMetadata;
 }
 
+function unwrapEngineReplayLog(log: { tag: string; data?: unknown }): unknown {
+  return log.tag === "engine_log" && log.data !== undefined ? log.data : log;
+}
+
 type ReplayPlayerSide = "playerOne" | "playerTwo";
 
-export type ReplayBlobSource = "indexed-db" | "api";
+export type ReplayBlobSource = "api" | "device";
 
 export interface ReplayBlobLoadResult {
   blob: ArrayBuffer;
@@ -81,9 +98,8 @@ export interface ReplayBlobLoadResult {
 }
 
 interface ReplayBlobLoaderDeps {
-  isReplayStoreAvailable?: () => boolean;
-  loadReplayData?: (gameId: string) => Promise<ArrayBuffer | null>;
   fetchReplayBlob?: (gameId: string) => Promise<ArrayBuffer>;
+  preferredSource?: "api" | "device";
 }
 
 function normalizePlayerName(value: string | null | undefined): string | null {
@@ -116,7 +132,8 @@ export function buildReplayPlayerMetadataMap(
 
   playerIds.forEach((playerId, index) => {
     const info = getReplayPlayerInfo(metadata, index as 0 | 1);
-    const displayName = normalizePlayerName(info?.displayName) ?? normalizePlayerName(info?.username);
+    const displayName =
+      normalizePlayerName(info?.displayName) ?? normalizePlayerName(info?.username);
     if (displayName) {
       playerMetadataMap[playerId] = { displayName };
     }
@@ -151,12 +168,11 @@ export function buildForkedReplayPlayerMetadataMap(
 }
 
 /**
- * Fetch the compressed replay blob from the API.
- * Uses the /data endpoint which returns gzipped JSON directly (or redirects to S3).
+ * Fetch the canonical JSON replay. HTTP content encoding is handled by fetch.
  */
 export async function fetchReplayBlob(gameId: string): Promise<ArrayBuffer> {
   const origin = getApiOrigin();
-  const url = `${origin}/v1/games/lorcana/play/replays/${encodeURIComponent(gameId)}/data`;
+  const url = `${origin}/v1/games/lorcana/play/replays/${encodeURIComponent(gameId)}`;
   console.debug("[fetchReplayBlob] fetching", { gameId, url });
   try {
     return await requestArrayBuffer(url, undefined, `Failed to fetch replay for ${gameId}`);
@@ -169,35 +185,26 @@ export async function fetchReplayBlob(gameId: string): Promise<ArrayBuffer> {
 /**
  * Load replay data for viewer/fork playback.
  *
- * Local saved replays still win, but public persisted replays must remain
- * playable even when the browser does not have a matching IndexedDB entry.
+ * Playback has one transport: the immutable server response.
  */
 export async function loadReplayBlobForPlayback(
   gameId: string,
   deps: ReplayBlobLoaderDeps = {},
 ): Promise<ReplayBlobLoadResult> {
-  const canUseStore = deps.isReplayStoreAvailable ?? isReplayStoreAvailable;
-  const loadLocalReplay = deps.loadReplayData ?? loadReplayData;
-  const fetchRemoteReplay = deps.fetchReplayBlob ?? fetchReplayBlob;
-
-  if (canUseStore()) {
-    try {
-      const localBlob = await loadLocalReplay(gameId);
-      if (localBlob) {
-        return { blob: localBlob, source: "indexed-db" };
-      }
-    } catch (error) {
-      console.warn("[Replay] IndexedDB replay load failed, falling back to API", {
-        gameId,
-        error,
-      });
-    }
+  if (deps.preferredSource === "device") {
+    const playback = await loadReplayFromDevice("lorcana", gameId);
+    if (!playback) throw new Error("This replay is not saved on this device.");
+    return {
+      blob: new TextEncoder().encode(JSON.stringify(playback)).buffer as ArrayBuffer,
+      source: "device",
+    };
   }
+  const fetchRemoteReplay = deps.fetchReplayBlob ?? fetchReplayBlob;
 
   try {
     return { blob: await fetchRemoteReplay(gameId), source: "api" };
   } catch (error) {
-    console.error("[Replay] API fetch failed after IndexedDB miss/unavailable", {
+    console.error("[Replay] API fetch failed", {
       gameId,
       error,
     });
@@ -206,16 +213,63 @@ export async function loadReplayBlobForPlayback(
 }
 
 /**
- * Decompress a gzipped replay blob into PersistedReplayData.
- * Uses the browser-native DecompressionStream API.
+ * Convert the canonical ReplayPlayback response into the existing renderer
+ * input while the Svelte playback UI migrates to the shared controller.
  */
 export async function decompressReplayBlob(compressed: ArrayBuffer): Promise<PersistedReplayData> {
-  const stream = new Blob([compressed])
-    .stream()
-    .pipeThrough(
-      new DecompressionStream("gzip") as unknown as ReadableWritablePair<Uint8Array, Uint8Array>,
-    );
+  const playback = ReplayPlaybackV1Schema.parse(
+    JSON.parse(new TextDecoder().decode(compressed)) as unknown,
+  );
+  const replay = playback.replay;
+  const playerIds = replay.participants.map((participant) => participant.id);
+  if (playerIds.length < 2) throw new Error("Replay is missing player participants.");
+  return {
+    version: 2,
+    gameId: replay.gameId,
+    matchId: replay.matchId,
+    gameType: replay.gameType,
+    seed: replay.seed,
+    playerIds: [playerIds[0]!, playerIds[1]!],
+    cardsMaps: readReplayCardsMaps(playback.resources),
+    initialState: JSON.stringify(replay.initialState),
+    steps: replay.steps.map((step) => ({
+      patches: step.patches,
+      logs: step.logs.map(unwrapEngineReplayLog),
+      ...(step.acceptedMove === null
+        ? { acceptedMove: null, reversal: step.reversal }
+        : {
+            acceptedMove: {
+              stateVersion: step.acceptedMove.stateVersion,
+              turnNumber: step.acceptedMove.turnNumber,
+              actorId: step.acceptedMove.actorId,
+              moveId: step.acceptedMove.moveId,
+              ...(step.acceptedMove.payload !== undefined
+                ? { input: step.acceptedMove.payload }
+                : {}),
+              timestamp: step.acceptedMove.timestamp,
+            },
+          }),
+    })),
+    metadata: {
+      ...replay.metadata,
+      completedAt: replay.metadata.completedAt ?? playback.publishedAt,
+      players: [toReplayPlayer(replay.participants[0]!), toReplayPlayer(replay.participants[1]!)],
+      authority: playback.trust === "server_authoritative" ? "server" : "client",
+    },
+  };
+}
 
-  const decompressed = await new Response(stream).text();
-  return JSON.parse(decompressed) as PersistedReplayData;
+function readReplayCardsMaps(resources: unknown): PersistedReplayData["cardsMaps"] {
+  if (!resources || typeof resources !== "object" || !("cardsMaps" in resources)) {
+    return { cardInstances: {}, owners: {} };
+  }
+  const cardsMaps = (resources as { cardsMaps?: unknown }).cardsMaps;
+  if (!cardsMaps || typeof cardsMaps !== "object") return { cardInstances: {}, owners: {} };
+  const value = cardsMaps as { cardInstances?: unknown; owners?: unknown };
+  if (!value.cardInstances || !value.owners) return { cardInstances: {}, owners: {} };
+  return cardsMaps as PersistedReplayData["cardsMaps"];
+}
+
+function toReplayPlayer(participant: { id: string; displayName: string }): ReplayPlayerInfo {
+  return { id: participant.id, displayName: participant.displayName, username: null };
 }

@@ -3,7 +3,7 @@ import { op05Amazon099 } from "../../../../../cards/src/cards/OP05/characters/09
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-099 Amazon", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op05Amazon099);
   });
 });

@@ -1,6 +1,6 @@
-export type SupporterPublicTier = "supporter" | "champion" | "legend" | "admin";
+export type SupporterPublicTier = "supporter" | "champion" | "legend";
 
-export type SupporterIconName = "star" | "gem" | "sparkles" | "shield";
+export type SupporterIconName = "star" | "gem" | "sparkles";
 
 export interface SupporterDisplayConfig {
   publicTier: SupporterPublicTier;
@@ -48,24 +48,12 @@ export const SUPPORTER_DISPLAY_CONFIGS: Record<SupporterPublicTier, SupporterDis
     border: "oklch(0.78 0.13 90 / 0.5)",
     glow: "oklch(0.78 0.13 90 / 0.34)",
   },
-  admin: {
-    publicTier: "admin",
-    label: "Admin",
-    shortLabel: "Admin",
-    icon: "shield",
-    color: "oklch(0.62 0.17 24)",
-    colorRgb: "201 79 66",
-    background: "oklch(0.62 0.17 24 / 0.12)",
-    border: "oklch(0.62 0.17 24 / 0.46)",
-    glow: "oklch(0.62 0.17 24 / 0.3)",
-  },
 };
 
 export function normalizeSupporterTier(
   tier: string | null | undefined,
 ): SupporterPublicTier | null {
   switch ((tier ?? "").trim().toLowerCase()) {
-    case "tier1":
     case "tier2":
     case "supporter":
       return "supporter";
@@ -73,12 +61,8 @@ export function normalizeSupporterTier(
     case "champion":
       return "champion";
     case "tier4":
-    case "tier6":
     case "legend":
       return "legend";
-    case "tier5":
-    case "admin":
-      return "admin";
     default:
       return null;
   }

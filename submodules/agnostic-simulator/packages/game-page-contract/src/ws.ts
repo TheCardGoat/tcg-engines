@@ -1,6 +1,7 @@
 import type { GameId, MoveId, PlayerId } from "./ids.js";
 import type { JsonPatch } from "./json-patch.js";
 import type { GameSnapshot } from "./snapshot.js";
+import type { AnimationPlanV2 } from "@tcg/protocol";
 
 /**
  * Tagged log entry for one in-game event. Tags are namespaced by gameType
@@ -14,15 +15,6 @@ export interface GameLogEntry {
   data?: unknown;
   /** Wall-clock timestamp at which the event was emitted. */
   ts?: number;
-}
-
-/**
- * Animation hint emitted by the engine alongside patches. Optional — the
- * page may render moves without animation if the deployable returns none.
- */
-export interface AnimationCue {
-  tag: string;
-  data?: unknown;
 }
 
 export interface MoveRecord {
@@ -43,6 +35,7 @@ export type ClientMsg =
       type: "join_game";
       gameId: GameId;
       ticket: string;
+      stateVersion?: number;
     }
   | {
       type: "execute_move";
@@ -79,7 +72,7 @@ export type ServerMsg =
   | {
       type: "game_joined";
       gameId: GameId;
-      snapshot: GameSnapshot;
+      snapshot?: GameSnapshot;
       /** Recent moves so the client can backfill its move log. */
       recentHistory: MoveRecord[];
     }
@@ -90,7 +83,7 @@ export type ServerMsg =
       patches: JsonPatch;
       acceptedMove: MoveRecord;
       logs: GameLogEntry[];
-      animations?: AnimationCue[];
+      animationPlan: AnimationPlanV2 | null;
     }
   | {
       type: "state_update";
@@ -98,12 +91,13 @@ export type ServerMsg =
       stateVersion: number;
       patches: JsonPatch;
       logs: GameLogEntry[];
-      animations?: AnimationCue[];
+      animationPlan: AnimationPlanV2 | null;
     }
   | {
       type: "state_sync";
       gameId: GameId;
       snapshot: GameSnapshot;
+      animationPlan: null;
     }
   | {
       type: "move_rejected";

@@ -34,6 +34,7 @@ function createSelectionState(
     candidatePlayerIds: [],
     viewerSide: "playerOne",
     candidateEntries: [],
+    hasPlayCardEntryModeCandidate: false,
     activeSlotIndex: null,
     slots: [],
     amountSelection: null,
@@ -195,6 +196,17 @@ describe("target selection modal helpers", () => {
         createSelectionState({
           allowedZones: ["hand"],
           playCardEntryModeChoice: { selected: null },
+        }),
+      ),
+    ).toBe(true);
+  });
+
+  it("opens the modal before choosing when a legal hand candidate needs an entry-mode choice", () => {
+    expect(
+      shouldUseTargetSelectionModal(
+        createSelectionState({
+          allowedZones: ["hand"],
+          hasPlayCardEntryModeCandidate: true,
         }),
       ),
     ).toBe(true);

@@ -969,6 +969,7 @@ describe("defaultChoiceResolvers map", () => {
         "chooseTrigger",
         "chooseTarget",
         "gainGig",
+        "preventGigSteal",
         "revealDestination",
         "scry",
       ].sort(),

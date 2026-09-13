@@ -176,6 +176,8 @@ export function runResolver(
         choice,
         ctx,
       );
+    case "preventGigSteal":
+      return pick(overrides?.preventGigSteal, defaultChoiceResolvers.preventGigSteal)(choice, ctx);
     case "chooseCardToPlay":
       return pick(overrides?.chooseCardToPlay, defaultChoiceResolvers.chooseCardToPlay)(
         choice,

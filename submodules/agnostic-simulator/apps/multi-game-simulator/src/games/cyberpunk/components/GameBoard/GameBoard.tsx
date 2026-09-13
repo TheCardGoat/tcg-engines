@@ -14,7 +14,6 @@ import { FixerZone } from "./FixerZone";
 import { LegendsZone } from "./LegendsZone";
 import { PInfoZone } from "./PInfoZone";
 import { TrashZone } from "./TrashZone";
-import { CardImage } from "./CardImage";
 import { useGameState } from "./gameStateContext";
 import { useMoveSelectionForSide } from "./MoveSelectionContext";
 import { ClockDisplay, PassTurnControl } from "./CenterRow";
@@ -164,7 +163,6 @@ export function GameBoard({
   const totalEddieCount = eddieCardCount + zones.legendArea.length;
 
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number } | null>(null);
-  const [confirmingConcede, setConfirmingConcede] = useState(false);
   const [trashViewerOpen, setTrashViewerOpen] = useState(false);
   const trashViewerOwnerId = String(PLAYER_SIDE_TO_ID[side]);
   const trashViewerZoneId = opponent ? "opp-trash" : "p-trash";
@@ -188,30 +186,6 @@ export function GameBoard({
         trashCardToSimulatorEntity(card, trashViewerOwnerId, trashViewerZoneId),
       ),
     [trashViewerOwnerId, trashViewerZoneId, zones.trash],
-  );
-  const trashViewerCardsById = useMemo(
-    () => new Map(zones.trash.map((card) => [card.cardId, card])),
-    [zones.trash],
-  );
-  const renderTrashViewerEntity = useCallback(
-    (entity: SimulatorEntity) => {
-      const card = trashViewerCardsById.get(entity.id);
-      if (!card) return null;
-
-      return (
-        <div className={classes.trashViewerCard} data-card-id={card.cardId}>
-          <CardImage
-            imageUrl={card.imageUrl}
-            faceDown={card.faceDown}
-            cardType={card.cardType}
-            alt={card.faceDown ? "Face-down card" : card.name}
-            color={card.color}
-            previewDetails={trashCardToPreviewDetails(card)}
-          />
-        </div>
-      );
-    },
-    [trashViewerCardsById],
   );
 
   const handleContextMenu = useCallback((ev: ReactMouseEvent<HTMLDivElement>) => {
@@ -273,12 +247,6 @@ export function GameBoard({
               "Click card — open card actions",
           );
         },
-      },
-      {
-        id: "concede",
-        label: "Concede match",
-        disabled: gameEnded,
-        run: () => setConfirmingConcede(true),
       },
     ];
   }, [
@@ -393,7 +361,6 @@ export function GameBoard({
           body: classes.trashViewerBody,
           closeButton: classes.trashViewerCloseButton,
         }}
-        renderEntity={renderTrashViewerEntity}
         onClose={() => setTrashViewerOpen(false)}
       />
       {contextMenu ? (
@@ -404,18 +371,6 @@ export function GameBoard({
           onClose={() => setContextMenu(null)}
         />
       ) : null}
-      <ConfirmDialog
-        opened={confirmingConcede && !gameEnded}
-        title="Concede match?"
-        body="This concedes the match and cannot be undone."
-        cancelLabel="Keep playing"
-        confirmLabel="Concede"
-        onCancel={() => setConfirmingConcede(false)}
-        onConfirm={() => {
-          setConfirmingConcede(false);
-          dispatch({ type: "concede", as: PLAYER_SIDE_TO_ID[side] });
-        }}
-      />
     </div>
   );
 }
@@ -548,35 +503,6 @@ function trashCardToSimulatorEntity(
       "data-card-color": card.color,
     },
   };
-}
-
-function trashCardToPreviewDetails(card: TrashViewerCard) {
-  if (card.faceDown) return undefined;
-
-  return {
-    name: card.name,
-    cardType: card.cardType,
-    cost: card.cost,
-    effectiveCost: card.effectiveCost,
-    power: card.power,
-    effectivePower: card.effectivePower,
-    classifications: card.classifications,
-    keywords: card.keywords,
-    rules: [
-      ...card.keywords.map(formatPreviewKeyword),
-      ...(card.rulesText ? [card.rulesText] : []),
-      ...card.effectiveRules
-        .filter((rule) => !card.keywords.includes(rule))
-        .map((rule) => `Effective: ${formatPreviewKeyword(rule)}.`),
-    ],
-    costEffects: card.costEffects,
-    activeEffects: card.activeEffects,
-    hasSellTag: card.hasSellTag,
-  };
-}
-
-function formatPreviewKeyword(value: string): string {
-  return value.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/^./, (first) => first.toUpperCase());
 }
 
 function usePeekedLegendsForSide(

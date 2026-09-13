@@ -52,4 +52,37 @@ describe("OP09-078 Gum-Gum Giant", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        leaderCardId: op09MonkeyDLuffy061,
+        hand: [op09GumGumGiant078, eb01Doma005, op05Pell014],
+        deck: [eb01Doma005, op05Pell014],
+        life: 2,
+        activeDon: 3,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const eventId = engine.findCardInZone("north", "hand", op09GumGumGiant078);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+
+    const paymentId = engine.findCardInZone("north", "hand", eb01Doma005);
+    const before = engine.getView("north").players.north;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const deckBefore = before.deckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    // Declined optional Counter costs: no DON!! return, no hand trash, no draw 2.
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.hand.map((card) => card.instanceId)).toContain(paymentId);
+    expect(after.trash.map((card) => card.instanceId)).not.toContain(paymentId);
+    expect(engine.getView("north").prompts).toHaveLength(0);
+  });
 });

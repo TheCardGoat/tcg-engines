@@ -34,12 +34,12 @@ export function TimedOutPlayerOverlay({
         </div>
         <div className="flex items-center gap-2">
           {canSkip ? (
-            <Button size="sm" variant="outline" data-testid="skip-opponent-turn" onClick={onSkip}>
+            <Button size="lg" variant="outline" data-testid="skip-opponent-turn" onClick={onSkip}>
               Skip Turn
             </Button>
           ) : null}
           {canDrop ? (
-            <Button size="sm" variant="danger" data-testid="drop-opponent" onClick={onDrop}>
+            <Button size="lg" variant="danger" data-testid="drop-opponent" onClick={onDrop}>
               Drop
             </Button>
           ) : null}

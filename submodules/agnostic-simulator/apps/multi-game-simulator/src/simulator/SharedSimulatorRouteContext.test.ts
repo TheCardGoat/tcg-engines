@@ -12,12 +12,44 @@ describe("SharedSimulatorRouteContext", () => {
       gameId: "g1",
       matchResolution: null,
       error: null,
-      matchPageData: {
-        viewerSeat: 0,
+      session: {
+        schemaVersion: 2,
+        phase: "playing",
+        revision: 0,
+        viewer: {
+          role: "player",
+          actorId: "p1",
+          userId: "u1",
+          seat: 1,
+          permissions: {
+            act: true,
+            chat: true,
+            propose: true,
+            useManualControls: true,
+            concede: true,
+            spectate: false,
+            viewReplay: false,
+            downloadReplay: false,
+            forkReplay: false,
+          },
+        },
+        capabilities: {
+          actions: true,
+          chat: true,
+          proposals: true,
+          manualControls: true,
+          spectating: true,
+          conceding: true,
+          replay: false,
+        },
+        presence: { players: [] },
+        history: { recentMoves: [], engineLogs: [] },
         realtime: {
           wsUrl: "wss://gateway.example.test",
           ticket: "ticket",
-          protocolVersion: 1,
+          reconnectToken: "reconnect",
+          expiresAt: "2026-07-22T01:00:00.000Z",
+          protocolVersion: 2,
         },
         match: {
           matchId: "m1",
@@ -29,7 +61,7 @@ describe("SharedSimulatorRouteContext", () => {
           participants: [
             {
               id: "p1",
-              seat: 0,
+              seat: 1,
               userId: "u1",
               displayName: "Current",
               mmrAtMatch: 1510,
@@ -37,7 +69,7 @@ describe("SharedSimulatorRouteContext", () => {
             },
             {
               id: "p2",
-              seat: 1,
+              seat: 2,
               userId: "u2",
               displayName: "Opponent",
               mmrAtMatch: 1490,
@@ -51,8 +83,8 @@ describe("SharedSimulatorRouteContext", () => {
           status: "in_progress",
           authority: "server",
           stateVersion: 1,
-          state: {},
-          cardsMaps: { cardInstances: {}, owners: {} },
+          view: {},
+          resources: { cardsMaps: { cardInstances: {}, owners: {} } },
         },
       },
     };

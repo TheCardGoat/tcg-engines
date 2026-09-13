@@ -10,7 +10,10 @@ import {
   type MoveLog,
 } from "@tcg/cyberpunk-engine";
 import {
+  AnimationPlanV2Schema,
   validateInteractionSubmission,
+  type AnimationPlanV2,
+  type AnimationStepV2,
   type EngineInteractionView,
   type InteractionSubmission,
 } from "@tcg/protocol";
@@ -79,12 +82,19 @@ export class CyberpunkServerEngine implements ServerGameEngine {
     return this.engine.getState();
   }
 
+  getViewerState(
+    viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
+  ): unknown {
+    const viewerId = viewer.role === "player" ? viewer.actorId : "__public_spectator__";
+    return this.engine.getFilteredView(viewerId as never);
+  }
+
   getActivePlayerId(): string | undefined {
     // Delegates to the engine's effective-active-player helper so the
     // SETUP-phase parallel-decision carve-out (both players mulligan
     // independently; canonical `turnMetadata.activePlayerId` doesn't
     // advance between their picks) is handled in one place that both
-    // the legacy ws-route handlers and the new inbox handlers consume.
+    // the server-side gameplay inbox consumes.
     return this.engine.getEffectiveActivePlayerId();
   }
 
@@ -167,6 +177,7 @@ export class CyberpunkServerEngine implements ServerGameEngine {
       actorId,
       stateVersion: this.getStateID(),
       prompt: this.engine.getPrompt(actorId as never),
+      state: this.engine.getState(),
     });
   }
 
@@ -237,6 +248,7 @@ export class CyberpunkServerEngine implements ServerGameEngine {
       state,
       patches: [],
       animations: [],
+      transition: "move",
       acceptedMoveRecord: {
         gameId: context.gameId,
         stateVersion,
@@ -419,19 +431,25 @@ export class CyberpunkServerEngine implements ServerGameEngine {
       sourceAuthority: context.sourceAuthority,
       log: toCanonicalCyberpunkMoveLog(log),
     }));
+    const nativeAnimations = animationPacketsFromResult({
+      gameId: context.gameId,
+      actorId,
+      stateVersion,
+      moveType,
+      result,
+    });
 
     return {
       success: true,
       stateID: stateVersion,
       state: result.state,
       patches: result.patches as readonly unknown[],
-      animations: animationPacketsFromResult({
-        gameId: context.gameId,
-        actorId,
-        stateVersion,
-        moveType,
-        result,
-      }),
+      animations: nativeAnimations,
+      animationPlan: cyberpunkAnimationPlan(
+        `${context.gameId}:${actorId}:${stateVersion}`,
+        result.animationScript,
+      ),
+      transition: "move",
       acceptedMoveRecord,
       engineLogRecords,
       undoable: result.undoable ?? false,
@@ -446,6 +464,232 @@ export class CyberpunkServerEngine implements ServerGameEngine {
   getRawState(): MatchState {
     return this.engine.getState();
   }
+}
+
+function cyberpunkAnimationPlan(id: string, script: AnimationScript): AnimationPlanV2 | null {
+  const steps = script.steps.flatMap<AnimationStepV2>((step) => {
+    const base = {
+      id: step.id,
+      startAtMs: step.startMs,
+      durationMs: step.durationMs,
+    };
+    switch (step.kind) {
+      case "cardMove":
+      case "cardExit":
+      case "cardReveal":
+        return [
+          {
+            ...base,
+            type: "entityTransfer",
+            entity: { kind: "entity", id: String(step.cardId) },
+            from: {
+              kind: "zone",
+              id: step.fromZone,
+              ownerId: String(step.playerId),
+            },
+            ...(step.toZone
+              ? {
+                  to: {
+                    kind: "zone" as const,
+                    id: step.toZone,
+                    ownerId: String(step.playerId),
+                  },
+                }
+              : {}),
+            sourceFace: cyberpunkZoneFace(step.fromZone),
+            destinationFace: step.toZone ? cyberpunkZoneFace(step.toZone) : "hidden",
+          },
+        ];
+      case "cardEnter":
+        return [
+          {
+            ...base,
+            type: "entityTransfer",
+            entity: { kind: "entity", id: String(step.cardId) },
+            to: { kind: "zone", id: step.toZone, ownerId: String(step.playerId) },
+            sourceFace: "hidden",
+            destinationFace: cyberpunkZoneFace(step.toZone),
+          },
+        ];
+      case "cardAttach":
+        return [
+          {
+            ...base,
+            type: "entityTransfer",
+            entity: { kind: "entity", id: String(step.gearId) },
+            from: { kind: "zone", id: "hand", ownerId: String(step.playerId) },
+            to: { kind: "entity", id: String(step.hostId) },
+            sourceFace: "hidden",
+            destinationFace: "public",
+            audioCue: "card.move",
+          },
+        ];
+      case "cardLand":
+        return [
+          {
+            ...base,
+            type: "emphasize",
+            at: { kind: "entity", id: String(step.cardId) },
+            style: "pulse",
+            audioCue: "card.play",
+          },
+        ];
+      case "legendReveal":
+        return [
+          {
+            ...base,
+            type: "entityStateChange",
+            entity: { kind: "entity", id: String(step.cardId) },
+            at: { kind: "entity", id: String(step.cardId) },
+            change: "face",
+            sourceFace: "hidden",
+            destinationFace: "public",
+            audioCue: "effect.trigger",
+          },
+        ];
+      case "effectTarget":
+        return [
+          {
+            ...base,
+            type: "effect",
+            source: { kind: "entity", id: String(step.sourceCardId) },
+            targets: step.targets.map((target) => {
+              switch (target.kind) {
+                case "card":
+                  return { kind: "entity" as const, id: String(target.cardId) };
+                case "gig":
+                  return { kind: "entity" as const, id: String(target.dieId) };
+                case "player":
+                  return { kind: "player" as const, id: String(target.playerId) };
+              }
+            }),
+            label: "EFFECT",
+            audioCue: "effect.trigger",
+          },
+        ];
+      case "resourceFloat":
+        return [
+          {
+            ...base,
+            type: "valueDelta",
+            subject: { kind: "player", id: String(step.playerId) },
+            delta: step.delta,
+            label: step.resource === "eddies" ? "EDDIES" : "GIG",
+            ...(step.previousValue !== undefined ? { fromValue: step.previousValue } : {}),
+            ...(step.newValue !== undefined ? { toValue: step.newValue } : {}),
+            audioCue:
+              step.resource === "gig" && step.delta > 0
+                ? "resource.gain"
+                : step.delta < 0
+                  ? "resource.spend"
+                  : "resource.gain",
+          },
+        ];
+      case "combat":
+        return [
+          {
+            ...base,
+            type: "combat",
+            source: { kind: "entity", id: String(step.attackerId) },
+            target: step.defenderId
+              ? { kind: "entity", id: String(step.defenderId) }
+              : { kind: "player", id: String(step.playerId) },
+            reason: "declared",
+            attackKind: step.attackKind,
+            audioCue: "combat.start",
+          },
+        ];
+      case "combatRedirect":
+        return [
+          {
+            ...base,
+            type: "combat",
+            source: { kind: "entity", id: String(step.blockerId) },
+            target: { kind: "entity", id: String(step.attackerId) },
+            reason: "blocked",
+            attackKind: "fight",
+            audioCue: "combat.start",
+          },
+        ];
+      case "gigMove":
+        return [
+          {
+            ...base,
+            type: "entityTransfer",
+            entity: { kind: "entity", id: String(step.dieId) },
+            from: {
+              kind: "zone",
+              id: step.from,
+              ownerId: String(step.fromPlayerId),
+            },
+            to: {
+              kind: "zone",
+              id: step.to,
+              ownerId: String(step.toPlayerId),
+            },
+            sourceFace: "public",
+            destinationFace: "public",
+            audioCue: step.moveKind === "steal" ? "resource.steal" : "resource.gain",
+          },
+        ];
+      case "phaseChange":
+        return [
+          {
+            ...base,
+            type: "phaseChange",
+            from: step.from,
+            to: step.to,
+            variant: step.variant ?? "phase",
+          },
+        ];
+      case "entityStateChange":
+        return [
+          {
+            ...base,
+            type: "entityStateChange",
+            entity: { kind: "entity", id: String(step.cardId) },
+            at: { kind: "entity", id: String(step.cardId) },
+            change: "orientation",
+            sourceFace: "public",
+            destinationFace: "public",
+            fromRotationDeg: step.change === "spent" ? 0 : 90,
+            toRotationDeg: step.change === "spent" ? 90 : 0,
+          },
+        ];
+      case "randomization":
+        return [
+          {
+            ...base,
+            type: "randomization",
+            at:
+              step.randomization === "die" && step.dieId
+                ? { kind: "entity", id: String(step.dieId) }
+                : { kind: "zone", id: "deck", ownerId: String(step.playerId) },
+            kind: step.randomization,
+            ...(step.resultLabel ? { resultLabel: step.resultLabel } : {}),
+            audioCue: step.randomization === "shuffle" ? "deck.shuffle" : "effect.trigger",
+          },
+        ];
+      case "gameResult":
+        return [
+          {
+            ...base,
+            type: "gameResult",
+            outcome: step.winnerId ? "winner" : "draw",
+            ...(step.winnerId
+              ? { winner: { kind: "player" as const, id: String(step.winnerId) } }
+              : {}),
+            reasonLabel: step.reasonLabel,
+          },
+        ];
+    }
+  });
+  if (steps.length === 0) return null;
+  return AnimationPlanV2Schema.parse({ id, version: 2, steps });
+}
+
+function cyberpunkZoneFace(zone: string): "public" | "hidden" {
+  return zone === "hand" || zone === "deck" ? "hidden" : "public";
 }
 
 function preserveForfeitReason(

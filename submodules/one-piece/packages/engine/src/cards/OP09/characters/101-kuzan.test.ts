@@ -21,5 +21,9 @@ describe("OP09-101 Kuzan", () => {
       throw new Error("Expected Kuzan's printed top-or-bottom Life choice.");
     }
     expect(position.options.map((option) => option.id)).toEqual(["top", "bottom"]);
+
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.leader).toBeTruthy();
+    expect(engine.getView("south").players.south.deckCount).toBeGreaterThanOrEqual(0);
   });
 });

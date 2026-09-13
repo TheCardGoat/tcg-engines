@@ -1,4 +1,12 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import type { ReactNode } from "react";
 
 import type { DOMRectLike, GameCardData } from "../types.ts";
@@ -16,6 +24,7 @@ interface CardInspectContextValue {
   readonly hovered: HoverState | null;
   readonly inspected: InspectState | null;
   readonly setHover: (card: GameCardData | null) => void;
+  readonly dismissHover: (cardId: string) => void;
   readonly openInspect: (card: GameCardData, anchor: DOMRectLike) => void;
   /**
    * Replace the inspected card snapshot in place (keeping the anchor) when
@@ -104,13 +113,31 @@ function sameCardSnapshot(a: GameCardData, b: GameCardData): boolean {
 export function CardInspectProvider({ children }: { readonly children: ReactNode }) {
   const [hovered, setHovered] = useState<HoverState | null>(null);
   const [inspected, setInspected] = useState<InspectState | null>(null);
+  const suppressedHoverCardId = useRef<string | null>(null);
+
+  useEffect(() => {
+    // Responsive reflow can move a hovered card without a mouseleave event.
+    // A fresh pointer entry should own the preview in the new layout.
+    const clearHover = () => setHovered(null);
+    window.addEventListener("resize", clearHover);
+    return () => window.removeEventListener("resize", clearHover);
+  }, []);
 
   const setHover = useCallback((card: GameCardData | null) => {
     setHovered((prev) => {
-      if (card === null) return prev === null ? prev : null;
+      if (card === null) {
+        suppressedHoverCardId.current = null;
+        return prev === null ? prev : null;
+      }
+      if (suppressedHoverCardId.current === card.id) return prev;
       if (prev && sameCardSnapshot(prev.card, card)) return prev;
       return { card };
     });
+  }, []);
+
+  const dismissHover = useCallback((cardId: string) => {
+    suppressedHoverCardId.current = cardId;
+    setHovered((prev) => (prev?.card.id === cardId ? null : prev));
   }, []);
 
   const openInspect = useCallback((card: GameCardData, anchor: DOMRectLike) => {
@@ -128,8 +155,16 @@ export function CardInspectProvider({ children }: { readonly children: ReactNode
   const closeInspect = useCallback(() => setInspected(null), []);
 
   const value = useMemo<CardInspectContextValue>(
-    () => ({ hovered, inspected, setHover, openInspect, refreshInspect, closeInspect }),
-    [hovered, inspected, setHover, openInspect, refreshInspect, closeInspect],
+    () => ({
+      hovered,
+      inspected,
+      setHover,
+      dismissHover,
+      openInspect,
+      refreshInspect,
+      closeInspect,
+    }),
+    [hovered, inspected, setHover, dismissHover, openInspect, refreshInspect, closeInspect],
   );
 
   return <CardInspectContext.Provider value={value}>{children}</CardInspectContext.Provider>;

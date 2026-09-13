@@ -12,7 +12,13 @@ import {
 import { createPortal } from "react-dom";
 import { IconKeyboard } from "@tabler/icons-react";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
-import { ClockReadout, MobileMirrorLedger, ResolvingEntityStage } from "@tcg/simulator-ui";
+import {
+  AnimatedEntityCollection,
+  AnimatedEntityNode,
+  ClockReadout,
+  MobileMirrorLedger,
+  ResolvingEntityStage,
+} from "@tcg/simulator-ui";
 import {
   defOf,
   getProjectedDirectAttackGigStealCount,
@@ -177,12 +183,13 @@ function GigDieCell({
   };
   const content = (
     <span
+      ref={dieRef}
       data-testid="card"
       data-card-kind="die"
       data-entity-id={die.id}
       data-sim-entity-id={die.id}
       data-face={die.faceValue}
-      style={{ display: "contents" }}
+      style={{ display: "block", width: "100%", height: "100%" }}
       aria-hidden
     >
       <DieDisplay
@@ -195,38 +202,22 @@ function GigDieCell({
     </span>
   );
 
-  if (interactive && onClick) {
-    return (
-      <button
-        {...commonProps}
-        {...hoverProps}
-        ref={(node) => {
-          dieRef.current = node;
-        }}
-        type="button"
-        aria-pressed={selected}
-        onClick={handleClick}
-      >
-        {content}
-      </button>
-    );
-  }
-
   return (
-    <div
+    <AnimatedEntityNode
+      entityId={die.id}
+      zoneRef={{ kind: "zone", id: side === "friendly" ? "p-gigArea" : "opp-gigArea" }}
+      density="mini"
       {...commonProps}
       {...hoverProps}
-      ref={(node) => {
-        dieRef.current = node;
-      }}
       tabIndex={0}
       role="button"
-      aria-disabled={!interactive}
+      aria-disabled={!interactive || !onClick}
+      aria-pressed={interactive && onClick ? selected : undefined}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
       {content}
-    </div>
+    </AnimatedEntityNode>
   );
 }
 
@@ -288,6 +279,8 @@ function GigLane({
   adjustChoice,
   scoreVariant = "full",
   showScore = true,
+  directAttackDropSurface = false,
+  directAttackDropTarget = false,
   selectionHintForDie,
   onDieClick,
   onAdjustGig,
@@ -308,6 +301,8 @@ function GigLane({
   adjustChoice?: AdjustGigControl | null;
   scoreVariant?: "full" | "compact";
   showScore?: boolean;
+  directAttackDropSurface?: boolean;
+  directAttackDropTarget?: boolean;
   selectionHintForDie?: (dieId: string) => GigSelectionHint | undefined;
   onDieClick?: (dieId: string) => void;
   onAdjustGig?: (value: number) => void;
@@ -319,6 +314,7 @@ function GigLane({
   const adjustLabel = adjustedDie?.label ?? adjustChoice?.label ?? "Gig";
   const [diePopover, setDiePopover] = useState<GigDiePopoverState | null>(null);
   const compactScore = scoreVariant === "compact";
+  const directAttackDrop = useZoneDroppable(directAttackDropSurface ? "opp-gigArea" : null);
   const handlePopoverClose = useCallback((dieId: string, pinned = false) => {
     setDiePopover((current) =>
       current?.dieId === dieId && current.pinned === pinned ? null : current,
@@ -350,7 +346,10 @@ function GigLane({
 
   return (
     <div
-      className={`${classes.cell} ${gridClass} ${classes.gigLane}`}
+      ref={directAttackDrop.setNodeRef}
+      className={`${classes.cell} ${gridClass} ${classes.gigLane} ${
+        directAttackDropTarget ? classes.gigLaneDirectAttackTarget : ""
+      } ${directAttackDrop.isOver ? classes.gigLaneDirectAttackOver : ""}`}
       data-testid="gig-row"
       data-zone-id={ownerSide === "opponent" ? "opp-gigArea" : "p-gigArea"}
       data-sim-zone-id={ownerSide === "opponent" ? "opp-gigArea" : "p-gigArea"}
@@ -359,8 +358,16 @@ function GigLane({
       data-street-cred={streetCred}
       data-win-condition={hasWinCondition ? "true" : "false"}
       data-selection-active={interactive ? "true" : "false"}
+      data-drop-hint={directAttackDropTarget ? "attackRival" : undefined}
+      data-drop-zone={directAttackDropTarget ? "opp-gigArea" : undefined}
       aria-label={`${label}: ${gigCount} Gigs, ${streetCred} Street Cred${hasWinCondition ? ", win condition active" : ""}`}
     >
+      {directAttackDropTarget ? (
+        <div className={classes.gigLaneAttackDropCue} aria-hidden="true">
+          <span>Drop</span>
+          <strong>Attack Rival</strong>
+        </div>
+      ) : null}
       {showScore ? (
         <div className={classes.gigScore} data-score-variant={scoreVariant} aria-hidden="true">
           <span
@@ -390,26 +397,28 @@ function GigLane({
       ) : null}
       <div className={classes.gigTrack}>
         <div className={classes.gigInner}>
-          {dice.map((die) => (
-            <GigDieCell
-              key={die.id}
-              die={die}
-              side={side}
-              selectionActive={interactive}
-              interactive={interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))}
-              selected={selectedDieIds?.has(die.id)}
-              selectionHint={
-                interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
-                  ? selectionHintForDie?.(die.id)
-                  : undefined
-              }
-              logHighlighted={logHighlightedDieId === die.id}
-              onClick={onDieClick}
-              popoverOpen={diePopover?.dieId === die.id}
-              onPopoverOpen={setDiePopover}
-              onPopoverClose={handlePopoverClose}
-            />
-          ))}
+          <AnimatedEntityCollection>
+            {dice.map((die) => (
+              <GigDieCell
+                key={die.id}
+                die={die}
+                side={side}
+                selectionActive={interactive}
+                interactive={interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))}
+                selected={selectedDieIds?.has(die.id)}
+                selectionHint={
+                  interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
+                    ? selectionHintForDie?.(die.id)
+                    : undefined
+                }
+                logHighlighted={logHighlightedDieId === die.id}
+                onClick={onDieClick}
+                popoverOpen={diePopover?.dieId === die.id}
+                onPopoverOpen={setDiePopover}
+                onPopoverClose={handlePopoverClose}
+              />
+            ))}
+          </AnimatedEntityCollection>
           {gigCount === 0 ? <span className={classes.gigEmpty}>No Gigs</span> : null}
         </div>
       </div>
@@ -573,10 +582,12 @@ export function PassTurnControl({
   compact = false,
   docked = false,
   compactLabelStyle = "short",
+  actionsOnly = false,
 }: {
   compact?: boolean;
   docked?: boolean;
   compactLabelStyle?: "short" | "action";
+  actionsOnly?: boolean;
 }) {
   const { phase, advancePhase, activeSide, gameEnded, overtimeActive } = useGameState();
   const { humanSide, matchState, moveLogs, aiMode, aiStrategies, canUndo, stepOnce, dispatch } =
@@ -770,14 +781,14 @@ export function PassTurnControl({
   const usesActionCompactLabel = compact && compactLabelStyle === "action";
   const attackTargetSummary = useAttackTargetSummary(matchState, matchState.G.attackState);
   const attackTarget = docked ? null : attackTargetSummary;
-  const showPhaseLabel = !(docked && humanChoiceInProgress);
+  const showPhaseLabel = !actionsOnly && !(docked && humanChoiceInProgress);
   const phaseText = docked
     ? dockedPhaseLabel(phase, matchState.G.attackState)
     : phaseLabel(phase, matchState.G.attackState);
 
   return (
     <div
-      className={`${classes.passInner} ${compact ? classes.passCompact : ""} ${docked ? classes.passDocked : ""}`}
+      className={`${classes.passInner} ${compact ? classes.passCompact : ""} ${docked ? classes.passDocked : ""} ${actionsOnly ? classes.passActionsOnly : ""}`}
       data-testid="phase-hud"
       data-phase={phase}
       data-overtime={overtimeActive ? "true" : "false"}
@@ -819,7 +830,7 @@ export function PassTurnControl({
           ) : null}
         </span>
       ) : null}
-      {attackSteps.length > 0 ? (
+      {!actionsOnly && attackSteps.length > 0 ? (
         <div className={classes.phaseStrip} aria-label="Attack step">
           {attackSteps.map((step) => (
             <span
@@ -1423,11 +1434,17 @@ export function CenterRow({
 }: CenterRowProps) {
   const { activeSide, gameEnded } = useGameState();
   const { humanSide, dispatch, interactionViews, matchState } = useEngine();
+  const interactionView = useEngineInteractionView(humanSide);
+  const { activeSource } = useDragDrop();
   const moveSelection = useMoveSelection();
   const resolvingProgramVisuals = useResolvingProgramVisuals();
   const rivalSide = otherSide(humanSide);
   const friendly = useSideZones(humanSide);
   const rival = useSideZones(rivalSide);
+  const canDropDirectAttackOnRivalGigs =
+    activeSource?.zone === "p-field" &&
+    typeof activeSource.cardId === "string" &&
+    interactionViewCanAttackRival(interactionView, activeSource.cardId);
   const temporaryEffects = useMemo(
     () =>
       collectTemporaryEffects([
@@ -1724,6 +1741,8 @@ export function CenterRow({
   if (mobileLedger) {
     const friendlyStackedLegendLayout = mobileLedger.friendlyLayout === "stacked";
     const rivalStackedLegendLayout = mobileLedger.rivalLayout === "stacked";
+    const friendlyShowsLegends = mobileLedger.friendlyLayout !== "scoreOnly";
+    const rivalShowsLegends = mobileLedger.rivalLayout !== "scoreOnly";
     const mobileLedgerCenter = mobileLedger.center ? (
       <div className={classes.mobileLedgerPriority}>{mobileLedger.center}</div>
     ) : null;
@@ -1750,19 +1769,21 @@ export function CenterRow({
                   <div
                     className={classes.mobileLedgerLegends}
                     data-legend-count={mobileLedger.friendlyLegendCount ?? undefined}
+                    data-testid="mobile-ledger-legends"
                   >
                     {mobileLedger.friendlyLegends}
                   </div>
                   <MobileStreetCredStrip ownerSide={humanSide} streetCred={friendly.streetCred} />
                 </div>
-              ) : (
+              ) : friendlyShowsLegends ? (
                 <div
                   className={classes.mobileLedgerLegends}
                   data-legend-count={mobileLedger.friendlyLegendCount ?? undefined}
+                  data-testid="mobile-ledger-legends"
                 >
                   {mobileLedger.friendlyLegends}
                 </div>
-              )}
+              ) : null}
               <GigLane
                 label="Friendly Gigs"
                 side="friendly"
@@ -1896,19 +1917,21 @@ export function CenterRow({
                   <div
                     className={classes.mobileLedgerLegends}
                     data-legend-count={mobileLedger.rivalLegendCount ?? undefined}
+                    data-testid="mobile-ledger-legends"
                   >
                     {mobileLedger.rivalLegends}
                   </div>
                   <MobileStreetCredStrip ownerSide={rivalSide} streetCred={rival.streetCred} />
                 </div>
-              ) : (
+              ) : rivalShowsLegends ? (
                 <div
                   className={classes.mobileLedgerLegends}
                   data-legend-count={mobileLedger.rivalLegendCount ?? undefined}
+                  data-testid="mobile-ledger-legends"
                 >
                   {mobileLedger.rivalLegends}
                 </div>
-              )}
+              ) : null}
             </div>
           }
         />
@@ -1939,6 +1962,8 @@ export function CenterRow({
           badgePosition="top"
           dice={rival.gigArea}
           streetCred={rival.streetCred}
+          directAttackDropSurface
+          directAttackDropTarget={canDropDirectAttackOnRivalGigs}
           interactive={
             (stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
             rivalEffectGigActive ||

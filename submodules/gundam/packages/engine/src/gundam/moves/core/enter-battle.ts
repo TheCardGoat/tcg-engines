@@ -20,7 +20,7 @@ import type {
   TargetFilter,
 } from "@tcg/gundam-types";
 import type { GundamMoveDefinition, GundamCardMeta, ReadonlyGundamG } from "../../types.ts";
-import { canAttack, getEffectiveStats } from "../../rules/derived-state.ts";
+import { canAttack, getEffectiveStats, isLinkUnit } from "../../rules/derived-state.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
 import { buildTargetResolutionContext } from "../../rules/derived-state.ts";
@@ -279,11 +279,34 @@ export function listLegalAttackTargets(
     g,
     framework,
   );
+  const deployTurnPermissions =
+    g.turnMetadata.deployedThisTurn.includes(attackerId) &&
+    !isLinkUnit(attackerId, g, framework.cards)
+      ? g.continuousEffects.filter(
+          (effect) =>
+            effect.targetId === attackerId &&
+            effect.payload.kind === "allow-attack-deployed-this-turn",
+        )
+      : [];
+  const hasUnrestrictedDeployTurnPermission = deployTurnPermissions.some(
+    (effect) =>
+      effect.payload.kind === "allow-attack-deployed-this-turn" &&
+      effect.payload.attackTarget === undefined,
+  );
+  const deployTurnTargetFilters = hasUnrestrictedDeployTurnPermission
+    ? []
+    : deployTurnPermissions.flatMap((effect) =>
+        effect.payload.kind === "allow-attack-deployed-this-turn" &&
+        effect.payload.attackTarget !== undefined
+          ? [effect.payload.attackTarget]
+          : [],
+      );
 
   if (
     forceTargetEffects.length > 0 ||
     grantTargetEffects.length > 0 ||
-    constantGrantTargetFilters.length > 0
+    constantGrantTargetFilters.length > 0 ||
+    deployTurnTargetFilters.length > 0
   ) {
     const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
       sourceCardId: attackerId,
@@ -308,6 +331,23 @@ export function listLegalAttackTargets(
       for (const id of granted) {
         if (!candidateIds.includes(id)) candidateIds.push(id);
       }
+    }
+
+    // A restricted deploy-turn permission is an attack-timing gate, not a
+    // target expansion. Apply it after permissive target grants so another
+    // effect cannot accidentally turn "may attack a rested Unit this turn"
+    // into permission to attack an active Unit or the enemy player. Link
+    // Units skip this intersection because Link itself grants their ordinary
+    // immediate-attack freedom.
+    if (deployTurnTargetFilters.length > 0) {
+      const allowed = new Set(
+        deployTurnTargetFilters.flatMap(
+          (filter) => evaluateTargetFilter(filter, battleCards, tgtCtx) as readonly string[],
+        ),
+      );
+      candidateIds = candidateIds.filter(
+        (candidateId) => candidateId !== DIRECT_TARGET && allowed.has(candidateId),
+      );
     }
 
     if (forceTargetEffects.length > 0) {

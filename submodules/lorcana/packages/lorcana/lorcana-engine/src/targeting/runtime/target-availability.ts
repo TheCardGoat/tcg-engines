@@ -51,7 +51,13 @@ export function analyzeTargetSelectionAvailabilityFromAnalysis(
   const canSatisfyRequiredSelection =
     !requiresExplicitTargetSelection ||
     minSelections <= 0 ||
-    (candidateCount > 0 && (analysis.allowDuplicateTargets || candidateCount >= minSelections));
+    (candidateCount > 0 &&
+      (analysis.allowDuplicateTargets || candidateCount >= minSelections) &&
+      // Independent chosen descriptors may reuse a card, but each descriptor's
+      // own multi-card selection still needs enough distinct cards of one owner.
+      (analysis.sameOwnerTargetGroups ?? []).every(
+        (group) => group.maxSameOwnerSelections >= group.minSelections,
+      ));
 
   const resolutionReqs = analyzeResolutionRequirements(effectOrAbility);
 

@@ -87,4 +87,39 @@ describe("OP06-043 Aramaki", () => {
     ).toBe(true);
     expect(engine.getView("south").players.south.lifeCount).toBe(lifeBefore);
   });
+
+  test("may decline optional Activate: Main so costs and power gain do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op06Aramaki043, eb01Doma005],
+        hand: [eb01MountainGod018, eb01Doma005],
+      },
+      { character: [eb01Doma005, eb01MountainGod018] },
+    );
+    const aramakiId = engine.findCardInZone("south", "character", op06Aramaki043);
+    const discardId = engine.findCardInZone("south", "hand", eb01MountainGod018);
+    const opposingId = engine.findCardInZone("north", "character", eb01Doma005);
+    const basePower = op06Aramaki043.power ?? 0;
+
+    engine.activateEffect(aramakiId, "activateMain", "south");
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const northCharsBefore = engine
+      .getView("south")
+      .players.north.characters.filter(Boolean).length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(discardId);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.north.characters.some((card) => card?.instanceId === opposingId)).toBe(
+      true,
+    );
+    expect(view.players.north.characters.filter(Boolean).length).toBe(northCharsBefore);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === aramakiId)?.power,
+    ).toBe(basePower);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

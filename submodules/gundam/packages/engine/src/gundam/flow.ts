@@ -63,6 +63,7 @@ import {
   actionStepOnEnter,
   actionStepEndIf,
   endStepOnEnter,
+  handStepOnEnter,
   handStepEndIf,
   cleanupStepOnEnter,
 } from "./lifecycle/index.ts";
@@ -267,6 +268,7 @@ export const gundamFlow: FlowDefinition = {
                 id: "hand-step",
                 name: "Hand Step",
                 order: 2,
+                onEnter: handStepOnEnter,
                 endIf: handStepEndIf,
                 validMoves: [
                   "discardToHandLimit",

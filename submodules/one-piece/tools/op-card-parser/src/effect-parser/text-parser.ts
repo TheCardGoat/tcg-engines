@@ -264,6 +264,26 @@ function parsePrefixChain(segment: string): PrefixParseResult {
       continue;
     }
 
+    // Circled-number DON!! rest costs used in older JP/EN prints: ①–⑩
+    const circledDonMatch = /^([①②③④⑤⑥⑦⑧⑨⑩])\s*/.exec(remaining);
+    if (circledDonMatch) {
+      const circledValues: Record<string, number> = {
+        "①": 1,
+        "②": 2,
+        "③": 3,
+        "④": 4,
+        "⑤": 5,
+        "⑥": 6,
+        "⑦": 7,
+        "⑧": 8,
+        "⑨": 9,
+        "⑩": 10,
+      };
+      costs.push({ type: "restDon", amount: circledValues[circledDonMatch[1]!]! });
+      remaining = remaining.slice(circledDonMatch[0].length);
+      continue;
+    }
+
     // No more prefix tokens to consume
     break;
   }
@@ -276,12 +296,28 @@ function parsePrefixChain(segment: string): PrefixParseResult {
   // joining a later optional payment (for example, "Rest 1 DON!! and you may
   // rest this Character:"). Accept either shape only when the prefix parses as
   // real costs, so ordinary action punctuation is not consumed as payment.
+  //
+  // When the cost area is "If <condition>, you may <cost>:", preserve the If
+  // prefix on the action text so build-effects can attach the condition.
   const costColonMatch = /^(.+?):\s*/i.exec(remaining);
-  const parsedColonCosts = costColonMatch ? parseTextCosts(costColonMatch[1]!) : [];
-  if (costColonMatch && parsedColonCosts.some((cost) => cost.type !== "unknown")) {
-    optional = /\byou\s+may\b/i.test(costColonMatch[1]!);
-    costs.push(...parsedColonCosts.filter((cost) => cost.type !== "unknown"));
-    remaining = remaining.slice(costColonMatch[0].length);
+  if (costColonMatch) {
+    const costArea = costColonMatch[1]!;
+    const ifCostMatch = /^If\s+(.+?),\s*(.+)$/is.exec(costArea);
+    const costBody = ifCostMatch ? ifCostMatch[2]! : costArea;
+    const parsedColonCosts = parseTextCosts(costBody);
+    if (parsedColonCosts.some((cost) => cost.type !== "unknown")) {
+      optional = /\byou\s+may\b/i.test(costBody);
+      costs.push(...parsedColonCosts.filter((cost) => cost.type !== "unknown"));
+      const actionBody = remaining.slice(costColonMatch[0].length);
+      remaining = ifCostMatch ? `If ${ifCostMatch[1]!.trim()}, ${actionBody}` : actionBody;
+    } else {
+      // Check for a bare colon that separates cost notation from action text
+      // This happens after DON!! costs: "DON!! -5 (...): action"
+      const bareColonMatch = /^:\s*/.exec(remaining);
+      if (bareColonMatch && costs.length > 0) {
+        remaining = remaining.slice(bareColonMatch[0].length);
+      }
+    }
   } else {
     // Check for a bare colon that separates cost notation from action text
     // This happens after DON!! costs: "DON!! -5 (...): action"
@@ -293,11 +329,29 @@ function parsePrefixChain(segment: string): PrefixParseResult {
   }
 
   // Cost reminder text uses "You may", but is stripped before this point.
-  // Costs are optional when a passive trigger offers the effect; direct
-  // activations already represent the player's choice to pay their costs.
-  const directActivationTriggers = new Set(["main", "counter", "trigger", "activateMain"]);
-  const hasPassiveTrigger = triggers.some((trigger) => !directActivationTriggers.has(trigger));
-  if (costs.length > 0 && hasPassiveTrigger) {
+  // Main / Counter Event play already commits the card (rest cost DON!!, trash);
+  // a post-commit optional on returnDon would let the player Skip after spending
+  // the Event for nothing. Keep returnDon non-optional for those direct Event
+  // activations.
+  // Life Trigger windows are also already opted-in via the lifeTrigger prompt:
+  // do not post-activate optionalize their costs (Skip would fire whenTriggerActivates
+  // observers then abandon the Trigger).
+  // Activate: Main and other passive windows still get a confirm step for
+  // returnDon (source remains on the field).
+  const directEventActivations = new Set(["main", "counter", "activateMain"]);
+  const committedEventActivations = new Set(["main", "counter"]);
+  const isLifeTriggerOnly =
+    triggers.length > 0 && triggers.every((trigger) => trigger === "trigger");
+  const hasPassiveNonLifeTrigger = triggers.some(
+    (trigger) => !directEventActivations.has(trigger) && trigger !== "trigger",
+  );
+  const isCommittedEventOnly =
+    triggers.length > 0 && triggers.every((trigger) => committedEventActivations.has(trigger));
+  const hasReturnDon = costs.some((cost) => cost.type === "returnDon");
+  if (hasReturnDon && !isCommittedEventOnly && !isLifeTriggerOnly) {
+    optional = true;
+  }
+  if (costs.length > 0 && hasPassiveNonLifeTrigger) {
     optional = true;
   }
 

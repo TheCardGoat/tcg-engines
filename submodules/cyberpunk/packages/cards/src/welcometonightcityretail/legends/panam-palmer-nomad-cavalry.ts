@@ -4,10 +4,11 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailPanamPalmerNomadCavalry = defineCyberpunkCard({
   id: "950f045c-f5a4-4318-9907-b630d64de754",
   slug: "panam-palmer-nomad-cavalry",
+  subname: "Nomad Cavalry",
   rulesText:
     "2 €$, {Spend} Move a Gear from this Legend to an unequipped friendly Unit. If you do, ready that Unit.\nAt the end of your turn, if 5 or more friendly Units and/or Legends are equipped, ready them.",
-  name: "Panam Palmer — Nomad Cavalry",
-  displayName: "Panam Palmer — Nomad Cavalry",
+  name: "Panam Palmer",
+  displayName: "Panam Palmer: Nomad Cavalry",
   canonicalId: "panam-palmer-nomad-cavalry",
   color: "green",
   classifications: ["Aldecado", "Merc", "Nomad"],

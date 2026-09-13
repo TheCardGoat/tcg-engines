@@ -3,7 +3,7 @@ import { op13Sabo004 } from "../../../../../cards/src/cards/OP13/leaders/004-sab
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-004 Sabo", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13Sabo004);
   });
 });

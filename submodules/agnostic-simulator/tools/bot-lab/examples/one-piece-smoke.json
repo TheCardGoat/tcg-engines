@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "game": "one-piece",
+  "candidateId": "heuristic",
+  "parentStrategyId": "value-ranked",
+  "informationPolicy": "oracle",
+  "hypothesis": "Smoke: heuristic beats value-ranked on a tiny multi-deck matrix.",
+  "engineRevision": "fnv1a32:eb58c0c2",
+  "cardCatalogHash": "fnv1a32:fa100c22",
+  "adapterVersion": "2",
+  "changes": {
+    "suite": "smoke"
+  },
+  "evaluation": {
+    "suiteId": "smoke",
+    "seedBase": "op-smoke-v2",
+    "minimumBlocks": 6,
+    "maximumBlocks": 12,
+    "batchSize": 6,
+    "confidenceLevel": 0.95,
+    "minimumMeanImprovement": 0,
+    "maximumCellRegression": 1
+  }
+}

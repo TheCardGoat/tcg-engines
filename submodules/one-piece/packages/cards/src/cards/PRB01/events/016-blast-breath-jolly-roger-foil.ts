@@ -77,6 +77,7 @@ export const prb01BlastBreathJollyRogerFoil016: EventCard = {
             duration: "thisBattle",
           },
         ],
+        optional: true,
       },
     ],
   },

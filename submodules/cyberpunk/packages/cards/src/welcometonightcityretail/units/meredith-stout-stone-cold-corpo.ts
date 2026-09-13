@@ -5,10 +5,11 @@ import { blockerAbility } from "@tcg/cyberpunk-types";
 export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = defineCyberpunkCard({
   id: "21f68be2-c664-4ae0-a7ef-965a3a5a14c8",
   slug: "meredith-stout-stone-cold-corpo",
+  subname: "Stone Cold Corpo",
   rulesText:
     "{Blocker}\nThis Unit has +2 power while fighting a Legend.\nWhen a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
-  name: "Meredith Stout — Stone Cold Corpo",
-  displayName: "Meredith Stout — Stone Cold Corpo",
+  name: "Meredith Stout",
+  displayName: "Meredith Stout: Stone Cold Corpo",
   canonicalId: "meredith-stout-stone-cold-corpo",
   color: "red",
   classifications: ["Corpo", "Militech"],

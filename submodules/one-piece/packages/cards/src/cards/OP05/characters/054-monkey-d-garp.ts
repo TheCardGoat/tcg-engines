@@ -47,6 +47,7 @@ export const op05MonkeyDGarp054: CharacterCard = {
               },
             },
             position: "bottom",
+            order: "any",
           },
         ],
       },

@@ -18,10 +18,15 @@ describe("Per-player undo", () => {
     const unit = createMockUnit({ level: 1, cost: 1 });
     const engine = GundamTestEngine.create({ hand: [unit], resourceArea: resources(2) }, {});
     engine.asPlayer(PLAYER_ONE).deployUnit(unit);
+    const deployedStateID = engine.getState().ctx._stateID;
 
     const result = engine.undo(PLAYER_ONE as PlayerId);
     expect(result).not.toBeNull();
-    expect(result!.success).toBe(true);
+    if (!result || !result.success) throw new Error("Expected the undo to succeed.");
+    expect(result.stateID).toBeGreaterThan(deployedStateID);
+    expect(result.processedCommand.move).toBe("undo");
+    expect(result.state.ctx._stateID).toBe(result.stateID);
+    expect(result.patches.length).toBeGreaterThan(0);
   });
 
   it("other player cannot undo the move", () => {

@@ -1,12 +1,69 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   welcomeToNightCityRetailAppetiteForDestruction,
+  welcomeToNightCityRetailAltCunninghamMotherOfDaemons,
+  welcomeToNightCityRetailBonnieAndClyde,
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailOffdutyMalfini,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Appetite for Destruction", () => {
+  it("offers Alt Cunningham's prevention against the fight-win Gig steal", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailAppetiteForDestruction],
+        field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: false, hasLag: false }],
+        eddies: 3,
+      },
+      {
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: true },
+          { card: welcomeToNightCityRetailAltCunninghamMotherOfDaemons, spent: false },
+        ],
+        hand: [welcomeToNightCityRetailBonnieAndClyde],
+        gigArea: [{ dieType: "d6", faceValue: 3 }],
+      },
+    );
+
+    engine.playCard(welcomeToNightCityRetailAppetiteForDestruction, { as: P1 });
+    engine.attackUnit(
+      welcomeToNightCityRetailOffdutyMalfini,
+      welcomeToNightCityRetailCorpoSecurity,
+      { as: P1 },
+    );
+    engine.resolveFullFight({ as: P1 });
+
+    const stealChoice = engine.getState().G.turnMetadata.pendingChoice;
+    expect(stealChoice?.type).toBe("chooseTarget");
+    if (!stealChoice || stealChoice.type !== "chooseTarget") {
+      throw new Error("Expected a Gig selection after the decisive fight.");
+    }
+    engine.resolveEffectTargetIds([stealChoice.payload.eligibleIds![0]!], {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "Alt Cunningham may prevent the pending effect-driven Gig theft.",
+    });
+
+    const prevention = engine.getState().G.turnMetadata.pendingChoice;
+    expect(prevention?.type).toBe("preventGigSteal");
+    if (!prevention || prevention.type !== "preventGigSteal") {
+      throw new Error("Expected Alt Cunningham to offer Gig-theft prevention.");
+    }
+    engine.resolvePreventGigSteal(
+      [
+        {
+          dieId: prevention.payload.stealEntries[0]!.dieId,
+          cardId: prevention.payload.handEntries[0]!.cardId,
+        },
+      ],
+      { as: P2 },
+    );
+
+    expect(engine.getGigDice(P2)).toHaveLength(1);
+    expect(engine.getGigDice(P1)).toHaveLength(0);
+  });
+
   it("lets the next friendly Unit that wins by 3 power steal a chosen Gig", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {

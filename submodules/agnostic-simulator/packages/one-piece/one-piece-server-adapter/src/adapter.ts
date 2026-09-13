@@ -1,4 +1,4 @@
-import { getAllCards, getCard, hasCard } from "@tcg/op-cards";
+import { getAllCards, getCard, validateDeckForFormat as validateOnePieceDeck } from "@tcg/op-cards";
 import type {
   CardSummary,
   CardsMaps,
@@ -12,12 +12,14 @@ import {
   normalizeMetadataColors,
   sortMetadataFacets,
 } from "@tcg/shared/game-adapter";
+import { slugify } from "@tcg/shared/utils";
 import {
   onePieceCreateServerEngine,
   onePieceExtractCardsMapsFromSnapshot,
   onePieceRestoreEngine,
   onePieceSerializeEngine,
 } from "./one-piece-engine-lifecycle";
+import { onePieceDeckInterchangeAdapter } from "./deck-interchange";
 
 const onePieceCanonicalByPublicId: ReadonlyMap<string, string> = (() => {
   const map = new Map<string, string>();
@@ -42,6 +44,7 @@ const onePieceCardByAnyId = (() => {
 
 export const onePieceServerAdapter: GameAdapter = {
   slug: "one-piece",
+  deckInterchange: onePieceDeckInterchangeAdapter,
 
   createGameId(): string {
     return `one-piece-game-${crypto.randomUUID()}`;
@@ -54,6 +57,8 @@ export const onePieceServerAdapter: GameAdapter = {
   buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps {
     const cardInstances: Record<string, string> = {};
     const owners: Record<string, string[]> = {};
+    const instanceSections: Record<string, string> = {};
+    let hasSections = false;
     for (const { owner, deck } of decks) {
       const ownerInstances: string[] = [];
       let counter = 0;
@@ -62,11 +67,15 @@ export const onePieceServerAdapter: GameAdapter = {
           const instanceId = `${owner}-${entry.cardId}-${counter++}`;
           cardInstances[instanceId] = entry.cardId;
           ownerInstances.push(instanceId);
+          if (entry.sectionId) {
+            instanceSections[instanceId] = entry.sectionId;
+            hasSections = true;
+          }
         }
       }
       owners[owner] = ownerInstances;
     }
-    return { cardInstances, owners };
+    return hasSections ? { cardInstances, owners, instanceSections } : { cardInstances, owners };
   },
 
   getCardById(publicId: string): CardSummary | null {
@@ -86,75 +95,30 @@ export const onePieceServerAdapter: GameAdapter = {
   },
 
   validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult {
-    if (formatId !== "standard") {
-      throw new Error(`Unknown One Piece format: ${formatId}`);
-    }
-
-    const totalCount = deck.reduce((sum, entry) => sum + entry.quantity, 0);
-    const leaderCount = deck.filter((entry) => {
-      if (!hasCard(entry.cardId)) return false;
-      return getCard(entry.cardId).cardType === "leader";
-    }).length;
-    const copiesByCanonicalId = new Map<string, number>();
-    for (const entry of deck) {
-      const canonicalId = onePieceCanonicalByPublicId.get(entry.cardId) ?? entry.cardId;
-      copiesByCanonicalId.set(
-        canonicalId,
-        (copiesByCanonicalId.get(canonicalId) ?? 0) + entry.quantity,
-      );
-    }
-    const overCopyLimit = [...copiesByCanonicalId].filter(([canonicalId, quantity]) => {
-      if (quantity <= 4 || !hasCard(canonicalId)) return false;
-      return !getCard(canonicalId).effects?.deckBuildingRules?.some(
-        (rule) => rule.rule === "unlimitedCopies",
-      );
-    });
-    const copyLimitPassed = overCopyLimit.length === 0;
-
-    return {
-      formatId,
-      label: "Standard",
-      valid: totalCount > 0 && leaderCount === 1 && copyLimitPassed,
-      rules: [
-        {
-          kind: "deck-size",
-          passed: totalCount > 0,
-          message:
-            totalCount > 0 ? `Deck has ${totalCount} cards` : "Deck must contain at least 1 card",
-        },
-        {
-          kind: "leader-count",
-          passed: leaderCount === 1,
-          message:
-            leaderCount === 1
-              ? "Deck has exactly 1 leader"
-              : `Deck must have exactly 1 leader (found ${leaderCount})`,
-        },
-        {
-          kind: "copy-limit",
-          passed: copyLimitPassed,
-          message: copyLimitPassed
-            ? "No card exceeds its allowed copy limit"
-            : `Copy limit exceeded: ${overCopyLimit
-                .map(([canonicalId, quantity]) => `${canonicalId} x${quantity}`)
-                .join(", ")}`,
-          details: overCopyLimit.map(([canonicalId, quantity]) => ({ canonicalId, quantity })),
-        },
-      ],
-    };
+    // Deck-construction rules (5-1-2 family) are owned by the game workspace;
+    // this is a thin delegate so platform services keep one entry point.
+    return validateOnePieceDeck(formatId, deck);
   },
 
   metadata: {
-    projectionVersion: 1,
+    projectionVersion: 2,
     capabilities: { colors: true, deckLists: true, archetypes: true },
     facets: [
-      { type: "leader", label: "Leader", pluralLabel: "Leaders", kind: "identity", order: 10 },
+      {
+        type: "leader",
+        label: "Leader",
+        pluralLabel: "Leaders",
+        kind: "identity",
+        order: 10,
+        ranking: { specialistSkill: true, mastery: true },
+      },
       {
         type: "color",
         label: "Leader color",
         pluralLabel: "Leader colors",
         kind: "individual",
         order: 20,
+        ranking: { specialistSkill: true, mastery: false },
       },
       {
         type: "color-combination",
@@ -162,6 +126,7 @@ export const onePieceServerAdapter: GameAdapter = {
         pluralLabel: "Leader color combinations",
         kind: "combination",
         order: 30,
+        ranking: { specialistSkill: true, mastery: false },
       },
     ],
     projectDeck(deck) {
@@ -183,14 +148,14 @@ export const onePieceServerAdapter: GameAdapter = {
       const colors = normalizeMetadataColors(leaders.flatMap((leader) => leader.colors));
       return {
         schemaVersion: 1,
-        projectionVersion: 1,
+        projectionVersion: 2,
         game: "one-piece",
         cardCount: deck.reduce((sum, entry) => sum + Math.max(0, Math.floor(entry.quantity)), 0),
         colors,
         facets: sortMetadataFacets([
           ...leaders.map((leader) => ({
             type: "leader",
-            key: leader.cardId,
+            key: slugify(leader.label),
             label: leader.label,
             colors: leader.colors,
             members: [leader],

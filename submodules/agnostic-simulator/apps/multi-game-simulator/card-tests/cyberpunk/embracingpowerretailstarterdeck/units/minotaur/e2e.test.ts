@@ -3,7 +3,6 @@ import { test } from "@playwright/test";
 import {
   embracingPowerRetailStarterDeckMinotaur,
   welcomeToNightCityRetailSwordwiseHuscle,
-  embracingPowerRetailStarterDeckMinotaur,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {

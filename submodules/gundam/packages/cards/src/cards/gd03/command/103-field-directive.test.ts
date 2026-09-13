@@ -56,7 +56,7 @@ describe("Field Directive (GD03-103)", () => {
     expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
   });
 
-  it("plays without damage or a target choice when fewer than 3 enemy Units are in play", () => {
+  it("cannot be played when fewer than 3 enemy Units are in play", () => {
     const rested = createMockUnit({ hp: 4 });
     const active = createMockUnit({ hp: 4 });
     const engine = GundamTestEngine.create(
@@ -68,11 +68,11 @@ describe("Field Directive (GD03-103)", () => {
     const commandId = p1.getHand()[0]!;
     const restedId = p2.getCardsInZone("battleArea")[0]!;
 
-    expectSuccess(p1.playCommand(commandId));
+    expectFailure(p1.playCommand(commandId), "PRECONDITION_FAILED");
 
     expect(p1.getBoardView().pendingChoice).toBeUndefined();
     expect(p2.getDamage(restedId)).toBe(0);
-    expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
+    expect(p1.getCardZone(commandId)).toBe(`hand:${PLAYER_ONE}`);
   });
 
   it("rejects an active enemy Unit as the Main effect's damage target", () => {

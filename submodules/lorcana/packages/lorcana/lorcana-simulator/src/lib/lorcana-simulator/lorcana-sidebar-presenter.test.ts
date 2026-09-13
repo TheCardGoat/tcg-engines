@@ -100,7 +100,11 @@ function createGameContextStub(
     pendingErrorReason: () => null,
     pendingMoveError: () => null,
     pendingResolutionAutoOpenStateId: () => null,
-    isOptimisticMovePending: () => false,
+    authoritativeCommandStatus: () => ({ phase: "idle" }),
+    staleRecoveryCompletionCount: () => 0,
+    isMovePending: () => false,
+    requestStateSync: () => {},
+    commandDiagnostic: () => null,
     challengeSourceCardId: () => null,
     challengeMode: () => false,
     animations: () => [],
@@ -395,12 +399,12 @@ describe("LorcanaSidebarPresenter", () => {
     presenter.handleSoundVolumeChange(120);
     expect(presenter.soundVolume).toBe(100);
     expect(forwarded).toEqual([100]);
-    expect(storage.getItem("lorcana.simulator.soundVolume")).toBe("100");
+    expect(storage.getItem("matchmaking.player.soundVolume")).toBe("100");
 
     presenter.handleSoundVolumeChange(-10);
     expect(presenter.soundVolume).toBe(0);
     expect(forwarded).toEqual([100, 0]);
-    expect(storage.getItem("lorcana.simulator.soundVolume")).toBe("0");
+    expect(storage.getItem("matchmaking.player.soundVolume")).toBe("0");
   });
 
   it("ignores invalid stored sound volume values", () => {
@@ -436,7 +440,7 @@ describe("LorcanaSidebarPresenter", () => {
     presenter.handleCardBackChange("cosmos");
 
     expect(presenter.selectedCardBack).toBe("cosmos");
-    expect(storage.getItem("lorcana.simulator.selectedCardBack")).toBe("cosmos");
+    expect(storage.getItem("matchmaking.lorcana.selectedCardBack")).toBe("cosmos");
     expect(ownVisualSettings).toEqual({ cardBack: "cosmos", playmat: "default" });
     expect(visualUpdates).toEqual([{ cardBack: "cosmos" }]);
   });
@@ -463,7 +467,7 @@ describe("LorcanaSidebarPresenter", () => {
     presenter.handlePlaymatChange("pooh");
 
     expect(presenter.selectedPlaymat).toBe("pooh");
-    expect(storage.getItem("lorcana.simulator.selectedPlaymat")).toBe("pooh");
+    expect(storage.getItem("matchmaking.lorcana.selectedPlaymat")).toBe("pooh");
     expect(ownVisualSettings).toEqual({ cardBack: "default", playmat: "pooh" });
     expect(visualUpdates).toEqual([{ playmat: "pooh" }]);
   });
@@ -683,6 +687,12 @@ describe("LorcanaSidebarPresenter", () => {
         target: "CHOSEN_CHARACTER",
       },
     });
+    board.cards[targetCardId] = {
+      id: targetCardId,
+      ownerId: playerTwoId,
+      zone: "play",
+      cardType: "character",
+    };
     board.bagEffects = [
       {
         ...board.bagEffects[0]!,
@@ -829,6 +839,14 @@ describe("LorcanaSidebarPresenter", () => {
         target: "CHOSEN_CARD",
       },
     });
+    for (const cardId of [firstDiscardCardId, secondDiscardCardId]) {
+      board.cards[cardId] = {
+        id: cardId,
+        ownerId: playerOneId,
+        zone: "discard",
+        cardType: "character",
+      };
+    }
     board.bagEffects = [
       {
         ...board.bagEffects[0]!,
@@ -3985,6 +4003,12 @@ describe("LorcanaSidebarPresenter", () => {
         target: "CHOSEN_CHARACTER",
       },
     });
+    board.cards[targetCardId] = {
+      id: targetCardId,
+      ownerId: playerTwoId,
+      zone: "play",
+      cardType: "character",
+    };
     board.bagEffects = [
       {
         ...board.bagEffects[0]!,

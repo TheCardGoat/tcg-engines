@@ -44,16 +44,22 @@ export const op14eb04IHaveAPlanToTakeDownOneOfTheFourEmperors019: EventCard = {
             revealFilters: [
               {
                 filter: "anyOf",
-                groups: [
-                  [
-                    { filter: "cardCategory", value: "character" },
-                    { filter: "trait", value: "Supernovas", match: "includes" },
-                  ],
-                  [
-                    { filter: "cardCategory", value: "character" },
-                    { filter: "trait", value: "Straw Hat Crew", match: "includes" },
-                  ],
+                filters: [
+                  {
+                    filter: "trait",
+                    value: "Supernovas",
+                    match: "includes",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Straw Hat Crew",
+                    match: "includes",
+                  },
                 ],
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
               },
             ],
             revealDestination: "hand",
@@ -63,7 +69,13 @@ export const op14eb04IHaveAPlanToTakeDownOneOfTheFourEmperors019: EventCard = {
       },
       {
         trigger: "trigger",
-        actions: [{ action: "draw", player: "self", amount: 1 }],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
       },
     ],
   },

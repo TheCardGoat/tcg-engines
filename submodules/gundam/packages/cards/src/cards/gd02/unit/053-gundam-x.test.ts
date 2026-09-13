@@ -70,21 +70,23 @@ describe("Gundam X (GD02-053)", () => {
 
   describe("【During Link】During your turn, while there are 7 or more cards in your trash, all your other (Vulture) Units get AP+2.", () => {
     it("gives AP+2 only to another friendly Vulture Unit while linked at the trash threshold", () => {
-      const vultureAlly = createMockUnit({ traits: ["vulture"], ap: 2, hp: 4 });
+      const firstVultureAlly = createMockUnit({ traits: ["vulture"], ap: 2, hp: 4 });
+      const secondVultureAlly = createMockUnit({ traits: ["vulture"], ap: 3, hp: 4 });
       const outsider = createMockUnit({ traits: ["new une"], ap: 2, hp: 4 });
       const trash = Array.from({ length: 7 }, () => createMockUnit());
       const engine = GundamTestEngine.create({
         hand: [gd02GarrodRanTiffaAdill094],
-        play: [gd02GundamX053, vultureAlly, outsider],
+        play: [gd02GundamX053, firstVultureAlly, secondVultureAlly, outsider],
         trash,
         resourceArea: activeResources(4),
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const [gundamXId, allyId, outsiderId] = p1.getCardsInZone("battleArea");
+      const [gundamXId, firstAllyId, secondAllyId, outsiderId] = p1.getCardsInZone("battleArea");
 
       expectSuccess(p1.assignPilot(gd02GarrodRanTiffaAdill094, gundamXId!));
 
-      expect(p1.getVisibleCard(allyId!)?.effectiveAp).toBe(4);
+      expect(p1.getVisibleCard(firstAllyId!)?.effectiveAp).toBe(4);
+      expect(p1.getVisibleCard(secondAllyId!)?.effectiveAp).toBe(5);
       expect(p1.getVisibleCard(outsiderId!)?.effectiveAp).toBe(2);
       expect(p1.getVisibleCard(gundamXId!)?.effectiveAp).toBe(7);
     });
@@ -142,7 +144,7 @@ describe("Gundam X (GD02-053)", () => {
       expectSuccess(p1.assignPilot(gd02GarrodRanTiffaAdill094, gundamXId!));
       expect(p1.getVisibleCard(allyId!)?.effectiveAp).toBe(4);
       const garrodChoice = p1.getBoardView().pendingChoice;
-      if (garrodChoice?.kind !== "optional") {
+      if (garrodChoice?.kind !== "targetSelection") {
         throw new Error("Expected Garrod's visible optional discard choice");
       }
       expectSuccess(

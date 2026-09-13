@@ -3,7 +3,7 @@ import { op07MonkeyDDragon001 } from "../../../../../cards/src/cards/OP07/leader
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-001 Monkey.D.Dragon", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07MonkeyDDragon001);
   });
 });

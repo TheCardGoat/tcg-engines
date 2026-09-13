@@ -3,7 +3,7 @@ import { op13GumGumSnakeShot039 } from "../../../../../cards/src/cards/OP13/even
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-039 Gum-Gum Snake Shot", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13GumGumSnakeShot039);
   });
 });

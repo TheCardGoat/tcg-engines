@@ -73,9 +73,16 @@ export const op12Koala081: LeaderCard = {
         ],
       },
       {
+        // One printed once-per-turn optional: base cost ≥8 OR Character-effect play.
         trigger: "whenOpponentPlaysCharacter",
         eventFilter: {
-          filters: [{ filter: "baseCost", comparison: "gte", value: 8 }],
+          anyOf: [
+            { filters: [{ filter: "baseCost", comparison: "gte", value: 8 }] },
+            {
+              sourceFilters: [{ filter: "cardCategory", value: "character" }],
+              sourceFromZone: "character",
+            },
+          ],
         },
         actions: [
           {
@@ -84,24 +91,6 @@ export const op12Koala081: LeaderCard = {
             count: {
               amount: 1,
             },
-            destination: "hand",
-          },
-        ],
-        oncePerTurn: true,
-        oncePerTurnKey: "koala-opponent-character-play",
-        optional: true,
-      },
-      {
-        trigger: "whenOpponentPlaysCharacter",
-        eventFilter: {
-          sourceFilters: [{ filter: "cardCategory", value: "character" }],
-          sourceFromZone: "character",
-        },
-        actions: [
-          {
-            action: "removeFromLife",
-            player: "opponent",
-            count: { amount: 1 },
             destination: "hand",
           },
         ],

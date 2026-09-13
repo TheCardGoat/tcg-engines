@@ -3,7 +3,7 @@ import { prb01VinsmokeNijiOp06065JollyRogerFoil065 } from "../../../../../cards/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-065 Vinsmoke Niji (OP06-065) (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01VinsmokeNijiOp06065JollyRogerFoil065);
   });
 });

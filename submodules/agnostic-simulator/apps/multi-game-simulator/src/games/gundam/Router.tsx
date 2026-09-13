@@ -2,7 +2,7 @@ import { type RouteObject } from "react-router-dom";
 import { createSimulatorBrowserRouter, SimulatorRouterProvider } from "../../lib/router.tsx";
 import { BotBenchUiPage } from "./pages/BotBenchUi.page";
 import { BotVsBotPage } from "./pages/BotVsBot.page";
-import { GundamFixtureIndexPage, GundamHomePage } from "./pages/FixtureRoutes.page";
+import { GundamFixtureIndexPage } from "./pages/FixtureRoutes.page";
 import { LiveMatchLandingPage } from "./pages/LiveMatchLanding.page";
 import { LiveMatchPage } from "./pages/LiveMatch.page";
 import { PracticePage } from "./pages/Practice.page";
@@ -14,7 +14,7 @@ import { VsAiPage } from "./pages/VsAi.page";
 export const gundamSimulatorRoutes: RouteObject[] = [
   {
     path: "/",
-    element: <GundamHomePage />,
+    element: <VsAiPage />,
   },
   {
     path: "/vs-ai",
@@ -23,6 +23,10 @@ export const gundamSimulatorRoutes: RouteObject[] = [
   {
     path: "/tests",
     element: <GundamFixtureIndexPage />,
+  },
+  {
+    path: "/tests/:fixtureId",
+    element: <VsAiPage />,
   },
   {
     path: "/tests/test-engine-state",

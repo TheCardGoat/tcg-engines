@@ -14,7 +14,13 @@ import type {
   MatchSeat,
   MatchState,
 } from "@tcg/op-engine";
-import type { EngineInteractionView, InteractionSubmission } from "@tcg/protocol";
+import {
+  AnimationPlanV2Schema,
+  type AnimationPlanV2,
+  type AnimationStepV2,
+  type EngineInteractionView,
+  type InteractionSubmission,
+} from "@tcg/protocol";
 import { createCanonicalEngineMoveLog, createEngineLogMessage } from "@tcg/shared/game-engine";
 import type {
   AcceptedMoveRecord,
@@ -119,6 +125,11 @@ export class OnePieceServerEngine implements ServerGameEngine {
       state: redactHiddenSetupState(result.state),
       patches: redactHiddenSetupPatches(result.patches),
       animations: result.animations.map(onePiecePacketAnimation),
+      animationPlan: onePieceAnimationPlan(
+        `${context.gameId}:${actorId}:${stateVersion}`,
+        result.animations,
+      ),
+      transition: "move",
       acceptedMoveRecord,
       engineLogRecords,
     };
@@ -130,6 +141,13 @@ export class OnePieceServerEngine implements ServerGameEngine {
 
   getState(): unknown {
     return this.state;
+  }
+
+  getViewerState(
+    viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
+  ): unknown {
+    const seat = viewer.role === "player" ? this.playerIdToSeat[viewer.actorId] : "spectator";
+    return projectStateForSeat(this.state, seat ?? "spectator");
   }
 
   getActivePlayerId(): string | undefined {
@@ -181,8 +199,10 @@ export class OnePieceServerEngine implements ServerGameEngine {
     }
     const setupSeat =
       this.state.status === "setup"
-        ? (["south", "north"] as const).find(
-            (seat) => getLegalCommands(this.state, seat).length > 0,
+        ? (["south", "north"] as const).find((seat) =>
+            // Concession (1-2-3) is always legal but is a player meta action,
+            // never an automated one; ignore it when finding the setup actor.
+            getLegalCommands(this.state, seat).some((descriptor) => descriptor.type !== "concede"),
           )
         : undefined;
     const actionSeat = pendingPrompt?.seat ?? setupSeat ?? this.state.activeSeat;
@@ -213,11 +233,19 @@ export class OnePieceServerEngine implements ServerGameEngine {
 
     const strategyOption = getSafeOnePieceAutomatedActionStrategyOption(options.strategyId);
     const random = createRandomAPI(`${context.gameId}:${this.getStateID()}:${seat}`);
+    const decisionContext = { random: () => random.random() };
     const command = pendingPrompt
-      ? resolveBotPromptCommand(this.state, pendingPrompt)
-      : strategyOption.strategy(this.state, seat, getLegalCommands(this.state, seat), {
-          random: () => random.random(),
-        });
+      ? ((pendingPrompt.kind !== "judge" &&
+        (pendingPrompt.seat === "north" || pendingPrompt.seat === "south")
+          ? strategyOption.resolvePrompt?.(this.state, pendingPrompt, decisionContext)
+          : undefined) ?? resolveBotPromptCommand(this.state, pendingPrompt))
+      : strategyOption.strategy(
+          this.state,
+          seat,
+          // Bots never concede; keep the meta command out of their choice set.
+          getLegalCommands(this.state, seat).filter((descriptor) => descriptor.type !== "concede"),
+          decisionContext,
+        );
     if (!command || command.seat === "judge") {
       return {
         finalResult: {
@@ -268,6 +296,69 @@ export class OnePieceServerEngine implements ServerGameEngine {
       };
     }
   }
+}
+
+function onePieceAnimationPlan(
+  id: string,
+  animations: readonly EngineAnimation[],
+): AnimationPlanV2 | null {
+  const steps = animations.flatMap<AnimationStepV2>((animation, index) => {
+    const data = animation.data;
+    const base = {
+      id: `${animation.id}:${index}`,
+      durationMs: animation.duration,
+    };
+    switch (data.kind) {
+      case "cardMove":
+        return [
+          {
+            ...base,
+            type: "entityTransfer",
+            entity: { kind: "entity", id: data.cardId },
+            from: {
+              kind: "zone",
+              id: data.fromZone,
+              ownerId: data.fromOwner,
+            },
+            to: {
+              kind: "zone",
+              id: data.toZone,
+              ownerId: data.toOwner,
+            },
+            sourceFace: onePieceZoneFace(data.fromZone),
+            destinationFace: onePieceZoneFace(data.toZone),
+          },
+        ];
+      case "attack":
+        return [
+          {
+            ...base,
+            type: "combat",
+            source: { kind: "entity" as const, id: data.attackerId },
+            target: { kind: "entity" as const, id: data.targetId },
+            label: "ATTACK",
+          },
+        ];
+      case "effect":
+        return [
+          {
+            ...base,
+            type: "effect",
+            source: { kind: "entity" as const, id: data.sourceInstanceId },
+            targets: data.targetIds.map((targetId) => ({ kind: "entity" as const, id: targetId })),
+            label: data.label,
+          },
+        ];
+      case "generic":
+        return [{ ...base, type: "hold", durationMs: animation.duration }];
+    }
+  });
+  if (steps.length === 0) return null;
+  return AnimationPlanV2Schema.parse({ id, version: 2, steps });
+}
+
+function onePieceZoneFace(zone: CardZone): "public" | "hidden" {
+  return zone === "deck" || zone === "hand" || zone === "life" ? "hidden" : "public";
 }
 
 /** Preserve native animation data; viewer safety is enforced by simulator rendering. */
@@ -484,6 +575,8 @@ function buildEngineCommand(
       return { type: "startGame", seat };
     case "endTurn":
       return { type: "endTurn", seat };
+    case "concede":
+      return { type: "concede", seat };
     case "playCard":
       return {
         type: "playCard",

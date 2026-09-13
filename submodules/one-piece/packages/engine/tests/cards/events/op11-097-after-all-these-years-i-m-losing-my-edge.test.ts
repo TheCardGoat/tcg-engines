@@ -38,5 +38,6 @@ describe("OP11-097 After All These Years I'm Losing My Edge!!!", () => {
     );
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
   });
 });

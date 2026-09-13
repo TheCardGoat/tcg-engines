@@ -1063,6 +1063,31 @@ describe("event log presentation", () => {
     );
   });
 
+  it("keeps return-to-hand outcomes in a sequential free-play summary", () => {
+    const playerOneId = "player_one" as PlayerId;
+    const primaryCardId = "card-primary" as CardInstanceId;
+    const returnedCardId = "card-secondary" as CardInstanceId;
+    const playedCardId = "card-tertiary" as CardInstanceId;
+    const entry = createFlatEntry(
+      {
+        type: "resolveEffect",
+        playerId: playerOneId,
+        timestamp: 123,
+        sourceCardId: primaryCardId,
+        resolution: { kind: "targetSelection", targets: [playedCardId] },
+        outcomes: {
+          cardsReturnedToHand: [returnedCardId],
+          cardsMovedToZone: [{ cardId: playedCardId, zone: "play" }],
+        },
+      },
+      { moveId: "resolveEffect" },
+    );
+
+    expect(flattenRowText(entry)).toBe(
+      "Resolved Ariel - On Human Legs by returning Mickey Mouse - Detective to hand and playing Grumpy - Soreheaded Miner.",
+    );
+  });
+
   it("formats flat persisted bag-resolution logs with inline effect damage outcomes", () => {
     const playerOneId = "player_one" as PlayerId;
     const primaryCardId = "card-primary" as CardInstanceId;
@@ -1424,6 +1449,31 @@ describe("buildActivityFeed", () => {
     const expected = groupEventLogRows(buildEventLogRows(entries, "playerOne"));
     const result = buildActivityFeed(entries, [], "playerOne");
     expect(result.map((g) => g.kind)).toEqual(expected.map((g) => g.kind));
+  });
+
+  it("uses participant names for spectator event-group labels", () => {
+    const entries = [
+      createLogEntry("Player one event", {
+        actorSide: "playerOne",
+        turnNumber: 1,
+        timestamp: 1000,
+      }),
+      createLogEntry("Player two event", {
+        actorSide: "playerTwo",
+        turnNumber: 1,
+        timestamp: 2000,
+      }),
+    ];
+
+    const result = buildActivityFeed(entries, [], null, undefined, (side) =>
+      side === "playerOne" ? "MatchBox" : "Bellwether Biding Her Time",
+    );
+    const eventGroups = result.filter((group) => group.kind === "event-group");
+
+    expect(eventGroups.map((group) => group.actor.label)).toEqual([
+      "MatchBox",
+      "Bellwether Biding Her Time",
+    ]);
   });
 
   it("converts chat messages to ChatFeedItems in chronological order when no game entries", () => {

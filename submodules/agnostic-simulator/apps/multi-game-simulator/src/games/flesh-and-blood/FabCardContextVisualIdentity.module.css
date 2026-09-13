@@ -1,0 +1,127 @@
+.surface {
+  --fab-context-gold: #d6b56f;
+  --fab-context-ember: #8f2e28;
+  --game-accent: var(--fab-context-gold);
+  --card-context-border: color-mix(in srgb, var(--fab-context-gold) 38%, #28191a);
+  background:
+    linear-gradient(145deg, rgb(120 31 28 / 15%), transparent 42%),
+    linear-gradient(#171112, #100d0e);
+  box-shadow: 0 18px 44px rgb(0 0 0 / 62%);
+}
+
+.identity {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.surface button:has(.modeLabel) {
+  width: auto;
+  min-width: 44px;
+  padding-inline: 8px;
+}
+
+.surface button:has(.modeLabel)[aria-pressed="true"] {
+  border-color: var(--fab-context-gold);
+  background: rgb(214 181 111 / 12%);
+  color: var(--fab-context-gold);
+}
+
+.modeLabel {
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.primaryRow,
+.secondaryRow {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.primaryRow > strong,
+.secondaryRow > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.primaryRow > strong {
+  color: #fff7e7;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.secondaryRow > span:first-child {
+  color: #cbbdb7;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.15;
+}
+
+.statGroup {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 5px;
+}
+
+.stat,
+.pitch {
+  display: inline-flex;
+  min-width: 27px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
+  color: #fff8e9;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat img,
+.pitch img {
+  flex: none;
+  object-fit: contain;
+}
+
+.pitch {
+  color: var(--fab-context-gold);
+}
+
+.pitch :global(.fab-pitch-gem) {
+  position: relative;
+  z-index: auto;
+  top: auto;
+  left: auto;
+  width: 19px;
+  height: 19px;
+  flex: none;
+}
+
+.pitch :global(.fab-pitch-gem-value) {
+  display: none;
+}
+
+@media (max-width: 560px) {
+  .surface [data-card-context-rule-text] {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .primaryRow > strong {
+    font-size: 15px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+  }
+
+  .secondaryRow > span:first-child {
+    font-size: 11px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.35;
+  }
+}

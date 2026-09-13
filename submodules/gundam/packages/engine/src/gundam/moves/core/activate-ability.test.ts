@@ -18,6 +18,7 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
+  expectFailure,
   expectSuccess,
   createMockUnit,
   createMockResource,
@@ -31,7 +32,70 @@ function resources(count: number): TestCardEntry[] {
   return Array.from({ length: count }, () => active(createMockResource()));
 }
 
+describe("activate-ability — first-segment target gate", () => {
+  it("does not publish or activate a trash-pair ability when no legal Pilot exists", () => {
+    const pairFromTrash: CardEffect = {
+      type: "activated",
+      activation: { timing: ["activate:main"] },
+      cost: { discardCount: 1 },
+      directives: [
+        {
+          action: {
+            action: "pairPilot",
+            target: {
+              owner: "friendly",
+              cardType: "pilot",
+              zone: "trash",
+              count: 1,
+            },
+          },
+        },
+      ],
+      sourceText: "【Activate･Main】Discard 1：Choose 1 Pilot from your trash. Pair it.",
+    };
+    const source = createMockUnit({ effects: [pairFromTrash] });
+    const fodder = createMockUnit({ name: "Discard Fodder" });
+    const engine = GundamTestEngine.create({
+      play: [source],
+      hand: [fodder],
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const sourceId = p1.getCardsInZone("battleArea")[0]!;
+    const fodderId = p1.getHand()[0]!;
+
+    expect(p1.getMoveProcedure("activateAbility", { cardId: sourceId, effectIndex: 0 })).toEqual(
+      [],
+    );
+    expectFailure(p1.activateAbility(sourceId, 0, { targets: [fodderId] }), "NO_LEGAL_TARGETS");
+    expect(p1.getCardZone(fodderId)).toBe(`hand:${PLAYER_ONE}`);
+  });
+});
+
 describe("activate-ability — queue migration (PR C)", () => {
+  it("rejects a rest-target cost without an explicit count when no target exists", () => {
+    const needsAnotherUnit: CardEffect = {
+      type: "activated",
+      activation: { timing: ["activate:main"] },
+      cost: {
+        restTarget: {
+          owner: "friendly",
+          cardType: "unit",
+          excludeSource: true,
+        },
+      },
+      directives: [{ action: { action: "draw", count: 1 } }],
+      sourceText: "【Activate･Main】 Rest 1 other friendly Unit: Draw 1.",
+    };
+    const source = createMockUnit({ effects: [needsAnotherUnit] });
+    const engine = GundamTestEngine.create({ play: [source], deck: 5 });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+
+    expectFailure(p1.activateAbility(source, 0, {}));
+
+    expect(p1.getHand()).toHaveLength(0);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
   it("auto-drains an activated effect with no targets", () => {
     // Rest the unit to draw 1.
     const restToDraw: CardEffect = {

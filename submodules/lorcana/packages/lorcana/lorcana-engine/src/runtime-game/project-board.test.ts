@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import type { PlayerId } from "#core";
+import type { MatchState, PlayerId } from "#core";
 import type { ActionCard } from "@tcg/lorcana-types";
 import { createCardI18n } from "../card-i18n";
 import {
@@ -408,6 +408,34 @@ const projectedDrawWatcher = createMockCharacter({
 });
 
 describe("projectLorcanaBoardView", () => {
+  it("renders opaque face-down cards from a network-filtered player view", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      inkwell: [projectedFriendlyTarget],
+      deck: 2,
+    });
+    const server = testEngine.asServer();
+    const filteredView = server
+      .getRuntime()
+      .getFilteredView({ role: "player", playerID: CANONICAL_PLAYER_ONE });
+    const actualInkwellId =
+      server.getState().ctx.zones.private.zoneCards[`inkwell:${CANONICAL_PLAYER_ONE}`]?.[0];
+
+    // The client consumes the secure network projection as its loadable
+    // snapshot even though private zones are optional in the transport type.
+    testEngine.asLorcanaPlayerOne().loadState(filteredView as unknown as MatchState);
+    const board = testEngine.asLorcanaPlayerOne().getBoard();
+    const projectedInkwellId = board.players[CANONICAL_PLAYER_ONE]?.inkwell[0];
+
+    expect(projectedInkwellId).toBe(`hidden:inkwell:${CANONICAL_PLAYER_ONE}:0`);
+    expect(projectedInkwellId).not.toBe(actualInkwellId);
+    expect(board.cards[projectedInkwellId!]).toMatchObject({
+      id: projectedInkwellId,
+      zone: "inkwell",
+      hidden: true,
+    });
+    expect(board.players[CANONICAL_PLAYER_ONE]?.deckCount).toBe(2);
+  });
+
   it("projects visible card types for characters and locations", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
       {

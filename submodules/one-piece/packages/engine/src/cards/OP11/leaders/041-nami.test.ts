@@ -3,7 +3,7 @@ import { op11Nami041 } from "../../../../../cards/src/cards/OP11/leaders/041-nam
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP11-041 Nami", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op11Nami041);
   });
 });

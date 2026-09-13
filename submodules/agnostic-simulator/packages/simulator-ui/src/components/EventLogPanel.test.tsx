@@ -45,6 +45,7 @@ function entry(
     entityIds: options.entityIds,
     cardRefs: options.cardRefs,
     section: options.section,
+    importance: options.importance,
   };
 }
 
@@ -65,7 +66,7 @@ describe("EventLogPanel", () => {
   });
 
   test("copies caller-provided readable text", async () => {
-    const writeText = vi.fn(async () => undefined);
+    const writeText = vi.fn(async (_text: string) => undefined);
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
       value: { writeText },
@@ -84,8 +85,91 @@ describe("EventLogPanel", () => {
     expect(writeText).toHaveBeenCalledWith("raw move log payload");
   });
 
+  test("copies the built-in readable log without projected JSON", async () => {
+    const writeText = vi.fn(async (_text: string) => undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText },
+    });
+
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel entries={[entry("one", "p1", "First player action.")]} readableCopy />,
+      ),
+    );
+    await openEventLogOptions();
+
+    const copyButton = document.body.querySelector('[aria-label="Copy readable event log"]');
+    await act(async () => {
+      copyButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    expect(writeText).toHaveBeenCalledWith(
+      "# Event log\nTurn 1 2026-07-07T00:00:00.000Z P1 Main [move]: First player action.",
+    );
+    expect(String(writeText.mock.calls[0]?.[0])).not.toContain("Projected entries");
+  });
+
+  test("keeps event-log options reachable when the title is hidden", async () => {
+    const writeText = vi.fn(async (_text: string) => undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: { writeText },
+    });
+
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          embedded
+          showHeader={false}
+          entries={[entry("one", "p1", "First player action.")]}
+          copyText="readable payload"
+        />,
+      ),
+    );
+
+    await openEventLogOptions();
+    const copyButton = document.body.querySelector('[aria-label="Copy readable event log"]');
+    expect(copyButton).toBeInstanceOf(HTMLButtonElement);
+    await act(async () => {
+      copyButton?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+    expect(writeText).toHaveBeenCalledWith("readable payload");
+  });
+
+  test("places event-log options in a shell-owned header when provided", () => {
+    const controlsContainer = document.createElement("div");
+    controlsContainer.setAttribute("data-testid", "shell-controls");
+    document.body.append(controlsContainer);
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          embedded
+          showHeader={false}
+          controlsContainer={controlsContainer}
+          entries={[entry("one", "p1", "First player action.")]}
+        />,
+      ),
+    );
+
+    expect(controlsContainer.querySelector('[aria-label="Event log options"]')).toBeInstanceOf(
+      HTMLButtonElement,
+    );
+    controlsContainer.remove();
+  });
+
   test("copies caller-provided raw text separately from readable text", async () => {
-    const writeText = vi.fn(async () => undefined);
+    const writeText = vi.fn(async (_text: string) => undefined);
     Object.defineProperty(navigator, "clipboard", {
       configurable: true,
       value: { writeText },
@@ -158,9 +242,9 @@ describe("EventLogPanel", () => {
       entry("two", "p1", "Second player action."),
     ]);
 
-    const renderedEntries = document.body.querySelectorAll("button");
-    const secondEntry = Array.from(renderedEntries).find((button) =>
-      button.textContent?.includes("Second player action."),
+    const renderedEntries = document.body.querySelectorAll(`.${classes.entry}`);
+    const secondEntry = Array.from(renderedEntries).find((row) =>
+      row.textContent?.includes("Second player action."),
     );
 
     expect(secondEntry).toBeDefined();
@@ -213,6 +297,14 @@ describe("EventLogPanel", () => {
     );
     expect(document.body.querySelector('[aria-label="Rival, move"]')).toBeInstanceOf(HTMLElement);
     expect(document.body.querySelectorAll(`.${classes.phaseHeader}`)).toHaveLength(3);
+  });
+
+  test("omits phase metadata when the projection has no meaningful phase", () => {
+    renderPanel([entry("one", "p1", "You played a card.", { phase: "" })]);
+
+    expect(document.body.querySelector(`.${classes.turnMeta}`)).toBeNull();
+    expect(document.body.querySelector(`.${classes.phaseHeader}`)).toBeNull();
+    expect(document.body.textContent).not.toContain("Phase");
   });
 
   test("can keep only the latest turn expanded while preserving explicit turn overrides", async () => {
@@ -343,11 +435,18 @@ describe("EventLogPanel", () => {
       moveFilter?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
 
+    expect(
+      document.body.querySelector('[role="dialog"][aria-label="Event log options"]'),
+    ).toBeNull();
     expect(document.body.querySelector('[data-testid="event-log-chat-message"]')).toBeNull();
     expect(document.body.textContent).not.toContain("Good luck!");
 
+    await openEventLogOptions();
+    const reopenedChatFilter = Array.from(document.body.querySelectorAll("button")).find((button) =>
+      button.textContent?.includes("Chat"),
+    );
     await act(async () => {
-      chatFilter?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      reopenedChatFilter?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
     });
 
     expect(document.body.querySelector('[data-testid="event-log-chat-message"]')).toBeInstanceOf(
@@ -420,5 +519,401 @@ describe("EventLogPanel", () => {
     expect(document.body.textContent).toContain("Attack");
     expect(document.body.textContent).toContain("React");
     expect(combatMarkers).toHaveLength(2);
+  });
+
+  test("renders every section fully by default with no collapse controls", () => {
+    renderPanel([
+      entry("a1", "p1", "Attacked with Romping Chair.", {
+        tags: ["combat"],
+        section: {
+          id: "fab-combat-1-1",
+          label: "Romping Chair → Bravo",
+          tone: "fight",
+          summary: "Chain: Romping Chair → Bravo · hit 1 · 4 damage",
+        },
+      }),
+      entry("a2", "p1", "Romping Chair hit Bravo for 4.", {
+        tags: ["combat"],
+        section: {
+          id: "fab-combat-1-1",
+          label: "Romping Chair → Bravo",
+          tone: "fight",
+          summary: "Chain: Romping Chair → Bravo · hit 1 · 4 damage",
+        },
+      }),
+    ]);
+
+    expect(document.body.querySelector('[data-testid="event-log-section"]')).toBeNull();
+    expect(
+      document.body.querySelectorAll(`.${classes.sectionEntries} .${classes.entry}`),
+    ).toHaveLength(2);
+    expect(document.body.textContent).toContain("Romping Chair hit Bravo for 4.");
+  });
+
+  test("locates only references that are currently represented on the board", async () => {
+    const onHighlightEntity = vi.fn();
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          entries={[
+            entry("present", "p1", "You played Snatch.", {
+              entityIds: ["snatch-instance"],
+              cardRefs: [
+                {
+                  name: "Snatch",
+                  entityId: "snatch-instance",
+                  definitionId: "snatch-definition",
+                },
+              ],
+            }),
+            entry("gone", "p2", "Opponent revealed Nimblism.", {
+              entityIds: ["nimblism-instance"],
+              cardRefs: [
+                {
+                  name: "Nimblism",
+                  entityId: "nimblism-instance",
+                  definitionId: "nimblism-definition",
+                },
+              ],
+            }),
+          ]}
+          availableEntityIds={["snatch-instance"]}
+          onHighlightEntity={onHighlightEntity}
+        />,
+      ),
+    );
+
+    const locate = document.body.querySelector('[aria-label="Show card on board"]');
+    expect(locate).toBeInstanceOf(HTMLButtonElement);
+    expect(document.body.textContent).toContain("Not currently on board");
+
+    await act(async () => {
+      locate?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+    expect(onHighlightEntity).toHaveBeenCalledWith(["snatch-instance"]);
+  });
+
+  test("honors collapsed-by-default sections even when they are the latest section", () => {
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          sectionExpansion="latest"
+          renderSectionLabel={(section) => <button type="button">Preview {section.label}</button>}
+          entries={[
+            entry("clash-outcome", "p1", "You revealed Snatch; Opponent revealed Snatch.", {
+              tags: ["combat"],
+              section: {
+                id: "clash-1",
+                label: "Clash",
+                tone: "comparison",
+                summary: "No winner · Snatch 4 power vs Snatch 4 power",
+                collapsedByDefault: true,
+              },
+            }),
+            entry("clash-result", undefined, "No player won the clash.", {
+              tags: ["combat"],
+              section: {
+                id: "clash-1",
+                label: "Clash",
+                tone: "comparison",
+                summary: "No winner · Snatch 4 power vs Snatch 4 power",
+                collapsedByDefault: true,
+              },
+            }),
+          ]}
+        />,
+      ),
+    );
+
+    const collapsed = document.body.querySelector(
+      '[data-testid="event-log-section"][data-expanded="false"]',
+    );
+    expect(collapsed?.textContent).toContain("No winner · Snatch 4 power vs Snatch 4 power");
+    expect(document.body.textContent).not.toContain("You revealed Snatch");
+    expect(document.body.querySelector("button button")).toBeNull();
+    expect(collapsed?.querySelectorAll("button")).toHaveLength(2);
+  });
+
+  test("renders an interrupted parent section once with its child section nested in sequence", async () => {
+    const activity = {
+      id: "activity-1",
+      label: "Clash Sequence Lab",
+      tone: "effect",
+      summary: "Clash Sequence Lab · 2 events",
+    };
+    const clash = {
+      id: "clash-1",
+      parent: activity,
+      label: "Clash",
+      tone: "comparison",
+      summary: "You won · Alpha Rampage 9 power vs Snatch 4 power",
+      collapsedByDefault: true,
+    };
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          sectionExpansion="latest"
+          entries={[
+            entry("played", "p1", "You played Clash Sequence Lab.", { section: activity }),
+            entry("revealed", "p1", "You revealed Alpha Rampage.", {
+              tags: ["combat"],
+              section: clash,
+            }),
+            entry("won", "p1", "You won the clash.", {
+              tags: ["combat"],
+              section: clash,
+            }),
+            entry("moved", "p1", "You moved Alpha Rampage to the graveyard.", {
+              section: activity,
+            }),
+          ]}
+        />,
+      ),
+    );
+
+    expect(document.body.querySelectorAll('[data-section-depth="0"]')).toHaveLength(1);
+    expect(document.body.querySelectorAll('[data-section-depth="1"]')).toHaveLength(1);
+    expect(document.body.textContent).toContain("You played Clash Sequence Lab.");
+    expect(document.body.textContent).toContain("You moved Alpha Rampage to the graveyard.");
+    expect(document.body.textContent).toContain(
+      "You won · Alpha Rampage 9 power vs Snatch 4 power",
+    );
+    expect(document.body.textContent).not.toContain("You revealed Alpha Rampage.");
+
+    await act(async () => {
+      document.body
+        .querySelector('[aria-label="Expand Clash"]')
+        ?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    expect(document.body.textContent).toContain("You revealed Alpha Rampage.");
+    expect(document.body.querySelectorAll('[data-section-depth="0"]')).toHaveLength(1);
+  });
+
+  test("materializes an embedded stack parent and reuses resumed layer groups", () => {
+    const stack = {
+      id: "stack-1",
+      label: "Stack · 2 layers",
+      meta: "Resolved",
+      tone: "stack",
+      summary: "2 layers resolved",
+    };
+    const firstLayer = {
+      id: "layer-1",
+      parent: stack,
+      actorSeatId: "player",
+      label: "Layer 1 · First Instant",
+      meta: "Resolves last",
+      tone: "stack-layer",
+    };
+    const secondLayer = {
+      id: "layer-2",
+      parent: stack,
+      actorSeatId: "opponent",
+      label: "Layer 2 · Second Instant",
+      meta: "Response · resolves first",
+      tone: "stack-layer",
+    };
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          sectionExpansion="latest"
+          seatLabels={{ player: "You", opponent: "Practice bot" }}
+          entries={[
+            entry("first-play", "p1", "You played First Instant.", { section: firstLayer }),
+            entry("second-play", "p1", "You played Second Instant.", { section: secondLayer }),
+            entry("first-resolve", "p1", "First Instant resolved.", { section: firstLayer }),
+          ]}
+        />,
+      ),
+    );
+
+    expect(document.body.querySelectorAll('[data-section-depth="0"]')).toHaveLength(1);
+    expect(document.body.querySelectorAll('[data-section-depth="1"]')).toHaveLength(2);
+    expect(document.body.textContent).toContain("Stack · 2 layers");
+    expect(document.body.textContent).toContain("Resolved");
+    expect(document.body.textContent?.match(/Layer 1 · First Instant/g)).toHaveLength(1);
+    expect(document.body.textContent).toContain("First Instant resolved.");
+    const actorMarkers = [...document.body.querySelectorAll("[data-section-actor]")];
+    expect(actorMarkers.map((marker) => marker.textContent)).toEqual(["Y", "O"]);
+    expect(actorMarkers.map((marker) => marker.getAttribute("aria-label"))).toEqual([
+      "Played by You",
+      "Played by Practice bot",
+    ]);
+  });
+
+  test("collapses older sections to one summary row while the latest stays expanded", async () => {
+    const closedChain = {
+      id: "fab-combat-1-1",
+      label: "Romping Chair → Bravo",
+      tone: "fight",
+      summary: "Chain: Romping Chair → Bravo · hit 1 · 4 damage",
+    };
+    const openChain = { id: "fab-combat-1-2", label: "Trench → Bravo", tone: "fight" };
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          sectionExpansion="latest"
+          entries={[
+            entry("a1", "p1", "Attacked Bravo with Romping Chair.", {
+              tags: ["combat"],
+              section: closedChain,
+            }),
+            entry("a2", "p1", "Romping Chair hit Bravo for 4.", {
+              tags: ["combat"],
+              section: closedChain,
+            }),
+            entry("b1", "p1", "Attacked Bravo with Trench.", {
+              tags: ["combat"],
+              section: openChain,
+            }),
+          ]}
+        />,
+      ),
+    );
+
+    const collapsed = document.body.querySelector(
+      '[data-testid="event-log-section"][data-expanded="false"]',
+    );
+    const expanded = document.body.querySelector(
+      '[data-testid="event-log-section"][data-expanded="true"]',
+    );
+
+    // The collapsed group renders exactly one summary row: its rows are
+    // removed from the DOM, not hidden.
+    expect(collapsed).toBeInstanceOf(HTMLElement);
+    expect(collapsed?.textContent).toContain("Chain: Romping Chair → Bravo · hit 1 · 4 damage");
+    const compactCount = collapsed?.querySelector('[data-entry-count="2"]');
+    expect(compactCount?.textContent).toBe("2");
+    expect(compactCount?.getAttribute("aria-label")).toBe("2 entries");
+    expect(compactCount?.closest(`.${classes.sectionToggleButton}`)).toBe(
+      compactCount?.parentElement,
+    );
+    expect(document.body.textContent).not.toContain("Romping Chair hit Bravo for 4.");
+
+    // The latest section of the turn stays fully rendered.
+    expect(expanded).toBeInstanceOf(HTMLElement);
+    expect(document.body.textContent).toContain("Attacked Bravo with Trench.");
+
+    await act(async () => {
+      collapsed?.querySelector("button")?.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    expect(document.body.textContent).toContain("Romping Chair hit Bravo for 4.");
+    expect(
+      document.body.querySelector('[data-testid="event-log-section"][data-expanded="false"]'),
+    ).toBeNull();
+  });
+
+  test("keeps always-scrolling logs anchored after a reader scrolls upward", async () => {
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    const first = entry("first", "p1", "First action.");
+    act(() => activeRoot?.render(<EventLogPanel entries={[first]} autoScroll="always" />));
+
+    const scroller = document.body.querySelector('[role="log"]') as HTMLDivElement;
+    Object.defineProperties(scroller, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 240 },
+      scrollTop: { configurable: true, value: 0, writable: true },
+    });
+    scroller.dispatchEvent(new Event("scroll", { bubbles: true }));
+
+    await act(async () => {
+      activeRoot?.render(
+        <EventLogPanel
+          entries={[first, entry("second", "p2", "Response action.")]}
+          autoScroll="always"
+        />,
+      );
+    });
+
+    expect(scroller.scrollTop).toBe(240);
+  });
+
+  test("does not scroll away when a reader expands a section in an always-scrolling log", async () => {
+    const section = {
+      id: "older-stack",
+      label: "Stack · 2 layers",
+      tone: "stack" as const,
+      collapsedByDefault: true,
+    };
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          entries={[
+            entry("first", "p1", "Played Snatch.", { section }),
+            entry("second", "p2", "Responded with an instant.", { section }),
+          ]}
+          autoScroll="always"
+          sectionExpansion="latest"
+        />,
+      ),
+    );
+
+    const scroller = document.body.querySelector('[role="log"]') as HTMLDivElement;
+    Object.defineProperties(scroller, {
+      clientHeight: { configurable: true, value: 100 },
+      scrollHeight: { configurable: true, value: 500 },
+      scrollTop: { configurable: true, value: 24, writable: true },
+    });
+    scroller.dispatchEvent(new Event("scroll", { bubbles: true }));
+    const toggle = document.body.querySelector(
+      '[data-testid="event-log-section"] button',
+    ) as HTMLButtonElement;
+
+    await act(async () => {
+      toggle.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    });
+
+    expect(scroller.scrollTop).toBe(24);
+    expect(
+      document.body
+        .querySelector('[data-testid="event-log-section"]')
+        ?.getAttribute("data-expanded"),
+    ).toBe("true");
+  });
+
+  test("overrides speaker labels through seatLabels without changing defaults", () => {
+    activeContainer = document.createElement("div");
+    document.body.append(activeContainer);
+    activeRoot = createRoot(activeContainer);
+    act(() =>
+      activeRoot?.render(
+        <EventLogPanel
+          seatLabels={{ player: "Me", opponent: "Practice bot" }}
+          entries={[
+            entry("one", "p1", "Played a unit."),
+            entry("two", "p2", "Activated an ability."),
+          ]}
+        />,
+      ),
+    );
+
+    expect(document.body.querySelector('[aria-label="Me, move"]')).toBeInstanceOf(HTMLElement);
+    expect(document.body.querySelector('[aria-label="Practice bot, move"]')).toBeInstanceOf(
+      HTMLElement,
+    );
+    expect(document.body.querySelector('[aria-label="You, move"]')).toBeNull();
+    expect(document.body.querySelector('[aria-label="Rival, move"]')).toBeNull();
   });
 });

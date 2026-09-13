@@ -4,6 +4,8 @@ import { screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
 import { renderSimulator } from "../../test/renderSimulator.tsx";
+import { DEV_PLAYER_TWO } from "../../game/dev-runtime.ts";
+import { asViewerId } from "../../game/types.ts";
 import { loadSetupDefault } from "../../game/fixtures/setup-default.ts";
 
 /**
@@ -22,5 +24,12 @@ describe("Setup · choose first player", () => {
     await waitFor(() => {
       expect(screen.queryByRole("dialog", { name: /who goes first/i })).toBeNull();
     });
+  });
+
+  it("shows a waiting state to the player who does not own the decision", () => {
+    renderSimulator(loadSetupDefault, { viewerId: asViewerId(DEV_PLAYER_TWO) });
+
+    expect(screen.queryByRole("dialog", { name: /who goes first/i })).toBeNull();
+    expect(screen.getByRole("status", { name: /waiting for opponent/i })).not.toBeNull();
   });
 });

@@ -1,0 +1,3050 @@
+{
+  "02u": {
+    "printingId": "set2-p1-018",
+    "shortId": "udf"
+  },
+  "03s": {
+    "printingId": "set4-211-enchanted",
+    "shortId": "JXe"
+  },
+  "05w": {
+    "printingId": "set11-206-epic",
+    "shortId": "qyV"
+  },
+  "09M": {
+    "printingId": "set6-210-enchanted",
+    "shortId": "CTm"
+  },
+  "0I6": {
+    "printingId": "set9-134",
+    "shortId": "cuz"
+  },
+  "0Js": {
+    "printingId": "set9-150",
+    "shortId": "g6g"
+  },
+  "0LB": {
+    "printingId": "set12-p3-049-challenge",
+    "shortId": "rxX"
+  },
+  "0Mn": {
+    "printingId": "set8-p2-027-promo",
+    "shortId": "ThD"
+  },
+  "0PN": {
+    "printingId": "set1-p1-020",
+    "shortId": "436"
+  },
+  "0S4": {
+    "printingId": "set9-012",
+    "shortId": "3en"
+  },
+  "0XX": {
+    "printingId": "set9-238-enchanted",
+    "shortId": "AlB"
+  },
+  "0aP": {
+    "printingId": "set9-207-epic",
+    "shortId": "EvJ"
+  },
+  "0cC": {
+    "printingId": "set10-181",
+    "shortId": "wNl"
+  },
+  "0cp": {
+    "printingId": "set5-218-enchanted",
+    "shortId": "S7N"
+  },
+  "0eJ": {
+    "printingId": "set9-223-enchanted",
+    "shortId": "o1w"
+  },
+  "0fG": {
+    "printingId": "set9-209-epic",
+    "shortId": "dcF"
+  },
+  "0ff": {
+    "printingId": "set11-209-epic",
+    "shortId": "f7C"
+  },
+  "0lp": {
+    "printingId": "set9-069",
+    "shortId": "2TN"
+  },
+  "0pB": {
+    "printingId": "set9-022",
+    "shortId": "JP7"
+  },
+  "0w8": {
+    "printingId": "set12-218-epic",
+    "shortId": "Fyk"
+  },
+  "0wY": {
+    "printingId": "set11-241-iconic",
+    "shortId": "dB0"
+  },
+  "12h": {
+    "printingId": "set9-167",
+    "shortId": "ZnD"
+  },
+  "17X": {
+    "printingId": "set5-107",
+    "shortId": "ZiJ"
+  },
+  "196": {
+    "printingId": "set6-205-enchanted",
+    "shortId": "b59"
+  },
+  "19k": {
+    "printingId": "set10-230-enchanted",
+    "shortId": "H0z"
+  },
+  "1AR": {
+    "printingId": "set9-156",
+    "shortId": "LVg"
+  },
+  "1Ed": {
+    "printingId": "set10-224-enchanted",
+    "shortId": "7Jz"
+  },
+  "1J0": {
+    "printingId": "set9-124",
+    "shortId": "bsy"
+  },
+  "1O7": {
+    "printingId": "set1-p1-024-promo",
+    "shortId": "nZP"
+  },
+  "1Rj": {
+    "printingId": "set9-141",
+    "shortId": "wSb"
+  },
+  "1Wc": {
+    "printingId": "set10-240-enchanted",
+    "shortId": "AE7"
+  },
+  "1gF": {
+    "printingId": "set10-211-epic",
+    "shortId": "RjX"
+  },
+  "1jr": {
+    "printingId": "set9-203",
+    "shortId": "6mG"
+  },
+  "1ju": {
+    "printingId": "set5-147",
+    "shortId": "xgq"
+  },
+  "1pX": {
+    "printingId": "set11-194",
+    "shortId": "gqN"
+  },
+  "1uc": {
+    "printingId": "set2-208-enchanted",
+    "shortId": "auv"
+  },
+  "1yb": {
+    "printingId": "set12-212-epic",
+    "shortId": "gbh"
+  },
+  "1z1": {
+    "printingId": "set12-015",
+    "shortId": "h1q"
+  },
+  "20T": {
+    "printingId": "set11-163",
+    "shortId": "xdR"
+  },
+  "2CO": {
+    "printingId": "set7-p2-026-promo-2",
+    "shortId": "HtH"
+  },
+  "2E9": {
+    "printingId": "set9-099",
+    "shortId": "HMM"
+  },
+  "2XS": {
+    "printingId": "set11-208-epic",
+    "shortId": "ibs"
+  },
+  "2aC": {
+    "printingId": "set2-p1-015-promo",
+    "shortId": "ttV"
+  },
+  "2dC": {
+    "printingId": "set6-p2-018-promo",
+    "shortId": "Ozo"
+  },
+  "2hI": {
+    "printingId": "set7-224-epic",
+    "shortId": "Jfd"
+  },
+  "2nf": {
+    "printingId": "set11-231-enchanted",
+    "shortId": "ubB"
+  },
+  "2qq": {
+    "printingId": "set2-216-enchanted",
+    "shortId": "ccI"
+  },
+  "2rj": {
+    "printingId": "set12-238-enchanted",
+    "shortId": "dtA"
+  },
+  "2t3": {
+    "printingId": "set3-216-enchanted",
+    "shortId": "3EB"
+  },
+  "2tB": {
+    "printingId": "set7-p3-037-promo",
+    "shortId": "pgq"
+  },
+  "2tR": {
+    "printingId": "set6-192",
+    "shortId": "rR8"
+  },
+  "34Z": {
+    "printingId": "set9-138",
+    "shortId": "OcX"
+  },
+  "35B": {
+    "printingId": "set12-242-iconic",
+    "shortId": "It2"
+  },
+  "35K": {
+    "printingId": "set9-230-enchanted",
+    "shortId": "1mS"
+  },
+  "38g": {
+    "printingId": "set9-071",
+    "shortId": "bL7"
+  },
+  "3B1": {
+    "printingId": "set11-222-epic",
+    "shortId": "Euy"
+  },
+  "3CQ": {
+    "printingId": "set12-215-epic",
+    "shortId": "ndv"
+  },
+  "3E2": {
+    "printingId": "set1-064",
+    "shortId": "9Kp"
+  },
+  "3FW": {
+    "printingId": "set9-214-epic",
+    "shortId": "Swu"
+  },
+  "3Ro": {
+    "printingId": "set9-204",
+    "shortId": "X29"
+  },
+  "3Za": {
+    "printingId": "set9-079",
+    "shortId": "kWU"
+  },
+  "3c0": {
+    "printingId": "set8-214-enchanted",
+    "shortId": "xCB"
+  },
+  "3ft": {
+    "printingId": "set10-197",
+    "shortId": "Je6"
+  },
+  "3qb": {
+    "printingId": "set5-p3-006-promo",
+    "shortId": "3gc"
+  },
+  "3sS": {
+    "printingId": "set9-037",
+    "shortId": "XWQ"
+  },
+  "3t5": {
+    "printingId": "set9-216-epic",
+    "shortId": "1lp"
+  },
+  "3wE": {
+    "printingId": "set9-233-enchanted",
+    "shortId": "TxL"
+  },
+  "41Q": {
+    "printingId": "set9-231-enchanted",
+    "shortId": "MCo"
+  },
+  "42x": {
+    "printingId": "set10-024",
+    "shortId": "LYe"
+  },
+  "43p": {
+    "printingId": "set12-211-epic",
+    "shortId": "XE1"
+  },
+  "44M": {
+    "printingId": "set7-215-enchanted",
+    "shortId": "9Gk"
+  },
+  "44Y": {
+    "printingId": "set8-137",
+    "shortId": "RpU"
+  },
+  "464": {
+    "printingId": "set12-p3-045-promo",
+    "shortId": "64O"
+  },
+  "475": {
+    "printingId": "set7-082",
+    "shortId": "tKK"
+  },
+  "47U": {
+    "printingId": "set7-152",
+    "shortId": "a6n"
+  },
+  "47m": {
+    "printingId": "set9-077",
+    "shortId": "sHr"
+  },
+  "49g": {
+    "printingId": "set9-188",
+    "shortId": "eSY"
+  },
+  "4EI": {
+    "printingId": "set3-209-enchanted",
+    "shortId": "l4m"
+  },
+  "4Ec": {
+    "printingId": "set8-209-enchanted",
+    "shortId": "lGm"
+  },
+  "4F7": {
+    "printingId": "set8-061",
+    "shortId": "HBo"
+  },
+  "4IA": {
+    "printingId": "set9-076",
+    "shortId": "kAd"
+  },
+  "4II": {
+    "printingId": "set9-019",
+    "shortId": "FmK"
+  },
+  "4Tp": {
+    "printingId": "set9-205-epic",
+    "shortId": "gfc"
+  },
+  "4aE": {
+    "printingId": "set9-149",
+    "shortId": "3QA"
+  },
+  "4eH": {
+    "printingId": "set11-224-enchanted",
+    "shortId": "3uR"
+  },
+  "4kO": {
+    "printingId": "set5-003",
+    "shortId": "no3"
+  },
+  "4o7": {
+    "printingId": "set7-212-enchanted",
+    "shortId": "r2H"
+  },
+  "4wV": {
+    "printingId": "set1-210-enchanted",
+    "shortId": "dbG"
+  },
+  "58D": {
+    "printingId": "set11-221-epic",
+    "shortId": "DUu"
+  },
+  "5AS": {
+    "printingId": "set9-219-epic",
+    "shortId": "HRY"
+  },
+  "5Dm": {
+    "printingId": "set4-p1-040-promo",
+    "shortId": "SOW"
+  },
+  "5Hn": {
+    "printingId": "set10-206-epic",
+    "shortId": "roY"
+  },
+  "5QH": {
+    "printingId": "set6-056",
+    "shortId": "0iA"
+  },
+  "5Sq": {
+    "printingId": "set5-019",
+    "shortId": "FSG"
+  },
+  "5Xs": {
+    "printingId": "set9-183",
+    "shortId": "YXu"
+  },
+  "5fm": {
+    "printingId": "set9-073",
+    "shortId": "VnP"
+  },
+  "5gf": {
+    "printingId": "set7-063",
+    "shortId": "9A8"
+  },
+  "5hH": {
+    "printingId": "set7-072",
+    "shortId": "WJH"
+  },
+  "5i2": {
+    "printingId": "set9-217-epic",
+    "shortId": "I1p"
+  },
+  "5np": {
+    "printingId": "set9-028",
+    "shortId": "mN2"
+  },
+  "5oI": {
+    "printingId": "set11-022",
+    "shortId": "gSL"
+  },
+  "5oZ": {
+    "printingId": "set9-001",
+    "shortId": "5Q6"
+  },
+  "5qZ": {
+    "printingId": "set6-140",
+    "shortId": "9Ce"
+  },
+  "5tQ": {
+    "printingId": "set8-027",
+    "shortId": "95T"
+  },
+  "617": {
+    "printingId": "set9-126",
+    "shortId": "1WD"
+  },
+  "63a": {
+    "printingId": "set9-236-enchanted",
+    "shortId": "GWh"
+  },
+  "64b": {
+    "printingId": "set9-157",
+    "shortId": "5eQ"
+  },
+  "65f": {
+    "printingId": "set9-027",
+    "shortId": "2oM"
+  },
+  "65t": {
+    "printingId": "set10-205-epic",
+    "shortId": "iLZ"
+  },
+  "68F": {
+    "printingId": "set10-235-enchanted",
+    "shortId": "hKv"
+  },
+  "6E0": {
+    "printingId": "set9-145",
+    "shortId": "j65"
+  },
+  "6JJ": {
+    "printingId": "set9-221-epic",
+    "shortId": "Q7d"
+  },
+  "6Rx": {
+    "printingId": "set2-207-enchanted",
+    "shortId": "RJn"
+  },
+  "6Vx": {
+    "printingId": "set2-137",
+    "shortId": "Tmr"
+  },
+  "6Y4": {
+    "printingId": "set7-218-enchanted",
+    "shortId": "MoQ"
+  },
+  "6ZH": {
+    "printingId": "set9-058",
+    "shortId": "XN7"
+  },
+  "6Zf": {
+    "printingId": "set2-070",
+    "shortId": "p7b"
+  },
+  "6gM": {
+    "printingId": "set3-p1-026-promo",
+    "shortId": "OeN"
+  },
+  "6ld": {
+    "printingId": "set9-116",
+    "shortId": "t7x"
+  },
+  "6mh": {
+    "printingId": "set6-216-enchanted",
+    "shortId": "fcX"
+  },
+  "6qK": {
+    "printingId": "set9-181",
+    "shortId": "ItI"
+  },
+  "6qy": {
+    "printingId": "set1-142",
+    "shortId": "vWb"
+  },
+  "728": {
+    "printingId": "set8-170",
+    "shortId": "J7u"
+  },
+  "77T": {
+    "printingId": "set9-170",
+    "shortId": "WTS"
+  },
+  "7AO": {
+    "printingId": "set1-007",
+    "shortId": "fZh"
+  },
+  "7JX": {
+    "printingId": "set11-238-enchanted",
+    "shortId": "tmy"
+  },
+  "7Ks": {
+    "printingId": "set11-229-enchanted",
+    "shortId": "Qzh"
+  },
+  "7Tc": {
+    "printingId": "set11-237-enchanted",
+    "shortId": "fxQ"
+  },
+  "7Zk": {
+    "printingId": "set6-222-enchanted",
+    "shortId": "Ubs"
+  },
+  "7aI": {
+    "printingId": "set12-115",
+    "shortId": "7dh"
+  },
+  "7ah": {
+    "printingId": "set9-192",
+    "shortId": "Mum"
+  },
+  "7c9": {
+    "printingId": "set10-212-epic",
+    "shortId": "63M"
+  },
+  "7di": {
+    "printingId": "set9-139",
+    "shortId": "o52"
+  },
+  "7jf": {
+    "printingId": "set9-123",
+    "shortId": "sTx"
+  },
+  "7oH": {
+    "printingId": "set9-043",
+    "shortId": "aJd"
+  },
+  "876": {
+    "printingId": "set12-p3-048-promo",
+    "shortId": "Zxd"
+  },
+  "8HS": {
+    "printingId": "set8-p2-031-challenge",
+    "shortId": "fUf"
+  },
+  "8Ix": {
+    "printingId": "set3-206-enchanted",
+    "shortId": "yew"
+  },
+  "8NZ": {
+    "printingId": "set7-133",
+    "shortId": "3kp"
+  },
+  "8S0": {
+    "printingId": "set8-152",
+    "shortId": "Inu"
+  },
+  "8Ze": {
+    "printingId": "set1-177",
+    "shortId": "gYL"
+  },
+  "8aU": {
+    "printingId": "set4-214-enchanted",
+    "shortId": "MG7"
+  },
+  "8f3": {
+    "printingId": "set3-222-enchanted",
+    "shortId": "HmY"
+  },
+  "8jt": {
+    "printingId": "set6-171",
+    "shortId": "56b"
+  },
+  "8tA": {
+    "printingId": "set9-222-epic",
+    "shortId": "lFV"
+  },
+  "8vE": {
+    "printingId": "set5-209-enchanted",
+    "shortId": "tGR"
+  },
+  "8vL": {
+    "printingId": "set9-030",
+    "shortId": "l5v"
+  },
+  "8x7": {
+    "printingId": "set8-p2-029-challenge",
+    "shortId": "3H5"
+  },
+  "8ys": {
+    "printingId": "set6-213-enchanted",
+    "shortId": "cC3"
+  },
+  "96K": {
+    "printingId": "set5-223-epic",
+    "shortId": "Vry"
+  },
+  "9E7": {
+    "printingId": "set9-068",
+    "shortId": "ep2"
+  },
+  "9NO": {
+    "printingId": "set9-130",
+    "shortId": "C4m"
+  },
+  "9VA": {
+    "printingId": "set9-095",
+    "shortId": "p2W"
+  },
+  "9XU": {
+    "printingId": "set9-096",
+    "shortId": "cEJ"
+  },
+  "9lh": {
+    "printingId": "set4-p1-037-promo",
+    "shortId": "b6X"
+  },
+  "9nh": {
+    "printingId": "set5-222-enchanted",
+    "shortId": "UAt"
+  },
+  "9q7": {
+    "printingId": "set1-212-enchanted",
+    "shortId": "kGS"
+  },
+  "9sx": {
+    "printingId": "set2-101",
+    "shortId": "EWe"
+  },
+  "9tX": {
+    "printingId": "set9-021",
+    "shortId": "Nhg"
+  },
+  "A0I": {
+    "printingId": "set12-228-enchanted",
+    "shortId": "b3r"
+  },
+  "A15": {
+    "printingId": "set4-125",
+    "shortId": "m2H"
+  },
+  "A85": {
+    "printingId": "set11-045",
+    "shortId": "sDu"
+  },
+  "ALL": {
+    "printingId": "set7-205-enchanted",
+    "shortId": "eU3"
+  },
+  "AY1": {
+    "printingId": "set9-090",
+    "shortId": "Y9v"
+  },
+  "AY5": {
+    "printingId": "set7-126",
+    "shortId": "yFe"
+  },
+  "AZZ": {
+    "printingId": "set5-013",
+    "shortId": "blx"
+  },
+  "AkQ": {
+    "printingId": "set9-p3-007-challenge",
+    "shortId": "ZoJ"
+  },
+  "Au0": {
+    "printingId": "set1-139",
+    "shortId": "F9x"
+  },
+  "AyR": {
+    "printingId": "set12-216-epic",
+    "shortId": "5bk"
+  },
+  "AzV": {
+    "printingId": "set11-058",
+    "shortId": "kli"
+  },
+  "B4k": {
+    "printingId": "set9-202",
+    "shortId": "oMf"
+  },
+  "BB1": {
+    "printingId": "set11-226-enchanted",
+    "shortId": "wXy"
+  },
+  "BDG": {
+    "printingId": "set9-p3-003-challenge",
+    "shortId": "Gp0"
+  },
+  "BEO": {
+    "printingId": "set11-205-epic",
+    "shortId": "Cpc"
+  },
+  "BIk": {
+    "printingId": "set11-225-enchanted",
+    "shortId": "aR5"
+  },
+  "BUx": {
+    "printingId": "set9-187",
+    "shortId": "0u8"
+  },
+  "BW6": {
+    "printingId": "set12-018",
+    "shortId": "W4V"
+  },
+  "BlL": {
+    "printingId": "set10-p3-036-promo",
+    "shortId": "lX3"
+  },
+  "Bv8": {
+    "printingId": "set7-200",
+    "shortId": "4xt"
+  },
+  "C8T": {
+    "printingId": "set10-133",
+    "shortId": "fJr"
+  },
+  "CEe": {
+    "printingId": "set8-212-enchanted",
+    "shortId": "05U"
+  },
+  "CNR": {
+    "printingId": "set9-184",
+    "shortId": "Puv"
+  },
+  "Ca2": {
+    "printingId": "set9-213-epic",
+    "shortId": "an9"
+  },
+  "Cbk": {
+    "printingId": "set9-048",
+    "shortId": "in4"
+  },
+  "Cby": {
+    "printingId": "set10-220-epic",
+    "shortId": "4xp"
+  },
+  "Cwj": {
+    "printingId": "set9-008",
+    "shortId": "qnF"
+  },
+  "D18": {
+    "printingId": "set2-181",
+    "shortId": "rNY"
+  },
+  "D1D": {
+    "printingId": "set11-230-enchanted",
+    "shortId": "xLN"
+  },
+  "D2o": {
+    "printingId": "set6-120",
+    "shortId": "NGk"
+  },
+  "DD1": {
+    "printingId": "set7-208-enchanted",
+    "shortId": "nBf"
+  },
+  "DMG": {
+    "printingId": "set10-129",
+    "shortId": "xnD"
+  },
+  "DXq": {
+    "printingId": "set3-195",
+    "shortId": "rIR"
+  },
+  "DZ8": {
+    "printingId": "set9-007",
+    "shortId": "5vj"
+  },
+  "DbJ": {
+    "printingId": "set10-187",
+    "shortId": "crr"
+  },
+  "Dbg": {
+    "printingId": "set6-p2-008-promo",
+    "shortId": "3Ok"
+  },
+  "Dcv": {
+    "printingId": "set9-177",
+    "shortId": "zw8"
+  },
+  "DdU": {
+    "printingId": "set2-214-enchanted",
+    "shortId": "Gxv"
+  },
+  "E5z": {
+    "printingId": "set9-010",
+    "shortId": "6Jp"
+  },
+  "EEV": {
+    "printingId": "set12-205-epic",
+    "shortId": "CLZ"
+  },
+  "ELn": {
+    "printingId": "set6-p3-014-promo",
+    "shortId": "usY"
+  },
+  "ERU": {
+    "printingId": "set2-p1-014-promo",
+    "shortId": "z4W"
+  },
+  "ETj": {
+    "printingId": "set10-153",
+    "shortId": "xU1"
+  },
+  "EVP": {
+    "printingId": "set12-229-enchanted",
+    "shortId": "kR5"
+  },
+  "EZT": {
+    "printingId": "set11-212-epic",
+    "shortId": "B8x"
+  },
+  "Ed5": {
+    "printingId": "set4-p3-041-promo",
+    "shortId": "Oa5"
+  },
+  "F34": {
+    "printingId": "set9-003",
+    "shortId": "x45"
+  },
+  "FAh": {
+    "printingId": "set11-p3-029-challenge",
+    "shortId": "WOp"
+  },
+  "FBp": {
+    "printingId": "set3-221-enchanted",
+    "shortId": "DXW"
+  },
+  "FEw": {
+    "printingId": "set9-208-epic",
+    "shortId": "gms"
+  },
+  "FOd": {
+    "printingId": "set6-014",
+    "shortId": "Xln"
+  },
+  "FRl": {
+    "printingId": "set1-p1-009-promo",
+    "shortId": "PTP"
+  },
+  "Fdq": {
+    "printingId": "set12-p3-055-promo",
+    "shortId": "iqR"
+  },
+  "FeH": {
+    "printingId": "set3-218-enchanted",
+    "shortId": "CU2"
+  },
+  "FeJ": {
+    "printingId": "set9-242-iconic",
+    "shortId": "N3q"
+  },
+  "Fp0": {
+    "printingId": "set9-p3-001-promo",
+    "shortId": "rie"
+  },
+  "G6y": {
+    "printingId": "set12-010",
+    "shortId": "5Wd"
+  },
+  "GAi": {
+    "printingId": "set10-196",
+    "shortId": "Dia"
+  },
+  "GBS": {
+    "printingId": "set12-163",
+    "shortId": "YA5"
+  },
+  "GPH": {
+    "printingId": "set7-222-enchanted",
+    "shortId": "eyb"
+  },
+  "GX9": {
+    "printingId": "set9-133",
+    "shortId": "jJa"
+  },
+  "GXc": {
+    "printingId": "set9-165",
+    "shortId": "YfD"
+  },
+  "GxF": {
+    "printingId": "set10-210-epic",
+    "shortId": "SFc"
+  },
+  "GzC": {
+    "printingId": "set9-056",
+    "shortId": "Psw"
+  },
+  "H1g": {
+    "printingId": "set6-p3-016-promo",
+    "shortId": "aP3"
+  },
+  "H4m": {
+    "printingId": "set8-p2-034-promo",
+    "shortId": "hxc"
+  },
+  "H6u": {
+    "printingId": "set1-084",
+    "shortId": "Jgm"
+  },
+  "HO1": {
+    "printingId": "set1-p1-012-promo",
+    "shortId": "Ja1"
+  },
+  "Hjw": {
+    "printingId": "set9-211-epic",
+    "shortId": "JwT"
+  },
+  "I2G": {
+    "printingId": "set7-p3-038-promo",
+    "shortId": "mV1"
+  },
+  "ICh": {
+    "printingId": "set3-105",
+    "shortId": "DqE"
+  },
+  "IGz": {
+    "printingId": "set2-073",
+    "shortId": "U2v"
+  },
+  "IVl": {
+    "printingId": "set6-107",
+    "shortId": "etO"
+  },
+  "IiM": {
+    "printingId": "set10-233-enchanted",
+    "shortId": "r4f"
+  },
+  "IkL": {
+    "printingId": "set11-p3-032-challenge",
+    "shortId": "yDQ"
+  },
+  "Im4": {
+    "printingId": "set6-207-enchanted",
+    "shortId": "R3f"
+  },
+  "Isl": {
+    "printingId": "set8-217-enchanted",
+    "shortId": "oo9"
+  },
+  "J1F": {
+    "printingId": "set10-155",
+    "shortId": "krh"
+  },
+  "J7L": {
+    "printingId": "set5-060",
+    "shortId": "0kU"
+  },
+  "JHY": {
+    "printingId": "set9-087",
+    "shortId": "iig"
+  },
+  "JV5": {
+    "printingId": "set12-234-enchanted",
+    "shortId": "pSs"
+  },
+  "JZG": {
+    "printingId": "set12-232-enchanted",
+    "shortId": "B2O"
+  },
+  "JjK": {
+    "printingId": "set6-211-enchanted",
+    "shortId": "IuR"
+  },
+  "Jpj": {
+    "printingId": "set9-004",
+    "shortId": "anA"
+  },
+  "Jsw": {
+    "printingId": "set11-171",
+    "shortId": "wmQ"
+  },
+  "JxY": {
+    "printingId": "set3-p1-028-promo",
+    "shortId": "Jfx"
+  },
+  "K04": {
+    "printingId": "set10-234-enchanted",
+    "shortId": "GCw"
+  },
+  "K2L": {
+    "printingId": "set11-220-epic",
+    "shortId": "V8a"
+  },
+  "K4W": {
+    "printingId": "set9-200",
+    "shortId": "K1w"
+  },
+  "K5K": {
+    "printingId": "set12-020",
+    "shortId": "7b7"
+  },
+  "KAb": {
+    "printingId": "set4-058",
+    "shortId": "APG"
+  },
+  "KHv": {
+    "printingId": "set12-091",
+    "shortId": "Y1s"
+  },
+  "KYT": {
+    "printingId": "set7-209-enchanted",
+    "shortId": "8rg"
+  },
+  "KZj": {
+    "printingId": "set8-141",
+    "shortId": "GUa"
+  },
+  "KmU": {
+    "printingId": "set9-234-enchanted",
+    "shortId": "vZz"
+  },
+  "L27": {
+    "printingId": "set9-051",
+    "shortId": "DXU"
+  },
+  "LAR": {
+    "printingId": "set9-189",
+    "shortId": "TT5"
+  },
+  "LJ1": {
+    "printingId": "set9-067",
+    "shortId": "SA9"
+  },
+  "LLF": {
+    "printingId": "set10-232-enchanted",
+    "shortId": "WFC"
+  },
+  "LTC": {
+    "printingId": "set7-p2-020-challenge",
+    "shortId": "D4J"
+  },
+  "LVd": {
+    "printingId": "set4-179",
+    "shortId": "HUY"
+  },
+  "LWg": {
+    "printingId": "set9-059",
+    "shortId": "ts1"
+  },
+  "LZl": {
+    "printingId": "set4-212-enchanted",
+    "shortId": "Mb1"
+  },
+  "Lbk": {
+    "printingId": "set10-223-enchanted",
+    "shortId": "olg"
+  },
+  "Llh": {
+    "printingId": "set8-219-enchanted",
+    "shortId": "qJJ"
+  },
+  "LmE": {
+    "printingId": "set5-214-enchanted",
+    "shortId": "lob"
+  },
+  "Lp1": {
+    "printingId": "set11-217-epic",
+    "shortId": "Sil"
+  },
+  "M3W": {
+    "printingId": "set4-207-enchanted",
+    "shortId": "sws"
+  },
+  "M6r": {
+    "printingId": "set4-218-enchanted",
+    "shortId": "bYq"
+  },
+  "M9P": {
+    "printingId": "set2-p1-017-promo",
+    "shortId": "2b1"
+  },
+  "MDh": {
+    "printingId": "set11-232-enchanted",
+    "shortId": "hlA"
+  },
+  "MEQ": {
+    "printingId": "set5-050",
+    "shortId": "ghy"
+  },
+  "MT1": {
+    "printingId": "set3-208-enchanted",
+    "shortId": "S0f"
+  },
+  "MWo": {
+    "printingId": "set10-049",
+    "shortId": "uvN"
+  },
+  "MXG": {
+    "printingId": "set11-214-epic",
+    "shortId": "MI7"
+  },
+  "Mfr": {
+    "printingId": "set1-214-enchanted",
+    "shortId": "ij3"
+  },
+  "MoR": {
+    "printingId": "set12-019",
+    "shortId": "E5L"
+  },
+  "Moj": {
+    "printingId": "set9-194",
+    "shortId": "0Em"
+  },
+  "Mvh": {
+    "printingId": "set6-016",
+    "shortId": "IGi"
+  },
+  "MwD": {
+    "printingId": "set9-036",
+    "shortId": "KeX"
+  },
+  "Mxa": {
+    "printingId": "set11-216-epic",
+    "shortId": "0G5"
+  },
+  "N2j": {
+    "printingId": "set9-108",
+    "shortId": "wO7"
+  },
+  "N4A": {
+    "printingId": "set12-p3-053-challenge",
+    "shortId": "0Op"
+  },
+  "N5a": {
+    "printingId": "set1-208-enchanted",
+    "shortId": "iGy"
+  },
+  "NCd": {
+    "printingId": "set1-130",
+    "shortId": "RUF"
+  },
+  "NEx": {
+    "printingId": "set4-208-enchanted",
+    "shortId": "PHK"
+  },
+  "NKp": {
+    "printingId": "set12-p3-044-promo",
+    "shortId": "eg5"
+  },
+  "NV7": {
+    "printingId": "set8-p2-035-promo",
+    "shortId": "92V"
+  },
+  "Na7": {
+    "printingId": "set10-124",
+    "shortId": "0Cr"
+  },
+  "NlV": {
+    "printingId": "set9-229-enchanted",
+    "shortId": "yah"
+  },
+  "NpZ": {
+    "printingId": "set4-216-enchanted",
+    "shortId": "Jde"
+  },
+  "Ntp": {
+    "printingId": "set9-101",
+    "shortId": "kgf"
+  },
+  "NxO": {
+    "printingId": "set9-232-enchanted",
+    "shortId": "7hh"
+  },
+  "O9N": {
+    "printingId": "set6-130",
+    "shortId": "oqN"
+  },
+  "OGh": {
+    "printingId": "set12-208-epic",
+    "shortId": "uyg"
+  },
+  "OJv": {
+    "printingId": "set9-226-enchanted",
+    "shortId": "5yU"
+  },
+  "OT7": {
+    "printingId": "set9-050",
+    "shortId": "PQe"
+  },
+  "OTu": {
+    "printingId": "set7-178",
+    "shortId": "1xN"
+  },
+  "OgN": {
+    "printingId": "set6-074",
+    "shortId": "deD"
+  },
+  "OiN": {
+    "printingId": "set9-196",
+    "shortId": "xm0"
+  },
+  "Orl": {
+    "printingId": "set6-209-enchanted",
+    "shortId": "S6u"
+  },
+  "P5F": {
+    "printingId": "set1-213-enchanted",
+    "shortId": "349"
+  },
+  "P7j": {
+    "printingId": "set10-241-iconic",
+    "shortId": "yQh"
+  },
+  "PQZ": {
+    "printingId": "set11-198",
+    "shortId": "uJN"
+  },
+  "PV9": {
+    "printingId": "set9-120",
+    "shortId": "NWQ"
+  },
+  "PX4": {
+    "printingId": "set5-048",
+    "shortId": "3zi"
+  },
+  "PYw": {
+    "printingId": "set9-024",
+    "shortId": "YZo"
+  },
+  "PZk": {
+    "printingId": "set9-041",
+    "shortId": "oju"
+  },
+  "Pd1": {
+    "printingId": "set4-115",
+    "shortId": "U3t"
+  },
+  "Pi7": {
+    "printingId": "set9-161",
+    "shortId": "dci"
+  },
+  "PjW": {
+    "printingId": "set8-210-enchanted",
+    "shortId": "faF"
+  },
+  "Pk3": {
+    "printingId": "set9-210-epic",
+    "shortId": "2yq"
+  },
+  "PkF": {
+    "printingId": "set8-205-enchanted",
+    "shortId": "zpG"
+  },
+  "Plh": {
+    "printingId": "set9-000",
+    "shortId": "gZa"
+  },
+  "PnR": {
+    "printingId": "set9-131",
+    "shortId": "trN"
+  },
+  "Prd": {
+    "printingId": "set2-p1-016-promo",
+    "shortId": "X42"
+  },
+  "Q4x": {
+    "printingId": "set5-207-enchanted",
+    "shortId": "rBt"
+  },
+  "QGJ": {
+    "printingId": "set5-211-enchanted",
+    "shortId": "osr"
+  },
+  "QOp": {
+    "printingId": "set8-224-epic",
+    "shortId": "cl6"
+  },
+  "QQZ": {
+    "printingId": "set7-219-enchanted",
+    "shortId": "wGT"
+  },
+  "QUY": {
+    "printingId": "set10-106",
+    "shortId": "ibL"
+  },
+  "Qdl": {
+    "printingId": "set1-209-enchanted",
+    "shortId": "yvs"
+  },
+  "Qfs": {
+    "printingId": "set1-p3-010-promo",
+    "shortId": "kVQ"
+  },
+  "QmK": {
+    "printingId": "set1-205-enchanted",
+    "shortId": "6dK"
+  },
+  "QwH": {
+    "printingId": "set7-044",
+    "shortId": "RGx"
+  },
+  "R01": {
+    "printingId": "set10-242-iconic",
+    "shortId": "wWJ"
+  },
+  "R2x": {
+    "printingId": "set7-035",
+    "shortId": "pjD"
+  },
+  "R9J": {
+    "printingId": "set11-028",
+    "shortId": "02Z"
+  },
+  "RCw": {
+    "printingId": "set12-225-enchanted",
+    "shortId": "RGt"
+  },
+  "RDv": {
+    "printingId": "set12-226-enchanted",
+    "shortId": "jKA"
+  },
+  "RGJ": {
+    "printingId": "set5-084",
+    "shortId": "fgM"
+  },
+  "RJJ": {
+    "printingId": "set12-239-enchanted",
+    "shortId": "u20"
+  },
+  "RMt": {
+    "printingId": "set9-240-enchanted",
+    "shortId": "eiK"
+  },
+  "RRB": {
+    "printingId": "set10-208-epic",
+    "shortId": "MvX"
+  },
+  "RUA": {
+    "printingId": "set11-235-enchanted",
+    "shortId": "ieF"
+  },
+  "RUI": {
+    "printingId": "set9-178",
+    "shortId": "3rs"
+  },
+  "RUK": {
+    "printingId": "set11-210-epic",
+    "shortId": "Erd"
+  },
+  "RZ1": {
+    "printingId": "set8-101",
+    "shortId": "so5"
+  },
+  "Rc1": {
+    "printingId": "set10-097",
+    "shortId": "VCG"
+  },
+  "Rgo": {
+    "printingId": "set5-217-enchanted",
+    "shortId": "1PK"
+  },
+  "RiX": {
+    "printingId": "set4-223-epic",
+    "shortId": "bnE"
+  },
+  "Rj7": {
+    "printingId": "set10-216-epic",
+    "shortId": "0Ju"
+  },
+  "Rnm": {
+    "printingId": "set8-p2-028-challenge",
+    "shortId": "qcZ"
+  },
+  "Rvd": {
+    "printingId": "set3-p1-027-promo",
+    "shortId": "fLo"
+  },
+  "RwC": {
+    "printingId": "set11-081",
+    "shortId": "FwZ"
+  },
+  "RxC": {
+    "printingId": "set8-207-enchanted",
+    "shortId": "jWx"
+  },
+  "S0o": {
+    "printingId": "set9-182",
+    "shortId": "ZD1"
+  },
+  "S6p": {
+    "printingId": "set2-p1-033-promo",
+    "shortId": "Uv6"
+  },
+  "SIy": {
+    "printingId": "set12-207-epic",
+    "shortId": "olR"
+  },
+  "SPL": {
+    "printingId": "set9-061",
+    "shortId": "oDB"
+  },
+  "SZs": {
+    "printingId": "set12-047",
+    "shortId": "TFi"
+  },
+  "Sa5": {
+    "printingId": "set10-213-epic",
+    "shortId": "wSO"
+  },
+  "SaO": {
+    "printingId": "set12-231-enchanted",
+    "shortId": "96D"
+  },
+  "SkC": {
+    "printingId": "set12-223-enchanted",
+    "shortId": "MyA"
+  },
+  "SlC": {
+    "printingId": "set6-p2-025-promo",
+    "shortId": "4Oc"
+  },
+  "SlK": {
+    "printingId": "set2-211-enchanted",
+    "shortId": "Toy"
+  },
+  "SoY": {
+    "printingId": "set5-205-enchanted",
+    "shortId": "K7e"
+  },
+  "Ss2": {
+    "printingId": "set7-221-enchanted",
+    "shortId": "WSz"
+  },
+  "T0F": {
+    "printingId": "set5-p2-002-promo",
+    "shortId": "2wu"
+  },
+  "T3k": {
+    "printingId": "set4-p1-036-promo",
+    "shortId": "06I"
+  },
+  "T9y": {
+    "printingId": "set9-082",
+    "shortId": "FMD"
+  },
+  "TK7": {
+    "printingId": "set9-013",
+    "shortId": "mvj"
+  },
+  "TOS": {
+    "printingId": "set9-136",
+    "shortId": "vOZ"
+  },
+  "TPJ": {
+    "printingId": "set9-065",
+    "shortId": "sKY"
+  },
+  "TRK": {
+    "printingId": "set8-223-epic",
+    "shortId": "UHm"
+  },
+  "Tdt": {
+    "printingId": "set9-103",
+    "shortId": "Kra"
+  },
+  "ToP": {
+    "printingId": "set9-122",
+    "shortId": "a6N"
+  },
+  "TtR": {
+    "printingId": "set9-093",
+    "shortId": "XTD"
+  },
+  "UC4": {
+    "printingId": "set12-p3-052-promo",
+    "shortId": "Z65"
+  },
+  "UGD": {
+    "printingId": "set5-065",
+    "shortId": "Rbn"
+  },
+  "UIV": {
+    "printingId": "set9-016",
+    "shortId": "JY6"
+  },
+  "UIc": {
+    "printingId": "set9-p3-012-promo",
+    "shortId": "xE1"
+  },
+  "UJ6": {
+    "printingId": "set9-017",
+    "shortId": "Utg"
+  },
+  "US6": {
+    "printingId": "set9-140",
+    "shortId": "DuF"
+  },
+  "UTf": {
+    "printingId": "set8-p2-032-challenge",
+    "shortId": "4Dg"
+  },
+  "UdH": {
+    "printingId": "set10-221-epic",
+    "shortId": "gNw"
+  },
+  "UdW": {
+    "printingId": "set3-211-enchanted",
+    "shortId": "9iA"
+  },
+  "Udk": {
+    "printingId": "set9-057",
+    "shortId": "Z92"
+  },
+  "Uem": {
+    "printingId": "set5-215-enchanted",
+    "shortId": "p30"
+  },
+  "Uhy": {
+    "printingId": "set10-217-epic",
+    "shortId": "aBY"
+  },
+  "Um9": {
+    "printingId": "set8-216-enchanted",
+    "shortId": "aVm"
+  },
+  "Uoa": {
+    "printingId": "set5-221-enchanted",
+    "shortId": "YJg"
+  },
+  "Uqw": {
+    "printingId": "set9-137",
+    "shortId": "gn7"
+  },
+  "Uwr": {
+    "printingId": "set12-221-epic",
+    "shortId": "0UJ"
+  },
+  "Uz4": {
+    "printingId": "set12-214-epic",
+    "shortId": "N9V"
+  },
+  "V2A": {
+    "printingId": "set4-205-enchanted",
+    "shortId": "N9b"
+  },
+  "VBj": {
+    "printingId": "set7-223-epic",
+    "shortId": "XP5"
+  },
+  "VGm": {
+    "printingId": "set7-p2-026-promo",
+    "shortId": "sUn"
+  },
+  "VHR": {
+    "printingId": "set11-213-epic",
+    "shortId": "3ri"
+  },
+  "VLK": {
+    "printingId": "set11-207-epic",
+    "shortId": "W7n"
+  },
+  "VLy": {
+    "printingId": "set4-215-enchanted",
+    "shortId": "KNm"
+  },
+  "VNz": {
+    "printingId": "set10-085",
+    "shortId": "7AC"
+  },
+  "VaD": {
+    "printingId": "set5-219-enchanted",
+    "shortId": "ELS"
+  },
+  "VdL": {
+    "printingId": "set2-215-enchanted",
+    "shortId": "X9s"
+  },
+  "Vy6": {
+    "printingId": "set7-073",
+    "shortId": "A0g"
+  },
+  "W0X": {
+    "printingId": "set2-035",
+    "shortId": "Dn8"
+  },
+  "W96": {
+    "printingId": "set3-207-enchanted",
+    "shortId": "j0p"
+  },
+  "W9B": {
+    "printingId": "set9-031",
+    "shortId": "MT4"
+  },
+  "WBL": {
+    "printingId": "set8-222-enchanted",
+    "shortId": "UEO"
+  },
+  "WGf": {
+    "printingId": "set2-p1-019",
+    "shortId": "pCk"
+  },
+  "WGo": {
+    "printingId": "set2-210-enchanted",
+    "shortId": "rez"
+  },
+  "WHL": {
+    "printingId": "set9-034",
+    "shortId": "256"
+  },
+  "WLA": {
+    "printingId": "set10-225-enchanted",
+    "shortId": "YW5"
+  },
+  "WLW": {
+    "printingId": "set8-186",
+    "shortId": "ePk"
+  },
+  "WP5": {
+    "printingId": "set11-092",
+    "shortId": "cKN"
+  },
+  "WSI": {
+    "printingId": "set8-024",
+    "shortId": "20I"
+  },
+  "WTH": {
+    "printingId": "set9-206-epic",
+    "shortId": "FFk"
+  },
+  "WU8": {
+    "printingId": "set1-060",
+    "shortId": "t2a"
+  },
+  "WVh": {
+    "printingId": "set9-129",
+    "shortId": "Egu"
+  },
+  "WXx": {
+    "printingId": "set6-217-enchanted",
+    "shortId": "VYQ"
+  },
+  "Wa2": {
+    "printingId": "set10-p3-018-challenge",
+    "shortId": "BPf"
+  },
+  "WaO": {
+    "printingId": "set4-221-enchanted",
+    "shortId": "Yuk"
+  },
+  "WiQ": {
+    "printingId": "set12-220-epic",
+    "shortId": "v2A"
+  },
+  "Wks": {
+    "printingId": "set9-115",
+    "shortId": "5JP"
+  },
+  "Wtk": {
+    "printingId": "set4-017",
+    "shortId": "i9B"
+  },
+  "Wwm": {
+    "printingId": "set9-107",
+    "shortId": "bQQ"
+  },
+  "Wxj": {
+    "printingId": "set12-p3-051-challenge",
+    "shortId": "huu"
+  },
+  "Wzv": {
+    "printingId": "set8-218-enchanted",
+    "shortId": "qwS"
+  },
+  "X1y": {
+    "printingId": "set9-169",
+    "shortId": "WES"
+  },
+  "X6A": {
+    "printingId": "set9-112",
+    "shortId": "a73"
+  },
+  "XQ4": {
+    "printingId": "set9-220-epic",
+    "shortId": "JQ0"
+  },
+  "XRe": {
+    "printingId": "set2-212-enchanted",
+    "shortId": "2eV"
+  },
+  "XaO": {
+    "printingId": "set9-032",
+    "shortId": "RJc"
+  },
+  "Xbs": {
+    "printingId": "set9-091",
+    "shortId": "XJp"
+  },
+  "XdJ": {
+    "printingId": "set1-p1-022",
+    "shortId": "FIn"
+  },
+  "Xee": {
+    "printingId": "set9-117",
+    "shortId": "XTx"
+  },
+  "XgV": {
+    "printingId": "set9-227-enchanted",
+    "shortId": "Lqq"
+  },
+  "XhN": {
+    "printingId": "set1-005",
+    "shortId": "qBw"
+  },
+  "XnU": {
+    "printingId": "set10-236-enchanted",
+    "shortId": "DLN"
+  },
+  "Xoc": {
+    "printingId": "set9-p3-039-promo",
+    "shortId": "UEJ"
+  },
+  "XxM": {
+    "printingId": "set8-079",
+    "shortId": "r0t"
+  },
+  "Y3G": {
+    "printingId": "set10-173",
+    "shortId": "1AE"
+  },
+  "Y8v": {
+    "printingId": "set1-075",
+    "shortId": "O4w"
+  },
+  "YE5": {
+    "printingId": "set9-159",
+    "shortId": "TEc"
+  },
+  "YGq": {
+    "printingId": "set9-144",
+    "shortId": "3gO"
+  },
+  "YPI": {
+    "printingId": "set3-213-enchanted",
+    "shortId": "sFE"
+  },
+  "YXD": {
+    "printingId": "set12-230-enchanted",
+    "shortId": "J65"
+  },
+  "YZf": {
+    "printingId": "set10-086",
+    "shortId": "z20"
+  },
+  "Yaq": {
+    "printingId": "set10-p3-022-challenge",
+    "shortId": "su8"
+  },
+  "Ybr": {
+    "printingId": "set4-036",
+    "shortId": "xMe"
+  },
+  "Ydi": {
+    "printingId": "set2-163",
+    "shortId": "6Xn"
+  },
+  "YfM": {
+    "printingId": "set9-128",
+    "shortId": "A4G"
+  },
+  "Ygc": {
+    "printingId": "set10-p3-025-promo",
+    "shortId": "Q7m"
+  },
+  "YlC": {
+    "printingId": "set4-222-enchanted",
+    "shortId": "asZ"
+  },
+  "Ylr": {
+    "printingId": "set9-163",
+    "shortId": "aFG"
+  },
+  "YvX": {
+    "printingId": "set6-127",
+    "shortId": "tUE"
+  },
+  "Yvh": {
+    "printingId": "set10-239-enchanted",
+    "shortId": "Pby"
+  },
+  "Z51": {
+    "printingId": "set2-213-enchanted",
+    "shortId": "qb5"
+  },
+  "Z6N": {
+    "printingId": "set7-p2-019-promo",
+    "shortId": "3D5"
+  },
+  "ZCd": {
+    "printingId": "set6-002",
+    "shortId": "wvZ"
+  },
+  "ZFD": {
+    "printingId": "set7-p2-021-challenge",
+    "shortId": "3df"
+  },
+  "ZOH": {
+    "printingId": "set3-223-epic",
+    "shortId": "c5k"
+  },
+  "ZY7": {
+    "printingId": "set4-p1-035-promo",
+    "shortId": "vIo"
+  },
+  "Zf7": {
+    "printingId": "set7-220-enchanted",
+    "shortId": "4F6"
+  },
+  "Zfj": {
+    "printingId": "set12-003",
+    "shortId": "RHn"
+  },
+  "ZjO": {
+    "printingId": "set10-209-epic",
+    "shortId": "xoA"
+  },
+  "Zl0": {
+    "printingId": "set12-p3-043-promo",
+    "shortId": "QKW"
+  },
+  "Zo3": {
+    "printingId": "set9-009",
+    "shortId": "1nk"
+  },
+  "Zv7": {
+    "printingId": "set10-207-epic",
+    "shortId": "9k2"
+  },
+  "a2V": {
+    "printingId": "set9-089",
+    "shortId": "wHT"
+  },
+  "a5G": {
+    "printingId": "set9-070",
+    "shortId": "je3"
+  },
+  "aA4": {
+    "printingId": "set9-239-enchanted",
+    "shortId": "Am5"
+  },
+  "aC3": {
+    "printingId": "set4-210-enchanted",
+    "shortId": "B4E"
+  },
+  "aEL": {
+    "printingId": "set12-p3-054-challenge",
+    "shortId": "6Vg"
+  },
+  "aHj": {
+    "printingId": "set9-154",
+    "shortId": "z67"
+  },
+  "aXU": {
+    "printingId": "set4-213-enchanted",
+    "shortId": "wyK"
+  },
+  "amr": {
+    "printingId": "set9-180",
+    "shortId": "14a"
+  },
+  "b01": {
+    "printingId": "set5-210-enchanted",
+    "shortId": "FvQ"
+  },
+  "b11": {
+    "printingId": "set7-213-enchanted",
+    "shortId": "cGj"
+  },
+  "b2t": {
+    "printingId": "set10-165",
+    "shortId": "Oys"
+  },
+  "b9N": {
+    "printingId": "set8-213-enchanted",
+    "shortId": "JLs"
+  },
+  "bDb": {
+    "printingId": "set9-142",
+    "shortId": "EOk"
+  },
+  "bDq": {
+    "printingId": "set10-056",
+    "shortId": "ON6"
+  },
+  "bMZ": {
+    "printingId": "set4-p3-015-promo",
+    "shortId": "sss"
+  },
+  "bN7": {
+    "printingId": "set11-013",
+    "shortId": "tbC"
+  },
+  "bO8": {
+    "printingId": "set9-105",
+    "shortId": "sli"
+  },
+  "bes": {
+    "printingId": "set1-114",
+    "shortId": "FqD"
+  },
+  "bms": {
+    "printingId": "set1-021",
+    "shortId": "VeF"
+  },
+  "brg": {
+    "printingId": "set6-119",
+    "shortId": "DC2"
+  },
+  "c1X": {
+    "printingId": "set9-029",
+    "shortId": "n0F"
+  },
+  "c2B": {
+    "printingId": "set9-179",
+    "shortId": "hYV"
+  },
+  "c2N": {
+    "printingId": "set2-p1-032-promo",
+    "shortId": "jcE"
+  },
+  "cId": {
+    "printingId": "set1-p1-011-promo",
+    "shortId": "Un6"
+  },
+  "cRy": {
+    "printingId": "set12-067",
+    "shortId": "u3M"
+  },
+  "cVT": {
+    "printingId": "set8-004",
+    "shortId": "4GN"
+  },
+  "cqc": {
+    "printingId": "set9-228-enchanted",
+    "shortId": "ZwA"
+  },
+  "cws": {
+    "printingId": "set7-p2-023-challenge",
+    "shortId": "Rhd"
+  },
+  "d49": {
+    "printingId": "set10-219-epic",
+    "shortId": "MXq"
+  },
+  "d51": {
+    "printingId": "set10-p3-021-challenge",
+    "shortId": "RZm"
+  },
+  "d5v": {
+    "printingId": "set11-164",
+    "shortId": "kRA"
+  },
+  "d9j": {
+    "printingId": "set12-082",
+    "shortId": "Iy7"
+  },
+  "dHA": {
+    "printingId": "set12-p3-046-promo",
+    "shortId": "p25"
+  },
+  "dNZ": {
+    "printingId": "set7-214-enchanted",
+    "shortId": "OdY"
+  },
+  "dPe": {
+    "printingId": "set9-119",
+    "shortId": "352"
+  },
+  "dWX": {
+    "printingId": "set9-193",
+    "shortId": "Rr1"
+  },
+  "dg5": {
+    "printingId": "set11-118",
+    "shortId": "bEk"
+  },
+  "dhS": {
+    "printingId": "set8-142",
+    "shortId": "v0p"
+  },
+  "dkv": {
+    "printingId": "set9-002",
+    "shortId": "cI1"
+  },
+  "dpv": {
+    "printingId": "set6-081",
+    "shortId": "sgl"
+  },
+  "duL": {
+    "printingId": "set10-p3-027-promo",
+    "shortId": "Azk"
+  },
+  "e20": {
+    "printingId": "set11-p3-042-promo",
+    "shortId": "01A"
+  },
+  "e3L": {
+    "printingId": "set8-080",
+    "shortId": "OrQ"
+  },
+  "e6d": {
+    "printingId": "set9-147",
+    "shortId": "rR9"
+  },
+  "e9n": {
+    "printingId": "set2-126",
+    "shortId": "1RH"
+  },
+  "eKu": {
+    "printingId": "set12-209-epic",
+    "shortId": "hab"
+  },
+  "eWY": {
+    "printingId": "set9-162",
+    "shortId": "8qZ"
+  },
+  "ecd": {
+    "printingId": "set12-233-enchanted",
+    "shortId": "ESm"
+  },
+  "ee3": {
+    "printingId": "set9-171",
+    "shortId": "T4Y"
+  },
+  "ejC": {
+    "printingId": "set9-102",
+    "shortId": "ibf"
+  },
+  "eq5": {
+    "printingId": "set5-206-enchanted",
+    "shortId": "OwE"
+  },
+  "eva": {
+    "printingId": "set9-215-epic",
+    "shortId": "TXj"
+  },
+  "f7n": {
+    "printingId": "set9-224-enchanted",
+    "shortId": "2Ve"
+  },
+  "fHl": {
+    "printingId": "set12-237-enchanted",
+    "shortId": "rdT"
+  },
+  "fMf": {
+    "printingId": "set9-212-epic",
+    "shortId": "NhN"
+  },
+  "fT0": {
+    "printingId": "set9-025",
+    "shortId": "bNZ"
+  },
+  "fiU": {
+    "printingId": "set9-039",
+    "shortId": "NPa"
+  },
+  "fio": {
+    "printingId": "set12-053",
+    "shortId": "ipu"
+  },
+  "fse": {
+    "printingId": "set12-235-enchanted",
+    "shortId": "vYu"
+  },
+  "fvk": {
+    "printingId": "set12-240-enchanted",
+    "shortId": "2yB"
+  },
+  "fzU": {
+    "printingId": "set12-224-enchanted",
+    "shortId": "x4H"
+  },
+  "g4t": {
+    "printingId": "set10-045",
+    "shortId": "FQw"
+  },
+  "g6Q": {
+    "printingId": "set12-213-epic",
+    "shortId": "j3h"
+  },
+  "gMk": {
+    "printingId": "set9-062",
+    "shortId": "SZ5"
+  },
+  "gTd": {
+    "printingId": "set9-152",
+    "shortId": "KUK"
+  },
+  "gbH": {
+    "printingId": "set7-216-enchanted",
+    "shortId": "TlT"
+  },
+  "gbt": {
+    "printingId": "set9-098",
+    "shortId": "qSX"
+  },
+  "geu": {
+    "printingId": "set3-065",
+    "shortId": "2fQ"
+  },
+  "gp0": {
+    "printingId": "set6-p2-009-promo",
+    "shortId": "j9a"
+  },
+  "gpM": {
+    "printingId": "set5-212-enchanted",
+    "shortId": "nHT"
+  },
+  "gsg": {
+    "printingId": "set3-217-enchanted",
+    "shortId": "8Ws"
+  },
+  "gv1": {
+    "printingId": "set9-086",
+    "shortId": "vj7"
+  },
+  "gzA": {
+    "printingId": "set4-209-enchanted",
+    "shortId": "LEt"
+  },
+  "h0r": {
+    "printingId": "set9-015",
+    "shortId": "PCk"
+  },
+  "h3m": {
+    "printingId": "set9-052",
+    "shortId": "0Hp"
+  },
+  "h4L": {
+    "printingId": "set2-110",
+    "shortId": "key"
+  },
+  "h8f": {
+    "printingId": "set3-219-enchanted",
+    "shortId": "yeq"
+  },
+  "hA2": {
+    "printingId": "set3-p1-029-promo",
+    "shortId": "LqB"
+  },
+  "hHD": {
+    "printingId": "set8-206-enchanted",
+    "shortId": "EHr"
+  },
+  "hNb": {
+    "printingId": "set9-035",
+    "shortId": "Kdh"
+  },
+  "hVz": {
+    "printingId": "set7-159",
+    "shortId": "oP9"
+  },
+  "hmt": {
+    "printingId": "set11-236-enchanted",
+    "shortId": "Yo3"
+  },
+  "hsu": {
+    "printingId": "set9-088",
+    "shortId": "nWR"
+  },
+  "huo": {
+    "printingId": "set5-213-enchanted",
+    "shortId": "OUH"
+  },
+  "hyz": {
+    "printingId": "set9-081",
+    "shortId": "mBV"
+  },
+  "hzv": {
+    "printingId": "set2-205-enchanted",
+    "shortId": "6kY"
+  },
+  "iKF": {
+    "printingId": "set10-p3-019-challenge",
+    "shortId": "pwK"
+  },
+  "iSA": {
+    "printingId": "set11-148",
+    "shortId": "Dg6"
+  },
+  "iTM": {
+    "printingId": "set9-092",
+    "shortId": "f7a"
+  },
+  "iWG": {
+    "printingId": "set7-p2-022-challenge",
+    "shortId": "2HL"
+  },
+  "idk": {
+    "printingId": "set12-097",
+    "shortId": "76J"
+  },
+  "ihH": {
+    "printingId": "set11-239-enchanted",
+    "shortId": "riP"
+  },
+  "ilP": {
+    "printingId": "set7-051",
+    "shortId": "t70"
+  },
+  "ioy": {
+    "printingId": "set8-028",
+    "shortId": "FRo"
+  },
+  "iql": {
+    "printingId": "set2-025",
+    "shortId": "qiq"
+  },
+  "ixE": {
+    "printingId": "set4-206-enchanted",
+    "shortId": "VWw"
+  },
+  "j0O": {
+    "printingId": "set9-135",
+    "shortId": "ot7"
+  },
+  "j6N": {
+    "printingId": "set9-038",
+    "shortId": "khp"
+  },
+  "jFM": {
+    "printingId": "set6-221-enchanted",
+    "shortId": "Eop"
+  },
+  "jRJ": {
+    "printingId": "set10-160",
+    "shortId": "Ff8"
+  },
+  "jSV": {
+    "printingId": "set10-229-enchanted",
+    "shortId": "NOr"
+  },
+  "jXk": {
+    "printingId": "set9-060",
+    "shortId": "6o5"
+  },
+  "jnV": {
+    "printingId": "set5-161",
+    "shortId": "VjU"
+  },
+  "jrh": {
+    "printingId": "set12-016",
+    "shortId": "5Rp"
+  },
+  "jsz": {
+    "printingId": "set10-073",
+    "shortId": "uiQ"
+  },
+  "jyd": {
+    "printingId": "set11-211-epic",
+    "shortId": "i8r"
+  },
+  "k7Z": {
+    "printingId": "set9-127",
+    "shortId": "LyU"
+  },
+  "kCJ": {
+    "printingId": "set11-234-enchanted",
+    "shortId": "cVQ"
+  },
+  "kDg": {
+    "printingId": "set11-064",
+    "shortId": "IUQ"
+  },
+  "kE0": {
+    "printingId": "set12-122",
+    "shortId": "tZ3"
+  },
+  "kOA": {
+    "printingId": "set12-206-epic",
+    "shortId": "0O9"
+  },
+  "kSG": {
+    "printingId": "set1-023",
+    "shortId": "UIq"
+  },
+  "klx": {
+    "printingId": "set9-153",
+    "shortId": "HnN"
+  },
+  "ksD": {
+    "printingId": "set6-212-enchanted",
+    "shortId": "rYK"
+  },
+  "kw2": {
+    "printingId": "set10-222-epic",
+    "shortId": "crm"
+  },
+  "l1I": {
+    "printingId": "set3-p1-039-promo",
+    "shortId": "Xsr"
+  },
+  "l86": {
+    "printingId": "set9-011",
+    "shortId": "KBF"
+  },
+  "lED": {
+    "printingId": "set11-156",
+    "shortId": "Qp0"
+  },
+  "lR1": {
+    "printingId": "set9-p3-008-challenge",
+    "shortId": "Krz"
+  },
+  "lkh": {
+    "printingId": "set3-215-enchanted",
+    "shortId": "Fl6"
+  },
+  "lmM": {
+    "printingId": "set9-172",
+    "shortId": "KtJ"
+  },
+  "lsO": {
+    "printingId": "set9-020",
+    "shortId": "j35"
+  },
+  "lsw": {
+    "printingId": "set10-218-epic",
+    "shortId": "Pq0"
+  },
+  "lw9": {
+    "printingId": "set3-007",
+    "shortId": "jkb"
+  },
+  "ly1": {
+    "printingId": "set9-199",
+    "shortId": "jXV"
+  },
+  "m3b": {
+    "printingId": "set9-p3-004-challenge",
+    "shortId": "Btk"
+  },
+  "m94": {
+    "printingId": "set7-206-enchanted",
+    "shortId": "Qxh"
+  },
+  "m95": {
+    "printingId": "set9-040",
+    "shortId": "4lK"
+  },
+  "mBW": {
+    "printingId": "set9-049",
+    "shortId": "Ajn"
+  },
+  "mE1": {
+    "printingId": "set3-210-enchanted",
+    "shortId": "kFP"
+  },
+  "mEJ": {
+    "printingId": "set11-p3-030-challenge",
+    "shortId": "Bdg"
+  },
+  "mEx": {
+    "printingId": "set3-212-enchanted",
+    "shortId": "bW0"
+  },
+  "mKB": {
+    "printingId": "set9-160",
+    "shortId": "rQq"
+  },
+  "mMK": {
+    "printingId": "set6-208-enchanted",
+    "shortId": "GxB"
+  },
+  "mNb": {
+    "printingId": "set3-220-enchanted",
+    "shortId": "aZ3"
+  },
+  "mT7": {
+    "printingId": "set8-215-enchanted",
+    "shortId": "cde"
+  },
+  "mTY": {
+    "printingId": "set1-018",
+    "shortId": "vmK"
+  },
+  "mUL": {
+    "printingId": "set9-118",
+    "shortId": "jYF"
+  },
+  "mUj": {
+    "printingId": "set9-175",
+    "shortId": "zKN"
+  },
+  "mW3": {
+    "printingId": "set1-189",
+    "shortId": "rWf"
+  },
+  "mis": {
+    "printingId": "set11-p3-028-challenge",
+    "shortId": "EIB"
+  },
+  "mkt": {
+    "printingId": "set3-214-enchanted",
+    "shortId": "1tU"
+  },
+  "mxh": {
+    "printingId": "set9-p3-011-promo",
+    "shortId": "Ogs"
+  },
+  "n08": {
+    "printingId": "set1-p1-023",
+    "shortId": "3yS"
+  },
+  "nL2": {
+    "printingId": "set3-155",
+    "shortId": "hec"
+  },
+  "nXb": {
+    "printingId": "set9-158",
+    "shortId": "foq"
+  },
+  "ndt": {
+    "printingId": "set11-227-enchanted",
+    "shortId": "xpL"
+  },
+  "niU": {
+    "printingId": "set11-p3-035-promo",
+    "shortId": "563"
+  },
+  "nis": {
+    "printingId": "set10-231-enchanted",
+    "shortId": "z7X"
+  },
+  "nk1": {
+    "printingId": "set5-220-enchanted",
+    "shortId": "htq"
+  },
+  "nlv": {
+    "printingId": "set9-p3-040-promo",
+    "shortId": "RgE"
+  },
+  "nr4": {
+    "printingId": "set6-218-enchanted",
+    "shortId": "JMr"
+  },
+  "o8t": {
+    "printingId": "set9-042",
+    "shortId": "tsl"
+  },
+  "oD3": {
+    "printingId": "set9-151",
+    "shortId": "69M"
+  },
+  "oNE": {
+    "printingId": "set8-033",
+    "shortId": "x3B"
+  },
+  "oVH": {
+    "printingId": "set9-083",
+    "shortId": "JNo"
+  },
+  "oVx": {
+    "printingId": "set4-220-enchanted",
+    "shortId": "yaN"
+  },
+  "obc": {
+    "printingId": "set9-185",
+    "shortId": "iCA"
+  },
+  "ogQ": {
+    "printingId": "set10-091",
+    "shortId": "1EB"
+  },
+  "oiE": {
+    "printingId": "set9-235-enchanted",
+    "shortId": "sil"
+  },
+  "okY": {
+    "printingId": "set10-226-enchanted",
+    "shortId": "SYN"
+  },
+  "op2": {
+    "printingId": "set9-085",
+    "shortId": "ASG"
+  },
+  "oqp": {
+    "printingId": "set4-225-epic",
+    "shortId": "OnI"
+  },
+  "otc": {
+    "printingId": "set12-p3-047-promo",
+    "shortId": "v1S"
+  },
+  "owY": {
+    "printingId": "set11-016",
+    "shortId": "k5I"
+  },
+  "ozu": {
+    "printingId": "set2-p1-031-promo",
+    "shortId": "aqh"
+  },
+  "p0y": {
+    "printingId": "set11-240-enchanted",
+    "shortId": "6Id"
+  },
+  "p3m": {
+    "printingId": "set10-p3-023-challenge",
+    "shortId": "Umm"
+  },
+  "p5e": {
+    "printingId": "set9-190",
+    "shortId": "RmQ"
+  },
+  "pBr": {
+    "printingId": "set6-020",
+    "shortId": "rdg"
+  },
+  "pDb": {
+    "printingId": "set5-p2-001-promo",
+    "shortId": "EQI"
+  },
+  "pHV": {
+    "printingId": "set11-117",
+    "shortId": "Pwi"
+  },
+  "pIt": {
+    "printingId": "set9-053",
+    "shortId": "05X"
+  },
+  "pK5": {
+    "printingId": "set8-070",
+    "shortId": "mMQ"
+  },
+  "pPD": {
+    "printingId": "set5-216-enchanted",
+    "shortId": "lZk"
+  },
+  "pPc": {
+    "printingId": "set8-208-enchanted",
+    "shortId": "u5C"
+  },
+  "pTa": {
+    "printingId": "set8-220-enchanted",
+    "shortId": "y1r"
+  },
+  "pVb": {
+    "printingId": "set9-225-enchanted",
+    "shortId": "1LV"
+  },
+  "pkU": {
+    "printingId": "set1-211-enchanted",
+    "shortId": "wXz"
+  },
+  "pn3": {
+    "printingId": "set12-055",
+    "shortId": "hpp"
+  },
+  "pyC": {
+    "printingId": "set9-218-epic",
+    "shortId": "ngx"
+  },
+  "pyb": {
+    "printingId": "set6-214-enchanted",
+    "shortId": "49u"
+  },
+  "q1K": {
+    "printingId": "set9-106",
+    "shortId": "d3j"
+  },
+  "q3L": {
+    "printingId": "set10-p3-020-challenge",
+    "shortId": "pIG"
+  },
+  "q6B": {
+    "printingId": "set2-019",
+    "shortId": "LF9"
+  },
+  "qC1": {
+    "printingId": "set12-054",
+    "shortId": "P5r"
+  },
+  "qNQ": {
+    "printingId": "set7-207-enchanted",
+    "shortId": "81C"
+  },
+  "qnh": {
+    "printingId": "set8-113",
+    "shortId": "7dV"
+  },
+  "qoz": {
+    "printingId": "set12-127",
+    "shortId": "556"
+  },
+  "qzx": {
+    "printingId": "set9-121",
+    "shortId": "ZVW"
+  },
+  "r6R": {
+    "printingId": "set12-236-enchanted",
+    "shortId": "n0L"
+  },
+  "rAH": {
+    "printingId": "set9-146",
+    "shortId": "Sfr"
+  },
+  "rAP": {
+    "printingId": "set5-208-enchanted",
+    "shortId": "qYX"
+  },
+  "rJQ": {
+    "printingId": "set9-132",
+    "shortId": "ek3"
+  },
+  "rJW": {
+    "printingId": "set9-197",
+    "shortId": "N3C"
+  },
+  "rKO": {
+    "printingId": "set7-096",
+    "shortId": "jaS"
+  },
+  "rL3": {
+    "printingId": "set9-023",
+    "shortId": "LI3"
+  },
+  "rQu": {
+    "printingId": "set4-p1-034-promo",
+    "shortId": "T05"
+  },
+  "rX6": {
+    "printingId": "set7-217-enchanted",
+    "shortId": "3xv"
+  },
+  "rYP": {
+    "printingId": "set1-p1-021",
+    "shortId": "zIV"
+  },
+  "rZh": {
+    "printingId": "set11-094",
+    "shortId": "9gi"
+  },
+  "reF": {
+    "printingId": "set5-154",
+    "shortId": "FbB"
+  },
+  "riS": {
+    "printingId": "set4-219-enchanted",
+    "shortId": "nJt"
+  },
+  "rvl": {
+    "printingId": "set12-121",
+    "shortId": "kCm"
+  },
+  "s59": {
+    "printingId": "set10-193",
+    "shortId": "J3F"
+  },
+  "s7q": {
+    "printingId": "set10-093",
+    "shortId": "JR6"
+  },
+  "sFO": {
+    "printingId": "set9-166",
+    "shortId": "PkI"
+  },
+  "sQ9": {
+    "printingId": "set9-201",
+    "shortId": "fbj"
+  },
+  "sUh": {
+    "printingId": "set6-p3-017-promo",
+    "shortId": "ii5"
+  },
+  "sVk": {
+    "printingId": "set9-054",
+    "shortId": "HaG"
+  },
+  "sWs": {
+    "printingId": "set1-p1-008-promo",
+    "shortId": "hSI"
+  },
+  "sdI": {
+    "printingId": "set1-186",
+    "shortId": "0We"
+  },
+  "sdt": {
+    "printingId": "set11-219-epic",
+    "shortId": "J9S"
+  },
+  "sfy": {
+    "printingId": "set4-116",
+    "shortId": "bCk"
+  },
+  "siB": {
+    "printingId": "set10-036",
+    "shortId": "xFu"
+  },
+  "snt": {
+    "printingId": "set11-192",
+    "shortId": "aEk"
+  },
+  "sz4": {
+    "printingId": "set2-209-enchanted",
+    "shortId": "DRq"
+  },
+  "t4e": {
+    "printingId": "set12-222-epic",
+    "shortId": "6sl"
+  },
+  "t58": {
+    "printingId": "set11-233-enchanted",
+    "shortId": "H2q"
+  },
+  "t5R": {
+    "printingId": "set8-006",
+    "shortId": "0v4"
+  },
+  "t9V": {
+    "printingId": "set1-163",
+    "shortId": "yd6"
+  },
+  "tF0": {
+    "printingId": "set11-p3-031-promo",
+    "shortId": "qT3"
+  },
+  "tG9": {
+    "printingId": "set9-195",
+    "shortId": "5mA"
+  },
+  "tQG": {
+    "printingId": "set12-227-enchanted",
+    "shortId": "xPk"
+  },
+  "tQU": {
+    "printingId": "set1-206-enchanted",
+    "shortId": "MQ5"
+  },
+  "tWy": {
+    "printingId": "set10-215-epic",
+    "shortId": "NIy"
+  },
+  "thO": {
+    "printingId": "set3-205-enchanted",
+    "shortId": "M9T"
+  },
+  "tje": {
+    "printingId": "set11-218-epic",
+    "shortId": "jSk"
+  },
+  "toT": {
+    "printingId": "set8-p2-030-challenge",
+    "shortId": "XnG"
+  },
+  "u0k": {
+    "printingId": "set9-168",
+    "shortId": "EMW"
+  },
+  "u1R": {
+    "printingId": "set12-p3-050-challenge",
+    "shortId": "ED6"
+  },
+  "u9s": {
+    "printingId": "set9-055",
+    "shortId": "5Zo"
+  },
+  "uCP": {
+    "printingId": "set9-097",
+    "shortId": "NMh"
+  },
+  "uQE": {
+    "printingId": "set11-242-iconic",
+    "shortId": "Xjj"
+  },
+  "uQg": {
+    "printingId": "set8-067",
+    "shortId": "9aY"
+  },
+  "uSb": {
+    "printingId": "set12-159",
+    "shortId": "lv1"
+  },
+  "ucq": {
+    "printingId": "set12-144",
+    "shortId": "562"
+  },
+  "um6": {
+    "printingId": "set7-210-enchanted",
+    "shortId": "G6C"
+  },
+  "umf": {
+    "printingId": "set6-156",
+    "shortId": "J99"
+  },
+  "uwu": {
+    "printingId": "set10-227-enchanted",
+    "shortId": "B71"
+  },
+  "uxV": {
+    "printingId": "set6-219-enchanted",
+    "shortId": "vrA"
+  },
+  "uyb": {
+    "printingId": "set10-p3-026-promo",
+    "shortId": "AnY"
+  },
+  "v0N": {
+    "printingId": "set4-061",
+    "shortId": "BPg"
+  },
+  "v1i": {
+    "printingId": "set9-p3-009-challenge",
+    "shortId": "Qcd"
+  },
+  "v22": {
+    "printingId": "set4-224-epic",
+    "shortId": "7yl"
+  },
+  "v9r": {
+    "printingId": "set10-200",
+    "shortId": "MKL"
+  },
+  "vCv": {
+    "printingId": "set9-198",
+    "shortId": "H3h"
+  },
+  "vEP": {
+    "printingId": "set9-084",
+    "shortId": "f2D"
+  },
+  "vNP": {
+    "printingId": "set9-155",
+    "shortId": "2JR"
+  },
+  "vSi": {
+    "printingId": "set8-025",
+    "shortId": "37v"
+  },
+  "vf1": {
+    "printingId": "set3-091",
+    "shortId": "c16"
+  },
+  "vhe": {
+    "printingId": "set12-061",
+    "shortId": "ZmD"
+  },
+  "vif": {
+    "printingId": "set10-214-epic",
+    "shortId": "uPL"
+  },
+  "vjJ": {
+    "printingId": "set12-217-epic",
+    "shortId": "APM"
+  },
+  "vmJ": {
+    "printingId": "set9-080",
+    "shortId": "ii9"
+  },
+  "vpZ": {
+    "printingId": "set1-215-enchanted",
+    "shortId": "FjY"
+  },
+  "wAM": {
+    "printingId": "set3-154",
+    "shortId": "dLT"
+  },
+  "wAd": {
+    "printingId": "set9-104",
+    "shortId": "Fkl"
+  },
+  "wLe": {
+    "printingId": "set5-118",
+    "shortId": "JO4"
+  },
+  "wRv": {
+    "printingId": "set11-155",
+    "shortId": "q6R"
+  },
+  "wbm": {
+    "printingId": "set12-241-iconic",
+    "shortId": "vFM"
+  },
+  "wc4": {
+    "printingId": "set2-206-enchanted",
+    "shortId": "65h"
+  },
+  "wic": {
+    "printingId": "set11-223-enchanted",
+    "shortId": "rmm"
+  },
+  "wkz": {
+    "printingId": "set10-228-enchanted",
+    "shortId": "2fJ"
+  },
+  "woM": {
+    "printingId": "set9-063",
+    "shortId": "8jB"
+  },
+  "wqr": {
+    "printingId": "set12-172",
+    "shortId": "jT4"
+  },
+  "wvC": {
+    "printingId": "set9-164",
+    "shortId": "jY8"
+  },
+  "wwB": {
+    "printingId": "set10-238-enchanted",
+    "shortId": "taG"
+  },
+  "wwO": {
+    "printingId": "set12-089",
+    "shortId": "5hR"
+  },
+  "x21": {
+    "printingId": "set6-220-enchanted",
+    "shortId": "Fpd"
+  },
+  "x28": {
+    "printingId": "set1-p1-013-promo",
+    "shortId": "bXy"
+  },
+  "x57": {
+    "printingId": "set11-215-epic",
+    "shortId": "JuC"
+  },
+  "x6E": {
+    "printingId": "set4-217-enchanted",
+    "shortId": "i7j"
+  },
+  "xKa": {
+    "printingId": "set6-215-enchanted",
+    "shortId": "IGq"
+  },
+  "xKp": {
+    "printingId": "set1-154",
+    "shortId": "9Tz"
+  },
+  "xTL": {
+    "printingId": "set1-p1-010-promo",
+    "shortId": "Rm1"
+  },
+  "xYw": {
+    "printingId": "set9-191",
+    "shortId": "mEB"
+  },
+  "xZ2": {
+    "printingId": "set10-237-enchanted",
+    "shortId": "59U"
+  },
+  "xeg": {
+    "printingId": "set11-185",
+    "shortId": "BEc"
+  },
+  "xfP": {
+    "printingId": "set7-004",
+    "shortId": "xya"
+  },
+  "xiP": {
+    "printingId": "set9-241-iconic",
+    "shortId": "pX4"
+  },
+  "yAe": {
+    "printingId": "set7-118",
+    "shortId": "Wr7"
+  },
+  "yLh": {
+    "printingId": "set9-066",
+    "shortId": "9zJ"
+  },
+  "yMt": {
+    "printingId": "set9-125",
+    "shortId": "8DB"
+  },
+  "yOS": {
+    "printingId": "set10-154",
+    "shortId": "4YX"
+  },
+  "ySs": {
+    "printingId": "set11-152",
+    "shortId": "aNM"
+  },
+  "yio": {
+    "printingId": "set1-207-enchanted",
+    "shortId": "8yF"
+  },
+  "ylY": {
+    "printingId": "set9-148",
+    "shortId": "q1c"
+  },
+  "yv4": {
+    "printingId": "set9-014",
+    "shortId": "fop"
+  },
+  "yvl": {
+    "printingId": "set12-148",
+    "shortId": "b66"
+  },
+  "yxp": {
+    "printingId": "set9-018",
+    "shortId": "1qg"
+  },
+  "z12": {
+    "printingId": "set12-219-epic",
+    "shortId": "5A7"
+  },
+  "z1V": {
+    "printingId": "set6-072",
+    "shortId": "zea"
+  },
+  "z5E": {
+    "printingId": "set7-211-enchanted",
+    "shortId": "a5N"
+  },
+  "z7I": {
+    "printingId": "set6-206-enchanted",
+    "shortId": "eH1"
+  },
+  "zIZ": {
+    "printingId": "set9-072",
+    "shortId": "OUz"
+  },
+  "zLd": {
+    "printingId": "set9-237-enchanted",
+    "shortId": "tFw"
+  },
+  "zU2": {
+    "printingId": "set8-211-enchanted",
+    "shortId": "zLW"
+  },
+  "zat": {
+    "printingId": "set6-p3-013-promo",
+    "shortId": "s0f"
+  },
+  "zb3": {
+    "printingId": "set8-221-enchanted",
+    "shortId": "8JD"
+  },
+  "zdO": {
+    "printingId": "set12-210-epic",
+    "shortId": "j0D"
+  },
+  "zpz": {
+    "printingId": "set9-033",
+    "shortId": "U6u"
+  },
+  "ztO": {
+    "printingId": "set11-p3-033-challenge",
+    "shortId": "B1p"
+  },
+  "zw0": {
+    "printingId": "set11-228-enchanted",
+    "shortId": "wWW"
+  }
+}

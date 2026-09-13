@@ -41,7 +41,7 @@ function deckCards() {
 }
 
 describe("Base-section excess rules management (11-5-2)", () => {
-  it("places a hand-deployed Base first, asks which visible Base to trash, then resolves Deploy", () => {
+  it("places a hand-deployed Base first, asks which existing Base to trash, then resolves Deploy", () => {
     const establishedBase = createMockBase({
       name: "Established Base",
       effects: [drawTwoWhenDestroyed],
@@ -77,9 +77,7 @@ describe("Base-section excess rules management (11-5-2)", () => {
       maxTargets: 1,
       prompt: "Choose 1 Base in your Base section to place into your trash.",
     });
-    expect(choice.legalTargetIds).toEqual(
-      expect.arrayContaining([establishedBaseId, incomingBaseId]),
-    );
+    expect(choice.legalTargetIds).toEqual([establishedBaseId]);
     expect(p1.getHand()).toHaveLength(0);
     expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(3);
 
@@ -94,7 +92,7 @@ describe("Base-section excess rules management (11-5-2)", () => {
     expect(p1.getBoardView().players[PLAYER_ONE]?.deckCount).toBe(2);
   });
 
-  it("uses the same visible choice when a second Burst Base is deployed", () => {
+  it("asks for the existing Base when a second Burst Base is deployed", () => {
     const establishedBase = createMockBase({
       name: "Established Burst Base",
       effects: [burstDeploySelf, drawTwoWhenDestroyed],
@@ -153,9 +151,7 @@ describe("Base-section excess rules management (11-5-2)", () => {
       minTargets: 1,
       maxTargets: 1,
     });
-    expect(choice.legalTargetIds).toEqual(
-      expect.arrayContaining([establishedBaseId, incomingBaseId]),
-    );
+    expect(choice.legalTargetIds).toEqual([establishedBaseId]);
     expect(p2.getHand()).toHaveLength(0);
     expect(p2.getBoardView().players[PLAYER_TWO]?.deckCount).toBe(3);
 
@@ -203,7 +199,7 @@ describe("Base-section excess rules management (11-5-2)", () => {
     expect(p1.getBoardView().players[PLAYER_ONE]!.trashCount).toBe(trashBefore);
   });
 
-  it("deploys an EX Base into an occupied section and lets the player keep either visible Base", () => {
+  it("deploys an EX Base into an occupied section and trashes the existing Base", () => {
     const deployExBase = createMockCommand({
       name: "Deploy EX Base into occupied section",
       level: 0,
@@ -232,7 +228,7 @@ describe("Base-section excess rules management (11-5-2)", () => {
     expect(visibleBases).toHaveLength(2);
     expect(p1.getBoardView().pendingChoice).toMatchObject({
       kind: "targetSelection",
-      legalTargetIds: expect.arrayContaining([establishedBaseId, exBaseId]),
+      legalTargetIds: [establishedBaseId],
     });
 
     expectSuccess(p1.resolveEffect({ targets: [establishedBaseId] }));

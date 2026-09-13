@@ -55,6 +55,17 @@ describe("ActivePlayerGuidance", () => {
     expect(body).toContain("Move guidance to top");
   });
 
+  it("reserves hand clearance for normal turn guidance", () => {
+    const { body } = render(ActivePlayerGuidance, {
+      props: {
+        items: [{ ...baseItem, mode: "default" }],
+        anchor: "bottom",
+      },
+    });
+
+    expect(body).toContain("guidance-anchor--hand-target-bottom");
+  });
+
   it("renders an inline hover reference with bold-underlined styling hooks", () => {
     const { body } = render(ActivePlayerGuidance, {
       props: {

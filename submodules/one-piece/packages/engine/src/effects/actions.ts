@@ -7,8 +7,9 @@ import {
   effectBlocksForInstance,
   emitEvent,
   emitLog,
-  enqueueEffectsForTrigger,
   enqueueInPlayEffectsForTrigger,
+  enqueueKoEffectsForTrigger,
+  enqueueMirroredInPlayEffectsForTrigger,
   enqueueResolution,
   getCardForInstance,
   getCardCost,
@@ -36,6 +37,7 @@ import {
 } from "../state.ts";
 import type {
   EffectBlockContinuation,
+  EffectPlayReplacementContinuation,
   MatchSeat,
   MatchState,
   PromptOption,
@@ -138,6 +140,8 @@ export function restCharacterByEffect(
     return false;
   }
   if (instance.zone === "character") {
+    // Printed as "if a Character is rested by your effect", so only the
+    // resting effect's controller has in-play cards that react.
     enqueueInPlayEffectsForTrigger(
       state,
       "whenCharacterRestedByEffect",
@@ -231,6 +235,16 @@ export function koCharacterByEffect(
   const owner = target.owner;
   const effectController = target.controller;
   const attachedDon = target.attachedDon;
+  const triggerEvent = {
+    instanceId: targetId,
+    instanceController: effectController,
+    effectController: controller,
+    koCause: "effect" as const,
+    attachedDon,
+  };
+  // 10-2-17-1/10-2-17-2: [On K.O.] effects activate on the field before the
+  // card is trashed, then resolve while the card is in the trash.
+  enqueueKoEffectsForTrigger(state, targetId, effectController, triggerEvent);
   if (target.attachedDon > 0) {
     getPlayer(state, effectController).restedDon += target.attachedDon;
     target.attachedDon = 0;
@@ -240,23 +254,6 @@ export function koCharacterByEffect(
     publicKnowledge: true,
     actor: controller,
   });
-  const triggerEvent = {
-    instanceId: targetId,
-    instanceController: effectController,
-    effectController: controller,
-    koCause: "effect" as const,
-    attachedDon,
-  };
-  enqueueEffectsForTrigger(state, targetId, effectController, "onKo", undefined, triggerEvent);
-  enqueueEffectsForTrigger(
-    state,
-    targetId,
-    effectController,
-    "whenCharacterKod",
-    undefined,
-    triggerEvent,
-  );
-  enqueueInPlayEffectsForTrigger(state, "whenCharacterKod", triggerEvent);
   emitLog(
     state,
     controller,
@@ -545,7 +542,7 @@ export function removeCardByEffectAction(
   state: MatchState,
   targetId: string,
   controller: MatchSeat,
-  sourceInstanceId: string,
+  _sourceInstanceId: string,
   action: EffectRemovalAction,
   redactDeckOrder = false,
 ) {
@@ -1027,9 +1024,9 @@ export function candidatesForPlayCardCost(
   return candidatesForCardCostOption(state, controller, sourceInstanceId, cost).filter(
     (instanceId) => {
       const card = getCardForInstance(state, instanceId);
+      // 3-7-6-1 makes a Character play legal even into a full Character area.
       return (
-        (card.cardType === "stage" ||
-          (card.cardType === "character" && getOpenCharacterSlots(state, controller).length > 0)) &&
+        (card.cardType === "stage" || card.cardType === "character") &&
         !isCardPlayRestricted(
           state,
           controller,
@@ -1255,6 +1252,8 @@ export function returnSelectedDonToDeck(
       sourceInstanceId && effectController
         ? { instanceId: sourceInstanceId, effectController, amount: selectedIds.length }
         : undefined;
+    // Printed as "when a DON!! card on your field is returned to your DON!!
+    // deck", so only the returning player's in-play cards react.
     enqueueInPlayEffectsForTrigger(state, "whenDonReturned", triggerEvent, [seat]);
   }
 }
@@ -1265,7 +1264,7 @@ export function playCardFromEffect(
   instanceId: string,
   playState: PlayAction["playState"],
   effectSourceInstanceId: string,
-  options: { deferOnPlay?: boolean } = {},
+  options: { deferOnPlay?: boolean; slotIndex?: number } = {},
 ): boolean {
   const instance = getInstance(state, instanceId);
   const card = getCardForInstance(state, instanceId);
@@ -1278,7 +1277,7 @@ export function playCardFromEffect(
   }
 
   if (card.cardType === "character") {
-    const slotIndex = getOpenCharacterSlots(state, controller)[0];
+    const slotIndex = options.slotIndex ?? getOpenCharacterSlots(state, controller)[0];
     if (slotIndex === undefined) {
       return false;
     }
@@ -1348,11 +1347,234 @@ export function playCardFromEffect(
       sourceInstanceId: effectSourceInstanceId,
       sourceFromZone: getInstance(state, effectSourceInstanceId).zone,
     };
-    enqueueInPlayEffectsForTrigger(state, "whenYouPlayCharacter", triggerEvent, [controller]);
-    enqueueInPlayEffectsForTrigger(state, "whenOpponentPlaysCharacter", triggerEvent, [
-      otherSeat(controller),
-    ]);
+    enqueueMirroredInPlayEffectsForTrigger(
+      state,
+      controller,
+      "whenYouPlayCharacter",
+      "whenOpponentPlaysCharacter",
+      triggerEvent,
+    );
     if (card.trigger || effectBlocksFor(card, "trigger").length > 0) {
+      // Printed as "when you play a Character with a [Trigger]", so only the
+      // playing player's in-play cards react.
+      enqueueInPlayEffectsForTrigger(state, "whenTriggerCharacterPlayed", triggerEvent, [
+        controller,
+      ]);
+    }
+  }
+  return true;
+}
+
+// 3-7-6-1 for effect-driven plays: with 5 Characters in the Character area, a
+// Character played by an effect is revealed and the playing player trashes 1
+// of their Characters first (rule processing, 3-7-6-1-1 / 10-2-1-3). The
+// prompt pauses the effect; the resolution completes the play into the freed
+// slot and resumes the stored continuation.
+export function promptForEffectCharacterReplacement(
+  state: MatchState,
+  options: {
+    controller: MatchSeat;
+    playingSeat: MatchSeat;
+    sourceInstanceId: string;
+    instanceId: string;
+    playState?: "rested" | "active";
+    continuation: EffectPlayReplacementContinuation;
+  },
+) {
+  const { controller, playingSeat, sourceInstanceId, instanceId, playState, continuation } =
+    options;
+  const player = getPlayer(state, playingSeat);
+  const card = getCardForInstance(state, instanceId);
+  getInstance(state, instanceId).publicKnowledge = true;
+  emitLog(state, playingSeat, `${player.playerName} reveals ${cardName(card)} to play it.`, {
+    sourceCardId: card.id,
+    sourceInstanceId: instanceId,
+    targetIds: [instanceId],
+    visibility: "public",
+  });
+  const candidateIds = player.characterArea.filter((entry): entry is string => Boolean(entry));
+  createChoicePrompt(state, {
+    choiceKind: "selectCards",
+    seat: playingSeat,
+    label: `${player.playerName} trashes 1 Character to play ${cardName(card)}`,
+    details: "Select 1 of your Characters to trash.",
+    sourceCardId: card.id,
+    sourceInstanceId,
+    eventId: null,
+    options: candidateIds.map((candidateId) => ({
+      id: candidateId,
+      label: cardName(getCardForInstance(state, candidateId)),
+      value: candidateId,
+      targetId: candidateId,
+    })),
+    minSelections: 1,
+    maxSelections: 1,
+    context: {},
+    resolutionContext: {
+      intent: "effectPlayCharacterReplacement",
+      sourceInstanceId,
+      controller,
+      playingSeat,
+      instanceId,
+      candidateIds,
+      playState,
+      continuation,
+    },
+  });
+}
+
+// Plays each pending card with the effect's play semantics, pausing for the
+// 3-7-6-1 replacement choice when a Character is played into a full Character
+// area. Returns "suspended" while that choice is pending, "failed" when a
+// play was illegal, and "completed" once every play finished (at which point
+// the action's thenActions are queued with every played card).
+export function playCardsFromEffectSequence(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  action: PlayAction,
+  playingSeat: MatchSeat,
+  pendingIds: string[],
+  playedIds: string[],
+  previousActionTargetIds?: string[],
+): "completed" | "suspended" | "failed" {
+  for (let index = 0; index < pendingIds.length; index += 1) {
+    const instanceId = pendingIds[index]!;
+    if (
+      getCardForInstance(state, instanceId).cardType === "character" &&
+      getOpenCharacterSlots(state, playingSeat).length === 0
+    ) {
+      promptForEffectCharacterReplacement(state, {
+        controller,
+        playingSeat,
+        sourceInstanceId,
+        instanceId,
+        playState: action.playState,
+        continuation: {
+          kind: "playAction",
+          action,
+          remainingIds: pendingIds.slice(index + 1),
+          playedIds: [...playedIds, ...pendingIds.slice(0, index)],
+          previousActionTargetIds,
+        },
+      });
+      return "suspended";
+    }
+    if (!playCardFromEffect(state, playingSeat, instanceId, action.playState, sourceInstanceId)) {
+      return "failed";
+    }
+  }
+  const allPlayedIds = [...playedIds, ...pendingIds];
+  if (allPlayedIds.length > 0) {
+    for (const nestedAction of [...(action.thenActions ?? [])].reverse()) {
+      enqueueResolution(
+        state,
+        {
+          kind: "effectAction",
+          sourceInstanceId,
+          controller,
+          action: nestedAction,
+          previousActionTargetIds: allPlayedIds,
+        },
+        { next: true },
+      );
+    }
+  }
+  return "completed";
+}
+
+// Completes a "playThisCard" action, optionally into a Character-area slot
+// freed by the 3-7-6-1 replacement choice.
+export function completePlayThisCard(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  slotIndex?: number,
+): boolean {
+  const source = getInstance(state, sourceInstanceId);
+  const card = getCardForInstance(state, sourceInstanceId);
+  if (
+    source.controller !== controller ||
+    (source.zone !== "hand" && source.zone !== "resolution")
+  ) {
+    return false;
+  }
+  const fromZone = source.zone;
+
+  if (card.cardType === "character") {
+    const resolvedSlotIndex = slotIndex ?? getOpenCharacterSlots(state, controller)[0];
+    if (resolvedSlotIndex === undefined) {
+      return false;
+    }
+    moveCard(state, sourceInstanceId, controller, "character", {
+      slotIndex: resolvedSlotIndex,
+      faceUp: true,
+      publicKnowledge: true,
+      actor: controller,
+    });
+    const played = getInstance(state, sourceInstanceId);
+    played.playedOnTurn = state.turnNumber;
+    played.rested = isPlayedRestedByPermanentEffect(state, controller, sourceInstanceId);
+  } else if (card.cardType === "stage") {
+    const existingStage = getPlayer(state, controller).stageArea;
+    if (existingStage) {
+      moveCard(state, existingStage, getInstance(state, existingStage).owner, "trash", {
+        faceUp: true,
+        publicKnowledge: true,
+        actor: controller,
+      });
+    }
+    moveCard(state, sourceInstanceId, controller, "stage", {
+      faceUp: true,
+      publicKnowledge: true,
+      actor: controller,
+    });
+  } else {
+    return false;
+  }
+
+  emitEvent(state, "cardPlayed", controller, {
+    sourceCardId: card.id,
+    sourceInstanceId,
+    visibility: "public",
+  });
+  emitLog(
+    state,
+    controller,
+    `${getPlayer(state, controller).playerName} plays ${cardName(card)}.`,
+    {
+      sourceCardId: card.id,
+      sourceInstanceId,
+      visibility: "public",
+    },
+  );
+  for (const [blockIndex] of effectBlocksForInstance(state, sourceInstanceId, "onPlay").entries()) {
+    enqueueResolution(state, {
+      kind: "effectBlock",
+      sourceInstanceId,
+      controller,
+      trigger: "onPlay",
+      blockIndex,
+    });
+  }
+  if (card.cardType === "character") {
+    const triggerEvent = {
+      instanceId: sourceInstanceId,
+      effectController: controller,
+      fromZone,
+      sourceInstanceId,
+      sourceFromZone: fromZone,
+    };
+    enqueueMirroredInPlayEffectsForTrigger(
+      state,
+      controller,
+      "whenYouPlayCharacter",
+      "whenOpponentPlaysCharacter",
+      triggerEvent,
+    );
+    if (card.trigger || effectBlocksFor(card, "trigger").length > 0) {
+      // Printed as "when you play a Character with a [Trigger]", so only
+      // the playing player's in-play cards react.
       enqueueInPlayEffectsForTrigger(state, "whenTriggerCharacterPlayed", triggerEvent, [
         controller,
       ]);
@@ -2123,11 +2345,11 @@ export function processEffectAction(
       const firstPower = basePower(getCardForInstance(state, firstId!));
       const secondPower = basePower(getCardForInstance(state, secondId!));
       for (const [targetId, value] of [
-        [firstId!, secondPower - firstPower],
-        [secondId!, firstPower - secondPower],
+        [firstId!, secondPower],
+        [secondId!, firstPower],
       ] as const) {
         addModifier(state, sourceInstanceId, targetId, {
-          type: "power",
+          type: "basePower",
           value,
           duration: action.duration,
           expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
@@ -2172,10 +2394,9 @@ export function processEffectAction(
       }
       const copiedBasePower = basePower(getCardForInstance(state, sourceIds[0]!));
       for (const targetId of targetIds) {
-        const printedBasePower = basePower(getCardForInstance(state, targetId));
         addModifier(state, sourceInstanceId, targetId, {
-          type: "power",
-          value: copiedBasePower - printedBasePower,
+          type: "basePower",
+          value: copiedBasePower,
           duration: action.duration,
           expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
           expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
@@ -2212,10 +2433,9 @@ export function processEffectAction(
         return true;
       }
       const copiedPower = getCardPower(state, copiedFromId);
-      const sourceBasePower = basePower(getCardForInstance(state, sourceInstanceId));
       addModifier(state, sourceInstanceId, sourceInstanceId, {
-        type: "power",
-        value: copiedPower - sourceBasePower,
+        type: "basePower",
+        value: copiedPower,
         duration: action.duration,
         expiresAtTurn: action.duration === "thisTurn" ? state.turnNumber : null,
         expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
@@ -3836,103 +4056,36 @@ export function processEffectAction(
           });
         }
         const triggerEvent = { instanceId: eventInstanceId, effectController: controller };
-        enqueueInPlayEffectsForTrigger(state, "whenYouActivateEvent", triggerEvent, [controller]);
-        enqueueInPlayEffectsForTrigger(state, "whenOpponentActivatesEvent", triggerEvent, [
-          otherSeat(controller),
-        ]);
+        enqueueMirroredInPlayEffectsForTrigger(
+          state,
+          controller,
+          "whenYouActivateEvent",
+          "whenOpponentActivatesEvent",
+          triggerEvent,
+        );
       }
       return true;
     }
     case "playThisCard": {
       const source = getInstance(state, sourceInstanceId);
-      const card = getCardForInstance(state, sourceInstanceId);
       if (
-        source.controller !== controller ||
-        (source.zone !== "hand" && source.zone !== "resolution")
+        source.controller === controller &&
+        (source.zone === "hand" || source.zone === "resolution") &&
+        getCardForInstance(state, sourceInstanceId).cardType === "character" &&
+        getOpenCharacterSlots(state, controller).length === 0
       ) {
-        return false;
-      }
-      const fromZone = source.zone;
-
-      if (card.cardType === "character") {
-        const slotIndex = getOpenCharacterSlots(state, controller)[0];
-        if (slotIndex === undefined) {
-          return false;
-        }
-        moveCard(state, sourceInstanceId, controller, "character", {
-          slotIndex,
-          faceUp: true,
-          publicKnowledge: true,
-          actor: controller,
-        });
-        const played = getInstance(state, sourceInstanceId);
-        played.playedOnTurn = state.turnNumber;
-        played.rested = isPlayedRestedByPermanentEffect(state, controller, sourceInstanceId);
-      } else if (card.cardType === "stage") {
-        const existingStage = getPlayer(state, controller).stageArea;
-        if (existingStage) {
-          moveCard(state, existingStage, getInstance(state, existingStage).owner, "trash", {
-            faceUp: true,
-            publicKnowledge: true,
-            actor: controller,
-          });
-        }
-        moveCard(state, sourceInstanceId, controller, "stage", {
-          faceUp: true,
-          publicKnowledge: true,
-          actor: controller,
-        });
-      } else {
-        return false;
-      }
-
-      emitEvent(state, "cardPlayed", controller, {
-        sourceCardId: card.id,
-        sourceInstanceId,
-        visibility: "public",
-      });
-      emitLog(
-        state,
-        controller,
-        `${getPlayer(state, controller).playerName} plays ${cardName(card)}.`,
-        {
-          sourceCardId: card.id,
-          sourceInstanceId,
-          visibility: "public",
-        },
-      );
-      for (const [blockIndex] of effectBlocksForInstance(
-        state,
-        sourceInstanceId,
-        "onPlay",
-      ).entries()) {
-        enqueueResolution(state, {
-          kind: "effectBlock",
-          sourceInstanceId,
+        // 3-7-6-1: the Character area is full, so the play pauses for the
+        // replacement choice instead of fizzling.
+        promptForEffectCharacterReplacement(state, {
           controller,
-          trigger: "onPlay",
-          blockIndex,
-        });
-      }
-      if (card.cardType === "character") {
-        const triggerEvent = {
-          instanceId: sourceInstanceId,
-          effectController: controller,
-          fromZone,
+          playingSeat: controller,
           sourceInstanceId,
-          sourceFromZone: fromZone,
-        };
-        enqueueInPlayEffectsForTrigger(state, "whenYouPlayCharacter", triggerEvent, [controller]);
-        enqueueInPlayEffectsForTrigger(state, "whenOpponentPlaysCharacter", triggerEvent, [
-          otherSeat(controller),
-        ]);
-        if (card.trigger || effectBlocksFor(card, "trigger").length > 0) {
-          enqueueInPlayEffectsForTrigger(state, "whenTriggerCharacterPlayed", triggerEvent, [
-            controller,
-          ]);
-        }
+          instanceId: sourceInstanceId,
+          continuation: { kind: "playThisCard" },
+        });
+        return false;
       }
-      return true;
+      return completePlayThisCard(state, controller, sourceInstanceId);
     }
     case "search": {
       if (
@@ -3984,22 +4137,13 @@ export function processEffectAction(
       const playableEligibleIds =
         action.revealDestination === "character"
           ? eligibleIds.filter((instanceId) => {
+              // 3-7-6-1 keeps Character plays legal even into a full
+              // Character area.
               const card = getCardForInstance(state, instanceId);
-              return (
-                card.cardType === "stage" ||
-                (card.cardType === "character" &&
-                  getOpenCharacterSlots(state, controller).length > 0)
-              );
+              return card.cardType === "stage" || card.cardType === "character";
             })
           : eligibleIds;
-      const openCharacterSlots = getOpenCharacterSlots(state, controller).length;
-      const destinationCapacity =
-        action.revealDestination === "character"
-          ? playableEligibleIds.filter(
-              (instanceId) => getCardForInstance(state, instanceId).cardType === "stage",
-            ).length + openCharacterSlots
-          : playableEligibleIds.length;
-      const maximum = Math.min(requested, playableEligibleIds.length, destinationCapacity);
+      const maximum = Math.min(requested, playableEligibleIds.length);
       createChoicePrompt(state, {
         choiceKind: "selectCards",
         seat: controller,
@@ -4036,6 +4180,7 @@ export function processEffectAction(
       state.status = "finished";
       state.phase = "finished";
       state.winner = controller;
+      state.finishReason = "effectWin";
       emitEvent(state, "winnerDeclared", controller, {
         data: {
           winner: controller,
@@ -4132,11 +4277,7 @@ export function processEffectAction(
       ) {
         return false;
       }
-      if (
-        selectedCards.filter((card) => card.cardType === "character").length >
-          getOpenCharacterSlots(state, playingSeat).length ||
-        selectedCards.filter((card) => card.cardType === "stage").length > 1
-      ) {
+      if (selectedCards.filter((card) => card.cardType === "stage").length > 1) {
         recordCapabilityIssue(state, {
           kind: "unsupportedAction",
           code: "action:play:placement",
@@ -4154,29 +4295,19 @@ export function processEffectAction(
         );
         return false;
       }
-      for (const instanceId of selectedTargetIds) {
-        if (
-          !playCardFromEffect(state, playingSeat, instanceId, action.playState, sourceInstanceId)
-        ) {
-          return false;
-        }
-      }
-      if (selectedTargetIds.length > 0) {
-        for (const nestedAction of [...(action.thenActions ?? [])].reverse()) {
-          enqueueResolution(
-            state,
-            {
-              kind: "effectAction",
-              sourceInstanceId,
-              controller,
-              action: nestedAction,
-              previousActionTargetIds: selectedTargetIds,
-            },
-            { next: true },
-          );
-        }
-      }
-      return true;
+      // 3-7-6-1 keeps Character plays legal even into a full Character area;
+      // the sequence pauses for the replacement choice when one is needed.
+      const playResult = playCardsFromEffectSequence(
+        state,
+        controller,
+        sourceInstanceId,
+        action,
+        playingSeat,
+        selectedTargetIds,
+        [],
+        previousActionTargetIds,
+      );
+      return playResult === "completed";
     }
     case "playGrouped": {
       const playingSeat = action.source.player === "self" ? controller : otherSeat(controller);
@@ -5016,13 +5147,9 @@ export function processEffectAction(
         return result.supported && result.matches;
       });
       const card = getCardForInstance(state, revealedInstanceId);
-      if (
-        !conditionalPlay ||
-        !matches ||
-        owner !== controller ||
-        card.cardType !== "character" ||
-        getOpenCharacterSlots(state, controller).length === 0
-      ) {
+      // 3-7-6-1 keeps the play legal even into a full Character area, so the
+      // choice is offered regardless of open slots.
+      if (!conditionalPlay || !matches || owner !== controller || card.cardType !== "character") {
         revealed.faceUp = false;
         revealed.publicKnowledge = false;
         return true;

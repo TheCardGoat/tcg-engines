@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   CyberpunkTestEngine,
-  P1,
   P2,
   createMockUnit,
   expectEligibleTargets,

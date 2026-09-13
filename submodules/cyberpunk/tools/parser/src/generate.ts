@@ -2,13 +2,11 @@ import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import type {
   Ability,
-  AlphaCardDefinition,
   CardKeyword,
   CardType,
   PromoCardDefinition,
   Prm01CardDefinition,
   BoxToppersRetailCardDefinition,
-  SpoilerCardDefinition,
   StructuredCardDefinition,
   TheHeistRetailStarterDeckCardDefinition,
   EmbracingPowerRetailStarterDeckCardDefinition,
@@ -16,19 +14,15 @@ import type {
 } from "@tcg/cyberpunk-types";
 import { loadGeneratedCards } from "./load-generated.ts";
 import {
-  parseAlphaCards,
   parseBoxToppersRetailCards,
   parseEmbracingPowerRetailStarterDeckCards,
   parsePromoCards,
   parsePrm01Cards,
-  parseSpoilerCards,
   parseTheHeistRetailStarterDeckCards,
   parseWelcomeToNightCityRetailCards,
 } from "./parser.ts";
 
 type StructuredSetCardDefinition =
-  | AlphaCardDefinition
-  | SpoilerCardDefinition
   | PromoCardDefinition
   | Prm01CardDefinition
   | BoxToppersRetailCardDefinition
@@ -63,8 +57,6 @@ export interface GenerateStructuredCardFilesOptions {
 }
 
 export interface GenerateStructuredCardFilesResult {
-  alphaCards: AlphaCardDefinition[];
-  spoilerCards: SpoilerCardDefinition[];
   promoCards: PromoCardDefinition[];
   prm01Cards: Prm01CardDefinition[];
   boxToppersRetailCards: BoxToppersRetailCardDefinition[];
@@ -89,18 +81,6 @@ interface ExistingCardFile {
 }
 
 const SET_CONFIGS: readonly SetConfig[] = [
-  {
-    code: "alpha",
-    prefix: "alpha",
-    cardsExportName: "alphaCards",
-    getBySlugName: "getAlphaCardBySlug",
-  },
-  {
-    code: "spoiler",
-    prefix: "spoiler",
-    cardsExportName: "spoilerCards",
-    getBySlugName: "getSpoilerCardBySlug",
-  },
   {
     code: "promo",
     prefix: "promo",
@@ -889,8 +869,6 @@ export async function generateStructuredCardFiles(
   const existingFiles = await readExistingCardFiles(options.outputDir);
   const existingIds = buildExistingCardIds(existingFiles);
   const generatedCards = await loadGeneratedCards(options.generatedFilePath);
-  const alphaCards = preserveExistingIds(parseAlphaCards(generatedCards), existingIds);
-  const spoilerCards = preserveExistingIds(parseSpoilerCards(generatedCards), existingIds);
   const promoCards = preserveExistingIds(parsePromoCards(generatedCards), existingIds);
   const prm01Cards = preserveExistingIds(parsePrm01Cards(generatedCards), existingIds);
   const boxToppersRetailCards = preserveExistingIds(
@@ -916,43 +894,33 @@ export async function generateStructuredCardFiles(
     ...welcomeToNightCityRetailCards,
   ] satisfies StructuredCardDefinition[];
 
-  await writeSetFiles(options.outputDir, SET_CONFIGS[0], alphaCards, existingFiles);
-  await writeSetFiles(options.outputDir, SET_CONFIGS[1], spoilerCards, existingFiles);
-  await writeSetFiles(options.outputDir, SET_CONFIGS[2], promoCards, existingFiles);
-  await writeSetFiles(options.outputDir, SET_CONFIGS[3], prm01Cards, existingFiles);
-  await writeSetFiles(options.outputDir, SET_CONFIGS[4], boxToppersRetailCards, existingFiles);
+  await writeSetFiles(options.outputDir, SET_CONFIGS[0], promoCards, existingFiles);
+  await writeSetFiles(options.outputDir, SET_CONFIGS[1], prm01Cards, existingFiles);
+  await writeSetFiles(options.outputDir, SET_CONFIGS[2], boxToppersRetailCards, existingFiles);
   await writeSetFiles(
     options.outputDir,
-    SET_CONFIGS[5],
+    SET_CONFIGS[3],
     theHeistRetailStarterDeckCards,
     existingFiles,
   );
   await writeSetFiles(
     options.outputDir,
-    SET_CONFIGS[6],
+    SET_CONFIGS[4],
     embracingPowerRetailStarterDeckCards,
     existingFiles,
   );
   await writeSetFiles(
     options.outputDir,
-    SET_CONFIGS[7],
+    SET_CONFIGS[5],
     welcomeToNightCityRetailCards,
     existingFiles,
   );
   await writeFile(
     join(options.outputDir, "card-metadata.ts"),
-    renderMetadataFile([
-      ...alphaCards,
-      ...spoilerCards,
-      ...promoCards,
-      ...prm01Cards,
-      ...retailCards,
-    ]),
+    renderMetadataFile([...promoCards, ...prm01Cards, ...retailCards]),
   );
 
   return {
-    alphaCards,
-    spoilerCards,
     promoCards,
     prm01Cards,
     boxToppersRetailCards,

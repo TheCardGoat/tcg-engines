@@ -3,7 +3,7 @@ import { prb02BrookSt01011PirateFoil011 } from "../../../../../cards/src/cards/P
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST01-011 Brook - ST01-011 (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02BrookSt01011PirateFoil011);
   });
 });

@@ -1,0 +1,16 @@
+# Source snapshots and generated development catalogs are local-only.
+.cache/
+packages/cards/src/generated.local.ts
+packages/cards/src/generated.local.json
+.exports/
+artifacts/
+screenshots/
+
+# Workspace intermediates.
+node_modules/
+dist/
+coverage/
+.vite/
+*.tsbuildinfo
+*.log
+*.tmp

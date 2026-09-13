@@ -36,66 +36,67 @@ export const eb03IKnewYouPeopleWereBehindThis049: EventCard = {
         ],
         actions: [
           {
-            action: "play",
-            source: {
-              player: "self",
-              zone: ["hand", "trash"],
-            },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
-              {
-                filter: "cost",
-                comparison: "lte",
-                value: 6,
-              },
-              {
-                filter: "trait",
-                value: "Thriller Bark Pirates",
-                match: "includes",
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
-              },
-            ],
-            condition: {
+            action: "conditional",
+            predicate: {
               condition: "leaderName",
               name: "Perona",
             },
-          },
-          {
-            action: "play",
-            source: {
-              player: "self",
-              zone: ["hand", "trash"],
-            },
-            count: {
-              amount: 1,
-              upTo: true,
-            },
-            filters: [
+            whenTrue: [
               {
-                filter: "cost",
-                comparison: "lte",
-                value: 4,
+                action: "play",
+                source: {
+                  player: "self",
+                  zone: ["hand", "trash"],
+                },
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 6,
+                  },
+                  {
+                    filter: "trait",
+                    value: "Thriller Bark Pirates",
+                    match: "includes",
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "character",
+                  },
+                ],
               },
               {
-                filter: "trait",
-                value: "Thriller Bark Pirates",
-                match: "includes",
-              },
-              {
-                filter: "cardCategory",
-                value: "character",
+                action: "play",
+                source: {
+                  player: "self",
+                  zone: ["hand", "trash"],
+                },
+                count: {
+                  amount: 1,
+                  upTo: true,
+                },
+                filters: [
+                  {
+                    filter: "cost",
+                    comparison: "lte",
+                    value: 4,
+                  },
+                  {
+                    filter: "trait",
+                    value: "Thriller Bark Pirates",
+                    match: "includes",
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "character",
+                  },
+                ],
               },
             ],
-            condition: {
-              condition: "leaderName",
-              name: "Perona",
-            },
           },
         ],
         optional: true,

@@ -5,10 +5,11 @@ import { quickAbility } from "@tcg/cyberpunk-types";
 export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = defineCyberpunkCard({
   id: "e64e2978-695b-4fc5-b17b-62c710a11c47",
   slug: "river-ward-detective-on-the-hunt",
+  subname: "Detective on the Hunt",
   rulesText:
     "{Quick} {Spend} Play a Gear with cost 2 or less from your hand for free.\nWhen a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
-  name: "River Ward — Detective on the Hunt",
-  displayName: "River Ward — Detective on the Hunt",
+  name: "River Ward",
+  displayName: "River Ward: Detective on the Hunt",
   canonicalId: "river-ward-detective-on-the-hunt",
   color: "yellow",
   classifications: ["NCPD"],

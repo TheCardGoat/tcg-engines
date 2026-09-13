@@ -132,6 +132,8 @@
     "@sveltejs/vite-plugin-svelte": "^7.0.0",
     "@tailwindcss/vite": "4.1.18",
     "@tcg/game-page-contract": "link:../../../../agnostic-simulator/packages/game-page-contract",
+    "@tcg/gateway-client": "link:../../../../agnostic-simulator/packages/gateway-client",
+    "@tcg/simulator-runtime": "link:../../../../agnostic-simulator/packages/simulator-runtime",
     "@tcg/simulator-testing": "link:../../../../agnostic-simulator/packages/simulator-testing",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/svelte": "^5.3.1",

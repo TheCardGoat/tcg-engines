@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "types": ["node"],
+    "resolveJsonModule": true
+  },
+  "include": ["src", "scripts/performance-sweep.ts"],
+  "exclude": ["src/rules/card-behavior/plans/**"]
+}

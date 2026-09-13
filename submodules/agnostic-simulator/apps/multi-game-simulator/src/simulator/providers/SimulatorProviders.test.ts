@@ -1,10 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
-import { createElement } from "react";
 import type { SharedSimulatorRouteData } from "../routeData";
 
-import { buildSimulatorProviderValues, SimulatorProviders } from "./SimulatorProviders";
-import { useSimulatorTransition } from "./transition-context";
+import { buildSimulatorProviderValues } from "./SimulatorProviders";
 
 const routeData: SharedSimulatorRouteData = {
   gameSlug: "cyberpunk",
@@ -13,12 +10,44 @@ const routeData: SharedSimulatorRouteData = {
   gameId: "g1",
   matchResolution: null,
   error: null,
-  matchPageData: {
-    viewerSeat: 0,
+  session: {
+    schemaVersion: 2,
+    phase: "playing",
+    revision: 0,
+    viewer: {
+      role: "player",
+      actorId: "p1",
+      userId: "u1",
+      seat: 1,
+      permissions: {
+        act: true,
+        chat: true,
+        propose: true,
+        useManualControls: true,
+        concede: true,
+        spectate: false,
+        viewReplay: false,
+        downloadReplay: false,
+        forkReplay: false,
+      },
+    },
+    capabilities: {
+      actions: true,
+      chat: true,
+      proposals: true,
+      manualControls: true,
+      spectating: true,
+      conceding: true,
+      replay: false,
+    },
+    presence: { players: [] },
+    history: { recentMoves: [], engineLogs: [] },
     realtime: {
       wsUrl: "wss://gateway.example.test",
       ticket: "ticket",
-      protocolVersion: 1,
+      reconnectToken: "reconnect",
+      expiresAt: "2026-07-22T01:00:00.000Z",
+      protocolVersion: 2,
     },
     match: {
       matchId: "m1",
@@ -30,7 +59,7 @@ const routeData: SharedSimulatorRouteData = {
       participants: [
         {
           id: "p1",
-          seat: 0,
+          seat: 1,
           userId: "u1",
           displayName: "Current",
           mmrAtMatch: 1510,
@@ -38,7 +67,7 @@ const routeData: SharedSimulatorRouteData = {
         },
         {
           id: "p2",
-          seat: 1,
+          seat: 2,
           userId: "u2",
           displayName: "Opponent",
           mmrAtMatch: 1490,
@@ -52,8 +81,8 @@ const routeData: SharedSimulatorRouteData = {
       status: "in_progress",
       authority: "server",
       stateVersion: 1,
-      state: {},
-      cardsMaps: { cardInstances: {}, owners: {} },
+      view: {},
+      resources: { cardsMaps: { cardInstances: {}, owners: {} } },
     },
     userSettings: {
       locale: "en-US",
@@ -68,7 +97,6 @@ describe("SimulatorProviders", () => {
       auth: {
         user: {
           id: "u1",
-          email: "player@example.test",
           name: "Account",
           displayUsername: "Player",
           emailVerified: true,
@@ -113,7 +141,7 @@ describe("SimulatorProviders", () => {
     expect(values.game.game?.gameId).toBe("g1");
     expect(values.players.currentPlayer).toMatchObject({ isPremium: true, mmr: 1510 });
     expect(values.players.opponentPlayer).toMatchObject({ isPremium: true, mmr: 1490 });
-    expect(values.userSettings.userSettings?.locale).toBe("en-US");
+    expect(values.userSettings.userSettings).toBeNull();
     expect(values.userSettings.viewerSettings).toMatchObject({
       playerSettings: { animationSpeed: "fast" },
       gameSettings: { cyberpunk: { visual: { cardBackId: "neon" } } },
@@ -124,52 +152,4 @@ describe("SimulatorProviders", () => {
       error: null,
     });
   });
-
-  test("seeds transition state from server-loaded game snapshots", async () => {
-    render(
-      createElement(
-        SimulatorProviders,
-        {
-          auth: null,
-          gameSlug: "cyberpunk",
-          gatewayTicket: null,
-          simulatorRouteData: routeData,
-        },
-        createElement(TransitionProbe),
-      ),
-    );
-
-    await waitFor(() => {
-      expect(screen.getByTestId("display-game").textContent).toBe("g1:1");
-    });
-    expect(screen.getByTestId("authoritative-game").textContent).toBe("g1:1");
-    expect(screen.getByTestId("active-transition").textContent).toBe("none");
-  });
 });
-
-function TransitionProbe() {
-  const transition = useSimulatorTransition();
-  return createElement(
-    "div",
-    null,
-    createElement(
-      "span",
-      { "data-testid": "display-game" },
-      transition.displayGame
-        ? `${transition.displayGame.gameId}:${transition.displayGame.stateVersion}`
-        : "none",
-    ),
-    createElement(
-      "span",
-      { "data-testid": "authoritative-game" },
-      transition.authoritativeGame
-        ? `${transition.authoritativeGame.gameId}:${transition.authoritativeGame.stateVersion}`
-        : "none",
-    ),
-    createElement(
-      "span",
-      { "data-testid": "active-transition" },
-      transition.activeTransition?.id ?? "none",
-    ),
-  );
-}

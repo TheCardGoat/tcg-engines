@@ -33,5 +33,6 @@ describe("OP06-010 Douglas Bullet", () => {
       "south",
     );
     expect(withoutFilm.getView("north").decisions).toHaveLength(0);
+    expect(withoutFilm.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -23,7 +23,7 @@ Each visual pass checks:
 6. reduced motion settles immediately without losing state or information;
 7. desktop and mobile placement does not obstruct primary controls.
 
-## Current audit
+## Previous visual audit
 
 - Opening-hand deal, mulligan redraw, and shield deal are derived from projected
   zone deltas because setup lifecycle changes do not emit `GundamMoveLog` rows.
@@ -43,3 +43,14 @@ Each visual pass checks:
 
 Do not mark this inventory complete while any entry remains
 `implementation-gap` or `automated-only`.
+
+## September 2026 playback simplification
+
+The historical row statuses above are not a fresh visual pass of every recipe.
+This refactor revalidated deployment, drag ownership, mulligan redraw, and
+resource placement in Chromium, plus desktop/mobile start-active-settled
+screenshots and reduced motion. Shared timeline and adapter tests cover lifecycle
+cleanup, privacy, server/local parity, and sequence timing. Command/combat mapping
+tests pass; the previous recipe-specific screenshots were not all recaptured.
+See the shared [playback guide](../../../../../docs/animation-playback.md) for
+ownership and authoring rules.

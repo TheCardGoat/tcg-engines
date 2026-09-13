@@ -1,0 +1,19 @@
+{
+  "name": "@tcg-engines/naruto-workspace",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ci-check": "pnpm -r run typecheck && pnpm -r run test",
+    "ci-check-full": "pnpm -r run typecheck && pnpm -r run test && pnpm -r run build",
+    "scrape:cards": "pnpm --filter @tcg-engines/naruto-scraper run scrape"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 
+import type { GundamPresentation } from "@tcg/gundam-server-adapter";
 import { GundamGameProvider } from "../game/index.ts";
 import type { ViewerId } from "../game/index.ts";
 
@@ -8,12 +9,24 @@ interface GundamGameProps {
   readonly runtime: MatchRuntime;
   readonly staticResources: MatchStaticResources;
   readonly viewerId: ViewerId;
+  readonly presentation?: GundamPresentation;
   readonly children: ReactNode;
 }
 
-export function GundamGame({ runtime, staticResources, viewerId, children }: GundamGameProps) {
+export function GundamGame({
+  runtime,
+  staticResources,
+  viewerId,
+  presentation,
+  children,
+}: GundamGameProps) {
   return (
-    <GundamGameProvider runtime={runtime} staticResources={staticResources} viewerId={viewerId}>
+    <GundamGameProvider
+      runtime={runtime}
+      staticResources={staticResources}
+      viewerId={viewerId}
+      presentation={presentation}
+    >
       {children}
     </GundamGameProvider>
   );

@@ -54,6 +54,7 @@ export const op01SheepSHorn117: EventCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },

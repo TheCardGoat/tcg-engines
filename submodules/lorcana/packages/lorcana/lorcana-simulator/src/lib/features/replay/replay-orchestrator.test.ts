@@ -13,7 +13,9 @@ import {
 } from "./fetch-replay.js";
 import { ReplayOrchestrator } from "./replay-orchestrator.svelte.ts";
 
-function createReplayData(stepOverrides?: Partial<PersistedReplayStep>): PersistedReplayData {
+function createReplayData(options?: {
+  patches?: PersistedReplayStep["patches"];
+}): PersistedReplayData {
   const engine = LorcanaMultiplayerTestEngine.createWithFixture(
     {
       hand: [arielOnHumanLegs],
@@ -53,7 +55,7 @@ function createReplayData(stepOverrides?: Partial<PersistedReplayStep>): Persist
     initialState,
     steps: [
       {
-        patches,
+        patches: options?.patches ?? patches,
         logs: [],
         acceptedMove: {
           stateVersion: 1,
@@ -62,7 +64,6 @@ function createReplayData(stepOverrides?: Partial<PersistedReplayStep>): Persist
           moveId: "inkCard",
           timestamp: Date.now(),
         },
-        ...stepOverrides,
       },
     ],
     metadata: {
@@ -216,73 +217,21 @@ describe("ReplayOrchestrator", () => {
 });
 
 describe("loadReplayBlobForPlayback", () => {
-  it("uses IndexedDB replay data when available", async () => {
-    const localBlob = new Uint8Array([1, 2, 3]).buffer;
-    let remoteFetches = 0;
-
-    const result = await loadReplayBlobForPlayback("game-1", {
-      isReplayStoreAvailable: () => true,
-      loadReplayData: async () => localBlob,
-      fetchReplayBlob: async () => {
-        remoteFetches += 1;
-        return new ArrayBuffer(0);
-      },
-    });
-
-    expect(result).toEqual({ blob: localBlob, source: "indexed-db" });
-    expect(remoteFetches).toBe(0);
-  });
-
-  it("fetches remote replay data when IndexedDB misses", async () => {
+  it("uses the canonical API transport", async () => {
     const remoteBlob = new Uint8Array([4, 5, 6]).buffer;
 
     const result = await loadReplayBlobForPlayback("game-1", {
-      isReplayStoreAvailable: () => true,
-      loadReplayData: async () => null,
       fetchReplayBlob: async () => remoteBlob,
     });
 
     expect(result).toEqual({ blob: remoteBlob, source: "api" });
   });
 
-  it("fetches remote replay data when IndexedDB is unavailable", async () => {
-    const remoteBlob = new Uint8Array([7, 8, 9]).buffer;
-    let localLoads = 0;
-
-    const result = await loadReplayBlobForPlayback("game-1", {
-      isReplayStoreAvailable: () => false,
-      loadReplayData: async () => {
-        localLoads += 1;
-        return null;
-      },
-      fetchReplayBlob: async () => remoteBlob,
-    });
-
-    expect(result).toEqual({ blob: remoteBlob, source: "api" });
-    expect(localLoads).toBe(0);
-  });
-
-  it("fetches remote replay data when IndexedDB read fails", async () => {
-    const remoteBlob = new Uint8Array([10, 11, 12]).buffer;
-
-    const result = await loadReplayBlobForPlayback("game-1", {
-      isReplayStoreAvailable: () => true,
-      loadReplayData: async () => {
-        throw new Error("IndexedDB read failed");
-      },
-      fetchReplayBlob: async () => remoteBlob,
-    });
-
-    expect(result).toEqual({ blob: remoteBlob, source: "api" });
-  });
-
-  it("propagates API fetch errors after IndexedDB miss", async () => {
+  it("propagates API fetch errors", async () => {
     const apiError = new Error("API unavailable");
 
     await expect(
       loadReplayBlobForPlayback("game-1", {
-        isReplayStoreAvailable: () => true,
-        loadReplayData: async () => null,
         fetchReplayBlob: async () => {
           throw apiError;
         },

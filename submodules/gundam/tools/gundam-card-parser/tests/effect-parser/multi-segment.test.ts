@@ -6,6 +6,1070 @@ import { describe, expect, test } from "vite-plus/test";
 import { parseEffect } from "../../scripts/parseEffect.ts";
 
 describe("multi-segment effects", () => {
+  test("gates an optional hand-Pilot pairing on a friendly Base condition", () => {
+    const [effect] = parseEffect(
+      "【Deploy】If a friendly white Base is in play, you may pair 1 (AEUG) Pilot card from your hand with this Unit.",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["deploy"],
+        conditions: [{ type: "friendlyBaseInPlay", color: "white" }],
+      },
+      directives: [
+        {
+          action: {
+            action: "pairPilot",
+            target: {
+              owner: "friendly",
+              zone: "hand",
+              cardType: "pilot",
+              count: 1,
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "aeug" }],
+            },
+          },
+          optional: true,
+        },
+      ],
+    });
+  });
+
+  test("parses a named host's pairing-cost override as a continuous substitution", () => {
+    const [effect] = parseEffect(
+      'When playing this card from your hand and pairing it with a Unit with "Gundam NT-1" in its card name, play this card as if it has 0 cost.',
+      "pilot",
+    );
+
+    expect(effect).toEqual({
+      type: "constant",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "pairingCostOverride",
+            cost: 0,
+            unit: {
+              owner: "friendly",
+              cardType: "unit",
+              attributeFilters: [
+                { attribute: "name", comparison: "includes", value: "Gundam NT-1" },
+              ],
+            },
+          },
+        },
+      ],
+      sourceText:
+        'When playing this card from your hand and pairing it with a Unit with "Gundam NT-1" in its card name, play this card as if it has 0 cost.',
+    });
+  });
+
+  test("separates a Burst from a following untimed self-stat effect", () => {
+    const effects = parseEffect(
+      "【Burst】Add this card to your hand.\nIncrease this Unit's AP by an amount equal to the number of (Cyclops Team) Pilot cards/Command cards with unique names in your trash.",
+      "pilot",
+    );
+
+    expect(effects).toHaveLength(2);
+    expect(effects[0]).toMatchObject({
+      type: "triggered",
+      activation: { timing: ["burst"] },
+      directives: [{ action: { action: "addSelfToHand" } }],
+    });
+    expect(effects[1]).toMatchObject({
+      type: "constant",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "statModifierByUniqueNameCount",
+            stat: "ap",
+            amountPerUniqueName: 1,
+          },
+        },
+      ],
+    });
+  });
+
+  test("separates Burst from an untimed rested-unit conditional keyword", () => {
+    const effects = parseEffect(
+      "【Burst】Add this card to your hand.\nIf there are 2 or more other rested Units in play, this Unit gains <Repair 2>.",
+      "pilot",
+    );
+
+    expect(effects).toHaveLength(2);
+    expect(effects[1]).toMatchObject({
+      type: "constant",
+      activation: {
+        conditions: [
+          {
+            type: "unitCount",
+            owner: "any",
+            count: 2,
+            state: "rested",
+            excludeSelf: true,
+          },
+        ],
+      },
+      directives: [{ action: { action: "grantKeyword", keyword: "Repair", keywordValue: 2 } }],
+    });
+  });
+
+  test("separates Burst from a named-unit continuous bonus without double-buffing its host", () => {
+    const effects = parseEffect(
+      '【Burst】Add this card to your hand.\nThis Unit and all your Units with "Gundam Lfrith" or "Gundnode" in their card name get AP+1.',
+      "pilot",
+    );
+
+    expect(effects).toHaveLength(2);
+    expect(effects[1]).toMatchObject({
+      type: "constant",
+      directives: [
+        { action: { action: "statModifier", target: { owner: "self", cardType: "unit" } } },
+        {
+          action: {
+            action: "statModifier",
+            target: {
+              owner: "friendly",
+              excludeSource: true,
+              attributeFilters: [
+                {
+                  attribute: "or",
+                  filters: [
+                    { attribute: "name", comparison: "includes", value: "Gundam Lfrith" },
+                    { attribute: "name", comparison: "includes", value: "Gundnode" },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("separates an opponent-turn once-per-turn observer from a preceding Deploy effect", () => {
+    const effects = parseEffect(
+      "【Deploy】Add 1 of your Shields to your hand.\n【Once per Turn】During your opponent's turn, when one of your Units is rested by one of your opponent's effects, choose 1 enemy Unit. Deal 1 damage to it.",
+      "base",
+    );
+
+    expect(effects).toHaveLength(2);
+    expect(effects[1]).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["onRestedByEnemyEffect"],
+        restrictions: [{ type: "oncePerTurn" }],
+        conditions: [
+          { type: "isTurn", whose: "opponent" },
+          { type: "eventPlayerIsOpponent" },
+          { type: "eventCardMatches", target: { owner: "friendly", cardType: "unit" } },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "dealDamage",
+            amount: 1,
+            target: { owner: "opponent", cardType: "unit", count: 1 },
+          },
+        },
+      ],
+    });
+  });
+
+  test("lifts a linked Pilot's qualified Unit trait into its constant activation", () => {
+    const [effect] = parseEffect(
+      "【During Link】If this is an (AGE System) Unit, it gets AP+1 and <Breach 1>.",
+    );
+
+    expect(effect).toMatchObject({
+      type: "constant",
+      activation: {
+        conditions: [{ type: "duringLink" }, { type: "linkedUnitHasTrait", trait: "age system" }],
+      },
+      directives: [
+        {
+          action: {
+            action: "statModifier",
+            stat: "ap",
+            amount: 1,
+            target: { owner: "self", cardType: "unit" },
+          },
+        },
+        {
+          action: {
+            action: "grantKeyword",
+            keyword: "Breach",
+            keywordValue: 1,
+            target: { owner: "self", cardType: "unit" },
+          },
+        },
+      ],
+    });
+  });
+
+  test("uses the chosen Unit's trait to gate a following draw", () => {
+    const [effect] = parseEffect(
+      "【When Linked】Choose 1 of your other Units. It gains <Repair 2> during this turn. Then, if it is a (Jupitris) Unit, draw 1. (At the end of your turn, this Unit recovers the specified number of HP.)",
+      "pilot",
+    );
+
+    expect(effect.directives).toMatchObject([
+      {
+        action: {
+          action: "grantKeyword",
+          keyword: "Repair",
+          keywordValue: 2,
+          duration: "thisTurn",
+          target: {
+            owner: "friendly",
+            cardType: "unit",
+            excludeSource: true,
+            count: 1,
+          },
+        },
+      },
+      {
+        action: {
+          action: "drawIfTargetMatches",
+          count: 1,
+          target: {
+            owner: "friendly",
+            cardType: "unit",
+            excludeSource: true,
+            count: 1,
+            attributeFilters: [{ attribute: "trait", comparison: "includes", value: "jupitris" }],
+          },
+        },
+      },
+    ]);
+  });
+
+  test("keeps a battling opponent predicate on a conditional self keyword grant", () => {
+    const [effect] = parseEffect(
+      "During your turn, while this Unit is battling an enemy Unit with a 【Destroyed】 effect, it gains <First Strike>.",
+    );
+    expect(effect).toMatchObject({
+      type: "constant",
+      activation: { conditions: [{ type: "isTurn", whose: "friendly" }] },
+      directives: [
+        {
+          action: {
+            action: "grantKeyword",
+            keyword: "FirstStrike",
+            target: {
+              owner: "self",
+              cardType: "unit",
+              isBattling: {
+                opponentMatches: {
+                  owner: "opponent",
+                  cardType: "unit",
+                  attributeFilters: [
+                    { attribute: "effectTiming", comparison: "includes", value: "destroyed" },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("keeps destroy-self separate from the chosen enemy damage target", () => {
+    const [effect] = parseEffect(
+      "【Activate･Main】Rest this Unit：Destroy this and choose 1 enemy Unit that is Lv.5 or lower. Deal 1 damage to it.",
+    );
+    expect(effect.directives).toMatchObject([
+      { action: { action: "destroy", target: { owner: "self", cardType: "unit", count: 1 } } },
+      {
+        action: {
+          action: "dealDamage",
+          amount: 1,
+          target: {
+            owner: "opponent",
+            cardType: "unit",
+            count: 1,
+            attributeFilters: [{ attribute: "level", comparison: "lte", value: 5 }],
+          },
+        },
+      },
+    ]);
+  });
+
+  test("parses observer triggers for deployment, EX Resources, and Command activation", () => {
+    const [deployment] = parseEffect(
+      "When another friendly (G Generation) Unit that is Lv.3 is deployed, this Unit gains <Breach 1> during this turn.",
+    );
+    const [exResource] = parseEffect(
+      "When you place an EX Resource, choose 1 of your (AGE System) Units. It gains <High-Maneuver> during this turn.",
+    );
+    const [command] = parseEffect(
+      "When you activate a Command's 【Main】/【Action】 effect, choose 1 enemy Unit. It gets AP-2 during this turn.",
+    );
+
+    expect(deployment).toMatchObject({
+      type: "triggered",
+      activation: { timing: ["deploy"] },
+      directives: [{ action: { action: "grantKeyword", keyword: "Breach", keywordValue: 1 } }],
+    });
+    expect(exResource.activation).toMatchObject({
+      timing: ["onExResourcePlaced"],
+      conditions: [{ type: "eventPlayerIsSelf" }],
+    });
+    expect(command.activation).toMatchObject({
+      timing: ["onCommandEffectActivated"],
+      conditions: [{ type: "eventPlayerIsSelf" }],
+    });
+  });
+
+  test("keeps the controller and friendly Unit gates on paid Unit-effect observers", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】During your turn, when you pay ① or more for a friendly Unit's effect, this Base recovers 2 HP.",
+    );
+
+    expect(effect.activation).toEqual({
+      timing: ["onUnitEffectCostPaid"],
+      conditions: [
+        { type: "isTurn", whose: "friendly" },
+        { type: "eventPlayerIsSelf" },
+        {
+          type: "eventCardMatches",
+          target: { owner: "friendly", cardType: "unit" },
+        },
+      ],
+      restrictions: [{ type: "oncePerTurn" }],
+    });
+  });
+
+  test("deduplicates end-of-turn observers after the first qualifying Unit-effect payment", () => {
+    const [effect] = parseEffect(
+      "【During Link】At the end of a turn where you have paid ① or more for one of your other (Militia)/(Dianna Counter) Units' effects, choose 1 of your (Militia) Units. Set it as active.",
+    );
+
+    expect(effect.activation).toEqual({
+      timing: ["onUnitEffectCostPaid"],
+      restrictions: [{ type: "oncePerTurn" }],
+      conditions: [
+        { type: "duringLink" },
+        {
+          type: "eventCardMatches",
+          target: {
+            owner: "friendly",
+            cardType: "unit",
+            excludeSource: true,
+            attributeFilters: [
+              {
+                attribute: "or",
+                filters: [
+                  { attribute: "trait", comparison: "includes", value: "militia" },
+                  {
+                    attribute: "trait",
+                    comparison: "includes",
+                    value: "dianna counter",
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    });
+  });
+
+  test("requires the full optional trash-exile payment before offering a dependent rest", () => {
+    const [effect] = parseEffect(
+      "【Deploy】You may choose 2 (Titans) cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit that is Lv.4 or lower. Rest it.",
+    );
+
+    expect(effect.activation).toEqual({
+      timing: ["deploy"],
+      conditions: [
+        {
+          type: "cardInZone",
+          owner: "friendly",
+          zone: "trash",
+          comparison: "gte",
+          count: 2,
+          hasTrait: "titans",
+        },
+      ],
+    });
+    expect(effect.directives).toMatchObject([
+      {
+        action: {
+          action: "exile",
+          target: { owner: "friendly", zone: "trash", count: 2 },
+        },
+        optional: true,
+      },
+      {
+        action: {
+          action: "rest",
+          target: { owner: "opponent", cardType: "unit", count: 1 },
+        },
+        dependsOnPrevious: true,
+      },
+    ]);
+  });
+
+  test("parses another Unit attacking an enemy Unit as an event-source Breach grant", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】When another Unit attacks an enemy Unit, if this Unit is rested, the attacking Unit gains <Breach 2> during this battle.",
+    );
+
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["attack"],
+        conditions: [
+          { type: "eventSourceMatches", target: { owner: "friendly", excludeSource: true } },
+          { type: "eventAttackTargetsUnit" },
+          { type: "selfIsRested" },
+        ],
+        restrictions: [{ type: "oncePerTurn" }],
+      },
+      directives: [
+        {
+          action: {
+            action: "grantKeywordEventSource",
+            keyword: "Breach",
+            keywordValue: 2,
+            duration: "thisBattle",
+          },
+        },
+      ],
+    });
+  });
+
+  test("binds battle-damage destruction to the source Unit and damaged enemy", () => {
+    const [effect] = parseEffect(
+      "When this Unit deals battle damage to an enemy Unit that is Lv.5 or lower, if you have a (CB) Pilot in play, destroy that enemy Unit.",
+    );
+
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["onBattleDamageDealtToUnit"],
+        conditions: [
+          { type: "eventSourceIsSelf" },
+          {
+            type: "eventCardMatches",
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              attributeFilters: [{ attribute: "level", comparison: "lte", value: 5 }],
+            },
+          },
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "battleArea",
+            cardType: "pilot",
+            hasTrait: "cb",
+          },
+        ],
+      },
+      directives: [{ action: { action: "destroyEventCard" } }],
+    });
+  });
+
+  test("binds a friendly trait battle-damage return to the damaged enemy", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】During your turn, when your (Triple Ship Alliance) Unit deals battle damage to an enemy Unit, you may return the enemy Unit to its owner's hand.",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["onBattleDamageDealtToUnit"],
+        restrictions: [{ type: "oncePerTurn" }],
+        conditions: [
+          { type: "isTurn", whose: "friendly" },
+          {
+            type: "eventSourceMatches",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              attributeFilters: [
+                { attribute: "trait", comparison: "includes", value: "triple ship alliance" },
+              ],
+            },
+          },
+          { type: "eventCardMatches", target: { owner: "opponent", cardType: "unit" } },
+        ],
+      },
+      directives: [{ optional: true, action: { action: "returnEventCardToHand" } }],
+    });
+  });
+
+  test("Development headers parse their optional exile and dependent effect", () => {
+    const [effect] = parseEffect(
+      "【Deploy・Development 2】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n\r\n■Choose 1 enemy Unit with 4 or less HP. Rest it.",
+    );
+
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: { timing: ["deploy"] },
+      directives: [
+        {
+          action: {
+            action: "exile",
+            target: {
+              owner: "friendly",
+              zone: "trash",
+              count: 2,
+              attributeFilters: [
+                {
+                  attribute: "trait",
+                  comparison: "includes",
+                  value: "g generation",
+                },
+              ],
+            },
+          },
+          optional: true,
+        },
+        {
+          action: {
+            action: "rest",
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              count: 1,
+              attributeFilters: [{ attribute: "hp", comparison: "lte", value: 4 }],
+            },
+          },
+          dependsOnPrevious: true,
+        },
+      ],
+    });
+  });
+
+  test("parses a destroyed card's self-exile into a dependent named Base deployment", () => {
+    const [effect] = parseEffect(
+      '【Destroyed】You may exile this card in your trash from the game. If you do, you may deploy 1 Base card with "Presidential Office" in its card name from your hand.',
+    );
+
+    expect(effect.directives).toMatchObject([
+      { action: { action: "exileSelf" }, optional: true },
+      {
+        action: {
+          action: "deploy",
+          target: {
+            owner: "friendly",
+            cardType: "base",
+            zone: "hand",
+            count: 1,
+            attributeFilters: [
+              { attribute: "name", comparison: "includes", value: "Presidential Office" },
+            ],
+          },
+        },
+        optional: true,
+        dependsOnPrevious: true,
+      },
+    ]);
+  });
+
+  test("parses the named-friendly Unit count into a rested-deployment replacement", () => {
+    const [effect] = parseEffect(
+      'Count up the number of your Units with "Gundam Lfrith"/"Gundnode" in their card name, plus this Unit. All enemy Units whose Lv. is equal to or lower than that number are deployed rested.',
+    );
+
+    expect(effect.directives).toEqual([
+      {
+        action: {
+          action: "deployRestedByFriendlyNameCount",
+          names: ["Gundam Lfrith", "Gundnode"],
+          target: { owner: "opponent", cardType: "unit", isToken: false, count: "all" },
+        },
+      },
+    ]);
+  });
+
+  test("parses battle-damage prevention against a battling enemy Blocker", () => {
+    const [effect] = parseEffect(
+      "During your turn, while this Unit is battling an enemy Unit with <Blocker>, this Unit can't receive battle damage.",
+    );
+
+    expect(effect).toMatchObject({
+      type: "constant",
+      activation: { conditions: [{ type: "isTurn", whose: "friendly" }] },
+      directives: [
+        {
+          action: {
+            action: "preventDamage",
+            target: { owner: "self", cardType: "unit" },
+            unitFilter: {
+              owner: "opponent",
+              cardType: "unit",
+              hasKeyword: "Blocker",
+              isBattling: true,
+            },
+            damageType: "battle",
+          },
+        },
+      ],
+    });
+  });
+
+  test("keeps the blocking enemy Unit's level limit on battle-damage prevention", () => {
+    const [effect] = parseEffect(
+      "When this Unit is blocked by an enemy Unit that is Lv.4 or lower, it can't receive battle damage during this battle.",
+      "pilot",
+    );
+
+    expect(effect).toMatchObject({
+      activation: { timing: ["onBlocked"], conditions: [{ type: "eventCardIsSelf" }] },
+      directives: [
+        {
+          action: {
+            action: "preventDamage",
+            unitFilter: {
+              owner: "opponent",
+              cardType: "unit",
+              attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("returns damage to the bounded enemy Unit that dealt battle damage to this Base", () => {
+    const [effect] = parseEffect(
+      "When this Base receives battle damage from an enemy Unit with 3 or less AP, deal 1 damage to that Unit.",
+      "base",
+    );
+
+    expect(effect).toMatchObject({
+      activation: { timing: ["onBattleDamageReceived"], conditions: [{ type: "eventCardIsSelf" }] },
+      directives: [
+        {
+          action: {
+            action: "dealDamageEventSource",
+            amount: 1,
+            sourceFilter: {
+              owner: "opponent",
+              cardType: "unit",
+              attributeFilters: [{ attribute: "ap", comparison: "lte", value: 3 }],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("grants an attack-time keyword only while battling a damaged enemy Unit", () => {
+    const [effect] = parseEffect(
+      "【Attack】If you are attacking a damaged enemy Unit, this Unit gains <Breach 3> during this battle. (When this Unit's attack destroys an enemy Unit, deal the specified amount of damage to the first card in that opponent's shield area.)",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      type: "constant",
+      directives: [
+        {
+          action: {
+            action: "grantKeyword",
+            keyword: "Breach",
+            keywordValue: 3,
+            duration: "thisBattle",
+            target: {
+              owner: "self",
+              cardType: "unit",
+              isBattling: {
+                opponentMatches: { owner: "opponent", cardType: "unit", state: "damaged" },
+              },
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("adds a trash gate and keyword-bearing active enemy filter to a paired attack option", () => {
+    const [effect] = parseEffect(
+      "【During Pair･(Vulture) Pilot】If there are 7 or more cards in your trash, this Unit may choose an active enemy Unit with a keyword effect as its attack target.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      type: "constant",
+      activation: {
+        conditions: [
+          { type: "duringPair" },
+          { type: "cardInZone", owner: "friendly", zone: "trash", comparison: "gte", count: 7 },
+        ],
+        qualification: { attribute: "trait", comparison: "includes", value: "vulture" },
+      },
+      directives: [
+        {
+          action: {
+            action: "chooseAttackTarget",
+            unit: { owner: "self", cardType: "unit", count: 1 },
+            attackTarget: {
+              owner: "opponent",
+              cardType: "unit",
+              state: "active",
+              hasAnyKeyword: true,
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("parses a self-destruction cost and the battling enemy Base or Shield target", () => {
+    const [effect] = parseEffect(
+      "【Activate･Action】Destroy this Unit：Choose 1 enemy Base/enemy Shield this Unit is battling. Deal 6 damage to it.",
+    );
+
+    expect(effect).toEqual({
+      type: "activated",
+      activation: { timing: ["activate:action"] },
+      cost: { destroySelf: true },
+      directives: [
+        {
+          action: {
+            action: "dealDamage",
+            amount: 6,
+            target: {
+              owner: "opponent",
+              attributeFilters: [
+                {
+                  attribute: "or",
+                  filters: [
+                    { attribute: "zone", comparison: "eq", value: "baseSection" },
+                    { attribute: "zone", comparison: "eq", value: "shieldArea" },
+                  ],
+                },
+              ],
+              isBattling: true,
+              count: 1,
+            },
+          },
+        },
+      ],
+      sourceText:
+        "【Activate·Action】Destroy this Unit：Choose 1 enemy Base/enemy Shield this Unit is battling. Deal 6 damage to it.",
+    });
+  });
+
+  test("parses one opponent-owned return choice per enemy player", () => {
+    const [effect] = parseEffect(
+      "【Deploy】Choose 1 Unit with 4 or less HP belonging to each enemy player. Return them to their owners' hands.",
+    );
+    expect(effect.directives).toMatchObject([
+      {
+        action: {
+          action: "queueEffectForPlayers",
+          scope: "opponents",
+          effect: {
+            directives: [
+              {
+                action: {
+                  action: "returnToHand",
+                  target: { owner: "friendly", cardType: "unit", count: 1 },
+                },
+              },
+            ],
+          },
+        },
+      },
+    ]);
+  });
+
+  test("Development can draw then discard once per opposing player", () => {
+    const [effect] = parseEffect(
+      "【Deploy・Development 2】You may exile the specified number of (G Generation) cards in your trash from the game. If you do, activate the following effect:\n■Draw a number of cards equal to the number of enemy players. Then, discard the same number of cards you drew with this effect.",
+    );
+
+    expect(effect.directives).toEqual([
+      expect.objectContaining({ action: expect.objectContaining({ action: "exile" }) }),
+      {
+        action: { action: "drawThenDiscardByOpponentCount" },
+        dependsOnPrevious: true,
+      },
+    ]);
+  });
+
+  test("one chosen Unit receives both recovery and the printed AP modifier", () => {
+    const [effect] = parseEffect(
+      "【Main】/【Action】Choose 1 (G Generation) Unit that is Lv.5 or higher. It recovers 2 HP and gets AP+2 during this turn.",
+    );
+
+    expect(effect.directives).toEqual([
+      {
+        action: {
+          action: "recoverHP",
+          amount: 2,
+          target: expect.objectContaining({ cardType: "unit", count: 1 }),
+        },
+      },
+      {
+        action: {
+          action: "statModifier",
+          stat: "ap",
+          amount: 2,
+          duration: "thisTurn",
+          target: expect.objectContaining({ cardType: "unit", count: 1 }),
+        },
+      },
+    ]);
+  });
+
+  test("a card-in-play condition gates the action on the chosen enemy Unit", () => {
+    const [effect] = parseEffect(
+      "【Action】If a friendly (G Generation) Unit is in play, choose 1 enemy Unit. It gets AP-3 during this battle.",
+    );
+
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["action"],
+        conditions: [{ type: "unitCount", owner: "friendly", hasTrait: "g generation" }],
+      },
+      directives: [
+        {
+          action: {
+            action: "statModifier",
+            stat: "ap",
+            amount: -3,
+            duration: "thisBattle",
+            target: expect.objectContaining({ owner: "opponent", cardType: "unit", count: 1 }),
+          },
+        },
+      ],
+    });
+  });
+
+  test("draws before a named-trash conditional follow-up", () => {
+    const [effect] = parseEffect(
+      '【Main】Draw 1. Then, if there are 2 or more cards with "A Healthy Curiosity" in their card name in your trash, choose 1 enemy Unit with 4 or less HP. Rest it.',
+    );
+
+    expect(effect.directives).toEqual([
+      {
+        action: {
+          action: "resolveThenQueue",
+          first: { action: "draw", count: 1 },
+          condition: {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "trash",
+            cardType: "command",
+            comparison: "gte",
+            count: 2,
+            hasName: "A Healthy Curiosity",
+          },
+          followUp: {
+            type: "triggered",
+            activation: { timing: [] },
+            directives: [
+              {
+                action: {
+                  action: "rest",
+                  target: {
+                    owner: "opponent",
+                    cardType: "unit",
+                    count: 1,
+                    attributeFilters: [{ attribute: "hp", comparison: "lte", value: 4 }],
+                  },
+                },
+              },
+            ],
+            sourceText: "Choose 1 enemy Unit with 4 or less HP. Rest it.",
+          },
+        },
+      },
+    ]);
+  });
+
+  test("broadens a damage target when enough named cards are in trash", () => {
+    const [effect] = parseEffect(
+      '【Main】/【Action】Choose 1 enemy Unit that is Lv.4 or lower. Deal 3 damage to it. If there are 2 or more cards with "Improved Technique" in their card name in your trash, choose 1 enemy Unit instead.',
+    );
+
+    expect(effect).toMatchObject({
+      type: "command",
+      activation: { timing: ["main", "action"] },
+      directives: [
+        {
+          condition: {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "trash",
+            cardType: "command",
+            comparison: "gte",
+            count: 2,
+            hasName: "Improved Technique",
+          },
+          thenDirectives: [
+            { action: { action: "dealDamage", amount: 3, target: { owner: "opponent" } } },
+          ],
+          elseDirectives: [
+            {
+              action: {
+                action: "dealDamage",
+                amount: 3,
+                target: {
+                  owner: "opponent",
+                  attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+                },
+              },
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  test("gates an optional friendly Blocker grant behind the named-trash condition", () => {
+    const [effect] = parseEffect(
+      '【Action】Choose 1 rested enemy Unit that is Lv.4 or lower. Return it to its owner\'s hand. Then, if there are 2 or more cards with "Awakened Potential" in their card name in your trash, you may choose 1 friendly Unit. It gains <Blocker> during this turn.',
+    );
+
+    expect(effect.directives).toEqual([
+      {
+        action: {
+          action: "returnToHand",
+          target: {
+            owner: "opponent",
+            cardType: "unit",
+            state: "rested",
+            count: 1,
+            attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+          },
+        },
+      },
+      {
+        condition: {
+          type: "cardInZone",
+          owner: "friendly",
+          zone: "trash",
+          cardType: "command",
+          comparison: "gte",
+          count: 2,
+          hasName: "Awakened Potential",
+        },
+        thenDirectives: [
+          {
+            action: {
+              action: "grantKeyword",
+              keyword: "Blocker",
+              duration: "thisTurn",
+              target: { owner: "friendly", cardType: "unit", count: 1 },
+            },
+            optional: true,
+          },
+        ],
+      },
+    ]);
+  });
+
+  test("parses optional named-Pilot pairing from hand", () => {
+    const [effect] = parseEffect(
+      '【Deploy】You may pair 1 Pilot card with "Ali al-Saachez" in its card name from your hand with this Unit.',
+    );
+
+    expect(effect.directives).toEqual([
+      {
+        action: {
+          action: "pairPilot",
+          target: {
+            owner: "friendly",
+            cardType: "pilot",
+            zone: "hand",
+            count: 1,
+            attributeFilters: [
+              { attribute: "name", comparison: "includes", value: "Ali al-Saachez" },
+            ],
+          },
+        },
+        optional: true,
+      },
+    ]);
+  });
+
+  test("a Command can declare a typed discard-for-level-and-cost substitution", () => {
+    const effects = parseEffect(
+      "When playing this card from your hand, you may discard 1 (G Generation) Unit card. If you do, play this card as if it has 2 Lv. and cost.\n【Main】Draw 2.",
+    );
+
+    expect(effects[0]).toEqual({
+      type: "substitution",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "playCostSubstitution",
+            level: 2,
+            cost: 2,
+            discardTarget: expect.objectContaining({
+              owner: "friendly",
+              zone: "hand",
+              cardType: "unit",
+              count: 1,
+            }),
+          },
+        },
+      ],
+      sourceText:
+        "When playing this card from your hand, you may discard 1 (G Generation) Unit card. If you do, play this card as if it has 2 Lv. and cost.",
+    });
+    expect(effects[1]?.directives).toEqual([{ action: { action: "draw", count: 2 } }]);
+  });
+
+  test("a Unit can declare an optional Link-Unit destruction substitution", () => {
+    const [effect] = parseEffect(
+      'When playing this card from your hand, you may destroy 1 of your Link Units with "Unicorn Mode" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.',
+    );
+
+    expect(effect).toEqual({
+      type: "substitution",
+      activation: {},
+      directives: [
+        {
+          action: {
+            action: "deployCostSubstitution",
+            level: 0,
+            cost: 0,
+            destroyTarget: {
+              owner: "friendly",
+              zone: "battleArea",
+              cardType: "unit",
+              count: 1,
+              isLinkUnit: true,
+              attributeFilters: [
+                { attribute: "name", comparison: "includes", value: "Unicorn Mode" },
+                { attribute: "level", comparison: "eq", value: 5 },
+              ],
+            },
+          },
+          optional: true,
+        },
+      ],
+      sourceText:
+        'When playing this card from your hand, you may destroy 1 of your Link Units with "Unicorn Mode" in its card name that is Lv.5. If you do, play this card as if it has 0 Lv. and cost.',
+    });
+  });
+
+  test("an optional chosen cost target makes its following action optional", () => {
+    const [effect] = parseEffect(
+      "【Deploy】You may choose 1 of your other active (Earth Alliance) Units. Rest it. If you do, choose 1 rested enemy Unit. Deal 2 damage to it.",
+    );
+
+    expect(effect.directives[0]).toMatchObject({
+      action: { action: "rest", target: { owner: "friendly", cardType: "unit", count: 1 } },
+      optional: true,
+    });
+    expect(effect.directives[1]).toMatchObject({
+      action: { action: "dealDamage", amount: 2, target: { owner: "opponent" } },
+      dependsOnPrevious: true,
+    });
+  });
+
   test("During Pair keyword and following friendly-turn shield trigger remain separate", () => {
     const effects = parseEffect(
       "【During Pair】This Unit gains <High-Maneuver>.\n(This Unit can't be blocked.)\nDuring your turn, when this Unit destroys an enemy shield area card with battle damage, choose 1 enemy Unit. Deal 2 damage to it.",
@@ -112,6 +1176,34 @@ describe("multi-segment effects", () => {
 });
 
 describe("multi-step single segment", () => {
+  test("keeps leading enemy-count token deployments in their mutually exclusive branches", () => {
+    const [effect] = parseEffect(
+      "【Main】If 1 to 4 enemy Units are in play, deploy 1 [Scout]((Test)·AP2·HP2) Unit token. If 5 or more are in play, deploy 1 [Vanguard]((Test)·AP4·HP4) Unit token.",
+      "command",
+    );
+
+    expect(effect.directives).toMatchObject([
+      {
+        condition: {
+          type: "and",
+          conditions: [
+            { type: "unitCount", owner: "opponent", comparison: "gte", count: 1 },
+            { type: "unitCount", owner: "opponent", comparison: "lte", count: 4 },
+          ],
+        },
+        thenDirectives: [
+          { action: { action: "deployToken", token: { name: "Scout", ap: 2, hp: 2 } } },
+        ],
+      },
+      {
+        condition: { type: "unitCount", owner: "opponent", comparison: "gte", count: 5 },
+        thenDirectives: [
+          { action: { action: "deployToken", token: { name: "Vanguard", ap: 4, hp: 4 } } },
+        ],
+      },
+    ]);
+  });
+
   test("conditional token alternatives become a choose-one directive", () => {
     const [effect] = parseEffect(
       "【Main】If you have no (Earth Alliance) Unit tokens in play, deploy 1 [Sword Strike Gundam]((Earth Alliance)·AP4·HP2·<Blocker>) or 1 [Launcher Strike Gundam]((Earth Alliance)·AP2·HP4·<Blocker>) Unit token.",
@@ -205,10 +1297,7 @@ describe("multi-step single segment", () => {
 
     const twoOrMore = (oneUnit as { elseDirectives: unknown[] }).elseDirectives[0];
     expect(twoOrMore).toMatchObject({
-      condition: { type: "unitCount", owner: "friendly", comparison: "gte", count: 2 },
-      thenDirectives: [
-        { action: { action: "deployToken", token: { name: "Guntank", ap: 2, hp: 4 } } },
-      ],
+      action: { action: "deployToken", token: { name: "Guntank", ap: 2, hp: 4 } },
     });
   });
 
@@ -297,6 +1386,9 @@ describe("multi-step single segment", () => {
         },
       ],
     });
+    expect(effects[2]).not.toMatchObject({
+      directives: [{ action: { unitFilter: { excludeSource: true } } }],
+    });
   });
 
   test("ST07-009 preserves the 7-card instead branch and temporary duration", () => {
@@ -365,7 +1457,7 @@ describe("multi-step single segment", () => {
     expect(effects[1]).toMatchObject({
       activation: {
         timing: ["whenPaired"],
-        conditions: [{ type: "duringPair" }, { type: "selfHasTrait", trait: "cb" }],
+        conditions: [{ type: "linkedUnitHasTrait", trait: "cb" }],
       },
       directives: [
         {
@@ -487,6 +1579,229 @@ describe("multi-step single segment", () => {
     });
   });
 
+  test("a linked attack can return chosen trash cards before readying itself", () => {
+    const [effect] = parseEffect(
+      "【During Link】【Attack】Choose 12 cards from your trash. Return them to their owner's deck and shuffle it. If you do, set this Unit as active. It gains <First Strike> during this turn. (While this Unit is attacking, it deals damage before the enemy Unit.)",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["attack"],
+        conditions: [
+          { type: "duringLink" },
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "trash",
+            comparison: "gte",
+            count: 12,
+          },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "returnToDeck",
+            position: "bottom",
+            shuffle: true,
+            target: { owner: "friendly", zone: "trash", count: 12 },
+          },
+        },
+        {
+          action: { action: "setActive", target: { owner: "self", cardType: "unit" } },
+          dependsOnPrevious: true,
+        },
+        {
+          action: {
+            action: "grantKeyword",
+            keyword: "FirstStrike",
+            duration: "thisTurn",
+            target: { owner: "self", cardType: "unit" },
+          },
+          dependsOnPrevious: true,
+        },
+      ],
+    });
+  });
+
+  test("a friendly-turn battle constant retains the opposing Unit's level filter", () => {
+    const [effect] = parseEffect(
+      "During your turn, while this Unit is battling an enemy Unit that is Lv.2 or lower, it gains <First Strike>.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      type: "constant",
+      activation: { conditions: [{ type: "isTurn", whose: "friendly" }] },
+      directives: [
+        {
+          action: {
+            action: "grantKeyword",
+            keyword: "FirstStrike",
+            target: {
+              owner: "self",
+              cardType: "unit",
+              isBattling: {
+                opponentMatches: {
+                  owner: "opponent",
+                  cardType: "unit",
+                  attributeFilters: [{ attribute: "level", comparison: "lte", value: 2 }],
+                },
+              },
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("a paired attack grants this-turn deployment attack permission to a chosen token", () => {
+    const [effect] = parseEffect(
+      "【During Pair】【Attack】Choose 1 of your (Triple Ship Alliance) Unit tokens. It may attack on the turn it is deployed.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["attack"],
+        conditions: [{ type: "duringPair" }, { type: "eventSourceIsSelf" }],
+      },
+      directives: [
+        {
+          action: {
+            action: "allowAttackDeployedThisTurn",
+            duration: "thisTurn",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              isToken: true,
+              count: 1,
+              attributeFilters: [
+                { attribute: "trait", comparison: "includes", value: "triple ship alliance" },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("an attacking Unit can draw when it destroys an enemy Link Unit", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】 When an enemy Link Unit is destroyed with damage while this Unit is attacking, draw 1.",
+      "pilot",
+    );
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["onEnemyLinkUnitDestroyed"],
+        restrictions: [{ type: "oncePerTurn" }],
+        conditions: [{ type: "selfIsAttacking" }],
+      },
+      directives: [{ action: { action: "draw", count: 1 } }],
+    });
+  });
+
+  test("an action activation can recover this Unit when a low-AP enemy is present", () => {
+    const [effect] = parseEffect(
+      "【Activate･Action】【Once per Turn】If an enemy Unit with 1 or less AP is in play, this Unit recovers 1 HP.",
+      "pilot",
+    );
+    expect(effect).toMatchObject({
+      type: "activated",
+      activation: {
+        timing: ["activate:action"],
+        restrictions: [{ type: "oncePerTurn" }],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+            attributeFilters: [{ attribute: "ap", comparison: "lte", value: 1 }],
+          },
+        ],
+      },
+      directives: [
+        { action: { action: "recoverHP", amount: 1, target: { owner: "self", cardType: "unit" } } },
+      ],
+    });
+  });
+
+  test("an action activation gates a choice on a trait-card trash threshold", () => {
+    const [effect] = parseEffect(
+      "【During Link】【Activate･Action】【Once per Turn】If there are 6 or more (Gjallarhorn) cards in your trash, choose 1 enemy Unit battling this Unit. It gets AP-3 during this battle.",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      type: "activated",
+      activation: {
+        timing: ["activate:action"],
+        restrictions: [{ type: "oncePerTurn" }],
+        conditions: [
+          { type: "duringLink" },
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "trash",
+            comparison: "gte",
+            count: 6,
+            hasTrait: "gjallarhorn",
+          },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "statModifier",
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              isBattling: { opponentMatches: { owner: "self", cardType: "unit" } },
+              count: 1,
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("a Main command can rest independent friendly and enemy Unit targets", () => {
+    const [effect] = parseEffect(
+      "【Main】Choose 1 active friendly (Earth Federation) Unit and 1 active enemy Unit. Rest them.",
+      "command",
+    );
+    expect(effect).toMatchObject({
+      type: "command",
+      activation: { timing: ["main"] },
+      directives: [
+        {
+          action: {
+            action: "rest",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              state: "active",
+              count: 1,
+              attributeFilters: [
+                { attribute: "trait", comparison: "includes", value: "earth federation" },
+              ],
+            },
+          },
+        },
+        {
+          action: {
+            action: "rest",
+            target: { owner: "opponent", cardType: "unit", state: "active", count: 1 },
+          },
+        },
+      ],
+    });
+  });
+
   test("ST08-006 keeps the hand-to-bottom cost inside the direct-attack branch", () => {
     const [effect] = parseEffect(
       "【During Pair】【Attack】【Once per Turn】If this Unit is attacking the enemy player, reveal 1 (Earth Federation) Unit card from your hand. Return it to the bottom of your deck. If you do, draw 2.",
@@ -550,7 +1865,7 @@ describe("multi-step single segment", () => {
     expect(effects[1]).toMatchObject({
       activation: {
         timing: ["whenPaired"],
-        conditions: [{ type: "duringPair" }, { type: "selfHasTrait", trait: "mafty" }],
+        conditions: [{ type: "linkedUnitHasTrait", trait: "mafty" }],
       },
       directives: [
         {
@@ -751,6 +2066,265 @@ describe("multi-step single segment", () => {
     );
   });
 
+  test("keeps the friendly trait effect source on a self-recovery Destroyed trigger", () => {
+    const [effect] = parseEffect(
+      "【Destroyed】If this Unit is destroyed by one of your (Neo Zeon) card's effects, add it from your trash to your hand.",
+      "unit",
+    );
+
+    expect(effect).toEqual({
+      type: "triggered",
+      activation: {
+        timing: ["destroyed"],
+        conditions: [
+          {
+            type: "eventSourceMatches",
+            target: {
+              owner: "friendly",
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "neo zeon" }],
+            },
+          },
+        ],
+      },
+      directives: [
+        { action: { action: "addFromTrash", target: { owner: "self", zone: "trash" } } },
+      ],
+      sourceText:
+        "【Destroyed】If this Unit is destroyed by one of your (Neo Zeon) card's effects, add it from your trash to your hand.",
+    });
+  });
+
+  test("queues an enemy player's discard only at the printed hand threshold", () => {
+    const [effect] = parseEffect(
+      "【When Paired･(Phantom Pain) Pilot】Choose 1 enemy player with 4 or more cards in their hand. They discard 1.",
+      "unit",
+    );
+
+    expect(effect).toEqual({
+      type: "triggered",
+      activation: {
+        timing: ["whenPaired"],
+        qualification: { attribute: "trait", comparison: "includes", value: "phantom pain" },
+        conditions: [{ type: "handCount", owner: "opponent", comparison: "gte", count: 4 }],
+      },
+      directives: [
+        {
+          action: {
+            action: "queueEffectForOpponent",
+            effect: {
+              type: "triggered",
+              activation: { timing: [] },
+              directives: [{ action: { action: "discard", count: 1 } }],
+              sourceText: "Choose 1 card from your hand to discard.",
+            },
+          },
+        },
+      ],
+      sourceText:
+        "【When Paired·(Phantom Pain) Pilot】Choose 1 enemy player with 4 or more cards in their hand. They discard 1.",
+    });
+  });
+
+  test("queues a Base rest before choosing the eligible enemy Unit for an AP reduction", () => {
+    const [effect] = parseEffect(
+      "【Attack】Choose 1 active friendly Base. Rest it. If you do, choose 1 enemy Unit that is Lv.4 or lower. It gets AP-2 during this battle.",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["attack"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+            attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+          },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "resolveThenQueue",
+            first: {
+              action: "rest",
+              target: { owner: "friendly", cardType: "base", state: "active", count: 1 },
+            },
+            followUp: {
+              directives: [
+                {
+                  action: {
+                    action: "statModifier",
+                    stat: "ap",
+                    amount: -2,
+                    duration: "thisBattle",
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("queues an optional other-Unit destruction before dealing damage to an eligible enemy", () => {
+    const [effect] = parseEffect(
+      "【During Pair】【Attack】You may choose 1 of your other Units. Destroy it. If you do, choose 1 enemy Unit that is Lv.4 or lower. Deal 2 damage to it.",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["attack"],
+        conditions: [
+          { type: "duringPair" },
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+            attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+          },
+        ],
+      },
+      directives: [
+        {
+          optional: true,
+          action: {
+            action: "resolveThenQueue",
+            first: {
+              action: "destroy",
+              target: { owner: "friendly", cardType: "unit", count: 1, excludeSource: true },
+            },
+            followUp: {
+              directives: [
+                {
+                  action: {
+                    action: "dealDamage",
+                    amount: 2,
+                    target: {
+                      owner: "opponent",
+                      cardType: "unit",
+                      count: 1,
+                      attributeFilters: [{ attribute: "level", comparison: "lte", value: 4 }],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("queues an optional discard before its deck tutor and requires a card in Deck", () => {
+    const [effect] = parseEffect(
+      "【When Paired】You may discard 1. If you do, look at the top 3 cards of your deck. You may reveal 1 (Vulture) Unit card among them and add it to your hand. Return the remaining cards randomly to the bottom of your deck.",
+      "pilot",
+    );
+
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["whenPaired"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "deck",
+            comparison: "gte",
+            count: 1,
+          },
+        ],
+      },
+      directives: [
+        {
+          optional: true,
+          action: {
+            action: "resolveThenQueue",
+            first: { action: "discard", count: 1 },
+            followUp: {
+              directives: [
+                {
+                  action: {
+                    action: "lookAtTopDeck",
+                    count: 3,
+                    return: "chooseTop",
+                    randomizeRemainingToBottom: true,
+                    tutorFilter: {
+                      owner: "friendly",
+                      cardType: "unit",
+                      attributeFilters: [
+                        { attribute: "trait", comparison: "includes", value: "vulture" },
+                      ],
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("queues a trash exile before the enemy Unit it enables", () => {
+    const [effect] = parseEffect(
+      "【Activate･Main】Choose 3 (Tekkadan)/(Teiwaz) Unit cards from your trash. Exile them from the game. If you do, choose 1 enemy Unit. Deal 2 damage to it.",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["activate:main"],
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "battleArea",
+            cardType: "unit",
+            comparison: "gte",
+            count: 1,
+          },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "resolveThenQueue",
+            first: {
+              action: "exile",
+              target: {
+                owner: "friendly",
+                zone: "trash",
+                cardType: "unit",
+                count: 3,
+              },
+            },
+            followUp: {
+              directives: [
+                {
+                  action: {
+                    action: "dealDamage",
+                    amount: 2,
+                    target: { owner: "opponent", cardType: "unit", count: 1 },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
   test("ST09-003 retains the purple-card trash threshold", () => {
     const [effect] = parseEffect(
       "【When Linked】If there are 5 or more purple cards in your trash, deal 2 damage to all Units with 5 or less AP.",
@@ -819,6 +2393,22 @@ describe("multi-step single segment", () => {
     });
   });
 
+  test("promotes a deploy-from-trash gate for an unconditional draw", () => {
+    const [effect] = parseEffect(
+      "【Deploy】If you deploy this Unit from your trash, draw 1.",
+      "unit",
+    );
+
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["deploy"],
+        conditions: [{ type: "deployedFromZone", zone: "trash" }],
+      },
+      directives: [{ action: { action: "draw", count: 1 } }],
+    });
+  });
+
   test("ST09-001 parses both activation costs and the bounded Impulse trash deploy", () => {
     const [effect] = parseEffect(
       '【Activate·Main】②, return this Unit to the bottom of its owner\'s deck：Choose 1 Unit card with "Impulse Gundam" in its card name that is Lv.4 or higher from your trash. Deploy it.',
@@ -869,6 +2459,182 @@ describe("multi-step single segment", () => {
               },
             },
           ],
+        },
+      ],
+    });
+  });
+
+  test("parses an end-of-turn mass rest and the count of Units it actually rested", () => {
+    const [effect] = parseEffect(
+      "<Repair 2> (At the end of your turn, this Unit recovers the specified number of HP.)\nAt the end of your turn, if this Unit is rested, rest all Units. If this effect rested 3 or more Units, draw 1.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: { timing: ["endOfTurn"], conditions: [{ type: "selfIsRested" }] },
+      directives: [
+        { action: { action: "rest", target: { owner: "any", cardType: "unit", count: "all" } } },
+        { action: { action: "drawIfTargetMatches", count: 1, target: { count: 3 } } },
+      ],
+    });
+  });
+
+  test("parses a conditional hand-deployment level and cost override", () => {
+    const [effect] = parseEffect(
+      "When playing this card from your hand, if 3 or more enemy Units are in play, play it as if it has 3 Lv. and cost.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      type: "substitution",
+      directives: [
+        {
+          action: {
+            action: "deployCostOverride",
+            level: 3,
+            cost: 3,
+            condition: { type: "unitCount", owner: "opponent", comparison: "gte", count: 3 },
+          },
+        },
+      ],
+    });
+  });
+
+  test("parses an alternative Pilot trait qualification", () => {
+    const [effect] = parseEffect(
+      "【When Paired･(Cyber-Newtype)/(Newtype) Pilot】Choose 1 to 2 enemy Units. Deal 1 damage to them.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["whenPaired"],
+        qualification: {
+          attribute: "or",
+          filters: [
+            { attribute: "trait", comparison: "includes", value: "cyber-newtype" },
+            { attribute: "trait", comparison: "includes", value: "newtype" },
+          ],
+        },
+      },
+    });
+  });
+
+  test("parses an enemy-shield-count gate before a target choice", () => {
+    const [effect] = parseEffect(
+      "【Deploy】If there are 3 or less enemy Shields, choose 1 enemy Unit with 5 or less AP. Deal 2 damage to it.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: {
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "opponent",
+            zone: "shieldArea",
+            comparison: "lte",
+            count: 3,
+          },
+        ],
+      },
+      directives: [
+        {
+          action: {
+            action: "dealDamage",
+            amount: 2,
+            target: {
+              owner: "opponent",
+              attributeFilters: [{ attribute: "ap", comparison: "lte", value: 5 }],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("preserves independent choices for all enemy players", () => {
+    const [effect] = parseEffect(
+      "【Deploy】All enemy players each choose 1 of their active Units. Rest them.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: { timing: ["deploy"] },
+      directives: [
+        {
+          action: {
+            action: "queueEffectForPlayers",
+            scope: "opponents",
+            effect: {
+              directives: [
+                {
+                  action: {
+                    action: "rest",
+                    target: { owner: "friendly", cardType: "unit", state: "active", count: 1 },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    });
+  });
+
+  test("parses the two-enemy-player gate and largest-opponent-board target", () => {
+    const [effect] = parseEffect(
+      "【Deploy】If there are 2 or more enemy players, choose 1 Unit belonging to an enemy player with the most Units. Return it to its owner's hand.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["deploy"],
+        conditions: [{ type: "enemyPlayerCount", comparison: "gte", count: 2 }],
+      },
+      directives: [
+        {
+          action: {
+            action: "returnToHand",
+            target: { owner: "any", cardType: "unit", ownerHasMostUnits: true, count: 1 },
+          },
+        },
+      ],
+    });
+  });
+
+  test("parses battle destruction draws for both the destroyed Unit owner and destroyer", () => {
+    const [effect] = parseEffect(
+      "【Destroyed】If this Unit is destroyed with battle damage, you and the player who destroyed this Unit draw 1.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["destroyed"],
+        conditions: [{ type: "eventDamageType", damageType: "battle" }],
+      },
+      directives: [
+        { action: { action: "draw", count: 1 } },
+        { action: { action: "drawEventDestroyer", count: 1 } },
+      ],
+    });
+  });
+
+  test("parses a generic EX Resource exile trigger with optional temporary enemy-damage reduction", () => {
+    const [effect] = parseEffect(
+      "When one of your EX Resources is exiled from the game, you may choose 1 of your Units. During this turn, when it receives enemy damage, reduce it by 3.",
+      "unit",
+    );
+    expect(effect).toMatchObject({
+      activation: {
+        timing: ["onExResourceExiled"],
+        conditions: [{ type: "eventPlayerIsSelf" }],
+      },
+      directives: [
+        {
+          optional: true,
+          action: {
+            action: "reduceNextDamage",
+            amount: 3,
+            duration: "thisTurn",
+            source: "enemy",
+            target: { owner: "friendly", cardType: "unit", count: 1 },
+          },
         },
       ],
     });

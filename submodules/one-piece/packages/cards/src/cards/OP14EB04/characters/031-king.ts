@@ -53,6 +53,7 @@ export const op14eb04King031: CharacterCard = {
               {
                 condition: "leaderTrait",
                 trait: "Animal Kingdom Pirates",
+                match: "includes",
               },
               {
                 condition: "notHasCard",
@@ -95,6 +96,9 @@ export const op14eb04King031: CharacterCard = {
     replacementEffects: [
       {
         replacedEvent: "ko",
+        eventFilter: {
+          targetSelf: true,
+        },
         replacementAction: {
           action: "returnDon",
           player: "self",

@@ -13,6 +13,7 @@ import { gd03MikhailKaminsky090 } from "../pilot/090-mikhail-kaminsky.ts";
 import { gd03KMpfer017 } from "./017-k-mpfer.ts";
 
 describe("Kämpfer (GD03-017)", () => {
+  /** @behavioral-proof complete: Burst decisions/filter and Pair qualification, recipients, target gate, and duration are public. */
   it("behavior: Burst adds a Cyclops Team Pilot card from trash to hand", () => {
     const attacker = createMockUnit({ name: "Enemy Attacker", ap: 1, hp: 3 });
     const engine = GundamTestEngine.create(

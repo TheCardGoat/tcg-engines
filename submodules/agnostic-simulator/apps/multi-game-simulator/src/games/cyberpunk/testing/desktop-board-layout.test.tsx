@@ -20,8 +20,7 @@ import {
 
 /**
  * Locks in the desktop board layout contract for the Cyberpunk route:
- * - MobileShell collapses to a two-column grid (sidebar + board) because the
- *   interactions slot is null.
+ * - SimulatorViewportShell owns one collapsible sidebar and the board.
  * - The shared InteractionPanel (aria-label + interaction-card testids) is
  *   re-homed INSIDE the board overlay (a descendant of the board-wrap) so the
  *   test harness — which forces a 1440px desktop width — can still drive it.
@@ -29,14 +28,16 @@ import {
  *   slot (standard layout, mirrors e2e/specs/practice-setup.spec.ts).
  */
 describe("Cyberpunk desktop board layout", () => {
-  test("MobileShell renders two columns and hosts the interaction panel inside the board", async () => {
+  test("viewport shell starts expanded and hosts the interaction panel inside the board", async () => {
     const view = renderCyberpunkSimulatorScenario({ scenarioId: "gameStart" });
     try {
       const container = view.container;
 
-      const desktopShell = container.querySelector(".mobile-shell-desktop");
-      expect(desktopShell, "expected desktop MobileShell at 1440px").not.toBeNull();
-      // interactions slot is null -> only sidebar + board children remain.
+      const desktopShell = container.querySelector(
+        '[data-active-shell="true"][data-layout="desktop"]',
+      );
+      expect(desktopShell, "expected desktop viewport shell at 1440px").not.toBeNull();
+      expect(desktopShell?.getAttribute("data-sidebar-open")).toBe("true");
       expect(desktopShell!.childElementCount).toBe(2);
 
       // The interaction panel is mounted inside the board overlay (board-wrap),
@@ -89,6 +90,48 @@ describe("Cyberpunk desktop board layout", () => {
     expect(Number.isInteger(opponentLayout.cardWidth)).toBe(true);
     expectIntegerLayout(playerLayout.cards);
     expectIntegerLayout(opponentLayout.cards);
+  });
+
+  test("a hand-card click opens only the card action menu", async () => {
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "openingMain" });
+    try {
+      await createTestingLibraryCyberpunkSimulatorPom(view.container).waitForReady();
+
+      const card = view.container.querySelector<HTMLElement>(
+        '[data-testid="hand-zone"][data-side="player"] [data-testid="hand-card"] [data-testid="card"][data-actionable="true"]',
+      );
+      expect(card, "expected an actionable player hand card").not.toBeNull();
+
+      card!.click();
+
+      await waitFor(() => {
+        expect(document.body.querySelector('[data-testid="card-context-menu"]')).not.toBeNull();
+      });
+      expect(view.container.querySelector('[data-testid="hand-command-tray"]')).toBeNull();
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("player board dock keeps phase controls and exposes the active attack step", async () => {
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "unitSecondhandBombus" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+
+      const dock = view.container.querySelector<HTMLElement>(
+        '[data-testid="pinfo-zone"] [data-testid="phase-hud"]',
+      );
+      expect(dock, "expected the player board phase-control dock").not.toBeNull();
+      expect(dock?.querySelector('[data-testid="phase-advance"]')).not.toBeNull();
+      expect(dock?.querySelector('[data-testid="phase-undo"]')).not.toBeNull();
+      expect(dock?.dataset.attackInProgress).toBe("true");
+      expect(
+        dock?.querySelector('[aria-label="Attack step"] [aria-current="step"]'),
+      ).not.toBeNull();
+    } finally {
+      view.unmount();
+    }
   });
 
   test("rival hand can grow from its safe left edge while the player hand stays centered", () => {

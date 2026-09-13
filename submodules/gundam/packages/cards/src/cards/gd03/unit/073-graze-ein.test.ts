@@ -4,6 +4,7 @@ import {
   PLAYER_ONE,
   PLAYER_TWO,
   activeResources,
+  createMockCommand,
   createMockPilot,
   createMockUnit,
   expectFailure,
@@ -133,5 +134,35 @@ describe("Graze Ein (GD03-073)", () => {
 
     expect(p1.getBoardView().pendingChoice).toBeUndefined();
     expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(5);
+  });
+
+  it("counts Gjallarhorn Command cards toward its trash threshold", () => {
+    const ein = createMockPilot({ name: "Ein Dalton" });
+    const enemy = createMockUnit({ ap: 5, hp: 10 });
+    const trash = Array.from({ length: 6 }, () => createMockCommand({ traits: ["gjallarhorn"] }));
+    const engine = GundamTestEngine.create(
+      {
+        hand: [ein],
+        play: [gd03GrazeEin073],
+        trash,
+        resourceArea: activeResources(7),
+        deck: 5,
+      },
+      { play: [enemy], shieldArea: [createMockUnit({ name: "Shield" })], deck: 5 },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const unitId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(ein, unitId));
+    expectSuccess(p1.passPhase());
+    expectSuccess(p2.passActionStep());
+    expectSuccess(p1.passActionStep());
+    expectSuccess(p2.enterBattle(enemyId, "direct"));
+    expectSuccess(p1.declareBlock(unitId));
+    expectSuccess(p1.activateAbility(unitId, 0, { targets: [enemyId] }));
+
+    expect(p2.getVisibleCard(enemyId)?.effectiveAp).toBe(2);
   });
 });

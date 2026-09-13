@@ -17,5 +17,9 @@ describe("OP13-041 Izo", () => {
     const view = engine.getView("south");
     expect(view.players.south).toMatchObject({ handCount: 2, deckCount: 1 });
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.characters.filter(Boolean).length).toBeGreaterThan(
+      0,
+    );
   });
 });

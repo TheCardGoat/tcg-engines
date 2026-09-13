@@ -5,10 +5,11 @@ import { quickAbility } from "@tcg/cyberpunk-types";
 export const welcomeToNightCityRetailGoroTakemuraVengefulBodyguard = defineCyberpunkCard({
   id: "424c9c0f-cc01-40ec-8404-75957985c7f8",
   slug: "goro-takemura-vengeful-bodyguard",
+  subname: "Vengeful Bodyguard",
   rulesText:
     "{Quick} 1 €$, {Spend} Give a friendly Unit with cost 4 or less {Blocker} this turn. If you control a value-pair of Gigs, also give it +1 power this turn.\nWhen a friendly Unit uses {Blocker}, you may discard 1. If you do, draw 1.",
-  name: "Goro Takemura — Vengeful Bodyguard",
-  displayName: "Goro Takemura — Vengeful Bodyguard",
+  name: "Goro Takemura",
+  displayName: "Goro Takemura: Vengeful Bodyguard",
   canonicalId: "goro-takemura-vengeful-bodyguard",
   color: "green",
   classifications: ["Arasaka", "Corpo"],

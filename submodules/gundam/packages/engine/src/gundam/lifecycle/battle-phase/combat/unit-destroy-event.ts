@@ -1,5 +1,6 @@
 import type { GundamG } from "../../../types.ts";
 import {
+  enqueueDelayedTriggers,
   enqueueObserverTriggers,
   enqueueOwnCardTriggers,
 } from "../../../effects/pending-effects.ts";
@@ -27,7 +28,38 @@ export function enqueueAttackerDestroyedDefenderTrigger(
     defeatedPairedPilotId,
     ownerId: attackerPlayerId,
     playerId: attackerPlayerId,
+    damageType: "battle" as const,
   };
   enqueueOwnCardTriggers(g, event, attackerId, attackerPlayerId, ctx.framework);
   enqueueObserverTriggers(g, event, ctx.framework, attackerId);
+  enqueueEnemyCardDestroyedByBattleTrigger(g, attackerId, defenderId, attackerPlayerId, ctx);
+}
+
+/**
+ * Publish the card-type-agnostic battle-destruction event used by delayed
+ * effects whose printed text says "destroys an enemy card with battle
+ * damage." Standard Unit-only 【Destroyed】 observers keep using
+ * `attackerDestroyedDefender`; this event is intentionally delayed-trigger
+ * only so Base and Shield destruction cannot activate Unit-only observers.
+ */
+export function enqueueEnemyCardDestroyedByBattleTrigger(
+  g: GundamG,
+  attackerId: string,
+  destroyedCardId: string,
+  attackerPlayerId: string,
+  ctx: BattleEffCtx,
+): void {
+  enqueueDelayedTriggers(
+    g,
+    {
+      type: "enemyCardDestroyedByBattle",
+      cardId: attackerId,
+      sourceCardId: attackerId,
+      destroyedCardId,
+      ownerId: attackerPlayerId,
+      playerId: attackerPlayerId,
+    },
+    ctx.framework,
+    {},
+  );
 }

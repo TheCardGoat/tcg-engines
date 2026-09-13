@@ -28,15 +28,13 @@ export const gd02GrazeRitterGroundType083: UnitCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-083.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-083.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-083.webp",
       productName: "Dual Impact [GD02]",
     },
   ],
   reprints: ["GD02-083"],
   selectedPrintingId: "GD02-083",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-083.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-083.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-083.webp",
   legality: "legal",
   level: 3,
   cost: 2,
@@ -49,28 +47,21 @@ export const gd02GrazeRitterGroundType083: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["destroyed"],
+        conditions: [{ type: "isTurn", whose: "opponent" }],
       },
       directives: [
         {
-          condition: {
-            type: "isTurn",
-            whose: "opponent",
-          },
-          thenDirectives: [
-            {
-              action: {
-                action: "setActive",
-                target: {
-                  owner: "friendly",
-                  cardType: "unit",
-                  count: 1,
-                  attributeFilters: [
-                    { attribute: "trait", comparison: "includes", value: "Gjallarhorn" },
-                  ],
-                },
-              },
+          action: {
+            action: "setActive",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              count: 1,
+              attributeFilters: [
+                { attribute: "trait", comparison: "includes", value: "Gjallarhorn" },
+              ],
             },
-          ],
+          },
         },
       ],
       sourceText:

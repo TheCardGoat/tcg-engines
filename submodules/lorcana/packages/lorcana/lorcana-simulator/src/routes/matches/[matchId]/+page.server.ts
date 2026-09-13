@@ -1,4 +1,5 @@
 import { isRedirect, redirect } from "@sveltejs/kit";
+import { base } from "$app/paths";
 import type { ServerLoadEvent } from "@sveltejs/kit";
 import { getApiOrigin } from "$lib/config/public-url-config.js";
 import { getServerApiOrigin } from "$lib/server/fetch-with-cf.js";
@@ -14,7 +15,6 @@ import { serverJsonOrNull } from "$lib/data/server/server-json.js";
  */
 export async function load(event: ServerLoadEvent) {
   const matchId = event.params.matchId as string;
-  const spectate = event.url.searchParams.has("spectate");
 
   const generalApi = getServerApiOrigin(getApiOrigin());
   const apiUrl = `${generalApi}/v1/games/lorcana/play/matches/${matchId}`;
@@ -38,11 +38,13 @@ export async function load(event: ServerLoadEvent) {
       return { matchId, error: "Match has no active game." };
     }
 
-    const target = spectate
-      ? `/matches/${matchId}/games/${currentGameId}?spectate`
-      : `/matches/${matchId}/games/${currentGameId}`;
-
-    redirect(303, target);
+    const target = new URL(
+      `${base}/matches/${encodeURIComponent(matchId)}/games/${encodeURIComponent(currentGameId)}`,
+      event.url.origin,
+    );
+    const returnTo = event.url.searchParams.get("returnTo");
+    if (returnTo) target.searchParams.set("returnTo", returnTo);
+    redirect(303, `${target.pathname}${target.search}`);
   } catch (e) {
     if (isRedirect(e)) throw e;
     return { matchId, error: "Failed to connect to the game server." };

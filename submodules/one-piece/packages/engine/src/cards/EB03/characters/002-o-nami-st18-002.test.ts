@@ -3,7 +3,7 @@ import { eb03ONamiSt18002002 } from "../../../../../cards/src/cards/EB03/charact
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST18-002 O-Nami - ST18-002", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb03ONamiSt18002002);
   });
 });

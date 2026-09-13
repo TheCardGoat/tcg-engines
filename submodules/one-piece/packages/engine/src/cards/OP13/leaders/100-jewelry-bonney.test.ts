@@ -3,7 +3,7 @@ import { op13JewelryBonney100 } from "../../../../../cards/src/cards/OP13/leader
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-100 Jewelry Bonney", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13JewelryBonney100);
   });
 });

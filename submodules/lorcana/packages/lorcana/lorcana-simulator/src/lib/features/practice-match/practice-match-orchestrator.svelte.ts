@@ -12,7 +12,7 @@ import {
   AutomatedMatchPlaybackReadModel,
   createPersistedMoveLogEntries,
 } from "../simulator-devtools/ai-match/playback-controller.js";
-import type { GatewayClientStore } from "../gateway/gateway-client.svelte.js";
+import type { GatewayTransportClient } from "../gateway/gateway-transport.js";
 import type { HumanVsAiMatchConfig } from "../simulator-devtools/vs-ai/types.js";
 import type { PracticeMatchRecentHistory } from "./types.js";
 
@@ -21,7 +21,7 @@ interface PracticeMatchOrchestratorOptions {
   playerId: string;
   botPlayerId: string;
   deckConfig: HumanVsAiMatchConfig;
-  gateway: GatewayClientStore;
+  gateway: GatewayTransportClient;
   /** Which seat the human player occupies. Defaults to "playerOne" (practice games). */
   humanSeat?: "playerOne" | "playerTwo";
   /** Whether state is managed by the server or client. Defaults to "client". */
@@ -34,7 +34,7 @@ interface PracticeMatchOrchestratorOptions {
 
 export class PracticeMatchOrchestrator {
   readonly orchestrator: HumanVsAiOrchestrator;
-  readonly #gateway: GatewayClientStore;
+  readonly #gateway: GatewayTransportClient;
   readonly #gameId: string;
   readonly #playerId: string;
   readonly #botPlayerId: string;
@@ -47,6 +47,9 @@ export class PracticeMatchOrchestrator {
   #persistedLogCount = 0;
   #persistedMoveCount = 0;
   #hasHydratedRecentHistory = false;
+  // Client-authority games must establish this immutable version-zero baseline
+  // before any move snapshot can be accepted by the runtime.
+  #pendingInitialSnapshot: LorcanaServerAuthoritativeSnapshot | null = null;
 
   static async create(
     options: PracticeMatchOrchestratorOptions,
@@ -81,6 +84,10 @@ export class PracticeMatchOrchestrator {
       // Fresh match — extract cardsMaps from the orchestrator's engine
       this.#cardsMaps = this.orchestrator.cardsMaps;
       this.#version = 0;
+      this.#pendingInitialSnapshot = getLorcanaServerAuthoritativeSnapshot(
+        this.orchestrator.server as unknown as LorcanaServer,
+        this.#cardsMaps,
+      );
       // Push initial state
       this.#schedulePush("init");
     }
@@ -165,6 +172,36 @@ export class PracticeMatchOrchestrator {
   async #pushState(moveType: string, options?: { awaitResponse?: boolean }): Promise<void> {
     if (this.#authority === "server") return;
 
+    if (this.#pendingInitialSnapshot) {
+      const initialSnapshot = this.#pendingInitialSnapshot;
+      const initialMessage = {
+        type: "push_state",
+        gameId: this.#gameId,
+        state: initialSnapshot.state,
+        cardsMaps: initialSnapshot.cardsMaps,
+        expectedVersion: null,
+        version: 0,
+        moveType: "init",
+        actorId: this.#playerId,
+      };
+      try {
+        // This acknowledgement proves the runtime wrote the version-zero
+        // baseline; a successful websocket emit alone does not.
+        await this.#gateway.sendWithAck(initialMessage, 3_000);
+      } catch {
+        // The websocket can be connecting or drop before the runtime writes
+        // the baseline. The old best-effort return lost it permanently.
+        this.#schedulePush("init");
+        return;
+      }
+      this.#pendingInitialSnapshot = null;
+
+      // The version-zero message above already persists a fresh engine. If
+      // moves happened while the socket was unavailable, schedule their
+      // versioned snapshot only after that baseline is durable.
+      if (this.#getAcceptedMoveHistory().length === 0) return;
+    }
+
     const server = this.orchestrator.server as unknown as LorcanaServer;
     const engineSnapshot = getLorcanaServerAuthoritativeSnapshot(server, this.#cardsMaps);
     const nextMoveEntries = this.#getAcceptedMoveHistory().slice(this.#persistedMoveCount);
@@ -208,6 +245,7 @@ export class PracticeMatchOrchestrator {
       gameId: this.#gameId,
       state: engineSnapshot.state,
       cardsMaps: engineSnapshot.cardsMaps,
+      expectedVersion: latestStateVersion === 0 ? null : latestStateVersion - 1,
       version: latestStateVersion,
       moveType,
       actorId,

@@ -1,4 +1,5 @@
 import { redirect } from "@sveltejs/kit";
+import { base } from "$app/paths";
 import type { ServerLoadEvent } from "@sveltejs/kit";
 import { sanitizeDeckText } from "@/features/simulator-devtools/fixtures/fixture-factory.js";
 import { DECK_FIXTURES } from "@/features/simulator-devtools/deck-fixtures/index.js";
@@ -174,15 +175,18 @@ function collectRequestDebugContext(event: ServerLoadEvent): Record<string, unkn
 
 function buildLocalFallbackTarget(params: {
   rawDeckParam: string;
-  opponentFixtureId: string;
+  opponentFixtureId?: string;
+  opponentDeckParam?: string;
   strategyId: string;
   seed: string;
   unknownCards: string[];
   fallbackReason?: string;
+  returnTo?: string;
 }): string {
   const playParams = new URLSearchParams();
   playParams.set("deck", params.rawDeckParam);
-  playParams.set("opponentFixtureId", params.opponentFixtureId);
+  if (params.opponentFixtureId) playParams.set("opponentFixtureId", params.opponentFixtureId);
+  if (params.opponentDeckParam) playParams.set("opponentDeck", params.opponentDeckParam);
   playParams.set("strategyId", params.strategyId);
   playParams.set("seed", params.seed);
 
@@ -193,28 +197,40 @@ function buildLocalFallbackTarget(params: {
   if (params.fallbackReason) {
     playParams.set("fallbackReason", params.fallbackReason);
   }
+  if (params.returnTo) {
+    playParams.set("returnTo", params.returnTo);
+  }
 
-  return `/sandbox/simulator/vs-ai/quick/play?${playParams.toString()}`;
+  return `${base}/sandbox/simulator/vs-ai/quick/play?${playParams.toString()}`;
 }
 
 export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData> {
   const { url, request } = event;
   const hasDeckParam = url.searchParams.has("deck");
   const rawDeckParam = url.searchParams.get("deck")?.trim() ?? "";
+  const playerFixtureId = url.searchParams.get("playerFixtureId")?.trim() ?? "";
+  const returnTo = url.searchParams.get("returnTo")?.trim() ?? "";
 
   logger.trace("load() called", {
     deckParamLength: rawDeckParam.length,
     hasDeckParam,
+    playerFixtureId: playerFixtureId || null,
     pathname: url.pathname,
   });
 
-  // Step 1: Decode deck param
-  if (!rawDeckParam) {
-    logger.trace("no deck param", { hasDeckParam });
-    return { status: "deck-error", reason: hasDeckParam ? "invalid" : "missing" };
+  // Step 1: Resolve either a supplied deck or a trusted starter fixture.
+  const playerFixture = playerFixtureId
+    ? DECK_FIXTURES.find((fixture) => fixture.id === playerFixtureId)
+    : undefined;
+  if (!rawDeckParam && !playerFixture) {
+    logger.trace("no player deck resolved", { hasDeckParam, playerFixtureId });
+    return {
+      status: "deck-error",
+      reason: hasDeckParam || playerFixtureId ? "invalid" : "missing",
+    };
   }
 
-  const decoded = decodeDeckParam(rawDeckParam);
+  const decoded = rawDeckParam ? decodeDeckParam(rawDeckParam) : (playerFixture?.cards ?? null);
   if (!decoded) {
     logger.trace("decode failed");
     return { status: "deck-error", reason: "invalid" };
@@ -229,25 +245,42 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
   }
   logger.trace("deck sanitized", {
     cardCount: sanitizedText.split("\n").length,
+    playerFixtureId: playerFixture?.id ?? null,
     unknownCardCount: unknownCards.length,
   });
 
+  const fallbackDeckParam =
+    rawDeckParam || Buffer.from(sanitizedText, "utf-8").toString("base64url");
+
   // Step 3: Pick opponent and strategy
   const opponentFixtureIdParam = url.searchParams.get("opponentFixtureId")?.trim() ?? "";
+  const opponentDeckParam = url.searchParams.get("opponentDeck")?.trim() ?? "";
   const strategyIdParam = url.searchParams.get("strategyId")?.trim() ?? "";
 
-  const opponentFixture =
-    (opponentFixtureIdParam
-      ? DECK_FIXTURES.find((f) => f.id === opponentFixtureIdParam)
-      : undefined) ?? pickRandom(DECK_FIXTURES);
+  const opponentDeck = opponentDeckParam ? decodeDeckParam(opponentDeckParam) : null;
+  const sanitizedOpponentDeck = opponentDeck
+    ? await sanitizeDeckText(opponentDeck)
+    : { sanitizedText: "" };
+  if (opponentDeckParam && !sanitizedOpponentDeck.sanitizedText) {
+    return { status: "deck-error", reason: "invalid" };
+  }
+  const opponentFixture = sanitizedOpponentDeck.sanitizedText
+    ? undefined
+    : ((opponentFixtureIdParam
+        ? DECK_FIXTURES.find((f) => f.id === opponentFixtureIdParam)
+        : undefined) ?? pickRandom(DECK_FIXTURES));
 
   const strategy = getSafeAutomatedActionStrategyOption(strategyIdParam);
 
-  if (!opponentFixture) {
+  if (!opponentFixture && !sanitizedOpponentDeck.sanitizedText) {
     logger.trace("no fixture resolved");
     return { status: "deck-error", reason: "invalid" };
   }
-  logger.trace("config resolved", { fixture: opponentFixture.id, strategy: strategy.id });
+  logger.trace("config resolved", {
+    fixture: opponentFixture?.id ?? null,
+    customOpponentDeck: Boolean(sanitizedOpponentDeck.sanitizedText),
+    strategy: strategy.id,
+  });
 
   const seed = createAutomatedMatchSeed();
   let fallbackReason: string | undefined;
@@ -265,7 +298,8 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
     decodedDeckLength: decoded.length,
     firstDeckLine: sanitizedText.split("\n")[0] ?? "",
     hasDeckParam,
-    opponentFixtureId: opponentFixture.id,
+    playerFixtureId: playerFixture?.id ?? null,
+    opponentFixtureId: opponentFixture?.id ?? null,
     publicApiOrigin,
     rawDeckParamLength: rawDeckParam.length,
     sanitizedDeckLength: sanitizedText.length,
@@ -277,27 +311,42 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
   try {
     logger.trace("calling API", { apiOrigin, hasCookie: !!cookie });
 
-    const result = await serverJsonOrNull<QuickMatchApiResult>(apiUrl, {
+    const idempotencyKey = crypto.randomUUID();
+    const requestInit = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Idempotency-Key": idempotencyKey,
         ...(cookie ? { cookie } : {}),
       },
       body: JSON.stringify({
         gameType: "lorcana",
         playerDeckText: sanitizedText,
-        botDeckText: opponentFixture.cards,
-        botFixtureId: opponentFixture.id,
+        ...(sanitizedOpponentDeck.sanitizedText
+          ? { botDeckText: sanitizedOpponentDeck.sanitizedText }
+          : { botDeckText: opponentFixture!.cards, botFixtureId: opponentFixture!.id }),
         botStrategyId: strategy.id,
       }),
-    });
+    } satisfies RequestInit;
+    let result: QuickMatchApiResult | null = null;
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+      try {
+        result = await serverJsonOrNull<QuickMatchApiResult>(apiUrl, requestInit);
+        break;
+      } catch (error) {
+        if (attempt === 2) throw error;
+        logger.warn("quick-match API request failed; retrying idempotently", {
+          attempt,
+        });
+      }
+    }
 
     if (result) {
       serverGameId = result.gameId;
       logger.trace("API success", { gameId: serverGameId, matchId: result.matchId });
     } else {
       fallbackReason = "api-status-error";
-      console.error("[quick-match/create] Falling back to local mode after API error", {
+      console.warn("[quick-match/create] Falling back to local mode after API error", {
         ...matchDebugContext,
         fallbackReason,
         apiDurationMs: Date.now() - startedAt,
@@ -313,7 +362,7 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
     }
   } catch (error) {
     fallbackReason = "api-unavailable";
-    console.error("[quick-match/create] Falling back to local mode after API request failure", {
+    console.warn("[quick-match/create] Falling back to local mode after API request failure", {
       ...matchDebugContext,
       fallbackReason,
       apiDurationMs: Date.now() - startedAt,
@@ -327,19 +376,26 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
 
   // Step 5: Redirect to the appropriate play route
   if (serverGameId) {
-    const target = `/sandbox/simulator/vs-ai/quick/play/${serverGameId}`;
+    const targetUrl = new URL(
+      `${base}/sandbox/simulator/vs-ai/quick/play/${encodeURIComponent(serverGameId)}`,
+      url.origin,
+    );
+    if (returnTo) targetUrl.searchParams.set("returnTo", returnTo);
+    const target = `${targetUrl.pathname}${targetUrl.search}`;
     logger.trace("redirecting to server match", { target });
     redirect(303, target);
   }
 
   // Local fallback — pass config via query params
   const target = buildLocalFallbackTarget({
-    rawDeckParam,
-    opponentFixtureId: opponentFixture.id,
+    rawDeckParam: fallbackDeckParam,
+    opponentFixtureId: opponentFixture?.id,
+    opponentDeckParam: sanitizedOpponentDeck.sanitizedText ? opponentDeckParam : undefined,
     strategyId: strategy.id,
     seed,
     unknownCards,
     fallbackReason,
+    returnTo: returnTo || undefined,
   });
   logger.trace("redirecting to local fallback", {
     fallbackReason,

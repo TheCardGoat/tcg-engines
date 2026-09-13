@@ -46,6 +46,7 @@ import { isClassification } from "../types";
 import { createAutomatedActionBoardSnapshot } from "./decision-trace";
 import { buildAutomatedActionDeckPlanningMetadata } from "./deck-profile";
 import { deckAwareLoreRaceAutomatedActionStrategy } from "./deck-aware-strategy";
+import { getImmediatePlanningEffect, inspectImmediateResolutionShape } from "./resolution-shape";
 import {
   type AutomatedActionTargetPriorityContext,
   scoreAutomatedActionTargets,
@@ -69,7 +70,6 @@ import {
   type AutomatedActionFallback,
   type AutomatedActionFamily,
   type AutomatedActionPlanningContext,
-  type AutomatedActionResolutionShape,
   type AutomatedActionResolutionVariant,
   type AutomatedActionSearchCaps,
   type AutomatedActionTargetId,
@@ -949,71 +949,6 @@ function addValidatedCandidate(
   candidates.push(candidate);
 }
 
-function inspectResolutionShape(effect: Effect | undefined): AutomatedActionResolutionShape {
-  const shape: AutomatedActionResolutionShape = {
-    choiceCount: 0,
-    optionalCount: 0,
-    requiresDestinations: false,
-    requiresNamedCard: false,
-    requiresOrderedTargets: false,
-    usesAmountSelection: false,
-  };
-
-  const visit = (current: Effect | undefined): void => {
-    if (!current) {
-      return;
-    }
-
-    const node = current as EffectInspectionNode;
-    switch (node.type) {
-      case "optional":
-        shape.optionalCount += 1;
-        break;
-      case "choice":
-      case "or":
-        shape.choiceCount += 1;
-        shape.choiceOptionCount = Math.max(
-          shape.choiceOptionCount ?? 0,
-          node.options?.length ?? node.choices?.length ?? 0,
-        );
-        break;
-      case "name-a-card":
-        shape.requiresNamedCard = true;
-        break;
-      case "scry":
-        if ((node.destinations?.length ?? 0) > 0) {
-          shape.requiresDestinations = true;
-        }
-        break;
-      case "put-on-bottom":
-        if (node.ordering === "player-choice") {
-          shape.requiresOrderedTargets = true;
-        }
-        break;
-    }
-
-    const nestedEffects: Array<Effect | undefined> = [
-      node.effect,
-      node.then,
-      node.else,
-      node.ifTrue,
-      node.ifFalse,
-      node.trueEffect,
-      node.falseEffect,
-      ...(node.effects ?? []),
-      ...(node.steps ?? []),
-      ...(node.options ?? []),
-      ...(node.choices ?? []),
-    ];
-    for (const nestedEffect of nestedEffects) {
-      visit(nestedEffect);
-    }
-  };
-
-  visit(effect);
-  return shape;
-}
-
 function selectZoneCards(
   board: LorcanaProjectedBoardView,
   ownerId: PlayerId,
@@ -1584,7 +1519,10 @@ function buildResolutionVariants(args: {
     return [{}];
   }
 
-  const shape = inspectResolutionShape(effect);
+  // Plan only the current decision surface. Nested mays become later bag/pending
+  // residuals after the engine peels the outer decision.
+  const shape = inspectImmediateResolutionShape(effect);
+  const planningEffect = getImmediatePlanningEffect(effect) ?? effect;
   const namedCardValues =
     typeof baseResolutionInput?.namedCard === "string" &&
     baseResolutionInput.namedCard.trim().length > 0
@@ -1611,7 +1549,7 @@ function buildResolutionVariants(args: {
     });
     return null;
   }
-  const rawScryEffect = findAutomatableScryEffect(effect);
+  const rawScryEffect = findAutomatableScryEffect(planningEffect);
   // When the scry targets a non-controller player's deck (e.g. target: "EACH_OPPONENT")
   // or is chosen by a non-controller player (e.g. chooser: "OPPONENT"), the engine will
   // create a pending effect for that player. The planner must not pre-plan destinations
@@ -1649,6 +1587,8 @@ function buildResolutionVariants(args: {
     });
     return null;
   }
+  // Nested mays peel as sequential residuals. Nested choice/or under a choice
+  // option is marked choiceCount > 1 (same choiceIndex is reused into the arm).
   if (shape.choiceCount > 1 || shape.optionalCount > 1) {
     diagnostics.push({
       kind: "unsupported-shape",
@@ -1667,7 +1607,7 @@ function buildResolutionVariants(args: {
     baseTargets: baseResolutionInput?.targets,
     selectionContext: baseResolutionInput?.selectionContext,
     diagnostics,
-    effect,
+    effect: planningEffect,
     family,
     sourceCardId,
     searchCaps,
@@ -1698,7 +1638,7 @@ function buildResolutionVariants(args: {
       : getForcedChoiceIndex({
           adapter,
           analysisPlayerId,
-          effect,
+          effect: planningEffect,
           sourceCardId,
         });
 

@@ -8,6 +8,7 @@ on:
       - ".bun-version"
       - "package.json"
       - "submodules/lorcana/**"
+      - "submodules/agnostic-simulator/**"
   pull_request:
     branches: [main]
     paths:
@@ -15,6 +16,7 @@ on:
       - ".bun-version"
       - "package.json"
       - "submodules/lorcana/**"
+      - "submodules/agnostic-simulator/**"
   workflow_dispatch:
 
 concurrency:
@@ -58,6 +60,14 @@ jobs:
 
       - name: Install Lorcana dependencies
         working-directory: submodules/lorcana
+        run: vp install --no-frozen-lockfile
+
+      # Lorcana simulator tests import the shared simulator contracts through
+      # the linked agnostic-simulator workspace; its node_modules must exist so
+      # cross-workspace subpath imports (for example @tcg/protocol/games)
+      # resolve.
+      - name: Install agnostic simulator dependencies
+        working-directory: submodules/agnostic-simulator
         run: vp install --no-frozen-lockfile
 
       - name: Run Lorcana full CI

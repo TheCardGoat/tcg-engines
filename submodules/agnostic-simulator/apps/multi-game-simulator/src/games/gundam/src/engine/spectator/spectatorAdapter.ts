@@ -1,6 +1,8 @@
 import { asPlayerId, stripPrivateFields, type GameLogEntry } from "@tcg/gundam-engine";
 import type { EngineInteractionView } from "@tcg/protocol";
+import { simulatorExternalCommandGateFor } from "@tcg/simulator-runtime/animation";
 
+import { applyGundamPresentationToView } from "@tcg/gundam-server-adapter";
 import type { EngineAdapter, EngineAdapterConfig } from "../../game/adapter.ts";
 import { type MoveName, type PartialInput, type SubmitOutcome } from "../../game/types.ts";
 
@@ -25,7 +27,7 @@ import { type MoveName, type PartialInput, type SubmitOutcome } from "../../game
  * `visibleTo` lists never match them by id).
  */
 export function createSpectatorEngineAdapter(config: EngineAdapterConfig): EngineAdapter {
-  const { runtime, staticResources, viewerId } = config;
+  const { runtime, staticResources, viewerId, presentation } = config;
 
   // Even though spectators have no real seat, we keep a "viewer player id"
   // so existing UI selectors (player-seat layout, mobile drawer side
@@ -49,11 +51,13 @@ export function createSpectatorEngineAdapter(config: EngineAdapterConfig): Engin
       playerId: null,
       perspectivePlayerId: viewerId,
     },
+    commandGate: simulatorExternalCommandGateFor(runtime),
 
-    view: () => runtime.getFilteredView({ role: "spectator" }),
+    view: () =>
+      applyGundamPresentationToView(runtime.getFilteredView({ role: "spectator" }), presentation),
 
     interactionView: (): EngineInteractionView => ({
-      protocolVersion: 1,
+      protocolVersion: 2,
       gameSlug: "gundam",
       actorId: "spectator",
       stateVersion: runtime.getState().ctx._stateID,
@@ -77,6 +81,7 @@ export function createSpectatorEngineAdapter(config: EngineAdapterConfig): Engin
     undo: () => null,
 
     pendingChoice: () => runtime.getPendingChoice({ role: "spectator" }),
+    pendingBurst: () => runtime.getBoardView({ role: "spectator" }).pendingBurst,
 
     moveHistory: () => runtime.getMoveHistory(),
 

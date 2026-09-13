@@ -45,4 +45,40 @@ describe("OP06-083 Oars", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional Activate: Main so K.O. cost and attack unlock do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: op06Oars083, playedOnTurn: 0 }, op06Cerberus087, eb01Doma005],
+      },
+      {},
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const oarsId = engine.findCardInZone("south", "character", op06Oars083);
+    const thrillerBarkId = engine.findCardInZone("south", "character", op06Cerberus087);
+
+    engine.activateEffect(oarsId, "activateMain", "south");
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const charsBefore = engine.getView("south").players.south.characters.filter(Boolean).length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.characters.some((card) => card?.instanceId === thrillerBarkId)).toBe(
+      true,
+    );
+    expect(view.players.south.characters.filter(Boolean).length).toBe(charsBefore);
+    expect(view.players.south.characters.find((card) => card?.instanceId === oarsId)?.rested).toBe(
+      false,
+    );
+    expect(
+      engine.expectFailure({
+        type: "declareAttack",
+        seat: "south",
+        attackerId: oarsId,
+        targetId: engine.leader("north"),
+      }).reason,
+    ).toBe("The selected attacker cannot attack.");
+    expect(view.prompts).toHaveLength(0);
+  });
 });

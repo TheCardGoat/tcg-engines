@@ -1,9 +1,6 @@
-import type {
-  JsonPatch,
-  ReplayChatMessage,
-  ReplayMetadata,
-  ReplayStep,
-} from "@tcg/game-page-contract";
+import { ReplayStepSchema } from "@tcg/game-page-contract";
+import { ReplayPlaybackV1Schema } from "@tcg/game-page-contract";
+import type { ReplayMetadata, ReplayStep } from "@tcg/game-page-contract";
 import type { GameSlug } from "@tcg/simulator-contract";
 
 import { playUrl } from "../../../runtime/gameRuntimeApi.ts";
@@ -19,12 +16,11 @@ export interface GundamReplayData {
   readonly cardsMaps?: unknown;
   readonly initialState: unknown;
   readonly steps: readonly ReplayStep[];
-  readonly chatMessages?: readonly ReplayChatMessage[];
   readonly metadata: ReplayMetadata;
 }
 
 export function buildReplayDataUrl(gameSlug: GameSlug, gameId: string): string {
-  return playUrl(gameSlug, `/replays/${encodeURIComponent(gameId)}/data`);
+  return playUrl(gameSlug, `/replays/${encodeURIComponent(gameId)}`);
 }
 
 export async function fetchReplayBlob(
@@ -42,19 +38,10 @@ export async function fetchReplayBlob(
 }
 
 export async function decompressReplayBlob(compressed: ArrayBuffer): Promise<GundamReplayData> {
-  if (typeof globalThis.DecompressionStream !== "function") {
-    throw new Error("Replay playback requires a browser with gzip decompression support.");
-  }
-  const stream = new Blob([compressed])
-    .stream()
-    .pipeThrough(
-      new globalThis.DecompressionStream("gzip") as unknown as ReadableWritablePair<
-        Uint8Array,
-        Uint8Array
-      >,
-    );
-  const decompressed = await new Response(stream).text();
-  return parseGundamReplayPayload(JSON.parse(decompressed));
+  const playback = ReplayPlaybackV1Schema.parse(
+    JSON.parse(new TextDecoder().decode(compressed)) as unknown,
+  );
+  return parseGundamReplayPayload(playback.replay);
 }
 
 export function parseGundamReplayPayload(value: unknown): GundamReplayData {
@@ -79,9 +66,6 @@ export function parseGundamReplayPayload(value: unknown): GundamReplayData {
     cardsMaps: value.cardsMaps,
     initialState: value.initialState,
     steps,
-    chatMessages: Array.isArray(value.chatMessages)
-      ? value.chatMessages.filter(isReplayChatMessage)
-      : undefined,
     metadata,
   };
 }
@@ -115,18 +99,7 @@ function readPlayerIds(value: Record<string, unknown>): readonly [string, string
 
 function readReplaySteps(value: unknown): readonly ReplayStep[] {
   if (!Array.isArray(value)) return [];
-  return value.map((step, index) => {
-    if (!isRecord(step)) {
-      throw new Error(`Replay step ${index} was not an object.`);
-    }
-    return {
-      patches: Array.isArray(step.patches) ? (step.patches as JsonPatch) : [],
-      acceptedMove: isRecord(step.acceptedMove)
-        ? (step.acceptedMove as unknown as ReplayStep["acceptedMove"])
-        : ({} as ReplayStep["acceptedMove"]),
-      logs: Array.isArray(step.logs) ? (step.logs as ReplayStep["logs"]) : [],
-    };
-  });
+  return value.map((step) => ReplayStepSchema.parse(step));
 }
 
 function readReplayMetadata(value: unknown, totalMoves: number): ReplayMetadata {
@@ -154,15 +127,6 @@ function readReplayMetadata(value: unknown, totalMoves: number): ReplayMetadata 
       ? { matchType: metadata.matchType }
       : {}),
   };
-}
-
-function isReplayChatMessage(value: unknown): value is ReplayChatMessage {
-  return (
-    isRecord(value) &&
-    typeof value.from === "string" &&
-    typeof value.body === "string" &&
-    typeof value.ts === "number"
-  );
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

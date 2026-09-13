@@ -22,3 +22,18 @@ export function buildStaticContexts(
   const projectionState = createProjectionState(ctx.framework.state, ctx.G);
   return { registry, projectionState };
 }
+
+/**
+ * Merge move-runtime `G` onto framework.state for static-ability condition
+ * evaluation (e.g. put-card-under-self-this-turn / turnMetadata). Framework
+ * snapshots alone omit G, which made conditions always fail open or throw.
+ */
+export function staticAbilityStateFromCtx<TState extends object>(ctx: {
+  framework: { state: TState };
+  G?: DerivedStateContext["G"];
+}): TState & { G: DerivedStateContext["G"] | undefined } {
+  return {
+    ...ctx.framework.state,
+    G: ctx.G,
+  };
+}

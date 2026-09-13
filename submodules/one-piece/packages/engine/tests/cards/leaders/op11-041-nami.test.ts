@@ -12,9 +12,27 @@ describe("OP11-041 Nami", () => {
     );
 
     engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    // "This effect can be activated when a card is removed from … Life" is optional.
+    engine.accept("south");
 
     expect(engine.getView("south").players.south.hand).toHaveLength(1);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline the optional Life-removed draw", () => {
+    const engine = OnePieceTestEngine.create(
+      { leaderCardId: op11Nami041, deck: [eb01Doma005] },
+      { life: [eb01MountainGod018] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+
+    engine.declareAttack(engine.leader("south"), engine.leader("north"), "south");
+    expect(engine.pendingDecision("effectOptional", "south").kind).toBe("confirm");
+    engine.decline("south");
+
+    expect(engine.getView("south").players.south.hand).toHaveLength(0);
+    expect(engine.getView("south").players.south.deckCount).toBe(1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
   test("maps the opponent-attack hand cost and keeps the power bonus for the turn", () => {

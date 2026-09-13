@@ -187,10 +187,15 @@ describe("Luisa Madrigal - Confident Climber", () => {
       expect(testEngine.asPlayerOne().getDamage(friendlyCharacter)).toBe(0);
     });
 
-    it("can choose an undamaged friendly character for the up-to-1 step and still move Luisa's damage to an opposing character", () => {
+    it("can choose an undamaged friendly character despite a damaged alternative and still move Luisa's damage to an opposing character", () => {
+      // CR 6.1.2–6.1.3: zero is legal; the following sentence still resolves.
       const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
         {
-          play: [{ card: luisaMadrigalConfidentClimber, damage: 3 }, undamagedFriendlyCharacter],
+          play: [
+            { card: luisaMadrigalConfidentClimber, damage: 3 },
+            undamagedFriendlyCharacter,
+            { card: friendlyCharacter, damage: 1 },
+          ],
           inkwell: 1,
           deck: [],
         },
@@ -224,6 +229,7 @@ describe("Luisa Madrigal - Confident Climber", () => {
 
       expect(testEngine.asPlayerOne().getDamage(luisaMadrigalConfidentClimber)).toBe(0);
       expect(testEngine.asPlayerTwo().getDamage(opposingCharacter)).toBe(3);
+      expect(testEngine.asPlayerOne().getDamage(friendlyCharacter)).toBe(1);
     });
 
     it("can be activated multiple times per turn (no exert required — cost is 1 ink only)", () => {

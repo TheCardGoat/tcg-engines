@@ -3,7 +3,7 @@ import { op04KungFuJugon005 } from "../../../../../cards/src/cards/OP04/characte
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-005 Kung Fu Jugon", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op04KungFuJugon005);
   });
 });

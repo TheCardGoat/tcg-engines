@@ -18,6 +18,7 @@ import {
   type LorcanaMoveDefinition,
   type LorcanaRuntimeMoveInputs,
   type PendingTurnTransitionState,
+  type ResolutionSelectionContext,
 } from "../../../types";
 import { getEligibleChallengeAttackers } from "../../rules/challenge-rules";
 import { getEligibleQuestCharacters } from "../core/quest";
@@ -54,6 +55,10 @@ import { detachTemporaryShiftTopCard } from "../../state/shift-stack";
 import { resolveTurnOwnerId } from "../../../core/runtime/turn-owner";
 import { checkDeckEmptyForPlayer } from "../../state/game-state-check";
 import { gainLore, isCardInPlayZone } from "../../../operations";
+import {
+  createPendingActionEffect,
+  enqueuePendingActionEffect,
+} from "../../resolution/action-effects/pending-action-effects";
 
 type PassTurnExecutionContext = Pick<
   MoveExecutionContext<LorcanaRuntimeMoveInputs["passTurn"]>,
@@ -201,7 +206,7 @@ function readyCardsForPlayer(
   ctx: PassTurnExecutionContext,
   playerId: PlayerId,
   currentTurn: number,
-): void {
+): boolean {
   const registry = getOrBuildMoveRegistry(ctx);
   const readyOnlyOneCharacter = hasTemporaryPlayerRestriction(
     ctx.G.temporaryPlayerRestrictions,
@@ -209,6 +214,40 @@ function readyCardsForPlayer(
     currentTurn,
     "ready-only-one-character",
   );
+  const readyRestrictionPayload =
+    ctx.G.temporaryPlayerRestrictions.payloadsByPlayer?.[playerId]?.["ready-only-one-character"];
+  const readyRestrictionSourceId = readyRestrictionPayload?.sourceId;
+  const playCards = ctx.framework.zones.getCards({ zone: "play", playerId }) as CardInstanceId[];
+  const canReadyAtStartOfTurn = (cardId: CardInstanceId): boolean => {
+    const currentMeta = (ctx.cards.require(cardId).meta ?? {}) as LorcanaCardMeta;
+    const atLocationId = currentMeta.atLocationId;
+    const isCardAtLocation = !!atLocationId && isCardInPlayZone(ctx, atLocationId as string);
+    return (
+      currentMeta.state === "exerted" &&
+      !hasTemporaryRestriction(currentMeta, currentTurn, "cant-ready", {
+        isSourceInPlay: (sourceId) => isCardInPlayZone(ctx, sourceId),
+        isCardAtLocation,
+      }) &&
+      !hasStaticCardRestriction({
+        state: ctx.framework.state,
+        cardId,
+        restriction: "cant-ready-at-start-of-turn",
+        registry,
+      }) &&
+      !hasTemporaryRestriction(currentMeta, currentTurn, "doesnt-ready", {
+        isSourceInPlay: (sourceId) => isCardInPlayZone(ctx, sourceId),
+        isCardAtLocation,
+      }) &&
+      !hasStaticCardRestriction({
+        state: ctx.framework.state,
+        cardId,
+        restriction: "cant-ready",
+        registry,
+      })
+    );
+  };
+  const readyCandidates = readyOnlyOneCharacter ? playCards.filter(canReadyAtStartOfTurn) : [];
+  const requiresReadyChoice = readyCandidates.length > 1 && readyRestrictionSourceId !== undefined;
   let charactersReadied = 0;
 
   const playerZoneRefs = [
@@ -223,31 +262,11 @@ function readyCardsForPlayer(
     for (const cardId of cards) {
       const currentMeta = (ctx.cards.require(cardId).meta ?? {}) as LorcanaCardMeta;
       const nextMeta = { ...currentMeta } as Record<string, unknown>;
-      const atLocationId = currentMeta.atLocationId;
-      const isCardAtLocation = !!atLocationId && isCardInPlayZone(ctx, atLocationId as string);
-      const cantReady =
-        hasTemporaryRestriction(currentMeta, currentTurn, "cant-ready", {
-          isSourceInPlay: (sourceId) => isCardInPlayZone(ctx, sourceId),
-          isCardAtLocation,
-        }) ||
-        hasStaticCardRestriction({
-          state: ctx.framework.state,
-          cardId,
-          restriction: "cant-ready-at-start-of-turn",
-          registry,
-        }) ||
-        hasTemporaryRestriction(currentMeta, currentTurn, "doesnt-ready", {
-          isSourceInPlay: (sourceId) => isCardInPlayZone(ctx, sourceId),
-          isCardAtLocation,
-        }) ||
-        hasStaticCardRestriction({
-          state: ctx.framework.state,
-          cardId,
-          restriction: "cant-ready",
-          registry,
-        });
+      const cantReady = !canReadyAtStartOfTurn(cardId);
       const exceedsReadyLimit =
-        zone.zone === "play" && readyOnlyOneCharacter && charactersReadied >= 1;
+        zone.zone === "play" &&
+        readyOnlyOneCharacter &&
+        (requiresReadyChoice || charactersReadied >= 1);
 
       if (currentMeta.state === "exerted" && !cantReady && !exceedsReadyLimit) {
         nextMeta.state = "ready";
@@ -269,6 +288,65 @@ function readyCardsForPlayer(
       ctx.cards.setMeta(cardId, nextMeta);
     }
   }
+
+  if (!requiresReadyChoice || !readyRestrictionSourceId) {
+    return false;
+  }
+
+  const sourceCard = ctx.cards.require(readyRestrictionSourceId);
+  const sourceControllerId = sourceCard.controllerID as PlayerId | undefined;
+  const sourceDefinition = sourceCard.definition;
+  if (!sourceControllerId || !sourceDefinition) {
+    return false;
+  }
+
+  const effect = {
+    type: "ready" as const,
+    target: {
+      selector: "chosen" as const,
+      count: 1 as const,
+      owner: "any" as const,
+      zones: ["play" as const],
+      cardTypes: ["character" as const],
+      filter: [{ type: "exerted" as const }],
+    },
+  };
+  const selectionContext: ResolutionSelectionContext = {
+    origin: "pending-effect",
+    requestId: "pending-start-of-turn-ready",
+    kind: "target-selection",
+    sourceCardId: readyRestrictionSourceId,
+    chooserId: playerId,
+    currentSelection: {},
+    submitField: "targets",
+    targetDsl: [effect.target],
+    cardCandidateIds: readyCandidates,
+    playerCandidateIds: [],
+    allowedZones: ["play"],
+    minSelections: 1,
+    maxSelections: 1,
+    declaredMaxSelections: 1,
+    ordered: false,
+    autoRejected: false,
+    promptLabel: "Choose a character to ready",
+  };
+  const pendingEffect = createPendingActionEffect(ctx, {
+    kind: "target-selection",
+    sourceCardId: readyRestrictionSourceId,
+    controllerId: sourceControllerId,
+    chooserId: playerId,
+    cardPlayed: {
+      playerId: sourceControllerId,
+      cardId: readyRestrictionSourceId,
+      cardType: sourceDefinition.cardType,
+      costType: "free",
+    },
+    effect,
+    resolutionInput: {},
+    selectionContext,
+  });
+  enqueuePendingActionEffect(ctx, pendingEffect);
+  return true;
 }
 
 function drawForTurn(ctx: PassTurnExecutionContext, playerId: PlayerId, turnNumber: number): void {
@@ -399,7 +477,7 @@ export function advanceTurnToNextPlayer(ctx: PassTurnExecutionContext): AdvanceT
   ctx.framework.status.setPhase("beginning");
   ctx.framework.priority.openWindow(nextPlayer);
 
-  readyCardsForPlayer(ctx, nextPlayer, turnNumber);
+  const readyChoicePending = readyCardsForPlayer(ctx, nextPlayer, turnNumber);
   cleanupExpiredEffects(ctx, turnNumber);
   cleanupDanglingTargetEffects(ctx);
   pruneExpiredTemporaryCardMeta(ctx, turnNumber);
@@ -450,6 +528,10 @@ export function advanceTurnToNextPlayer(ctx: PassTurnExecutionContext): AdvanceT
     turn: turnNumber,
     phase: "beginning",
   });
+
+  if (readyChoicePending) {
+    ctx.framework.priority.setHolder(nextPlayer);
+  }
 
   return { previousPlayer: previousPlayer as PlayerId, nextPlayer, turnNumber };
 }
@@ -523,6 +605,9 @@ export function continuePendingTurnTransition(ctx: PassTurnExecutionContext): vo
           turnNumber,
         });
         ctx.G.pendingTurnTransition = transitionState;
+        if (ctx.framework.state.priority.pendingChoice || (ctx.G.pendingEffects?.length ?? 0) > 0) {
+          return;
+        }
         continue;
       }
 

@@ -1124,11 +1124,11 @@ export const resolveBag: LorcanaMoveDefinition<"resolveBag"> = {
         (resolutionInput as Record<string, unknown>).resolveOptional = true;
       }
     }
-    if (
-      topLevelType !== "sequence" &&
-      effectRequirements.isOptional &&
-      resolutionInput.resolveOptional === false
-    ) {
+    // Only short-circuit a pure top-level optional decline. Wrappers such as
+    // for-each / for-each-opponent host independent mays (e.g. Queen's Castle
+    // "for each character here, you may draw") — declining the first iteration
+    // must still run the remaining iterations, not remove the bag item entirely.
+    if (topLevelType === "optional" && resolutionInput.resolveOptional === false) {
       logResolveBagOptionalDecline(ctx, bagEffect);
       recordBagEffectResolution(ctx, bagEffect);
       removeBagEffect(ctx, bagId);

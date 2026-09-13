@@ -2,13 +2,11 @@ import { createContext } from "react";
 
 import type { EngineAdapter } from "./adapter.ts";
 import type { GameStore } from "./store.ts";
-import type { PendingController } from "./pending.ts";
 import type { ViewerId } from "./types.ts";
 
 export interface GundamGameContextValue {
   readonly adapter: EngineAdapter;
   readonly store: GameStore;
-  readonly pending: PendingController;
   readonly viewerId: ViewerId;
 }
 

@@ -1,0 +1,48 @@
+import type { BaseCard } from "@tcg/gundam-types";
+
+export const exbpExBase025: BaseCard = {
+  cardNumber: "EXBP-025",
+  name: "EX Base",
+  type: "base",
+  traits: [],
+  id: "EXBP-025",
+  canonicalId: "EXBP-025",
+  externalIds: { bandai: "gundam:exbp-025" },
+  slug: "ex-base-exbp-025",
+  displayName: "EX Base",
+  set: { code: "SC01", name: "Deck Build Box Freedom Ascension [SC01]", packageId: "616301" },
+  printNumber: "EXBP-025",
+  printings: [
+    {
+      id: "EXBP-025",
+      artId: "EXBP-025",
+      setCode: "SC01",
+      collectorNumber: "EXBP-025",
+      cardNumber: "EXBP-025",
+      set: {
+        code: "SC01",
+        name: "Deck Build Box Freedom Ascension [SC01]",
+        packageId: "616301",
+      },
+      rarity: "promo",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/exbp/EXBP-025.webp",
+      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-025.webp?260715",
+      productName: "Deck Build Box Freedom Ascension [SC01]",
+    },
+  ],
+  reprints: ["EXBP-025"],
+  selectedPrintingId: "EXBP-025",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/exbp/EXBP-025.webp",
+  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/EXBP-025.webp?260715",
+  legality: "legal",
+  sourceTitle: "Mobile Suit Gundam: Char's Counterattack",
+  level: 0,
+  cost: 0,
+  hp: 3,
+  effect: "(At the start of the game, place 1 active EX Base as your shield area's base.)",
+  effects: [],
+  keywordEffects: [],
+  rarity: "promo",
+};
+export const sc01ExBase025 = exbpExBase025;

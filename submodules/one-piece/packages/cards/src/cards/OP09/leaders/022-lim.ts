@@ -66,8 +66,8 @@ export const op09Lim022: LeaderCard = {
             ],
           },
         ],
-        optional: true,
         oncePerTurn: true,
+        optional: true,
       },
     ],
     permanentEffects: [

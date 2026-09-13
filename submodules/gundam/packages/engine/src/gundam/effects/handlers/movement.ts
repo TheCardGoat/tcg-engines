@@ -3,7 +3,7 @@
  */
 
 import type { CardInstanceId, PlayerId } from "../../../types/branded.ts";
-import type { Card, TokenSpec } from "@tcg/gundam-types";
+import type { Card, CardColor, TokenSpec, Zone } from "@tcg/gundam-types";
 import type { EffectExecutionContext } from "../executor.ts";
 import { emitGundamEvent } from "../../events.ts";
 import { emitGundamLog } from "../../logging.ts";
@@ -15,6 +15,7 @@ import {
 import { TOKEN_PRINTINGS } from "@tcg/gundam-token-data";
 import { buildTokenUnitDefinition } from "../token-definition.ts";
 import { enqueueBaseSectionExcessManagement } from "../../rules/base-section-excess.ts";
+import { enqueueBattleAreaExcessManagement } from "../../rules/battle-area-excess.ts";
 
 // =============================================================================
 // Return to Hand
@@ -54,41 +55,54 @@ export function handlePlaceInTrashAction(
   targetIds: readonly CardInstanceId[],
   ctx: EffectExecutionContext,
 ): void {
+  const moved = new Set<string>();
   for (const cardId of targetIds) {
-    const id = cardId as string;
-    const ownerId = ctx.framework.cards.getOwner(id) as string | undefined;
-    const fromZone = ctx.framework.cards.getZone(id)?.split(":")[0];
-    if (!ownerId || !fromZone) continue;
+    // Rule 3-3-6: paired Pilots follow their Unit (including battle-area
+    // excess management, which is not destruction — 11-4-2-1 — but still
+    // moves the Unit out of the battle area).
+    for (const id of cardAndPairedPilot(cardId as string, ctx)) {
+      if (moved.has(id)) continue;
+      const ownerId = ctx.framework.cards.getOwner(id) as string | undefined;
+      const fromZone = ctx.framework.cards.getZone(id)?.split(":")[0];
+      if (!ownerId || !fromZone) continue;
 
-    ctx.framework.zones.moveCard(id, { zone: "trash", playerId: ownerId });
-    delete ctx.G.damage[id];
-    delete ctx.G.exhausted[id];
-    ctx.G.continuousEffects = ctx.G.continuousEffects.filter(
-      (entry) => entry.sourceId !== id && entry.targetId !== id,
-    );
+      ctx.framework.zones.moveCard(id, { zone: "trash", playerId: ownerId });
+      delete ctx.G.damage[id];
+      delete ctx.G.exhausted[id];
+      ctx.G.continuousEffects = ctx.G.continuousEffects.filter(
+        (entry) => entry.sourceId !== id && entry.targetId !== id,
+      );
 
-    // Tokens momentarily enter trash, then cease to exist (rule 5-17-2-5).
-    // Remove both the zone/index entry and its dynamic definition so no
-    // visible trash count or unknown ghost card survives the transition.
-    if (ctx.framework.cards.getMeta(id)?.isToken === true) {
-      ctx.framework.zones.removeCard(id);
-      ctx.framework.cards.deregisterDefinition(id);
+      // Tokens momentarily enter trash, then cease to exist (rule 5-17-2-5).
+      // Remove both the zone/index entry and its dynamic definition so no
+      // visible trash count or unknown ghost card survives the transition.
+      if (ctx.framework.cards.getMeta(id)?.isToken === true) {
+        ctx.framework.zones.removeCard(id);
+        ctx.framework.cards.deregisterDefinition(id);
+      }
+
+      emitGundamLog(ctx.framework, {
+        type: "gundam.effect.movedToZone",
+        values: { cardId: id, from: fromZone, to: "trash" },
+        visibility: { mode: "PUBLIC" },
+        category: "action",
+      });
+      moved.add(id);
     }
-
-    emitGundamLog(ctx.framework, {
-      type: "gundam.effect.movedToZone",
-      values: { cardId: id, from: fromZone, to: "trash" },
-      visibility: { mode: "PUBLIC" },
-      category: "action",
-    });
   }
 }
 
-export function handleReturnPairedPilotToHandAction(ctx: EffectExecutionContext): void {
+export function handleReturnPairedPilotToHandAction(
+  ctx: EffectExecutionContext,
+  color?: CardColor,
+): void {
   const eventPilotId =
     ctx.triggerContext?.pairedPilotId ??
     (ctx.sourceCardId ? ctx.G.pilotAssignments[ctx.sourceCardId] : undefined);
   if (!eventPilotId) return;
+
+  const definition = ctx.framework.cards.getDefinition(eventPilotId) as Card | undefined;
+  if (color && definition?.color !== color) return;
 
   const ownerId = ctx.framework.cards.getOwner(eventPilotId) as string | undefined;
   if (!ownerId) return;
@@ -105,6 +119,19 @@ export function handleReturnPairedPilotToHandAction(ctx: EffectExecutionContext)
     visibility: { mode: "PUBLIC" },
     category: "action",
   });
+}
+
+/** Return the card paired with the triggering Unit to its owner's deck. */
+export function handleReturnPairedCardToDeckAction(
+  position: "top" | "bottom",
+  ctx: EffectExecutionContext,
+): void {
+  const pairedCardId =
+    ctx.triggerContext?.pairedPilotId ??
+    (ctx.sourceCardId ? ctx.G.pilotAssignments[ctx.sourceCardId] : undefined);
+  if (!pairedCardId) return;
+
+  handleReturnToDeckAction([pairedCardId as CardInstanceId], position, ctx);
 }
 
 // =============================================================================
@@ -216,6 +243,8 @@ export function handleDeployAction(
     });
     if (isBase) {
       enqueueBaseSectionExcessManagement(ctx.G, ownerId, cardId as string, ctx.framework);
+    } else {
+      enqueueBattleAreaExcessManagement(ctx.G, ownerId, cardId as string, ctx.framework);
     }
     const event = {
       type: isBase ? "baseDeployed" : "unitDeployed",
@@ -246,18 +275,26 @@ export function handleDeployAction(
 // Deploy Self (Burst / Deploy effect on the card itself)
 // =============================================================================
 
-export function handleDeploySelfAction(sourceCardId: string, ctx: EffectExecutionContext): void {
+export function handleDeploySelfAction(
+  sourceCardId: string,
+  ctx: EffectExecutionContext,
+  opts: { definitionOverride?: Card } = {},
+): void {
   const ownerId = ctx.framework.cards.getOwner(sourceCardId) as string | undefined;
   if (!ownerId) return;
 
-  const def = ctx.framework.cards.getDefinition(sourceCardId);
+  const def = opts.definitionOverride ?? ctx.framework.cards.getDefinition(sourceCardId);
   const isBase = def?.type === "base";
   const zone = isBase ? "baseSection" : "battleArea";
   const fromZone = ctx.framework.cards.getZone(sourceCardId)?.split(":")[0];
   ctx.framework.zones.moveCard(sourceCardId, { zone, playerId: ownerId });
   ctx.G.turnMetadata.deployedThisTurn.push(sourceCardId);
   ctx.G.exhausted[sourceCardId] = false;
-  ctx.framework.cards.patchMeta(sourceCardId, { exhausted: false, deployedThisTurn: true });
+  ctx.framework.cards.patchMeta(sourceCardId, {
+    exhausted: false,
+    deployedThisTurn: true,
+    ...(opts.definitionOverride ? { definitionOverride: opts.definitionOverride } : {}),
+  });
 
   // Placement event (synchronous) — see `handleDeployAction` for the
   // placement/completion contract.
@@ -265,26 +302,33 @@ export function handleDeploySelfAction(sourceCardId: string, ctx: EffectExecutio
     kind: isBase ? "BASE_PLACED" : "UNIT_PLACED",
     payload: { cardId: sourceCardId, playerId: ownerId },
   });
+  if (fromZone) {
+    emitGundamLog(ctx.framework, {
+      type: "gundam.effect.movedToZone",
+      values: { cardId: sourceCardId, from: fromZone as Zone, to: zone },
+      visibility: { mode: "PUBLIC" },
+      category: "action",
+    });
+  }
   if (isBase) {
     enqueueBaseSectionExcessManagement(ctx.G, ownerId, sourceCardId, ctx.framework);
+  } else {
+    // Rule 11-4: Burst/self Unit deploys also fill battle-area capacity.
+    enqueueBattleAreaExcessManagement(ctx.G, ownerId, sourceCardId, ctx.framework);
   }
   // Queue this card's own 【Deploy】 triggered effects so burst-deployed
   // Units / Bases still fire their on-deploy clauses (rule 10-1-6 — the
   // trigger fires from the deploy event regardless of how deployment
   // happened). Without this enqueue, cards like Dominion would flip
   // into baseSection on burst but silently drop their 【Deploy】 clauses.
-  enqueueOwnCardTriggers(
-    ctx.G,
-    {
-      type: isBase ? "baseDeployed" : "unitDeployed",
-      cardId: sourceCardId,
-      playerId: ownerId,
-      fromZone,
-    },
-    sourceCardId,
-    ownerId,
-    ctx.framework,
-  );
+  const event = {
+    type: isBase ? "baseDeployed" : "unitDeployed",
+    cardId: sourceCardId,
+    playerId: ownerId,
+    fromZone,
+  };
+  enqueueOwnCardTriggers(ctx.G, event, sourceCardId, ownerId, ctx.framework);
+  enqueueObserverTriggers(ctx.G, event, ctx.framework, sourceCardId);
   // Completion fence — UNIT_DEPLOYED / BASE_DEPLOYED fires after every
   // deploy-triggered effect produced above (this card's own 【Deploy】
   // text) has resolved. Inherits the parent move's id via ambient
@@ -310,6 +354,7 @@ export function handleDeployTokenAction(
   ctx: EffectExecutionContext,
 ): void {
   const tokenSpec = cloneTokenSpec(token);
+  const deployedTokenIds: string[] = [];
   for (let i = 0; i < count; i++) {
     const tokenIndex = (ctx.G.eventCounters.token ?? 0) + 1;
     ctx.G.eventCounters.token = tokenIndex;
@@ -357,6 +402,7 @@ export function handleDeployTokenAction(
       kind: "UNIT_PLACED",
       payload: { cardId: tokenId, playerId: ctx.sourcePlayerId, isToken: true, token: tokenSpec },
     });
+    deployedTokenIds.push(tokenId);
     enqueueMoveCompletionFence(ctx.G, ctx.sourcePlayerId, ctx.framework, [
       {
         kind: "emitEvent",
@@ -371,6 +417,11 @@ export function handleDeployTokenAction(
         },
       },
     ]);
+  }
+  // Rule 11-4 / 11-4-2-2: enqueue once after the full token wave so every
+  // newly deployed token is protected from the excess trash choice.
+  if (deployedTokenIds.length > 0) {
+    enqueueBattleAreaExcessManagement(ctx.G, ctx.sourcePlayerId, deployedTokenIds, ctx.framework);
   }
 }
 

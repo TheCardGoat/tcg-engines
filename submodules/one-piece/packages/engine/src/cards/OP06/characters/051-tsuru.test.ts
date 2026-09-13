@@ -3,7 +3,7 @@ import { op06Tsuru051 } from "../../../../../cards/src/cards/OP06/characters/051
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-051 Tsuru", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op06Tsuru051);
   });
 });

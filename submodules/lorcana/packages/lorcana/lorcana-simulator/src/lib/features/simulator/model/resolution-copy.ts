@@ -265,6 +265,7 @@ function buildPromptContent(
 
   if (params.kind === "target-selection") {
     const selectionContext = params.targetSelectionContext;
+    const effectPrompt = selectionContext?.promptLabel;
     const minSelections = selectionContext?.minSelections ?? 1;
     const maxSelections = selectionContext?.maxSelections ?? 1;
     // Prefer the printed maximum from the card descriptor (e.g. "up to 2") over
@@ -279,18 +280,30 @@ function buildPromptContent(
       selectionContext?.canDeclineSelection === true ||
       selectionContext?.originatesFromOptional === true;
 
+    if (effectPrompt) {
+      return {
+        promptMessage: `${effectPrompt}${isOptional ? " (optional)" : ""}.`,
+        promptInlineReference: referenceLabel
+          ? buildInlineReference(
+              referenceLabel,
+              sourceCard,
+              `${effectPrompt}${isOptional ? " (optional)" : ""}. — `,
+              "",
+            )
+          : null,
+      };
+    }
+
     if (selectionContext?.expectedSlottedKind === "move-to-location") {
-      const autoResolvedSlots = new Set(selectionContext.autoResolvedSlots ?? []);
       const [onlyTargetDsl] = selectionContext.targetDsl;
       const onlyTargetCardTypes =
         onlyTargetDsl && typeof onlyTargetDsl === "object" && "cardTypes" in onlyTargetDsl
           ? onlyTargetDsl.cardTypes
           : undefined;
       const selectsOnlyLocation =
-        autoResolvedSlots.has("subject") ||
-        (selectionContext.targetDsl.length === 1 &&
-          Array.isArray(onlyTargetCardTypes) &&
-          onlyTargetCardTypes.includes("location"));
+        selectionContext.targetDsl.length === 1 &&
+        Array.isArray(onlyTargetCardTypes) &&
+        onlyTargetCardTypes.includes("location");
       const prefix = selectsOnlyLocation
         ? "Choose a location to move to for "
         : selectionContext.targetDsl.length === 1

@@ -3,6 +3,7 @@ import type { EngineCommand, MatchSeat, MatchState } from "../types.ts";
 import { findPendingPrompt } from "../state.ts";
 import { resolvePrompt as resolveBattlePrompt } from "../battle.ts";
 import { resolveEffectChoicePrompt } from "../effects.ts";
+import { resolveCharacterReplacementPrompt } from "./play.ts";
 
 export function handlePlayerPromptResolution(
   state: MatchState,
@@ -32,6 +33,10 @@ export function handlePlayerPromptResolution(
       promptId: prompt.id,
     },
   });
+
+  if (resolveCharacterReplacementPrompt(state, prompt, command)) {
+    return true;
+  }
 
   if (resolveEffectChoicePrompt(state, prompt, command)) {
     return true;

@@ -39,21 +39,30 @@ bun packages/tools/replay-cli/src/cli.ts \
   --replay-id <gameId> --turn <n> --fork --side playerTwo
 ```
 
+Set `AGENT_REPLAY_CONTEXT_TOKEN` to prefer the shared persisted replay
+agent-context endpoint. If that endpoint has no replay, the CLI falls back to
+the legacy `MATCH_MANAGEMENT_API_KEY` runtime trace. The two credentials remain
+separate. Use `--before 0 --after 12` (values are bounded to 0-50) when the
+decisive interaction starts at the selected turn and the default window is too
+broad or ends too early.
+
 Run `bun packages/tools/replay-cli/src/cli.ts --help` for the full list of
 flags.
 
 ## Flags
 
-| Flag                 | Mode           | Notes                                                                                              |
-| -------------------- | -------------- | -------------------------------------------------------------------------------------------------- |
-| `--replay-id <id>`   | both           | Required. Production `gameId` from the support ticket / Linear issue.                              |
-| `--turn <n>`         | both           | Required. 1-based turn number (`acceptedMove.turnNumber` semantics).                               |
-| `--api-origin <url>` | trace          | Override the replay download origin. Default: `$TCG_API_ORIGIN` env, then `https://api.tcg.online`.|
-| `--open`             | browser        | Open the replay watcher at the first step of `--turn` instead of printing the trace.               |
-| `--fork`             | browser        | Open the "Play from Here" fork view at the first step of `--turn`. Requires `--side`. Implies `--open`. |
-| `--side <p1\|p2>`    | browser (fork) | Required with `--fork`. Accepts `playerOne` or `playerTwo`.                                        |
+| Flag                 | Mode           | Notes                                                                                                                                               |
+| -------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--replay-id <id>`   | both           | Required. Production `gameId` from the support ticket / Linear issue.                                                                               |
+| `--turn <n>`         | both           | Required. 1-based turn number (`acceptedMove.turnNumber` semantics).                                                                                |
+| `--api-origin <url>` | trace          | Override the replay download origin. Default: `$TCG_API_ORIGIN` env, then `https://api.tcg.online`.                                                 |
+| `--before <0-50>`    | persisted      | Override how many persisted context steps appear before the selected turn.                                                                          |
+| `--after <0-50>`     | persisted      | Override how many persisted context steps appear after the selected turn.                                                                           |
+| `--open`             | browser        | Open the replay watcher at the first step of `--turn` instead of printing the trace.                                                                |
+| `--fork`             | browser        | Open the "Play from Here" fork view at the first step of `--turn`. Requires `--side`. Implies `--open`.                                             |
+| `--side <p1\|p2>`    | browser (fork) | Required with `--fork`. Accepts `playerOne` or `playerTwo`.                                                                                         |
 | `--base-url <url>`   | browser        | Simulator origin for the opened URL. Default: `$TCG_REPLAY_BASE_URL` env, then `http://localhost:5173`. Set to `https://tcg.online` for production. |
-| `-h`, `--help`       | —              | Print usage and exit.                                                                              |
+| `-h`, `--help`       | —              | Print usage and exit.                                                                                                                               |
 
 Exit codes: `0` success · `1` runtime error (replay not found, turn out of
 range, fetch failure) · `2` bad input (missing/invalid flag).

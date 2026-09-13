@@ -71,6 +71,7 @@ export const op04Issho020: LeaderCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
     permanentEffects: [

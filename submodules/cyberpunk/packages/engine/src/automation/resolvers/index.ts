@@ -4,6 +4,7 @@ import { chooseTargetResolver } from "./choose-target.ts";
 import { chooseEffectResolver } from "./choose-effect.ts";
 import { chooseTriggerResolver } from "./choose-trigger.ts";
 import { chooseGigsToStealResolver } from "./choose-gigs-to-steal.ts";
+import { preventGigStealResolver } from "./prevent-gig-steal.ts";
 import { chooseCardToPlayResolver } from "./choose-card-to-play.ts";
 import { chooseCardToMoveResolver } from "./choose-card-to-move.ts";
 import { chooseCardTypeResolver } from "./choose-card-type.ts";
@@ -24,6 +25,7 @@ export const defaultChoiceResolvers: ChoiceResolverMap = {
   chooseEffect: chooseEffectResolver,
   chooseTrigger: chooseTriggerResolver,
   chooseGigsToSteal: chooseGigsToStealResolver,
+  preventGigSteal: preventGigStealResolver,
   chooseCardToPlay: chooseCardToPlayResolver,
   chooseCardToMove: chooseCardToMoveResolver,
   chooseCardType: chooseCardTypeResolver,
@@ -37,6 +39,7 @@ export {
   chooseEffectResolver,
   chooseTriggerResolver,
   chooseGigsToStealResolver,
+  preventGigStealResolver,
   chooseCardToPlayResolver,
   chooseCardToMoveResolver,
   chooseCardTypeResolver,

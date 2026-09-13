@@ -1,7 +1,11 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
-import { getEffectiveRules, markDefeatAtEndOfTurnIfAttacked } from "../active-effects/index.ts";
+import {
+  consumeRuleUse,
+  getEffectiveRules,
+  markDefeatAtEndOfTurnIfAttacked,
+} from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
 import { hasPlayedProgramThisTurn, satisfiesMustAttackRequirement } from "./attack-requirements.ts";
 
@@ -114,7 +118,15 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
     if (!opponent?.zones.field.includes(defenderId as CardInstanceId)) {
       return { valid: false, error: "Defender not on opponent's field", errorCode: "NOT_ON_FIELD" };
     }
-    if (!defender.meta.spent) {
+    const defenderRules = getEffectiveRules(
+      state as import("../types/match-state.ts").MatchState,
+      defenderId,
+    );
+    if (
+      !defender.meta.spent &&
+      !attackerRules.includes("canAttackReadyUnits") &&
+      !(attackerRules.includes("canAttackReadyBlockers") && defenderRules.includes("blocker"))
+    ) {
       return { valid: false, error: "Can only attack spent units", errorCode: "TARGET_READY" };
     }
 
@@ -128,6 +140,11 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
 
     operations.card.spend(attackerId as CardInstanceId);
     operations.card.setAttackedThisTurn(attackerId as CardInstanceId, true);
+    consumeRuleUse(
+      state as import("../types/match-state.ts").MatchState,
+      attackerId,
+      "canAttackReadyUnits",
+    );
 
     operations.game.setAttackState({
       attackerId: attackerId as CardInstanceId,

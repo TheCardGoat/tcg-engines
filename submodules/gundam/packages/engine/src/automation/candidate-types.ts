@@ -24,26 +24,31 @@ export type GundamBotCandidate =
       readonly cardId: string;
       readonly mode?: DeployUnitArgs["mode"];
       readonly targets?: readonly string[];
+      readonly paymentResourceIds?: readonly string[];
     }
   | {
       readonly family: "deployBase";
       readonly cardId: string;
       readonly targets?: readonly string[];
+      readonly paymentResourceIds?: readonly string[];
     }
   | {
       readonly family: "playCommand";
       readonly cardId: string;
       readonly targets?: readonly string[];
+      readonly paymentResourceIds?: readonly string[];
     }
   | {
       readonly family: "assignPilot";
       readonly pilotId: string;
       readonly unitId: string;
+      readonly paymentResourceIds?: readonly string[];
     }
   | {
       readonly family: "playCommandAsPilot";
       readonly cardId: string;
       readonly unitId: string;
+      readonly paymentResourceIds?: readonly string[];
     }
   | {
       readonly family: "enterBattle";
@@ -59,6 +64,7 @@ export type GundamBotCandidate =
       readonly cardId: string;
       readonly effectIndex: number;
       readonly targets?: readonly string[];
+      readonly paymentResourceIds?: readonly string[];
     }
   | { readonly family: "passBlock" }
   | { readonly family: "passBattleAction" }
@@ -120,24 +126,33 @@ export function candidateToCommand(candidate: GundamBotCandidate): {
       const args: Record<string, unknown> = { cardId: candidate.cardId };
       if (candidate.mode !== undefined) args.mode = candidate.mode;
       if (candidate.targets !== undefined) args.targets = candidate.targets;
+      if (candidate.paymentResourceIds !== undefined)
+        args.paymentResourceIds = candidate.paymentResourceIds;
       return { move: "deployUnit", args };
     }
     case "deployBase":
     case "playCommand": {
       const args: Record<string, unknown> = { cardId: candidate.cardId };
       if (candidate.targets !== undefined) args.targets = candidate.targets;
+      if (candidate.paymentResourceIds !== undefined)
+        args.paymentResourceIds = candidate.paymentResourceIds;
       return { move: candidate.family, args };
     }
-    case "assignPilot":
-      return {
-        move: "assignPilot",
-        args: { pilotId: candidate.pilotId, unitId: candidate.unitId },
+    case "assignPilot": {
+      const args: Record<string, unknown> = {
+        pilotId: candidate.pilotId,
+        unitId: candidate.unitId,
       };
-    case "playCommandAsPilot":
-      return {
-        move: "playCommandAsPilot",
-        args: { cardId: candidate.cardId, unitId: candidate.unitId },
-      };
+      if (candidate.paymentResourceIds !== undefined)
+        args.paymentResourceIds = candidate.paymentResourceIds;
+      return { move: "assignPilot", args };
+    }
+    case "playCommandAsPilot": {
+      const args: Record<string, unknown> = { cardId: candidate.cardId, unitId: candidate.unitId };
+      if (candidate.paymentResourceIds !== undefined)
+        args.paymentResourceIds = candidate.paymentResourceIds;
+      return { move: "playCommandAsPilot", args };
+    }
     case "enterBattle":
       return {
         move: "enterBattle",
@@ -151,6 +166,8 @@ export function candidateToCommand(candidate: GundamBotCandidate): {
         effectIndex: candidate.effectIndex,
       };
       if (candidate.targets !== undefined) args.targets = candidate.targets;
+      if (candidate.paymentResourceIds !== undefined)
+        args.paymentResourceIds = candidate.paymentResourceIds;
       return { move: "activateAbility", args };
     }
     case "passBlock":
@@ -199,11 +216,15 @@ export function commandToCandidate(
       const rawMode = partialInput.mode;
       if (rawMode !== undefined && rawMode !== "normal" && rawMode !== "alternate") return null;
       const targets = partialInput.targets;
+      const paymentResourceIds = partialInput.paymentResourceIds;
       return {
         family: "deployUnit",
         cardId,
         ...(rawMode === undefined ? {} : { mode: rawMode }),
         ...(Array.isArray(targets) ? { targets: targets as readonly string[] } : {}),
+        ...(Array.isArray(paymentResourceIds)
+          ? { paymentResourceIds: paymentResourceIds as readonly string[] }
+          : {}),
       };
     }
     case "deployBase":
@@ -211,23 +232,43 @@ export function commandToCandidate(
       const cardId = partialInput.cardId;
       if (typeof cardId !== "string") return null;
       const targets = partialInput.targets;
+      const paymentResourceIds = partialInput.paymentResourceIds;
       return {
         family: moveName,
         cardId,
         ...(Array.isArray(targets) ? { targets: targets as readonly string[] } : {}),
+        ...(Array.isArray(paymentResourceIds)
+          ? { paymentResourceIds: paymentResourceIds as readonly string[] }
+          : {}),
       };
     }
     case "assignPilot": {
       const pilotId = partialInput.pilotId;
       const unitId = partialInput.unitId;
       if (typeof pilotId !== "string" || typeof unitId !== "string") return null;
-      return { family: "assignPilot", pilotId, unitId };
+      const paymentResourceIds = partialInput.paymentResourceIds;
+      return {
+        family: "assignPilot",
+        pilotId,
+        unitId,
+        ...(Array.isArray(paymentResourceIds)
+          ? { paymentResourceIds: paymentResourceIds as readonly string[] }
+          : {}),
+      };
     }
     case "playCommandAsPilot": {
       const cardId = partialInput.cardId;
       const unitId = partialInput.unitId;
       if (typeof cardId !== "string" || typeof unitId !== "string") return null;
-      return { family: "playCommandAsPilot", cardId, unitId };
+      const paymentResourceIds = partialInput.paymentResourceIds;
+      return {
+        family: "playCommandAsPilot",
+        cardId,
+        unitId,
+        ...(Array.isArray(paymentResourceIds)
+          ? { paymentResourceIds: paymentResourceIds as readonly string[] }
+          : {}),
+      };
     }
     case "enterBattle": {
       const attackerId = partialInput.attackerId;
@@ -245,11 +286,15 @@ export function commandToCandidate(
       const effectIndex = partialInput.effectIndex;
       if (typeof cardId !== "string" || typeof effectIndex !== "number") return null;
       const targets = partialInput.targets;
+      const paymentResourceIds = partialInput.paymentResourceIds;
       return {
         family: "activateAbility",
         cardId,
         effectIndex,
         ...(Array.isArray(targets) ? { targets: targets as readonly string[] } : {}),
+        ...(Array.isArray(paymentResourceIds)
+          ? { paymentResourceIds: paymentResourceIds as readonly string[] }
+          : {}),
       };
     }
     case "passBlock":

@@ -43,4 +43,34 @@ describe("ST13-010 Portgas.D.Ace", () => {
     expect(view.players.south.leader.power).toBe(5000);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [prb02PortgasDAceSt13010PirateFoil010],
+      life: [op12PortgasDAceSp011, eb01Doma005],
+    });
+    const sourceId = engine.findCardInZone(
+      "south",
+      "character",
+      prb02PortgasDAceSt13010PirateFoil010,
+    );
+    const lifeAceId = engine.findCardInZone("south", "life", op12PortgasDAceSp011);
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const leaderPower = engine.getView("south").players.south.leader.power;
+
+    engine.activateEffect(sourceId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.characters.map((card) => card?.instanceId)).toContain(sourceId);
+    expect(view.players.south.trash.map((card) => card.instanceId)).not.toContain(sourceId);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.lifeCount).toBe(lifeBefore);
+    expect(view.players.south.characters.some((card) => card?.instanceId === lifeAceId)).toBe(
+      false,
+    );
+    expect(view.players.south.leader.power).toBe(leaderPower);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

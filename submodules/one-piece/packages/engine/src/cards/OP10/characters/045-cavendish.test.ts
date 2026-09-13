@@ -25,5 +25,8 @@ describe("OP10-045 Cavendish", () => {
       "south",
     );
     expect(engine.getView("south").players.south.hand).toHaveLength(2);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
   });
 });

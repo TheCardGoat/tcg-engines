@@ -374,9 +374,6 @@ async function launchClientPractice(config: PracticeMatchConfig): Promise<QuickM
   if (body.object !== "quick_match" || !body.matchId || !body.gameId || !body.playerId) {
     throw new Error("Quick match response did not include a playable match.");
   }
-  if (!body.wsTicket && !body.authToken) {
-    throw new Error("Quick match response did not include a gateway ticket.");
-  }
   return body;
 }
 
@@ -431,19 +428,9 @@ export function liveMatchHref(
   botStrategyId: string,
   basename = currentSimulatorBasename(),
 ): string {
-  // quick-match issues the gateway credential for the guest/authenticated
-  // player it just created. Carry it into the live route so existing clients do
-  // not need a second auth round trip before opening the gateway socket.
   const params = new URLSearchParams();
   params.set("returnTo", matchmakingReturnUrl());
-  params.set("playerId", response.playerId);
   params.set("botStrategyId", botStrategyId);
-  if (response.wsTicket) {
-    params.set("ticket", response.wsTicket);
-  }
-  if (response.authToken) {
-    params.set("authToken", response.authToken);
-  }
   const path = `/matches/${encodeURIComponent(response.matchId)}/games/${encodeURIComponent(
     response.gameId,
   )}`;

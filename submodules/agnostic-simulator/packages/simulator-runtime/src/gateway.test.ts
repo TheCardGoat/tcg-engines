@@ -37,6 +37,7 @@ describe("simulator gateway runtime", () => {
     await expect(
       requestGatewayTicket({
         apiBaseUrl: "https://api.tcg.online/v1",
+        gameSlug: "cyberpunk",
         matchId: "match_1",
         playerId: "player_1",
         fetcher,
@@ -49,7 +50,11 @@ describe("simulator gateway runtime", () => {
       expect.objectContaining({
         method: "POST",
         credentials: "include",
-        body: JSON.stringify({ matchId: "match_1", playerId: "player_1" }),
+        body: JSON.stringify({
+          gameSlug: "cyberpunk",
+          matchId: "match_1",
+          playerId: "player_1",
+        }),
       }),
     );
   });

@@ -35,6 +35,7 @@ export const eb02PortgasDAce028: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Whitebeard Pirates",
+            match: "includes",
           },
         ],
         actions: [

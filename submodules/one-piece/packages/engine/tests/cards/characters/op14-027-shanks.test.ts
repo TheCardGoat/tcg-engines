@@ -19,5 +19,6 @@ describe("OP14-027 Shanks", () => {
     expect(engine.getState().cards[shanksId]?.rested).toBe(true);
     expect(engine.getState().cards[targetId]?.rested).toBe(true);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

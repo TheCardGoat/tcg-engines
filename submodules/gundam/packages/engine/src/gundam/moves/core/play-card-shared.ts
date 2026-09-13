@@ -41,6 +41,7 @@ import {
 } from "../../effects/target-legality.ts";
 import { evaluateCondition, evaluateTargetFilter } from "../../../runtime/target-dsl.ts";
 import { emitGundamLog } from "../../logging.ts";
+import { enqueueObserverTriggers } from "../../effects/pending-effects.ts";
 import { handleUnitDefeated } from "../../effects/handlers/combat.ts";
 import { handleReturnToDeckAction } from "../../effects/handlers/movement.ts";
 import { rejectWithKey } from "./validation-error.ts";
@@ -50,14 +51,13 @@ const MAX_RESOURCE_TOTAL = 15;
 /** Maximum EX resource tokens allowed in resource area (Rule 4-4-2-1) */
 const MAX_EX_RESOURCE_TOKENS = 5;
 
-/**
- * Whether a card in the resource area is an EX Resource token.
- * Identified by isToken meta flag on a "resource" type card.
- */
+/** Whether a card in the resource area is an EX Resource token. */
 export function isExResourceToken(cardId: string, framework: FrameworkReadAPI): boolean {
   const def = framework.cards.getDefinition(cardId) as Card | undefined;
   if (!def || def.type !== "resource") return false;
   const meta = framework.cards.getMeta(cardId) as GundamCardMeta | undefined;
+  // EXR/EXRP definitions may also be ordinary cards in a Resource Deck.
+  // Token status is instance metadata, not an intrinsic card-number property.
   return meta?.isToken === true;
 }
 
@@ -134,6 +134,50 @@ export function validatePlayFromHand(
   return { valid: true };
 }
 
+/** Reject an explicit payment that does not name exactly the active Resources used. */
+export function validatePaymentResourceIds(
+  ids: readonly string[] | undefined,
+  cost: number,
+  playerId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+): MoveValidationResult {
+  if (ids === undefined) return { valid: true };
+  if (new Set(ids).size !== ids.length || ids.length !== cost) {
+    return {
+      valid: false,
+      error: "Select exactly the card cost in active Resources",
+      errorCode: "INVALID_PAYMENT",
+    };
+  }
+  const active = new Set(
+    framework.zones.getCards({ zone: "resourceArea", playerId }).filter((id) => !G.exhausted[id]),
+  );
+  return ids.every((id) => active.has(id))
+    ? { valid: true }
+    : { valid: false, error: "Selected Resource is not active", errorCode: "INVALID_PAYMENT" };
+}
+
+/**
+ * Lists active payment options only when an EX Resource gives the controller
+ * a meaningful choice. Normal-only payments retain their one-step flow.
+ */
+export function resourcePaymentSelection(
+  cost: number,
+  playerId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+  includeActiveResources = false,
+): readonly string[] | undefined {
+  if (cost <= 0) return undefined;
+  const activeResources = framework.zones
+    .getCards({ zone: "resourceArea", playerId })
+    .filter((id) => !G.exhausted[id]);
+  return includeActiveResources || activeResources.some((id) => isExResourceToken(id, framework))
+    ? activeResources
+    : undefined;
+}
+
 /**
  * Rest individual resource cards to pay a card's cost.
  * Must be called during move execution, after validation has passed.
@@ -151,7 +195,7 @@ export function payCardCost(
   playerId: string,
   G: GundamG,
   framework: FrameworkWriteAPI,
-  options: { costOverride?: number } = {},
+  options: { costOverride?: number; paymentResourceIds?: readonly string[] } = {},
 ): number {
   return payCardCostWithDetails(cardId, playerId, G, framework, options).total;
 }
@@ -161,11 +205,19 @@ export function payCardCostWithDetails(
   playerId: string,
   G: GundamG,
   framework: FrameworkWriteAPI,
-  options: { costOverride?: number } = {},
+  options: { costOverride?: number; paymentResourceIds?: readonly string[] } = {},
 ): { total: number; regularCount: number; exRemovedCount: number } {
   const effectiveCost =
     options.costOverride ?? computeEffectiveCostInHand(cardId, playerId, G, framework);
-  const paid = payCost({ payResources: effectiveCost }, cardId, playerId, G, framework);
+  const paid = payCost(
+    { payResources: effectiveCost },
+    cardId,
+    playerId,
+    G,
+    framework,
+    [],
+    options.paymentResourceIds,
+  );
   return {
     total: effectiveCost,
     regularCount: paid.regularCount,
@@ -199,6 +251,7 @@ export function payCost(
   G: GundamG,
   framework: FrameworkWriteAPI,
   chosenCostIds: readonly string[] = [],
+  paymentResourceIds?: readonly string[],
 ): { regularCount: number; exRemovedCount: number } {
   let paidResources = { regularCount: 0, exRemovedCount: 0 };
   if (!cost) return paidResources;
@@ -209,7 +262,7 @@ export function payCost(
   }
 
   if (cost.payResources !== undefined && cost.payResources > 0) {
-    paidResources = exhaustResources(cost.payResources, playerId, G, framework);
+    paidResources = exhaustResources(cost.payResources, playerId, G, framework, paymentResourceIds);
     emitGundamLog(framework, {
       type: "gundam.cost.resourcesSpent",
       values: {
@@ -272,13 +325,21 @@ export function payCost(
       gatherAllCardsForTargeting(tgtCtx),
       tgtCtx,
     );
-    const [cardId] = candidates;
-    if (cardId) {
-      G.exhausted[cardId as string] = true;
-      framework.cards.patchMeta(cardId as string, { exhausted: true });
+    const { min, max } = getFilterCountBounds(cost.restTarget);
+    const selected = chosenCostIds.filter((cardId) =>
+      candidates.includes(cardId as CardInstanceId),
+    );
+    const toRest = (selected.length >= min ? selected : candidates)
+      .slice(0, Number.isFinite(max) ? max : candidates.length)
+      .map(String);
+    for (const cardId of toRest) {
+      G.exhausted[cardId] = true;
+      framework.cards.patchMeta(cardId, { exhausted: true });
+    }
+    if (toRest.length > 0) {
       emitGundamLog(framework, {
         type: "gundam.cost.unitsRested",
-        values: { playerId, cardIds: [cardId as string] },
+        values: { playerId, cardIds: toRest },
         visibility: { mode: "PUBLIC" },
         category: "action",
       });
@@ -406,13 +467,17 @@ function exhaustResources(
   playerId: string,
   G: GundamG,
   framework: FrameworkWriteAPI,
+  paymentResourceIds?: readonly string[],
 ): { regularCount: number; exRemovedCount: number } {
   if (count <= 0) return { regularCount: 0, exRemovedCount: 0 };
 
   const resourceIds = framework.zones.getCards({ zone: "resourceArea", playerId });
   const activeIds = resourceIds.filter((id) => !G.exhausted[id]);
-  const regularActive = activeIds.filter((id) => !isExResourceToken(id, framework));
-  const exActive = activeIds.filter((id) => isExResourceToken(id, framework));
+  const selected = paymentResourceIds
+    ? activeIds.filter((id) => paymentResourceIds.includes(id))
+    : activeIds;
+  const regularActive = selected.filter((id) => !isExResourceToken(id, framework));
+  const exActive = selected.filter((id) => isExResourceToken(id, framework));
 
   let remaining = count;
   let regularCount = 0;
@@ -441,6 +506,17 @@ function exhaustResources(
     framework.cards.deregisterDefinition(resId);
     remaining--;
     exRemovedCount++;
+    enqueueObserverTriggers(
+      G,
+      {
+        type: "exResourceExiled",
+        cardId: resId,
+        playerId,
+        ownerId: playerId,
+      },
+      framework,
+      undefined,
+    );
   }
 
   return { regularCount, exRemovedCount };
@@ -452,15 +528,17 @@ function exhaustResources(
 
 /**
  * Pre-validate targets supplied on a deploy move's input against the card's
- * own 【Deploy】 triggered effects. When the card has targeted Deploy
- * directives, the caller must supply `chosenTargets` that satisfy every
- * such directive's filter (count + filter match). This mirrors rule
- * 10-1-8-1-1 (targets declared at activation) and lets the engine skip
- * the pending-effect halt for triggers whose targets were already chosen
- * at play time.
+ * own 【Deploy】 triggered effects. Omitting targets is always legal —
+ * Deploy itself is not gated by 10-1-8-1-1. The trigger either enqueues
+ * and asks after deploy, or `hasLegalRequiredTargets` skips activation
+ * when a required public target cannot be chosen (10-2-2, 10-3-3-1).
  *
- * Returns `{ valid: true }` when there are no targeted Deploy directives
- * or when the supplied targets satisfy every such directive.
+ * Supplied targets are still checked so clients that pre-commit as part
+ * of the deploy procedure cannot sneak in illegal IDs.
+ *
+ * Returns `{ valid: true }` when no targets were supplied, when there
+ * are no targeted Deploy directives, or when the supplied targets
+ * satisfy every such directive.
  */
 export function validateDeployTriggerTargets(
   cardId: string,

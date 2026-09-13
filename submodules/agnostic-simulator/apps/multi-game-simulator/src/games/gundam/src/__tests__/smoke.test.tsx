@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
-import { cleanup } from "@testing-library/react";
+import { cleanup, screen } from "@testing-library/react";
 
 import { renderSimulator } from "../test/renderSimulator.tsx";
 import { loadSetupDefault } from "../game/fixtures/setup-default.ts";
@@ -25,7 +25,8 @@ describe("SimulatorApp smoke", () => {
     const { container } = renderSimulator(loadSetupDefault);
     expect(container.firstChild).not.toBeNull();
     expect(container.querySelector("[data-sim-board]")).not.toBeNull();
-    expect(container.querySelector("[data-testid='desktop-match-rail']")).not.toBeNull();
+    expect(container.querySelector("[data-testid='desktop-match-rail']")).toBeNull();
+    expect(container.querySelector("[aria-label='Match actions']")).not.toBeNull();
     expect(container.querySelector("[data-seat-side='top']")?.getAttribute("aria-label")).toBe(
       "Opponent board",
     );
@@ -41,8 +42,18 @@ describe("SimulatorApp smoke", () => {
     expect(
       container
         .querySelector("[data-sim-zone-id='resourceArea:player_one']")
-        ?.querySelector("[data-resource-capacity='6']"),
+        ?.querySelector("[role='list']"),
     ).not.toBeNull();
+    for (const side of ["top", "bottom"]) {
+      const seat = screen.getByLabelText(side === "top" ? "Opponent board" : "Active player board");
+      for (const row of ["hand", "resources", "field"]) {
+        expect(seat.querySelector(`:scope > [data-seat-row='${row}']`)).not.toBeNull();
+      }
+    }
+    const handControls = screen.getByTestId("gundam-desktop-hand-controls");
+    expect(handControls.querySelector("[data-testid='undo-button']")).not.toBeNull();
+    expect(handControls.querySelector("[data-testid='primary-action']")).not.toBeNull();
+    expect(container.querySelectorAll("[data-testid='primary-action']")).toHaveLength(1);
 
     // `game/adapter.ts` defers store notifications via `queueMicrotask`,
     // so any React warnings/errors triggered by the first projection

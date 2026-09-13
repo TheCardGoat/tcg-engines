@@ -1,10 +1,15 @@
-import { createMockBase, createMockResource } from "@tcg/gundam-engine";
+import { gd01Side7124 } from "@tcg/gundam-cards";
 
 import { createDevRuntime, type DevRuntime } from "../dev-runtime.ts";
+import {
+  realResourceCards,
+  st01AsticassiaSchoolOfTechnologyEarthHouse016,
+  st01WhiteBase015,
+} from "./real-cards.ts";
 
 /**
- * Deploy-base fixture — viewer has a cost-0 Base card in hand and an
- * empty base section. Mirrors `deployBase.enumerateCandidates` gating:
+ * Three production Bases with varied printed costs make the empty-base-section
+ * deployment state useful for repeated QA passes.
  * Base candidates exist only when the base section is empty (rule
  * 4-6-3, "up to one Base face up").
  *
@@ -17,16 +22,8 @@ export function loadDeployBaseDemo(): DevRuntime {
   return createDevRuntime({
     skipToMainPhase: true,
     p1: {
-      hand: [
-        createMockBase({
-          cost: 0,
-          level: 1,
-          hp: 5,
-          color: "blue",
-          name: "White Base",
-        }),
-      ],
-      resourceArea: [createMockResource(), createMockResource()],
+      hand: [gd01Side7124, st01AsticassiaSchoolOfTechnologyEarthHouse016, st01WhiteBase015],
+      resourceArea: realResourceCards(3),
       deck: 30,
       resourceDeck: 10,
     },

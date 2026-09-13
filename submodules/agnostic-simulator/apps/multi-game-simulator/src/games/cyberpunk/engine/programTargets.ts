@@ -45,6 +45,15 @@ export function getProgramSpatialTargets(
 
   const targets: string[] = [];
   const abilities = ((def as { abilities?: ProgramAbility[] }).abilities ?? []) as ProgramAbility[];
+  if (
+    abilities.some(
+      (ability) =>
+        isPlayAbility(ability) &&
+        (hasMultiTargetSpatialChoice(ability) || hasChainedSpatialChoice(ability)),
+    )
+  ) {
+    return [];
+  }
   abilities.forEach((ability, abilityIndex) => {
     if (!isPlayAbility(ability)) {
       return;
@@ -82,6 +91,36 @@ export function getProgramSpatialTargets(
   return [...new Set(targets)];
 }
 
+function hasMultiTargetSpatialChoice(ability: ProgramAbility): boolean {
+  const targets = [
+    ...(ability.bindings ?? []).map((binding) => binding.target),
+    ...collectEffects(ability.effects ?? []).flatMap((effect) =>
+      effect.target ? [effect.target] : [],
+    ),
+  ];
+  return targets.some(
+    (target) =>
+      target.selector === "card" &&
+      Boolean(target.selection && target.selection.max > 1) &&
+      (target.cardTypes ?? []).some((type: string) => type === "unit" || type === "legend"),
+  );
+}
+
+/**
+ * A chained `ifYouDo` target must be selected only after its parent effect
+ * resolves. Pre-highlighting both steps makes legal targets indistinguishable
+ * in the browser and permits a misleading direct-click shortcut.
+ */
+function hasChainedSpatialChoice(ability: ProgramAbility): boolean {
+  return (ability.effects ?? []).some((effect) =>
+    effect.effect === "ifYouDo"
+      ? [effect.doEffect, ...(effect.ifEffects ?? []), ...(effect.elseEffects ?? [])].some(
+          (nested) => nested?.target && isSpatialCardTarget(nested.target),
+        )
+      : false,
+  );
+}
+
 function hasLegalPlayCard(view: EngineInteractionView, cardId: string): boolean {
   return interactionViewActionHasCandidate(view, "playCard", "cardId", cardId);
 }
@@ -109,7 +148,10 @@ function collectEffects(effects: readonly ProgramEffect[]): ProgramEffect[] {
 }
 
 function isSpatialCardTarget(target: EngineTarget): boolean {
-  if (target.selector !== "card" || !target.selection) {
+  // The pre-play spatial shortcut submits one target immediately after the
+  // Program is played. Multi-target effects must use the engine's staged
+  // choice flow so the player can select every allowed target.
+  if (target.selector !== "card" || !target.selection || target.selection.max !== 1) {
     return false;
   }
   const cardTypes = target.cardTypes ?? [];

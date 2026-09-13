@@ -1,8 +1,8 @@
 Public export generated from:
-  private repository: /home/runner/work/the-card-goat-online/the-card-goat-online
-  private commit: 8dda6a054695ce5756ccbeeeeef7f0847066db33
-  export branch: public-sync/2026-W30
-  generated at: 2026-07-20T02:15:57Z
+  private repository: /Users/wazar/projects/tcg-online-sync-fix
+  private commit: a953cd57c895e685432009872fa403ae7b20431f
+  export branch: public-sync/2026-W37
+  generated at: 2026-09-13T19:54:09Z
 
 Allowlisted source:
   - submodules/agnostic-simulator
@@ -11,6 +11,10 @@ Allowlisted source:
   - submodules/gundam
   - submodules/one-piece
   - submodules/star-wars-unlimited
+  - submodules/naruto
+  - submodules/flesh-and-blood
+  - submodules/grand-archive
+  - submodules/riftbound
 
 Forbidden private path verified absent:
   - submodules/platform

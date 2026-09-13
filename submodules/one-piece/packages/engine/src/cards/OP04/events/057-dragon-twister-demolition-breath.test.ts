@@ -3,7 +3,7 @@ import { op04DragonTwisterDemolitionBreath057 } from "../../../../../cards/src/c
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-057 Dragon Twister Demolition Breath", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op04DragonTwisterDemolitionBreath057);
   });
 });

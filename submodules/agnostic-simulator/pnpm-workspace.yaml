@@ -2,9 +2,13 @@ packages:
   - apps/*
   - packages/*
   - packages/cyberpunk/*
+  - packages/flesh-and-blood/*
   - packages/gundam/*
+  - packages/grand-archive/*
   - packages/lorcana/*
+  - packages/naruto/*
   - packages/one-piece/*
+  - packages/riftbound/*
   - tools/*
 
 allowBuilds:
@@ -86,7 +90,7 @@ overrides:
   vitest: "catalog:"
   zod: ^4.4.3
 patchedDependencies:
-  '@voidzero-dev/vite-plus-test': patches/@voidzero-dev__vite-plus-test.patch
+  "@voidzero-dev/vite-plus-test": patches/@voidzero-dev__vite-plus-test.patch
 peerDependencyRules:
   allowAny:
     - vite

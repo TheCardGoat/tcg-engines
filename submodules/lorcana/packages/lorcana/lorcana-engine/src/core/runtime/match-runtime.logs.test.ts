@@ -108,6 +108,52 @@ describe("projectGameLog", () => {
     ]);
   });
 
+  it("records a card returned from discard to hand in the resolve-effect log", () => {
+    const { moveLogs } = projectGameLog({
+      state,
+      moveLogEntries: [
+        {
+          category: "action",
+          visibility: { mode: "PUBLIC" },
+          typedEntry: createLorcanaGameLogEntry(
+            "lorcana.effect.resolve.targetSelection",
+            {
+              playerId: playerOneId,
+              sourceCardId: threeArrowsId,
+              targets: [characterId],
+            },
+            { mode: "PUBLIC" },
+            "action",
+          ),
+        },
+      ],
+      publishedGameEvents: [
+        publishedGameEvent(1, {
+          kind: "MOVE_EXECUTED",
+          commandId: "command-1",
+          move: "resolveEffect",
+          playerId: playerOneId,
+          inputRedacted: false,
+          input: {},
+        }),
+        publishedGameEvent(2, {
+          kind: "CUSTOM",
+          customType: "cardLeftDiscard",
+          data: {
+            cardId: characterId,
+            ownerId: playerOneId,
+            toZone: "hand",
+          },
+        }),
+      ],
+    });
+
+    expect(moveLogs[0]?.public).toContainEqual({
+      key: "lorcana.outcome.cardReturnedToHand",
+      values: { playerId: playerOneId, cardId: characterId },
+    });
+  });
+
   it("stores draw detail as a private appendix for the drawing player", () => {
     const { moveLogs } = projectGameLog({
       state,

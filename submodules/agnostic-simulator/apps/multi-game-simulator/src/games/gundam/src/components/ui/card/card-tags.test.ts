@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
-import { ShieldAlertIcon } from "lucide-react";
+import { ShieldAlertIcon, ShieldOffIcon } from "lucide-react";
 
 import { getCardTags, TAG_TONE_CLASSES, type TagTone } from "../card/card-tags.ts";
 import type { GameCardData } from "../types.ts";
@@ -39,6 +39,18 @@ describe("getCardTags", () => {
     );
     expect(tags).toHaveLength(1);
     expect(tags[0].id).toBe("kw-Repair");
+  });
+
+  it("uses distinct defensive and shield-breaking icons for Blocker and Breach", () => {
+    const tags = getCardTags(
+      makeCard({
+        keywords: [{ keyword: "Blocker" }, { keyword: "Breach", value: 2 }],
+      }),
+    );
+
+    expect(tags[0].icon).toBe(ShieldAlertIcon);
+    expect(tags[1].icon).toBe(ShieldOffIcon);
+    expect(tags[0].icon).not.toBe(tags[1].icon);
   });
 
   it("returns granted keyword tags with success tone", () => {
@@ -132,11 +144,20 @@ describe("getCardTags", () => {
     expect(tags[0].tone).toBe("warning");
   });
 
-  it("returns link tag when linkRequirement is set", () => {
-    const tags = getCardTags(makeCard({ linkRequirement: "Pilot" }));
+  it("does not return a link tag for an unpaired Unit with a Link Condition", () => {
+    const tags = getCardTags(makeCard({ linkRequirement: "(G Generation) Trait" }));
+    expect(tags).toEqual([]);
+  });
+
+  it("returns a link tag only when the Unit is currently a Link Unit", () => {
+    const tags = getCardTags(
+      makeCard({ linkRequirement: "(G Generation) Trait", isLinkUnit: true }),
+    );
     expect(tags).toHaveLength(1);
     expect(tags[0].id).toBe("link");
     expect(tags[0].tone).toBe("info");
+    expect(tags[0].label).toBe("LINKED");
+    expect(tags[0].tooltip).toBe("Link active: paired Pilot meets (G Generation) Trait.");
   });
 
   it("returns damage tag when damage > 0", () => {

@@ -55,6 +55,7 @@ export const op03TopKnot074: EventCard = {
             position: "bottom",
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

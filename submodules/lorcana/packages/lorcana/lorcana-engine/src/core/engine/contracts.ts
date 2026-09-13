@@ -6,6 +6,7 @@ import type {
   PacketAnimation,
 } from "../runtime/types";
 import type { CommandSuccess, DeepReadonly, ZoneConfig } from "../runtime/match-runtime.types";
+import type { AuthoritativeCommandStatus } from "../runtime/protocol-types";
 
 export type EngineActorContext = {
   role: "player" | "spectator" | "judge";
@@ -126,8 +127,8 @@ export interface GameEngine {
   canUndo?(playerId: string): boolean;
   undo?(playerId: string, prevStateID?: number): boolean;
   dispose(): void | Promise<void>;
-  /** True while a move has been sent to the server but the authoritative confirmation has not yet arrived. */
-  readonly isOptimisticMovePending?: boolean;
+  /** True while an authoritative move is submitting or state recovery is in progress. */
+  readonly isMovePending?: boolean;
 }
 
 /**
@@ -147,4 +148,9 @@ export interface TransportAwareEngine extends GameEngine {
   ): () => void;
 
   onProtocolError?(handler: (error: ProtocolError) => void): () => void;
+  getAuthoritativeCommandStatus?(): AuthoritativeCommandStatus;
+  onAuthoritativeCommandStatusChange?(
+    handler: (status: AuthoritativeCommandStatus) => void,
+  ): () => void;
+  requestStateSync?(): void;
 }

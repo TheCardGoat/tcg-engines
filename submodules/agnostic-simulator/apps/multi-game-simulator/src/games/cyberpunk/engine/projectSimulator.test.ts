@@ -169,7 +169,12 @@ describe("projectSimulator", () => {
     });
 
     const entity = projection.entities.find((candidate) => candidate.id === target.instanceId);
-    expect(entity?.overlayBadges?.some((badge) => badge.label === "mustAttack")).toBe(true);
+    expect(
+      entity?.decorations?.some(
+        (decoration) =>
+          decoration.content.kind === "icon" && decoration.content.token === "mustAttack",
+      ),
+    ).toBe(true);
     expect(entity?.activeEffects).toContainEqual(
       expect.objectContaining({
         id: "test-must-attack",
@@ -282,5 +287,88 @@ describe("projectSimulator", () => {
     });
 
     expect(projection.interactions).toHaveLength(0);
+  });
+
+  it("does not project an ordinary attacker against a ready Unit when only another attacker has permission", () => {
+    const engine = getScenario("retailWtnc22CombatStealQa").build();
+    const matchState = engine.getState();
+    const [permittedAttacker, ordinaryAttacker] = engine.getCardsInZone("field", P1);
+    const readyDefender = engine
+      .getCardsInZone("field", P2)
+      .find((card) => defOf(card).displayName === "Corpo Security");
+    expect(permittedAttacker).toBeDefined();
+    expect(ordinaryAttacker).toBeDefined();
+    expect(readyDefender).toBeDefined();
+    readyDefender!.meta.spent = false;
+    matchState.G.activeEffects.push({
+      id: "ready-unit-permission",
+      sourceCardId: permittedAttacker!.instanceId,
+      targetCardId: permittedAttacker!.instanceId,
+      kind: "grantRule",
+      rule: "canAttackReadyUnits",
+      duration: "turn",
+      origin: "imperative",
+      abilityIndex: 0,
+    } satisfies ActiveEffect);
+
+    const view: EngineInteractionView = {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "cyberpunk",
+      actorId: P1,
+      stateVersion: matchState.ctx.stateID,
+      status: "ready",
+      actions: [
+        {
+          id: "attackUnit",
+          requestId: "attack-ready-unit",
+          intent: "attack",
+          text: { key: "Attack a Unit" },
+          enabled: true,
+          inputs: [
+            {
+              id: "attackerId",
+              kind: "entity-selection",
+              entityKinds: ["card"],
+              role: "from",
+              text: { key: "Attacker" },
+              min: 1,
+              max: 1,
+              ordered: false,
+              candidates: [permittedAttacker!, ordinaryAttacker!].map((card) => ({
+                entity: { kind: "card", instanceId: card.instanceId, ownerId: P1 },
+                enabled: true,
+              })),
+            },
+            {
+              id: "defenderId",
+              kind: "entity-selection",
+              entityKinds: ["card"],
+              role: "to",
+              text: { key: "Defender" },
+              min: 1,
+              max: 1,
+              ordered: false,
+              candidates: [
+                {
+                  entity: { kind: "card", instanceId: readyDefender!.instanceId, ownerId: P2 },
+                  enabled: true,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
+
+    const projection = projectSimulator({
+      matchState,
+      viewerSide: "player" as Side,
+      interactionViews: { player: view },
+      humanSide: "player" as Side,
+    });
+    const interaction = projection.interactions.find((candidate) => candidate.id === "attackUnit");
+    expect(interaction?.input.candidateEntityIds).toEqual([
+      `${permittedAttacker!.instanceId}->${readyDefender!.instanceId}`,
+    ]);
   });
 });

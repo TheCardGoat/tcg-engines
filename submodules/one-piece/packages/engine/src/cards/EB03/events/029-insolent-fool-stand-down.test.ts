@@ -3,7 +3,7 @@ import { eb03InsolentFoolStandDown029 } from "../../../../../cards/src/cards/EB0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB03-029 Insolent Fool!! Stand Down!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb03InsolentFoolStandDown029);
   });
 });

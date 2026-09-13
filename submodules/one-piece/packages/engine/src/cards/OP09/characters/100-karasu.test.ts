@@ -20,5 +20,8 @@ describe("OP09-100 Karasu", () => {
     expect(
       engine.getView("north").players.north.characters.map((card) => card?.instanceId),
     ).toContain(karasuId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
   });
 });

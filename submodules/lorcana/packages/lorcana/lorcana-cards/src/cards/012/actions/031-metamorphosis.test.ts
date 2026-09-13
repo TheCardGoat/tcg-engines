@@ -4,6 +4,7 @@ import { shift } from "../../../helpers/abilities/shift";
 import { metamorphosis } from "./031-metamorphosis";
 import { omnidroidV8 } from "../characters/173-omnidroid-v8";
 import { omnidroidV9 } from "../characters/184-omnidroid-v9";
+import { woodyBuzzLightyearBestBuddies } from "../../013/characters/028-woody-buzz-lightyear-best-buddies";
 
 const shiftTarget = createMockCharacter({
   id: "metamorphosis-shift-target",
@@ -97,6 +98,37 @@ describe("Metamorphosis", () => {
     ).toBeSuccessfulCommand();
     expect(testEngine.asPlayerOne().getCardZone(omnidroidV9)).toBe("play");
     expect(testEngine.asPlayerOne()).toHaveCardsUnder({ card: omnidroidV9, count: 1 });
+  });
+
+  it("shifts Woody & Buzz Lightyear from discard onto a Buzz Lightyear base (Small Buzz report)", () => {
+    // bugrepCYdgo7u_ZUyZ9Z7Lvbg3y — duo Shift 5 onto Woody or Buzz Lightyear via Metamorphosis
+    const smallBuzz = createMockCharacter({
+      id: "metamorphosis-small-buzz",
+      name: "Buzz Lightyear",
+      version: "Space Ranger",
+      cost: 2,
+      strength: 3,
+      willpower: 3,
+      lore: 1,
+    });
+
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      hand: [metamorphosis],
+      inkwell: metamorphosis.cost,
+      discard: [woodyBuzzLightyearBestBuddies],
+      play: [smallBuzz],
+    });
+
+    expect(
+      testEngine.asPlayerOne().playCard(metamorphosis, {
+        targets: [woodyBuzzLightyearBestBuddies, smallBuzz],
+      }),
+    ).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getCardZone(woodyBuzzLightyearBestBuddies)).toBe("play");
+    expect(testEngine.asPlayerOne()).toHaveCardsUnder({
+      card: woodyBuzzLightyearBestBuddies,
+      count: 1,
+    });
   });
 
   describe("release notes ruling", () => {

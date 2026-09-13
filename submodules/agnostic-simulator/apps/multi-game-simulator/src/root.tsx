@@ -1,15 +1,19 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 import type { ClientLoaderFunctionArgs, LoaderFunctionArgs } from "react-router";
+import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
 import { isPlayableGameSlug, type PlayableGameSlug } from "@tcg/protocol";
 import { CanonicalUserSettingsSchema, type CanonicalUserSettings } from "@tcg/game-page-contract";
 import type { GatewayTicket } from "@tcg/simulator-runtime/gateway";
 import type { SessionResult } from "@tcg/shared/auth";
+import { getPlayGameConfig } from "@tcg/shared/game-adapter";
 
 import { platformAuthSessionContext } from "../server/context";
 import { resolveGatewayTicket, type GatewayTicketBootstrapResult } from "../server/gateway-ticket";
 import { initRootSocket } from "./lib/gateway/root-socket";
-import { apiUrl } from "./runtime/gameRuntimeApi";
-import { fetchSharedSimulatorRouteData } from "./simulator/routeData";
+import { apiUrl, runtimeApiEnvForServer } from "./runtime/gameRuntimeApi";
+import { parseSharedSimulatorRoute } from "./simulator/routeData";
+import { isSimulatorDebugExportEnabled } from "./simulator/debug-export/debug-export-feature";
 import {
   normalizeSimulatorSettings,
   type SimulatorSettings,
@@ -17,6 +21,10 @@ import {
 
 import "./app.css";
 import "@tcg/simulator-ui/styles/theme.css";
+// The FAB sideboard is a lazy route with a dense, fixed-height card grid.
+// Keep its layout CSS in the initial document so card and footer geometry is
+// reserved before the route module and remote board art finish loading.
+import "./games/flesh-and-blood/flesh-and-blood.css";
 
 export type SimulatorAuthBootstrapStatus =
   | "ready"
@@ -36,11 +44,6 @@ export type SimulatorAuthBootstrapResult = {
   reason?: string;
 };
 
-export interface UrlGatewayCredentials {
-  ticket?: string;
-  authToken?: string;
-}
-
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -51,7 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <MantineProvider defaultColorScheme="dark">{children}</MantineProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
@@ -83,32 +86,14 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
   const gameSlug = resolveGameSlugFromPath(url.pathname);
   const authResult = context.get(platformAuthSessionContext);
   const auth: SessionResult | null = authResult.status === "ready" ? authResult.session : null;
-  const routeAuth = resolveRouteAuthHints(url);
-  const urlGatewayCredentials = parseUrlGatewayCredentials(url);
-  const hasUrlGatewayCredentials = Boolean(
-    urlGatewayCredentials.ticket || urlGatewayCredentials.authToken,
-  );
-  const simulatorRouteData = await fetchSharedSimulatorRouteData({
-    request,
-    env: process.env,
-  });
-  const requiresMatchPlayerAuth =
-    routeAuth.requiresPlayerAuth ||
-    (Boolean(simulatorRouteData.matchPageData) &&
-      simulatorRouteData.matchPageData?.viewerSeat !== "spectator");
-  const gatewayTicketMatchId = requiresMatchPlayerAuth ? routeAuth.matchId : undefined;
-  const gatewayTicketPlayerId = requiresMatchPlayerAuth ? routeAuth.playerId : undefined;
-  const requireAuth = Boolean(auth?.session) || requiresMatchPlayerAuth;
-  const gatewayTicketResult =
-    requireAuth && (Boolean(auth?.session) || !hasUrlGatewayCredentials)
-      ? await resolveGatewayTicket({
-          request,
-          gameSlug,
-          matchId: gatewayTicketMatchId,
-          playerId: gatewayTicketPlayerId,
-          requireAuth,
-        })
-      : null;
+  const runtimeEnv = runtimeApiEnvForServer(process.env);
+  const route = parseSharedSimulatorRoute(url);
+  const sessionRoute = route.routeKind === "live-match" || route.routeKind === "match-landing";
+  const requireAuth = Boolean(auth?.session);
+  const [gatewayTicketResult, settingsBootstrap] = await Promise.all([
+    !sessionRoute && requireAuth ? resolveGatewayTicket({ request, gameSlug, requireAuth }) : null,
+    auth?.session ? fetchViewerSettings({ request, env: runtimeEnv }) : null,
+  ]);
   const gatewayTicket: GatewayTicket | null =
     gatewayTicketResult?.status === "ready" ? gatewayTicketResult.ticket : null;
   const authBootstrap = buildSimulatorAuthBootstrap({
@@ -116,26 +101,19 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
     authReason: "reason" in authResult ? authResult.reason : undefined,
     gatewayTicketResult,
     hasSession: Boolean(auth?.session),
-    hasToken: Boolean(
-      gatewayTicket?.authToken ?? urlGatewayCredentials.authToken ?? auth?.session?.token,
-    ),
-    hasTicket: Boolean(gatewayTicket?.ticket ?? urlGatewayCredentials.ticket),
+    hasToken: Boolean(gatewayTicket?.authToken ?? auth?.session?.token),
+    hasTicket: Boolean(gatewayTicket?.ticket),
     requireAuth,
-    matchId: gatewayTicketMatchId,
-    playerId: gatewayTicketPlayerId,
   });
-  const settingsBootstrap = auth?.session
-    ? await fetchViewerSettings({ request, env: process.env })
-    : null;
   return {
     auth,
     authBootstrap,
+    debugExportEnabled: isSimulatorDebugExportEnabled(process.env),
     gameSlug,
     gatewayTicket,
-    simulatorRouteData,
+    sessionRoute,
     simulatorSettings: settingsBootstrap?.simulatorSettings ?? null,
     viewerSettings: settingsBootstrap?.viewerSettings ?? null,
-    urlGatewayCredentials,
   };
 }
 
@@ -147,18 +125,25 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
  */
 export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
   const serverData = await serverLoader<typeof loader>();
+  if (serverData.sessionRoute) return { ...serverData, rootSocketReady: false };
+  const isLiveGame =
+    serverData.gameSlug !== null && getPlayGameConfig(serverData.gameSlug)?.isActive === true;
   initRootSocket({
     session: serverData.auth?.session ?? null,
-    gameSlug: serverData.gameSlug,
-    ticket: serverData.gatewayTicket?.ticket ?? serverData.urlGatewayCredentials.ticket,
-    authToken: serverData.gatewayTicket?.authToken ?? serverData.urlGatewayCredentials.authToken,
+    gameSlug: isLiveGame ? serverData.gameSlug : null,
+    ticket: serverData.gatewayTicket?.ticket,
+    authToken: serverData.gatewayTicket?.authToken,
     requireAuth: serverData.authBootstrap.requireAuth,
-    matchId: serverData.authBootstrap.matchId,
-    playerId: serverData.authBootstrap.playerId,
   });
   return { ...serverData, rootSocketReady: true };
 }
 clientLoader.hydrate = true as const;
+
+// Applies to document and framework data responses, including the Vite dev
+// handler which does not run the production Express response middleware.
+export function headers() {
+  return { "Cache-Control": "private, no-store", Vary: "Cookie, Authorization" };
+}
 
 export default function Root() {
   return <Outlet />;
@@ -169,6 +154,8 @@ interface UserSettingsResponse {
   gameSettings?: CanonicalUserSettings["gameSettings"];
   gameplaySettings?: {
     soundVolume?: number;
+    cardInteractionMode?: SimulatorSettings["cardInteractionMode"];
+    animationSpeed?: SimulatorSettings["animationSpeed"];
   };
 }
 
@@ -199,10 +186,19 @@ async function fetchViewerSettings({
     const viewerSettings = parsed.success ? parsed.data : null;
     const soundVolume =
       viewerSettings?.playerSettings.soundVolume ?? body.gameplaySettings?.soundVolume;
+    const cardInteractionMode =
+      viewerSettings?.playerSettings.cardInteractionMode ??
+      body.gameplaySettings?.cardInteractionMode;
+    const animationSpeed =
+      viewerSettings?.playerSettings.animationSpeed ?? body.gameplaySettings?.animationSpeed;
     return {
       viewerSettings,
       simulatorSettings:
-        soundVolume === undefined ? null : normalizeSimulatorSettings({ soundVolume }),
+        soundVolume === undefined &&
+        cardInteractionMode === undefined &&
+        animationSpeed === undefined
+          ? null
+          : normalizeSimulatorSettings({ soundVolume, cardInteractionMode, animationSpeed }),
     };
   } catch {
     return null;
@@ -220,43 +216,6 @@ function forwardedRequestHeaders(request: Request): Headers {
     headers.set("authorization", authorization);
   }
   return headers;
-}
-
-function resolveRouteAuthHints(url: URL): {
-  requiresPlayerAuth: boolean;
-  matchId?: string;
-  playerId?: string;
-} {
-  const playerId = url.searchParams.get("playerId")?.trim() || undefined;
-  const matchId = matchIdFromPath(url.pathname);
-  return {
-    ...(matchId ? { matchId } : {}),
-    ...(playerId ? { playerId } : {}),
-    requiresPlayerAuth: Boolean(matchId && playerId),
-  };
-}
-
-function parseUrlGatewayCredentials(url: URL): UrlGatewayCredentials {
-  const ticket = url.searchParams.get("ticket")?.trim() || undefined;
-  const authToken = url.searchParams.get("authToken")?.trim() || undefined;
-  return {
-    ...(ticket ? { ticket } : {}),
-    ...(authToken ? { authToken } : {}),
-  };
-}
-
-function matchIdFromPath(pathname: string): string | undefined {
-  const segments = pathname.split("/").filter(Boolean);
-  const matchIndex = segments.indexOf("matches");
-  const encodedMatchId = matchIndex >= 0 ? segments[matchIndex + 1] : undefined;
-  if (!encodedMatchId) {
-    return undefined;
-  }
-  try {
-    return decodeURIComponent(encodedMatchId);
-  } catch {
-    return undefined;
-  }
 }
 
 function buildSimulatorAuthBootstrap({

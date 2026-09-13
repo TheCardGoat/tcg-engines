@@ -75,6 +75,7 @@ export const eb01Blueno033: CharacterCard = {
             ],
           },
         ],
+        optional: true,
       },
     ],
   },

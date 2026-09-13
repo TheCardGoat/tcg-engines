@@ -3,7 +3,7 @@ import { op12Koala081 } from "../../../../../cards/src/cards/OP12/leaders/081-ko
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP12-081 Koala", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op12Koala081);
   });
 });

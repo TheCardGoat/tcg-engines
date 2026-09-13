@@ -117,16 +117,23 @@ describe("Gundam DX (GD04-049)", () => {
 
       expectSuccess(p1.assignPilot(pilot, gundamDxId));
       expectSuccess(p1.enterBattle(gundamDxId, "direct"));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") throw new Error("Expected the Vulture exile choice");
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
-      expect(p1.getBoardView().pendingChoice).toMatchObject({
+      const exileChoice = p1.getBoardView().pendingChoice;
+      if (exileChoice?.kind !== "targetSelection") {
+        throw new Error("Expected the Vulture exile target choice");
+      }
+      expect(exileChoice).toMatchObject({
         kind: "targetSelection",
+        optionalDirectiveIndex: exileChoice.directiveIndex,
         legalTargetIds: trashIds,
         minTargets: 7,
         maxTargets: 7,
       });
-      expectSuccess(p1.resolveEffect({ targets: trashIds }));
+      expectSuccess(
+        p1.resolveEffect({
+          optionalAnswers: { [exileChoice.directiveIndex]: true },
+          targets: trashIds,
+        }),
+      );
 
       for (const trashId of trashIds) {
         expect(p1.getCardZone(trashId)).toBe("removalArea");
@@ -161,16 +168,23 @@ describe("Gundam DX (GD04-049)", () => {
 
       expectSuccess(p1.assignPilot(pilot, gundamDxId));
       expectSuccess(p1.enterBattle(gundamDxId, "direct"));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") throw new Error("Expected the Vulture exile choice");
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: true } }));
-      expect(p1.getBoardView().pendingChoice).toMatchObject({
+      const exileChoice = p1.getBoardView().pendingChoice;
+      if (exileChoice?.kind !== "targetSelection") {
+        throw new Error("Expected the Vulture exile target choice");
+      }
+      expect(exileChoice).toMatchObject({
         kind: "targetSelection",
+        optionalDirectiveIndex: exileChoice.directiveIndex,
         legalTargetIds: trashIds,
         minTargets: 7,
         maxTargets: 7,
       });
-      expectSuccess(p1.resolveEffect({ targets: trashIds }));
+      expectSuccess(
+        p1.resolveEffect({
+          optionalAnswers: { [exileChoice.directiveIndex]: true },
+          targets: trashIds,
+        }),
+      );
 
       expect(p2.getCardsInZone("baseSection")).toContain(targetId);
       expect(p1.getBoardView().pendingChoice).toMatchObject({
@@ -202,9 +216,15 @@ describe("Gundam DX (GD04-049)", () => {
 
       expectSuccess(p1.assignPilot(pilot, gundamDxId));
       expectSuccess(p1.enterBattle(gundamDxId, "direct"));
-      const optional = p1.getBoardView().pendingChoice;
-      if (optional?.kind !== "optional") throw new Error("Expected the Vulture exile choice");
-      expectSuccess(p1.resolveEffect({ optionalAnswers: { [optional.directiveIndex]: false } }));
+      const exileChoice = p1.getBoardView().pendingChoice;
+      if (exileChoice?.kind !== "targetSelection") {
+        throw new Error("Expected optional Vulture exile target choice");
+      }
+      expectSuccess(
+        p1.resolveEffect({
+          optionalAnswers: { [exileChoice.directiveIndex]: false },
+        }),
+      );
 
       expect(p2.getCardsInZone("battleArea")).toContain(targetId);
       expect(p1.getCardsInZone("trash")).toHaveLength(7);

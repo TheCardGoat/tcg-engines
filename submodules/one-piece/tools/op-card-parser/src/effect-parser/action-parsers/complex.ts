@@ -209,6 +209,30 @@ export function parseSelectAction(text: string): Action[] | null {
     ];
   }
 
+  // Diable Jambe-style: "Select up to 1 of your {Trait} type Leader or Character cards.
+  // Your opponent cannot activate [Blocker] if that Leader or Character attacks during this turn."
+  const selectUnblockableIfAttacksMatch =
+    /^select\s+(?:up\s+to\s+)?(\d+)\s+(?:of\s+)?(your(?:\s+opponent[''\u2019]s)?)\s+(.+?)\.\s+Your\s+opponent\s+cannot\s+activate\s+\[([^\]]+)\]\s+if\s+that\s+(?:Leader\s+or\s+)?Character\s+attacks?\s+during\s+this\s+turn$/i.exec(
+      trimmed,
+    );
+  if (selectUnblockableIfAttacksMatch) {
+    const keyword = KEYWORD_BRACKET_TO_TYPE[selectUnblockableIfAttacksMatch[4]!.toLowerCase()];
+    const amount = parseInt(selectUnblockableIfAttacksMatch[1]!, 10);
+    const upTo = /^select\s+up\s+to/i.test(trimmed);
+    const selectionTarget = parseTarget(
+      `${upTo ? "up to " : ""}${amount} of ${selectUnblockableIfAttacksMatch[2]!} ${selectUnblockableIfAttacksMatch[3]!}`,
+    );
+    if (keyword !== "blocker" || !selectionTarget) return null;
+    return [
+      {
+        action: "grantKeyword",
+        target: selectionTarget,
+        keyword: "unblockable",
+        duration: "thisTurn",
+      },
+    ];
+  }
+
   // "Select up to N of your opponent's Characters. This Character's base power becomes the same as the selected Character's power during this turn."
   const selectSetPowerMatch =
     /^select\s+(?:up\s+to\s+)?(\d+)\s+(?:of\s+)?(your(?:\s+opponent[''\u2019]s)?)\s+(.+?)\.\s+This\s+Character[''\u2019]s\s+base\s+power\s+becomes\s+the\s+same\s+as\s+the\s+selected\s+Character[''\u2019]s\s+power(?:\s+(during\s+this\s+(?:turn|battle)|until\s+.+))?$/i.exec(

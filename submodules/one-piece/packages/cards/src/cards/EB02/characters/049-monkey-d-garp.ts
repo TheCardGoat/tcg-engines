@@ -50,12 +50,6 @@ export const eb02MonkeyDGarp049: CharacterCard = {
       },
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "leaderName",
-            name: "Monkey.D.Garp",
-          },
-        ],
         costs: [
           {
             cost: "restThisCard",
@@ -78,6 +72,10 @@ export const eb02MonkeyDGarp049: CharacterCard = {
                   value: 1,
                 },
               ],
+            },
+            condition: {
+              condition: "leaderName",
+              name: "Monkey.D.Garp",
             },
           },
         ],

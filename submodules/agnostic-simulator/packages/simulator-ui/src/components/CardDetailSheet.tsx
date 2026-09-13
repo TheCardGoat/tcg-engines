@@ -9,7 +9,8 @@ export interface CardDetailSheetProps {
   entity: SimulatorEntity;
   open: boolean;
   onClose?: () => void;
-  children: React.ReactNode;
+  /** Optional trigger. Omit when a game provides its own action control. */
+  children?: React.ReactNode;
 }
 
 export function CardDetailSheet({ entity, open, onClose, children }: CardDetailSheetProps) {
@@ -39,18 +40,20 @@ export function CardDetailSheet({ entity, open, onClose, children }: CardDetailS
 
   return (
     <>
-      <span
-        className="card-detail-trigger inline-block"
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerLeave={handlePointerLeave}
-        role="button"
-        tabIndex={0}
-        aria-haspopup="dialog"
-        aria-expanded={open}
-      >
-        {children}
-      </span>
+      {children ? (
+        <span
+          className="card-detail-trigger inline-block"
+          onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
+          onPointerLeave={handlePointerLeave}
+          role="button"
+          tabIndex={0}
+          aria-haspopup="dialog"
+          aria-expanded={open}
+        >
+          {children}
+        </span>
+      ) : null}
 
       {open && (
         <>
@@ -68,6 +71,14 @@ export function CardDetailSheet({ entity, open, onClose, children }: CardDetailS
             aria-modal="true"
             aria-label={`${entity.title} details`}
           >
+            <button
+              type="button"
+              className="absolute right-3 top-3 z-10 grid size-10 place-items-center rounded-full border border-[var(--board-border)] bg-[var(--board-surface)] text-lg font-black text-[var(--board-text)] shadow-lg transition-colors hover:bg-[var(--board-surface-soft)]"
+              aria-label="Close card details"
+              onClick={onClose}
+            >
+              ×
+            </button>
             <div className="flex justify-center pt-3 pb-1 md:hidden">
               <div className="h-1 w-10 rounded-full bg-[var(--board-border)]" />
             </div>

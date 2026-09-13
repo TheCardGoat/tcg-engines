@@ -9,13 +9,13 @@ import {
   SOUTH,
 } from "../src/index.ts";
 import {
+  op10Scotch008,
   op13GumGumGatlingGun021,
   op13Higuma013,
   op13MonkeyDLuffy001,
   op13Otama043,
   op13RoronoaZoro037,
   op13WindmillVillage022,
-  st01MonkeyDLuffy001,
 } from "../../cards/src/index.ts";
 
 describe("OnePieceTestEngine fixtures", () => {
@@ -47,7 +47,9 @@ describe("OnePieceTestEngine fixtures", () => {
       expect(player.restedDon).toBe(0);
       expect(player.donDeckCount).toBe(10);
       expect(player.hand).toHaveLength(5);
-      expect(player.life).toHaveLength(st01MonkeyDLuffy001.life);
+      // 5-2-1-7: starting Life is placed after the mulligan step, when the
+      // game starts — not at match creation.
+      expect(player.life).toEqual([]);
     };
 
     assertFreshPlayerSetup("south");
@@ -85,7 +87,9 @@ describe("OnePieceTestEngine fixtures", () => {
       zone: "character",
       rested: true,
       attachedDon: 2,
-      playedOnTurn: 1,
+      // Legacy fixture convention: playedOnTurn: 1 means "played this turn"
+      // and is remapped to the active turnNumber (default 3).
+      playedOnTurn: state.turnNumber,
     });
     expect(state.cards[playerOne.stageArea!]?.cardId).toBe(op13WindmillVillage022.id);
     expect(playerOne.trash.map((id) => state.cards[id]?.cardId)).toEqual([op13RoronoaZoro037.id]);
@@ -145,5 +149,90 @@ describe("OnePieceTestEngine fixtures", () => {
     expect(envelope.gameSlug).toBe("one-piece");
     expect(envelope.viewer).toBe(SOUTH);
     expect(envelope.payload).toHaveProperty("state");
+  });
+
+  test("asSouth/asNorth drivers resolve catalog cards and preflight attack legality", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: op13Higuma013, playedOnTurn: 0 }],
+        hand: [op13Otama043],
+        activeDon: 1,
+      },
+      { life: 4, deck: 6 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const south = engine.asSouth();
+    const north = engine.asNorth();
+
+    south.play(op13Otama043);
+    expect(south.findOnField(op13Otama043)).toBeTruthy();
+
+    south.attack(op13Higuma013, north.leader());
+    // Complete Counter so damage (if any) or battle cleanup finishes.
+    if (north.hasPendingChoice()) {
+      north.chooseCounter();
+    }
+
+    expect(
+      south.view().players.south.characters.find((card) => card?.cardId === op13Higuma013.id)
+        ?.rested,
+    ).toBe(true);
+  });
+
+  test("asSouth().attack throws a human-readable error when the attacker cannot attack", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        // played this turn (default remaps playedOnTurn: 1 → current turn)
+        character: [{ card: op13Higuma013, playedOnTurn: 1 }],
+      },
+      { life: 4, deck: 6 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+
+    expect(() => engine.asSouth().attack(op13Higuma013, engine.asNorth().leader())).toThrow(
+      /asSouth\(\)\.attack[\s\S]*attacker cannot attack[\s\S]*(played this turn|canAttackWith=false)/,
+    );
+  });
+
+  test("asSouth().play throws a human-readable error when the card is not in hand", () => {
+    const engine = OnePieceTestEngine.create({ hand: [], activeDon: 1 });
+
+    expect(() => engine.asSouth().play(op13Otama043)).toThrow(
+      /asSouth\(\)\.play[\s\S]*not in south's hand/,
+    );
+  });
+
+  test("asNorth().chooseBlocker resolves a pending Blocker step by catalog card", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op13Higuma013, playedOnTurn: 0 }] },
+      {
+        character: [op10Scotch008],
+        life: 4,
+        deck: 6,
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const south = engine.asSouth();
+    const north = engine.asNorth();
+
+    south.attack(op13Higuma013, north.leader());
+    expect(north.pendingDecision("battleBlocker")).toBeTruthy();
+    north.chooseBlocker(op10Scotch008);
+    // Blocker step is consumed; battle may continue into Counter.
+    expect(() => north.pendingDecision("battleBlocker")).toThrow(
+      /no matching pending prompt|no pending/,
+    );
+    if (north.hasPendingChoice()) {
+      north.chooseCounter();
+    }
+    expect(south.view().status).toBe("active");
+  });
+
+  test("named choose helpers throw a seat-prefixed error when no prompt is pending", () => {
+    const engine = OnePieceTestEngine.create();
+
+    expect(() => engine.asNorth().chooseBlocker()).toThrow(
+      /asNorth\(\)\.choose[\s\S]*no pending battleBlocker/,
+    );
   });
 });

@@ -42,4 +42,35 @@ describe("OP12-022 Inuarashi", () => {
         .players.north.characters.find((card) => card?.instanceId === eligibleId)?.rested,
     ).toBe(false);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op12Inuarashi022] },
+      {
+        character: [
+          { card: eb01Doma005, rested: true, playedOnTurn: 0 },
+          { card: op01Shanks120, rested: true, playedOnTurn: 0 },
+        ],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const inuarashiId = engine.findCardInZone("south", "character", op12Inuarashi022);
+    engine.activateEffect(inuarashiId, "activateMain", "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

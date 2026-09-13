@@ -49,7 +49,8 @@ export const op13GumGumElephantGun038: EventCard = {
             },
           },
           {
-            action: "scheduleAtEndOfTurn",
+            action: "delayed",
+            timing: "endOfThisTurn",
             actions: [
               {
                 action: "setActive",

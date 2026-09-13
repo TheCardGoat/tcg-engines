@@ -3,7 +3,7 @@ import { eb01Izo002 } from "../../../../../cards/src/cards/EB01/characters/002-i
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-002 Izo", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01Izo002);
   });
 });

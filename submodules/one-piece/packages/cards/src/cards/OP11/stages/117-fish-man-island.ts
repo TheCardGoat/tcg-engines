@@ -70,6 +70,10 @@ export const op11FishManIsland117: StageCard = {
             },
             value: 1000,
             duration: "thisTurn",
+            condition: {
+              condition: "leaderName",
+              name: "Shirahoshi",
+            },
           },
         ],
         optional: true,

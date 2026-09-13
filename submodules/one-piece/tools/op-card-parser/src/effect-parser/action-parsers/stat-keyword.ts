@@ -113,7 +113,24 @@ export function parseModifyPowerAction(text: string): ModifyPowerAction | null {
       trimmed,
     );
   if (gainsMatch) {
-    const target = parseModifyPowerTarget(gainsMatch[1]!);
+    const targetText = gainsMatch[1]!.trim();
+    // Pronoun continuations after set/play/select: "It gains +1000 power during this turn"
+    if (/^(?:it|that\s+card|that\s+Character|that\s+Leader)$/i.test(targetText)) {
+      const value = parseInt(gainsMatch[2]!, 10);
+      const duration = gainsMatch[3] ? parseFullDuration(gainsMatch[3]) : "permanent";
+      return {
+        action: "modifyPower",
+        target: {
+          player: "self",
+          zones: ["character"],
+          count: { amount: 1 },
+        },
+        value,
+        duration,
+        previousActionTargets: true,
+      };
+    }
+    const target = parseModifyPowerTarget(targetText);
     if (!target) return null;
     const value = parseInt(gainsMatch[2]!, 10);
     const duration = gainsMatch[3] ? parseFullDuration(gainsMatch[3]) : "permanent";

@@ -25,7 +25,7 @@ export function renderCyberpunkSimulatorScenario({
   layout = "desktop",
   boardProps,
 }: RenderCyberpunkSimulatorOptions): ReturnType<typeof render> {
-  // The shared MobileShell hides the InteractionPanel behind a tab in mobile
+  // The shared viewport shell moves game-owned chrome into rails in mobile
   // layout. jsdom defaults to a narrow viewport, so force a desktop width so
   // the panel is in the DOM and the POM can drive actions through it.
   const originalInnerWidth = window.innerWidth;

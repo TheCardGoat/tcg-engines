@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailVCorporateExile,
+  theHeistRetailStarterDeckVCorporateExile,
   embracingPowerRetailStarterDeckGoroTakemuraLosingHisWay,
   theHeistRetailStarterDeckDexterDeshawnOneLastChance,
   welcomeToNightCityRetailCorpoSecurity,
@@ -137,7 +137,7 @@ describe("new Cyberpunk card abilities", () => {
             hasLag: false,
           },
         ],
-        legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: false }],
+        legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
       },
       {
         field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],

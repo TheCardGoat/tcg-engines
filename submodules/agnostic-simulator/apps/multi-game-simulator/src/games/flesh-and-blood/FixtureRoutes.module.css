@@ -1,0 +1,231 @@
+.page {
+  min-height: 100svh;
+  padding: clamp(20px, 4vw, 48px);
+  color: #fef2f2;
+  background:
+    radial-gradient(ellipse at 8% 6%, rgb(138 28 28 / 28%), transparent 36%),
+    radial-gradient(ellipse at 92% 94%, rgb(196 163 90 / 12%), transparent 34%), #0f0a0a;
+}
+
+.header {
+  display: grid;
+  gap: 8px;
+  max-width: 820px;
+  margin-bottom: 28px;
+}
+
+.header p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(251 191 36 / 72%);
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(30px, 5vw, 52px);
+  line-height: 1.05;
+  font-weight: 800;
+}
+
+.header a {
+  width: fit-content;
+  margin-top: 8px;
+  color: #fecaca;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+.toolbar {
+  display: grid;
+  gap: 10px;
+  max-width: 960px;
+  margin-bottom: 18px;
+}
+
+.toolbar input,
+.toolbar select {
+  min-height: 44px;
+  border-radius: 8px;
+  border: 1px solid rgb(196 163 90 / 35%);
+  background: rgb(26 18 18 / 88%);
+  color: #fef2f2;
+  padding: 0.55rem 0.75rem;
+  font: inherit;
+}
+
+.group {
+  display: grid;
+  gap: 12px;
+  max-width: 980px;
+  margin-top: 22px;
+}
+
+.group h2 {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(251 191 36 / 80%);
+}
+
+.group ul {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.group a {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  color: inherit;
+  text-decoration: none;
+  background: rgb(26 18 18 / 82%);
+  border: 1px solid rgb(196 163 90 / 28%);
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgb(0 0 0 / 28%);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+
+.group a:hover {
+  border-color: rgb(251 191 36 / 55%);
+  background: rgb(40 22 22 / 92%);
+}
+
+.group span {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.group code {
+  width: fit-content;
+  padding: 2px 6px;
+  font-size: 11px;
+  color: #fecaca;
+  background: rgb(0 0 0 / 35%);
+  border: 1px solid rgb(138 28 28 / 35%);
+  border-radius: 6px;
+}
+
+.group p {
+  max-width: 760px;
+  margin: 0;
+  font-size: 13px;
+  color: rgb(254 242 242 / 68%);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgb(196 163 90 / 30%);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgb(254 242 242 / 78%);
+}
+
+.count {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgb(251 191 36 / 85%);
+}
+
+/* Full-board fixture detail */
+.detailRoot {
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  min-height: 0;
+  background: #0f0a0a;
+  color: #fef2f2;
+}
+
+.detailBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 48px;
+  padding: 0.45rem 0.75rem;
+  border-bottom: 1px solid rgb(196 163 90 / 28%);
+  background: rgb(20 12 12 / 96%);
+}
+
+.detailBar a {
+  color: #fecaca;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.detailBar a:hover {
+  text-decoration: underline;
+}
+
+.detailTitle {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.detailTitle strong {
+  display: block;
+  font-size: 0.85rem;
+}
+
+.detailTitle small {
+  display: block;
+  color: rgb(254 242 242 / 60%);
+  font-size: 0.68rem;
+}
+
+.detailSelect {
+  min-height: 40px;
+  border-radius: 8px;
+  border: 1px solid rgb(196 163 90 / 35%);
+  background: rgb(0 0 0 / 35%);
+  color: inherit;
+  padding: 0.25rem 0.5rem;
+  font: inherit;
+  max-width: 16rem;
+}
+
+.detailBoard {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.notFound {
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  min-height: 100svh;
+  text-align: center;
+  padding: 2rem;
+  background: #0f0a0a;
+  color: #fef2f2;
+}

@@ -47,6 +47,71 @@
     var(--mobile-portrait-bottom-rail-h);
 }
 
+.root[data-external-rails="true"] {
+  position: absolute;
+  grid-template-rows:
+    var(--mobile-portrait-opponent-hand-h)
+    minmax(0, 1fr)
+    var(--mobile-portrait-ledger-h)
+    minmax(0, 1fr)
+    var(--mobile-portrait-hand-h);
+}
+
+.root[data-external-rails="true"][data-zone-summaries="true"] {
+  grid-template-rows:
+    var(--mobile-portrait-opponent-hand-h)
+    var(--mobile-zone-summary-bar-h, 24px)
+    minmax(0, 1fr)
+    var(--mobile-portrait-ledger-h)
+    minmax(0, 1fr)
+    var(--mobile-zone-summary-bar-h, 24px)
+    var(--mobile-portrait-hand-h);
+}
+
+.root[data-external-rails="true"] .opponentHand {
+  grid-row: 1;
+}
+
+.root[data-external-rails="true"] .opponentBattlefield {
+  grid-row: 2;
+}
+
+.root[data-external-rails="true"] .ledger {
+  grid-row: 3;
+}
+
+.root[data-external-rails="true"] .playerBattlefield {
+  grid-row: 4;
+}
+
+.root[data-external-rails="true"] .playerHand {
+  grid-row: 5;
+}
+
+.root[data-external-rails="true"][data-zone-summaries="true"] .opponentZoneSummary {
+  grid-row: 2;
+}
+
+.root[data-external-rails="true"][data-zone-summaries="true"] .opponentBattlefield {
+  grid-row: 3;
+}
+
+.root[data-external-rails="true"][data-zone-summaries="true"] .ledger {
+  grid-row: 4;
+}
+
+.root[data-external-rails="true"][data-zone-summaries="true"] .playerBattlefield {
+  grid-row: 5;
+}
+
+.root[data-external-rails="true"][data-zone-summaries="true"] .playerZoneSummary {
+  grid-row: 6;
+}
+
+.root[data-external-rails="true"][data-zone-summaries="true"] .playerHand {
+  grid-row: 7;
+}
+
 .topRail,
 .opponentHand,
 .opponentZoneSummary,
@@ -127,15 +192,17 @@
 }
 
 .rail {
+  color: var(--mobile-portrait-text, var(--board-text, var(--text, rgb(244 249 235 / 94%))));
   display: grid;
   grid-template-columns: minmax(92px, 0.9fr) minmax(74px, auto) minmax(96px, 1fr);
   align-items: stretch;
   min-width: 0;
   min-height: 0;
-  border-block: 1px solid var(--mobile-portrait-border);
+  border-block: 1px solid var(--mobile-portrait-border, var(--board-border, rgb(245 230 66 / 42%)));
   background:
     linear-gradient(90deg, rgb(255 61 138 / 8%), transparent 36%),
-    linear-gradient(270deg, rgb(74 217 255 / 9%), transparent 38%), var(--mobile-portrait-surface);
+    linear-gradient(270deg, rgb(74 217 255 / 9%), transparent 38%),
+    var(--mobile-portrait-surface, var(--board-surface, rgb(7 9 12 / 96%)));
 }
 
 .rail[data-side="player"] {
@@ -165,6 +232,12 @@
 
 .railRight {
   justify-content: flex-end;
+}
+
+@media (width <= 359px) {
+  .rail {
+    grid-template-columns: minmax(44px, 0.65fr) minmax(68px, auto) minmax(88px, 1fr);
+  }
 }
 
 .lane {

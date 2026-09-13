@@ -21,12 +21,14 @@ describe("EB03-036 Baby 5", () => {
 
     engine.playCard(eb03Baby5036);
 
+    engine.acceptLeadingOptional("south");
     const cost = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     expect(cost?.kind).toBe("payCost");
     if (cost?.kind !== "payCost") throw new Error("Expected Baby 5's DON!! payment choice.");
     expect(cost.candidates.map((candidate) => candidate.ref.id)).toContain("active-don:0");
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
 
+    engine.acceptLeadingOptional("south");
     const ko = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(ko?.kind).toBe("selectEntity");
     if (ko?.kind !== "selectEntity") throw new Error("Expected Baby 5's K.O. choice.");
@@ -51,5 +53,35 @@ describe("EB03-036 Baby 5", () => {
     );
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [eb03Baby5036],
+        activeDon: 5,
+      },
+      {
+        character: [eb01Doma005, eb01PrinceBellett026, eb01MountainGod018],
+      },
+    );
+
+    engine.playCard(eb03Baby5036);
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

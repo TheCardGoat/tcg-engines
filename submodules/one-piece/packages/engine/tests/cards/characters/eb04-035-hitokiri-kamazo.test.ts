@@ -19,6 +19,7 @@ describe("EB04-035 Hitokiri Kamazo", () => {
     });
 
     engine.playCard(eb01Kalifa031, "south");
+    engine.acceptLeadingOptional("south");
     const firstReturn = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     expect(firstReturn?.kind).toBe("payCost");
     if (firstReturn?.kind !== "payCost") throw new Error("Expected Kalifa's DON!! return.");
@@ -36,6 +37,7 @@ describe("EB04-035 Hitokiri Kamazo", () => {
     });
 
     engine.playCard(eb01Kalifa031, "south");
+    engine.acceptLeadingOptional("south");
     const secondReturn = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
     expect(secondReturn?.kind).toBe("payCost");
     if (secondReturn?.kind !== "payCost") throw new Error("Expected Kalifa's second DON!! return.");
@@ -64,6 +66,7 @@ describe("EB04-035 Hitokiri Kamazo", () => {
     const lifeBefore = engine.getView("south").players.south.lifeCount;
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");
+    engine.acceptLeadingOptional("south");
     const blocker = engine.pendingDecision("battleBlocker", "south").steps[0];
     expect(blocker?.kind).toBe("selectEntity");
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Kamazo's Blocker choice.");

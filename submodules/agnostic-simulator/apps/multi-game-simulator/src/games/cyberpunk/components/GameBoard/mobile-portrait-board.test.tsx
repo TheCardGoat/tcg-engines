@@ -100,12 +100,12 @@ describe("Cyberpunk mobile portrait board", () => {
     }
   });
 
-  test("uses the readable stacked ledger for two Legends", async () => {
+  test("uses the readable stacked ledger for active Legends", async () => {
     ensureJsdomAnimationSupport();
     installResizeObserverStub();
 
     const view = renderCyberpunkSimulatorScenario({
-      scenarioId: "mobileLedgerTwoLegends",
+      scenarioId: "mobileLedgerThreeLegends",
       layout: "mobile",
     });
 
@@ -123,6 +123,64 @@ describe("Cyberpunk mobile portrait board", () => {
         expect(side.querySelector('[data-sim-anchor-id$="street-cred"]')).toBeTruthy();
         expect(side.querySelector('[data-testid="gig-row"]')).toBeTruthy();
       }
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("omits the empty Legend region for a side without an active Legend", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "unitGoroTakemuraLosingHisWay",
+      layout: "mobile",
+    });
+
+    try {
+      const ledger = await waitFor(() =>
+        requiredElement<HTMLElement>(
+          view.container,
+          '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
+        ),
+      );
+      const emptySide = requiredElement<HTMLElement>(
+        ledger,
+        '[data-tone="rival"][data-side-layout="scoreOnly"]',
+      );
+      const activeSide = requiredElement<HTMLElement>(
+        ledger,
+        '[data-tone="friendly"][data-side-layout="stacked"]',
+      );
+
+      expect(emptySide.querySelector('[data-testid="mobile-ledger-legends"]')).toBeNull();
+      expect(emptySide.querySelector('[data-testid="gig-row"]')).toBeTruthy();
+      expect(activeSide.querySelector('[data-testid="mobile-ledger-legends"]')).toBeTruthy();
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("omits inactive face-down Legends from the Bonnie and Clyde ledger", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "progBonnieAndClyde",
+      layout: "mobile",
+    });
+
+    try {
+      const ledger = await waitFor(() =>
+        requiredElement<HTMLElement>(
+          view.container,
+          '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
+        ),
+      );
+
+      expect(ledger.querySelectorAll('[data-side-layout="scoreOnly"]')).toHaveLength(2);
+      expect(ledger.querySelector('[data-testid="mobile-ledger-legends"]')).toBeNull();
+      expect(ledger.querySelectorAll('[data-testid="gig-row"]')).toHaveLength(2);
     } finally {
       view.unmount();
     }
@@ -147,36 +205,6 @@ describe("Cyberpunk mobile portrait board", () => {
 
       expect(equippedUnit.style.getPropertyValue("--attached-gear-count")).toBe("2");
       expect(equippedUnit.style.getPropertyValue("--attached-gear-space")).toBe("");
-    } finally {
-      view.unmount();
-    }
-  });
-
-  test("keeps practice sidebar AI tools available from the mobile top rail", async () => {
-    ensureJsdomAnimationSupport();
-    installResizeObserverStub();
-
-    const view = renderCyberpunkSimulatorScenario({
-      scenarioId: "gameStart",
-      layout: "mobile",
-    });
-
-    try {
-      const board = await waitFor(() =>
-        requiredElement<HTMLElement>(view.container, '[data-testid="mobile-cyberpunk-board"]'),
-      );
-      fireEvent.click(requiredElement<HTMLButtonElement>(board, '[aria-label="Open AI controls"]'));
-
-      await waitFor(() => requiredElement<HTMLElement>(document.body, '[data-testid="ai-tools"]'));
-      expect(
-        requiredElement<HTMLButtonElement>(document.body, '[data-testid="ai-log-snapshot"]'),
-      ).toBeTruthy();
-      expect(
-        requiredElement<HTMLButtonElement>(document.body, '[data-testid="ai-log-clear"]'),
-      ).toBeTruthy();
-      expect(
-        requiredElement<HTMLButtonElement>(document.body, '[data-testid="ai-reset-scenario"]'),
-      ).toBeTruthy();
     } finally {
       view.unmount();
     }
@@ -234,12 +262,14 @@ describe("Cyberpunk mobile portrait board", () => {
     });
 
     try {
-      const board = await waitFor(() =>
+      await waitFor(() =>
         requiredElement<HTMLElement>(view.container, '[data-testid="mobile-cyberpunk-board"]'),
       );
-      expect(board.querySelector('[aria-label="Open AI controls"]')).toBeNull();
+      expect(view.container.querySelector('[aria-label="Open AI controls"]')).toBeNull();
 
-      fireEvent.click(requiredElement<HTMLButtonElement>(board, '[aria-label="Player actions"]'));
+      fireEvent.click(
+        requiredElement<HTMLButtonElement>(view.container, '[aria-label="Player actions"]'),
+      );
       await waitFor(() =>
         requiredElement<HTMLElement>(document.body, '[data-testid="mobile-player-actions"]'),
       );

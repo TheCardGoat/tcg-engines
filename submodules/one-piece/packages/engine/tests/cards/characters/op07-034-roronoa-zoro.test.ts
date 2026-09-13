@@ -24,6 +24,9 @@ describe("OP07-034 Roronoa Zoro", () => {
         engine.getView("south").players.south.characters.find((card) => card?.instanceId === zoroId)
           ?.power,
       ).toBe(characterCount >= 3 ? 4000 : 2000);
+      expect(engine.getState().capabilityHistory).toHaveLength(0);
+      expect(engine.getView("south").players.south.leader).toBeTruthy();
+      expect(engine.getView("south").prompts).toHaveLength(0);
     }
   });
 });

@@ -269,7 +269,10 @@ describe("initRootSocket (shared manager)", () => {
     // runtime-API origin and maps the response ({ ticket, authToken }) into a
     // GatewayCredentials snapshot ({ ticket, token, requireAuth }).
     const snapshot = await controller!.refresh();
-    expect(ticketMock).toHaveBeenCalledWith({ apiBaseUrl: expect.any(String) });
+    expect(ticketMock).toHaveBeenCalledWith({
+      apiBaseUrl: expect.any(String),
+      gameSlug: "cyberpunk",
+    });
     expect(snapshot).toEqual({
       ticket: "refreshed_ticket",
       token: "refreshed_jwt",
@@ -281,6 +284,75 @@ describe("initRootSocket (shared manager)", () => {
       token: "refreshed_jwt",
       requireAuth: true,
     });
+  });
+
+  it("refreshes scoped credentials from the lifecycle session before an engine exists", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          schemaVersion: 2,
+          revision: 1,
+          phase: "starting",
+          gameId: "g1",
+          match: {
+            matchId: "m1",
+            gameType: "cyberpunk",
+            format: "best_of_1",
+            matchType: "casual",
+            status: "waiting",
+            participants: [],
+            gameIds: [],
+          },
+          viewer: {
+            role: "spectator",
+            spectatorId: "s1",
+            permissions: {
+              act: false,
+              chat: false,
+              propose: false,
+              useManualControls: false,
+              concede: false,
+              spectate: true,
+              viewReplay: false,
+              downloadReplay: false,
+              forkReplay: false,
+            },
+          },
+          realtime: {
+            ticket: "new-ticket",
+            reconnectToken: "new-token",
+            expiresAt: "2026-12-31T00:00:00.000Z",
+            wsUrl: "ws://localhost:3003/cyberpunk",
+            protocolVersion: 2,
+          },
+        }),
+      ),
+    );
+    try {
+      initRootSocket({
+        session: null,
+        gameSlug: "cyberpunk",
+        matchId: "m1",
+        gameId: "g1",
+        ticket: "old-ticket",
+        authToken: "old-token",
+        requireAuth: true,
+      });
+      expect(await getRootSocketControllerForTests()!.refresh()).toEqual({
+        expiresAt: 1798675200000,
+        ticket: "new-ticket",
+        token: "new-token",
+        requireAuth: true,
+      });
+      expect(fetch).toHaveBeenCalledWith(
+        expect.stringContaining("/matches/m1/games/g1/session"),
+        expect.anything(),
+      );
+      expect(ticketMock).not.toHaveBeenCalled();
+    } finally {
+      vi.unstubAllGlobals();
+    }
   });
 
   it("forwards live match identity hints when refreshing credentials", async () => {
@@ -299,6 +371,7 @@ describe("initRootSocket (shared manager)", () => {
 
     expect(ticketMock).toHaveBeenCalledWith({
       apiBaseUrl: expect.any(String),
+      gameSlug: "cyberpunk",
       matchId: "match_1",
       playerId: "player_1",
     });
@@ -339,18 +412,41 @@ describe("initRootSocket (shared manager)", () => {
     expect(fake.connect).not.toHaveBeenCalled();
   });
 
-  it("fails closed instead of refreshing unsupported protocol slugs through another game", async () => {
-    ticketMock.mockResolvedValue({ ticket: "should_not_be_used", authToken: "should_not_be_used" });
+  it("refreshes Riftbound credentials through the Riftbound runtime API", async () => {
+    ticketMock.mockResolvedValue({ ticket: "riftbound_ticket", authToken: "riftbound_token" });
     initRootSocket({
       session: makeSession("sess1"),
       gameSlug: "riftbound",
       requireAuth: true,
     });
 
-    await expect(getRootSocketControllerForTests()!.refresh()).rejects.toThrow(
-      /not supported for riftbound/i,
+    await expect(getRootSocketControllerForTests()!.refresh()).resolves.toMatchObject({
+      ticket: "riftbound_ticket",
+      token: "riftbound_token",
+    });
+    expect(ticketMock).toHaveBeenCalledWith(
+      expect.objectContaining({ apiBaseUrl: "https://api.tcg.online" }),
     );
-    expect(ticketMock).not.toHaveBeenCalled();
+  });
+
+  it("refreshes Grand Archive credentials through the Grand Archive runtime API", async () => {
+    ticketMock.mockResolvedValue({ ticket: "grand_archive_ticket", authToken: "ga_token" });
+    initRootSocket({
+      session: makeSession("sess1"),
+      gameSlug: "grand-archive",
+      requireAuth: true,
+    });
+
+    await expect(getRootSocketControllerForTests()!.refresh()).resolves.toMatchObject({
+      ticket: "grand_archive_ticket",
+      token: "ga_token",
+    });
+    expect(ticketMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        apiBaseUrl: "https://api.tcg.online",
+        gameSlug: "grand-archive",
+      }),
+    );
   });
 
   it("keeps exactly ONE socket when a second consumer acquires the same slug (LiveMatch)", () => {

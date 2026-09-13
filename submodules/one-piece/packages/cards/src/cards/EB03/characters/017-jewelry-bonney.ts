@@ -35,6 +35,7 @@ export const eb03JewelryBonney017: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Supernovas",
+            match: "includes",
           },
         ],
         actions: [
@@ -66,7 +67,7 @@ export const eb03JewelryBonney017: CharacterCard = {
                 },
               ],
             },
-            duration: "untilEndOfOpponentNextTurn",
+            duration: "untilEndOfOpponentNextEndPhase",
           },
         ],
       },

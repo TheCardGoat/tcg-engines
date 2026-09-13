@@ -89,6 +89,65 @@ describe("Baloo - Carefree Bear", () => {
       expect(testEngine.asPlayerOne().getZonesCardCount().hand).toBe(0);
       expect(testEngine.asPlayerTwo().getZonesCardCount().hand).toBe(0);
     });
+
+    // bugrepBBToE_WgnWvnXULioe9xR / bugrepHeQAcoz5Hg9_uUraMWWrK:
+    // each player must discard exactly one card, not their whole hand
+    it("mode 1: each player discards exactly one card from multi-card hands", () => {
+      const fillerThree = createMockCharacter({
+        id: "baloo-test-filler-three",
+        name: "Filler Card Three",
+        cost: 1,
+        strength: 1,
+        willpower: 1,
+        lore: 1,
+      });
+      const fillerFour = createMockCharacter({
+        id: "baloo-test-filler-four",
+        name: "Filler Card Four",
+        cost: 1,
+        strength: 1,
+        willpower: 1,
+        lore: 1,
+      });
+      const fillerFive = createMockCharacter({
+        id: "baloo-test-filler-five",
+        name: "Filler Card Five",
+        cost: 1,
+        strength: 1,
+        willpower: 1,
+        lore: 1,
+      });
+
+      const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+        {
+          inkwell: balooCarefreeBear.cost,
+          hand: [balooCarefreeBear, filler, fillerTwo, fillerThree],
+        },
+        {
+          hand: [fillerFour, fillerFive],
+        },
+      );
+
+      expect(testEngine.asPlayerOne().playCard(balooCarefreeBear)).toBeSuccessfulCommand();
+      expect(
+        testEngine.asPlayerOne().resolvePendingByCard(balooCarefreeBear, { choiceIndex: 1 }),
+      ).toBeSuccessfulCommand();
+
+      expect(
+        testEngine.asPlayerOne().resolveNextPending({ targets: [filler] }),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerOne().getCardZone(filler)).toBe("discard");
+      expect(testEngine.asPlayerOne().getZonesCardCount().hand).toBe(2);
+
+      expect(
+        testEngine.asPlayerTwo().resolveNextPending({ targets: [fillerFour] }),
+      ).toBeSuccessfulCommand();
+      expect(testEngine.asPlayerTwo().getCardZone(fillerFour)).toBe("discard");
+      expect(testEngine.asPlayerTwo().getCardZone(fillerFive)).toBe("hand");
+      expect(testEngine.asPlayerTwo().getZonesCardCount().hand).toBe(1);
+      expect(testEngine.asPlayerOne().getPendingEffects()).toHaveLength(0);
+      expect(testEngine.asPlayerTwo().getPendingEffects()).toHaveLength(0);
+    });
   });
 
   it("regression: ROLL WITH IT ability should trigger and create a bag effect when played", () => {

@@ -25,5 +25,6 @@ describe("OP06-032 Hammond", () => {
         .getView("south")
         .players.south.characters.find((card) => card?.instanceId === hammondId)?.rested,
     ).toBe(true);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

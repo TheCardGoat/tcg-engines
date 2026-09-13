@@ -25,23 +25,34 @@ export interface Participant {
   isMobile?: boolean;
   /** Matchmaking rating captured at match creation. */
   mmrAtMatch?: number;
+  /** Whether the captured ranked bracket was past placements; missing means unknown. */
+  rankedPlacementComplete?: boolean;
   /** Billing/supporter tier captured at match creation. */
   subscriptionTier?: string;
   /** Normalized premium flag so simulators do not parse billing tier names. */
   isPremium?: boolean;
 }
 
-export type MatchStatus = "in_progress" | "completed" | "abandoned";
+export type MatchStatus = "waiting" | "in_progress" | "completed" | "abandoned";
 
 /**
  * `practice_vs_bot` and `local` are local-authority matchTypes; everything
  * else is server-authority. The page chooses an orchestrator from
  * `GameSnapshot.authority`, not from `matchType`.
  */
-export type MatchType = "ranked" | "casual" | "practice_vs_bot" | "private" | "local";
+export type MatchType =
+  | "ranked"
+  | "casual"
+  | "testing"
+  | "practice_vs_bot"
+  | "private"
+  | "tournament"
+  | "league"
+  | "local";
 
 export interface MatchInfo {
   matchId: MatchId;
+  currentGameId?: GameId;
   gameType: GameType;
   /** Game-defined format slug (e.g. "core-constructed"). */
   format: string;

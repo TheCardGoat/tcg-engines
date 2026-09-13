@@ -41,5 +41,6 @@ describe("OP01-072 Smiley", () => {
       noDon.getView("south").players.south.characters.find((card) => card?.instanceId === noDonId)
         ?.power,
     ).toBe(1000);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

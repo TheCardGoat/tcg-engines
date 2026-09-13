@@ -56,7 +56,7 @@ export const eb03Hina025: CharacterCard = {
           {
             action: "returnToHand",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

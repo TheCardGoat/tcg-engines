@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailGoroTakemuraHandsUnclean,
-  boxTopperRetailVCorporateExile,
+  embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean,
+  theHeistRetailStarterDeckVCorporateExile,
   embracingPowerRetailStarterDeckMinotaur,
   welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailMandibularUpgrade,
@@ -24,8 +24,8 @@ describe("Mandibular Upgrade", () => {
       hand: [welcomeToNightCityRetailMandibularUpgrade],
       field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
       legendArea: [
-        { card: boxTopperRetailVCorporateExile, faceDown: false },
-        { card: boxTopperRetailGoroTakemuraHandsUnclean, faceDown: true },
+        { card: theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+        { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
       ],
       eddies: 1,
     });
@@ -37,17 +37,18 @@ describe("Mandibular Upgrade", () => {
     );
     const attachTargets = getAttachTargets(engine);
     expect(attachTargets).toContain(
-      engine.getCard(boxTopperRetailVCorporateExile, "legendArea", P1).instanceId,
+      engine.getCard(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1).instanceId,
     );
     expect(attachTargets).not.toContain(
-      engine.getCard(boxTopperRetailGoroTakemuraHandsUnclean, "legendArea", P1).instanceId,
+      engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, "legendArea", P1)
+        .instanceId,
     );
   });
 
   it("has no attach targets when there is no friendly Unit or face-up Legend", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailMandibularUpgrade],
-      legendArea: [{ card: boxTopperRetailVCorporateExile, faceDown: true }],
+      legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: true }],
       eddies: 1,
     });
 

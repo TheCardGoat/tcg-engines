@@ -112,4 +112,39 @@ describe("OP04-094 Trueno Bastardo", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Life Trigger so Leader rest and K.O. do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+          { card: op03RobLucci092, playedOnTurn: 0 },
+        ],
+      },
+      {
+        life: [op04TruenoBastardo094],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const selectedId = engine.findCardInZone("south", "character", eb01MountainGod018);
+
+    engine.declareAttack(selectedId, engine.leader("north"), "south");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const before = engine.getView("north").players.north;
+    const southCharsBefore = engine
+      .getView("north")
+      .players.south.characters.filter(Boolean).length;
+    const trashBefore = engine.getView("north").players.south.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.leader.rested).toBe(false);
+    expect(view.players.south.characters.some((card) => card?.instanceId === selectedId)).toBe(
+      true,
+    );
+    expect(view.players.south.characters.filter(Boolean).length).toBe(southCharsBefore);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.north.lifeCount).toBe(before.lifeCount);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

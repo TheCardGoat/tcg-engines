@@ -37,7 +37,7 @@ describe("createSpectatorEngineAdapter", () => {
       type: "pass",
       playerId: asPlayerId("player_one"),
       timestamp: 1,
-      passKind: "action-step",
+      context: "action-step",
       outcomes: {
         cardsDrawn: {
           count: 1,
@@ -100,7 +100,7 @@ describe("createSpectatorEngineAdapter", () => {
       viewerId: dev.p1Id,
     });
 
-    expect(adapter.packetAnimations()[0]?.animation.data).toMatchObject({
+    expect(adapter.packetAnimations()[0]?.animation?.data).toMatchObject({
       kind: "cardMove",
       cardId: secretCardId,
       fromZone: "deck",

@@ -101,4 +101,27 @@ describe("OP13-098 Never Existed... in the First Place...", () => {
       expect(engine.getState().capabilityHistory).toHaveLength(0);
     });
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    withImuLeader(() => {
+      const engine = OnePieceTestEngine.create(
+        { hand: [op13NeverExistedInTheFirstPlace098], activeDon: 2 },
+        { stage: op13TheEmptyThrone099 },
+      );
+      const stageId = engine.findCardInZone("north", "stage", op13TheEmptyThrone099);
+
+      engine.playCard(op13NeverExistedInTheFirstPlace098);
+      const before = engine.getView("south").players.south;
+      const activeDonBefore = before.activeDon;
+      const restedDonBefore = before.restedDon;
+      engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+      const view = engine.getView("south");
+      expect(view.players.south.activeDon).toBe(activeDonBefore);
+      expect(view.players.south.restedDon).toBe(restedDonBefore);
+      expect(view.players.north.stage?.instanceId).toBe(stageId);
+      expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(stageId);
+      expect(view.prompts).toHaveLength(0);
+    });
+  });
 });

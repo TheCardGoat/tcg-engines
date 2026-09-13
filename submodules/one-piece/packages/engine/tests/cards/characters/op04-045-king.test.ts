@@ -18,5 +18,6 @@ describe("OP04-045 King", () => {
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(drawnId);
     expect(view.players.south.deckCount).toBe(1);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

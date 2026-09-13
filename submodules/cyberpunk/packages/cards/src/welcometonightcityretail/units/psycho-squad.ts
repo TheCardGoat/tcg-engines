@@ -4,7 +4,7 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailPsychoSquad = defineCyberpunkCard({
   id: "14d87f2a-8bd7-424f-b65b-3659156cef81",
   slug: "psycho-squad",
-  rulesText: "[Flavor] Their protocol stops at “shoot first.”",
+  rulesText: "[Flavour] Their protocol stops at “shoot first.”",
   name: "Psycho Squad",
   displayName: "Psycho Squad",
   canonicalId: "psycho-squad",

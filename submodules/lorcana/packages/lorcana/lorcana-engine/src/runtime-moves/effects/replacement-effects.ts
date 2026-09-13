@@ -1,5 +1,6 @@
 import type { CardInstanceId, PlayerId } from "#core";
 import type {
+  LorcanaCardDefinition,
   NumericSelfReplacement,
   ReplacementAbilityDefinition,
   ReplacementAbilityKind,
@@ -10,6 +11,7 @@ import type {
   ActionResolutionInput,
   PlayCardExecutionContext,
 } from "../resolution/action-effects/types";
+import { cardHasName } from "../../card-utils";
 import { evaluateCondition } from "../../rules/condition-evaluator";
 import { buildConditionContext } from "../../rules/condition-context";
 import { createProjectionState, getEffectiveStrength } from "../../rules/derived-state";
@@ -238,14 +240,6 @@ function getCardOwnerId(
   return cardId ? (ctx.framework.zones.getCardOwner(cardId) as PlayerId | undefined) : undefined;
 }
 
-function getCardName(
-  ctx: ReplacementContext,
-  cardId: CardInstanceId | undefined,
-): string | undefined {
-  const definition = cardId ? ctx.cards.getDefinition(cardId) : undefined;
-  return definition && "name" in definition ? (definition.name as string | undefined) : undefined;
-}
-
 function hasClassification(
   ctx: ReplacementContext,
   cardId: CardInstanceId | undefined,
@@ -347,7 +341,12 @@ function appliesNumericSelfReplacement(
         : typeof resolutionInput.targets === "string"
           ? (resolutionInput.targets as CardInstanceId)
           : undefined;
-      return getCardName(ctx, selectedTargetId) === replacement.condition.name;
+      // Use cardHasName so ampersand names (CR 5.2.6.1) and explicit aliases match.
+      // Exact string equality rejects "Darkwing Duck & Launchpad" for "Darkwing Duck".
+      const definition = selectedTargetId
+        ? (ctx.cards.getDefinition(selectedTargetId) as LorcanaCardDefinition | undefined)
+        : undefined;
+      return definition ? cardHasName(definition, replacement.condition.name) : false;
     }
     case "trigger-subject-classification":
       return hasClassification(
@@ -499,7 +498,8 @@ function createPrintedReplacementCandidate(
     const abilityKey = ability.id ?? "replacement";
     return {
       id: `${sourceId}:${abilityKey}:zone-destination`,
-      applicationKey: registrationKind.applicationKey ?? `${sourceId}:${abilityKey}:zone-destination`,
+      applicationKey:
+        registrationKind.applicationKey ?? `${sourceId}:${abilityKey}:zone-destination`,
       apply: (currentEvent) => ({
         ...currentEvent,
         toZone: registrationKind.replacementZone,

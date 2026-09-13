@@ -66,10 +66,20 @@ describe("Ruthless Tactics (ST06-011)", () => {
         resourceArea: activeResources(3),
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
-      const ids = p1.getCardsInZone("battleArea");
 
-      expectFailure(p1.playCommand(st06RuthlessTactics011, { targets: [] }), "INVALID_TARGET");
-      expectFailure(p1.playCommand(st06RuthlessTactics011, { targets: ids }), "INVALID_TARGET");
+      expectSuccess(p1.playCommand(st06RuthlessTactics011, { targets: [] }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "targetSelection" });
+
+      const overEngine = GundamTestEngine.create({
+        hand: [st06RuthlessTactics011],
+        play: units,
+        resourceArea: activeResources(3),
+      });
+      const over = overEngine.asPlayer(PLAYER_ONE);
+      expectFailure(
+        over.playCommand(st06RuthlessTactics011, { targets: over.getCardsInZone("battleArea") }),
+        "INVALID_TARGET",
+      );
     });
 
     it("rejects a friendly non-Clan Unit and an enemy Clan Unit", () => {

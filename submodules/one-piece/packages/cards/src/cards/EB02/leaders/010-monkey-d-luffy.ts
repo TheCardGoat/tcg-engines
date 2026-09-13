@@ -45,23 +45,6 @@ export const eb02MonkeyDLuffy010: LeaderCard = {
     effects: [
       {
         trigger: "activateMain",
-        conditions: [
-          {
-            condition: "zoneCount",
-            player: "self",
-            zone: "character",
-            comparison: "eq",
-            value: 0,
-            filters: [
-              {
-                filter: "trait",
-                value: "Straw Hat Crew",
-                match: "includes",
-                negate: true,
-              },
-            ],
-          },
-        ],
         costs: [
           {
             cost: "returnDon",
@@ -79,6 +62,21 @@ export const eb02MonkeyDLuffy010: LeaderCard = {
                 upTo: true,
               },
             },
+            condition: {
+              condition: "zoneCount",
+              player: "self",
+              zone: "character",
+              comparison: "eq",
+              value: 0,
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Straw Hat Crew",
+                  match: "includes",
+                  negate: true,
+                },
+              ],
+            },
           },
           {
             action: "modifyPower",
@@ -95,6 +93,7 @@ export const eb02MonkeyDLuffy010: LeaderCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

@@ -11,7 +11,7 @@ import { createSimulatorBrowserRouter, SimulatorRouterProvider } from "./router.
 
 vi.mock("../simulator/audio/sound-service", () => ({
   disposeSimulatorSoundService: vi.fn(),
-  initSimulatorSoundService: vi.fn(),
+  initSimulatorSoundService: vi.fn(() => Promise.resolve()),
   playSimulatorSound: vi.fn(),
   setSimulatorSoundVolume: vi.fn(),
 }));
@@ -43,7 +43,13 @@ describe("SimulatorRouterProvider", () => {
   it("bridges simulator settings into the nested router root", async () => {
     render(
       <SimulatorAuthContextProvider value={authContext()}>
-        <SimulatorSettingsProvider initialSettings={{ soundVolume: 35 }}>
+        <SimulatorSettingsProvider
+          initialSettings={{
+            soundVolume: 35,
+            cardInteractionMode: "detailed",
+            animationSpeed: "normal",
+          }}
+        >
           <SimulatorAudioProvider>
             <OuterSettingsProbe />
             <SimulatorRouterProvider

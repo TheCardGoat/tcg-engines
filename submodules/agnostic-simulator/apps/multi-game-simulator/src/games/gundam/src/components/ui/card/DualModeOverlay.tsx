@@ -54,7 +54,6 @@ export function DualModeOverlay({ scale, onPickCmd, onPickPilot }: DualModeOverl
           border: 0,
           borderBottom: "1px solid rgba(41,212,247,.6)",
           boxShadow: "inset 0 0 0 2px rgba(41,212,247,.85), inset 0 0 22px rgba(41,212,247,.3)",
-          animation: "gd-dual-mode-pulse 1.4s ease-in-out infinite",
         }}
       >
         <div
@@ -86,7 +85,6 @@ export function DualModeOverlay({ scale, onPickCmd, onPickPilot }: DualModeOverl
           border: 0,
           borderTop: "1px solid rgba(41,212,247,.6)",
           boxShadow: "inset 0 0 0 2px rgba(41,212,247,.85), inset 0 0 22px rgba(41,212,247,.3)",
-          animation: "gd-dual-mode-pulse 1.4s ease-in-out infinite",
         }}
       >
         <div

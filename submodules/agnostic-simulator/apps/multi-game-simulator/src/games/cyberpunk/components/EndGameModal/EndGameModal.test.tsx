@@ -58,8 +58,11 @@ vi.mock("../../../../simulator/audio", () => ({
 }));
 
 vi.mock("@tcg/simulator-ui", () => ({
-  PostGameModal: ({ actions }: { actions?: React.ReactNode }) => (
-    <div data-testid="post-game-modal">{actions}</div>
+  PostGameModal: ({ actions, reason }: { actions?: React.ReactNode; reason?: string }) => (
+    <div data-testid="post-game-modal">
+      <span>{reason}</span>
+      {actions}
+    </div>
   ),
 }));
 
@@ -78,5 +81,11 @@ describe("EndGameModal", () => {
     view.rerender(<EndGameModal />);
 
     expect(mocks.playCue).toHaveBeenCalledTimes(1);
+  });
+
+  test("describes the rules-accurate seven-gig start-of-turn victory", () => {
+    const view = render(<EndGameModal />);
+
+    expect(view.getByText("Gig victory: start your turn with 7 gigs")).toBeTruthy();
   });
 });

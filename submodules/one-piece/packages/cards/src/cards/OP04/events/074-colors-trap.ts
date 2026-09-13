@@ -67,6 +67,7 @@ export const op04ColorsTrap074: EventCard = {
             },
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

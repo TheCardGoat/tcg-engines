@@ -1,7 +1,7 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
-import { getEffectiveRules } from "../active-effects/index.ts";
+import { consumeRuleUse, getEffectiveRules } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
 import { hasPlayedProgramThisTurn, satisfiesMustAttackRequirement } from "./attack-requirements.ts";
 
@@ -28,6 +28,7 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
         id as string,
       );
       if (rules.includes("cantAttack")) return false;
+      if (rules.includes("cantAttackRival")) return false;
       if (
         rules.includes("requiresProgramPlayedThisTurn") &&
         !hasPlayedProgramThisTurn(state, playerId)
@@ -86,6 +87,13 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
     if (attackerRules.includes("cantAttack")) {
       return { valid: false, error: "Attacker can't attack", errorCode: "CANT_ATTACK" };
     }
+    if (attackerRules.includes("cantAttackRival")) {
+      return {
+        valid: false,
+        error: "Attacker can only attack rival Units",
+        errorCode: "CANT_ATTACK_RIVAL",
+      };
+    }
     if (
       attackerRules.includes("requiresProgramPlayedThisTurn") &&
       !hasPlayedProgramThisTurn(state as import("../types/match-state.ts").MatchState, playerId)
@@ -120,6 +128,11 @@ export const attackRivalMove: MoveDefinition<AttackRivalInput> = {
 
     operations.card.spend(attackerId as CardInstanceId);
     operations.card.setAttackedThisTurn(attackerId as CardInstanceId, true);
+    consumeRuleUse(
+      state as import("../types/match-state.ts").MatchState,
+      attackerId,
+      "canAttackReadyUnits",
+    );
 
     operations.game.setAttackState({
       attackerId: attackerId as CardInstanceId,

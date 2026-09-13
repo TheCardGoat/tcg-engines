@@ -9,8 +9,6 @@ const generatedFilePath = resolve(repoRoot, "packages/cards/src/generated.ts");
 const outputDir = resolve(repoRoot, "packages/cards/src");
 
 const {
-  alphaCards,
-  spoilerCards,
   promoCards,
   prm01Cards,
   boxToppersRetailCards,
@@ -23,8 +21,6 @@ const {
 });
 
 const generatedCounts = [
-  `${alphaCards.length} alpha`,
-  `${spoilerCards.length} spoiler`,
   `${promoCards.length} promo`,
   `${prm01Cards.length} PRM01`,
   `${boxToppersRetailCards.length} box toppers retail`,

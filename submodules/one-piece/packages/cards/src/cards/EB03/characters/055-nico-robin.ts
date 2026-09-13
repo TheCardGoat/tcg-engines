@@ -80,6 +80,7 @@ export const eb03NicoRobin055: CharacterCard = {
             condition: {
               condition: "leaderTrait",
               trait: "Straw Hat Crew",
+              match: "includes",
             },
           },
         ],

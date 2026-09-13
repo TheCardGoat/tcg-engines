@@ -28,8 +28,7 @@ export const gd02PsychoGundam001: UnitCard = {
       },
       rarity: "legendRare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-001.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-001.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-001.webp",
       productName: "Dual Impact [GD02]",
     },
     {
@@ -45,15 +44,13 @@ export const gd02PsychoGundam001: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-001_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-001_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-001_p1.webp",
       productName: "Dual Impact [GD02]",
     },
   ],
   reprints: ["GD02-001", "GD02-001_p1"],
   selectedPrintingId: "GD02-001",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd02/GD02-001.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD02-001.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd02/GD02-001.webp",
   legality: "legal",
   level: 6,
   cost: 4,
@@ -67,10 +64,13 @@ export const gd02PsychoGundam001: UnitCard = {
       type: "triggered",
       activation: {
         timing: ["onShieldAreaCardDestroyByBattle"],
+        qualification: {
+          attribute: "trait",
+          comparison: "includes",
+          value: "cyber-newtype",
+        },
         conditions: [
           { type: "duringPair" },
-          { type: "selfPairedPilotHasTrait", trait: "cyber-newtype" },
-          { type: "isTurn", whose: "friendly" },
           {
             type: "eventCardMatches",
             target: {

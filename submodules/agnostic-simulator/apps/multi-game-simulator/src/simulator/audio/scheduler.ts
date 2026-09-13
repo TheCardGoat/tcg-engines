@@ -1,5 +1,5 @@
 import type { SimulatorAudioCueId } from "@tcg/protocol";
-import type { ScheduledAnimationStep } from "@tcg/simulator-ui";
+import type { CompiledAudioCue } from "@tcg/simulator-runtime/animation";
 
 export interface ScheduledSimulatorAudioCue {
   readonly cue: SimulatorAudioCueId;
@@ -7,21 +7,18 @@ export interface ScheduledSimulatorAudioCue {
 }
 
 export function collectScheduledSimulatorAudioCues(
-  steps: readonly ScheduledAnimationStep[],
+  steps: readonly CompiledAudioCue[],
   seenStepKeys: Set<string>,
 ): ScheduledSimulatorAudioCue[] {
   const cues: ScheduledSimulatorAudioCue[] = [];
   for (const step of steps) {
-    const cue = step.step.audioCue;
-    if (!cue) {
-      continue;
-    }
+    const cue = step.cue;
     const key = `${step.planId}:${step.stepId}:${cue}`;
     if (seenStepKeys.has(key)) {
       continue;
     }
     seenStepKeys.add(key);
-    cues.push({ cue, delayMs: step.delayMs });
+    cues.push({ cue, delayMs: step.startAtMs });
   }
   return cues;
 }

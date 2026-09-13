@@ -6,7 +6,13 @@ const CARD_ROOT = join(SCRIPT_DIR, "../../../packages/cards/src/cards");
 const SCRAPED_DIR = join(SCRIPT_DIR, "../data/scraped");
 const ASSET_ROOT =
   process.env["GUNDAM_CARD_ASSET_ROOT"] ?? "/Users/esposo/Projects/assets/public/gundam/cards";
-const R2_BASE_URL = "https://r2.tcg.online/public/gundam/cards";
+const CARD_NUMBER_FILTER = new Set(
+  (process.env["GUNDAM_METADATA_CARD_NUMBERS"] ?? "")
+    .split(",")
+    .map((value) => value.trim().toUpperCase())
+    .filter(Boolean),
+);
+const R2_BASE_URL = "https://cdn.tcg.online/public/gundam/cards";
 
 const METADATA_FIELDS = new Set([
   "id",
@@ -524,6 +530,7 @@ let updated = 0;
 for (const { parsed, printings, source } of parsedEntries) {
   const filePath = parsed.filePath;
   const canonicalId = canonicalCardNumber(parsed.cardNumber);
+  if (CARD_NUMBER_FILTER.size > 0 && !CARD_NUMBER_FILTER.has(canonicalId)) continue;
   const siblingPrintingIds = [...(printingIdsByCanonical.get(canonicalId) ?? [])].sort((a, b) =>
     a.localeCompare(b, "en", { numeric: true, sensitivity: "base" }),
   );

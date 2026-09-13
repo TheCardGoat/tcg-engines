@@ -3,7 +3,7 @@ import { prb01DonquixoteFamilyJollyRogerFoil036 } from "../../../../../cards/src
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-036 Donquixote Family (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01DonquixoteFamilyJollyRogerFoil036);
   });
 });

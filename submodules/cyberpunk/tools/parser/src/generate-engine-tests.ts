@@ -1,24 +1,16 @@
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import type {
-  AlphaCardDefinition,
-  CardType,
-  PromoCardDefinition,
-  SpoilerCardDefinition,
-} from "@tcg/cyberpunk-types";
+import type { CardType, PromoCardDefinition } from "@tcg/cyberpunk-types";
 import { loadGeneratedCards } from "./load-generated.ts";
-import { parseAlphaCards, parsePromoCards, parseSpoilerCards } from "./parser.ts";
+import { parsePromoCards } from "./parser.ts";
 
-type StructuredSetCardDefinition =
-  | AlphaCardDefinition
-  | SpoilerCardDefinition
-  | PromoCardDefinition;
+type StructuredSetCardDefinition = PromoCardDefinition;
 
 type StructuredSetCode = StructuredSetCardDefinition["set"]["code"];
 
 interface SetConfig {
   code: StructuredSetCode;
-  prefix: "alpha" | "spoiler" | "promo";
+  prefix: "promo";
 }
 
 interface BucketMeta {
@@ -36,16 +28,10 @@ export interface GenerateEngineTestFilesOptions {
 }
 
 export interface GenerateEngineTestFilesResult {
-  alphaCards: AlphaCardDefinition[];
-  spoilerCards: SpoilerCardDefinition[];
   promoCards: PromoCardDefinition[];
 }
 
-const SET_CONFIGS: readonly SetConfig[] = [
-  { code: "alpha", prefix: "alpha" },
-  { code: "spoiler", prefix: "spoiler" },
-  { code: "promo", prefix: "promo" },
-] as const;
+const SET_CONFIGS: readonly SetConfig[] = [{ code: "promo", prefix: "promo" }] as const;
 
 const BUCKET_META_BY_TYPE: Record<CardType, BucketMeta> = {
   legend: { dir: "legends" },
@@ -154,17 +140,11 @@ export async function generateEngineTestFiles(
   options: GenerateEngineTestFilesOptions,
 ): Promise<GenerateEngineTestFilesResult> {
   const generatedCards = await loadGeneratedCards(options.generatedFilePath);
-  const alphaCards = parseAlphaCards(generatedCards);
-  const spoilerCards = parseSpoilerCards(generatedCards);
   const promoCards = parsePromoCards(generatedCards);
 
-  await writeSetFiles(options.outputDir, SET_CONFIGS[0], alphaCards);
-  await writeSetFiles(options.outputDir, SET_CONFIGS[1], spoilerCards);
-  await writeSetFiles(options.outputDir, SET_CONFIGS[2], promoCards);
+  await writeSetFiles(options.outputDir, SET_CONFIGS[0], promoCards);
 
   return {
-    alphaCards: alphaCards.filter((c) => c.abilities.length > 0),
-    spoilerCards: spoilerCards.filter((c) => c.abilities.length > 0),
     promoCards: promoCards.filter((c) => c.abilities.length > 0),
   };
 }

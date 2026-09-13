@@ -4,16 +4,38 @@
  * Uses Svelte 5 runes for reactive state management.
  * Call `fetchSession()` on mount to check for an existing session cookie.
  *
- * The Better Auth session is the single source of truth for the current user.
- * Custom columns such as `displayUsername` ride on the session payload via
- * `user.additionalFields` configured in apps/api/src/auth/auth.ts. After a
- * profile save, `AccountSettingsDialog` calls `patchUser()` for an optimistic
- * update; the next `fetchSession()` round-trip returns the canonical value.
+ * The platform's `/v1/auth/session` projection is the source of truth for the
+ * current user. Better Auth's client is used only for explicit auth actions.
+ * After a profile save, `AccountSettingsDialog` calls `patchUser()` for an
+ * optimistic update; the next `fetchSession()` returns the canonical value.
  */
 
 import type { AuthUser, AuthSession } from "@tcg/shared/auth";
 import { authClient } from "./client.js";
+import { fetchCanonicalSession } from "./canonical-session-client.js";
 import { trackEvent, setUserProperties } from "$lib/analytics/analytics.js";
+import { env } from "$env/dynamic/public";
+import { resolvePlatformMatchmakingReturnUrl } from "$lib/navigation/platform-matchmaking-url.js";
+
+/**
+ * Default post-login landing target. The matchmaking lobby lives on the
+ * platform app now, so callbacks go there directly instead of relying on the
+ * simulator's legacy `/matchmaking` redirect (which a mounted base path such
+ * as `/lorcana/simulator` would bypass).
+ */
+function defaultAuthCallbackUrl(): string {
+  return resolvePlatformMatchmakingReturnUrl(
+    new URL(window.location.href),
+    env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+  );
+}
+
+function resolveAuthCallbackUrl(callbackPath: string | undefined): URL {
+  const target = callbackPath ?? defaultAuthCallbackUrl();
+  if (target.startsWith("http://") || target.startsWith("https://")) return new URL(target);
+  const path = target.startsWith("/") ? target : `/${target}`;
+  return new URL(path, window.location.origin);
+}
 
 let user = $state<AuthUser | null>(null);
 let session = $state<AuthSession | null>(null);
@@ -25,12 +47,10 @@ async function fetchSession(
   const wasAuthenticated = user !== null;
   isLoading = true;
   try {
-    const result = await authClient.getSession();
-    if (result.data?.user && result.data?.session) {
-      // The client can't infer API-side `user.additionalFields`; the server
-      // adds displayUsername/username/subscriptionTier/subscriptionExpiresAt.
-      user = result.data.user as unknown as AuthUser;
-      session = result.data.session as unknown as AuthSession;
+    const result = await fetchCanonicalSession();
+    if (result?.user && result.session) {
+      user = result.user;
+      session = result.session;
 
       if (!wasAuthenticated) {
         trackEvent("auth_sign_in_complete", { method: options.signInMethod ?? "discord" });
@@ -99,14 +119,13 @@ function isDefaultDevAgentAuthInput(input: DevEmailPasswordAuthInput): boolean {
 
 async function signInWithDiscord(options: DiscordSignInOptions = {}): Promise<void> {
   trackEvent("auth_sign_in_start", { method: "discord" });
-  const { callbackPath = "/matchmaking", joinGuild = false } = options;
-  const path = callbackPath.startsWith("/") ? callbackPath : `/${callbackPath}`;
+  const { callbackPath, joinGuild = false } = options;
 
   if (typeof window === "undefined") {
     throw new Error("signInWithDiscord must be called in the browser");
   }
 
-  const callbackURL = new URL(path, window.location.origin);
+  const callbackURL = resolveAuthCallbackUrl(callbackPath);
   const errorCallbackURL = new URL("/sign-in", window.location.origin).toString();
 
   if (joinGuild) {
@@ -128,15 +147,14 @@ async function signInWithDiscord(options: DiscordSignInOptions = {}): Promise<vo
  * Sign in with Metafy OAuth (generic OAuth2 provider configured on the API).
  * Redirects the user to Metafy for authentication.
  */
-async function signInWithMetafy(callbackPath = "/matchmaking"): Promise<void> {
+async function signInWithMetafy(callbackPath?: string): Promise<void> {
   trackEvent("auth_sign_in_start", { method: "metafy" });
-  const path = callbackPath.startsWith("/") ? callbackPath : `/${callbackPath}`;
 
   if (typeof window === "undefined") {
     throw new Error("signInWithMetafy must be called in the browser");
   }
 
-  const callbackURL = new URL(path, window.location.origin).toString();
+  const callbackURL = resolveAuthCallbackUrl(callbackPath).toString();
   const errorCallbackURL = new URL("/sign-in", window.location.origin).toString();
 
   const result = await authClient.signIn.oauth2({
@@ -245,7 +263,7 @@ async function signOut(): Promise<void> {
 
 /**
  * Hydrate session state from server-provided data (via +layout.server.ts).
- * Avoids the client-side HTTP round-trip to /api/auth/get-session.
+ * Avoids a client-side round-trip to Better Auth's full session endpoint.
  */
 function hydrateFromServer(serverUser: AuthUser | null, serverSession: AuthSession | null): void {
   if (serverUser && serverSession) {

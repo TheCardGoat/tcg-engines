@@ -2,8 +2,6 @@ import {
   MatchRuntime,
   DEFAULT_DYNAMIC_CLOCK_CONFIG,
   asPlayerId,
-  createMockResource,
-  createMockUnit,
   createStaticResources,
   type CandidateStrategy,
   type BotDecisionSink,
@@ -14,9 +12,16 @@ import {
 } from "@tcg/gundam-engine";
 import type { Card } from "@tcg/gundam-types";
 import type { GundamCardMeta } from "@tcg/gundam-engine";
-import { exbpExBase001, exrpExResource003 } from "@tcg/gundam-cards";
+import { defaultGundamSetupCards } from "@tcg/gundam-token-data";
+import { exbExBase001, exrExResource001 } from "@tcg/gundam-cards";
 
 import { asViewerId, type ViewerId } from "./types.ts";
+import {
+  realMainDeckCards,
+  realResourceCards,
+  realShieldCards,
+  resolveVisualFixtureCard,
+} from "./fixtures/real-cards.ts";
 
 export const DEV_PLAYER_ONE = "player_one" as const;
 export const DEV_PLAYER_TWO = "player_two" as const;
@@ -41,8 +46,8 @@ export interface DevPlayerFixture {
    * Shield area cards. Fixtures that `skipToMainPhase` bypass the
    * setup-phase shield-fill (see `lifecycle/setup/setup-flow.test.ts`),
    * so any spec that reads opponent shields has to seed them here.
-   * Accepts either `Card | DevCardEntry` entries or a number (mocked
-   * shield cards auto-generated).
+   * Accepts either `Card | DevCardEntry` entries or a number (real,
+   * deterministic shield cards auto-generated).
    */
   readonly shieldArea?: ReadonlyArray<Card | DevCardEntry> | number;
 }
@@ -53,6 +58,10 @@ export interface DevRuntimeConfig {
   readonly seed?: string;
   readonly skipToMainPhase?: boolean;
   readonly initialActivePlayer?: DevPlayerId;
+  /** Optional visual-lab reserve. Defaults to the production-like dynamic clock. */
+  readonly clockReserveMs?: number;
+  /** Engine-unit-test escape hatch. Visual fixture factories must never enable it. */
+  readonly allowSyntheticCards?: boolean;
 }
 
 /**
@@ -107,14 +116,20 @@ function isEntry(v: Card | DevCardEntry): v is DevCardEntry {
 
 function expandDeck(
   v: ReadonlyArray<Card | DevCardEntry> | number | undefined,
-  fill: () => Card,
+  fill: (count: number) => readonly Card[],
 ): ReadonlyArray<Card | DevCardEntry> {
-  if (typeof v === "number") return Array.from({ length: v }, fill);
+  if (typeof v === "number") return fill(v);
   return v ?? [];
 }
 
-function toPlaced(playerId: string, entry: Card | DevCardEntry, zone: string): PlacedCard {
-  const card = isEntry(entry) ? entry.card : entry;
+function toPlaced(
+  playerId: string,
+  entry: Card | DevCardEntry,
+  zone: string,
+  allowSyntheticCards: boolean,
+): PlacedCard {
+  const inputCard = isEntry(entry) ? entry.card : entry;
+  const card = allowSyntheticCards ? inputCard : resolveVisualFixtureCard(inputCard);
   const meta: GundamCardMeta = {
     exhausted: isEntry(entry) ? (entry.exhausted ?? false) : false,
   };
@@ -127,20 +142,32 @@ function toPlaced(playerId: string, entry: Card | DevCardEntry, zone: string): P
   };
 }
 
-function collectPlayer(playerId: string, fixture: DevPlayerFixture | undefined): PlacedCard[] {
+function collectPlayer(
+  playerId: string,
+  fixture: DevPlayerFixture | undefined,
+  allowSyntheticCards: boolean,
+): PlacedCard[] {
   const f = fixture ?? {};
   const out: PlacedCard[] = [];
-  for (const e of f.hand ?? []) out.push(toPlaced(playerId, e, "hand"));
-  for (const e of expandDeck(f.deck, createMockUnit)) out.push(toPlaced(playerId, e, "deck"));
-  for (const e of expandDeck(f.resourceDeck, createMockResource)) {
-    out.push(toPlaced(playerId, e, "resourceDeck"));
+  for (const e of f.hand ?? []) out.push(toPlaced(playerId, e, "hand", allowSyntheticCards));
+  for (const e of expandDeck(f.deck, realMainDeckCards)) {
+    out.push(toPlaced(playerId, e, "deck", allowSyntheticCards));
   }
-  for (const e of f.resourceArea ?? []) out.push(toPlaced(playerId, e, "resourceArea"));
-  for (const e of f.battleArea ?? []) out.push(toPlaced(playerId, e, "battleArea"));
-  for (const e of f.baseSection ?? []) out.push(toPlaced(playerId, e, "baseSection"));
-  for (const e of f.trash ?? []) out.push(toPlaced(playerId, e, "trash"));
-  for (const e of expandDeck(f.shieldArea, createMockUnit)) {
-    out.push(toPlaced(playerId, e, "shieldArea"));
+  for (const e of expandDeck(f.resourceDeck, realResourceCards)) {
+    out.push(toPlaced(playerId, e, "resourceDeck", allowSyntheticCards));
+  }
+  for (const e of f.resourceArea ?? []) {
+    out.push(toPlaced(playerId, e, "resourceArea", allowSyntheticCards));
+  }
+  for (const e of f.battleArea ?? []) {
+    out.push(toPlaced(playerId, e, "battleArea", allowSyntheticCards));
+  }
+  for (const e of f.baseSection ?? []) {
+    out.push(toPlaced(playerId, e, "baseSection", allowSyntheticCards));
+  }
+  for (const e of f.trash ?? []) out.push(toPlaced(playerId, e, "trash", allowSyntheticCards));
+  for (const e of expandDeck(f.shieldArea, realShieldCards)) {
+    out.push(toPlaced(playerId, e, "shieldArea", allowSyntheticCards));
   }
   return out;
 }
@@ -227,10 +254,18 @@ export function skipToEndPhaseHandStep(runtime: MatchRuntime): void {
 }
 
 export function createDevRuntime(config: DevRuntimeConfig = {}): DevRuntime {
-  const { p1, p2, seed = "dev-seed", skipToMainPhase: skip = false, initialActivePlayer } = config;
+  const {
+    p1,
+    p2,
+    seed = "dev-seed",
+    skipToMainPhase: skip = false,
+    initialActivePlayer,
+    clockReserveMs,
+    allowSyntheticCards = false,
+  } = config;
 
-  const p1Cards = collectPlayer(DEV_PLAYER_ONE, p1);
-  const p2Cards = collectPlayer(DEV_PLAYER_TWO, p2);
+  const p1Cards = collectPlayer(DEV_PLAYER_ONE, p1, allowSyntheticCards);
+  const p2Cards = collectPlayer(DEV_PLAYER_TWO, p2, allowSyntheticCards);
 
   const catalog = new Map<string, Card>();
   for (const { card } of [...p1Cards, ...p2Cards]) {
@@ -242,11 +277,11 @@ export function createDevRuntime(config: DevRuntimeConfig = {}): DevRuntime {
   // catalog, so without these entries the tokens render as face-down
   // (no name, no image, no stats) once they hit base/resource zones.
   //
-  // REVISIT once real matchmaking ships: deck submission should declare
-  // which token printings the player owns, and the host should merge those
-  // into the catalog instead of dev-runtime hard-coding EXBP-001 / EXRP-003.
-  catalog.set(exbpExBase001.cardNumber, exbpExBase001);
-  catalog.set(exrpExResource003.cardNumber, exrpExResource003);
+  // The host default injects the normal booster tokens (EXB-001 /
+  // EXR-001), so those defs must resolve; matches
+  // `defaultGundamSetupCards` in @tcg/gundam-token-data.
+  catalog.set(exbExBase001.cardNumber, exbExBase001);
+  catalog.set(exrExResource001.cardNumber, exrExResource001);
 
   const p1Player: Player = {
     id: asPlayerId(DEV_PLAYER_ONE),
@@ -261,13 +296,27 @@ export function createDevRuntime(config: DevRuntimeConfig = {}): DevRuntime {
     resourceDeck: p2Cards.filter((c) => c.zone === "resourceDeck").map((c) => c.card.cardNumber),
   };
 
-  const staticResources = createStaticResources([p1Player, p2Player], catalog);
+  const staticResources = createStaticResources(
+    [p1Player, p2Player],
+    catalog,
+    defaultGundamSetupCards([p1Player.id, p2Player.id]),
+  );
   const runtime = new MatchRuntime(staticResources);
   runtime.initialize(
     [p1Player, p2Player],
     seed,
     (initialActivePlayer ?? DEV_PLAYER_ONE) as PlayerId,
-    { mode: "dynamic", config: DEFAULT_DYNAMIC_CLOCK_CONFIG },
+    {
+      mode: "dynamic",
+      config:
+        clockReserveMs === undefined
+          ? DEFAULT_DYNAMIC_CLOCK_CONFIG
+          : {
+              ...DEFAULT_DYNAMIC_CLOCK_CONFIG,
+              initialReserveMs: clockReserveMs,
+              reserveCapMs: Math.max(clockReserveMs, DEFAULT_DYNAMIC_CLOCK_CONFIG.reserveCapMs),
+            },
+    },
   );
 
   placeIntoRuntime(runtime, DEV_PLAYER_ONE, p1Cards);

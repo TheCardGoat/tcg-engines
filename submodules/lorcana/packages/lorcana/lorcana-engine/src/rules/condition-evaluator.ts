@@ -1346,7 +1346,11 @@ export function evaluateCondition(
       if (!targetId) {
         return false;
       }
-      const cardsUnderThisTurn = ctx.G.turnMetadata?.cardsUnderThisTurn;
+      // G may be absent on partial projection / static-ability states (client
+      // board projection, continuous-effect read contexts). Match the defensive
+      // chaining used by put-card-under-any-this-turn so materializing Willie's
+      // THE FOOD OF GENEROSITY restriction cannot throw on missing G.
+      const cardsUnderThisTurn = ctx.G?.turnMetadata?.cardsUnderThisTurn;
       if (!cardsUnderThisTurn) {
         return false;
       }

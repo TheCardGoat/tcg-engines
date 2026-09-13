@@ -23,5 +23,6 @@ describe("EB02-005 Fake Straw Hat Crew", () => {
         ?.power,
     ).toBe(1000);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

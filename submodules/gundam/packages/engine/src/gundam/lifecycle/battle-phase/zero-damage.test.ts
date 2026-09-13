@@ -8,6 +8,8 @@ import { describe, expect, it } from "vite-plus/test";
 import type { CardEffect, UnitCard } from "@tcg/gundam-types";
 import type { CardInstanceId, PlayerId } from "../../../types/branded.ts";
 import {
+  activeResources,
+  createMockCommand,
   GundamTestEngine,
   PLAYER_ONE,
   PLAYER_TWO,
@@ -91,6 +93,134 @@ describe("Rule 5-5-5 — zero damage is not dealt", () => {
     expectSuccess(p1.passBattleAction());
 
     expect(p2.getDamage(baseId)).toBe(0);
+  });
+
+  it("direct attack: 0-AP attacker leaves Shields in place", () => {
+    const attacker = createMockUnit({ ap: 0, hp: 5 });
+    const shield = createMockUnit();
+    const engine = GundamTestEngine.create(
+      { play: [attacker], deck: 1 },
+      { shieldArea: [shield], deck: 1 },
+    );
+
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(attacker, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardsInZone("shieldArea")).toHaveLength(1);
+    expect(p2.getCardsInZone("trash")).toHaveLength(0);
+    expect(p2.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("direct attack: positive AP still removes a Shield", () => {
+    const attacker = createMockUnit({ ap: 1, hp: 5 });
+    const engine = GundamTestEngine.create(
+      { play: [attacker], deck: 1 },
+      { shieldArea: [createMockUnit()], deck: 1 },
+    );
+
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(attacker, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardsInZone("shieldArea")).toHaveLength(0);
+    expect(p2.getCardsInZone("trash")).toHaveLength(1);
+  });
+
+  it("uses AP reduced by an Action Command before direct-attack damage", () => {
+    const attacker = createMockUnit({ ap: 3, hp: 5 });
+    const apReduction = createMockCommand({
+      level: 1,
+      cost: 0,
+      effects: [
+        {
+          type: "command",
+          activation: { timing: ["action"] },
+          directives: [
+            {
+              action: {
+                action: "statModifier",
+                stat: "ap",
+                amount: -3,
+                duration: "thisBattle",
+                target: { owner: "opponent", cardType: "unit", count: 1 },
+              },
+            },
+          ],
+          sourceText: "【Action】Choose 1 enemy Unit. It gets AP-3 during this battle.",
+        },
+      ],
+    });
+    const engine = GundamTestEngine.create(
+      { play: [attacker], deck: 1 },
+      {
+        hand: [apReduction],
+        resourceArea: activeResources(1),
+        shieldArea: [createMockUnit()],
+        deck: 1,
+      },
+    );
+
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const commandId = p2.getHand()[0]!;
+
+    expectSuccess(p1.enterBattle(attackerId, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.playCommand(commandId, { targets: [attackerId] }));
+    expect(p1.getVisibleCard(attackerId)?.effectiveAp).toBe(0);
+    expectSuccess(p1.passBattleAction());
+    expectSuccess(p2.passBattleAction());
+
+    expect(p2.getCardsInZone("shieldArea")).toHaveLength(1);
+    expect(p2.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("direct attack: 0-AP Suppression does not remove Shields", () => {
+    const attacker = createMockUnit({
+      ap: 0,
+      hp: 5,
+      keywordEffects: [{ keyword: "Suppression" }],
+    });
+    const engine = GundamTestEngine.create(
+      { play: [attacker], deck: 1 },
+      { shieldArea: [createMockUnit(), createMockUnit()], deck: 1 },
+    );
+
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(attacker, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(p2.getCardsInZone("shieldArea")).toHaveLength(2);
+    expect(p2.getBoardView().pendingChoice).toBeUndefined();
+  });
+
+  it("direct attack: 0-AP attacker does not defeat an unshielded player", () => {
+    const attacker = createMockUnit({ ap: 0, hp: 5 });
+    const engine = GundamTestEngine.create({ play: [attacker], deck: 1 }, { deck: 1 });
+
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+
+    expectSuccess(p1.enterBattle(attacker, "direct"));
+    expectSuccess(p2.passBlock());
+    expectSuccess(p2.passBattleAction());
+    expectSuccess(p1.passBattleAction());
+
+    expect(engine.getState().ctx.status.gameEnded).toBeFalsy();
   });
 
   it("effect damage with amount=0 does not write damage, emit events, or enqueue triggers", () => {

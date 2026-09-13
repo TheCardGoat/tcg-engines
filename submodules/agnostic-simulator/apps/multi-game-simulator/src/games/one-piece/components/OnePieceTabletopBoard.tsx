@@ -186,7 +186,10 @@ function LeaderCommand({
   const leaderEntities = entitiesForZone(zones.leader, entityMap);
   const leaderEntity = leaderEntities[0];
   const leaderPower = leaderEntity?.stats.find((stat) => stat.label === "Power")?.value;
-  const attachedBadges = leaderEntity?.overlayBadges?.map((badge) => badge.label).join(" ");
+  const attachedBadges = leaderEntity?.decorations
+    ?.filter((decoration) => decoration.content.kind === "text")
+    .map((decoration) => (decoration.content.kind === "text" ? decoration.content.text : ""))
+    .join(" ");
 
   return (
     <div className={classes.commandRail} data-testid={`${seatId}-command-rail`}>
@@ -380,7 +383,6 @@ function HoveredCardPreview({ entity }: { entity: SimulatorEntity | undefined })
       <ViewerSafeCardImage
         entity={entity}
         alt={entity.title}
-        fill
         className={classes.hoverCardPreviewImage}
       />
     </aside>
@@ -410,7 +412,9 @@ function TabletopControls({
       action.type !== "chooseJoKenPo" &&
       action.type !== "chooseFirstPlayer" &&
       action.type !== "mulligan" &&
-      action.type !== "keepHand",
+      action.type !== "keepHand" &&
+      action.type !== "endTurn" &&
+      action.type !== "concede",
   );
   const showJoKenPoModal = joKenPoActions.length > 0;
   const showFirstPlayerModal = firstPlayerActions.length > 0;
@@ -559,11 +563,7 @@ function TabletopControls({
               </TabletopActionButton>
             ))}
           </div>
-        ) : (
-          <TabletopActionButton variant="primary" className={classes.turnEndControl} disabled>
-            Turn End
-          </TabletopActionButton>
-        )}
+        ) : null}
       </div>
     </>
   );

@@ -13,12 +13,10 @@ export type UserRole = "user" | "donor" | "moderator" | "admin";
 /**
  * Subscription tier levels.
  *
- * `"free"` is the implicit default for users with no Stripe subscription
- * (new signups, and anyone who has cancelled). It is intentionally distinct
- * from `"tier1"`, which is preserved for legacy paid tier-1 customers
- * migrated from lorcanito and ranks just above "free" in tier ordering.
+ * `"free"` is the implicit default for users with no active membership.
+ * The only paid membership levels are tier2, tier3, and tier4.
  */
-export type SubscriptionTier = "free" | "tier1" | "tier2" | "tier3" | "tier4" | "tier5" | "tier6";
+export type SubscriptionTier = "free" | "tier2" | "tier3" | "tier4";
 
 /**
  * User type from Better Auth session
@@ -29,7 +27,6 @@ export type SubscriptionTier = "free" | "tier1" | "tier2" | "tier3" | "tier4" | 
  */
 export interface AuthUser {
   id: string;
-  email: string;
   /** Primary identifier from the OAuth provider (e.g. Discord username). Read-only. */
   name: string;
   image?: string | null;
@@ -67,7 +64,7 @@ export function isModerator(user: AuthUser | null): boolean {
  * Check if user has required subscription tier or higher
  */
 export function hasSubscriptionTier(user: AuthUser | null, minTier: SubscriptionTier): boolean {
-  const tiers: SubscriptionTier[] = ["free", "tier1", "tier2", "tier3", "tier4", "tier5", "tier6"];
+  const tiers: SubscriptionTier[] = ["free", "tier2", "tier3", "tier4"];
   const userTierIndex = tiers.indexOf(user?.subscriptionTier ?? "free");
   const minTierIndex = tiers.indexOf(minTier);
   return userTierIndex >= minTierIndex;

@@ -36,5 +36,6 @@ describe("OP07-030 Pappag", () => {
         .getView("south")
         .decisions.some((decision) => decision.title.includes("Blocker")),
     ).toBe(false);
+    expect(withoutCamie.getView("south").prompts).toHaveLength(0);
   });
 });

@@ -12,6 +12,11 @@ const getNoDecisions = () => 0;
  * action. Surfaces only on pages that mounted a {@link VsAiProvider},
  * so main-phase / setup pages see nothing.
  *
+ * During a match the full panel sits behind a collapsed disclosure:
+ * the summary line keeps the live bot status (strategy + mode) visible
+ * while STRATEGY / SPEED / PACING / TAKE CONTROL stay one click away
+ * instead of occupying the sidebar above the comms log.
+ *
  * Layout-agnostic: renders in normal flow so the parent decides
  * positioning. Currently mounted inside the MatchSidebar above the
  * EventLog section so it reads as part of the
@@ -27,10 +32,9 @@ export function VsAiControls() {
 
   const strategyId = ctx.strategyName.trim() || null;
   const isPaused = ctx.mode === "paused";
-
   return (
     <div
-      className="gundam-ai-control-panel pt-2.5 pb-3 pr-hud-sm pl-hud-md border-b border-hud-border"
+      className="gundam-ai-control-panel p-3"
       role="region"
       aria-label="AI opponent controls"
       style={
@@ -52,18 +56,36 @@ export function VsAiControls() {
         speed={ctx.speed}
         status={isPaused ? "paused" : ctx.mode === "step" ? "you-control" : "thinking"}
         side="opponent"
-        strategies={strategyId ? [{ id: strategyId, label: ctx.strategyName }] : []}
+        strategies={ctx.strategies}
         selectedStrategyId={strategyId}
         isTakeover={isPaused}
         canStep={ctx.mode === "step"}
         onChangeMode={(mode) => ctx.setMode(mode)}
         onChangeSpeed={(speed) => ctx.setSpeed(speed)}
+        onChangeStrategy={(strategy) => {
+          if (strategy) ctx.setStrategy(strategy);
+        }}
         onStep={ctx.stepOnce}
         onTakeControl={() => ctx.setMode("paused")}
         onReleaseControl={() => ctx.setMode("auto")}
       />
       <VsAiDiagnosticTools />
     </div>
+  );
+}
+
+export function VsAiSummary() {
+  const ctx = useVsAi();
+  if (!ctx) return null;
+
+  const modeLabel = ctx.mode === "paused" ? "YOU CONTROL" : ctx.mode === "step" ? "STEP" : "AUTO";
+  return (
+    <span className="flex min-w-0 items-center gap-2 font-mono text-[10px] font-bold tracking-hud-label text-hud-text-muted">
+      <span className="truncate uppercase">Bot · {ctx.strategyName}</span>
+      <span className="flex-none rounded-sm border border-hud-border/60 px-1.5 py-0.5 text-hud-accent">
+        {modeLabel}
+      </span>
+    </span>
   );
 }
 
@@ -89,7 +111,7 @@ function VsAiDiagnosticTools() {
         <button
           type="button"
           data-testid="ai-log-snapshot"
-          className="min-h-8 border border-hud-accent/35 px-1 font-mono text-[8px] leading-3 font-bold uppercase tracking-[0.04em] text-hud-accent transition-colors hover:bg-hud-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hud-accent focus-visible:outline-offset-2"
+          className="min-h-8 border border-hud-accent/35 px-1 font-mono text-hud-2xs leading-3 font-bold uppercase tracking-[0.04em] text-hud-accent transition-colors hover:bg-hud-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hud-accent focus-visible:outline-offset-2"
           onClick={() => void diagnostics.copySnapshot()}
           title="Copy the board, interaction state, logs, bot decisions, and engine state"
         >
@@ -98,7 +120,7 @@ function VsAiDiagnosticTools() {
         <button
           type="button"
           data-testid="ai-log-clear"
-          className="min-h-8 border border-hud-accent/35 px-1 font-mono text-[8px] leading-3 font-bold uppercase tracking-[0.04em] text-hud-accent transition-colors hover:bg-hud-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hud-accent focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+          className="min-h-8 border border-hud-accent/35 px-1 font-mono text-hud-2xs leading-3 font-bold uppercase tracking-[0.04em] text-hud-accent transition-colors hover:bg-hud-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hud-accent focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
           onClick={diagnostics.clearDecisions}
           disabled={decisionCount === 0}
         >
@@ -107,7 +129,7 @@ function VsAiDiagnosticTools() {
         <button
           type="button"
           data-testid="ai-reset-scenario"
-          className="flex min-h-8 flex-col items-center justify-center border border-hud-accent/35 px-1 font-mono text-[8px] leading-3 font-bold uppercase tracking-[0.04em] text-hud-accent transition-colors hover:bg-hud-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hud-accent focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
+          className="flex min-h-8 flex-col items-center justify-center border border-hud-accent/35 px-1 font-mono text-hud-2xs leading-3 font-bold uppercase tracking-[0.04em] text-hud-accent transition-colors hover:bg-hud-accent/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-hud-accent focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
           onClick={diagnostics.restartScenario}
           aria-label="Restart scenario"
           disabled={!diagnostics.restartScenario}

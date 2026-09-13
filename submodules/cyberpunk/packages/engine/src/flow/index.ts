@@ -2,6 +2,7 @@ import type { MatchState } from "../types/match-state.ts";
 import type { PlayerId } from "../types/branded.ts";
 import type { Operations } from "../operations/index.ts";
 import { rollDie } from "../types/gig-die.ts";
+import { getEffectiveRules } from "../active-effects/index.ts";
 
 export function startTurn(
   state: MatchState,
@@ -19,6 +20,8 @@ export function startTurn(
   for (const zone of zonesToReady) {
     const cardIds = player?.zones[zone] ?? [];
     for (const cardId of cardIds) {
+      // Skip cards locked by cantReady (e.g. Pacifica Netrunner).
+      if (getEffectiveRules(state, cardId as string).includes("cantReady")) continue;
       operations.card.ready(cardId);
     }
   }

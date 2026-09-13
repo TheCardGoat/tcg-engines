@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  boxTopperRetailVCorporateExile,
+  theHeistRetailStarterDeckVCorporateExile,
   welcomeToNightCityRetailSandevistan,
   welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
@@ -36,7 +36,7 @@ describe("Sandevistan (retail)", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       legendArea: [
         {
-          card: boxTopperRetailVCorporateExile,
+          card: theHeistRetailStarterDeckVCorporateExile,
           faceDown: false,
           attachedGears: [welcomeToNightCityRetailSandevistan],
         },
@@ -45,11 +45,15 @@ describe("Sandevistan (retail)", () => {
 
     // Fixture setup auto-readies legends; spend it explicitly so Sandevistan
     // has work to do at end of turn.
-    engine.judgeSpendCard(boxTopperRetailVCorporateExile, { as: P1 });
-    expect(engine.getCard(boxTopperRetailVCorporateExile, "legendArea", P1).meta.spent).toBe(true);
+    engine.judgeSpendCard(theHeistRetailStarterDeckVCorporateExile, { as: P1 });
+    expect(
+      engine.getCard(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1).meta.spent,
+    ).toBe(true);
 
     engine.completeTurn({ as: P1 });
 
-    expect(engine.getCard(boxTopperRetailVCorporateExile, "legendArea", P1).meta.spent).toBe(false);
+    expect(
+      engine.getCard(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1).meta.spent,
+    ).toBe(false);
   });
 });

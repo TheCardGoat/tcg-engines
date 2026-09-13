@@ -20,6 +20,35 @@ const targetItem = createMockItem({
 });
 
 describe("Mulan - Created by the Vine - Epic", () => {
+  it("may banish a chosen item when you play Mulan herself", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture(
+      {
+        hand: [mulanCreatedByTheVineEpic],
+        inkwell: mulanCreatedByTheVineEpic.cost,
+        deck: 3,
+      },
+      {
+        play: [targetItem],
+        deck: 3,
+      },
+    );
+
+    expect(testEngine.asPlayerOne().playCard(mulanCreatedByTheVineEpic)).toBeSuccessfulCommand();
+    expect(testEngine.asPlayerOne().getBagCount()).toBe(1);
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(mulanCreatedByTheVineEpic, {
+        resolveOptional: true,
+      }),
+    ).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerOne().resolveNextPending({
+        targets: [targetItem],
+      }),
+    ).toBeSuccessfulCommand();
+
+    expect(testEngine.asPlayerTwo().getCardZone(targetItem)).toBe("discard");
+  });
+
   it("may banish a chosen item when you play a Floodborn character", () => {
     const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
       play: [mulanCreatedByTheVineEpic, targetItem],

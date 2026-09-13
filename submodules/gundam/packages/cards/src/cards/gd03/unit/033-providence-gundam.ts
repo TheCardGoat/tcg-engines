@@ -27,8 +27,7 @@ export const gd03ProvidenceGundam033: UnitCard = {
       },
       rarity: "legendRare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-033.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-033.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-033.webp",
       productName: "Steel Requiem[GD03]",
     },
     {
@@ -44,15 +43,13 @@ export const gd03ProvidenceGundam033: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-033_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-033_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-033_p1.webp",
       productName: "Steel Requiem[GD03]",
     },
   ],
   reprints: ["GD03-033", "GD03-033_p1"],
   selectedPrintingId: "GD03-033",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-033.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-033.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-033.webp",
   legality: "legal",
   level: 7,
   cost: 5,
@@ -88,6 +85,7 @@ export const gd03ProvidenceGundam033: UnitCard = {
             target: {
               owner: "friendly",
               cardType: "unit",
+              count: "all",
               attributeFilters: [
                 {
                   attribute: "trait",

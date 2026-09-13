@@ -11,8 +11,9 @@
 
 .panelMobileDrawer {
   height: 100%;
+  overflow: hidden;
   gap: 10px;
-  padding: 2px 0 0;
+  padding: 2px 0 max(8px, env(safe-area-inset-bottom));
 }
 
 .panelCompact {
@@ -20,6 +21,10 @@
   max-height: 100%;
   padding: 6px 8px 8px;
   overflow: hidden;
+}
+
+.panelCompact.panelMobileDrawer {
+  overflow-y: auto;
 }
 
 .scroll {
@@ -46,7 +51,7 @@
 
 .panelMobileDrawer .scroll {
   flex: 1 1 auto;
-  min-height: 180px;
+  min-height: 58px;
   max-height: none;
   gap: 5px;
   padding: 6px 2px 6px 0;
@@ -93,10 +98,11 @@
 
 .empty {
   margin: auto;
+  color: var(--simulator-chat-empty-color, inherit);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  opacity: 0.45;
+  opacity: var(--simulator-chat-empty-opacity, 0.45);
 }
 
 .bubble {
@@ -189,6 +195,8 @@
 
 .panelMobileDrawer .presets {
   display: grid;
+  min-height: 0;
+  overflow-y: auto;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
   padding: 2px 0 4px;
@@ -299,6 +307,21 @@
   min-width: 78px;
   min-height: 42px;
   padding-inline: 12px;
+}
+
+/* A narrow match rail needs its full width for composing a readable message. */
+@container simulator-sidebar (max-width: 16rem) {
+  .inputRow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .input,
+  .sendBtn,
+  .panelMobileDrawer .input,
+  .panelMobileDrawer .sendBtn {
+    min-height: 44px;
+  }
 }
 
 .sendBtn:hover:not(:disabled) {

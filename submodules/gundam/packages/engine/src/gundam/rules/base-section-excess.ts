@@ -17,6 +17,9 @@ function buildBaseSectionExcessEffect(excessCount: number): CardEffect {
             zone: "baseSection",
             cardType: "base",
             count: excessCount,
+            // Rule 11-5-2 requires a Base that was already in the section;
+            // the Base whose deployment caused excess must remain.
+            excludeSource: true,
           },
         },
       },
@@ -29,10 +32,10 @@ function buildBaseSectionExcessEffect(excessCount: number): CardEffect {
  * Rule 11-5-2 rules management after a Base enters an occupied Base section.
  *
  * The Base has already entered the public zone when this runs. The resulting
- * ordinary target-selection prompt therefore lets the controller choose from
- * every visible Base, including the new one. Rules-management entries have a
- * dedicated priority tier so the choice settles before 【Deploy】 or observer
- * triggers continue (rule 11-1-2).
+ * ordinary target-selection prompt therefore presents the Bases that were
+ * already in the section, while excluding the newly deployed Base. Rules-
+ * management entries have a dedicated priority tier so the choice settles
+ * before 【Deploy】 or observer triggers continue (rule 11-1-2).
  */
 export function enqueueBaseSectionExcessManagement(
   g: GundamG,

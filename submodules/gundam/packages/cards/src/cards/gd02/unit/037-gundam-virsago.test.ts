@@ -18,6 +18,7 @@ import {
 } from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Gundam Virsago (GD02-037)", () => {
+  /** @behavioral-proof complete: deployment, Link, shield/AP gates, damage, and Breach are public. */
   describe("Printed Lv.5 and cost 4", () => {
     it("cannot deploy with only 4 total Resources", () => {
       const engine = GundamTestEngine.create({

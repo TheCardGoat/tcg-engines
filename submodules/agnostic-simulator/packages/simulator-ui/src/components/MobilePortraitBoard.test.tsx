@@ -49,6 +49,24 @@ describe("mobile portrait board primitives", () => {
     expect(markup.indexOf("clock")).toBeLessThan(markup.indexOf("controls"));
   });
 
+  test("removes internal rail rows when the viewport shell owns mobile chrome", () => {
+    const markup = renderToStaticMarkup(
+      <MobilePortraitBoard
+        externalRails
+        topRail={<span>external top rail</span>}
+        opponentHand={<span>rival hand</span>}
+        opponentBattlefield={<span>rival field</span>}
+        ledger={<span>ledger</span>}
+        playerBattlefield={<span>player field</span>}
+        playerHand={<span>player hand</span>}
+        bottomRail={<span>external bottom rail</span>}
+      />,
+    );
+    expect(markup).toContain('data-external-rails="true"');
+    expect(markup).not.toContain('class="topRail');
+    expect(markup).not.toContain('class="bottomRail');
+  });
+
   test("renders explicit battlefield scroll cues when overflow is provided", () => {
     const markup = renderToStaticMarkup(
       <MobileBattlefieldLane

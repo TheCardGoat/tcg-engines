@@ -7,6 +7,7 @@ interface ChoiceModalProps {
   title: string;
   description?: string;
   options: readonly InteractionOption[];
+  placement?: "viewport" | "container";
   timerMs?: number;
   onSelect?: (optionId: string) => void;
   onClose?: () => void;
@@ -17,6 +18,7 @@ export function ChoiceModal({
   title,
   description,
   options,
+  placement = "viewport",
   timerMs,
   onSelect,
   onClose,
@@ -58,7 +60,9 @@ export function ChoiceModal({
 
   return (
     <div
-      className="choice-modal-backdrop fixed inset-0 z-40 grid place-items-center bg-black/60 backdrop-blur-sm p-4"
+      className={`choice-modal-backdrop ${
+        placement === "container" ? "absolute" : "fixed"
+      } inset-0 z-40 grid place-items-center bg-black/60 backdrop-blur-sm p-4`}
       onClick={onClose}
       role="presentation"
     >

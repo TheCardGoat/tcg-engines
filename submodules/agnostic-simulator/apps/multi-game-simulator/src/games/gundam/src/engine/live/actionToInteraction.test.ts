@@ -17,6 +17,7 @@ import {
   gd04GrahamSUnionFlagCustomGnFlag071,
   gd04PalaSys094,
   gd04UnicornGundam02BansheeNornDestroyMode065,
+  gd05GirtyLue127,
 } from "@tcg/gundam-cards";
 import {
   GundamTestEngine,
@@ -32,13 +33,196 @@ import {
 import { buildGundamInteractionView, gundamSubmissionToPayload } from "@tcg/gundam-server-adapter";
 import { validateInteractionSubmission, type EngineInteractionView } from "@tcg/protocol";
 
-import { protocolTargetSelection } from "../../game/selectors/interactionView.ts";
+import { createEngineAdapter } from "../../game/adapter.ts";
+import { loadReleaseCardReviewLab } from "../../game/fixtures/release-card-review-labs.ts";
 import { asMoveName } from "../../game/types.ts";
 import { moveToInteractionSubmission } from "./actionToInteraction.ts";
 
 type TestPlayerId = typeof PLAYER_ONE | typeof PLAYER_TWO;
 
 describe("native Gundam moves through the interaction protocol", () => {
+  it("auto-adds Girty Lue's top Shield on deploy without publishing a shield choice", () => {
+    const engine = GundamTestEngine.create({
+      hand: [gd05GirtyLue127],
+      shieldArea: [createMockUnit({ name: "Shield A" }), createMockUnit({ name: "Shield B" })],
+      resourceArea: activeResources(2),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const baseId = p1.getHand()[0]!;
+    const [topShieldId, bottomShieldId] = p1.getCardsInZone("shieldArea");
+
+    expectSuccess(p1.deployBase(baseId));
+
+    // Rule 4-6-4-1: no choose-any-Shield prompt for generic "Add 1 of your Shields".
+    expect(protocolTargetIds(currentInteractionView(engine, PLAYER_ONE))).toBeNull();
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardZone(topShieldId!)).toBe(`hand:${PLAYER_ONE}`);
+    expect(p1.getCardZone(bottomShieldId!)).toBe(`shieldArea:${PLAYER_ONE}`);
+  });
+
+  it("resolves Girty Lue deploy in the release-review projection without a shield target prompt", () => {
+    const dev = loadReleaseCardReviewLab("GD05-127", "deploy");
+    const adapter = createEngineAdapter({
+      runtime: dev.runtime,
+      staticResources: dev.runtime.getStaticResources(),
+      viewerId: dev.p1Id,
+    });
+    const girtyId = adapter
+      .view()
+      .zones.zones[`hand:${dev.p1Id}`]!.cards.find(
+        (card) => card.definition?.cardNumber === "GD05-127",
+      )!.instanceId;
+    const shieldsBefore = adapter
+      .view()
+      .zones.zones[`shieldArea:${dev.p1Id}`]!.cards.map((card) => card.instanceId);
+    const topShieldId = shieldsBefore[0]!;
+
+    expect(adapter.submit(asMoveName("deployBase"), { cardId: girtyId }).ok).toBe(true);
+
+    expect(protocolTargetIds(adapter.interactionView())).toBeNull();
+    expect(
+      adapter.view().zones.zones[`hand:${dev.p1Id}`]!.cards.map((c) => c.instanceId),
+    ).toContain(topShieldId);
+    expect(
+      adapter.view().zones.zones[`shieldArea:${dev.p1Id}`]!.cards.map((c) => c.instanceId),
+    ).toEqual(shieldsBefore.slice(1));
+  });
+
+  it("carries no-valid-action automation metadata through every safe priority pass", () => {
+    for (const move of ["passBlock", "passBattleAction", "passActionStep"] as const) {
+      const view: EngineInteractionView = {
+        protocolVersion: 2,
+        gameSlug: "gundam",
+        actorId: PLAYER_ONE,
+        stateVersion: 7,
+        status: "ready",
+        actions: [
+          {
+            id: move,
+            requestId: `gundam:7:${move}`,
+            intent: "pass",
+            text: { key: `gundam.move.${move}` },
+            enabled: true,
+            inputs: [],
+          },
+        ],
+      };
+
+      const submission = moveToInteractionSubmission(asMoveName(move), { automatic: true }, view);
+
+      expect(submission).toMatchObject({
+        actionId: move,
+        values: {},
+        automation: { kind: "no-valid-action" },
+      });
+      expect(validateInteractionSubmission(view, submission!).ok).toBe(true);
+      expect(gundamSubmissionToPayload(submission!)).toEqual({
+        moveType: move,
+        payload: { automatic: true },
+      });
+    }
+  });
+
+  it("maps native target arrays into the shared partition value", () => {
+    const view: EngineInteractionView = {
+      protocolVersion: 2,
+      gameSlug: "gundam",
+      actorId: PLAYER_ONE,
+      stateVersion: 8,
+      status: "choosing",
+      actions: [
+        {
+          id: "resolveEffect",
+          requestId: "gundam:8:resolveEffect",
+          intent: "choose-targets",
+          text: { key: "resolve" },
+          enabled: true,
+          inputs: [
+            {
+              kind: "option-selection",
+              id: "pendingEffectId",
+              text: { key: "effect" },
+              required: true,
+              min: 1,
+              max: 1,
+              options: [{ id: "pe_1", text: { key: "pe_1" }, enabled: true }],
+            },
+            {
+              kind: "entity-partition",
+              id: "targetPartition",
+              text: { key: "discard" },
+              entityKind: "card",
+              candidates: ["card-a", "card-b"].map((instanceId) => ({
+                entity: { kind: "card" as const, instanceId },
+                enabled: true,
+              })),
+              routes: [
+                {
+                  id: "targets",
+                  text: { key: "discard" },
+                  kind: "extract",
+                  ordered: false,
+                  min: 1,
+                  max: 1,
+                },
+              ],
+              assignment: "remainder-automatic",
+              remainderText: { key: "stay-in-hand" },
+            },
+          ],
+        },
+      ],
+    };
+
+    const submission = moveToInteractionSubmission(
+      asMoveName("resolveEffect"),
+      { pendingEffectId: "pe_1", targets: ["card-b"] },
+      view,
+    );
+
+    expect(submission?.values).toEqual({
+      pendingEffectId: "pe_1",
+      targetPartition: { targets: ["card-b"] },
+    });
+    expect(validateInteractionSubmission(view, submission!).ok).toBe(true);
+  });
+
+  it("preserves setup inputs through the interaction protocol", () => {
+    const engine = GundamTestEngine.create({}, {}, { skipToMainPhase: false });
+    const firstPlayerView = currentInteractionView(engine, PLAYER_ONE);
+    const firstPlayerSubmission = moveToInteractionSubmission(
+      asMoveName("chooseFirstPlayer"),
+      { playerId: PLAYER_ONE },
+      firstPlayerView,
+    );
+
+    expect(firstPlayerSubmission?.values).toEqual({ playerId: PLAYER_ONE });
+    expect(gundamSubmissionToPayload(firstPlayerSubmission!)).toEqual({
+      moveType: "chooseFirstPlayer",
+      payload: { playerId: PLAYER_ONE },
+    });
+
+    dispatchInteraction(
+      engine,
+      PLAYER_ONE,
+      firstPlayerView,
+      { playerId: PLAYER_ONE },
+      "chooseFirstPlayer",
+    );
+    const alterHandView = currentInteractionView(engine, PLAYER_ONE);
+    const alterHandSubmission = moveToInteractionSubmission(
+      asMoveName("alterHand"),
+      { wantsRedraw: false },
+      alterHandView,
+    );
+
+    expect(alterHandSubmission?.values).toEqual({ wantsRedraw: false });
+    expect(gundamSubmissionToPayload(alterHandSubmission!)).toEqual({
+      moveType: "alterHand",
+      payload: { wantsRedraw: false },
+    });
+  });
+
   it("submits GD01-002's alternate deploy from the simulator's native move shape", () => {
     const unicornMode = createMockUnit({
       name: "Unicorn Gundam (Unicorn Mode)",
@@ -231,23 +415,18 @@ describe("native Gundam moves through the interaction protocol", () => {
     const [farsiaId, defurseId, hellionId] = p1.getCardsInZone("trash");
 
     expectSuccess(p1.deployBase(gd03Downes130));
-    const optional = p1.getBoardView().pendingChoice;
-    if (optional?.kind !== "optional") {
-      throw new Error("Expected Downes to offer its optional trash deployment");
-    }
-    dispatchInteraction(engine, PLAYER_ONE, currentInteractionView(engine, PLAYER_ONE), {
-      pendingEffectId: optional.effectId,
-      optionalAnswers: { [optional.directiveIndex]: true },
-    });
-
     const targetChoice = p1.getBoardView().pendingChoice;
-    if (targetChoice?.kind !== "targetSelection") {
-      throw new Error("Expected Downes to ask which eligible trash Unit to deploy");
+    if (
+      targetChoice?.kind !== "targetSelection" ||
+      targetChoice.optionalDirectiveIndex === undefined
+    ) {
+      throw new Error("Expected Downes to combine its optional decision with the legal target");
     }
     const targetView = currentInteractionView(engine, PLAYER_ONE);
-    expect(protocolTargetSelection(targetView)?.targetIds).toEqual([farsiaId]);
+    expect(protocolTargetIds(targetView)).toEqual([farsiaId]);
     dispatchInteraction(engine, PLAYER_ONE, targetView, {
       pendingEffectId: targetChoice.effectId,
+      optionalAnswers: { [targetChoice.optionalDirectiveIndex]: true },
       targets: [farsiaId!],
     });
 
@@ -285,7 +464,7 @@ describe("native Gundam moves through the interaction protocol", () => {
     }
 
     const targetView = currentInteractionView(engine, PLAYER_ONE);
-    expect(protocolTargetSelection(targetView)?.targetIds).toEqual([enemyId]);
+    expect(protocolTargetIds(targetView)).toEqual([enemyId]);
     dispatchInteraction(engine, PLAYER_ONE, targetView, {
       pendingEffectId: choice.effectId,
       targets: [enemyId],
@@ -317,7 +496,7 @@ describe("native Gundam moves through the interaction protocol", () => {
     expect(p1.getCardsInZone("deck")).toHaveLength(1);
     expect(p1.getBoardView().pendingChoice).toBeUndefined();
     expect(p2.getDamage(enemyId)).toBe(0);
-    expect(protocolTargetSelection(currentInteractionView(engine, PLAYER_ONE))).toBeNull();
+    expect(protocolTargetIds(currentInteractionView(engine, PLAYER_ONE))).toBeNull();
   });
 
   it("lets a flexible GD04-071 target satisfy the group the other card cannot", () => {
@@ -519,6 +698,27 @@ function currentInteractionView(
     staticResources: engine.getRuntime().getStaticResources(),
     pendingChoice: engine.asPlayer(playerId).getBoardView().pendingChoice,
   });
+}
+
+function protocolTargetIds(view: EngineInteractionView): readonly string[] | null {
+  if (view.status !== "choosing") return null;
+  const action = view.actions.find(
+    (candidate) => candidate.id === "resolveEffect" && candidate.enabled,
+  );
+  if (!action) return null;
+  const targetInputs = action.inputs.filter(
+    (input) =>
+      input.kind === "entity-selection" &&
+      (input.id === "targets" || /^targetGroups\.\d+$/.test(input.id)),
+  );
+  if (targetInputs.length === 0) return null;
+  return targetInputs.flatMap((input) =>
+    input.kind === "entity-selection"
+      ? input.candidates
+          .filter((candidate) => candidate.enabled && candidate.entity.kind === "card")
+          .map((candidate) => candidate.entity.instanceId)
+      : [],
+  );
 }
 
 function dispatchInteraction(

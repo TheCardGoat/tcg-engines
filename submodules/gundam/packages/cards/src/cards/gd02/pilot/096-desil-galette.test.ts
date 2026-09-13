@@ -57,7 +57,7 @@ describe("Desil Galette (GD02-096)", () => {
 
     expectSuccess(p1.assignPilot(gd02DesilGalette096, hostId));
     const deployChoice = p1.getBoardView().pendingChoice;
-    if (deployChoice?.kind !== "optional") {
+    if (deployChoice?.kind !== "targetSelection") {
       throw new Error("Expected a visible choice to deploy the eligible Vagan Unit");
     }
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [deployChoice.directiveIndex]: true } }));
@@ -90,7 +90,7 @@ describe("Desil Galette (GD02-096)", () => {
 
     expectSuccess(p1.assignPilot(gd02DesilGalette096, hostId));
     const deployChoice = p1.getBoardView().pendingChoice;
-    if (deployChoice?.kind !== "optional") {
+    if (deployChoice?.kind !== "targetSelection") {
       throw new Error("Expected a visible choice to deploy the eligible Vagan Unit");
     }
     expectSuccess(p1.resolveEffect({ optionalAnswers: { [deployChoice.directiveIndex]: false } }));

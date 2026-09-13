@@ -139,7 +139,7 @@ export class ClientEngine {
 
   // ── Private ─────────────────────────────────────────────────────────────
 
-  private handleCommandResult(result: CommandResult, commandID: string): void {
+  private handleCommandResult(_result: CommandResult, commandID: string): void {
     this.pendingCommands.delete(commandID);
   }
 

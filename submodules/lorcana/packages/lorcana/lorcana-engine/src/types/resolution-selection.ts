@@ -126,7 +126,15 @@ export type TargetResolutionSelectionContext = ResolutionSelectionContextBase & 
    * effects (e.g. Luisa "I Can Take It").
    */
   autoResolvedSlots?: readonly string[];
+  /**
+   * Card ids already bound by the engine to named slotted-target positions.
+   * Unlike `autoResolvedSlots`, these ids need not be the source card (for
+   * example, a location referenced as the trigger subject).
+   */
+  resolvedTargetIdsBySlot?: Readonly<Record<string, CardInstanceId>>;
   playCardEntryModeCandidateIds?: CardInstanceId[];
+  /** Presentation metadata only; engine candidate legality remains authoritative. */
+  promptLabel?: string;
 };
 
 export type ChoiceResolutionSelectionContext = ResolutionSelectionContextBase & {

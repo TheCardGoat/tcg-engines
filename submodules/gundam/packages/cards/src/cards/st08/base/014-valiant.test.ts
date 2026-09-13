@@ -121,9 +121,13 @@ describe("Valiant (ST08-014)", () => {
         resourceArea: activeResources(2),
       });
       const p1 = engine.asPlayer(PLAYER_ONE);
+      const shieldsBefore = p1.getCardsInZone("shieldArea").length;
+      const handBefore = p1.getHand().length;
       expectSuccess(p1.deployBase(st08Valiant014));
       expect(p1.getCardsInZone("baseSection")).toHaveLength(1);
       expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p1.getCardsInZone("shieldArea").length).toBe(shieldsBefore - 1);
+      expect(p1.getHand().length).toBe(handBefore);
     });
 
     it("rejects an enemy Unit target", () => {

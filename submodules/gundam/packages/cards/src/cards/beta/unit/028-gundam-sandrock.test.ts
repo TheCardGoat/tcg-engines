@@ -22,7 +22,7 @@ describe("Gundam Sandrock (GD01-028)", () => {
 
       expectSuccess(p1.deployUnit(sandrockId!));
       expect(p1.getBoardView().pendingChoice).toMatchObject({
-        kind: "optional",
+        kind: "targetSelection",
         controllerId: PLAYER_ONE,
         directiveIndex: 0,
       });
@@ -52,7 +52,7 @@ describe("Gundam Sandrock (GD01-028)", () => {
       const maganacId = p1.getHand()[1]!;
 
       expectSuccess(p1.deployUnit(betaGundamSandrock028));
-      expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "optional" });
+      expect(p1.getBoardView().pendingChoice).toMatchObject({ kind: "targetSelection" });
       expectSuccess(p1.resolveEffect({ optionalAnswers: { 0: false } }));
 
       expect(p1.getCardZone(maganacId)).toBe(`hand:${PLAYER_ONE}`);

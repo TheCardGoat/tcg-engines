@@ -1,0 +1,47 @@
+import type { UnitCard } from "@tcg/gundam-types";
+
+export const gd05ChaosGundamMaMode045: UnitCard = {
+  cardNumber: "GD05-045",
+  name: "Chaos Gundam (MA Mode)",
+  type: "unit",
+  color: "red",
+  traits: ["earth alliance", "phantom pain"],
+  id: "GD05-045",
+  canonicalId: "GD05-045",
+  externalIds: { bandai: "gundam:gd05-045" },
+  slug: "chaos-gundam-ma-mode-gd05-045",
+  displayName: "Chaos Gundam (MA Mode)",
+  rulesText:
+    "<Breach 3> (During your turn, when this Unit destroys an enemy Unit with battle damage, deal the specified amount of damage to the first card in that opponent's shield area.)",
+  set: { code: "GD05", name: "Freedom Ascension [GD05]", packageId: "616105" },
+  printNumber: "GD05-045",
+  printings: [
+    {
+      id: "GD05-045",
+      artId: "GD05-045",
+      setCode: "GD05",
+      collectorNumber: "GD05-045",
+      cardNumber: "GD05-045",
+      set: { code: "GD05", name: "Freedom Ascension [GD05]", packageId: "616105" },
+      rarity: "common",
+      finish: "standard",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd05/GD05-045.webp",
+      productName: "Freedom Ascension [GD05]",
+    },
+  ],
+  selectedPrintingId: "GD05-045",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd05/GD05-045.webp",
+  legality: "legal",
+  sourceTitle: "Mobile Suit Gundam SEED Destiny",
+  level: 4,
+  cost: 3,
+  ap: 3,
+  hp: 4,
+  linkCondition: "[Sting Oakley]",
+  battlefieldZones: ["space", "earth"],
+  effect:
+    "<Breach 3> (During your turn, when this Unit destroys an enemy Unit with battle damage, deal the specified amount of damage to the first card in that opponent's shield area.)",
+  effects: [],
+  keywordEffects: [{ keyword: "Breach", value: 3 }],
+  rarity: "common",
+};

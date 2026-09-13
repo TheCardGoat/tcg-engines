@@ -27,15 +27,13 @@ export const gd01ThePathToVictoryOrDefeat109: CommandCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-109.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-109.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-109.webp",
       productName: "Newtype Rising [GD01]",
     },
   ],
   reprints: ["GD01-109"],
   selectedPrintingId: "GD01-109",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd01/GD01-109.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD01-109.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd01/GD01-109.webp",
   legality: "legal",
   level: 5,
   cost: 1,
@@ -56,6 +54,7 @@ export const gd01ThePathToVictoryOrDefeat109: CommandCard = {
             randomizeRemainingToBottom: true,
             tutorFilter: {
               owner: "friendly",
+              count: 1,
               cardType: ["unit", "pilot"],
               attributeFilters: [
                 {

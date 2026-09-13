@@ -30,6 +30,19 @@ function isCyberpunkFixtureTestArg(arg: string): boolean {
 const includeCyberpunkFixtureTests =
   process.env.CYBERPUNK_FIXTURE_TESTS === "1" || process.argv.some(isCyberpunkFixtureTestArg);
 
+const CARD_PACKAGES_BY_GAME = {
+  cyberpunk: ["@tcg/cyberpunk-cards"],
+  "flesh-and-blood": ["@tcg/flesh-and-blood-cards"],
+  "grand-archive": ["@tcg/grand-archive-cards"],
+  gundam: ["@tcg/gundam-cards"],
+  naruto: ["@tcg-engines/naruto-cards"],
+  "one-piece": ["@tcg/op-cards"],
+} as const;
+const selectedCardPackages =
+  CARD_PACKAGES_BY_GAME[process.env.GAME_SLUG as keyof typeof CARD_PACKAGES_BY_GAME] ?? [];
+const prebundleSelectedCards =
+  process.env.VITE_OPTIMIZE_DEPS_DISCOVERY === "false" && selectedCardPackages.length > 0;
+
 const testExclude = [
   "e2e/**",
   "**/e2e.test.ts",
@@ -41,6 +54,32 @@ const testExclude = [
 
 export default defineConfig({
   base: process.env.VITE_BASE_URL || "/",
+  optimizeDeps: {
+    // The Docker stack runs one selected game at a time. Scanning every lazy
+    // game route eagerly can exhaust Docker Desktop before the first page
+    // hydrates, so Docker opts into this bounded shared-runtime warmup.
+    noDiscovery: process.env.VITE_OPTIMIZE_DEPS_DISCOVERY === "false",
+    include:
+      process.env.VITE_OPTIMIZE_DEPS_DISCOVERY === "false"
+        ? [
+            "@dnd-kit/core",
+            "@mantine/core",
+            "@mantine/hooks",
+            "@radix-ui/react-dialog",
+            "@tabler/icons-react",
+            "howler",
+            "lucide-react",
+            "prop-types",
+            "react",
+            "react-dom",
+            "react-router",
+            "react-router-dom",
+            "socket.io-client",
+            "socket.io-msgpack-parser",
+            ...selectedCardPackages,
+          ]
+        : undefined,
+  },
   environments: {
     ssr: {
       build: {
@@ -51,6 +90,7 @@ export default defineConfig({
     },
   },
   server: {
+    origin: process.env.VITE_DEV_ASSET_ORIGIN,
     fs: {
       allow: [repoRoot],
     },
@@ -67,14 +107,6 @@ export default defineConfig({
         find: /^@cyberpunk-simulator\/(.+)$/,
         replacement: resolve(configDir, "src/games/cyberpunk/$1"),
       },
-      ...(isVitest
-        ? [
-            {
-              find: "@cyberpunk/animation",
-              replacement: resolve(configDir, "src/games/cyberpunk/testing/__mocks__/animation.ts"),
-            },
-          ]
-        : []),
       {
         find: /^@cyberpunk$/,
         replacement: resolve(configDir, "src/games/cyberpunk"),
@@ -119,10 +151,14 @@ export default defineConfig({
         find: /^@cyberpunk-engine\/(.+)$/,
         replacement: resolve(configDir, "../../../cyberpunk/packages/engine/src/$1"),
       },
-      {
-        find: /^@tcg\/cyberpunk-cards$/,
-        replacement: resolve(configDir, "../../../cyberpunk/packages/cards/src/index.ts"),
-      },
+      ...(prebundleSelectedCards && process.env.GAME_SLUG === "cyberpunk"
+        ? []
+        : [
+            {
+              find: /^@tcg\/cyberpunk-cards$/,
+              replacement: resolve(configDir, "../../../cyberpunk/packages/cards/src/index.ts"),
+            },
+          ]),
       {
         find: /^@tcg\/cyberpunk-server-adapter\/interaction-protocol$/,
         replacement: resolve(
@@ -138,10 +174,39 @@ export default defineConfig({
         find: /^@tcg\/cyberpunk-utils$/,
         replacement: resolve(configDir, "../../../cyberpunk/packages/utils/src/index.ts"),
       },
+      ...(prebundleSelectedCards && process.env.GAME_SLUG === "flesh-and-blood"
+        ? []
+        : [
+            {
+              find: /^@tcg\/flesh-and-blood-cards$/,
+              replacement: resolve(
+                configDir,
+                "../../../flesh-and-blood/packages/cards/src/index.ts",
+              ),
+            },
+          ]),
       {
-        find: /^@tcg\/gundam-cards$/,
-        replacement: resolve(configDir, "../../../gundam/packages/cards/src/index.ts"),
+        // This generated, fixture-only entrypoint changes without lockfile
+        // updates. Resolve it as source so a running dev stack cannot retain a
+        // stale optimized-dependency export list after regeneration.
+        find: /^@tcg\/flesh-and-blood-cards\/simulator-scenario-cards$/,
+        replacement: resolve(
+          configDir,
+          "../../../flesh-and-blood/packages/cards/src/simulator-scenario-cards.ts",
+        ),
       },
+      {
+        find: /^@tcg\/flesh-and-blood-types$/,
+        replacement: resolve(configDir, "../../../flesh-and-blood/packages/types/src/index.ts"),
+      },
+      ...(prebundleSelectedCards && process.env.GAME_SLUG === "gundam"
+        ? []
+        : [
+            {
+              find: /^@tcg\/gundam-cards$/,
+              replacement: resolve(configDir, "../../../gundam/packages/cards/src/index.ts"),
+            },
+          ]),
       {
         find: /^@tcg\/gundam-engine$/,
         replacement: resolve(configDir, "../../../gundam/packages/engine/src/index.ts"),
@@ -158,10 +223,62 @@ export default defineConfig({
         find: /^@tcg\/gundam-types$/,
         replacement: resolve(configDir, "../../../gundam/packages/types/src/index.ts"),
       },
+      ...(prebundleSelectedCards && process.env.GAME_SLUG === "grand-archive"
+        ? []
+        : [
+            {
+              find: /^@tcg\/grand-archive-cards$/,
+              replacement: resolve(configDir, "../../../grand-archive/packages/cards/src/index.ts"),
+            },
+          ]),
       {
-        find: /^@tcg\/op-cards$/,
-        replacement: resolve(configDir, "../../../one-piece/packages/cards/src/index.ts"),
+        find: /^@tcg\/grand-archive-engine\/automation$/,
+        replacement: resolve(
+          configDir,
+          "../../../grand-archive/packages/engine/src/automation/index.ts",
+        ),
       },
+      {
+        find: /^@tcg\/grand-archive-engine\/runtime$/,
+        replacement: resolve(
+          configDir,
+          "../../../grand-archive/packages/engine/src/runtime-api.ts",
+        ),
+      },
+      {
+        find: /^@tcg\/grand-archive-engine\/simulator$/,
+        replacement: resolve(
+          configDir,
+          "../../../grand-archive/packages/engine/src/simulator-api.ts",
+        ),
+      },
+      {
+        find: /^@tcg\/grand-archive-server-adapter$/,
+        replacement: resolve(
+          configDir,
+          "../../packages/grand-archive/grand-archive-server-adapter/src/index.ts",
+        ),
+      },
+      {
+        find: /^@tcg\/grand-archive-types$/,
+        replacement: resolve(configDir, "../../../grand-archive/packages/types/src/index.ts"),
+      },
+      {
+        find: /^@tcg-engines\/naruto-cards$/,
+        replacement: resolve(configDir, "../../../naruto/packages/cards/src/index.ts"),
+      },
+      {
+        find: /^@tcg-engines\/naruto-engine$/,
+        replacement: resolve(configDir, "../../../naruto/packages/engine/src/index.ts"),
+      },
+      ...(prebundleSelectedCards && process.env.GAME_SLUG === "one-piece"
+        ? []
+        : [
+            {
+              find: /^@tcg\/op-cards$/,
+              replacement: resolve(configDir, "../../../one-piece/packages/cards/src/index.ts"),
+            },
+          ]),
       {
         find: /^@tcg\/op-engine$/,
         replacement: resolve(configDir, "../../../one-piece/packages/engine/src/index.ts"),
@@ -275,5 +392,9 @@ export default defineConfig({
     environment: "jsdom",
     exclude: testExclude,
     setupFiles: "./vitest.setup.mjs",
+    // Shard 2 runs heavy board files (fab-board ~165 cases) on a shared 8-vCPU
+    // runner. Isolated cases finish in <1s; under that load the 5s default
+    // times out healthy tests at exactly 5000ms.
+    testTimeout: 20_000,
   },
 });

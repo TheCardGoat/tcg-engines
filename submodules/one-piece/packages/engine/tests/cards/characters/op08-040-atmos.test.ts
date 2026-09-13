@@ -82,4 +82,34 @@ describe("OP08-040 Atmos", () => {
     expect(view.players.north.characters.some((card) => card?.instanceId === targetId)).toBe(true);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional On Play so reveal and return do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op08Marco002,
+        hand: [op08Atmos040, eb01Doma005, eb01Izo002, op02Vista011, eb01Fourtricks025],
+        activeDon: op08Atmos040.cost,
+      },
+      { character: [eb01Doma005, eb01MountainGod018] },
+    );
+    const firstRevealId = engine.findCardInZone("south", "hand", eb01Doma005);
+    const secondRevealId = engine.findCardInZone("south", "hand", eb01Izo002);
+    const targetId = engine.findCardInZone("north", "character", eb01Doma005);
+
+    engine.playCard(op08Atmos040, "south");
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const northCharsBefore = engine
+      .getView("south")
+      .players.north.characters.filter(Boolean).length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([firstRevealId, secondRevealId]),
+    );
+    expect(view.players.north.characters.some((card) => card?.instanceId === targetId)).toBe(true);
+    expect(view.players.north.characters.filter(Boolean).length).toBe(northCharsBefore);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

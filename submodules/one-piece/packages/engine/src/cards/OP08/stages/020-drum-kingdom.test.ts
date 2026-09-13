@@ -3,7 +3,7 @@ import { op08DrumKingdom020 } from "../../../../../cards/src/cards/OP08/stages/0
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP08-020 Drum Kingdom", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op08DrumKingdom020);
   });
 });

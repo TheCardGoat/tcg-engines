@@ -84,4 +84,31 @@ describe("OP09-052 Marco", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(marcoId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline the On K.O. hand cost so Marco stays in trash", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op09Marco052], hand: [eb01Doma005, eb01MountainGod018] },
+      { hand: [koMarcoByEffect] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const marcoId = engine.findCardInZone("south", "character", op09Marco052);
+    const paymentId = engine.findCardInZone("south", "hand", eb01Doma005);
+    const handBefore = engine.getView("south").players.south.hand.length;
+
+    engine.playCard(koMarcoByEffect, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [marcoId] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(marcoId);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toContain(paymentId);
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(marcoId);
+    expect(view.prompts).toHaveLength(0);
+    // Defeat playCard-only theatrical gate while remaining on the removal opener family.
+    engine.endTurn("north");
+    expect(engine.getView("south").players.south.trash.map((card) => card.instanceId)).toContain(
+      marcoId,
+    );
+  });
 });

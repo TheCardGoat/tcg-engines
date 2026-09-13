@@ -50,6 +50,7 @@ export const eb02TonyTonyChopper003: CharacterCard = {
           {
             condition: "leaderTrait",
             trait: "Straw Hat Crew",
+            match: "includes",
           },
         ],
         actions: [

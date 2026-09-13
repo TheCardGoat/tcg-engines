@@ -49,12 +49,17 @@ describe("OP14-070 Buffalo", () => {
       { firstPlayer: "south", activeSeat: "north" },
     );
     const buffaloId = engine.findCardInZone("south", "character", op14eb04Buffalo070);
+    const humandrillId = engine.findCardInZone("north", "character", op14eb04Humandrill032);
 
-    restBuffaloByOpponentCharacterEffect(engine, buffaloId);
+    engine.declareAttack(humandrillId, engine.leader("south"), "north");
+    const rest = engine.pendingDecision("effectTargetSelection", "north").steps[0];
+    if (rest?.kind !== "selectEntity") throw new Error("Expected Humandrill's rest target.");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [buffaloId] }, "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south).toMatchObject({ activeDon: 1, donDeckCount: 9 });
+    expect(view.players.south.activeDon).toBe(1);
+    expect(view.players.south.donDeckCount).toBe(9);
     expect(
       view.players.south.characters.find((card) => card?.instanceId === buffaloId)?.rested,
     ).toBe(true);

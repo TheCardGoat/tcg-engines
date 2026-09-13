@@ -4,9 +4,10 @@ import { defineCyberpunkCard } from "../../define.ts";
 export const welcomeToNightCityRetailAdamSmasherMetalOverMeat = defineCyberpunkCard({
   id: "a2ad9c2f-bfb7-473b-9408-91af142d269d",
   slug: "adam-smasher-metal-over-meat",
+  subname: "Metal Over Meat",
   rulesText: "{Play} Defeat all other Units.",
-  name: "Adam Smasher — Metal Over Meat",
-  displayName: "Adam Smasher — Metal Over Meat",
+  name: "Adam Smasher",
+  displayName: "Adam Smasher: Metal Over Meat",
   canonicalId: "adam-smasher-metal-over-meat",
   color: "yellow",
   classifications: ["Arasaka", "Merc"],

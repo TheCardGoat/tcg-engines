@@ -36,5 +36,6 @@ describe("OP03-053 Yosaku & Johnny", () => {
       noDon.getView("south").players.south.characters.find((card) => card?.instanceId === noDonId)
         ?.power,
     ).toBe(3000);
+    expect(noDon.getView("south").prompts).toHaveLength(0);
   });
 });

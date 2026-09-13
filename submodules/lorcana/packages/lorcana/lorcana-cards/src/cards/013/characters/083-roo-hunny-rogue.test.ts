@@ -25,4 +25,12 @@ describe("Roo - Hunny Rogue", () => {
 
     expect(testEngine.asPlayerOne().hasKeyword(rooHunnyRogue, "Evasive")).toBe(true);
   });
+
+  it("treats another copy of Roo as another Hunny character", () => {
+    const testEngine = LorcanaMultiplayerTestEngine.createWithFixture({
+      play: [rooHunnyRogue, rooHunnyRogue],
+    });
+
+    expect(testEngine.asPlayerOne().hasKeyword(rooHunnyRogue, "Evasive")).toBe(true);
+  });
 });

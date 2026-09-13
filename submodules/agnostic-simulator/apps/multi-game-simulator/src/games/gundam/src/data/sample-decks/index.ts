@@ -5,6 +5,18 @@ import * as GundamCards from "@tcg/gundam-cards";
 import { earthFederationStarter } from "./earth-federation-starter.ts";
 import { seedAggro } from "./seed-aggro.ts";
 import { gd01Mixed } from "./gd01-mixed.ts";
+import {
+  topdecks01,
+  topdecks02,
+  topdecks03,
+  topdecks04,
+  topdecks05,
+  topdecks06,
+  topdecks07,
+  topdecks08,
+  topdecks09,
+  topdecks10,
+} from "./topdecks.ts";
 
 import { coverageGD01001ToGD01126 } from "./coverage-gd01-001-to-gd01-126.ts";
 import { coverageGD01031ToGD01130 } from "./coverage-gd01-031-to-gd01-130.ts";
@@ -30,6 +42,16 @@ export type SampleDeckId =
   | "ef-starter"
   | "seed-aggro"
   | "gd01-mixed"
+  | "topdecks-01"
+  | "topdecks-02"
+  | "topdecks-03"
+  | "topdecks-04"
+  | "topdecks-05"
+  | "topdecks-06"
+  | "topdecks-07"
+  | "topdecks-08"
+  | "topdecks-09"
+  | "topdecks-10"
   | "coverage-gd01-001-to-gd01-126"
   | "coverage-gd01-031-to-gd01-130"
   | "coverage-gd01-061-to-gd02-124"
@@ -49,6 +71,16 @@ export const SAMPLE_DECKS: Readonly<Record<SampleDeckId, DeckList>> = {
   "ef-starter": earthFederationStarter,
   "seed-aggro": seedAggro,
   "gd01-mixed": gd01Mixed,
+  "topdecks-01": topdecks01,
+  "topdecks-02": topdecks02,
+  "topdecks-03": topdecks03,
+  "topdecks-04": topdecks04,
+  "topdecks-05": topdecks05,
+  "topdecks-06": topdecks06,
+  "topdecks-07": topdecks07,
+  "topdecks-08": topdecks08,
+  "topdecks-09": topdecks09,
+  "topdecks-10": topdecks10,
   "coverage-gd01-001-to-gd01-126": coverageGD01001ToGD01126,
   "coverage-gd01-031-to-gd01-130": coverageGD01031ToGD01130,
   "coverage-gd01-061-to-gd02-124": coverageGD01061ToGD02124,
@@ -73,6 +105,16 @@ export {
   earthFederationStarter,
   seedAggro,
   gd01Mixed,
+  topdecks01,
+  topdecks02,
+  topdecks03,
+  topdecks04,
+  topdecks05,
+  topdecks06,
+  topdecks07,
+  topdecks08,
+  topdecks09,
+  topdecks10,
   coverageGD01001ToGD01126,
   coverageGD01031ToGD01130,
   coverageGD01061ToGD02124,

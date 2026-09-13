@@ -10,7 +10,7 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB01-031 Kalifa", () => {
-  test("pays DON!! -1 before mapping up to 2 low-cost Characters from trash", () => {
+  test("pays optional DON!! -1 before mapping up to 2 low-cost Characters from trash", () => {
     const engine = OnePieceTestEngine.create({
       leaderCardId: op03Iceburg058,
       hand: [eb01Kalifa031],
@@ -23,6 +23,8 @@ describe("EB01-031 Kalifa", () => {
     const donDeckBefore = engine.getView("south").players.south.donDeckCount;
 
     engine.playCard(eb01Kalifa031);
+    // Printed DON!! −1 is optional ("You may return…")
+    engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
 
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
@@ -39,5 +41,37 @@ describe("EB01-031 Kalifa", () => {
     expect(view.players.south.hand.map((card) => card.instanceId)).toEqual([firstId, secondId]);
     expect(view.players.south.donDeckCount).toBe(donDeckBefore + 1);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline the optional DON!! cost without returning DON!! or searching trash", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op03Iceburg058,
+      hand: [eb01Kalifa031],
+      trash: [eb01Doma005, eb01Blueno017],
+      activeDon: 6,
+    });
+    const trashIds = [
+      engine.findCardInZone("south", "trash", eb01Doma005),
+      engine.findCardInZone("south", "trash", eb01Blueno017),
+    ];
+
+    engine.playCard(eb01Kalifa031);
+    const afterPlay = engine.getView("south").players.south;
+    const donDeckAfterPlay = afterPlay.donDeckCount;
+    const activeDonAfterPlay = afterPlay.activeDon;
+
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    // Play cost was already paid; declining the optional effect must not return more DON!!.
+    expect(view.players.south.activeDon).toBe(activeDonAfterPlay);
+    expect(view.players.south.donDeckCount).toBe(donDeckAfterPlay);
+    expect(view.players.south.hand.map((card) => card.instanceId)).not.toEqual(
+      expect.arrayContaining(trashIds),
+    );
+    expect(view.players.south.trash.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining(trashIds),
+    );
+    expect(view.prompts).toHaveLength(0);
   });
 });

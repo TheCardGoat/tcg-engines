@@ -8,12 +8,12 @@ import {
   useTargeting,
 } from "@tcg/simulator-ui";
 import { useHasHover } from "../../../lib/use-has-hover.ts";
-import { useHintsEnabled } from "../../../lib/use-hints-enabled.ts";
 import type { CardColor, GameCardData, TargetingState } from "../types.ts";
 import { CardTagStrip } from "./CardTagStrip.tsx";
 import { getCardTags } from "./card-tags.ts";
 import { StatCurrentBadges } from "./StatCurrentBadges.tsx";
 import { useDualMode } from "../dual-mode-context.tsx";
+import { useLinkTargetPreview } from "../link-target-preview-context.tsx";
 import { DualModeOverlay } from "./DualModeOverlay.tsx";
 import { DamageCounterOverlay } from "./DamageCounterOverlay.tsx";
 import { toSimulatorEntity } from "./to-simulator-entity.ts";
@@ -28,6 +28,8 @@ export const CARD_COLORS: Record<CardColor, string> = {
 
 const TARGET_CANDIDATE_SHADOW =
   "0 0 0 3px rgba(255,248,170,1), 0 0 0 7px rgba(255,190,35,.78), 0 0 28px rgba(255,214,64,1), 0 0 62px rgba(255,150,20,.72), 0 0 96px rgba(255,105,0,.4)";
+const TARGET_LINK_SHADOW =
+  "0 0 0 3px rgba(244,255,251,1), 0 0 0 8px rgba(52,235,166,.92), 0 7px 30px rgba(20,190,130,.82), 0 0 68px rgba(80,255,200,.74)";
 const TARGET_SELECTED_SHADOW =
   "0 0 0 3px rgba(255,255,255,1), 0 0 0 7px rgba(45,107,255,1), 0 0 30px rgba(45,107,255,1), 0 0 68px rgba(76,195,255,.9), 0 0 104px rgba(76,195,255,.48)";
 
@@ -49,6 +51,12 @@ export interface CardFaceProps {
   /** When true, suppress the bottom tag strip. Same rationale — the
    * play-zone band hosts the tag chips above the card. */
   readonly hideSupplementalBadges?: boolean;
+  /** Loading strategy for the card art. Board/hand cards stay lazy; the
+   * hover preview passes "eager" so the art starts fetching on hover. */
+  readonly imageLoading?: "eager" | "lazy";
+  /** Notified when the card art finishes loading or fails. Lets the hover
+   * preview swap its text fallback for the loaded image. */
+  readonly onImageStatusChange?: (status: "loaded" | "error") => void;
 }
 
 export function CardFace({
@@ -61,8 +69,9 @@ export function CardFace({
   draggable = false,
   hideStatBadges = false,
   hideSupplementalBadges = false,
+  imageLoading = "lazy",
+  onImageStatusChange,
 }: CardFaceProps) {
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [hovered, setHovered] = useState(false);
   // Touch devices synthesize mouseenter/leave on tap. Skip the hover
@@ -85,7 +94,6 @@ export function CardFace({
   const damage = card.damage ?? 0;
 
   useEffect(() => {
-    setImageLoaded(false);
     setImageError(false);
   }, [resolvedImageSrc]);
 
@@ -95,14 +103,19 @@ export function CardFace({
   // screen-wide `SpotlightDim` still conveys the active state globally;
   // this adds a specific cue on the card the user is actually pointing at.
   const targeting = useTargeting();
+  const linkPreview = useLinkTargetPreview();
   const isCandidate =
     targeting.active && card.id != null ? targeting.candidateIds.has(card.id) : false;
+  const isLinkCandidate =
+    isCandidate && card.id != null ? linkPreview.linkCandidateIds.has(card.id) : false;
   const isInvalidTarget = targeting.active && !isCandidate && hovered;
   const targetingState: TargetingState | undefined = isInvalidTarget
     ? "invalid"
-    : isCandidate
-      ? "candidate"
-      : undefined;
+    : isLinkCandidate
+      ? "link-candidate"
+      : isCandidate
+        ? "candidate"
+        : undefined;
 
   // Tri-state legality from the shared protocol interaction view.
   // Replaces the boolean `card.playable` for visual treatment so a
@@ -112,15 +125,9 @@ export function CardFace({
   // a back-compat fallback for renders without an id (e.g. ghost cards
   // in setup overlays) until that prop is dropped in the cleanup pass.
   const legality = useCardLegality(card.id);
-  const isPlayable = legality === "playable" || (card.id == null && card.playable === true);
+  const isPlayable =
+    !targeting.active && (legality === "playable" || (card.id == null && card.playable === true));
   const isDisabled = legality === "disabled";
-  const { enabled: hintsEnabled } = useHintsEnabled();
-  // Pulse the green rim on every playable card so interactivity reads
-  // at a glance. Suppressed during targeting or while selected — those
-  // states have their own stronger cues and stacking would read as noise.
-  // Hints toggle still gates the effect so players can mute it.
-  const showPlayablePulse =
-    hintsEnabled && isPlayable && !card.selected && !isInvalidTarget && !isCandidate;
 
   // A zone-provided `draggable` flag is already derived from the same
   // interaction view as `isPlayable`; trust it directly so the cursor
@@ -140,6 +147,35 @@ export function CardFace({
         height: `var(--zone-card-height, ${height}px)`,
       }
     : { width, height };
+  const auraShadow = isInvalidTarget
+    ? "0 0 0 3px rgba(255,77,94,.85), 0 5px 18px rgba(255,45,122,.48)"
+    : card.selected
+      ? TARGET_SELECTED_SHADOW
+      : isLinkCandidate
+        ? TARGET_LINK_SHADOW
+        : isCandidate
+          ? TARGET_CANDIDATE_SHADOW
+          : card.highlight
+            ? "0 0 10px rgba(76,195,255,.75)"
+            : isPlayable
+              ? "0 0 0 2px rgba(240,255,244,1), 0 0 0 5px rgba(40,210,92,.95), 0 5px 18px rgba(18,170,70,.72), 0 0 34px rgba(86,220,120,.62)"
+              : "0 2px 5px rgba(0,0,0,.55)";
+  const auraOutline =
+    card.selected && !isInvalidTarget
+      ? "1px solid rgba(45,107,255,.6)"
+      : isCandidate
+        ? "1px solid rgba(255,255,255,.72)"
+        : "none";
+  const auraClassName = `gd-card-aura${isLinkCandidate && !card.selected ? " gd-target-link" : ""}${
+    isCandidate && !isLinkCandidate && !card.selected ? " gd-target-candidate" : ""
+  }${card.selected && !isInvalidTarget ? " gd-target-selected" : ""}`;
+  const stateClassName = `${
+    isPlayable && !card.selected && !isCandidate ? " gd-card-actionable" : ""
+  }${
+    isLinkCandidate && !card.selected ? " gd-target-link" : ""
+  }${isCandidate && !isLinkCandidate && !card.selected ? " gd-target-candidate" : ""}${
+    card.selected && !isInvalidTarget ? " gd-target-selected" : ""
+  }`;
 
   if (simulatorEntity.face === "hidden") {
     return (
@@ -149,7 +185,7 @@ export function CardFace({
           density="normal"
           fill
           fullImageChrome="edge-to-edge"
-          fullImageFit="cover"
+          fullImageFit="contain"
         />
       </div>
     );
@@ -157,67 +193,9 @@ export function CardFace({
 
   return (
     <div
-      aria-label={cardAriaLabel(card, simulatorEntity.states)}
-      role={onClick ? "button" : undefined}
-      tabIndex={onClick ? 0 : undefined}
-      onClick={onClick}
-      onKeyDown={
-        onClick
-          ? (event) => {
-              if (event.key !== "Enter" && event.key !== " ") return;
-              event.preventDefault();
-              event.currentTarget.click();
-            }
-          : undefined
-      }
-      onMouseEnter={hasHover ? () => setHovered(true) : undefined}
-      onMouseLeave={hasHover ? () => setHovered(false) : undefined}
-      data-card-id={card.id}
-      data-entity-id={card.id}
-      data-sim-entity-id={card.id}
-      data-card-type={card.cardType}
-      data-targeting-state={targetingState}
-      data-legality={legality}
-      className={`relative flex-shrink-0 bg-hud-deep overflow-hidden transition-[box-shadow,transform,outline-color,filter] duration-200${
-        showPlayablePulse ? " gd-pulse-playable" : ""
-      }${isCandidate && !card.selected ? " gd-target-candidate" : ""}${
-        card.selected && !isInvalidTarget ? " gd-target-selected" : ""
-      }`}
+      className="gd-card-shell relative flex-shrink-0 overflow-visible"
       style={{
         ...sizingStyle,
-        // Precedence: invalid (during targeting) > selected > target candidate > highlight > playable > default.
-        // `playable` glow is green to read as "go / available action",
-        // distinct from gold "selected"/"highlight" and cyan candidate hints.
-        boxShadow: isInvalidTarget
-          ? "0 0 10px rgba(255,45,122,.7)"
-          : card.selected
-            ? TARGET_SELECTED_SHADOW
-            : isCandidate
-              ? TARGET_CANDIDATE_SHADOW
-              : card.highlight
-                ? "0 0 10px rgba(76,195,255,.75)"
-                : isPlayable
-                  ? "0 0 10px rgba(86,220,120,.9), 0 0 22px rgba(86,220,120,.45)"
-                  : "0 2px 5px rgba(0,0,0,.55)",
-        border: `${isPlayable || isCandidate || card.selected ? 3 : 1}px solid ${
-          isInvalidTarget
-            ? "#ff4d5e"
-            : card.selected
-              ? "#ffffff"
-              : isCandidate
-                ? "#ffe36e"
-                : isPlayable
-                  ? "rgba(120,235,140,.95)"
-                  : shade(tint, -35)
-        }`,
-        outline:
-          card.selected && !isInvalidTarget
-            ? "1px solid rgba(45,107,255,.6)"
-            : isCandidate
-              ? "1px solid rgba(255,255,255,.65)"
-              : "none",
-        outlineOffset: card.selected || isCandidate ? 2 : 0,
-        filter: isInvalidTarget ? "saturate(0.4) brightness(0.8)" : undefined,
         transform:
           isPlayable && hovered
             ? card.exerted
@@ -227,92 +205,163 @@ export function CardFace({
               ? "rotate(20deg) scale(.96)"
               : "none",
         transformOrigin: "center center",
-        cursor: isCandidate
-          ? "pointer"
-          : isDisabled
-            ? "not-allowed"
-            : isDraggable
-              ? "grab"
-              : onClick
-                ? "pointer"
-                : "default",
-        clipPath: `polygon(${chamfer}px 0, 100% 0, 100% calc(100% - ${chamfer}px), calc(100% - ${chamfer}px) 100%, 0 100%, 0 ${chamfer}px)`,
         ...style,
       }}
     >
-      <ArtFallback color={card.color} name={card.name} scale={scale} />
-      {hasImage && (
-        <div
-          className="absolute inset-0 transition-opacity duration-300 ease-out"
-          style={{ opacity: imageLoaded ? 1 : 0 }}
-        >
-          <ViewerSafeCardImage
-            entity={simulatorEntity}
-            alt={card.name}
-            fill
-            fit="cover"
-            loading="lazy"
-            className="absolute inset-0"
-            imageClassName="h-full w-full object-cover"
-            onImageLoad={() => setImageLoaded(true)}
-            onImageError={() => setImageError(true)}
+      <span
+        className={auraClassName}
+        data-card-aura
+        aria-hidden="true"
+        style={{
+          boxShadow: auraShadow,
+          outline: auraOutline,
+          outlineOffset: card.selected || isCandidate ? 2 : 0,
+        }}
+      />
+      <div
+        aria-label={cardAriaLabel(card, simulatorEntity.states, isPlayable, isLinkCandidate)}
+        role={onClick ? "button" : undefined}
+        tabIndex={onClick ? 0 : undefined}
+        onClick={onClick}
+        onKeyDown={
+          onClick
+            ? (event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                event.currentTarget.click();
+              }
+            : undefined
+        }
+        onMouseEnter={hasHover ? () => setHovered(true) : undefined}
+        onMouseLeave={hasHover ? () => setHovered(false) : undefined}
+        data-card-id={card.id}
+        data-entity-id={card.id}
+        data-sim-entity-id={card.id}
+        data-card-type={card.cardType}
+        data-targeting-state={targetingState}
+        data-legality={legality}
+        data-actionable={isPlayable ? "true" : undefined}
+        className={`gd-card-visual relative z-[1] h-full w-full bg-hud-deep overflow-hidden transition-[border-color,filter] duration-200${stateClassName}`}
+        style={{
+          ...sizingStyle,
+          border: `${isPlayable || isCandidate || card.selected ? 3 : 1}px solid ${
+            isInvalidTarget
+              ? "#ff4d5e"
+              : card.selected
+                ? "#ffffff"
+                : isLinkCandidate
+                  ? "#86ffd1"
+                  : isCandidate
+                    ? "#ffe36e"
+                    : isPlayable
+                      ? "rgba(120,235,140,.95)"
+                      : shade(tint, -35)
+          }`,
+          filter: isInvalidTarget ? "saturate(0.4) brightness(0.8)" : undefined,
+          cursor: isCandidate
+            ? "pointer"
+            : isDisabled
+              ? "not-allowed"
+              : isDraggable
+                ? "grab"
+                : onClick
+                  ? "pointer"
+                  : "default",
+          clipPath: `polygon(${chamfer}px 0, 100% 0, 100% calc(100% - ${chamfer}px), calc(100% - ${chamfer}px) 100%, 0 100%, 0 ${chamfer}px)`,
+        }}
+      >
+        {isPlayable && !card.selected && !isCandidate && (
+          <span className="gd-card-action-marker" aria-hidden="true" />
+        )}
+        <ArtFallback color={card.color} name={card.name} scale={scale} />
+        {hasImage && (
+          <div className="absolute inset-0">
+            <ViewerSafeCardImage
+              entity={simulatorEntity}
+              alt={card.name}
+              loading={imageLoading}
+              // Never crop a card face: shell/image ratios may differ while
+              // cached CDN assets are rolling out, but the full printed card
+              // (including its rules text and corners) must remain visible.
+              className="absolute inset-0 h-full w-full object-contain"
+              style={{ objectFit: "contain" }}
+              onImageLoad={() => {
+                onImageStatusChange?.("loaded");
+              }}
+              onImageError={() => {
+                setImageError(true);
+                onImageStatusChange?.("error");
+              }}
+            />
+          </div>
+        )}
+
+        {card.cardType === "unit" &&
+          card.deployedThisTurn === true &&
+          card.canAttackThisTurn === false && <DeployedOverlay chamfer={chamfer} />}
+
+        {/* Legality lock overlay removed — the static legality glow ring
+         * (rendered via boxShadow/border above) is sufficient signal without
+         * dimming or locking the non-playable cards. */}
+
+        <DamageCounterOverlay damage={damage} scale={scale} />
+
+        {!hideStatBadges && scale >= 0.6 && (
+          <StatCurrentBadges
+            ap={card.ap}
+            baseAp={card.baseAp}
+            hp={card.hp}
+            baseHp={card.baseHp}
+            scale={scale}
           />
-        </div>
-      )}
+        )}
 
-      {card.cardType === "unit" &&
-        card.deployedThisTurn === true &&
-        card.canAttackThisTurn === false && <DeployedOverlay chamfer={chamfer} />}
+        {!hideSupplementalBadges && tags.length > 0 && scale >= 0.45 && (
+          <div
+            className="absolute pointer-events-none"
+            style={{
+              left: 3 * scale,
+              right: 3 * scale,
+              bottom: 3 * scale,
+              zIndex: 2,
+            }}
+          >
+            <CardTagStrip
+              tags={tags}
+              maxVisible={scale < 0.55 ? 1 : scale < 0.75 ? 2 : 3}
+              compact={scale < 0.55}
+              collapseMode={scale < 0.85 ? "hover-stack" : "none"}
+            />
+          </div>
+        )}
 
-      {/* Legality lock overlay removed — relying on the legality glow ring
-       * (rendered via boxShadow/border above) and the pulse animation on
-       * playable cards is sufficient signal without dimming/locking the
-       * non-playable ones. */}
-
-      <DamageCounterOverlay damage={damage} scale={scale} />
-
-      {!hideStatBadges && scale >= 0.6 && (
-        <StatCurrentBadges
-          ap={card.ap}
-          baseAp={card.baseAp}
-          hp={card.hp}
-          baseHp={card.baseHp}
-          scale={scale}
-        />
-      )}
-
-      {!hideSupplementalBadges && tags.length > 0 && scale >= 0.45 && (
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            left: 3 * scale,
-            right: 3 * scale,
-            bottom: 3 * scale,
-            zIndex: 2,
-          }}
-        >
-          <CardTagStrip
-            tags={tags}
-            maxVisible={scale < 0.55 ? 1 : scale < 0.75 ? 2 : 3}
-            compact={scale < 0.55}
-            collapseMode={scale < 0.85 ? "hover-stack" : "none"}
+        {isDualLifted && (
+          <DualModeOverlay
+            scale={scale}
+            onPickCmd={() => dual.commit("cmd")}
+            onPickPilot={() => dual.commit("pilot")}
           />
-        </div>
-      )}
-
-      {isDualLifted && (
-        <DualModeOverlay
-          scale={scale}
-          onPickCmd={() => dual.commit("cmd")}
-          onPickPilot={() => dual.commit("pilot")}
-        />
+        )}
+      </div>
+      {isLinkCandidate && !card.selected && (
+        <span className="gd-link-target-marker" data-testid="link-target-marker">
+          <span className="gd-link-target-marker__diamond" aria-hidden="true" />
+          LINK
+        </span>
       )}
     </div>
   );
 }
 
-function cardAriaLabel(card: GameCardData, states: readonly string[]): string {
+function cardAriaLabel(
+  card: GameCardData,
+  states: readonly string[],
+  isPlayable: boolean,
+  isLinkCandidate: boolean,
+): string {
   const parts = [card.name];
+  if (isPlayable) parts.push("action available");
+  if (isLinkCandidate) parts.push("Link Condition met");
   if (card.cardType) parts.push(card.cardType);
   if (card.color) parts.push(card.color);
   if (card.ap != null) parts.push(`AP ${card.ap}`);

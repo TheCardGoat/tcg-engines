@@ -124,6 +124,87 @@ describe("public 【Burst】 interaction", () => {
 
     expect(p2.getCardZone(shieldId)).toBe(`trash:${PLAYER_TWO}`);
   });
+
+  it("records a trash-to-Base-section move when Burst deploys the revealed Shield", () => {
+    const attacker = createMockUnit({ ap: 2, hp: 3 });
+    const burstBase = createMockBase({
+      effects: [
+        {
+          type: "triggered",
+          activation: { timing: ["burst"] },
+          directives: [{ action: { action: "deploySelf" } }],
+          sourceText: "【Burst】Deploy this card.",
+        },
+        {
+          type: "triggered",
+          activation: { timing: ["deploy"] },
+          directives: [{ action: { action: "addShieldToHand", count: 1 } }],
+          sourceText: "【Deploy】Add 1 of your Shields to your hand.",
+        },
+      ],
+    });
+    const remainingShield = createMockUnit({ name: "Hidden Remaining Shield" });
+    const engine = GundamTestEngine.create(
+      { play: [attacker] },
+      { shieldArea: [burstBase, remainingShield] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const attackerId = p1.getCardsInZone("battleArea")[0]!;
+    const [shieldId, remainingShieldId] = p2.getCardsInZone("shieldArea");
+
+    expect(p1.enterBattle(attackerId, "direct").success).toBe(true);
+    expect(p2.passBlock().success).toBe(true);
+    expect(p2.passBattleAction().success).toBe(true);
+    expect(p1.passBattleAction().success).toBe(true);
+
+    const result = p2.resolveEffect({ optionalAnswers: { [-1]: true } });
+    expect(result.success).toBe(true);
+    if (!result.success) throw new Error("Expected Burst deployment to resolve");
+
+    expect(result.moveLogs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          outcomes: expect.objectContaining({
+            cardsMoved: expect.arrayContaining([
+              expect.objectContaining({
+                cardId: shieldId,
+                from: "trash",
+                to: "baseSection",
+              }),
+            ]),
+          }),
+        }),
+      ]),
+    );
+    expect(result.moveLogs).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          outcomes: expect.objectContaining({
+            shieldsAddedToHand: {
+              playerId: PLAYER_TWO,
+              count: 1,
+            },
+          }),
+        }),
+      ]),
+    );
+    expect(JSON.stringify(result.moveLogs)).not.toContain(remainingShieldId);
+    expect(result.animations).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          data: expect.objectContaining({
+            kind: "cardMove",
+            cardId: shieldId,
+            fromZone: "trash",
+            toZone: "baseSection",
+          }),
+        }),
+      ]),
+    );
+    expect(p2.getCardZone(shieldId!)).toBe(`baseSection:${PLAYER_TWO}`);
+    expect(p2.getCardZone(remainingShieldId!)).toBe(`hand:${PLAYER_TWO}`);
+  });
 });
 
 describe("GundamTestEngine.endTurn", () => {
@@ -150,6 +231,44 @@ describe("GundamTestEngine.endTurn", () => {
     expect(engine.getState().ctx.status.turnPlayer).toBe(PLAYER_TWO);
     // Repair 2 subtracts 2 from damage; 3 - 2 = 1.
     expect(p1.getDamage(unit)).toBe(1);
+    expect(
+      engine
+        .getRuntime()
+        .getGameLogHistory()
+        .find(({ entry }) => entry.type === "gundam.effect.hpRecovered"),
+    ).toMatchObject({
+      entry: {
+        playerId: PLAYER_ONE,
+        message: expect.stringContaining("recovered 2 HP"),
+        data: {
+          type: "gundam.effect.hpRecovered",
+          values: { cardId: unitId, amount: 2 },
+        },
+      },
+    });
+    expect(
+      engine
+        .getRuntime()
+        .getMoveLogHistory()
+        .flatMap((log) => log.outcomes?.hpRecovered ?? []),
+    ).toEqual([{ cardId: unitId, amount: 2 }]);
+    expect(
+      engine
+        .getRuntime()
+        .getPacketAnimationHistory()
+        .find(
+          ({ animation }) =>
+            animation.data.kind === "generic" && animation.data.name === "hpRecovered",
+        ),
+    ).toMatchObject({
+      animation: {
+        data: {
+          kind: "generic",
+          name: "hpRecovered",
+          params: { cardId: unitId, amount: 2 },
+        },
+      },
+    });
   });
 
   it("returns control to main-phase of the next turn", () => {

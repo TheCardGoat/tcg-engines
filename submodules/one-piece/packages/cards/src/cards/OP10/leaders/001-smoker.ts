@@ -95,21 +95,17 @@ export const op10Smoker001: LeaderCard = {
               filters: [
                 {
                   filter: "anyOf",
-                  groups: [
-                    [
-                      {
-                        filter: "trait",
-                        value: "Navy",
-                        match: "includes",
-                      },
-                    ],
-                    [
-                      {
-                        filter: "trait",
-                        value: "Punk Hazard",
-                        match: "includes",
-                      },
-                    ],
+                  filters: [
+                    {
+                      filter: "trait",
+                      value: "Navy",
+                      match: "includes",
+                    },
+                    {
+                      filter: "trait",
+                      value: "Punk Hazard",
+                      match: "includes",
+                    },
                   ],
                 },
               ],

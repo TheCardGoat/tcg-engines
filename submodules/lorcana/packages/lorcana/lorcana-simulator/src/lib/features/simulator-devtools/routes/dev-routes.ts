@@ -28,11 +28,6 @@ export const staticRouteLinks: RouteLink[] = [
     description: "Create or join a live match and navigate into active game sessions.",
   },
   {
-    href: "/matchmaking/archetype",
-    label: "Archetype Matchmaking",
-    description: "Browse player-created matches and create a new archetype-based room.",
-  },
-  {
     href: "/sandbox/simulator",
     label: "Sandbox Simulator",
     description: "Open the local simulator harness with fixture-driven tabletop state.",

@@ -20,7 +20,7 @@ export const tFatum00011: UnitCard = {
       },
       rarity: "common",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-011.webp",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-011.webp",
     },
   ],
   level: 0,

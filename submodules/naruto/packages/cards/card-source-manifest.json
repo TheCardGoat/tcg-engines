@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 3,
+  "dataset": {
+    "id": "naruto-preview-card-snapshot-v2",
+    "status": "provisional-community-sourced",
+    "completeness": "not-asserted"
+  },
+  "provenance": [
+    {
+      "scope": "confirmed game structure only",
+      "url": "https://www.naruto-cardgame.com/en/welcome/",
+      "accessedOn": "2026-08-02",
+      "status": "primary-source-reviewed",
+      "retrieval": {
+        "httpStatus": 200,
+        "contentType": "text/html; charset=UTF-8",
+        "contentSha256": "57a0c49dd8b06f9f98067121da7209edbebf4ef0eaeb2ddcaba729ee177c5ec0",
+        "hashInput": "normalized visible text from the #type and #feature sections, in that order",
+        "command": "curl -fsSL --compressed https://www.naruto-cardgame.com/en/welcome/ | node tools/hash-official-rules-source.mjs",
+        "note": "A reviewed-content digest is used because unrelated raw HTML bytes changed across CDN responses during the audit."
+      },
+      "claimEvidence": [
+        {
+          "field": "totalDeckSize",
+          "value": 51,
+          "anchor": "#feature",
+          "support": "The General Rules section states a deck count of 51.",
+          "limitation": "The page does not define that deck's composition or say whether its Leader is included."
+        },
+        {
+          "field": "chakraCount",
+          "value": 5,
+          "anchor": "#feature",
+          "support": "The General Rules section separately states five Chakra cards."
+        },
+        {
+          "field": "summonCount",
+          "value": 1,
+          "anchor": "#feature",
+          "support": "The General Rules section separately states one Summon card."
+        },
+        {
+          "field": "cardTypes",
+          "value": ["leader", "character", "ex_character", "chakra", "summon"],
+          "anchor": "#type",
+          "support": "The Card Types section says there are five types and labels Leader, Character, EX Character, Chakra, and Summon."
+        },
+        {
+          "field": "charactersChosenByLeaderColor",
+          "value": true,
+          "anchor": "#type",
+          "support": "The Character Cards description says Character cards are chosen based on the Leader's color.",
+          "limitation": "This does not establish a color restriction for every other card or side-card type."
+        },
+        {
+          "field": "exCharactersRequireConditions",
+          "value": true,
+          "anchor": "#type",
+          "support": "The EX Character description conditions play on reaching certain play conditions."
+        },
+        {
+          "field": "summonRestsToDeploy",
+          "value": true,
+          "anchor": "#feature",
+          "support": "The General Rules section connects resting the Summon card with bringing a Character onto the field."
+        },
+        {
+          "field": "chakraActivatesFaceDownSupports",
+          "value": true,
+          "anchor": "#feature",
+          "support": "The General Rules section says Chakra activates face-down Support cards."
+        },
+        {
+          "field": "leaderLifeZeroLoses",
+          "value": true,
+          "anchor": "#feature",
+          "support": "The General Rules section defines victory by reducing the opposing Leader's Life to zero."
+        }
+      ],
+      "provisionalInterpretations": [
+        {
+          "field": "mainDeckSize",
+          "value": 50,
+          "reason": "The Preview runtime stores Leader separately and uses 50 main-deck cards, but the welcome page does not publish that composition."
+        }
+      ]
+    },
+    {
+      "source": "naruto-card-game-simulator",
+      "scope": "35 provisional card records and their printed metadata",
+      "url": "https://narutocardgamesimulator.com/en/collection",
+      "accessedOn": "2026-08-02",
+      "status": "community-source-scraped",
+      "retrieval": {
+        "route": "public collection page and its same-origin Next.js card-data chunk",
+        "payloadUrl": "https://narutocardgamesimulator.com/_next/static/chunks/2lwokegtf0ss7.js",
+        "payloadSha256": "f0689e15e42781de6d853a795ab8c8f37f93d6a5e3f587e51992a24764326288",
+        "cardCount": 35,
+        "command": "pnpm run scrape:cards -- --out packages/cards/community-card-source-snapshot.json",
+        "robotsPolicy": "The public collection route is allowed; /api/ is disallowed and is not requested."
+      },
+      "note": "This is an unofficial community simulator. Its data is review evidence, not authoritative card text or rules."
+    },
+    {
+      "source": "exburst",
+      "scope": "37 public catalog identities and visible card-detail metadata",
+      "url": "https://exburst.dev/naruto/cardlist",
+      "accessedOn": "2026-08-02",
+      "status": "community-source-scraped",
+      "retrieval": {
+        "route": "public card list and /naruto/cards/{number} detail pages in a rate-limited headless browser",
+        "payloadSha256": "37ce687ab2ebdbadea9a262ef52144a130099dd0b11430edec515220110adda5",
+        "cardCount": 37,
+        "command": "pnpm run scrape:cards -- --out packages/cards/community-card-source-snapshot.json",
+        "robotsPolicy": "Only public pages are rendered; /api/ is disallowed and is not requested.",
+        "imagePolicy": "Image URLs are retained for source identification; image bytes are not downloaded or shipped."
+      },
+      "note": "This is an unofficial community database. It is used to cross-check identities and metadata, not to derive executable behavior."
+    },
+    {
+      "scope": "all CardDefinition values in src/cards.ts",
+      "url": null,
+      "status": "community-cross-checked",
+      "note": "The runtime snapshot is reproduced by the Naruto Card Game Simulator data except for one recorded N-sakura damage override retained from ExBurst. Five cross-source conflicts and two ExBurst-only sample cards remain explicit in the checked-in snapshot."
+    }
+  ],
+  "communitySnapshot": {
+    "path": "community-card-source-snapshot.json",
+    "sha256": "a58dc2f84969723ab78297afbed30b8349c4bb75bdeb1072e772b1841f1dc726",
+    "sourceCardCounts": {
+      "narutoCardGameSimulator": 35,
+      "exBurst": 37
+    },
+    "reviewedOverrides": [
+      {
+        "cardId": "N-sakura",
+        "field": "damage",
+        "outputValue": 2,
+        "sourceValue": 1
+      }
+    ],
+    "limitations": [
+      "Both card catalogs are unofficial community sources.",
+      "Cross-source conflicts are not silently resolved into engine behavior.",
+      "The checked-in data does not establish catalog completeness or authoritative wording."
+    ]
+  },
+  "output": {
+    "path": "src/cards.ts",
+    "sha256": "d3a597168b652cfcab062b0732e6540da2e71321f33c5703b78be95463ec3d3e",
+    "cardCount": 35,
+    "cardIds": [
+      "N-001",
+      "N-004",
+      "N-005",
+      "N-006",
+      "N-007",
+      "N-008",
+      "N-010",
+      "N-011",
+      "N-012",
+      "N-013",
+      "N-014",
+      "N-015",
+      "N-016",
+      "N-019",
+      "N-021",
+      "N-022",
+      "K-039",
+      "N-naruto-ex",
+      "N-choji",
+      "N-hinata",
+      "N-orochimaru",
+      "N-sakura",
+      "N-reveal-01",
+      "N-reveal-02",
+      "N-reveal-03",
+      "N-reveal-04",
+      "N-reveal-05",
+      "N-reveal-06",
+      "N-reveal-07",
+      "N-reveal-08",
+      "N-reveal-09",
+      "N-reveal-10",
+      "C-001",
+      "CP-001",
+      "S-001"
+    ]
+  },
+  "verification": {
+    "command": "pnpm run verify-provenance",
+    "checks": [
+      "community snapshot SHA-256",
+      "per-source payload SHA-256 and card counts",
+      "complete reconciliation accounting",
+      "recorded runtime overrides",
+      "source file SHA-256",
+      "top-level card count",
+      "top-level card ids and order"
+    ],
+    "reproduction": "Run the opt-in live scraper to refresh the checked-in community snapshot, review every reported conflict and identity inference, then run pnpm run verify-provenance. A primary-source importer still does not exist."
+  }
+}

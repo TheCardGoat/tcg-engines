@@ -1,3 +1,5 @@
+import { PLAYABLE_GAME_SLUGS } from "@tcg/protocol";
+
 const REDACTED = "[redacted]";
 const DEFAULT_TRACE_SAMPLE_RATIO = 0.02;
 const MAX_MESSAGE_LENGTH = 1_500;
@@ -6,6 +8,9 @@ const SENSITIVE_KEY =
 const UUID_SEGMENT = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const NUMERIC_SEGMENT = /^\d+$/;
 const OPAQUE_SEGMENT = /^[a-z0-9_-]{16,}$/i;
+const KNOWN_GAMES: ReadonlySet<string> = new Set(
+  PLAYABLE_GAME_SLUGS.filter((slug) => slug !== "platform"),
+);
 
 export type BrowserResourceConfig = {
   serviceName: string;
@@ -71,6 +76,11 @@ export function normalizeRoute(pathname: string): string {
         : segment,
     );
   return segments.length === 0 ? "/" : `/${segments.join("/")}`;
+}
+
+export function browserGameFromPathname(pathname: string): string {
+  const segment = pathname.split("/").filter(Boolean)[0];
+  return segment && KNOWN_GAMES.has(segment) ? segment : "unknown";
 }
 
 export function parseTraceSampleRatio(

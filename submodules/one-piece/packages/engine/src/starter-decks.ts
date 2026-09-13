@@ -1,25 +1,14 @@
 import type { MatchConfig, MatchPlayerConfig, MatchSeat } from "./types.ts";
+import { ONE_PIECE_PRECONSTRUCTED_DECKS } from "@tcg/op-cards";
 
-export const ST01_LEADER_CARD_ID = "ST01-001";
+const ST01 = ONE_PIECE_PRECONSTRUCTED_DECKS.find((deck) => deck.code === "ST01");
+if (!ST01) throw new Error("The verified ST01 preconstructed deck is unavailable.");
 
-export const ST01_MAIN_DECK: readonly string[] = Object.freeze([
-  ...copies("ST01-002", 4),
-  ...copies("ST01-003", 4),
-  ...copies("ST01-004", 4),
-  ...copies("ST01-005", 4),
-  ...copies("ST01-006", 4),
-  ...copies("ST01-007", 4),
-  ...copies("ST01-008", 4),
-  ...copies("ST01-009", 4),
-  ...copies("ST01-010", 4),
-  ...copies("ST01-011", 2),
-  ...copies("ST01-012", 2),
-  ...copies("ST01-013", 2),
-  ...copies("ST01-014", 2),
-  ...copies("ST01-015", 2),
-  ...copies("ST01-016", 2),
-  ...copies("ST01-017", 2),
-]);
+export const ST01_LEADER_CARD_ID = ST01.leaderCardId;
+
+export const ST01_MAIN_DECK: readonly string[] = Object.freeze(
+  ST01.mainDeck.flatMap((entry) => copies(entry.cardId, entry.quantity)),
+);
 
 export function createSt01PlayerConfig(playerName: string): MatchPlayerConfig {
   return {

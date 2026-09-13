@@ -57,6 +57,7 @@ export const op07MonkeyDLuffy073: CharacterCard = {
           },
         ],
         oncePerTurn: true,
+        optional: true,
       },
     ],
   },

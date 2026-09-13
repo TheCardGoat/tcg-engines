@@ -1,7 +1,7 @@
 import {
-  MatchPageDataSchema,
+  MatchSessionSchema,
   MatchResolutionSchema,
-  type MatchPageData,
+  type MatchSession,
   type MatchResolution,
   type Participant,
 } from "@tcg/game-page-contract";
@@ -38,7 +38,7 @@ export interface SharedSimulatorRouteParams {
 }
 
 export interface SharedSimulatorRouteData extends SharedSimulatorRouteParams {
-  matchPageData: MatchPageData | null;
+  session: MatchSession | null;
   matchResolution: MatchResolution | null;
   error: string | null;
 }
@@ -47,6 +47,7 @@ interface FetchSharedSimulatorRouteDataInput {
   request: Request;
   env?: RuntimeApiEnv;
   fetcher?: typeof fetch;
+  onSetCookie?: (cookie: string) => void;
 }
 
 interface FetchSharedSimulatorRouteDataForRouteInput extends FetchSharedSimulatorRouteDataInput {
@@ -56,7 +57,7 @@ interface FetchSharedSimulatorRouteDataForRouteInput extends FetchSharedSimulato
 const EMPTY_ROUTE_DATA: SharedSimulatorRouteData = {
   gameSlug: null,
   routeKind: "other",
-  matchPageData: null,
+  session: null,
   matchResolution: null,
   error: null,
 };
@@ -115,9 +116,10 @@ export async function fetchSharedSimulatorRouteData({
   request,
   env,
   fetcher = fetch,
+  onSetCookie,
 }: FetchSharedSimulatorRouteDataInput): Promise<SharedSimulatorRouteData> {
   const route = parseSharedSimulatorRoute(new URL(request.url));
-  return fetchSharedSimulatorRouteDataForRoute({ request, route, env, fetcher });
+  return fetchSharedSimulatorRouteDataForRoute({ request, route, env, fetcher, onSetCookie });
 }
 
 export async function fetchSharedSimulatorRouteDataForRoute({
@@ -125,6 +127,7 @@ export async function fetchSharedSimulatorRouteDataForRoute({
   route,
   env,
   fetcher = fetch,
+  onSetCookie,
 }: FetchSharedSimulatorRouteDataForRouteInput): Promise<SharedSimulatorRouteData> {
   if (!route.gameSlug) {
     return EMPTY_ROUTE_DATA;
@@ -132,7 +135,7 @@ export async function fetchSharedSimulatorRouteDataForRoute({
 
   const base: SharedSimulatorRouteData = {
     ...route,
-    matchPageData: null,
+    session: null,
     matchResolution: null,
     error: null,
   };
@@ -144,18 +147,17 @@ export async function fetchSharedSimulatorRouteDataForRoute({
           route.gameSlug,
           `/matches/${encodeURIComponent(route.matchId)}/games/${encodeURIComponent(
             route.gameId,
-          )}/context`,
+          )}/session`,
           env,
         ),
         { headers: forwardedRequestHeaders(request) },
       );
+      for (const cookie of response.headers.getSetCookie()) onSetCookie?.(cookie);
       if (!response.ok) {
-        return { ...base, error: `Match context request failed with HTTP ${response.status}.` };
+        return { ...base, error: matchRequestErrorMessage(response.status) };
       }
-      return {
-        ...base,
-        matchPageData: MatchPageDataSchema.parse(await response.json()),
-      };
+      const session = MatchSessionSchema.parse(await response.json());
+      return { ...base, session };
     }
 
     if (route.routeKind === "match-landing" && route.matchId) {
@@ -164,7 +166,7 @@ export async function fetchSharedSimulatorRouteDataForRoute({
         { headers: forwardedRequestHeaders(request) },
       );
       if (!response.ok) {
-        return { ...base, error: `Match metadata request failed with HTTP ${response.status}.` };
+        return { ...base, error: matchRequestErrorMessage(response.status) };
       }
       return {
         ...base,
@@ -172,13 +174,33 @@ export async function fetchSharedSimulatorRouteDataForRoute({
       };
     }
   } catch (error) {
+    // Deliberately omit request headers, query strings and schema values.
+    console.error("[simulator-route] bootstrap failed", {
+      gameSlug: route.gameSlug,
+      routeKind: route.routeKind,
+      matchId: route.matchId,
+      gameId: route.gameId,
+      cause: error instanceof Error ? error.name : "UnknownError",
+    });
     return {
       ...base,
-      error: error instanceof Error ? error.message : "Shared simulator route data failed to load.",
+      error: matchRequestErrorMessage(),
     };
   }
 
   return base;
+}
+
+function matchRequestErrorMessage(status?: number): string {
+  if (status === 404 || status === 410) {
+    // A 404 also protects private matches. Do not claim a confirmed expiry or
+    // result when the API cannot distinguish absence from restricted access.
+    return "This match may have expired after inactivity, ended, or no longer be accessible to you. You can return to matchmaking to start another match.";
+  }
+  if (status === 401 || status === 403) {
+    return "You don't have access to this match. Check that you're signed in with the account you used to join, then try again.";
+  }
+  return "We couldn't load this match right now. Please try again in a moment.";
 }
 
 export function participantIsPremium(participant: Participant | null | undefined): boolean {

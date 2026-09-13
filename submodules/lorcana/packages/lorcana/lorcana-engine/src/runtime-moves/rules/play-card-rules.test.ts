@@ -63,4 +63,54 @@ describe("getShiftRules", () => {
       ),
     ).toEqual([morph]);
   });
+
+  it("lets advanced mimicry satisfy an item-only Shift target", () => {
+    const morph = "morph" as CardInstanceId;
+    const potato = "potato" as CardInstanceId;
+    const definitions = {
+      [morph]: {
+        id: "morph",
+        cardType: "character",
+        name: "Morph",
+        cost: 1,
+        strength: 1,
+        willpower: 1,
+        lore: 1,
+        inkable: true,
+        classifications: ["Storyborn", "Ally", "Alien"],
+        abilities: [
+          {
+            type: "static",
+            name: "ADVANCED MIMICRY",
+            text: "ADVANCED MIMICRY You can shift any character on top of this character.",
+            effect: {
+              chooser: "CONTROLLER",
+              effect: { from: "hand", type: "play-card" },
+              type: "optional",
+            },
+          },
+        ],
+      },
+      [potato]: {
+        id: "potato",
+        cardType: "item",
+        name: "Potato",
+        cost: 1,
+        inkable: true,
+        abilities: [],
+      },
+    };
+
+    expect(
+      resolveShiftTargetCandidates(
+        {
+          targetMode: { type: "name", name: "Potato" },
+          targetCardType: "item",
+          inkCost: 5,
+        },
+        [morph, potato],
+        (id) => definitions[id] as LorcanaCardDefinition | undefined,
+      ),
+    ).toEqual([morph, potato]);
+  });
 });

@@ -1,4 +1,24 @@
-export type GameSlug = "one-piece" | "gundam" | "cyberpunk" | "lorcana" | "platform";
+export type GameSlug =
+  | "one-piece"
+  | "gundam"
+  | "cyberpunk"
+  | "lorcana"
+  | "riftbound"
+  | "flesh-and-blood"
+  | "grand-archive"
+  | "naruto"
+  | "platform";
+
+/** Full-card width / height ratio shared by standard poker-sized TCG cards. */
+export const STANDARD_CARD_IMAGE_ASPECT_RATIO = 5 / 7;
+
+export type {
+  SimulatorActivityEntry,
+  SimulatorStatement,
+  SimulatorStatementAction,
+  SimulatorStatementActionInput,
+  SimulatorStatementsState,
+} from "./statements";
 
 export type ZoneRole =
   | "leader"
@@ -30,6 +50,69 @@ export type InteractionInputKind =
 export interface SimulatorMetadataItem {
   label: string;
   value: string;
+  /** Printed value before continuous effects or other runtime modifiers. */
+  baseValue?: string;
+  /** Optional game-owned explanation of how the current value was derived. */
+  detail?: string;
+}
+
+export type CardInteractionMode = "detailed" | "quick";
+
+export type SimulatorCardActionAvailability =
+  | { kind: "enabled" }
+  | {
+      kind: "disabled";
+      /** Player-facing, localized explanation of the current blocker. */
+      reason: string;
+      /** Optional game-owned diagnostic key used by tests and telemetry. */
+      reasonCode?: string;
+    };
+
+/**
+ * A game-owned action projected for one public card. The shared UI presents
+ * this data but does not interpret legality or construct engine payloads.
+ */
+export interface SimulatorCardAction {
+  id: string;
+  sourceEntityId: string;
+  label: string;
+  detail?: string;
+  order: number;
+  shortcut?: string;
+  activation: "execute" | "begin-selection";
+  /** Opaque reference resolved by the game integration against current state. */
+  commandRef?: string;
+  availability: SimulatorCardActionAvailability;
+}
+
+export interface SimulatorEntityRule {
+  id: string;
+  kind: "text" | "keyword" | "ability";
+  label?: string;
+  text: string;
+  /** Associates printed explanatory text with an action when available. */
+  actionId?: string;
+}
+
+export interface SimulatorEntityRelationship {
+  id: string;
+  label: string;
+  entityIds: string[];
+  /** Public display labels for relationship targets, when the adapter can expose them. */
+  entityLabels?: Array<{ id: string; label: string }>;
+}
+
+export interface SimulatorEntityDetails {
+  rules: SimulatorEntityRule[];
+  relationships?: SimulatorEntityRelationship[];
+}
+
+export interface SimulatorEntityDecoration {
+  id: string;
+  slot: "top-start" | "top-end" | "bottom-start" | "bottom-end";
+  ariaLabel: string;
+  content: { kind: "icon"; token: string } | { kind: "text"; text: string };
+  tone?: "neutral" | "positive" | "negative" | "warning";
 }
 
 export interface SimulatorCounter {
@@ -71,16 +154,34 @@ export interface SimulatorEntity {
   kind: EntityKind;
   ownerId: string;
   face: "public" | "hidden";
+  /** Viewer-safe state context appended to the entity's accessible name. */
+  accessibilityDescription?: string;
   states: EntityState[];
   stats: SimulatorMetadataItem[];
   traits: string[];
   imageUrl?: string;
   backImageUrl?: string;
+  /**
+   * Stable width / height ratio for the complete card face.
+   *
+   * Games project this value from their native card format so shared UI can
+   * reserve the correct footprint before the image decodes. Image components
+   * must not infer or mutate layout from the downloaded asset.
+   */
+  imageAspectRatio?: number;
+  /**
+   * A zone-selected, identity-safe footprint for a hidden card back.
+   *
+   * This intentionally permits only a square back rather than propagating a
+   * card's native image geometry through the hidden-card privacy boundary.
+   */
+  hiddenBackLayout?: "square";
   frameStyle?: { color: string; pattern?: string };
-  overlayBadges?: { label: string; color: string; position: "tl" | "tr" | "bl" | "br" }[];
+  decorations?: SimulatorEntityDecoration[];
   activeEffects?: SimulatorActiveEffect[];
+  /** Public, normalized reading data for the detailed card context mode. */
+  details?: SimulatorEntityDetails;
   dataAttributes?: Record<string, string | number | boolean | undefined>;
-  spawnAnimation?: "fade" | "slide-up" | "flip";
 }
 
 export interface SimulatorZone {
@@ -95,7 +196,6 @@ export interface SimulatorZone {
   layoutHint?: "grid" | "fan" | "stack" | "row";
   orientation?: "portrait" | "landscape";
   allowedDropRoles?: ZoneRole[];
-  transitionStyle?: "instant" | "slide" | "shuffle";
   deckReveal?: SimulatorDeckReveal;
 }
 
@@ -160,6 +260,34 @@ export interface SimulatorInteraction {
   movePreview: InteractionMovePreview;
 }
 
+export interface SimulatorCardReference {
+  /** Legacy game-native identity. New projections should use the explicit fields below. */
+  id?: string;
+  name: string;
+  /** Current-table entity identity, when the historical fact named an exact object. */
+  entityId?: string;
+  /** Printed/card-definition identity used for exact preview rendering. */
+  definitionId?: string;
+}
+
+export interface SimulatorEventLogSection {
+  id: string;
+  /** Optional enclosing activity, embedded so parents need no synthetic log row. */
+  parent?: SimulatorEventLogSection;
+  /** Viewer-relative seat that played or initiated this activity, when unambiguous. */
+  actorSeatId?: string;
+  label: string;
+  /** Short structural state shown alongside the label while expanded. */
+  meta?: string;
+  tone?: string;
+  /** Some low-priority groups should begin collapsed even when they are the newest section. */
+  collapsedByDefault?: boolean;
+  /** One-line outcome of the section, shown when the group is collapsed. */
+  summary?: string;
+  /** Structured card mentions in the label, meta, or summary. */
+  cardRefs?: SimulatorCardReference[];
+}
+
 export interface SimulatorEventLogEntry {
   id: string;
   turn: number;
@@ -167,14 +295,46 @@ export interface SimulatorEventLogEntry {
   seatId?: string;
   timestamp: string;
   message: string;
+  /** Game-owned stable event key for classification without parsing localized copy. */
+  sourceKey?: string;
   tags: ("move" | "combat" | "ability" | "system")[];
+  /** Routine entries can be visually demoted or collapsed without parsing localized prose. */
+  importance?: "normal" | "routine";
   entityIds?: string[];
-  cardRefs?: { id?: string; name: string }[];
-  section?: {
-    id: string;
-    label: string;
-    tone?: string;
-  };
+  cardRefs?: SimulatorCardReference[];
+  section?: SimulatorEventLogSection;
+}
+
+export type SimulatorMatchHistoryMetric =
+  | { kind: "value"; label: string; value: number }
+  | { kind: "change"; label: string; before: number; after: number }
+  | { kind: "comparison"; leftLabel: string; left: number; rightLabel: string; right: number };
+
+export type SimulatorMatchHistoryDetail =
+  | { kind: "text"; label?: string; text: string }
+  | {
+      kind: "cards";
+      label: string;
+      cards: SimulatorCardReference[];
+      lead?: string;
+      trail?: string;
+      amount?: number;
+    };
+
+/** Flat, append-only player history. Game projections own native vocabulary. */
+export interface SimulatorMatchHistoryRow {
+  id: string;
+  turn: number;
+  timestamp: string;
+  actorSeatId?: string;
+  /** Player who owns this turn, independent from the actor who produced the row. */
+  turnOwnerSeatId?: string;
+  kind: "match-start" | "activity" | "combat" | "outcome" | "turn-end" | "priority-pass";
+  title: string;
+  details?: SimulatorMatchHistoryDetail[];
+  metrics?: SimulatorMatchHistoryMetric[];
+  entityIds?: string[];
+  cardRefs?: SimulatorCardReference[];
 }
 
 export interface SimulatorTargetingIntent {
@@ -182,7 +342,29 @@ export interface SimulatorTargetingIntent {
   sourceEntityId: string;
   targetEntityIds: string[];
   targetZoneIds: string[];
-  preview?: { damage?: number; banish?: boolean };
+  preview?: { damage?: number; banish?: boolean; label?: string };
+}
+
+export type SimulatorCombatEndpoint =
+  | { kind: "entity"; id: string }
+  | { kind: "zone"; id: string }
+  | { kind: "player"; id: string };
+
+/**
+ * Projected combat truth for a relationship that must remain visible longer
+ * than a transient animation packet. Games map their native battle state into
+ * this shape; shared UI owns geometry and presentation.
+ */
+export interface SimulatorCombatIntent {
+  id: string;
+  attackerEntityId: string;
+  declaredTarget: SimulatorCombatEndpoint;
+  currentTarget: SimulatorCombatEndpoint;
+  phase: "declared" | "redirected" | "resolving";
+  attackKind: "direct" | "fight";
+  declaredTargetLabel?: string;
+  currentTargetLabel?: string;
+  ariaLabel?: string;
 }
 
 export interface SimulatorTargetFilter {

@@ -1,8 +1,16 @@
 import { useDroppable } from "@dnd-kit/core";
-import { useEffect } from "react";
-import type { CSSProperties } from "react";
+import {
+  AnimatedEntityCollection,
+  AnimatedEntitySlot,
+  FixedSlotCardZone,
+  PointerDraggable,
+  PointerDroppable,
+  useAnimationNode,
+} from "@tcg/simulator-ui";
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
-import { useLayoutMode } from "../../../lib/use-layout-mode.ts";
+import { useCompactLandscapeViewport, useLayoutMode } from "../../../lib/use-layout-mode.ts";
 import { cn } from "../../../lib/utils.ts";
 import { GameCard } from "../GameCard.tsx";
 import { CardTagStrip } from "../card/CardTagStrip.tsx";
@@ -10,12 +18,30 @@ import { CARD_IMAGE_DIMENSIONS, CARD_SIZE_SCALES } from "../card/card-image-form
 import { getCardTags } from "../card/card-tags.ts";
 import type { GameCardData } from "../types.ts";
 import type { SeatSide } from "./PlayerSeat.tsx";
+import { AttackDropCue } from "./AttackDropCue.tsx";
 import { CLIP_DIAMOND } from "./constants.ts";
 import { PlayZoneCardBands } from "./PlayZoneCardBands.tsx";
-import { encodeGundamBattleAreaTarget, useGundamDragDrop } from "./gundam-drag-drop-context.tsx";
+import {
+  encodeGundamAttackTarget,
+  encodeGundamAttackUnitSource,
+  encodeGundamBattleAreaTarget,
+  encodeGundamPilotTarget,
+  type GundamAttackUnitDragSource,
+  useGundamDragCommands,
+  useGundamDragState,
+} from "./gundam-drag-drop-context.tsx";
+import { gundamAnimationEntityForCard } from "../../../animation/gundamAnimationVisual.tsx";
 
 const PAIRED_PILOT_PEEK_RATIO = 0.3;
 const PAIRED_PILOT_UNIT_COVER_RATIO = 0.08;
+const SCROLL_EPSILON = 2;
+
+interface HorizontalOverflowState {
+  readonly before: boolean;
+  readonly after: boolean;
+}
+
+const EMPTY_HORIZONTAL_OVERFLOW: HorizontalOverflowState = { before: false, after: false };
 
 interface PlayZoneProps {
   readonly side: SeatSide;
@@ -30,6 +56,11 @@ interface PlayZoneProps {
   /** Dropping a playable hand card dispatches the same source-card action
    * as tapping it. Targeted moves continue through the normal prompt flow. */
   readonly onCardDrop?: (cardId: string) => void;
+  /** Legal Unit ids keyed by the Pilot currently being dragged from hand. */
+  readonly pilotDropTargetIds?: ReadonlyMap<string, readonly string[]>;
+  /** Legal Unit ids that also satisfy the dragged Pilot's Link Condition. */
+  readonly pilotLinkTargetIds?: ReadonlyMap<string, readonly string[]>;
+  readonly attackDragSources?: ReadonlyMap<string, GundamAttackUnitDragSource>;
   readonly isTurn?: boolean;
   readonly isPriority?: boolean;
   readonly className?: string;
@@ -43,26 +74,111 @@ export function PlayZone({
   highlightCardIds,
   onCardClick,
   onCardDrop,
+  pilotDropTargetIds,
+  pilotLinkTargetIds,
+  attackDragSources,
   isTurn = false,
   isPriority = false,
   className,
 }: PlayZoneProps) {
   const isTop = side === "top";
   const layout = useLayoutMode();
+  const compactLandscape = useCompactLandscapeViewport();
+  const mobileLaneRef = useRef<HTMLDivElement>(null);
+  const desktopLaneRef = useRef<HTMLDivElement>(null);
+  const [mobileOverflow, setMobileOverflow] =
+    useState<HorizontalOverflowState>(EMPTY_HORIZONTAL_OVERFLOW);
+  const [desktopOverflow, setDesktopOverflow] =
+    useState<HorizontalOverflowState>(EMPTY_HORIZONTAL_OVERFLOW);
   const selectedCardSet = new Set(selectedCardIds);
   const canAcceptDrop = Boolean(onCardDrop);
-  const { activeSource, registerCardDropHandler } = useGundamDragDrop();
+  const activeSource = useGundamDragState();
+  const { registerCardDropHandler } = useGundamDragCommands();
+  const animationZoneId = `battleArea:${playerId ?? side}`;
+  const setAnimationZoneRef = useAnimationNode(
+    { kind: "zone", id: animationZoneId, ownerId: playerId ?? side },
+    {
+      zoneId: animationZoneId,
+      density: layout === "mobile" ? "mini" : "normal",
+      presence: "present",
+    },
+  );
   const dropTargetId = encodeGundamBattleAreaTarget({
     type: "battle-area",
     playerId: playerId ?? side,
   });
   const { isOver, setNodeRef } = useDroppable({ id: dropTargetId, disabled: !canAcceptDrop });
-  const isDragOver = canAcceptDrop && Boolean(activeSource) && isOver;
+  const setPlayZoneRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      setNodeRef(node);
+      setAnimationZoneRef(node);
+    },
+    [setAnimationZoneRef, setNodeRef],
+  );
+  const isDragOver = canAcceptDrop && activeSource?.type === "hand-card" && isOver;
+  const readOverflow = useCallback((scroller: HTMLDivElement | null): HorizontalOverflowState => {
+    if (!scroller) return EMPTY_HORIZONTAL_OVERFLOW;
+    const maxScrollLeft = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    if (maxScrollLeft <= SCROLL_EPSILON) return EMPTY_HORIZONTAL_OVERFLOW;
+    return {
+      before: scroller.scrollLeft > SCROLL_EPSILON,
+      after: scroller.scrollLeft < maxScrollLeft - SCROLL_EPSILON,
+    };
+  }, []);
+  const updateMobileOverflow = useCallback(() => {
+    const next = readOverflow(mobileLaneRef.current);
+    setMobileOverflow((current) =>
+      current.before === next.before && current.after === next.after ? current : next,
+    );
+  }, [readOverflow]);
+  const updateDesktopOverflow = useCallback(() => {
+    const next = readOverflow(desktopLaneRef.current);
+    setDesktopOverflow((current) =>
+      current.before === next.before && current.after === next.after ? current : next,
+    );
+  }, [readOverflow]);
+  const scrollLane = useCallback((lane: "mobile" | "desktop", direction: "start" | "end") => {
+    const scroller = lane === "mobile" ? mobileLaneRef.current : desktopLaneRef.current;
+    if (!scroller) return;
+    scroller.scrollTo({
+      left: direction === "start" ? 0 : scroller.scrollWidth,
+      behavior: "smooth",
+    });
+  }, []);
   useEffect(() => {
     if (!onCardDrop) return;
-    registerCardDropHandler(onCardDrop);
-    return () => registerCardDropHandler(null);
+    return registerCardDropHandler(onCardDrop);
   }, [onCardDrop, registerCardDropHandler]);
+  useEffect(() => {
+    const scroller = layout === "mobile" ? mobileLaneRef.current : desktopLaneRef.current;
+    const update = layout === "mobile" ? updateMobileOverflow : updateDesktopOverflow;
+    if (!scroller) return;
+
+    let frame: number | null = null;
+    const scheduleUpdate = () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(() => {
+        frame = null;
+        update();
+      });
+    };
+
+    update();
+    scroller.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    const observer =
+      typeof ResizeObserver === "undefined" ? null : new ResizeObserver(scheduleUpdate);
+    observer?.observe(scroller);
+    const lane = scroller.firstElementChild;
+    if (lane instanceof HTMLElement) observer?.observe(lane);
+
+    return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      scroller.removeEventListener("scroll", update);
+      window.removeEventListener("resize", scheduleUpdate);
+      observer?.disconnect();
+    };
+  }, [layout, play.length, updateDesktopOverflow, updateMobileOverflow]);
   const dropProps = canAcceptDrop
     ? {
         "aria-label": "Your battle area drop zone",
@@ -97,69 +213,130 @@ export function PlayZone({
   };
   if (layout === "mobile") {
     // The utility plate lives in ResourceAreaRow, leaving the field as a
-    // full-width horizontal lane. Players can swipe when deployed units
-    // exceed the viewport rather than shrinking the card faces.
+    // full-width six-slot lane. Players can swipe when the known Unit capacity
+    // exceeds the viewport rather than shrinking card faces into thumbnails.
     return (
       <div
-        ref={setNodeRef}
+        ref={setPlayZoneRef}
         className={cn(
           "flex-1 min-h-0 min-w-0 flex flex-col relative border-y border-hud-border/20",
           className,
         )}
         data-sim-zone-id={playerId ? `battleArea:${playerId}` : undefined}
+        data-seat-row="field"
         data-turn={isTurn ? "true" : "false"}
         data-priority={isPriority ? "true" : "false"}
         style={zoneVars}
         {...dropProps}
       >
         <div
+          ref={mobileLaneRef}
           className={cn(
-            "relative flex-1 flex items-center gap-2 px-2 py-2 overflow-x-auto overflow-y-visible",
+            "relative flex-1 px-3 py-2 overflow-x-auto overflow-y-visible",
             "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden touch-pan-x justify-start",
           )}
         >
-          <FieldLabel
-            side={side}
-            count={play.length}
-            mobile
-            isTurn={isTurn}
-            isPriority={isPriority}
-          />
-          {play.map((c, i) => {
-            const handleClick = c.id && onCardClick ? () => onCardClick(c.id!) : undefined;
-            return (
-              <div key={c.id ?? i} className="play-slot flex-shrink-0">
-                <PairedUnitStack
-                  card={c}
-                  side={side}
-                  size="micro"
-                  onCardClick={handleClick}
-                  selected={c.id !== undefined && selectedCardSet.has(c.id)}
-                  highlight={c.id !== undefined && highlightCardIds.includes(c.id)}
-                  hideStatBadges={false}
-                  hideSupplementalBadges={false}
-                />
-              </div>
-            );
-          })}
+          <AnimatedEntityCollection>
+            <FixedSlotCardZone
+              capacity={6}
+              items={play}
+              layout="row"
+              showEmptySlots={false}
+              ariaLabel="Battle area. Six Unit slots. Swipe to view all slots."
+              className={cn(
+                "h-full w-max min-w-0 gap-2",
+                compactLandscape ? "items-start" : "items-center",
+              )}
+              slotClassName={cn(
+                "flex flex-none justify-center",
+                compactLandscape ? "h-auto w-[68px] items-start" : "h-full w-[92px] items-center",
+              )}
+              emptySlotClassName="border border-dashed border-hud-border/35 bg-hud-deep/15"
+              renderEmptySlot={(index) => (
+                <span
+                  className="font-mono text-hud-2xs font-bold tracking-hud-label text-hud-text-faint"
+                  aria-hidden
+                >
+                  {index + 1}
+                </span>
+              )}
+              renderItem={(c, i) => {
+                const handleClick = c.id && onCardClick ? () => onCardClick(c.id!) : undefined;
+                const attackSource = c.id ? attackDragSources?.get(c.id) : undefined;
+                return (
+                  <AnimatedEntitySlot
+                    key={c.id ?? i}
+                    entity={gundamAnimationEntityForCard(c, playerId ?? side)}
+                    zoneRef={{
+                      kind: "zone",
+                      id: `battleArea:${playerId ?? side}`,
+                      ownerId: playerId ?? side,
+                    }}
+                    density="normal"
+                    className="play-slot flex-none"
+                  >
+                    <AttackDragDropCard
+                      card={c}
+                      source={attackSource}
+                      onActivate={handleClick}
+                      pilotDropTargetIds={pilotDropTargetIds}
+                      pilotLinkTargetIds={pilotLinkTargetIds}
+                    >
+                      <PairedUnitStack
+                        card={c}
+                        side={side}
+                        ownerId={playerId ?? side}
+                        size={compactLandscape ? "micro" : "tiny"}
+                        onCardClick={attackSource ? undefined : handleClick}
+                        selected={c.id !== undefined && selectedCardSet.has(c.id)}
+                        highlight={c.id !== undefined && highlightCardIds.includes(c.id)}
+                        hideStatBadges={false}
+                        hideSupplementalBadges={false}
+                      />
+                    </AttackDragDropCard>
+                  </AnimatedEntitySlot>
+                );
+              }}
+            />
+          </AnimatedEntityCollection>
         </div>
+        {mobileOverflow.before ? (
+          <button
+            type="button"
+            onClick={() => scrollLane("mobile", "start")}
+            className="absolute left-0 top-1/2 z-[3] grid h-14 w-[1.9rem] -translate-y-1/2 place-items-center rounded-full border border-hud-border/25 bg-hud-deep/90 font-display text-hud-lg text-hud-accent transition-colors hover:border-hud-info focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hud-info"
+            aria-label="Scroll battle area to first slot"
+          >
+            ‹
+          </button>
+        ) : null}
+        {mobileOverflow.after ? (
+          <button
+            type="button"
+            onClick={() => scrollLane("mobile", "end")}
+            className="absolute right-0 top-1/2 z-[3] grid h-14 w-[1.9rem] -translate-y-1/2 place-items-center rounded-full border border-hud-border/25 bg-hud-deep/90 font-display text-hud-lg text-hud-accent transition-colors hover:border-hud-info focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hud-info"
+            aria-label="Scroll battle area to last slot"
+          >
+            ›
+          </button>
+        ) : null}
       </div>
     );
   }
 
   return (
     <div
-      ref={setNodeRef}
+      ref={setPlayZoneRef}
       className={cn(
-        "flex-1 min-h-[160px] pt-3.5 pr-6 pb-3.5 pl-3 relative flex items-stretch gap-3",
+        "z-[1] flex-1 min-h-[232px] px-3 py-1 relative flex items-stretch gap-3",
         className,
       )}
       data-sim-zone-id={playerId ? `battleArea:${playerId}` : undefined}
+      data-seat-row="field"
       style={zoneVars}
       {...dropProps}
     >
-      <FieldLabel side={side} count={play.length} />
-      <div className="relative flex-1 flex items-center">
+      <div className="relative flex-1 min-w-0 flex items-center">
         <div className="absolute left-[2px] top-0 bottom-0 flex flex-col items-center justify-between py-3 pointer-events-none">
           {[0, 1, 2, 3].map((i) => (
             <div
@@ -173,115 +350,251 @@ export function PlayZone({
           ))}
         </div>
 
-        <div className="flex flex-1 flex-wrap items-center justify-center gap-2.5 pl-8">
-          {play.length === 0 ? (
-            <div className="mx-auto flex flex-col items-center gap-1 text-center text-hud-text-faint">
-              <span className="h-5 w-5 rounded-full border border-dashed border-current" />
-              <span className="text-[9px] font-semibold uppercase tracking-[.14em]">
-                {isTop ? "Opponent field clear" : "Deploy units here"}
-              </span>
-            </div>
-          ) : null}
-          {play.map((c, i) => {
-            const handleClick = c.id && onCardClick ? () => onCardClick(c.id!) : undefined;
-            const slotVars = getPlaySlotVars(c, side, "small");
-            if (!bandsEnabled) {
-              return (
-                <div key={c.id ?? i}>
-                  {renderUnitNode({
-                    card: c,
-                    size: "small",
-                    selected: c.id !== undefined && selectedCardSet.has(c.id),
-                    highlight: c.id !== undefined && highlightCardIds.includes(c.id),
-                    hideStatBadges: bandsEnabled,
-                    hideSupplementalBadges: bandsEnabled,
-                    onCardClick: handleClick,
-                  })}
-                </div>
-              );
-            }
-            return (
-              <div key={c.id ?? i} className="play-slot" style={slotVars}>
-                <PlayZoneCardBands card={c} section="top" />
-                <PairedUnitStack
-                  card={c}
-                  side={side}
-                  size="small"
-                  onCardClick={handleClick}
-                  selected={c.id !== undefined && selectedCardSet.has(c.id)}
-                  highlight={c.id !== undefined && highlightCardIds.includes(c.id)}
-                  hideStatBadges={bandsEnabled}
-                  hideSupplementalBadges={bandsEnabled}
-                />
-                <PlayZoneCardBands card={c} section="bottom" />
-              </div>
-            );
-          })}
+        {desktopOverflow.before ? (
+          <button
+            type="button"
+            onClick={() => scrollLane("desktop", "start")}
+            className="absolute left-0 top-1/2 z-[3] grid h-14 w-[1.9rem] -translate-y-1/2 place-items-center rounded-full border border-hud-border/25 bg-hud-deep/90 font-display text-hud-lg text-hud-accent transition-colors hover:border-hud-info focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hud-info"
+            aria-label="Scroll battle area to first slot"
+          >
+            ‹
+          </button>
+        ) : null}
+        {desktopOverflow.after ? (
+          <button
+            type="button"
+            onClick={() => scrollLane("desktop", "end")}
+            className="absolute right-0 top-1/2 z-[3] grid h-14 w-[1.9rem] -translate-y-1/2 place-items-center rounded-full border border-hud-border/25 bg-hud-deep/90 font-display text-hud-lg text-hud-accent transition-colors hover:border-hud-info focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hud-info"
+            aria-label="Scroll battle area to last slot"
+          >
+            ›
+          </button>
+        ) : null}
+
+        <div
+          ref={desktopLaneRef}
+          onScroll={updateDesktopOverflow}
+          aria-label="Scroll horizontally through battle area slots"
+          className="min-w-0 flex-1 flex-nowrap overflow-x-auto overflow-y-hidden px-3 py-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          data-play-zone-card-lane
+          tabIndex={0}
+        >
+          <AnimatedEntityCollection>
+            <FixedSlotCardZone
+              capacity={6}
+              items={play}
+              showEmptySlots={false}
+              ariaLabel="Battle area. Six Unit slots. Scroll horizontally to view all slots."
+              className="h-full w-max min-w-0 items-center"
+              slotClassName="flex h-full w-[176px] min-w-[176px] items-center justify-center"
+              emptySlotClassName="border border-dashed border-hud-border/35 bg-hud-deep/15"
+              renderEmptySlot={(index) => (
+                <span
+                  className="font-mono text-[8px] font-bold tracking-hud-label text-hud-text-faint"
+                  aria-hidden
+                >
+                  {index + 1}
+                </span>
+              )}
+              renderItem={(c, i) => {
+                const handleClick = c.id && onCardClick ? () => onCardClick(c.id!) : undefined;
+                const attackSource = c.id ? attackDragSources?.get(c.id) : undefined;
+                // The full field owns every pixel of its cards. `small-plus`
+                // is taller than the available field once a rested Unit and
+                // its status band are considered, which made cards cross into
+                // the combat core. A uniform small face keeps all six slots
+                // readable and safely contained; overflow is handled by the
+                // edge controls rather than by stacking cards.
+                const desktopCardSize = "small";
+                const slotVars = getPlaySlotVars(c, desktopCardSize);
+                if (!bandsEnabled) {
+                  return (
+                    <AnimatedEntitySlot
+                      key={c.id ?? i}
+                      entity={gundamAnimationEntityForCard(c, playerId ?? side)}
+                      zoneRef={{
+                        kind: "zone",
+                        id: `battleArea:${playerId ?? side}`,
+                        ownerId: playerId ?? side,
+                      }}
+                      density="normal"
+                    >
+                      <AttackDragDropCard
+                        card={c}
+                        source={attackSource}
+                        onActivate={handleClick}
+                        pilotDropTargetIds={pilotDropTargetIds}
+                        pilotLinkTargetIds={pilotLinkTargetIds}
+                      >
+                        {renderUnitNode({
+                          card: c,
+                          size: "small",
+                          selected: c.id !== undefined && selectedCardSet.has(c.id),
+                          highlight: c.id !== undefined && highlightCardIds.includes(c.id),
+                          hideStatBadges: bandsEnabled,
+                          hideSupplementalBadges: bandsEnabled,
+                          onCardClick: attackSource ? undefined : handleClick,
+                        })}
+                      </AttackDragDropCard>
+                    </AnimatedEntitySlot>
+                  );
+                }
+                return (
+                  <AnimatedEntitySlot
+                    key={c.id ?? i}
+                    entity={gundamAnimationEntityForCard(c, playerId ?? side)}
+                    zoneRef={{
+                      kind: "zone",
+                      id: `battleArea:${playerId ?? side}`,
+                      ownerId: playerId ?? side,
+                    }}
+                    density="normal"
+                    className="play-slot flex-none"
+                    style={slotVars}
+                  >
+                    <PlayZoneCardBands card={c} section="top" />
+                    <AttackDragDropCard
+                      card={c}
+                      source={attackSource}
+                      onActivate={handleClick}
+                      pilotDropTargetIds={pilotDropTargetIds}
+                      pilotLinkTargetIds={pilotLinkTargetIds}
+                    >
+                      <PairedUnitStack
+                        card={c}
+                        side={side}
+                        ownerId={playerId ?? side}
+                        size={desktopCardSize}
+                        onCardClick={attackSource ? undefined : handleClick}
+                        selected={c.id !== undefined && selectedCardSet.has(c.id)}
+                        highlight={c.id !== undefined && highlightCardIds.includes(c.id)}
+                        hideStatBadges={bandsEnabled}
+                        hideSupplementalBadges={bandsEnabled}
+                      />
+                    </AttackDragDropCard>
+                    <PlayZoneCardBands card={c} section="bottom" />
+                  </AnimatedEntitySlot>
+                );
+              }}
+            />
+          </AnimatedEntityCollection>
         </div>
       </div>
     </div>
   );
 }
 
-function FieldLabel({
-  side,
-  count,
-  mobile = false,
-  isTurn = false,
-  isPriority = false,
+function AttackDragDropCard({
+  card,
+  source,
+  onActivate,
+  pilotDropTargetIds,
+  pilotLinkTargetIds,
+  children,
 }: {
-  readonly side: SeatSide;
-  readonly count: number;
-  readonly mobile?: boolean;
-  readonly isTurn?: boolean;
-  readonly isPriority?: boolean;
+  readonly card: GameCardData;
+  readonly source?: GundamAttackUnitDragSource;
+  readonly onActivate?: () => void;
+  readonly pilotDropTargetIds?: ReadonlyMap<string, readonly string[]>;
+  readonly pilotLinkTargetIds?: ReadonlyMap<string, readonly string[]>;
+  readonly children: ReactNode;
 }) {
-  const isTop = side === "top";
-  return (
-    <div
-      className={cn(
-        "pointer-events-none absolute z-[2] flex items-center gap-1.5 rounded-sm border bg-white/80 px-2 py-1 text-[8px] font-bold uppercase tracking-[.16em] text-hud-text-dim",
-        mobile
-          ? "left-2 right-2 top-1 min-h-[26px] shadow-sm"
-          : isTop
-            ? "left-4 top-2"
-            : "bottom-2 right-4",
-      )}
-      style={{
-        borderColor: isTop ? "rgba(255,45,122,.22)" : "rgba(45,107,255,.22)",
-      }}
+  const activeSource = useGundamDragState();
+  const isLegalPilotTarget =
+    activeSource?.type === "hand-card" &&
+    (activeSource.card.cardType === "pilot" || activeSource.card.cardType === "command") &&
+    card.id !== undefined &&
+    pilotDropTargetIds?.get(activeSource.cardId)?.includes(card.id) === true;
+  const isLegalAttackTarget =
+    activeSource?.type === "attack-unit" &&
+    card.id !== undefined &&
+    activeSource.legalTargetIds.includes(card.id);
+  const isLinkPilotTarget =
+    isLegalPilotTarget &&
+    card.id !== undefined &&
+    pilotLinkTargetIds
+      ?.get(activeSource?.type === "hand-card" ? activeSource.cardId : "")
+      ?.includes(card.id) === true;
+  const targetId = encodeGundamAttackTarget({
+    type: "attack-target",
+    targetId: card.id ?? "unavailable",
+  });
+  const pilotTargetId = encodeGundamPilotTarget({
+    type: "pilot-target",
+    unitId: card.id ?? "unavailable",
+  });
+  const targetNode = (
+    <PointerDroppable
+      id={pilotTargetId}
+      disabled={!isLegalPilotTarget}
+      className="relative"
+      data-pilot-drop-candidate={isLegalPilotTarget ? "true" : undefined}
+      data-pilot-link-candidate={isLinkPilotTarget ? "true" : undefined}
     >
-      <span
-        className="h-1.5 w-1.5 rounded-full"
-        style={{ background: isTop ? "var(--color-hud-danger)" : "var(--color-hud-accent)" }}
-      />
-      {isTop ? "Opponent field" : "Your field"}
-      <span className="text-hud-text-faint">{count}</span>
-      {mobile && (isTurn || isPriority) ? (
-        <span className="ml-auto flex items-center gap-1">
-          {isTurn ? (
-            <span className="rounded-sm border border-current/20 bg-white/70 px-1 py-0.5 text-[7px]">
-              Turn
-            </span>
-          ) : null}
-          {isPriority ? (
-            <span
-              className="rounded-sm px-1 py-0.5 text-[7px] text-white"
-              style={{ background: isTop ? "#c8155a" : "#1e49c7" }}
-            >
-              Priority
-            </span>
-          ) : null}
-        </span>
-      ) : null}
-    </div>
+      {({ isOver: isPilotOver }) => (
+        <PointerDroppable
+          id={targetId}
+          disabled={!isLegalAttackTarget}
+          className="relative"
+          data-attack-drop-candidate={isLegalAttackTarget ? "true" : undefined}
+        >
+          {({ isOver: isAttackOver }) => (
+            <>
+              {children}
+              {isLegalAttackTarget ? (
+                <AttackDropCue
+                  variant="unit"
+                  isOver={isAttackOver}
+                  label={`Attack ${card.name}`}
+                  testId={`attack-drop-label-${card.id}`}
+                />
+              ) : null}
+              {isLegalPilotTarget ? (
+                <AttackDropCue
+                  variant="pilot"
+                  isOver={isPilotOver}
+                  linkEligible={isLinkPilotTarget}
+                  label={isPilotOver ? "Release to pair" : `Pair with ${card.name}`}
+                  testId={`pilot-drop-label-${card.id}`}
+                />
+              ) : null}
+            </>
+          )}
+        </PointerDroppable>
+      )}
+    </PointerDroppable>
+  );
+
+  if (!source) return targetNode;
+
+  return (
+    <PointerDraggable
+      id={encodeGundamAttackUnitSource(source)}
+      transformBehavior="overlay-only"
+      className="relative touch-none data-[dragging=true]:opacity-40"
+      aria-label={`${card.name} actions; drag to attack`}
+      onClick={(event) => {
+        if (event.target !== event.currentTarget || !onActivate) return;
+        event.currentTarget.querySelector<HTMLElement>("[data-sim-entity-id]")?.click();
+      }}
+      onKeyDownCapture={(event) => {
+        if (event.key !== "Enter" || !onActivate) return;
+        event.preventDefault();
+        event.stopPropagation();
+        event.currentTarget.querySelector<HTMLElement>("[data-sim-entity-id]")?.click();
+      }}
+      data-testid={`attack-drag-source-${source.cardId}`}
+    >
+      {targetNode}
+    </PointerDraggable>
   );
 }
 
 interface PairedUnitStackProps {
   readonly card: GameCardData;
   readonly side: SeatSide;
-  readonly size: "small" | "micro";
+  readonly ownerId: string;
+  readonly size: "small" | "small-plus" | "tiny" | "micro";
   readonly onCardClick?: () => void;
   readonly selected: boolean;
   readonly highlight: boolean;
@@ -289,40 +602,37 @@ interface PairedUnitStackProps {
   readonly hideSupplementalBadges: boolean;
 }
 
-function getPairedPilotMetrics(size: "small" | "micro"): {
+function getPairedPilotMetrics(size: "small" | "small-plus" | "tiny" | "micro"): {
   readonly peekPx: number;
   readonly unitCoverPx: number;
 } {
   const cardHeightPx = CARD_IMAGE_DIMENSIONS.full.height * CARD_SIZE_SCALES[size];
-  const peekPx = Math.round(cardHeightPx * PAIRED_PILOT_PEEK_RATIO);
+  const unitCoverPx = Math.round(cardHeightPx * PAIRED_PILOT_UNIT_COVER_RATIO);
+  const peekPx = Math.max(Math.round(cardHeightPx * PAIRED_PILOT_PEEK_RATIO), unitCoverPx + 44);
   return {
     peekPx,
-    unitCoverPx: Math.round(cardHeightPx * PAIRED_PILOT_UNIT_COVER_RATIO),
+    unitCoverPx,
   };
 }
 
 function getPlaySlotVars(
   card: GameCardData,
-  side: SeatSide,
-  size: "small" | "micro",
+  size: "small" | "small-plus" | "tiny" | "micro",
 ): CSSProperties & Record<string, string> {
   if (!card.pairedPilot) return {};
 
   const { peekPx, unitCoverPx } = getPairedPilotMetrics(size);
-  const statBottomOffsetPx = side === "top" ? unitCoverPx : Math.max(0, peekPx - unitCoverPx);
+  const statBottomOffsetPx = Math.max(0, peekPx - unitCoverPx);
   return {
     "--play-slot-stat-bottom-offset": `${statBottomOffsetPx}px`,
   };
 }
 
 /**
- * Renders a unit card with its paired pilot peeking out from the seat's
- * back edge, matching the official Gundam digital UI. The pilot card
- * sits behind the unit in reserved peek space, then the unit shifts
- * toward that strip to cover the pilot title/name. For the bottom
- * (own) seat the pilot peeks below the unit; for the top (opponent)
- * seat it mirrors above. Cards without a paired pilot render as a plain
- * GameCard.
+ * Renders a unit card over its paired pilot, matching the physical Gundam
+ * pairing convention. The pilot's lower strip remains visible beneath the
+ * unit for both seats so its name, portrait, and bonus stats stay readable.
+ * Cards without a paired pilot render as a plain GameCard.
  *
  * The exposed pilot strip is clickable + hoverable as a distinct card so
  * the player can inspect the pilot independently — `data-card-id` lets
@@ -331,7 +641,7 @@ function getPlaySlotVars(
  */
 function PairedUnitStack({
   card,
-  side,
+  ownerId,
   size,
   onCardClick,
   selected,
@@ -351,44 +661,38 @@ function PairedUnitStack({
 
   if (!card.pairedPilot) return unitNode;
 
-  // Reserve a 30%-of-card-height pilot strip at the seat's back edge,
-  // then cover part of that strip with the shifted unit so the pilot's
-  // printed name stays hidden. Compute both values from the same
-  // dimensions table the GameCard uses so the stack scales uniformly.
-  const isTop = side === "top";
+  // Scale the lower strip with the card, keeping at least 44px exposed after
+  // the unit overlap so the Pilot remains a usable touch target.
   const { peekPx, unitCoverPx } = getPairedPilotMetrics(size);
 
   return (
     <div
       className="relative"
+      data-paired-pilot-stack
       style={{
-        // Reserve the full pilot strip footprint so the seat's adjacent
-        // rows (resource band / shields plate) don't collide with it.
-        [isTop ? "marginTop" : "marginBottom"]: peekPx,
+        // Reserve the exposed lower strip so adjacent rows do not collide
+        // with the pilot's name, portrait, and bonus-stat area.
+        marginBottom: peekPx,
       }}
     >
       {/* Pilot card sits behind (z-index 0) the unit, vertically shifted
-       * into the reserved strip. The unit then moves toward that strip to
-       * hide the pilot name while leaving a smaller inspectable peek. */}
-      <div
+       * into the reserved lower strip. */}
+      <AnimatedEntitySlot
         className="absolute left-1/2 -translate-x-1/2 pointer-events-auto"
+        data-paired-pilot-card
+        entity={gundamAnimationEntityForCard(card.pairedPilot, ownerId)}
+        zoneRef={{ kind: "zone", id: `battleArea:${ownerId}`, ownerId }}
+        density={size === "micro" ? "mini" : "normal"}
         style={{
           zIndex: 0,
-          // Shift the pilot away from the centerline into the reserved
-          // strip. The unit translation below intentionally covers part
-          // of this strip so the pilot's printed name stays hidden.
-          top: isTop ? `-${peekPx}px` : `${peekPx}px`,
+          top: `${peekPx}px`,
         }}
         onClick={(e) => e.stopPropagation()}
       >
         <GameCard {...card.pairedPilot} size={size} hideSupplementalBadges />
-      </div>
+      </AnimatedEntitySlot>
       <div className="relative" style={{ zIndex: 1 }}>
-        <div
-          style={{
-            transform: `translateY(${isTop ? -unitCoverPx : unitCoverPx}px)`,
-          }}
-        >
+        <div data-paired-unit-card style={{ transform: `translateY(${unitCoverPx}px)` }}>
           {unitNode}
         </div>
       </div>
@@ -404,7 +708,7 @@ function renderUnitNode({
   highlight,
   hideStatBadges,
   hideSupplementalBadges,
-}: Omit<PairedUnitStackProps, "side">) {
+}: Omit<PairedUnitStackProps, "side" | "ownerId">) {
   return (
     <div className="relative inline-block">
       <GameCard

@@ -49,19 +49,15 @@ export const op14eb04IHeardTheSoundOfALadySTeardropsFalling029: EventCard = {
             revealFilters: [
               {
                 filter: "anyOf",
-                groups: [
-                  [
-                    {
-                      filter: "name",
-                      value: "Sanji",
-                    },
-                  ],
-                  [
-                    {
-                      filter: "cardCategory",
-                      value: "event",
-                    },
-                  ],
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Sanji",
+                  },
+                  {
+                    filter: "cardCategory",
+                    value: "event",
+                  },
                 ],
               },
             ],

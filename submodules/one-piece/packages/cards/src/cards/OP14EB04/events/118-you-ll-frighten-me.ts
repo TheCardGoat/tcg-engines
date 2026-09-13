@@ -78,12 +78,28 @@ export const op14eb04YouLlFrightenMe118: EventCard = {
         actions: [
           {
             action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1, upTo: true },
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
             filters: [
-              { filter: "cardCategory", value: "character" },
-              { filter: "power", comparison: "lte", value: 6000 },
-              { filter: "hasTrigger", value: true },
+              {
+                filter: "hasTrigger",
+                value: true,
+              },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 6000,
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
             ],
           },
         ],

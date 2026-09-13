@@ -41,37 +41,36 @@ export const op08SBear113: CharacterCard = {
         ],
         actions: [
           {
-            action: "playThisCard",
-            condition: {
+            action: "conditional",
+            predicate: {
               condition: "lifeCount",
               player: "self",
               comparison: "lte",
               value: 2,
             },
-          },
-          {
-            action: "ko",
-            target: {
-              player: "opponent",
-              zones: ["character"],
-              count: {
-                amount: 1,
-                upTo: true,
+            whenTrue: [
+              {
+                action: "playThisCard",
               },
-              filters: [
-                {
-                  filter: "cost",
-                  comparison: "lte",
-                  value: 3,
+              {
+                action: "ko",
+                target: {
+                  player: "opponent",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 3,
+                    },
+                  ],
                 },
-              ],
-            },
-            condition: {
-              condition: "lifeCount",
-              player: "self",
-              comparison: "lte",
-              value: 2,
-            },
+              },
+            ],
           },
         ],
         optional: true,

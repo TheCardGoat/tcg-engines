@@ -1,16 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  IconArrowBarToDown,
-  IconArrowBarToUp,
-  IconChevronLeft,
-  IconChevronRight,
-  IconX,
-} from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 import { Card } from "./Card";
 import { CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
-import { useHandCardTap } from "./useHandCardTap";
-import { useHandCommand, useSelectedHandCard } from "./useHandCommand";
 import { useZoneDroppable } from "./useZoneDroppable";
 import type { CardActiveEffectView, EffectiveRule, EngineCardType, Side } from "../../engine";
 import classes from "./MobileHandZone.module.css";
@@ -59,28 +51,6 @@ interface HandOverflowState {
   after: boolean;
 }
 
-function compactRules(card: MobileHandCard | null | undefined): string {
-  const printed = card?.rulesText ? [card.rulesText] : [];
-  const effective =
-    card?.effectiveRules
-      ?.filter((rule) => !card.keywords?.includes(rule))
-      .map((rule) => `Effective: ${rule}.`) ?? [];
-  const source = [...(card?.keywords ?? []), ...printed, ...effective].join(" ");
-  return source.replace(/\s+/g, " ").trim();
-}
-
-function cardKindLabel(card: MobileHandCard | null | undefined): string {
-  const parts = [...(card?.classifications ?? []), ...(card?.keywords ?? [])].filter(Boolean);
-  if (parts.length > 0) {
-    return parts.slice(0, 2).join(" / ");
-  }
-  return card?.cardType ?? "Card";
-}
-
-function statLabel(value: number | null | undefined): string {
-  return typeof value === "number" ? String(value) : "-";
-}
-
 function parseCssPixels(value: string | null | undefined): number {
   const parsed = Number.parseFloat(value ?? "");
   return Number.isFinite(parsed) ? parsed : 0;
@@ -106,23 +76,11 @@ export function MobileHandZone({
   const drop = useZoneDroppable(faceDown ? null : zoneName);
   const { activeSource } = useDragDrop();
   const isReturnDropReady = !faceDown && activeSource?.zone === zoneName;
-  const [selectedCardId, setSelectedCardId] = useSelectedHandCard();
-  const command = useHandCommand({
-    cards,
-    selectedCardId,
-    setSelectedCardId,
-    side,
-  });
   const visibleOpponentCards = faceDown && !cards ? Math.min(renderCount, 5) : renderCount;
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const lastMeasurementRef = useRef<MobileHandMeasurement | null>(null);
   const [spreadMode, setSpreadMode] = useState<"stacked" | "full">("stacked");
-  const [commandPlacement, setCommandPlacement] = useState<"player" | "rival">("player");
   const [overflow, setOverflow] = useState<HandOverflowState>({ before: false, after: false });
-  const { handleHandCardPointerDown, handleHandCardPointerUp } = useHandCardTap({
-    faceDown,
-    selectCard: command.selectCard,
-  });
 
   const updateOverflow = useCallback(() => {
     const scroller = scrollerRef.current;
@@ -227,7 +185,7 @@ export function MobileHandZone({
       window.removeEventListener("resize", scheduleMeasure);
       observer?.disconnect();
     };
-  }, [command.visible, faceDown, onMeasure, renderCount, updateOverflow, visibleOpponentCards]);
+  }, [faceDown, onMeasure, renderCount, updateOverflow, visibleOpponentCards]);
 
   return (
     <div
@@ -247,106 +205,6 @@ export function MobileHandZone({
       data-drop-ready={isReturnDropReady ? "return" : undefined}
       data-drop-over={drop.isOver ? "true" : "false"}
     >
-      {!faceDown && command.visible ? (
-        <div
-          className={classes.commandTray}
-          data-testid="hand-command-tray"
-          data-for-card-id={command.selectedCard?.cardId ?? undefined}
-          data-command-placement={commandPlacement}
-          onClick={(event) => event.stopPropagation()}
-        >
-          <div className={classes.commandChrome}>
-            <button
-              type="button"
-              className={classes.commandIconButton}
-              data-testid="hand-action-toggle-placement"
-              aria-label={
-                commandPlacement === "rival"
-                  ? "Move hand actions back to your hand"
-                  : "Move hand actions to rival hand"
-              }
-              aria-pressed={commandPlacement === "rival"}
-              title={commandPlacement === "rival" ? "Move to your hand" : "Move to rival hand"}
-              onClick={() =>
-                setCommandPlacement((current) => (current === "rival" ? "player" : "rival"))
-              }
-            >
-              {commandPlacement === "rival" ? (
-                <IconArrowBarToDown size={14} stroke={1.8} aria-hidden="true" />
-              ) : (
-                <IconArrowBarToUp size={14} stroke={1.8} aria-hidden="true" />
-              )}
-            </button>
-            <button
-              type="button"
-              className={classes.commandIconButton}
-              data-testid="hand-action-close"
-              aria-label="Close hand actions"
-              title="Close"
-              onClick={() => setSelectedCardId(null)}
-            >
-              <IconX size={14} stroke={1.9} aria-hidden="true" />
-            </button>
-          </div>
-          <div className={classes.commandPeek}>
-            <button
-              type="button"
-              className={classes.commandPreviewImageButton}
-              onClick={command.inspectSelected}
-              aria-label={`Inspect ${command.selectedCard?.name ?? "selected card"}`}
-            >
-              <CardImage
-                imageUrl={command.selectedCard?.imageUrl}
-                alt={command.selectedCard?.name ?? "Selected card"}
-                disablePreview
-              />
-            </button>
-            <div className={classes.commandCopy}>
-              <div className={classes.commandHeading}>
-                <span className={classes.commandName}>{command.selectedCard?.name}</span>
-                <div className={classes.commandMeta} aria-label="Selected card details">
-                  <span className={classes.commandKind}>{cardKindLabel(command.selectedCard)}</span>
-                  <div className={classes.commandStats} aria-label="Selected card stats">
-                    <span>
-                      C{" "}
-                      {statLabel(command.selectedCard?.effectiveCost ?? command.selectedCard?.cost)}
-                    </span>
-                    <span>
-                      P{" "}
-                      {statLabel(
-                        command.selectedCard?.effectivePower ?? command.selectedCard?.power,
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <p className={classes.commandRules}>
-                {compactRules(command.selectedCard) || "No rules text."}
-              </p>
-            </div>
-          </div>
-          <div className={classes.commandActions}>
-            {command.canPlay ? (
-              <button type="button" data-testid="hand-action-play" onClick={command.play}>
-                Play
-              </button>
-            ) : null}
-            {command.canGoSolo ? (
-              <button type="button" data-testid="hand-action-goSolo" onClick={command.goSolo}>
-                Go Solo
-              </button>
-            ) : null}
-            {command.canSell ? (
-              <button type="button" data-testid="hand-action-sell" onClick={command.sell}>
-                Sell
-              </button>
-            ) : null}
-            <button type="button" onClick={command.inspectSelected}>
-              Inspect
-            </button>
-          </div>
-        </div>
-      ) : null}
       {!faceDown && overflow.before ? (
         <span
           className={`${classes.edgeFade} ${classes.edgeFadeBefore}`}
@@ -417,12 +275,9 @@ export function MobileHandZone({
               data-face-down={cardFaceDown ? "true" : "false"}
               data-temporary-revealed={cardRevealed ? "true" : undefined}
               data-ready={card && !cardFaceDown ? "true" : undefined}
-              data-selected={card?.cardId && card.cardId === selectedCardId ? "true" : "false"}
               {...publicCardAttrs}
               data-sim-entity-id={!cardFaceDown ? card?.cardId : undefined}
-              style={{ zIndex: card?.cardId === selectedCardId ? 200 : i + 1 }}
-              onPointerDown={(event) => handleHandCardPointerDown(card?.cardId, event)}
-              onPointerUp={(event) => handleHandCardPointerUp(card?.cardId, event)}
+              style={{ zIndex: i + 1 }}
             >
               {cardFaceDown ? (
                 <CardImage faceDown disablePreview alt="Opponent card" />
@@ -449,7 +304,6 @@ export function MobileHandZone({
                   effectivePower={card?.effectivePower}
                   activeEffects={card?.activeEffects}
                   disablePreview
-                  disableActionMenu
                 />
               )}
             </div>

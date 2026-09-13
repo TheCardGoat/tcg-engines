@@ -6,6 +6,7 @@ import type { DevRuntime } from "../dev-runtime.ts";
 // fixture is dev/test-only; they're lazy-loaded via dynamic
 // `import()` so each becomes its own bundle chunk.
 import { loadVsAiDemo } from "./vs-ai-demo.ts";
+import { RELEASE_REVIEW_ENTRIES, reviewFixtureId } from "./release-card-review-labs.ts";
 
 /**
  * Fixture factories may be parameter-less (the common case for
@@ -51,8 +52,33 @@ export const FIXTURES = {
   "setup-default": () => import("./setup-default.ts").then((m) => m.loadSetupDefault),
   "setup-default-opponent-keeps": () =>
     import("./setup-default-opponent-keeps.ts").then((m) => m.loadSetupDefaultOpponentKeeps),
+  "mulligan-animation-demo": () =>
+    import("./mulligan-animation-demo.ts").then((m) => m.loadMulliganAnimationDemo),
   "main-phase-demo": () => import("./main-phase-demo.ts").then((m) => m.loadMainPhaseDemo),
+  "st10-development-lab": () =>
+    import("./st10-development-lab.ts").then((m) => m.loadSt10DevelopmentLab),
+  "st10-pair-link-lab": () => import("./st10-pair-link-lab.ts").then((m) => m.loadSt10PairLinkLab),
+  "st10-shield-assault-lab": () =>
+    import("./st10-shield-assault-lab.ts").then((m) => m.loadSt10ShieldAssaultLab),
+  "st10-defense-action-lab": () =>
+    import("./st10-defense-action-lab.ts").then((m) => m.loadSt10DefenseActionLab),
+  ...Object.fromEntries(
+    RELEASE_REVIEW_ENTRIES.flatMap(({ card, timings }) =>
+      timings.map(
+        (timing) =>
+          [
+            reviewFixtureId(card.cardNumber, timing),
+            () =>
+              import("./release-card-review-labs.ts").then(
+                (m) => () => m.loadReleaseCardReviewLab(card.cardNumber, timing),
+              ),
+          ] as const,
+      ),
+    ),
+  ),
   "battle-ready-demo": () => import("./battle-ready-demo.ts").then((m) => m.loadBattleReadyDemo),
+  "base-combat-demo": () => import("./base-combat-demo.ts").then((m) => m.loadBaseCombatDemo),
+  "direct-player-demo": () => import("./direct-player-demo.ts").then((m) => m.loadDirectPlayerDemo),
   "pilot-pair-demo": () => import("./pilot-pair-demo.ts").then((m) => m.loadPilotPairDemo),
   "command-rest-demo": () => import("./command-rest-demo.ts").then((m) => m.loadCommandRestDemo),
   "command-auto-resolve-demo": () =>
@@ -65,6 +91,8 @@ export const FIXTURES = {
   "suppression-demo": () => import("./suppression-demo.ts").then((m) => m.loadSuppressionDemo),
   "deploy-base-demo": () => import("./deploy-base-demo.ts").then((m) => m.loadDeployBaseDemo),
   "deploy-unit-demo": () => import("./deploy-unit-demo.ts").then((m) => m.loadDeployUnitDemo),
+  "resource-area-animation-demo": () =>
+    import("./resource-area-animation-demo.ts").then((m) => m.loadResourceAreaAnimationDemo),
   "attack-trigger-draw-demo": () =>
     import("./attack-trigger-draw-demo.ts").then((m) => m.loadAttackTriggerDrawDemo),
   "mutual-destruction-demo": () =>

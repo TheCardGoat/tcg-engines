@@ -67,4 +67,30 @@ describe("OP02-118 Yasakani Sacred Jewel", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [op02YasakaniSacredJewel118, eb01Doma005],
+        character: [{ card: eb01Doma005, rested: true, playedOnTurn: 0 }],
+        activeDon: 1,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const defenderId = engine.findCardInZone("north", "character", eb01Doma005);
+    const eventId = engine.findCardInZone("north", "hand", op02YasakaniSacredJewel118);
+    const costId = engine.findCardInZone("north", "hand", eb01Doma005);
+    engine.declareAttack(attackerId, defenderId, "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    // Optional hand-trash cost did not fire — cost card remains available.
+    expect(after.hand.map((card) => card.instanceId)).toContain(costId);
+    expect(after.trash.map((card) => card.instanceId)).not.toContain(costId);
+    expect(after.trash.map((card) => card.instanceId)).toContain(eventId);
+  });
 });

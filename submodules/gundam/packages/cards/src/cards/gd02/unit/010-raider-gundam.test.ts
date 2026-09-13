@@ -155,6 +155,36 @@ describe("Raider Gundam (GD02-010)", () => {
       expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(3);
     });
 
+    it("does not draw when a different friendly Unit receives enemy effect damage", () => {
+      const enemyDamage = damageCommand("opponent");
+      const otherUnit = createMockUnit({ name: "Other Friendly Unit", hp: 3 });
+      const engine = GundamTestEngine.create(
+        { play: [gd02RaiderGundam010, otherUnit], deck: 3 },
+        { hand: [enemyDamage], resourceArea: activeResources(1) },
+        { initialActivePlayer: PLAYER_TWO },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [raiderId, otherUnitId] = p1.getCardsInZone("battleArea");
+      if (!raiderId || !otherUnitId) {
+        throw new Error("Expected Raider Gundam and the other friendly Unit in play");
+      }
+      const handBefore = p1.getHand().length;
+
+      expectSuccess(p2.playCommand(enemyDamage));
+      const damageChoice = p2.getBoardView().pendingChoice;
+      if (damageChoice?.kind !== "targetSelection") {
+        throw new Error("Expected a visible damage target choice");
+      }
+      expect(damageChoice.legalTargetIds).toEqual(expect.arrayContaining([raiderId, otherUnitId]));
+      expectSuccess(p2.resolveEffect({ targets: [otherUnitId] }));
+
+      expect(p1.getDamage(otherUnitId)).toBe(1);
+      expect(p1.getDamage(raiderId)).toBe(0);
+      expect(p1.getHand()).toHaveLength(handBefore);
+      expect(p1.getBoardView().players[PLAYER_ONE]!.deckCount).toBe(3);
+    });
+
     it("draws only once after two enemy damage effects in the same turn", () => {
       const firstDamage = damageCommand("opponent");
       const secondDamage = damageCommand("opponent");

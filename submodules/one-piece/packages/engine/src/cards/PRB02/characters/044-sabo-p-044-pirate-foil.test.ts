@@ -36,5 +36,6 @@ describe("P-044 Sabo", () => {
         .getView("south")
         .players.south.characters.find((card) => card?.instanceId === unboostedId)?.power,
     ).toBe((prb02SaboP044PirateFoil044.power ?? 0) + 1000);
+    expect(fiveHand.getView("south").prompts).toHaveLength(0);
   });
 });

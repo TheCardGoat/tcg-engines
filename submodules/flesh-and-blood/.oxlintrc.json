@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "rules": {
+    "unicorn/no-thenable": "off"
+  },
+  "overrides": [
+    {
+      "files": ["packages/cards/src/cards/**/*.ts"],
+      "rules": {
+        "unicorn/no-thenable": "off"
+      }
+    }
+  ]
+}

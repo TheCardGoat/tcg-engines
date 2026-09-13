@@ -5,12 +5,16 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   activeResources,
+  asPlayerId,
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
 
 import { toSimulatorEntity } from "../ui/card/to-simulator-entity.ts";
-import { applyLiveStateUpdate, createLiveMatchViewerEngine } from "../../engine/live/liveState.ts";
+import {
+  applyReplaySnapshotUpdate,
+  createReplayViewerEngine,
+} from "../../engine/live/liveState.ts";
 import { mapZone, toGameCardData } from "./mappers.ts";
 
 describe("GD02 token cards in the simulator projection", () => {
@@ -21,15 +25,15 @@ describe("GD02 token cards in the simulator projection", () => {
       play: [newUneAlly],
       resourceArea: activeResources(2),
     });
-    const live = createLiveMatchViewerEngine(serializedState(serverEngine));
+    const live = createReplayViewerEngine(serializedState(serverEngine));
 
     expectSuccess(serverEngine.asPlayer(PLAYER_ONE).deployUnit(gd02DaughtressWeapon043));
     const tokenState = serializedState(serverEngine);
-    applyLiveStateUpdate(live.runtime, live.staticResources, tokenState);
-    const joinedAfterDeployment = createLiveMatchViewerEngine(tokenState);
+    applyReplaySnapshotUpdate(live.runtime, live.staticResources, tokenState);
+    const joinedAfterDeployment = createReplayViewerEngine(tokenState);
 
     for (const runtime of [live.runtime, joinedAfterDeployment.runtime]) {
-      const view = runtime.getFilteredView({ role: "player", playerId: PLAYER_ONE });
+      const view = runtime.getFilteredView({ role: "player", playerId: asPlayerId(PLAYER_ONE) });
       const visibleCards = mapZone(view, "battleArea", PLAYER_ONE).map((card) =>
         toGameCardData(view, card),
       );
@@ -47,7 +51,7 @@ describe("GD02 token cards in the simulator projection", () => {
       });
       expect(entity.title).toBe("Daughtress");
       expect(entity.face).toBe("public");
-      expect(entity.imageUrl).toBe("https://r2.tcg.online/public/gundam/cards/t/T-012.webp");
+      expect(entity.imageUrl).toBe("https://cdn.tcg.online/public/gundam/cards/t/T-012.webp");
       expect(entity.stats).toEqual(
         expect.arrayContaining([
           { label: "AP", value: "0" },
@@ -58,6 +62,6 @@ describe("GD02 token cards in the simulator projection", () => {
   });
 });
 
-function serializedState(engine: GundamTestEngine): Record<string, unknown> {
-  return structuredClone(engine.getState()) as unknown as Record<string, unknown>;
+function serializedState(engine: GundamTestEngine) {
+  return structuredClone(engine.getState());
 }

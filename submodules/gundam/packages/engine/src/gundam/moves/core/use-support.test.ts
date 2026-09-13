@@ -53,7 +53,7 @@ describe("Main Phase — <Support> activated ability (rule 13-1-3)", () => {
     expect(buff?.payload.kind === "stat-modifier" && buff.payload.modifier).toBe(2);
   });
 
-  it("rejects targeting the support unit itself (13-1-3-1: 'other' friendly)", () => {
+  it("does not publish Support when no other friendly Unit exists (10-2-2)", () => {
     const supporter = createMockUnit({
       ap: 1,
       hp: 3,
@@ -63,7 +63,26 @@ describe("Main Phase — <Support> activated ability (rule 13-1-3)", () => {
     const p1 = engine.asPlayer(PLAYER_ONE);
     const supporterId = p1.getCardsInZone("battleArea")[0]!;
 
+    expect(p1.getMoveProcedure("activateAbility", { cardId: supporterId, effectIndex: 0 })).toEqual(
+      [],
+    );
+    expectFailure(p1.useSupport(supporterId, supporterId), "NO_LEGAL_TARGETS");
+    expect(p1.isExhausted(supporterId)).toBe(false);
+  });
+
+  it("rejects targeting the support unit itself (13-1-3-1: 'other' friendly)", () => {
+    const supporter = createMockUnit({
+      ap: 1,
+      hp: 3,
+      keywordEffects: [{ keyword: "Support", value: 1 }],
+    });
+    const ally = createMockUnit({ ap: 2, hp: 3 });
+    const engine = GundamTestEngine.create({ play: [supporter, ally] }, {});
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const supporterId = p1.getCardsInZone("battleArea")[0]!;
+
     expectFailure(p1.useSupport(supporterId, supporterId), "ILLEGAL_TARGET");
+    expect(p1.isExhausted(supporterId)).toBe(false);
   });
 
   it("rejects when the source does not have <Support>", () => {
@@ -100,15 +119,17 @@ describe("Main Phase — <Support> activated ability (rule 13-1-3)", () => {
       hp: 3,
       keywordEffects: [{ keyword: "Support", value: 1 }],
     });
+    const ally = createMockUnit({ ap: 2, hp: 3 });
     const enemy = createMockUnit({ ap: 3, hp: 5 });
 
-    const engine = GundamTestEngine.create({ play: [supporter] }, { play: [enemy] });
+    const engine = GundamTestEngine.create({ play: [supporter, ally] }, { play: [enemy] });
     const p1 = engine.asPlayer(PLAYER_ONE);
     const p2 = engine.asPlayer(PLAYER_TWO);
     const supporterId = p1.getCardsInZone("battleArea")[0]!;
     const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
     expectFailure(p1.useSupport(supporterId, enemyId), "ILLEGAL_TARGET");
+    expect(p1.isExhausted(supporterId)).toBe(false);
   });
 
   it("13-1-3-2: stacks additively when Support is gained from multiple sources", () => {

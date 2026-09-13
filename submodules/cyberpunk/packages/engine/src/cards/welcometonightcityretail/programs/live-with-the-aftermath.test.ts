@@ -36,6 +36,33 @@ describe("Live with the Aftermath", () => {
     ]);
   });
 
+  it("rejects its controller selecting the rival's Unit", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { hand: [aftermath], eddies: 3, field: [welcomeToNightCityRetailMoxInciters] },
+      { field: [welcomeToNightCityRetailCorpoSecurity] },
+    );
+    const friendlyUnit = engine.getCard(welcomeToNightCityRetailMoxInciters, "field", P1);
+    const rivalUnit = engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2);
+
+    engine.playCard(aftermath, { as: P1 });
+
+    expect(
+      engine.executeMove(
+        "resolveEffectTarget",
+        { args: { targetIds: [rivalUnit.instanceId] } },
+        P1,
+      ),
+    ).toMatchObject({
+      success: false,
+      errorCode: "INVALID_CHOICE",
+    });
+
+    const choice = getTargetChoice(engine, P1);
+    expect(choice.payload.eligibleIds).toEqual([friendlyUnit.instanceId]);
+    expect(engine.getCardsInZone("field", P1)).toContainEqual(friendlyUnit);
+    expect(engine.getCardsInZone("field", P2)).toContainEqual(rivalUnit);
+  });
+
   it("then makes the rival choose one of their own Units", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       { hand: [aftermath], eddies: 3, field: [welcomeToNightCityRetailMoxInciters] },
@@ -57,6 +84,12 @@ describe("Live with the Aftermath", () => {
         engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2).instanceId,
         engine.getCard(welcomeToNightCityRetailSwordwiseHuscle, "field", P2).instanceId,
       ]),
+    );
+    expect(engine.getCardsInZone("field", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailMoxInciters.id,
+    );
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).not.toContain(
+      welcomeToNightCityRetailMoxInciters.id,
     );
   });
 

@@ -2,10 +2,19 @@ import { index, route, type RouteConfig } from "@react-router/dev/routes";
 
 export default [
   index("routes/index.tsx"),
+  route("flesh-and-blood/simulator/tests/analytics-preview", "routes/fab-analytics-preview.tsx"),
   route("animation-fixtures", "routes/animation-fixtures.tsx"),
   route("simulator-ui-fixtures", "routes/simulator-ui-fixtures.tsx"),
+  route(
+    "simulator-ui-fixtures/interaction-prompt",
+    "routes/simulator-ui-fixtures-interaction-prompt.tsx",
+  ),
+  route("flesh-and-blood/simulator/analytics-methodology", "routes/fab-analytics-methodology.tsx"),
   route(":gameSlug/simulator", "routes/simulator-game-index.tsx"),
   route(":gameSlug/simulator/play/practice", "routes/simulator-practice-vs-ai.tsx"),
+  route("flesh-and-blood/simulator/tests/hero-banners", "routes/fab-hero-banners.tsx"),
+  route("flesh-and-blood/simulator/tests/hosted-controls", "routes/fab-hosted-controls.tsx"),
+  route("flesh-and-blood/simulator/tests/sidebar-preview", "routes/fab-sidebar-preview.tsx"),
   route(":gameSlug/simulator/tests", "routes/simulator-tests.tsx"),
   route(":gameSlug/simulator/tests/test-engine-state", "routes/simulator-test-engine-state.tsx"),
   route(":gameSlug/simulator/tests/:fixtureId", "routes/simulator-test-fixture.tsx"),

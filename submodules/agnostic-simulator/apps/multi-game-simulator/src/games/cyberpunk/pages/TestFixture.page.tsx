@@ -15,18 +15,16 @@ const VALID_IDS: ReadonlySet<string> = new Set(listScenarios().map((s) => s.id))
 const DEFAULT_FIXTURE_STRATEGY_ID = "default";
 
 /**
- * Dev-only route that bootstraps the board with a specific fixture. URL shape:
+ * Route that bootstraps the board with a specific fixture. URL shape:
  * `/tests/<fixtureId>`. Mirrors the lorcana-simulator's `[fixtureId]` route.
- * Returns 404 in production or for unknown fixture ids.
+ * Returns 404 for unknown fixture ids. Rendered in both development and
+ * production so fixtures can be inspected on tcg.online.
  */
 export function TestFixturePage() {
   const params = useParams<{ fixtureId: string }>();
   const location = useLocation();
   const fixtureId = params.fixtureId ?? "";
 
-  if (!import.meta.env.DEV) {
-    return <NotFound />;
-  }
   if (!VALID_IDS.has(fixtureId)) {
     return <NotFound />;
   }

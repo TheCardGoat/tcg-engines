@@ -5,6 +5,7 @@ import { op11Randolph077 } from "../../../../../cards/src/cards/OP11/characters/
 import { OnePieceTestEngine } from "../../../index.ts";
 
 function payOneReturnedDon(engine: OnePieceTestEngine) {
+  engine.acceptLeadingOptional("south");
   const payment = engine.pendingDecision("effectCostReturnDon", "south").steps[0];
   expect(payment).toMatchObject({ kind: "payCost", min: 1, max: 1 });
   if (payment?.kind !== "payCost") throw new Error("Expected a DON!! return cost.");
@@ -26,6 +27,7 @@ describe("OP11-077 Randolph", () => {
 
     engine.playCard(op02Hydra090, "south");
     payOneReturnedDon(engine);
+    engine.acceptLeadingOptional("south");
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     expect(target).toMatchObject({ kind: "selectEntity", min: 0, max: 1 });
     if (target?.kind !== "selectEntity") throw new Error("Expected Randolph's cost target.");

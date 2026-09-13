@@ -1,6 +1,9 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
   EngineInteractionView,
+  EntityAllocationInput,
+  EntityRef,
+  EntityPartitionInput,
   EntitySelectionInput,
   INTERACTION_PROTOCOL_VERSION,
   InteractionSubmission,
@@ -21,6 +24,255 @@ import {
 const actorId = "player_one";
 
 describe("engine interaction protocol", () => {
+  test("preserves private candidate rendering identity and authoritative location", () => {
+    expect(
+      EntityRef.parse({
+        kind: "card",
+        instanceId: "deck-card-1",
+        definitionId: "wtr-009",
+        ownerId: actorId,
+        zoneId: `${actorId}:deck`,
+      }),
+    ).toEqual({
+      kind: "card",
+      instanceId: "deck-card-1",
+      definitionId: "wtr-009",
+      ownerId: actorId,
+      zoneId: `${actorId}:deck`,
+    });
+  });
+
+  test("rejects protocol v1 views after the clean v2 break", () => {
+    expect(EngineInteractionView.safeParse({ ...buildView([]), protocolVersion: 1 }).success).toBe(
+      false,
+    );
+  });
+
+  test("validates exhaustive entity partitions and preserves route order", () => {
+    const action = partitionAction("exhaustive");
+    const view = buildView([action]);
+    const submission = buildInteractionSubmission({
+      view,
+      action,
+      values: { partition: { tutor: ["card-a"], top: ["card-c", "card-b"] } },
+    });
+
+    expect(validateInteractionSubmission(view, submission)).toEqual({ ok: true, action });
+    expect(submission.values.partition).toEqual({
+      tutor: ["card-a"],
+      top: ["card-c", "card-b"],
+    });
+    expect(entityCandidatesForAction(action)).toHaveLength(3);
+  });
+
+  test("rejects incomplete, duplicated, and ineligible partition assignments", () => {
+    const action = partitionAction("exhaustive");
+    const view = buildView([action]);
+    const submission = buildInteractionSubmission({
+      view,
+      action,
+      values: { partition: { tutor: ["card-b"], top: ["card-b"] } },
+    });
+    const result = validateInteractionSubmission(view, submission);
+    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error("Expected invalid partition");
+    expect(result.issues.map((issue) => issue.code)).toEqual(
+      expect.arrayContaining([
+        "candidate_unavailable",
+        "duplicate_selection",
+        "partition_incomplete",
+      ]),
+    );
+  });
+
+  test("accepts an empty partition when the remainder is automatic", () => {
+    const action = partitionAction("remainder-automatic");
+    const view = buildView([action]);
+    const submission = buildInteractionSubmission({
+      view,
+      action,
+      values: { partition: {} },
+    });
+    expect(validateInteractionSubmission(view, submission).ok).toBe(true);
+  });
+
+  test("matches an exact option selection in conditional requirements", () => {
+    const action: InteractionAction = {
+      id: "variant-choice",
+      requestId: "variant-choice:1",
+      intent: "choose-option",
+      text: { key: "Choose a variant" },
+      enabled: true,
+      inputs: [
+        {
+          kind: "option-selection",
+          id: "variant",
+          text: { key: "Variant" },
+          required: true,
+          min: 1,
+          max: 1,
+          options: ["reorder", "starcall"].map((id) => ({ id, text: { key: id } })),
+        },
+        {
+          kind: "option-selection",
+          id: "starcall-card",
+          text: { key: "Starcall card" },
+          required: false,
+          requiredWhen: [{ all: [{ inputId: "variant", value: ["starcall"] }] }],
+          min: 1,
+          max: 1,
+          options: [{ id: "card-a", text: { key: "Card A" } }],
+        },
+      ],
+    };
+    const view = buildView([action]);
+
+    expect(
+      validateInteractionSubmission(
+        view,
+        buildInteractionSubmission({ view, action, values: { variant: ["reorder"] } }),
+      ).ok,
+    ).toBe(true);
+    expectInvalidCodes(
+      view,
+      buildInteractionSubmission({ view, action, values: { variant: ["starcall"] } }),
+      ["missing_value"],
+    );
+  });
+
+  test("validates bounded entity allocations without encoding an answer option", () => {
+    const allocation = EntityAllocationInput.parse({
+      kind: "entity-allocation",
+      id: "damage",
+      text: { key: "Distribute 3 damage" },
+      required: true,
+      role: "target",
+      entityKinds: ["card"],
+      totalMin: 3,
+      totalMax: 3,
+      candidates: ["card-a", "card-b"].map((instanceId) => ({
+        entity: { kind: "card", instanceId },
+        enabled: true,
+        min: 0,
+        max: 3,
+      })),
+    });
+    const action: InteractionAction = {
+      id: "allocate-damage",
+      requestId: "allocation:1",
+      intent: "choose-targets",
+      text: { key: "Allocate damage" },
+      enabled: true,
+      inputs: [allocation],
+    };
+    const view = buildView([action]);
+
+    expect(
+      validateInteractionSubmission(
+        view,
+        buildInteractionSubmission({
+          view,
+          action,
+          values: { damage: { "card-a": 1, "card-b": 2 } },
+        }),
+      ).ok,
+    ).toBe(true);
+    expectInvalidCodes(
+      view,
+      buildInteractionSubmission({ view, action, values: { damage: { "card-a": 4 } } }),
+      ["number_out_of_bounds", "selection_count_out_of_bounds"],
+    );
+  });
+
+  test("rejects malformed partition schemas", () => {
+    const input = partitionAction("exhaustive").inputs[0]!;
+    if (input.kind !== "entity-partition") throw new Error("Expected partition input");
+
+    expect(() =>
+      EntityPartitionInput.parse({
+        ...input,
+        candidates: [input.candidates[0], input.candidates[0]],
+      }),
+    ).toThrow();
+    expect(() =>
+      EntityPartitionInput.parse({
+        ...input,
+        routes: [input.routes[0], input.routes[0]],
+      }),
+    ).toThrow();
+    expect(() =>
+      EntityPartitionInput.parse({
+        ...input,
+        routes: [{ ...input.routes[0], candidateIds: ["unknown-card"] }],
+      }),
+    ).toThrow();
+    expect(() =>
+      EntityPartitionInput.parse({
+        ...input,
+        assignment: "remainder-automatic",
+      }),
+    ).toThrow();
+  });
+
+  test("rejects unknown and disabled partition candidates", () => {
+    const action = partitionAction("exhaustive");
+    const input = action.inputs[0]!;
+    if (input.kind !== "entity-partition") throw new Error("Expected partition input");
+    const disabledAction: InteractionAction = {
+      ...action,
+      inputs: [
+        {
+          ...input,
+          candidates: input.candidates.map((candidate) =>
+            candidate.entity.instanceId === "card-c" ? { ...candidate, enabled: false } : candidate,
+          ),
+        },
+      ],
+    };
+    const view = buildView([disabledAction]);
+    const submission = buildInteractionSubmission({
+      view,
+      action: disabledAction,
+      values: { partition: { tutor: ["card-a"], top: ["card-b", "card-c", "unknown"] } },
+    });
+
+    const result = validateInteractionSubmission(view, submission);
+    expect(result.ok).toBe(false);
+    if (result.ok) throw new Error("Expected invalid partition");
+    expect(result.issues.filter((issue) => issue.code === "candidate_unavailable")).toHaveLength(2);
+  });
+
+  test("applies conditional destination bounds after optional extraction", () => {
+    const action = partitionAction("exhaustive");
+    const input = action.inputs[0]!;
+    if (input.kind !== "entity-partition") throw new Error("Expected partition input");
+    const boundedAction: InteractionAction = {
+      ...action,
+      inputs: [
+        {
+          ...input,
+          routes: [
+            input.routes[0]!,
+            { ...input.routes[1]!, minWhenRemainingAtLeast: { count: 1, min: 1 } },
+          ],
+        },
+      ],
+    };
+    const view = buildView([boundedAction]);
+    const invalid = buildInteractionSubmission({
+      view,
+      action: boundedAction,
+      values: { partition: { tutor: ["card-a"] } },
+    });
+    const valid = buildInteractionSubmission({
+      view,
+      action: boundedAction,
+      values: { partition: { tutor: ["card-a"], top: ["card-c", "card-b"] } },
+    });
+
+    expect(validateInteractionSubmission(view, invalid).ok).toBe(false);
+    expect(validateInteractionSubmission(view, valid).ok).toBe(true);
+  });
   test("represents a Lorcana-style play card action with instance-id candidates", () => {
     const view = buildView([
       fromLorcanaAvailableMove({
@@ -134,6 +386,41 @@ describe("engine interaction protocol", () => {
     ).toThrow();
   });
 
+  test("publishes observer-safe effect progress without candidates or tentative selections", () => {
+    const parsed = EngineInteractionView.parse({
+      ...buildView([]),
+      status: "waiting",
+      resolution: {
+        actingPlayerId: "player_two",
+        pendingCount: 3,
+        currentEffect: {
+          id: "effect_1",
+          text: { key: "gundam.effect.current", params: { label: "Kamille Bidan — When Linked" } },
+        },
+        currentStep: {
+          index: 1,
+          count: 2,
+          text: { key: "gundam.effect.step" },
+          requirement: {
+            kind: "entity-selection",
+            text: { key: "gundam.choice.targets" },
+            required: true,
+            min: 1,
+            max: 1,
+          },
+        },
+      },
+    });
+
+    expect(parsed.resolution).toMatchObject({
+      actingPlayerId: "player_two",
+      pendingCount: 3,
+      currentStep: { index: 1, count: 2 },
+    });
+    expect(JSON.stringify(parsed.resolution)).not.toContain("candidates");
+    expect(JSON.stringify(parsed.resolution)).not.toContain("selected");
+  });
+
   test("rejects impossible selection bounds", () => {
     const input = {
       kind: "entity-selection",
@@ -156,6 +443,51 @@ describe("engine interaction protocol", () => {
     ).toThrow();
     expect(() => OrderingInput.parse({ ...baseOrderingInput(), min: 2, max: 1 })).toThrow();
     expect(() => NumberInput.parse({ ...baseNumberInput(), min: 5, max: 3 })).toThrow();
+  });
+
+  test("accepts an adapter marker for an implicit option selection", () => {
+    expect(
+      OptionSelectionInput.parse({ ...baseOptionSelectionInput(), implicit: true }).implicit,
+    ).toBe(true);
+  });
+
+  test("accepts semantic search presentation with contextual suggestions", () => {
+    const input = OptionSelectionInput.parse({
+      ...baseOptionSelectionInput(),
+      presentation: {
+        kind: "search",
+        label: { key: "Card name" },
+        placeholder: { key: "Type a card name" },
+        confirmLabel: { key: "Use this name" },
+        description: { key: "Search every legal name or use a visible suggestion." },
+        resultLimit: 12,
+        suggestionGroups: [
+          { id: "your-hand", text: { key: "In your hand" }, optionIds: ["name:snatch"] },
+        ],
+      },
+    });
+
+    expect(input.presentation).toMatchObject({
+      kind: "search",
+      resultLimit: 12,
+      suggestionGroups: [{ id: "your-hand", optionIds: ["name:snatch"] }],
+    });
+  });
+
+  test("accepts direct option presentation with an explicit zero-choice outcome", () => {
+    const input = OptionSelectionInput.parse({
+      ...baseOptionSelectionInput(),
+      min: 0,
+      presentation: {
+        kind: "direct",
+        emptyText: { key: "Take 5 arcane damage" },
+      },
+    });
+
+    expect(input.presentation).toEqual({
+      kind: "direct",
+      emptyText: { key: "Take 5 arcane damage" },
+    });
   });
 
   test("rejects selection bounds that exceed enabled candidates", () => {
@@ -250,6 +582,7 @@ describe("engine interaction protocol", () => {
         view,
         action,
         values: { cardId: "card_1" },
+        automation: { kind: "no-valid-action" },
         correlationId: "corr_1",
       }),
     ).toEqual({
@@ -258,6 +591,7 @@ describe("engine interaction protocol", () => {
       requestId: action.requestId,
       actionId: action.id,
       values: { cardId: "card_1" },
+      automation: { kind: "no-valid-action" },
       correlationId: "corr_1",
     });
   });
@@ -848,6 +1182,53 @@ function fromLorcanaOrderingPrompt(requestId: string, cardIds: string[]): Intera
           enabled: true,
         })),
       },
+    ],
+  };
+}
+
+function partitionAction(assignment: "exhaustive" | "remainder-automatic"): InteractionAction {
+  return {
+    id: "partition-cards",
+    requestId: "partition:1",
+    intent: "order-cards",
+    text: { key: "test.partition" },
+    enabled: true,
+    inputs: [
+      EntityPartitionInput.parse({
+        kind: "entity-partition",
+        id: "partition",
+        text: { key: "test.partition.cards" },
+        candidateSetText: { key: "test.partition.candidates", params: { label: "Your Hand" } },
+        required: true,
+        entityKind: "card",
+        candidates: ["card-a", "card-b", "card-c"].map((instanceId) => ({
+          entity: { kind: "card", instanceId },
+          enabled: true,
+        })),
+        routes: [
+          {
+            id: "tutor",
+            text: { key: "test.partition.tutor" },
+            kind: "extract",
+            ordered: false,
+            min: 0,
+            max: 1,
+            candidateIds: ["card-a"],
+          },
+          {
+            id: "top",
+            text: { key: "test.partition.top" },
+            kind: "destination",
+            ordered: true,
+            min: 0,
+            max: 3,
+          },
+        ],
+        assignment,
+        ...(assignment === "remainder-automatic"
+          ? { remainderText: { key: "test.partition.automatic" } }
+          : {}),
+      }),
     ],
   };
 }

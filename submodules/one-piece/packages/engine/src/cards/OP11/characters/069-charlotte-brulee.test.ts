@@ -45,4 +45,31 @@ describe("OP11-069 Charlotte Brulee", () => {
     expect(view.players.south).toMatchObject({ lifeCount: 0, activeDon: 0, donDeckCount: 1 });
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      leaderCardId: op11CharlotteKatakuri062,
+      hand: [op11CharlotteBrulee069],
+      life: [eb01Doma005],
+      activeDon: op11CharlotteBrulee069.cost,
+      donDeckCount: 1,
+    });
+    engine.playCard(op11CharlotteBrulee069, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

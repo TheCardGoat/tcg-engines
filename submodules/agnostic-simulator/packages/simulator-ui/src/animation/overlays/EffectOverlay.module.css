@@ -1,0 +1,126 @@
+.sourceCardEffect {
+  position: fixed;
+  z-index: 1;
+  width: clamp(5.75rem, 8.5vw, 7.75rem);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+.sourceCardFrame {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--game-accent, #5eead4) 62%, white 12%);
+  border-radius: 0.55rem;
+  box-shadow:
+    0 1.15rem 2.5rem rgb(0 0 0 / 52%),
+    0 0.25rem 0.8rem color-mix(in srgb, var(--game-accent, #5eead4) 28%, transparent);
+}
+
+.sourceCardFrame > * {
+  width: 100%;
+  height: 100%;
+}
+
+.sourceLabel {
+  position: absolute;
+  top: -1.35rem;
+  padding: 0.18rem 0.42rem;
+  border-radius: 0.35rem;
+  background: rgb(10 28 35 / 94%);
+  color: color-mix(in srgb, var(--game-accent, #5eead4) 72%, white 28%);
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.sourceName {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  left: 50%;
+  width: 11rem;
+  max-width: 11rem;
+  color: #fff7ed;
+  font-size: clamp(0.7rem, 1.1vw, 0.86rem);
+  font-weight: 800;
+  line-height: 1.15;
+  text-align: center;
+  text-wrap: balance;
+  transform: translateX(-50%);
+}
+
+.impactCopy {
+  position: absolute;
+  top: calc(100% + 2rem);
+  left: 50%;
+  display: grid;
+  min-width: max-content;
+  justify-items: center;
+  color: #fff7ed;
+  filter: drop-shadow(0 0.2rem 0.3rem rgb(0 0 0 / 72%));
+  line-height: 0.92;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+}
+
+.impactCopy[data-tone="negative"] {
+  color: #fecaca;
+}
+
+.impactValue {
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+  font-weight: 950;
+  letter-spacing: -0.035em;
+}
+
+.impactLabel {
+  margin-top: 0.2rem;
+  font-size: clamp(0.68rem, 1.2vw, 0.9rem);
+  font-weight: 850;
+  letter-spacing: 0.08em;
+}
+
+.targetImpact {
+  position: fixed;
+  z-index: 0;
+  display: grid;
+  min-width: 3.25rem;
+  min-height: 3.25rem;
+  border: 2px solid #fecaca;
+  border-radius: 0.7rem;
+  box-shadow:
+    0 0.45rem 1.2rem rgb(0 0 0 / 42%),
+    0 0 1.1rem rgb(248 113 113 / 38%);
+  place-items: start center;
+}
+
+.targetImpact::after {
+  position: absolute;
+  inset: -0.4rem;
+  border: 1px solid rgb(254 202 202 / 68%);
+  border-radius: 0.95rem;
+  content: "";
+}
+
+.targetLabel {
+  position: absolute;
+  top: -1.45rem;
+  padding: 0.18rem 0.42rem;
+  border-radius: 0.35rem;
+  background: rgb(48 12 18 / 92%);
+  color: #fecaca;
+  font-size: 0.62rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+  .sourceCardEffect {
+    width: clamp(4.75rem, 20vw, 6.25rem);
+  }
+}

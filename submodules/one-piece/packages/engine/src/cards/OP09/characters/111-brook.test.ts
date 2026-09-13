@@ -25,5 +25,7 @@ describe("OP09-111 Brook", () => {
     expect(engine.getView("north").players.south.trash.map((card) => card.instanceId)).toEqual(
       expect.arrayContaining(selectedIds),
     );
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

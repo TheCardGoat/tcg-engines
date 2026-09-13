@@ -57,16 +57,23 @@ export async function fetchReplay(
   replayId: string,
   apiOrigin: string,
 ): Promise<PersistedReplayData> {
-  const url = `${apiOrigin.replace(/\/$/, "")}/v1/play/replays/${encodeURIComponent(replayId)}/data`;
-  const res = await fetch(url, { redirect: "follow", signal: AbortSignal.timeout(30_000) });
+  const apiKey = process.env.MATCH_MANAGEMENT_API_KEY;
+  if (!apiKey) {
+    throw new Error("MATCH_MANAGEMENT_API_KEY is required to inspect raw replay artifacts");
+  }
+  const url = `${apiOrigin.replace(/\/$/, "")}/internal/runtime/games/${encodeURIComponent(replayId)}/replay-data`;
+  const res = await fetch(url, {
+    headers: { "x-api-key": apiKey },
+    redirect: "follow",
+    signal: AbortSignal.timeout(30_000),
+  });
   if (res.status === 404) {
     throw new ReplayNotFoundError(replayId);
   }
   if (!res.ok) {
     throw new Error(`Failed to fetch replay (${res.status} ${res.statusText}) from ${url}`);
   }
-  const compressed = new Uint8Array(await res.arrayBuffer());
-  const json = Bun.gunzipSync(compressed);
-  const text = new TextDecoder().decode(json);
-  return JSON.parse(text) as PersistedReplayData;
+  const payload = (await res.json()) as { replay?: PersistedReplayData };
+  if (!payload.replay) throw new ReplayNotFoundError(replayId);
+  return payload.replay;
 }

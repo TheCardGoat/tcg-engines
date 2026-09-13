@@ -2,17 +2,26 @@ import { useEffect, useState } from "react";
 
 export type ActiveLayout = "desktop" | "mobile";
 
-export function useActiveLayout(breakpoint = 1280): ActiveLayout {
+export interface ActiveLayoutOptions {
+  readonly coarsePointerShortViewport?: boolean;
+  readonly shortViewportBreakpoint?: number;
+}
+
+export function useActiveLayout(breakpoint = 767, options: ActiveLayoutOptions = {}): ActiveLayout {
   const [layout, setLayout] = useState<ActiveLayout>("desktop");
 
   useEffect(() => {
     const update = () => {
-      setLayout(window.innerWidth > breakpoint ? "desktop" : "mobile");
+      const shortCoarseViewport =
+        options.coarsePointerShortViewport === true &&
+        window.innerHeight <= (options.shortViewportBreakpoint ?? 520) &&
+        window.matchMedia?.("(pointer: coarse)").matches;
+      setLayout(window.innerWidth <= breakpoint || shortCoarseViewport ? "mobile" : "desktop");
     };
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, [breakpoint]);
+  }, [breakpoint, options.coarsePointerShortViewport, options.shortViewportBreakpoint]);
 
   return layout;
 }

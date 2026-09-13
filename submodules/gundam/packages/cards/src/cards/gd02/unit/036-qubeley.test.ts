@@ -18,6 +18,7 @@ import {
 } from "../../../test-helpers/legal-gameplay-test-helpers.ts";
 
 describe("Qubeley (GD02-036)", () => {
+  /** @behavioral-proof complete: deployment, Link, Suppression, pair qualification, targeting, and damage are public. */
   describe("Printed Lv.7 and cost 5", () => {
     it("cannot deploy with only 6 total Resources", () => {
       const engine = GundamTestEngine.create({

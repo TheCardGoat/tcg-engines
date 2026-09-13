@@ -61,8 +61,7 @@ export const CARD_INFO_DIALOG_W = DIALOG_W;
  */
 export function CardInfoBody({ card }: { readonly card: GameCardData }) {
   const factionColor = (card.color && CARD_COLOR[card.color]) || "#4cc3ff";
-  const factionName =
-    (card.color && m[FACTION_NAME_KEY[card.color]]()) || m["sim.cardInfo.faction.unknown"]();
+  const factionName = card.color ? m[FACTION_NAME_KEY[card.color]]() : undefined;
   return (
     <>
       <div className="scanline absolute inset-0 opacity-30 mix-blend-multiply pointer-events-none" />
@@ -111,8 +110,7 @@ export function CardInfoDialog({
 
   const open = card !== null;
   const factionColor = (card?.color && CARD_COLOR[card.color]) || "#4cc3ff";
-  const factionName =
-    (card?.color && m[FACTION_NAME_KEY[card.color]]()) || m["sim.cardInfo.faction.unknown"]();
+  const factionName = card?.color ? m[FACTION_NAME_KEY[card.color]]() : undefined;
   const isMobile = useLayoutMode() === "mobile";
 
   const body = card ? (
@@ -166,6 +164,7 @@ export function CardInfoDialog({
               bottom: `calc(var(--mobile-menubar-height) + var(--safe-bottom))`,
               maxHeight: `calc(100dvh - var(--mobile-menubar-height) - var(--mobile-top-hud-height) - var(--safe-top) - var(--safe-bottom) - 16px)`,
               overflowY: "auto",
+              overscrollBehaviorY: "contain",
               background: "linear-gradient(180deg, rgba(255,255,255,.96), rgba(248,250,254,.98))",
               borderTop: `1px solid ${factionColor}`,
               borderLeft: `1px solid ${factionColor}66`,
@@ -222,7 +221,7 @@ export function CardInfoDialog({
 interface HeaderProps {
   readonly card: GameCardData;
   readonly factionColor: string;
-  readonly factionName: string;
+  readonly factionName?: string;
   /**
    * When provided, renders the ✕ close control in the header. Omit in
    * hover-driven surfaces (HoverCard content) where the whole card
@@ -256,17 +255,15 @@ function Header({ card, factionColor, factionName, onClose }: HeaderProps) {
       )}
 
       <div className="flex-1 min-w-0">
-        <div
-          className="gd-mono text-hud-2xs font-bold tracking-hud-label"
-          style={{ color: factionColor }}
-        >
-          ◆ {typeLabel} · {factionName}
+        <div className="gd-mono text-hud-xs font-bold tracking-hud-label text-hud-text-muted">
+          ◆ {typeLabel}
+          {factionName ? ` · ${factionName}` : null}
         </div>
-        <div className="gd-display font-extrabold text-hud-accent-hot uppercase whitespace-nowrap overflow-hidden text-ellipsis mt-px tracking-hud-body text-base [text-shadow:0_0_6px_rgba(45,107,255,.3)]">
+        <div className="gd-display font-extrabold text-hud-accent-hot uppercase whitespace-normal [overflow-wrap:anywhere] mt-px tracking-hud-body text-base [text-shadow:0_0_6px_rgba(45,107,255,.3)]">
           {card.name}
         </div>
         {card.subtitle && (
-          <div className="gd-mono text-hud-xs text-hud-text-dim mt-px whitespace-nowrap overflow-hidden text-ellipsis tracking-hud-display">
+          <div className="gd-mono text-hud-xs text-hud-text-dim mt-px whitespace-normal [overflow-wrap:anywhere] tracking-hud-display">
             {card.subtitle.toUpperCase()}
           </div>
         )}
@@ -358,7 +355,7 @@ function StatsRow({ card, factionColor }: StatsRowProps) {
 
   if (stats.length === 0) {
     return (
-      <div className="px-3 py-2 border-b border-hud-accent/15 bg-[rgba(248,250,254,.5)]">
+      <div className="px-3 py-2 border-b border-hud-accent/15 bg-hud-surface">
         <Stat
           label={m["sim.cardInfo.stat.supportModule"]()}
           value="—"
@@ -371,7 +368,7 @@ function StatsRow({ card, factionColor }: StatsRowProps) {
   }
 
   return (
-    <div className="px-3 py-2 flex items-center gap-[5px] border-b border-hud-accent/15 bg-[rgba(248,250,254,.5)]">
+    <div className="px-3 py-2 flex items-center gap-[5px] border-b border-hud-accent/15 bg-hud-surface">
       {stats.map((s) => (
         <Stat
           key={s.label}
@@ -400,22 +397,16 @@ function Stat({ label, value, color, icon, wide, delta }: StatProps) {
   const deltaColor = delta && delta > 0 ? "#36ff8a" : delta && delta < 0 ? "#ff4d5e" : undefined;
   return (
     <div
-      className={`flex-1 flex flex-col items-center px-1.5 py-1 clip-hud-5 ${wide ? "min-w-40" : "min-w-[50px]"}`}
+      className={`flex-1 flex flex-col items-center px-1.5 py-1 bg-hud-surface-raised clip-hud-5 ${wide ? "min-w-40" : "min-w-[50px]"}`}
       style={{
-        background: `linear-gradient(180deg, ${color}22, rgba(248,250,254,.6))`,
         border: `1px solid ${color}55`,
       }}
     >
-      <div className="gd-mono text-hud-2xs font-bold tracking-hud-label" style={{ color }}>
+      <div className="gd-mono text-hud-xs font-bold tracking-hud-label text-hud-text-muted">
         {icon} {label}
       </div>
       <div className="flex items-baseline gap-1">
-        <div
-          className="gd-display text-sm font-extrabold text-hud-accent-hot leading-[1.1]"
-          style={{ textShadow: `0 0 5px ${color}77` }}
-        >
-          {value}
-        </div>
+        <div className="gd-display text-sm font-extrabold text-hud-text leading-[1.1]">{value}</div>
         {deltaColor && delta != null && (
           <span
             className="gd-mono text-hud-2xs font-extrabold"
@@ -452,7 +443,7 @@ function EffectBlock({
         count={1}
         factionColor={factionColor}
       />
-      <div className="mt-1.5 px-2.5 py-2 bg-[linear-gradient(180deg,rgba(30,73,199,.18),rgba(30,73,199,.06))] border border-hud-info/35 clip-hud-6 text-xs text-hud-text-muted leading-[1.4]">
+      <div className="mt-1.5 px-2.5 py-2 bg-[linear-gradient(180deg,rgba(30,73,199,.18),rgba(30,73,199,.06))] border border-hud-info/35 clip-hud-6 font-body text-sm text-hud-text leading-relaxed">
         {segments.map((seg, i) => (
           <Fragment key={i}>
             {seg.kind === "text" && seg.text}
@@ -539,7 +530,7 @@ function KeywordsBlock({ card, factionColor }: KeywordsBlockProps) {
           return (
             <div
               key={tag.id}
-              className="flex items-start gap-2 px-2.5 py-1.5 bg-[rgba(248,250,254,.45)] border clip-hud-6"
+              className="flex items-start gap-2 px-2.5 py-1.5 bg-hud-surface-raised border clip-hud-6"
               style={{ borderColor: `${factionColor}44` }}
             >
               <span
@@ -551,7 +542,7 @@ function KeywordsBlock({ card, factionColor }: KeywordsBlockProps) {
                 <div className="gd-display text-hud-sm text-hud-accent-hot font-extrabold tracking-hud-display uppercase">
                   {tag.label}
                 </div>
-                <div className="gd-mono text-hud-xs text-hud-text-dim mt-px leading-[1.35]">
+                <div className="font-body text-sm text-hud-text mt-px leading-relaxed">
                   {tag.tooltip}
                 </div>
               </div>
@@ -580,7 +571,7 @@ function TraitsBlock({ traits, factionColor }: TraitsBlockProps) {
         {traits.map((t) => (
           <span
             key={t}
-            className="gd-mono text-hud-2xs font-bold tracking-hud-label uppercase px-2 py-1 text-hud-text-muted bg-[rgba(248,250,254,.6)] border border-white/15 clip-hud-5"
+            className="gd-mono text-hud-2xs font-bold tracking-hud-label uppercase px-2 py-1 text-hud-text-muted bg-hud-surface-raised border border-white/15 clip-hud-5"
           >
             {t}
           </span>
@@ -604,7 +595,7 @@ function LinkBlock({ requirement, factionColor }: LinkBlockProps) {
         factionColor={factionColor}
       />
       <div
-        className="mt-1.5 px-2.5 py-1.5 bg-[rgba(248,250,254,.45)] border clip-hud-6 gd-mono text-hud-xs text-hud-text-muted leading-[1.4]"
+        className="mt-1.5 px-2.5 py-1.5 bg-hud-surface-raised border clip-hud-6 gd-mono text-hud-xs text-hud-text-muted leading-[1.4]"
         style={{ borderColor: `${factionColor}44` }}
       >
         {requirement}
@@ -716,7 +707,7 @@ function ActiveEffectsBlock({ effects, factionColor }: ActiveEffectsBlockProps) 
         {effects.map((e, i) => (
           <div
             key={`${e.sourceId}${e.kind}${i}`}
-            className="flex items-start gap-2 px-2.5 py-1.5 bg-[rgba(248,250,254,.45)] border clip-hud-6"
+            className="flex items-start gap-2 px-2.5 py-1.5 bg-hud-surface-raised border clip-hud-6"
             style={{ borderColor: `${factionColor}44` }}
           >
             <span
@@ -771,10 +762,9 @@ function SectionHeader({ label, count, factionColor }: SectionHeaderProps) {
         style={{ background: `linear-gradient(90deg, ${factionColor}55, transparent)` }}
       />
       <span
-        className="gd-mono text-hud-2xs font-bold px-1.5 bg-[rgba(248,250,254,.6)] tracking-hud-display"
+        className="gd-mono text-hud-2xs font-bold px-1.5 bg-hud-surface-raised text-hud-text-muted tracking-hud-display"
         style={{
           border: `1px solid ${factionColor}`,
-          color: factionColor,
         }}
       >
         {String(count).padStart(2, "0")}

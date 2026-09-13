@@ -1,0 +1,111 @@
+{
+  "name": "@tcg/flesh-and-blood-cards",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./catalog": {
+      "types": "./src/catalog.ts",
+      "default": "./src/catalog.ts"
+    },
+    "./catalog-data": {
+      "types": "./src/catalog-data.ts",
+      "default": "./src/catalog-data.ts"
+    },
+    "./cards/*": {
+      "types": "./src/cards/*.ts",
+      "default": "./src/cards/*.ts"
+    },
+    "./translations/de-DE": {
+      "types": "./src/translations/de-DE.ts",
+      "default": "./src/translations/de-DE.ts"
+    },
+    "./translations/es-ES": {
+      "types": "./src/translations/es-ES.ts",
+      "default": "./src/translations/es-ES.ts"
+    },
+    "./translations/fr-FR": {
+      "types": "./src/translations/fr-FR.ts",
+      "default": "./src/translations/fr-FR.ts"
+    },
+    "./translations/it-IT": {
+      "types": "./src/translations/it-IT.ts",
+      "default": "./src/translations/it-IT.ts"
+    },
+    "./cdn": {
+      "types": "./src/cdn.ts",
+      "default": "./src/cdn.ts"
+    },
+    "./runtime-registry": {
+      "types": "./src/runtime-registry.ts",
+      "default": "./src/runtime-registry.ts"
+    },
+    "./deck-library": {
+      "types": "./src/deck-library.ts",
+      "default": "./src/deck-library.ts"
+    },
+    "./preconstructed-decks": {
+      "types": "./src/preconstructed-decks.ts",
+      "default": "./src/preconstructed-decks.ts"
+    },
+    "./simulator-scenario-cards": {
+      "types": "./src/simulator-scenario-cards.ts",
+      "default": "./src/simulator-scenario-cards.ts"
+    },
+    "./package.json": "./package.json",
+    "./presentation": {
+      "types": "./src/presentation.ts",
+      "default": "./src/presentation.ts"
+    },
+    "./presentation-catalog": {
+      "types": "./src/presentation-catalog.ts",
+      "default": "./src/presentation-catalog.ts"
+    },
+    "./presentation-revision": {
+      "types": "./src/generated/presentation-revision.ts",
+      "default": "./src/generated/presentation-revision.ts"
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "check-types": "pnpm --dir ../types run build && pnpm run check:canonical-card-layout && pnpm run check:canonical-authoring && pnpm run check:card-identities && pnpm run check:canonical-card-manifest && pnpm run check:card-catalog-sync && pnpm run check:card-release-audit-consistency && pnpm run check:card-test-quality && pnpm run check:presentation && tsc -p tsconfig.json --noEmit",
+    "check:canonical-card-layout": "node --experimental-transform-types --no-warnings scripts/audit-canonical-card-layout.mjs",
+    "check:card-catalog-sync": "node --experimental-transform-types --no-warnings scripts/audit-card-catalog-sync.mjs",
+    "check:card-release-audit-consistency": "node --experimental-transform-types --no-warnings scripts/check-card-release-audit-consistency.mjs",
+    "check:card-test-quality": "node scripts/audit-card-test-quality.mjs",
+    "audit:canonical-authoring": "node --experimental-transform-types --no-warnings scripts/audit-canonical-authoring.mjs",
+    "check:canonical-authoring": "node --experimental-transform-types --no-warnings scripts/audit-canonical-authoring.mjs --strict",
+    "generate:card-identities": "node --experimental-transform-types --no-warnings scripts/generate-card-identities.mjs",
+    "check:card-identities": "node --experimental-transform-types --no-warnings scripts/generate-card-identities.mjs --check",
+    "generate:canonical-card-manifest": "node --experimental-transform-types --no-warnings scripts/generate-canonical-card-manifest.mjs",
+    "check:canonical-card-manifest": "node --experimental-transform-types --no-warnings scripts/generate-canonical-card-manifest.mjs --check",
+    "generate:simulator-scenario-cards": "node --experimental-transform-types --no-warnings scripts/generate-simulator-scenario-cards.mjs && vp fmt scripts/generate-simulator-scenario-cards.mjs src/simulator-scenario-cards.generated.ts",
+    "test:canonical-card-layout": "node --experimental-transform-types --no-warnings --test scripts/audit-canonical-card-layout.node-test.mjs",
+    "test:canonical-card-manifest": "node --experimental-transform-types --no-warnings --test scripts/generate-canonical-card-manifest.node-test.mjs",
+    "test:card-catalog-sync": "node --experimental-transform-types --no-warnings --test scripts/audit-card-catalog-sync.node-test.mjs",
+    "test:card-release-audit": "node --experimental-transform-types --no-warnings --test scripts/audit-card-release-audit.node-test.mjs scripts/check-card-release-audit-consistency.node-test.mjs scripts/audit-card-test-quality.node-test.mjs",
+    "test:canonical-authoring": "node --experimental-transform-types --no-warnings --test scripts/audit-canonical-authoring.node-test.mjs",
+    "test:card-identities": "node --experimental-transform-types --no-warnings --test scripts/generate-card-identities.node-test.mjs",
+    "test": "vp test run --no-isolate --pool=threads --testTimeout=20000",
+    "generate:presentation": "node --experimental-transform-types --no-warnings scripts/generate-presentation-catalog.mjs",
+    "check:presentation": "node --experimental-transform-types --no-warnings scripts/generate-presentation-catalog.mjs --check",
+    "check:published-presentation": "node scripts/verify-published-presentation.mjs --catalog-only",
+    "test:published-presentation": "node --test scripts/verify-published-presentation.node-test.mjs"
+  },
+  "dependencies": {
+    "@tcg/flesh-and-blood-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@tcg/flesh-and-blood-engine": "workspace:*",
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

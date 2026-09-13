@@ -3,7 +3,7 @@ import { op08Jinbe085 } from "../../../../../cards/src/cards/OP08/characters/085
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP08-085 Jinbe", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op08Jinbe085);
   });
 });

@@ -80,6 +80,7 @@ export type {
   RepeatEffect,
   RevealAndConditionalEffect,
   RevealAndRouteEffect,
+  RevealAndRouteFallback,
   RevealRoute,
   RevealRouteDestination,
   SequenceEffect,

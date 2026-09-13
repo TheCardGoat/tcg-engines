@@ -8,7 +8,7 @@ import {
   MoonStarIcon,
   ShieldAlertIcon,
   ShieldBanIcon,
-  ShieldPlusIcon,
+  ShieldOffIcon,
   SparklesIcon,
   SwordsIcon,
   WrenchIcon,
@@ -31,14 +31,18 @@ export interface CardTag {
 const KEYWORD_META: Record<KeywordEffect, { icon: LucideIcon; tone: TagTone }> = {
   Blocker: { icon: ShieldAlertIcon, tone: "info" },
   Repair: { icon: WrenchIcon, tone: "success" },
-  Breach: { icon: ShieldPlusIcon, tone: "danger" },
+  Breach: { icon: ShieldOffIcon, tone: "danger" },
   FirstStrike: { icon: ZapIcon, tone: "warning" },
   HighManeuver: { icon: SparklesIcon, tone: "info" },
   Support: { icon: ArrowUpIcon, tone: "success" },
   Suppression: { icon: SwordsIcon, tone: "warning" },
 };
 
-function keywordTag(entry: KeywordEffectEntry, idPrefix = "kw", toneOverride?: TagTone): CardTag {
+export function keywordTag(
+  entry: KeywordEffectEntry,
+  idPrefix = "kw",
+  toneOverride?: TagTone,
+): CardTag {
   const meta = KEYWORD_META[entry.keyword];
   const base = `sim.card.keyword.${entry.keyword}`;
   const label =
@@ -157,7 +161,7 @@ export function getCardTags(card: GameCardData): readonly CardTag[] {
     });
   }
 
-  if (card.linkRequirement) {
+  if (card.linkRequirement && card.isLinkUnit) {
     tags.push({
       id: "link",
       icon: Link2Icon,

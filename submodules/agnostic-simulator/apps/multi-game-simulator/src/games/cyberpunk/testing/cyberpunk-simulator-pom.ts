@@ -1077,13 +1077,8 @@ export class CyberpunkSimulatorPom<
       return;
     }
     await this.takeControl(as);
-    await this.boardForPlayer(as).handCard(gearId).click({ force: true });
-    const legacyPlayAction = this.dom.getByTestId("card-action-playCard");
-    if ((await legacyPlayAction.count()) > 0) {
-      await legacyPlayAction.click({ force: true });
-    } else {
-      await this.dom.getByTestId("hand-action-play").click({ force: true });
-    }
+    await this.boardForPlayer(as).handCardChoiceSurface(gearId).click({ force: true });
+    await this.dom.getByTestId("card-action-playCard").click({ force: true });
     await this.choiceTarget(attachToId).clickJs();
   }
 

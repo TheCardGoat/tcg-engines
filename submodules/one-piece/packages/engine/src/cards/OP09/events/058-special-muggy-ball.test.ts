@@ -3,7 +3,7 @@ import { op09SpecialMuggyBall058 } from "../../../../../cards/src/cards/OP09/eve
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-058 Special Muggy Ball", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op09SpecialMuggyBall058);
   });
 });

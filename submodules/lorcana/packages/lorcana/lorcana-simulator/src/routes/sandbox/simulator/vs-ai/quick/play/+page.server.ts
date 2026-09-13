@@ -1,4 +1,5 @@
 import { redirect } from "@sveltejs/kit";
+import { base } from "$app/paths";
 import type { ServerLoadEvent } from "@sveltejs/kit";
 import { sanitizeDeckText } from "@/features/simulator-devtools/fixtures/fixture-factory.js";
 import { DECK_FIXTURES } from "@/features/simulator-devtools/deck-fixtures/index.js";
@@ -20,6 +21,7 @@ export interface QuickMatchPlayData {
   serverGameId: string | null;
   unknownCards: string[];
   fallbackReason: string | null;
+  returnTo: string | null;
 }
 
 export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayData> {
@@ -27,43 +29,54 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayData> 
 
   const rawDeckParam = url.searchParams.get("deck")?.trim() ?? "";
   const opponentFixtureId = url.searchParams.get("opponentFixtureId")?.trim() ?? "";
+  const opponentDeckParam = url.searchParams.get("opponentDeck")?.trim() ?? "";
   const strategyId = url.searchParams.get("strategyId")?.trim() ?? "";
   const seed = url.searchParams.get("seed")?.trim() ?? "";
   const serverGameId = url.searchParams.get("serverGameId")?.trim() || null;
   const unknownCardsParam = url.searchParams.get("unknownCards")?.trim() ?? "";
   const fallbackReason = url.searchParams.get("fallbackReason")?.trim() || null;
+  const returnTo = url.searchParams.get("returnTo")?.trim() || null;
 
   // All params are required — if missing, send back to the creation route
-  if (!rawDeckParam || !opponentFixtureId || !strategyId || !seed) {
-    redirect(303, "/sandbox/simulator/vs-ai/quick");
+  if (!rawDeckParam || (!opponentFixtureId && !opponentDeckParam) || !strategyId || !seed) {
+    redirect(303, `${base}/sandbox/simulator/vs-ai/quick`);
   }
 
   const decoded = decodeDeckParam(rawDeckParam);
   if (!decoded) {
-    redirect(303, "/sandbox/simulator/vs-ai/quick");
+    redirect(303, `${base}/sandbox/simulator/vs-ai/quick`);
   }
 
   const { sanitizedText } = await sanitizeDeckText(decoded);
   if (!sanitizedText) {
-    redirect(303, "/sandbox/simulator/vs-ai/quick");
+    redirect(303, `${base}/sandbox/simulator/vs-ai/quick`);
   }
 
-  const opponentFixture = DECK_FIXTURES.find((f) => f.id === opponentFixtureId);
-  if (!opponentFixture) {
-    redirect(303, "/sandbox/simulator/vs-ai/quick");
+  const opponentFixture = opponentFixtureId
+    ? DECK_FIXTURES.find((f) => f.id === opponentFixtureId)
+    : undefined;
+  const opponentDeck = opponentDeckParam ? decodeDeckParam(opponentDeckParam) : null;
+  const { sanitizedText: sanitizedOpponentDeck } = opponentDeck
+    ? await sanitizeDeckText(opponentDeck)
+    : { sanitizedText: "" };
+  if (
+    (!opponentFixture && !sanitizedOpponentDeck) ||
+    (opponentDeckParam && !sanitizedOpponentDeck)
+  ) {
+    redirect(303, `${base}/sandbox/simulator/vs-ai/quick`);
   }
 
   const strategy = getSafeAutomatedActionStrategyOption(strategyId);
 
   const config: HumanVsAiMatchConfig = {
     playerOneDeckText: sanitizedText,
-    playerTwoDeckText: opponentFixture.cards,
-    playerTwoFixtureId: opponentFixture.id,
+    playerTwoDeckText: sanitizedOpponentDeck || opponentFixture!.cards,
+    ...(opponentFixture ? { playerTwoFixtureId: opponentFixture.id } : {}),
     strategyId: strategy?.id ?? strategyId,
     seed,
   };
 
   const unknownCards = unknownCardsParam ? unknownCardsParam.split("|") : [];
 
-  return { config, serverGameId, unknownCards, fallbackReason };
+  return { config, serverGameId, unknownCards, fallbackReason, returnTo };
 }

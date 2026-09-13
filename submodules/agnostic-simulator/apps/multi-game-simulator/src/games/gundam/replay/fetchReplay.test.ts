@@ -16,7 +16,14 @@ describe("parseGundamReplayPayload", () => {
       steps: [
         {
           patches: [{ op: "replace", path: "/ctx/turnNumber", value: 2 }],
-          acceptedMove: { input: { move: "passTurn" } },
+          acceptedMove: {
+            stateVersion: 1,
+            turnNumber: 1,
+            actorId: "p1",
+            moveId: "passTurn",
+            timestamp: 1,
+            payload: { move: "passTurn" },
+          },
           logs: [],
         },
       ],

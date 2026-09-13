@@ -1,0 +1,27 @@
+{
+  "name": "@tcg/flesh-and-blood-scraper",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "scrape": "node --experimental-transform-types src/cli.ts",
+    "test": "vp test run"
+  },
+  "dependencies": {
+    "@tcg/flesh-and-blood-types": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:",
+    "vitest": "catalog:"
+  }
+}

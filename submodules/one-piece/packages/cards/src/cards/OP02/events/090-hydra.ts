@@ -49,6 +49,7 @@ export const op02Hydra090: EventCard = {
             duration: "thisTurn",
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

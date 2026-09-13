@@ -45,6 +45,18 @@ function parseConditionChain(text: string): Condition | null {
  * no "If"/"When" prefix is present or the condition can't be parsed.
  */
 export function parseInlineCondition(text: string): InlineConditionResult | null {
+  // "This effect can be activated at the start of your turn. Y"
+  const activatedStartOfTurnMatch =
+    /^This\s+effect\s+can\s+be\s+activated\s+at\s+the\s+start\s+of\s+your\s+turn\.\s*(.+)$/is.exec(
+      text,
+    );
+  if (activatedStartOfTurnMatch) {
+    return {
+      condition: { condition: "triggerEvent", event: "startOfYourTurn" },
+      remainingText: activatedStartOfTurnMatch[1]!.trim(),
+    };
+  }
+
   // "This effect can be activated when X. Y" — meta-prefix for custom timing
   const activatedWhenMatch =
     /^This\s+effect\s+can\s+be\s+activated\s+when\s+(.+?)\.\s+(.+)$/is.exec(text);
@@ -319,6 +331,14 @@ export function parseWhenEvent(text: string): EffectTrigger | null {
 
   // "your opponent's Character attacks"
   if (/^your\s+opponent[''\u2019]s\s+Character\s+attacks$/i.test(t)) return "onOpponentAttack";
+
+  // "a card is trashed from your hand by your "Trait" type card's effect"
+  if (
+    /^a\s+card\s+is\s+trashed\s+from\s+your\s+hand\s+by\s+your\s+(?:[[{"\u201c])([^\]}"\u201d]+)(?:[\]}"\u201d])\s+type\s+card[''\u2019]?s\s+effect$/i.test(
+      t,
+    )
+  )
+    return "whenCardsTrashedFromHandByEffect";
 
   // "you take damage (or ...)"
   if (/^you\s+take\s+damage/i.test(t)) return "whenDealsDamage";

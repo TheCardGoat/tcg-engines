@@ -253,5 +253,41 @@ describe("Hallelujah Haptism (GD04-090)", () => {
       expect(p1.getHand()).toHaveLength(0);
       expect(p1.getCardsInZone("deck")).toHaveLength(1);
     });
+
+    it("does not look at the deck when another friendly Unit destroys the defender", () => {
+      const host = createMockUnit({
+        name: "Hallelujah Host",
+        ap: 1,
+        hp: 5,
+        linkCondition: "[Hallelujah Haptism]",
+      });
+      const otherAttacker = createMockUnit({ name: "Other Attacker", ap: 4, hp: 5 });
+      const fragileEnemy = createMockUnit({ ap: 1, hp: 1 });
+      const cbCard = createMockUnit({ name: "CB Reward", traits: ["cb"] });
+      const engine = GundamTestEngine.create(
+        {
+          hand: [gd04HallelujahHaptism090],
+          play: [host, otherAttacker],
+          deck: [cbCard],
+          resourceArea: activeResources(5),
+        },
+        { play: [{ card: fragileEnemy, exhausted: true }] },
+      );
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const p2 = engine.asPlayer(PLAYER_TWO);
+      const [hostId, otherAttackerId] = p1.getCardsInZone("battleArea");
+      const defenderId = p2.getCardsInZone("battleArea")[0]!;
+
+      expectSuccess(p1.assignPilot(gd04HallelujahHaptism090, hostId!));
+      expectSuccess(p1.enterBattle(otherAttackerId!, defenderId));
+      expectSuccess(p2.passBlock());
+      expectSuccess(p2.passBattleAction());
+      expectSuccess(p1.passBattleAction());
+
+      expect(p2.getCardZone(defenderId)).toBe(`trash:${PLAYER_TWO}`);
+      expect(p1.getBoardView().pendingChoice).toBeUndefined();
+      expect(p1.getHand()).toHaveLength(0);
+      expect(p1.getCardsInZone("deck")).toHaveLength(1);
+    });
   });
 });

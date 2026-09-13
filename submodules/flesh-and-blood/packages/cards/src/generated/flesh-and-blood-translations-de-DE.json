@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "game": "flesh-and-blood",
+  "locale": "de-DE",
+  "provenance": {
+    "source": "fab-cube",
+    "sourceUrl": "https://github.com/the-fab-cube/flesh-and-blood-cards",
+    "sourceRef": "usurp-the-shadow-throne",
+    "locale": "de-DE",
+    "fetchedAt": "2026-09-11T04:33:18.000Z",
+    "sourceVersion": "9fb8c73011311720bc7add61fb8eaab00b131bc3",
+    "sha256": "579cceead22638f765708587fbfa937f72d8f95468ed672fe984915e2398d22c",
+    "productionEligible": false
+  },
+  "catalogSha256": "5d08485a19fdcbd7c82f048a8626027bf3703241c189905f41059eb2f19d4c64",
+  "sets": [
+    {
+      "setId": "1HP",
+      "name": "History Pack 1 – Black Label"
+    }
+  ],
+  "cards": [
+    {
+      "canonicalId": "N77hdGp96fNQnzc79hqN9",
+      "name": "Auge von Ophidia",
+      "functionalTextHtml": "**Legendär** *(Du darfst Auge von Ophidia nur einmal in deinem Deck haben.)*\n\nWenn du Auge von Ophidia pitchst, **sortiere 2 um**.",
+      "functionalTextPlain": "Legendär (Du darfst Auge von Ophidia nur einmal in deinem Deck haben.)\nWenn du Auge von Ophidia pitchst, sortiere 2 um.",
+      "typeText": "Allgemein Ressource - Edelstein"
+    },
+    {
+      "canonicalId": "pBpLPQ7kg6mkBpNMMPdCD",
+      "name": "Herz von Fyendal",
+      "functionalTextHtml": "**Legendär** *(Du darfst Herz von Fyendal nur einmal in deinem Deck haben.)*\n\nWenn du Herz von Fyendal pitchst und weniger {h} als ein gegnerischer Held hast, erhälst du 1{h}.",
+      "functionalTextPlain": "Legendär (Du darfst Herz von Fyendal nur einmal in deinem Deck haben.)\nWenn du Herz von Fyendal pitchst und weniger {h} als ein gegnerischer Held hast, erhälst du 1{h}.",
+      "typeText": "Allgemein Ressource - Edelstein"
+    },
+    {
+      "canonicalId": "pkMGCRh9fDT98dRgnQF8W",
+      "name": "Scherbe der Erznacht",
+      "functionalTextHtml": "**Legendäre Viserai-Spezialisierung** *(Du darfst Scherbe der Erznacht nur einmal in deinem Deck haben und nur dann, wenn Viserai dein Held ist.)*\n\nWenn du Scherbe der Erznacht pitchst, erstelle ein Runengesang-Token.",
+      "functionalTextPlain": "Legendäre Viserai-Spezialisierung (Du darfst Scherbe der Erznacht nur einmal in deinem Deck haben und nur dann, wenn Viserai dein Held ist.)\nWenn du Scherbe der Erznacht pitchst, erstelle ein Runengesang-Token.",
+      "typeText": "Runenklinge Ressource - Edelstein"
+    }
+  ]
+}

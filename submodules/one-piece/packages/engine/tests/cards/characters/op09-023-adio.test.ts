@@ -56,4 +56,35 @@ describe("OP09-023 Adio", () => {
     expect(view.players.south).toMatchObject({ activeDon: 1, restedDon: 1 });
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op09Adio023], activeDon: 2 },
+      {
+        character: [
+          { card: op09Yasopp013, playedOnTurn: 0 },
+          { card: op09Yasopp013, playedOnTurn: 0 },
+        ],
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const attackers = engine
+      .getView("south")
+      .players.north.characters.flatMap((card) => (card ? [card.instanceId] : []));
+    engine.declareAttack(attackers[0]!, engine.leader("south"), "north");
+
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const lifeBefore = before.lifeCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    // Declined: no rest 1 DON!! cost and no +2000; attack may still deal Life damage.
+    expect(after.activeDon).toBe(2);
+    expect(after.restedDon).toBe(0);
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.lifeCount).toBe(lifeBefore - 1);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

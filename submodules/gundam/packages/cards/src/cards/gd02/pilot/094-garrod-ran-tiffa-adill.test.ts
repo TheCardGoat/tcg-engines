@@ -55,7 +55,7 @@ describe("Garrod Ran & Tiffa Adill (GD02-094)", () => {
 
     expectSuccess(p1.assignPilot(gd02GarrodRanTiffaAdill094, hostId));
     const discardChoice = p1.getBoardView().pendingChoice;
-    if (discardChoice?.kind !== "optional") {
+    if (discardChoice?.kind !== "targetSelection") {
       throw new Error("Expected a visible choice to discard for the Deck look");
     }
     expect(discardChoice.controllerId).toBe(PLAYER_ONE);
@@ -106,7 +106,7 @@ describe("Garrod Ran & Tiffa Adill (GD02-094)", () => {
 
     expectSuccess(p1.assignPilot(gd02GarrodRanTiffaAdill094, hostId));
     const discardChoice = p1.getBoardView().pendingChoice;
-    if (discardChoice?.kind !== "optional") {
+    if (discardChoice?.kind !== "targetSelection") {
       throw new Error("Expected a visible choice to discard for the Deck look");
     }
     expect(discardChoice.controllerId).toBe(PLAYER_ONE);

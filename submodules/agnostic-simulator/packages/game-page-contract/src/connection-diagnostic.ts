@@ -58,6 +58,8 @@ export interface SimulatorConnectionDiagnostic {
       | "missing_credentials"
       | "anonymous_welcome"
       | "connect_error"
+      | "viewer_scope_expired"
+      | "scope_renewal"
       | "refresh_failed"
       | "refresh_exhausted";
     latencyMs?: number;

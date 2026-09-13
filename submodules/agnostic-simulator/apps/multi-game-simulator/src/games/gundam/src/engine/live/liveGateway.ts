@@ -2,7 +2,6 @@ import type { ServerToClientEvents } from "@tcg/protocol";
 import type { GameSlug } from "@tcg/simulator-contract";
 import {
   parseGatewayEvent,
-  parseGatewayMessage,
   requestGatewayTicket as requestSharedGatewayTicket,
   type GatewayMessage,
   type GatewaySocket,
@@ -31,6 +30,7 @@ export interface MatchInfo {
 export async function requestGatewayTicket(fetcher: typeof fetch = fetch): Promise<GatewayTicket> {
   return requestSharedGatewayTicket({
     apiBaseUrl: gameApiBaseUrl(GUNDAM_GAME_SLUG),
+    gameSlug: GUNDAM_GAME_SLUG,
     fetcher,
   });
 }
@@ -57,10 +57,6 @@ export async function requestQuickMatchGatewayTicket(
     throw new Error("Quick match gateway ticket response did not include a ticket.");
   }
   return { ticket: body.ticket, authToken: body.authToken ?? undefined };
-}
-
-export function parseLiveGatewayMessage(data: unknown): LiveGatewayMessage | null {
-  return parseGatewayMessage(data);
 }
 
 export function parseLiveGatewayEvent(type: string, payload: unknown): LiveGatewayMessage | null {

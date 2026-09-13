@@ -1,21 +1,55 @@
 import type { GameSlug } from "@tcg/simulator-contract";
 import { normalizeOrigin } from "@tcg/simulator-runtime/gateway";
 
-export type RuntimeApiEnv = Record<string, string | undefined>;
+const SERVER_INTERNAL_RUNTIME_ONLY = Symbol("server-internal-runtime-only");
 
-const PRODUCTION_GAME_RUNTIME_API_ORIGINS: Record<GameSlug, string> = {
+export type RuntimeApiEnv = Record<string, string | undefined> & {
+  [SERVER_INTERNAL_RUNTIME_ONLY]?: true;
+};
+
+export function runtimeApiEnvForServer(env: RuntimeApiEnv): RuntimeApiEnv {
+  const internalRuntimeUrls = env.GAME_RUNTIME_API_INTERNAL_URLS?.trim();
+  const developmentRuntimeUrls =
+    env.NODE_ENV === "production" ? undefined : env.VITE_GAME_RUNTIME_API_URLS?.trim();
+  return {
+    ...env,
+    VITE_GAME_RUNTIME_API_URLS: internalRuntimeUrls || developmentRuntimeUrls,
+    [SERVER_INTERNAL_RUNTIME_ONLY]: true,
+  };
+}
+
+/**
+ * Production runtime API origins.
+ *
+ * The platform consolidated to a single General API deployment that serves
+ * every game runtime from `https://api.tcg.online`, scoped by the game slug in
+ * the URL path (`/v1/games/:gameSlug/...`). Every slug therefore resolves to
+ * the same origin; the slug only selects the path-scoped runtime context.
+ */
+const PUBLIC_PRODUCTION_GAME_RUNTIME_API_ORIGINS: Record<GameSlug, string> = {
   platform: "https://api.tcg.online",
-  cyberpunk: "https://cyberpunk-api.tcg.online",
-  gundam: "https://gundam-api.tcg.online",
-  lorcana: "https://lorcana-api.tcg.online",
-  "one-piece": "https://one-piece-api.tcg.online",
+  cyberpunk: "https://api.tcg.online",
+  gundam: "https://api.tcg.online",
+  lorcana: "https://api.tcg.online",
+  "one-piece": "https://api.tcg.online",
+  riftbound: "https://api.tcg.online",
+  "flesh-and-blood": "https://api.tcg.online",
+  "grand-archive": "https://api.tcg.online",
+  naruto: "https://api.tcg.online",
 };
 
 export function gameApiBaseUrl(gameSlug: GameSlug, env: RuntimeApiEnv = runtimeApiEnv()): string {
   const runtimeUrls = parseRuntimeApiUrlMap(env.VITE_GAME_RUNTIME_API_URLS);
-  return normalizeApiBase(
-    runtimeUrls[gameSlug] ?? PRODUCTION_GAME_RUNTIME_API_ORIGINS[gameSlug] ?? env.VITE_API_URL,
-  );
+  const configuredOrigin = runtimeUrls[gameSlug]?.trim();
+  if (configuredOrigin) {
+    return normalizeApiBase(configuredOrigin);
+  }
+  if (env[SERVER_INTERNAL_RUNTIME_ONLY]) {
+    throw new Error(
+      `GAME_RUNTIME_API_INTERNAL_URLS is missing an internal runtime API origin for '${gameSlug}'`,
+    );
+  }
+  return normalizeApiBase(env.VITE_API_URL ?? PUBLIC_PRODUCTION_GAME_RUNTIME_API_ORIGINS[gameSlug]);
 }
 
 export function playUrl(

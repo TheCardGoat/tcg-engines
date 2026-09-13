@@ -26,5 +26,8 @@ describe("OP10-104 Caribou", () => {
     expect(
       engine.getView("south").players.south.characters.map((card) => card?.instanceId),
     ).toContain(caribouId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+    expect(engine.getView("south").players.south.lifeCount).toBeGreaterThanOrEqual(0);
   });
 });

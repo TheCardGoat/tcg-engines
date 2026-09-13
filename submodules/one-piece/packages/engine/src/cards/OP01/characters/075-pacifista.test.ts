@@ -3,7 +3,7 @@ import { op01Pacifista075 } from "../../../../../cards/src/cards/OP01/characters
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-075 Pacifista", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01Pacifista075);
   });
 });

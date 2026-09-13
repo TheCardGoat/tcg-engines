@@ -1,4 +1,18 @@
+import type {
+  PresentationBundle,
+  PresentationCatalogReference,
+  PresentationRecords,
+  PresentationBindings,
+} from "@tcg/protocol/presentation";
 import type { PlayableGameSlug } from "@tcg/protocol/games";
+import type {
+  DeckDocument,
+  DeckDocumentDiagnostic,
+  DeckDocumentEntryV1,
+  DeckDocumentJsonObject,
+  DeckDocumentV1,
+  DeckDocumentV2,
+} from "@tcg/game-page-contract/deck-document";
 export type { PlayableGameSlug } from "@tcg/protocol/games";
 
 /**
@@ -13,11 +27,37 @@ export interface CardsMaps {
   cardInstances: Record<string, string>;
   /** playerId → instance ids owned by that player. */
   owners: Record<string, string[]>;
+  /**
+   * Optional per-instance deck-section assignment (e.g. "main", "resource",
+   * "side", "leader", "don"). Populated by adapters that receive section-aware
+   * deck input. When present, server engines SHOULD trust this over
+   * catalog-derived card type so the deck builder remains the single source of
+   * truth for deck topology. Omitting it preserves legacy behavior.
+   */
+  instanceSections?: Record<string, string>;
+  /**
+   * Persistent rules-significant deck declarations, keyed by owner. These are
+   * copied from DeckDocumentV2 without generic interpretation so the owning
+   * game can consume choices such as a starting Champion.
+   */
+  deckDeclarationsByOwnerId?: Record<string, DeckDocumentJsonObject>;
+  /**
+   * Presentation overlay. Gameplay identity stays in `cardInstances`; this map
+   * carries the printing chosen for each concrete instance or setup slot.
+   */
+  presentation?: {
+    printingIdByInstanceId: Record<string, string>;
+    printingIdBySetupSlotByOwnerId?: Record<string, Record<string, string>>;
+  };
 }
 
 export interface DeckEntry {
   cardId: string;
   qty: number;
+  /** Game-owned deck section such as "main", "resource", "side", "leader", or "don". */
+  sectionId?: string;
+  /** Presentation printing; omitted when the card id is already the printing. */
+  printingId?: string;
 }
 
 export interface DeckBuildInput {
@@ -25,9 +65,214 @@ export interface DeckBuildInput {
   deck: DeckEntry[];
 }
 
+/** Section-preserving saved deck snapshot supplied to a game-owned pregame. */
+export interface PregameDeckInput {
+  readonly formatId: string;
+  readonly deckVersionId?: string;
+  readonly mainDeck: readonly DeckCard[];
+  readonly inventory: readonly DeckCard[];
+}
+
+export interface PregameValidationResult {
+  readonly valid: boolean;
+  readonly issues: readonly { readonly code: string; readonly message: string }[];
+}
+
+/** Values which may cross the platform's JSON/Redis persistence boundary. */
+export type JsonValue =
+  | null
+  | boolean
+  | number
+  | string
+  | readonly JsonValue[]
+  | { readonly [key: string]: JsonValue };
+
+/** Narrow an opaque adapter value without allowing lossy JSON coercion. */
+export function isJsonValue(value: unknown): value is JsonValue {
+  if (value === null || typeof value === "string" || typeof value === "boolean") return true;
+  if (typeof value === "number") return Number.isFinite(value);
+  if (Array.isArray(value)) {
+    const ownKeys = Reflect.ownKeys(value);
+    if (ownKeys.length !== value.length + 1 || !ownKeys.includes("length")) return false;
+    for (let index = 0; index < value.length; index += 1) {
+      if (!Object.hasOwn(value, index) || !isJsonValue(value[index])) return false;
+    }
+    return ownKeys.every(
+      (key) => key === "length" || (typeof key === "string" && /^\d+$/.test(key)),
+    );
+  }
+  if (typeof value !== "object") return false;
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype !== Object.prototype && prototype !== null) return false;
+  return Object.values(value).every(isJsonValue);
+}
+
+export function parseJsonValue(value: unknown): JsonValue {
+  if (!isJsonValue(value)) throw new Error("Value is not losslessly JSON-serializable");
+  return value;
+}
+
+/**
+ * Game-native pregame bridge. The shared play service persists pool and
+ * selection values as opaque JSON and never interprets game rules.
+ */
+export interface GamePregameAdapter {
+  readonly kind: string;
+  /** Duration of the one preparation timer, in milliseconds. */
+  readonly deadlineMs: number;
+  readonly defaultFormatId: string;
+  /** Omitted: choose turn order before selection. Other games randomize game one and allow later sideboarding before the loser declares order. */
+  readonly turnOrderPolicy?: "random-then-loser-choice";
+  /** Advance game-owned registration state while retaining the immutable match pool. */
+  nextGamePool?(pool: JsonValue, previousSelection: JsonValue): JsonValue;
+  /** Build the private, persisted pool. Runtime definitions must not be included. */
+  createPool(input: PregameDeckInput): JsonValue;
+  /** Validate and normalize a pool loaded from an untrusted persistence boundary. */
+  parsePool(value: unknown): JsonValue;
+  /** Validate and normalize a player selection before it is persisted. */
+  parseSelection(value: unknown): JsonValue;
+  /** Build the private JSON response shown only to the owning player. */
+  projectPoolForPlayer(pool: JsonValue): JsonValue;
+  createDefaultSelection(pool: JsonValue): JsonValue;
+  validateSelection(pool: JsonValue, selection: JsonValue): PregameValidationResult;
+  reconcileSelection(
+    pool: JsonValue,
+    selection: JsonValue,
+  ): { readonly selection: JsonValue; readonly validation: PregameValidationResult };
+  /** Cards which become owned match instances after the selection locks. */
+  materializeDeck(pool: JsonValue, selection: JsonValue): readonly DeckEntry[];
+}
+
 export interface DeckCard {
   cardId: string;
+  /** Stable gameplay identity shared by every printing. */
+  canonicalId?: string;
+  /** Optional cosmetic/physical printing selection. */
+  printingId?: string;
+  /** Game-owned deck section such as `main`, `resource`, or `side`. */
+  sectionId?: string;
   quantity: number;
+}
+
+export interface DeckInterchangeResult {
+  deck: DeckCard[];
+  diagnostics: DeckDocumentDiagnostic[];
+  declarations?: DeckDocumentJsonObject;
+  appearance?: DeckDocumentJsonObject;
+}
+
+export type DeckDocumentValidationMode = "draft" | "registration";
+
+export interface DeckDocumentProjectionOptions {
+  readonly role?: DeckFormatSectionRole;
+  /**
+   * Draft validation preserves incomplete saved work. Registration validation
+   * additionally enforces format counts and required declarations/appearance.
+   */
+  readonly validationMode?: DeckDocumentValidationMode;
+}
+
+export type DeckDocumentSections<TSection extends string> = Readonly<
+  Partial<Record<TSection, readonly DeckDocumentEntryV1[]>>
+>;
+
+export type DeckFormatSectionRole = "validation" | "runtime";
+
+export interface DeckFormatSectionDefinition<TSection extends string = string> {
+  readonly id: TSection;
+  readonly roles: readonly DeckFormatSectionRole[];
+  readonly required: boolean;
+  /** Stable localization key or game-native fallback label for builder clients. */
+  readonly label: string;
+  readonly exactCards?: number;
+  readonly minimumCards?: number;
+  readonly maximumCards?: number;
+  /** Non-contiguous legal totals, for example a Riftbound sideboard of 0 or 8. */
+  readonly allowedCardCounts?: readonly number[];
+}
+
+export type DeckFormatExtensionFieldKind =
+  | "card-reference"
+  | "printing-reference"
+  | "string"
+  | "number"
+  | "boolean"
+  | "json";
+
+/**
+ * A format-owned root extension field. These fields deliberately live beside
+ * section definitions: declarations and cosmetics are not registered copies.
+ */
+export interface DeckFormatExtensionFieldDefinition<TSection extends string = string> {
+  /** Dot-separated path below `declarations` or `appearance`. */
+  readonly id: string;
+  readonly label: string;
+  readonly kind: DeckFormatExtensionFieldKind;
+  /** Completion requirement for builders/legality, not for empty drafts. */
+  readonly required: boolean;
+  /** Optional registered section from which a card reference must be selected. */
+  readonly sourceSectionId?: TSection;
+}
+
+export interface DeckFormatDefinition<
+  TFormat extends string = string,
+  TSection extends string = string,
+> {
+  readonly id: TFormat;
+  /**
+   * A format id identifies one immutable rules interpretation. Breaking rule
+   * changes require a new id so persisted documents are never reinterpreted.
+   */
+  readonly label: string;
+  readonly sections: readonly DeckFormatSectionDefinition<TSection>[];
+  readonly declarationFields?: readonly DeckFormatExtensionFieldDefinition<TSection>[];
+  readonly appearanceFields?: readonly DeckFormatExtensionFieldDefinition<TSection>[];
+}
+
+/**
+ * Game-owned bridge between flat platform deck entries and the versioned
+ * cross-game interchange document. Shared consumers preserve section ids and
+ * printing choices; each game decides how those map to native deck rules.
+ */
+export interface DeckInterchangeAdapter<
+  TGame extends DeckDocumentV1["game"] = DeckDocumentV1["game"],
+  TSection extends string = string,
+  TFormat extends string = string,
+> {
+  readonly game: TGame;
+  readonly defaultFormatId: TFormat;
+  readonly formats: Readonly<Record<TFormat, DeckFormatDefinition<TFormat, TSection>>>;
+  getFormatDefinition(formatId: string): DeckFormatDefinition<TFormat, TSection> | null;
+  createDocument(input: {
+    formatId?: TFormat;
+    name?: string;
+    sections: DeckDocumentSections<TSection>;
+    declarations?: DeckDocumentJsonObject;
+    appearance?: DeckDocumentJsonObject;
+  }): DeckDocumentV2<TGame, TFormat, TSection>;
+  createEmptyDocument(input?: {
+    formatId?: TFormat;
+    name?: string;
+  }): DeckDocumentV2<TGame, TFormat, TSection>;
+  validateDocument(
+    document: DeckDocumentV2<TGame, TFormat, TSection>,
+    options?: { validationMode?: DeckDocumentValidationMode },
+  ): DeckDocumentDiagnostic[];
+  migrateDocument(
+    document: DeckDocument,
+  ):
+    | { ok: true; document: DeckDocumentV2<TGame, TFormat, TSection> }
+    | { ok: false; diagnostics: DeckDocumentDiagnostic[] };
+  projectDocument(
+    document: DeckDocument,
+    options?: DeckDocumentProjectionOptions,
+  ): DeckInterchangeResult;
+  toDocument(input: {
+    formatId: TFormat;
+    name?: string;
+    deck: ReadonlyArray<DeckCard>;
+  }): DeckDocumentV2<TGame, TFormat, TSection>;
+  fromDocument(document: DeckDocument): DeckInterchangeResult;
 }
 
 export type DeckMetadataFacetKind = "identity" | "individual" | "combination";
@@ -41,6 +286,13 @@ export interface DeckMetadataFacetDefinition {
   kind: DeckMetadataFacetKind;
   /** Lower values appear first in capability-driven clients. */
   order: number;
+  /** Engagement projections this game-owned facet is eligible to produce. */
+  ranking: {
+    /** Seasonal Elo derived from completed ranked matches. */
+    specialistSkill: boolean;
+    /** Lifetime and period progress derived from completed PvP matches. */
+    mastery: boolean;
+  };
 }
 
 export interface DeckMetadataMember {
@@ -105,6 +357,21 @@ export interface DeckFormatResult {
   rules: DeckFormatRule[];
 }
 
+/** A game-owned, opponent-visible deck identity such as a Leader or Hero. */
+export interface MatchmakingDeckIdentity {
+  id: string;
+  label: string;
+  imageUrl?: string | null;
+}
+
+/** Optional matchmaking identity capability for games with a single deck-defining card. */
+export interface MatchmakingIdentityAdapter {
+  /** Extract the one identity represented by an already validated deck. */
+  getDeckIdentity(deck: ReadonlyArray<DeckCard>): MatchmakingDeckIdentity | null;
+  /** List identities that may be selected as an opponent filter for a format. */
+  listOpponentIdentities(formatId: string): readonly MatchmakingDeckIdentity[];
+}
+
 /**
  * Minimal card metadata exposed across games. Each game's adapter resolves a
  * `publicId` to one of these. `colors` is the game-native color/affiliation
@@ -139,13 +406,42 @@ export interface GameRuntimeFingerprint {
   };
 }
 
+/** Format-validation facts which are not registered card copies. */
+export interface DeckValidationContext {
+  readonly declarations?: DeckDocumentJsonObject;
+  readonly appearance?: DeckDocumentJsonObject;
+}
+
 /**
  * The contract a game must satisfy to participate in the play module's
  * matchmaking, lobby, and match flows. Lives behind a slug-keyed registry
  * so {@link match-service}, {@link matchmaking-service}, and friends stay
  * game-agnostic.
  */
+/** Optional presentation-only capability. Game-native state is narrowed by its adapter. */
+export interface GamePresentationAdapter {
+  prepare(inputs: readonly DeckBuildInput[]): Promise<PresentationBundle>;
+  collectReferences(state: unknown, cardsMaps: CardsMaps): readonly string[];
+  resolve(
+    catalog: PresentationCatalogReference,
+    references: readonly string[],
+    printingIds: readonly string[],
+  ): Promise<PresentationRecords>;
+  projectBindings(
+    state: unknown,
+    resources: unknown,
+    cardsMaps: CardsMaps,
+    viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
+  ): PresentationBindings;
+}
+
 export interface GameAdapter {
+  presentation?: GamePresentationAdapter;
+  /** Game-owned practice fixtures, already resolved to canonical deck entries. */
+  readonly practiceDecks?: {
+    readonly ids: readonly string[];
+    getDeck(id: string): readonly DeckCard[] | undefined;
+  };
   /** Slug used in URLs and persistence (e.g. "lorcana"). */
   readonly slug: PlayableGameSlug;
   /** Mint a fresh per-match instance gameId. Format is opaque. */
@@ -177,10 +473,31 @@ export interface GameAdapter {
   /** Return the adapter's runtime package fingerprint for diagnostics. */
   getRuntimeFingerprint?(): GameRuntimeFingerprint;
   /**
+   * Extract the game's current public score from a spectator-safe projection.
+   * Values are keyed by game profile id so shared surfaces can align them to
+   * seats without understanding game-native state.
+   */
+  getPublicGameScore?(spectatorView: unknown):
+    | {
+        kind: string;
+        players: Record<string, number>;
+      }
+    | undefined;
+  /**
    * Validate a deck against a format. Returns the per-rule breakdown; throws
    * when the format id is unknown for this game.
    */
-  validateDeckForFormat(formatId: string, deck: ReadonlyArray<DeckCard>): DeckFormatResult;
+  validateDeckForFormat(
+    formatId: string,
+    deck: ReadonlyArray<DeckCard>,
+    context?: DeckValidationContext,
+  ): DeckFormatResult;
+  /** Game-owned identity filters used by matchmaking; omitted for games without one. */
+  readonly matchmakingIdentity?: MatchmakingIdentityAdapter;
+  /** Optional server-authoritative start-of-game selection lifecycle. */
+  readonly pregame?: GamePregameAdapter;
+  /** Optional versioned import/export bridge for builders and practice links. */
+  readonly deckInterchange?: DeckInterchangeAdapter;
   /** Game-owned projection into the shared metadata analytics contract. */
   readonly metadata?: GameMetadataAdapter;
 
@@ -218,6 +535,21 @@ export interface GameAdapter {
   extractCardsMapsFromSnapshot?(
     snapshot: import("../game-engine/types.js").EngineSnapshot,
   ): CardsMaps;
+
+  /**
+   * Derive the adapter-owned `automation` creation seed from per-seat
+   * resolved game settings. Each seat carries its id plus this game's entry
+   * from the platform-resolved settings map (`undefined` for guests/bots);
+   * declared defaults have already been applied by the resolver. Adapters
+   * validate only the fields they understand and fail closed by omitting
+   * seats whose values they cannot read. Returns the seed handed to
+   * {@link import("../game-engine/types.js").ServerEngineCreateInput.automation},
+   * or `undefined` when no seat contributes. Adapters without engine-owned
+   * automation omit this hook and the play module stamps nothing.
+   */
+  automationSeedFromSettings?(
+    seats: ReadonlyArray<{ seatId: string; gameSettings: unknown }>,
+  ): Record<string, unknown> | undefined;
 }
 
 /**

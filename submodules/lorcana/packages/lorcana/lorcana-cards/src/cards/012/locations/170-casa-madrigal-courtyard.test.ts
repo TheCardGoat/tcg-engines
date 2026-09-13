@@ -23,7 +23,13 @@ describe("Casa Madrigal - Courtyard", () => {
 
     expect(testEngine.asPlayerOne().quest(woundedQuester)).toBeSuccessfulCommand();
 
-    // Resolve the triggered ability's sequence of two optional heals in one shot.
+    // Two independent "you may" surfaces — each needs its own accept.
+    expect(
+      testEngine.asPlayerOne().resolvePendingByCard(casaMadrigalCourtyard, {
+        resolveOptional: true,
+        amount: 2,
+      }),
+    ).toBeSuccessfulCommand();
     expect(
       testEngine.asPlayerOne().resolvePendingByCard(casaMadrigalCourtyard, {
         resolveOptional: true,

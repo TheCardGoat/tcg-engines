@@ -1,6 +1,5 @@
 import { MatchChatController } from "@/features/match-chat/match-chat-controller.svelte.js";
 import type { OpponentPresenceTracker } from "@/features/gateway/opponent-presence.svelte.js";
-import type { GatewayClientStore } from "@/features/gateway/gateway-client.svelte.js";
 import type { LorcanaPlayerSettingsMap } from "$lib/features/simulator/model/player-visual-settings.js";
 import type { GameContextParticipant } from "../+page.server.js";
 import type { PlayerMatchMetadata } from "$lib/features/simulator/model/player-match-metadata.js";
@@ -45,7 +44,7 @@ export function mergeWsVisuals(
 export function createMatchChat(params: {
   gameId: string;
   canSend: boolean;
-  gateway: GatewayClientStore;
+  gateway: { send(message: object): boolean };
 }): MatchChatController {
   return new MatchChatController({
     gameId: params.gameId,

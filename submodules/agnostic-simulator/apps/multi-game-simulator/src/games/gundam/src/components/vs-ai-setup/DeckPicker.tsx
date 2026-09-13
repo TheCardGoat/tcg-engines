@@ -1,102 +1,103 @@
-import { cn } from "../../lib/utils.ts";
 import { SAMPLE_DECKS, SAMPLE_DECK_IDS, type SampleDeckId } from "../../data/sample-decks/index.ts";
 
-/**
- * Summarise a deck in a tiny chip row — total card count + a rough
- * card-type breakdown. Pulled from the decklist itself (no catalog
- * lookup) so this stays cheap to render for every deck in the grid.
- */
 function deckTotals(deckId: SampleDeckId): { readonly main: number; readonly resource: number } {
   const list = SAMPLE_DECKS[deckId];
   const main = list.cards.reduce((sum, entry) => sum + entry.count, 0);
   return { main, resource: list.resource.count };
 }
 
+const DECK_GROUPS = [
+  {
+    label: "Featured decks",
+    ids: SAMPLE_DECK_IDS.filter((id) => !id.startsWith("topdecks-") && !id.startsWith("coverage-")),
+  },
+  {
+    label: "Tournament decks",
+    ids: SAMPLE_DECK_IDS.filter((id) => id.startsWith("topdecks-")),
+  },
+  {
+    label: "Card coverage fixtures",
+    ids: SAMPLE_DECK_IDS.filter((id) => id.startsWith("coverage-")),
+  },
+] as const;
+
 export interface DeckPickerProps {
   readonly label: string;
   readonly selected: SampleDeckId;
   readonly onSelect: (id: SampleDeckId) => void;
-  /** Ids to visually mark as the opponent's pick (dimmed, not
-   * disabled — same deck vs self is allowed in Gundam TCG). Purely
-   * cosmetic. */
   readonly opponentId?: SampleDeckId;
   readonly idPrefix: string;
 }
 
 export function DeckPicker({ label, selected, onSelect, opponentId, idPrefix }: DeckPickerProps) {
+  const deck = SAMPLE_DECKS[selected];
+  const totals = deckTotals(selected);
+  const isMirrorMatch = selected === opponentId;
+  const descriptionId = `${idPrefix}-description`;
+
+  const handleChange = (value: string) => {
+    const deckId = SAMPLE_DECK_IDS.find((id) => id === value);
+    if (deckId) onSelect(deckId);
+  };
+
   return (
-    <fieldset className="min-w-0">
-      <legend className="gd-mono text-hud-xs font-bold text-hud-info mb-2 tracking-hud-label uppercase">
+    <div className="min-w-0">
+      <label htmlFor={idPrefix} className="mb-2 block text-sm font-bold text-hud-text">
         {label}
-      </legend>
-      <div role="radiogroup" aria-label={label} className="grid gap-2 grid-cols-1 sm:grid-cols-3">
-        {SAMPLE_DECK_IDS.map((id) => {
-          const deck = SAMPLE_DECKS[id];
-          const isSelected = id === selected;
-          const isOpponent = id === opponentId;
-          const totals = deckTotals(id);
-          const inputId = `${idPrefix}-${id}`;
-          return (
-            <label
-              key={id}
-              htmlFor={inputId}
-              className={cn(
-                "relative flex flex-col gap-1 cursor-pointer pt-2.5 pr-3 pb-2.5 pl-3 clip-hud-6",
-                "bg-[linear-gradient(180deg,rgba(255,255,255,.85),rgba(248,250,254,.95))]",
-                "border transition-[border-color,box-shadow,filter] duration-150",
-                isSelected
-                  ? "border-hud-accent-hot shadow-[0_0_16px_rgba(45,107,255,.35)]"
-                  : "border-hud-border hover:border-hud-border-hot",
-                isOpponent && !isSelected && "opacity-60",
-              )}
-            >
-              <input
-                type="radio"
-                id={inputId}
-                name={idPrefix}
-                value={id}
-                checked={isSelected}
-                onChange={() => onSelect(id)}
-                className="sr-only"
-              />
-              <div className="flex items-start justify-between gap-2">
-                <span
-                  className={cn(
-                    "gd-display font-extrabold tracking-hud-body text-hud-md leading-tight",
-                    isSelected ? "text-hud-accent-hot" : "text-hud-text",
-                  )}
-                >
-                  {deck.name}
-                </span>
-                {isOpponent && (
-                  <span
-                    className="gd-mono text-hud-2xs font-bold tracking-hud-label uppercase text-hud-danger/80 flex-shrink-0"
-                    aria-hidden="true"
-                  >
-                    OPP
-                  </span>
-                )}
-              </div>
-              {deck.description && (
-                <span className="text-hud-xs text-hud-text-muted leading-snug">
-                  {deck.description}
-                </span>
-              )}
-              <div className="mt-1 flex gap-2 flex-wrap">
-                <Chip>{totals.main}-MAIN</Chip>
-                <Chip>{totals.resource}-RES</Chip>
-              </div>
-            </label>
-          );
-        })}
+      </label>
+      <div className="relative">
+        <select
+          id={idPrefix}
+          name={idPrefix}
+          value={selected}
+          onChange={(event) => handleChange(event.currentTarget.value)}
+          aria-describedby={descriptionId}
+          className="h-11 w-full appearance-none clip-hud-6 border border-hud-border bg-hud-surface py-2 pl-3 pr-10 text-sm font-bold text-hud-text shadow-sm transition hover:border-hud-border-hot focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-hud-info"
+        >
+          {DECK_GROUPS.map((group) => (
+            <optgroup key={group.label} label={group.label}>
+              {group.ids.map((id) => (
+                <option key={id} value={id}>
+                  {SAMPLE_DECKS[id].name}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+        <svg
+          viewBox="0 0 20 20"
+          aria-hidden="true"
+          className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-hud-accent-hot"
+        >
+          <path d="m5 7.5 5 5 5-5" fill="none" stroke="currentColor" strokeWidth="1.75" />
+        </svg>
       </div>
-    </fieldset>
+
+      <div
+        id={descriptionId}
+        className="mt-2 min-h-20 clip-hud-6 bg-hud-surface/70 px-3 py-2.5 ring-1 ring-inset ring-hud-border/70"
+      >
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="gd-display text-sm font-extrabold text-hud-text">{deck.name}</span>
+          <Chip>{totals.main} main</Chip>
+          <Chip>{totals.resource} resource</Chip>
+          {isMirrorMatch ? (
+            <span className="text-[10px] font-bold uppercase tracking-hud-label text-hud-danger">
+              Mirror match
+            </span>
+          ) : null}
+        </div>
+        {deck.description ? (
+          <p className="mt-1 text-xs leading-5 text-hud-text-muted">{deck.description}</p>
+        ) : null}
+      </div>
+    </div>
   );
 }
 
 function Chip({ children }: { readonly children: React.ReactNode }) {
   return (
-    <span className="gd-mono text-hud-2xs font-bold tracking-hud-label uppercase text-hud-text-faint border border-hud-border/60 px-1.5 py-0.5 clip-hud-4">
+    <span className="rounded-full bg-hud-bg px-2 py-0.5 text-[10px] font-bold uppercase tracking-hud-label text-hud-text-muted ring-1 ring-inset ring-hud-border/70">
       {children}
     </span>
   );

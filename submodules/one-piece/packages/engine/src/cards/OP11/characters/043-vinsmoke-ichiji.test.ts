@@ -31,6 +31,8 @@ describe("OP11-043 Vinsmoke Ichiji", () => {
     const lifeBefore = engine.getView("south").players.south.lifeCount;
 
     engine.declareAttack(attackers[0]!, engine.leader("south"), "north");
+    // "This effect can be activated when…" is optional; accept then choose a target.
+    engine.accept("south");
     const power = engine.pendingDecision("effectTargetSelection", "south");
     expect(power.actorId).toBe("south");
     const powerStep = power.steps[0];
@@ -82,5 +84,29 @@ describe("OP11-043 Vinsmoke Ichiji", () => {
     if (blocker?.kind !== "selectEntity") throw new Error("Expected Ichiji's Blocker choice.");
     expect(blocker.candidates.map((candidate) => candidate.ref.id)).toContain(ichijiId);
     expect(engine.getView("south").players.south.deckCount).toBe(deckBefore);
+  });
+
+  test("may decline the optional opponent-attack activation without power or deck trash", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op11VinsmokeIchiji043, op11VinsmokeNiji045],
+        deck: Array.from({ length: 8 }, () => eb01Doma005),
+      },
+      { character: [{ card: op11Hatchan034, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const attackerId = engine.findCardInZone("north", "character", op11Hatchan034);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const lifeBefore = engine.getView("south").players.south.lifeCount;
+
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+    expect(engine.pendingDecision("effectOptional", "south").kind).toBe("confirm");
+    engine.decline("south");
+
+    engine.resolveDecision("battleBlocker", { selectedIds: ["skip"] }, "south");
+    const view = engine.getView("south");
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.leader.power).toBe(5000);
+    expect(view.players.south.lifeCount).toBe(lifeBefore - 1);
   });
 });

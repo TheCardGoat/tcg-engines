@@ -1,6 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
   LEGACY_CYBERPUNK_USER_CONFIG_STORAGE_KEY,
+  SIMULATOR_ANIMATION_SPEED_STORAGE_KEY,
+  SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY,
   SIMULATOR_SOUND_VOLUME_STORAGE_KEY,
   clampSoundVolume,
   normalizeSimulatorSettings,
@@ -17,23 +19,51 @@ describe("simulator settings", () => {
   });
 
   test("normalizes settings with defaults", () => {
-    expect(normalizeSimulatorSettings(null)).toEqual({ soundVolume: 50 });
-    expect(normalizeSimulatorSettings({ soundVolume: 150 })).toEqual({ soundVolume: 100 });
+    expect(normalizeSimulatorSettings(null)).toEqual({
+      soundVolume: 50,
+      cardInteractionMode: "detailed",
+      animationSpeed: "normal",
+    });
+    expect(
+      normalizeSimulatorSettings({
+        soundVolume: 150,
+        cardInteractionMode: "quick",
+        animationSpeed: "slow",
+      }),
+    ).toEqual({
+      soundVolume: 100,
+      cardInteractionMode: "quick",
+      animationSpeed: "slow",
+    });
   });
 
-  test("reads and writes local sound volume", () => {
+  test("reads and writes local simulator preferences", () => {
     const storage = new MemoryStorage();
-    writeLocalSimulatorSettings(storage, { soundVolume: 24 });
+    writeLocalSimulatorSettings(storage, {
+      soundVolume: 24,
+      cardInteractionMode: "quick",
+      animationSpeed: "slow",
+    });
 
     expect(storage.getItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY)).toBe("24");
-    expect(readLocalSimulatorSettings(storage)).toEqual({ soundVolume: 24 });
+    expect(storage.getItem(SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY)).toBe("quick");
+    expect(storage.getItem(SIMULATOR_ANIMATION_SPEED_STORAGE_KEY)).toBe("slow");
+    expect(readLocalSimulatorSettings(storage)).toEqual({
+      soundVolume: 24,
+      cardInteractionMode: "quick",
+      animationSpeed: "slow",
+    });
   });
 
   test("migrates legacy Cyberpunk sound volume", () => {
     const storage = new MemoryStorage();
     storage.setItem(LEGACY_CYBERPUNK_USER_CONFIG_STORAGE_KEY, JSON.stringify({ soundVolume: 150 }));
 
-    expect(readLocalSimulatorSettings(storage)).toEqual({ soundVolume: 100 });
+    expect(readLocalSimulatorSettings(storage)).toEqual({
+      soundVolume: 100,
+      cardInteractionMode: "detailed",
+      animationSpeed: "normal",
+    });
     expect(storage.getItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY)).toBe("100");
   });
 });

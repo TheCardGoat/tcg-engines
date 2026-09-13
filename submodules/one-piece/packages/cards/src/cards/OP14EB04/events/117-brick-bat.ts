@@ -58,12 +58,29 @@ export const op14eb04BrickBat117: EventCard = {
         actions: [
           {
             action: "play",
-            source: { player: "self", zone: "trash" },
-            count: { amount: 1, upTo: true },
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
             filters: [
-              { filter: "cardCategory", value: "character" },
-              { filter: "cost", comparison: "lte", value: 4 },
-              { filter: "trait", value: "Thriller Bark Pirates", match: "includes" },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
             ],
             playState: "rested",
           },

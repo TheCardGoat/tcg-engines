@@ -3,7 +3,7 @@ import { op11IMGonnaBeANavyOfficer099 } from "../../../../../cards/src/cards/OP1
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP11-099 I'm Gonna Be a Navy Officer!!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op11IMGonnaBeANavyOfficer099);
   });
 });

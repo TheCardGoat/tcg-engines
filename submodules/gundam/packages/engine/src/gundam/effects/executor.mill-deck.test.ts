@@ -41,6 +41,24 @@ describe("executor — millDeck", () => {
     expect(engine.getCardCount({ zone: "trash", playerId: PLAYER_ONE })).toBe(p1TrashBefore + 3);
     // Opponent deck untouched.
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_TWO })).toBe(p2DeckBefore);
+    expect(
+      engine
+        .getRuntime()
+        .getMoveLogHistory()
+        .flatMap((log) => log.outcomes?.cardsMoved ?? [])
+        .filter((move) => move.from === "deck" && move.to === "trash"),
+    ).toHaveLength(3);
+    expect(
+      engine
+        .getRuntime()
+        .getPacketAnimationHistory()
+        .filter(
+          ({ animation }) =>
+            animation.data.kind === "cardMove" &&
+            animation.data.fromZone === "deck" &&
+            animation.data.toZone === "trash",
+        ),
+    ).toHaveLength(3);
   });
 
   it("owner=opponent mills the opposing player's deck into their trash", () => {

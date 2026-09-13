@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "game": "one-piece",
+  "candidateId": "heuristic",
+  "parentStrategyId": "value-ranked",
+  "informationPolicy": "oracle",
+  "hypothesis": "Rules-aware heuristic play (on-curve development, DON!! planning, pressure attacks, counter/blocker economy) decisively outperforms value-ranked baseline play.",
+  "engineRevision": "fnv1a32:25ded2b0",
+  "cardCatalogHash": "fnv1a32:13fb511e",
+  "_comment": "engineRevision/cardCatalogHash above are historical values from the completed heuristic promotion. The one-piece adapter now computes both honestly (engine source tree + full card catalog), so re-running evaluate with this file will report drift; regenerate the manifest via train to reproduce.",
+  "adapterVersion": "1",
+  "changes": {
+    "strategy": "heuristic command scoring plus prompt-level blocker/counter/trigger/target resolution"
+  },
+  "evaluation": {
+    "suiteId": "promotion",
+    "seedBase": "stable",
+    "minimumBlocks": 200,
+    "maximumBlocks": 400,
+    "batchSize": 100,
+    "confidenceLevel": 0.95,
+    "minimumMeanImprovement": 0.02,
+    "maximumCellRegression": 0.05
+  }
+}

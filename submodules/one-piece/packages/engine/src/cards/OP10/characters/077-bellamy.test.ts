@@ -30,5 +30,32 @@ describe("OP10-077 Bellamy", () => {
       donDeckCount: 0,
     });
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { character: [op10Bellamy077], activeDon: 2, donDeckCount: 1 },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const bellamyId = engine.findCardInZone("north", "character", op10Bellamy077);
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    const blocker = engine.pendingDecision("battleBlocker", "north").steps[0];
+    if (blocker?.kind !== "selectEntity") throw new Error("Expected Bellamy's Blocker choice.");
+    engine.resolveDecision("battleBlocker", { selectedIds: [bellamyId] }, "north");
+
+    const before = engine.getView("north").players.north;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+    const after = engine.getView("north").players.north;
+    // Declined On Block: no rest 2 DON!! and no added active DON!! from the deck.
+    expect(after.activeDon).toBe(2);
+    expect(after.restedDon).toBe(0);
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(engine.getView("north").prompts).toHaveLength(0);
   });
 });

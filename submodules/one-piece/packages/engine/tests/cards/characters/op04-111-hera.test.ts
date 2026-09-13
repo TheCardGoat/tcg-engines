@@ -90,4 +90,39 @@ describe("OP04-111 Hera", () => {
       engine.getView("north").players.north.trash.map((card) => card.instanceId),
     ).not.toContain(triggerId);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [
+        op04Hera111,
+        op04Hera111,
+        op04Rabiyan113,
+        eb01Doma005,
+        { card: op03CharlotteLinlin114, rested: true },
+      ],
+    });
+    const heraIds = engine
+      .getView("south")
+      .players.south.characters.filter((card) => card?.cardId === op04Hera111.id)
+      .map((card) => card!.instanceId);
+    const sourceId = heraIds[0]!;
+
+    engine.activateEffect(sourceId, "activateMain", "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

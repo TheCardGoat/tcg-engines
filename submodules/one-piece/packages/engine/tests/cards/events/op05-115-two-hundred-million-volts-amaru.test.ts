@@ -80,4 +80,41 @@ describe("OP05-115 Two-Hundred Million Volts Amaru", () => {
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Life Trigger so hand trash and Life add do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [eb01Doma005, eb01Fourtricks025],
+        life: [op05TwoHundredMillionVoltsAmaru115],
+        deck: [eb01MountainGod018, eb01Doma005],
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const before = engine.getView("north").players.north;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const handIds = before.hand.map((card) => card.instanceId);
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.length).toBe(handBefore);
+    expect(view.players.north.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining(handIds),
+    );
+    expect(view.players.north.lifeCount).toBe(lifeBefore);
+    expect(view.players.north.deckCount).toBe(deckBefore);
+    expect(view.players.north.trash.map((card) => card.cardId)).toContain(
+      op05TwoHundredMillionVoltsAmaru115.id,
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

@@ -7,11 +7,78 @@ import {
 } from "./move-logs.js";
 
 describe("canonical engine move logs", () => {
+  it("replaces a public narrative message with only the viewer's private version", () => {
+    const log = {
+      kind: "player-narrative" as const,
+      schemaVersion: 1,
+      commandId: "command-1",
+      moveType: "draw",
+      actorId: "player-one",
+      timestamp: 10,
+      turnNumber: 2,
+      turnPlayerId: "player-one",
+      phase: "action",
+      entries: [
+        {
+          entryId: "command-1:entry-0",
+          publicMessage: { key: "test.draw", values: { count: 1 } },
+          privateMessageByPlayerId: {
+            "player-one": { key: "test.draw.private", values: { cardName: "Snatch" } },
+          },
+        },
+      ],
+    };
+
+    expect(selectVisibleEngineLogForViewer(log, "player-one")).toMatchObject({
+      turnPlayerId: "player-one",
+      entries: [
+        {
+          entryId: "command-1:entry-0",
+          message: { key: "test.draw.private", values: { cardName: "Snatch" } },
+        },
+      ],
+    });
+    expect(selectVisibleEngineLogForViewer(log, "player-two")).toMatchObject({
+      entries: [
+        {
+          entryId: "command-1:entry-0",
+          message: { key: "test.draw", values: { count: 1 } },
+        },
+      ],
+    });
+    expect(selectVisibleEngineLogForViewer(log, null)).toMatchObject({
+      entries: [
+        {
+          entryId: "command-1:entry-0",
+          message: { key: "test.draw", values: { count: 1 } },
+        },
+      ],
+    });
+  });
+
+  it("fails closed for a malformed player-narrative envelope", () => {
+    const malformed = {
+      kind: "player-narrative",
+      entries: [
+        {
+          entryId: "command-1:entry-0",
+          publicMessage: { key: "test.draw", values: { count: 1 } },
+          privateMessageByPlayerId: {
+            "player-one": { key: "test.draw.private", values: { cardName: "Snatch" } },
+          },
+        },
+      ],
+    };
+
+    expect(selectVisibleEngineLogForViewer(malformed, "player-two")).toBeNull();
+  });
+
   it("moves private field values into per-player appendices", () => {
     const log = createCanonicalEngineMoveLog({
       moveType: "draw",
       playerId: "player-one",
       timestamp: 10,
+      sequence: 1,
       turnNumber: 2,
       messages: [
         createEngineLogMessage({
@@ -34,6 +101,7 @@ describe("canonical engine move logs", () => {
         },
       },
     ]);
+    expect(log.sequence).toBe(1);
     expect(log.privateByPlayerId?.["player-one"]).toEqual([
       {
         key: "test.draw",

@@ -41,6 +41,7 @@ export type {
   PilotKeyword,
   SourceStatRef,
   TargetFilter,
+  UnitTargetFilter,
   TargetOwner,
   TokenSpec,
 } from "./effects.ts";

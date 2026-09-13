@@ -10,23 +10,32 @@ interface FixtureIndexProps {
 
 const LATEST_RELEASE_FIXTURES = [
   {
-    id: "progLiveWithTheAftermathRetail",
-    title: "Live with the Aftermath",
+    id: "retailWtnc22FixerCallQa",
+    title: "Fixer Call / Spend",
     steps:
-      "Play the Program, choose your Mox Inciters, then switch to P2 and choose Corpo Security.",
+      "Call Dexter, Muamar, or Padre (1 Eddie, once per turn). Refresh to try another. After a Call, Spend that Legend on a Gig. Negative: Call twice in one turn.",
   },
   {
-    id: "unitOctantRetail",
-    title: "Octant",
+    id: "retailWtnc22CombatStealQa",
+    title: "Combat / steal / programs",
     steps:
-      "Play Octant with the two 8+ Gigs already in your Gig area; it costs 5 €$ instead of 7 €$.",
+      "Play Chrome Fang, Gunpoint, Reaper, or Delamain, or attack with equipped Goons / Ruthless. Refresh between cards. Street Cred starts 5 vs 18 so the Rival picks Gunpoint's mode.",
+  },
+  {
+    id: "retailWtnc22CostGearQa",
+    title: "Costs / Gear / Heywood",
+    steps:
+      "Check Trauma Team at 3 €$ and Zetatech Berserk at 4 €$. First Cyberware is −3 from Viktor. Attach Adrenaline (P2 has 2 more Gigs). Fight Swordwise to see Deadman replace a defeat. Refresh between paths.",
+  },
+  {
+    id: "retailWtnc22TurnTriggerQa",
+    title: "Turn triggers / Radioport / Wakako",
+    steps:
+      "Panam free-Calls; Radioport on spend can Call Arasaka Goro, not River Ward. MaxTac may swap Gigs. Shattered Memories starts at 6 discarded = d6 6. Pass the turn to ready spent Muramasa. Refresh between cards.",
   },
 ] as const;
 
 export function FixtureIndex({ variant = "dev" }: FixtureIndexProps) {
-  if (variant === "dev" && !import.meta.env.DEV) {
-    return <NotFound />;
-  }
   const scenarios = listScenarios();
   const isHome = variant === "home";
 

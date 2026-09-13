@@ -37,7 +37,7 @@ export interface ActiveEffectEntry {
  * type doubles as a compile-time guard against typos in CSS selectors
  * or test queries.
  */
-export type TargetingState = "candidate" | "invalid";
+export type TargetingState = "candidate" | "link-candidate" | "invalid";
 
 export interface GameCardData {
   readonly id?: string;
@@ -53,6 +53,10 @@ export interface GameCardData {
   readonly baseHp?: number | null;
   readonly damage?: number;
   readonly effect?: string;
+  /** One printed rules block per engine-owned effect, preserving source wording. */
+  readonly effectBlocks?: readonly string[];
+  /** Whether this card exposes an activated effect the player can deliberately use. */
+  readonly hasActivatedAbility?: boolean;
   readonly keywords?: readonly KeywordEffectEntry[];
   readonly grantedKeywords?: readonly string[];
   readonly traits?: readonly string[];
@@ -81,14 +85,6 @@ export interface GameCardData {
   readonly pairedPilot?: GameCardData;
 }
 
-export interface PromptAction {
-  readonly label: ReactNode;
-  readonly onClick: () => void;
-  readonly kind?: "default" | "primary" | "danger";
-  readonly disabled?: boolean;
-  readonly testId?: string;
-}
-
 export interface DOMRectLike {
   readonly left: number;
   readonly top: number;
@@ -99,12 +95,16 @@ export interface DOMRectLike {
 }
 
 export interface PlayerInfo {
+  /** Stable engine/player id for state, zone, and timer lookups. */
+  readonly id?: string;
+  /** Player-facing name. Falls back to `id` when no profile name is available. */
   readonly name: string;
   readonly clock?: string | number;
   readonly timer?: ClockSnapshot;
   readonly isOwnClock?: boolean;
   readonly colors?: readonly CardColor[];
   readonly deck?: number;
+  readonly resourceDeck?: number;
   readonly discard?: number;
   readonly shields?: number;
   readonly resourcesAvailable?: number;
@@ -126,76 +126,6 @@ export interface LogItem {
 export interface LogTurn {
   readonly turn: number;
   readonly groups: readonly LogItem[];
-}
-
-export interface PendingEffectSource {
-  readonly name: string;
-  readonly cost?: number;
-  readonly color?: CardColor;
-}
-
-export type PendingEffectKind =
-  | "yes-no"
-  | "select-hand"
-  | "select-play"
-  | "select-any"
-  | "scry"
-  | "deck-look"
-  | "choose-one"
-  | "confirm";
-
-/**
- * One button in a `choose-one` modal prompt — used by `ResolveBar` when
- * `kind === "choose-one"` (e.g. ST04-012 Striker Pack: "deploy 1 [Sword
- * Strike] or 1 [Launcher Strike]"). Container builds one entry per
- * option from `PendingChooseOnePrompt.options` and wires `onClick` to
- * submit the matching `chooseOneAnswers`.
- */
-export interface PendingEffectChoiceOption {
-  readonly index: number;
-  readonly label: string;
-  readonly onClick: () => void;
-  readonly previewCard?: GameCardData;
-}
-
-export interface PendingEffect {
-  readonly id: string;
-  readonly source: PendingEffectSource;
-  readonly title: string;
-  readonly kind: PendingEffectKind;
-  readonly acceptLabel?: string;
-  readonly declineLabel?: string;
-  readonly confirmDisabled?: boolean;
-  readonly description?: string;
-  readonly code?: string;
-  readonly handLimit?: number;
-  readonly revealed?: readonly GameCardData[];
-  readonly deckLook?: DeckLookEffect;
-  /** Present when `kind === "choose-one"`. */
-  readonly chooseOptions?: readonly PendingEffectChoiceOption[];
-}
-
-export interface ScryConfirmResult {
-  readonly toHand: readonly GameCardData[];
-  readonly toBottom: readonly GameCardData[];
-}
-
-export interface DeckLookEffect {
-  readonly directiveIndex: number;
-  readonly returnMode: "topAndBottom" | "chooseTop" | "topOrTrash";
-  readonly remainingDestination?: "bottom" | "trash";
-  readonly randomizeRemainingToBottom: boolean;
-  readonly tutorDestination: "hand" | "battleArea";
-  readonly revealed: readonly GameCardData[];
-  readonly legalTutorIds: readonly string[];
-}
-
-export interface DeckLookConfirmResult {
-  readonly directiveIndex: number;
-  readonly tutorCardId?: string;
-  readonly toTop: readonly GameCardData[];
-  readonly toBottom: readonly GameCardData[];
-  readonly toTrash: readonly GameCardData[];
 }
 
 export type StyleOverrides = CSSProperties;

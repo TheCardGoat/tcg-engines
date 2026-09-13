@@ -63,7 +63,9 @@ function summarizeInput(input: InteractionInput): string {
       return `${input.id}: number`;
     case "ordering":
       return `${input.id}: order ${input.min}-${input.max} ${input.entityKind} candidates=${input.candidates.filter((candidate) => candidate.enabled !== false).length}`;
-    default:
-      return input;
+    case "entity-partition":
+      return `${input.id}: partition ${input.entityKind} candidates=${input.candidates.filter((candidate) => candidate.enabled !== false).length} routes=${input.routes.length}`;
+    case "entity-allocation":
+      return `${input.id}: allocate ${input.totalMin}-${input.totalMax} ${input.entityKinds.join("|")} candidates=${input.candidates.filter((candidate) => candidate.enabled !== false).length}`;
   }
 }

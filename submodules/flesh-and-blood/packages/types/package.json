@@ -1,0 +1,35 @@
+{
+  "name": "@tcg/flesh-and-blood-types",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.mjs"
+    },
+    "./catalog": {
+      "types": "./src/catalog.ts",
+      "default": "./dist/catalog.mjs"
+    },
+    "./authoring": {
+      "types": "./src/authoring.ts",
+      "default": "./dist/authoring.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack src/index.ts src/catalog.ts src/authoring.ts",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "test": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@tcg/card-model": "link:../../../agnostic-simulator/packages/card-model"
+  },
+  "devDependencies": {
+    "@typescript/native": "catalog:",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

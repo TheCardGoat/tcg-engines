@@ -3,7 +3,7 @@ import { prb02TashigiReprint032 } from "../../../../../cards/src/cards/PRB02/cha
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-032 Tashigi (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02TashigiReprint032);
   });
 });

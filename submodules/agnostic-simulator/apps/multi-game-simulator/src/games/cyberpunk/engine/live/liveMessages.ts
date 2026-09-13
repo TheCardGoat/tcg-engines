@@ -1,17 +1,17 @@
-import type { MatchState } from "@tcg/cyberpunk-engine";
 import { EngineInteractionView, type ServerToClientEvents } from "@tcg/protocol";
-import {
-  parseLiveGatewayEvent,
-  parseLiveGatewayMessage,
-  type LiveGatewayMessage,
-  type MatchInfo,
-} from "./liveGateway";
+import { parseLiveGatewayEvent, type LiveGatewayMessage, type MatchInfo } from "./liveGateway";
 import {
   buildLiveMatchGameHref,
   projectLiveStateForSimulator,
   projectLiveValueForSimulator,
   type LiveMatchContext,
 } from "./matchContext";
+import {
+  isFilteredMatchView,
+  isMatchState,
+  viewerProjectionToMatchState,
+  type CyberpunkViewerState,
+} from "./liveState";
 
 export type LiveMessageEffect =
   | { type: "ignore" }
@@ -26,12 +26,22 @@ export function prepareLiveContext(context: LiveMatchContext): LiveMatchContext 
     ...context,
     game: {
       ...context.game,
-      state: projectLiveStateForSimulator(context.game.state),
+      state: projectLiveStateForSimulator(context.game.state, context.game.actorIds),
+      ...(context.game.viewerProjection
+        ? {
+            viewerProjection: projectLiveValueForSimulator(
+              context.game.viewerProjection,
+              context.game.state,
+              context.game.actorIds,
+            ),
+          }
+        : {}),
       ...(context.game.interactionView
         ? {
             interactionView: projectLiveValueForSimulator(
               context.game.interactionView,
               context.game.state,
+              context.game.actorIds,
             ),
           }
         : {}),
@@ -61,8 +71,12 @@ export function reduceLiveGatewayMessage(
   const version =
     ("stateVersion" in message && typeof message.stateVersion === "number"
       ? message.stateVersion
-      : state.ctx.stateID) ?? context.game.version;
-  const isTerminalState = state.G.gameEnded === true;
+      : viewerStateVersion(state)) ?? context.game.version;
+  const isTerminalState = viewerStateGameEnded(state);
+  const viewerProjection = isFilteredMatchView(state) ? state : undefined;
+  const rendererState = isMatchState(state)
+    ? state
+    : viewerProjectionToMatchState(state, context.match.matchId);
   const interactionView =
     "interactionView" in message ? parseInteractionView(message.interactionView) : undefined;
   const matchInfo = matchInfoFromMessage(message);
@@ -83,16 +97,13 @@ export function reduceLiveGatewayMessage(
           message.type === "game_ended" || matchInfo?.matchCompleted || isTerminalState
             ? "completed"
             : context.game.status,
-        state,
+        state: rendererState,
+        ...(viewerProjection ? { viewerProjection } : {}),
         version,
         ...(interactionView ? { interactionView } : {}),
       },
     }),
   };
-}
-
-export function parseGatewayMessage(data: unknown): LiveGatewayMessage | null {
-  return parseLiveGatewayMessage(data);
 }
 
 export function parseGatewayEvent(
@@ -107,7 +118,8 @@ function redirectForMessage(
   options: { matchId: string; gameId: string; search: string; basename?: string },
 ): string | null {
   const matchInfo = matchInfoFromMessage(message);
-  const terminalState = message.type === "game_ended" || stateFromMessage(message)?.G.gameEnded;
+  const terminalState =
+    message.type === "game_ended" || viewerStateGameEnded(stateFromMessage(message));
   if (matchInfo?.nextGameId && matchInfo.nextGameId !== options.gameId && !terminalState) {
     return nextGameHref(options.matchId, matchInfo.nextGameId, options.search, options.basename);
   }
@@ -196,12 +208,23 @@ function terminalContextFromMessage(
   };
 }
 
-function stateFromMessage(message: LiveGatewayMessage): MatchState | null {
+function stateFromMessage(message: LiveGatewayMessage): CyberpunkViewerState | null {
   if (!("state" in message) || !message.state || typeof message.state !== "object") {
     return null;
   }
-  const state = message.state as Partial<MatchState>;
-  return state.G && state.ctx ? (message.state as MatchState) : null;
+  if (isMatchState(message.state) || isFilteredMatchView(message.state)) {
+    return message.state;
+  }
+  return null;
+}
+
+function viewerStateVersion(state: CyberpunkViewerState): number {
+  return isMatchState(state) ? state.ctx.stateID : state.stateID;
+}
+
+function viewerStateGameEnded(state: CyberpunkViewerState | null): boolean {
+  if (!state) return false;
+  return isMatchState(state) ? state.G.gameEnded : state.gameEnded;
 }
 
 function parseInteractionView(value: unknown): LiveMatchContext["game"]["interactionView"] {

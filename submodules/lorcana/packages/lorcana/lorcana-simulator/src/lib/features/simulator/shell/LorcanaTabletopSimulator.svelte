@@ -19,7 +19,7 @@
   import { toast } from "svelte-sonner";
   import { DragDropProvider } from "@dnd-kit/svelte";
   import { Feedback, PointerActivationConstraints, PointerSensor } from "@dnd-kit/dom";
-  import type { LorcanaEngineBase, LorcanaProjectedBoardView } from "@tcg/lorcana-engine";
+  import type { AuthoritativeCommandStatus, LorcanaEngineBase } from "@tcg/lorcana-engine";
   import type { PlayerInteractionView } from "@tcg/lorcana-interaction";
   import type {
     ExecutableMoveEntry,
@@ -35,6 +35,7 @@
   import type { MatchChatController } from "@/features/match-chat/match-chat-controller.svelte.js";
 
   import LorcanaSimulatorSidebar from "./LorcanaSimulatorSidebar.svelte";
+  import AuthoritativeCommandBanner from "./AuthoritativeCommandBanner.svelte";
   import LorcanaCompactPanels from "./LorcanaCompactPanels.svelte";
   import PlayerSettingsDialog from "@/features/simulator/dialogs/PlayerSettingsDialog.svelte";
   import SimulatorSupportDialog from "@/features/simulator/dialogs/SimulatorSupportDialog.svelte";
@@ -69,6 +70,7 @@
     reopenPostGameModal,
     syncPostGameModalState,
   } from "@/features/simulator/post-game/modal-state.js";
+  import { getTerminalPostGameBoard } from "@/features/simulator/post-game/post-game-readiness.js";
   import { buildPostGameSummary } from "@/features/simulator/post-game/summary.js";
   import type { HotkeyMode } from "@/features/simulator/context/game-context.svelte.js";
   import {
@@ -82,7 +84,7 @@
   import type { ServerGameplaySettings } from "@/features/settings/player-settings-store.svelte.js";
   import type { OpponentPresenceTracker } from "@/features/gateway/opponent-presence.svelte.js";
   import type { OpponentAfkTracker } from "@/features/gateway/opponent-afk.svelte.js";
-  import type { ConnectionStatus } from "@/features/gateway/gateway-client.js";
+  import type { ConnectionStatus } from "@/features/gateway/gateway-client.svelte.js";
   import type { MatchNavigationContext } from "@/features/simulator/model/contracts.js";
 
   interface LorcanaTabletopSimulatorProps {
@@ -119,6 +121,10 @@
     boardOverlay?: Snippet;
     /** Override which side appears at the bottom (e.g. replay viewer perspective). */
     ownerSide?: LorcanaPlayerSide | null;
+    /** Regression-harness override; production callers should use the transport lifecycle. */
+    commandStatusOverride?: AuthoritativeCommandStatus | null;
+    /** Regression-harness override for recovered feedback. */
+    staleRecoveryCompletionCountOverride?: number | null;
   }
 
   let {
@@ -148,6 +154,8 @@
     moderationMatchId = null,
     boardOverlay,
     ownerSide: ownerSideOverride = null,
+    commandStatusOverride = null,
+    staleRecoveryCompletionCountOverride = null,
   }: LorcanaTabletopSimulatorProps = $props();
   let sidebarOpen = $state(true);
 
@@ -173,7 +181,10 @@
   });
   $effect(() => {
     if (serverGameplaySettings) {
-      sidebar.initializeFromServer(serverGameplaySettings);
+      // Hydration reads reactive presenter settings to apply engine side effects.
+      // Keep those reads out of this effect's dependency graph so a player
+      // change is not immediately overwritten by the original server snapshot.
+      untrack(() => sidebar.initializeFromServer(serverGameplaySettings));
     }
   });
   const board = useLorcanaBoardPresenter();
@@ -193,40 +204,41 @@
   const layout = new SimulatorLayoutModeObserver();
   const layoutMode = $derived(layout.current);
   const boardSnapshot = $derived(game.boardSnapshot());
+  const commandDiagnostic = $derived(game.commandDiagnostic());
   const bugReportContext = $derived(
-    bugReportContextFromBoard(boardSnapshot, {
-      platform: layoutMode,
-      matchId: moderationMatchId,
-    }),
+    (() => {
+      const context = bugReportContextFromBoard(boardSnapshot, {
+        platform: layoutMode,
+        matchId: moderationMatchId,
+      });
+      if (!context || !commandDiagnostic) return context;
+      return {
+        ...context,
+        lastCommandErrorCode: commandDiagnostic.code,
+        lastCommandErrorReason: commandDiagnostic.reason,
+        lastCommandErrorAt: commandDiagnostic.recordedAt,
+      };
+    })(),
   );
   const moveLogEntries = $derived(game.moveLogEntries());
   const ownerSide = $derived(ownerSideOverride ?? game.ownerSide());
   const pendingMoveError = $derived(sidebar.pendingMoveError);
+  const authoritativeCommandStatus = $derived(
+    commandStatusOverride ?? game.authoritativeCommandStatus(),
+  );
+  const isMovePending = $derived(authoritativeCommandStatus.phase !== "idle");
+  const staleRecoveryCompletionCount = $derived(
+    staleRecoveryCompletionCountOverride ?? game.staleRecoveryCompletionCount(),
+  );
   const mobileNotice = $derived(sidebar.mobileNotice);
   const isCompactLayout = $derived(layout.isCompact);
   let localMoveSubmissionCount = $state(0);
   const isEngineFinished = $derived(boardSnapshot?.status === "finished");
   const isPostGame = $derived(isEngineFinished || (matchContext?.matchCompleted ?? false));
-  const postGameBoardSnapshot = $derived.by((): LorcanaProjectedBoardView | null => {
-    if (!boardSnapshot) {
-      return null;
-    }
-
-    if (isEngineFinished) {
-      return boardSnapshot;
-    }
-
-    if (matchContext?.matchCompleted) {
-      return {
-        ...boardSnapshot,
-        status: "finished",
-        winner: matchContext.winnerId ?? boardSnapshot.winner,
-        reason: matchContext.endReason ?? boardSnapshot.reason ?? "Match completed",
-      };
-    }
-
-    return null;
-  });
+  // Match metadata can arrive before the terminal state_update. Do not
+  // synthesize a finished board from it: opening the summary at that point
+  // would fetch and retain a pre-terminal post-game record.
+  const postGameBoardSnapshot = $derived(getTerminalPostGameBoard(boardSnapshot));
   const isSpectator = $derived(viewerMode === "spectator");
   const readOnlyMode = $derived(isPostGame || isSpectator);
   const compactActionCount = $derived(isPostGame ? 0 : sidebar.moveCategoryCount);
@@ -236,10 +248,12 @@
   const topSide = $derived(sidebar.topSide);
   const bottomSide = $derived(sidebar.bottomSide);
   const pendingEffectsPopoverItems = $derived.by(() =>
-    isPostGame ? ([] as PendingEffectsPopoverItem[]) : sidebar.pendingEffectsPopoverItems,
+    isPostGame || isMovePending
+      ? ([] as PendingEffectsPopoverItem[])
+      : sidebar.pendingEffectsPopoverItems,
   );
   const activePlayerGuidance = $derived.by(() =>
-    isPostGame ? [] : sidebar.activePlayerGuidance,
+    isPostGame || isMovePending ? [] : sidebar.activePlayerGuidance,
   );
   const opponentPlayHotkeyCards = $derived.by(() =>
     getOrderedPlayZoneCards(
@@ -333,11 +347,65 @@
   let supportReminderVisible = $state(false);
   let supportReminderOpen = $state(false);
   let supportReminderVariantIndex = $state<number | null>(null);
+  let commandBannerVisible = $state(false);
+  let lastStaleRecoveryCompletionCount = $state(0);
   const supportReminderText = $derived(
     supportReminderVisible && supportReminderVariantIndex !== null
       ? SIMULATOR_SUPPORT_REMINDER_VARIANTS[supportReminderVariantIndex] ?? null
       : null,
   );
+
+  $effect(() => {
+    const status = authoritativeCommandStatus;
+    if (status.phase === "idle") {
+      commandBannerVisible = false;
+      return;
+    }
+    if (status.phase !== "submitting") {
+      commandBannerVisible = true;
+      return;
+    }
+
+    commandBannerVisible = false;
+    const timer = setTimeout(() => {
+      commandBannerVisible = true;
+    }, 250);
+    return () => clearTimeout(timer);
+  });
+
+  $effect(() => {
+    if (
+      authoritativeCommandStatus.phase !== "recovering" &&
+      authoritativeCommandStatus.phase !== "recovery_failed"
+    ) {
+      return;
+    }
+    pendingDirectMove = null;
+    sidebar.cancelActionSelectionSession();
+    sidebar.cancelResolutionSelectionSession();
+    simulatorCardContext.closeCardInspect();
+  });
+
+  $effect(() => {
+    if (!isPostGame) return;
+
+    untrack(() => {
+      pendingDirectMove = null;
+      sidebar.cancelActionSelectionSession();
+      sidebar.cancelResolutionSelectionSession();
+      simulatorCardContext.handleLeave({});
+      simulatorCardContext.setExternalPreviewCard(null);
+      simulatorCardContext.closeGlobalPreview();
+      simulatorCardContext.closeCardInspect();
+    });
+  });
+
+  $effect(() => {
+    if (!boardSnapshot) return;
+    if (staleRecoveryCompletionCount <= lastStaleRecoveryCompletionCount) return;
+    lastStaleRecoveryCompletionCount = staleRecoveryCompletionCount;
+    toast.success(m["sim.commandRecovery.completed"]({}), { duration: 4_000 });
+  });
 
   $effect(() => {
     const nextReminderState = resolveSupportReminderState({
@@ -412,12 +480,7 @@
 
     lastToastedMoveError = pendingMoveError;
 
-    toast.error(pendingMoveError.rawReason ?? pendingMoveError.message, {
-      description:
-        pendingMoveError.rawReason && pendingMoveError.rawReason !== pendingMoveError.message
-          ? pendingMoveError.message
-          : undefined,
-    });
+    toast.error(pendingMoveError.message);
   });
 
   $effect(() => {
@@ -515,7 +578,7 @@
   const gameplayHotkeyDescriptors = $derived(
     visibleHotkeyDescriptors.filter((descriptor) => !ALWAYS_ON_HOTKEY_IDS.has(descriptor.id)),
   );
-  const gameplayHotkeysPaused = $derived(sidebar.isPlayerSettingsOpen);
+  const gameplayHotkeysPaused = $derived(sidebar.isPlayerSettingsOpen || isMovePending);
 
   export function runAnimation(...args: Parameters<typeof game.runAnimation>): ReturnType<typeof game.runAnimation> {
     return game.runAnimation(...args);
@@ -545,6 +608,7 @@
   }
 
   function submitAvailableMove(move: ExecutableMoveEntry): void {
+    if (isMovePending) return;
     localMoveSubmissionCount += 1;
     sidebar.handleAvailableMoveClick(move);
   }
@@ -587,6 +651,7 @@
     categoryId: "pass-turn" | "undo" | "quest-all",
     source: "keyboard" | "pointer" = "pointer",
   ): void {
+    if (isMovePending) return;
     const moves = sidebar.expandCategoryMoves(categoryId);
     const move = moves[0] ?? createFallbackConfirmableDirectMove(categoryId);
     if (!move) {
@@ -706,18 +771,30 @@
 <DragDropProvider
         plugins={(defaults) => [...defaults, Feedback.configure({})]}
         {sensors}
-        onDragStart={dndContext.handleDragStart}
-        onDragMove={dndContext.handleDragMove}
-        onDragEnd={dndContext.handleDragEnd}
+        onDragStart={(event, manager) => {
+          if (!isMovePending) dndContext.handleDragStart(event, manager);
+        }}
+        onDragMove={(event, manager) => {
+          if (!isMovePending) dndContext.handleDragMove(event, manager);
+        }}
+        onDragEnd={(event, manager) => {
+          if (!isMovePending) dndContext.handleDragEnd(event, manager);
+        }}
 >
   <Sidebar.Provider bind:open={sidebarOpen}>
     <div class="simulator-dark simulator-v2">
+      {#if commandBannerVisible && authoritativeCommandStatus.phase !== "idle"}
+        <AuthoritativeCommandBanner
+          status={authoritativeCommandStatus}
+          onRetry={game.requestStateSync}
+        />
+      {/if}
       <SimulatorHotkeyLayer descriptors={alwaysOnHotkeyDescriptors} paused={gameplayHotkeysPaused} />
       <SimulatorHotkeyLayer descriptors={gameplayHotkeyDescriptors} paused={gameplayHotkeysPaused} />
       <Toaster theme="dark" position="top-right"/>
       {#if !isCompactLayout}
         <LorcanaSimulatorSidebar
-          readOnly={readOnlyMode}
+          readOnly={readOnlyMode || isMovePending}
           isOpponentAfk={opponentAfk?.isAfk ?? false}
           {supportReminderText}
           bind:supportReminderOpen
@@ -753,6 +830,7 @@
 
           {#if boardSnapshot}
             <TabletopBoard
+              interactionLocked={isMovePending}
               {layoutMode}
               {compactActionCount}
               {pendingEffectsPopoverItems}
@@ -795,6 +873,7 @@
         <main class="compact-inset" aria-label={m["sim.tabletop.aria"]({})}>
           {#if boardSnapshot}
             <TabletopBoard
+              interactionLocked={isMovePending}
               {opponentPresence}
               {onSkipOpponent}
               {onDropOpponent}
@@ -917,7 +996,7 @@
       <LorcanaCompactPanels
         bind:open={compactPanelsOpen}
         bind:activeTab={compactPanelsTab}
-        readOnly={readOnlyMode}
+        readOnly={readOnlyMode || isMovePending}
       />
       {/if}
 
@@ -926,6 +1005,7 @@
           bind:open={postGameDialogOpen}
           gameId={postGameGameId}
           summary={postGameSummary}
+          minimumStateId={postGameSummary.board.stateID ?? null}
           {isAuthenticated}
           onReturnToMatchmaking={handleReturnToMatchmaking}
           {matchContext}

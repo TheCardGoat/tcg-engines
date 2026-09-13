@@ -75,4 +75,37 @@ describe("OP11-095 Monkey.D.Garp", () => {
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(targetId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [op11MonkeyDGarp095],
+        character: [op01Shanks120],
+        trash: [op11Bogard093, op11Morgan094, op11Ripper096],
+        activeDon: op11MonkeyDGarp095.cost,
+        restedDon: 1,
+      },
+      { character: [op11Bogard093, op11MonkeyDGarp095] },
+    );
+    const paymentIds = [...engine.getState().players.south.trash];
+    const eligibleId = engine.findCardInZone("north", "character", op11Bogard093);
+
+    engine.playCard(op11MonkeyDGarp095, "south");
+    const afterPlay = engine.getView("south").players.south;
+    const trashAfterPlay = afterPlay.trash.length;
+    const deckAfterPlay = afterPlay.deckCount;
+    const restedAfterPlay = afterPlay.restedDon;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.trash.length).toBe(trashAfterPlay);
+    expect(view.players.south.deckCount).toBe(deckAfterPlay);
+    expect(view.players.south.restedDon).toBe(restedAfterPlay);
+    expect(view.players.south.leader.attachedDon).toBe(0);
+    expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(eligibleId);
+    for (const id of paymentIds) {
+      expect(view.players.south.trash.map((card) => card.instanceId)).toContain(id);
+    }
+    expect(view.prompts).toHaveLength(0);
+  });
 });

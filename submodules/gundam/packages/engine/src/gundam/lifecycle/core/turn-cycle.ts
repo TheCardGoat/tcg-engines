@@ -53,6 +53,7 @@ export function turnCycleOnEnd(ctx: LifecycleContext): void {
   g.turnMetadata = {
     attackedThisTurn: [],
     deployedThisTurn: [],
+    activatedCommandThisTurn: [],
     pendingCombat: undefined,
   };
 

@@ -141,6 +141,123 @@ describe("header – once per turn", () => {
     expect(effect.activation.restrictions).toEqual([{ type: "oncePerTurn" }]);
   });
 
+  test("trait-qualified friendly color pairing infers observer gates", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】When you pair a (Cyber-Newtype) Pilot with one of your blue Units, draw 1.",
+    );
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["whenPaired"],
+        qualification: {
+          attribute: "trait",
+          comparison: "includes",
+          value: "cyber-newtype",
+        },
+        conditions: [
+          { type: "eventPlayerIsSelf" },
+          {
+            type: "eventCardMatches",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              attributeFilters: [{ attribute: "color", comparison: "eq", value: "blue" }],
+            },
+          },
+        ],
+        restrictions: [{ type: "oncePerTurn" }],
+      },
+      directives: [{ action: { action: "draw", count: 1 } }],
+    });
+  });
+
+  test('"enemy card" accepts Unit and shield-area battle destruction', () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】During your turn, when this Unit destroys an enemy card with battle damage, deploy 1 [Pluma]((Calamity War)·AP2·HP1) Unit token.",
+    );
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["onDestroyByBattle", "onShieldAreaCardDestroyByBattle"],
+        conditions: [{ type: "isTurn", whose: "friendly" }, { type: "eventCardIsSelf" }],
+        restrictions: [{ type: "oncePerTurn" }],
+      },
+    });
+  });
+
+  test("enemy effect damage infers the enemy-only damage trigger", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】When this Unit receives enemy effect damage, draw 1.",
+    );
+    expect(effect.type).toBe("triggered");
+    expect(effect.activation.timing).toEqual(["onEnemyEffectDamage"]);
+    expect(effect.activation.restrictions).toEqual([{ type: "oncePerTurn" }]);
+    expect(effect.directives).toEqual([{ action: { action: "draw", count: 1 } }]);
+  });
+
+  test("other friendly trait Unit damage observes enemy battle and effect damage", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】During your turn, when one of your other (Academy) Units receives damage from an enemy, place 1 EX Resource.",
+    );
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["onBattleDamageReceived", "onEnemyEffectDamage"],
+        conditions: [
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventDamageSourceIsOpponent" },
+          {
+            type: "eventCardMatches",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              excludeSource: true,
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "academy" }],
+            },
+          },
+        ],
+        restrictions: [{ type: "oncePerTurn" }],
+      },
+      directives: [{ action: { action: "placeExResource", state: "active" } }],
+    });
+  });
+
+  test("conditional enemy damage reduction is an inline constant modifier", () => {
+    const [effect] = parseEffect(
+      "【Once per Turn】When this Unit receives enemy damage, if you have an (Earth Federation) Pilot in play, reduce it by 2.",
+    );
+    expect(effect).toEqual({
+      type: "constant",
+      activation: {
+        conditions: [
+          {
+            type: "cardInZone",
+            owner: "friendly",
+            zone: "battleArea",
+            cardType: "pilot",
+            hasTrait: "earth federation",
+            comparison: "gte",
+            count: 1,
+          },
+        ],
+        restrictions: [{ type: "oncePerTurn" }],
+      },
+      directives: [
+        {
+          action: {
+            action: "reduceNextDamage",
+            amount: 2,
+            target: { owner: "self", cardType: "unit" },
+            source: "enemy",
+            duration: "permanent",
+          },
+        },
+      ],
+      sourceText:
+        "【Once per Turn】When this Unit receives enemy damage, if you have an (Earth Federation) Pilot in play, reduce it by 2.",
+    });
+  });
+
   test("During Pair and friendly-turn headers qualify an embedded self destroy trigger", () => {
     const [effect] = parseEffect(
       "【During Pair】During your turn, when this Unit destroys an enemy Unit with battle damage, deal 1 damage to all enemy Units that are Lv.3 or lower.",
@@ -197,6 +314,62 @@ describe("triggered leading conditions", () => {
           },
         },
       ],
+    });
+  });
+
+  test("turn-prefixed destroy trigger filters the defeated Unit's paired Pilot trait", () => {
+    const [effect] = parseEffect(
+      "During your turn, when this Unit destroys an enemy Unit paired with a (Newtype) Pilot with battle damage, draw 1.",
+    );
+    expect(effect).toEqual({
+      type: "triggered",
+      activation: {
+        timing: ["onDestroyByBattle"],
+        conditions: [
+          { type: "isTurn", whose: "friendly" },
+          { type: "eventCardIsSelf" },
+          {
+            type: "eventDefeatedCardMatches",
+            target: {
+              owner: "opponent",
+              cardType: "unit",
+              attributeFilters: [
+                {
+                  attribute: "pairedPilotTrait",
+                  comparison: "includes",
+                  value: "newtype",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      directives: [{ action: { action: "draw", count: 1 } }],
+      sourceText:
+        "During your turn, when this Unit destroys an enemy Unit paired with a (Newtype) Pilot with battle damage, draw 1.",
+    });
+  });
+
+  test("self-or-friendly-trait deployment uses one friendly event filter", () => {
+    const [effect] = parseEffect(
+      "When this Unit or one of your (Neo Zeon) Units is deployed, choose 1 enemy Unit. Deal 3 damage to it.",
+    );
+    expect(effect).toMatchObject({
+      type: "triggered",
+      activation: {
+        timing: ["deploy"],
+        conditions: [
+          { type: "eventPlayerIsSelf" },
+          {
+            type: "eventCardMatches",
+            target: {
+              owner: "friendly",
+              cardType: "unit",
+              attributeFilters: [{ attribute: "trait", comparison: "includes", value: "neo zeon" }],
+            },
+          },
+        ],
+      },
     });
   });
 });
@@ -261,6 +434,37 @@ describe("header – Pilot keyword", () => {
   });
 });
 
+describe("activated exile costs", () => {
+  test("normalizes Japanese middle dots and parses Command-trash exile costs", () => {
+    const [effect] = parseEffect(
+      "【Activate･Action】Exile 2 Command cards in your trash from the game：During this battle, when this Unit receives enemy damage, reduce it by 2.",
+    );
+    expect(effect).toMatchObject({
+      type: "activated",
+      activation: { timing: ["activate:action"] },
+      cost: {
+        exileFromTrash: {
+          owner: "friendly",
+          zone: "trash",
+          cardType: "command",
+          count: 2,
+        },
+      },
+      directives: [
+        {
+          action: {
+            action: "reduceNextDamage",
+            amount: 2,
+            source: "enemy",
+            duration: "thisBattle",
+            target: { owner: "self" },
+          },
+        },
+      ],
+    });
+  });
+});
+
 describe("empty / trivial inputs", () => {
   test("empty string returns no effects", () => {
     expect(parseEffect("")).toEqual([]);
@@ -287,8 +491,15 @@ describe("free-standing When triggers", () => {
     );
     expect(effect.type).toBe("triggered");
     expect(effect.activation.timing).toEqual(["onBattleDamageDealtToUnit"]);
-    expect(effect.directives[0]).toMatchObject({
-      action: { action: "destroy", target: { owner: "opponent", cardType: "unit" } },
+    expect(effect.activation.conditions).toEqual([
+      { type: "eventSourceIsSelf" },
+      {
+        type: "eventCardMatches",
+        target: { owner: "opponent", cardType: "unit" },
+      },
+    ]);
+    expect(effect.directives[0]).toEqual({
+      action: { action: "destroyEventCard" },
     });
   });
 

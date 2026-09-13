@@ -76,7 +76,9 @@ export function deriveClockView(
   return {
     displayMs,
     isNegative,
-    formattedTime: formatClockTime(displayMs),
+    // Preserve the negative value for timeout/drop policy, while keeping the
+    // player-facing countdown pinned to its natural endpoint.
+    formattedTime: formatClockTime(Math.max(0, displayMs)),
     urgencyClass,
     shouldPlayLowTimeTick,
     decisionCapExceeded,

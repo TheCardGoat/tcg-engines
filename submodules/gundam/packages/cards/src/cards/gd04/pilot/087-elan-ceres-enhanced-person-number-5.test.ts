@@ -43,30 +43,47 @@ describe("Elan Ceres (Enhanced Person Number 5) (GD04-087)", () => {
         hp: 8,
         linkCondition: "[Elan Ceres (Enhanced Person Number 5)]",
       });
-      const academyUnit = createMockUnit({ name: "Academy Ally", traits: ["academy"], hp: 8 });
+      const firstAcademyUnit = createMockUnit({
+        name: "First Academy Ally",
+        traits: ["academy"],
+        hp: 8,
+      });
+      const secondAcademyUnit = createMockUnit({
+        name: "Second Academy Ally",
+        traits: ["academy"],
+        hp: 8,
+      });
       const enemy = createMockUnit({ name: "Enemy Defender", ap: 2, hp: 8 });
       const engine = GundamTestEngine.create(
         {
           hand: [gd04ElanCeresEnhancedPersonNumber5087],
-          play: [host, academyUnit],
+          play: [host, firstAcademyUnit, secondAcademyUnit],
           resourceArea: activeResources(4),
         },
         { play: [{ card: enemy, exhausted: true }] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);
       const p2 = engine.asPlayer(PLAYER_TWO);
-      const [hostId, academyId] = p1.getCardsInZone("battleArea");
+      const [hostId, firstAcademyId, secondAcademyId] = p1.getCardsInZone("battleArea");
       const enemyId = p2.getCardsInZone("battleArea")[0]!;
 
       expectSuccess(p1.assignPilot(gd04ElanCeresEnhancedPersonNumber5087, hostId!));
       expectSuccess(p1.enterBattle(hostId!, enemyId));
-      expectSuccess(p1.resolveEffect({ targets: [academyId!], optionalAnswers: { 0: true } }));
+      expect(p1.getBoardView().pendingChoice).toMatchObject({
+        kind: "targetSelection",
+        optionalDirectiveIndex: 0,
+        legalTargetIds: [firstAcademyId, secondAcademyId],
+      });
+      expectSuccess(
+        p1.resolveEffect({ targets: [secondAcademyId!], optionalAnswers: { 0: true } }),
+      );
       expectSuccess(p2.passBlock());
       expectSuccess(p2.passBattleAction());
       expectSuccess(p1.passBattleAction());
 
       expect(p1.getDamage(hostId!)).toBe(0);
-      expect(p1.getDamage(academyId!)).toBe(2);
+      expect(p1.getDamage(firstAcademyId!)).toBe(0);
+      expect(p1.getDamage(secondAcademyId!)).toBe(2);
     });
 
     it("deals battle damage to the linked Unit when the player declines the redirect", () => {

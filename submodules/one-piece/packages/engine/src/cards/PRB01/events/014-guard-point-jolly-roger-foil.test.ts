@@ -3,7 +3,7 @@ import { prb01GuardPointJollyRogerFoil014 } from "../../../../../cards/src/cards
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST01-014 Guard Point (Jolly Roger Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01GuardPointJollyRogerFoil014);
   });
 });

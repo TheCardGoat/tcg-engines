@@ -131,6 +131,8 @@ describe("OP04-060 Crocodile", () => {
       drawnId,
     );
 
+    // Complete the first battle before the second attack is declared (6-5-6).
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
     engine.declareAttack(secondAttacker, engine.leader("south"), "north");
     expect(
       engine

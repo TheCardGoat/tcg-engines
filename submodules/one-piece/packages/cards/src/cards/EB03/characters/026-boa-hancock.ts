@@ -88,6 +88,7 @@ export const eb03BoaHancock026: CharacterCard = {
             cost: "returnCharacterToDeck",
             amount: 1,
             position: "bottom",
+            player: "self",
           },
         ],
         actions: [

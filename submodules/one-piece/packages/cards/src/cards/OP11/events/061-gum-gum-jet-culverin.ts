@@ -57,7 +57,7 @@ export const op11GumGumJetCulverin061: EventCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

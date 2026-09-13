@@ -26,6 +26,7 @@ describe("EB01-039 Conquerer of Three Worlds Ragnaraku", () => {
 
     engine.playCard(eb01ConquererOfThreeWorldsRagnaraku039);
 
+    engine.acceptLeadingOptional("south");
     const returnDonDecision = engine.pendingDecision("effectCostReturnDon", "south");
     const returnDonStep = returnDonDecision.steps[0];
     expect(returnDonStep?.kind).toBe("payCost");
@@ -42,6 +43,7 @@ describe("EB01-039 Conquerer of Three Worlds Ragnaraku", () => {
     ]);
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
 
+    engine.acceptLeadingOptional("south");
     const targetDecision = engine.pendingDecision("effectTargetSelection", "south");
     const targetStep = targetDecision.steps[0];
     expect(targetDecision.actorId).toBe("south");
@@ -87,11 +89,13 @@ describe("EB01-039 Conquerer of Three Worlds Ragnaraku", () => {
     engine.declareAttack(attackerId, engine.leader("north"), "south");
     engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
 
+    engine.acceptLeadingOptional("north");
     const triggerDecision = engine.pendingDecision("lifeTrigger", "north");
     const beforeTrigger = engine.getView("north").players.north;
     expect(triggerDecision).toMatchObject({ actorId: "north", kind: "confirm" });
     engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
 
+    engine.acceptLeadingOptional("north");
     const donDecision = engine.pendingDecision("effectAddDon", "north");
     const donStep = donDecision.steps[0];
     expect(donDecision.actorId).toBe("north");
@@ -111,5 +115,35 @@ describe("EB01-039 Conquerer of Three Worlds Ragnaraku", () => {
     );
     expect(view.prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
+  });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        hand: [eb01ConquererOfThreeWorldsRagnaraku039],
+        activeDon: 6,
+      },
+      {
+        character: [op05JohnGiant044, op13JewelryBonney108],
+      },
+    );
+
+    engine.playCard(eb01ConquererOfThreeWorldsRagnaraku039);
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

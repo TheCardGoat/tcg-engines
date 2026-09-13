@@ -34,6 +34,19 @@ let adapters provide native ids, labels, zones, prompts, and state.
   `@tcg/shared/game-adapter` rather than game internals.
 - Shared UI renders normalized data; game naming, layout, move labels, and
   prompt wording are adapter inputs.
+- Before adding a React component or custom CSS, search the app, Mantine, and
+  `@tcg/simulator-ui`. Reuse, compose, or theme existing primitives for standard
+  dialogs, buttons, menus, inputs, overlays, focus behavior, and layout. Mount
+  the required provider in tests instead of replacing a design-system
+  primitive with test-only markup. Custom components and CSS are for behavior
+  those primitives cannot express and for game-native board geometry,
+  responsive composition, or animation.
+- Simulator panels, prompts, drawers, and sidebars use one compact surface
+  grammar. Reuse the shared semantic density variables and the compact or
+  focused-decision tier documented in the root `DESIGN.md`; do not add
+  component-local header, footer, padding, radius, or typography dimensions
+  when the shared role applies. Preserve 44px coarse-pointer targets without
+  inflating passive chrome, and keep the game board visually dominant.
 
 ## Cross-Game Change Gate
 

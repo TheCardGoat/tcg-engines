@@ -74,4 +74,43 @@ describe("EB01-002 Izo", () => {
     );
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: eb01KouzukiOden001,
+        hand: [eb01Izo002, eb01Doma005, eb01Doma005],
+        activeDon: 5,
+      },
+      { character: [{ card: eb01Doma005, playedOnTurn: 0 }] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+
+    engine.playCard(eb01Izo002, "south");
+    engine.resolveDecision("effectGiveDonCount", { optionId: "1" }, "south");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("south")] },
+      "south",
+    );
+    engine.endTurn("south");
+
+    const attackerId = engine.findCardInZone("north", "character", eb01Doma005);
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+    const before = engine.getView("south").players.south;
+    const handBefore = before.hand.map((card) => card.instanceId);
+    const trashBefore = before.trash.length;
+    const attackerPowerBefore = engine
+      .getView("south")
+      .players.north.characters.find((card) => card?.instanceId === attackerId)?.power;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.hand.map((card) => card.instanceId)).toEqual(handBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(
+      engine
+        .getView("south")
+        .players.north.characters.find((card) => card?.instanceId === attackerId)?.power,
+    ).toBe(attackerPowerBefore);
+  });
 });

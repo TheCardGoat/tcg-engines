@@ -29,27 +29,40 @@
     resetPostGameRecordRequestStateForGame,
     shouldAutoLoadPostGameRecord,
   } from "./record-request-state.js";
+  import {
+    isPostGameRecordFresh,
+    loadFreshPostGameRecord,
+  } from "./post-game-record-loader.js";
   import { buildPostGameSummaryFromCanonical } from "./summary.js";
+  import { resolvePostGameMatchAction } from "./match-action.js";
   import type {
     PostGameNoteState,
     PostGameSectionId,
     PostGameSummary,
   } from "./types.js";
-  import { downloadReplayZip } from "@/features/replay/download-replay.js";
   import {
-    isReplayStoreAvailable,
-    saveReplayFromApi,
-    isReplaySaved,
-  } from "@/features/replay/replay-store.js";
-  import { fetchReplayBlob, decompressReplayBlob } from "@/features/replay/fetch-replay.js";
+    downloadReplayArchive,
+    fetchAndSaveReplay,
+    isBrowserReplayStorageAvailable,
+    listDeviceReplays,
+  } from "@tcg/simulator-runtime/replay-library";
+  import { ReplayPlaybackV1Schema } from "@tcg/game-page-contract";
   import type { MatchNavigationContext, LorcanaPlayerSide } from "@/features/simulator/model/contracts.js";
   import { useLorcanaGameContext } from "@/features/simulator/context/game-context.svelte.js";
   import { resolvePatronTierConfig } from "@/features/simulator/model/player-tier.js";
+  import { base } from "$app/paths";
+  import { page } from "$app/state";
+  import { env } from "$env/dynamic/public";
+  import { getApiOrigin } from "$lib/config/public-url-config.js";
+  import { resolvePlatformMatchmakingReturnUrl } from "$lib/navigation/platform-matchmaking-url.js";
+  import { replayRoutePath } from "$lib/navigation/replay-route-path.js";
 
   interface PostGameSummaryDialogProps {
     open?: boolean;
     gameId: string;
     summary: PostGameSummary;
+    /** Terminal board version already observed by this client. */
+    minimumStateId?: number | null;
     onReturnToMatchmaking: () => void | Promise<void>;
     isAuthenticated?: boolean;
     loadRecord?: (gameId: string) => Promise<PostGameRecordEnvelope>;
@@ -69,6 +82,7 @@
     open = $bindable(false),
     gameId,
     summary,
+    minimumStateId = null,
     onReturnToMatchmaking,
     isAuthenticated = false,
     loadRecord = fetchPostGameRecord,
@@ -83,6 +97,10 @@
     onOpenFeedback,
     onOpenPlayerReport,
   }: PostGameSummaryDialogProps = $props();
+
+  const postGameMatchAction = $derived(
+    resolvePostGameMatchAction(matchContext, onNextGame !== null),
+  );
 
   const gameContext = (() => {
     try {
@@ -143,9 +161,16 @@
   let replaySaving = $state(false);
   let replaySaved = $state(false);
 
-  const canSaveReplay = isReplayStoreAvailable();
+  const canSaveReplay = isBrowserReplayStorageAvailable();
   const effectiveSummary = $derived.by(() =>
-    record?.postGame ? buildPostGameSummaryFromCanonical(record.postGame, summary.outcome.viewerSide) : summary,
+    record?.postGame && isPostGameRecordFresh(record, minimumStateId)
+      ? buildPostGameSummaryFromCanonical(record.postGame, summary.outcome.viewerSide)
+      : summary,
+  );
+  const canonicalSummaryPending = $derived(
+    open &&
+      !(record?.postGame && isPostGameRecordFresh(record, minimumStateId)) &&
+      (recordRequestState.requestedGameId !== gameId || noteState.isLoading),
   );
   const isOverallMatchComplete = $derived(matchContext === null || matchContext.matchCompleted);
   const inkmarksEarnedForMatch = $derived(record?.inkmarksEarnedForMatch ?? null);
@@ -186,16 +211,6 @@
   const outcomeHighlight = $derived(
     effectiveSummary.highlights.find((highlight) => highlight.id === "highlight:outcome") ?? null,
   );
-  const recordedSpanMs = $derived.by(() => {
-    const firstTurn = effectiveSummary.turns[0];
-    const lastTurn = effectiveSummary.turns.at(-1);
-
-    if (!firstTurn || !lastTurn) {
-      return 0;
-    }
-
-    return Math.max(0, lastTurn.endedAt - firstTurn.startedAt);
-  });
   const noteDirty = $derived(
     noteState.loaded && noteState.value.trim() !== noteState.lastSavedValue.trim(),
   );
@@ -227,10 +242,10 @@
     const requestGameId = gameId;
     let cancelled = false;
 
-    isReplaySaved(requestGameId)
-      .then((saved) => {
+    listDeviceReplays("lorcana")
+      .then((savedReplays) => {
         if (!cancelled && open && gameId === requestGameId) {
-          replaySaved = saved;
+          replaySaved = savedReplays.some((replay) => replay.gameId === requestGameId);
         }
       })
       .catch((error) => {
@@ -294,7 +309,7 @@
       error: null,
     };
 
-    void loadRecord(gameId)
+    void loadFreshPostGameRecord({ gameId, minimumStateId, loadRecord })
       .then((nextRecord) => {
         recordRequestState = markPostGameRecordLoaded(recordRequestState, gameId);
         record = nextRecord;
@@ -351,7 +366,9 @@
     replayDownloading = true;
 
     try {
-      await downloadReplayZip(gameId, record?.postGame?.analytics ?? undefined);
+      const response = await fetch(replayUrl(gameId), { credentials: "include" });
+      if (!response.ok) throw new Error(`Failed to fetch replay (${response.status}).`);
+      downloadReplayArchive(ReplayPlaybackV1Schema.parse(await response.json()));
     } catch (error) {
       console.error("[PostGame] Failed to download replay:", error);
     } finally {
@@ -364,16 +381,17 @@
     replaySaving = true;
 
     try {
-      await saveReplayFromApi(gameId, fetchReplayBlob, async (compressed) => {
-        const data = await decompressReplayBlob(compressed);
-        return data;
-      });
+      await fetchAndSaveReplay(replayUrl(gameId), "lorcana");
       replaySaved = true;
     } catch (error) {
       console.error("[PostGame] Failed to save replay:", error);
     } finally {
       replaySaving = false;
     }
+  }
+
+  function replayUrl(replayGameId: string): string {
+    return `${getApiOrigin()}/v1/games/lorcana/play/replays/${encodeURIComponent(replayGameId)}`;
   }
 
   async function handleSaveNotes(): Promise<void> {
@@ -416,7 +434,9 @@
       await handleSaveNotes();
       if (noteDirty) return;
     }
-    window.location.assign("/matchmaking/atelier");
+    window.location.assign(
+      resolvePlatformMatchmakingReturnUrl(page.url, env.PUBLIC_PLATFORM_MATCHMAKING_URL, "atelier"),
+    );
   }
 
   async function handleReturn(): Promise<void> {
@@ -540,6 +560,13 @@
         {m["sim.postGame.description"]({})}
       </Dialog.Description>
 
+      {#if canonicalSummaryPending}
+        <div class="post-game-summary-loading" role="status" aria-live="polite">
+          <LoaderCircle class="size-7 animate-spin" aria-hidden="true" />
+          <span>{m["sim.postGame.finalization.pending"]({})}</span>
+        </div>
+      {/if}
+
       <header class="post-game-header">
         <div class="post-game-header__eyebrow">
           <Badge variant="outline" class="post-game-result-badge">{viewerResultLabel}</Badge>
@@ -572,7 +599,7 @@
           </div>
           <div class="post-game-fact">
             <span>{m["sim.postGame.timeline.duration.label"]({})}</span>
-            <strong>{formatDuration(recordedSpanMs)}</strong>
+            <strong>{formatDuration(effectiveSummary.durationMs)}</strong>
           </div>
           <div class="post-game-fact">
             <span>{m["sim.postGame.timeline.actionsLabel"]({})}</span>
@@ -588,7 +615,7 @@
               <span>{m["sim.postGame.inkmarks.description"]({})}</span>
             </div>
             <Button
-              href="/matchmaking/atelier"
+              href={resolvePlatformMatchmakingReturnUrl(page.url, env.PUBLIC_PLATFORM_MATCHMAKING_URL, "atelier")}
               variant="outline"
               size="sm"
               class="post-game-inkmarks__cta"
@@ -701,7 +728,7 @@
                           {/if}
                         </div>
                         <h4>{highlight.title}</h4>
-                        <p>{highlight.detail}</p>
+                        <p>{humanizeReason(highlight.detail) ?? highlight.detail}</p>
                       </article>
                     {/each}
                   {/if}
@@ -934,8 +961,18 @@
             {/if}
             {#if matchContext && matchContext.format !== "best_of_1"}
               <div class="post-game-series-info">
-                {#if matchContext.nextGameId}
-                  <span>Game {matchContext.gameIndex} of 3</span>
+                {#if matchContext.completionFailed}
+                  <span>{m["sim.postGame.finalization.failed"]({})}</span>
+                {:else if matchContext.nextGameId}
+                  <span>{m["sim.postGame.sidebar.gameOf"]({ current: matchContext.gameIndex, total: 3 })}</span>
+                  <span class="post-game-series-info__sep">·</span>
+                  {#if ownerSide === "playerTwo"}
+                    <span>{matchContext.player2Score} – {matchContext.player1Score}</span>
+                  {:else}
+                    <span>{matchContext.player1Score} – {matchContext.player2Score}</span>
+                  {/if}
+                {:else if matchContext.matchCompleted}
+                  <span>{m["sim.postGame.outcome.complete"]({})}</span>
                   <span class="post-game-series-info__sep">·</span>
                   {#if ownerSide === "playerTwo"}
                     <span>{matchContext.player2Score} – {matchContext.player1Score}</span>
@@ -943,17 +980,14 @@
                     <span>{matchContext.player1Score} – {matchContext.player2Score}</span>
                   {/if}
                 {:else}
-                  <span>Match complete</span>
-                  <span class="post-game-series-info__sep">·</span>
-                  {#if ownerSide === "playerTwo"}
-                    <span>{matchContext.player2Score} – {matchContext.player1Score}</span>
-                  {:else}
-                    <span>{matchContext.player1Score} – {matchContext.player2Score}</span>
-                  {/if}
+                  <span>{m["sim.postGame.finalization.pending"]({})}</span>
                 {/if}
               </div>
             {/if}
             <div class="post-game-footer__replay-actions">
+              <Button variant="outline" size="sm" href={replayRoutePath(gameId, base)}>
+                {m["sim.postGame.replay.watch"]({})}
+              </Button>
               <Button variant="outline" size="sm" onclick={handleDownloadReplay} disabled={replayDownloading}>
                 <Download class="mr-1.5 size-3.5" />
                 {replayDownloading
@@ -968,7 +1002,7 @@
                   {:else if replaySaving}
                     {m["sim.postGame.replay.saving"]({})}
                   {:else}
-                    {m["sim.postGame.replay.save"]({})}
+                    {m["sim.postGame.replay.saveOnDevice"]({})}
                   {/if}
                 </Button>
               {/if}
@@ -983,20 +1017,20 @@
             >
               {m["sim.postGame.close"]({})}
             </Button>
-            {#if matchContext?.nextGameId && onNextGame}
+            {#if postGameMatchAction === "next-game"}
               <Button
                 class="post-game-footer__cta"
                 onclick={() => onNextGame!()}
-                disabled={leavingMatch || matchContext.navigating}
+                disabled={leavingMatch || matchContext?.navigating}
               >
-                {#if matchContext.navigating}
+                {#if matchContext?.navigating}
                   <LoaderCircle class="mr-1.5 size-3.5 animate-spin" />
-                  Loading…
+                  {m["sim.sidebar.loadingNextGame"]({})}
                 {:else}
-                  Go to Next Game →
+                  {m["sim.postGame.sidebar.goToNextGame"]({})}
                 {/if}
               </Button>
-            {:else if !matchContext || matchContext.matchCompleted || matchContext.format === "best_of_1"}
+            {:else if postGameMatchAction === "return"}
               <Button
                 class="post-game-footer__cta"
                 onclick={handleReturn}
@@ -1014,7 +1048,7 @@
               -->
               <Button class="post-game-footer__cta" disabled>
                 <LoaderCircle class="mr-1.5 size-3.5 animate-spin" />
-                Finalizing match…
+                {m["sim.postGame.finalization.pending"]({})}
               </Button>
             {/if}
           </div>
@@ -1047,6 +1081,24 @@
       rgba(2, 6, 23, 0.96);
     color: #e2e8f0;
     box-shadow: 0 32px 100px rgba(2, 6, 23, 0.6);
+  }
+
+  .post-game-summary-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    min-height: 18rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border-radius: inherit;
+    background:
+      linear-gradient(180deg, rgba(15, 23, 42, 0.99), rgba(2, 6, 23, 0.99)),
+      rgba(2, 6, 23, 0.98);
+    color: #e2e8f0;
+    font-size: 0.95rem;
+    font-weight: 650;
   }
 
   .post-game-empty-state {

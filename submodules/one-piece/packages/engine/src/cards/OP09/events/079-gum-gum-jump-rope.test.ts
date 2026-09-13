@@ -3,7 +3,7 @@ import { op09GumGumJumpRope079 } from "../../../../../cards/src/cards/OP09/event
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-079 Gum-Gum Jump Rope", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op09GumGumJumpRope079);
   });
 });

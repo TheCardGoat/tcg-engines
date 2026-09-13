@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vite-plus/test";
 
 import type { GameCardData } from "../types.ts";
@@ -20,17 +20,25 @@ const disabledCard: GameCardData = {
   cost: 3,
 };
 
+let resizeObserverCallback: ResizeObserverCallback | undefined;
+let resizeObserverTarget: Element | undefined;
+
 beforeEach(() => {
   Object.defineProperty(window, "matchMedia", {
     configurable: true,
-    value: () => ({
-      matches: false,
+    value: (query: string) => ({
+      matches: query === "(any-hover: hover)",
       addEventListener: () => {},
       removeEventListener: () => {},
     }),
   });
   globalThis.ResizeObserver = class ResizeObserver {
-    observe() {}
+    constructor(callback: ResizeObserverCallback) {
+      resizeObserverCallback = callback;
+    }
+    observe(target: Element) {
+      resizeObserverTarget = target;
+    }
     unobserve() {}
     disconnect() {}
   };
@@ -52,11 +60,12 @@ describe("HandZone drag affordance", () => {
       </GundamDragDropProvider>,
     );
 
-    const card = screen.getByRole("listitem", { name: "Playable Unit (cost 1)" });
+    const card = screen.getByRole("button", { name: "Playable Unit (cost 1)" });
     expect(card.tabIndex).toBe(0);
+    expect(card.style.transform).toBe("");
 
     fireEvent.focus(card);
-    expect(card.style.transform).toContain("translateY(-10px)");
+    expect(card.style.transform).toBe("translateY(-10px)");
 
     fireEvent.keyDown(card, { key: "Enter" });
     expect(onSelect).toHaveBeenCalledWith(0);
@@ -67,7 +76,7 @@ describe("HandZone drag affordance", () => {
   });
 
   it("only exposes legal hand cards to the shared pointer drag surface", () => {
-    render(
+    const { container } = render(
       <GundamDragDropProvider>
         <HandZone
           hand={[playableCard, disabledCard]}
@@ -77,14 +86,17 @@ describe("HandZone drag affordance", () => {
       </GundamDragDropProvider>,
     );
 
-    const playable = screen.getByRole("listitem", { name: "Playable Unit (cost 1)" });
-    const disabled = screen.getByRole("listitem", { name: "Disabled Unit (cost 3)" });
+    const playable = screen.getByRole("button", { name: "Playable Unit (cost 1)" });
+    const disabledDragSurface = container.querySelector<HTMLElement>("[data-draggable='false']");
+    const disabled = disabledDragSurface?.closest<HTMLElement>("[role='listitem']");
     expect(playable.getAttribute("draggable")).toBeNull();
     expect(playable.dataset.draggable).toBe("true");
     expect(playable.getAttribute("aria-describedby")).not.toBeNull();
-    expect(disabled.getAttribute("draggable")).toBeNull();
-    expect(disabled.dataset.draggable).toBe("false");
-    expect(disabled.getAttribute("aria-describedby")).toBeNull();
+    expect(disabledDragSurface?.getAttribute("draggable")).toBeNull();
+    expect(disabledDragSurface?.dataset.draggable).toBe("false");
+    expect(disabledDragSurface?.getAttribute("aria-describedby")).toBeNull();
+    expect(disabled).not.toBeNull();
+    expect(screen.queryByRole("button", { name: "Disabled Unit (cost 3)" })).toBeNull();
     expect(playable.textContent).toContain("Playable Unit");
   });
 
@@ -99,8 +111,92 @@ describe("HandZone drag affordance", () => {
       />,
     );
 
-    fireEvent.keyDown(screen.getByRole("listitem"), { key: " ", code: "Space" });
+    fireEvent.keyDown(screen.getByRole("button"), { key: " ", code: "Space" });
     expect(onSelect).toHaveBeenCalledWith(0);
+  });
+
+  it("lifts a focused card without reflowing the hand", () => {
+    const hand = [playableCard, disabledCard, { ...playableCard, id: "third-unit" }];
+    const { container } = render(
+      <HandZone hand={hand} isOpponent={false} canPlay={() => true} onSelect={() => {}} />,
+    );
+
+    const cards = screen.getAllByRole("button");
+    const slots = Array.from(container.querySelectorAll<HTMLElement>(".hand-card"));
+    const marginsBeforeFocus = slots.map((slot) => slot.style.marginLeft);
+
+    fireEvent.focus(cards[1]!);
+
+    expect(screen.getByTestId("hand-zone-self").className).toContain("z-[30]");
+    expect(screen.getByTestId("hand-zone-self").className).toContain("overflow-visible");
+    expect(container.querySelector(".hand-container")?.className).toContain("overflow-visible");
+    expect(cards[1]!.style.transform).toContain("translateY(-10px)");
+    expect(slots.map((slot) => slot.style.marginLeft)).toEqual(marginsBeforeFocus);
+  });
+
+  it("clears stale hover state when the hand becomes non-interactive", () => {
+    const hand = [playableCard, disabledCard];
+    const { rerender } = render(
+      <HandZone hand={hand} isOpponent={false} canPlay={() => true} onSelect={() => {}} />,
+    );
+
+    const cards = screen.getAllByRole("button");
+    fireEvent.mouseEnter(cards[0]!);
+    expect(cards[1]!.style.opacity).not.toBe("1");
+
+    rerender(<HandZone hand={hand} isOpponent={false} canPlay={() => true} />);
+
+    expect(cards[1]!.style.opacity).toBe("1");
+    expect(cards[1]!.closest<HTMLElement>(".hand-card")?.style.filter).toBe("none");
+
+    rerender(<HandZone hand={hand} isOpponent={false} canPlay={() => true} onSelect={() => {}} />);
+
+    expect(cards[0]!.style.transform).toBe("");
+    expect(cards[1]!.style.opacity).toBe("1");
+    expect(cards[1]!.closest<HTMLElement>(".hand-card")?.style.filter).toBe("none");
+  });
+
+  it("clears stale focus state when the hand becomes non-interactive", () => {
+    const hand = [playableCard, disabledCard];
+    const { rerender } = render(
+      <HandZone hand={hand} isOpponent={false} canPlay={() => true} onSelect={() => {}} />,
+    );
+
+    const cards = screen.getAllByRole("button");
+    fireEvent.focus(cards[0]!);
+    expect(cards[0]!.style.transform).toBe("translateY(-10px)");
+
+    rerender(<HandZone hand={hand} isOpponent={false} canPlay={() => true} />);
+    rerender(<HandZone hand={hand} isOpponent={false} canPlay={() => true} onSelect={() => {}} />);
+
+    expect(cards[0]!.style.transform).toBe("");
+    expect(cards[1]!.style.opacity).toBe("1");
+  });
+
+  it("uses the available desktop width before overlapping cards", () => {
+    const hand = Array.from({ length: 6 }, (_, index) => ({
+      ...playableCard,
+      id: `card-${index}`,
+      name: `Card ${index}`,
+    }));
+    const { container } = render(<HandZone hand={hand} isOpponent={false} canPlay={() => true} />);
+
+    act(() => {
+      resizeObserverCallback?.(
+        [
+          {
+            target: resizeObserverTarget!,
+            contentRect: { width: 700 },
+          } as ResizeObserverEntry,
+        ],
+        {} as ResizeObserver,
+      );
+    });
+
+    const margins = Array.from(container.querySelectorAll<HTMLElement>(".hand-card")).map(
+      (slot) => slot.style.marginLeft,
+    );
+    expect(margins).toEqual(["0px", "8px", "8px", "8px", "8px", "8px"]);
   });
 
   it("renders a localized empty-hand count instead of a missing-message token", () => {
@@ -108,6 +204,40 @@ describe("HandZone drag affordance", () => {
 
     expect(screen.getByText("0 cards in hand")).not.toBeNull();
     expect(screen.queryByText("[sim.hand.count]")).toBeNull();
+  });
+
+  it("collapses a known opponent hand and names the resulting state", () => {
+    const onToggleTucked = vi.fn();
+    const { container, rerender } = render(
+      <HandZone
+        hand={[{ ...playableCard, faceDown: true }]}
+        handCount={1}
+        isOpponent
+        onToggleTucked={onToggleTucked}
+      />,
+    );
+
+    const hideButton = screen.getByRole("button", { name: "Hide opponent hand" });
+    expect(hideButton.getAttribute("aria-expanded")).toBe("true");
+    expect(container.querySelectorAll(".hand-card")).toHaveLength(1);
+    fireEvent.click(hideButton);
+    expect(onToggleTucked).toHaveBeenCalledOnce();
+
+    rerender(
+      <HandZone
+        hand={[{ ...playableCard, faceDown: true }]}
+        handCount={1}
+        isOpponent
+        isTucked
+        onToggleTucked={onToggleTucked}
+      />,
+    );
+
+    expect(
+      screen.getByRole("button", { name: "Show opponent hand" }).getAttribute("aria-expanded"),
+    ).toBe("false");
+    expect(container.querySelectorAll(".hand-card")).toHaveLength(0);
+    expect(screen.getByRole("status").textContent).toBe("Opponent hand hidden · 1 cards in hand");
   });
 
   it("does not show a hidden-card overflow count when all mobile cards are rendered", async () => {

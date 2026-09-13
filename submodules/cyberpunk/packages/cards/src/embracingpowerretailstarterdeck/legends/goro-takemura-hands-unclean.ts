@@ -6,10 +6,11 @@ export const embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean = defineCyb
   id: "72358c7d-9f29-4ef6-a682-f5bfc72c7714",
   canonicalId: "goro-takemura-hands-unclean",
   slug: "goro-takemura-hands-unclean",
+  subname: "Hands Unclean",
   rulesText:
     "{Go Solo} (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
-  name: "Goro Takemura — Hands Unclean",
-  displayName: "Goro Takemura — Hands Unclean",
+  name: "Goro Takemura",
+  displayName: "Goro Takemura: Hands Unclean",
   color: "green",
   classifications: ["Arasaka", "Corpo"],
   set: {

@@ -6,10 +6,11 @@ export const welcomeToNightCityRetailSashaYakovlevaWonTLetYouDown = defineCyberp
   id: "e2dc863c-5bc9-4ad7-9138-2d5b966ed901",
   canonicalId: "sasha-yakovleva-won-t-let-you-down",
   slug: "sasha-yakovleva-won-t-let-you-down",
+  subname: "Won't Let You Down",
   rulesText:
     "{Go Solo}\n{Attack} Reveal the top card of your deck and add it to your hand. This Unit gains power equal to that card's cost this turn.\n{Defeated} A Rival discards 1.",
-  name: "Sasha Yakovleva — Won't Let You Down",
-  displayName: "Sasha Yakovleva — Won't Let You Down",
+  name: "Sasha Yakovleva",
+  displayName: "Sasha Yakovleva: Won't Let You Down",
   color: "blue",
   classifications: ["Maine's Crew", "Merc", "Netrunner"],
   set: {

@@ -58,4 +58,48 @@ describe("PRB02-010 Charlotte Pudding", () => {
     expect(view.players.south.donDeckCount).toBe(donDeckBefore + 2);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        leaderCardId: op03CharlotteKatakuri099,
+        hand: [
+          prb02CharlottePuddingPrb02010010,
+          op11CharlotteDaifuku068,
+          op11CharlotteDaifuku068,
+          op08CharlotteKatakuri062,
+        ],
+        deck: [eb01Doma005, eb01Fourtricks025],
+        activeDon: 9,
+      },
+      { activeDon: 6 },
+    );
+    const eligibleIds = engine
+      .getState()
+      .players.south.hand.filter(
+        (instanceId) => engine.getState().cards[instanceId]?.cardId === op11CharlotteDaifuku068.id,
+      );
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const donPoolBefore =
+      engine.getView("south").players.south.activeDon +
+      engine.getView("south").players.south.restedDon;
+
+    engine.playCard(prb02CharlottePuddingPrb02010010, "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.activeDon + view.players.south.restedDon).toBe(donPoolBefore);
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.hand.length).toBe(handBefore - 1);
+    expect(view.players.south.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining(eligibleIds),
+    );
+    expect(view.players.south.characters.map((card) => card?.instanceId)).not.toContain(
+      eligibleIds[0],
+    );
+    expect(view.prompts).toHaveLength(0);
+  });
 });

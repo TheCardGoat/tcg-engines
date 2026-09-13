@@ -33,9 +33,11 @@ export default defineConfig({
     },
   ],
   webServer: {
-    // The /cyberpunk/simulator/tests/* routes are dev-only (gated by
-    // import.meta.env.DEV), so e2e must run against `vp dev`, never
-    // `vp preview`. Workspace libraries should be built separately in CI.
+    // The Playwright harness depends on dev-only engine bridges
+    // (window.__cyberpunkEngine / window.__cyberpunkSimulator), so e2e must run
+    // against `vp dev`, never `vp preview`. The /tests/* fixture routes
+    // themselves render in production too. Workspace libraries should be built
+    // separately in CI.
     command: `vp dev --host 127.0.0.1 --port ${PORT}`,
     url: `${BASE_URL}${SIMULATOR_BASE_PATH}/`,
     reuseExistingServer: !isCI,

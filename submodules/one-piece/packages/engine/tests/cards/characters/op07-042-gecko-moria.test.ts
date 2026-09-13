@@ -94,6 +94,12 @@ describe("OP07-042 Gecko Moria", () => {
     const moriaId = engine.findCardInZone("south", "character", op07GeckoMoria042);
 
     targetWithReturner(engine, moriaId, "south");
+    // Boa Hancock may offer an optional draw when a Character leaves by your effect.
+    try {
+      engine.decline("south");
+    } catch {
+      // No leave reaction pending.
+    }
 
     const view = engine.getView("south");
     expect(view.players.south.hand.map((card) => card.instanceId)).toContain(moriaId);

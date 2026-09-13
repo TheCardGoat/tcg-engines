@@ -27,6 +27,8 @@ export type AuthMethod = "ticket" | "jwt" | "session" | "authenticated" | "anony
  * sign-in / sign-out transitions instead of leaving stale auth material behind.
  */
 export interface GatewayCredentials {
+  /** Absolute scope expiry in milliseconds; refresh begins 15 minutes before it. */
+  expiresAt?: number | null;
   /**
    * Single-use ticket from the gateway ticket endpoint. The library embeds it
    * in the first handshake `auth` object and then clears it from its internal
@@ -74,6 +76,8 @@ export interface GatewayConnectionState {
     | "missing_credentials"
     | "anonymous_welcome"
     | "connect_error"
+    | "viewer_scope_expired"
+    | "scope_renewal"
     | "refresh_failed"
     | "refresh_exhausted";
 }
@@ -173,7 +177,10 @@ export interface PingConfig {
  */
 export interface JoinOptions {
   gameId: string;
-  role: "player" | "spectator";
+  /** Version rendered from HTTP bootstrap, used to avoid a duplicate full snapshot. */
+  stateVersion?: number;
+  /** Legacy v1 hint. Scoped v2 credentials select the viewer server-side. */
+  role?: "player" | "spectator";
   gameProfileId?: string;
 }
 
@@ -186,11 +193,12 @@ export interface CredentialsController {
    */
   get(): GatewayCredentials;
   /**
-   * Async, called by the library on auth failure (unauthenticated welcome with
-   * requireAuth, or a blocked tryConnect gate). Must return a fresh credentials
-   * snapshot. Should NOT throw on "no creds available" — return the best
-   * available snapshot and let the library decide. The library dedupes
-   * concurrent calls and retries at most once before transitioning to terminal.
+   * Async, called by the library on auth failure (a rejected authenticated
+   * handshake, an unauthenticated welcome with requireAuth, or a blocked
+   * tryConnect gate). Must return a fresh credentials snapshot. Should NOT
+   * throw on "no creds available" — return the best available snapshot and let
+   * the library decide. The library dedupes concurrent calls and retries at
+   * most once before transitioning to terminal.
    */
   refresh(): Promise<GatewayCredentials>;
 }

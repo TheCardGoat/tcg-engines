@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
   import { env } from '$env/dynamic/public';
   import {
     Card,
@@ -24,6 +23,7 @@
     updateDiscordPlayingGamePresence,
   } from "@tcg/shared/discord-rich-presence";
   import { getApiUrl } from "$lib/config/api";
+  import { resolvePlatformMatchmakingReturnUrl } from '$lib/navigation/platform-matchmaking-url.js';
 
   let { data }: { data: GamePageData } = $props();
   let activePresenceKey: string | null = null;
@@ -158,7 +158,17 @@
           <CardDescription class="text-rose-200">{data.message}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button onclick={() => goto('/matchmaking')}>Back to matchmaking</Button>
+          <Button
+            onclick={() =>
+              window.location.assign(
+                resolvePlatformMatchmakingReturnUrl(
+                  new URL(window.location.href),
+                  env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+                ),
+              )}
+            >
+              Back to matchmaking
+            </Button>
         </CardContent>
       </Card>
     </div>

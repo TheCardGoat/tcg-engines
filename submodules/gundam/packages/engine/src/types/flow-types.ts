@@ -11,6 +11,8 @@ export interface LifecycleContext {
   readonly playerId?: PlayerId;
   readonly cards: CardRuntimeAPI;
   readonly framework: FrameworkWriteAPI;
+  /** Host-supplied setup token definitions, keyed by player then slot. */
+  readonly setupCards?: Record<string, Record<string, import("@tcg/gundam-types").Card>>;
 }
 
 /**

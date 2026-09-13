@@ -1,0 +1,131 @@
+.fab-mobile-stack-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  margin-right: auto;
+  padding: 0.4rem 0.7rem;
+  border: 1px solid var(--prompt-menu-border, #a98b4d);
+  border-radius: 0.5rem;
+  background: var(--prompt-menu-surface-soft, #302618);
+  color: var(--prompt-menu-text, #f5e7c5);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.fab-mobile-stack-popover {
+  z-index: 4200;
+  display: flex;
+  flex-direction: column;
+  width: min(22rem, calc(100vw - 1rem));
+  max-height: min(65dvh, var(--radix-popover-content-available-height, 65dvh));
+  overflow: hidden;
+  border: 1px solid var(--prompt-menu-border, #806c45);
+  border-radius: 0.625rem;
+  background: var(--prompt-menu-surface, #171315);
+  color: var(--prompt-menu-text, #f2e9dc);
+  box-shadow: 0 12px 36px rgb(0 0 0 / 55%);
+  font-size: 0.875rem;
+}
+
+.fab-mobile-stack-popover header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: var(--simulator-panel-header-height, 2.5rem);
+  padding: 0.5rem 0.625rem;
+  border-bottom: 1px solid var(--prompt-menu-border, #4c4031);
+}
+
+.fab-mobile-stack-popover header > div,
+.fab-mobile-stack-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.2rem;
+}
+
+.fab-mobile-stack-popover header span,
+.fab-mobile-stack-copy small {
+  color: var(--prompt-menu-muted, #c6b9a7);
+  font-size: 0.75rem;
+  line-height: 1.35;
+}
+
+.fab-mobile-stack-popover header button {
+  display: grid;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid var(--prompt-menu-border, #655437);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.fab-mobile-stack-popover ol {
+  display: grid;
+  min-height: 0;
+  gap: 0.35rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  margin: 0;
+  padding: 0.625rem;
+}
+
+.fab-mobile-stack-popover li {
+  position: relative;
+  min-width: 0;
+}
+
+.fab-mobile-stack-entry {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  min-height: 4rem;
+  border: 1px solid var(--prompt-menu-border, #493e33);
+  border-radius: 0.5rem;
+  padding: 0.25rem;
+  background: var(--prompt-menu-surface-soft, #221c1e);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fab-mobile-stack-popover li[data-resolves-next="true"] .fab-mobile-stack-entry {
+  border-color: var(--fab-priority-gold, #ad8d47);
+  background: color-mix(
+    in srgb,
+    var(--prompt-menu-surface-soft, #30271b) 84%,
+    var(--fab-priority-gold, #ad8d47) 16%
+  );
+}
+
+.fab-mobile-stack-art {
+  position: relative;
+  display: block;
+  width: 4rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 0.25rem;
+}
+
+.fab-mobile-stack-copy strong {
+  overflow-wrap: anywhere;
+  line-height: 1.3;
+}
+
+.fab-mobile-stack-trigger:focus-visible,
+.fab-mobile-stack-popover button:focus-visible {
+  outline: 2px solid #e0b84a;
+  outline-offset: 2px;
+}

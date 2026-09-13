@@ -43,4 +43,4 @@ peerDependencyRules:
     vitest: "*"
 
 patchedDependencies:
-  '@voidzero-dev/vite-plus-test': patches/@voidzero-dev__vite-plus-test.patch
+  "@voidzero-dev/vite-plus-test": patches/@voidzero-dev__vite-plus-test.patch

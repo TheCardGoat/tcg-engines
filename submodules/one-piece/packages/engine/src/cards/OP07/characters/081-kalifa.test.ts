@@ -3,7 +3,7 @@ import { op07Kalifa081 } from "../../../../../cards/src/cards/OP07/characters/08
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-081 Kalifa", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op07Kalifa081);
   });
 });

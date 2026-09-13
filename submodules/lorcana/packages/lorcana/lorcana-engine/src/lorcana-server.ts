@@ -15,6 +15,7 @@ import {
   type PlayerId,
   ServerEngine,
   type ServerEngineConfig,
+  createCardsMapsFromStaticResources,
 } from "#core";
 import type {
   BagEffectEntry,
@@ -99,6 +100,14 @@ export class LorcanaServer extends LorcanaEngineBase {
       debugMode: false,
       choosingFirstPlayer: init.goingFirst,
       _skipInitialization: init._skipInitialization,
+      shouldPostProcessClientCommand: (_playerId, command) => {
+        const moveId = command.move as keyof LorcanaRuntimeMoveInputs & string;
+        const input = command.input as LorcanaRuntimeMoveInputs[typeof moveId];
+        return !this.shouldSkipImmediateAutoBagDrain(moveId, input);
+      },
+      postProcessClientCommand: (runtime, playerId) => {
+        this.drainDeterministicBagEffectsInRuntime(runtime, playerId);
+      },
     };
 
     this.engine = new ServerEngine(serverEngineConfig);
@@ -122,6 +131,10 @@ export class LorcanaServer extends LorcanaEngineBase {
 
   getRuntime() {
     return this.engine.getRuntime();
+  }
+
+  getCardsMaps(): LorcanaCardsMaps {
+    return createCardsMapsFromStaticResources(this.getResolvedStaticResources());
   }
 
   getMoveLogHistory() {

@@ -42,5 +42,6 @@ describe("OP12-109 Pacifista", () => {
     expect(engine.findCardInZone("south", "trash", op14eb04Killer005)).toBe(killerId);
     expect(engine.findCardInZone("north", "hand", op12Pacifista109)).toBe(pacifistaId);
     expect(engine.getState().capabilityHistory).toEqual([]);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

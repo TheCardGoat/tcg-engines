@@ -35,6 +35,10 @@ export interface DeckMetadataFacetDefinition {
   pluralLabel: string;
   kind: DeckMetadataFacetKind;
   order: number;
+  ranking: {
+    specialistSkill: boolean;
+    mastery: boolean;
+  };
 }
 
 export interface DeckMetadataMember {
@@ -169,6 +173,17 @@ export interface GameAdapter {
    *          adapter does not support canonical resolution.
    */
   getCanonicalCardId?(publicId: string): string | null;
+  /**
+   * Extract the game's current public score from a spectator-safe projection.
+   * Values are keyed by game profile id so shared surfaces can align them to
+   * seats without understanding game-native state.
+   */
+  getPublicGameScore?(spectatorView: unknown):
+    | {
+        kind: string;
+        players: Record<string, number>;
+      }
+    | undefined;
   /**
    * Validate a deck against a format. Returns the per-rule breakdown; throws
    * when the format id is unknown for this game.

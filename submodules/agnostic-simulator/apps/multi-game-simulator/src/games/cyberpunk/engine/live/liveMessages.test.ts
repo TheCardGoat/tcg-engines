@@ -26,7 +26,7 @@ describe("live gateway message reducer", () => {
 
     expect(effect).toEqual({
       type: "redirect",
-      href: "/cyberpunk/simulator/matches/match%201/games/game%202?playerId=p1",
+      href: "/cyberpunk/simulator/matches/match%201/games/game%202",
     });
   });
 });

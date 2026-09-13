@@ -244,7 +244,8 @@ describe("@tcg/op-engine", () => {
     expect(started.accepted).toBe(true);
     expect(started.state.status).toBe("active");
     expect(started.state.phase).toBe("main");
-    expect(started.state.players.south.activeDon).toBe(2);
+    // 6-4-1: the player going first places only 1 DON!! card on their first turn.
+    expect(started.state.players.south.activeDon).toBe(1);
     expect(
       started.state.logHistory.some((entry) => entry.message.includes("enters DON!! phase")),
     ).toBe(true);
@@ -385,8 +386,13 @@ describe("@tcg/op-engine", () => {
       false,
     );
     expect(firstPickPatchText).toContain("hiddenChoices");
-    expect(getLegalCommands(firstPick.state, "south")).toHaveLength(0);
+    // Concession (1-2-3) is the only command left for the player who already
+    // picked; the other player still has all three Jo Ken Po choices.
+    expect(getLegalCommands(firstPick.state, "south").map((command) => command.type)).toEqual([
+      "concede",
+    ]);
     expect(getLegalCommands(firstPick.state, "north").map((command) => command.type)).toEqual([
+      "concede",
       "chooseJoKenPo",
       "chooseJoKenPo",
       "chooseJoKenPo",
@@ -602,8 +608,20 @@ describe("@tcg/op-engine", () => {
 
   test("plays a stage, activates it, and projects the modified character power", () => {
     const started = runCommands(createMatch(buildConfig()), startGameCommands());
-    const otamaId = findCardInZone(started, "south", "hand", op13Otama043);
-    const afterOtama = applyCommand(started, {
+    // 6-4-1 leaves the first player with only 1 DON!! on their first turn, so
+    // the two 1-cost plays happen on the controller's second turn.
+    const southSecondTurn = runCommands(started, [
+      {
+        type: "endTurn",
+        seat: "south",
+      },
+      {
+        type: "endTurn",
+        seat: "north",
+      },
+    ]);
+    const otamaId = findCardInZone(southSecondTurn, "south", "hand", op13Otama043);
+    const afterOtama = applyCommand(southSecondTurn, {
       type: "playCard",
       seat: "south",
       instanceId: otamaId,
@@ -772,6 +790,10 @@ describe("@tcg/op-engine", () => {
         south: buildConfig().players.south,
         north: {
           leaderCardId: op13MonkeyDLuffy001.id,
+          // Life is placed after the opening hand with the deck-top card at
+          // the bottom of the Life area, so the last card moved into Life
+          // (index 8 for a 4-Life Leader, a [Trigger] Event) is the top of
+          // the Life area and is the card taken by the first point of damage.
           mainDeck: cardIds([
             op13GumGumGatlingGun021,
             op13WindmillVillage022,
@@ -780,9 +802,9 @@ describe("@tcg/op-engine", () => {
             op13Higuma013,
             op13GumGumGatlingGun021,
             op13WindmillVillage022,
+            op13RoronoaZoro037,
             op13GumGumGatlingGun021,
             op13Higuma013,
-            op13RoronoaZoro037,
             op13Higuma013,
           ]),
         },

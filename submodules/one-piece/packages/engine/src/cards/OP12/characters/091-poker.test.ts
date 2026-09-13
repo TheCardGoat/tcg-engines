@@ -64,4 +64,35 @@ describe("OP12-091 Poker", () => {
       }).accepted,
     ).toBe(false);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      character: [op12Poker091, op12Mizerka092, eb01Doma005],
+      trash: [eb01Doma005, eb01MountainGod018, eb01Doma005, eb01MountainGod018],
+    });
+    const pokerId = engine.findCardInZone("south", "character", op12Poker091);
+    const mizerkaId = engine.findCardInZone("south", "character", op12Mizerka092);
+    const deckBefore = engine.getView("south").players.south.deckCount;
+    const trashBefore = engine.getView("south").players.south.trash.length;
+    const pokerPower = engine
+      .getView("south")
+      .players.south.characters.find((card) => card?.instanceId === pokerId)?.power;
+    const mizerkaPower = engine
+      .getView("south")
+      .players.south.characters.find((card) => card?.instanceId === mizerkaId)?.power;
+
+    engine.activateEffect(pokerId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.deckCount).toBe(deckBefore);
+    expect(view.players.south.trash.length).toBe(trashBefore);
+    expect(view.players.south.characters.find((card) => card?.instanceId === pokerId)?.power).toBe(
+      pokerPower,
+    );
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === mizerkaId)?.power,
+    ).toBe(mizerkaPower);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

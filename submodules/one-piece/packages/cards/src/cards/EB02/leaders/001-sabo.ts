@@ -20,5 +20,7 @@ export const eb02Sabo001: LeaderCard = {
   rarity: "L",
   setId: "EB02",
   artVariants: undefined,
+  // Inherit effects from base card so reprint gameplay stays in sync
+  // (reprints/alt-arts must share the same ability DSL structure).
   i18n: eb02Sabo001I18n,
 };

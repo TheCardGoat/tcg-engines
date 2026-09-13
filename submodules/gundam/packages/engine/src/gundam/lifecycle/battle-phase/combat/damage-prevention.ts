@@ -43,6 +43,7 @@ export function hasDamagePreventionFor(
   g: GundamG,
   framework: FrameworkReadAPI,
   damageType: "battle" | "effect" = "battle",
+  damageAmount?: number,
 ): boolean {
   // 1. Check explicit ContinuousEffectEntry records (pushed by executor).
   for (const effect of g.continuousEffects) {
@@ -53,6 +54,12 @@ export function hasDamagePreventionFor(
     // Damage-type gate: if the effect specifies a damageType, it only
     // prevents that kind.
     if (p.damageType && p.damageType !== damageType) continue;
+    if (
+      p.maxDamageAmount !== undefined &&
+      (damageAmount === undefined || damageAmount > p.maxDamageAmount)
+    ) {
+      continue;
+    }
 
     if (p.source === "enemy") {
       const targetOwnerId = framework.cards.getOwner(targetCardId) as string | undefined;
@@ -82,7 +89,16 @@ export function hasDamagePreventionFor(
   //    statModifier / grantKeyword. This covers cards like Forbidden
   //    Gundam whose preventDamage is a constant effect that re-evaluates
   //    its conditions each time damage would be applied.
-  if (inlineConstantPreventDamage(targetCardId, attackerCardId, g, framework, damageType)) {
+  if (
+    inlineConstantPreventDamage(
+      targetCardId,
+      attackerCardId,
+      g,
+      framework,
+      damageType,
+      damageAmount,
+    )
+  ) {
     return true;
   }
 
@@ -121,7 +137,7 @@ export function applyDamageReduction(
     }
 
     remaining = Math.max(0, remaining - p.amount);
-    consumedIds.push(effect.id);
+    if (p.consuming !== false) consumedIds.push(effect.id);
   }
 
   if (consumedIds.length > 0) {
@@ -170,6 +186,7 @@ function inlineConstantPreventDamage(
   g: GundamG,
   framework: FrameworkReadAPI,
   damageType: "battle" | "effect",
+  damageAmount?: number,
 ): boolean {
   const targetOwnerId = (framework.cards.getOwner(targetCardId) ?? "") as string;
   const battleCards = getAllBattleAreaAndBaseRuntimeCards(g, framework);
@@ -213,6 +230,12 @@ function inlineConstantPreventDamage(
 
         // Damage-type gate.
         if (action.damageType && action.damageType !== damageType) continue;
+        if (
+          action.maxDamageAmount !== undefined &&
+          (damageAmount === undefined || damageAmount > action.maxDamageAmount)
+        ) {
+          continue;
+        }
 
         if (action.source === "enemy") {
           const sourceOwnerId = framework.cards.getOwner(attackerCardId) as string | undefined;
@@ -253,6 +276,12 @@ function inlineConstantDamageReduction(
   const sourceIds = [targetCardId];
   const pilotId = g.pilotAssignments[targetCardId];
   if (pilotId) sourceIds.push(pilotId);
+  // A constant effect on any friendly Unit or Pilot may protect another
+  // friendly Unit. This covers effects such as "one of your ... Unit tokens
+  // receives ... damage" rather than only self-targeting protections.
+  for (const cardId of framework.zones.getCards({ zone: "battleArea", playerId: targetOwnerId })) {
+    if (!sourceIds.includes(cardId)) sourceIds.push(cardId);
+  }
   const bases = framework.zones.getCards({ zone: "baseSection", playerId: targetOwnerId });
   for (const baseId of bases) {
     if (!sourceIds.includes(baseId)) sourceIds.push(baseId);

@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   welcomeToNightCityRetailCorpoSecurity,
-  welcomeToNightCityRetailSecondhandBombus,
   welcomeToNightCityRetailJackieWellesRideOrDieChoom,
   embracingPowerRetailStarterDeckMinotaur,
 } from "@tcg/cyberpunk-cards";

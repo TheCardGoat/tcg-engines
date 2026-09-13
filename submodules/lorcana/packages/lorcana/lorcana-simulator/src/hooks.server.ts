@@ -7,8 +7,14 @@ import { context, propagation, SpanKind, SpanStatusCode, trace } from "@opentele
 import type { TextMapSetter } from "@opentelemetry/api";
 import { paraglideMiddleware } from "$lib/paraglide/server";
 import { getApiOrigin } from "$lib/config/public-url-config.js";
+import { serializeErrorDetails } from "$lib/server/error-details.js";
 import { getServerApiOrigin, serverFetch } from "$lib/server/fetch-with-cf.js";
+import { canonicalHostRedirect } from "$lib/server/canonical-host-redirect.js";
 import { isGdprStrictCountry, normalizeCfCountry } from "$lib/geo/eu-countries.js";
+import {
+  createSessionLookupRequestInit,
+  shouldResolveSession,
+} from "$lib/server/session-request.js";
 import { normalizePathForTelemetry, parseUrlPatterns } from "$lib/telemetry/config.js";
 import { isServerTelemetryEnabled } from "$lib/telemetry/server.js";
 import type { AuthUser, AuthSession } from "@tcg/shared/auth";
@@ -32,8 +38,21 @@ const STATIC_PROBE_PATHS = new Set([
   "/sitemaps.txt",
 ]);
 
+const handleCanonicalHost: Handle = ({ event, resolve }) => {
+  const location = canonicalHostRedirect(event.url);
+  if (location) {
+    return new Response(null, {
+      status: 308,
+      headers: { location },
+    });
+  }
+
+  return resolve(event);
+};
+
 const handleStaticProbe: Handle = ({ event, resolve }) => {
-  if (STATIC_PROBE_PATHS.has(event.url.pathname)) {
+  const isUnconfiguredAdsProbe = event.url.pathname === "/ads.txt" && !env.UPSTREAM_ADS_TXT_URL;
+  if (STATIC_PROBE_PATHS.has(event.url.pathname) || isUnconfiguredAdsProbe) {
     return new Response(null, {
       status: 204,
       headers: {
@@ -71,19 +90,31 @@ const handleSession: Handle = async ({ event, resolve }) => {
   event.locals.session = null;
 
   const cookie = event.request.headers.get("cookie");
-  if (!cookie) {
+  if (!cookie || !shouldResolveSession(event.url.pathname)) {
     return resolve(event);
   }
 
+  let publicApiOrigin: string | undefined;
+  let apiOrigin: string | undefined;
+  const authCookies: string[] = [];
+
   try {
-    const apiOrigin = getServerApiOrigin(getApiOrigin());
-    const res = await serverFetch(`${apiOrigin}/api/auth/get-session`, {
-      headers: { cookie },
-    });
+    publicApiOrigin = getApiOrigin();
+    apiOrigin = getServerApiOrigin(publicApiOrigin);
+    const res = await serverFetch(
+      `${apiOrigin.replace(/\/v1\/?$/i, "")}/v1/auth/session`,
+      createSessionLookupRequestInit(cookie),
+    );
+
+    authCookies.push(...res.headers.getSetCookie());
 
     if (res.ok) {
-      const data = (await res.json()) as { user: AuthUser; session: AuthSession } | null;
-      if (data?.user && data?.session) {
+      const data = (await res.json()) as {
+        status?: unknown;
+        user?: AuthUser;
+        session?: AuthSession;
+      } | null;
+      if (data?.status === "authenticated" && data.user && data.session) {
         event.locals.user = data.user;
         event.locals.session = data.session;
       }
@@ -91,16 +122,31 @@ const handleSession: Handle = async ({ event, resolve }) => {
       sessionLogger.warn("getSession request failed status={status} statusText={statusText}", {
         status: res.status,
         statusText: res.statusText,
+        requestPath: event.url.pathname,
+        apiOrigin: new URL(apiOrigin).origin,
+        usingPrivateApiOrigin: apiOrigin !== publicApiOrigin,
       });
     }
   } catch (error) {
     // Continue as anonymous, but surface the failure so API outages are visible
     sessionLogger.warn("getSession request threw error={error}", {
-      error: error instanceof Error ? error.message : String(error),
+      error: serializeErrorDetails(error),
+      requestPath: event.url.pathname,
+      apiOrigin: apiOrigin ? new URL(apiOrigin).origin : undefined,
+      usingPrivateApiOrigin: apiOrigin !== undefined && apiOrigin !== publicApiOrigin,
     });
   }
 
-  return resolve(event);
+  const response = await resolve(event);
+  if (authCookies.length === 0) return response;
+
+  const headers = new Headers(response.headers);
+  for (const authCookie of authCookies) headers.append("set-cookie", authCookie);
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
 };
 
 /**
@@ -120,6 +166,7 @@ const handleGeo: Handle = ({ event, resolve }) => {
 };
 
 export const handle: Handle = sequence(
+  handleCanonicalHost,
   handleStaticProbe,
   handleParaglide,
   handleGeo,

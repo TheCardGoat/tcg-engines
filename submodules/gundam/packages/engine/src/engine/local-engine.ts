@@ -7,7 +7,7 @@
 import type { CommandEnvelope, CommandResult } from "../types/command.ts";
 import type { PlayerId } from "../types/branded.ts";
 import type { FilteredMatchView, ViewRoleContext } from "../types/projection.ts";
-import type { MatchState } from "../types/match-state.ts";
+import type { MatchState, TimeControlConfig } from "../types/match-state.ts";
 import type { MatchStaticResources, Player } from "../runtime/static-resources.ts";
 import type { GameEngine } from "./contracts.ts";
 
@@ -22,8 +22,13 @@ export class LocalEngine implements GameEngine {
 
   // ── Initialization ──────────────────────────────────────────────────────
 
-  initialize(players: Player[], seed?: string, initialActivePlayer?: PlayerId): void {
-    this.runtime.initialize(players, seed, initialActivePlayer);
+  initialize(
+    players: Player[],
+    seed?: string,
+    initialActivePlayer?: PlayerId,
+    timeConfig?: TimeControlConfig,
+  ): void {
+    this.runtime.initialize(players, seed, initialActivePlayer, timeConfig);
   }
 
   // ── GameEngine interface ────────────────────────────────────────────────

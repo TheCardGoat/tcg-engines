@@ -14,6 +14,7 @@ import { projectLorcanaCardDerived } from "../../projection/card-derived";
 import { createProjectionState } from "../../rules/derived-state";
 import { resolveCandidateTargets } from "../../targeting/runtime";
 import { isCardInPlayZone } from "../../operations/zones";
+import { staticAbilityStateFromCtx } from "../../operations/static-context";
 import type {
   ChallengeState,
   LorcanaCardDefinition,
@@ -448,16 +449,19 @@ function isChallengeReadyAttacker(ctx: ChallengeAnyContext, attackerId: CardInst
     return false;
   }
 
+  // Include G so turnMetadata conditions (e.g. Willie's put-card-under-self-this-turn) evaluate.
+  const staticState = staticAbilityStateFromCtx(ctx);
+
   if (
     hasStaticSelfRestriction({
-      state: ctx.framework.state,
+      state: staticState,
       cardId: attackerId,
       restriction: "cant-challenge",
       getDefinitionByInstanceId: (instanceId) => getCardsApi(ctx).getDefinition(instanceId),
     })
   ) {
     const bypass = getStaticSelfRestrictionBypass({
-      state: ctx.framework.state,
+      state: staticState,
       cardId: attackerId,
       restriction: "cant-challenge",
       getDefinitionByInstanceId: (instanceId) => getCardsApi(ctx).getDefinition(instanceId),
@@ -472,7 +476,7 @@ function isChallengeReadyAttacker(ctx: ChallengeAnyContext, attackerId: CardInst
 
   if (
     hasStaticCardRestriction({
-      state: ctx.framework.state,
+      state: staticState,
       cardId: attackerId,
       restriction: "cant-challenge",
       registry,
@@ -788,16 +792,18 @@ export function validateChallengeAction(ctx: ChallengeValidationContext): Runtim
     return createFailure("Attacker cannot challenge", "ATTACKER_CANT_CHALLENGE");
   }
 
+  const staticState = staticAbilityStateFromCtx(ctx);
+
   if (
     hasStaticSelfRestriction({
-      state: ctx.framework.state,
+      state: staticState,
       cardId: attackerId,
       restriction: "cant-challenge",
       getDefinitionByInstanceId: (instanceId) => getCardsApi(ctx).getDefinition(instanceId),
     })
   ) {
     const bypass = getStaticSelfRestrictionBypass({
-      state: ctx.framework.state,
+      state: staticState,
       cardId: attackerId,
       restriction: "cant-challenge",
       getDefinitionByInstanceId: (instanceId) => getCardsApi(ctx).getDefinition(instanceId),

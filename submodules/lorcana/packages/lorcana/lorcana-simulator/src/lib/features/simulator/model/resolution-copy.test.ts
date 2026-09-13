@@ -61,6 +61,38 @@ function createTargetSelectionContext(
 }
 
 describe("resolution-copy", () => {
+  it("asks for another character when a move effect already binds its source and location", () => {
+    const sourceCard = createCardSnapshot({
+      label: "Carl Fredricksen - On the Move",
+      textEntries: [{ title: "MOVING PARTNER", description: "Move together." }],
+    });
+    const copy = buildResolutionCopyBundle({
+      kind: "target-selection",
+      sourceCard,
+      targetSelectionContext: createTargetSelectionContext({
+        expectedSlottedKind: "move-to-location",
+        autoResolvedSlots: ["subject"],
+        resolvedTargetIdsBySlot: { location: asCardId("played-location") },
+        currentSelection: { targets: [asCardId("played-location")] },
+        targetDsl: [
+          {
+            selector: "chosen",
+            count: { upTo: 1 },
+            owner: "you",
+            zones: ["play"],
+            cardTypes: ["character"],
+            excludeSelf: true,
+          },
+        ],
+        minSelections: 0,
+      }),
+    });
+
+    expect(copy.promptMessage).toBe(
+      "Choose a character to move for Carl Fredricksen - On the Move: MOVING PARTNER (optional).",
+    );
+  });
+
   it("builds rich optional-effect copy when title and description are available", () => {
     const sourceCard = createCardSnapshot({
       label: "Mulan - Disguised Soldier",
@@ -131,6 +163,33 @@ describe("resolution-copy", () => {
     expect(copy.promptMessage).toBe(
       "Select the required target or player for Jasmine - Resourceful Infiltrator: JUST WHAT YOU NEED.",
     );
+  });
+
+  it("uses an optional effect prompt label in both modal and inline guidance copy", () => {
+    const sourceCard = createCardSnapshot({
+      label: "Woody - Helping a Friend",
+      textEntries: [{ title: "HANG ON!", description: "Choose both actions instead." }],
+    });
+
+    const copy = buildResolutionCopyBundle({
+      kind: "target-selection",
+      sourceCard,
+      targetSelectionContext: createTargetSelectionContext({
+        promptLabel: "Return a character with cost 2 or less from your discard to your hand",
+        originatesFromOptional: true,
+      }),
+    });
+
+    expect(copy.promptMessage).toBe(
+      "Return a character with cost 2 or less from your discard to your hand (optional).",
+    );
+    expect(copy.promptInlineReference).toEqual({
+      label: "Woody - Helping a Friend: HANG ON!",
+      card: sourceCard,
+      prefix:
+        "Return a character with cost 2 or less from your discard to your hand (optional). — ",
+      suffix: "",
+    });
   });
 
   it("uses abilityIndex to resolve localized target-selection prompts", () => {

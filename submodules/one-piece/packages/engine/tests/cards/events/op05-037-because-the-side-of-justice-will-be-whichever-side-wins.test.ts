@@ -83,4 +83,38 @@ describe("OP05-037 Because the Side of Justice Will Be Whichever Side Wins!!", (
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Counter so hand trash and protection do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      {
+        hand: [op05BecauseTheSideOfJusticeWillBeWhicheverSideWins037, eb01Doma005],
+        life: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const eventId = engine.findCardInZone(
+      "north",
+      "hand",
+      op05BecauseTheSideOfJusticeWillBeWhicheverSideWins037,
+    );
+    const costId = engine.findCardInZone("north", "hand", eb01Doma005);
+    const lifeBefore = engine.getView("north").players.north.lifeCount;
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(costId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(costId);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+    // Without protection, Life may drop; cost never paid.
+    // Without the optional protection, Life is taken.
+    expect(view.players.north.lifeCount).toBe(lifeBefore - 1);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

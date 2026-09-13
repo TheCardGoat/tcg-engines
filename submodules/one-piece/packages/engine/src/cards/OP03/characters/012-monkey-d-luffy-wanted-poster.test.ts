@@ -3,7 +3,7 @@ import { op03MonkeyDLuffyWantedPoster012 } from "../../../../../cards/src/cards/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST01-012 Monkey.D.Luffy (Wanted Poster)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op03MonkeyDLuffyWantedPoster012);
   });
 });

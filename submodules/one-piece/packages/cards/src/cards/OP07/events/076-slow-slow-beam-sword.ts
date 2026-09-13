@@ -60,6 +60,7 @@ export const op07SlowSlowBeamSword076: EventCard = {
             },
           },
         ],
+        optional: true,
       },
       {
         trigger: "trigger",

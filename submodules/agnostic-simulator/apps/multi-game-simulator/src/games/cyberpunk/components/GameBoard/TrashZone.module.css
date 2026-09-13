@@ -14,6 +14,12 @@
   cursor: pointer;
 }
 
+/* The visible card is a pile preview. Let the zone, not the preview card,
+ * receive pointer input so any tap opens the full Trash viewer. */
+.interactive .inner {
+  pointer-events: none;
+}
+
 .interactive:hover {
   border-color: rgb(var(--side-accent-rgb, 245 230 66) / 52%);
   background: rgb(var(--side-accent-rgb, 245 230 66) / 8%);
@@ -45,9 +51,39 @@
 .inner {
   position: absolute;
   inset: var(--zone-pad);
+}
+
+.inner > * {
+  width: 100%;
+  height: 100%;
+}
+
+.pile {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.pile :global(.discard-pile-zone-layers) {
+  inset: 4px -4px -4px 4px;
+}
+
+.pile :global(.discard-pile-zone-entity) {
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.pile :global(.tabletop-pile-count),
+.pile :global(.tabletop-pile-label) {
+  display: none;
 }
 
 .cardWrap {
@@ -60,12 +96,14 @@
   visibility: hidden;
 }
 
-.empty {
+.pile :global(.empty-zone) {
   height: 100%;
   aspect-ratio: 5 / 7;
-  border: 1px dashed rgb(245 230 66 / 22%);
+  min-height: 0;
+  border-color: rgb(245 230 66 / 22%);
   background: rgb(245 230 66 / 2%);
   border-radius: 3px;
+  color: transparent;
 }
 
 .viewer {

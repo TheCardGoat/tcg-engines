@@ -17,10 +17,147 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Lorcana Sim" />
 
+    <style>
+      #app-boot-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        box-sizing: border-box;
+        padding: 24px;
+        color: #e2e8f0;
+        background:
+          radial-gradient(circle at 50% 44%, rgba(212, 175, 55, 0.12), transparent 24%),
+          radial-gradient(circle at 50% 50%, #101a31 0, #060b1d 42%, #020617 76%);
+      }
+
+      .app-boot-mark {
+        position: relative;
+        display: grid;
+        width: 88px;
+        height: 88px;
+        place-items: center;
+        isolation: isolate;
+      }
+
+      .app-boot-mark::before,
+      .app-boot-mark::after {
+        position: absolute;
+        content: '';
+        pointer-events: none;
+      }
+
+      .app-boot-mark::before {
+        inset: -13px;
+        z-index: -1;
+        border-radius: 24px;
+        background: conic-gradient(
+          from 45deg,
+          rgba(212, 175, 55, 0.14) 0 22%,
+          rgba(212, 175, 55, 0.9) 30%,
+          rgba(255, 244, 197, 0.95) 34%,
+          rgba(212, 175, 55, 0.14) 42% 100%
+        );
+        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+        mask-composite: exclude;
+        padding: 1px;
+        animation: app-boot-trace 2.4s linear infinite;
+      }
+
+      .app-boot-mark::after {
+        inset: 15px 9px;
+        z-index: 1;
+        background: linear-gradient(
+          105deg,
+          transparent 35%,
+          rgba(255, 247, 214, 0.8) 50%,
+          transparent 65%
+        );
+        filter: blur(2px);
+        mix-blend-mode: screen;
+        transform: translateX(-125%) skewX(-10deg);
+        animation: app-boot-glint 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      }
+
+      .app-boot-logo {
+        width: 72px;
+        height: 72px;
+        object-fit: contain;
+        filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.42));
+        animation: app-boot-deal 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      }
+
+      @keyframes app-boot-deal {
+        0% {
+          opacity: 0.5;
+          transform: translate3d(-8px, 5px, 0) rotate(-4deg) scale(0.9);
+        }
+        24%,
+        72% {
+          opacity: 1;
+          transform: translate3d(0, 0, 0) rotate(0) scale(1);
+        }
+        100% {
+          opacity: 0.68;
+          transform: translate3d(0, 0, 0) rotate(0) scale(0.96);
+        }
+      }
+
+      @keyframes app-boot-trace {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+
+      @keyframes app-boot-glint {
+        0%,
+        22% {
+          opacity: 0;
+          transform: translateX(-125%) skewX(-10deg);
+        }
+        34% {
+          opacity: 0.9;
+        }
+        52%,
+        100% {
+          opacity: 0;
+          transform: translateX(125%) skewX(-10deg);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .app-boot-mark::before,
+        .app-boot-mark::after,
+        .app-boot-logo {
+          animation: none;
+        }
+
+        .app-boot-mark::before {
+          background: rgba(212, 175, 55, 0.5);
+        }
+
+        .app-boot-mark::after {
+          display: none;
+        }
+      }
+    </style>
+
     %sveltekit.head%
   </head>
 
   <body data-sveltekit-preload-data="hover">
+    <div id="app-boot-screen" role="status" aria-label="Loading" aria-live="polite">
+      <div class="app-boot-mark" aria-hidden="true">
+        <img
+          class="app-boot-logo"
+          src="https://cdn.tcg.online/public/thecardgoat/branding/icon-square-72.webp"
+          width="72"
+          height="72"
+          alt=""
+        />
+      </div>
+    </div>
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

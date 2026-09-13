@@ -56,6 +56,31 @@ describe("Extreme Hatred (GD01-112)", () => {
     expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
   });
 
+  it("can be played when two active friendlies exist even if no enemy Unit can be chosen", () => {
+    const firstFriendly = createMockUnit();
+    const secondFriendly = createMockUnit();
+    const engine = GundamTestEngine.create({
+      hand: [gd01ExtremeHatred112],
+      play: [firstFriendly, secondFriendly],
+      resourceArea: activeResources(6),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const [firstFriendlyId, secondFriendlyId] = p1.getCardsInZone("battleArea");
+    const commandId = p1.getHand()[0]!;
+
+    expectSuccess(p1.playCommand(commandId));
+    const restChoice = p1.getBoardView().pendingChoice;
+    if (restChoice?.kind !== "targetSelection") {
+      throw new Error("Expected Extreme Hatred to ask which two friendly Units to rest");
+    }
+    expectSuccess(p1.resolveEffect({ targets: [firstFriendlyId!, secondFriendlyId!] }));
+
+    expect(p1.isExhausted(firstFriendlyId!)).toBe(true);
+    expect(p1.isExhausted(secondFriendlyId!)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+    expect(p1.getCardZone(commandId)).toBe(`trash:${PLAYER_ONE}`);
+  });
+
   it("does not rest or damage anything when two active friendly Units cannot be chosen", () => {
     const activeFriendly = createMockUnit();
     const restedFriendly = createMockUnit({ keywordEffects: [{ keyword: "Support", value: 1 }] });

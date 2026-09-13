@@ -61,4 +61,36 @@ describe("OP05-105 Satori", () => {
       false,
     );
   });
+
+  test("may decline optional Life Trigger so hand trash and play do not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        life: [op05Satori105],
+        hand: [op05UpperYard117, op05MaryGeoise097],
+      },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const satoriId = engine.findCardInZone("north", "life", op05Satori105);
+    const discardId = engine.findCardInZone("north", "hand", op05UpperYard117);
+    const otherId = engine.findCardInZone("north", "hand", op05MaryGeoise097);
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const handBefore = engine.getView("north").players.north.hand.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.map((card) => card.instanceId)).toEqual(
+      expect.arrayContaining([discardId, otherId]),
+    );
+    expect(view.players.north.hand.length).toBe(handBefore);
+    expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(discardId);
+    expect(view.players.north.characters.some((card) => card?.instanceId === satoriId)).toBe(false);
+    // Declined optional: physical Trigger card is trashed without being played.
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(satoriId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

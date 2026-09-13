@@ -27,8 +27,7 @@ export const gd03GundamAge2Normal019: UnitCard = {
       },
       rarity: "legendRare",
       finish: "standard",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-019.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-019.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-019.webp",
       productName: "Steel Requiem[GD03]",
     },
     {
@@ -44,15 +43,13 @@ export const gd03GundamAge2Normal019: UnitCard = {
       },
       rarity: "legendRare",
       finish: "parallel",
-      imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-019_p1.webp",
-      sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-019_p1.webp?260424",
+      imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-019_p1.webp",
       productName: "Steel Requiem[GD03]",
     },
   ],
   reprints: ["GD03-019", "GD03-019_p1"],
   selectedPrintingId: "GD03-019",
-  imageUrl: "https://r2.tcg.online/public/gundam/cards/gd03/GD03-019.webp",
-  sourceImageUrl: "https://www.gundam-gcg.com/en/images/cards/card/GD03-019.webp?260424",
+  imageUrl: "https://cdn.tcg.online/public/gundam/cards/gd03/GD03-019.webp",
   legality: "legal",
   level: 5,
   cost: 4,
@@ -65,7 +62,10 @@ export const gd03GundamAge2Normal019: UnitCard = {
     {
       type: "constant",
       activation: {
-        conditions: [{ type: "duringPair" }, { type: "selfIsRested" }],
+        // The target's rested filter already makes this continuous effect
+        // inapplicable while AGE-2 is active; keeping the state there also
+        // lets the attack-target resolver evaluate it at declaration time.
+        conditions: [{ type: "duringPair" }],
       },
       directives: [
         {

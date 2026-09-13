@@ -29,18 +29,15 @@
 }
 
 .boardShell {
-  --hand-board-gap: clamp(18px, 3cqh, 32px);
   --hand-arc-bleed: 32px;
-  --board-shift-up: 12px;
   --zone-gutter: 4px;
   --zone-pad: 6px;
   --zone-border: 1px solid rgb(245 230 66 / 32%);
   --unit-card-h: 15cqh;
-  --board-edge-gutter: clamp(22px, 2.6cqh, 34px);
   --center-row-h: minmax(58px, 5.4%);
 
   position: absolute;
-  top: calc(var(--hand-board-gap) - var(--board-shift-up));
+  top: 0;
   right: 0;
   /* Reserve a physical dock for the local hand. The board never extends
      into this space, keeping Eddies and return-to-hand drop targets clear. */
@@ -51,9 +48,7 @@
   background: #07090c;
   display: grid;
   container-type: size;
-  grid-template-rows:
-    var(--board-edge-gutter) minmax(0, 1fr) var(--center-row-h) minmax(0, 1fr)
-    var(--board-edge-gutter);
+  grid-template-rows: minmax(0, 1fr) var(--center-row-h) minmax(0, 1fr);
 }
 
 .root[data-field-card-size="compact"] .boardShell {
@@ -67,12 +62,12 @@
 }
 
 .opponentSide {
-  grid-row: 2;
+  grid-row: 1;
   --priority-rgb: 255 61 138;
 }
 
 .centerWrapper {
-  grid-row: 3;
+  grid-row: 2;
   position: relative;
   z-index: 70;
   min-height: 0;
@@ -98,7 +93,7 @@
 }
 
 .playerSide {
-  grid-row: 4;
+  grid-row: 3;
   --priority-rgb: 74 217 255;
 }
 
@@ -225,7 +220,7 @@
 }
 
 /*
-  Floating action panel re-homed from MobileShell's right-hand interactions
+  Floating action panel re-homed from the former right-hand interactions
   column. Anchored just above the self hand (.handBottom): hand bottom offset
   + hand height + a small gap. Centered horizontally over the self hand with a
   capped width so it never spans the whole board. The self-hand variables live

@@ -36,4 +36,42 @@ describe("regression fixture registry", () => {
     expect(regressionFixture.playerOne.play).toHaveLength(1);
     expect(regressionFixture.playerTwo.play).toHaveLength(1);
   });
+
+  it("registers the Darkwing's Chair Set ampersand-heal visual board", () => {
+    const regressionFixture = getLorcanaRegressionFixture("darkwings-chair-set-ampersand-heal");
+
+    expect(regressionFixture.name).toBe(
+      "Darkwing's Chair Set - Ampersand name heal (team + solos)",
+    );
+    expect(regressionFixture.skipPreGame).toBe(true);
+    // 4 Chair Sets + Scimitar + 6 Darkwing variants + 3 Launchpads + Goofy + 2 Aladdins
+    expect(
+      Array.isArray(regressionFixture.playerOne.play) && regressionFixture.playerOne.play.length,
+    ).toBeGreaterThanOrEqual(15);
+    expect(
+      Array.isArray(regressionFixture.playerOne.hand) && regressionFixture.playerOne.hand.length,
+    ).toBeGreaterThanOrEqual(4);
+  });
+
+  it("registers the Look What You've Done single-replay visual regression", () => {
+    const regressionFixture = getLorcanaRegressionFixture("look-what-youve-done-single-replay");
+
+    expect(regressionFixture.name).toBe("Look What You've Done - Single Discard Replay");
+    expect(regressionFixture.skipPreGame).toBe(true);
+    expect(regressionFixture.playerOne.hand).toHaveLength(2);
+    expect(regressionFixture.playerOne.inkwell).toBe(5);
+    expect(regressionFixture.playerTwo.play).toHaveLength(1);
+  });
+
+  it("registers the Mulan self-trigger regression", () => {
+    const regressionFixture = getLorcanaRegressionFixture(
+      "mulan-created-by-the-vine-self-trigger",
+    );
+
+    expect(regressionFixture.name).toBe("Mulan - Created by the Vine self trigger");
+    expect(regressionFixture.skipPreGame).toBe(true);
+    expect(regressionFixture.playerOne.hand).toHaveLength(1);
+    expect(regressionFixture.playerOne.inkwell).toBe(4);
+    expect(regressionFixture.playerTwo.play).toHaveLength(1);
+  });
 });

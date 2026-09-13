@@ -1,4 +1,10 @@
-import type { MatchSeat, MatchState, EngineCommand, LegalCommandDescriptor } from "../types.ts";
+import type {
+  MatchSeat,
+  MatchState,
+  EngineCommand,
+  LegalCommandDescriptor,
+  PromptState,
+} from "../types.ts";
 import { getCardForInstance, getPlayer } from "../shared.ts";
 
 export type OnePieceBotStrategy = (
@@ -10,6 +16,34 @@ export type OnePieceBotStrategy = (
 
 export interface OnePieceBotDecisionContext {
   readonly random: () => number;
+}
+
+export type OnePieceBotPromptResolver = (
+  state: MatchState,
+  prompt: PromptState,
+  context?: OnePieceBotDecisionContext,
+) => EngineCommand | null;
+
+/**
+ * Object strategy form: a main-phase command chooser plus an optional prompt
+ * resolver for blocker/counter/trigger/effect decisions. Plain function
+ * strategies keep working via {@link toBotAgent}; the harness falls back to
+ * its naive prompt resolver when the agent provides no `resolvePrompt` or it
+ * returns null.
+ */
+export interface OnePieceBotAgent {
+  readonly id: string;
+  readonly choose: OnePieceBotStrategy;
+  readonly resolvePrompt?: OnePieceBotPromptResolver;
+}
+
+export type OnePieceBotStrategyLike = OnePieceBotStrategy | OnePieceBotAgent;
+
+export function toBotAgent(strategy: OnePieceBotStrategyLike): OnePieceBotAgent {
+  if (typeof strategy === "function") {
+    return { id: strategy.name || "anonymous", choose: strategy };
+  }
+  return strategy;
 }
 
 function randomItem<T>(items: T[], random: () => number): T {
@@ -101,6 +135,10 @@ export function commandFromDescriptor(
         seat,
         promptId: descriptor.promptId,
       };
+    case "concede":
+      // Bots never concede (1-2-3/1-2-4): keep the descriptor out of every
+      // strategy's choice set by never converting it into a command.
+      return null;
     default:
       return null;
   }

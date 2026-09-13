@@ -48,4 +48,35 @@ describe("ST09-014 Narikabura Arrow reprint", () => {
     );
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      { life: [prb01NarikaburaArrowJollyRogerFoil014], hand: [eb01Doma005, eb01Doma005], deck: 6 },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const paymentIds = engine.getState().players.north.hand.slice();
+    const triggerId = engine.findCardInZone("north", "life", prb01NarikaburaArrowJollyRogerFoil014);
+    const lifeBefore = engine.getView("north").players.north.lifeCount;
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "north");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    const afterTrigger = engine.getView("north").players.north;
+    const handAfterTrigger = afterTrigger.hand.length;
+    const deckAfterTrigger = afterTrigger.deckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.hand.length).toBe(handAfterTrigger);
+    expect(view.players.north.deckCount).toBe(deckAfterTrigger);
+    expect(view.players.north.lifeCount).toBe(lifeBefore - 1);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(triggerId);
+    for (const id of paymentIds) {
+      expect(view.players.north.hand.map((card) => card.instanceId)).toContain(id);
+      expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(id);
+    }
+    expect(view.prompts).toHaveLength(0);
+  });
 });

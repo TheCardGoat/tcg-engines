@@ -67,17 +67,30 @@ describe("OP14-062 Gladius", () => {
   });
 
   test("may decline the DON return after being K.O.'d", () => {
-    const engine = createGladiusEngine();
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: op14eb04Gladius062, rested: true }], activeDon: 1 },
+      {
+        character: [eb01Doma005, { card: op14eb04EdwardNewgate044, playedOnTurn: 0 }],
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const gladiusId = engine.findCardInZone("south", "character", op14eb04Gladius062);
+    const attackerId = engine.findCardInZone("north", "character", op14eb04EdwardNewgate044);
     const eligibleId = engine.findCardInZone("north", "character", eb01Doma005);
-    koGladius(engine);
+    const activeDonBefore = engine.getView("south").players.south.activeDon;
+    const donDeckBefore = engine.getView("south").players.south.donDeckCount;
 
+    engine.declareAttack(attackerId, gladiusId, "north");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
-    expect(view.players.south.activeDon).toBe(1);
+    expect(view.players.south.activeDon).toBe(activeDonBefore);
+    expect(view.players.south.donDeckCount).toBe(donDeckBefore);
+    expect(view.players.south.trash.map((card) => card.instanceId)).toContain(gladiusId);
     expect(
       view.players.north.characters.find((card) => card?.instanceId === eligibleId)?.rested,
     ).toBe(false);
+    expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(eligibleId);
     expect(view.prompts).toHaveLength(0);
   });
 });

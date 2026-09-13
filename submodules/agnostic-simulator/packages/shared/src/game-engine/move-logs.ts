@@ -16,9 +16,42 @@ export interface CanonicalEngineMoveLog {
   readonly moveType: string;
   readonly playerId: string;
   readonly timestamp: number;
+  /** Stable ordering among records produced by the same accepted command. */
+  readonly sequence?: number;
   readonly turnNumber?: number;
   readonly public: readonly EngineLogMessage[];
   readonly privateByPlayerId?: Partial<Record<string, readonly EngineLogMessage[]>>;
+}
+
+/**
+ * Command-scoped player narration. Games own message keys and values; the
+ * shared host owns only viewer-safe selection of a private replacement over
+ * its public fallback.
+ */
+export interface CanonicalPlayerNarrativeEntry {
+  readonly entryId: string;
+  readonly publicMessage: EngineLogMessage | null;
+  readonly privateMessageByPlayerId?: Readonly<Record<string, EngineLogMessage>>;
+}
+
+export interface CanonicalPlayerNarrativeLog {
+  readonly kind: "player-narrative";
+  readonly schemaVersion: number;
+  readonly commandId: string;
+  readonly moveType: string;
+  readonly actorId: string;
+  readonly timestamp: number;
+  readonly turnNumber: number;
+  readonly turnPlayerId: string;
+  readonly phase: string;
+  readonly entries: readonly CanonicalPlayerNarrativeEntry[];
+}
+
+export interface VisiblePlayerNarrativeLog extends Omit<CanonicalPlayerNarrativeLog, "entries"> {
+  readonly entries: readonly {
+    readonly entryId: string;
+    readonly message: EngineLogMessage;
+  }[];
 }
 
 interface PrivateFieldLike {
@@ -36,6 +69,79 @@ export function isCanonicalEngineMoveLog(log: unknown): log is CanonicalEngineMo
   );
 }
 
+export function isCanonicalPlayerNarrativeLog(log: unknown): log is CanonicalPlayerNarrativeLog {
+  if (
+    typeof log !== "object" ||
+    log === null ||
+    (log as { kind?: unknown }).kind !== "player-narrative" ||
+    typeof (log as { schemaVersion?: unknown }).schemaVersion !== "number" ||
+    !Number.isFinite((log as { schemaVersion: number }).schemaVersion) ||
+    typeof (log as { commandId?: unknown }).commandId !== "string" ||
+    typeof (log as { moveType?: unknown }).moveType !== "string" ||
+    typeof (log as { actorId?: unknown }).actorId !== "string" ||
+    typeof (log as { timestamp?: unknown }).timestamp !== "number" ||
+    !Number.isFinite((log as { timestamp: number }).timestamp) ||
+    typeof (log as { turnNumber?: unknown }).turnNumber !== "number" ||
+    !Number.isFinite((log as { turnNumber: number }).turnNumber) ||
+    typeof (log as { turnPlayerId?: unknown }).turnPlayerId !== "string" ||
+    typeof (log as { phase?: unknown }).phase !== "string" ||
+    !Array.isArray((log as { entries?: unknown }).entries)
+  ) {
+    return false;
+  }
+  return (log as { entries: readonly unknown[] }).entries.every(
+    (entry) =>
+      typeof entry === "object" &&
+      entry !== null &&
+      typeof (entry as { entryId?: unknown }).entryId === "string" &&
+      ((entry as { publicMessage?: unknown }).publicMessage === null ||
+        isEngineLogMessage((entry as { publicMessage?: unknown }).publicMessage)) &&
+      isPrivateMessageMap(
+        (entry as { privateMessageByPlayerId?: unknown }).privateMessageByPlayerId,
+      ),
+  );
+}
+
+function isEngineLogMessage(value: unknown): value is EngineLogMessage {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as { key?: unknown }).key === "string"
+  );
+}
+
+function isPrivateMessageMap(value: unknown): boolean {
+  return (
+    value === undefined ||
+    (typeof value === "object" &&
+      value !== null &&
+      !Array.isArray(value) &&
+      Object.values(value).every((message) => isEngineLogMessage(message)))
+  );
+}
+
+export function composePlayerNarrativeForViewer(
+  log: CanonicalPlayerNarrativeLog,
+  viewerId: string | null,
+): VisiblePlayerNarrativeLog {
+  return {
+    kind: log.kind,
+    schemaVersion: log.schemaVersion,
+    commandId: log.commandId,
+    moveType: log.moveType,
+    actorId: log.actorId,
+    timestamp: log.timestamp,
+    turnNumber: log.turnNumber,
+    turnPlayerId: log.turnPlayerId,
+    phase: log.phase,
+    entries: log.entries.flatMap((entry) => {
+      const message =
+        (viewerId ? entry.privateMessageByPlayerId?.[viewerId] : undefined) ?? entry.publicMessage;
+      return message ? [{ entryId: entry.entryId, message }] : [];
+    }),
+  };
+}
+
 export function composeCanonicalMoveLogForViewer(
   log: CanonicalEngineMoveLog,
   viewerId: string | null,
@@ -50,6 +156,19 @@ export function composeCanonicalMoveLogForViewer(
 }
 
 export function selectVisibleEngineLogForViewer(log: unknown, viewerId: string | null): unknown {
+  if (isCanonicalPlayerNarrativeLog(log)) {
+    return composePlayerNarrativeForViewer(log, viewerId);
+  }
+  // A malformed narrative envelope must fail closed. Falling through to the
+  // legacy generic scrubber could otherwise preserve its private replacement
+  // map verbatim.
+  if (
+    typeof log === "object" &&
+    log !== null &&
+    (log as { kind?: unknown }).kind === "player-narrative"
+  ) {
+    return null;
+  }
   if (isCanonicalEngineMoveLog(log)) {
     return composeCanonicalMoveLogForViewer(log, viewerId);
   }
@@ -61,6 +180,7 @@ export function createCanonicalEngineMoveLog(args: {
   moveType: string;
   playerId: string;
   timestamp: number;
+  sequence?: number;
   turnNumber?: number;
   messages: readonly EngineLogMessage[];
 }): CanonicalEngineMoveLog {
@@ -83,6 +203,7 @@ export function createCanonicalEngineMoveLog(args: {
     moveType: args.moveType,
     playerId: args.playerId,
     timestamp: args.timestamp,
+    ...(args.sequence === undefined ? {} : { sequence: args.sequence }),
     ...(args.turnNumber === undefined ? {} : { turnNumber: args.turnNumber }),
     public: publicMessages,
     ...privateAppendix,

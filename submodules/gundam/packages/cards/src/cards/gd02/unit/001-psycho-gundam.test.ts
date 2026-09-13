@@ -44,6 +44,7 @@ function selfDamageCommand() {
 }
 
 describe("Psycho Gundam (GD02-001)", () => {
+  /** @behavioral-proof complete: deployment, Link, Breach, pair qualification, Titans source, and recovery are public. */
   describe("Printed Lv.6 and cost 4", () => {
     it("cannot deploy with only 5 total Resources", () => {
       const engine = GundamTestEngine.create({

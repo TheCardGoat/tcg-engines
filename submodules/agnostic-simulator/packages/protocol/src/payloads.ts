@@ -1,3 +1,4 @@
+import type { PresentationEnvelope } from "./presentation.js";
 /**
  * Server -> Client payload shapes.
  *
@@ -7,14 +8,14 @@
  * Game-engine-specific shapes (Lorcana animations, accepted-move records,
  * engine logs, cards maps, match state views) are intentionally typed as
  * `unknown[]` / `unknown` so this package stays game-agnostic. Concrete
- * shapes live alongside the producers in `apps/api/src/modules/play/types`
- * and remain re-exported from `apps/api/src/modules/gateway/protocol/`.
+ * shapes live alongside the game adapters and play-service producers; this
+ * package exposes only the game-agnostic Socket.IO event contract.
  */
 
 import type { ChatMessage } from "./chat.js";
 import type { PlayableGameSlug } from "./games.js";
 import type { EngineInteractionView } from "./interactions.js";
-import type { AnimationPacketV1 } from "./animations.js";
+import type { AnimationPlanV2 } from "./animations.js";
 
 export interface GatewayPongPayload {
   /** ISO-8601 server timestamp. */
@@ -36,6 +37,9 @@ export interface GatewayWelcomePayload {
   userId?: string | null;
   userName?: string | null;
 }
+
+/** A connected viewer must renew credentials and rejoin before sending more commands. */
+export const VIEWER_SCOPE_EXPIRED = "viewer_scope_expired";
 
 export interface GatewayErrorPayload {
   code: string;
@@ -63,12 +67,18 @@ export interface GameJoinedPayload {
   gameId: string;
   role: "player" | "spectator";
   stateVersion: number;
-  state: unknown;
+  /** Present only when the HTTP bootstrap version was stale. */
+  state?: unknown;
+  /** Viewer-filtered, game-owned presentation resources for the included state. */
+  resources?: unknown;
+  presentation?: PresentationEnvelope;
   cardsMaps?: unknown;
   players: { id: string; connected: boolean; disconnectedAt?: string }[];
   playerVisualSettings?: Record<string, PlayerVisualSettings>;
   pendingProposal?: PendingProposal;
   interactionView?: EngineInteractionView;
+  /** Whether the seated recipient may undo the latest authoritative move. */
+  undoable?: boolean;
   correlationId?: string;
 }
 
@@ -97,9 +107,12 @@ export interface ClientUpdateBaseProperties {
   patches: unknown[];
   /** Engine logs stripped for the acting player (includes their own private data). */
   engineLogs: unknown[];
-  animations: AnimationPacketV1[];
+  animationPlan: AnimationPlanV2 | null;
   /** Full state snapshot, included whenever the backend can avoid client-side patch application. */
   state: unknown;
+  /** Viewer-filtered, game-owned resources that correspond to this state snapshot. */
+  resources?: unknown;
+  presentation?: PresentationEnvelope;
   /** Server-side processing time in milliseconds (from message receipt to response send). */
   serverProcessingMs?: number;
   matchInfo?: {
@@ -112,6 +125,8 @@ export interface ClientUpdateBaseProperties {
     winnerId?: string;
   };
   interactionView?: EngineInteractionView;
+  /** Whether the receiving player may undo their latest authoritative move. */
+  undoable?: boolean;
 }
 
 export interface StateSyncPayload extends Omit<ClientUpdateBaseProperties, "patches"> {}
@@ -134,6 +149,8 @@ export interface MoveAcceptedPayload extends ClientUpdateBaseProperties {
   moveType: string;
   actorId: string;
   acceptedMove?: unknown;
+  /** Game-owned command outcome, sent only to the acting player. */
+  outcome?: unknown;
   correlationId?: string;
 }
 
@@ -166,6 +183,13 @@ export interface GameEndedPayload {
   player2Score?: number;
 }
 
+/** The terminal game state committed, but durable match progression did not. */
+export interface MatchFinalizationFailedPayload {
+  gameId: string;
+  matchId: string;
+  message: string;
+}
+
 /** Concrete shape produced by `play/types/MatchStateView`; treat as opaque here. */
 export type MatchStatePayload = Record<string, unknown> & { durationMs?: number };
 
@@ -178,6 +202,10 @@ export interface ErrorPayload {
 export interface HeartbeatAckPayload {
   serverTime: string;
   stateVersions: Record<string, number>;
+  /** Echoes the client probe id without exposing game or user data. */
+  correlationId?: string;
+  /** Echoes the client timestamp so the originating browser can calculate full-path RTT. */
+  clientSentAt?: number;
 }
 
 export interface RecentOpponentAvoidancePayload {
@@ -349,14 +377,7 @@ export interface TournamentUpdatePayload {
 export interface EventSubscriptionAckPayload {
   eventId: string;
   subscribed: boolean;
-}
-
-export interface GlobalAnnouncementPayload {
-  id: string;
-  title: string;
-  body: string;
-  severity: "info" | "warning" | "critical";
-  issuedAt: string;
+  correlationId: string;
 }
 
 export interface FriendMessagePayload {

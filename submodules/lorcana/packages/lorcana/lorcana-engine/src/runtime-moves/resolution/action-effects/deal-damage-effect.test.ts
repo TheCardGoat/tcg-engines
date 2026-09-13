@@ -1,7 +1,8 @@
-import { describe, expect, it } from "bun:test";
+import { describe, expect, it, spyOn } from "bun:test";
 import type { CardInstanceId, PlayerId } from "#core";
 import { addTemporaryKeyword } from "../../effects/temporary-effects";
 import { resolveDealDamageEffect, resolvePutDamageLikeEffect } from "./deal-damage-effect";
+import { effectLogger } from "./effect-logger";
 import type { PlayCardExecutionContext } from "./types";
 
 const PLAYER_ONE = "player-one" as PlayerId;
@@ -138,6 +139,58 @@ describe("deal-damage-effect", () => {
     );
 
     expect(ctx.cards.require(targetId).meta.damage).toBe(2);
+  });
+
+  it("logs fully resisted damage at debug instead of warn", () => {
+    const debug = spyOn(effectLogger, "debug");
+    const warn = spyOn(effectLogger, "warn");
+    const targetId = "target" as CardInstanceId;
+    const sourceId = "source" as CardInstanceId;
+    const ctx = createTestContext({
+      definitions: {
+        [targetId]: {
+          id: "target",
+          cardType: "character",
+          strength: 2,
+          willpower: 5,
+          abilities: [{ type: "keyword", keyword: "Resist", value: 2 }],
+        },
+      },
+      cardMeta: {
+        [targetId]: { damage: 0, state: "ready" },
+      },
+      zoneCards: {
+        [`play:${PLAYER_ONE}`]: [targetId],
+      },
+    });
+
+    try {
+      resolveDealDamageEffect(
+        ctx,
+        {
+          cardId: sourceId,
+          cardType: "action",
+          costType: "free",
+          playerId: PLAYER_ONE,
+        },
+        { type: "deal-damage", amount: 2 },
+        {
+          targets: [targetId],
+          amountByTarget: {
+            [targetId]: 2,
+          },
+        },
+      );
+
+      expect(ctx.cards.require(targetId).meta.damage).toBe(0);
+      expect(debug).toHaveBeenCalledWith("Target target took no damage after reduction");
+      expect(
+        warn.mock.calls.some((call) => String(call[0]).includes("took no damage after reduction")),
+      ).toBe(false);
+    } finally {
+      debug.mockRestore();
+      warn.mockRestore();
+    }
   });
 
   it("reduces direct damage by temporary Resist on locations", () => {

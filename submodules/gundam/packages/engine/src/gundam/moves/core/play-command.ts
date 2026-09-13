@@ -11,7 +11,8 @@
  *   - 3-4-5  : 【Main】 and 【Action】 timing gate when a command can be played.
  *   - 7-5-2-2-1: Reveal the card before paying its cost (COMMAND_REVEALED).
  *   - 7-5-2-2-2/3: Level and resource cost validation (see play-card-shared).
- *   - 10-1-8-1-1: Reject the play when a required target cannot be chosen.
+ *   - 10-1-8-1-1: Reject the play when a required public target cannot be chosen.
+ *   - 10-1-8-1-2: Only the first portion (before Then / If you do) can block play.
  */
 
 import type {
@@ -22,12 +23,20 @@ import type {
   EffectAction,
   EffectDirective,
 } from "@tcg/gundam-types";
-import type { GundamMoveDefinition } from "../../types.ts";
-import { validatePlayFromHand, payCardCostWithDetails } from "./play-card-shared.ts";
+import type { GundamMoveDefinition, ReadonlyGundamG } from "../../types.ts";
+import type { FrameworkReadAPI } from "../../../types/move-types.ts";
+import {
+  validatePlayFromHand,
+  validatePaymentResourceIds,
+  payCardCostWithDetails,
+  payCost,
+  resourcePaymentSelection,
+} from "./play-card-shared.ts";
 import { resetActionStepOnAction } from "./action-step-reset.ts";
 import {
   enqueueObserverTriggers,
   enqueuePendingEffect,
+  hasLegalRequiredTargets,
   nextPendingEffectId,
 } from "../../effects/pending-effects.ts";
 import { emitGundamEvent } from "../../events.ts";
@@ -38,16 +47,26 @@ import {
 } from "../../rules/derived-state.ts";
 import { evaluateTargetFilter, evaluateCondition } from "../../../runtime/target-dsl.ts";
 import {
+  collectFirstSegmentActivationActions,
   extractActionFilters,
   gatherAllCardsForTargeting,
   getFilterCountBounds,
+  isActivationGateFilter,
 } from "../../effects/target-legality.ts";
 import type { TargetResolutionContext } from "../../../runtime/target-dsl.ts";
 
 type Phase = "main-phase" | "battle-phase" | "end-phase";
+type PlayCostSubstitution = Extract<EffectAction, { action: "playCostSubstitution" }>;
 
 function isActionTiming(phase: string | undefined, step: string | undefined): boolean {
   return (phase === "battle-phase" || phase === "end-phase") && step === "action-step";
+}
+
+/** Empty `targets: []` is not a precommit — treat it as unresolved. */
+function normalizeEffectTargets(
+  targets: readonly string[] | undefined,
+): readonly string[] | undefined {
+  return targets && targets.length > 0 ? targets : undefined;
 }
 
 function findPlayableCommandEffect(
@@ -89,6 +108,18 @@ function isConditionalDirective(directive: unknown): directive is ConditionalDir
   );
 }
 
+function hasChooseOneDirective(directives: readonly Directive[]): boolean {
+  return directives.some((directive) => {
+    if ("condition" in directive) {
+      return (
+        hasChooseOneDirective(directive.thenDirectives) ||
+        hasChooseOneDirective(directive.elseDirectives ?? [])
+      );
+    }
+    return "kind" in directive && directive.kind === "chooseOne";
+  });
+}
+
 /**
  * Iterate every EffectAction in a directive list, recursing into
  * ConditionalDirective branches. When a `tgtCtx` is supplied the
@@ -104,6 +135,11 @@ function* iterAllActions(
 ): Generator<EffectAction> {
   for (const directive of directives) {
     if (isEffectDirective(directive)) {
+      // Optional selectors are choices made after the Command has legally
+      // activated. They cannot make playing the Command illegal when their
+      // target set is empty (for example, "you may pair this card from your
+      // trash with one of your Units").
+      if (tgtCtx && directive.optional) continue;
       yield directive.action;
     } else if (isConditionalDirective(directive)) {
       if (tgtCtx) {
@@ -162,6 +198,31 @@ function* iterTopLevelActions(
 }
 
 /**
+ * Yield optional actions from the play-time branch only. Optional targets
+ * never make a Command unplayable, but a caller may pre-commit them alongside
+ * mandatory targets. Those supplied IDs still need to count as recognized
+ * targets during validation.
+ */
+function* iterOptionalActions(
+  directives: readonly Directive[],
+  tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
+): Generator<EffectAction> {
+  for (const directive of directives) {
+    if (isEffectDirective(directive)) {
+      if (directive.optional) yield directive.action;
+      continue;
+    }
+    if (isConditionalDirective(directive)) {
+      if (evaluateCondition(directive.condition, tgtCtx)) {
+        yield* iterOptionalActions(directive.thenDirectives, tgtCtx);
+      } else if (directive.elseDirectives) {
+        yield* iterOptionalActions(directive.elseDirectives, tgtCtx);
+      }
+    }
+  }
+}
+
+/**
  * Validate that the player-chosen targets (if any) are legal for this effect,
  * or that legal candidates exist when no explicit choice was made.
  *
@@ -172,6 +233,7 @@ function validateEffectTargets(
   chosenTargets: readonly string[] | undefined,
   tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
   effectiveCost: number,
+  paymentResourceIds?: readonly string[],
 ): { errorCode: string; error: string } | null {
   // Conditions first (rule 10-1-8: command effects have conditions too)
   if (effect.activation.conditions) {
@@ -190,15 +252,38 @@ function validateEffectTargets(
   // Union of chosen targets that matched at least one action's filter.
   // Used to confirm every chosen target belongs to some action.
   const matchedSet = new Set<string>();
+  let previousActionSelectsTargets = false;
+  // Rule 10-1-8-1-2: only the first portion (before Then / If you do)
+  // can make playing the Command illegal. Later public chooses and
+  // private selections (hand/deck/shields, 10-2-2-1) are resolution.
+  const firstSegmentActions = new Set(
+    collectFirstSegmentActivationActions(effect.directives, tgtCtx).map(({ action }) => action),
+  );
 
   for (const action of iterTopLevelActions(effect, tgtCtx)) {
-    for (const filter of extractCommandActionFilters(action, tgtCtx, effectiveCost)) {
+    const actionFilters = extractCommandActionFilters(
+      action,
+      tgtCtx,
+      effectiveCost,
+      paymentResourceIds,
+    );
+    // `drawIfTargetMatches` evaluates the immediately preceding printed
+    // selection in the executor. Its condition must not make a Command
+    // unplayable before that selection resolves.
+    if (action.action === "drawIfTargetMatches" && previousActionSelectsTargets) {
+      previousActionSelectsTargets = actionFilters.length > 0;
+      continue;
+    }
+    const isFirstSegmentGate = firstSegmentActions.has(action);
+
+    for (const filter of actionFilters) {
       const candidates = evaluateTargetFilter(filter, gather, tgtCtx);
       const { min, max } = getFilterCountBounds(filter);
+      const gatesPlay = isFirstSegmentGate && isActivationGateFilter(filter);
 
       if (chosenSet === undefined) {
-        // Auto-target path: candidates must cover at least `min` for the play to be legal.
-        if (candidates.length < min) {
+        // Auto-target path: only first-segment public chooses block play.
+        if (gatesPlay && candidates.length < min) {
           return {
             errorCode: "NO_LEGAL_TARGETS",
             error: `No legal targets for command effect (need at least ${min})`,
@@ -215,8 +300,13 @@ function validateEffectTargets(
       const picked = chosenTargets!.filter((id) => candidateSet.has(id));
 
       if (picked.length < min) {
-        // Too few (below min) — allow zero when candidates are also zero (empty-set legal play)
-        if (!(picked.length === 0 && candidates.length === 0 && min === 0)) {
+        // Later Then/If-you-do chooses do not block the auto-play path
+        // (chosenSet undefined above). An explicit precommit is stored as
+        // the whole effect's chosenTargets, so any counted filter that
+        // currently has candidates must be fully supplied — public or
+        // private — or the later prompt is skipped (10-3-3).
+        const requireChosenCount = gatesPlay || candidates.length >= min;
+        if (requireChosenCount && !(picked.length === 0 && candidates.length === 0 && min === 0)) {
           return {
             errorCode: "INVALID_TARGET",
             error: `Too few targets chosen: need at least ${min}, got ${picked.length}`,
@@ -230,6 +320,31 @@ function validateEffectTargets(
         };
       }
       for (const id of picked) matchedSet.add(id);
+    }
+    previousActionSelectsTargets = actionFilters.some(
+      (filter) => filter.owner !== "self" && filter.count !== undefined && filter.count !== "all",
+    );
+  }
+
+  // Optional selectors are resolved after activation, so they do not impose
+  // minimum target counts above. When the move pre-commits an optional target,
+  // however, recognize it here so the final extraneous-target guard accepts
+  // it only when it matches that optional action's filter.
+  if (chosenSet !== undefined) {
+    for (const action of iterOptionalActions(effect.directives, tgtCtx)) {
+      for (const filter of extractCommandActionFilters(
+        action,
+        tgtCtx,
+        effectiveCost,
+        paymentResourceIds,
+      )) {
+        const candidates = new Set(
+          evaluateTargetFilter(filter, gather, tgtCtx) as readonly string[],
+        );
+        for (const id of chosenTargets!) {
+          if (candidates.has(id)) matchedSet.add(id);
+        }
+      }
     }
   }
 
@@ -249,12 +364,13 @@ function extractCommandActionFilters(
   action: EffectAction,
   tgtCtx: TargetResolutionContext,
   effectiveCost: number,
+  paymentResourceIds?: readonly string[],
 ): ReturnType<typeof extractActionFilters> {
   const filters = extractActionFilters(action);
   if (
     action.action !== "chooseAttackTarget" ||
     action.exResourceUnitCount === undefined ||
-    !commandWouldUseExResource(tgtCtx, effectiveCost)
+    !commandWouldUseExResource(tgtCtx, effectiveCost, paymentResourceIds)
   ) {
     return filters;
   }
@@ -264,14 +380,31 @@ function extractCommandActionFilters(
   );
 }
 
+/**
+ * Whether the command play is treated as paying with an EX Resource.
+ *
+ * Explicit `paymentResourceIds` win: if the controller selected an EX token,
+ * the EX-powered target count applies even when enough regular Resources are
+ * available. Without a selection, fall back to the auto-pay heuristic
+ * (EX only when regulars cannot cover the cost).
+ */
 function commandWouldUseExResource(
   tgtCtx: TargetResolutionContext,
   effectiveCost: number,
+  paymentResourceIds?: readonly string[],
 ): boolean {
   const source = tgtCtx.getCardById(tgtCtx.sourceCardId);
   if (!source) return false;
   const cost = effectiveCost;
   if (cost <= 0) return false;
+
+  if (paymentResourceIds !== undefined) {
+    return paymentResourceIds.some((id) => {
+      const card = tgtCtx.getCardById(id as never);
+      if (!card) return false;
+      return tgtCtx.getCardName(card).toLowerCase() === "ex resource";
+    });
+  }
 
   const activeResources = tgtCtx
     .getCardsInZone(tgtCtx.sourcePlayerId, "resourceArea")
@@ -286,6 +419,86 @@ function commandWouldUseExResource(
 export const playCommand: GundamMoveDefinition<"playCommand"> = {
   gatedByPendingEffects: true,
 
+  describeProcedure({ G, playerId, partialInput, framework }) {
+    const cardId = (partialInput as { cardId?: string }).cardId;
+    if (!cardId) return [];
+    const definition = framework.cards.getDefinition(cardId) as Card | undefined;
+    const substitution = findPlayCostSubstitution(definition);
+    const mode = (partialInput as { mode?: string }).mode;
+
+    let paymentCost = computeEffectiveCostInHand(cardId, playerId, G, framework);
+    if (substitution) {
+      const normal = validatePlayFromHand(cardId, playerId, G, framework).valid;
+      const alternateBase = validatePlayFromHand(cardId, playerId, G, framework, {
+        costOverride: substitution.action.cost,
+        levelOverride: substitution.action.level,
+      }).valid;
+      const candidates = alternateBase
+        ? playSubstitutionCandidates(cardId, playerId, G, framework, substitution.action)
+        : [];
+      const { min, max } = getFilterCountBounds(substitution.action.discardTarget);
+      const alternate = candidates.length >= min;
+
+      if (mode === undefined) {
+        const modes: { id: string; label: string }[] = [];
+        if (normal) modes.push({ id: "normal", label: "Pay printed Lv. and cost." });
+        if (alternate) {
+          modes.push({
+            id: "alternate",
+            label: `Alternate · Lv. ${substitution.action.level} / Cost ${substitution.action.cost}`,
+          });
+        }
+        return modes.length > 0 ? [{ kind: "selectMode", modes }] : [];
+      }
+      if (mode === "alternate") {
+        const selected = ((partialInput as { targets?: readonly string[] }).targets ?? []).filter(
+          (id) => candidates.includes(id),
+        );
+        if (selected.length < min || selected.length > max) {
+          return [
+            {
+              kind: "selectTarget",
+              role: "cost",
+              candidateIds: candidates,
+              minTargets: min,
+              maxTargets: Number.isFinite(max) ? max : candidates.length,
+            },
+          ];
+        }
+        paymentCost = substitution.action.cost;
+      }
+    }
+
+    const selectedPayment = (partialInput as { paymentResourceIds?: readonly string[] })
+      .paymentResourceIds;
+    // Only force an explicit Resource pick when the controller can choose EX
+    // vs regular payment. With only regular Resources, auto-pay matches the
+    // historical flow and keeps single-tap Command plays working. When EX is
+    // available (or already partially selected), collect exact payment IDs so
+    // EX-powered target counts can honor the selection.
+    if (paymentCost > 0 && selectedPayment?.length !== paymentCost) {
+      const activeResources = resourcePaymentSelection(
+        paymentCost,
+        playerId,
+        G,
+        framework,
+        selectedPayment !== undefined,
+      );
+      if (activeResources || selectedPayment !== undefined) {
+        return [
+          {
+            kind: "selectTarget",
+            role: "resource",
+            candidateIds: activeResources ?? [],
+            minTargets: paymentCost,
+            maxTargets: paymentCost,
+          },
+        ];
+      }
+    }
+    return [];
+  },
+
   enumerateCandidates({ G, playerId, framework }) {
     const phase = framework.state.status.phase as string;
     const step = framework.state.status.step as string | undefined;
@@ -298,15 +511,32 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
       if (!def || def.type !== "command") continue;
       if (!findPlayableCommandEffect(def, phase as Phase, step)) continue;
       const check = validatePlayFromHand(cardId, playerId, g, framework);
-      if (!check.valid) continue;
+      const substitution = findPlayCostSubstitution(def);
+      const alternate = substitution
+        ? validatePlayFromHand(cardId, playerId, g, framework, {
+            costOverride: substitution.action.cost,
+            levelOverride: substitution.action.level,
+          }).valid &&
+          playSubstitutionCandidates(cardId, playerId, g, framework, substitution.action).length >=
+            getFilterCountBounds(substitution.action.discardTarget).min
+        : false;
+      if (!check.valid && !alternate) continue;
       // Ensure at least one legal target arrangement exists (rule 10-1-8-1-1).
       // `validateEffectTargets` returns `null` on success and an error object
       // on failure — skip the card when an error object is returned.
       const effect = findPlayableCommandEffect(def, phase as Phase, step)!;
+      if (
+        hasChooseOneDirective(effect.directives) &&
+        !hasLegalRequiredTargets(effect, "command", g, playerId, cardId, framework)
+      ) {
+        continue;
+      }
       const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
         sourceCardId: cardId,
       });
-      const effectiveCost = computeEffectiveCostInHand(cardId, playerId, g, framework);
+      const effectiveCost = check.valid
+        ? computeEffectiveCostInHand(cardId, playerId, g, framework)
+        : substitution!.action.cost;
       if (validateEffectTargets(effect, undefined, tgtCtx, effectiveCost) !== null) continue;
       out.push(cardId);
     }
@@ -316,7 +546,7 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
   validate({ G, playerId, args, framework, validationMode }) {
     if (validationMode === "preflight") return { valid: true };
     const g = G;
-    const { cardId, targets } = args;
+    const { cardId, mode, targets, paymentResourceIds } = args;
 
     const phase = framework.state.status.phase as string;
     const step = framework.state.status.step as string | undefined;
@@ -328,13 +558,65 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
       };
     }
 
-    // Common checks: card in hand, level, cost
-    const commonResult = validatePlayFromHand(cardId, playerId, g, framework);
-    if (!commonResult.valid) return commonResult;
-
     const definition = framework.cards.getDefinition(cardId) as Card | undefined;
     if (!definition || definition.type !== "command") {
       return { valid: false, error: "Card is not a Command", errorCode: "NOT_A_COMMAND" };
+    }
+
+    const substitution = findPlayCostSubstitution(definition);
+    if (mode !== undefined && mode !== "normal" && mode !== "alternate") {
+      return { valid: false, error: "Unknown command play mode", errorCode: "INVALID_MODE" };
+    }
+    const commonResult = validatePlayFromHand(
+      cardId,
+      playerId,
+      g,
+      framework,
+      mode === "alternate" && substitution
+        ? { costOverride: substitution.action.cost, levelOverride: substitution.action.level }
+        : {},
+    );
+    if (!commonResult.valid) return commonResult;
+    const payment = validatePaymentResourceIds(
+      paymentResourceIds,
+      mode === "alternate" && substitution
+        ? substitution.action.cost
+        : computeEffectiveCostInHand(cardId, playerId, g, framework),
+      playerId,
+      g,
+      framework,
+    );
+    if (!payment.valid) return payment;
+    if (mode === "alternate" && !substitution) {
+      return {
+        valid: false,
+        error: "This Command has no alternate play cost",
+        errorCode: "INVALID_MODE",
+      };
+    }
+
+    const costTargets =
+      mode === "alternate" && substitution
+        ? playSubstitutionCandidates(cardId, playerId, g, framework, substitution.action).filter(
+            (id) => (targets ?? []).includes(id),
+          )
+        : [];
+    if (mode === "alternate" && substitution) {
+      const { min, max } = getFilterCountBounds(substitution.action.discardTarget);
+      if (new Set(costTargets).size !== costTargets.length) {
+        return {
+          valid: false,
+          error: "Cost targets must be unique",
+          errorCode: "DUPLICATE_TARGETS",
+        };
+      }
+      if (costTargets.length < min || costTargets.length > max) {
+        return {
+          valid: false,
+          error: `Alternate play requires ${min} discard target(s)`,
+          errorCode: "WRONG_TARGET_COUNT",
+        };
+      }
     }
 
     const effect = findPlayableCommandEffect(definition, phase as Phase, step);
@@ -357,8 +639,30 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
     const tgtCtx = buildTargetResolutionContext(g, playerId, framework, {
       sourceCardId: cardId,
     });
-    const effectiveCost = computeEffectiveCostInHand(cardId, playerId, g, framework);
-    const tgtError = validateEffectTargets(effect, targets, tgtCtx, effectiveCost);
+    const effectiveCost =
+      mode === "alternate" && substitution
+        ? substitution.action.cost
+        : computeEffectiveCostInHand(cardId, playerId, g, framework);
+    const effectTargets = normalizeEffectTargets(
+      targets?.filter((id) => !costTargets.includes(id)),
+    );
+    if (
+      hasChooseOneDirective(effect.directives) &&
+      !hasLegalRequiredTargets(effect, "command", g, playerId, cardId, framework)
+    ) {
+      return {
+        valid: false,
+        error: "No legal targets for any command effect option",
+        errorCode: "NO_LEGAL_TARGETS",
+      };
+    }
+    const tgtError = validateEffectTargets(
+      effect,
+      effectTargets,
+      tgtCtx,
+      effectiveCost,
+      paymentResourceIds,
+    );
     if (tgtError) {
       return { valid: false, ...tgtError };
     }
@@ -368,8 +672,18 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
 
   execute({ G, playerId, args, moveId, framework }) {
     const g = G;
-    const { cardId, targets } = args;
+    const { cardId, mode, targets, paymentResourceIds } = args;
     const definition = framework.cards.getDefinition(cardId) as Card;
+    const substitution = findPlayCostSubstitution(definition);
+    const costTargets =
+      mode === "alternate" && substitution
+        ? playSubstitutionCandidates(cardId, playerId, g, framework, substitution.action).filter(
+            (id) => (targets ?? []).includes(id),
+          )
+        : [];
+    const effectTargets = normalizeEffectTargets(
+      targets?.filter((id) => !costTargets.includes(id)),
+    );
 
     // Rule 7-5-2-2-1: reveal before paying cost.
     emitGundamEvent(framework.events, {
@@ -378,7 +692,28 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
     });
 
     // Rule 7-5-2-2-3: pay cost.
-    const paidCost = payCardCostWithDetails(cardId, playerId, g, framework);
+    if (mode === "alternate" && substitution) {
+      payCost(
+        {
+          discardCount: costTargets.length,
+          discardFilter: substitution.action.discardTarget,
+        },
+        cardId,
+        playerId,
+        g,
+        framework,
+        costTargets,
+      );
+    }
+    const paidCost = payCardCostWithDetails(
+      cardId,
+      playerId,
+      g,
+      framework,
+      mode === "alternate" && substitution
+        ? { costOverride: substitution.action.cost, paymentResourceIds }
+        : { paymentResourceIds },
+    );
     emitGundamLog(framework, {
       type: "gundam.move.playCommand",
       values: { cardId, playerId, cost: paidCost.total },
@@ -394,6 +729,9 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
     const step = framework.state.status.step as string | undefined;
     const effect = findPlayableCommandEffect(definition, phase, step);
     if (effect) {
+      if (!g.turnMetadata.activatedCommandThisTurn.includes(cardId)) {
+        g.turnMetadata.activatedCommandThisTurn.push(cardId);
+      }
       const commandTiming = commandTimingForPhase(effect, phase, step);
       if (!commandTiming) {
         throw new Error("Command effect is missing a valid timing");
@@ -410,10 +748,15 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
           id: nextPendingEffectId(g),
           controllerId: playerId,
           sourceCardId: cardId,
+          commandActivationOrigin: {
+            kind: "playedFromHand",
+            paidResources: paidCost.total,
+            paidExResources: paidCost.exRemovedCount,
+          },
           effect,
           effectIndex: fullEffectIndex >= 0 ? fullEffectIndex : 0,
           kind: "command",
-          chosenTargets: targets,
+          chosenTargets: effectTargets,
           trigger: {
             type: "commandPlayed",
             cardId,
@@ -465,3 +808,34 @@ export const playCommand: GundamMoveDefinition<"playCommand"> = {
     }
   },
 };
+
+function findPlayCostSubstitution(
+  definition: Card | undefined,
+): { action: PlayCostSubstitution; sourceText: string } | undefined {
+  for (const effect of (definition?.effects ?? []) as CardEffect[]) {
+    if (effect.type !== "substitution") continue;
+    for (const directive of effect.directives) {
+      if (!("action" in directive)) continue;
+      const action = (directive as EffectDirective).action;
+      if (action.action === "playCostSubstitution") {
+        return { action, sourceText: effect.sourceText };
+      }
+    }
+  }
+  return undefined;
+}
+
+function playSubstitutionCandidates(
+  sourceCardId: string,
+  playerId: string,
+  G: ReadonlyGundamG,
+  framework: FrameworkReadAPI,
+  action: PlayCostSubstitution,
+): string[] {
+  const ctx = buildTargetResolutionContext(G, playerId, framework, { sourceCardId });
+  return evaluateTargetFilter(
+    action.discardTarget,
+    gatherAllCardsForTargeting(ctx),
+    ctx,
+  ) as string[];
+}

@@ -49,4 +49,27 @@ describe("OP12-013 Hatchan", () => {
     ).toBe(true);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create({
+      hand: [op08PhoenixBrand055, op08PhoenixBrand055, op08PhoenixBrand055, eb01Doma005],
+      character: [op12Hatchan013],
+      restedDon: 2,
+    });
+    const hatchanId = engine.findCardInZone("south", "character", op12Hatchan013);
+    const handBefore = engine.getView("south").players.south.hand.length;
+    const restedBefore = engine.getView("south").players.south.restedDon;
+
+    engine.activateEffect(hatchanId, "activateMain", "south");
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+
+    const view = engine.getView("south");
+    expect(view.players.south.hand.length).toBe(handBefore);
+    expect(view.players.south.restedDon).toBe(restedBefore);
+    expect(view.players.south.leader.attachedDon).toBe(0);
+    expect(
+      view.players.south.characters.find((card) => card?.instanceId === hatchanId)?.rested,
+    ).toBe(false);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

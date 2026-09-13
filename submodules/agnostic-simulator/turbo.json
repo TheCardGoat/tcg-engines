@@ -39,60 +39,6 @@
         "!**/*.tsbuildinfo"
       ]
     },
-    "ci-check": {
-      "cache": true,
-      "outputs": [],
-      "outputLogs": "errors-only",
-      "env": ["CI", "NODE_ENV", "AGENT"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/package.json",
-        "$TURBO_ROOT$/pnpm-lock.yaml",
-        "$TURBO_ROOT$/pnpm-workspace.yaml",
-        "$TURBO_ROOT$/vite.config.ts",
-        "$TURBO_ROOT$/turbo.json",
-        "$TURBO_ROOT$/tsconfig.json",
-        "$TURBO_ROOT$/tsconfig.*.json",
-        "!**/node_modules/**",
-        "!**/.turbo/**",
-        "!**/.vite/**",
-        "!**/.svelte-kit/**",
-        "!**/coverage/**",
-        "!**/dist/**",
-        "!**/build/**",
-        "!**/*.tsbuildinfo"
-      ]
-    },
-    "ci-check-full": {
-      "cache": true,
-      "outputs": [
-        "dist/**",
-        "build/**",
-        "apps/**/dist/**",
-        "apps/**/build/**",
-        "packages/**/dist/**"
-      ],
-      "outputLogs": "errors-only",
-      "env": ["CI", "NODE_ENV", "AGENT"],
-      "inputs": [
-        "$TURBO_DEFAULT$",
-        "$TURBO_ROOT$/package.json",
-        "$TURBO_ROOT$/pnpm-lock.yaml",
-        "$TURBO_ROOT$/pnpm-workspace.yaml",
-        "$TURBO_ROOT$/vite.config.ts",
-        "$TURBO_ROOT$/turbo.json",
-        "$TURBO_ROOT$/tsconfig.json",
-        "$TURBO_ROOT$/tsconfig.*.json",
-        "!**/node_modules/**",
-        "!**/.turbo/**",
-        "!**/.vite/**",
-        "!**/.svelte-kit/**",
-        "!**/coverage/**",
-        "!**/dist/**",
-        "!**/build/**",
-        "!**/*.tsbuildinfo"
-      ]
-    },
     "dev": {
       "cache": false,
       "persistent": true,

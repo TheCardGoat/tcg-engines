@@ -6,7 +6,7 @@ export const welcomeToNightCityRetailCyberpsychosis = defineCyberpunkCard({
   id: "d0991502-57e5-42e2-b37b-64b425f4f1b5",
   slug: "cyberpsychosis",
   rulesText:
-    "{Quick} Give an equipped Unit +3 power this turn for each if its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
+    "{Quick} Give an equipped Unit +3 power this turn for each of its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
   name: "Cyberpsychosis",
   displayName: "Cyberpsychosis",
   canonicalId: "cyberpsychosis",

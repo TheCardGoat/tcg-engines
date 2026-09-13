@@ -5,7 +5,6 @@ import type { SessionResult } from "@tcg/shared/auth";
 const platformSessionWithDates: SessionResult = {
   user: {
     id: "user_1",
-    email: "player@example.com",
     name: "Player",
     image: null,
     username: null,
@@ -29,7 +28,10 @@ const platformSessionWithDates: SessionResult = {
   },
 };
 
-const platformSession = JSON.parse(JSON.stringify(platformSessionWithDates)) as SessionResult;
+const platformSession = {
+  status: "authenticated" as const,
+  ...JSON.parse(JSON.stringify(platformSessionWithDates)),
+} as SessionResult & { status: "authenticated" };
 
 describe("parsePlatformAuthSession", () => {
   it("accepts the platform Better Auth session shape", () => {
@@ -39,6 +41,7 @@ describe("parsePlatformAuthSession", () => {
   it("accepts the minimum user id and session token needed for gateway auth", () => {
     expect(
       parsePlatformAuthSession({
+        status: "authenticated",
         user: { id: "user_1" },
         session: { token: "session_token_1" },
       }),
@@ -67,6 +70,7 @@ describe("parsePlatformAuthSession", () => {
   it("coerces optional untrusted fields to the runtime contract", () => {
     expect(
       parsePlatformAuthSession({
+        status: "authenticated",
         user: {
           id: "user_1",
           image: ["not", "a", "string"],
@@ -103,7 +107,7 @@ describe("resolvePlatformAuthSession", () => {
       resolvePlatformAuthSession({
         request: new Request("https://tcg.online/cyberpunk/simulator/"),
         fetcher,
-        sessionUrl: "http://general-api.internal/api/auth/get-session",
+        sessionUrl: "http://general-api.internal/v1/auth/session",
       }),
     ).resolves.toEqual({ status: "session_missing", reason: "no_cookie" });
 
@@ -111,7 +115,12 @@ describe("resolvePlatformAuthSession", () => {
   });
 
   it("forwards cookies and host metadata to the platform auth service", async () => {
-    const fetcher = vi.fn<typeof fetch>(async () => Response.json(platformSession));
+    const fetcher = vi.fn<typeof fetch>(async () =>
+      Response.json(platformSession, {
+        headers: { "set-cookie": "tcg-auth.session_token=renewed; Path=/; HttpOnly" },
+      }),
+    );
+    const onSetCookie = vi.fn();
 
     await expect(
       resolvePlatformAuthSession({
@@ -119,12 +128,13 @@ describe("resolvePlatformAuthSession", () => {
           headers: { cookie: "better-auth.session_token=abc" },
         }),
         fetcher,
-        sessionUrl: "http://general-api.internal/api/auth/get-session",
+        sessionUrl: "http://general-api.internal/v1/auth/session",
+        onSetCookie,
       }),
     ).resolves.toEqual({ status: "ready", session: platformSessionWithDates });
 
     expect(fetcher).toHaveBeenCalledWith(
-      "http://general-api.internal/api/auth/get-session",
+      "http://general-api.internal/v1/auth/session",
       expect.objectContaining({
         headers: {
           cookie: "better-auth.session_token=abc",
@@ -134,6 +144,7 @@ describe("resolvePlatformAuthSession", () => {
         redirect: "manual",
       }),
     );
+    expect(onSetCookie).toHaveBeenCalledWith("tcg-auth.session_token=renewed; Path=/; HttpOnly");
   });
 
   it("reports non-OK session responses", async () => {
@@ -145,7 +156,7 @@ describe("resolvePlatformAuthSession", () => {
           headers: { cookie: "better-auth.session_token=abc" },
         }),
         fetcher,
-        sessionUrl: "http://general-api.internal/api/auth/get-session",
+        sessionUrl: "http://general-api.internal/v1/auth/session",
       }),
     ).resolves.toEqual({
       status: "session_missing",
@@ -163,7 +174,7 @@ describe("resolvePlatformAuthSession", () => {
           headers: { cookie: "better-auth.session_token=abc" },
         }),
         fetcher,
-        sessionUrl: "http://general-api.internal/api/auth/get-session",
+        sessionUrl: "http://general-api.internal/v1/auth/session",
       }),
     ).resolves.toEqual({ status: "auth_parse_failed", reason: "malformed_payload" });
   });
@@ -177,7 +188,7 @@ describe("resolvePlatformAuthSession", () => {
           headers: { cookie: "better-auth.session_token=abc" },
         }),
         fetcher,
-        sessionUrl: "http://general-api.internal/api/auth/get-session",
+        sessionUrl: "http://general-api.internal/v1/auth/session",
       }),
     ).resolves.toEqual({ status: "session_missing", reason: "no_session" });
   });
@@ -193,7 +204,7 @@ describe("resolvePlatformAuthSession", () => {
           headers: { cookie: "better-auth.session_token=abc" },
         }),
         fetcher,
-        sessionUrl: "http://general-api.internal/api/auth/get-session",
+        sessionUrl: "http://general-api.internal/v1/auth/session",
       }),
     ).resolves.toEqual({ status: "session_missing", reason: "no_session" });
   });

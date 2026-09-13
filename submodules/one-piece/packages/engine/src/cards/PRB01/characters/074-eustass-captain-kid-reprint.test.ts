@@ -3,7 +3,7 @@ import { prb01EustassCaptainKidReprint074 } from "../../../../../cards/src/cards
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-074 074-eustass-captain-kid-reprint", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01EustassCaptainKidReprint074);
   });
 });

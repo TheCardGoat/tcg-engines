@@ -3,6 +3,14 @@ import { structuredCards } from "@tcg/cyberpunk-cards";
 import { cyberpunkServerAdapter } from "./adapter";
 
 describe("Cyberpunk metadata projection", () => {
+  it("declares lineup, Legend, and color facets for both ranking layers", () => {
+    expect(cyberpunkServerAdapter.metadata!.facets).toSatisfy((definitions) =>
+      definitions.every(
+        (definition) => definition.ranking.specialistSkill && definition.ranking.mastery,
+      ),
+    );
+  });
+
   it("projects Legends, their lineup, and exact colors deterministically", () => {
     const legends = structuredCards.filter((card) => card.type === "legend").slice(0, 3);
     expect(legends).toHaveLength(3);

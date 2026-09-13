@@ -39,5 +39,6 @@ describe("OP09-105 Sanji", () => {
       expect.arrayContaining(discardIds),
     );
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

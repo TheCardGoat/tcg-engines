@@ -107,6 +107,8 @@ export interface PostGameTurnSummary {
 
 export interface PostGameSummary {
   board: LorcanaProjectedBoardView;
+  /** Canonical wall-clock duration for the completed game. */
+  durationMs: number;
   outcome: PostGameOutcomeSummary;
   players: Record<LorcanaPlayerSide, PostGamePlayerBoardSummary>;
   countersBySide: Record<LorcanaPlayerSide, PostGameActionCounters>;

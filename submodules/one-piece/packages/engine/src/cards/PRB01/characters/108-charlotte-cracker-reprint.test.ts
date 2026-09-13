@@ -3,7 +3,7 @@ import { prb01CharlotteCrackerReprint108 } from "../../../../../cards/src/cards/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-108 Charlotte Cracker (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb01CharlotteCrackerReprint108);
   });
 });

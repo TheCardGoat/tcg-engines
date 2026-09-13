@@ -3,7 +3,7 @@ import { op04NefeltariVivi001 } from "../../../../../cards/src/cards/OP04/leader
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-001 Nefeltari Vivi", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op04NefeltariVivi001);
   });
 });

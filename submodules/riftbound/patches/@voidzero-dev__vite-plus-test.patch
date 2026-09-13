@@ -1,0 +1,22 @@
+diff --git a/package.json b/package.json
+index 532ce616dab4898152897a7ff27368178c2ab7b8..1890cd37a63aa3d87239a24f3f45a4ee6f691e35 100644
+--- a/package.json
++++ b/package.json
+@@ -274,7 +274,7 @@
+     "tinyexec": "^1.0.2",
+     "tinyglobby": "^0.2.15",
+     "ws": "^8.18.3",
+-    "@voidzero-dev/vite-plus-core": "0.1.24"
++    "@voidzero-dev/vite-plus-core": "0.2.4"
+   },
+   "devDependencies": {
+     "@blazediff/core": "1.9.1",
+@@ -364,5 +364,8 @@
+   },
+   "scripts": {
+     "build": "oxnode -C dev ./build.ts"
++  },
++  "bin": {
++    "vitest": "vitest.mjs"
+   }
+ }

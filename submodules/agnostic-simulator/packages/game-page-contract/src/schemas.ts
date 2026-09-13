@@ -1,17 +1,47 @@
+import {
+  PresentationBindingsSchema,
+  PresentationBundleSchema,
+  PresentationEnvelopeSchema,
+} from "@tcg/protocol/presentation";
 import { z } from "zod";
+import { AnimationPlanV2Schema } from "@tcg/protocol";
 
+import { GAME_TYPES } from "./ids.js";
 import { REPLAY_FILE_VERSION } from "./replay.js";
+import type { DeckDocumentJsonValue } from "./deck-document.js";
 
 // ---------- Primitives ----------
 
 const opaqueId = z.string().min(1);
 
-export const GameTypeSchema = z.enum(["lorcana", "gundam", "cyberpunk", "riftbound", "one-piece"]);
+export const GameTypeSchema = z.enum(GAME_TYPES);
+
+const DeckDocumentJsonValueSchema: z.ZodType<DeckDocumentJsonValue> = z.lazy(() =>
+  z.union([
+    z.null(),
+    z.boolean(),
+    z.number(),
+    z.string(),
+    z.array(DeckDocumentJsonValueSchema),
+    z.record(z.string(), DeckDocumentJsonValueSchema),
+  ]),
+);
+
+const DeckDocumentJsonObjectSchema = z.record(z.string(), DeckDocumentJsonValueSchema);
 
 export const CardsMapsSchema = z
   .object({
     cardInstances: z.record(opaqueId, opaqueId),
     owners: z.record(opaqueId, z.array(opaqueId)),
+    instanceSections: z.record(opaqueId, z.string()).optional(),
+    deckDeclarationsByOwnerId: z.record(opaqueId, DeckDocumentJsonObjectSchema).optional(),
+    presentation: z
+      .object({
+        printingIdByInstanceId: z.record(opaqueId, opaqueId),
+        printingIdBySetupSlotByOwnerId: z.record(opaqueId, z.record(opaqueId, opaqueId)).optional(),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 
@@ -45,18 +75,30 @@ export const ParticipantSchema = z
     visualSettings: ParticipantVisualSettingsSchema.optional(),
     isMobile: z.boolean().optional(),
     mmrAtMatch: z.number().optional(),
+    /** True only when the captured ranked bracket is past placement. Missing means unknown. */
+    rankedPlacementComplete: z.boolean().optional(),
     subscriptionTier: z.string().optional(),
     isPremium: z.boolean().optional(),
   })
   .strict();
 
-export const MatchTypeSchema = z.enum(["ranked", "casual", "practice_vs_bot", "private", "local"]);
+export const MatchTypeSchema = z.enum([
+  "ranked",
+  "casual",
+  "testing",
+  "practice_vs_bot",
+  "private",
+  "tournament",
+  "league",
+  "local",
+]);
 
-export const MatchStatusSchema = z.enum(["in_progress", "completed", "abandoned"]);
+export const MatchStatusSchema = z.enum(["waiting", "in_progress", "completed", "abandoned"]);
 
 export const MatchInfoSchema = z
   .object({
     matchId: opaqueId,
+    currentGameId: opaqueId.optional(),
     gameType: GameTypeSchema,
     format: z.string(),
     matchType: MatchTypeSchema,
@@ -102,13 +144,6 @@ export const GameLogEntrySchema = z
   })
   .strict();
 
-export const AnimationCueSchema = z
-  .object({
-    tag: z.string(),
-    data: z.unknown().optional(),
-  })
-  .strict();
-
 export const MoveRecordSchema = z
   .object({
     stateVersion: z.number().int().nonnegative(),
@@ -128,6 +163,7 @@ export const ClientMsgSchema = z.discriminatedUnion("type", [
       type: z.literal("join_game"),
       gameId: opaqueId,
       ticket: z.string(),
+      stateVersion: z.number().int().nonnegative().optional(),
     })
     .strict(),
   z
@@ -177,7 +213,7 @@ export const ServerMsgSchema = z.discriminatedUnion("type", [
     .object({
       type: z.literal("game_joined"),
       gameId: opaqueId,
-      snapshot: GameSnapshotSchema,
+      snapshot: GameSnapshotSchema.optional(),
       recentHistory: z.array(MoveRecordSchema),
     })
     .strict(),
@@ -189,7 +225,7 @@ export const ServerMsgSchema = z.discriminatedUnion("type", [
       patches: JsonPatchSchema,
       acceptedMove: MoveRecordSchema,
       logs: z.array(GameLogEntrySchema),
-      animations: z.array(AnimationCueSchema).optional(),
+      animationPlan: AnimationPlanV2Schema.nullable(),
     })
     .strict(),
   z
@@ -199,7 +235,7 @@ export const ServerMsgSchema = z.discriminatedUnion("type", [
       stateVersion: z.number().int().nonnegative(),
       patches: JsonPatchSchema,
       logs: z.array(GameLogEntrySchema),
-      animations: z.array(AnimationCueSchema).optional(),
+      animationPlan: AnimationPlanV2Schema.nullable(),
     })
     .strict(),
   z
@@ -207,6 +243,7 @@ export const ServerMsgSchema = z.discriminatedUnion("type", [
       type: z.literal("state_sync"),
       gameId: opaqueId,
       snapshot: GameSnapshotSchema,
+      animationPlan: z.null(),
     })
     .strict(),
   z
@@ -273,13 +310,116 @@ export const RealtimeAccessSchema = z
   })
   .strict();
 
-export const MatchPageDataSchema = z
+export const SpectatorAccessSchema = z.enum(["public", "authenticated", "disabled"]);
+export const ReplayAccessSchema = z.enum([
+  "public_after_match",
+  "authenticated_after_match",
+  "participants",
+]);
+
+export const ViewerPermissionsSchema = z
   .object({
+    act: z.boolean(),
+    chat: z.boolean(),
+    propose: z.boolean(),
+    useManualControls: z.boolean(),
+    concede: z.boolean(),
+    spectate: z.boolean(),
+    viewReplay: z.boolean(),
+    downloadReplay: z.boolean(),
+    forkReplay: z.boolean(),
+  })
+  .strict();
+
+export const ResolvedMatchViewerSchema = z.discriminatedUnion("role", [
+  z
+    .object({
+      role: z.literal("player"),
+      actorId: opaqueId,
+      seat: z.union([z.literal(1), z.literal(2)]),
+      userId: opaqueId,
+      permissions: ViewerPermissionsSchema,
+    })
+    .strict(),
+  z
+    .object({
+      role: z.literal("spectator"),
+      spectatorId: opaqueId,
+      userId: opaqueId.optional(),
+      permissions: ViewerPermissionsSchema,
+    })
+    .strict(),
+]);
+
+export const ViewerProjectedGameStateSchema = z
+  .object({
+    gameId: opaqueId,
+    gameNumber: z.number().int().positive(),
+    status: z.enum(["in_progress", "completed"]),
+    authority: z.enum(["server", "client"]),
+    stateVersion: z.number().int().nonnegative(),
+    view: z.unknown(),
+    resources: z.unknown().optional(),
+    presentation: PresentationEnvelopeSchema.optional(),
+    clock: ClockSnapshotSchema.optional(),
+    interactionView: z.unknown().optional(),
+    undoable: z.boolean().optional(),
+  })
+  .strict();
+
+export const LiveMatchCapabilitiesSchema = z
+  .object({
+    actions: z.boolean(),
+    chat: z.boolean(),
+    proposals: z.boolean(),
+    manualControls: z.boolean(),
+    spectating: z.boolean(),
+    conceding: z.boolean(),
+    replay: z.boolean(),
+  })
+  .strict();
+
+export const LiveMatchHistorySchema = z
+  .object({
+    recentMoves: z.array(MoveRecordSchema),
+    engineLogs: z.array(GameLogEntrySchema),
+    chatMessages: z.array(z.unknown()).optional(),
+    freeTextEnabled: z.boolean().optional(),
+  })
+  .strict();
+
+export const LiveMatchPresenceSchema = z
+  .object({
+    players: z.array(
+      z
+        .object({
+          id: opaqueId,
+          connected: z.boolean(),
+          disconnectedAt: z.iso.datetime().optional(),
+        })
+        .strict(),
+    ),
+    spectatorCount: z.number().int().nonnegative().optional(),
+  })
+  .strict();
+
+export const ScopedRealtimeAccessSchema = RealtimeAccessSchema.extend({
+  reconnectToken: z.string().min(1),
+  expiresAt: z.iso.datetime(),
+}).strict();
+
+export const LiveMatchBootstrapV1Schema = z
+  .object({
+    schemaVersion: z.literal(1),
     match: MatchInfoSchema,
-    game: GameSnapshotSchema,
-    viewerSeat: z.union([z.number().int().nonnegative(), z.literal("spectator")]),
-    realtime: RealtimeAccessSchema,
+    game: ViewerProjectedGameStateSchema,
+    viewer: ResolvedMatchViewerSchema,
+    capabilities: LiveMatchCapabilitiesSchema,
+    presence: LiveMatchPresenceSchema,
+    history: LiveMatchHistorySchema,
+    realtime: ScopedRealtimeAccessSchema.optional(),
     userSettings: UserSettingsSchema.optional(),
+    replayUrl: z.string().optional(),
   })
   .strict();
 
@@ -398,6 +538,8 @@ export const SimulatorConnectionDiagnosticSchema = z
             "missing_credentials",
             "anonymous_welcome",
             "connect_error",
+            "viewer_scope_expired",
+            "scope_renewal",
             "refresh_failed",
             "refresh_exhausted",
           ])
@@ -420,19 +562,33 @@ export const SimulatorConnectionDiagnosticSchema = z
 
 // ---------- Replay ----------
 
-export const ReplayChatMessageSchema = z
+export const ReplayReversalSchema = z
   .object({
-    from: opaqueId,
-    body: z.string(),
-    ts: z.number(),
+    stateVersion: z.number().int().nonnegative(),
+    turnNumber: z.number().int().nonnegative(),
+    actorId: z.string(),
+    timestamp: z.number(),
   })
   .strict();
 
-export const ReplayStepSchema = z
+const ReplayStepStateSchema = z.object({
+  patches: JsonPatchSchema,
+  presentationBindings: PresentationBindingsSchema.optional(),
+  resourcePatches: JsonPatchSchema.optional(),
+  logs: z.array(GameLogEntrySchema),
+});
+
+export const ReplayStepSchema = z.union([
+  ReplayStepStateSchema.extend({ acceptedMove: MoveRecordSchema }).strict(),
+  ReplayStepStateSchema.extend({ acceptedMove: z.null(), reversal: ReplayReversalSchema }).strict(),
+]);
+
+export const ReplayCheckpointSchema = z
   .object({
-    patches: JsonPatchSchema,
-    acceptedMove: MoveRecordSchema,
-    logs: z.array(GameLogEntrySchema),
+    cursor: z.number().int().nonnegative(),
+    state: z.unknown(),
+    resources: z.unknown().optional(),
+    presentationBindings: PresentationBindingsSchema.optional(),
   })
   .strict();
 
@@ -457,10 +613,9 @@ export const ReplayFileSchema = z
     gameId: opaqueId,
     seed: z.string(),
     participants: z.array(ParticipantSchema),
-    cardsMaps: CardsMapsSchema,
     initialState: z.unknown(),
+    checkpoints: z.array(ReplayCheckpointSchema),
     steps: z.array(ReplayStepSchema),
-    chatMessages: z.array(ReplayChatMessageSchema).optional(),
     metadata: ReplayMetadataSchema,
   })
   .strict();
@@ -475,3 +630,39 @@ export const ReplaySummarySchema = z
     sizeBytes: z.number().optional(),
   })
   .strict();
+
+export const ReplayTrustSchema = z.enum(["server_authoritative", "player_authored_unverified"]);
+
+export const ReplayAvailabilitySchema = z
+  .object({
+    status: z.enum(["saving", "saved", "failed", "expired"]),
+    availableUntil: z.iso.datetime().nullable(),
+    viewerExpiresAt: z.iso.datetime().nullable(),
+  })
+  .strict();
+
+export const ReplayPlaybackV1Schema = z
+  .object({
+    schemaVersion: z.literal(1),
+    trust: ReplayTrustSchema,
+    publishedAt: z.iso.datetime(),
+    availability: ReplayAvailabilitySchema.optional(),
+    resources: z.unknown().optional(),
+    presentationBindings: PresentationBindingsSchema.optional(),
+    presentation: PresentationBundleSchema.optional(),
+    replay: ReplayFileSchema,
+  })
+  .strict();
+
+export const PREGAME_TURN_ORDER_TIMEOUT_MS = 20_000;
+
+export const PregameTurnOrderSchema = z.discriminatedUnion("stage", [
+  z.object({ stage: z.literal("choosing"), chooserId: z.string() }),
+  z.object({
+    stage: z.literal("chosen"),
+    chooserId: z.string(),
+    firstPlayerId: z.string(),
+    source: z.enum(["player", "bot", "timeout", "random"]),
+  }),
+]);
+export type PregameTurnOrder = z.infer<typeof PregameTurnOrderSchema>;

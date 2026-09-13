@@ -1,16 +1,44 @@
 /**
+ * Svelte adapter over the shared Socket.IO gateway client.
  *
- * Provides $state-powered reactivity for connection status,
- * latency, and authentication. Manages lifecycle automatically.
+ * Lorcanito keeps its existing reactive surface while the shared manager owns
+ * the namespace, handshake credentials, reconnects, and latency probes.
  */
 
-import { GatewayClient } from "./gateway-client";
-import type { ConnectionStatus, GatewayClientState } from "./gateway-client";
+import {
+  createGatewayConnectionManager,
+  type CredentialsController,
+  type GatewayConnectionManager,
+  type GatewayConnectionState,
+  type GatewayHandle,
+} from "@tcg/gateway-client";
 import { trackEvent, truncateForAnalytics } from "$lib/analytics/analytics.js";
 
-export type { ConnectionStatus, GatewayClientState };
+export type ConnectionStatus = GatewayConnectionState["status"];
 
-type GameMessage = { type: string; [key: string]: unknown };
+export interface GatewayClientState {
+  status: ConnectionStatus;
+  authenticated: boolean;
+  connectionId: string | null;
+  latencyMs: number | null;
+  lastPongTime: string | null;
+  reconnectAttempts: number;
+  error: string | null;
+  serverInitiatedClose: boolean;
+  authError: boolean;
+}
+
+type GameMessage = { type: string; correlationId?: string; [key: string]: unknown };
+
+type PendingAck = {
+  resolve: (message: GameMessage) => void;
+  reject: (reason: string) => void;
+  timeoutHandle: ReturnType<typeof setTimeout>;
+};
+
+type UntypedGatewayHandle = {
+  emit(event: string, payload: Record<string, unknown>): void;
+};
 
 export class GatewayClientStore {
   status: ConnectionStatus = $state("idle");
@@ -20,51 +48,56 @@ export class GatewayClientStore {
   lastPongTime: string | null = $state(null);
   reconnectAttempts: number = $state(0);
   error: string | null = $state(null);
-  /** True when the server announced shutdown (deploy) before the socket closed. */
   serverInitiatedClose: boolean = $state(false);
-  /** True when the gateway rejected the connection with a terminal auth error. */
   authError: boolean = $state(false);
-  /** Epoch ms timestamp of the last status transition. */
   statusChangedAt: number = $state(Date.now());
-  /** Auth method being attempted: ticket, token, or anonymous. */
   readonly authMethod: "ticket" | "token" | "anonymous";
   readonly namespace = "/lorcana";
 
-  private client: GatewayClient;
   #previousStatus: ConnectionStatus = "idle";
-  #additionalListeners = new Set<(msg: GameMessage) => void>();
+  #additionalListeners = new Set<(message: GameMessage) => void>();
   #statusListeners = new Set<(status: ConnectionStatus) => void>();
-  /** Throttle latency samples to one every 30s — GA4 quotas are limited. */
+  #pendingAcks = new Map<string, PendingAck>();
+  #manager: GatewayConnectionManager;
+  #handle: GatewayHandle | null = null;
+  #handleCleanups: Array<() => void> = [];
   #lastLatencySampleAt = 0;
-  /** Disconnect transitions observed since the last sample emit. */
   #disconnectCount = 0;
-  /** Disconnect transitions observed since the last latency sample. */
   #disconnectsSinceLastLatencySample = 0;
   #disconnectSampleTimer: ReturnType<typeof setInterval> | null = null;
+  readonly #credentials: CredentialsController;
+  readonly #onGameMessage?: (message: GameMessage) => void;
+  readonly #onOpen?: () => void;
+  readonly #ticket?: string;
+  readonly #token?: string;
+  readonly #getToken?: () => string | undefined;
+
   static readonly DISCONNECT_SAMPLE_WINDOW_MS = 60_000;
 
   constructor(
-    url: string,
+    gatewayUrl: string,
     ticket?: string,
-    onGameMessage?: (msg: GameMessage) => void,
+    onGameMessage?: (message: GameMessage) => void,
     onOpen?: () => void,
     token?: string,
     getToken?: () => string | undefined,
+    credentials?: CredentialsController,
   ) {
     this.authMethod = ticket ? "ticket" : (token ?? getToken?.()) ? "token" : "anonymous";
-    this.client = new GatewayClient({
-      url,
-      ticket,
-      token,
-      getToken,
-      onStateChange: (state) => this.sync(state),
-      onGameMessage: (msg) => {
-        onGameMessage?.(msg);
-        for (const listener of this.#additionalListeners) {
-          listener(msg);
-        }
-      },
-      onOpen,
+    this.#ticket = ticket;
+    this.#token = token;
+    this.#getToken = getToken;
+    this.#onGameMessage = onGameMessage;
+    this.#onOpen = onOpen;
+    this.#credentials =
+      credentials ??
+      ({
+        get: () => this.readCredentials(),
+        refresh: async () => this.readCredentials(false),
+      } satisfies CredentialsController);
+    this.#manager = createGatewayConnectionManager({
+      gatewayOrigin: gatewayUrl,
+      ping: { intervalMs: 10_000 },
     });
 
     this.#disconnectSampleTimer = setInterval(() => {
@@ -78,12 +111,7 @@ export class GatewayClientStore {
     }, GatewayClientStore.DISCONNECT_SAMPLE_WINDOW_MS);
   }
 
-  /**
-   * Register an additional game message listener. Returns an unsubscribe function.
-   * Used by GatewayTransport to receive state_update/move_rejected alongside
-   * the primary onGameMessage callback.
-   */
-  addGameMessageListener(handler: (msg: GameMessage) => void): () => void {
+  addGameMessageListener(handler: (message: GameMessage) => void): () => void {
     this.#additionalListeners.add(handler);
     return () => {
       this.#additionalListeners.delete(handler);
@@ -97,25 +125,61 @@ export class GatewayClientStore {
     };
   }
 
-  /** Send a JSON message over the WebSocket. Returns false when no socket is open. */
   send(message: object): boolean {
-    return this.client.send(message);
+    if (!this.#handle || this.status !== "connected" || !isRecord(message)) return false;
+    const type = typeof message.type === "string" ? message.type : null;
+    if (!type) return false;
+    const { type: _type, ...payload } = message;
+    try {
+      (this.#handle as unknown as UntypedGatewayHandle).emit(type, payload);
+      return true;
+    } catch {
+      return false;
+    }
   }
 
-  /** Send a message and return a Promise that resolves with the correlated server response. */
-  sendWithAck<T extends { type: string; correlationId?: string; [key: string]: unknown }>(
-    message: object,
-    timeoutMs?: number,
-  ): Promise<T> {
-    return this.client.sendWithAck<T>(message, timeoutMs);
+  sendWithAck<T extends GameMessage>(message: object, timeoutMs = 10_000): Promise<T> {
+    if (!this.#handle || this.status !== "connected") {
+      return Promise.reject("disconnected");
+    }
+    return new Promise<T>((resolve, reject) => {
+      const correlationId = crypto.randomUUID();
+      const timeoutHandle = setTimeout(() => {
+        this.#pendingAcks.delete(correlationId);
+        reject("timeout");
+      }, timeoutMs);
+      this.#pendingAcks.set(correlationId, {
+        resolve: resolve as (message: GameMessage) => void,
+        reject,
+        timeoutHandle,
+      });
+      if (!this.send({ ...message, correlationId })) {
+        clearTimeout(timeoutHandle);
+        this.#pendingAcks.delete(correlationId);
+        reject("disconnected");
+      }
+    });
   }
 
   connect(): void {
-    this.client.connect();
+    if (!this.#handle) {
+      this.openHandle();
+      return;
+    }
+    if (this.status === "disconnected" || this.status === "idle") {
+      this.#handle.reconnect();
+    }
   }
 
   disconnect(): void {
-    this.client.disconnect();
+    this.releaseHandle();
+    this.rejectAllPendingAcks("disconnected");
+    this.sync({
+      ...this.#manager.getState("lorcana"),
+      status: "disconnected",
+      authenticated: false,
+      connectionId: null,
+    });
   }
 
   destroy(): void {
@@ -123,44 +187,111 @@ export class GatewayClientStore {
       clearInterval(this.#disconnectSampleTimer);
       this.#disconnectSampleTimer = null;
     }
-    this.client.destroy();
+    this.disconnect();
+    this.#manager.destroy();
+    this.sync({
+      ...this.#manager.getState("lorcana"),
+      status: "idle",
+      authenticated: false,
+      connectionId: null,
+    });
     if (_instance === this) _instance = null;
   }
 
-  private sync(state: Readonly<GatewayClientState>): void {
-    const prevStatus = this.#previousStatus;
-    const statusChanged = state.status !== prevStatus;
-    this.#previousStatus = state.status;
-    if (statusChanged) {
-      this.statusChangedAt = Date.now();
-    }
+  private readCredentials(includeTicket = true) {
+    const token = this.#token ?? this.#getToken?.();
+    return {
+      ...(includeTicket && this.#ticket ? { ticket: this.#ticket } : {}),
+      ...(token ? { token } : {}),
+      requireAuth: Boolean(this.#ticket || token),
+    };
+  }
 
-    // Track connection transitions
-    if (state.status === "connected" && prevStatus !== "connected") {
-      if (state.reconnectAttempts > 0) {
-        trackEvent("ws_reconnect", { attempts: state.reconnectAttempts });
+  private openHandle(): void {
+    this.#handle = this.#manager.acquire("lorcana", { credentials: this.#credentials });
+    this.#handleCleanups = [
+      this.#handle.subscribeState((state) => this.sync(state)),
+      this.#handle.onAny((event, payload) => this.receive(event, payload)),
+      this.#handle.onConnected(() => this.#onOpen?.()),
+      this.#handle.onLatency(() => {
+        this.lastPongTime = new Date().toISOString();
+      }),
+    ];
+  }
+
+  private releaseHandle(): void {
+    for (const cleanup of this.#handleCleanups) cleanup();
+    this.#handleCleanups = [];
+    this.#handle?.release();
+    this.#handle = null;
+  }
+
+  private receive(event: string, payload: unknown): void {
+    if (event === "server_shutting_down") {
+      this.serverInitiatedClose = true;
+    }
+    const message: GameMessage = isRecord(payload)
+      ? { ...payload, type: event }
+      : { type: event, payload };
+    const correlationId = typeof message.correlationId === "string" ? message.correlationId : null;
+    if (correlationId) {
+      const ack = this.#pendingAcks.get(correlationId);
+      if (ack) {
+        clearTimeout(ack.timeoutHandle);
+        this.#pendingAcks.delete(correlationId);
+        if (
+          message.type === "error" ||
+          message.type === "gateway_error" ||
+          message.type === "move_rejected"
+        ) {
+          ack.reject(message.type);
+        } else {
+          ack.resolve(message);
+        }
+      }
+    }
+    this.#onGameMessage?.(message);
+    for (const listener of this.#additionalListeners) listener(message);
+  }
+
+  private rejectAllPendingAcks(reason: string): void {
+    for (const ack of this.#pendingAcks.values()) {
+      clearTimeout(ack.timeoutHandle);
+      ack.reject(reason);
+    }
+    this.#pendingAcks.clear();
+  }
+
+  private sync(state: GatewayConnectionState): void {
+    const previousStatus = this.#previousStatus;
+    const statusChanged = state.status !== previousStatus;
+    this.#previousStatus = state.status;
+    if (statusChanged) this.statusChangedAt = Date.now();
+
+    if (state.status === "connected" && previousStatus !== "connected") {
+      if (state.reconnectAttempt > 0) {
+        trackEvent("ws_reconnect", { attempts: state.reconnectAttempt });
       } else {
         trackEvent("ws_connect");
       }
-    } else if (state.status === "disconnected" && prevStatus === "connected") {
+      this.serverInitiatedClose = false;
+    } else if (state.status === "disconnected" && previousStatus === "connected") {
       this.#disconnectCount += 1;
       this.#disconnectsSinceLastLatencySample += 1;
       trackEvent("ws_disconnect", { reason: state.error ? "connection_error" : "closed" });
     } else if (
       state.status === "disconnected" &&
-      (prevStatus === "reconnecting" || prevStatus === "connecting") &&
-      state.reconnectAttempts > 0
+      (previousStatus === "reconnecting" || previousStatus === "connecting") &&
+      state.reconnectAttempt > 0
     ) {
-      // Reached terminal disconnect after reconnect attempts — funnel signal.
       const lastError = truncateForAnalytics(state.error);
       trackEvent("ws_reconnect_failed", {
-        attempts: state.reconnectAttempts,
+        attempts: state.reconnectAttempt,
         ...(lastError ? { last_error: lastError } : {}),
       });
     }
 
-    // Sample latency once every 30 seconds while connected.
-    if (state.status === "connected" && state.latencyMs != null) {
+    if (state.status === "connected" && state.latencyMs !== null) {
       const now = Date.now();
       if (now - this.#lastLatencySampleAt >= 30_000) {
         const disconnectsSinceLastProbe = this.#disconnectsSinceLastLatencySample;
@@ -180,44 +311,44 @@ export class GatewayClientStore {
     this.authenticated = state.authenticated;
     this.connectionId = state.connectionId;
     this.latencyMs = state.latencyMs;
-    this.lastPongTime = state.lastPongTime;
-    this.reconnectAttempts = state.reconnectAttempts;
+    this.reconnectAttempts = state.reconnectAttempt;
     this.error = state.error;
-    this.serverInitiatedClose = state.serverInitiatedClose;
-    this.authError = state.authError;
+    this.authError = state.authStatus === "failed";
 
     if (statusChanged) {
-      for (const listener of this.#statusListeners) {
-        listener(state.status);
-      }
+      for (const listener of this.#statusListeners) listener(state.status);
     }
   }
 }
 
-// Module-level singleton — at most one active WS connection in the browser.
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 let _instance: GatewayClientStore | null = null;
 
-/**
- * Create (or replace) the global GatewayClientStore singleton.
- * Any existing live connection is destroyed before the new one is opened.
- */
 export function createGatewayStore(
-  url: string,
+  gatewayUrl: string,
   ticket?: string,
-  onGameMessage?: (msg: GameMessage) => void,
+  onGameMessage?: (message: GameMessage) => void,
   onOpen?: () => void,
   token?: string,
   getToken?: () => string | undefined,
+  credentials?: CredentialsController,
 ): GatewayClientStore {
-  if (_instance) {
-    _instance.destroy();
-    _instance = null;
-  }
-  _instance = new GatewayClientStore(url, ticket, onGameMessage, onOpen, token, getToken);
+  _instance?.destroy();
+  _instance = new GatewayClientStore(
+    gatewayUrl,
+    ticket,
+    onGameMessage,
+    onOpen,
+    token,
+    getToken,
+    credentials,
+  );
   return _instance;
 }
 
-/** Destroy the singleton and clear the reference (call from onDestroy). */
 export function destroyGatewayStore(): void {
   _instance?.destroy();
   _instance = null;

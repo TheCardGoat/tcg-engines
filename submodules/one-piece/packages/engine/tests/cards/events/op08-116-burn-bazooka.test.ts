@@ -64,4 +64,39 @@ describe("OP08-116 Burn Bazooka", () => {
     expect(engine.getView("north").prompts).toHaveLength(0);
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
+
+  test("may decline optional Life cost so Life and face-up add do not apply after Counter power", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
+      {
+        hand: [op08BurnBazooka116, op08Wyper110],
+        life: [eb01Doma005, op05Pell014],
+        activeDon: 2,
+      },
+      SOUTH_ATTACKS_WITHOUT_TURN_SETUP,
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const eventId = engine.findCardInZone("north", "hand", op08BurnBazooka116);
+    const shandianId = engine.findCardInZone("north", "hand", op08Wyper110);
+    const lifeIdsBefore = [...engine.getState().players.north.life];
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("battleCounter", { selectedIds: [eventId] }, "north");
+    engine.resolveDecision(
+      "effectTargetSelection",
+      { selectedIds: [engine.leader("north")] },
+      "north",
+    );
+    const lifeBefore = engine.getView("north").players.north.lifeCount;
+    const handBefore = engine.getView("north").players.north.hand.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "north");
+
+    const view = engine.getView("north");
+    expect(view.players.north.lifeCount).toBe(lifeBefore);
+    expect(view.players.north.hand.length).toBe(handBefore);
+    expect(view.players.north.hand.map((card) => card.instanceId)).toContain(shandianId);
+    expect(engine.getState().players.north.life).toEqual(lifeIdsBefore);
+    expect(view.players.north.trash.map((card) => card.instanceId)).toContain(eventId);
+    expect(view.prompts).toHaveLength(0);
+  });
 });

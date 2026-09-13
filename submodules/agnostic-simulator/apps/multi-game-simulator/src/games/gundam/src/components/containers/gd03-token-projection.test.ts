@@ -14,12 +14,16 @@ import {
   GundamTestEngine,
   PLAYER_ONE,
   activeResources,
+  asPlayerId,
   createMockUnit,
   expectSuccess,
 } from "@tcg/gundam-engine";
 
 import { toSimulatorEntity } from "../ui/card/to-simulator-entity.ts";
-import { applyLiveStateUpdate, createLiveMatchViewerEngine } from "../../engine/live/liveState.ts";
+import {
+  applyReplaySnapshotUpdate,
+  createReplayViewerEngine,
+} from "../../engine/live/liveState.ts";
 import { mapZone, toGameCardData } from "./mappers.ts";
 
 interface TokenScenario {
@@ -41,7 +45,7 @@ const tokenCases: TokenCase[] = [
     cardNumber: "T-013",
     name: "Hy-Gogg",
     traits: ["cyclops team"],
-    imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-013.webp",
+    imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-013.webp",
     create: () => {
       const cyclopsAlly = createMockUnit({ traits: ["cyclops team"] });
       const engine = GundamTestEngine.create({
@@ -62,7 +66,7 @@ const tokenCases: TokenCase[] = [
     cardNumber: "T-014",
     name: "Ad Balloon",
     traits: ["civilian"],
-    imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-014.webp",
+    imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-014.webp",
     effect: "This Unit can't be set as active or paired with a Pilot.",
     create: () => {
       const cyclopsTrash = Array.from({ length: 4 }, () =>
@@ -87,7 +91,7 @@ const tokenCases: TokenCase[] = [
     cardNumber: "T-015",
     name: "CGS Mobile Worker",
     traits: ["tekkadan"],
-    imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-015.webp",
+    imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-015.webp",
     create: () => {
       const engine = GundamTestEngine.create({
         hand: [st05WithIronAndBlood013],
@@ -108,7 +112,7 @@ const tokenCases: TokenCase[] = [
     cardNumber: "T-016",
     name: "Graze Custom",
     traits: ["tekkadan"],
-    imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-016.webp",
+    imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-016.webp",
     create: () => {
       const engine = GundamTestEngine.create(
         { hand: [gd03OrgaSOrder117], resourceArea: activeResources(3) },
@@ -125,7 +129,7 @@ const tokenCases: TokenCase[] = [
     cardNumber: "T-017",
     name: "Gundam Barbatos 4th Form",
     traits: ["tekkadan"],
-    imageUrl: "https://r2.tcg.online/public/gundam/cards/t/T-017.webp",
+    imageUrl: "https://cdn.tcg.online/public/gundam/cards/t/T-017.webp",
     create: () => {
       const enemyUnits = Array.from({ length: 5 }, () => createMockUnit());
       const engine = GundamTestEngine.create(
@@ -145,15 +149,15 @@ describe("GD03 token cards in the simulator projection", () => {
   for (const tokenCase of tokenCases) {
     it(`hydrates ${tokenCase.cardNumber} into a live viewer with its printed identity`, () => {
       const { engine: serverEngine, deploy } = tokenCase.create();
-      const live = createLiveMatchViewerEngine(serializedState(serverEngine));
+      const live = createReplayViewerEngine(serializedState(serverEngine));
 
       deploy();
       const tokenState = serializedState(serverEngine);
-      applyLiveStateUpdate(live.runtime, live.staticResources, tokenState);
-      const joinedAfterDeployment = createLiveMatchViewerEngine(tokenState);
+      applyReplaySnapshotUpdate(live.runtime, live.staticResources, tokenState);
+      const joinedAfterDeployment = createReplayViewerEngine(tokenState);
 
       for (const runtime of [live.runtime, joinedAfterDeployment.runtime]) {
-        const view = runtime.getFilteredView({ role: "player", playerId: PLAYER_ONE });
+        const view = runtime.getFilteredView({ role: "player", playerId: asPlayerId(PLAYER_ONE) });
         const visibleCards = mapZone(view, "battleArea", PLAYER_ONE).map((card) =>
           toGameCardData(view, card),
         );
@@ -179,12 +183,12 @@ describe("GD03 token cards in the simulator projection", () => {
       hand: [gd03MAVTactics106],
       resourceArea: activeResources(6),
     });
-    const live = createLiveMatchViewerEngine(serializedState(serverEngine));
+    const live = createReplayViewerEngine(serializedState(serverEngine));
 
     expectSuccess(serverEngine.asPlayer(PLAYER_ONE).playCommand(gd03MAVTactics106));
-    applyLiveStateUpdate(live.runtime, live.staticResources, serializedState(serverEngine));
+    applyReplaySnapshotUpdate(live.runtime, live.staticResources, serializedState(serverEngine));
 
-    const view = live.runtime.getFilteredView({ role: "player", playerId: PLAYER_ONE });
+    const view = live.runtime.getFilteredView({ role: "player", playerId: asPlayerId(PLAYER_ONE) });
     const visibleCards = mapZone(view, "battleArea", PLAYER_ONE).map((card) =>
       toGameCardData(view, card),
     );
@@ -194,18 +198,18 @@ describe("GD03 token cards in the simulator projection", () => {
     const entity = toSimulatorEntity(omegaPsycommu!, {
       zoneId: `battleArea:${PLAYER_ONE}`,
     });
-    expect(entity).toMatchObject({
-      title: "GQuuuuuuX (Omega Psycommu)",
-      face: "public",
-      stats: expect.arrayContaining([
-        { label: "AP", value: "3" },
-        { label: "HP", value: "2" },
+    expect(entity.title).toBe("GQuuuuuuX (Omega Psycommu)");
+    expect(entity.face).toBe("public");
+    expect(entity.stats).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ label: "AP", value: "3" }),
+        expect.objectContaining({ label: "HP", value: "2" }),
       ]),
-    });
+    );
     expect(entity.imageUrl).toBeUndefined();
   });
 });
 
-function serializedState(engine: GundamTestEngine): Record<string, unknown> {
-  return structuredClone(engine.getState()) as unknown as Record<string, unknown>;
+function serializedState(engine: GundamTestEngine) {
+  return structuredClone(engine.getState());
 }

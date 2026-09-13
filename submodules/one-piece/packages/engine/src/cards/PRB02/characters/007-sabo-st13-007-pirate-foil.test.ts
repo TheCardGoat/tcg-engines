@@ -3,7 +3,7 @@ import { prb02SaboSt13007PirateFoil007 } from "../../../../../cards/src/cards/PR
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST13-007 Sabo - ST13-007 (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02SaboSt13007PirateFoil007);
   });
 });

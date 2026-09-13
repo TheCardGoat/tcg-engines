@@ -30,5 +30,6 @@ describe("OP11-009 Nico Robin", () => {
       engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
         ?.power,
     ).toBe(3000);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 });

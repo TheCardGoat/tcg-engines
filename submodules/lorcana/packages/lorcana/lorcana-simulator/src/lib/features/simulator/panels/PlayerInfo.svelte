@@ -17,7 +17,6 @@ import Hand from "@lucide/svelte/icons/hand";
 import Layers from "@lucide/svelte/icons/layers";
 import PaintBucket from "@lucide/svelte/icons/paint-bucket";
 import Settings from "@lucide/svelte/icons/settings";
-import ShieldCheck from "@lucide/svelte/icons/shield-check";
 import Smartphone from "@lucide/svelte/icons/smartphone";
 import Sparkles from "@lucide/svelte/icons/sparkles";
 import Star from "@lucide/svelte/icons/star";
@@ -224,8 +223,6 @@ function handleSupportClick() {
               <Sparkles size={8} />
             {:else if patronConfig.icon === "gem"}
               <Gem size={8} />
-            {:else if patronConfig.icon === "shield"}
-              <ShieldCheck size={8} />
             {:else}
               <Star size={8} />
             {/if}

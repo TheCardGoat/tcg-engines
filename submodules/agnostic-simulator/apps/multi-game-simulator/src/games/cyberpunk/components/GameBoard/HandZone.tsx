@@ -1,12 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatedEntityCollection, AnimatedEntityNode, useAnimationNode } from "@tcg/simulator-ui";
 import { Card } from "./Card";
 import { CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
-import { useHandCommand, useSelectedHandCard } from "./useHandCommand";
-import { useHandCardTap } from "./useHandCardTap";
 import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
-import type { CardActiveEffectView, EffectiveRule, EngineCardType, Side } from "../../engine";
+import {
+  PLAYER_SIDE_TO_ID,
+  type CardActiveEffectView,
+  type EffectiveRule,
+  type EngineCardType,
+  type Side,
+} from "../../engine";
 import classes from "./HandZone.module.css";
 import { DEFAULT_PLAYER_ZONE_WIDTH, computePlayerHandLayout } from "./handLayout";
 
@@ -93,6 +98,19 @@ export function HandZone({
   const cardW = playerLayout.cardWidth;
   const variantClass = faceDown ? classes.opponent : classes.player;
   const zoneName = faceDown ? "opp-hand" : "p-hand";
+  const ownerId = side ? String(PLAYER_SIDE_TO_ID[side]) : undefined;
+  const setAnimationZoneRef = useAnimationNode(
+    {
+      kind: "zone",
+      id: zoneName,
+      ...(ownerId ? { ownerId } : {}),
+    },
+    {
+      zoneId: zoneName,
+      density: "normal",
+      presence: "present",
+    },
+  );
   const drop = useZoneDroppable(faceDown ? null : zoneName);
   const setDropNodeRef = drop.setNodeRef;
   const currentZoneElement = useRef<HTMLDivElement | null>(null);
@@ -103,25 +121,13 @@ export function HandZone({
         setZoneElement(node);
       }
       setDropNodeRef(node);
+      setAnimationZoneRef(node);
     },
-    [setDropNodeRef, setZoneElement],
+    [setAnimationZoneRef, setDropNodeRef, setZoneElement],
   );
   const { activeSource } = useDragDrop();
   const isReturnDropReady = !faceDown && activeSource?.zone === zoneName;
-  const [selectedCardId, setSelectedCardId] = useSelectedHandCard();
   const moveSelection = useMoveSelection();
-  const command = useHandCommand({
-    cards,
-    selectedCardId,
-    setSelectedCardId,
-    side,
-  });
-  const selectedIndex = cards?.findIndex((card) => card.cardId === selectedCardId) ?? -1;
-  const selectedLayout = selectedIndex >= 0 ? layout[selectedIndex] : null;
-  const { handleHandCardPointerDown, handleHandCardPointerUp } = useHandCardTap({
-    faceDown,
-    selectCard: command.selectCard,
-  });
 
   return (
     <div
@@ -154,141 +160,115 @@ export function HandZone({
           <strong>{renderCount}</strong>
         </span>
       ) : null}
-      {!faceDown && command.visible ? (
-        <div
-          className={classes.commandTray}
-          data-testid="hand-command-tray"
-          data-for-card-id={command.selectedCard?.cardId ?? undefined}
-          style={{
-            ["--tray-x" as string]: `${selectedLayout?.x ?? 0}px`,
-          }}
-          onClick={(event) => event.stopPropagation()}
-        >
-          <span className={classes.commandName}>{command.selectedCard?.name}</span>
-          <div className={classes.commandActions}>
-            {command.canPlay ? (
-              <button type="button" data-testid="hand-action-play" onClick={command.play}>
-                Play
-              </button>
-            ) : null}
-            {command.canGoSolo ? (
-              <button type="button" data-testid="hand-action-goSolo" onClick={command.goSolo}>
-                Go Solo
-              </button>
-            ) : null}
-            {command.canSell ? (
-              <button type="button" data-testid="hand-action-sell" onClick={command.sell}>
-                Sell
-              </button>
-            ) : null}
-            <button type="button" onClick={command.inspectSelected}>
-              Inspect
-            </button>
-          </div>
-        </div>
-      ) : null}
-      {layout.map(({ angle, x, y }, i) => {
-        const leftOffset = Math.round(x - cardW / 2);
-        const positionStyle = faceDown
-          ? {
-              left: layoutAlignment === "start" ? `${leftOffset}px` : `calc(50% + ${leftOffset}px)`,
-              top: `${-y}px`,
-            }
-          : {
-              left: `calc(50% + ${leftOffset}px)`,
-              bottom: `${-y}px`,
-            };
-        const card = cards?.[i];
-        const cardRevealed = faceDown && card?.temporaryRevealed === true;
-        const cardFaceDown = faceDown && !cardRevealed;
-        const stagedProgram =
-          Boolean(card?.cardId) &&
-          moveSelection.selection?.moveId === "playCard" &&
-          moveSelection.selection.sourceCardType === "program" &&
-          moveSelection.selection.sourceCardId === card?.cardId;
-        const affordable =
-          card &&
-          !faceDown &&
-          typeof (card.effectiveCost ?? card.cost) === "number" &&
-          typeof availableEddies === "number"
-            ? availableEddies >= (card.effectiveCost ?? card.cost)!
-            : undefined;
-        const publicCardAttrs =
-          card && !cardFaceDown
+      <AnimatedEntityCollection>
+        {layout.map(({ angle, x, y }, i) => {
+          const leftOffset = Math.round(x - cardW / 2);
+          const positionStyle = faceDown
             ? {
-                "data-card-id": card.cardId,
-                "data-instance-id": card.cardId,
-                "data-definition-id": card.definitionId,
-                "data-card-name": card.name,
-                "data-card-type": card.cardType,
-                "data-card-color": card.color,
-                "data-cost": card.cost ?? undefined,
-                "data-effective-cost": card.effectiveCost ?? card.cost ?? undefined,
-                "data-power": card.effectivePower ?? card.power ?? undefined,
-                "data-affordable":
-                  affordable === undefined ? undefined : affordable ? "true" : "false",
+                left:
+                  layoutAlignment === "start" ? `${leftOffset}px` : `calc(50% + ${leftOffset}px)`,
+                top: `${-y}px`,
               }
-            : {};
-        return (
-          <div
-            key={card?.cardId ?? i}
-            className={`${classes.card} ${variantClass}`}
-            data-testid="hand-card"
-            data-face-down={cardFaceDown ? "true" : "false"}
-            data-temporary-revealed={cardRevealed ? "true" : undefined}
-            data-selected={card?.cardId && card.cardId === selectedCardId ? "true" : "false"}
-            data-staged-program={stagedProgram ? "true" : undefined}
-            {...publicCardAttrs}
-            data-sim-entity-id={!cardFaceDown ? card?.cardId : undefined}
-            data-ready={card && !cardFaceDown ? "true" : undefined}
-            style={{
-              ...positionStyle,
-              ["--card-rotate" as string]: `${angle}deg`,
-              zIndex: card?.cardId === selectedCardId ? 230 : i + 1,
-            }}
-            onPointerDown={(event) => handleHandCardPointerDown(card?.cardId, event)}
-            onPointerUp={(event) => handleHandCardPointerUp(card?.cardId, event)}
-          >
-            {cardFaceDown ? (
-              <div
-                data-testid="card"
-                data-card-kind="card"
-                data-entity-id={undefined}
-                data-instance-id={undefined}
-                data-sim-entity-id={undefined}
-                data-face="hidden"
-                style={{ display: "contents" }}
-                aria-hidden
-              >
-                <CardImage faceDown disablePreview alt="Opponent card" />
-              </div>
-            ) : (
-              <Card
-                imageUrl={card?.imageUrl}
-                name={card?.name}
-                definitionId={card?.definitionId}
-                cardType={card?.cardType}
-                color={card?.color}
-                zone={zoneName}
-                index={i}
-                cardId={card?.cardId}
-                side={side}
-                effectiveRules={card?.effectiveRules}
-                rulesText={card?.rulesText}
-                classifications={card?.classifications}
-                keywords={card?.keywords}
-                hasSellTag={card?.hasSellTag}
-                cost={card?.cost}
-                effectiveCost={card?.effectiveCost}
-                costEffects={card?.costEffects}
-                power={card?.power}
-                effectivePower={card?.effectivePower}
-                activeEffects={card?.activeEffects}
-              />
-            )}
-          </div>
-        );
-      })}
+            : {
+                left: `calc(50% + ${leftOffset}px)`,
+                bottom: `${-y}px`,
+              };
+          const card = cards?.[i];
+          const cardRevealed = faceDown && card?.temporaryRevealed === true;
+          const cardFaceDown = faceDown && !cardRevealed;
+          const stagedProgram =
+            Boolean(card?.cardId) &&
+            moveSelection.selection?.moveId === "playCard" &&
+            moveSelection.selection.sourceCardType === "program" &&
+            moveSelection.selection.sourceCardId === card?.cardId;
+          const affordable =
+            card &&
+            !faceDown &&
+            typeof (card.effectiveCost ?? card.cost) === "number" &&
+            typeof availableEddies === "number"
+              ? availableEddies >= (card.effectiveCost ?? card.cost)!
+              : undefined;
+          const publicCardAttrs =
+            card && !cardFaceDown
+              ? {
+                  "data-card-id": card.cardId,
+                  "data-instance-id": card.cardId,
+                  "data-definition-id": card.definitionId,
+                  "data-card-name": card.name,
+                  "data-card-type": card.cardType,
+                  "data-card-color": card.color,
+                  "data-cost": card.cost ?? undefined,
+                  "data-effective-cost": card.effectiveCost ?? card.cost ?? undefined,
+                  "data-power": card.effectivePower ?? card.power ?? undefined,
+                  "data-affordable":
+                    affordable === undefined ? undefined : affordable ? "true" : "false",
+                }
+              : {};
+          return (
+            <AnimatedEntityNode
+              key={card?.cardId ?? `hidden-hand-${i}`}
+              entityId={card?.cardId ?? `hidden-hand-${i}`}
+              zoneRef={{
+                kind: "zone",
+                id: `${side === "player" ? "p" : "opp"}-hand`,
+                ownerId: String(side),
+              }}
+              density="normal"
+              className={`${classes.card} ${variantClass}`}
+              data-testid="hand-card"
+              data-face-down={cardFaceDown ? "true" : "false"}
+              data-temporary-revealed={cardRevealed ? "true" : undefined}
+              data-staged-program={stagedProgram ? "true" : undefined}
+              {...publicCardAttrs}
+              data-sim-entity-id={!cardFaceDown ? card?.cardId : undefined}
+              data-ready={card && !cardFaceDown ? "true" : undefined}
+              style={{
+                ...positionStyle,
+                ["--card-rotate" as string]: `${angle}deg`,
+                zIndex: i + 1,
+              }}
+            >
+              {cardFaceDown ? (
+                <div
+                  data-testid="card"
+                  data-card-kind="card"
+                  data-entity-id={undefined}
+                  data-instance-id={undefined}
+                  data-sim-entity-id={undefined}
+                  data-face="hidden"
+                  style={{ display: "contents" }}
+                  aria-hidden
+                >
+                  <CardImage faceDown disablePreview alt="Opponent card" />
+                </div>
+              ) : (
+                <Card
+                  imageUrl={card?.imageUrl}
+                  name={card?.name}
+                  definitionId={card?.definitionId}
+                  cardType={card?.cardType}
+                  color={card?.color}
+                  zone={zoneName}
+                  index={i}
+                  cardId={card?.cardId}
+                  side={side}
+                  effectiveRules={card?.effectiveRules}
+                  rulesText={card?.rulesText}
+                  classifications={card?.classifications}
+                  keywords={card?.keywords}
+                  hasSellTag={card?.hasSellTag}
+                  cost={card?.cost}
+                  effectiveCost={card?.effectiveCost}
+                  costEffects={card?.costEffects}
+                  power={card?.power}
+                  effectivePower={card?.effectivePower}
+                  activeEffects={card?.activeEffects}
+                />
+              )}
+            </AnimatedEntityNode>
+          );
+        })}
+      </AnimatedEntityCollection>
     </div>
   );
 }

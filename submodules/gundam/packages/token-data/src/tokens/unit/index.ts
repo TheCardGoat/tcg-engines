@@ -17,6 +17,7 @@ import { tAdBalloon014 } from "./014-ad-balloon.ts";
 import { tCgsMobileWorker015 } from "./015-cgs-mobile-worker.ts";
 import { tGrazeCustom016 } from "./016-graze-custom.ts";
 import { tGundamBarbatos4thForm017 } from "./017-gundam-barbatos-4th-form.ts";
+import { tGundnode026 } from "./026-gundnode.ts";
 
 export {
   tGundam001,
@@ -36,6 +37,7 @@ export {
   tCgsMobileWorker015,
   tGrazeCustom016,
   tGundamBarbatos4thForm017,
+  tGundnode026,
 };
 
 export const TOKEN_PRINTINGS: Readonly<Partial<Record<string, UnitCard>>> = {
@@ -56,4 +58,5 @@ export const TOKEN_PRINTINGS: Readonly<Partial<Record<string, UnitCard>>> = {
   [tCgsMobileWorker015.cardNumber]: tCgsMobileWorker015,
   [tGrazeCustom016.cardNumber]: tGrazeCustom016,
   [tGundamBarbatos4thForm017.cardNumber]: tGundamBarbatos4thForm017,
+  [tGundnode026.cardNumber]: tGundnode026,
 };

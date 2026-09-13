@@ -2,7 +2,7 @@
   "name": "@tcg/protocol",
   "version": "0.1.0",
   "private": true,
-  "description": "Shared WebSocket protocol types for ws-gateway / game-server / web client.",
+  "description": "Shared Socket.IO protocol types for gateway, game runtimes, and clients.",
   "files": [
     "src/"
   ],
@@ -21,7 +21,9 @@
     "./payloads": "./src/payloads.ts",
     "./interactions": "./src/interactions.ts",
     "./handler-context": "./src/handler-context.ts",
-    "./animations": "./src/animations.ts"
+    "./animations": "./src/animations.ts",
+    "./ws-ticket": "./src/ws-ticket.ts",
+    "./presentation": "./src/presentation.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit",

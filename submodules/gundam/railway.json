@@ -10,9 +10,32 @@
   },
   "deploy": {
     "startCommand": "node server.js",
-    "numReplicas": 1,
     "restartPolicyMaxRetries": 3,
     "restartPolicyWindowSeconds": 60,
-    "sleepApplication": true
+    "sleepApplication": false
+  },
+  "environments": {
+    "production": {
+      "deploy": {
+        "sleepApplication": false,
+        "limitOverride": {
+          "containers": {
+            "cpu": 8,
+            "memoryBytes": 8000000000
+          }
+        }
+      }
+    },
+    "staging": {
+      "deploy": {
+        "sleepApplication": true,
+        "limitOverride": {
+          "containers": {
+            "cpu": 2,
+            "memoryBytes": 2000000000
+          }
+        }
+      }
+    }
   }
 }

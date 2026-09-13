@@ -24,7 +24,8 @@ describe("Setup · lands in main-phase", () => {
       expect(screen.queryByRole("dialog", { name: /keep or redraw/i })).toBeNull();
     });
 
-    const passTurn = await screen.findByRole("button", { name: /pass turn/i });
+    const passTurn = await screen.findByTestId("primary-action");
     expect((passTurn as HTMLButtonElement).disabled).toBe(false);
+    expect(passTurn.querySelector("kbd")?.textContent).toBe("SPACE");
   });
 });

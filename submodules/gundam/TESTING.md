@@ -31,23 +31,25 @@ Cross-boundary adapter behavior lives under
 
 ## Simulator Tests
 
-Use RTL/jsdom tests in `apps/simulator/src/__tests__` for ordinary app flows and
-DOM behavior. Component, selector, sample deck, live adapter, and route-loader
-tests live near their source files under `apps/simulator/src` and
-`apps/simulator/app`.
+Use RTL/jsdom tests under
+`../agnostic-simulator/apps/multi-game-simulator/src/games/gundam` for ordinary
+app flows and DOM behavior. Component, selector, sample deck, live adapter, and
+route-loader tests live near their source files.
 
 Use Playwright only when jsdom cannot prove the behavior: real layout,
 viewport/mobile branches, hover, pointer/touch behavior, hydration, or a long
 multi-phase browser flow that is clearer end-to-end. Playwright specs live in
-`apps/simulator/e2e` and run against the production SSR build.
+`../agnostic-simulator/apps/multi-game-simulator/e2e` and run against the
+multi-game simulator.
 
 ## Commands
 
 From repo root:
 
 ```sh
-bun run ci:gundam:check
-bun run ci:gundam
+pnpm run ci:gundam:check
+pnpm run ci:gundam
+pnpm run ci:agnostic:check
 ```
 
 From `submodules/gundam`:
@@ -65,10 +67,10 @@ Focused package checks:
 ```sh
 pnpm -F @tcg/gundam-engine test
 pnpm -F @tcg/gundam-cards test
-pnpm -F @tcg/gundam-simulator test
-pnpm -F @tcg/gundam-simulator run build
-pnpm -F @tcg/gundam-simulator exec playwright install --with-deps chromium
-pnpm -F @tcg/gundam-simulator test:e2e
+pnpm --dir ../agnostic-simulator/apps/multi-game-simulator test
+pnpm --dir ../agnostic-simulator/apps/multi-game-simulator run build
+pnpm --dir ../agnostic-simulator/apps/multi-game-simulator run e2e:install
+pnpm --dir ../agnostic-simulator/apps/multi-game-simulator run e2e
 ```
 
 Harness checks:
@@ -93,4 +95,6 @@ catches missing or empty sibling tests, but it cannot tell whether assertions
 are strong enough. The allowlist in `tools/harness/card-fixture-allowlist.txt`
 is explicit test debt.
 
-Before rules-facing work, read `.agents/skills/gundam-tcg-rules.md`.
+Before rules-facing work, read
+`.agents/skills/gundam-tcg-rules/references/glossary.md`, then
+`.agents/skills/gundam-tcg-rules/SKILL.md`.

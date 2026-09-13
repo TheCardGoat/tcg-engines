@@ -6,10 +6,11 @@ export const welcomeToNightCityRetailOverwatchPanamSGift = defineCyberpunkCard({
   id: "78ea68b3-1260-416b-9f88-d6be4586232b",
   canonicalId: "overwatch-panam-s-gift",
   slug: "overwatch-panam-s-gift",
+  subname: "Panam's Gift",
   rulesText:
     "{Quick} 1 €$, {Spend} Discard 1. Defeat a spent rival Unit with cost equal to or less than the discarded card's cost.",
-  name: "Overwatch — Panam's Gift",
-  displayName: "Overwatch — Panam's Gift",
+  name: "Overwatch",
+  displayName: "Overwatch: Panam's Gift",
   color: "green",
   classifications: ["Weapon"],
   set: {

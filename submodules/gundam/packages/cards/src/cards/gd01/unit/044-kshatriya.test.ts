@@ -89,6 +89,34 @@ describe("Kshatriya (GD01-044)", () => {
     expect(p2.getDamage(secondEnemyId!)).toBe(1);
   });
 
+  it("caps the optional second target at the only enemy Unit and resolves its damage", () => {
+    const cyberNewtype = createMockPilot({ traits: ["cyber-newtype"], level: 1, cost: 1 });
+    const enemy = createMockUnit({ hp: 5 });
+    const engine = GundamTestEngine.create(
+      {
+        hand: [cyberNewtype],
+        play: [gd01Kshatriya044],
+        resourceArea: activeResources(1),
+      },
+      { play: [enemy] },
+    );
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const p2 = engine.asPlayer(PLAYER_TWO);
+    const kshatriyaId = p1.getCardsInZone("battleArea")[0]!;
+    const enemyId = p2.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.assignPilot(cyberNewtype, kshatriyaId));
+    expect(p1.getBoardView().pendingChoice).toMatchObject({
+      kind: "targetSelection",
+      legalTargetIds: [enemyId],
+      minTargets: 1,
+      maxTargets: 1,
+    });
+    expectSuccess(p1.resolveEffect({ targets: [enemyId] }));
+
+    expect(p2.getDamage(enemyId)).toBe(1);
+  });
+
   it("does not offer damage targets after pairing an unrelated Pilot", () => {
     const unrelatedPilot = createMockPilot({ traits: ["coordinator"], level: 1, cost: 1 });
     const enemy = createMockUnit({ hp: 5 });

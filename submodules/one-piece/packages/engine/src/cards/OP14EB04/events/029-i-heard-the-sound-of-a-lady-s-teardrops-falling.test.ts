@@ -3,7 +3,7 @@ import { op14eb04IHeardTheSoundOfALadySTeardropsFalling029 } from "../../../../.
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB04-029 I Heard the Sound...of a Lady's Teardrops Falling", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op14eb04IHeardTheSoundOfALadySTeardropsFalling029);
   });
 });

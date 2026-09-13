@@ -1,0 +1,46 @@
+{
+  "name": "flesh-and-blood",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "tools/*"
+    ],
+    "catalog": {
+      "@types/node": "^24",
+      "@typescript/native": "npm:typescript@7.0.2",
+      "@typescript/native-preview": "npm:typescript@7.0.2",
+      "typescript": "npm:@typescript/typescript6@6.0.2",
+      "vite": "npm:@voidzero-dev/vite-plus-core@0.2.4",
+      "vite-plus": "0.2.4",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.24",
+      "zod": "^4.4.3"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "build": "pnpm --dir packages/types run build && pnpm --dir packages/cards run build && pnpm --dir packages/engine run build && pnpm --dir tools/catalog run build && pnpm --dir tools/scraper run build",
+    "ci-check": "vp run ci:check",
+    "ci-check-full": "vp run ci:full",
+    "check-types": "pnpm -r --if-present --filter './packages/**' run check-types",
+    "test": "pnpm -r --if-present --filter './packages/**' run test",
+    "test:catalog": "pnpm --dir tools/catalog test",
+    "scrape": "pnpm --dir tools/scraper run scrape",
+    "refresh:source": "pnpm --dir tools/catalog run refresh",
+    "generate": "pnpm --dir tools/catalog run generate",
+    "verify:catalog": "pnpm --dir tools/catalog run verify:catalog",
+    "prepare": "node -e \"process.exit(process.env.CI?0:1)\" || vp config"
+  },
+  "devDependencies": {
+    "@typescript/native": "catalog:",
+    "@typescript/native-preview": "catalog:",
+    "oxfmt": "0.57.0",
+    "typescript": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "pnpm@10.33.0"
+}

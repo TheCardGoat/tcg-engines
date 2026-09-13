@@ -1,25 +1,37 @@
+import { isCanonicalEngineMoveLog } from "@tcg/shared/game-engine";
+import { readGundamPresentation, type GundamPresentation } from "@tcg/gundam-server-adapter";
+
 import type { LiveGatewayMessage } from "./liveGateway.ts";
-import { getMatchmakingReturnUrl, type LiveMatchView } from "./matchContext.ts";
+import type { LiveEngineLogRecord, LiveMatchView } from "./matchContext.ts";
+import { parseGundamLiveProjection } from "./liveProjection.ts";
 
 export type LiveMessageEffect =
   | { type: "ignore" }
-  | { type: "state"; view: LiveMatchView }
-  | { type: "ended"; view: LiveMatchView }
-  | { type: "redirect"; href: string };
+  | { type: "invalid_state"; reason: string }
+  | {
+      type: "state";
+      view: LiveMatchView;
+      /**
+       * Set when the state advanced but the message carried no
+       * `interactionView`, so the stored view was invalidated. The page
+       * should request a fresh `state_sync` to republish it.
+       */
+      resyncInteractionView?: boolean;
+    }
+  | { type: "ended"; view: LiveMatchView };
 
 interface ReduceOptions {
-  readonly matchId: string;
   readonly gameId: string;
-  readonly search: string;
 }
 
 /**
  * Apply a gateway message to a {@link LiveMatchView}.
  *
  * Branches:
- *   - `state_sync` / `state_update` with a matching gameId → update view
- *   - `game_ended` → mark ended + (eventually) bounce to matchmaking
- *   - `match_state` with `status: completed` → redirect to matchmaking
+ *   - `game_joined` / `state_sync` / `state_update` / `move_accepted`
+ *     with a matching gameId → update view
+ *   - `game_ended` → mark ended so the post-match overview can remain open
+ *   - `match_state` → preserve the current route and overview
  *   - anything else → ignore
  */
 export function reduceLiveGatewayMessage(
@@ -30,23 +42,63 @@ export function reduceLiveGatewayMessage(
   switch (message.type) {
     case "game_joined":
     case "state_sync":
-    case "state_update": {
+    case "state_update":
+    case "move_accepted": {
       if (message.gameId !== options.gameId) return { type: "ignore" };
-      const state = isMatchState(message.state) ? message.state : null;
-      if (!state) return { type: "ignore" };
+      if (message.state === undefined || message.state === null) return { type: "ignore" };
+      const state = parseGundamLiveProjection(message.state);
+      if (!state) {
+        return {
+          type: "invalid_state",
+          reason: "Live state was not a privacy-filtered Gundam projection.",
+        };
+      }
+      const version = message.stateVersion ?? view.version;
+      // Viewer-filtered cards maps arrive with `game_joined` and full
+      // `state_sync` replies. A match bootstrapped before any card was
+      // visible starts with an empty overlay, so each message that carries
+      // refreshed maps must widen the accumulated presentation — otherwise
+      // mixed printings revealed mid-match keep rendering as defaults.
+      const presentation = mergePresentations(
+        view.presentation,
+        "cardsMaps" in message
+          ? readGundamPresentation({ cardsMaps: message.cardsMaps })
+          : undefined,
+      );
+      // The stored interaction view is only valid for the state version it
+      // was published at. A state advance without a fresh view invalidates
+      // it — otherwise the UI would offer moves from the new state that
+      // the stale view doesn't publish, and submits would fail client-side
+      // with "Server did not publish a compatible interaction".
+      const publishedView = message.interactionView;
+      const storedView =
+        publishedView ??
+        (view.interactionView?.stateVersion === version ? view.interactionView : undefined);
       return {
         type: "state",
+        resyncInteractionView: !publishedView && storedView === undefined,
         view: {
           ...view,
           state,
-          version: message.stateVersion ?? view.version,
-          animationPackets: appendAnimationPackets(
+          version,
+          presentation,
+          // A state advance without an undoability field must revoke the
+          // previous affordance. Otherwise a bot turn can leave the player
+          // with a stale Undo button until the next full sync.
+          canUndo: message.undoable === true,
+          animationPackets: appendAnimationPlans(
             view.animationPackets,
-            "animations" in message ? message.animations : [],
-            message.stateVersion ?? view.version,
+            "animationPlan" in message ? message.animationPlan : null,
+            version,
             turnNumberOf(state),
           ),
-          ...(message.interactionView ? { interactionView: message.interactionView } : {}),
+          engineLogRecords: appendEngineLogRecords(
+            view.engineLogRecords,
+            "engineLogs" in message ? message.engineLogs : undefined,
+          ),
+          // `undefined` clears a stale stored view; the conditional spread
+          // above cannot remove the key carried in by `...view`.
+          interactionView: storedView,
         },
       };
     }
@@ -64,11 +116,6 @@ export function reduceLiveGatewayMessage(
       };
     }
     case "match_state": {
-      const record = message as Record<string, unknown>;
-      const status = typeof record.status === "string" ? record.status : null;
-      if (status === "completed" || status === "abandoned") {
-        return { type: "redirect", href: getMatchmakingReturnUrl(options.search) };
-      }
       return { type: "ignore" };
     }
     default:
@@ -76,43 +123,99 @@ export function reduceLiveGatewayMessage(
   }
 }
 
-function appendAnimationPackets(
+function appendAnimationPlans(
   existing: LiveMatchView["animationPackets"],
-  packets: readonly {
-    readonly id: string;
-    readonly kind: string;
-    readonly durationMs?: number;
-    readonly payload: unknown;
-  }[],
+  plan: import("@tcg/protocol").AnimationPlanV2 | null,
   stateVersion: number,
   turnNumber: number,
 ): LiveMatchView["animationPackets"] {
-  if (packets.length === 0) return existing;
-  const ids = new Set(existing.map(({ packet }) => packet.id));
-  const additions = packets
-    .filter((packet) => !ids.has(packet.id))
-    .map((packet) => ({ packet, stateVersion, turnNumber }));
-  return [...existing, ...additions].slice(-256);
-}
-
-function turnNumberOf(state: Record<string, unknown>): number {
-  const ctx = state.ctx;
-  if (!ctx || typeof ctx !== "object") return 0;
-  const status = (ctx as { status?: unknown }).status;
-  if (!status || typeof status !== "object") return 0;
-  const turn = (status as { turn?: unknown }).turn;
-  return typeof turn === "number" ? turn : 0;
+  if (!plan || existing.some((entry) => entry.plan.id === plan.id)) return existing;
+  return [...existing, { plan, stateVersion, turnNumber }].slice(-256);
 }
 
 /**
- * Loose check that a payload looks like a Gundam `MatchState` snapshot:
- * the engine snapshot we get from `runtime.getState()` always has a
- * `ctx` field carrying turn / phase / zones, so we use that as the
- * discriminator. We can't reach in for the brand because the wire
- * payload is plain JSON.
+ * Union two presentation overlays. Per-instance printings are assigned at
+ * match creation and never change, so entries from an earlier viewer-filtered
+ * map stay valid when a later message reveals more cards; replacing wholesale
+ * could temporarily hide already-revealed entries behind a sparser map.
  */
-function isMatchState(value: unknown): value is Record<string, unknown> {
-  if (!value || typeof value !== "object") return false;
-  const maybe = value as { ctx?: unknown };
-  return maybe.ctx !== undefined && typeof maybe.ctx === "object";
+function mergePresentations(
+  previous: GundamPresentation | undefined,
+  next: GundamPresentation | undefined,
+): GundamPresentation | undefined {
+  if (!previous) return next;
+  if (!next) return previous;
+  const merged: GundamPresentation = {
+    printingIdByInstanceId: {
+      ...previous.printingIdByInstanceId,
+      ...next.printingIdByInstanceId,
+    },
+  };
+  const previousSlots = previous.printingIdBySetupSlotByOwnerId;
+  const nextSlots = next.printingIdBySetupSlotByOwnerId;
+  if (previousSlots || nextSlots) {
+    merged.printingIdBySetupSlotByOwnerId = {
+      ...previousSlots,
+      ...Object.fromEntries(
+        Object.entries(nextSlots ?? {}).map(([ownerId, slots]) => [
+          ownerId,
+          { ...previousSlots?.[ownerId], ...slots },
+        ]),
+      ),
+    };
+  }
+  return merged;
+}
+
+/**
+ * Accumulate viewer-safe engine log records across state messages.
+ *
+ * The same record can arrive twice with different visibility: the
+ * public `state_update` broadcast and the actor-composed `move_accepted`
+ * (or takeover reply). Both share the structural dedupe key, so on
+ * collision we keep the copy with more visible messages — that's the
+ * one composed for this viewer.
+ */
+function appendEngineLogRecords(
+  existing: LiveMatchView["engineLogRecords"],
+  candidates: unknown,
+): LiveMatchView["engineLogRecords"] {
+  if (!Array.isArray(candidates) || candidates.length === 0) return existing;
+  const byKey = new Map(existing.map((record) => [engineLogKey(record), record]));
+  let changed = false;
+  for (const candidate of candidates) {
+    const record = parseEngineLogRecord(candidate);
+    if (!record) continue;
+    const key = engineLogKey(record);
+    const prior = byKey.get(key);
+    if (prior && prior.log.public.length >= record.log.public.length) continue;
+    byKey.set(key, record);
+    changed = true;
+  }
+  if (!changed) return existing;
+  return [...byKey.values()].slice(-512);
+}
+
+function parseEngineLogRecord(value: unknown): LiveEngineLogRecord | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const candidate = value as Record<string, unknown>;
+  if (typeof candidate.stateVersion !== "number" || typeof candidate.timestamp !== "number") {
+    return null;
+  }
+  if (!isCanonicalEngineMoveLog(candidate.log)) return null;
+  return {
+    stateVersion: candidate.stateVersion,
+    timestamp: candidate.timestamp,
+    log: candidate.log,
+  };
+}
+
+function engineLogKey(record: LiveEngineLogRecord): string {
+  return [record.stateVersion, record.log.timestamp, record.log.moveType, record.log.playerId].join(
+    "|",
+  );
+}
+
+function turnNumberOf(state: NonNullable<LiveMatchView["state"]>): number {
+  return state.status.turn;
 }

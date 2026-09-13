@@ -98,7 +98,7 @@ describe("deriveClockView — interpolation", () => {
     const view = deriveClockView(snapshot, NOW);
     expect(view.displayMs).toBe(-3_000);
     expect(view.isNegative).toBe(true);
-    expect(view.formattedTime).toBe("-0:03");
+    expect(view.formattedTime).toBe("0:00");
     expect(view.urgencyClass).toBe("timer--critical");
   });
 });

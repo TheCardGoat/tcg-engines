@@ -17,6 +17,11 @@
  *   tcg-replay --replay-id <gameId> --turn <n> --fork --side playerOne
  */
 import { fetchReplay, ReplayNotFoundError } from "./fetch";
+import {
+  AgentReplayContextNotFoundError,
+  fetchAgentReplayContext,
+  fetchAgentReplayContextMarkdown,
+} from "./agent-context";
 import { extractTurn } from "./turn-extractor";
 import { resolveDefIds } from "./card-resolver";
 import { renderTurn } from "./render";
@@ -32,6 +37,8 @@ interface CliOptions {
   baseUrl: string;
   openMode: OpenMode | null;
   side: ForkSide | null;
+  before: number | null;
+  after: number | null;
   showHelp: boolean;
 }
 
@@ -42,6 +49,8 @@ function parseArgs(argv: string[]): CliOptions {
   let baseUrl = process.env.TCG_REPLAY_BASE_URL ?? DEFAULT_BASE_URL;
   let openMode: OpenMode | null = null;
   let side: ForkSide | null = null;
+  let before: number | null = null;
+  let after: number | null = null;
   let showHelp = false;
 
   const requireValue = (flag: string, value: string | undefined): string => {
@@ -76,6 +85,17 @@ function parseArgs(argv: string[]): CliOptions {
       baseUrl = requireValue("--base-url", argv[++i]);
       continue;
     }
+    if (arg === "--before" || arg === "--after") {
+      const raw = requireValue(arg, argv[++i]);
+      const value = Number(raw);
+      if (!Number.isInteger(value) || value < 0 || value > 50) {
+        process.stderr.write(`${arg} must be an integer from 0 to 50\n`);
+        process.exit(2);
+      }
+      if (arg === "--before") before = value;
+      else after = value;
+      continue;
+    }
     if (arg === "--open") {
       if (openMode === null) openMode = "watch";
       continue;
@@ -95,7 +115,7 @@ function parseArgs(argv: string[]): CliOptions {
     }
   }
 
-  return { replayId, turn, apiOrigin, baseUrl, openMode, side, showHelp };
+  return { replayId, turn, apiOrigin, baseUrl, openMode, side, before, after, showHelp };
 }
 
 function printHelp(): void {
@@ -110,6 +130,8 @@ Required:
 Trace mode (default):
   --api-origin <url>  API origin to download the replay from
                       (default: $TCG_API_ORIGIN or ${DEFAULT_API_ORIGIN})
+  --before <0-50>     Persisted context steps before the turn anchor.
+  --after <0-50>      Persisted context steps after the turn anchor.
 
 Browser mode (move triage from CLI to UI):
   --open              Open the replay watcher in the default browser at the
@@ -166,6 +188,51 @@ async function main(): Promise<void> {
     process.stderr.write("--fork requires --side <playerOne|playerTwo>\n\n");
     printHelp();
     process.exit(2);
+  }
+
+  const agentContextToken = process.env.AGENT_REPLAY_CONTEXT_TOKEN;
+  if (agentContextToken) {
+    try {
+      if (opts.openMode === null) {
+        const markdown = await fetchAgentReplayContextMarkdown(
+          opts.replayId,
+          opts.turn,
+          opts.apiOrigin,
+          agentContextToken,
+          {
+            before: opts.before ?? undefined,
+            after: opts.after ?? undefined,
+          },
+        );
+        process.stdout.write(markdown.endsWith("\n") ? markdown : `${markdown}\n`);
+        return;
+      }
+      const context = await fetchAgentReplayContext(
+        opts.replayId,
+        opts.turn,
+        opts.apiOrigin,
+        agentContextToken,
+        {
+          before: opts.before ?? undefined,
+          after: opts.after ?? undefined,
+        },
+      );
+      const url = buildReplayUrl({
+        baseUrl: opts.baseUrl,
+        replayId: opts.replayId,
+        step: context.selectedWindow.anchorStep,
+        mode: opts.openMode,
+        side: opts.side ?? undefined,
+      });
+      process.stdout.write(`${url}\n`);
+      openInBrowser(url);
+      return;
+    } catch (error) {
+      if (!(error instanceof AgentReplayContextNotFoundError)) {
+        process.stderr.write(`agent context fetch failed: ${(error as Error).message}\n`);
+        process.exit(1);
+      }
+    }
   }
 
   let replay;

@@ -5,8 +5,9 @@ export const prm01RebeccaHavingAMoment = defineCyberpunkCard({
   id: "4acee220-f0ae-4bdc-85c9-f8e70ba99673",
   canonicalId: "rebecca-having-a-moment",
   slug: "rebecca-having-a-moment",
-  name: "Rebecca — Having a Moment",
-  displayName: "Rebecca — Having a Moment",
+  subname: "Having a Moment",
+  name: "Rebecca",
+  displayName: "Rebecca: Having a Moment",
   color: "red",
   set: {
     code: "PRM01",

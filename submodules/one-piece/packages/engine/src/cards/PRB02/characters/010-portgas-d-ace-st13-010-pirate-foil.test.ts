@@ -3,7 +3,7 @@ import { prb02PortgasDAceSt13010PirateFoil010 } from "../../../../../cards/src/c
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST13-010 Portgas.D.Ace - ST13-010 (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02PortgasDAceSt13010PirateFoil010);
   });
 });

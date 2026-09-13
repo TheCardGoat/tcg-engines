@@ -22,9 +22,10 @@ import type {
   ConditionalDirective,
   EffectCondition,
   TargetFilter,
+  UnitCard,
   Zone,
 } from "@tcg/gundam-types";
-import { exbpExBase001, exrpExResource003 } from "@tcg/gundam-token-data";
+import { exbExBase001, exrExResource001 } from "@tcg/gundam-token-data";
 import type { CardInstanceId, PlayerId } from "../../types/branded.ts";
 import type { RuntimeCard } from "../../types/base-card.ts";
 import type { FrameworkWriteAPI } from "../../types/move-types.ts";
@@ -32,7 +33,9 @@ import type {
   GundamG,
   ContinuousEffectEntry,
   ContinuousEffectPayload,
+  PendingEffect,
   PostResolveAction,
+  CommandActivationOrigin,
 } from "../types.ts";
 import {
   buildTargetResolutionContext,
@@ -54,12 +57,14 @@ import {
   handleRestAction,
   handleSetActiveAction,
   handleDestroyAction,
+  handleDestroyTopOpponentShields,
   handleExileAction,
 } from "./handlers/combat.ts";
 import {
   handleReturnToHandAction,
   handlePlaceInTrashAction,
   handleReturnPairedPilotToHandAction,
+  handleReturnPairedCardToDeckAction,
   handleReturnToDeckAction,
   handleDeployAction,
   handleDeployTokenAction,
@@ -83,11 +88,91 @@ import {
   nextPendingEffectId,
   requiredTargetAssignmentExists,
 } from "./pending-effects.ts";
-import { getFilterCountBounds } from "./target-legality.ts";
+import { firstSegmentActivationGateSatisfied, getFilterCountBounds } from "./target-legality.ts";
 import { enqueueBaseSectionExcessManagement } from "../rules/base-section-excess.ts";
+import { resolveDirectBattle } from "../lifecycle/battle-phase/combat/resolve-direct.ts";
 
-let exResourceTokenCounter = 0;
-let exBaseTokenCounter = 0;
+function recordActivatedCommand(cardId: string, ctx: EffectExecutionContext): void {
+  const definition = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
+  if (
+    definition?.type === "command" &&
+    !ctx.G.turnMetadata.activatedCommandThisTurn.includes(cardId)
+  ) {
+    ctx.G.turnMetadata.activatedCommandThisTurn.push(cardId);
+  }
+}
+
+function enqueueIndirectCommandActivation(
+  cardId: string,
+  timing: "main" | "action",
+  ctx: EffectExecutionContext,
+  origin?: CommandActivationOrigin,
+): boolean {
+  const definition = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
+  if (definition?.type !== "command") return false;
+
+  const effectIndex = (definition.effects ?? []).findIndex(
+    (effect) =>
+      effect.type === "command" &&
+      ((effect.activation.timing ?? []) as readonly string[]).includes(timing),
+  );
+  if (effectIndex < 0) return false;
+  const effect = definition.effects![effectIndex] as CardEffect;
+  const pending: PendingEffect = {
+    id: "__indirect_command_legality__",
+    controllerId: ctx.sourcePlayerId,
+    sourceCardId: cardId,
+    commandActivationOrigin:
+      origin ??
+      (((ctx.currentEffect?.activation.timing ?? []) as readonly string[]).includes("burst")
+        ? { kind: "activatedFromShield" }
+        : { kind: "activatedFromTrash" }),
+    effect,
+    effectIndex,
+    kind: ((ctx.currentEffect?.activation.timing ?? []) as readonly string[]).includes("burst")
+      ? "burst"
+      : "command",
+    chosenTargets: ctx.chosenTargets,
+  };
+  const tgtCtx = buildTargetResolutionContext(ctx.G, ctx.sourcePlayerId, ctx.framework, {
+    ...targetResolutionOptions(ctx),
+    sourceCardId: cardId,
+  });
+  // evaluateLegalTargets returns null when the first public choose is
+  // unchoosable (no prompt). Treat that as "does not activate" so Burst /
+  // paired-card replays do not record commandEffectActivated (10-2-2).
+  if (!firstSegmentActivationGateSatisfied(effect.directives, tgtCtx)) return false;
+  const targetResolution = evaluateLegalTargets(pending, ctx.G, ctx.framework);
+  if (targetResolution && !requiredTargetAssignmentExists(targetResolution.groups)) return false;
+
+  // Indirect activation is not playing the Command (rule 3-4-3/3-4-4).
+  // Preserve its current zone and any Pair assignment. A Burst/Discard
+  // replay therefore remains in trash, while a paired Special Move remains
+  // paired in the battle area for the duration of its Main effect.
+  recordActivatedCommand(cardId, ctx);
+  enqueueObserverTriggers(
+    ctx.G,
+    {
+      type: "commandEffectActivated",
+      cardId,
+      playerId: ctx.sourcePlayerId,
+      timing,
+    },
+    ctx.framework,
+    cardId,
+    { preempt: true },
+  );
+  enqueuePendingEffect(
+    ctx.G,
+    {
+      ...pending,
+      id: nextPendingEffectId(ctx.G),
+    },
+    ctx.framework,
+    { preempt: true },
+  );
+  return true;
+}
 
 // =============================================================================
 // Execution Context
@@ -98,10 +183,14 @@ export interface EffectExecutionContext {
   G: GundamG;
   /** Player whose effect is firing */
   sourcePlayerId: string;
+  /** Player whose card/effect originated this queue chain. */
+  effectOriginPlayerId?: string;
   /** Card whose effect is firing (undefined for anonymous effects) */
   sourceCardId?: string;
   /** Rules identity captured when a queued paired-Pilot effect triggered. */
   sourceIdentityCardId?: string;
+  /** Stable Command provenance for legality checks and effect observers. */
+  commandActivationOrigin?: CommandActivationOrigin;
   /** Current structured effect being executed. */
   currentEffect?: CardEffect;
   /** Top-level directive index currently being executed. */
@@ -149,6 +238,8 @@ export interface EffectExecutionContext {
    */
   postActions?: readonly PostResolveAction[];
   postActionState?: { deferredToFollowUp?: boolean };
+  /** Follow-up evaluated after command cleanup, retained across staged effects. */
+  afterResolutionEffect?: CardEffect;
   /**
    * Breach value captured while both battle participants are still in play.
    * Battle-context constant effects may stop matching after the defeated
@@ -179,7 +270,27 @@ export interface EffectExecutionContext {
     paidResources?: number;
     paidExResources?: number;
     damagedBy?: string;
+    destroyedBy?: string;
+    damageType?: "battle" | "effect";
+    attackTargetId?: string;
   };
+}
+
+function millDeckAndRecordMoves(
+  count: number,
+  playerId: string,
+  ctx: EffectExecutionContext,
+): string[] {
+  const milledIds = handleMillDeckAction(count, playerId, ctx.framework);
+  for (const cardId of milledIds) {
+    emitGundamLog(ctx.framework, {
+      type: "gundam.effect.movedToZone",
+      values: { cardId, from: "deck", to: "trash" },
+      visibility: { mode: "PUBLIC" },
+      category: "rules",
+    });
+  }
+  return milledIds;
 }
 
 // =============================================================================
@@ -274,7 +385,15 @@ export function executeCardEffect(
         if (!cardId) return false;
         const eventCard = ctx.framework.cards.get(cardId);
         if (!eventCard) return false;
-        const matches = evaluateTargetFilter(condition.target, [eventCard], tgtCtx);
+        // Destruction observers are queued while the event card is in play,
+        // but resolve after it has moved to trash. Preserve the event card's
+        // actual zone so an observer's Unit filter does not incorrectly
+        // reapply its normal battle-area default at resolution time.
+        const target: TargetFilter = {
+          ...condition.target,
+          zone: condition.target.zone ?? tgtCtx.getCardZone(eventCard),
+        };
+        const matches = evaluateTargetFilter(target, [eventCard], tgtCtx);
         if (matches.length === 0) return false;
         continue;
       }
@@ -284,6 +403,16 @@ export function executeCardEffect(
         if (!eventSourceCard) return false;
         const matches = evaluateTargetFilter(condition.target, [eventSourceCard], tgtCtx);
         if (matches.length === 0) return false;
+        continue;
+      }
+      if (condition.type === "eventAttackTargetsUnit") {
+        if (
+          ctx.triggerContext?.eventType !== "attackDeclared" ||
+          ctx.triggerContext.attackTargetId === undefined ||
+          ctx.triggerContext.attackTargetId === "direct"
+        ) {
+          return false;
+        }
         continue;
       }
       if (condition.type === "eventDefeatedCardMatches") {
@@ -342,6 +471,10 @@ export function executeCardEffect(
         } else if (ctx.triggerContext?.playerId === ctx.sourcePlayerId) {
           return false;
         }
+        continue;
+      }
+      if (condition.type === "eventDamageType") {
+        if (ctx.triggerContext?.damageType !== condition.damageType) return false;
         continue;
       }
       if (!evaluateCondition(condition, tgtCtx)) {
@@ -535,23 +668,48 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
     ctx.framework,
     targetResolutionOptions(ctx),
   );
+  if (
+    action.action === "pairSourceFromZone" &&
+    (!ctx.sourceCardId ||
+      ctx.framework.cards.getZone(ctx.sourceCardId)?.split(":")[0] !== action.requiredZone)
+  ) {
+    return false;
+  }
   switch (action.action) {
     case "resolveThenQueue":
       // The continuation is valid only when its prerequisite action can
       // actually resolve. This matters especially for optional sequences:
       // if the first target pool is empty, treating the unanswerable option
       // as accepted would enqueue a later prompt without paying its printed
-      // prerequisite.
-      return preflightResolved(action.first, ctx);
+      // prerequisite. A missing prerequisite intentionally stages a new
+      // interaction window after a modal choice.
+      return action.first ? preflightResolved(action.first, ctx) : true;
     case "dealDamageEventSource":
       return eventSourceMatches(action.sourceFilter, ctx, tgtCtx);
+    case "dealDamageToFirstOpponentShield":
+      return (
+        tgtCtx.getCardsInZone(tgtCtx.opponentPlayerId, "baseSection").length > 0 ||
+        tgtCtx.getCardsInZone(tgtCtx.opponentPlayerId, "shieldArea").length > 0
+      );
     case "recoverHPEventCard":
       return eventCardMatches(action.sourceFilter, ctx, tgtCtx);
     case "grantKeywordEventCard":
       return eventCardMatches(action.sourceFilter, ctx, tgtCtx);
+    case "grantKeywordEventSource":
+      return eventSourceMatches(action.sourceFilter, ctx, tgtCtx);
     case "destroyEventCard":
       return Boolean(ctx.triggerContext?.cardId);
-    case "returnPairedPilotToHand":
+    case "exileSelf":
+      return Boolean(ctx.sourceCardId);
+    case "returnPairedPilotToHand": {
+      const pairedId =
+        ctx.triggerContext?.pairedPilotId ??
+        (ctx.sourceCardId ? ctx.G.pilotAssignments[ctx.sourceCardId] : undefined);
+      if (!pairedId) return false;
+      const definition = ctx.framework.cards.getDefinition(pairedId) as Card | undefined;
+      return !action.color || definition?.color === action.color;
+    }
+    case "returnPairedCardToDeck":
       return Boolean(
         ctx.triggerContext?.pairedPilotId ??
         (ctx.sourceCardId ? ctx.G.pilotAssignments[ctx.sourceCardId] : undefined),
@@ -618,6 +776,7 @@ function preflightResolved(action: EffectAction, ctx: EffectExecutionContext): b
     case "statModifier":
     case "statModifierByEventPaidCost":
     case "pairPilot":
+    case "pairSourceFromZone":
     case "pairEventCardAsPilot":
     case "preventDamage":
     case "reduceNextDamage":
@@ -746,18 +905,33 @@ function clampToFilterCount<T>(
 function enqueueFollowUpEffect(
   ctx: EffectExecutionContext,
   effect: CardEffect,
-  opts: { resolutionOrderSelected?: boolean } = {},
+  opts: {
+    resolutionOrderSelected?: boolean;
+    controllerId?: string;
+    choiceCandidateSet?: PendingEffect["choiceCandidateSet"];
+  } = {},
 ): void {
   const pendingEffect = {
     id: nextPendingEffectId(ctx.G),
-    controllerId: ctx.sourcePlayerId,
+    controllerId: opts.controllerId ?? ctx.sourcePlayerId,
+    effectOriginPlayerId: ctx.effectOriginPlayerId ?? ctx.sourcePlayerId,
     sourceCardId: ctx.sourceCardId ?? "__effect__",
     effect,
+    choiceCandidateSet: opts.choiceCandidateSet,
     effectIndex: -1,
     kind: "triggered" as const,
     resolutionOrderSelected: opts.resolutionOrderSelected,
     postActions: ctx.postActions,
+    commandActivationOrigin: ctx.commandActivationOrigin,
+    afterResolutionEffect: ctx.afterResolutionEffect,
   };
+  const tgtCtx = buildTargetResolutionContext(
+    ctx.G,
+    pendingEffect.controllerId,
+    ctx.framework,
+    targetResolutionOptions(ctx),
+  );
+  if (!firstSegmentActivationGateSatisfied(effect.directives, tgtCtx)) return;
   const resolution = evaluateLegalTargets(pendingEffect, ctx.G, ctx.framework);
   if (resolution && !requiredTargetAssignmentExists(resolution.groups)) return;
 
@@ -768,20 +942,62 @@ function enqueueFollowUpEffect(
   }
 }
 
+/**
+ * Queue the printed continuation that begins only after the primary effect's
+ * lifecycle cleanup. Unlike `resolveThenQueue`, this deliberately does not
+ * inherit `postActions`: callers invoke it after those actions have already
+ * moved a played Command to trash and emitted its completion event.
+ */
+export function enqueueAfterResolutionEffect(ctx: EffectExecutionContext): void {
+  const effect = ctx.afterResolutionEffect;
+  if (!effect) return;
+  const pendingEffect: PendingEffect = {
+    id: nextPendingEffectId(ctx.G),
+    controllerId: ctx.sourcePlayerId,
+    effectOriginPlayerId: ctx.effectOriginPlayerId ?? ctx.sourcePlayerId,
+    sourceCardId: ctx.sourceCardId ?? "__effect__",
+    sourceIdentityCardId: ctx.sourceIdentityCardId,
+    commandActivationOrigin: ctx.commandActivationOrigin,
+    effect,
+    effectIndex: -1,
+    kind: "triggered",
+    resolutionOrderSelected: true,
+  };
+  const tgtCtx = buildTargetResolutionContext(
+    ctx.G,
+    pendingEffect.controllerId,
+    ctx.framework,
+    targetResolutionOptions(ctx),
+  );
+  if (!firstSegmentActivationGateSatisfied(effect.directives, tgtCtx)) return;
+  const resolution = evaluateLegalTargets(pendingEffect, ctx.G, ctx.framework);
+  if (resolution && !requiredTargetAssignmentExists(resolution.groups)) return;
+  enqueuePendingEffect(ctx.G, pendingEffect, ctx.framework, { preempt: true });
+}
+
 function enqueueTargetedFollowUp(
   ctx: EffectExecutionContext,
   action: EffectAction,
   prompt: string,
+  opts: { choiceCandidateSet?: PendingEffect["choiceCandidateSet"] } = {},
 ): void {
-  enqueueFollowUpEffect(ctx, {
-    type: "triggered",
-    activation: { timing: [] },
-    directives: [{ action }],
-    sourceText: prompt,
-  });
+  enqueueFollowUpEffect(
+    ctx,
+    {
+      type: "triggered",
+      activation: { timing: [] },
+      directives: [{ action }],
+      sourceText: prompt,
+    },
+    opts,
+  );
 }
 
-function enqueueDiscardChoice(ctx: EffectExecutionContext, count: number): void {
+function enqueueDiscardChoice(
+  ctx: EffectExecutionContext,
+  count: number,
+  activateDiscardedCommand?: { trait: string; timing: "main" | "action" },
+): void {
   const discardTarget: TargetFilter = {
     owner: "friendly",
     zone: "hand",
@@ -789,11 +1005,27 @@ function enqueueDiscardChoice(ctx: EffectExecutionContext, count: number): void 
   };
   enqueueTargetedFollowUp(
     ctx,
-    { action: "discardChosen", target: discardTarget },
+    {
+      action: "discardChosen",
+      target: discardTarget,
+      ...(activateDiscardedCommand ? { activateDiscardedCommand } : {}),
+    },
     count === 1
       ? "Choose a card from your hand to discard."
       : `Choose ${count} cards from your hand to discard.`,
   );
+}
+
+function recordOpponentDiscardByEffect(
+  discardedCardIds: readonly string[],
+  ctx: EffectExecutionContext,
+): void {
+  const originPlayerId = ctx.effectOriginPlayerId ?? ctx.sourcePlayerId;
+  // Opponent-controlled discard choices are represented by queueEffectForOpponent,
+  // which preserves the originating player while switching sourcePlayerId.
+  if (discardedCardIds.length === 0 || originPlayerId === ctx.sourcePlayerId) return;
+  const origins = (ctx.G.turnMetadata.opponentDiscardEffectOriginPlayerIds ??= []);
+  if (!origins.includes(originPlayerId)) origins.push(originPlayerId);
 }
 
 function executeAction(action: EffectAction, ctx: EffectExecutionContext): void {
@@ -809,6 +1041,12 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "draw":
       drawByEffect(action.count, ctx.sourcePlayerId, ctx);
       break;
+
+    case "drawEventDestroyer": {
+      const destroyerId = ctx.triggerContext?.destroyedBy;
+      if (destroyerId) drawByEffect(action.count, destroyerId, ctx);
+      break;
+    }
 
     case "drawIfTargetMatches": {
       const targets =
@@ -835,12 +1073,23 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "drawThenDiscard": {
       drawByEffect(action.drawCount, ctx.sourcePlayerId, ctx);
       if (ctx.framework.state.status.gameEnded) break;
-      enqueueDiscardChoice(ctx, action.discardCount);
+      enqueueDiscardChoice(ctx, action.discardCount, action.activateDiscardedCommand);
+      break;
+    }
+
+    case "drawThenDiscardByOpponentCount": {
+      const count = ctx.framework.state.playerIds.filter(
+        (playerId) => String(playerId) !== ctx.sourcePlayerId,
+      ).length;
+      if (count <= 0) break;
+      drawByEffect(count, ctx.sourcePlayerId, ctx);
+      if (ctx.framework.state.status.gameEnded) break;
+      enqueueDiscardChoice(ctx, count);
       break;
     }
 
     case "resolveThenQueue": {
-      const prerequisiteResolved = preflightResolved(action.first, ctx);
+      const prerequisiteResolved = action.first ? preflightResolved(action.first, ctx) : true;
       const previousGeneration = ctx.G.pendingEffectCurrentPriorityGeneration;
       const reserveGeneration = () => {
         const next = (ctx.G.eventCounters.pendingEffectPriorityGeneration ?? 0) + 1;
@@ -855,8 +1104,10 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       const followUpGeneration = previousGeneration ?? reserveGeneration();
       const prerequisiteGeneration = reserveGeneration();
       try {
-        ctx.G.pendingEffectCurrentPriorityGeneration = prerequisiteGeneration;
-        executeAction(action.first, ctx);
+        if (action.first) {
+          ctx.G.pendingEffectCurrentPriorityGeneration = prerequisiteGeneration;
+          executeAction(action.first, ctx);
+        }
         ctx.G.pendingEffectCurrentPriorityGeneration = followUpGeneration;
         if (ctx.framework.state.status.gameEnded) break;
         // Mandatory effects still perform as much as possible (rule 10-1-3),
@@ -879,8 +1130,28 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
+    case "queueEffectForOpponent":
+      enqueueFollowUpEffect(ctx, action.effect, {
+        controllerId: tgtCtx.opponentPlayerId as string,
+      });
+      break;
+
+    case "queueEffectForPlayers": {
+      const playerIds = (ctx.framework.state.playerIds as readonly string[]).filter(
+        (playerId) => action.scope === "all" || playerId !== ctx.sourcePlayerId,
+      );
+      // Queue in reverse because follow-up effects preempt the current queue.
+      for (const playerId of [...playerIds].reverse()) {
+        enqueueFollowUpEffect(ctx, action.effect, { controllerId: playerId });
+      }
+      break;
+    }
+
     case "createDelayedTrigger":
       {
+        const eventCardIds = action.target
+          ? (resolveActionTargets(action.target, ctx, tgtCtx) as string[])
+          : undefined;
         const eventSourceIds = action.eventSourceFilter
           ? (resolveActionTargets(action.eventSourceFilter, ctx, tgtCtx) as string[])
           : undefined;
@@ -891,6 +1162,10 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
           payload: {
             kind: "delayed-trigger",
             eventType: action.eventType,
+            additionalEventTypes: action.additionalEventTypes,
+            eventDamageType: action.eventDamageType,
+            oncePerSimultaneousGroup: action.oncePerSimultaneousGroup,
+            eventCardIds,
             eventCardFilter: action.eventCardFilter,
             eventSourceFilter: action.eventSourceFilter,
             eventSourceIds,
@@ -923,12 +1198,54 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       };
       const targets = resolveActionTargets(discardTarget, ctx, tgtCtx) as readonly string[];
       handleChosenDiscardAction(targets, ctx.sourcePlayerId, ctx.framework);
+      recordOpponentDiscardByEffect(targets, ctx);
       break;
     }
 
     case "discardChosen": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx) as readonly string[];
       handleChosenDiscardAction(targets, ctx.sourcePlayerId, ctx.framework);
+      recordOpponentDiscardByEffect(targets, ctx);
+      if (action.activateDiscardedCommand) {
+        for (const cardId of targets) {
+          const definition = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
+          if (
+            definition?.type !== "command" ||
+            !definition.traits.some(
+              (trait) =>
+                trait.toLowerCase() === action.activateDiscardedCommand!.trait.toLowerCase(),
+            )
+          ) {
+            continue;
+          }
+          enqueuePendingEffect(
+            ctx.G,
+            {
+              id: nextPendingEffectId(ctx.G),
+              controllerId: ctx.sourcePlayerId,
+              sourceCardId: cardId as CardInstanceId,
+              effect: {
+                type: "triggered",
+                activation: { timing: [] },
+                directives: [
+                  {
+                    action: {
+                      action: "activateTiming",
+                      timing: action.activateDiscardedCommand.timing,
+                    },
+                    optional: true,
+                  },
+                ],
+                sourceText: `You may activate the discarded (${action.activateDiscardedCommand.trait}) Command card's ${action.activateDiscardedCommand.timing}.`,
+              },
+              effectIndex: -1,
+              kind: "triggered",
+            },
+            ctx.framework,
+            { preempt: true },
+          );
+        }
+      }
       break;
     }
 
@@ -938,12 +1255,43 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       // self (no printed card uses `any` for mill — see type docs).
       const millPlayerId =
         action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
-      handleMillDeckAction(action.count, millPlayerId, ctx.framework);
+      millDeckAndRecordMoves(action.count, millPlayerId, ctx);
+      break;
+    }
+
+    case "millDeckThenAddToHand": {
+      const milledIds = millDeckAndRecordMoves(action.count, ctx.sourcePlayerId, ctx);
+      if (ctx.framework.state.status.gameEnded) break;
+      const eligibleIds = milledIds.filter((cardId) => {
+        const card = ctx.framework.cards.get(cardId);
+        return card !== undefined && evaluateTargetFilter(action.target, [card], tgtCtx).length > 0;
+      });
+      if (eligibleIds.length === 0) break;
+      enqueueTargetedFollowUp(
+        ctx,
+        {
+          action: "returnToHand",
+          target: {
+            ...action.target,
+            zone: "trash",
+            count: 1,
+            instanceIds: eligibleIds,
+          },
+        },
+        "Choose a card placed from your deck to add to your hand.",
+        {
+          choiceCandidateSet: {
+            kind: "temporary",
+            zone: "trash",
+            cardIds: milledIds,
+          },
+        },
+      );
       break;
     }
 
     case "millDeckThenDrawIfTrait": {
-      const milledIds = handleMillDeckAction(action.count, ctx.sourcePlayerId, ctx.framework);
+      const milledIds = millDeckAndRecordMoves(action.count, ctx.sourcePlayerId, ctx);
       let matchedTrait = false;
       for (const cardId of milledIds) {
         const def = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
@@ -961,7 +1309,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "millDeckThenDamageIfTrait": {
       const millPlayerId =
         action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
-      const milledIds = handleMillDeckAction(action.count, millPlayerId, ctx.framework);
+      const milledIds = millDeckAndRecordMoves(action.count, millPlayerId, ctx);
       if (ctx.framework.state.status.gameEnded) break;
       const traits = Array.isArray(action.traits) ? action.traits : [action.traits];
       const matchedTrait = milledIds.some((cardId) => {
@@ -983,7 +1331,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "millDeckThenDamageByTraitCount": {
       const millPlayerId =
         action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
-      const milledIds = handleMillDeckAction(action.count, millPlayerId, ctx.framework);
+      const milledIds = millDeckAndRecordMoves(action.count, millPlayerId, ctx);
       if (ctx.framework.state.status.gameEnded) break;
       const traits = Array.isArray(action.traits) ? action.traits : [action.traits];
       const matchedCount = milledIds.filter((cardId) => {
@@ -1005,7 +1353,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "millDeckThenStatModifierIfTrait": {
       const millPlayerId =
         action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
-      const milledIds = handleMillDeckAction(action.count, millPlayerId, ctx.framework);
+      const milledIds = millDeckAndRecordMoves(action.count, millPlayerId, ctx);
       if (ctx.framework.state.status.gameEnded) break;
       const traits = Array.isArray(action.traits) ? action.traits : [action.traits];
       const matchedTrait = milledIds.some((cardId) => {
@@ -1015,6 +1363,31 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
         );
       });
       if (matchedTrait) {
+        enqueueTargetedFollowUp(
+          ctx,
+          {
+            action: "statModifier",
+            stat: action.stat,
+            amount: action.amount,
+            duration: action.duration,
+            target: action.target,
+          },
+          ctx.currentEffect?.sourceText ?? "Choose a Unit for this modifier.",
+        );
+      }
+      break;
+    }
+
+    case "millDeckThenStatModifierIfLevel": {
+      const millPlayerId =
+        action.owner === "opponent" ? (tgtCtx.opponentPlayerId as string) : ctx.sourcePlayerId;
+      const milledIds = millDeckAndRecordMoves(action.count, millPlayerId, ctx);
+      if (ctx.framework.state.status.gameEnded) break;
+      const matched = milledIds.some((cardId) => {
+        const def = ctx.framework.cards.getDefinition(cardId) as Card | undefined;
+        return (def?.level ?? -Infinity) >= action.minLevel;
+      });
+      if (matched) {
         enqueueTargetedFollowUp(
           ctx,
           {
@@ -1125,6 +1498,22 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
+    case "dealDamageToFirstOpponentShield": {
+      const opponentId = tgtCtx.opponentPlayerId as string;
+      const firstCard =
+        ctx.framework.zones.getCards({ zone: "baseSection", playerId: opponentId })[0] ??
+        ctx.framework.zones.getCards({ zone: "shieldArea", playerId: opponentId })[0];
+      if (firstCard) {
+        handleDealDamageAction([firstCard as CardInstanceId], action.amount, ctx);
+      }
+      break;
+    }
+
+    case "destroyTopOpponentShields": {
+      handleDestroyTopOpponentShields(action.count, tgtCtx.opponentPlayerId as string, ctx);
+      break;
+    }
+
     case "recoverHP": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       handleRecoverHPAction(targets, action.amount, ctx);
@@ -1139,6 +1528,9 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     }
 
     case "rest": {
+      if (action.requiresPaidExResources && (ctx.triggerContext?.paidExResources ?? 0) === 0) {
+        break;
+      }
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       ctx.previousResolvedTargets = targets;
       handleRestAction(targets, ctx, { allowSubstitution: action.allowSubstitution });
@@ -1146,6 +1538,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     }
 
     case "substituteBaseRestWithSelf":
+    case "substituteUnitRestWithSelf":
       // Declarative marker consumed by handleRestAction. Substitution
       // effects are not independently executable.
       break;
@@ -1153,6 +1546,16 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "setActive": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       handleSetActiveAction(targets, ctx);
+      if (action.cantAttackDuration) {
+        for (const cardId of targets) {
+          pushPreventiveEffect(
+            { kind: "restriction", restriction: "cannot-attack" },
+            cardId as string,
+            mapDuration(action.cantAttackDuration),
+            ctx,
+          );
+        }
+      }
       break;
     }
 
@@ -1179,6 +1582,40 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
+    case "beginDamageStepBattle": {
+      if (!ctx.sourceCardId) break;
+      const targets = resolveActionTargets(action.target, ctx, tgtCtx);
+      for (const targetId of targets) {
+        const targetOwnerId = ctx.framework.cards.getOwner(targetId as string) as
+          | string
+          | undefined;
+        if (!targetOwnerId || targetOwnerId === ctx.sourcePlayerId) continue;
+        // This effect skips straight to the Damage Step, but it is still a
+        // battle. Keep its combatants available while damage and triggered
+        // effects resolve so predicates such as `isBattling` and
+        // `isBeingAttacked` retain their printed meaning.
+        const previousCombat = ctx.G.turnMetadata.pendingCombat;
+        ctx.G.turnMetadata.pendingCombat = {
+          stage: "damage-step",
+          attackerId: ctx.sourceCardId,
+          attackerPlayerId: ctx.sourcePlayerId,
+          target: targetId as string,
+        };
+        try {
+          resolveDirectBattle(ctx.G, ctx.sourceCardId, ctx.sourcePlayerId, targetId as string, {
+            G: ctx.G,
+            sourcePlayerId: ctx.sourcePlayerId,
+            sourceCardId: ctx.sourceCardId,
+            framework: ctx.framework,
+            destructionDamageType: "battle",
+          });
+        } finally {
+          ctx.G.turnMetadata.pendingCombat = previousCombat;
+        }
+      }
+      break;
+    }
+
     case "destroyEventCard": {
       const eventCardId = ctx.triggerContext?.cardId;
       if (eventCardId) handleDestroyAction([eventCardId as CardInstanceId], ctx);
@@ -1187,9 +1624,15 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
 
     case "exile": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
-      handleExileAction(targets, ctx.framework);
+      handleExileAction(targets, ctx);
       break;
     }
+
+    case "exileSelf":
+      if (ctx.sourceCardId) {
+        handleExileAction([ctx.sourceCardId as CardInstanceId], ctx);
+      }
+      break;
 
     // ── Zone movement ────────────────────────────────────────────────────────
     case "returnToHand": {
@@ -1205,7 +1648,11 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     }
 
     case "returnPairedPilotToHand":
-      handleReturnPairedPilotToHandAction(ctx);
+      handleReturnPairedPilotToHandAction(ctx, action.color);
+      break;
+
+    case "returnPairedCardToDeck":
+      handleReturnPairedCardToDeckAction(action.position, ctx);
       break;
 
     case "returnToDeck": {
@@ -1236,20 +1683,38 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       }
       break;
 
+    case "deploySelfAsUnit": {
+      if (!ctx.sourceCardId) break;
+      const printedDefinition = ctx.framework.cards.getDefinition(ctx.sourceCardId);
+      if (printedDefinition?.type !== "pilot") break;
+      const { apBonus: _apBonus, hpBonus: _hpBonus, ...cardBase } = printedDefinition;
+      const definitionOverride: UnitCard = {
+        ...cardBase,
+        type: "unit",
+        ap: action.ap,
+        hp: action.hp,
+        battlefieldZones: ["space", "earth"],
+      };
+      handleDeploySelfAction(ctx.sourceCardId, ctx, { definitionOverride });
+      break;
+    }
+
     case "deployExBase": {
       const count = action.count ?? 1;
       for (let i = 0; i < count; i++) {
-        const tokenId = `ex_base_token_${++exBaseTokenCounter}`;
+        const tokenIndex = (ctx.G.eventCounters.exBaseToken ?? 0) + 1;
+        ctx.G.eventCounters.exBaseToken = tokenIndex;
+        const tokenId = `ex_base_token_${tokenIndex}`;
         ctx.framework.cards.registerDefinition(
           tokenId,
-          exbpExBase001,
+          exbExBase001,
           ctx.sourcePlayerId as PlayerId,
         );
         ctx.framework.zones.placeToken(
           tokenId,
           { zone: "baseSection", playerId: ctx.sourcePlayerId },
           ctx.sourcePlayerId as PlayerId,
-          { isToken: true, tokenDefinitionId: exbpExBase001.cardNumber },
+          { isToken: true, tokenDefinitionId: exbExBase001.cardNumber },
         );
         ctx.G.turnMetadata.deployedThisTurn.push(tokenId);
         ctx.framework.cards.patchMeta(tokenId, { deployedThisTurn: true, exhausted: false });
@@ -1286,12 +1751,26 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
             zone: "hand",
             playerId: ownerId as string,
           });
+          emitGundamLog(ctx.framework, {
+            type: "gundam.effect.returnedToHand",
+            values: { cardId: ctx.sourceCardId, playerId: ownerId as string },
+            visibility: { mode: "PUBLIC" },
+            category: "action",
+          });
         }
       }
       break;
 
     case "addShieldToHand":
-      handleAddShieldToHandAction(action.count, ctx.sourcePlayerId, ctx.framework);
+      handleAddShieldToHandAction(
+        action.target
+          ? resolveActionTargets(action.target, ctx, tgtCtx)
+          : ctx.framework.zones
+              .getCards({ zone: "shieldArea", playerId: ctx.sourcePlayerId })
+              .slice(0, action.count),
+        ctx.sourcePlayerId,
+        ctx.framework,
+      );
       break;
 
     case "addFromTrash": {
@@ -1314,6 +1793,12 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
         ctx.framework.zones.moveCard(cardId as string, {
           zone: "hand",
           playerId: ctx.sourcePlayerId,
+        });
+        emitGundamLog(ctx.framework, {
+          type: "gundam.effect.movedToZone",
+          values: { cardId: cardId as string, from: "trash", to: "hand" },
+          visibility: { mode: "PUBLIC" },
+          category: "action",
         });
       }
       break;
@@ -1367,50 +1852,56 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
 
     case "placeExResource": {
       const count = action.count ?? 1;
-      for (let i = 0; i < count; i++) {
-        if (!canPlaceResource(ctx.sourcePlayerId, true, ctx.framework)) break;
-        const tokenId = `ex_resource_token_${++exResourceTokenCounter}`;
-        ctx.framework.cards.registerDefinition(
-          tokenId,
-          exrpExResource003,
-          ctx.sourcePlayerId as PlayerId,
-        );
-        ctx.framework.zones.placeToken(
-          tokenId,
-          { zone: "resourceArea", playerId: ctx.sourcePlayerId },
-          ctx.sourcePlayerId as PlayerId,
-          { isToken: true, tokenDefinitionId: exrpExResource003.cardNumber },
-        );
-        if (action.state === "rested") {
-          ctx.G.exhausted[tokenId] = true;
-          ctx.framework.cards.patchMeta(tokenId, { exhausted: true });
+      const recipients =
+        action.recipients === "all" ? Object.keys(ctx.G.players) : [ctx.sourcePlayerId];
+      for (const recipientId of recipients) {
+        for (let i = 0; i < count; i++) {
+          if (!canPlaceResource(recipientId, true, ctx.framework)) break;
+          const tokenIndex = (ctx.G.eventCounters.exResourceToken ?? 0) + 1;
+          ctx.G.eventCounters.exResourceToken = tokenIndex;
+          const tokenId = `ex_resource_token_${tokenIndex}`;
+          ctx.framework.cards.registerDefinition(
+            tokenId,
+            exrExResource001,
+            recipientId as PlayerId,
+          );
+          ctx.framework.zones.placeToken(
+            tokenId,
+            { zone: "resourceArea", playerId: recipientId },
+            recipientId as PlayerId,
+            { isToken: true, tokenDefinitionId: exrExResource001.cardNumber },
+          );
+          if (action.state === "rested") {
+            ctx.G.exhausted[tokenId] = true;
+            ctx.framework.cards.patchMeta(tokenId, { exhausted: true });
+          }
+          emitGundamLog(ctx.framework, {
+            type: "gundam.effect.resourcePlaced",
+            values: {
+              playerId: recipientId,
+              cardId: tokenId,
+              state: action.state === "rested" ? "rested" : "active",
+            },
+            visibility: { mode: "PUBLIC" },
+            category: "action",
+          });
+
+          const exEvent = {
+            type: "exResourcePlaced" as const,
+            cardId: tokenId,
+            playerId: recipientId,
+            ownerId: recipientId,
+          };
+          enqueueObserverTriggers(ctx.G, exEvent, ctx.framework, undefined);
+
+          emitGundamEvent(ctx.framework.events, {
+            kind: "EX_RESOURCE_PLACED",
+            payload: {
+              playerId: recipientId,
+              cardId: tokenId,
+            },
+          });
         }
-        emitGundamLog(ctx.framework, {
-          type: "gundam.effect.resourcePlaced",
-          values: {
-            playerId: ctx.sourcePlayerId,
-            cardId: tokenId,
-            state: action.state === "rested" ? "rested" : "active",
-          },
-          visibility: { mode: "PUBLIC" },
-          category: "action",
-        });
-
-        const exEvent = {
-          type: "exResourcePlaced" as const,
-          cardId: tokenId,
-          playerId: ctx.sourcePlayerId,
-          ownerId: ctx.sourcePlayerId,
-        };
-        enqueueObserverTriggers(ctx.G, exEvent, ctx.framework, undefined);
-
-        emitGundamEvent(ctx.framework.events, {
-          kind: "EX_RESOURCE_PLACED",
-          payload: {
-            playerId: ctx.sourcePlayerId,
-            cardId: tokenId,
-          },
-        });
       }
       break;
     }
@@ -1450,6 +1941,22 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       const eventCardId = ctx.triggerContext?.cardId;
       if (eventCardId && eventCardMatches(action.sourceFilter, ctx, tgtCtx)) {
         const targets = [eventCardId as CardInstanceId];
+        ctx.previousResolvedTargets = targets;
+        handleGrantKeywordAction(
+          targets,
+          action.keyword,
+          action.keywordValue ?? 1,
+          action.duration,
+          ctx,
+        );
+      }
+      break;
+    }
+
+    case "grantKeywordEventSource": {
+      const eventSourceCardId = ctx.triggerContext?.eventSourceCardId;
+      if (eventSourceCardId && eventSourceMatches(action.sourceFilter, ctx, tgtCtx)) {
+        const targets = [eventSourceCardId as CardInstanceId];
         ctx.previousResolvedTargets = targets;
         handleGrantKeywordAction(
           targets,
@@ -1560,10 +2067,31 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       break;
     }
 
+    case "pairSourceFromZone": {
+      if (
+        !ctx.sourceCardId ||
+        ctx.framework.cards.getZone(ctx.sourceCardId)?.split(":")[0] !== action.requiredZone
+      ) {
+        break;
+      }
+      const targets = resolveActionTargets(action.target, ctx, tgtCtx);
+      if (targets.length > 0) {
+        handlePairPilotAction(ctx.sourceCardId, targets[0]! as string, ctx);
+      }
+      break;
+    }
+
     case "pairPilot": {
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       if (ctx.sourceCardId && targets.length > 0) {
-        handlePairPilotAction(targets[0]! as string, ctx.sourceCardId, ctx);
+        const targetId = targets[0]! as string;
+        if (action.target.cardType === "pilot") {
+          // A Unit ability selects the Pilot that will be paired to its source.
+          handlePairPilotAction(targetId, ctx.sourceCardId, ctx);
+        } else if (action.target.cardType === "unit") {
+          // A Command acting as a Pilot selects the Unit that receives it.
+          handlePairPilotAction(ctx.sourceCardId, targetId, ctx);
+        }
       }
       break;
     }
@@ -1587,6 +2115,7 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
     case "redirectBattleDamage":
     case "preventDestroy":
     case "preventDamageToZone":
+    case "restrictUnit":
     case "cantAttack":
     case "allowAttackDeployedThisTurn":
     case "cantTargetPlayer":
@@ -1606,29 +2135,18 @@ function executeAction(action: EffectAction, ctx: EffectExecutionContext): void 
       // effect. The outer Burst has already been accepted, so this nested
       // effect is mandatory but retains Burst priority.
       if (ctx.sourceCardId) {
-        const def = ctx.framework.cards.getDefinition(ctx.sourceCardId) as Card | undefined;
-        if (def?.effects?.length) {
-          for (const [effectIndex, effect] of (def.effects as CardEffect[]).entries()) {
-            const effectTimings = (effect.activation.timing ?? []) as string[];
-            if (effectTimings.includes(action.timing)) {
-              enqueuePendingEffect(
-                ctx.G,
-                {
-                  id: nextPendingEffectId(ctx.G),
-                  controllerId: ctx.sourcePlayerId,
-                  sourceCardId: ctx.sourceCardId,
-                  effect,
-                  effectIndex,
-                  kind: "burst",
-                  chosenTargets: ctx.chosenTargets,
-                },
-                ctx.framework,
-                { preempt: true },
-              );
-            }
-          }
-        }
+        enqueueIndirectCommandActivation(ctx.sourceCardId, action.timing, ctx);
       }
+      break;
+    }
+
+    case "activatePairedCardTiming": {
+      const pairedCardId = ctx.sourceCardId ? ctx.G.pilotAssignments[ctx.sourceCardId] : undefined;
+      if (!pairedCardId) break;
+      enqueueIndirectCommandActivation(pairedCardId, action.timing, ctx, {
+        kind: "activatedWhilePaired",
+        hostUnitId: ctx.sourceCardId as CardInstanceId,
+      });
       break;
     }
 
@@ -1703,9 +2221,11 @@ function eventCardMatches(
   if (!sourceFilter) return true;
   const eventCard = ctx.framework.cards.get(eventCardId);
   if (!eventCard) return false;
-  return evaluateTargetFilter(sourceFilter, [eventCard], tgtCtx).includes(
-    eventCardId as CardInstanceId,
-  );
+  const target: TargetFilter = {
+    ...sourceFilter,
+    zone: sourceFilter.zone ?? tgtCtx.getCardZone(eventCard),
+  };
+  return evaluateTargetFilter(target, [eventCard], tgtCtx).includes(eventCardId as CardInstanceId);
 }
 
 function isConditionalDirective(directive: Directive): directive is ConditionalDirective {
@@ -1726,7 +2246,10 @@ function gatherAllCards(tgtCtx: ReturnType<typeof buildTargetResolutionContext>)
     "shieldArea",
     "resourceArea",
   ] as const;
-  const playerIds = [tgtCtx.sourcePlayerId as string, tgtCtx.opponentPlayerId as string];
+  const playerIds = (tgtCtx.allPlayerIds ?? [
+    tgtCtx.sourcePlayerId,
+    tgtCtx.opponentPlayerId,
+  ]) as readonly string[];
   const cards = [];
   for (const playerId of playerIds) {
     for (const zone of zones) {
@@ -1751,14 +2274,20 @@ function countUniqueNames(
 }
 
 function handleAddShieldToHandAction(
-  count: number,
+  shieldIds: readonly string[],
   playerId: string,
   framework: FrameworkWriteAPI,
 ): void {
-  const shields = framework.zones.getCards({ zone: "shieldArea", playerId });
-  const toMove = shields.slice(0, count);
-  for (const cardId of toMove) {
+  for (const cardId of shieldIds) {
     framework.zones.moveCard(cardId, { zone: "hand", playerId });
+  }
+  if (shieldIds.length > 0) {
+    emitGundamLog(framework, {
+      type: "gundam.effect.shieldsAddedToHand",
+      values: { playerId, count: shieldIds.length },
+      visibility: { mode: "PUBLIC" },
+      category: "action",
+    });
   }
 }
 
@@ -1786,6 +2315,26 @@ function handlePreventiveAction(
   tgtCtx: ReturnType<typeof buildTargetResolutionContext>,
 ): void {
   switch (action.action) {
+    case "restrictUnit": {
+      const targets = resolveActionTargets(action.target, ctx, tgtCtx);
+      const restrictionNames = {
+        cannotSetActive: "cannot-set-active",
+        cannotPairPilot: "cannot-pair-pilot",
+        cannotActivateBlocker: "cannot-activate-blocker",
+      } as const;
+      for (const cardId of targets) {
+        for (const restriction of action.restrictions) {
+          pushPreventiveEffect(
+            { kind: "restriction", restriction: restrictionNames[restriction] },
+            cardId as string,
+            action.duration ? mapDuration(action.duration) : "permanent",
+            ctx,
+          );
+        }
+      }
+      break;
+    }
+
     case "preventActive": {
       // "It won't be set as active during the start phase of your opponent's next turn."
       // Push a prevent-active restriction on each target, lasting until the start of
@@ -1833,6 +2382,7 @@ function handlePreventiveAction(
             damageType: action.damageType,
             sourceCardType: action.sourceCardType,
             source: action.source,
+            maxDamageAmount: action.maxDamageAmount,
           },
           cardId as string,
           // Honor card-data `duration` when supplied — most cards print
@@ -1859,6 +2409,7 @@ function handlePreventiveAction(
             amount,
             damageType: action.damageType,
             source: action.source,
+            consuming: action.consuming,
           },
           cardId as string,
           mapDuration(action.duration),
@@ -1931,7 +2482,10 @@ function handlePreventiveAction(
       const targets = resolveActionTargets(action.target, ctx, tgtCtx);
       for (const cardId of targets) {
         pushPreventiveEffect(
-          { kind: "allow-attack-deployed-this-turn" },
+          {
+            kind: "allow-attack-deployed-this-turn",
+            ...(action.attackTarget ? { attackTarget: action.attackTarget } : {}),
+          },
           cardId as string,
           mapDuration(action.duration),
           ctx,

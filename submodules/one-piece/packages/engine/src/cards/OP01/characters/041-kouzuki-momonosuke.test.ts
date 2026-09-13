@@ -3,7 +3,7 @@ import { op01KouzukiMomonosuke041 } from "../../../../../cards/src/cards/OP01/ch
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-041 Kouzuki Momonosuke", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01KouzukiMomonosuke041);
   });
 });

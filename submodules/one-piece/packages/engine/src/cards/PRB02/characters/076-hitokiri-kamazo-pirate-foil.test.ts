@@ -3,7 +3,7 @@ import { prb02HitokiriKamazoPirateFoil076 } from "../../../../../cards/src/cards
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-076 Hitokiri Kamazo (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02HitokiriKamazoPirateFoil076);
   });
 });

@@ -1226,6 +1226,90 @@ describe("resolveActionEffect", () => {
     expect(state.cardMeta[target]?.damage).toBe(0);
   });
 
+  it("applies selected-target-name selfReplacement when the target's ampersand name matches", () => {
+    const source = "chair" as CardInstanceId;
+    const team = "team" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext({
+      definitions: {
+        [source]: { id: "chair", cardType: "item", name: "Darkwing's Chair Set" },
+        [team]: {
+          id: "team",
+          cardType: "character",
+          name: "Darkwing Duck & Launchpad",
+          willpower: 7,
+        },
+      },
+      zoneCards: {
+        [`play:${PLAYER_ONE}`]: [team],
+      },
+      cardMeta: {
+        [team]: { damage: 4 },
+      },
+    });
+
+    const result = resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(source, PLAYER_ONE),
+      {
+        type: "remove-damage",
+        amount: { type: "up-to", value: 2 },
+        selfReplacement: {
+          condition: { type: "selected-target-name", name: "Darkwing Duck" },
+          value: 4,
+        },
+        target: "CHOSEN_CHARACTER",
+      },
+      {
+        targets: [team],
+      },
+    );
+
+    expect(result.status).toBe("resolved");
+    expect(state.cardMeta[team]?.damage).toBe(0);
+  });
+
+  it("does not boost remove-damage selfReplacement for an unmatched solo name", () => {
+    const source = "chair" as CardInstanceId;
+    const launchpad = "launchpad" as CardInstanceId;
+    const { ctx, state } = createResolverTestContext({
+      definitions: {
+        [source]: { id: "chair", cardType: "item", name: "Darkwing's Chair Set" },
+        [launchpad]: {
+          id: "launchpad",
+          cardType: "character",
+          name: "Launchpad",
+          willpower: 5,
+        },
+      },
+      zoneCards: {
+        [`play:${PLAYER_ONE}`]: [launchpad],
+      },
+      cardMeta: {
+        [launchpad]: { damage: 4 },
+      },
+    });
+
+    const result = resolveActionEffect(
+      ctx,
+      createCardPlayedPayload(source, PLAYER_ONE),
+      {
+        type: "remove-damage",
+        amount: { type: "up-to", value: 2 },
+        selfReplacement: {
+          condition: { type: "selected-target-name", name: "Darkwing Duck" },
+          value: 4,
+        },
+        target: "CHOSEN_CHARACTER",
+      },
+      {
+        targets: [launchpad],
+      },
+    );
+
+    expect(result.status).toBe("resolved");
+    expect(state.cardMeta[launchpad]?.damage).toBe(2);
+  });
+
   it("preserves an explicit zero amount for up-to remove-damage", () => {
     const source = "source" as CardInstanceId;
     const target = "target" as CardInstanceId;

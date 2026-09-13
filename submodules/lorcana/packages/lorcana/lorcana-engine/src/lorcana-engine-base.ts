@@ -768,6 +768,16 @@ export abstract class LorcanaEngineBase {
   // ============================================================================
   abstract getClientPlayerId(): string | undefined;
 
+  /**
+   * Subclasses can override this to skip the immediate auto-bag-drain that
+   * normally follows a successful move. The default is to drain; this keeps the
+   * authoritative server path deterministic. Non-optimistic clients override it
+   * because their local state is stale until the server's projection arrives.
+   */
+  protected shouldSkipAutoBagDrainAfterMove(): boolean {
+    return false;
+  }
+
   public turnActions() {
     // 4.1.3. The active player can take the following turn actions during their turn: ink a card, play a card, use a card’s activated ability, quest, challenge, and move a character to a location.
     return [];
@@ -808,7 +818,7 @@ export abstract class LorcanaEngineBase {
     throw new Error("loadState is not supported by this engine implementation");
   }
 
-  private shouldSkipImmediateAutoBagDrain<K extends keyof LorcanaRuntimeMoveInputs & string>(
+  protected shouldSkipImmediateAutoBagDrain<K extends keyof LorcanaRuntimeMoveInputs & string>(
     moveId: K,
     input: LorcanaRuntimeMoveInputs[K],
   ): boolean {
@@ -1132,20 +1142,24 @@ export abstract class LorcanaEngineBase {
     playerId: string,
     _originalStateID: number, // Required by sandboxPostProcess contract; unused here because the sandbox starts from the correct post-move state
   ): void {
+    this.drainDeterministicBagEffectsInRuntime(sandboxRuntime, playerId);
+  }
+
+  protected drainDeterministicBagEffectsInRuntime(runtime: MatchRuntime, playerId: string): void {
     const maxAttempts = 25;
 
     for (let i = 0; i < maxAttempts; i++) {
-      const state = sandboxRuntime.getState() as LorcanaMatchState;
+      const state = runtime.getState() as LorcanaMatchState;
       const bagId = this.getAutoResolvableBagIdFromState(state, playerId);
 
       if (!bagId) {
         return;
       }
 
-      const currentStateID = sandboxRuntime.getCurrentStateID();
-      const result = sandboxRuntime.processCommand(
+      const currentStateID = runtime.getCurrentStateID();
+      const result = runtime.processCommand(
         {
-          commandID: `sandbox-drain-${i}`,
+          commandID: `auto-drain-${i}-${currentStateID}`,
           move: "resolveBag",
           input: { args: { bagId } },
         },
@@ -1163,9 +1177,7 @@ export abstract class LorcanaEngineBase {
       }
     }
 
-    logger.warning(
-      `Sandbox auto-drain stopped after ${maxAttempts} attempts for player '${playerId}'`,
-    );
+    logger.warning(`Auto-drain stopped after ${maxAttempts} attempts for player '${playerId}'`);
   }
 
   protected validateMoveForPlayer<K extends keyof LorcanaRuntimeMoveInputs & string>(
@@ -1211,7 +1223,9 @@ export abstract class LorcanaEngineBase {
       prevStateID,
     });
     const skipAutoBagDrain =
-      options.skipAutoBagDrain || this.shouldSkipImmediateAutoBagDrain(moveId, input);
+      options.skipAutoBagDrain ||
+      this.shouldSkipAutoBagDrainAfterMove() ||
+      this.shouldSkipImmediateAutoBagDrain(moveId, input);
 
     const maybeAutoDrain = (result: CommandResult): CommandResult =>
       !result.success || skipAutoBagDrain
@@ -1303,6 +1317,10 @@ export abstract class LorcanaEngineBase {
         });
       }
 
+      // The base engine path owns deterministic bag draining for authoritative
+      // execution. Non-optimistic clients override shouldSkipAutoBagDrainAfterMove
+      // so they do not auto-drain a stale local bag before the server projection
+      // arrives, which would enqueue duplicate resolveBag commands.
       return logResult(maybeAutoDrain(result as CommandResult));
     } catch (error) {
       logger.error("Move {moveId} THREW player={playerId} error={error}", {
@@ -1616,8 +1634,8 @@ export abstract class LorcanaEngineBase {
     return this.engine.getStateID();
   }
 
-  isOptimisticMovePending(): boolean {
-    return this.engine.isOptimisticMovePending ?? false;
+  isMovePending(): boolean {
+    return this.engine.isMovePending ?? false;
   }
 
   getActiveEffects(): EngineActiveEffectProjection[] {

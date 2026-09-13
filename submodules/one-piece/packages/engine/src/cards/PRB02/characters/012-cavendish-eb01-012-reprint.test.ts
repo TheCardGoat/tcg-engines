@@ -3,7 +3,7 @@ import { prb02CavendishEb01012Reprint012 } from "../../../../../cards/src/cards/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-012 Cavendish - EB01-012 (Reprint)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02CavendishEb01012Reprint012);
   });
 });

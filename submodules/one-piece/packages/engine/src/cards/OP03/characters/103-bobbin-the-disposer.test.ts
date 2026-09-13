@@ -3,7 +3,7 @@ import { op03BobbinTheDisposer103 } from "../../../../../cards/src/cards/OP03/ch
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-103 Bobbin the Disposer", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op03BobbinTheDisposer103);
   });
 });

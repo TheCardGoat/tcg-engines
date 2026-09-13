@@ -82,4 +82,38 @@ describe("EB03-053 Nami", () => {
     expect(view.players.south.trash.map((card) => card.instanceId)).toContain(namiId);
     expect(view.prompts).toHaveLength(0);
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [{ card: eb03Nami053, rested: true, playedOnTurn: 0 }],
+        hand: [eb01Doma005, eb03Stussy043],
+        life: [eb01Fourtricks025],
+      },
+      {
+        character: [{ card: eb01MountainGod018, playedOnTurn: 0 }],
+      },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const namiId = engine.findCardInZone("south", "character", eb03Nami053);
+    const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
+    engine.declareAttack(attackerId, namiId, "north");
+    engine.resolveDecision("battleCounter", { selectedIds: [] }, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    const handBefore = before.hand.length;
+    const lifeBefore = before.lifeCount;
+    const deckBefore = before.deckCount;
+    const trashBefore = before.trash.length;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    expect(after.hand.length).toBe(handBefore);
+    expect(after.lifeCount).toBe(lifeBefore);
+    expect(after.deckCount).toBe(deckBefore);
+    expect(after.trash.length).toBe(trashBefore);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+  });
 });

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount, onDestroy, untrack } from 'svelte';
   import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
+  import { env } from '$env/dynamic/public';
   import { authSession } from '$lib/auth/session.svelte.js';
   import { LorcanaTabletopSimulator } from '$lib';
   import { HvHPlayerOrchestrator } from '@/features/hvh/hvh-player-orchestrator.svelte.js';
@@ -12,11 +14,7 @@
     clearPracticeSession,
     saveRankedMatchSession,
   } from '@/features/practice-match/practice-match-storage.js';
-  import {
-    acquirePlayerTicket,
-    connectAndJoin,
-    fetchQuickMatchTicket,
-  } from './connect-gateway.js';
+  import { connectAndJoin, type MatchGatewayConnection } from './connect-gateway.js';
   import { createMessageRouter, type RecentHistory, type ProposalPayload } from './game-mode-message-router.js';
   import {
     buildVisualSettings,
@@ -27,18 +25,20 @@
     type PlayerMatchMetadata,
   } from './game-mode-setup.js';
   import { toast } from 'svelte-sonner';
+  import { m } from '$lib/i18n/messages.js';
   import {
     createManualModeController,
     setManualModeContext,
   } from '@/features/manual-mode/manual-mode-context.svelte.js';
   import { trackEvent } from '$lib/analytics/analytics.js';
+  import { resolvePlatformMatchmakingReturnUrl } from '$lib/navigation/platform-matchmaking-url.js';
   import type { GamePageData } from '../+page.server.js';
   import type { CardsMaps, LorcanaMatchState } from '@tcg/lorcana-engine';
   import type { MatchChatController } from '@/features/match-chat/match-chat-controller.svelte.js';
   import type { LorcanaPlayerSettingsMap } from '$lib/features/simulator/model/player-visual-settings.js';
-  import type { GatewayClientStore } from '@/features/gateway/gateway-client.svelte.js';
   import type { SpectatorRecentHistory } from '@/features/spectator/spectator-match-orchestrator.svelte.js';
   import type { MatchNavigationContext } from '@/features/simulator/model/contracts.js';
+  import { resolveMatchCompletionFailed } from '@/features/simulator/post-game/match-action.js';
 
   type ServerData = Extract<GamePageData, { mode: 'server' }>;
   let { data }: { data: ServerData } = $props();
@@ -65,7 +65,10 @@
   async function handleNextGame(): Promise<void> {
     if (matchContext.nextGameId && !matchContext.navigating) {
       matchContext = { ...matchContext, navigating: true };
-      await goto(`/matches/${data.matchId}`);
+      const target = new URL(`${base}/matches/${encodeURIComponent(data.matchId)}`, window.location.origin);
+      const returnTo = new URL(window.location.href).searchParams.get('returnTo');
+      if (returnTo) target.searchParams.set('returnTo', returnTo);
+      await goto(`${target.pathname}${target.search}`);
     }
   }
 
@@ -120,9 +123,10 @@
       finished &&
       !matchContext.nextGameId &&
       !matchContext.matchCompleted &&
+      !matchContext.completionFailed &&
       matchContext.format !== 'best_of_1';
     if (awaitingServer && !finalizingToastDismiss && !terminalToastFired) {
-      const id = toast.loading('Finalizing match…', { duration: Infinity });
+      const id = toast.loading(m['sim.postGame.finalization.pending']({}), { duration: Infinity });
       finalizingToastDismiss = () => toast.dismiss(id);
     }
   });
@@ -156,7 +160,7 @@
     deadline: number;
     intent: 'enable_manual_mode' | 'disable_manual_mode';
   } | null>(null);
-  let gateway = $state<GatewayClientStore | null>(null);
+  let gateway = $state<MatchGatewayConnection | null>(null);
 
   const manualMode = createManualModeController({
     gameId: initialGameId,
@@ -205,6 +209,11 @@
           ? (msg.message as string)
           : 'Something went wrong';
       console.error('[hvh-mode] gateway error', msg);
+      if (msg.code === 'completion_failed') {
+        finalizingToastDismiss?.();
+        finalizingToastDismiss = null;
+        matchContext = { ...matchContext, completionFailed: true };
+      }
       // Pre-join errors are already surfaced via loadError (connect-gateway fails fast).
       // Only toast for in-game errors received after game_joined.
       if (gameSubscribed) {
@@ -247,6 +256,7 @@
           ...matchContext,
           nextGameId,
           matchCompleted: payload.matchInfo.matchCompleted,
+          completionFailed: false,
           winnerId: payload.matchInfo.winnerId ?? matchContext.winnerId,
           player1Score: payload.matchInfo.player1Score,
           player2Score: payload.matchInfo.player2Score,
@@ -348,6 +358,16 @@
       }
     },
     onUnhandled: (msg) => {
+      if (msg.type === 'match_finalization_failed') {
+        if (msg.gameId !== data.gameId) return;
+        finalizingToastDismiss?.();
+        finalizingToastDismiss = null;
+        matchContext = { ...matchContext, completionFailed: true };
+        if (gameSubscribed) {
+          toast.error(m['sim.postGame.finalization.failed']({}), { duration: 8000 });
+        }
+        return;
+      }
       if (msg.type === 'game_ended') {
         const gid = typeof msg.gameId === 'string' ? msg.gameId : undefined;
         if (gid && gid === data.gameId && orchestrator) {
@@ -381,6 +401,7 @@
             ...matchContext,
             nextGameId: nextGameId ?? matchContext.nextGameId,
             matchCompleted: derivedCompleted ?? matchContext.matchCompleted,
+            completionFailed: false,
             winnerId:
               typeof msgRecord.winnerId === 'string' ? msgRecord.winnerId : matchContext.winnerId,
             endReason:
@@ -414,6 +435,10 @@
           ...matchContext,
           nextGameId,
           matchCompleted,
+          completionFailed: resolveMatchCompletionFailed(matchContext.completionFailed, {
+            matchCompleted,
+            nextGameId,
+          }),
           winnerId: typeof msg.winnerId === 'string' ? msg.winnerId : matchContext.winnerId,
           endReason: typeof msg.reason === 'string' ? msg.reason : matchContext.endReason,
           player1Score:
@@ -506,7 +531,12 @@
 
   async function handleReturnToMatchmaking(): Promise<void> {
     clearPracticeSession();
-    await goto('/matchmaking');
+    window.location.assign(
+      resolvePlatformMatchmakingReturnUrl(
+        new URL(window.location.href),
+        env.PUBLIC_PLATFORM_MATCHMAKING_URL,
+      ),
+    );
   }
 
   onMount(async () => {
@@ -516,62 +546,39 @@
     playerVisualSettings = buildVisualSettings(match.participants);
     playerMetadataMap = buildPlayerMetadataMap(match.participants);
 
-    // Auth may still be hydrating on first paint (svelte state starts null).
-    // Wait briefly so the fallback reconstruction below can match the user.
-    if (!authSession.user && authSession.isLoading) {
-      for (let i = 0; i < 50 && authSession.isLoading; i++) {
-        await new Promise((r) => setTimeout(r, 20));
-      }
-    }
-
     let session = loadPracticeSession(gameId);
-    if (!session) {
-      // localStorage holds only one session at a time — it may have been
-      // overwritten by a newer game, or cleared when the player left matchmaking.
-      // Reconstruct the session from the server context if the authenticated
-      // user can be matched to one of the participants by userId.
-      const userId = authSession.user?.id;
-      const myParticipant = userId
-        ? match.participants.find((p) => p.userId === userId)
-        : undefined;
-      if (myParticipant) {
-        saveRankedMatchSession({ matchId: data.matchId, gameId, gameProfileId: myParticipant.id, userId });
-        session = loadPracticeSession(gameId);
-      }
+    const serverViewer = data.bootstrap.viewer;
+    if (
+      serverViewer.role === 'player' &&
+      (!session || session.gameProfileId !== serverViewer.actorId)
+    ) {
+      saveRankedMatchSession({
+        matchId: data.matchId,
+        gameId,
+        gameProfileId: serverViewer.actorId,
+        userId: serverViewer.userId,
+      });
+      session = loadPracticeSession(gameId);
     }
     if (!session) {
       loadError =
-        'No session found for this match. You may need to rejoin from matchmaking.';
+        'The server could not establish your player session.';
       return;
     }
 
     presenceSelfPlayerId = session.gameProfileId;
-    sessionUserId = session.userId ?? null;
+    sessionUserId = serverViewer.role === 'player' ? serverViewer.userId : null;
 
     void (async () => {
-      const {
-        ticket,
-        authToken,
-        error: ticketError,
-      } = await acquirePlayerTicket({
-        wsTicket: session.wsTicket,
-        fetchQuickMatchTicket: session.wsTicket
-          ? () => fetchQuickMatchTicket(session.matchId, session.gameProfileId)
-          : undefined,
-      });
-      if (ticketError) {
-        loadError = ticketError;
+      const realtime = data.bootstrap.realtime;
+      if (!realtime || data.bootstrap.viewer.role !== 'player') {
+        loadError = 'This player session is no longer available.';
         return;
       }
 
       const result = await connectAndJoin({
-        ticket,
-        authToken,
-        gameId,
-        role: 'player',
+        bootstrap: data.bootstrap,
         matchType: match.matchType,
-        gameProfileId: session.gameProfileId,
-        userId: session.userId ?? authSession.user?.id,
         onMessage: (msg) => {
           if (msg.type === 'game_joined') gameSubscribed = true;
           handleMessage(msg);
@@ -665,7 +672,7 @@
         state,
         cardsMaps,
         gameProfileId: session.gameProfileId,
-        userId: session.userId ?? authSession.user?.id,
+        userId: serverViewer.role === 'player' ? serverViewer.userId : undefined,
         recentHistory: pendingRecentHistory ?? undefined,
         idleStore,
       });
@@ -690,10 +697,6 @@
       gateway!.send({
         type: 'reconnect',
         gameId: data.gameId,
-        gameProfileId: presenceSelfPlayerId,
-        ...(sessionUserId ?? authSession.user?.id
-          ? { userId: sessionUserId ?? authSession.user?.id }
-          : {}),
         lastReceivedVersion: 0,
       });
       gameSubscribed = false;

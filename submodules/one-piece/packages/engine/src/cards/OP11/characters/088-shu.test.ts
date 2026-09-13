@@ -22,6 +22,8 @@ describe("OP11-088 Shu", () => {
       .map((card) => card!.instanceId);
 
     engine.declareAttack(firstAttackerId!, engine.leader("south"), "north");
+    // "This effect can be activated when…" is optional.
+    engine.accept("south");
     expect(
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === shuId)
         ?.power,
@@ -33,6 +35,27 @@ describe("OP11-088 Shu", () => {
     engine.resolveDecision("battleBlocker", { selectedIds: [shuId] }, "south");
 
     engine.declareAttack(secondAttackerId!, engine.leader("south"), "north");
+    // Once per turn — no second optional activation.
+    expect(() => engine.pendingDecision("effectOptional", "south")).toThrow();
+    expect(
+      engine.getView("south").players.south.characters.find((card) => card?.instanceId === shuId)
+        ?.power,
+    ).toBe(5000);
+  });
+
+  test("may decline the optional activation and keep printed power", () => {
+    const engine = OnePieceTestEngine.create(
+      { character: [op11Shu088] },
+      { character: [{ card: eb01Fourtricks025, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const shuId = engine.findCardInZone("south", "character", op11Shu088);
+    const attackerId = engine.findCardInZone("north", "character", eb01Fourtricks025);
+
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+    expect(engine.pendingDecision("effectOptional", "south").kind).toBe("confirm");
+    engine.decline("south");
+
     expect(
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === shuId)
         ?.power,
@@ -50,6 +73,7 @@ describe("OP11-088 Shu", () => {
 
     engine.declareAttack(attackerId, engine.leader("south"), "north");
 
+    expect(() => engine.pendingDecision("effectOptional", "south")).toThrow();
     expect(
       engine.getView("south").players.south.characters.find((card) => card?.instanceId === shuId)
         ?.power,

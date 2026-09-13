@@ -6,8 +6,9 @@ import {
   getEventTicketMultiplier,
   getPatronGrantInkmarks,
   getSupporterPerks,
-  hasActiveAlternateArtAccess,
   normalizeSupporterPerkTier,
+  replayRetentionDaysForTier,
+  replayRetentionExpiryAt,
 } from "./supporter-perks.js";
 
 describe("supporter perk config", () => {
@@ -17,7 +18,6 @@ describe("supporter perk config", () => {
     expect(getPatronGrantInkmarks("free")).toBe(0);
     expect(getCosmeticProgressMultiplier("free")).toBe(1);
     expect(getEventTicketMultiplier("free")).toBe(1);
-    expect(hasActiveAlternateArtAccess("free")).toBe(false);
   });
 
   it("maps active perk tiers to the configured perk tiers", () => {
@@ -25,11 +25,11 @@ describe("supporter perk config", () => {
     expect(normalizeSupporterPerkTier("tier2")).toBe("tier2");
     expect(normalizeSupporterPerkTier("tier3")).toBe("tier3");
     expect(normalizeSupporterPerkTier("tier4")).toBe("tier4");
-    expect(normalizeSupporterPerkTier("tier5")).toBe("tier4");
-    expect(normalizeSupporterPerkTier("tier6")).toBe("tier4");
+    expect(normalizeSupporterPerkTier("tier5")).toBeNull();
+    expect(normalizeSupporterPerkTier("tier6")).toBeNull();
   });
 
-  it("centralizes grants, cosmetic multipliers, ticket multipliers, and art access", () => {
+  it("centralizes grants and engagement multipliers without granting card printings", () => {
     expect(getPatronGrantInkmarks("tier1")).toBe(0);
     expect(getPatronGrantInkmarks("tier2")).toBe(50);
     expect(getPatronGrantInkmarks("tier3")).toBe(100);
@@ -44,11 +44,25 @@ describe("supporter perk config", () => {
     expect(getEventTicketMultiplier("tier2")).toBe(2);
     expect(getEventTicketMultiplier("tier3")).toBe(3);
     expect(getEventTicketMultiplier("tier4")).toBe(5);
+  });
 
-    expect(hasActiveAlternateArtAccess("tier1")).toBe(false);
-    expect(hasActiveAlternateArtAccess("tier3")).toBe(false);
-    expect(hasActiveAlternateArtAccess("tier4")).toBe(true);
-    expect(hasActiveAlternateArtAccess("tier6")).toBe(true);
+  it("owns the replay retention policy for free and paid tiers", () => {
+    expect(replayRetentionDaysForTier("free")).toBe(1);
+    expect(replayRetentionDaysForTier("tier2")).toBe(30);
+    expect(replayRetentionDaysForTier("tier3")).toBe(60);
+    expect(replayRetentionDaysForTier("tier4")).toBe(90);
+    expect(replayRetentionDaysForTier("unknown")).toBe(1);
+  });
+
+  it("guarantees a full day after publication without shortening paid retention", () => {
+    const completed = new Date("2026-09-01T12:00:00.000Z");
+    expect(replayRetentionExpiryAt(completed, 1).toISOString()).toBe("2026-09-02T12:00:00.000Z");
+    expect(
+      replayRetentionExpiryAt(completed, 1, new Date("2026-09-02T11:00:00.000Z")).toISOString(),
+    ).toBe("2026-09-03T11:00:00.000Z");
+    expect(replayRetentionExpiryAt(completed, 90, new Date("2026-09-02T11:00:00.000Z"))).toEqual(
+      new Date("2026-11-30T12:00:00.000Z"),
+    );
   });
 });
 

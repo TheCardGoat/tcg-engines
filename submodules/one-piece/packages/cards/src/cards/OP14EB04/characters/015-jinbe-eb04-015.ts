@@ -70,10 +70,12 @@ export const op14eb04JinbeEb04015015: CharacterCard = {
                 {
                   condition: "leaderTrait",
                   trait: "Fish-Man",
+                  match: "includes",
                 },
                 {
                   condition: "leaderTrait",
                   trait: "Merfolk",
+                  match: "includes",
                 },
               ],
             },

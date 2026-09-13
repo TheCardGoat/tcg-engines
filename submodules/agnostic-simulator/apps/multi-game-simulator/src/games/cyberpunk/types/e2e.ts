@@ -61,7 +61,10 @@ export type ScenarioGroup =
   | "unit-gig-condition"
   | "unit-vanilla"
   | "unit-activated"
-  | "unit-rush";
+  | "unit-rush"
+  | "unit-fight-trigger"
+  | "unit-gig-prevention"
+  | "release-qa";
 
 export type ScenarioId =
   | "gameStart"
@@ -230,7 +233,25 @@ export type ScenarioId =
   | "unitFieldOperatorRetail"
   | "unitMoxIncitersRetail"
   | "unitPsychoSquadRetail"
-  | "unitViktorVektorYouMightFeelALittlePinchRetail";
+  | "unitViktorVektorYouMightFeelALittlePinchRetail"
+  | "progBonnieAndClyde"
+  | "progBonnieAndClydeSingleTarget"
+  | "progTheHeist"
+  | "progTheHeistFreePlay"
+  | "progTrustNoOne"
+  | "legendJudyAlvarezBraindanceMaestro"
+  | "unitAltCunninghamMotherOfDaemons"
+  | "unitMaelstromZealots"
+  | "cyberpunkAllFourCards"
+  | "retailReleaseAug2026AllCards"
+  | "retailReleaseAug2026PlayBench"
+  | "retailScrapedReleaseAug2026Qa"
+  | "retailScrapedReleaseAug2026VStealQa"
+  | "retailWtnc22FixerCallQa"
+  | "retailWtnc22CombatStealQa"
+  | "retailWtnc22CostGearQa"
+  | "retailWtnc22TurnTriggerQa"
+  | "retailReleaseSep2026ScrapedCardsQa";
 
 /**
  * Discriminated union of UI-driven engine actions. Each maps 1:1 onto a method
@@ -268,7 +289,14 @@ export type EngineAction =
   | { type: "mulligan"; as?: PlayerId }
   | { type: "keepHand"; as?: PlayerId }
   | { type: "gainGig"; dieId: string; as?: PlayerId }
-  | { type: "resolveCardToPlay"; cardId: string; as?: PlayerId }
+  | {
+      type: "resolveCardToPlay";
+      cardId?: string;
+      attachToId?: string;
+      pass?: boolean;
+      as?: PlayerId;
+    }
+  | { type: "resolveChooseEffect"; optionId: string; as?: PlayerId }
   | { type: "resolveCardToMove"; cardId?: string; pass?: boolean; as?: PlayerId }
   | { type: "concede"; as?: PlayerId }
   | { type: "undo" }

@@ -1,7 +1,14 @@
-import { gd01ExtremeHatred112 } from "@tcg/gundam-cards";
-import { createMockResource, createMockUnit } from "@tcg/gundam-engine";
+import {
+  gd01ExtremeHatred112,
+  st01Gm005,
+  st01Guncannon003,
+  st01Gundam001,
+  st01Guntank004,
+  st03Gouf009,
+} from "@tcg/gundam-cards";
 
 import { createDevRuntime, type DevRuntime } from "../dev-runtime.ts";
+import { realResourceCards } from "./real-cards.ts";
 
 /**
  * Real multi-group target fixture for GD01-112 Extreme Hatred.
@@ -16,16 +23,13 @@ export function loadCommandMultiTargetDemo(): DevRuntime {
     skipToMainPhase: true,
     p1: {
       hand: [gd01ExtremeHatred112],
-      resourceArea: Array.from({ length: 6 }, () => createMockResource()),
-      battleArea: [
-        createMockUnit({ cost: 2, level: 2, ap: 2, hp: 4, color: "red", name: "Zaku II" }),
-        createMockUnit({ cost: 3, level: 3, ap: 3, hp: 5, color: "purple", name: "Dom" }),
-      ],
+      resourceArea: realResourceCards(6),
+      battleArea: [st01Gm005, st01Guncannon003, st01Guntank004],
       deck: 30,
       resourceDeck: 10,
     },
     p2: {
-      battleArea: [createMockUnit({ level: 4, ap: 3, hp: 6, name: "Enemy Gundam" })],
+      battleArea: [st01Gundam001, st03Gouf009],
       deck: 30,
       resourceDeck: 10,
     },

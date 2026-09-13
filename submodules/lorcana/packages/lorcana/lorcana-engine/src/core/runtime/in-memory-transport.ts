@@ -1,4 +1,11 @@
-import type { ClientMessage, ConnectionState, ServerMessage, Transport } from "./protocol-types";
+import type {
+  AuthoritativeCommandStatus,
+  ClientMessage,
+  ConnectionState,
+  ServerMessage,
+  Transport,
+} from "./protocol-types";
+import { PROTOCOL_VERSION } from "./protocol-types";
 import { getLogger } from "@logtape/logtape";
 
 const logger = getLogger(["core-engine", "in-memory-transport"]);
@@ -173,6 +180,7 @@ export class InMemoryTransport implements Transport {
   private messageHandler: ((message: ServerMessage) => void) | null = null;
   private disconnectHandler: ((reason: string) => void) | null = null;
   private errorHandler: ((error: Error) => void) | null = null;
+  private lastMatchID = "";
 
   constructor(options: InMemoryTransportOptions = {}) {
     this.browserTransport = normalizeBrowserTransportConfig(options.browserTransport);
@@ -209,6 +217,7 @@ export class InMemoryTransport implements Transport {
       return;
     }
 
+    this.lastMatchID = message.matchID;
     this.dispatchToPeer(message);
   }
 
@@ -226,6 +235,24 @@ export class InMemoryTransport implements Transport {
 
   getState(): ConnectionState {
     return this.state;
+  }
+
+  getAuthoritativeCommandStatus(): AuthoritativeCommandStatus {
+    return { phase: "idle" };
+  }
+
+  onAuthoritativeCommandStatusChange(): () => void {
+    return () => {};
+  }
+
+  requestStateSync(lastKnownStateID?: number): void {
+    if (!this.lastMatchID) return;
+    this.send({
+      type: "SYNC_REQUEST",
+      protocolVersion: PROTOCOL_VERSION,
+      matchID: this.lastMatchID,
+      lastKnownStateID,
+    });
   }
 
   // =============================================================================

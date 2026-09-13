@@ -300,6 +300,54 @@ describe("executeDirectives — dependsOnPrevious", () => {
     expect(engine.getCardCount({ zone: "deck", playerId: PLAYER_ONE })).toBe(before - 1);
   });
 
+  it("still activates the first portion when only the If-you-do choose is missing", () => {
+    const firstPortionThenMissingFollowUp: CardEffect = {
+      type: "triggered",
+      activation: { timing: ["deploy"] },
+      directives: [
+        {
+          action: {
+            action: "rest",
+            target: { owner: "friendly", cardType: "unit", count: 1 },
+          },
+        },
+        {
+          action: {
+            action: "dealDamage",
+            amount: 1,
+            target: { owner: "opponent", cardType: "unit", count: 1 },
+          },
+          dependsOnPrevious: true,
+        },
+      ],
+      sourceText: "Choose 1 friendly Unit. Rest it. If you do, choose 1 enemy Unit. Deal 1 damage.",
+    };
+    const ally = createMockUnit({ ap: 1, hp: 3, level: 1, cost: 0 });
+    const triggerUnit = createMockUnit({
+      name: "First-portion Trigger",
+      cost: 0,
+      effects: [firstPortionThenMissingFollowUp],
+    });
+    const engine = GundamTestEngine.create({
+      hand: [triggerUnit],
+      play: [ally],
+      resourceArea: activeResources(1),
+    });
+    const p1 = engine.asPlayer(PLAYER_ONE);
+    const triggerUnitId = p1.getHand()[0]!;
+    const allyId = p1.getCardsInZone("battleArea")[0]!;
+
+    expectSuccess(p1.deployUnit(triggerUnitId));
+    const restChoice = p1.getBoardView().pendingChoice;
+    if (restChoice?.kind !== "targetSelection") {
+      throw new Error("Expected the Deploy trigger to ask for a friendly Unit to rest");
+    }
+    expectSuccess(p1.resolveEffect({ targets: [allyId] }));
+
+    expect(p1.isExhausted(allyId)).toBe(true);
+    expect(p1.getBoardView().pendingChoice).toBeUndefined();
+  });
+
   it("does not activate the targeted trigger when no legal target exists", () => {
     const triggerUnit = createMockUnit({
       name: "Targetless Trigger",

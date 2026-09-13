@@ -1,0 +1,439 @@
+.trigger {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--participant-accent) 28%, transparent);
+  border-radius: 0.45rem;
+  background: color-mix(in srgb, var(--participant-accent) 7%, transparent);
+  color: inherit;
+  cursor: pointer;
+}
+
+.trigger:hover {
+  background: color-mix(in srgb, var(--participant-accent) 15%, transparent);
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--participant-accent);
+  outline-offset: 2px;
+}
+
+.actionTooltip {
+  position: fixed;
+  z-index: 5000;
+  width: min(15.5rem, calc(100vw - 1rem));
+  padding: 0.55rem 0.65rem;
+  border: 1px solid #5f3c37;
+  border-radius: 0.45rem;
+  background: #170f10;
+  box-shadow: 0 0.65rem 1.5rem rgb(0 0 0 / 48%);
+  color: #f8eeee;
+  pointer-events: none;
+}
+
+.actionTooltip[data-side="top"] {
+  transform: translateY(-100%);
+}
+
+.connectionDot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: #6b5555;
+  box-shadow: 0 0 0 0.2rem rgb(107 85 85 / 16%);
+}
+
+.connectionDot[data-status="connected"] {
+  background: #55c982;
+  box-shadow: 0 0 0 0.2rem rgb(85 201 130 / 16%);
+}
+
+.connectionDot[data-status="reconnecting"] {
+  background: #e4b657;
+  box-shadow: 0 0 0 0.2rem rgb(228 182 87 / 16%);
+}
+
+.menu {
+  position: fixed;
+  z-index: 1100;
+  display: grid;
+  width: min(17rem, calc(100vw - 1rem));
+  max-height: calc(100dvh - 1rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: 1px solid #5b3331;
+  border-radius: 0.625rem;
+  background: #170f10;
+  box-shadow: 0 0.75rem 2rem rgb(0 0 0 / 48%);
+  color: #f8eeee;
+}
+
+.menuHeader {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.75rem 0.8rem 0.65rem;
+  border-bottom: 1px solid #402525;
+  background: #1e1314;
+}
+
+.menuHeader strong,
+.menuHeader span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menuHeader strong {
+  font-size: 0.875rem;
+}
+
+.menuHeader span {
+  color: #c9aeae;
+  font-size: 0.75rem;
+}
+
+.menuGroup {
+  display: grid;
+  padding: 0.35rem;
+}
+
+.menuItem {
+  display: grid;
+  min-height: 2.5rem;
+  grid-template-columns: 1.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.55rem;
+  border: 0;
+  border-radius: 0.375rem;
+  padding: 0.45rem 0.55rem;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background: #2c191a;
+}
+
+.menuItem:focus-visible {
+  outline: 2px solid #d9ad55;
+  outline-offset: -2px;
+}
+
+.menuItem:disabled {
+  color: #8f7979;
+  cursor: default;
+}
+
+.menuItem[data-danger="true"] {
+  color: #ff8f8f;
+}
+
+.menuMessage {
+  margin: 0;
+  padding: 0.55rem 0.8rem 0.7rem;
+  border-top: 1px solid #402525;
+  color: #d9c0c0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.menuMessage[data-tone="error"] {
+  color: #ff9f9f;
+}
+
+.overlay {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgb(5 3 3 / 72%);
+}
+
+.dialog {
+  display: grid;
+  width: min(38rem, 100%);
+  max-height: min(42rem, calc(100dvh - 2rem));
+  overflow: auto;
+  border: 1px solid #68403b;
+  border-radius: 0.875rem;
+  background: #170f10;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 55%);
+  color: #f8eeee;
+}
+
+.dialog:has(> .settingsTabs) {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.settingsTabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem 0;
+  border-bottom: 1px solid #402525;
+}
+
+.settingsTabs button {
+  min-width: 0;
+  min-height: 2.75rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 0.5rem;
+  background: transparent;
+  color: #ad9292;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.settingsTabs button[aria-selected="true"] {
+  border-bottom-color: #e3ad3b;
+  color: #fff3d1;
+}
+.settingsTabs button:focus-visible {
+  outline: 2px solid #d3a138;
+  outline-offset: -2px;
+}
+.settingsPanel {
+  min-height: 0;
+  overflow: auto;
+}
+
+.settingsPanel > .dialogBody {
+  min-height: 18rem;
+  align-content: start;
+}
+
+.settingsAction {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid #402525;
+  padding-top: 1rem;
+}
+.settingsAction div {
+  display: grid;
+  gap: 0.25rem;
+}
+.settingsAction strong,
+.settingsAction p {
+  margin: 0;
+}
+.settingsAction p {
+  color: #bfa6a6;
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+.settingsAction button,
+.settingsAction a {
+  min-height: 2.5rem;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  border: 1px solid #69423e;
+  border-radius: 0.375rem;
+  padding: 0.6rem 0.8rem;
+  background: #251718;
+  color: #f8eeee;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dialogHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid #402525;
+}
+
+.dialogHeader h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.iconButton {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #5b3331;
+  border-radius: 0.375rem;
+  background: #211416;
+  color: inherit;
+  cursor: pointer;
+}
+
+.dialogBody {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.field > span,
+.field legend {
+  padding: 0;
+  color: #d9c0c0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.field select,
+.field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #5b3331;
+  border-radius: 0.375rem;
+  padding: 0.65rem;
+  background: #211416;
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+}
+
+.field textarea {
+  resize: vertical;
+}
+
+.rangeRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 3rem;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rangeRow output {
+  color: #d9c0c0;
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  text-align: end;
+}
+
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.segmented label {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid #5b3331;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.65rem;
+  background: #211416;
+  font-size: 0.8125rem;
+  font-weight: 750;
+}
+
+.dialogActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem 1rem;
+}
+
+.dialogActions button {
+  min-height: 2.5rem;
+  border: 1px solid #69423e;
+  border-radius: 0.375rem;
+  padding: 0.45rem 0.8rem;
+  background: #251718;
+  color: inherit;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dialogActions button[type="submit"],
+.dialogActions button[data-primary="true"] {
+  border-color: #96722f;
+  background: #3a2b14;
+  color: #ffe2a0;
+}
+
+.dialogActions button:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.dialogDescription,
+.dialogError {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.dialogDescription {
+  color: #d9c0c0;
+}
+
+.dialogError {
+  color: #ff9f9f;
+}
+
+@media (max-width: 520px) {
+  .overlay {
+    align-items: end;
+    padding: 0;
+  }
+
+  .dialog {
+    width: 100%;
+    max-height: min(38rem, 88dvh);
+    border-radius: 0.875rem 0.875rem 0 0;
+  }
+}
+.connectionTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: var(--mantine-radius-sm);
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.connectionTrigger:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+@media (pointer: coarse) {
+  .connectionTrigger {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

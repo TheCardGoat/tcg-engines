@@ -6,6 +6,7 @@ import {
   activeResources,
   createMockPilot,
   createMockUnit,
+  expectFailure,
   expectSuccess,
 } from "@tcg/gundam-engine";
 import { gd04Zeong017 } from "./017-zeong.ts";
@@ -38,6 +39,34 @@ describe("Zeong (GD04-017)", () => {
         expect(p1.isExhausted(tokenId)).toBe(false);
         expect(p1.getVisibleCard(tokenId)).toMatchObject({ effectiveAp: 2, effectiveHp: 1 });
       }
+    });
+
+    it("does not let a Pilot pair with a generated Wire-Guided Arm token", () => {
+      const newtypePilot = createMockPilot({
+        name: "Char Aznable",
+        traits: ["newtype"],
+        level: 6,
+        cost: 1,
+      });
+      const laterPilot = createMockPilot({ name: "Later Pilot", level: 1, cost: 1 });
+      const engine = GundamTestEngine.create({
+        hand: [newtypePilot, laterPilot],
+        play: [gd04Zeong017],
+        resourceArea: activeResources(7),
+      });
+      const p1 = engine.asPlayer(PLAYER_ONE);
+      const zeongId = p1.getCardsInZone("battleArea")[0]!;
+      const [newtypePilotId, laterPilotId] = p1.getHand();
+
+      expectSuccess(p1.assignPilot(newtypePilotId!, zeongId));
+
+      const wireGuidedArmId = p1
+        .getCardsInZone("battleArea")
+        .find((cardId) => cardId !== zeongId && cardId !== newtypePilotId)!;
+      expectFailure(p1.assignPilot(laterPilotId!, wireGuidedArmId), "UNIT_CANNOT_PAIR_PILOT");
+
+      expect(p1.getPilotId(wireGuidedArmId)).toBeUndefined();
+      expect(p1.getCardZone(laterPilotId!)).toBe(`hand:${PLAYER_ONE}`);
     });
 
     it("does not deploy tokens when the paired Pilot lacks the Newtype trait", () => {

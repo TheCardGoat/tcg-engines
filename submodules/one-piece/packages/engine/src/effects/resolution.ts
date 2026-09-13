@@ -37,6 +37,7 @@ import {
   candidatesForTrashCardCost,
   candidatesForTrashCharacterCost,
   candidatesForTrashFromHandCost,
+  completePlayThisCard,
   freezeActionCandidateIds,
   candidatesForRevealFromHandCost,
   candidatesForReturnCharacterCost,
@@ -45,6 +46,8 @@ import {
   candidatesForReturnTrashToDeckCost,
   koCharacterByEffect,
   playCardFromEffect,
+  playCardsFromEffectSequence,
+  promptForEffectCharacterReplacement,
   promptForEffectRemovalReplacement,
   promptForRearrangeDeckOrder,
   processEffectAction,
@@ -58,6 +61,7 @@ import {
   payCosts,
 } from "./actions.ts";
 import { evaluateConditions } from "./conditions.ts";
+import { isCardPlayRestricted } from "./permanent.ts";
 import {
   candidatePoolForTarget,
   matchesTargetFilter,
@@ -107,6 +111,80 @@ export function processBattleEndEffects(
   enqueueResolution(state, { kind: "battleCleanupFinalize", battleId: item.battleId });
 }
 
+function eventFilterMatches(
+  state: MatchState,
+  item: Extract<ResolutionItem, { kind: "effectBlock" }>,
+  eventFilter: NonNullable<NonNullable<ReturnType<typeof effectBlocksFor>[number]>["eventFilter"]>,
+  event: NonNullable<Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"]>,
+): boolean {
+  if (eventFilter.anyOf?.length) {
+    return eventFilter.anyOf.some((alt) => eventFilterMatches(state, item, alt, event));
+  }
+  const triggeringCard = getInstance(state, event.instanceId);
+  const triggeringController = event.instanceController ?? triggeringCard.controller;
+  const playerMatches =
+    !eventFilter.player ||
+    eventFilter.player === "any" ||
+    (eventFilter.player === "self" && triggeringController === item.controller) ||
+    (eventFilter.player === "opponent" && triggeringController !== item.controller);
+  const causeMatches =
+    !eventFilter.causedBy ||
+    eventFilter.causedBy === "any" ||
+    (eventFilter.causedBy === "self" && event.effectController === item.controller) ||
+    (eventFilter.causedBy === "opponent" && event.effectController !== item.controller);
+  const koCauseMatches = !eventFilter.koCause || event.koCause === eventFilter.koCause;
+  const fromZoneMatches =
+    !eventFilter.fromZone || ("fromZone" in event && event.fromZone === eventFilter.fromZone);
+  const toZoneMatches =
+    !eventFilter.toZone || ("toZone" in event && event.toZone === eventFilter.toZone);
+  const targetSelfMatches =
+    !eventFilter.targetSelf || event.targetInstanceId === item.sourceInstanceId;
+  const sourceSelfMatches =
+    !eventFilter.sourceSelf || event.sourceInstanceId === item.sourceInstanceId;
+  const filtersMatch = (eventFilter.filters ?? []).every((filter) => {
+    const result = matchesTargetFilter(state, item.sourceInstanceId, event.instanceId, filter);
+    return result.supported && result.matches;
+  });
+  const sourceFiltersMatch = (eventFilter.sourceFilters ?? []).every((filter) => {
+    if (!event.sourceInstanceId) return false;
+    const result = matchesTargetFilter(
+      state,
+      item.sourceInstanceId,
+      event.sourceInstanceId,
+      filter,
+    );
+    return result.supported && result.matches;
+  });
+  const targetFiltersMatch = (eventFilter.targetFilters ?? []).every((filter) => {
+    if (!event.targetInstanceId) return false;
+    const result = matchesTargetFilter(
+      state,
+      item.sourceInstanceId,
+      event.targetInstanceId,
+      filter,
+    );
+    return result.supported && result.matches;
+  });
+  const sourceFromZoneMatches =
+    !eventFilter.sourceFromZone || event.sourceFromZone === eventFilter.sourceFromZone;
+  const amountMatches =
+    eventFilter.minimumAmount === undefined || (event.amount ?? 0) >= eventFilter.minimumAmount;
+  return (
+    playerMatches &&
+    causeMatches &&
+    koCauseMatches &&
+    fromZoneMatches &&
+    toZoneMatches &&
+    targetSelfMatches &&
+    sourceSelfMatches &&
+    filtersMatch &&
+    sourceFiltersMatch &&
+    targetFiltersMatch &&
+    sourceFromZoneMatches &&
+    amountMatches
+  );
+}
+
 export function processEffectBlock(
   state: MatchState,
   item: Extract<ResolutionItem, { kind: "effectBlock" }>,
@@ -135,73 +213,7 @@ export function processEffectBlock(
     if (!event) {
       return;
     }
-    const triggeringCard = getInstance(state, event.instanceId);
-    const triggeringController = event.instanceController ?? triggeringCard.controller;
-    const playerMatches =
-      !block.eventFilter.player ||
-      block.eventFilter.player === "any" ||
-      (block.eventFilter.player === "self" && triggeringController === item.controller) ||
-      (block.eventFilter.player === "opponent" && triggeringController !== item.controller);
-    const causeMatches =
-      !block.eventFilter.causedBy ||
-      block.eventFilter.causedBy === "any" ||
-      (block.eventFilter.causedBy === "self" && event.effectController === item.controller) ||
-      (block.eventFilter.causedBy === "opponent" && event.effectController !== item.controller);
-    const koCauseMatches =
-      !block.eventFilter.koCause || event.koCause === block.eventFilter.koCause;
-    const fromZoneMatches =
-      !block.eventFilter.fromZone ||
-      ("fromZone" in event && event.fromZone === block.eventFilter.fromZone);
-    const toZoneMatches =
-      !block.eventFilter.toZone || ("toZone" in event && event.toZone === block.eventFilter.toZone);
-    const targetSelfMatches =
-      !block.eventFilter.targetSelf || event.targetInstanceId === item.sourceInstanceId;
-    const sourceSelfMatches =
-      !block.eventFilter.sourceSelf || event.sourceInstanceId === item.sourceInstanceId;
-    const filtersMatch = (block.eventFilter.filters ?? []).every((filter) => {
-      const result = matchesTargetFilter(state, item.sourceInstanceId, event.instanceId, filter);
-      return result.supported && result.matches;
-    });
-    const sourceFiltersMatch = (block.eventFilter.sourceFilters ?? []).every((filter) => {
-      if (!event.sourceInstanceId) return false;
-      const result = matchesTargetFilter(
-        state,
-        item.sourceInstanceId,
-        event.sourceInstanceId,
-        filter,
-      );
-      return result.supported && result.matches;
-    });
-    const targetFiltersMatch = (block.eventFilter.targetFilters ?? []).every((filter) => {
-      if (!event.targetInstanceId) return false;
-      const result = matchesTargetFilter(
-        state,
-        item.sourceInstanceId,
-        event.targetInstanceId,
-        filter,
-      );
-      return result.supported && result.matches;
-    });
-    const sourceFromZoneMatches =
-      !block.eventFilter.sourceFromZone ||
-      event.sourceFromZone === block.eventFilter.sourceFromZone;
-    const amountMatches =
-      block.eventFilter.minimumAmount === undefined ||
-      (event.amount ?? 0) >= block.eventFilter.minimumAmount;
-    if (
-      !playerMatches ||
-      !causeMatches ||
-      !koCauseMatches ||
-      !fromZoneMatches ||
-      !toZoneMatches ||
-      !targetSelfMatches ||
-      !sourceSelfMatches ||
-      !filtersMatch ||
-      !sourceFiltersMatch ||
-      !targetFiltersMatch ||
-      !sourceFromZoneMatches ||
-      !amountMatches
-    ) {
+    if (!eventFilterMatches(state, item, block.eventFilter, event)) {
       return;
     }
   }
@@ -1038,6 +1050,41 @@ export function processEffectBlock(
       .filter((instance) => instance.zone === "character")
       .map((instance) => [instance.instanceId, instance.controller]),
   );
+  if (playCardCost && !item.costsPaid) {
+    // 3-7-6-1: a Character played as the effect cost into a full Character
+    // area pauses the block for the replacement choice; the continuation
+    // re-queues this block with costs already paid.
+    const costPlayIds =
+      item.costPaymentIds ??
+      candidatesForPlayCardCost(state, item.controller, item.sourceInstanceId, playCardCost).slice(
+        0,
+        playCardCost.amount,
+      );
+    const replacementPlayId = costPlayIds.find(
+      (instanceId) =>
+        getCardForInstance(state, instanceId).cardType === "character" &&
+        getOpenCharacterSlots(state, item.controller).length === 0,
+    );
+    if (replacementPlayId) {
+      promptForEffectCharacterReplacement(state, {
+        controller: item.controller,
+        playingSeat: item.controller,
+        sourceInstanceId: item.sourceInstanceId,
+        instanceId: replacementPlayId,
+        playState: "active",
+        continuation: {
+          kind: "playCardCost",
+          trigger: item.trigger,
+          blockIndex: item.blockIndex,
+          selectedIds: costPlayIds,
+          trashHandIds: item.trashHandIds,
+          costPaymentIdsByType: item.costPaymentIdsByType,
+          triggerEvent: item.triggerEvent,
+        },
+      });
+      return;
+    }
+  }
   if (
     !item.costsPaid &&
     !payCosts(
@@ -1491,6 +1538,150 @@ function completeGroupedPlay(
   return true;
 }
 
+interface SearchPlayContext {
+  sourceInstanceId: string;
+  controller: MatchSeat;
+  action: Extract<import("@tcg/op-types").Action, { action: "search" }>;
+  lookedIds: string[];
+}
+
+// Handles the looked-at cards that were not selected once every selected card
+// has been played or added to hand.
+function finishSearchAfterSelections(
+  state: MatchState,
+  promptSourceCardId: string | null,
+  context: SearchPlayContext,
+  selectedIds: string[],
+): boolean {
+  const remainderIds = context.lookedIds.filter((instanceId) => !selectedIds.includes(instanceId));
+  if (context.action.remainderPosition === "trash") {
+    finishSearchRemainder(
+      state,
+      context.sourceInstanceId,
+      context.controller,
+      remainderIds,
+      "trash",
+    );
+    return true;
+  }
+  if (remainderIds.length <= 1) {
+    if (context.action.remainderPosition === "any") {
+      promptForSearchRemainderPosition(
+        state,
+        context.sourceInstanceId,
+        context.controller,
+        remainderIds,
+      );
+      return true;
+    }
+    finishSearchRemainder(
+      state,
+      context.sourceInstanceId,
+      context.controller,
+      remainderIds,
+      context.action.remainderPosition === "top" ? "top" : "bottom",
+    );
+    return true;
+  }
+  const remainderPosition = context.action.remainderPosition === "top" ? "top" : "bottom";
+  createChoicePrompt(state, {
+    choiceKind: "orderCards",
+    seat: context.controller,
+    label: `${cardName(getCardForInstance(state, context.sourceInstanceId))} orders the remaining cards`,
+    details: `Order the remaining cards from first to last at the ${remainderPosition} of your deck.`,
+    sourceCardId: promptSourceCardId,
+    sourceInstanceId: context.sourceInstanceId,
+    eventId: null,
+    options: remainderIds.map((instanceId) => ({
+      id: instanceId,
+      label: cardName(getCardForInstance(state, instanceId)),
+      value: instanceId,
+      targetId: instanceId,
+    })),
+    minSelections: remainderIds.length,
+    maxSelections: remainderIds.length,
+    context: { action: "search", role: "remainderOrder", ordered: true },
+    resolutionContext: {
+      intent: "effectSearchRemainderOrder",
+      sourceInstanceId: context.sourceInstanceId,
+      controller: context.controller,
+      action: context.action,
+      remainderIds,
+    },
+  });
+  return true;
+}
+
+// Resolves the selected cards of a search, pausing for the 3-7-6-1
+// replacement choice when a Character is played into a full Character area.
+function playSearchSelections(
+  state: MatchState,
+  promptSourceCardId: string | null,
+  context: SearchPlayContext,
+  pendingIds: string[],
+  playedIds: string[],
+): boolean {
+  for (let index = 0; index < pendingIds.length; index += 1) {
+    const instanceId = pendingIds[index]!;
+    if (context.action.revealDestination === "character") {
+      if (
+        getCardForInstance(state, instanceId).cardType === "character" &&
+        getOpenCharacterSlots(state, context.controller).length === 0
+      ) {
+        promptForEffectCharacterReplacement(state, {
+          controller: context.controller,
+          playingSeat: context.controller,
+          sourceInstanceId: context.sourceInstanceId,
+          instanceId,
+          playState: context.action.playState,
+          continuation: {
+            kind: "searchPlay",
+            action: context.action,
+            lookedIds: context.lookedIds,
+            playedIds: [...playedIds, ...pendingIds.slice(0, index)],
+            remainingIds: pendingIds.slice(index + 1),
+            sourceCardId: promptSourceCardId,
+          },
+        });
+        return true;
+      }
+      if (
+        !playCardFromEffect(
+          state,
+          context.controller,
+          instanceId,
+          context.action.playState,
+          context.sourceInstanceId,
+        )
+      ) {
+        return false;
+      }
+    } else {
+      emitLog(
+        state,
+        context.controller,
+        `${getPlayer(state, context.controller).playerName} reveals ${cardName(getCardForInstance(state, instanceId))} and adds it to their hand.`,
+        {
+          sourceCardId: promptSourceCardId,
+          sourceInstanceId: context.sourceInstanceId,
+          targetIds: [instanceId],
+          visibility: "public",
+        },
+      );
+      moveCard(state, instanceId, context.controller, "hand", {
+        faceUp: false,
+        publicKnowledge: false,
+        actor: context.controller,
+        visibility: "private",
+      });
+    }
+  }
+  return finishSearchAfterSelections(state, promptSourceCardId, context, [
+    ...playedIds,
+    ...pendingIds,
+  ]);
+}
+
 export function resolveEffectChoicePrompt(
   state: MatchState,
   prompt: PromptState,
@@ -1913,6 +2104,8 @@ export function resolveEffectChoicePrompt(
           { next: true },
         );
       } else {
+        // Rules 8-1-2 / 10-2-13: Once Per Turn is consumed only when activated
+        // and resolved — declining leaves later opportunities available.
         emitLog(
           state,
           command.seat,
@@ -2751,6 +2944,163 @@ export function resolveEffectChoicePrompt(
       );
       return true;
     }
+    case "effectPlayCharacterReplacement": {
+      const context = prompt.resolutionContext;
+      const selectedIds = command.selectedIds ?? (command.optionId ? [command.optionId] : []);
+      const player = getPlayer(state, context.playingSeat);
+      const instance = getInstance(state, context.instanceId);
+      const card = getCardForInstance(state, context.instanceId);
+      if (
+        selectedIds.length !== 1 ||
+        selectedIds.some(
+          (selectedId) =>
+            !context.candidateIds.includes(selectedId) ||
+            !player.characterArea.includes(selectedId),
+        ) ||
+        instance.controller !== context.playingSeat ||
+        instance.zone === "character" ||
+        card.cardType !== "character" ||
+        isCardPlayRestricted(
+          state,
+          context.playingSeat,
+          context.instanceId,
+          instance.zone,
+          "effect",
+        )
+      ) {
+        return false;
+      }
+      const trashedId = selectedIds[0]!;
+      const slotIndex = player.characterArea.indexOf(trashedId);
+      const trashedInstance = getInstance(state, trashedId);
+      // 3-7-6-1-1: this trash processes a rule, so no effect can be applied —
+      // it is not a K.O. (10-2-1-3) and dispatches no triggers or replacements.
+      // Return any attached DON!! to the cost area before the Character leaves play.
+      if (trashedInstance.attachedDon > 0) {
+        getPlayer(state, trashedInstance.owner).restedDon += trashedInstance.attachedDon;
+        trashedInstance.attachedDon = 0;
+      }
+      moveCard(state, trashedId, trashedInstance.owner, "trash", {
+        faceUp: true,
+        publicKnowledge: true,
+        actor: context.playingSeat,
+      });
+      const continuation = context.continuation;
+      if (continuation.kind === "playThisCard") {
+        return completePlayThisCard(state, context.controller, context.instanceId, slotIndex);
+      }
+      if (
+        !playCardFromEffect(
+          state,
+          context.playingSeat,
+          context.instanceId,
+          context.playState,
+          context.sourceInstanceId,
+          { slotIndex },
+        )
+      ) {
+        return false;
+      }
+      switch (continuation.kind) {
+        case "playAction":
+          return (
+            playCardsFromEffectSequence(
+              state,
+              context.controller,
+              context.sourceInstanceId,
+              continuation.action,
+              context.playingSeat,
+              continuation.remainingIds,
+              [...continuation.playedIds, context.instanceId],
+              continuation.previousActionTargetIds,
+            ) !== "failed"
+          );
+        case "searchPlay":
+          return playSearchSelections(
+            state,
+            continuation.sourceCardId,
+            {
+              sourceInstanceId: context.sourceInstanceId,
+              controller: context.controller,
+              action: continuation.action,
+              lookedIds: continuation.lookedIds,
+            },
+            continuation.remainingIds,
+            [...continuation.playedIds, context.instanceId],
+          );
+        case "revealFromLifePlay": {
+          const conditionalPlay = continuation.action.conditionalPlay;
+          for (const nestedAction of [...(conditionalPlay?.thenActions ?? [])].reverse()) {
+            enqueueResolution(
+              state,
+              {
+                kind: "effectAction",
+                sourceInstanceId: context.sourceInstanceId,
+                controller: context.controller,
+                action: nestedAction,
+                previousActionTargetIds: [context.instanceId],
+              },
+              { next: true },
+            );
+          }
+          return true;
+        }
+        case "playCardCost": {
+          const sourceCard = getCardForInstance(state, context.sourceInstanceId);
+          const otherCosts = (
+            effectBlocksFor(sourceCard, continuation.trigger)[continuation.blockIndex]?.costs ?? []
+          ).filter((cost) => cost.cost !== "playCard");
+          if (
+            otherCosts.length > 0 &&
+            !payCosts(
+              state,
+              context.controller,
+              context.sourceInstanceId,
+              otherCosts,
+              continuation.trashHandIds,
+              undefined,
+              continuation.costPaymentIdsByType,
+            )
+          ) {
+            const issue = recordCapabilityIssue(state, {
+              kind: "unsupportedCost",
+              code: `cost:${continuation.trigger}:${continuation.blockIndex}`,
+              actor: context.controller,
+              sourceCardId: getInstance(state, context.sourceInstanceId).cardId,
+              sourceInstanceId: context.sourceInstanceId,
+              eventId: null,
+              details: `${cardName(sourceCard)} has costs that could not be paid automatically.`,
+            });
+            enqueueJudgePrompt(
+              state,
+              context.sourceInstanceId,
+              "Judge review: effect costs",
+              `${cardName(sourceCard)} has costs that could not be paid automatically.`,
+              { issueId: issue.id },
+            );
+            return true;
+          }
+          enqueueResolution(
+            state,
+            {
+              kind: "effectBlock",
+              sourceInstanceId: context.sourceInstanceId,
+              controller: context.controller,
+              trigger: continuation.trigger,
+              blockIndex: continuation.blockIndex,
+              trashHandIds: continuation.trashHandIds,
+              costPaymentIds: continuation.selectedIds,
+              costPaymentIdsByType: continuation.costPaymentIdsByType,
+              costsPaid: true,
+              confirmed: true,
+              triggerEvent: continuation.triggerEvent,
+            },
+            { next: true },
+          );
+          return true;
+        }
+      }
+    }
     case "effectSearchSelection": {
       const context = prompt.resolutionContext;
       const selectedIds = command.selectedIds ?? [];
@@ -2758,7 +3108,7 @@ export function resolveEffectChoicePrompt(
         context.action.revealCount.amount === "all"
           ? context.eligibleIds.length
           : context.action.revealCount.amount;
-      const openCharacterSlots = getOpenCharacterSlots(state, context.controller).length;
+      // 3-7-6-1 keeps Character plays legal even into a full Character area.
       const playableEligibleIds =
         context.action.revealDestination === "character"
           ? context.eligibleIds.filter((instanceId) => {
@@ -2766,13 +3116,7 @@ export function resolveEffectChoicePrompt(
               return card.cardType === "stage" || card.cardType === "character";
             })
           : context.eligibleIds;
-      const destinationCapacity =
-        context.action.revealDestination === "character"
-          ? playableEligibleIds.filter(
-              (instanceId) => getCardForInstance(state, instanceId).cardType === "stage",
-            ).length + openCharacterSlots
-          : playableEligibleIds.length;
-      const maximum = Math.min(requested, playableEligibleIds.length, destinationCapacity);
+      const maximum = Math.min(requested, playableEligibleIds.length);
       const minimum = context.action.revealCount.upTo ? 0 : maximum;
       const player = getPlayer(state, context.controller);
       if (
@@ -2780,107 +3124,13 @@ export function resolveEffectChoicePrompt(
         selectedIds.length > maximum ||
         new Set(selectedIds).size !== selectedIds.length ||
         selectedIds.some((instanceId) => !playableEligibleIds.includes(instanceId)) ||
-        selectedIds.filter(
-          (instanceId) => getCardForInstance(state, instanceId).cardType === "character",
-        ).length > openCharacterSlots ||
         player.deck
           .slice(0, context.lookedIds.length)
           .some((instanceId, index) => instanceId !== context.lookedIds[index])
       ) {
         return false;
       }
-      for (const instanceId of selectedIds) {
-        if (context.action.revealDestination === "character") {
-          if (
-            !playCardFromEffect(
-              state,
-              context.controller,
-              instanceId,
-              context.action.playState,
-              context.sourceInstanceId,
-            )
-          ) {
-            return false;
-          }
-        } else {
-          emitLog(
-            state,
-            context.controller,
-            `${getPlayer(state, context.controller).playerName} reveals ${cardName(getCardForInstance(state, instanceId))} and adds it to their hand.`,
-            {
-              sourceCardId: prompt.sourceCardId,
-              sourceInstanceId: context.sourceInstanceId,
-              targetIds: [instanceId],
-              visibility: "public",
-            },
-          );
-          moveCard(state, instanceId, context.controller, "hand", {
-            faceUp: false,
-            publicKnowledge: false,
-            actor: context.controller,
-            visibility: "private",
-          });
-        }
-      }
-      const remainderIds = context.lookedIds.filter(
-        (instanceId) => !selectedIds.includes(instanceId),
-      );
-      if (context.action.remainderPosition === "trash") {
-        finishSearchRemainder(
-          state,
-          context.sourceInstanceId,
-          context.controller,
-          remainderIds,
-          "trash",
-        );
-        return true;
-      }
-      if (remainderIds.length <= 1) {
-        if (context.action.remainderPosition === "any") {
-          promptForSearchRemainderPosition(
-            state,
-            context.sourceInstanceId,
-            context.controller,
-            remainderIds,
-          );
-          return true;
-        }
-        finishSearchRemainder(
-          state,
-          context.sourceInstanceId,
-          context.controller,
-          remainderIds,
-          context.action.remainderPosition === "top" ? "top" : "bottom",
-        );
-        return true;
-      }
-      const remainderPosition = context.action.remainderPosition === "top" ? "top" : "bottom";
-      createChoicePrompt(state, {
-        choiceKind: "orderCards",
-        seat: context.controller,
-        label: `${cardName(getCardForInstance(state, context.sourceInstanceId))} orders the remaining cards`,
-        details: `Order the remaining cards from first to last at the ${remainderPosition} of your deck.`,
-        sourceCardId: prompt.sourceCardId,
-        sourceInstanceId: context.sourceInstanceId,
-        eventId: null,
-        options: remainderIds.map((instanceId) => ({
-          id: instanceId,
-          label: cardName(getCardForInstance(state, instanceId)),
-          value: instanceId,
-          targetId: instanceId,
-        })),
-        minSelections: remainderIds.length,
-        maxSelections: remainderIds.length,
-        context: { action: "search", role: "remainderOrder", ordered: true },
-        resolutionContext: {
-          intent: "effectSearchRemainderOrder",
-          sourceInstanceId: context.sourceInstanceId,
-          controller: context.controller,
-          action: context.action,
-          remainderIds,
-        },
-      });
-      return true;
+      return playSearchSelections(state, prompt.sourceCardId, context, selectedIds, []);
     }
     case "effectSearchRemainderOrder": {
       const context = prompt.resolutionContext;
@@ -3531,7 +3781,24 @@ export function resolveEffectChoicePrompt(
             filter,
           );
           return result.supported && result.matches;
-        }) ||
+        })
+      ) {
+        return false;
+      }
+      if (getOpenCharacterSlots(state, context.controller).length === 0) {
+        // 3-7-6-1: the Character area is full, so the play pauses for the
+        // replacement choice instead of fizzling.
+        promptForEffectCharacterReplacement(state, {
+          controller: context.controller,
+          playingSeat: context.controller,
+          sourceInstanceId: context.sourceInstanceId,
+          instanceId: context.revealedInstanceId,
+          playState: "active",
+          continuation: { kind: "revealFromLifePlay", action: context.action },
+        });
+        return true;
+      }
+      if (
         !playCardFromEffect(
           state,
           context.controller,

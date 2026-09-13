@@ -1,8 +1,11 @@
+import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { Card } from "./Card";
+import { DiscardPileZone } from "@tcg/simulator-ui";
 import { useMoveSelection } from "./MoveSelectionContext";
 import { useZoneDroppable } from "./useZoneDroppable";
 import { ZoneBadge } from "./ZoneBadge";
-import { useEngineOptional } from "../../engine";
+import { useEngineOptional, type Side } from "../../engine";
+import { cyberpunkCardZoneToSimulatorZone } from "../../engine/projectSimulator";
 import type { KeyboardEvent, MouseEvent } from "react";
 import classes from "./TrashZone.module.css";
 
@@ -36,6 +39,15 @@ export function TrashZone({
   onOpen,
 }: TrashZoneProps) {
   const zoneName = opponent ? "opp-trash" : "p-trash";
+  const resolvedSide: Side = side ?? (opponent ? "opponent" : "player");
+  const ownerId = cyberpunkCardZoneToSimulatorZone("trash", resolvedSide).ownerId ?? resolvedSide;
+  const topEntity = topCard ? trashEntity(topCard, ownerId) : undefined;
+  const zone = {
+    ...cyberpunkCardZoneToSimulatorZone("trash", resolvedSide),
+    entityIds: topEntity ? [topEntity.id] : [],
+    count,
+    layoutHint: "stack" as const,
+  };
   const drop = useZoneDroppable(zoneName);
   const engine = useEngineOptional();
   const moveSelection = useMoveSelection();
@@ -57,13 +69,10 @@ export function TrashZone({
   };
   const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
     if (!onOpen) return;
-    const target = event.target instanceof Element ? event.target : null;
-    const interactiveCard = target?.closest(
-      '[data-testid="card"][data-actionable="true"], [data-testid="card"][data-selectable="true"]',
-    );
-    if (interactiveCard && event.currentTarget.contains(interactiveCard)) {
-      return;
-    }
+    // The pile is one navigation target. Its visible top card is a preview,
+    // not a separate action: opening that card would leave the rest of the
+    // trash inaccessible from a direct tap.
+    event.preventDefault();
     event.stopPropagation();
     onOpen();
   };
@@ -89,32 +98,41 @@ export function TrashZone({
       onKeyDown={handleKeyDown}
     >
       <div className={classes.inner}>
-        {topCard ? (
-          <div
-            className={classes.cardWrap}
-            data-testid="trash-card"
-            data-card-id={topCard.cardId}
-            data-instance-id={topCard.cardId}
-            data-definition-id={topCard.definitionId}
-            data-sim-entity-id={topCard.cardId}
-            data-card-name={topCard.name}
-            data-resolving-program={hideResolvingTopCard ? "true" : undefined}
-          >
-            <Card
-              imageUrl={topCard.imageUrl}
-              name={topCard.name}
-              definitionId={topCard.definitionId}
-              cardId={topCard.cardId}
-              cardType={topCard.cardType}
-              color={topCard.color}
-              zone={zoneName}
-              index={0}
-              side={side}
-            />
-          </div>
-        ) : (
-          <div className={classes.empty} />
-        )}
+        <DiscardPileZone
+          zone={zone}
+          entities={topEntity ? [topEntity] : []}
+          entityCount={count}
+          label="Trash"
+          emptyLabel="Trash"
+          density="mini"
+          className={classes.pile}
+          renderTopEntity={() =>
+            topCard ? (
+              <div
+                className={classes.cardWrap}
+                data-testid="trash-card"
+                data-card-id={topCard.cardId}
+                data-instance-id={topCard.cardId}
+                data-definition-id={topCard.definitionId}
+                data-sim-entity-id={topCard.cardId}
+                data-card-name={topCard.name}
+                data-resolving-program={hideResolvingTopCard ? "true" : undefined}
+              >
+                <Card
+                  imageUrl={topCard.imageUrl}
+                  name={topCard.name}
+                  definitionId={topCard.definitionId}
+                  cardId={topCard.cardId}
+                  cardType={topCard.cardType}
+                  color={topCard.color}
+                  zone={zoneName}
+                  index={0}
+                  side={side}
+                />
+              </div>
+            ) : null
+          }
+        />
       </div>
       <div data-testid="trash-card-list" hidden>
         {trashCards.map((card, index) => (
@@ -139,6 +157,31 @@ export function TrashZone({
       </ZoneBadge>
     </div>
   );
+}
+
+function trashEntity(card: TrashZoneCard, ownerId: string): SimulatorEntity {
+  const id = card.cardId ?? card.definitionId ?? `${ownerId}:trash:${card.name}`;
+  return {
+    id,
+    title: card.faceDown ? "Hidden card" : card.name,
+    subtitle: card.faceDown ? "Private information" : (card.cardType ?? "card"),
+    kind: "card",
+    ownerId,
+    face: card.faceDown ? "hidden" : "public",
+    states: [
+      ...(card.spent ? (["rested"] as const) : []),
+      ...(card.faceDown ? (["hidden"] as const) : []),
+    ],
+    stats: [],
+    traits: [],
+    imageUrl: card.faceDown ? undefined : card.imageUrl,
+    dataAttributes: {
+      "data-card-id": id,
+      "data-definition-id": card.definitionId,
+      "data-card-type": card.cardType,
+      "data-card-color": card.color,
+    },
+  };
 }
 
 function resolvingProgramIdFromPrompt(

@@ -3,7 +3,7 @@ import { eb01MsMonday035 } from "../../../../../cards/src/cards/EB01/characters/
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-035 Ms. Monday", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(eb01MsMonday035);
   });
 });

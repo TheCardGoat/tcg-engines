@@ -1,8 +1,12 @@
-import { useCallback, useMemo, type ReactNode } from "react";
+// SETTINGS PARITY: keep in sync with the platform web app's GameSettingsFields.svelte (Gundam).
+import { useMemo, useState, type ReactNode } from "react";
+import { SimulatorActivityTabs, type SimulatorMatchActions } from "@tcg/simulator-ui";
+import { useSimulatorPlayers, useSimulatorRoute } from "../../../../../simulator/providers";
+import { SimulatorOpponentParticipantActions } from "../../../../../simulator/participant-actions";
 
 import {
-  asMoveName,
   useBoardProjection,
+  useGundamControlState,
   useGundamGame,
   useLogEntries,
   useViewerId,
@@ -10,45 +14,66 @@ import {
 import { useMoveLogs } from "../../game/hooks.ts";
 import { m } from "../../lib/i18n/messages.ts";
 import { CardLink } from "../ui/CardLink.tsx";
-import { MatchSidebar } from "../ui/MatchSidebar.tsx";
-import type { LogTurn, MatchInfo, PlayerInfo } from "../ui/types.ts";
+import { MatchEventLog, MatchSidebar } from "../ui/MatchSidebar.tsx";
+import { DeferredGundamChatPanel } from "../ui/DeferredGundamChatPanel.tsx";
+import type { LogTurn, PlayerInfo } from "../ui/types.ts";
 import { toLogTurns } from "./log-mapper.tsx";
 import { toStructuredLogTurns } from "./move-log-mapper.tsx";
 import {
+  orderGundamEventLogEntries,
   projectGundamLegacyEventLogEntries,
   projectGundamMoveLogEntries,
 } from "./move-log-projection.ts";
-import { countActiveResources, resolveOpponentId, zoneCount } from "./mappers.ts";
-import { useSubmitError } from "./submit-error-context.tsx";
-import { VsAiControls } from "../ui/VsAiControls.tsx";
-import { SoundVolumeControl } from "../../../../../simulator/settings";
+import {
+  countActiveResources,
+  resolveOpponentId,
+  resolvePlayerDisplayName,
+  zoneCount,
+} from "./mappers.ts";
+import { VsAiControls, VsAiSummary } from "../ui/VsAiControls.tsx";
+import { AnimationSpeedControl, SoundVolumeControl } from "../../../../../simulator/settings";
+import { useVsAi } from "../../game/bot/bot-context.tsx";
+import { ConcedeButton } from "../ui/ConcedeButton.tsx";
+import { AutoPassPriorityControl } from "../ui/AutoPassPriorityControl.tsx";
+import { useGundamMatchActions } from "./MobileChromeContainer.tsx";
+import { buildBugReportContext } from "../../../../../runtime/bugReportApi.ts";
+import { useLayoutMode } from "../../lib/use-layout-mode.ts";
+import { GundamBugReportDialog } from "../ui/GundamBugReportDialog.tsx";
 
 export interface MatchSidebarContainerProps {
-  readonly onCollapse?: () => void;
   readonly connectionPanel?: ReactNode;
+  readonly connectionIndicator?: ReactNode;
+  readonly selfActions: ReactNode;
 }
 
 export function MatchSidebarContainer({
-  onCollapse,
   connectionPanel,
-}: MatchSidebarContainerProps = {}) {
+  connectionIndicator,
+  selfActions,
+}: MatchSidebarContainerProps) {
   const view = useBoardProjection();
   const viewerId = useViewerId();
-  const { adapter } = useGundamGame();
-  const { report } = useSubmitError();
+  const route = useSimulatorRoute();
+  const controlState = useGundamControlState();
   const { log, eventLogEntries } = useMatchLogData();
+  const vsAi = useVsAi();
+  const matchActions = useGundamMatchActions();
+  const players = useSimulatorPlayers();
   const resolvedOpponent = resolveOpponentId(view, viewerId);
   const opponentId = resolvedOpponent ?? viewerId;
-
-  const matchInfo: MatchInfo = {
-    format: view.status.gameSegment ?? "setup",
-    turn: view.status.turn,
-    phase: view.status.phase ?? "—",
-    mode: "hot-seat",
+  const actions: SimulatorMatchActions = {
+    controls: null,
+    danger: (
+      <ConcedeButton
+        onConcede={matchActions.onConcede}
+        className="h-full min-h-11 px-1 text-hud-xs font-bold uppercase tracking-[.04em]"
+      />
+    ),
   };
 
   const opponent: PlayerInfo = {
-    name: opponentId,
+    id: opponentId,
+    name: resolvePlayerDisplayName(opponentId, route.matchPageData?.match.participants, "Rival"),
     clock: "—",
     timer: view.timerView.players?.[opponentId],
     isOwnClock: false,
@@ -60,7 +85,12 @@ export function MatchSidebarContainer({
     resourcesTotal: zoneCount(view, "resourceArea", opponentId),
   };
   const self: PlayerInfo = {
-    name: viewerId,
+    id: viewerId,
+    name: resolvePlayerDisplayName(
+      String(viewerId),
+      route.matchPageData?.match.participants,
+      "You",
+    ),
     clock: "—",
     timer: view.timerView.players?.[String(viewerId)],
     isOwnClock: true,
@@ -72,40 +102,122 @@ export function MatchSidebarContainer({
     resourcesTotal: zoneCount(view, "resourceArea", viewerId),
   };
 
-  const turnPlayerId = view.status.turnPlayer ?? view.status.activePlayer;
-  const currentTurn: "opponent" | "self" =
-    String(turnPlayerId) === String(viewerId) ? "self" : "opponent";
-  const priorityHolder: "opponent" | "self" =
-    String(view.status.activePlayer) === String(viewerId) ? "self" : "opponent";
-
-  const onConcede = useCallback(() => {
-    report(adapter.submit(asMoveName("concede"), {}));
-  }, [adapter, report]);
-
   return (
     <MatchSidebar
-      matchInfo={matchInfo}
       players={[opponent, self]}
-      currentTurn={currentTurn}
-      priorityHolder={priorityHolder}
+      controlState={controlState}
       log={log}
       eventLogEntries={eventLogEntries}
-      onConcede={onConcede}
-      onCollapse={onCollapse}
-      // `VsAiControls` short-circuits to null when no `VsAiProvider`
-      // is in the tree (i.e. non-AI fixtures). Wiring it here keeps
-      // the sidebar presentational and the controls consistently
-      // placed above the comms log on AI matches.
-      aboveBattleData={
-        <>
-          <VsAiControls />
+      connectionIndicator={connectionIndicator}
+      opponentActions={
+        players.opponentPlayer.participant && route.matchId && route.gameId ? (
+          <SimulatorOpponentParticipantActions
+            participant={
+              players.opponentPlayer.participant.isBot
+                ? {
+                    kind: "bot" as const,
+                    displayName: players.opponentPlayer.participant.displayName,
+                  }
+                : {
+                    kind: "human" as const,
+                    gameProfileId: players.opponentPlayer.participant.id,
+                    userId: players.opponentPlayer.participant.userId,
+                    displayName: players.opponentPlayer.participant.displayName,
+                  }
+            }
+            match={{
+              matchId: route.matchId,
+              gameId: route.gameId,
+              gameSlug: "gundam",
+            }}
+          />
+        ) : undefined
+      }
+      selfActions={selfActions}
+      automation={
+        vsAi
+          ? {
+              summary: <VsAiSummary />,
+              details: <VsAiControls />,
+              label: "Bot controls",
+              panelLabel: "Bot strategy and pacing controls",
+            }
+          : undefined
+      }
+      secondaryActivity={
+        <div className="grid gap-3 p-3">
           {connectionPanel}
-          <div className="border-b border-hud-border px-hud-md py-2.5">
+          <GundamLiveBugReportControl />
+          <AutoPassPriorityControl className="text-hud-text-muted" />
+          <AnimationSpeedControl className="text-hud-text-muted" />
+          <SoundVolumeControl className="text-hud-text-muted" />
+        </div>
+      }
+      actions={actions}
+    />
+  );
+}
+
+export function GundamMobileActivityContainer({
+  connectionPanel,
+}: {
+  readonly connectionPanel?: ReactNode;
+}) {
+  const { log, eventLogEntries } = useMatchLogData();
+  const vsAi = useVsAi();
+
+  return (
+    <div className="gd-dark-surface gd-mobile-activity grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)] text-hud-text">
+      <header className="border-b border-hud-border px-3 py-2">
+        <strong className="text-xs uppercase tracking-[.12em]">Match activity</strong>
+        <p className="mt-0.5 text-hud-xs text-hud-text-muted">
+          Battle log, chat, and game controls
+        </p>
+      </header>
+      <SimulatorActivityTabs
+        log={<MatchEventLog log={log} eventLogEntries={eventLogEntries} />}
+        chat={<DeferredGundamChatPanel />}
+        secondary={
+          <div className="grid gap-3 p-3">
+            {vsAi ? <VsAiControls /> : null}
+            {connectionPanel}
+            <GundamLiveBugReportControl />
+            <AutoPassPriorityControl className="text-hud-text-muted" />
+            <AnimationSpeedControl className="text-hud-text-muted" />
             <SoundVolumeControl className="text-hud-text-muted" />
           </div>
-        </>
-      }
-    />
+        }
+      />
+    </div>
+  );
+}
+
+function GundamLiveBugReportControl() {
+  const [open, setOpen] = useState(false);
+  const view = useBoardProjection();
+  const route = useSimulatorRoute();
+  const layoutMode = useLayoutMode();
+  const context = buildBugReportContext({
+    gameSlug: "gundam",
+    ...(route.gameId ? { gameId: route.gameId } : {}),
+    ...(route.matchId ? { matchId: route.matchId } : {}),
+    playerCount: view.players.length,
+    turn: view.status.turn,
+    stateVersion: view.stateID,
+    platform: layoutMode === "mobile" ? "mobile" : "desktop",
+  });
+
+  return (
+    <>
+      <button
+        type="button"
+        className="gd-support-action min-h-11 w-full rounded border border-hud-danger/40 bg-hud-danger/5 px-3 py-2 text-left hover:bg-hud-danger/10"
+        onClick={() => setOpen(true)}
+      >
+        {m["sim.support.bugReport.liveAction"]()}
+      </button>
+      <GundamBugReportDialog open={open} onOpenChange={setOpen} context={context} />
+    </>
   );
 }
 
@@ -155,15 +267,17 @@ export function useMatchLogData() {
     );
     if (projectedMoveEntries.length === 0) return [];
 
-    return dedupeSystemEntries([
-      ...projectedMoveEntries,
-      ...projectGundamLegacyEventLogEntries(
-        logEntries,
-        String(viewerId),
-        phase,
-        adapter.cardDefinitionOf,
-      ),
-    ]).sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp));
+    return orderGundamEventLogEntries(
+      dedupeSystemEntries([
+        ...projectedMoveEntries,
+        ...projectGundamLegacyEventLogEntries(
+          logEntries,
+          String(viewerId),
+          phase,
+          adapter.cardDefinitionOf,
+        ),
+      ]),
+    );
   }, [logEntries, moveLogs, viewerId, view.status.phase, view.status.gameSegment, adapter]);
 
   return { log, eventLogEntries } as const;

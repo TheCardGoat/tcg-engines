@@ -3,7 +3,6 @@ import { readFile } from "node:fs/promises";
 const GUARDED_FILES = [
   "src/lib/features/simulator/shell/LorcanaTabletopSimulator.svelte",
   "src/lib/features/simulator/shell/LorcanaSimulatorSidebar.svelte",
-  "src/lib/features/matchmaking/ui/MatchmakingLobby.svelte",
   "src/lib/features/simulator/panels/AvailableMovesPanel.svelte",
   "src/lib/features/simulator/panels/EventLogPanel.svelte",
   "src/lib/features/simulator/board/HandZone.svelte",

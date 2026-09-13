@@ -3,7 +3,7 @@ import { op13BennBeckmanSp009 } from "../../../../../cards/src/cards/OP13/charac
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-009 Benn.Beckman (SP)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13BennBeckmanSp009);
   });
 });

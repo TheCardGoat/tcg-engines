@@ -1,11 +1,22 @@
 import { describe, expect, it } from "bun:test";
-import { LorcanaMultiplayerTestEngine, createMockCharacter } from "@tcg/lorcana-engine/testing";
+import {
+  LorcanaMultiplayerTestEngine,
+  createMockCharacter,
+  createMockSong,
+} from "@tcg/lorcana-engine/testing";
 import { woodyTownSheriff } from "./013-woody-town-sheriff";
 
 const opposingCharacter = createMockCharacter({
   id: "woody-town-sheriff-opposing",
   name: "Opposing Character",
   cost: 2,
+});
+
+const opposingSong = createMockSong({
+  id: "woody-town-sheriff-opposing-song",
+  name: "Opposing Song",
+  cost: 2,
+  text: "A test song.",
 });
 
 describe("Woody - Town Sheriff", () => {
@@ -17,6 +28,7 @@ describe("Woody - Town Sheriff", () => {
       },
       {
         play: [opposingCharacter],
+        hand: [opposingSong],
       },
     );
 
@@ -37,5 +49,10 @@ describe("Woody - Town Sheriff", () => {
     expect(testEngine.asPlayerTwo().hasTemporaryRestriction(opposingCharacter, "must-quest")).toBe(
       true,
     );
+
+    expect(testEngine.asPlayerOne().passTurn()).toBeSuccessfulCommand();
+    expect(
+      testEngine.asPlayerTwo().singSong(opposingSong, opposingCharacter),
+    ).toBeSuccessfulCommand();
   });
 });

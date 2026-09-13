@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import type { ScheduledAnimationStep } from "@tcg/simulator-ui";
+import type { CompiledAudioCue } from "@tcg/simulator-runtime/animation";
 import { collectScheduledSimulatorAudioCues } from "./scheduler";
 
 describe("collectScheduledSimulatorAudioCues", () => {
@@ -9,10 +9,9 @@ describe("collectScheduledSimulatorAudioCues", () => {
     expect(
       collectScheduledSimulatorAudioCues(
         [
-          scheduledStep("plan-1", "draw", "card.draw", 150),
-          scheduledStep("plan-1", "phase", "phase.change", 0),
-          scheduledStep("plan-1", "steal", "resource.steal", 420),
-          scheduledStep("plan-1", "silent", undefined, 75),
+          scheduledStep("draw", "card.draw", 150),
+          scheduledStep("phase", "phase.change", 0),
+          scheduledStep("steal", "resource.steal", 420),
         ],
         seen,
       ),
@@ -25,34 +24,39 @@ describe("collectScheduledSimulatorAudioCues", () => {
 
   test("dedupes repeated scheduled steps", () => {
     const seen = new Set<string>();
-    const steps = [scheduledStep("plan-1", "draw", "card.draw", 150)];
+    const steps = [scheduledStep("draw", "card.draw", 150)];
 
     expect(collectScheduledSimulatorAudioCues(steps, seen)).toEqual([
       { cue: "card.draw", delayMs: 150 },
     ]);
     expect(collectScheduledSimulatorAudioCues(steps, seen)).toEqual([]);
   });
+
+  test("does not dedupe reused step ids across plans", () => {
+    const seen = new Set<string>();
+
+    expect(
+      collectScheduledSimulatorAudioCues(
+        [
+          scheduledStep("draw", "card.draw", 0, "plan-a"),
+          scheduledStep("draw", "card.draw", 0, "plan-b"),
+        ],
+        seen,
+      ),
+    ).toHaveLength(2);
+  });
 });
 
 function scheduledStep(
-  planId: string,
   stepId: string,
-  audioCue: ScheduledAnimationStep["step"]["audioCue"],
-  delayMs: number,
-): ScheduledAnimationStep {
+  cue: CompiledAudioCue["cue"],
+  startAtMs: number,
+  planId = "plan",
+): CompiledAudioCue {
   return {
     planId,
     stepId,
-    delayMs,
-    durationMs: 300,
-    step: {
-      id: stepId,
-      type: "phaseChange",
-      from: "Main",
-      to: "End",
-      ...(audioCue ? { audioCue } : {}),
-      delayMs,
-      durationMs: 300,
-    },
+    cue,
+    startAtMs,
   };
 }

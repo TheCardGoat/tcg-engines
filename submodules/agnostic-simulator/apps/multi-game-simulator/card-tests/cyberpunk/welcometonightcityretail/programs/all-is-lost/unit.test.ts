@@ -3,7 +3,6 @@ import {
   CyberpunkTestEngine,
   P1,
   createMockUnit,
-  createMockProgram,
   expectEligibleTargets,
   expectNoPendingChoice,
 } from "@cyberpunk-engine/testing/index.ts";

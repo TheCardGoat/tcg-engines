@@ -294,9 +294,7 @@ body[data-immersive-app="active"] main {
   --color-board-gradient-end: #1a3252;
 
   /* Custom animations for Lorcana simulator */
-  --animate-playable-pulse: playable-pulse 1s ease-in-out infinite;
   --animate-damage-pulse: damage-pulse 0.5s ease-in-out infinite;
-  --animate-selection-pulse: selection-pulse 0.75s ease-in-out infinite;
   --animate-drop-pulse: drop-pulse 0.5s ease-in-out infinite;
   --animate-bounce-subtle: bounce-subtle 0.25s ease-in-out infinite alternate;
   --animate-quest-icon-spin: quest-icon-spin 1.5s linear infinite;
@@ -304,18 +302,6 @@ body[data-immersive-app="active"] main {
 }
 
 /* Custom keyframes for Lorcana simulator animations */
-@keyframes playable-pulse {
-  0%,
-  100% {
-    opacity: 0.6;
-    box-shadow: 0 0 12px rgba(250, 204, 21, 0.35);
-  }
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 22px rgba(250, 204, 21, 0.58);
-  }
-}
-
 @keyframes damage-pulse {
   0%,
   100% {
@@ -323,18 +309,6 @@ body[data-immersive-app="active"] main {
   }
   50% {
     transform: translate(-50%, -50%) scale(1.1);
-  }
-}
-
-@keyframes selection-pulse {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
-  }
-  50% {
-    opacity: 0.7;
-    box-shadow: 0 0 30px rgba(245, 158, 11, 0.8);
   }
 }
 

@@ -48,11 +48,12 @@ export const eb02Sogeking024: CharacterCard = {
               },
             },
             position: "bottom",
+            order: "any",
           },
           {
             action: "returnToHand",
             target: {
-              player: "both",
+              player: "any",
               zones: ["character"],
               count: {
                 amount: 1,

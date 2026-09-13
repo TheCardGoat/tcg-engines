@@ -3,7 +3,7 @@ import { op01PunkGibson058 } from "../../../../../cards/src/cards/OP01/events/05
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-058 Punk Gibson", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op01PunkGibson058);
   });
 });

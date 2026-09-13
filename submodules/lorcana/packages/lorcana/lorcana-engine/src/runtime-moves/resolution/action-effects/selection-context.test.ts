@@ -204,6 +204,53 @@ describe("buildResolutionSelectionContext", () => {
               target: "CHOSEN_CHARACTER",
             },
           },
+          {
+            type: "optional",
+            effect: {
+              type: "return-from-discard",
+              cardType: "character",
+              costRestriction: { comparison: "less-or-equal", value: 2 },
+            },
+          },
+          {
+            type: "optional",
+            effect: {
+              type: "play-card",
+              from: "hand",
+              cardType: "character",
+              cost: "free",
+              costRestriction: { comparison: "less-or-equal", value: 2 },
+            },
+          },
+          {
+            type: "optional",
+            effect: {
+              type: "return-from-discard",
+              target: "OPPONENT",
+              destination: "top-of-deck",
+              count: 2,
+              cardType: "item",
+            },
+          },
+          {
+            type: "optional",
+            effect: {
+              type: "play-card",
+              from: ["hand", "discard"],
+              cardType: "character",
+              free: true,
+              filter: { maxCost: 4 },
+            },
+          },
+          {
+            type: "optional",
+            effect: {
+              type: "play-card",
+              from: "hand",
+              cardType: "character",
+              costRestriction: { comparison: "equal", value: 1 },
+            },
+          },
         ],
       },
       resolutionInput: {},
@@ -220,6 +267,11 @@ describe("buildResolutionSelectionContext", () => {
       "Deal 2 damage to chosen character.",
       "Remove up to 3 damage.",
       "Put chosen card on the bottom of their deck.",
+      "Return a character with cost 2 or less from your discard to your hand.",
+      "Play a character with cost 2 or less from your hand for free.",
+      "Return 2 items from an opponent's discard to the top of their deck.",
+      "Play a character with cost 4 or less from your hand or your discard for free.",
+      "Play a character with cost 1 from your hand.",
     ]);
   });
 
@@ -650,5 +702,89 @@ describe("buildResolutionSelectionContext", () => {
     });
 
     expect(selection).toBeUndefined();
+  });
+
+  it("does not let an accepted outer optional make an opponent consequence declineable", () => {
+    const source = "source" as CardInstanceId;
+    const { ctx } = createMinimalSelectionTestContext({
+      [source]: { id: "source", cardType: "character" },
+    });
+
+    const selection = buildResolutionSelectionContext({
+      origin: "pending-effect",
+      requestId: "req-accepted-optional-opponent-consequence",
+      sourceCardId: source,
+      chooserId: PLAYER_TWO,
+      cardPlayed: createCardPlayedPayload(source, PLAYER_ONE),
+      effect: {
+        type: "for-each-opponent",
+        effect: {
+          type: "banish",
+          chosenBy: "opponent",
+          target: {
+            selector: "chosen",
+            count: 1,
+            owner: "opponent",
+            zones: ["play"],
+            cardTypes: ["character"],
+          },
+        },
+      },
+      resolutionInput: {},
+      ctx,
+      originatesFromOptional: true,
+      canDeclineSelection: true,
+    });
+
+    expect(selection?.kind).toBe("target-selection");
+    if (selection?.kind !== "target-selection") {
+      throw new Error("Expected target-selection");
+    }
+    expect(selection.chooserId).toBe(PLAYER_TWO);
+    expect(selection.originatesFromOptional).toBeUndefined();
+    expect(selection.canDeclineSelection).toBeUndefined();
+  });
+
+  it("keeps an explicitly optional opponent consequence declineable", () => {
+    const source = "source" as CardInstanceId;
+    const { ctx } = createMinimalSelectionTestContext({
+      [source]: { id: "source", cardType: "character" },
+    });
+
+    const selection = buildResolutionSelectionContext({
+      origin: "pending-effect",
+      requestId: "req-explicitly-optional-opponent-consequence",
+      sourceCardId: source,
+      chooserId: PLAYER_TWO,
+      cardPlayed: createCardPlayedPayload(source, PLAYER_ONE),
+      effect: {
+        type: "for-each-opponent",
+        effect: {
+          type: "optional",
+          chooser: "OPPONENT",
+          effect: {
+            type: "banish",
+            chosenBy: "opponent",
+            target: {
+              selector: "chosen",
+              count: 1,
+              owner: "opponent",
+              zones: ["play"],
+              cardTypes: ["character"],
+            },
+          },
+        },
+      },
+      resolutionInput: {},
+      ctx,
+      originatesFromOptional: true,
+      canDeclineSelection: true,
+    });
+
+    expect(selection?.kind).toBe("optional-selection");
+    if (selection?.kind !== "optional-selection") {
+      throw new Error("Expected optional-selection");
+    }
+    expect(selection.chooserId).toBe(PLAYER_TWO);
   });
 });

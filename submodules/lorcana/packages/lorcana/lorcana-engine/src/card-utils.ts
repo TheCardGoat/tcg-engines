@@ -496,7 +496,7 @@ export function cardHasName(card: LorcanaCardDefinition, name: string): boolean 
 }
 
 /**
- * Check if a card has a two-part name with ampersand (Rule 6.2.4.1)
+ * Check if a card has a two-part name with ampersand (Rule 5.2.6.1)
  * e.g., "Flotsam & Jetsam"
  */
 export function hasAmpersandName(card: LorcanaCardDefinition): boolean {
@@ -504,7 +504,7 @@ export function hasAmpersandName(card: LorcanaCardDefinition): boolean {
 }
 
 /**
- * Get both name parts for cards with ampersand (Rule 6.2.4.1)
+ * Get both name parts for cards with ampersand (Rule 5.2.6.1)
  * Returns null if card doesn't have ampersand name
  */
 export function getAmpersandNames(card: LorcanaCardDefinition): [string, string] | null {

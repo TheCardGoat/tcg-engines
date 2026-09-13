@@ -35,4 +35,31 @@ describe("OP01-111 Black Maria", () => {
       5000,
     );
   });
+
+  test("may decline optional so paid effect does not apply", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [op01BlackMaria111],
+        activeDon: 1,
+      },
+      { character: [{ card: eb01Fourtricks025, playedOnTurn: 0 }] },
+      { firstPlayer: "south", activeSeat: "north" },
+    );
+    const mariaId = engine.findCardInZone("south", "character", op01BlackMaria111);
+    const attackerId = engine.findCardInZone("north", "character", eb01Fourtricks025);
+    engine.declareAttack(attackerId, engine.leader("south"), "north");
+    engine.resolveDecision("battleBlocker", { selectedIds: [mariaId] }, "south");
+    const before = engine.getView("south").players.south;
+    const donPoolBefore = before.activeDon + before.restedDon;
+    const donDeckBefore = before.donDeckCount;
+    engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
+    const after = engine.getView("south").players.south;
+    expect(after.activeDon + after.restedDon).toBe(donPoolBefore);
+    expect(after.donDeckCount).toBe(donDeckBefore);
+    // Without the optional power, Maria is not still at the boosted 6000.
+    expect(
+      after.characters.find((card) => card?.instanceId === mariaId)?.power ??
+        after.trash.find((card) => card.instanceId === mariaId)?.power,
+    ).not.toBe(6000);
+  });
 });

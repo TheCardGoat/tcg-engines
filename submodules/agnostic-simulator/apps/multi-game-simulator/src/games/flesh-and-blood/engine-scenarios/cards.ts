@@ -1,0 +1,328 @@
+import {
+  CATALOG_TEST_DEFINITIONS,
+  catalogIds,
+  toFabCardDefinition,
+  type FabCardDefinitionInput,
+} from "@tcg/flesh-and-blood-engine/simulator";
+
+import {
+  alphaInstinctBlue,
+  agileWindupRed,
+  alphaRampageRed,
+  azaleaAceInTheHole,
+  becomeTheBottleRed,
+  bonebreakerBellowRed,
+  braveforgeBracers,
+  cosmicDualityBlue,
+  crouchingTiger,
+  surgingStrikeRed,
+  crackedBaubleYellow,
+  dash,
+  dawnblade,
+  blizzardBlue,
+  entwineIceRed,
+  everbloomLifeBlue,
+  flashBoltRed,
+  gustwaveOfTheSecondWindRed,
+  headJabBlue,
+  hadronColliderRed,
+  holoShieldRed,
+  indefensiblyHonedBlue,
+  invokeYenduraiRed,
+  iraCrimsonHaze,
+  katsu,
+  leaveNoWitnessesRed,
+  mightyWindupRed,
+  mutatedMassBlue,
+  poisonTheWellBlue,
+  plunderThePoorRed,
+  pilferTheTombBlue,
+  hulkUpBlue,
+  ripOffTheTopYellow,
+  retraceThePastBlue,
+  ravenousMeataxe,
+  ravenousRabbleRed,
+  splatterSkull,
+  sigilOfSolaceRed,
+  skullboneCrosswrap,
+  talismanicLens,
+  optekalMonocleBlue,
+  songOfSinewYellow,
+  rok,
+  rockyardRodeoBlue,
+  brutalAssaultBlue,
+  digInYellow,
+  tuffnut,
+  toughness,
+  toughAsARokBlue,
+  tigrineReflexRed,
+  boltyn,
+  boltOfCourageRed,
+  beamingBravadoYellow,
+  battlefieldBlitzYellow,
+  battlefieldBeaconYellow,
+  courageOfBladehold,
+  courageousSteelhandRed,
+  cintariSaber,
+  engulfingLightRed,
+  engulfingLightYellow,
+  expressLightningYellow,
+  illuminateYellow,
+  luminaAscensionYellow,
+  serBoltynBreakerOfDawn,
+  snapdragonScalers,
+  takeFlightYellow,
+  nimblismBlue,
+  spireSnipingRed,
+  snatchRed,
+  nimblismYellow,
+  noHeroStandsAloneYellow,
+  spearsOfSurrealityRed,
+  spectralProcessionRed,
+  spectralShield,
+  startingStakeYellow,
+  sutcliffeSResearchNotesRed,
+  theSuspenseIsKillingMeBlue,
+  whisperOfTheOracleRed,
+  silverstrideDodgers,
+  vigorousWindupRed,
+  wageMightBlue,
+  whelmingGustwaveRed,
+  windUpTheCrowdBlue,
+  wreckerRompBlue,
+  zeroToSixtyRed,
+  zyggyStarlight,
+} from "@tcg/flesh-and-blood-cards/simulator-scenario-cards";
+
+export const DEFS = CATALOG_TEST_DEFINITIONS;
+
+export const VISUAL_DECK_CARD_ID = catalogIds.nimblismBlue;
+
+export const SPLATTER_SKULL_ID = "LwHFKjjChb9JFQjLmrGMq";
+
+export const RAVENOUS_MEATAXE_ID = "Kfqdk6PhqBd9tKM8T8hmN";
+
+export const RAVENOUS_RABBLE_RED_ID = "RpjM6dFbhwh7WPQkNLbbF";
+
+export const EVERBLOOM_LIFE_ID = "nnQpNFFKqfMwJbRQ6brJ6";
+
+export const INVOKE_YENDURAI_ID = "9J9c98JJDc8mtKnRR9hhq";
+
+export const YENDURAI_BACK_FACE_ID = `${INVOKE_YENDURAI_ID}:face:back`;
+
+export const POISON_THE_WELL_BLUE_ID = "BqMDcNR8b6m7L7QPtHgTB";
+
+export const FLASH_BOLT_RED_ID = "TkpjjKgfzKLgjRMDJNpk7";
+
+export const DASH_ID = "kftPnNkrBLJ7rPmFGgQCm";
+
+export const COSMIC_DUALITY_BLUE_ID = "WhggpfhhBLDnpKwCkjWDk";
+
+export const ZYGGY_STARLIGHT_ID = "pnwGDgknLbHc96Ghg8f67";
+
+export const AGILE_WINDUP_RED_ID = "Rmm8PgnzKNNfLcnKh86jd";
+
+export const MIGHTY_WINDUP_RED_ID = "RGHRQgGJdBhBPgM9Pfgw7";
+
+export const VIGOROUS_WINDUP_RED_ID = "6DkjQLNmzwdBmwhfGWTJG";
+
+export const STARTING_STAKE_YELLOW_ID = "kD798qm7kWr9fhCLM9dDm";
+
+export const PILFER_THE_TOMB_BLUE_ID = "pQjcMbpRPhTG8DkHftnK9";
+
+export const SIGIL_OF_SOLACE_RED_ID = "kzW8BKdWcm9LwtTCTdqRK";
+
+export const CRACKED_BAUBLE_YELLOW_ID = "Dbhn6rRcrbdRnKbqdPdwh";
+
+export const SONG_OF_SINEW_YELLOW_ID = "gG6NLRhhPKLPh6Q7nJHBT";
+
+export const SCENARIO_STRUCTURED_CARDS = new Map<string, Parameters<typeof toFabCardDefinition>[0]>(
+  [
+    alphaInstinctBlue,
+    agileWindupRed,
+    alphaRampageRed,
+    azaleaAceInTheHole,
+    becomeTheBottleRed,
+    bonebreakerBellowRed,
+    braveforgeBracers,
+    cosmicDualityBlue,
+    crouchingTiger,
+    surgingStrikeRed,
+    crackedBaubleYellow,
+    dash,
+    dawnblade,
+    blizzardBlue,
+    entwineIceRed,
+    everbloomLifeBlue,
+    flashBoltRed,
+    gustwaveOfTheSecondWindRed,
+    headJabBlue,
+    hadronColliderRed,
+    holoShieldRed,
+    indefensiblyHonedBlue,
+    invokeYenduraiRed,
+    iraCrimsonHaze,
+    katsu,
+    leaveNoWitnessesRed,
+    mightyWindupRed,
+    mutatedMassBlue,
+    poisonTheWellBlue,
+    plunderThePoorRed,
+    pilferTheTombBlue,
+    hulkUpBlue,
+    ripOffTheTopYellow,
+    retraceThePastBlue,
+    ravenousMeataxe,
+    ravenousRabbleRed,
+    splatterSkull,
+    sigilOfSolaceRed,
+    skullboneCrosswrap,
+    talismanicLens,
+    optekalMonocleBlue,
+    songOfSinewYellow,
+    rok,
+    rockyardRodeoBlue,
+    brutalAssaultBlue,
+    spireSnipingRed,
+    snatchRed,
+    spearsOfSurrealityRed,
+    spectralProcessionRed,
+    spectralShield,
+    startingStakeYellow,
+    sutcliffeSResearchNotesRed,
+    theSuspenseIsKillingMeBlue,
+    tuffnut,
+    toughness,
+    tigrineReflexRed,
+    noHeroStandsAloneYellow,
+    toughAsARokBlue,
+    boltyn,
+    boltOfCourageRed,
+    beamingBravadoYellow,
+    battlefieldBlitzYellow,
+    battlefieldBeaconYellow,
+    courageOfBladehold,
+    courageousSteelhandRed,
+    cintariSaber,
+    engulfingLightRed,
+    engulfingLightYellow,
+    expressLightningYellow,
+    illuminateYellow,
+    luminaAscensionYellow,
+    serBoltynBreakerOfDawn,
+    snapdragonScalers,
+    takeFlightYellow,
+    nimblismBlue,
+    whisperOfTheOracleRed,
+    silverstrideDodgers,
+    vigorousWindupRed,
+    wageMightBlue,
+    whelmingGustwaveRed,
+    windUpTheCrowdBlue,
+    wreckerRompBlue,
+    zeroToSixtyRed,
+    zyggyStarlight,
+  ].map((card) => [card.canonicalId, card] as const),
+);
+
+export function realCardDefinition(canonicalId: string): FabCardDefinitionInput {
+  if (canonicalId === catalogIds.sigilSolace) {
+    const card = CATALOG_TEST_DEFINITIONS[canonicalId];
+    if (card) return card;
+  }
+  const card = SCENARIO_STRUCTURED_CARDS.get(canonicalId);
+  if (!card) throw new Error(`Missing structured FAB card ${canonicalId}`);
+  return toFabCardDefinition(card);
+}
+
+export {
+  CATALOG_TEST_DEFINITIONS,
+  catalogIds,
+  toFabCardDefinition,
+  alphaInstinctBlue,
+  agileWindupRed,
+  alphaRampageRed,
+  azaleaAceInTheHole,
+  becomeTheBottleRed,
+  bonebreakerBellowRed,
+  braveforgeBracers,
+  cosmicDualityBlue,
+  crouchingTiger,
+  surgingStrikeRed,
+  crackedBaubleYellow,
+  dash,
+  dawnblade,
+  blizzardBlue,
+  entwineIceRed,
+  everbloomLifeBlue,
+  flashBoltRed,
+  gustwaveOfTheSecondWindRed,
+  headJabBlue,
+  hadronColliderRed,
+  holoShieldRed,
+  indefensiblyHonedBlue,
+  invokeYenduraiRed,
+  iraCrimsonHaze,
+  katsu,
+  leaveNoWitnessesRed,
+  mightyWindupRed,
+  mutatedMassBlue,
+  poisonTheWellBlue,
+  plunderThePoorRed,
+  pilferTheTombBlue,
+  hulkUpBlue,
+  ripOffTheTopYellow,
+  retraceThePastBlue,
+  ravenousMeataxe,
+  ravenousRabbleRed,
+  splatterSkull,
+  sigilOfSolaceRed,
+  skullboneCrosswrap,
+  talismanicLens,
+  optekalMonocleBlue,
+  songOfSinewYellow,
+  rok,
+  rockyardRodeoBlue,
+  brutalAssaultBlue,
+  digInYellow,
+  tuffnut,
+  toughness,
+  toughAsARokBlue,
+  tigrineReflexRed,
+  boltyn,
+  boltOfCourageRed,
+  beamingBravadoYellow,
+  battlefieldBlitzYellow,
+  battlefieldBeaconYellow,
+  courageOfBladehold,
+  courageousSteelhandRed,
+  cintariSaber,
+  engulfingLightRed,
+  engulfingLightYellow,
+  expressLightningYellow,
+  illuminateYellow,
+  luminaAscensionYellow,
+  serBoltynBreakerOfDawn,
+  snapdragonScalers,
+  takeFlightYellow,
+  nimblismBlue,
+  spireSnipingRed,
+  snatchRed,
+  nimblismYellow,
+  noHeroStandsAloneYellow,
+  spearsOfSurrealityRed,
+  spectralProcessionRed,
+  spectralShield,
+  startingStakeYellow,
+  sutcliffeSResearchNotesRed,
+  theSuspenseIsKillingMeBlue,
+  whisperOfTheOracleRed,
+  silverstrideDodgers,
+  vigorousWindupRed,
+  wageMightBlue,
+  whelmingGustwaveRed,
+  windUpTheCrowdBlue,
+  wreckerRompBlue,
+  zeroToSixtyRed,
+  zyggyStarlight,
+};

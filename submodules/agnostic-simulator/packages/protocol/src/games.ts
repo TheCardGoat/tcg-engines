@@ -14,6 +14,9 @@ export type PlayableGameSlug =
   | "cyberpunk"
   | "riftbound"
   | "one-piece"
+  | "flesh-and-blood"
+  | "grand-archive"
+  | "naruto"
   | "platform";
 
 export const PLAYABLE_GAME_SLUGS = [
@@ -22,6 +25,9 @@ export const PLAYABLE_GAME_SLUGS = [
   "cyberpunk",
   "riftbound",
   "one-piece",
+  "flesh-and-blood",
+  "grand-archive",
+  "naruto",
   "platform",
 ] as const satisfies readonly PlayableGameSlug[];
 

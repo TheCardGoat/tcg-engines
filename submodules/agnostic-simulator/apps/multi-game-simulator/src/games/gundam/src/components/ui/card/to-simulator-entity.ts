@@ -2,6 +2,7 @@ import type {
   EntityKind,
   EntityState,
   SimulatorEntity,
+  SimulatorEntityRule,
   SimulatorMetadataItem,
   SimulatorZone,
   ZoneRole,
@@ -9,7 +10,8 @@ import type {
 } from "@tcg/simulator-contract";
 
 import type { CardColor, CardType, GameCardData } from "../types.ts";
-import { buildCardImageUrl } from "./card-image-format.ts";
+import { keywordTag } from "./card-tags.ts";
+import { buildCardImageUrl, GUNDAM_FULL_CARD_ASPECT_RATIO } from "./card-image-format.ts";
 
 const FRAME_COLORS: Record<CardColor, string> = {
   blue: "#1e49c7",
@@ -75,8 +77,11 @@ export function toSimulatorEntity(
     stats: statsFor(card),
     traits: faceDown ? [] : [...(card.traits ?? [])],
     imageUrl: faceDown ? undefined : imageUrlFor(card),
+    imageAspectRatio: GUNDAM_FULL_CARD_ASPECT_RATIO,
     frameStyle: faceDown || !card.color ? undefined : { color: FRAME_COLORS[card.color] },
-    overlayBadges: faceDown ? undefined : overlayBadgesFor(card),
+    decorations: faceDown ? undefined : decorationsFor(card),
+    activeEffects: faceDown ? undefined : activeEffectsFor(card),
+    details: faceDown ? undefined : detailsFor(card),
     dataAttributes,
   };
 }
@@ -147,8 +152,8 @@ function statsFor(card: GameCardData): SimulatorMetadataItem[] {
   const stats: SimulatorMetadataItem[] = [];
   pushStat(stats, "Cost", card.cost);
   pushStat(stats, "Level", card.level);
-  pushStat(stats, "AP", card.ap);
-  pushStat(stats, "HP", card.hp);
+  pushStat(stats, "AP", card.ap, card.baseAp);
+  pushStat(stats, "HP", card.hp, card.baseHp);
   if (card.battlefieldZones?.length) {
     stats.push({
       label: "Zone",
@@ -166,9 +171,151 @@ function pushStat(
   stats: SimulatorMetadataItem[],
   label: string,
   value: string | number | null | undefined,
+  baseValue?: string | number | null,
 ) {
   if (value === null || value === undefined) return;
-  stats.push({ label, value: String(value) });
+  stats.push({
+    label,
+    value: String(value),
+    baseValue:
+      baseValue === null || baseValue === undefined || baseValue === value
+        ? undefined
+        : String(baseValue),
+  });
+}
+
+function detailsFor(card: GameCardData): NonNullable<SimulatorEntity["details"]> {
+  const rules = [
+    ...(card.keywords ?? []).map((entry, index) => {
+      const presentation = keywordTag(entry);
+      return {
+        id: `keyword-${index}`,
+        label: presentation.label,
+        text: presentation.tooltip,
+        kind: "keyword" as const,
+      };
+    }),
+    ...effectRulesFor(card),
+    ...(card.linkRequirement
+      ? [
+          {
+            id: "link",
+            label: "Link",
+            text: card.linkRequirement,
+            kind: "ability" as const,
+          },
+        ]
+      : []),
+  ];
+
+  return {
+    rules,
+    relationships: card.pairedPilot?.id
+      ? [
+          {
+            id: `paired-pilot:${card.pairedPilot.id}`,
+            label: "Paired Pilot",
+            entityIds: [card.pairedPilot.id],
+          },
+        ]
+      : [],
+  };
+}
+
+function effectRulesFor(card: GameCardData): SimulatorEntityRule[] {
+  const sourceBlocks =
+    card.effectBlocks && card.effectBlocks.length > 0
+      ? card.effectBlocks
+      : splitLegacyEffectText(card.effect);
+
+  return sourceBlocks.map((sourceText, index) => {
+    const { labels, text } = parseEffectBlock(sourceText);
+    return {
+      id: `effect-${index}`,
+      kind: labels.length > 0 ? "ability" : "text",
+      label: labels.length > 0 ? labels.join(" · ") : undefined,
+      text,
+    };
+  });
+}
+
+function splitLegacyEffectText(effect: string | undefined): string[] {
+  if (!effect) return [];
+  const lines = normalizeEffectText(effect)
+    .split(/\n+/u)
+    .map(stripMarkdownEmphasis)
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const blocks: string[] = [];
+
+  for (const line of lines) {
+    if (LEADING_RULE_LABEL.test(line) || blocks.length === 0) {
+      blocks.push(line);
+      continue;
+    }
+    blocks[blocks.length - 1] = `${blocks.at(-1)}\n${line}`;
+  }
+
+  return blocks;
+}
+
+const LEADING_RULE_LABEL = /^【[^】]+】/u;
+
+function parseEffectBlock(sourceText: string): { labels: string[]; text: string } {
+  let remaining = stripMarkdownEmphasis(normalizeEffectText(sourceText).trim());
+  const labels: string[] = [];
+
+  while (true) {
+    const match = remaining.match(/^【([^】]+)】\s*/u);
+    if (!match) break;
+    labels.push(match[1]?.trim().replace(/[･・]/gu, " · ") ?? "");
+    remaining = remaining.slice(match[0].length);
+  }
+
+  return {
+    labels: labels.filter(Boolean),
+    text: decodeEffectEntities(
+      remaining.trim() || stripMarkdownEmphasis(normalizeEffectText(sourceText).trim()),
+    ),
+  };
+}
+
+function decodeEffectEntities(value: string): string {
+  // Card data includes escaped keyword brackets. Keep the result as plain text;
+  // decoding the ampersand last prevents recursively decoding nested entities.
+  return value
+    .replace(/&lt;/gu, "<")
+    .replace(/&gt;/gu, ">")
+    .replace(/&quot;/gu, '"')
+    .replace(/&apos;|&#39;/gu, "'")
+    .replace(/&nbsp;/gu, " ")
+    .replace(/&amp;/gu, "&");
+}
+
+function normalizeEffectText(value: string): string {
+  return value
+    .replace(/<br\s*\/?>/giu, "\n")
+    .replace(/\r\n?/gu, "\n")
+    .replace(/\n{3,}/gu, "\n\n");
+}
+
+function stripMarkdownEmphasis(value: string): string {
+  const trimmed = value.trim();
+  return trimmed.startsWith("**") && trimmed.endsWith("**") ? trimmed.slice(2, -2).trim() : trimmed;
+}
+
+function activeEffectsFor(card: GameCardData): SimulatorEntity["activeEffects"] {
+  return (card.activeEffects ?? []).map((effect, index) => ({
+    id: `${effect.sourceId}:${index}`,
+    targetKind: "entity",
+    targetId: card.id ?? card.name,
+    sourceEntityId: effect.sourceId,
+    sourceLabel: effect.sourceName ?? effect.sourceLabel ?? "Effect",
+    label: effect.kind,
+    detail: effect.description,
+    tone: effect.kind.includes("restriction") ? "debuff" : "neutral",
+    durationLabel: effect.duration,
+  }));
 }
 
 function imageUrlFor(card: GameCardData): string | undefined {
@@ -177,16 +324,28 @@ function imageUrlFor(card: GameCardData): string | undefined {
   return undefined;
 }
 
-function overlayBadgesFor(card: GameCardData): SimulatorEntity["overlayBadges"] {
-  const badges: NonNullable<SimulatorEntity["overlayBadges"]> = [];
+function decorationsFor(card: GameCardData): SimulatorEntity["decorations"] {
+  const decorations: NonNullable<SimulatorEntity["decorations"]> = [];
 
   if (card.damage && card.damage > 0) {
-    badges.push({ label: String(card.damage), color: "#d7263d", position: "br" });
+    decorations.push({
+      id: "damage",
+      slot: "bottom-end",
+      ariaLabel: `${card.damage} damage`,
+      content: { kind: "text", text: String(card.damage) },
+      tone: "negative",
+    });
   }
 
   if (card.highlight) {
-    badges.push({ label: "!", color: "#4cc3ff", position: "tl" });
+    decorations.push({
+      id: "highlight",
+      slot: "top-start",
+      ariaLabel: "Highlighted",
+      content: { kind: "icon", token: "highlight" },
+      tone: "neutral",
+    });
   }
 
-  return badges.length > 0 ? badges : undefined;
+  return decorations.length > 0 ? decorations : undefined;
 }

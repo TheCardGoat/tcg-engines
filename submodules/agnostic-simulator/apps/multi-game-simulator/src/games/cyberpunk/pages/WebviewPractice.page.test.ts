@@ -17,7 +17,7 @@ describe("WebviewPractice live match redirect", () => {
     window.history.replaceState({}, "", "/cyberpunk/simulator/play/practice?source=matchmaking");
 
     expect(liveMatchHref(response, "default")).toBe(
-      "/cyberpunk/simulator/matches/match%201/games/cyberpunk-game%2F2?returnTo=https%3A%2F%2Ftcg.online%2Fcyberpunk%2Fmatchmaking&playerId=player_1&botStrategyId=default&ticket=ticket_1&authToken=auth_1",
+      "/cyberpunk/simulator/matches/match%201/games/cyberpunk-game%2F2?returnTo=https%3A%2F%2Ftcg.online%2Fcyberpunk%2Fmatchmaking&botStrategyId=default",
     );
   });
 

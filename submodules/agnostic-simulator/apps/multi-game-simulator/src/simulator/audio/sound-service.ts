@@ -1,5 +1,7 @@
 import { Howl, Howler } from "howler";
 import type { SimulatorAudioCueId } from "@tcg/protocol";
+import { simulatorSoundAssetUrl, type SimulatorSoundPackId } from "./sound-packs.ts";
+import { simulatorAudioDebug } from "./debug.ts";
 
 interface SynthRecipe {
   readonly duration: number;
@@ -12,6 +14,8 @@ const blobUrls: string[] = [];
 let currentVolume = 50;
 let initialized = false;
 let initGeneration = 0;
+let readyPromise: Promise<void> | null = null;
+let currentSoundPack: SimulatorSoundPackId = "original";
 
 const recipes: Record<SimulatorAudioCueId, SynthRecipe> = {
   "card.draw": { duration: 0.16, render: (ctx, dest, now) => synthNoiseSweep(ctx, dest, now, 900) },
@@ -20,6 +24,14 @@ const recipes: Record<SimulatorAudioCueId, SynthRecipe> = {
   "card.discard": {
     duration: 0.2,
     render: (ctx, dest, now) => synthDown(ctx, dest, now, 260, 110),
+  },
+  "card.destroy": {
+    duration: 0.24,
+    render: (ctx, dest, now) => synthDown(ctx, dest, now, 180, 64),
+  },
+  "card.reveal": {
+    duration: 0.2,
+    render: (ctx, dest, now) => synthTone(ctx, dest, now, 640, 960),
   },
   "deck.shuffle": { duration: 0.28, render: synthShuffle },
   "resource.gain": {
@@ -31,8 +43,24 @@ const recipes: Record<SimulatorAudioCueId, SynthRecipe> = {
     duration: 0.22,
     render: (ctx, dest, now) => synthTone(ctx, dest, now, 340, 920),
   },
+  "life.gain": {
+    duration: 0.24,
+    render: (ctx, dest, now) => synthTone(ctx, dest, now, 440, 880),
+  },
+  "life.loss": {
+    duration: 0.22,
+    render: (ctx, dest, now) => synthDown(ctx, dest, now, 220, 72),
+  },
   "combat.start": { duration: 0.14, render: (ctx, dest, now) => synthClick(ctx, dest, now, 180) },
   "combat.hit": { duration: 0.18, render: synthHit },
+  "combat.block": {
+    duration: 0.2,
+    render: (ctx, dest, now) => synthClick(ctx, dest, now, 140),
+  },
+  "damage.prevent": {
+    duration: 0.22,
+    render: (ctx, dest, now) => synthTone(ctx, dest, now, 300, 620),
+  },
   "effect.trigger": {
     duration: 0.2,
     render: (ctx, dest, now) => synthTone(ctx, dest, now, 760, 980),
@@ -45,22 +73,50 @@ const recipes: Record<SimulatorAudioCueId, SynthRecipe> = {
     duration: 0.28,
     render: (ctx, dest, now) => synthTone(ctx, dest, now, 260, 520),
   },
+  "random.die": {
+    duration: 0.24,
+    render: (ctx, dest, now) => {
+      synthClick(ctx, dest, now, 240);
+      synthClick(ctx, dest, now + 0.07, 310);
+      synthClick(ctx, dest, now + 0.14, 190);
+    },
+  },
+  "random.coin": {
+    duration: 0.22,
+    render: (ctx, dest, now) => synthTone(ctx, dest, now, 920, 1_280),
+  },
   "game.win": { duration: 0.75, render: synthVictory },
   "game.loss": { duration: 0.6, render: (ctx, dest, now) => synthDown(ctx, dest, now, 260, 80) },
 };
 
-export function initSimulatorSoundService(): void {
-  if (typeof window === "undefined" || initialized) {
-    return;
+export function initSimulatorSoundService(): Promise<void> {
+  if (typeof window === "undefined") {
+    return Promise.resolve();
+  }
+  if (initialized) {
+    return readyPromise ?? Promise.resolve();
   }
   initialized = true;
   const generation = ++initGeneration;
   Howler.volume(volumeToGain(currentVolume));
-  Promise.all(
-    (Object.entries(recipes) as [SimulatorAudioCueId, SynthRecipe][]).map(([id, recipe]) =>
-      prerenderSound(id, recipe, generation),
-    ),
-  ).catch(() => undefined);
+  readyPromise =
+    currentSoundPack === "original"
+      ? Promise.all(
+          (Object.entries(recipes) as [SimulatorAudioCueId, SynthRecipe][]).map(([id, recipe]) =>
+            prerenderSound(id, recipe, generation),
+          ),
+        ).then(() => undefined)
+      : loadCdnSoundPack(currentSoundPack, generation);
+  return readyPromise;
+}
+
+export function setSimulatorSoundPack(packId: SimulatorSoundPackId): Promise<void> {
+  if (packId === currentSoundPack && initialized) {
+    return readyPromise ?? Promise.resolve();
+  }
+  disposeSimulatorSoundService();
+  currentSoundPack = packId;
+  return initSimulatorSoundService();
 }
 
 export function setSimulatorSoundVolume(volume: number): void {
@@ -82,13 +138,36 @@ export function disposeSimulatorSoundService(): void {
   howlMap.clear();
   blobUrls.length = 0;
   initialized = false;
+  readyPromise = null;
 }
 
 export function playSimulatorSound(id: SimulatorAudioCueId | null | undefined): void {
-  if (!id || currentVolume === 0) {
+  if (!id) {
     return;
   }
-  howlMap.get(id)?.play();
+  if (currentVolume === 0) {
+    simulatorAudioDebug("suppressed", { cue: id, reason: "muted" });
+    return;
+  }
+  const readiness = initialized ? readyPromise : initSimulatorSoundService();
+  const generation = initGeneration;
+  const playWhenCurrent = () => {
+    if (generation !== initGeneration || currentVolume === 0) return;
+    const sound = howlMap.get(id);
+    if (!sound) {
+      simulatorAudioDebug("unavailable", { cue: id });
+      return;
+    }
+    sound.play();
+    simulatorAudioDebug("played", { cue: id });
+  };
+  if (readiness) {
+    void readiness.then(playWhenCurrent).catch((error: unknown) => {
+      console.debug(`Failed to prepare simulator sound: ${id}`, error);
+    });
+    return;
+  }
+  playWhenCurrent();
 }
 
 function volumeToGain(volume: number): number {
@@ -119,6 +198,37 @@ async function prerenderSound(
   } catch (error) {
     console.debug(`Failed to render simulator sound: ${id}`, error);
   }
+}
+
+async function loadCdnSoundPack(
+  packId: Exclude<SimulatorSoundPackId, "original">,
+  generation: number,
+): Promise<void> {
+  await Promise.all(
+    (Object.keys(recipes) as SimulatorAudioCueId[]).map(
+      (id) =>
+        new Promise<void>((resolve, reject) => {
+          const howl = new Howl({
+            src: [simulatorSoundAssetUrl(packId, id)],
+            format: ["wav"],
+            preload: true,
+            volume: 1,
+            onload: () => {
+              if (generation === initGeneration) {
+                howlMap.set(id, howl);
+              } else {
+                howl.unload();
+              }
+              resolve();
+            },
+            onloaderror: (_soundId, error) => {
+              howl.unload();
+              reject(new Error(`Failed to load ${packId}/${id}: ${String(error)}`));
+            },
+          });
+        }),
+    ),
+  );
 }
 
 function encodeWav(buffer: AudioBuffer): ArrayBuffer {

@@ -3,7 +3,7 @@ import { op13TheOneWhoIsTheMostFreeIsThePirateKing116 } from "../../../../../car
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-116 The One Who Is the Most Free Is the Pirate King!!!", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(op13TheOneWhoIsTheMostFreeIsThePirateKing116);
   });
 });

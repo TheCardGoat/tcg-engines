@@ -20,5 +20,6 @@ describe("OP01-037 Kawamatsu", () => {
     expect(view.players.north.characters.map((card) => card?.instanceId)).toContain(kawamatsuId);
     expect(view.players.north.trash.map((card) => card.instanceId)).not.toContain(kawamatsuId);
     expect(view.prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

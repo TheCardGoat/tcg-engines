@@ -314,6 +314,21 @@ export function parseCountCondition(text: string): Condition | null {
     };
   }
 
+  // Total Character cost: the total cost of your Characters is N or more/less
+  m = /^the\s+total\s+cost\s+of\s+your\s+Characters?\s+is\s+(\d+)(?:\s+or\s+(less|more))?$/i.exec(
+    t,
+  );
+  if (m) {
+    return {
+      condition: "zoneValueTotal",
+      player: "self",
+      zone: "character",
+      property: "cost",
+      comparison: m[2] ? parseComparison(m[2]) : "eq",
+      value: parseInt(m[1]!, 10),
+    };
+  }
+
   // DON!! field count: you have N or more/less DON!! cards on your field
   m = /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+DON!!\s+cards?\s+on\s+your\s+field$/i.exec(t);
   if (m) {
@@ -336,15 +351,14 @@ export function parseCountCondition(text: string): Condition | null {
     };
   }
 
-  // DON!! field count (active): you have N or more active DON!! cards
+  // Active DON!! count: you have N or more/less active DON!! cards
+  // Prefer the dedicated activeDonCount condition used by Leader definitions.
   m = /^you\s+have\s+(\d+)\s+or\s+(less|more)\s+active\s+DON!!\s+cards?$/i.exec(t);
   if (m) {
     return {
-      condition: "donFieldCount",
-      player: "self",
+      condition: "activeDonCount",
       comparison: parseComparison(m[2]),
       value: parseInt(m[1]!, 10),
-      state: "active",
     };
   }
 

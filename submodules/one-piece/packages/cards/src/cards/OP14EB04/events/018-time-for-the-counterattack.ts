@@ -31,20 +31,13 @@ export const op14eb04TimeForTheCounterattack018: EventCard = {
         trigger: "counter",
         conditions: [
           {
-            condition: "compound",
-            operator: "or",
-            conditions: [
+            condition: "existsOnField",
+            zone: "character",
+            filters: [
               {
-                condition: "existsOnField",
-                player: "self",
-                zone: "character",
-                filters: [{ filter: "power", comparison: "gte", value: 8000 }],
-              },
-              {
-                condition: "existsOnField",
-                player: "opponent",
-                zone: "character",
-                filters: [{ filter: "power", comparison: "gte", value: 8000 }],
+                filter: "power",
+                comparison: "gte",
+                value: 8000,
               },
             ],
           },
@@ -70,12 +63,28 @@ export const op14eb04TimeForTheCounterattack018: EventCard = {
         actions: [
           {
             action: "play",
-            source: { player: "self", zone: "hand" },
-            count: { amount: 1, upTo: true },
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
             filters: [
-              { filter: "cardCategory", value: "character" },
-              { filter: "color", value: "red" },
-              { filter: "power", comparison: "lte", value: 2000 },
+              {
+                filter: "power",
+                comparison: "lte",
+                value: 2000,
+              },
+              {
+                filter: "color",
+                value: "red",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
             ],
           },
         ],

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "source": "riot-card-gallery",
+  "sourceUrl": "https://playriftbound.com/en-us/card-gallery/",
+  "locale": "en-US",
+  "fetchedAt": "2026-07-20T12:00:00.000Z",
+  "sha256": "338d5d926b32c6bf2baba0bc2186670a0b2e02af68c2b62157468d53cd9b9637",
+  "payload": {
+    "sets": [
+      {
+        "id": "OGN",
+        "name": "Origins",
+        "collectorNumberMax": 298
+      }
+    ],
+    "cards": [
+      {
+        "id": "ogn-001-298",
+        "collectorNumber": 1,
+        "name": "Test Unit",
+        "publicCode": "OGN-001/298",
+        "set": { "value": { "id": "OGN", "label": "Origins" } },
+        "cardType": { "type": [{ "id": "unit", "label": "Unit" }] },
+        "rarity": { "value": { "id": "common", "label": "Common" } },
+        "domain": { "values": [{ "id": "order", "label": "Order" }] },
+        "cardImage": {
+          "url": "https://cmsassets.rgpub.io/sanity/images/source/abcdefabcdefabcdefabcdefabcdefabcdefabcd-744x1039.png",
+          "dimensions": { "width": 744, "height": 1039 }
+        },
+        "orientation": "portrait",
+        "illustrator": {
+          "values": [{ "id": "artist", "label": "Official Artist" }]
+        },
+        "text": {
+          "richText": {
+            "type": "html",
+            "body": "<p>Printed reference text.</p>"
+          }
+        }
+      }
+    ],
+    "reportedTotal": 1
+  }
+}

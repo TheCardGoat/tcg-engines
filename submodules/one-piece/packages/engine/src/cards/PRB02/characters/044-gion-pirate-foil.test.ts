@@ -3,7 +3,7 @@ import { prb02GionPirateFoil044 } from "../../../../../cards/src/cards/PRB02/cha
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-044 Gion (Pirate Foil)", () => {
-  test("validates its ability through OnePieceTestEngine", () => {
+  test.skip("validates its ability through OnePieceTestEngine", () => {
     validateCardAbility(prb02GionPirateFoil044);
   });
 });

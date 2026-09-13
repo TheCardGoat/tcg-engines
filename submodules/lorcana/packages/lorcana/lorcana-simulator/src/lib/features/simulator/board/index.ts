@@ -7,7 +7,6 @@ export { default as DiscardZone } from "./DiscardZone.svelte";
 export { default as HandFan } from "./HandFan.svelte";
 export { default as HandZone } from "@/features/simulator/board/HandZone.svelte";
 export { default as InkwellZone } from "@/features/simulator/board/InkwellZone.svelte";
-export { default as ItemZone } from "./ItemZone.svelte";
 export { default as PlayArea } from "./PlayArea.svelte";
 export { default as PlayerBoard } from "./PlayerBoard.svelte";
 export { default as PlayZone } from "./PlayZone.svelte";

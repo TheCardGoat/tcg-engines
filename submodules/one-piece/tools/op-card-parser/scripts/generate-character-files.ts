@@ -210,16 +210,12 @@ for (const set of sets) {
       continue;
     }
 
-    // Parse effects from effect text
-    const printedEffect = card.i18n.en.effect;
-    const effectText = [
-      printedEffect,
-      card.trigger && !/\[Trigger\]/i.test(printedEffect ?? "")
-        ? `[Trigger] ${card.trigger}`
-        : undefined,
-    ]
-      .filter((text): text is string => Boolean(text))
-      .join("\n");
+    // Parse effects from effect text (never double-prefix [Trigger])
+    const { joinPrintedAbilityText } = await import("../src/printed-text.ts");
+    const effectText = joinPrintedAbilityText({
+      effect: card.i18n.en.effect,
+      trigger: card.trigger,
+    });
     if (effectText) {
       const effects = buildCardEffects(effectText);
       if (effects) {

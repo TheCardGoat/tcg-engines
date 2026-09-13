@@ -28,9 +28,9 @@ export const welcomeToNightCityRetailLiveWithTheAftermath = defineCyberpunkCard(
       text: "Each player defeats one of their Units.",
       trigger: { trigger: "play" },
       source: { selector: "self" },
-      effects: [
+      bindings: [
         {
-          effect: "defeat",
+          id: "friendlyUnit",
           target: {
             selector: "card",
             controller: "friendly",
@@ -40,13 +40,29 @@ export const welcomeToNightCityRetailLiveWithTheAftermath = defineCyberpunkCard(
           },
         },
         {
-          effect: "defeat",
+          id: "rivalUnit",
           target: {
             selector: "card",
             controller: "rival",
             zones: ["field"],
             cardTypes: ["unit"],
             selection: { mode: "choose", min: 1, max: 1, chooser: "rival" },
+          },
+        },
+      ],
+      effects: [
+        {
+          effect: "defeat",
+          target: {
+            selector: "bound",
+            id: "friendlyUnit",
+          },
+        },
+        {
+          effect: "defeat",
+          target: {
+            selector: "bound",
+            id: "rivalUnit",
           },
         },
       ],

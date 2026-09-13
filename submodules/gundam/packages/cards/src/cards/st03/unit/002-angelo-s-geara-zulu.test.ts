@@ -80,9 +80,10 @@ describe("Angelo's Geara Zulu (ST03-002)", () => {
     });
 
     it("cannot target an enemy Unit with Support", () => {
+      const ally = createMockUnit({ ap: 2, hp: 3 });
       const enemy = createMockUnit({ ap: 3, hp: 5 });
       const engine = GundamTestEngine.create(
-        { play: [st03AngeloSGearaZulu002] },
+        { play: [st03AngeloSGearaZulu002, ally] },
         { play: [enemy] },
       );
       const p1 = engine.asPlayer(PLAYER_ONE);

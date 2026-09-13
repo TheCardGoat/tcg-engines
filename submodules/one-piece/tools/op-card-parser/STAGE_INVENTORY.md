@@ -9,11 +9,11 @@ semantic review or command-driven behavior proof.
 <!-- prettier-ignore -->
 | Stored set | ID | Canonical ID | Name | Text | Structured | Audit | Exported | Behavior test | Definition |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| EB01 | EB01-011 | EB01-011 | Mini-Merry | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB01/stages/011-mini-merry.ts` |
-| EB01 | EB01-030 | EB01-030 | Loguetown | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB01/stages/030-loguetown.ts` |
-| EB02 | EB02-009 | EB02-009 | Thousand Sunny | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/stages/009-thousand-sunny.ts` |
-| EB02 | EB02-041 | EB02-041 | Merry Go | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/stages/041-merry-go.ts` |
-| EB02 | EB02-060 | EB02-060 | Merry Go | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/EB02/stages/060-merry-go.ts` |
+| EB01 | EB01-011 | EB01-011 | Mini-Merry | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/stages/011-mini-merry.ts` |
+| EB01 | EB01-030 | EB01-030 | Loguetown | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB01/stages/030-loguetown.ts` |
+| EB02 | EB02-009 | EB02-009 | Thousand Sunny | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/stages/009-thousand-sunny.ts` |
+| EB02 | EB02-041 | EB02-041 | Merry Go | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/stages/041-merry-go.ts` |
+| EB02 | EB02-060 | EB02-060 | Merry Go | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/EB02/stages/060-merry-go.ts` |
 | OP02 | OP02-024 | OP02-024 | Moby Dick | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP02/stages/024-moby-dick.ts` |
 | OP02 | OP02-048 | OP02-048 | Land of Wano | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP02/stages/048-land-of-wano.ts` |
 | OP02 | OP02-070 | OP02-070 | New Kama Land | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP02/stages/070-new-kama-land.ts` |
@@ -31,25 +31,25 @@ semantic review or command-driven behavior proof.
 | OP06 | OP06-098 | OP06-098 | Thriller Bark | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP06/stages/098-thriller-bark.ts` |
 | OP06 | OP06-117 | OP06-117 | The Ark Maxim | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP06/stages/117-the-ark-maxim.ts` |
 | OP07 | OP07-058 | OP07-058 | Island of Women | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/stages/058-island-of-women.ts` |
-| OP07 | OP07-117 | OP07-117 | Egghead | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP07/stages/117-egghead.ts` |
+| OP07 | OP07-117 | OP07-117 | Egghead | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP07/stages/117-egghead.ts` |
 | OP08 | OP08-020 | OP08-020 | Drum Kingdom | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/stages/020-drum-kingdom.ts` |
-| OP08 | OP08-039 | OP08-039 | Zou | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/stages/039-zou.ts` |
-| OP08 | OP08-056 | OP08-056 | Moby Dick | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP08/stages/056-moby-dick.ts` |
+| OP08 | OP08-039 | OP08-039 | Zou | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/stages/039-zou.ts` |
+| OP08 | OP08-056 | OP08-056 | Moby Dick | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP08/stages/056-moby-dick.ts` |
 | OP09 | OP09-021 | OP09-021 | Red Force | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/stages/021-red-force.ts` |
 | OP09 | OP09-060 | OP09-060 | Emptee Bluffs Island | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/stages/060-emptee-bluffs-island.ts` |
-| OP09 | OP09-080 | OP09-080 | Thousand Sunny | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP09/stages/080-thousand-sunny.ts` |
+| OP09 | OP09-080 | OP09-080 | Thousand Sunny | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/stages/080-thousand-sunny.ts` |
 | OP09 | OP09-099 | OP09-099 | Fullalead | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP09/stages/099-fullalead.ts` |
 | OP10 | OP10-021 | OP10-021 | Punk Hazard | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP10/stages/021-punk-hazard.ts` |
-| OP11 | OP11-117 | OP11-117 | Fish-Man Island | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP11/stages/117-fish-man-island.ts` |
-| OP12 | OP12-080 | OP12-080 | Baratie | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP12/stages/080-baratie.ts` |
+| OP11 | OP11-117 | OP11-117 | Fish-Man Island | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP11/stages/117-fish-man-island.ts` |
+| OP12 | OP12-080 | OP12-080 | Baratie | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP12/stages/080-baratie.ts` |
 | OP13 | OP13-022 | OP13-022 | Windmill Village | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/stages/022-windmill-village.ts` |
-| OP13 | OP13-078 | OP13-078 | Oro Jackson | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/stages/078-oro-jackson.ts` |
-| OP13 | OP13-099 | OP13-099 | The Empty Throne | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/OP13/stages/099-the-empty-throne.ts` |
+| OP13 | OP13-078 | OP13-078 | Oro Jackson | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/stages/078-oro-jackson.ts` |
+| OP13 | OP13-099 | OP13-099 | The Empty Throne | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP13/stages/099-the-empty-throne.ts` |
 | OP14EB04 | OP14-039 | OP14-039 | Coffin Boat | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/OP14EB04/stages/039-coffin-boat.ts` |
 | PRB01 | OP05-117_p2 | OP05-117 | Upper Yard (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/stages/117-upper-yard-jolly-roger-foil.ts` |
 | PRB01 | OP06-079_p2 | OP06-079 | Kingdom of GERMA (Jolly Roger Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB01/stages/079-kingdom-of-germa-jolly-roger-foil.ts` |
 | PRB02 | OP04-096_p1 | OP04-096 | Corrida Coliseum (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/stages/096-corrida-coliseum-pirate-foil.ts` |
 | PRB02 | OP05-021_p1 | OP05-021 | Revolutionary Army HQ (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/stages/021-revolutionary-army-hq-pirate-foil.ts` |
 | PRB02 | OP05-097_p1 | OP05-097 | Mary Geoise (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/stages/097-mary-geoise-pirate-foil.ts` |
-| PRB02 | ST14-017 | ST14-017 | Thousand Sunny (Pirate Foil) | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/PRB02/stages/017-thousand-sunny-pirate-foil.ts` |
-| ST01 | ST01-017 | ST01-017 | Thousand Sunny | yes | yes | mismatch | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |
+| PRB02 | ST14-017 | ST14-017 | Thousand Sunny (Pirate Foil) | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/PRB02/stages/017-thousand-sunny-pirate-foil.ts` |
+| ST01 | ST01-017 | ST01-017 | Thousand Sunny | yes | yes | pass | yes | yes | `../../packages/cards/src/cards/ST01/index.ts` |

@@ -295,9 +295,11 @@ function pickArgsFor(
     case "resolveDiscardFromHand":
     case "resolveAdjustGig":
     case "resolveStealGigs":
+    case "resolvePreventGigSteal":
     case "resolveTrigger":
     case "resolveEffectTarget":
     case "resolveCardTypeChoice":
+    case "resolveChooseEffect":
       return decisionFromMove(available, {
         pickFromCandidates: (cands) => cands[0] ?? null,
         pickPair: () => null,

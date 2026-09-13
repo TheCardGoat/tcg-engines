@@ -19,13 +19,16 @@ export function OnePieceTestStatePage() {
     if (loadState.status !== "ready") {
       return null;
     }
-    return buildOnePieceBoardFromState(loadState.envelope.payload.state, {
-      id: "test-engine-state",
-      label: "Test engine state",
-      description: "Board state opened from OnePieceTestEngine.",
-      logPrefix: "Opened test engine state.",
-      viewer: onePieceViewer(loadState.envelope.viewer),
-    });
+    return buildOnePieceBoardFromState(
+      loadState.envelope.payload.state as Parameters<typeof buildOnePieceBoardFromState>[0],
+      {
+        id: "test-engine-state",
+        label: "Test engine state",
+        description: "Board state opened from OnePieceTestEngine.",
+        logPrefix: "Opened test engine state.",
+        viewer: onePieceViewer(loadState.envelope.viewer),
+      },
+    );
   }, [loadState]);
 
   if (loadState.status === "loading") {

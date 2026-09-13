@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { execSync } from "node:child_process";
-import { dirname, join, relative } from "node:path";
+import { dirname, isAbsolute, join, relative } from "node:path";
 import type { CardType } from "@tcg/gundam-types";
 import { CARDS_DIR, REPO_ROOT } from "./_helpers.ts";
 import { cleanHtml } from "./effect-parser/helpers.ts";
@@ -15,7 +15,7 @@ interface StructuredCardEffectRecord {
   filePath: string;
   rawEffect?: string;
   effects: ReturnType<typeof parseEffect>;
-  parseStatus: "no-effect" | "keyword-only" | "parsed" | "empty" | "partial";
+  parseStatus: "no-effect" | "keyword-only" | "parsed" | "fallback" | "empty" | "partial";
 }
 
 function walk(dir: string): string[] {
@@ -66,12 +66,23 @@ function parseStatus(
   if (effects.length === 0) return "empty";
   if (effects.some((effect) => effect.directives.length === 0 && !effect.pilotKeyword))
     return "partial";
+  if (
+    effects.some((effect) =>
+      effect.directives.some(
+        (directive) => "action" in directive && directive.action.action === "unparsedText",
+      ),
+    )
+  )
+    return "fallback";
   return "parsed";
 }
 
 const outArg = process.argv.find((arg) => arg.startsWith("--out="));
 const outPath = outArg
-  ? join(REPO_ROOT, outArg.slice("--out=".length))
+  ? (() => {
+      const requested = outArg.slice("--out=".length);
+      return isAbsolute(requested) ? requested : join(REPO_ROOT, requested);
+    })()
   : join(REPO_ROOT, "tools/gundam-card-parser/data/structured/card-effects.json");
 
 const records: StructuredCardEffectRecord[] = walk(CARDS_DIR)
@@ -106,13 +117,17 @@ const summary = {
   noEffect: records.filter((record) => record.parseStatus === "no-effect").length,
   keywordOnly: records.filter((record) => record.parseStatus === "keyword-only").length,
   parsed: records.filter((record) => record.parseStatus === "parsed").length,
+  fallback: records.filter((record) => record.parseStatus === "fallback").length,
   partial: records.filter((record) => record.parseStatus === "partial").length,
   empty: records.filter((record) => record.parseStatus === "empty").length,
 };
 
 mkdirSync(dirname(outPath), { recursive: true });
 writeFileSync(outPath, `${JSON.stringify({ summary, cards: records }, null, 2)}\n`);
-execSync(`vp fmt ${relative(REPO_ROOT, outPath)}`, { cwd: REPO_ROOT, stdio: "ignore" });
+const relativeOutPath = relative(REPO_ROOT, outPath);
+if (!relativeOutPath.startsWith("..")) {
+  execSync(`vp fmt ${relativeOutPath}`, { cwd: REPO_ROOT, stdio: "ignore" });
+}
 
 console.log(`Wrote ${relative(REPO_ROOT, outPath)}`);
 console.log(JSON.stringify(summary, null, 2));

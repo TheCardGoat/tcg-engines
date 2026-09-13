@@ -33,5 +33,7 @@ describe("OP10-038 Roronoa Zoro", () => {
         .getView("south")
         .players.south.characters.find((card) => card?.instanceId === thresholdId)?.power,
     ).toBe(8000);
+    expect(engine.getView("south").prompts).toHaveLength(0);
+    expect(engine.getState().capabilityHistory).toHaveLength(0);
   });
 });

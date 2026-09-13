@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useRef, type MouseEvent } from "react";
 import { AspectRatio } from "@mantine/core";
-import type { SimulatorEntity } from "@tcg/simulator-contract";
+import { STANDARD_CARD_IMAGE_ASPECT_RATIO, type SimulatorEntity } from "@tcg/simulator-contract";
 import { ViewerSafeCardImage } from "@tcg/simulator-ui";
 import { useHasHover } from "../../../../lib/media-query";
 import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
 import { useCardInspect } from "./CardInspectContext";
 import classes from "./CardImage.module.css";
 
-export const CARD_BACK = "https://r2.tcg.online/public/cyberpunk/cards/back/card-back.webp";
+export const CARD_BACK = "https://cdn.tcg.online/public/cyberpunk/cards/back/card-back.webp";
 export const LEGEND_CARD_BACK =
-  "https://r2.tcg.online/public/cyberpunk/cards/back/legend-card-back.webp";
-export const CARD_ASPECT_RATIO = 5 / 7;
+  "https://cdn.tcg.online/public/cyberpunk/cards/back/legend-card-back.webp";
+export const CARD_ASPECT_RATIO = STANDARD_CARD_IMAGE_ASPECT_RATIO;
 
 interface CardImageProps {
   imageUrl?: string;
@@ -58,6 +58,7 @@ export function CardImage({
     traits: [],
     imageUrl,
     backImageUrl: cardType === "legend" ? LEGEND_CARD_BACK : CARD_BACK,
+    imageAspectRatio: CARD_ASPECT_RATIO,
   };
   const imageRef = useRef<HTMLImageElement | null>(null);
   const { show, hide } = useCardPreview();
@@ -112,7 +113,7 @@ export function CardImage({
   return (
     <AspectRatio
       ratio={CARD_ASPECT_RATIO}
-      className={`${classes.wrap} ${className ?? ""}`}
+      className={`sim-card-image-frame ${classes.wrap} ${className ?? ""}`}
       onMouseEnter={hoverPreviewable ? showPreview : undefined}
       onMouseLeave={hoverPreviewable ? () => hide() : undefined}
       onFocus={hoverPreviewable ? showPreview : undefined}
@@ -122,9 +123,7 @@ export function CardImage({
       <ViewerSafeCardImage
         entity={entity}
         alt={faceDown ? "Hidden card" : alt}
-        fill
-        className="h-full w-full"
-        imageClassName={classes.img}
+        className={classes.img}
         imageRef={imageRef}
         onImageLoad={onImageLoad}
         onImageError={onImageError}

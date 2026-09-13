@@ -16,10 +16,17 @@ included here.
   tests.
 - `submodules/cyberpunk` - Cyberpunk cards, engine, parser/scraper tooling, and
   server adapter.
+- `submodules/flesh-and-blood` - Flesh and Blood catalog types, cards, rules
+  engine runtime, and ingestion tooling.
+- `submodules/grand-archive` - Grand Archive catalog types, cards, rules
+  engine runtime, and ingestion tooling.
 - `submodules/gundam` - Gundam engine, cards, simulator, tooling, and server
   adapter.
+- `submodules/naruto` - Naruto cards, provisional rules engine, and tests.
 - `submodules/one-piece` - One Piece simulator, engine, cards, types,
   and utilities.
+- `submodules/riftbound` - Riftbound catalog types, cards, and ingestion
+  tooling.
 
 ## Requirements
 
