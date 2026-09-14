@@ -1,8 +1,8 @@
 Public export generated from:
-  private repository: /Users/wazar/projects/tcg-online-readme-update
+  private repository: /home/runner/work/the-card-goat-online/the-card-goat-online
   private commit: be7bd31c992c3fdcafb01a8d7fd0703e54c0994d
-  export branch: public-sync/2026-W37
-  generated at: 2026-09-13T20:36:45Z
+  export branch: public-sync/2026-W38
+  generated at: 2026-09-14T00:35:15Z
 
 Allowlisted source:
   - submodules/agnostic-simulator
