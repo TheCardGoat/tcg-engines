@@ -31,6 +31,7 @@ export const testOfMight = definePitchFamily(fabPitchFamilies["test-of-might"], 
           prize: {
             type: "create-token",
             token: "might",
+            creator: "token-controller",
             controller: "winner",
           },
         },

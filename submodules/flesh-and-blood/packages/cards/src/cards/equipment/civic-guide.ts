@@ -27,6 +27,7 @@ export const civicGuide = defineCard(fabCardIdentitiesByCanonicalId["zFTw6RPr76G
         effect: {
           type: "create-token",
           token: "might",
+          creator: "effect-controller",
           controller: "another-hero",
         },
       },

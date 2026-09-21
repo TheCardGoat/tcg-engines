@@ -1085,6 +1085,52 @@ describe("Grand Archive keyword effects", () => {
     expect(paidGame.state.objects[discardId]?.zone).toBe("graveyard");
   });
 
+  it("Exalted permits playing Exalted-element cards only while a champion enables another advanced element", () => {
+    const exaltedAction = keywordCard(
+      { name: "exalted" },
+      {
+        canonicalId: "kw-exalted-action",
+        type: "ACTION",
+        elements: ["EXALTED"],
+        cost: { kind: "none" },
+      },
+    );
+    function championWithElements(canonicalId: string, elements: readonly GrandArchiveElement[]) {
+      const champion = championCard(canonicalId);
+      return champion.layout.kind === "single-faced"
+        ? {
+            ...champion,
+            layout: {
+              kind: "single-faced" as const,
+              face: { ...champion.layout.face, elements: [...elements] },
+            },
+          }
+        : champion;
+    }
+    for (const [label, elements, playable] of [
+      ["advanced element", ["TERA"], true],
+      ["basic element only", ["FIRE"], false],
+      ["Exalted itself", ["EXALTED"], false],
+    ] as const) {
+      const game = GrandArchiveTestEngine.startFixture({
+        playerOne: {
+          champion: championWithElements("kw-exalted-champion", elements),
+          zones: { hand: [exaltedAction] },
+        },
+        playerTwo: { champion: championWithElements("kw-exalted-opponent", ["NORM"]) },
+      });
+      const player = game.player("player-one");
+      if (playable) {
+        player.activate(exaltedAction);
+        expect(game.state.stack.length).toBeGreaterThan(0);
+      } else {
+        expect(() => player.activate(exaltedAction)).toThrow(
+          /does not have every required element enabled/u,
+        );
+      }
+    }
+  });
+
   it("Intercept redirects a champion attack to the awake intercept ally", () => {
     const interceptAlly = keywordCard(
       { name: "intercept" },
@@ -1669,6 +1715,122 @@ describe("Grand Archive keyword effects", () => {
     expect(ally.zone).toBe("field");
     expect(ally.damage).toBe(0);
   });
+  it("Aetherwing requires a load, moves every loaded card to intent, and excludes attack cards", () => {
+    const weapon = keywordCard(
+      { name: "aetherwing" },
+      {
+        canonicalId: "kw-aetherwing",
+        type: "WEAPON",
+        subtypes: ["AETHERWING"],
+        stats: { power: 1, durability: 3 },
+      },
+    );
+    const charge = keywordCard(
+      { name: "aethercalling" },
+      {
+        canonicalId: "kw-loaded-charge",
+        type: "ACTION",
+        subtypes: ["AETHERCHARGE", "SPELL"],
+        stats: { power: 2 },
+        abilities: [
+          {
+            id: "kw-loaded-charge-a1",
+            kind: "card-resolution",
+            text: "Load this card into target Aetherwing.",
+            targets: [
+              {
+                id: "weapon",
+                kind: "target",
+                declared: "announcement",
+                chooser: "controller",
+                count: { kind: "exactly", amount: 1 },
+                unique: true,
+                candidates: {
+                  kind: "object",
+                  zones: ["field"],
+                  relationship: "controlled-by",
+                  player: "controller",
+                  filter: {
+                    kind: "all",
+                    filters: [
+                      { kind: "type", oneOf: ["WEAPON"] },
+                      { kind: "subtype", oneOf: ["AETHERWING"] },
+                    ],
+                  },
+                },
+              },
+            ],
+            effect: {
+              kind: "move",
+              subject: { kind: "source" },
+              destination: { zone: "loaded", host: { kind: "bound", binding: "weapon" } },
+            },
+          },
+        ],
+      },
+    );
+    const attack = keywordCard(
+      { name: "cleave" },
+      { canonicalId: "kw-aetherwing-attack", type: "ATTACK", stats: { power: 2 }, abilities: [] },
+    );
+    for (const withAttackCard of [false, true]) {
+      const game = keywordFixture({
+        playerOne: { zones: { field: [weapon], hand: [charge, charge, attack] } },
+      });
+      const p = game.player("player-one"),
+        q = game.player("player-two");
+      const attacker = p.card("keyword-fixture-champion-one"),
+        defender = q.card("keyword-fixture-champion-two"),
+        host = p.card(weapon);
+      const before = game.state;
+      expect(() => p.declareAttack(attacker, defender, { weaponIds: [host.objectId] })).toThrow();
+      expect(game.state).toEqual(before);
+      const loads = p.cards(charge);
+      for (const source of loads) {
+        p.activate(source, { targets: { weapon: [host.objectId] } });
+        drainStack(game);
+        expect(game.state.objects[source.objectId]?.zone).toBe("loaded");
+        expect(game.state.objects[source.objectId]?.hostId).toBe(host.objectId);
+      }
+      if (withAttackCard) {
+        p.activate(attack, { attackAttackerId: attacker.objectId });
+        const decision = untilDecision(game, "declare-resolved-attack");
+        const beforeAttack = game.state;
+        expect(() =>
+          p.execute({
+            move: "answer-decision",
+            decisionId: decision.id,
+            stateVersion: decision.stateVersion,
+            answer: {
+              attackerId: attacker.objectId,
+              targetIds: [defender.objectId],
+              weaponIds: [host.objectId],
+            },
+          }),
+        ).toThrow();
+        expect(game.state).toEqual(beforeAttack);
+        p.execute({
+          move: "answer-decision",
+          decisionId: decision.id,
+          stateVersion: decision.stateVersion,
+          answer: { attackerId: attacker.objectId, targetIds: [defender.objectId], weaponIds: [] },
+        });
+      } else {
+        p.declareAttack(attacker, defender, { weaponIds: [host.objectId] });
+        for (const source of loads) {
+          expect(game.state.objects[source.objectId]?.zone).toBe("intent");
+          expect(game.state.objects[source.objectId]?.hostId).toBe(attacker.objectId);
+        }
+      }
+      completeCombat(game);
+      expect(game.state.objects[defender.objectId]?.damage).toBe(withAttackCard ? 4 : 7);
+      expect(game.state.objects[host.objectId]?.counters.durability).toBe(withAttackCard ? 3 : 2);
+      for (const source of loads)
+        expect(game.state.objects[source.objectId]?.zone).toBe(
+          withAttackCard ? "loaded" : "graveyard",
+        );
+    }
+  });
 });
 
 type KeywordCoverageOwner =
@@ -1684,7 +1846,7 @@ type KeywordCoverageOwner =
 const keywordCoverageOwnership = {
   "aenean-progression": "keyword-effects.test.ts",
   aethercalling: { specializedSuite: "commands/special-legal-commands.test.ts" },
-  aetherwing: { specializedSuite: "kernel/engine.test.ts" },
+  aetherwing: "keyword-effects.test.ts",
   "attack-procedure": {
     noStandaloneRuntimeBranch: "catalog marker expanded into attack procedures",
   },
@@ -1703,7 +1865,7 @@ const keywordCoverageOwnership = {
   gun: { noStandaloneRuntimeBranch: "weapon subtype marker" },
   efficiency: "keyword-effects.test.ts",
   "elysian-aura": { specializedSuite: "kernel/engine.test.ts" },
-  exalted: { noStandaloneRuntimeBranch: "element rule, not an executable keyword branch" },
+  exalted: "keyword-effects.test.ts",
   empower: { specializedSuite: "kernel/engine.test.ts" },
   ephemeral: { noStandaloneRuntimeBranch: "object state produced by Ephemerate" },
   ephemerate: "keyword-effects.test.ts",

@@ -54,6 +54,7 @@ export const spikeWithInertia = definePitchFamily(fabPitchFamilies["spike-with-i
                   effect: {
                     type: "create-token",
                     token: "inertia",
+                    creator: "effect-controller",
                     controller: "attack-target",
                   },
                 },

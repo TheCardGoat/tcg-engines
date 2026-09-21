@@ -39,6 +39,7 @@ export const kavdaenTraderOfSkins = defineCard(
                     {
                       type: "create-token",
                       token: "copper",
+                      creator: "token-controller",
                       controller: "iteration-subject",
                     },
                   ],

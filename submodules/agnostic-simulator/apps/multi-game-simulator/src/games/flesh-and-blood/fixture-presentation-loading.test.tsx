@@ -56,3 +56,23 @@ it.each([
     expect(view.container.textContent).not.toMatch(/image unavailable/i);
   });
 });
+
+it("exposes shell hydration and presentation readiness separately from card image readiness", async () => {
+  const view = render(
+    <MemoryRouter initialEntries={["/flesh-and-blood/simulator/tests/sidebar-preview"]}>
+      <MantineProvider>
+        <FabPresentationCatalogProvider initial={testPresentationEnvelope}>
+          <FabAutomationSettingsProvider>
+            <FabSidebarPreview />
+          </FabAutomationSettingsProvider>
+        </FabPresentationCatalogProvider>
+      </MantineProvider>
+    </MemoryRouter>,
+  );
+
+  await waitFor(() => {
+    const root = view.container.querySelector(".fab-simulator-root");
+    expect(root?.getAttribute("data-fab-hydrated")).toBe("true");
+    expect(root?.getAttribute("data-fab-presentation-state")).toBe("ready");
+  });
+});

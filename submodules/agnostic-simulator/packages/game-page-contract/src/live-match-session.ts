@@ -36,9 +36,9 @@ export interface LiveMatchSessionConfig {
   bootstrap: LiveMatchBootstrapV1;
   /**
    * Heartbeat payload builder. When paired with `heartbeatIntervalMs`, the
-   * session owns the heartbeat loop and emits `heartbeat` while the underlying
-   * handle is authenticated. Omit both → no session-owned heartbeat (the
-   * handle's manager-level heartbeat still runs if configured).
+   * session owns the heartbeat loop and emits `heartbeat` while an active,
+   * seated player is authenticated. Omit both → no session-owned heartbeat.
+   * Gateway transport liveness and the manager-level latency ping are separate.
    */
   buildHeartbeatPayload?: () => Omit<
     Parameters<ClientToServerEvents["heartbeat"]>[0],
@@ -76,6 +76,8 @@ export interface LiveMatchSessionState {
   lastHeartbeatSentAt: string | null;
   lastHeartbeatAckAt: string | null;
   joined: boolean;
+  /** Role from the last `game_joined` for this session's gameId, else null. */
+  joinedRole: "player" | "spectator" | null;
   presence: PlayerPresenceDiagnostic[];
   /** Capped diagnostic event log (FIFO, last 20). */
   events: ConnectionDiagnosticEvent[];
@@ -105,6 +107,7 @@ export interface LiveMatchSession {
 
 const MAX_DIAGNOSTIC_EVENTS = 20;
 const SYNC_DEDUP_MS = 2000;
+export const LIVE_MATCH_HEARTBEAT_INTERVAL_MS = 30_000;
 
 /**
  * Factory for a live-match session. The session owns join lifecycle, the
@@ -119,6 +122,12 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
 
   let started = false;
   let stopped = false;
+  let joinRequested = false;
+  let heartbeatEligible =
+    config.bootstrap.game.status === "in_progress" &&
+    config.bootstrap.viewer.role === "player" &&
+    config.bootstrap.viewer.permissions.act &&
+    config.bootstrap.capabilities.actions;
   let lastSyncRequestAt = 0;
   const heartbeatProbeTracker = createHeartbeatProbeTracker();
 
@@ -139,6 +148,7 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     lastHeartbeatSentAt: null,
     lastHeartbeatAckAt: null,
     joined: false,
+    joinedRole: null,
     error: null,
     reconnectAttempt: 0,
   };
@@ -187,8 +197,15 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     baseState.authFailureReason = s.authFailureReason;
     baseState.error = s.error;
     baseState.reconnectAttempt = s.reconnectAttempt;
-    if (s.status === "disconnected" || s.status === "reconnecting" || !s.authenticated) {
+    // Credential refresh disconnects the socket on purpose. Keep the last
+    // game_joined acknowledgement so client-authoritative boards stay mounted
+    // and server-authoritative UIs can show "reconnecting" without unseating.
+    if (
+      s.authStatus !== "refreshing" &&
+      (s.status === "disconnected" || s.status === "reconnecting" || !s.authenticated)
+    ) {
       baseState.joined = false;
+      baseState.joinedRole = null;
     }
 
     if (becameConnected) {
@@ -220,10 +237,25 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
   }
 
   function applySessionEvent(event: string, payload: unknown): void {
+    if (
+      event === "game_ended" &&
+      payload &&
+      typeof payload === "object" &&
+      "gameId" in payload &&
+      payload.gameId === gameId
+    ) {
+      heartbeatEligible = false;
+    }
     switch (event) {
       case "game_joined": {
-        baseState.joined = true;
         const gameJoined = payload as GameJoinedPayload;
+        if (typeof gameJoined?.gameId === "string" && gameJoined.gameId !== gameId) {
+          break;
+        }
+        if (gameJoined?.role === "player" || gameJoined?.role === "spectator") {
+          baseState.joinedRole = gameJoined.role;
+        }
+        baseState.joined = true;
         if (gameJoined?.players) {
           presenceMap.clear();
           for (const player of gameJoined.players) {
@@ -324,9 +356,15 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     });
     cleanups.push(offHeartbeatAck);
 
+    // Completed games have no realtime scope and must remain read-only. Keep
+    // the connection listeners above so diagnostics still reflect the shared
+    // root socket, but do not join the game room or start a match heartbeat.
+    if (config.bootstrap.game.status === "completed") return;
+
     // Install listeners before joining. A warm gateway can acknowledge the
     // join immediately; subscribing afterward loses the initial state,
     // presence, and recent-history payloads until the page is reloaded.
+    joinRequested = true;
     recordDiagnostic("join_game_emit", {
       gameId,
       role: config.bootstrap.viewer.role,
@@ -341,6 +379,7 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
       const buildPayload = config.buildHeartbeatPayload;
       const intervalMs = config.heartbeatIntervalMs;
       const timer: ReturnType<typeof setInterval> = setInterval(() => {
+        if (!heartbeatEligible) return;
         if (!handle.getState().authenticated) return;
         const clientSentAt = Date.now();
         baseState.lastHeartbeatSentAt = new Date(clientSentAt).toISOString();
@@ -359,13 +398,14 @@ export function createLiveMatchSession(config: LiveMatchSessionConfig): LiveMatc
     stopped = true;
     heartbeatProbeTracker.clear();
 
-    handle.leave();
+    if (joinRequested) handle.leave();
 
     for (const cleanup of cleanups) cleanup();
     cleanups.length = 0;
 
     presenceMap.clear();
     baseState.joined = false;
+    baseState.joinedRole = null;
   }
 
   return {

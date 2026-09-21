@@ -45,7 +45,7 @@ export const welcomeToNightCityRetailJohnnySilverhandRockingRenegade = defineCyb
               minValue: 8,
             },
             reductionPerCount: 1,
-            min: 0,
+            min: 1,
           },
         },
         {

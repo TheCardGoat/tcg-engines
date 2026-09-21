@@ -76,7 +76,7 @@ export const stellarionShift: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           kind: "activated",
           text: "[Class Bonus] [Element Bonus] (2), Banish this card from your graveyard: Your champion gains stealth until end of turn. Prevent the next 4 non-combat damage that would be dealt to them this turn. Activate this ability only if your champion is distant.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "all",
             costs: [

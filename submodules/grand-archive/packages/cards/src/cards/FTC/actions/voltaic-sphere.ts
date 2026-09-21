@@ -93,7 +93,7 @@ export const voltaicSphere: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           kind: "activated",
           text: "[Class Bonus] Banish Voltaic Sphere from your graveyard: The next arcane element Spell card you activate this turn costs 1 less to activate.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "banish-self",
           },

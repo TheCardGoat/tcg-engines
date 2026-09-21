@@ -56,17 +56,16 @@ export const fireAndBrimstone = definePitchFamily(fabPitchFamilies["fire-and-bri
             outputBinding: "them",
           },
           {
-            type: "optional",
-            effect: {
-              type: "modify-activation-limit",
-              target: {
-                selector: "binding",
-                binding: "them",
-              },
-              operation: "additional",
-              count: 1,
-              duration: "this-turn",
+            // CR 5.2.3c: the allowance applies to every bound dagger by
+            // itself; no on-resolution decision exists.
+            type: "modify-activation-limit",
+            target: {
+              selector: "binding",
+              binding: "them",
             },
+            operation: "additional",
+            count: 1,
+            duration: "this-turn",
           },
         ],
       },

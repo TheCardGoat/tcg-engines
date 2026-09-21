@@ -45,7 +45,8 @@ describe("Stabbing Pain (FNG017) AAA", () => {
     Fang.must.playReaction(stabbingPainRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(4);
+    // + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(5);
     expectFabCard(Fang, stabbingPainRed).toBeIn("graveyard");
     expectFabPlayer(Dash).notToBeMarked();
 
@@ -74,7 +75,8 @@ describe("Stabbing Pain (FNG017) AAA", () => {
     Fang.must.playReaction(stabbingPainRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(4);
+    // + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(5);
 
     game.helpers.resolveRestOfCombat();
     expectFabPlayer(Dash).notToBeMarked();

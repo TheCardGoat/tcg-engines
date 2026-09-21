@@ -5,7 +5,7 @@ import {
   op11FisherTiger035,
   op14eb04SilversRayleigh108,
 } from "@tcg/op-cards";
-import { op11VinsmokeYonji046 } from "../../../../../cards/src/cards/OP11/characters/046-vinsmoke-yonji.ts";
+import { op11VinsmokeYonji046 } from "../../../../../cards/src/cards/characters/op11-046-vinsmoke-yonji.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

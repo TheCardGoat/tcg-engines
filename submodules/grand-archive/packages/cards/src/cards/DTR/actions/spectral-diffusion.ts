@@ -42,15 +42,29 @@ export const spectralDiffusion: GrandArchiveCard<GrandArchiveAbilityDefinition, 
               costKind: "reserve",
               costOperation: "subtract",
               amount: {
-                kind: "count",
-                collection: {
-                  zones: ["field"],
-                  player: "controller",
-                  filter: {
-                    kind: "object-state",
-                    state: "ephemeral",
+                kind: "calculate",
+                operator: "multiply",
+                operands: [
+                  {
+                    kind: "calculate",
+                    operator: "minimum",
+                    operands: [
+                      {
+                        kind: "count",
+                        collection: {
+                          zones: ["field"],
+                          player: "controller",
+                          filter: {
+                            kind: "object-state",
+                            state: "ephemeral",
+                          },
+                        },
+                      },
+                      2,
+                    ],
                   },
-                },
+                  1,
+                ],
               },
               duration: {
                 kind: "while-source-in-functional-zone",

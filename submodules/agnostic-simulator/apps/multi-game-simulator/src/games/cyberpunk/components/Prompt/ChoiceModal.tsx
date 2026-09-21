@@ -1,17 +1,24 @@
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { IconArrowBarToDown, IconArrowBarToUp, IconMinus } from "@tabler/icons-react";
+import { notifications } from "@mantine/notifications";
+import {
+  IconArrowBarToDown,
+  IconArrowBarToUp,
+  IconArrowRight,
+  IconCircleDashedCheck,
+  IconMinus,
+  IconTargetArrow,
+} from "@tabler/icons-react";
 import {
   buildInteractionSubmissionForActionId,
   type InteractionAction,
   type InteractionSubmissionValue,
+  type OptionSelectionInput,
 } from "@tcg/protocol";
 import type { PlayerPrompt } from "@tcg/cyberpunk-engine";
 import { DeckRevealShelf, interactionBoundsCopy } from "@tcg/simulator-ui";
 import { defOf } from "@tcg/cyberpunk-engine";
 import {
-  getGearAttachTargets,
-  getProgramSpatialTargets,
   PLAYER_SIDE_TO_ID,
   interactionSubmissionToEngineAction,
   useEngine,
@@ -22,7 +29,7 @@ import {
 import { buildCyberpunkDeckReveal } from "../../engine/deckRevealProjection";
 import { CardImage } from "../GameBoard/CardImage";
 import { CardNameToken } from "../CardDisplay/CardNameToken";
-import { useMoveSelection } from "../GameBoard/MoveSelectionContext";
+import { useLocalTargetSelection } from "./useLocalTargetSelection";
 import {
   choiceActionHasRenderableDrawerContent,
   choiceModalActionFromInteractionView,
@@ -36,7 +43,10 @@ import {
   useChoiceModalMinimized,
   useChoiceModalOpen,
 } from "./choiceModalState";
-import { booleanInput, entityInput, optionInput } from "./interactionInputs";
+import { booleanInput, entityInput, numberInput, optionInput } from "./interactionInputs";
+import { playCardPromptCopy, unaffordablePlayReason } from "./playCardAffordability";
+import { useCyberpunkAnimationActive } from "../../animation/CyberpunkAnimationActivityContext";
+import { buildAdjustGigOptions } from "../adjustGigOptions";
 import classes from "./ChoiceModal.module.css";
 
 interface ChoiceModalProps {
@@ -57,38 +67,16 @@ type ChoiceModalPlacement = "top" | "bottom";
  */
 export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   const [placement, setPlacement] = useState<ChoiceModalPlacement>("bottom");
+  const animationActive = useCyberpunkAnimationActive();
   const { humanSide, matchState } = useEngine();
   const interactionView = useEngineInteractionView(side);
   const prompt = useNativePromptPresentation(side);
-  const moveSelection = useMoveSelection();
-  const selectedPlayCardId =
-    moveSelection.selection?.side === side && moveSelection.selection.moveId === "playCard"
-      ? moveSelection.selection.sourceCardId
-      : undefined;
-  const selectedPlayCard = selectedPlayCardId ? matchState.G.cardIndex[selectedPlayCardId] : null;
-  const selectedPlayCardDef = selectedPlayCard ? defOf(selectedPlayCard) : null;
-  const selectedPlaySourceType: SelectedPlaySourceType | null =
-    selectedPlayCardDef?.type === "gear"
-      ? "gear"
-      : selectedPlayCardDef?.type === "program"
-        ? "program"
-        : null;
-  const selectedPlayTargetIds =
-    selectedPlayCardId && selectedPlaySourceType === "gear"
-      ? getGearAttachTargets({ interactionView }, selectedPlayCardId, "gear")
-      : selectedPlayCardId && selectedPlaySourceType === "program"
-        ? getProgramSpatialTargets({ matchState, side, interactionView }, selectedPlayCardId)
-        : [];
-  const selectedPlayTargetRequestId =
-    selectedPlayCardId && selectedPlayTargetIds.length > 0
-      ? ["selected-play-target", side, selectedPlayCardId, selectedPlayTargetIds.join("|")].join(
-          ":",
-        )
-      : null;
+  const localTargetSelection = useLocalTargetSelection(side);
+  const localTargetRequestId = localTargetSelection?.requestId ?? null;
   const targetPromptPresentation = getTargetPromptPresentation({
     actions: interactionView.actions,
     matchState,
-    selectedPlayTargetRequestId,
+    localTargetRequestId,
     choice: prompt.choice,
     visibleHandOwnerId: PLAYER_SIDE_TO_ID[side],
   });
@@ -127,16 +115,13 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   const currentRequestId = requestId ?? autoAction?.requestId ?? undefined;
   const minimized = useChoiceModalMinimized(side, currentRequestId);
   const actionRequestId = autoAction?.requestId;
-  const selectedPlayTargetChoiceOpen =
-    spatialChoiceOpened &&
-    selectedPlayCardId !== undefined &&
-    selectedPlaySourceType !== null &&
-    selectedPlayTargetIds.length > 0;
+  const localTargetChoiceOpen = spatialChoiceOpened && localTargetSelection !== null;
   const canRenderChoice =
     targetPromptPresentation.presentation === "drawer" ||
     Boolean(autoAction && !isTargetChoiceModalAction(autoAction)) ||
     spatialChoiceOpened;
   const canAutoOpenChoice = Boolean(
+    !animationActive &&
     canRenderChoice &&
     requestId &&
     targetPromptPresentation.presentation === "drawer" &&
@@ -156,7 +141,7 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   const hasRenderableNativeTargetChoice =
     nativeTargetChoice !== null && nativeTargetChoiceHasRenderableContent(nativeTargetChoice);
   const hasRenderableModalContent =
-    hasRenderableActionContent || hasRenderableNativeTargetChoice || selectedPlayTargetChoiceOpen;
+    hasRenderableActionContent || hasRenderableNativeTargetChoice || localTargetChoiceOpen;
   const shouldRenderEmptyDrawer =
     opened &&
     targetPromptPresentation.presentation === "drawer" &&
@@ -211,6 +196,7 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
   }, [currentRequestId, hasRenderableModalContent, side, storedOpened, shouldRenderEmptyDrawer]);
 
   if (
+    animationActive ||
     side !== humanSide ||
     !canRenderChoice ||
     (!hasRenderableModalContent && !shouldRenderEmptyDrawer)
@@ -269,26 +255,15 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
           </button>
         </div>
         {action && hasRenderableActionContent ? (
-          <ChoiceContent action={action} side={side} />
+          <ChoiceContent action={action} side={side} choice={prompt.choice} />
         ) : nativeTargetChoice && hasRenderableNativeTargetChoice ? (
           <NativeTargetChoiceContent
             choice={nativeTargetChoice}
             requestId={currentRequestId}
             side={side}
           />
-        ) : selectedPlayTargetChoiceOpen &&
-          selectedPlayCardId &&
-          selectedPlayCardDef &&
-          selectedPlaySourceType &&
-          currentRequestId ? (
-          <SelectedPlayTargetChoiceContent
-            requestId={currentRequestId}
-            side={side}
-            sourceCardId={selectedPlayCardId}
-            sourceName={selectedPlayCardDef.displayName ?? selectedPlayCardDef.name}
-            sourceType={selectedPlaySourceType}
-            targetIds={selectedPlayTargetIds}
-          />
+        ) : localTargetChoiceOpen && localTargetSelection ? (
+          <LocalTargetChoiceContent selection={localTargetSelection} />
         ) : shouldRenderEmptyDrawer ? (
           <EmptyChoiceContent onClose={() => setChoiceModalOpen(side, currentRequestId, false)} />
         ) : null}
@@ -299,14 +274,15 @@ export function ChoiceModal({ side, surface = "desktop" }: ChoiceModalProps) {
 }
 
 type NativeTargetChoice = Extract<NonNullable<PlayerPrompt["choice"]>, { type: "chooseTarget" }>;
-type SelectedPlaySourceType = "gear" | "program";
 
 function isTargetChoiceModalAction(action: InteractionAction | null): boolean {
   switch (action?.id) {
     case "resolveCardToPlay":
     case "resolveEffectTarget":
+    case "resolveAdjustGig":
     case "resolveDiscardFromHand":
     case "resolveCardToMove":
+    case "resolveSacrificialGear":
       return true;
     default:
       return false;
@@ -344,55 +320,44 @@ function EmptyChoiceContent({ onClose }: { onClose: () => void }) {
   );
 }
 
-function SelectedPlayTargetChoiceContent({
-  requestId,
-  side,
-  sourceCardId,
-  sourceName,
-  sourceType,
-  targetIds,
+function LocalTargetChoiceContent({
+  selection,
 }: {
-  requestId: string;
-  side: Side;
-  sourceCardId: string;
-  sourceName: string;
-  sourceType: SelectedPlaySourceType;
-  targetIds: readonly string[];
+  selection: NonNullable<ReturnType<typeof useLocalTargetSelection>>;
 }) {
-  const { dispatch, matchState } = useEngine();
-  const moveSelection = useMoveSelection();
-  const chooseTarget = (targetId: string) => {
-    const as = PLAYER_SIDE_TO_ID[side];
-    if (sourceType === "gear") {
-      dispatch({ type: "playCard", cardId: sourceCardId, attachToId: targetId, as });
-      moveSelection.clearSelection();
-      setChoiceModalOpen(side, requestId, false);
-      return;
-    }
-    const result = dispatch({ type: "playCard", cardId: sourceCardId, as });
-    if (result.success) {
-      dispatch({ type: "resolveEffectTarget", targetIds: [targetId], as });
-    }
-    moveSelection.clearSelection();
-    setChoiceModalOpen(side, requestId, false);
-  };
-
+  const { matchState } = useEngine();
   return (
     <>
       <p className={classes.title}>
-        Choose target for <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+        Choose {selection.kind === "attack" ? "attack target" : "target"} for{" "}
+        <SourceCardName cardId={selection.sourceCardId} fallbackName={selection.sourceName} />
       </p>
       <p className={classes.subtitle}>Select from the legal board targets below.</p>
       <TargetCandidateGrid
-        candidates={targetIds.map((cardId) => ({
+        candidates={selection.targetIds.map((cardId) => ({
           cardId,
           selected: false,
           summary: cardSummary(matchState, cardId),
           selectable: true,
           source: targetSource(matchState, cardId),
-          onSelect: () => chooseTarget(cardId),
+          onSelect: () => selection.selectCard(cardId),
         }))}
       />
+      <div className={classes.actions}>
+        {selection.canTargetRival ? (
+          <button type="button" className={classes.secondary} onClick={selection.selectRival}>
+            Attack rival Gig area
+          </button>
+        ) : null}
+        <button
+          type="button"
+          className={classes.secondary}
+          data-testid="target-modal-cancel-selection"
+          onClick={selection.cancel}
+        >
+          {selection.kind === "attack" ? "Cancel attack" : "Cancel"}
+        </button>
+      </div>
     </>
   );
 }
@@ -537,22 +502,28 @@ function NativeTargetChoiceContent({
   const summaries = targetIds.map((cardId) => cardSummary(matchState, cardId)).filter(Boolean);
   const allUnits = summaries.length > 0 && summaries.every((summary) => summary?.type === "unit");
   const sourceRules = choice.payload.source?.rulesText?.toLowerCase() ?? "";
-  const title =
-    allUnits && choice.payload.targetPurpose === "attachHost" ? (
-      "Choose Unit to equip"
-    ) : choice.payload.source ? (
-      <>
-        Choose target for{" "}
-        <SourceCardName
-          cardId={choice.payload.source.cardId}
-          fallbackName={choice.payload.source.displayName}
-        />
-      </>
-    ) : (
-      "Choose target"
-    );
-  const subtitle =
-    allUnits && choice.payload.targetPurpose === "attachHost"
+  const playCardCopy =
+    choice.payload.targetPurpose === "playCard"
+      ? playCardPromptCopy(choice.payload.availableEddiesAfterCosts)
+      : null;
+  const title = playCardCopy ? (
+    playCardCopy.title
+  ) : allUnits && choice.payload.targetPurpose === "attachHost" ? (
+    "Choose Unit to equip"
+  ) : choice.payload.source ? (
+    <>
+      Choose target for{" "}
+      <SourceCardName
+        cardId={choice.payload.source.cardId}
+        fallbackName={choice.payload.source.displayName}
+      />
+    </>
+  ) : (
+    "Choose target"
+  );
+  const subtitle = playCardCopy
+    ? playCardCopy.subtitle
+    : allUnits && choice.payload.targetPurpose === "attachHost"
       ? "Pick the friendly Unit that will receive the Gear."
       : sourceRules.toLowerCase().includes("rival unit")
         ? "Pick the rival Unit to target."
@@ -587,14 +558,24 @@ function NativeTargetChoiceContent({
       <p className={classes.title}>{title}</p>
       <p className={classes.subtitle}>{subtitle}</p>
       <TargetCandidateGrid
-        candidates={targetIds.map((cardId) => ({
-          cardId,
-          selected: selectedTargetIds.includes(cardId),
-          summary: cardSummary(matchState, cardId),
-          selectable: true,
-          source: targetSource(matchState, cardId),
-          onSelect: () => toggleTarget(cardId),
-        }))}
+        candidates={targetIds.map((cardId) => {
+          const unavailableReason =
+            choice.payload.targetPurpose === "playCard"
+              ? unaffordablePlayReason(
+                  choice.payload.effectiveCostsByCardId?.[cardId],
+                  choice.payload.availableEddiesAfterCosts,
+                )
+              : undefined;
+          return {
+            cardId,
+            selected: selectedTargetIds.includes(cardId),
+            summary: cardSummary(matchState, cardId),
+            selectable: unavailableReason === undefined,
+            unavailableReason,
+            source: targetSource(matchState, cardId),
+            onSelect: () => toggleTarget(cardId),
+          };
+        })}
       />
       {max > 1 || canSkip ? (
         <div className={classes.actions}>
@@ -655,21 +636,34 @@ function modalTitle(action: InteractionAction): string {
     case "resolveCardTypeChoice":
       return "Choose card type";
     case "resolveTrigger":
-      return "Choose trigger";
+      return "Choose next effect";
     case "resolveEffectTarget":
       return "Choose target";
     case "resolveCardToMove":
       return "Choose target";
+    case "resolveRedirectDefeat":
+      return "Redirect defeat";
+    case "resolveSacrificialGear":
+      return "Choose gear";
     default:
       return "Choice";
   }
 }
 
-function ChoiceContent({ action, side }: { action: InteractionAction; side: Side }) {
+function ChoiceContent({
+  action,
+  side,
+  choice,
+}: {
+  action: InteractionAction;
+  side: Side;
+  choice: PlayerPrompt["choice"];
+}) {
   const { dispatch, matchState } = useEngine();
   const interactionView = useEngineInteractionView(side);
   const [selectedSearchIds, setSelectedSearchIds] = useState<string[]>([]);
   const [selectedTargetIds, setSelectedTargetIds] = useState<string[]>([]);
+  const [preventPairs, setPreventPairs] = useState<Record<string, string>>({});
   const submitInteraction = useCallback(
     (actionId: string, values: Record<string, InteractionSubmissionValue> = {}) => {
       const submission = buildInteractionSubmissionForActionId({
@@ -678,6 +672,16 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
         values,
       });
       if (!submission) {
+        console.warn(
+          "[qa-diag] submission null",
+          actionId,
+          "viewActions:",
+          interactionView?.actions?.map(
+            (a: { id: string; enabled: boolean }) => `${a.id}:${a.enabled}`,
+          ),
+          "viewVersion:",
+          interactionView?.stateVersion,
+        );
         return;
       }
       const action = interactionSubmissionToEngineAction(submission, PLAYER_SIDE_TO_ID[side]);
@@ -692,6 +696,7 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
   useEffect(() => {
     setSelectedSearchIds([]);
     setSelectedTargetIds([]);
+    setPreventPairs({});
   }, [choiceResetKey]);
 
   useEffect(() => {
@@ -740,6 +745,130 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
   }
 
   switch (action.id) {
+    case "resolveAdjustGig": {
+      const dieInput = entityInput(action, "dieId", "die");
+      const valueInput = numberInput(action, "value");
+      if (!dieInput || !valueInput) return null;
+
+      const passInput = booleanInput(action, "pass");
+      const sourceName = textParam(action.text.params, "sourceDisplayName");
+      const sourceCardId = textParam(action.text.params, "sourceCardId");
+      const sourceRules = textParam(action.text.params, "sourceRulesText");
+      const chooseUpTo = booleanParam(action.text.params, "adjustGigChooseUpTo") === true;
+      const selectedDieId = selectedTargetIds[0];
+      const selectedDie = selectedDieId ? matchState.G.gigDice[selectedDieId] : undefined;
+      const selectedSummary = selectedDieId ? gigDieSummary(matchState, selectedDieId) : null;
+      const maxFaceValue = selectedDie
+        ? ({ d4: 4, d6: 6, d8: 8, d10: 10, d12: 12, d20: 20 } as const)[selectedDie.dieType]
+        : undefined;
+      const adjustmentOptions =
+        selectedDie && maxFaceValue
+          ? buildAdjustGigOptions({
+              currentValue: selectedDie.faceValue,
+              maxFaceValue,
+              maxAmount: numberParam(action.text.params, "adjustGigMaxAmount"),
+              direction: textParam(action.text.params, "adjustGigDirection"),
+              chooseUpTo,
+              minValue: valueInput.min,
+              maxValue: valueInput.max,
+            })
+          : [];
+
+      return (
+        <>
+          <p className={classes.title}>
+            {selectedSummary ? (
+              `Adjust ${selectedSummary.label}`
+            ) : sourceName ? (
+              <>
+                Choose Gig for <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+              </>
+            ) : (
+              "Choose Gig"
+            )}
+          </p>
+          <p className={classes.subtitle}>
+            {selectedSummary
+              ? `Showing ${selectedDie?.faceValue}. Choose its resulting value.`
+              : gigTargetSubtitle(dieInput.min, dieInput.max)}
+          </p>
+          {sourceRules ? <p className={classes.sourceLine}>{sourceRules}</p> : null}
+          {selectedDieId ? (
+            <div className={classes.options}>
+              {adjustmentOptions.map((option) => (
+                <button
+                  key={option.value}
+                  type="button"
+                  className={classes.option}
+                  data-testid="prompt-adjust-gig-option"
+                  data-value={option.value}
+                  aria-label={option.label}
+                  onClick={() =>
+                    submitInteraction(
+                      "resolveAdjustGig",
+                      option.delta === 0 && chooseUpTo
+                        ? { pass: true }
+                        : { dieId: selectedDieId, value: option.value },
+                    )
+                  }
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className={classes.options}>
+              {dieInput.candidates.map((candidate) => {
+                const dieId = candidate.entity.instanceId;
+                const summary = gigDieSummary(matchState, dieId);
+                const selectable = candidate.enabled !== false;
+                return (
+                  <button
+                    key={dieId}
+                    type="button"
+                    className={`${classes.option} ${selectable ? "" : classes.optionUnavailable}`}
+                    data-testid="target-modal-gig"
+                    data-die-id={dieId}
+                    aria-disabled={selectable ? undefined : true}
+                    aria-label={`${selectable ? "Select" : "Not a valid target"} ${summary?.label ?? "Gig"}`}
+                    onClick={() => {
+                      if (selectable) setSelectedTargetIds([dieId]);
+                    }}
+                  >
+                    <span className={classes.triggerOptionTitle}>
+                      {summary?.label ?? "Gig die"}
+                    </span>
+                    <span className={classes.triggerOptionCopy}>
+                      {summary?.description ?? dieId}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          <div className={classes.actions}>
+            {selectedDieId ? (
+              <button
+                type="button"
+                className={classes.secondary}
+                onClick={() => setSelectedTargetIds([])}
+              >
+                Choose another Gig
+              </button>
+            ) : passInput ? (
+              <button
+                type="button"
+                className={classes.secondary}
+                onClick={() => submitInteraction("resolveAdjustGig", { pass: true })}
+              >
+                Take none
+              </button>
+            ) : null}
+          </div>
+        </>
+      );
+    }
+
     case "resolveEffectTarget": {
       const targetInput = entityInput(action, "targetIds", "card");
       if (targetInput) {
@@ -795,11 +924,19 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
             <TargetCandidateGrid
               candidates={targetInput.candidates.map((candidate) => {
                 const cardId = candidate.entity.instanceId;
+                const unavailableReason =
+                  candidate.enabled === false
+                    ? (unaffordablePlayReason(
+                        numberParam(candidate.disabledText?.params, "cost"),
+                        numberParam(candidate.disabledText?.params, "available"),
+                      ) ?? "Can't pay this card")
+                    : undefined;
                 return {
                   cardId,
                   selected: selectedTargetIds.includes(cardId),
                   summary: cardSummary(matchState, cardId),
                   selectable: candidate.enabled !== false,
+                  unavailableReason,
                   source: targetSource(matchState, cardId),
                   onSelect: () => toggleTarget(cardId),
                 };
@@ -986,6 +1123,8 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
       const cardInput = entityInput(action, "cardIds", "card");
       if (!cardInput) return null;
       const passInput = booleanInput(action, "pass");
+      const sourceName = textParam(action.text.params, "sourceDisplayName");
+      const sourceCardId = textParam(action.text.params, "sourceCardId");
       const max = cardInput.max;
       const required = passInput ? max : cardInput.min;
       const selectedCount = selectedTargetIds.length;
@@ -1002,7 +1141,16 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
       const requirement = required === max ? `${required}` : `${required}-${max}`;
       return (
         <>
-          <p className={classes.title}>Choose cards to discard</p>
+          <p className={classes.title} data-testid="choice-modal-title">
+            {sourceName ? (
+              <>
+                Choose {max === 1 ? "a card" : "cards"} to discard for{" "}
+                <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+              </>
+            ) : (
+              "Choose cards to discard"
+            )}
+          </p>
           <p className={classes.subtitle}>
             Select {requirement} card{max === 1 ? "" : "s"}, or skip this optional effect.
           </p>
@@ -1070,51 +1218,232 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
       );
     }
 
+    case "resolvePreventGigSteal": {
+      const dieInput = entityInput(action, "dieIds", "die");
+      const cardInput = entityInput(action, "cardIds", "card");
+      if (!dieInput || !cardInput) return null;
+      const stealEntries = choice?.type === "preventGigSteal" ? choice.payload.stealEntries : [];
+      const handEntries = choice?.type === "preventGigSteal" ? choice.payload.handEntries : [];
+      const valueByDie = new Map(stealEntries.map((entry) => [entry.dieId, entry.value]));
+      const costByCard = new Map(handEntries.map((entry) => [entry.cardId, entry.cost]));
+      const usedCardIds = new Set(Object.values(preventPairs));
+      const rows = dieInput.candidates.map((candidate) => {
+        const dieId = candidate.entity.instanceId;
+        const value = valueByDie.get(dieId);
+        const matchingCardIds =
+          value === undefined
+            ? []
+            : cardInput.candidates
+                .map((cardCandidate) => cardCandidate.entity.instanceId)
+                .filter((cardId) => costByCard.get(cardId) === value);
+        return { dieId, value, matchingCardIds };
+      });
+      const pairCount = Object.keys(preventPairs).length;
+      const togglePair = (dieId: string, cardId: string) => {
+        setPreventPairs((current) => {
+          if (current[dieId] === cardId) {
+            const next = { ...current };
+            delete next[dieId];
+            return next;
+          }
+          return { ...current, [dieId]: cardId };
+        });
+      };
+      return (
+        <>
+          <p className={classes.title}>Prevent Gig Steal</p>
+          <p className={classes.subtitle}>
+            Discard a card whose cost equals the Gig&apos;s value to protect it, or let the Rival
+            steal.
+          </p>
+          <div className={classes.options}>
+            {rows.map((row) => {
+              const selectedCardId = preventPairs[row.dieId];
+              return (
+                <div
+                  key={row.dieId}
+                  className={classes.preventRow}
+                  data-testid="prevent-steal-gig-row"
+                  data-die-id={row.dieId}
+                >
+                  <p className={classes.preventRowLabel}>
+                    Gig · value {row.value ?? "?"}
+                    {selectedCardId ? (
+                      <span className={classes.selectedMark}>Protected</span>
+                    ) : null}
+                  </p>
+                  <div className={classes.preventRowCards}>
+                    {row.matchingCardIds.map((cardId) => {
+                      const selected = selectedCardId === cardId;
+                      const disabled = !selected && usedCardIds.has(cardId);
+                      const summary = cardSummary(matchState, cardId);
+                      return (
+                        <button
+                          key={cardId}
+                          type="button"
+                          className={`${classes.option} ${classes.cardOption} ${
+                            selected ? classes.optionSelected : ""
+                          }`}
+                          disabled={disabled}
+                          data-testid="prevent-steal-card-option"
+                          data-card-id={cardId}
+                          aria-label={`${selected ? "Selected" : "Select"} ${summary?.name ?? cardId} (cost ${costByCard.get(cardId) ?? "?"})`}
+                          aria-pressed={selected}
+                          onClick={() => togglePair(row.dieId, cardId)}
+                        >
+                          <CardArt summary={summary} fallbackName={cardId} />
+                          <CardMeta summary={summary} />
+                          {selected ? <span className={classes.selectedMark}>Selected</span> : null}
+                        </button>
+                      );
+                    })}
+                    {row.matchingCardIds.length === 0 ? (
+                      <span className={classes.preventRowEmpty}>
+                        No hand card matches this value.
+                      </span>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className={classes.actions}>
+            <span className={classes.selectionCount}>
+              {pairCount}/{rows.length} protected
+            </span>
+            <button
+              type="button"
+              className={classes.secondary}
+              data-testid="prevent-steal-pass"
+              onClick={() => {
+                submitInteraction("resolvePreventGigSteal", {
+                  pass: true,
+                  dieIds: [],
+                  cardIds: [],
+                });
+              }}
+            >
+              Let it be stolen
+            </button>
+            <button
+              type="button"
+              className={classes.primary}
+              data-testid="prevent-steal-confirm"
+              disabled={pairCount === 0}
+              onClick={() => {
+                if (pairCount === 0) return;
+                submitInteraction("resolvePreventGigSteal", {
+                  dieIds: Object.keys(preventPairs),
+                  cardIds: Object.values(preventPairs),
+                });
+              }}
+            >
+              Prevent
+            </button>
+          </div>
+        </>
+      );
+    }
+
     case "resolveTrigger": {
       const triggerInput = optionInput(action, "triggerId");
       if (!triggerInput) return null;
       const canPass = !triggerInput.required;
+      const pendingCount = triggerInput.options.length;
+      const rollContext = triggerRollContext(triggerInput.options);
+      const mandatoryCount = triggerInput.options.filter(
+        (option) =>
+          !booleanParam(option.text.params, "optional") &&
+          !booleanParam(option.text.params, "containsOptionalEffect"),
+      ).length;
       return (
         <>
-          <p className={classes.title}>{canPass ? "Optional ability" : "Ability pending"}</p>
-          <p className={classes.subtitle}>
-            {canPass
-              ? "Use the ability now, or pass to continue the turn."
-              : triggerInput.options.length === 1
-                ? "Resolve this ability before the game can continue."
-                : "Choose which pending ability resolves next."}
+          <p className={classes.title}>
+            {rollContext
+              ? "Choose the next Gig roll effect"
+              : pendingCount > 1
+                ? "Choose the next effect"
+                : "Resolve the pending effect"}
           </p>
-          <div className={classes.options}>
-            {triggerInput.options.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                className={classes.option}
-                onClick={() => {
-                  submitInteraction("resolveTrigger", { triggerId: option.id });
-                }}
-              >
-                <span className={classes.triggerOptionTitle}>
-                  <SourceCardName
-                    cardId={textParam(option.text.params, "sourceCardId")}
-                    fallbackName={textParam(option.text.params, "cardName") ?? option.id}
-                    interactive={false}
-                  />
-                </span>
-                <span className={classes.triggerOptionCopy}>
-                  {textParam(option.text.params, "abilityText") ?? "Resolve ability"}
-                </span>
-              </button>
-            ))}
+          <p className={classes.subtitle}>
+            {pendingCount === 1
+              ? canPass
+                ? "Resolve this optional effect, or skip it."
+                : "This required effect must resolve before the game continues."
+              : `${pendingCount} effects are pending. Pick one to resolve now; you’ll choose again if others remain.`}
+          </p>
+          {rollContext ? (
+            <div className={classes.rollContext} data-testid="trigger-roll-context">
+              <span className={classes.rollDie}>{rollContext.dieType.toUpperCase()}</span>
+              <span className={classes.rollResult}>{rollContext.result}</span>
+              <span className={classes.rollSummary}>
+                Rolled from your fixer area
+                {rollContext.boundary ? ` · ${rollContext.boundary} value` : ""}
+              </span>
+            </div>
+          ) : null}
+          <div className={classes.triggerOptions}>
+            {triggerInput.options.map((option) => {
+              const optional = booleanParam(option.text.params, "optional") === true;
+              const containsOptionalEffect =
+                booleanParam(option.text.params, "containsOptionalEffect") === true;
+              const sourceCardId = textParam(option.text.params, "sourceCardId");
+              const fallbackName = textParam(option.text.params, "cardName") ?? option.id;
+              const summary = sourceCardId ? cardSummary(matchState, sourceCardId) : null;
+              const requirement = optional
+                ? "optional"
+                : containsOptionalEffect
+                  ? "choice"
+                  : "required";
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  className={`${classes.option} ${classes.triggerCardOption}`}
+                  data-option-requirement={requirement}
+                  data-testid="pending-effect-option"
+                  onClick={() => {
+                    submitInteraction("resolveTrigger", { triggerId: option.id });
+                  }}
+                >
+                  <CardArt summary={summary} fallbackName={fallbackName} />
+                  <span className={classes.triggerOptionBody}>
+                    <span className={classes.triggerOptionHeader}>
+                      <span className={classes.triggerOptionTitle}>{fallbackName}</span>
+                      <span className={classes.requirementBadge}>
+                        {requirement === "choice"
+                          ? "Includes choice"
+                          : requirement === "optional"
+                            ? "Optional"
+                            : "Required"}
+                      </span>
+                    </span>
+                    <span className={classes.triggerOptionCopy}>
+                      {textParam(option.text.params, "abilityText") ?? "Resolve effect"}
+                    </span>
+                    <span className={classes.resolveNextLabel}>
+                      Resolve next <IconArrowRight size={14} stroke={1.9} aria-hidden="true" />
+                    </span>
+                  </span>
+                </button>
+              );
+            })}
             {canPass ? (
               <button
                 type="button"
-                className={classes.option}
+                className={`${classes.option} ${classes.passOption}`}
                 onClick={() => {
                   submitInteraction("resolveTrigger", { pass: true });
                 }}
               >
-                Pass on ability
+                <span>Skip optional effects</span>
+                {mandatoryCount > 0 ? (
+                  <span className={classes.triggerOptionCopy}>
+                    {mandatoryCount === 1
+                      ? "The required effect will resolve next."
+                      : `${mandatoryCount} required effects will remain pending.`}
+                  </span>
+                ) : null}
               </button>
             ) : null}
           </div>
@@ -1129,31 +1458,21 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
       const canSkip = cardInput.min === 0;
       const maxSelect = cardInput.max;
       const multiSelect = maxSelect > 1;
-      const requiredText =
-        cardInput.min === cardInput.max
-          ? `${cardInput.min}`
-          : cardInput.min === 0
-            ? `up to ${cardInput.max}`
-            : `${cardInput.min}-${cardInput.max}`;
       const lookCount = numberParam(action.text.params, "lookCount") ?? maxSelect;
+      const eligibleCount = numberParam(action.text.params, "eligibleCount") ?? maxSelect;
+      const eligibilityLabel = textParam(action.text.params, "eligibilityLabel") ?? "any card";
+      const selectionLimitLabel = textParam(action.text.params, "selectionLimitLabel");
+      const destinationReveal = booleanParam(action.text.params, "destinationReveal") ?? false;
+      const remainderZone = textParam(action.text.params, "remainderZone") ?? "deckBottom";
       const sourceName = textParam(action.text.params, "sourceDisplayName");
       const sourceCardId = textParam(action.text.params, "sourceCardId");
-      const revealedCardIds = cardInput.candidates.flatMap((candidate) =>
-        candidate.entity.kind === "card" ? [String(candidate.entity.instanceId)] : [],
-      );
-      const reveal = buildCyberpunkDeckReveal({
-        id: `${action.requestId}:search`,
-        zoneId: side === "opponent" ? "opp-deck" : "p-deck",
-        ownerId: String(PLAYER_SIDE_TO_ID[side]),
-        cardIds: revealedCardIds,
-        count: lookCount,
-        turnNumber: matchState.G.turnMetadata.turnNumber,
-        matchState,
-      });
       const selectedCount = selectedSearchIds.length;
-      const selectableCount = cardInput.candidates.filter(
-        (candidate) => candidate.enabled !== false,
-      ).length;
+      const selectionRequirementTooltip = scrySelectionRequirementTooltip(
+        cardInput.min,
+        cardInput.max,
+      );
+      const SelectionRequirementIcon =
+        cardInput.min === 0 ? IconCircleDashedCheck : IconTargetArrow;
       const canConfirm =
         selectedCount >= cardInput.min && selectedCount <= cardInput.max && selectedCount > 0;
       const submitScry = (selectedCardIds: string[]) => {
@@ -1174,31 +1493,55 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
         });
       };
       return (
-        <>
+        <div className={classes.searchFlow}>
           <div className={classes.searchHeader}>
             <div className={classes.searchTitleBlock}>
-              <p className={classes.kicker}>Deck search</p>
-              {sourceName ? (
-                <p className={classes.sourceLine}>
-                  Resolving <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
-                </p>
-              ) : null}
-              <p className={classes.title}>Pick {requiredText}</p>
-              <p className={classes.subtitle}>
-                {selectableCount === 0 && canSkip
-                  ? "No valid Gear targets. Take none to continue."
-                  : `Top ${lookCount} revealed. Hover for full card view.`}
-              </p>
-              <DeckRevealShelf reveal={reveal} className={classes.promptRevealShelf} />
+              <div className={classes.searchIdentityRow}>
+                <span
+                  className={classes.searchRequirementBadge}
+                  data-testid="search-deck-requirement"
+                  data-requirement={cardInput.min === 0 ? "optional" : "required"}
+                  role="img"
+                  aria-label={selectionRequirementTooltip}
+                  title={selectionRequirementTooltip}
+                  tabIndex={0}
+                >
+                  <SelectionRequirementIcon size={16} stroke={2.2} aria-hidden="true" />
+                </span>
+                {sourceName ? (
+                  <p className={classes.sourceLine}>
+                    Resolving <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+                  </p>
+                ) : null}
+              </div>
+              <div className={classes.searchBrief}>
+                <p className={classes.title}>{scryPromptTitle(destinationZone, cardInput.max)}</p>
+              </div>
+              <div className={classes.searchDetailRail}>
+                <div className={classes.searchContext} data-testid="search-deck-context">
+                  <span>
+                    <strong>{eligibleCount}</strong> of {lookCount} eligible
+                    {eligibilityLabel === "any card" ? null : ` · ${eligibilityLabel}`}
+                  </span>
+                  {selectionLimitLabel ? <span>{selectionLimitLabel}</span> : null}
+                </div>
+              </div>
             </div>
             <div
               className={classes.searchMeter}
-              aria-label={`${selectedCount} of ${maxSelect} selected`}
+              aria-label={`${selectedCount} of ${maxSelect} chosen`}
             >
+              <span>Chosen</span>
               <strong>
-                {selectedCount}/{maxSelect}
+                {selectedCount}
+                <span className={classes.searchMeterDivider}> of </span>
+                {maxSelect}
               </strong>
-              <span>selected</span>
+              <span className={classes.searchMeterTicks} aria-hidden="true">
+                {Array.from({ length: maxSelect }, (_, index) => (
+                  <span key={index} data-active={index < selectedCount ? "true" : "false"} />
+                ))}
+              </span>
             </div>
           </div>
           <div className={`${classes.options} ${classes.searchOptions}`}>
@@ -1207,6 +1550,7 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
               const selected = selectedSearchIds.includes(cardId);
               const summary = cardSummary(matchState, cardId);
               const selectable = candidate.enabled !== false;
+              const ineligibleReason = textParam(candidate.disabledText?.params, "label");
               return (
                 <button
                   key={cardId}
@@ -1228,8 +1572,13 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                   aria-pressed={multiSelect ? selected : undefined}
                   aria-disabled={selectable ? undefined : true}
                   aria-label={`${
-                    selectable ? (selected ? "Selected" : "Select") : "Not a valid target"
+                    selectable
+                      ? selected
+                        ? "Selected"
+                        : "Select"
+                      : (ineligibleReason ?? "Not eligible")
                   } ${summary?.name ?? cardId}`}
+                  title={selectable ? undefined : ineligibleReason}
                   onClick={() => {
                     if (!selectable) {
                       return;
@@ -1243,7 +1592,7 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                 >
                   <CardArt summary={summary} fallbackName={cardId} />
                   <CardMeta summary={summary} />
-                  {!selectable ? <span className={classes.invalidMark}>Not target</span> : null}
+                  {!selectable ? <span className={classes.invalidMark}>Not eligible</span> : null}
                   {selected ? <span className={classes.selectedMark}>Selected</span> : null}
                 </button>
               );
@@ -1251,9 +1600,7 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
           </div>
           <div className={classes.actions} data-testid="search-deck-actions">
             <span className={classes.selectionCount}>
-              {selectedCount === 0
-                ? "No cards selected"
-                : `${selectedCount} ready for ${scryDestinationLabel(destinationZone)}`}
+              {scryConsequenceLabel(selectedCount, lookCount, destinationZone, remainderZone)}
             </span>
             {canSkip ? (
               <button
@@ -1264,7 +1611,7 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                   submitScry([]);
                 }}
               >
-                Take none
+                {scrySkipLabel(lookCount, remainderZone)}
               </button>
             ) : null}
             {multiSelect ? (
@@ -1277,11 +1624,11 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                   submitScry(selectedSearchIds);
                 }}
               >
-                {scryConfirmLabel(destinationZone)}
+                {scryConfirmLabel(destinationZone, selectedCount, destinationReveal)}
               </button>
             ) : null}
           </div>
-        </>
+        </div>
       );
     }
 
@@ -1319,7 +1666,11 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
           <p className={classes.subtitle}>
             {revealedCount} card{revealedCount === 1 ? "" : "s"} revealed from the top of the deck.
           </p>
-          <DeckRevealShelf reveal={reveal} className={classes.promptRevealShelf} />
+          <DeckRevealShelf
+            reveal={reveal}
+            presentation="inline"
+            className={classes.promptRevealCards}
+          />
           <div className={classes.options}>
             {destinationInput.options.map((option) => {
               const label =
@@ -1387,6 +1738,8 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
     case "resolveCardToMove": {
       const cardInput = entityInput(action, "cardId", "card");
       if (!cardInput) return null;
+      const passInput = booleanInput(action, "pass");
+      const canSkip = cardInput.min === 0 || Boolean(passInput);
       const sourceName = textParam(action.text.params, "sourceDisplayName");
       const sourceCardId = textParam(action.text.params, "sourceCardId");
       const destination = textParam(action.text.params, "destination");
@@ -1408,9 +1761,13 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
             )}
           </p>
           <p className={classes.subtitle}>
-            {hasMultipleTargetZones(matchState, cardInput.candidates)
-              ? "Select from the legal targets below. Targets are grouped by source zone."
-              : "Select from the legal targets below."}
+            {canSkip
+              ? destination === "trash"
+                ? "Select a card to trash, or skip this effect."
+                : "Select a card to move, or skip this effect."
+              : hasMultipleTargetZones(matchState, cardInput.candidates)
+                ? "Select from the legal targets below. Targets are grouped by source zone."
+                : "Select from the legal targets below."}
           </p>
           <TargetCandidateGrid
             candidates={cardInput.candidates.map((candidate) => {
@@ -1421,10 +1778,25 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
                 summary: cardSummary(matchState, cardId),
                 selectable: candidate.enabled !== false,
                 source: targetSource(matchState, cardId),
+                host: attachedHostSummary(matchState, cardId),
                 onSelect: () => submitInteraction("resolveCardToMove", { cardId }),
               };
             })}
           />
+          {canSkip ? (
+            <div className={classes.actions}>
+              <button
+                type="button"
+                className={classes.secondary}
+                data-testid="card-to-move-pass"
+                onClick={() => {
+                  submitInteraction("resolveCardToMove", { pass: true });
+                }}
+              >
+                Skip effect
+              </button>
+            </div>
+          ) : null}
         </>
       );
     }
@@ -1432,6 +1804,101 @@ function ChoiceContent({ action, side }: { action: InteractionAction; side: Side
     case "gainGig":
     case "resolveCardToPlay":
       return null;
+    case "resolveSacrificialGear": {
+      const cardInput = entityInput(action, "cardId", "card");
+      if (!cardInput) return null;
+      const sourceName = textParam(action.text.params, "sourceDisplayName");
+      const sourceCardId = textParam(action.text.params, "sourceCardId");
+      return (
+        <>
+          <p className={classes.title}>
+            {sourceName ? (
+              <>
+                Choose which Gear is defeated instead of{" "}
+                <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+              </>
+            ) : (
+              "Choose which attached Gear is defeated instead of this Unit"
+            )}
+          </p>
+          <p className={classes.subtitle}>Select one attached Gear. The Unit stays in play.</p>
+          <TargetCandidateGrid
+            candidates={cardInput.candidates.map((candidate) => {
+              const cardId = candidate.entity.instanceId;
+              return {
+                cardId,
+                selected: false,
+                summary: cardSummary(matchState, cardId),
+                selectable: candidate.enabled !== false,
+                source: targetSource(matchState, cardId),
+                host: attachedHostSummary(matchState, cardId),
+                onSelect: () => submitInteraction("resolveSacrificialGear", { cardId }),
+              };
+            })}
+          />
+        </>
+      );
+    }
+    case "resolveRedirectDefeat": {
+      const sourceName = textParam(action.text.params, "sourceDisplayName");
+      const sourceCardId = textParam(action.text.params, "sourceCardId");
+      const cost = numberParam(action.text.params, "cost") ?? 1;
+      return (
+        <>
+          <p className={classes.title}>Redirect this defeat?</p>
+          <p className={classes.subtitle}>
+            Spend {cost} €$ to defeat{" "}
+            {sourceName ? (
+              <SourceCardName cardId={sourceCardId} fallbackName={sourceName} />
+            ) : (
+              "this Legend"
+            )}{" "}
+            instead of the friendly Unit.
+          </p>
+          <div className={classes.actions}>
+            <button
+              type="button"
+              className={classes.primary}
+              data-testid="redirect-defeat-apply"
+              onClick={() => submitInteraction("resolveRedirectDefeat", { pass: false })}
+            >
+              Spend {cost} €$
+            </button>
+            <button
+              type="button"
+              className={classes.secondary}
+              data-testid="redirect-defeat-decline"
+              onClick={() => submitInteraction("resolveRedirectDefeat", { pass: true })}
+            >
+              Let the Unit be defeated
+            </button>
+          </div>
+        </>
+      );
+    }
+    case "resolveFirstPlayer":
+      return (
+        <>
+          <p className={classes.title}>Go first or second?</p>
+          <p className={classes.subtitle}>You won the random determination.</p>
+          <div className={classes.actions}>
+            <button
+              type="button"
+              className={classes.primary}
+              onClick={() => submitInteraction("resolveFirstPlayer", { goFirst: true })}
+            >
+              Go first
+            </button>
+            <button
+              type="button"
+              className={classes.secondary}
+              onClick={() => submitInteraction("resolveFirstPlayer", { goFirst: false })}
+            >
+              Go second
+            </button>
+          </div>
+        </>
+      );
     default:
       return null;
   }
@@ -1442,8 +1909,15 @@ interface TargetCandidateView {
   selected: boolean;
   summary: CardSummary | null;
   selectable: boolean;
+  unavailableReason?: string;
   source: TargetSource;
+  host?: AttachedHostSummary | null;
   onSelect: () => void;
+}
+
+interface AttachedHostSummary {
+  cardId: string;
+  name: string;
 }
 
 interface TargetSource {
@@ -1504,12 +1978,20 @@ function TargetCandidateButton({ candidate }: { candidate: TargetCandidateView }
       data-card-id={candidate.cardId}
       data-zone={candidate.source.zone ?? ""}
       data-owner-id={candidate.source.ownerId ?? ""}
+      data-host-name={candidate.host?.name ?? ""}
       data-selectable={candidate.selectable ? "true" : "false"}
-      aria-label={`${targetCandidateActionLabel(candidate)} ${name} from ${candidate.source.label}`}
+      aria-label={`${targetCandidateActionLabel(candidate)} ${name}${
+        candidate.host ? ` attached to ${candidate.host.name}` : ""
+      } from ${candidate.source.label}${
+        candidate.unavailableReason ? `. ${candidate.unavailableReason}` : ""
+      }`}
       aria-disabled={candidate.selectable ? undefined : true}
       aria-pressed={candidate.selected}
       onClick={() => {
-        if (!candidate.selectable) return;
+        if (!candidate.selectable) {
+          explainUnavailableTarget(candidate);
+          return;
+        }
         candidate.onSelect();
       }}
     >
@@ -1518,15 +2000,35 @@ function TargetCandidateButton({ candidate }: { candidate: TargetCandidateView }
       </span>
       <CardArt summary={candidate.summary} fallbackName={candidate.cardId} />
       <CardMeta summary={candidate.summary} />
-      {!candidate.selectable ? <span className={classes.invalidMark}>Not target</span> : null}
+      {candidate.host ? (
+        <span className={classes.hostMeta} data-testid="target-modal-host">
+          On {candidate.host.name}
+        </span>
+      ) : null}
+      {!candidate.selectable ? (
+        <span className={classes.costBlock} data-testid="target-modal-unaffordable">
+          {candidate.unavailableReason ?? "Not a target"}
+        </span>
+      ) : null}
       {candidate.selected ? <span className={classes.selectedMark}>Selected</span> : null}
     </button>
   );
 }
 
+function explainUnavailableTarget(candidate: TargetCandidateView): void {
+  const name = candidate.summary?.name ?? "This card";
+  notifications.show({
+    color: "yellow",
+    title: `Can't play ${name}`,
+    message:
+      candidate.unavailableReason ??
+      "You still have to pay this card's cost, and you don't have enough Eddies.",
+  });
+}
+
 function targetCandidateActionLabel(candidate: TargetCandidateView): string {
   if (!candidate.selectable) {
-    return "Not a valid target";
+    return candidate.unavailableReason ?? "Not a valid target";
   }
   return candidate.selected ? "Selected" : "Select";
 }
@@ -1663,6 +2165,45 @@ function textParam(params: InteractionAction["text"]["params"], key: string): st
   return typeof value === "string" ? value : undefined;
 }
 
+function numberParam(
+  params: InteractionAction["text"]["params"] | undefined,
+  key: string,
+): number | undefined {
+  const value = params?.[key];
+  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
+}
+
+function booleanParam(
+  params: InteractionAction["text"]["params"] | undefined,
+  key: string,
+): boolean | undefined {
+  const value = params?.[key];
+  return typeof value === "boolean" ? value : undefined;
+}
+
+function triggerRollContext(options: OptionSelectionInput["options"] | undefined) {
+  const contexts = (options ?? [])
+    .map((option) => {
+      const dieType = textParam(option.text.params, "rollDieType");
+      const result = numberParam(option.text.params, "rollResult");
+      if (!dieType || result === undefined) return null;
+      const sides = Number.parseInt(dieType.replace(/^d/i, ""), 10);
+      return {
+        dieType,
+        result,
+        boundary: result === 1 ? "minimum" : result === sides ? "maximum" : null,
+      };
+    })
+    .filter((context): context is NonNullable<typeof context> => context !== null);
+  const first = contexts[0];
+  if (!first) return null;
+  return contexts.every(
+    (context) => context.dieType === first.dieType && context.result === first.result,
+  )
+    ? first
+    : null;
+}
+
 function delimitedTextParam(params: InteractionAction["text"]["params"], key: string): string[] {
   return (
     textParam(params, key)
@@ -1699,11 +2240,6 @@ function SourceCardName({
   interactive?: boolean;
 }) {
   return <CardNameToken cardId={cardId} fallbackName={fallbackName} interactive={interactive} />;
-}
-
-function numberParam(params: InteractionAction["text"]["params"], key: string): number | undefined {
-  const value = params?.[key];
-  return typeof value === "number" ? value : undefined;
 }
 
 type CardType = "legend" | "unit" | "gear" | "program";
@@ -1763,6 +2299,26 @@ function CardMeta({ summary }: { summary: CardSummary | null }) {
   );
 }
 
+function attachedHostSummary(
+  matchState: ReturnType<typeof useEngine>["matchState"],
+  cardId: string,
+): AttachedHostSummary | null {
+  const card = matchState.G.cardIndex[cardId];
+  const hostId = card?.meta.attachedToId;
+  if (!hostId) {
+    return null;
+  }
+  const host = matchState.G.cardIndex[hostId];
+  if (!host) {
+    return null;
+  }
+  const definition = defOf(host);
+  return {
+    cardId: hostId,
+    name: definition.displayName ?? definition.name,
+  };
+}
+
 function cardSummary(
   matchState: ReturnType<typeof useEngine>["matchState"],
   cardId: string,
@@ -1800,9 +2356,9 @@ function scryDestinationLabel(destinationZone: string): string {
     case "trash":
       return "trash";
     case "deckBottom":
-      return "deck bottom";
+      return "bottom of deck";
     case "deckTop":
-      return "deck top";
+      return "top of deck";
     case "hand":
       return "hand";
     default:
@@ -1810,16 +2366,73 @@ function scryDestinationLabel(destinationZone: string): string {
   }
 }
 
-function scryConfirmLabel(destinationZone: string): string {
+function scryPromptTitle(destinationZone: string, max: number): string {
+  if (max === 0) return "No eligible cards";
+  const noun = max === 1 ? "a card" : "cards";
   switch (destinationZone) {
     case "trash":
-      return "Trash selected";
+      return `Choose ${noun} to trash`;
     case "deckBottom":
-      return "Bottom selected";
+      return `Choose ${noun} for the deck bottom`;
     case "deckTop":
-      return "Top selected";
+      return `Choose ${noun} for the deck top`;
     case "hand":
-      return "Add selected";
+      return `Choose ${noun} for your hand`;
+    default:
+      return `Choose ${noun}`;
+  }
+}
+
+function scrySelectionRequirement(min: number, max: number): string {
+  if (max === 0) return "No selection available";
+  if (min === 0) return "Optional";
+  if (min === max) return max === 1 ? "Required" : `Choose exactly ${max}`;
+  return `Choose at least ${min}`;
+}
+
+function scrySelectionRequirementTooltip(min: number, max: number): string {
+  const requirement = scrySelectionRequirement(min, max);
+  if (max === 0) return `${requirement}.`;
+  if (min === 0) return "Optional — you can choose none.";
+  if (min === max) {
+    return `Required — choose exactly ${max} card${max === 1 ? "" : "s"}.`;
+  }
+  return `Required — choose at least ${min} card${min === 1 ? "" : "s"}.`;
+}
+
+function scryConsequenceLabel(
+  selectedCount: number,
+  lookCount: number,
+  destinationZone: string,
+  remainderZone: string,
+): string {
+  const selected = `${selectedCount} to ${scryDestinationLabel(destinationZone)}`;
+  const remainderCount = Math.max(0, lookCount - selectedCount);
+  if (remainderZone === "deckTop") {
+    return `${selected} · ${remainderCount} ${remainderCount === 1 ? "stays" : "stay"} on top`;
+  }
+  return `${selected} · ${remainderCount} to ${scryDestinationLabel(remainderZone)}`;
+}
+
+function scrySkipLabel(lookCount: number, remainderZone: string): string {
+  if (remainderZone === "deckTop") return "Keep on top";
+  if (remainderZone === "deckBottom") return `Bottom-deck all ${lookCount}`;
+  if (remainderZone === "trash") return `Trash all ${lookCount}`;
+  return `Send all to ${scryDestinationLabel(remainderZone)}`;
+}
+
+function scryConfirmLabel(destinationZone: string, selectedCount: number, reveal: boolean): string {
+  const count = selectedCount > 0 ? ` ${selectedCount}` : " selected";
+  switch (destinationZone) {
+    case "trash":
+      return `Trash${count}`;
+    case "deckBottom":
+      return `Bottom-deck${count}`;
+    case "deckTop":
+      return `Put${count} on top`;
+    case "hand":
+      if (reveal && selectedCount > 0) return `Reveal ${selectedCount} and add to hand`;
+      return `${reveal ? "Reveal and add" : "Add"}${count} to hand`;
     default:
       return "Confirm selected";
   }
@@ -1852,6 +2465,11 @@ function effectTargetChoiceCopy(
         ? "Pick the Cyberware Gear to play for free."
         : "Pick the Gear to play from trash.",
     };
+  }
+
+  if (targetPurpose === "playCard") {
+    const copy = playCardPromptCopy(numberParam(action.text.params, "availableEddiesAfterCosts"));
+    return { title: copy.title, subtitle: copy.subtitle };
   }
 
   return { title: null, subtitle: null };

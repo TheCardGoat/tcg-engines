@@ -18,6 +18,19 @@ interface FabLayerBase {
   readonly modes: readonly string[];
   readonly bindings: FabEventBindings;
   /** A resolving asset payment only succeeds after its journal commits. */
+  /** Runtime loop cursor; the authored body is restored after each occurrence. */
+  readonly repeatFrames?: Readonly<
+    Record<
+      string,
+      {
+        readonly original: Extract<FabEffect, { type: "repeat" }>;
+        readonly index: number;
+        readonly limit: number;
+        readonly accepted: boolean;
+        readonly progressed: boolean;
+      }
+    >
+  >;
   readonly effectPaymentReceipts?: Readonly<Record<string, FabEffectPaymentReceipt>>;
 }
 

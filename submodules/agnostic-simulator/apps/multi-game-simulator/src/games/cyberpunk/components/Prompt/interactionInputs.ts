@@ -2,6 +2,7 @@ import type {
   BooleanInput,
   EntitySelectionInput,
   InteractionAction,
+  NumberInput,
   OptionSelectionInput,
 } from "@tcg/protocol";
 
@@ -34,6 +35,14 @@ export function booleanInput(action: InteractionAction, inputId: string): Boolea
   const input = action.inputs.find(
     (candidate): candidate is BooleanInput =>
       candidate.kind === "boolean" && candidate.id === inputId,
+  );
+  return input ?? null;
+}
+
+export function numberInput(action: InteractionAction, inputId: string): NumberInput | null {
+  const input = action.inputs.find(
+    (candidate): candidate is NumberInput =>
+      candidate.kind === "number" && candidate.id === inputId,
   );
   return input ?? null;
 }

@@ -41,6 +41,7 @@ export const virulentTouch = definePitchFamily(fabPitchFamilies["virulent-touch"
         effect: {
           type: "create-token",
           token: "bloodrot-pox",
+          creator: "effect-controller",
           controller: "defending-hero",
         },
       },

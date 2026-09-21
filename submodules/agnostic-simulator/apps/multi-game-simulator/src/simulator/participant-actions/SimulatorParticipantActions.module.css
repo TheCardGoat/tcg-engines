@@ -1,24 +1,3 @@
-.trigger {
-  display: grid;
-  width: 2rem;
-  height: 2rem;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--participant-accent) 28%, transparent);
-  border-radius: 0.45rem;
-  background: color-mix(in srgb, var(--participant-accent) 7%, transparent);
-  color: inherit;
-  cursor: pointer;
-}
-
-.trigger:hover {
-  background: color-mix(in srgb, var(--participant-accent) 15%, transparent);
-}
-
-.trigger:focus-visible {
-  outline: 2px solid var(--participant-accent);
-  outline-offset: 2px;
-}
-
 .actionTooltip {
   position: fixed;
   z-index: 5000;

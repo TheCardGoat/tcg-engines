@@ -175,6 +175,28 @@ describe("naruto server adapter", () => {
     expect(narutoServerAdapter.getCardById("N-022")?.label).toBe(card?.nameEn);
   });
 
+  it("exposes card text as searchText for catalog full-text search", () => {
+    const catalog = getNarutoDeckBuilderCatalog();
+    const withSkillText = catalog.cards.find((card) => card.searchText.length > 0);
+    expect(withSkillText).toBeDefined();
+
+    const source = getCardById(withSkillText!.id)!;
+    const skillTextToken = source.skills
+      .flatMap((skill) => skill.text.split(/\s+/))
+      .find((token) => token.length > 6);
+    expect(skillTextToken).toBeDefined();
+    expect(withSkillText!.searchText).toContain(skillTextToken!);
+
+    // Chakra-only support text is captured too.
+    const chakra = catalog.cards.find((card) => card.type === "chakra");
+    if (chakra) {
+      const chakraSource = getCardById(chakra.id)!;
+      for (const skill of chakraSource.skills) {
+        expect(chakra.searchText).toContain(skill.text);
+      }
+    }
+  });
+
   it("publishes typed Preview templates and fixed setup artwork choices", () => {
     const catalog = getNarutoDeckBuilderCatalog();
 

@@ -11,7 +11,7 @@ import {
   op14eb04EdwardNewgate044,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04FisherTiger054 } from "../../../../../cards/src/cards/OP14EB04/characters/054-fisher-tiger.ts";
+import { op14eb04FisherTiger054 } from "../../../../../cards/src/cards/characters/op14-054-fisher-tiger.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -61,6 +61,7 @@ export const straightFlare: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 operands: [
                   {
                     kind: "count",
+                    distinctBy: "reserve-cost",
                     collection: {
                       zones: ["field"],
                       player: "controller",

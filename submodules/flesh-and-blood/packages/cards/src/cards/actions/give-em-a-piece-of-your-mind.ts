@@ -28,6 +28,7 @@ export const giveEmAPieceOfYourMind = definePitchFamily(
           effect: {
             type: "create-token",
             token: "vigor",
+            creator: "token-controller",
             controller: "defending-hero",
           },
         },

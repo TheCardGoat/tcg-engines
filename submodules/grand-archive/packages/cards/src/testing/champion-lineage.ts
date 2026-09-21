@@ -7,7 +7,12 @@ import { GrandArchiveTestEngine } from "@tcg/grand-archive-engine/testing";
 import { expect, it } from "vitest";
 
 import { woodlandSquirrels } from "../cards/DOA/allies/woodland-squirrels.ts";
-import { grandArchiveDefaultFaceId } from "./class-bonus-test-champion.ts";
+import { cardiacVessel } from "../cards/PRD/phantasias/cardiac-vessel.ts";
+import {
+  createClassBonusTestChampion,
+  requireSingleFace,
+  grandArchiveDefaultFaceId,
+} from "./class-bonus-test-champion.ts";
 
 /** Blank fixture champions isolate the named Lineage restriction from other champion abilities. */
 export function lineageTestChampion(
@@ -47,11 +52,16 @@ export function proveChampionLineage({
   lineageName,
   level,
   memoryCost,
+  announceTargets,
 }: {
   readonly card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   readonly lineageName: string;
   readonly level: number;
   readonly memoryCost: number;
+  /** Level-up faces whose paragraphs declare announcement targets must supply them. */
+  readonly announceTargets?: (
+    game: GrandArchiveTestEngine,
+  ) => Record<string, readonly import("@tcg/grand-archive-engine/runtime").GrandArchiveTargetId[]>;
 }): void {
   function setup(previousName: string, previousLevel = level - 1) {
     const starter = lineageTestChampion(lineageName, 0);
@@ -66,6 +76,7 @@ export function proveChampionLineage({
         zones: {
           "material-deck": [card],
           memory: Array.from({ length: memoryCost }, () => woodlandSquirrels),
+          ...(announceTargets ? { field: [cardiacVessel] } : {}),
         },
       },
       playerTwo: { champion: lineageTestChampion("Opponent", 0) },
@@ -78,27 +89,35 @@ export function proveChampionLineage({
     const player = game.player("player-one");
     const champion = player.card(starter, { zone: "field" });
     const previous = game.state.objects[champion.objectId]?.activeDefinitionId;
-    player.materialize(card);
+    player.materialize(card, announceTargets ? { targets: announceTargets(game) } : {});
     expect(player.zone("memory")).toHaveLength(0);
     expect(game.state.objects[champion.objectId]?.activeDefinitionId).toBe(previous);
     player.pass();
     game.player("player-two").pass();
     expect(game.state.objects[champion.objectId]?.activeDefinitionId).toBe(card.canonicalId);
-    expect(player.zone("field")).toHaveLength(1);
+    expect(player.zone("field")).toHaveLength(announceTargets ? 2 : 1);
     expect(player.cards(card, { zone: "material-deck" })).toHaveLength(0);
   });
 
   it("rejects a different current champion even when the required name exists deeper in the lineage", () => {
     const { game } = setup("Unrelated");
     const before = game.state;
-    expect(() => game.player("player-one").materialize(card)).toThrow("Lineage restriction");
+    expect(() =>
+      game
+        .player("player-one")
+        .materialize(card, announceTargets ? { targets: announceTargets(game) } : {}),
+    ).toThrow("Lineage restriction");
     expect(game.state).toEqual(before);
   });
 
   it("does not allow skipping a champion level even with the correct name", () => {
     const { game } = setup(lineageName, level - 2);
     const before = game.state;
-    expect(() => game.player("player-one").materialize(card)).toThrow();
+    expect(() =>
+      game
+        .player("player-one")
+        .materialize(card, announceTargets ? { targets: announceTargets(game) } : {}),
+    ).toThrow();
     expect(game.state).toEqual(before);
   });
 }
@@ -159,4 +178,29 @@ export function proveChampionSuccessorRestriction({
     );
     expect(game.state).toEqual(before);
   });
+}
+
+/** A level-zero fixture champion with the tested class and an explicit lineage identity. */
+export function createLineageTestChampion(
+  card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>,
+  lineageName: string,
+): GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> {
+  const base = createClassBonusTestChampion(card, true, "activation-discount");
+  const face = requireSingleFace(base);
+  const canonicalId = `${base.canonicalId}-${lineageName.toLowerCase().replaceAll(" ", "-")}`;
+  return {
+    ...base,
+    canonicalId,
+    slug: canonicalId,
+    layout: {
+      kind: "single-faced",
+      face: {
+        ...face,
+        id: grandArchiveDefaultFaceId(canonicalId),
+        catalogId: canonicalId,
+        name: `${lineageName}, Test Champion`,
+        lineageName,
+      },
+    },
+  };
 }

@@ -38,6 +38,7 @@ export const rottenRemains = definePitchFamily(fabPitchFamilies["rotten-remains"
                   selector: "object",
                   declared: "at-resolution",
                   player: "iteration-subject",
+                  chooser: "controller",
                   zones: ["graveyard"],
                   filter: {
                     power: {

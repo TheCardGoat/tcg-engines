@@ -36,7 +36,7 @@ export const ZONE_CONFIGS: Record<CardZone, ZoneConfig> = {
     id: "trash",
     name: "Trash",
     visibility: "public",
-    ordered: false,
+    ordered: true,
     ownerScoped: true,
   },
   legendArea: {
@@ -60,6 +60,13 @@ export const ZONE_CONFIGS: Record<CardZone, ZoneConfig> = {
     ordered: false,
     ownerScoped: true,
   },
+  removedFromGame: {
+    id: "removedFromGame",
+    name: "Removed from Game",
+    visibility: "public",
+    ordered: true,
+    ownerScoped: true,
+  },
 };
 
 export const PLAYER_ZONES: CardZone[] = [
@@ -69,6 +76,7 @@ export const PLAYER_ZONES: CardZone[] = [
   "trash",
   "legendArea",
   "eddieArea",
+  "removedFromGame",
 ];
 
 export function isCardZone(zone: string): zone is CardZone {

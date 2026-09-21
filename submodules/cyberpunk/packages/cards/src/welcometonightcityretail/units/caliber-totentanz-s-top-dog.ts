@@ -23,7 +23,7 @@ export const welcomeToNightCityRetailCaliberTotentanzSTopDog = defineCyberpunkCa
   legality: "legal",
   hasSellTag: false,
   ram: 2,
-  timingTriggers: ["play"],
+  timingTriggers: ["play", "defeated"],
   type: "unit",
   cost: 5,
   power: 5,

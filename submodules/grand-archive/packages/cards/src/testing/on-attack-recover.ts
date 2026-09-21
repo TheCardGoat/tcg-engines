@@ -15,12 +15,14 @@ export function proveOnAttackRecover({
   amount,
   attackCost,
   classRestricted = false,
+  power = 3,
 }: {
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   abilityId: string;
   amount: number;
   attackCost?: number;
   classRestricted?: boolean;
+  power?: number;
 }): void {
   for (const classBonus of classRestricted ? [false, true] : [false])
     for (const damage of [0, 1, amount + 2])
@@ -73,6 +75,6 @@ export function proveOnAttackRecover({
         expect(game.state.objects[id]!.damage).toBe(
           Math.max(0, damage - (!classRestricted || classBonus ? amount : 0)),
         );
-        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(attack ? 3 : 1);
+        expect(game.state.objects[q.card(champion).objectId]!.damage).toBe(attack ? power : 1);
       });
 }

@@ -69,45 +69,56 @@ export const infernoSlime: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 2,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["FIRE"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 2,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["graveyard"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["FIRE"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "deal-damage",
-                  source: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  recipient: {
-                    kind: "each",
-                    collection: {
-                      zones: ["field"],
-                      filter: {
-                        kind: "type",
-                        oneOf: ["CHAMPION"],
+                  then: {
+                    kind: "deal-damage",
+                    source: {
+                      kind: "source",
+                    },
+                    recipient: {
+                      kind: "each",
+                      collection: {
+                        zones: ["field"],
+                        filter: {
+                          kind: "type",
+                          oneOf: ["CHAMPION"],
+                        },
                       },
                     },
+                    amount: 4,
                   },
-                  amount: 4,
                 },
               ],
             },

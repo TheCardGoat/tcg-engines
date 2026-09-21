@@ -13,10 +13,12 @@ import {
 } from "../engine";
 import classes from "./Practice.module.css";
 import { cyberpunkSimulatorPath } from "./simulatorPaths";
+import { practiceModeFromSearch } from "../../../simulator/practiceMode";
 
 export function PracticePage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const practiceMode = practiceModeFromSearch(searchParams);
   const initialBotStrategyId = normalizeStrategyId(searchParams.get("botStrategyId"));
   const [playerDeckFixtureId, setPlayerDeckFixtureId] = useState(DEFAULT_PLAYER_PRACTICE_DECK_ID);
   const [botDeckFixtureId, setBotDeckFixtureId] = useState(DEFAULT_BOT_PRACTICE_DECK_ID);
@@ -47,6 +49,7 @@ export function PracticePage() {
         botDeckFixtureId,
         playerStrategyId: playerStrategyId === "human" ? null : playerStrategyId,
         botStrategyId,
+        mode: practiceMode,
         seed,
       });
       savePracticeMatchConfig(config);
@@ -66,8 +69,9 @@ export function PracticePage() {
             Practice match
           </h1>
           <p className={classes.lead}>
-            Launch a fresh local game against the AI. Both seats use valid fixture decks, and the
-            match starts from the real setup flow with mulligans and manual Gig choices.
+            {practiceMode === "self"
+              ? "Control both seats to test interactions and explore specific lines. The table switches perspective without revealing the other hand."
+              : "Test a matchup with a practice bot. Bots help exercise decks and simulator flows; they are not competitive opponents."}
           </p>
         </header>
 
@@ -91,7 +95,7 @@ export function PracticePage() {
             </label>
 
             <label className={classes.field}>
-              <span className={classes.label}>Bot deck</span>
+              <span className={classes.label}>Opponent deck</span>
               <select
                 className={classes.select}
                 data-testid="practice-setup-bot-deck"
@@ -107,46 +111,50 @@ export function PracticePage() {
               </select>
             </label>
 
-            <label className={classes.field}>
-              <span className={classes.label}>Your automation</span>
-              <select
-                className={classes.select}
-                data-testid="practice-setup-player-strategy"
-                name="playerStrategy"
-                value={playerStrategyId}
-                onChange={(event) =>
-                  setPlayerStrategyId(
-                    event.currentTarget.value as StrategyDescriptor["id"] | "human",
-                  )
-                }
-              >
-                <option value="human">Human</option>
-                {AI_STRATEGIES.map((strategy) => (
-                  <option key={strategy.id} value={strategy.id}>
-                    {strategy.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+            {practiceMode === "bot" ? (
+              <label className={classes.field}>
+                <span className={classes.label}>Your automation</span>
+                <select
+                  className={classes.select}
+                  data-testid="practice-setup-player-strategy"
+                  name="playerStrategy"
+                  value={playerStrategyId}
+                  onChange={(event) =>
+                    setPlayerStrategyId(
+                      event.currentTarget.value as StrategyDescriptor["id"] | "human",
+                    )
+                  }
+                >
+                  <option value="human">Human</option>
+                  {AI_STRATEGIES.map((strategy) => (
+                    <option key={strategy.id} value={strategy.id}>
+                      {strategy.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
 
-            <label className={classes.field}>
-              <span className={classes.label}>Bot strategy</span>
-              <select
-                className={classes.select}
-                data-testid="practice-setup-bot-strategy"
-                name="botStrategy"
-                value={botStrategyId}
-                onChange={(event) =>
-                  setBotStrategyId(event.currentTarget.value as StrategyDescriptor["id"])
-                }
-              >
-                {AI_STRATEGIES.map((strategy) => (
-                  <option key={strategy.id} value={strategy.id}>
-                    {strategy.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+            {practiceMode === "bot" ? (
+              <label className={classes.field}>
+                <span className={classes.label}>Bot strategy</span>
+                <select
+                  className={classes.select}
+                  data-testid="practice-setup-bot-strategy"
+                  name="botStrategy"
+                  value={botStrategyId}
+                  onChange={(event) =>
+                    setBotStrategyId(event.currentTarget.value as StrategyDescriptor["id"])
+                  }
+                >
+                  {AI_STRATEGIES.map((strategy) => (
+                    <option key={strategy.id} value={strategy.id}>
+                      {strategy.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ) : null}
 
             <label className={classes.field}>
               <span className={classes.label}>Seed</span>
@@ -166,7 +174,9 @@ export function PracticePage() {
             data-testid="practice-setup-strategy-desc"
             data-strategy-id={botStrategyId}
           >
-            {strategyDescription}
+            {practiceMode === "self"
+              ? "Play both sides is manual. Use Opponent controls during the match to switch seats."
+              : strategyDescription}
           </p>
 
           <button
@@ -176,7 +186,11 @@ export function PracticePage() {
             disabled={loading || !playerDeckFixtureId}
             onClick={startPracticeMatch}
           >
-            {loading ? "Booting match…" : "Start practice match"}
+            {loading
+              ? "Setting the table…"
+              : practiceMode === "self"
+                ? "Start both-sides practice"
+                : "Start bot practice"}
           </button>
 
           {error ? (

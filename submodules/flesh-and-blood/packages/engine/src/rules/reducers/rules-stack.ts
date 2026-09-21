@@ -1,4 +1,5 @@
 import type { FabMatchState } from "../../state.ts";
+import { withoutFabScopedAutoPass } from "../../state.ts";
 import { nextRandom } from "../../random.ts";
 import type { ProposedEvent } from "../events.ts";
 import type { FabEventReduction } from "../../kernel/transaction-kernel.ts";
@@ -61,6 +62,12 @@ export function reduceRulesStackEvent(
         state.rulesStack.length === 0
       ) {
         state.combat = null;
+        // An aborted layer-step chain is still a chain close: retire "this
+        // combat" auto-pass scopes with it.
+        state.automationPreferences = withoutFabScopedAutoPass(
+          state.automationPreferences,
+          "combat",
+        );
       }
       // Removing the layer re-anchors the window for the same holder inside
       // one resolution transaction (e.g. the attack event just stamped the

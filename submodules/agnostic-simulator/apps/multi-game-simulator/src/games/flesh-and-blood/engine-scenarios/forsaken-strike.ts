@@ -48,6 +48,16 @@ export const FORSAKEN_STRIKE_SCENARIOS: FabScenarioCollection = {
         { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
       );
       const player = engine.as(gravyBones);
+      // The six paid rewards create simultaneous triggered abilities. Fixture
+      // engines bypass the practice automation seed, so opt the human seat into
+      // trigger-order auto-answering explicitly (the practice product default).
+      const preferences = engine.getState().automationPreferences[player.id];
+      if (preferences) {
+        engine.getState().automationPreferences[player.id] = {
+          ...preferences,
+          autoOrderTriggers: true,
+        };
+      }
       engine.playInstance(
         player.id,
         player.cardsIn("hand", forsakenStrikeYellow)[0]!.instanceId,

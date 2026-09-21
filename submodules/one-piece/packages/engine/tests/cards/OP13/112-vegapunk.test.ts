@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op01Nekomamushi048 } from "../../../../cards/src/cards/OP01/characters/048-nekomamushi.ts";
-import { op13Vegapunk112 } from "../../../../cards/src/cards/OP13/characters/112-vegapunk.ts";
+import { op01Nekomamushi048 } from "../../../../cards/src/cards/characters/op01-048-nekomamushi.ts";
+import { op13Vegapunk112 } from "../../../../cards/src/cards/characters/op13-112-vegapunk.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 function pendingBlockerPrompt(engine: OnePieceTestEngine) {

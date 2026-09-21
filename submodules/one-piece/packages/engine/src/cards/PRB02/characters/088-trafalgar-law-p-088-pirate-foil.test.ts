@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op01TrafalgarLaw002, op02Sanji026 } from "@tcg/op-cards";
-import { prb02ShanksP083PirateFoil083 } from "../../../../../cards/src/cards/PRB02/characters/083-shanks-p-083-pirate-foil.ts";
-import { prb02TrafalgarLawP088PirateFoil088 } from "../../../../../cards/src/cards/PRB02/characters/088-trafalgar-law-p-088-pirate-foil.ts";
+import { prb02ShanksP083PirateFoil083 } from "../../../../../cards/src/cards/characters/p-083-shanks-p-083-pirate-foil.ts";
+import { prb02TrafalgarLawP088PirateFoil088 } from "../../../../../cards/src/cards/characters/p-088-trafalgar-law-p-088-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -47,6 +47,15 @@ function subjectHasStatusValue(
   );
 }
 
+/** Seat whose per-player fact a per-hero condition reads. Under a for-each
+ * iteration the semantic subject is the bound `iteration-subject` seat; the
+ * layer controller is only the fallback for conditions evaluated outside a
+ * for-each (where controller and subject coincide). */
+function perHeroSeat(context: FabEvalContext): string {
+  const iterationSubject = context.bindings?.strings?.["iteration-subject"];
+  return typeof iterationSubject === "string" ? iterationSubject : context.controllerId;
+}
+
 const HYPER_DRIVER_CANONICAL_IDS = new Set([
   "kRRdnfWFfdCmmKTnjmzNk",
   "zPjKJbcG7q8qD8QdKjtnG",
@@ -1088,9 +1097,16 @@ const CONDITION_STATUS_HANDLERS: Partial<Record<FabStatusMarker, CondStatusFn>> 
     (context.facts?.playerAttackActionPlayed[context.controllerId] ?? 0) +
       (context.facts?.playerNonAttackActionPlayed[context.controllerId] ?? 0) ===
     0,
-  "chose-war": (context) => context.facts?.playerDiplomacyChoice[context.controllerId] === "war",
+  // "Starting with the hero to your left, each hero chooses war or peace. If
+  // they choose war/peace …" (DTD230): under the for-each, "they" is the
+  // iteration-subject, not the layer controller. Reading the controller made
+  // every iteration evaluate the controller's answer — an opponent-played
+  // Diplomacy silently dropped the first chooser's restriction (the
+  // controller's status was not stamped yet at proposal time) and mixed
+  // choices applied the controller's answer to the other hero.
+  "chose-war": (context) => context.facts?.playerDiplomacyChoice[perHeroSeat(context)] === "war",
   "chose-peace": (context) =>
-    context.facts?.playerDiplomacyChoice[context.controllerId] === "peace",
+    context.facts?.playerDiplomacyChoice[perHeroSeat(context)] === "peace",
   "didnt-banish-this-way-card-with-6-or-more-p": (context, objects) => {
     if (context.bindings?.strings?.["didnt-banish-this-way-card-with-6-or-more-p"] === "true")
       return true;

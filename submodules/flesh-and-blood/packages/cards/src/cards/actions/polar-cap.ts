@@ -33,6 +33,7 @@ export const polarCap = definePitchFamily(fabPitchFamilies["polar-cap"], {
             then: {
               type: "create-token",
               token: "frostbite",
+              creator: "effect-controller",
               controller: "target-controller",
             },
           },

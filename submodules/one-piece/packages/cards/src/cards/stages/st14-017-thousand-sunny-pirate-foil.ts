@@ -1,0 +1,87 @@
+import type { StageCard } from "@tcg/op-types";
+import { prb02ThousandSunnyPirateFoil017I18n } from "./st14-017-thousand-sunny-pirate-foil.i18n.ts";
+
+export const prb02ThousandSunnyPirateFoil017: StageCard = {
+  id: "ST14-017",
+  canonicalId: "ST14-017",
+  slug: "thousand-sunny-pirate-foil",
+  name: "Thousand Sunny",
+  printings: [
+    {
+      id: "ST14-017",
+      artId: "ST14-017",
+      setCode: "ST14",
+      collectorNumber: "017",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/ST14-017_p1.jpg",
+      label: "Thousand Sunny (Pirate Foil)",
+    },
+    {
+      id: "ST14-017_r1",
+      artId: "ST14-017_r1",
+      setCode: "ST14",
+      collectorNumber: "017",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/ST14-017_r1.jpg",
+      label: "Thousand Sunny (Reprint)",
+    },
+  ],
+  cardType: "stage",
+  color: ["black"],
+  rarity: "C",
+  setId: "ST14",
+  cost: 1,
+  traits: ["Straw Hat Crew"],
+  effect:
+    'All of your black "Straw Hat Crew" type Characters gain +1 cost.[On Play] If your Leader has the "Straw Hat Crew" type, draw 1 card.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Straw Hat Crew",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "color",
+                  value: "black",
+                },
+                {
+                  filter: "trait",
+                  value: "Straw Hat Crew",
+                  match: "includes",
+                },
+              ],
+            },
+            value: 1,
+          },
+        ],
+      },
+    ],
+  },
+  i18n: prb02ThousandSunnyPirateFoil017I18n,
+};

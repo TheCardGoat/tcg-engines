@@ -52,6 +52,7 @@ export function proposeChooseAndCreateToken(
       type: "create-token",
       token: chosen,
       controller: effect.controller ?? effect.chooser,
+      creator: effect.creator ?? "effect-controller",
       count: 1,
     },
   );

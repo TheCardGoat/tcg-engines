@@ -7,6 +7,12 @@ export type FabViewerHeroSignal =
       readonly duration: "this-turn";
     }
   | {
+      /** CR 9.3 marked — persists until an opponent's hit removes it (CR 9.3.3). */
+      readonly kind: "flag";
+      readonly id: "marked";
+      readonly duration: "until-hit";
+    }
+  | {
       readonly kind: "count";
       readonly id: "intimidate" | "weapon-attacks" | "soul-added";
       readonly value: number;
@@ -16,6 +22,7 @@ export type FabViewerHeroSignal =
 interface HeroSignalPlayer {
   readonly playerId: string;
   readonly heroCardId: string | null;
+  readonly marked: boolean;
   readonly history: {
     readonly turn: {
       readonly crowdCheered: boolean;
@@ -106,5 +113,10 @@ export function projectFabViewerHeroSignals(
 ): readonly FabViewerHeroSignal[] {
   if (!player.heroCardId) return [];
   const canonicalId = state.objects[player.heroCardId]?.canonicalId ?? player.heroCardId;
-  return HERO_SIGNAL_PROJECTORS[canonicalId]?.(state, player) ?? [];
+  // Marked is a game-rule flag on every hero (CR 9.3), not a hero-native
+  // signal, so it projects ahead of the curated per-hero inventory.
+  const marked: readonly FabViewerHeroSignal[] = player.marked
+    ? [{ kind: "flag", id: "marked", duration: "until-hit" }]
+    : [];
+  return [...marked, ...(HERO_SIGNAL_PROJECTORS[canonicalId]?.(state, player) ?? [])];
 }

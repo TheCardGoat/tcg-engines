@@ -421,6 +421,11 @@ export function optionalPlayCostIsPayable(
 ): boolean {
   const { cost, optional } = spec;
   if (!isPayablePlayCost(cost, optional)) return false;
+  // Every part of a bounded mixed cost is "up to N", so paying zero from each
+  // part is a legal payment; the cost can never be unpayable (CR 5.1.6).
+  if (boundedMixedPlayCostParts(cost) !== null) return true;
+  // "Banish all cards in your hand" is vacuous with an empty hand.
+  if (isAllBanishHandPlayCost(cost)) return true;
   if (isResourcePlayCost(cost)) return true;
   if (isOptionalBanishGraveyardPlayCost(cost, optional)) {
     const graveyard = state.containers.zonesByPlayerId[actorId]?.graveyard ?? [];
@@ -465,9 +470,28 @@ export function optionalPlayCostIsPayable(
       ).length > 0
     );
   }
-  if (isRevealHandPlayCost(cost) || isRandomDiscardHandPlayCost(cost) || isChargePlayCost(cost)) {
-    const hand = state.containers.zonesByPlayerId[actorId]?.hand ?? [];
-    return hand.some((instanceId) => instanceId !== playedInstanceId);
+  if (isRevealHandPlayCost(cost)) {
+    const candidates = zonePlayCostCandidates(
+      state,
+      actorId,
+      playedInstanceId,
+      "hand",
+      playCostFilter(cost),
+    );
+    if (
+      typeof cost.count === "object" &&
+      (cost.count.type === "all" || cost.count.type === "any-number")
+    ) {
+      return true;
+    }
+    const needed = typeof cost.count === "number" ? cost.count : 1;
+    return candidates.length >= needed;
+  }
+  if (isRandomDiscardHandPlayCost(cost) || isChargePlayCost(cost)) {
+    return (
+      zonePlayCostCandidates(state, actorId, playedInstanceId, "hand", playCostFilter(cost))
+        .length > 0
+    );
   }
   if (isRandomBanishHandPlayCost(cost) || isNamedDiscardHandPlayCost(cost)) {
     const needed = isRandomBanishHandPlayCost(cost)

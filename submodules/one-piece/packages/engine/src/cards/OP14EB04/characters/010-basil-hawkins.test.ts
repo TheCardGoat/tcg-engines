@@ -1,7 +1,7 @@
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Urouge002 } from "../../../../../cards/src/cards/OP14EB04/characters/002-urouge.ts";
-import { op14eb04BasilHawkins010 } from "../../../../../cards/src/cards/OP14EB04/characters/010-basil-hawkins.ts";
+import { op14eb04Urouge002 } from "../../../../../cards/src/cards/characters/op14-002-urouge.ts";
+import { op14eb04BasilHawkins010 } from "../../../../../cards/src/cards/characters/op14-010-basil-hawkins.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

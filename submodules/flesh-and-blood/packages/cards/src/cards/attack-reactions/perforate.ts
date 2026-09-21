@@ -5,42 +5,41 @@ export const perforate = definePitchFamily(fabPitchFamilies["perforate"], {
   abilities: () => ({
     grantAdditionalDaggerAttack: {
       kind: "resolution",
+      // CR 5.2.3c: the allowance + discount apply by themselves; "you may" is
+      // the later activation choice, not an on-resolution decision.
       effect: {
-        type: "optional",
-        effect: {
-          type: "sequence",
-          steps: [
-            {
-              type: "modify-activation-limit",
-              target: {
-                selector: "object",
-                declared: "at-resolution",
-                player: "controller",
-                zones: ["weapon", "permanent"],
-                filter: {
-                  typeBox: {
-                    subtypes: ["Dagger"],
-                  },
+        type: "sequence",
+        steps: [
+          {
+            type: "modify-activation-limit",
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "controller",
+              zones: ["weapon", "permanent"],
+              filter: {
+                typeBox: {
+                  subtypes: ["Dagger"],
                 },
-                count: 1,
               },
-              operation: "additional",
               count: 1,
-              duration: "this-turn",
-              outputBinding: "it",
             },
-            {
-              type: "modify-activation-cost",
-              op: "subtract",
-              amount: 1,
-              target: {
-                selector: "binding",
-                binding: "it",
-              },
-              duration: "this-turn",
+            operation: "additional",
+            count: 1,
+            duration: "this-turn",
+            outputBinding: "it",
+          },
+          {
+            type: "modify-activation-cost",
+            op: "subtract",
+            amount: 1,
+            target: {
+              selector: "binding",
+              binding: "it",
             },
-          ],
-        },
+            duration: "this-turn",
+          },
+        ],
       },
     },
     drawCard: {

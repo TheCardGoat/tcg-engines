@@ -43,24 +43,24 @@ export const welcomeToNightCityRetailKerryEurodyneTheLastRockerboy = defineCyber
           },
         },
       ],
+      conditions: [
+        {
+          condition: "targetValue",
+          target: {
+            selector: "gig",
+            controller: "friendly",
+            minValue: 8,
+          },
+          property: "gigValue",
+          comparison: "gte",
+          value: 8,
+        },
+      ],
       effects: [
         {
           effect: "draw",
           player: "friendly",
           amount: 2,
-          conditions: [
-            {
-              condition: "targetValue",
-              target: {
-                selector: "gig",
-                controller: "friendly",
-                minValue: 8,
-              },
-              property: "gigValue",
-              comparison: "gte",
-              value: 8,
-            },
-          ],
         },
       ],
     },

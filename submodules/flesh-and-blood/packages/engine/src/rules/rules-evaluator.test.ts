@@ -23,6 +23,7 @@ const FALSE_PERFORMED_THIS_TURN = {
   "create-card": false,
   "activate-cannon": false,
   "activate-weapon": false,
+  "sharpen-sword": false,
   "phantasm-destroy-illusionist-attack-action": false,
   "play-or-activate": false,
   "destroy-item": false,

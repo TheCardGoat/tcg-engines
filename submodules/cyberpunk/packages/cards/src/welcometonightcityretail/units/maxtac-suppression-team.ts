@@ -23,32 +23,20 @@ export const welcomeToNightCityRetailMaxtacSuppressionTeam = defineCyberpunkCard
   ram: 1,
   abilities: [
     {
-      kind: "triggered",
+      kind: "static",
       text: "Rival Units can't attack the turn they're played.",
-      trigger: {
-        trigger: "event",
-        event: {
-          event: "cardPlayed",
-          player: "rival",
-          target: {
-            selector: "card",
-            controller: "rival",
-            cardTypes: ["unit"],
-          },
-        },
-      },
-      source: {
-        selector: "self",
-      },
       effects: [
         {
           effect: "grantRule",
           target: {
-            selector: "context",
-            key: "triggerCard",
+            selector: "card",
+            controller: "rival",
+            zones: ["field"],
+            cardTypes: ["unit"],
+            hasLag: true,
           },
           rule: "cantAttack",
-          duration: "turn",
+          duration: "continuous",
         },
       ],
     },

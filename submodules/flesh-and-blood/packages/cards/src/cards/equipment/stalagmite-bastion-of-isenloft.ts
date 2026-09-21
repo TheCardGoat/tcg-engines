@@ -32,6 +32,7 @@ export const stalagmiteBastionOfIsenloft = defineCard(
               {
                 type: "create-token",
                 token: "frostbite",
+                creator: "effect-controller",
                 controller: "opponent",
               },
               {

@@ -1,5 +1,6 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
+  expectCombat,
   expectFabCard,
   expectFabPlayer,
   FAB_MANUAL_HARNESS,
@@ -7,77 +8,76 @@ import {
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
 import { chane } from "../heroes/chane.ts";
+import { nimblismBlue } from "../actions/nimblism.ts";
+import { snatchRed } from "../actions/snatch.ts";
 import { sinspeakerGloombladeRed } from "../actions/sinspeaker-gloomblade.ts";
 import { runechantOfWrathYellow as runechantOfWrath } from "./runechant-of-wrath.ts";
 
-/**
- * Runechant of Wrath (IAR157) — Runeblade Instant Aura.
- *
- * Printed: When an attack usurps this, it gets overpower.
- */
+// Own-aura behavior follows the captured IAR157 text. The opponent-aura
+// scenario preserves existing behavior; its usurp payment eligibility still
+// needs an independently captured official ruling before card acceptance.
+describe("Runechant of Wrath overpower and object reset", () => {
+  it.each(["own", "opponent"] as const)(
+    "%s aura: overpower rejects two action defenders and resets after combat",
+    (owner) => {
+      const game = FabTestEngine.start(
+        {
+          hero: chane,
+          hand: [sinspeakerGloombladeRed],
+          arena: owner === "own" ? [runechantOfWrath] : [],
+          deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+        },
+        {
+          hero: dash,
+          life: 20,
+          hand: [snatchRed, nimblismBlue],
+          arena: owner === "opponent" ? [runechantOfWrath] : [],
+          deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      const Chane = game.as(chane);
+      const Dash = game.as(dash);
+      Chane.playAttack(sinspeakerGloombladeRed);
+      expectCombat(game).toHaveAttackPower(4);
+      expectFabCard(owner === "own" ? Chane : Dash, runechantOfWrath).toBeIn("graveyard");
 
-describe("Runechant of Wrath (IAR157) AAA", () => {
-  it("happy: the usurping attack gains overpower", () => {
+      expect(Dash.expectBlockRejected([snatchRed, nimblismBlue]).errorCode).toBe("overpower");
+      expectFabCard(Dash, snatchRed).toBeIn("hand");
+      expectFabCard(Dash, Dash.cardIn("hand", nimblismBlue)).toBeIn("hand");
+      Dash.defendWith(snatchRed);
+      game.closeCombat({ optionals: "throw", ordering: "listed" });
+      expectFabPlayer(Dash).toHaveLife(18);
+      expectFabCard(Chane, sinspeakerGloombladeRed)
+        .toBeIn("graveyard")
+        .notToHaveKeyword("overpower");
+      expectCombat(game).toBeClosed();
+    },
+  );
+
+  it("without an aura: two action defenders are legal and the attack has only printed power", () => {
     const game = FabTestEngine.start(
       {
         hero: chane,
         hand: [sinspeakerGloombladeRed],
-        arena: [runechantOfWrath],
-        actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, life: 20, deck: 6 },
-      { ...FAB_MANUAL_HARNESS, firstPlayer: chane },
+      {
+        hero: dash,
+        life: 20,
+        hand: [snatchRed, nimblismBlue],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      FAB_MANUAL_HARNESS,
     );
     const Chane = game.as(chane);
     const Dash = game.as(dash);
-
-    Chane.play(sinspeakerGloombladeRed);
-    game.helpers.resolveUntilIdle({ entityTargets: "minimum", ordering: "listed" });
-
-    expectFabCard(Chane, runechantOfWrath).toBeIn("graveyard");
-    expectFabCard(Chane, sinspeakerGloombladeRed).toHaveKeyword("overpower");
-  });
-
-  it("boundary: usurping an opponent's Runechant still grants overpower", () => {
-    const game = FabTestEngine.start(
-      { hero: chane, hand: [sinspeakerGloombladeRed], actionPoints: 1, deck: 6 },
-      { hero: dash, arena: [runechantOfWrath], life: 20, deck: 6 },
-      { ...FAB_MANUAL_HARNESS, firstPlayer: chane },
-    );
-    const Chane = game.as(chane);
-    const Dash = game.as(dash);
-
     Chane.playAttack(sinspeakerGloombladeRed);
-    Dash.defendWith();
-    game.helpers.resolveRestOfCombat();
-
-    expectFabCard(Chane, sinspeakerGloombladeRed).toHaveKeyword("overpower");
-    expectFabPlayer(Dash).toHaveLife(16);
-  });
-
-  it("timing: overpower expires at the end of the turn", () => {
-    const game = FabTestEngine.start(
-      {
-        hero: chane,
-        hand: [sinspeakerGloombladeRed],
-        arena: [runechantOfWrath],
-        actionPoints: 1,
-        deck: 6,
-      },
-      { hero: dash, life: 20, deck: 6 },
-      { ...FAB_MANUAL_HARNESS, firstPlayer: chane },
-    );
-    const Chane = game.as(chane);
-    const Dash = game.as(dash);
-
-    Chane.play(sinspeakerGloombladeRed);
-    game.helpers.resolveUntilIdle({ entityTargets: "minimum", ordering: "listed" });
-    expectFabCard(Chane, sinspeakerGloombladeRed).toHaveKeyword("overpower");
-
-    game.closeCombat({ optionals: "decline", ordering: "listed" });
-    Chane.endTurn();
-    game.helpers.untilIdle();
-    expectFabCard(Chane, sinspeakerGloombladeRed).notToHaveKeyword("overpower");
+    expectCombat(game).toHaveAttackPower(2).notToHaveKeyword("overpower");
+    Dash.defendWith(snatchRed, nimblismBlue);
+    game.closeCombat({ optionals: "throw" });
+    expectFabPlayer(Dash).toHaveLife(20);
+    expectFabCard(Chane, sinspeakerGloombladeRed).toBeIn("graveyard").notToHaveKeyword("overpower");
+    expectCombat(game).toBeClosed();
   });
 });

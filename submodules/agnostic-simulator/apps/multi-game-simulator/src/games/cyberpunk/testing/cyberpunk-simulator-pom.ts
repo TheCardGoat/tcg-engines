@@ -1297,16 +1297,38 @@ export class CyberpunkSimulatorPom<
     await this.clickPromptVerb(as, "pass");
   }
 
-  async resolveAdjustGig(value: number, as: PlayerId): Promise<void> {
+  async resolveAdjustGig(dieId: string, value: number, as: PlayerId): Promise<void> {
     if (hasEngineHarness(this.harness)) {
       await this.harness.dispatchEngine(
         (engine, payload) =>
-          engine.executeMove("resolveAdjustGig", { args: { value: payload.value } }, payload.as),
-        { value, as },
+          engine.executeMove(
+            "resolveAdjustGig",
+            { args: { kind: "adjust", dieId: payload.dieId, value: payload.value } },
+            payload.as,
+          ),
+        { dieId, value, as },
       );
       return;
     }
-    await this.runSingleOptionMove(as, "resolveAdjustGig", String(value));
+    await this.takeControl(as);
+    await this.dom
+      .locator(`[data-testid="gig-die"][data-die-id=${cssString(dieId)}]`)
+      .click({ force: true });
+    await this.dom
+      .locator(`[data-testid="prompt-adjust-gig-option"][data-value=${cssString(String(value))}]`)
+      .clickJs();
+  }
+
+  async resolveAdjustGigPass(as: PlayerId): Promise<void> {
+    if (hasEngineHarness(this.harness)) {
+      await this.harness.dispatchEngine(
+        (engine, player) =>
+          engine.executeMove("resolveAdjustGig", { args: { kind: "noAdjustment" } }, player),
+        as,
+      );
+      return;
+    }
+    await this.clickPromptVerb(as, "pass");
   }
 
   async resolveTrigger(triggerId: string, as: PlayerId): Promise<void> {
@@ -1439,6 +1461,14 @@ export class CyberpunkSimulatorPom<
       this.boardForPlayer(player).eddiesZone(),
       "data-count",
       String(expected),
+    );
+  }
+
+  async expectSellCue(player: PlayerId, expected: boolean): Promise<void> {
+    await expectDomAttribute(
+      this.boardForPlayer(player).eddiesZone(),
+      "data-sell-cue",
+      expected ? "true" : "false",
     );
   }
 

@@ -95,16 +95,16 @@ export interface TestEngineOptions {
    */
   activePlayerId?: PlayerId;
   /**
-   * Per the gameplay guide, GAIN A GIG is a player choice — the active player
-   * picks which die to take from the fixer area at start of turn. The engine
-   * surfaces this as a `gainGig` pending choice. For tests that don't care
-   * about the choice (most card-behavior tests), the test harness resolves it
-   * automatically by picking the first non-d20 (or d20 if it's the only die
-   * left), matching pre-existing engine behavior. Set this to `false` to
-   * exercise the rules-faithful flow and call `engine.gainGig({ die })`
-   * explicitly. Default: `true`.
+   * GAIN A GIG surfaces a `gainGig` pending choice when multiple dice are
+   * legal; a single legal die is always resolved by the engine. For tests that
+   * don't care about a multi-option choice (most card-behavior tests), the
+   * harness resolves it automatically by picking the first non-d20. Set this
+   * to `false` to exercise the rules-faithful multi-option flow and call
+   * `engine.gainGig({ die })` explicitly. Default: `true`.
    */
   autoGainGig?: boolean;
+  /** Default true. Set false to assert CR 7.5.2 first-or-second choice. */
+  autoChooseFirstPlayer?: boolean;
   /**
    * Put the fixture directly into overtime. This clears both fixer areas and
    * sets the game-state overtime flag plus the legacy turn-metadata mirror.

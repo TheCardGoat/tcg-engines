@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op06KingdomOfGerma079 } from "../../../../../cards/src/cards/OP06/stages/079-kingdom-of-germa.ts";
+import { op06KingdomOfGerma079 } from "../../../../../cards/src/cards/stages/op06-079-kingdom-of-germa.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-079 Kingdom of GERMA", () => {

@@ -11,4 +11,4 @@ export {
   clearDefinitionOverride,
 } from "./card-registry.ts";
 export { getInstance, tryGetInstance, getDefinitionFor, defOf, tryDefOf } from "./lookups.ts";
-export { getEffectiveActivePlayerId } from "./turn-info.ts";
+export { getEffectiveActivePlayerId, isOpeningHandDecisionWindow } from "./turn-info.ts";

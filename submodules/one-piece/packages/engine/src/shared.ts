@@ -317,6 +317,18 @@ export function enqueueMirroredInPlayEffectsForTrigger(
   opponentTrigger: EffectBlock["trigger"],
   triggerEvent?: Extract<ResolutionItem, { kind: "effectBlock" }>["triggerEvent"],
 ) {
+  if (actorTrigger === "whenYouActivateEvent" && triggerEvent?.instanceId !== undefined) {
+    const player = getPlayer(state, actor);
+    const activatedBaseCost = baseCost(getCard(getInstance(state, triggerEvent.instanceId).cardId));
+    const existing = player.activatedEvent;
+    player.activatedEvent =
+      existing && existing.turnNumber === state.turnNumber
+        ? {
+            turnNumber: existing.turnNumber,
+            bestBaseCost: Math.max(existing.bestBaseCost, activatedBaseCost),
+          }
+        : { turnNumber: state.turnNumber, bestBaseCost: activatedBaseCost };
+  }
   for (const seat of [state.activeSeat, otherSeat(state.activeSeat)]) {
     enqueueInPlayEffectsForTrigger(
       state,
@@ -548,6 +560,22 @@ export function getCardPower(state: MatchState, instanceId: string): number {
     getPowerModifierTotal(state, instanceId) +
     getPermanentModifierTotal(state, instanceId, "power")
   );
+}
+
+export function getCardAttribute(state: MatchState, instanceId: string): string[] {
+  const card = getCard(getInstance(state, instanceId).cardId);
+  const base: string[] = Array.isArray(card.attribute)
+    ? card.attribute
+    : card.attribute
+      ? [card.attribute]
+      : [];
+  const granted: string[] = [];
+  for (const modifier of Object.values(state.modifiers)) {
+    if (modifier.type === "attribute" && modifier.targetId === instanceId && modifier.attribute) {
+      granted.push(modifier.attribute);
+    }
+  }
+  return [...new Set([...base, ...granted])];
 }
 
 export function getCardCost(state: MatchState, instanceId: string): number {

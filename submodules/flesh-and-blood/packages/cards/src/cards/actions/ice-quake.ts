@@ -39,7 +39,12 @@ export const iceQuake = definePitchFamily(fabPitchFamilies["ice-quake"], {
         policy: { kind: "windowed", duration: "this-turn", matching: "every" },
         resolution: {
           kind: "effect",
-          effect: { type: "create-token", token: "frostbite", controller: "attack-target" },
+          effect: {
+            type: "create-token",
+            token: "frostbite",
+            creator: "effect-controller",
+            controller: "attack-target",
+          },
         },
       },
     },

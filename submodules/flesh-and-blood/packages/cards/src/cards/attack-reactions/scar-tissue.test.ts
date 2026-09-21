@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   expectCombat,
   expectFabCard,
@@ -95,5 +95,6 @@ describe("Scar Tissue (FNG015) AAA", () => {
 
     game.helpers.resolveRestOfCombat();
     expectFabPlayer(Dash).toBeMarked();
+    expect(game.renderedPlayerNarrative(Fang.id)).toContain("Obsidian Fire Vein marked Opponent.");
   });
 });

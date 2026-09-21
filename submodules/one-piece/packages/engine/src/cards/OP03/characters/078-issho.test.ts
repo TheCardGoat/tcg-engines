@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op03Issho078 } from "../../../../../cards/src/cards/OP03/characters/078-issho.ts";
+import { op03Issho078 } from "../../../../../cards/src/cards/characters/op03-078-issho.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-078 Issho", () => {

@@ -129,7 +129,7 @@ describe("Grand Archive banishment provenance", () => {
     expect(runtime.state.decision).toBeNull();
     expect(runtime.state.objects[payloadId]).toMatchObject({
       zone: "banishment",
-      banishedBySourceId: sourceId,
+      banishedBy: { sourceId, sourceIncarnation: runtime.state.objects[sourceId]!.incarnation },
     });
   });
 
@@ -180,9 +180,9 @@ describe("Grand Archive banishment provenance", () => {
     );
     expect(execution.state.objects[banishedId]).toMatchObject({
       zone: "banishment",
-      banishedBySourceId: sourceId,
+      banishedBy: { sourceId, sourceIncarnation: arranged.objects[sourceId]!.incarnation },
     });
-    expect(execution.state.objects[unrelatedId]?.banishedBySourceId).toBeUndefined();
+    expect(execution.state.objects[unrelatedId]?.banishedBy?.sourceId).toBeUndefined();
 
     const evaluation = {
       program,
@@ -317,12 +317,12 @@ describe("Grand Archive banishment provenance", () => {
       program,
       serializeGrandArchiveMatchSnapshot(execution.state),
     );
-    expect(restored.objects[banishedId]?.banishedBySourceId).toBe(sourceId);
+    expect(restored.objects[banishedId]?.banishedBy?.sourceId).toBe(sourceId);
 
     const leftBanishment = kernel.transact(restored, [
       { type: "object-moved", objectId: banishedId, from: "banishment", to: "graveyard" },
     ]).state;
-    expect(leftBanishment.objects[banishedId]?.banishedBySourceId).toBeUndefined();
+    expect(leftBanishment.objects[banishedId]?.banishedBy?.sourceId).toBeUndefined();
 
     const additionalCost = payGrandArchiveAbilityCost(
       {
@@ -351,10 +351,10 @@ describe("Grand Archive banishment provenance", () => {
         type: "object-moved",
         objectId: additionalCostId,
         to: "banishment",
-        banishedBySourceId: sourceId,
+        banishedBy: { sourceId, sourceIncarnation: arranged.objects[sourceId]!.incarnation },
       }),
     ]);
     const additionalCostPaid = kernel.transact(leftBanishment, additionalCost.events).state;
-    expect(additionalCostPaid.objects[additionalCostId]?.banishedBySourceId).toBe(sourceId);
+    expect(additionalCostPaid.objects[additionalCostId]?.banishedBy?.sourceId).toBe(sourceId);
   });
 });

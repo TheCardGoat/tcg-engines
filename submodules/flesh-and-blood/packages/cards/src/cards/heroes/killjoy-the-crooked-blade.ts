@@ -27,7 +27,7 @@ export const killjoyTheCrookedBlade = defineCard(
             observes: {
               kind: "event-object",
               selector: "moved-object",
-              relationship: { kind: "controller", player: "ability-controller" },
+              relationship: { kind: "any" },
               filter: { name: "Gold", typeBox: { metatypes: ["Token"] } },
             },
             reason: "steal",

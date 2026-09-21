@@ -397,7 +397,7 @@ function normalizeCard(apiCard) {
 
   let internalName = card.title;
   internalName += card.subtitle ? `#${card.subtitle}` : "";
-  internalName = internalName.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  internalName = internalName.normalize("NFKD").replace(/\p{M}/gu, "");
   card.internalName = internalName
     .toLowerCase()
     .replace(/[^\w\s#]|_/g, "")

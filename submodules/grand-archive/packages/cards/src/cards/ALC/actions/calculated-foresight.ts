@@ -46,48 +46,59 @@ export const calculatedForesight: GrandArchiveCard<GrandArchiveAbilityDefinition
                   kind: "sequence",
                   effects: [
                     {
-                      kind: "banish",
-                      player: "controller",
-                      selection: {
-                        id: "banished-cards",
-                        kind: "choice",
-                        declared: "resolution",
-                        chooser: "controller",
-                        count: {
-                          kind: "exactly",
-                          amount: 1,
-                        },
-                        candidates: {
-                          kind: "card",
-                          zones: ["graveyard"],
-                          relationship: "zone-of",
-                          player: "controller",
-                          filter: {
-                            kind: "has-keyword",
-                            keyword: "floating-memory",
+                      kind: "attempt",
+                      effect: {
+                        kind: "banish",
+                        player: "controller",
+                        selection: {
+                          id: "banished-cards",
+                          kind: "choice",
+                          declared: "resolution",
+                          chooser: "controller",
+                          count: {
+                            kind: "exactly",
+                            amount: 1,
+                          },
+                          candidates: {
+                            kind: "card",
+                            zones: ["graveyard"],
+                            relationship: "zone-of",
+                            player: "controller",
+                            filter: {
+                              kind: "has-keyword",
+                              keyword: "floating-memory",
+                            },
                           },
                         },
                       },
+                      bindSucceededAs: "optional-action-succeeded",
                     },
                     {
-                      kind: "continuous",
-                      subjects: {
-                        kind: "champion",
-                        player: "controller",
+                      kind: "conditional",
+                      condition: {
+                        kind: "effect-succeeded",
+                        binding: "optional-action-succeeded",
                       },
-                      affectedSet: "locked",
-                      duration: {
-                        kind: "this-turn",
-                      },
-                      layer: {
-                        layer: "D",
-                        modifies: "ability",
-                      },
-                      change: {
-                        kind: "grant-keyword",
-                        keyword: {
-                          name: "ranged",
-                          value: 3,
+                      then: {
+                        kind: "continuous",
+                        subjects: {
+                          kind: "champion",
+                          player: "controller",
+                        },
+                        affectedSet: "locked",
+                        duration: {
+                          kind: "this-turn",
+                        },
+                        layer: {
+                          layer: "D",
+                          modifies: "ability",
+                        },
+                        change: {
+                          kind: "grant-keyword",
+                          keyword: {
+                            name: "ranged",
+                            value: 3,
+                          },
                         },
                       },
                     },

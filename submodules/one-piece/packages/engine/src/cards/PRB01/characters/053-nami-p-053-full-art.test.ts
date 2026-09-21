@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb01NamiP053FullArt053 } from "../../../../../cards/src/cards/PRB01/characters/053-nami-p-053-full-art.ts";
+import { prb01NamiP053FullArt053 } from "../../../../../cards/src/cards/characters/p-053-nami-p-053-full-art.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

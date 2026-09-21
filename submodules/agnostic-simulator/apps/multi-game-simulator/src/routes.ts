@@ -3,6 +3,7 @@ import { index, route, type RouteConfig } from "@react-router/dev/routes";
 export default [
   index("routes/index.tsx"),
   route("flesh-and-blood/simulator/tests/analytics-preview", "routes/fab-analytics-preview.tsx"),
+  route("cyberpunk/simulator/tests/endgame-preview", "routes/cyberpunk-endgame-preview.tsx"),
   route("animation-fixtures", "routes/animation-fixtures.tsx"),
   route("simulator-ui-fixtures", "routes/simulator-ui-fixtures.tsx"),
   route(

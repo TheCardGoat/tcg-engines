@@ -5,8 +5,7 @@ export const evoAtomBreaker = definePitchFamily(fabPitchFamilies["evo-atom-break
   abilities: () => ({
     ifHaveBaseChestEquippedTransformXHyperDrivers: {
       kind: "resolution",
-      // Printed base chest + multi-object transform (CR 8.5.36d). Engine under-zone
-      // / non-self transform still partial (§7). Prevention 2X rides successful equip.
+      // CR 8.5.36d: choose X Drivers, then transform all sources atomically.
       condition: {
         type: "equipped-count",
         filter: {
@@ -24,41 +23,29 @@ export const evoAtomBreaker = definePitchFamily(fabPitchFamilies["evo-atom-break
         type: "sequence",
         steps: [
           {
-            type: "sequence",
-            steps: [
-              {
-                type: "transform",
-                target: {
-                  selector: "object",
-                  declared: "at-resolution",
-                  player: "controller",
-                  zones: ["equipment-chest"],
-                  filter: {
-                    typeBox: {
-                      types: ["Equipment"],
-                      subtypes: ["Base", "Chest"],
-                    },
-                  },
-                  count: 1,
-                },
-                into: "this",
-              },
-              {
-                type: "transform",
-                target: {
-                  selector: "object",
-                  declared: "at-resolution",
-                  player: "controller",
-                  zones: ["permanent"],
-                  filter: {
-                    name: "Hyper Driver",
-                  },
-                  count: {
-                    type: "x",
-                  },
-                },
-                into: "this",
-              },
+            type: "choose-card",
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "controller",
+              zones: ["permanent"],
+              filter: { name: "Hyper Driver" },
+              count: { type: "any-number" },
+            },
+            outputBinding: "evo-drivers",
+          },
+          {
+            type: "transform-into-resolving-card",
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "controller",
+              zones: ["equipment-chest"],
+              filter: { typeBox: { types: ["Equipment"], subtypes: ["Base", "Chest"] } },
+              count: 1,
+            },
+            additionalTargets: [
+              { selector: "binding", binding: "evo-drivers", count: { type: "any-number" } },
             ],
           },
           {
@@ -72,11 +59,14 @@ export const evoAtomBreaker = definePitchFamily(fabPitchFamilies["evo-atom-break
             then: {
               type: "prevention",
               preventionKind: "fixed",
+              times: 1,
               amount: {
                 type: "double",
                 operands: [
                   {
-                    type: "x",
+                    type: "count",
+                    what: "objects-under-source",
+                    filter: { name: "Hyper Driver" },
                   },
                 ],
               },

@@ -13,6 +13,7 @@ export const frosthavenSheath = definePitchFamily(fabPitchFamilies["frosthaven-s
       effect: {
         type: "create-token",
         token: "frostbite",
+        creator: "effect-controller",
         controller: "opponent",
       },
       label: {

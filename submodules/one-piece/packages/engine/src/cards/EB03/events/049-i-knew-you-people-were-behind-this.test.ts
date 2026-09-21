@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb03IKnewYouPeopleWereBehindThis049 } from "../../../../../cards/src/cards/EB03/events/049-i-knew-you-people-were-behind-this.ts";
+import { eb03IKnewYouPeopleWereBehindThis049 } from "../../../../../cards/src/cards/events/eb03-049-i-knew-you-people-were-behind-this.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB03-049 I Knew You People Were Behind This.", () => {

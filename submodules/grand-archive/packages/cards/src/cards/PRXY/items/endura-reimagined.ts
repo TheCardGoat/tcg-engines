@@ -56,38 +56,49 @@ export const enduraReimagined: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "name",
-                        value: "Endura, Scepter of Ignition",
-                        match: "exact",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "name",
+                          value: "Endura, Scepter of Ignition",
+                          match: "exact",
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "enlighten",
-                  amount: 2,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "enlighten",
+                    amount: 2,
+                  },
                 },
               ],
             },

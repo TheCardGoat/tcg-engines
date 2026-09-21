@@ -78,7 +78,11 @@ describe("OP04-053 Page One", () => {
       .map((log) => log.message)
       .join(" ");
     expect(spectatorLog).toContain("places a card from their hand at the bottom");
-    expect(spectatorLog).not.toContain(eb01MountainGod018.name);
+    // The deck-bottom choice prompt names only public candidates; South's
+    // hidden hand/deck cards stay masked (the board Mountain God may still be
+    // named by Ice Age's own target prompt, so a blanket name ban would be
+    // too broad).
+    expect(spectatorLog).toMatch(/Page One chooses its target: a hidden card(, a hidden card)*/);
     expect(spectatorLog).not.toContain("Order:");
     expect(spectatorLog).not.toContain(eb01Doma005.name);
     expect(spectatorView.players.south.deckTop).toMatchObject({

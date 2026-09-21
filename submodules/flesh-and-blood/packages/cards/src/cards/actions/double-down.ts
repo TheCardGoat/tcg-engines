@@ -81,6 +81,8 @@ export const doubleDown = definePitchFamily(fabPitchFamilies["double-down"], {
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "any",
+          occurrences: "every",
           filter: {
             typeBox: {
               metatypes: ["Token"],

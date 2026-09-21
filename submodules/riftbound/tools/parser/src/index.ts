@@ -244,17 +244,51 @@ function artIdFromImageUrl(imageUrl: string, fallback: string): string {
   return match?.[1] ?? fallback;
 }
 
+/**
+ * The gallery smart list's totalItems counts records the site never publishes,
+ * so an equality check against it can never hold. Completeness is proven
+ * structurally instead: every declared set must embed its full base collector
+ * number range 1..collectorNumberMax; alternate printings beyond the base
+ * range are optional by definition.
+ */
+function assertGalleryBaseNumbersCovered(
+  sets: ReadonlyArray<{ id: string; collectorNumberMax?: number }>,
+  cards: ReadonlyArray<{ set: { value: { id: string | number } }; collectorNumber: number }>,
+): void {
+  const embedded = new Map<string, Set<number>>();
+  for (const card of cards) {
+    const setId = String(card.set.value.id);
+    let numbers = embedded.get(setId);
+    if (!numbers) embedded.set(setId, (numbers = new Set<number>()));
+    numbers.add(card.collectorNumber);
+  }
+  for (const set of sets) {
+    if (set.collectorNumberMax === undefined) continue;
+    const numbers = embedded.get(set.id);
+    const missing: number[] = [];
+    for (let n = 1; n <= set.collectorNumberMax; n += 1) {
+      if (!numbers?.has(n)) missing.push(n);
+    }
+    if (missing.length > 0) {
+      throw new RiftboundCatalogError(
+        `gallery.set ${set.id}: missing base collector numbers ${missing.join(", ")}`,
+      );
+    }
+  }
+}
+
 function normalizeGallery(payload: unknown): {
   sets: RiftboundSetDefinition[];
   cards: RiftboundCardDefinition[];
 } {
   const result = GalleryPayloadSchema.safeParse(payload);
   if (!result.success) throw schemaError("gallery", result.error);
-  if (result.data.cards.length !== result.data.reportedTotal) {
+  if (result.data.cards.length > result.data.reportedTotal) {
     throw new RiftboundCatalogError(
-      `gallery.reportedTotal: received ${result.data.cards.length} of ${result.data.reportedTotal} cards`,
+      `gallery.reportedTotal: payload embeds ${result.data.cards.length} cards but reports only ${result.data.reportedTotal}`,
     );
   }
+  assertGalleryBaseNumbersCovered(result.data.sets, result.data.cards);
 
   const sets = result.data.sets.map((set) => ({
     id: set.id,

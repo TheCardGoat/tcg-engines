@@ -8,6 +8,7 @@ export const songOfJackBeQuick = definePitchFamily(fabPitchFamilies["song-of-jac
       effect: {
         type: "create-token",
         token: "quicken",
+        creator: "effect-controller",
         controller: "each-other-hero",
       },
     },

@@ -12,6 +12,7 @@ import {
   type RawGatewayClientMessage,
   type RawGatewayServerMessage,
 } from "./gateway.js";
+import { composeDropEligibility, unsupportedTimeoutChannel } from "./drop-eligibility.js";
 import {
   ExecuteMoveMessage,
   GatewayClientMessage,
@@ -19,6 +20,7 @@ import {
   HeartbeatMessage,
   JoinGameMessage,
   LeaveGameMessage,
+  ProposalSendMessage,
   RequestGameStateSyncMessage,
   SubmitInteractionMessage,
 } from "./schemas.js";
@@ -109,6 +111,33 @@ test("gateway state packets validate authoritative animation envelopes", () => {
       animations: [{ id: "private-engine-packet", payload: { cardId: "hidden-card" } }],
     }).success,
   ).toBe(false);
+});
+
+test("undo proposal scopes survive protocol and gateway validation", () => {
+  const request = {
+    type: "proposal_send" as const,
+    gameId: "g_1",
+    actionType: "undo" as const,
+    undoScope: "turn_start" as const,
+  };
+  expect(ProposalSendMessage.parse(request)).toEqual(request);
+  expect(
+    ProposalSendMessage.safeParse({
+      ...request,
+      actionType: "cancel_match",
+    }).success,
+  ).toBe(false);
+
+  const received = {
+    type: "proposal_received" as const,
+    gameId: "g_1",
+    matchId: "m_1",
+    actionType: "undo",
+    undoScope: "turn_start" as const,
+    senderPlayerId: "p_1",
+    deadline: 1_800_000_000_000,
+  };
+  expect(RawGatewayServerMessageSchema.parse(received)).toEqual(received);
 });
 
 describe("gateway wire-message contract", () => {
@@ -248,6 +277,42 @@ describe("gateway wire-message contract", () => {
     for (const message of messages) {
       expect(RawGatewayServerMessageSchema.parse(message)).toEqual(message);
     }
+  });
+
+  test("rejects malformed drop eligibility at the gateway boundary", () => {
+    const eligibility = composeDropEligibility({
+      nowMs: 1_700_000_000_000,
+      timeout: unsupportedTimeoutChannel(),
+      disconnect: { connected: true },
+    });
+    expect(
+      RawGatewayServerMessageSchema.parse({
+        type: "drop_eligibility",
+        gameId: "g_1",
+        dropEligibility: eligibility,
+      }),
+    ).toEqual({
+      type: "drop_eligibility",
+      gameId: "g_1",
+      dropEligibility: eligibility,
+    });
+    expect(
+      RawGatewayServerMessageSchema.safeParse({
+        type: "drop_eligibility",
+        gameId: "g_1",
+        dropEligibility: { allowed: true },
+      }).success,
+    ).toBe(false);
+    expect(
+      RawGatewayServerMessageSchema.safeParse({
+        type: "game_joined",
+        gameId: "g_1",
+        role: "player",
+        stateVersion: 1,
+        players: [{ id: "p_1", connected: true }],
+        dropEligibility: { allowed: true },
+      }).success,
+    ).toBe(false);
   });
 
   test("standalone client messages accepted by the public contract are accepted by gateway ingress", () => {

@@ -26,6 +26,7 @@ import {
   createChoicePrompt,
   finalizeBeginTurnRefresh,
   moveCard,
+  processEmptyDeckDefeat,
 } from "../state.ts";
 import type { MatchState } from "../types.ts";
 import { hasPendingNonJudgePrompt } from "./shared.ts";
@@ -53,7 +54,7 @@ function queueBattleBlockChoice(state: MatchState, battleId: string) {
   createChoicePrompt(state, {
     choiceKind: "selectCards",
     seat: defendingSeat,
-    label: `${getPlayer(state, defendingSeat).playerName} may block`,
+    label: `${getPlayer(state, defendingSeat).playerName} may block the attack.`,
     details: "Select a blocker or skip.",
     sourceCardId: getInstance(state, battle.attackerId).cardId,
     sourceInstanceId: battle.attackerId,
@@ -101,6 +102,15 @@ export function drainResolutionQueue(state: MatchState) {
         finalizeBeginTurnRefresh(state, item.seat, item.skipDraw);
         break;
       case "endTurnFinalize":
+        // 6-2-3-1 variants: a deferred deck-empty defeat resolves once the
+        // turn in which the deck reached 0 cards ends. All end-of-turn
+        // effects have resolved by this point, so a deck refilled above 0
+        // escapes the defeat and an emptied deck loses here.
+        for (const seat of [item.seat, otherSeat(item.seat)] as const) {
+          if (state.status !== "active") break;
+          processEmptyDeckDefeat(state, seat, true);
+        }
+        if (state.status === "finished") break;
         cleanupTurnEndModifiers(state, state.turnNumber, item.seat);
         state.turnNumber += 1;
         const nextSeat = state.extraTurnSeat ?? otherSeat(item.seat);
@@ -124,7 +134,7 @@ export function drainResolutionQueue(state: MatchState) {
             createChoicePrompt(state, {
               choiceKind: "chooseOption",
               seat: item.controller,
-              label: `${cardName(getCardForInstance(state, item.sourceInstanceId))} deck position`,
+              label: `${cardName(getCardForInstance(state, item.sourceInstanceId))} deck position.`,
               details:
                 "Choose whether to leave the revealed card at the top or bottom of the deck.",
               sourceCardId: getInstance(state, item.sourceInstanceId).cardId,

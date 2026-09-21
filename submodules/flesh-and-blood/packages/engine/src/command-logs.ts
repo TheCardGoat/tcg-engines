@@ -8,6 +8,7 @@ import type {
 } from "./moves.ts";
 import type { CommittedEvent, FabGameEventName, FabObjectSnapshot } from "./rules/events.ts";
 import type { FabAttackTarget } from "./game/combat.ts";
+import type { FabDecision } from "./rules/process.ts";
 import type { FabRulesSnapshot } from "./kernel/transaction-kernel.ts";
 import { findObject } from "./rules/proposals/shared.ts";
 import {
@@ -486,6 +487,19 @@ export const FAB_LOG_FACT_EMITTERS = {
       data.faceDown === true ||
       data.object.faceDown ||
       (data.faceDown !== false && FAB_PRIVATE_ZONE_NAMES.has(from));
+    // A deliberate deck-top placement of a known card is exactly the fact the
+    // history should narrate (Call for Backup: "put the other on top of your
+    // deck"). Hidden placements keep the generic identity-hidden lines below.
+    if (data.to === "deck" && data.position === "top" && !identityHidden) {
+      return [
+        {
+          key: "flesh-and-blood.deck-top",
+          values: { playerId, cardName: fabObjectDisplayName(data.object), from },
+          objectRefs: { cardName: objectReference(data.object) },
+          category: "action",
+        },
+      ];
+    }
     const facts: FabLogFact[] = [
       identityHidden
         ? {
@@ -1224,17 +1238,33 @@ export const FAB_LOG_FACT_EMITTERS = {
     },
   ],
   "set-status": (event) => {
-    if (!event.data.status.startsWith("named-card:") || !event.controllerId) return [];
-    return [
-      {
-        key: "flesh-and-blood.name-card",
-        values: {
-          playerId: event.controllerId,
-          cardName: event.data.status.slice("named-card:".length),
-        },
-        category: "rules",
+    const facts: FabLogFact[] = [];
+    // CR 9.3 mark — the gained flag is the player-visible fact; losing it is
+    // silent because CR 9.3.3 removal is folded into the hit line.
+    if (event.data.status === "marked" && event.controllerId) {
+      const playerId = event.data.object.ownerId;
+      if (playerId) {
+        facts.push({
+          key: "flesh-and-blood.marked",
+          values: {
+            sourceName: event.source ? fabObjectDisplayName(event.source) : "An effect",
+            playerId,
+          },
+          ...(event.source ? { objectRefs: { sourceName: objectReference(event.source) } } : {}),
+          category: "rules",
+        });
+      }
+    }
+    if (!event.data.status.startsWith("named-card:") || !event.controllerId) return facts;
+    facts.push({
+      key: "flesh-and-blood.name-card",
+      values: {
+        playerId: event.controllerId,
+        cardName: event.data.status.slice("named-card:".length),
       },
-    ];
+      category: "rules",
+    });
+    return facts;
   },
   sharpen: (event) => [
     {
@@ -1464,6 +1494,11 @@ export const FAB_LOG_FACT_EMITTERS = {
   },
   "set-tapped": (event) => {
     const source = event.source;
+    // Taps paid as activation or play costs narrate as payment details of the
+    // activity they belong to, not as standalone state changes.
+    const isCostPayment =
+      event.cause.kind === "player-command" &&
+      (event.cause.command === "activation-cost" || event.cause.command === "play-effect-cost");
     if (event.data.tapped && source && source.instanceId !== event.data.object.instanceId) {
       return [
         {
@@ -1483,6 +1518,7 @@ export const FAB_LOG_FACT_EMITTERS = {
             cardName: objectReference(event.data.object),
           },
           category: "rules",
+          ...(isCostPayment ? { narrativeRole: "detail" as const } : {}),
         },
       ];
     }
@@ -1494,6 +1530,7 @@ export const FAB_LOG_FACT_EMITTERS = {
           state: event.data.tapped ? "tapped" : "untapped",
         },
         category: "rules",
+        ...(isCostPayment ? { narrativeRole: "detail" as const } : {}),
       },
     ];
   },
@@ -1887,6 +1924,138 @@ function openedLayerReference(
   };
 }
 
+/**
+ * The answered decision names what a player actually picked so the history
+ * carries every modal choice: entity-target card picks (Call for Backup's
+ * named pair, a chosen discard, a searched card) and closed-list option picks
+ * (Warmonger's Diplomacy's war or peace).
+ *
+ * Card picks narrate only when they were made from zones the board cannot
+ * show (the piles); arena selections already narrate through their deliberate
+ * outcome lines (bind, destroy, attack). Picks are public only when every
+ * chosen object was public where it was chosen — otherwise the answer stays
+ * private to the answering seat (hidden deck-search and hand picks). Option
+ * picks are declared openly on the printed card, so they narrate publicly.
+ * Returns null when the answer carries nothing this narrative can name.
+ */
+export function chosenTargetsNarrative(input: {
+  readonly command: FabCommand;
+  readonly state: FabRulesSnapshot;
+  /** The decision pending before the command, so option labels are recoverable. */
+  readonly decision?: FabDecision | null;
+  readonly events: readonly CommittedEvent[];
+}): { readonly choice: string; readonly allPublic: boolean } | null {
+  const { command } = input;
+  if (command.move !== "answer-decision") return null;
+  const answer: unknown = command.answer;
+  if (!answer || typeof answer !== "object" || Array.isArray(answer)) return null;
+
+  const answeredDecision = input.decision;
+  const optionLabelsFor = (): string[] | null => {
+    // Only resolution prompts (Warmonger's Diplomacy's war or peace) narrate:
+    // their outcome never restates the choice. Plain option decisions
+    // (prevention modes, boast payments) already narrate through their outcome
+    // lines, and ability modes have their own modes-chosen fact.
+    if (
+      !answeredDecision ||
+      answeredDecision.decisionId !== command.decisionId ||
+      answeredDecision.kind !== "effect-resolution" ||
+      answerKind !== "effect-resolution"
+    ) {
+      return null;
+    }
+    const optionId = (answer as { optionId?: unknown }).optionId;
+    if (typeof optionId !== "string") return null;
+    const option = answeredDecision.options.find((entry) => entry.id === optionId);
+    return [option?.label ?? optionId];
+  };
+
+  const answerKind = (answer as { kind?: unknown }).kind;
+  if (answerKind === "effect-resolution") {
+    const labels = optionLabelsFor();
+    if (!labels) return null;
+    return { choice: labels.join(", "), allPublic: true };
+  }
+
+  if (answerKind !== "entity-target") return null;
+  const instanceIds = (answer as { instanceIds?: unknown }).instanceIds;
+  if (!Array.isArray(instanceIds)) return null;
+  const ids = instanceIds.filter((id): id is string => typeof id === "string");
+  if (ids.length === 0) return null;
+
+  const resolved = ids.map((instanceId) => {
+    // Prefer a committed event's pre-move snapshot: the resolution that ran in
+    // the same command may already have moved the card (graveyard → deck),
+    // and the destination zone must not demote a public choice to private.
+    for (const event of input.events) {
+      const candidate: unknown = (event.data as { object?: unknown } | null | undefined)?.object;
+      if (
+        candidate &&
+        typeof candidate === "object" &&
+        (candidate as { instanceId?: unknown }).instanceId === instanceId &&
+        "visibility" in candidate
+      ) {
+        return candidate as FabObjectSnapshot;
+      }
+    }
+    return findObject(input.state, instanceId);
+  });
+  if (resolved.every((snapshot) => snapshot === null)) return null;
+  // Card picks narrate only when they came from a pile the board cannot show;
+  // every such choice is presented in a modal/drawer, and its consequences
+  // name at most part of the pick (Call for Backup: two named, one banished,
+  // one deck-topped).
+  const MODAL_PILE_ZONE_NAMES = new Set([
+    "graveyard",
+    "banished",
+    "hand",
+    "deck",
+    "arsenal",
+    "pitch",
+    "soul",
+    "inventory",
+  ]);
+  const chosenFromPiles = resolved.some(
+    (snapshot) => snapshot !== null && MODAL_PILE_ZONE_NAMES.has(snapshot.zone),
+  );
+  if (!chosenFromPiles) return null;
+
+  const choice = resolved
+    .map((snapshot) => (snapshot ? fabObjectDisplayName(snapshot) : "a card"))
+    .join(", ");
+  const allPublic = resolved.every(
+    (snapshot) => snapshot !== null && snapshot.visibility === "public" && !snapshot.faceDown,
+  );
+  return { choice, allPublic };
+}
+
+function chosenTargetsLog(input: {
+  readonly commandId: string;
+  readonly command: FabCommand;
+  readonly actorId: string;
+  readonly state: FabRulesSnapshot;
+  readonly decision?: FabDecision | null;
+  readonly events: readonly CommittedEvent[];
+  readonly timestamp: number;
+}): FabMoveLog | null {
+  const chosen = chosenTargetsNarrative(input);
+  if (!chosen) return null;
+  const message = logMessage("flesh-and-blood.decision.chosen", {
+    actorId: input.actorId,
+    choice: chosen.choice,
+  });
+  return {
+    commandId: input.commandId,
+    moveType: input.command.move,
+    playerId: input.actorId,
+    timestamp: input.timestamp,
+    sequence: 1,
+    turnNumber: input.state.turnNumber,
+    public: chosen.allPublic ? [message] : [],
+    ...(chosen.allPublic ? {} : { privateByPlayerId: { [input.actorId]: [message] } }),
+  };
+}
+
 export function semanticMoveLogs(input: {
   readonly commandId: string;
   readonly command: FabCommand;
@@ -1894,6 +2063,8 @@ export function semanticMoveLogs(input: {
   readonly state: FabRulesSnapshot;
   readonly status: FabCommandStatus;
   readonly events: readonly CommittedEvent[];
+  /** The decision pending before the command, so option picks keep their labels. */
+  readonly decisionBeforeCommand?: FabDecision | null;
   /** Ordered bottom-to-top stack immediately after the accepted player command. */
   readonly stackAfterCommand: readonly FabStackLayerSnapshot[];
   readonly timestamp: number;
@@ -1959,6 +2130,11 @@ export function semanticMoveLogs(input: {
         : {}),
     },
   ];
+  const chosenLog = chosenTargetsLog({
+    ...input,
+    decision: input.decisionBeforeCommand ?? null,
+  });
+  if (chosenLog) logs.push(chosenLog);
   if (facts.length > 0) {
     const publicMessages: FabMoveLogMessage[] = [];
     const privateByPlayerId: Record<string, FabMoveLogMessage[]> = {};

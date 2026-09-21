@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op01RoronoaZoro001 } from "../../../../cards/src/cards/OP01/leaders/001-roronoa-zoro.ts";
-import { op02Sakazuki099 } from "../../../../cards/src/cards/OP02/characters/099-sakazuki.ts";
-import { op12RoronoaZoro036 } from "../../../../cards/src/cards/OP12/characters/036-roronoa-zoro.ts";
-import { op12RoronoaZoro113 } from "../../../../cards/src/cards/OP12/characters/113-roronoa-zoro.ts";
-import { op14eb04Killer005 } from "../../../../cards/src/cards/OP14EB04/characters/005-killer.ts";
+import { op01RoronoaZoro001 } from "../../../../cards/src/cards/leaders/op01-001-roronoa-zoro.ts";
+import { op02Sakazuki099 } from "../../../../cards/src/cards/characters/op02-099-sakazuki.ts";
+import { op12RoronoaZoro036 } from "../../../../cards/src/cards/characters/op12-036-roronoa-zoro.ts";
+import { op12RoronoaZoro113 } from "../../../../cards/src/cards/characters/op12-113-roronoa-zoro.ts";
+import { op14eb04Killer005 } from "../../../../cards/src/cards/characters/op14-005-killer.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 function pendingPrompt(engine: OnePieceTestEngine, intent: string) {

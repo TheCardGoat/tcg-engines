@@ -23,7 +23,7 @@ export const theHeistRetailStarterDeckDexterDeshawnOneLastChance = defineCyberpu
   legality: "legal",
   hasSellTag: false,
   ram: 2,
-  timingTriggers: ["play", "attack"],
+  timingTriggers: ["play", "attack", "defeated"],
   abilities: [
     {
       kind: "triggered",

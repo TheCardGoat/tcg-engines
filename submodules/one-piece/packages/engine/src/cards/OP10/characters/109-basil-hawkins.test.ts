@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op01Shanks120 } from "@tcg/op-cards";
-import { op10BasilHawkins109 } from "../../../../../cards/src/cards/OP10/characters/109-basil-hawkins.ts";
+import { op10BasilHawkins109 } from "../../../../../cards/src/cards/characters/op10-109-basil-hawkins.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP10-109 Basil Hawkins", () => {

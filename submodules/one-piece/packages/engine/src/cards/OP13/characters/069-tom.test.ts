@@ -1,6 +1,6 @@
 import { eb01Doma005, op06TheArkNoah041, op08Zou039 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Tom069 } from "../../../../../cards/src/cards/OP13/characters/069-tom.ts";
+import { op13Tom069 } from "../../../../../cards/src/cards/characters/op13-069-tom.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

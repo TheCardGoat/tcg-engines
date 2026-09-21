@@ -38,6 +38,7 @@ export const civicDuty = defineCard(fabCardIdentitiesByCanonicalId["TwcL67rLrL9C
         effect: {
           type: "create-token",
           token: "vigor",
+          creator: "effect-controller",
           controller: "another-hero",
         },
       },

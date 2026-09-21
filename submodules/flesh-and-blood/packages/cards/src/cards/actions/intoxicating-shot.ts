@@ -37,11 +37,13 @@ export const intoxicatingShot = definePitchFamily(fabPitchFamilies["intoxicating
             {
               type: "create-token",
               token: "courage",
+              creator: "token-controller",
               controller: "attack-target",
             },
             {
               type: "create-token",
               token: "quicken",
+              creator: "token-controller",
               controller: "attack-target",
             },
           ],

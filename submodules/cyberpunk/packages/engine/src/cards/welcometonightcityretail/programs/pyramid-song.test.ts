@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
+  welcomeToNightCityRetailEvelynParkerSchemingSiren,
   welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailMaelstromZealots,
   welcomeToNightCityRetailPyramidSong,
@@ -8,14 +9,68 @@ import { getEffectivePower } from "../../../active-effects/index.ts";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Pyramid Song", () => {
-  it("is a blue Braindance program with cost 3", () => {
+  it("has the exact printed identity and conditional modal ability", () => {
     const card = welcomeToNightCityRetailPyramidSong;
-    expect(card.type).toBe("program");
-    expect(card.color).toBe("blue");
-    expect(card.classifications).toEqual(["Braindance"]);
-    expect(card.cost).toBe(3);
-    expect(card.printNumber).toBe("135");
-    expect(card.abilities[0]?.effects[0]?.effect).toBe("chooseEffect");
+    expect(card).toMatchObject({
+      canonicalId: "pyramid-song",
+      slug: "pyramid-song",
+      name: "Pyramid Song",
+      displayName: "Pyramid Song",
+      type: "program",
+      color: "blue",
+      classifications: ["Braindance"],
+      cost: 3,
+      ram: 3,
+      hasSellTag: true,
+      timingTriggers: ["play"],
+      printNumber: "135",
+      rarity: "Rare",
+      rulesText:
+        "Choose one effect. If a friendly d4 is a min Gig, choose both instead.\nGive a rival Unit -5 power this turn. // Bottom-deck a rival Unit with power 0.",
+      reminderText: ["Discard programs after they resolve."],
+    });
+    expect(card.abilities).toMatchObject([
+      {
+        kind: "triggered",
+        trigger: { trigger: "play" },
+        source: { selector: "self" },
+        effects: [
+          {
+            effect: "chooseEffect",
+            options: [
+              {
+                id: "both",
+                effects: [
+                  { effect: "modifyPower", value: -5, duration: "turn" },
+                  { effect: "moveCard", destination: "deckBottom" },
+                ],
+              },
+              {
+                id: "power-down",
+                effects: [{ effect: "modifyPower", value: -5, duration: "turn" }],
+              },
+              { id: "bottom-deck", effects: [{ effect: "moveCard", destination: "deckBottom" }] },
+            ],
+          },
+        ],
+      },
+    ]);
+  });
+
+  it("plays for exactly 3 Eddies", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailPyramidSong],
+      eddies: 3,
+      gigArea: [{ dieType: "d6", faceValue: 3 }],
+    });
+    for (const legend of engine.getCardsInZone("legendArea", P1)) {
+      engine.judgeSpendCard(legend, { as: P1 });
+    }
+
+    engine.playCard(welcomeToNightCityRetailPyramidSong, { as: P1 });
+
+    expect(engine.getEddies(P1)).toBe(0);
+    expect(engine.getState().G.turnMetadata.pendingChoice?.type).toBe("chooseEffect");
   });
 
   it("offers a modal when friendly d4 is not a min Gig", () => {
@@ -41,6 +96,26 @@ describe("Pyramid Song", () => {
       const optionIds = choice.payload.options.map((o) => o.id).sort();
       expect(optionIds).toEqual(["bottom-deck", "power-down"]);
     }
+  });
+
+  it("offers the same one-effect modal when no friendly d4 exists", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailPyramidSong],
+        eddies: 3,
+        gigArea: [{ dieType: "d6", faceValue: 1 }],
+      },
+      { field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }] },
+    );
+
+    engine.playCard(welcomeToNightCityRetailPyramidSong, { as: P1 });
+
+    const choice = engine.getState().G.turnMetadata.pendingChoice;
+    if (choice?.type !== "chooseEffect") throw new Error("Expected a modal choice");
+    expect(choice.payload.options.map((option) => option.id).sort()).toEqual([
+      "bottom-deck",
+      "power-down",
+    ]);
   });
 
   it("auto-applies both effects when friendly d4 is a min Gig", () => {
@@ -102,6 +177,40 @@ describe("Pyramid Song", () => {
     const operatorId = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2)
       .instanceId as string;
     expect(getEffectivePower(engine.getState(), operatorId)).toBe(0); // 2 - 5 clamped to 0
+  });
+
+  it("bottom-deck mode offers only rival field Units with current power 0", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailPyramidSong],
+        field: [welcomeToNightCityRetailEvelynParkerSchemingSiren],
+        eddies: 3,
+        gigArea: [{ dieType: "d4", faceValue: 2 }],
+      },
+      {
+        field: [
+          welcomeToNightCityRetailEvelynParkerSchemingSiren,
+          welcomeToNightCityRetailFieldOperator,
+        ],
+        deck: [welcomeToNightCityRetailMaelstromZealots],
+      },
+      { preserveDeckOrder: true },
+    );
+    engine.playCard(welcomeToNightCityRetailPyramidSong, { as: P1 });
+    engine.resolveChooseEffect("bottom-deck", { as: P1 });
+    const choice = engine.getState().G.turnMetadata.pendingChoice;
+    if (choice?.type !== "chooseTarget") throw new Error("Expected a Unit choice");
+    const rivalZero = engine.findCardId(
+      welcomeToNightCityRetailEvelynParkerSchemingSiren,
+      "field",
+      P2,
+    );
+
+    expect(choice.payload.eligibleIds).toEqual([rivalZero]);
+    engine.resolveEffectTarget(welcomeToNightCityRetailEvelynParkerSchemingSiren, { as: P1 });
+    expect(engine.getCardsInZone("deck", P2).at(-1)?.definitionId).toBe(
+      welcomeToNightCityRetailEvelynParkerSchemingSiren.id,
+    );
   });
 
   it("both path continues after the first target prompt (power-down then bottom-deck)", () => {

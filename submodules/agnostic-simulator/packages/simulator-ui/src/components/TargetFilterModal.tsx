@@ -46,6 +46,10 @@ interface TargetFilterModalCommonProps {
   emptyLabel?: string;
   duplicateFilter?: TargetFilterDuplicateFilter;
   renderPreview?: (entity: SimulatorEntity) => ReactNode;
+  /** Replaces the visible heading content; `title` stays the accessible name. */
+  renderTitle?: (title: string) => ReactNode;
+  /** Context shown at the start of the select toolbar row, beside the cards-per-row control. */
+  toolbarNote?: ReactNode;
 }
 
 export type TargetFilterModalProps = TargetFilterModalCommonProps &
@@ -57,7 +61,7 @@ export type TargetFilterModalProps = TargetFilterModalCommonProps &
           | { readonly kind?: "popover" }
           | {
               readonly kind: "external";
-              readonly onInspect: (entity: SimulatorEntity) => void;
+              readonly onInspect?: (entity: SimulatorEntity) => void;
               readonly onPreviewEnd?: () => void;
             };
         interactionStateFor?: CardInteractionStateResolver;
@@ -91,6 +95,8 @@ export function TargetFilterModal({
   emptyLabel = "No matching cards",
   duplicateFilter,
   renderPreview,
+  renderTitle,
+  toolbarNote,
   ...modeProps
 }: TargetFilterModalProps) {
   const selectable = modeProps.mode === "select";
@@ -201,9 +207,15 @@ export function TargetFilterModal({
 
     const containFocus = (event: FocusEvent) => {
       const dialog = dialogRef.current;
-      if (dialog && event.target instanceof Node && !dialog.contains(event.target)) {
-        dialog.focus({ preventScroll: true });
+      const target = event.target;
+      if (!(dialog && target instanceof Node) || dialog.contains(target)) return;
+      if (
+        target instanceof Element &&
+        target.closest("[data-card-context-menu], [data-card-context-preview-dialog]")
+      ) {
+        return;
       }
+      dialog.focus({ preventScroll: true });
     };
     if (modalPresentation) document.addEventListener("focusin", containFocus);
 
@@ -303,7 +315,7 @@ export function TargetFilterModal({
               id={titleId}
               className={cx("text-base font-black leading-tight", classNames?.title)}
             >
-              {title}
+              {renderTitle ? renderTitle(title) : title}
             </h2>
             {description ? (
               <p
@@ -359,12 +371,15 @@ export function TargetFilterModal({
                 <div
                   className={cx(
                     "target-filter-modal-toolbar items-center justify-between gap-3",
-                    duplicateFilter ? "flex" : "hidden min-[720px]:flex",
+                    duplicateFilter || toolbarNote ? "flex" : "hidden min-[720px]:flex",
                   )}
                 >
-                  <div className="flex min-w-0 items-center gap-3">{duplicateToggle}</div>
+                  <div className="flex min-h-0 min-w-0 flex-1 items-center gap-3">
+                    {toolbarNote}
+                    {duplicateToggle}
+                  </div>
                   <fieldset
-                    className="hidden items-center gap-1 rounded-md border border-[var(--board-border,rgba(216,229,247,0.22))] bg-[var(--board-surface-soft,rgba(216,229,247,0.08))] p-1 min-[720px]:flex"
+                    className="hidden shrink-0 items-center gap-1 rounded-md border border-[var(--board-border,rgba(216,229,247,0.22))] bg-[var(--board-surface-soft,rgba(216,229,247,0.08))] p-1 min-[720px]:flex"
                     aria-label="Cards per row"
                   >
                     <legend className="sr-only">Cards per row</legend>
@@ -391,7 +406,14 @@ export function TargetFilterModal({
                   </fieldset>
                 </div>
               ) : null}
-              <div className="target-filter-modal-content grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] grid-cols-[minmax(0,1fr)_minmax(15rem,18rem)] items-start gap-5 overflow-hidden max-[719px]:grid-cols-1 max-[719px]:grid-rows-[auto_minmax(0,1fr)] max-[719px]:gap-3">
+              <div
+                className={cx(
+                  "target-filter-modal-content grid min-h-0 flex-1 grid-rows-[minmax(0,1fr)] items-start overflow-hidden",
+                  selectable
+                    ? "grid-cols-[minmax(0,1fr)_minmax(15rem,18rem)] gap-5 max-[719px]:grid-cols-1 max-[719px]:grid-rows-[auto_minmax(0,1fr)] max-[719px]:gap-3"
+                    : "grid-cols-1",
+                )}
+              >
                 <div className="target-filter-modal-grid h-full min-h-0 min-w-0 overflow-x-hidden overflow-y-auto p-1 max-[719px]:row-start-2">
                   <CardGrid
                     entities={[...displayedEntities]}

@@ -65,6 +65,7 @@ export const weavingManastream: GrandArchiveCard<GrandArchiveAbilityDefinition, 
           id: "wi4f59furp-a3",
           kind: "triggered",
           text: "[Diana Bonus] [Element Bonus] Whenever this card is banished from your graveyard to pay for a memory cost, you may load it into an Aetherwing weapon you control.",
+          functionalZones: ["graveyard"],
           trigger: {
             kind: "event",
             event: {

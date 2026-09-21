@@ -49,45 +49,56 @@ export const windriderInvoker: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "enlighten",
+                    amount: 2,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: "enlighten",
-                  amount: 2,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                    },
-                    {
-                      kind: "continuous",
-                      subjects: {
-                        kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "draw",
+                        player: "controller",
+                        amount: 1,
                       },
-                      affectedSet: "locked",
-                      duration: {
-                        kind: "this-turn",
+                      {
+                        kind: "continuous",
+                        subjects: {
+                          kind: "source",
+                        },
+                        affectedSet: "locked",
+                        duration: {
+                          kind: "this-turn",
+                        },
+                        layer: {
+                          layer: "E",
+                          modifies: "stat",
+                          sublayer: "modifier",
+                        },
+                        change: {
+                          kind: "numeric",
+                          property: "power",
+                          operation: "add",
+                          amount: 3,
+                        },
                       },
-                      layer: {
-                        layer: "E",
-                        modifies: "stat",
-                        sublayer: "modifier",
-                      },
-                      change: {
-                        kind: "numeric",
-                        property: "power",
-                        operation: "add",
-                        amount: 3,
-                      },
-                    },
-                  ],
+                    ],
+                  },
                 },
               ],
             },

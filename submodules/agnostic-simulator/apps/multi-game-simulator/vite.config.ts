@@ -76,6 +76,7 @@ export default defineConfig({
             "react-router-dom",
             "socket.io-client",
             "socket.io-msgpack-parser",
+            "@react-three/fiber",
             ...selectedCardPackages,
           ]
         : undefined,

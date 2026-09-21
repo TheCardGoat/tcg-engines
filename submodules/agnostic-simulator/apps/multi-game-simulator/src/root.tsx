@@ -11,6 +11,7 @@ import { getPlayGameConfig } from "@tcg/shared/game-adapter";
 import { platformAuthSessionContext } from "../server/context";
 import { resolveGatewayTicket, type GatewayTicketBootstrapResult } from "../server/gateway-ticket";
 import { initRootSocket } from "./lib/gateway/root-socket";
+import { logDebugPayload } from "./lib/debug-logging";
 import { apiUrl, runtimeApiEnvForServer } from "./runtime/gameRuntimeApi";
 import { parseSharedSimulatorRoute } from "./simulator/routeData";
 import { isSimulatorDebugExportEnabled } from "./simulator/debug-export/debug-export-feature";
@@ -125,6 +126,7 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
  */
 export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
   const serverData = await serverLoader<typeof loader>();
+  logDebugPayload("[simulator:ssr] root loader payload", serverData);
   if (serverData.sessionRoute) return { ...serverData, rootSocketReady: false };
   const isLiveGame =
     serverData.gameSlug !== null && getPlayGameConfig(serverData.gameSlug)?.isActive === true;

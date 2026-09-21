@@ -1,0 +1,107 @@
+import type { LeaderCard } from "@tcg/op-types";
+import { op10Usopp042I18n } from "./op10-042-usopp.i18n.ts";
+
+export const op10Usopp042: LeaderCard = {
+  id: "OP10-042",
+  canonicalId: "OP10-042",
+  slug: "usopp/op10-042",
+  name: "Usopp",
+  printings: [
+    {
+      id: "OP10-042",
+      artId: "OP10-042",
+      setCode: "OP10",
+      collectorNumber: "042",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP10-042.jpg",
+    },
+    {
+      id: "OP10-042_p1",
+      artId: "OP10-042_p1",
+      setCode: "OP10",
+      collectorNumber: "042",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP10-042_p1.jpg",
+    },
+  ],
+  cardType: "leader",
+  color: ["blue", "black"],
+  rarity: "L",
+  setId: "OP10",
+  power: 5000,
+  life: 4,
+  traits: ["Straw Hat Crew Dressrosa"],
+  attribute: "ranged",
+  effect:
+    'All of your "Dressrosa" type Characters with a cost of 2 or more gain +1 cost.[Opponent\'s Turn] [Once Per Turn] This effect can be activated when your "Dressrosa" type Character is removed from the field by your opponent\'s effect or K.O.\'d. If you have 5 or less cards in your hand, draw 1 card.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenCharacterRemoved",
+        eventFilter: {
+          player: "self",
+          causedBy: "opponent",
+          filters: [
+            {
+              filter: "trait",
+              value: "Dressrosa",
+              match: "includes",
+            },
+          ],
+        },
+        conditions: [
+          {
+            condition: "turn",
+            value: "opponent",
+          },
+          {
+            condition: "handCount",
+            player: "self",
+            comparison: "lte",
+            value: 5,
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+        ],
+        optional: true,
+        oncePerTurn: true,
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: "all",
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Dressrosa",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "gte",
+                  value: 2,
+                },
+              ],
+            },
+            value: 1,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op10Usopp042I18n,
+};

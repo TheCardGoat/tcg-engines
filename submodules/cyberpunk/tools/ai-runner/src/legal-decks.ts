@@ -3,14 +3,23 @@ import type { CardDefinition } from "@tcg/cyberpunk-types";
 import { deckLists, structuredCards } from "@tcg/cyberpunk-cards";
 import { validateDeck } from "../../../packages/utils/src/index.ts";
 
+import { authoredBotLabDeckSpecs } from "./authored-decks.ts";
+
 const STRICT_MAIN_DECK_SIZE = 40;
 const MAX_COPIES = 3;
 
-export type DeckSource = "test" | "real-single" | "print-and-play-padded" | "legal-permutations";
+export type DeckSource =
+  | "test"
+  | "real-single"
+  | "print-and-play-padded"
+  | "legal-permutations"
+  | "authored-botlab";
 
 export interface GeneratedDeck {
   id: string;
   archetype: string;
+  /** Human-readable deck title; authored decks carry their English title. */
+  title?: string;
   legends: string[];
   mainDeck: string[];
   coveredSlugs: string[];
@@ -60,6 +69,9 @@ export function createStructuredCatalog(): CardCatalog {
 
 export function createLegalDeckPool(source: DeckSource): DeckPool {
   const pool = buildPool();
+  if (source === "authored-botlab") {
+    return summarizePool(pool, createAuthoredBotLabDecks());
+  }
   if (source === "real-single") {
     const deck = buildArchetypeDeck(pool, "real-single", "real-single", (cards) =>
       cards.map((card, index) => ({ card, score: cards.length - index })),
@@ -106,6 +118,48 @@ export function createLegalDeckPool(source: DeckSource): DeckPool {
   decks.push(buildSetBalancedDeck(pool));
   decks.push(...buildGreedySetCoverDecks(pool, decks));
   return summarizePool(pool, decks);
+}
+
+/**
+ * Resolve the hand-authored bot-lab archetype specs against the real
+ * structured catalog. Every spec must resolve and validate exactly as
+ * authored — lists are complete 40-card decks, so no padding or filling
+ * happens here, and any legality failure names the offending card.
+ */
+export function createAuthoredBotLabDecks(): GeneratedDeck[] {
+  const pool = buildPool();
+  return authoredBotLabDeckSpecs.map((spec) => buildAuthoredDeck(pool, spec));
+}
+
+function buildAuthoredDeck(
+  pool: BuildPool,
+  spec: (typeof authoredBotLabDeckSpecs)[number],
+): GeneratedDeck {
+  const legends = spec.legends.map((name) => findByName(pool.legends, name));
+  const mainDeck: string[] = [];
+  const counts = new Map<string, number>();
+  for (const [name, count] of Object.entries(spec.mainDeck)) {
+    if (!Number.isInteger(count) || count < 1) {
+      throw new Error(`${spec.id}: "${name}" has invalid copy count ${count}`);
+    }
+    const card = findByName(pool.nonLegends, name);
+    const seen = counts.get(card.slug) ?? 0;
+    if (seen + count > MAX_COPIES) {
+      throw new Error(`${spec.id}: "${card.displayName}" would exceed the ${MAX_COPIES}-copy cap`);
+    }
+    for (let i = 0; i < count; i++) mainDeck.push(card.slug);
+    counts.set(card.slug, seen + count);
+  }
+  const deck: GeneratedDeck = {
+    id: spec.id,
+    archetype: "authored-botlab",
+    title: spec.title,
+    legends: legends.map((card) => card.slug),
+    mainDeck,
+    coveredSlugs: [...new Set(mainDeck)].sort(),
+  };
+  assertStrictDeck(pool, deck);
+  return deck;
 }
 
 export function deckListFromGenerated(deck: GeneratedDeck, playerId: string): DeckList {

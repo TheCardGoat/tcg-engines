@@ -36,9 +36,15 @@ export const meatAndGreet = definePitchFamily(fabPitchFamilies["meat-and-greet"]
     performedThisTurnDealArcaneDamageGrantPropertyThisTurn: {
       kind: "resolution",
       condition: {
-        type: "performed-this-turn",
-        event: "deal-arcane-damage",
-        player: "controller",
+        type: "compare-amount",
+        amount: {
+          type: "count",
+          what: "damage-dealt",
+          recipient: "opposing-heroes",
+          damageType: "arcane",
+          per: "turn",
+        },
+        comparison: { op: "gt", value: 0 },
       },
       effect: {
         type: "grant-property",

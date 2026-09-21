@@ -28,7 +28,7 @@ export const welcomeToNightCityRetailSwordwiseHuscle = defineCyberpunkCard({
   power: 3,
   abilities: [
     AbilityBuilder.triggered()
-      .text("ATTACK If this Unit has power 5+, draw 1.")
+      .text("{Attack} If this Unit has power 5+, draw 1.")
       .onAttack()
       .source(target.self())
       .effect(

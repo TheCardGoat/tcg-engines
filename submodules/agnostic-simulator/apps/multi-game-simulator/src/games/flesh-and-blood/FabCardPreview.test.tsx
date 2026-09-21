@@ -106,21 +106,22 @@ describe("FabCardPreview", () => {
     expect(preview.getAttribute("data-visible")).toBeNull();
   });
 
-  it("moves beside a trigger that would otherwise be covered by the preview", () => {
+  it("keeps one fixed preview position without measuring the trigger", () => {
     const view = render(
       <FabCardPreviewProvider>
         <PreviewTrigger entity={visibleCard} />
       </FabCardPreviewProvider>,
     );
     const trigger = view.getByRole("button", { name: "Show preview" });
-    trigger.getBoundingClientRect = () =>
-      ({ left: 80, right: 196, top: 220, bottom: 240, width: 116, height: 20 }) as DOMRect;
+    trigger.getBoundingClientRect = () => {
+      throw new Error("Fixed previews must not measure their trigger");
+    };
 
     fireEvent.mouseEnter(trigger);
 
-    expect(view.getByTestId("fab-card-preview").style.getPropertyValue("--fab-preview-left")).toBe(
-      "208px",
-    );
+    const preview = view.getByTestId("fab-card-preview");
+    expect(preview.getAttribute("data-visible")).toBe("true");
+    expect(preview.style.getPropertyValue("--fab-preview-left")).toBe("");
   });
 
   it("closes from the preview close button", () => {
@@ -593,6 +594,10 @@ describe("FabCardPreview", () => {
     expect(previewImage.src).toBe(resolveFabCardArt({ canonicalId }).printedImageUrl);
     expect(previewImage.src).toMatch(/\/public\/fab\/assets\/full\/[a-f0-9]{64}\.webp$/);
     expect(parseCssAspectRatio(preview.style.aspectRatio)).toBeCloseTo(63 / 88);
+    const original = view.getByRole("link", { name: "Open full-size card image in a new tab" });
+    expect(original.getAttribute("href")).toBe(previewImage.src);
+    expect(original.getAttribute("target")).toBe("_blank");
+    expect(original.getAttribute("rel")).toBe("noopener noreferrer");
   });
 
   it("does not retry a provider image when a printing identity has no asset", async () => {

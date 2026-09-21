@@ -2525,9 +2525,6 @@
         },
         "ll": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       },
       "cardsReferencedBy": ["w98kfFNz9prGgmD88ptJR"]
@@ -2577,7 +2574,12 @@
       "abilityAndEffectKeywords": ["Attack"],
       "functionalTextHtml": "**Once per Turn Action** - {r}: **Attack**\n\nIf you have a card in your pitch zone with cost 0, this card's attacks get **go again**.",
       "functionalTextPlain": "Once per Turn Action - {r}: Attack\nIf you have a card in your pitch zone with cost 0, this card's attacks get go again.",
-      "typeText": "Ninja Weapon - Dagger (1H)"
+      "typeText": "Ninja Weapon - Dagger (1H)",
+      "legalities": {
+        "silverAge": {
+          "banned": true
+        }
+      }
     },
     {
       "canonicalId": "DC8RfMDzMnthBkWJgmWpQ",
@@ -7315,9 +7317,6 @@
         },
         "ll": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       },
       "cardsReferencedBy": ["mjKPwTWCd7MTFkBpg6QzM", "DGNn7nRKwBjzf9f9rmzJM"]
@@ -7980,6 +7979,9 @@
       "legalities": {
         "blitz": {
           "banned": true
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -8003,6 +8005,9 @@
       "legalities": {
         "blitz": {
           "banned": true
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -8025,6 +8030,9 @@
       "typeText": "Wizard Action",
       "legalities": {
         "blitz": {
+          "banned": true
+        },
+        "silverAge": {
           "banned": true
         }
       }
@@ -13691,7 +13699,12 @@
       "cardKeywords": ["Battleworn"],
       "functionalTextHtml": "Whenever you discard a random card with 6 or more {p}, you may destroy this. If you do, gain 1 action point.\n\n**Battleworn**",
       "functionalTextPlain": "Whenever you discard a random card with 6 or more {p}, you may destroy this. If you do, gain 1 action point.\nBattleworn",
-      "typeText": "Brute Equipment - Legs"
+      "typeText": "Brute Equipment - Legs",
+      "legalities": {
+        "silverAge": {
+          "banned": true
+        }
+      }
     },
     {
       "canonicalId": "WDqWgDfRpTjWdMdTMM666",
@@ -13776,6 +13789,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -18592,6 +18608,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -18614,6 +18633,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -18636,6 +18658,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -21246,7 +21271,12 @@
       "cardKeywords": ["Lightning Fusion", "Go again"],
       "functionalTextHtml": "**Lightning Fusion**\n\nIf this was **fused**, it gets **go again**.",
       "functionalTextPlain": "Lightning Fusion\nIf this was fused, it gets go again.",
-      "typeText": "Elemental Action - Attack"
+      "typeText": "Elemental Action - Attack",
+      "legalities": {
+        "cc": {
+          "banned": true
+        }
+      }
     },
     {
       "canonicalId": "rPFqdQD8MGWwJh9th7NGz",
@@ -21473,6 +21503,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -22294,6 +22327,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -25158,6 +25194,9 @@
         },
         "ll": {
           "legal": false
+        },
+        "silverAge": {
+          "legal": false
         }
       },
       "cardsReferencedBy": [
@@ -25778,6 +25817,9 @@
           "legal": false
         },
         "ll": {
+          "legal": false
+        },
+        "silverAge": {
           "legal": false
         }
       },
@@ -31970,9 +32012,6 @@
       "legalities": {
         "commoner": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       }
     },
@@ -31996,9 +32035,6 @@
       "legalities": {
         "commoner": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       }
     },
@@ -32022,9 +32058,6 @@
       "legalities": {
         "commoner": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       }
     },
@@ -32287,12 +32320,7 @@
       "cardKeywords": ["Rune Gate", "Blood Debt"],
       "functionalTextHtml": "**Rune Gate**\n\n**Blood Debt**",
       "functionalTextPlain": "Rune Gate\nBlood Debt",
-      "typeText": "Shadow Runeblade Action - Attack",
-      "legalities": {
-        "silverAge": {
-          "banned": true
-        }
-      }
+      "typeText": "Shadow Runeblade Action - Attack"
     },
     {
       "canonicalId": "QbQhqwJRFfmcWfjTDqL8t",
@@ -32310,12 +32338,7 @@
       "cardKeywords": ["Rune Gate", "Blood Debt"],
       "functionalTextHtml": "**Rune Gate**\n\n**Blood Debt**",
       "functionalTextPlain": "Rune Gate\nBlood Debt",
-      "typeText": "Shadow Runeblade Action - Attack",
-      "legalities": {
-        "silverAge": {
-          "banned": true
-        }
-      }
+      "typeText": "Shadow Runeblade Action - Attack"
     },
     {
       "canonicalId": "PtCqzqtLLBDWqwFPPKKPj",
@@ -32333,12 +32356,7 @@
       "cardKeywords": ["Rune Gate", "Blood Debt"],
       "functionalTextHtml": "**Rune Gate**\n\n**Blood Debt**",
       "functionalTextPlain": "Rune Gate\nBlood Debt",
-      "typeText": "Shadow Runeblade Action - Attack",
-      "legalities": {
-        "silverAge": {
-          "banned": true
-        }
-      }
+      "typeText": "Shadow Runeblade Action - Attack"
     },
     {
       "canonicalId": "7QhWMkPGMbFjHqn7rk9Gq",
@@ -38359,6 +38377,9 @@
         },
         "ll": {
           "legal": false
+        },
+        "silverAge": {
+          "legal": false
         }
       },
       "cardsReferencedBy": [
@@ -40083,7 +40104,12 @@
       "cardKeywords": ["Lightning Fusion", "Go again"],
       "functionalTextHtml": "**Lightning Fusion**\n\nIf this was **fused**, it gets **go again**.",
       "functionalTextPlain": "Lightning Fusion\nIf this was fused, it gets go again.",
-      "typeText": "Elemental Action - Attack"
+      "typeText": "Elemental Action - Attack",
+      "legalities": {
+        "cc": {
+          "banned": true
+        }
+      }
     },
     {
       "canonicalId": "JqTFK6frf7P9WngJCg76P",
@@ -40101,7 +40127,12 @@
       "cardKeywords": ["Lightning Fusion", "Go again"],
       "functionalTextHtml": "**Lightning Fusion**\n\nIf this was **fused**, it gets **go again**.",
       "functionalTextPlain": "Lightning Fusion\nIf this was fused, it gets go again.",
-      "typeText": "Elemental Action - Attack"
+      "typeText": "Elemental Action - Attack",
+      "legalities": {
+        "cc": {
+          "banned": true
+        }
+      }
     },
     {
       "canonicalId": "T8JWb9PmhhbtHkRwdPdMQ",
@@ -41335,6 +41366,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -41951,6 +41985,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -41974,6 +42011,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -41997,6 +42037,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -49440,6 +49483,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -49463,6 +49509,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -49486,6 +49535,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -55248,12 +55300,7 @@
       "cardKeywords": ["Go again"],
       "functionalTextHtml": "When this attacks, your next attack this combat chain is Draconic.\n\n**Go again**",
       "functionalTextPlain": "When this attacks, your next attack this combat chain is Draconic.\nGo again",
-      "typeText": "Draconic Ninja Action - Attack",
-      "legalities": {
-        "cc": {
-          "banned": true
-        }
-      }
+      "typeText": "Draconic Ninja Action - Attack"
     },
     {
       "canonicalId": "B7JjFkkd8gdhc7CqdWN9G",
@@ -56993,12 +57040,7 @@
       "cardKeywords": [],
       "functionalTextHtml": "When this is put into your graveyard from anywhere, gain 1{h}.",
       "functionalTextPlain": "When this is put into your graveyard from anywhere, gain 1{h}.",
-      "typeText": "Generic Action - Attack",
-      "legalities": {
-        "silverAge": {
-          "banned": true
-        }
-      }
+      "typeText": "Generic Action - Attack"
     },
     {
       "canonicalId": "tGd6nNtRQGbkcNjCRGB77",
@@ -58318,9 +58360,6 @@
       "legalities": {
         "commoner": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       }
     },
@@ -62836,9 +62875,6 @@
         },
         "ll": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       },
       "cardsReferencedBy": [
@@ -72487,6 +72523,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -72509,6 +72548,9 @@
       "legalities": {
         "commoner": {
           "legal": false
+        },
+        "silverAge": {
+          "banned": true
         }
       }
     },
@@ -88862,6 +88904,9 @@
         },
         "ll": {
           "legal": false
+        },
+        "silverAge": {
+          "legal": false
         }
       },
       "cardsReferencedBy": ["HnMKfF8fQMj9KJfhGBkdG"]
@@ -92606,12 +92651,7 @@
       "abilitiesAndEffects": ["Action"],
       "functionalTextHtml": "**Action** - {x}{x}{r}, destroy this: Return target aura with cost X from your graveyard to your hand.\n\n**Guardwell**",
       "functionalTextPlain": "Action - {x}{x}{r}, destroy this: Return target aura with cost X from your graveyard to your hand.\nGuardwell",
-      "typeText": "Runeblade Equipment - Arms",
-      "legalities": {
-        "silverAge": {
-          "banned": true
-        }
-      }
+      "typeText": "Runeblade Equipment - Arms"
     },
     {
       "canonicalId": "JgH7RNTPbJkM6Bqc7HJgT",
@@ -101333,12 +101373,7 @@
       "cardKeywords": [],
       "functionalTextHtml": "When this is put into your graveyard from anywhere, gain 1{h}.",
       "functionalTextPlain": "When this is put into your graveyard from anywhere, gain 1{h}.",
-      "typeText": "Generic Action - Attack",
-      "legalities": {
-        "silverAge": {
-          "banned": true
-        }
-      }
+      "typeText": "Generic Action - Attack"
     },
     {
       "canonicalId": "PqpzLCTzp6Q6JkwqtDPhf",
@@ -101356,12 +101391,7 @@
       "cardKeywords": [],
       "functionalTextHtml": "When this is put into your graveyard from anywhere, gain 1{h}.",
       "functionalTextPlain": "When this is put into your graveyard from anywhere, gain 1{h}.",
-      "typeText": "Generic Action - Attack",
-      "legalities": {
-        "silverAge": {
-          "banned": true
-        }
-      }
+      "typeText": "Generic Action - Attack"
     },
     {
       "canonicalId": "GzCQMQGTHq66mwH7GbpQL",
@@ -101760,12 +101790,7 @@
       "cardKeywords": ["Go again"],
       "functionalTextHtml": "When this attacks, your next attack this combat chain is Draconic.\n\n**Go again**",
       "functionalTextPlain": "When this attacks, your next attack this combat chain is Draconic.\nGo again",
-      "typeText": "Draconic Ninja Action - Attack",
-      "legalities": {
-        "cc": {
-          "banned": true
-        }
-      }
+      "typeText": "Draconic Ninja Action - Attack"
     },
     {
       "canonicalId": "KpmrMGn8pRtQnBbdCznbf",
@@ -101783,12 +101808,7 @@
       "cardKeywords": ["Go again"],
       "functionalTextHtml": "When this attacks, your next attack this combat chain is Draconic.\n\n**Go again**",
       "functionalTextPlain": "When this attacks, your next attack this combat chain is Draconic.\nGo again",
-      "typeText": "Draconic Ninja Action - Attack",
-      "legalities": {
-        "cc": {
-          "banned": true
-        }
-      }
+      "typeText": "Draconic Ninja Action - Attack"
     },
     {
       "canonicalId": "jGzKJnCwkjfHhPhRzk7gj",
@@ -107244,9 +107264,6 @@
       "legalities": {
         "commoner": {
           "legal": false
-        },
-        "silverAge": {
-          "banned": true
         }
       }
     },

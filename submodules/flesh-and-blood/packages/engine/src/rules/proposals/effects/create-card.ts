@@ -84,6 +84,8 @@ function slugifyCreatedCardName(name: string): string {
   return name
     .replace(/^token:/i, "")
     .trim()
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
     .replace(/[\s_]+/g, "-")
     .replace(/-+/g, "-")

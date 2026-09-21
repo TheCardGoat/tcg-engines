@@ -46,8 +46,11 @@ describe("Induce Panic (OMN246) AAA", () => {
     game.passBoth();
 
     expectFabCard(Arakni, inducePanicYellow).toBeIn("combatChain");
-    // Random reveal + binding-matches `it`/`chosen` does not discard the
-    // matching Red Snatch; Dash still holds Nimblism.
+    // Each hero reveals their own random card. Dash's reveal (Nimblism, blue)
+    // misses; Arakni's reveal (Snatch, red) matches the chosen color, so
+    // Arakni discards exactly the revealed card.
+    expectFabCard(Arakni, snatchRed).toBeIn("graveyard");
+    expectFabPlayer(Arakni).toHaveHandCount(0);
     expectFabPlayer(Dash).toHaveHandCount(1);
     expectFabCard(Dash, nimblismBlue).toBeIn("hand");
   });

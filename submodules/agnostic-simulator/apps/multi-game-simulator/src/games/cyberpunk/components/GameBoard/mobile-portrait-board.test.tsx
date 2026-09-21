@@ -2,6 +2,11 @@
 
 import { fireEvent, waitFor, within } from "@testing-library/react";
 import { afterEach, describe, expect, test, vi } from "vite-plus/test";
+import {
+  composeDropEligibility,
+  DISCONNECT_DROP_THRESHOLD_MS,
+  unsupportedTimeoutChannel,
+} from "@tcg/protocol";
 
 import { ensureJsdomAnimationSupport } from "../../testing/fixture-behaviors/run-cyberpunk-fixture-behavior-jsdom";
 import { renderCyberpunkSimulatorScenario } from "../../testing/render-cyberpunk-simulator";
@@ -64,8 +69,11 @@ describe("Cyberpunk mobile portrait board", () => {
       expect(ledger.textContent).toContain("SC");
 
       expect(
-        requiredElement<HTMLElement>(board, '[data-drop-zone="opp-pinfo"]')?.dataset.dropSurface,
+        requiredElement<HTMLElement>(board, '[data-drop-zone="opp-gigArea"]')?.dataset.dropSurface,
       ).toBe("rival-gigs");
+      expect(
+        requiredElement<HTMLElement>(board, '[data-drop-zone="p-eddies"]')?.dataset.dropSurface,
+      ).toBe("friendly-gigs-legends");
 
       const gigDice = ledger.querySelectorAll<HTMLElement>('[data-testid="gig-die"]');
       expect(gigDice.length).toBeGreaterThan(0);
@@ -83,6 +91,7 @@ describe("Cyberpunk mobile portrait board", () => {
         board,
         '[data-testid="player-zone-summary-bar"]',
       );
+      expect(zoneSummary.querySelector('[data-drop-zone="p-eddies"]')).toBeNull();
       expect(
         Array.from(
           zoneSummary.querySelectorAll<HTMLElement>('[data-testid="zone-summary-fixer-die"]'),
@@ -123,6 +132,9 @@ describe("Cyberpunk mobile portrait board", () => {
         expect(side.querySelector('[data-sim-anchor-id$="street-cred"]')).toBeTruthy();
         expect(side.querySelector('[data-testid="gig-row"]')).toBeTruthy();
       }
+
+      expect(ledger.querySelector('[data-testid="resolving-program"]')).toBeNull();
+      expect(ledger.parentElement?.getAttribute("data-has-resolving")).not.toBe("true");
     } finally {
       view.unmount();
     }
@@ -161,7 +173,75 @@ describe("Cyberpunk mobile portrait board", () => {
     }
   });
 
-  test("omits inactive face-down Legends from the Bonnie and Clyde ledger", async () => {
+  test("keeps friendly face-down Legends as a compact positional strip", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "attackStep",
+      layout: "mobile",
+    });
+
+    try {
+      const ledger = await waitFor(() =>
+        requiredElement<HTMLElement>(
+          view.container,
+          '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
+        ),
+      );
+      const friendly = requiredElement<HTMLElement>(
+        ledger,
+        '[data-tone="friendly"][data-side-layout="compact"]',
+      );
+      const friendlySlots = Array.from(
+        friendly.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]'),
+      );
+      const occupiedSlots = friendlySlots.filter((slot) => slot.dataset.occupied === "true");
+
+      expect(friendly.dataset.legendCount).toBe("2");
+      expect(occupiedSlots.map((slot) => slot.dataset.legendIndex)).toEqual(["0", "1"]);
+      expect(occupiedSlots.map((slot) => slot.dataset.faceDown)).toEqual(["true", "true"]);
+      expect(occupiedSlots.some((slot) => slot.dataset.callLegendActionable === "true")).toBe(true);
+      expect(ledger.querySelectorAll('[data-testid="gig-row"]')).toHaveLength(2);
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("keeps mixed face-up and face-down Legend indexes on the two-Legend ledger", async () => {
+    ensureJsdomAnimationSupport();
+    installResizeObserverStub();
+
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "mobileLedgerTwoLegends",
+      layout: "mobile",
+    });
+
+    try {
+      const ledger = await waitFor(() =>
+        requiredElement<HTMLElement>(
+          view.container,
+          '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
+        ),
+      );
+      const friendly = requiredElement<HTMLElement>(
+        ledger,
+        '[data-tone="friendly"][data-side-layout="stacked"]',
+      );
+      const slots = Array.from(
+        friendly.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]'),
+      );
+
+      expect(ledger.querySelectorAll('[data-side-layout="stacked"]')).toHaveLength(2);
+      expect(slots.map((slot) => slot.dataset.legendIndex)).toEqual(["0", "1", "2"]);
+      expect(slots.map((slot) => slot.dataset.occupied)).toEqual(["true", "true", "false"]);
+      expect(slots.map((slot) => slot.dataset.faceDown)).toEqual(["false", "true", undefined]);
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("omits rival face-down-only Legends from the Bonnie and Clyde ledger", async () => {
     ensureJsdomAnimationSupport();
     installResizeObserverStub();
 
@@ -177,9 +257,22 @@ describe("Cyberpunk mobile portrait board", () => {
           '[aria-label="Mobile Legends, Street Cred, and Gig dice"]',
         ),
       );
+      const friendly = requiredElement<HTMLElement>(
+        ledger,
+        '[data-tone="friendly"][data-side-layout="compact"]',
+      );
+      const rival = requiredElement<HTMLElement>(
+        ledger,
+        '[data-tone="rival"][data-side-layout="scoreOnly"]',
+      );
+      const friendlySlots = Array.from(
+        friendly.querySelectorAll<HTMLElement>('[data-testid="legend-slot"]'),
+      );
 
-      expect(ledger.querySelectorAll('[data-side-layout="scoreOnly"]')).toHaveLength(2);
-      expect(ledger.querySelector('[data-testid="mobile-ledger-legends"]')).toBeNull();
+      expect(rival.querySelector('[data-testid="mobile-ledger-legends"]')).toBeNull();
+      expect(friendlySlots.map((slot) => slot.dataset.legendIndex)).toEqual(["0", "1", "2"]);
+      expect(friendlySlots[0]?.dataset.occupied).toBe("true");
+      expect(friendlySlots[0]?.dataset.faceDown).toBe("true");
       expect(ledger.querySelectorAll('[data-testid="gig-row"]')).toHaveLength(2);
     } finally {
       view.unmount();
@@ -224,6 +317,10 @@ describe("Cyberpunk mobile portrait board", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
     const onClaimRivalDrop = vi.fn();
+    // The Drop menu item renders from server-projected eligibility, so feed
+    // the page the same disconnect the connections fixture describes (past
+    // the 30s threshold, i.e. claimable now).
+    const nowMs = Date.now();
 
     const view = renderCyberpunkSimulatorScenario({
       scenarioId: "gameStart",
@@ -234,10 +331,18 @@ describe("Cyberpunk mobile portrait board", () => {
           opponent: {
             status: "disconnected",
             connected: false,
-            disconnectedAt: new Date(Date.now() - 31_000).toISOString(),
+            disconnectedAt: new Date(nowMs - 31_000).toISOString(),
           },
         },
         onClaimRivalDrop,
+        dropEligibility: composeDropEligibility({
+          nowMs,
+          timeout: unsupportedTimeoutChannel(),
+          disconnect: {
+            connected: false,
+            disconnectedAtMs: nowMs - DISCONNECT_DROP_THRESHOLD_MS - 5_000,
+          },
+        }),
         liveMatchSidebar: {
           matchId: "match_1",
           gameId: "game_1",

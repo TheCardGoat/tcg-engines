@@ -102,75 +102,86 @@ export const triskitGuidanceAngel: GrandArchiveCard<GrandArchiveAbilityDefinitio
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish-object",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish-object",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "continuous",
-                      subjects: {
-                        kind: "source",
-                      },
-                      affectedSet: "locked",
-                      duration: {
-                        kind: "permanent",
-                      },
-                      layer: {
-                        layer: "B",
-                        modifies: "type",
-                      },
-                      change: {
-                        kind: "set-types",
-                        types: ["CHAMPION"],
-                      },
-                    },
-                    {
-                      kind: "continuous",
-                      subjects: {
-                        kind: "source",
-                      },
-                      affectedSet: "locked",
-                      duration: {
-                        kind: "permanent",
-                      },
-                      layer: {
-                        layer: "B",
-                        modifies: "type",
-                      },
-                      change: {
-                        kind: "add-characteristic",
-                        characteristic: {
-                          kind: "supertype",
-                          value: "UNIQUE",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "continuous",
+                        subjects: {
+                          kind: "source",
+                        },
+                        affectedSet: "locked",
+                        duration: {
+                          kind: "permanent",
+                        },
+                        layer: {
+                          layer: "B",
+                          modifies: "type",
+                        },
+                        change: {
+                          kind: "set-types",
+                          types: ["CHAMPION"],
                         },
                       },
-                    },
-                    {
-                      kind: "continuous",
-                      subjects: {
-                        kind: "source",
+                      {
+                        kind: "continuous",
+                        subjects: {
+                          kind: "source",
+                        },
+                        affectedSet: "locked",
+                        duration: {
+                          kind: "permanent",
+                        },
+                        layer: {
+                          layer: "B",
+                          modifies: "type",
+                        },
+                        change: {
+                          kind: "add-characteristic",
+                          characteristic: {
+                            kind: "supertype",
+                            value: "UNIQUE",
+                          },
+                        },
                       },
-                      affectedSet: "locked",
-                      duration: {
-                        kind: "permanent",
+                      {
+                        kind: "continuous",
+                        subjects: {
+                          kind: "source",
+                        },
+                        affectedSet: "locked",
+                        duration: {
+                          kind: "permanent",
+                        },
+                        layer: {
+                          layer: "A",
+                          modifies: "base-stats",
+                        },
+                        change: {
+                          kind: "numeric",
+                          property: "level",
+                          operation: "set",
+                          amount: 3,
+                        },
                       },
-                      layer: {
-                        layer: "A",
-                        modifies: "base-stats",
-                      },
-                      change: {
-                        kind: "numeric",
-                        property: "level",
-                        operation: "set",
-                        amount: 3,
-                      },
-                    },
-                  ],
+                    ],
+                  },
                 },
               ],
             },

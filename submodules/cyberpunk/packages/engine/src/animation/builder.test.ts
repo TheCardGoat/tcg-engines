@@ -7,12 +7,9 @@ import type {
   CardAttachStep,
   CardEnterStep,
   CardExitStep,
-  CardLandStep,
+  EffectTargetStep,
   CardMoveStep,
   CardRevealStep,
-  CombatRedirectStep,
-  CombatStep,
-  EffectTargetStep,
   GigMoveStep,
   LegendRevealStep,
   PhaseChangeStep,
@@ -219,7 +216,7 @@ describe("buildAnimationScript", () => {
     expect(script.totalDurationMs).toBe(0);
   });
 
-  it("emits semantic state, randomization, and result steps", () => {
+  it("emits parallel Three-ready orientation changes for spend and ready", () => {
     const events: GameEvent[] = [
       { type: "cardSpent", cardId: cid("unit"), playerId: pid("p1") },
       { type: "cardReadied", cardId: cid("unit"), playerId: pid("p1") },
@@ -237,21 +234,52 @@ describe("buildAnimationScript", () => {
 
     const script = buildAnimationScript(events);
 
-    expect(script.steps).toMatchObject([
-      { kind: "entityStateChange", change: "spent", cardId: "unit" },
-      { kind: "entityStateChange", change: "readied", cardId: "unit" },
-      { kind: "randomization", randomization: "shuffle" },
-      { kind: "randomization", randomization: "die", dieId: "d8", resultLabel: "6" },
-      { kind: "gameResult", winnerId: "p1", reasonLabel: "seven gigs" },
+    expect(script.steps.filter((step) => step.kind === "entityStateChange")).toMatchObject([
+      { change: "spent", startMs: 0, durationMs: ANIMATION_DURATIONS_MS.entityStateChange },
+      { change: "readied", startMs: 0, durationMs: ANIMATION_DURATIONS_MS.entityStateChange },
     ]);
-    expect(script.totalDurationMs).toBe(
-      ANIMATION_DURATIONS_MS.entityStateChange * 2 +
-        ANIMATION_DURATIONS_MS.randomization * 2 +
-        ANIMATION_DURATIONS_MS.gameResult,
-    );
+    expect(script.totalDurationMs).toBe(ANIMATION_DURATIONS_MS.entityStateChange);
   });
 
-  it("emits a cardLand after a unit's cardMove to field", () => {
+  it("starts a move paid for by a tap immediately", () => {
+    const events: GameEvent[] = [
+      { type: "cardSpent", cardId: cid("legend"), playerId: pid("p1") },
+      {
+        type: "cardMoved",
+        cardId: cid("u1"),
+        fromZone: "hand",
+        toZone: "field",
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+    const move = script.steps.find((step) => step.kind === "cardMove");
+    expect(move?.startMs).toBe(0);
+  });
+
+  it("runs turn-start readies and the draw under the turn banner", () => {
+    const events: GameEvent[] = [
+      { type: "phaseChanged", from: "main", to: "start", playerId: pid("p1") },
+      { type: "turnStarted", playerId: pid("p2"), turnNumber: 2 },
+      { type: "cardReadied", cardId: cid("u1"), playerId: pid("p2") },
+      { type: "cardReadied", cardId: cid("u2"), playerId: pid("p2") },
+      { type: "cardsDrawn", cardIds: [cid("d1")], count: 1, playerId: pid("p2") },
+    ];
+
+    const script = buildAnimationScript(events);
+
+    const readies = script.steps.filter((step) => step.kind === "entityStateChange");
+    expect(readies).toMatchObject([
+      { cardId: "u1", change: "readied", startMs: 0 },
+      { cardId: "u2", change: "readied", startMs: 0 },
+    ]);
+    const draw = script.steps.find((step) => step.kind === "cardEnter");
+    expect(draw?.startMs).toBe(0);
+    expect(script.totalDurationMs).toBe(ANIMATION_DURATIONS_MS.phaseChange);
+  });
+
+  it("emits only the field transfer for a played unit", () => {
     const events: GameEvent[] = [
       {
         type: "cardMoved",
@@ -264,17 +292,13 @@ describe("buildAnimationScript", () => {
     ];
 
     const script = buildAnimationScript(events);
-    expect(script.steps).toHaveLength(2);
+    expect(script.steps).toHaveLength(1);
     const move = script.steps[0] as CardMoveStep;
-    const land = script.steps[1] as CardLandStep;
     expect(move.kind).toBe("cardMove");
-    expect(land.kind).toBe("cardLand");
-    expect(land.cardId).toBe("u1");
-    expect(land.startMs).toBe(ANIMATION_DURATIONS_MS.cardMove);
-    expect(land.durationMs).toBe(ANIMATION_DURATIONS_MS.cardLand);
+    expect(move.toZone).toBe("field");
   });
 
-  it("does not emit cardLand for a played card that lands in trash (program)", () => {
+  it("does not emit extra steps for a played card that lands in trash (program)", () => {
     const events: GameEvent[] = [
       {
         type: "cardMoved",
@@ -325,19 +349,24 @@ describe("buildAnimationScript", () => {
 
     expect(script.steps.map((s) => s.kind)).toEqual(["cardMove", "effectTarget", "cardExit"]);
     const playMove = script.steps[0] as CardMoveStep;
-    const target = script.steps[1] as EffectTargetStep;
+    const targeting = script.steps[1] as EffectTargetStep;
     const defeated = script.steps[2] as CardExitStep;
     expect(playMove.cardId).toBe("prog");
     expect(playMove.fromZone).toBe("hand");
     expect(playMove.toZone).toBe("trash");
-    expect(target.sourceCardId).toBe("prog");
-    expect(target.startMs).toBe(ANIMATION_DURATIONS_MS.cardMove);
+    expect(targeting).toMatchObject({
+      sourceCardId: "prog",
+      targets: [{ kind: "card", cardId: "target" }],
+      label: "Defeat",
+      tone: "negative",
+    });
     expect(defeated.cardId).toBe("target");
     expect(defeated.fromZone).toBe("field");
     expect(defeated.toZone).toBe("trash");
     expect(defeated.startMs).toBe(
-      ANIMATION_DURATIONS_MS.cardMove + ANIMATION_DURATIONS_MS.effectTarget,
+      ANIMATION_DURATIONS_MS.cardMove + ANIMATION_DURATIONS_MS.effectTargetImpactDelayMs,
     );
+    expect(defeated.startMs).toBeLessThan(targeting.startMs + targeting.durationMs);
   });
 
   it("emits a cardAttach for cardAttached and suppresses the gear's cardMove", () => {
@@ -361,7 +390,7 @@ describe("buildAnimationScript", () => {
     expect(attach.durationMs).toBe(ANIMATION_DURATIONS_MS.cardAttach);
   });
 
-  it("emits an effectTarget step for effectTargeted with mixed targets", () => {
+  it("starts a targeted card move at the effect impact beat", () => {
     const events: GameEvent[] = [
       {
         type: "effectTargeted",
@@ -383,12 +412,11 @@ describe("buildAnimationScript", () => {
 
     const script = buildAnimationScript(events);
     expect(script.steps.map((s) => s.kind)).toEqual(["effectTarget", "cardMove"]);
-    const target = script.steps[0] as EffectTargetStep;
-    expect(target.sourceCardId).toBe("prog");
-    expect(target.targets).toHaveLength(2);
-    expect(target.startMs).toBe(0);
+    const effect = script.steps[0] as EffectTargetStep;
     const move = script.steps[1] as CardMoveStep;
-    expect(move.startMs).toBe(ANIMATION_DURATIONS_MS.effectTarget);
+    expect(effect.targets).toHaveLength(2);
+    expect(move.startMs).toBe(ANIMATION_DURATIONS_MS.effectTargetImpactDelayMs);
+    expect(move.cardId).toBe("u1");
   });
 
   it("ignores effectTargeted when targets is empty", () => {
@@ -417,8 +445,31 @@ describe("buildAnimationScript", () => {
     expect(reveal.reason).toBe("legendCalled");
     expect(reveal.cardId).toBe("legend-1");
     expect(reveal.playerId).toBe("p1");
+    expect(reveal.fromRotationDeg).toBe(0);
+    expect(reveal.toRotationDeg).toBe(0);
     expect(reveal.durationMs).toBe(ANIMATION_DURATIONS_MS.legendReveal);
     expect(script.totalDurationMs).toBe(ANIMATION_DURATIONS_MS.legendReveal);
+  });
+
+  it("combines a called Legend paying for itself into one face-and-orientation change", () => {
+    const events: GameEvent[] = [
+      { type: "cardSpent", cardId: cid("legend-1"), playerId: pid("p1") },
+      { type: "eddiesSpent", playerId: pid("p1"), amount: 1, forWhat: "callLegend" },
+      { type: "legendCalled", cardId: cid("legend-1"), playerId: pid("p1") },
+    ];
+
+    const script = buildAnimationScript(events);
+    const stateChanges = script.steps.filter(
+      (step) => step.kind === "legendReveal" || step.kind === "entityStateChange",
+    );
+
+    expect(stateChanges).toHaveLength(1);
+    expect(stateChanges[0]).toMatchObject({
+      kind: "legendReveal",
+      cardId: "legend-1",
+      fromRotationDeg: 0,
+      toRotationDeg: 90,
+    });
   });
 
   it("emits staggered cardReveal steps for public revealed cards", () => {
@@ -536,6 +587,39 @@ describe("buildAnimationScript", () => {
     expect(move.cardId).toBe("other-card");
   });
 
+  it("starts detached gear motion from its host and then draws", () => {
+    const events: GameEvent[] = [
+      {
+        type: "cardDetached",
+        gearId: cid("gear-1"),
+        hostId: cid("host-1"),
+        playerId: pid("p1"),
+      },
+      {
+        type: "cardMoved",
+        cardId: cid("gear-1"),
+        fromZone: "field",
+        toZone: "trash",
+        playerId: pid("p1"),
+      },
+      {
+        type: "cardsDrawn",
+        playerId: pid("p1"),
+        count: 2,
+        cardIds: [cid("d1"), cid("d2")],
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+    expect(script.steps.map((step) => step.kind)).toEqual(["cardMove", "cardEnter", "cardEnter"]);
+    const move = script.steps[0] as CardMoveStep;
+    expect(move.cardId).toBe("gear-1");
+    expect(move.fromHostId).toBe("host-1");
+    expect(move.fromZone).toBe("field");
+    expect(move.toZone).toBe("trash");
+    expect(script.steps[1]?.startMs).toBeGreaterThan(move.startMs);
+  });
+
   it("emits staggered cardEnter steps for cardsDrawn", () => {
     const events: GameEvent[] = [
       {
@@ -592,6 +676,26 @@ describe("buildAnimationScript", () => {
     expect(step.durationMs).toBe(ANIMATION_DURATIONS_MS.gigMove);
   });
 
+  it("emits a correct gigMove step when a die returns to the fixer area", () => {
+    const events: GameEvent[] = [
+      {
+        type: "gigDieMoved",
+        dieId: dieId("d6-1"),
+        from: "gigArea",
+        to: "fixerArea",
+        playerId: pid("p1"),
+      },
+    ];
+
+    const script = buildAnimationScript(events);
+    expect(script.steps).toHaveLength(1);
+    const step = script.steps[0] as GigMoveStep;
+    expect(step.kind).toBe("gigMove");
+    expect(step.from).toBe("gigArea");
+    expect(step.to).toBe("fixerArea");
+    expect(step.moveKind).toBe("correct");
+  });
+
   it("emits one gigMove step for gigStolen and suppresses the paired gigDieMoved", () => {
     const events: GameEvent[] = [
       {
@@ -645,7 +749,7 @@ describe("buildAnimationScript", () => {
     expect(step.newValue).toBe(8);
   });
 
-  it("emits combat steps for attackDeclared and attackResolved with the right reason", () => {
+  it("does not emit overlay combat for declare, resolve, or redirect", () => {
     const events: GameEvent[] = [
       {
         type: "attackDeclared",
@@ -653,6 +757,13 @@ describe("buildAnimationScript", () => {
         defenderId: cid("def"),
         attackKind: "fight",
         playerId: pid("p1"),
+      },
+      {
+        type: "blockerActivated",
+        attackerId: cid("atk"),
+        blockerId: cid("blocker"),
+        originalTarget: null,
+        playerId: pid("p2"),
       },
       {
         type: "attackResolved",
@@ -664,41 +775,7 @@ describe("buildAnimationScript", () => {
       },
     ];
 
-    const script = buildAnimationScript(events);
-    expect(script.steps).toHaveLength(2);
-    const declared = script.steps[0] as CombatStep;
-    const resolved = script.steps[1] as CombatStep;
-    expect(declared.kind).toBe("combat");
-    expect(declared.reason).toBe("attackDeclared");
-    expect(declared.startMs).toBe(0);
-    expect(declared.durationMs).toBe(ANIMATION_DURATIONS_MS.combatDeclare);
-    expect(resolved.reason).toBe("attackResolved");
-    expect(resolved.startMs).toBe(ANIMATION_DURATIONS_MS.combatDeclare);
-    expect(resolved.durationMs).toBe(ANIMATION_DURATIONS_MS.combatResolve);
-  });
-
-  it("emits a combatRedirect step for blockerActivated", () => {
-    const events: GameEvent[] = [
-      {
-        type: "blockerActivated",
-        attackerId: cid("atk"),
-        blockerId: cid("blocker"),
-        originalTarget: null,
-        playerId: pid("p2"),
-      },
-    ];
-
-    const script = buildAnimationScript(events);
-
-    expect(script.steps).toHaveLength(1);
-    const redirect = script.steps[0] as CombatRedirectStep;
-    expect(redirect.kind).toBe("combatRedirect");
-    expect(redirect.reason).toBe("blockerActivated");
-    expect(redirect.attackerId).toBe("atk");
-    expect(redirect.blockerId).toBe("blocker");
-    expect(redirect.originalTargetId).toBeNull();
-    expect(redirect.playerId).toBe("p2");
-    expect(redirect.durationMs).toBe(ANIMATION_DURATIONS_MS.combatDeclare);
+    expect(buildAnimationScript(events).steps).toEqual([]);
   });
 
   it("orders fight impact before defeated cards move to trash", () => {
@@ -728,13 +805,10 @@ describe("buildAnimationScript", () => {
 
     const script = buildAnimationScript(events);
 
-    expect(script.steps.map((step) => step.kind)).toEqual(["combat", "cardExit"]);
-    const impact = script.steps[0] as CombatStep;
-    const defeated = script.steps[1] as CardExitStep;
-    expect(impact.reason).toBe("attackResolved");
-    expect(impact.startMs).toBe(0);
+    expect(script.steps.map((step) => step.kind)).toEqual(["cardExit"]);
+    const defeated = script.steps[0] as CardExitStep;
     expect(defeated.reason).toBe("cardDefeated");
-    expect(defeated.startMs).toBe(ANIMATION_DURATIONS_MS.combatResolve);
+    expect(defeated.startMs).toBe(0);
   });
 
   it("orders direct impact before stolen Gig movement", () => {
@@ -759,13 +833,10 @@ describe("buildAnimationScript", () => {
 
     const script = buildAnimationScript(events);
 
-    expect(script.steps.map((step) => step.kind)).toEqual(["combat", "gigMove"]);
-    const impact = script.steps[0] as CombatStep;
-    const stolen = script.steps[1] as GigMoveStep;
-    expect(impact.reason).toBe("attackResolved");
-    expect(impact.gigsStolen).toBe(1);
+    expect(script.steps.map((step) => step.kind)).toEqual(["gigMove"]);
+    const stolen = script.steps[0] as GigMoveStep;
     expect(stolen.reason).toBe("gigStolen");
-    expect(stolen.startMs).toBe(ANIMATION_DURATIONS_MS.combatResolve);
+    expect(stolen.startMs).toBe(0);
   });
 
   it("emits a phaseChange step for phaseChanged", () => {

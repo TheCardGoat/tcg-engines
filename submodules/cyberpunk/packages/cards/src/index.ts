@@ -1,7 +1,7 @@
 import type { CardDefinition, RawCardRecord, StructuredCardDefinition } from "@tcg/cyberpunk-types";
 
 export { cards, rawCards } from "./generated.ts";
-export { deckLists, starterDeckLists } from "./decks/index.ts";
+export { CYBERPUNK_STARTER_DECK_SOURCE_URL, deckLists, starterDeckLists } from "./decks/index.ts";
 export * from "./promo/index.ts";
 export * from "./PRM01/index.ts";
 export * from "./boxtoppersretail/index.ts";
@@ -9,20 +9,50 @@ export * from "./theheistretailstarterdeck/index.ts";
 export * from "./embracingpowerretailstarterdeck/index.ts";
 export * from "./welcometonightcityretail/index.ts";
 
-import { cards, rawCards } from "./generated.ts";
+import { rawCards } from "./generated.ts";
 import { prm01Cards } from "./PRM01/index.ts";
 import { boxToppersRetailCards } from "./boxtoppersretail/index.ts";
 import { promoCards } from "./promo/index.ts";
 import { theHeistRetailStarterDeckCards } from "./theheistretailstarterdeck/index.ts";
 import { embracingPowerRetailStarterDeckCards } from "./embracingpowerretailstarterdeck/index.ts";
 import { welcomeToNightCityRetailCards } from "./welcometonightcityretail/index.ts";
+import { getMergedCyberpunkCards, setPriority } from "./merged.ts";
 
+/**
+ * Resolve a slug to its CANONICAL runtime card.
+ *
+ * The raw generated pool can carry the same slug twice — e.g. a
+ * `cyberpunk:<slug>` spoiler row and a later `cb-<slug>` retail row for the
+ * same printed card. A first-match scan would silently return whichever entry
+ * was scraped first (the spoiler text/printings) instead of the canonical card
+ * every merged consumer (engine catalog, deck identity, platform catalog)
+ * resolves to. The merged pool is slug-unique by construction
+ * (`mergeDuplicateCards` pass 2), so this lookup can never be shadowed.
+ */
 export function getCardBySlug(slug: string): CardDefinition | undefined {
-  return cards.find((card) => card.slug === slug);
+  return getMergedCyberpunkCards().find((card) => card.slug === slug);
 }
 
+/**
+ * Resolve a slug to the RAW generated record of its CANONICAL card.
+ *
+ * Same shadowing hazard as {@link getCardBySlug}: several raw sets can share a
+ * slug, and the canonical (highest-priority set, ties by id — the same ordering
+ * `pickCanonicalAndMergePrintings` applies) must win over scrape order. Falls
+ * back to the highest-priority match only for slugs the merged pool does not
+ * carry.
+ */
 export function getRawCardBySlug(slug: string): RawCardRecord | undefined {
-  return rawCards.find((card) => card.slug === slug);
+  const matches = rawCards.filter((card) => card.slug === slug);
+  if (matches.length <= 1) return matches[0];
+  const canonical = getMergedCyberpunkCards().find((card) => card.slug === slug);
+  const ordered = matches.toSorted(
+    (a, b) => setPriority(b.set.code) - setPriority(a.set.code) || a.id.localeCompare(b.id),
+  );
+  // A merged canonical can intentionally preserve an older source id while
+  // adopting the released set's rules and printings. Match its canonical set
+  // before considering the legacy id so spoiler rows cannot shadow retail.
+  return ordered.find((card) => card.set.code === canonical?.set.code) ?? ordered[0];
 }
 
 export const structuredCards: StructuredCardDefinition[] = [
@@ -52,6 +82,7 @@ export function getStructuredPrm01CardBySlug(slug: string) {
 export {
   getMergedCyberpunkCards,
   getMergedCyberpunkCardsById,
+  legacyAccentMangledSlugAliases,
   mergeDuplicateCards,
   pickCanonicalAndMergePrintings,
   setPriority,

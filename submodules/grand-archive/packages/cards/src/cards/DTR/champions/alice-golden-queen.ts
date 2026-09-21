@@ -51,6 +51,10 @@ export const aliceGoldenQueen: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                       },
                       {
                         kind: "subtype",
+                        oneOf: ["CHESSMAN"],
+                      },
+                      {
+                        kind: "subtype",
                         oneOf: ["COMMAND"],
                       },
                     ],
@@ -93,40 +97,48 @@ export const aliceGoldenQueen: GrandArchiveCard<GrandArchiveAbilityDefinition, "
             kind: "banish-self",
           },
           effect: {
-            kind: "replacement",
-            event: {
-              name: "damage-dealt",
-              recipient: {
-                kind: "event-object",
-                controller: "controller",
-                filter: {
-                  kind: "all",
-                  filters: [
-                    {
-                      kind: "type",
-                      oneOf: ["ALLY"],
-                    },
-                    {
-                      kind: "subtype",
-                      oneOf: ["CHESSMAN"],
-                    },
-                    {
-                      kind: "object-state",
-                      state: "awake",
-                    },
-                  ],
-                },
+            kind: "for-each",
+            collection: {
+              zones: ["field"],
+              player: "controller",
+              filter: {
+                kind: "all",
+                filters: [
+                  {
+                    kind: "type",
+                    oneOf: ["ALLY"],
+                  },
+                  {
+                    kind: "subtype",
+                    oneOf: ["CHESSMAN"],
+                  },
+                  {
+                    kind: "object-state",
+                    state: "awake",
+                  },
+                ],
               },
             },
-            operation: {
-              kind: "prevent",
-            },
-            capacity: {
-              amount: 3,
-              scope: "per-object",
-            },
-            duration: {
-              kind: "this-turn",
+            bindEachAs: "protected-awake-ally",
+            effect: {
+              kind: "replacement",
+              event: {
+                name: "damage-dealt",
+                recipient: {
+                  kind: "bound-object",
+                  binding: "protected-awake-ally",
+                },
+              },
+              operation: {
+                kind: "prevent",
+              },
+              capacity: {
+                amount: 3,
+                scope: "replacement-instance",
+              },
+              duration: {
+                kind: "this-turn",
+              },
             },
           },
         },

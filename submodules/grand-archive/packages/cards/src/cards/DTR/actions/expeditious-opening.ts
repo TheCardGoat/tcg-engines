@@ -34,6 +34,10 @@ export const expeditiousOpening: GrandArchiveCard<GrandArchiveAbilityDefinition,
             kind: "rule-modification",
             mode: "allow",
             action: "activate-fast",
+            subject: {
+              kind: "player",
+              player: "controller",
+            },
             filter: {
               kind: "type",
               oneOf: ["ALLY"],
@@ -41,6 +45,9 @@ export const expeditiousOpening: GrandArchiveCard<GrandArchiveAbilityDefinition,
             duration: {
               kind: "for-next-event",
               event: "card-activated",
+              expires: {
+                kind: "this-turn",
+              },
             },
           },
         },

@@ -1,12 +1,14 @@
 import { useCallback, useMemo, useState, type MouseEvent as ReactMouseEvent } from "react";
 import { Modal } from "@mantine/core";
+import { IconAlertTriangle } from "@tabler/icons-react";
 import type {
   SimulatorEntity,
   SimulatorTable,
   SimulatorTargetFilter,
 } from "@tcg/simulator-contract";
-import { TargetFilterModal } from "@tcg/simulator-ui";
+import { TargetFilterModal, useCardContextMenuApi } from "@tcg/simulator-ui";
 import { BoardContextMenu, type BoardContextMenuAction } from "./BoardContextMenu";
+import { boardCorrectionMenuAction } from "./BoardCorrectionStrip";
 import { DeckZone } from "./DeckZone";
 import { EddiesZone } from "./EddiesZone";
 import { FieldZone } from "./FieldZone";
@@ -26,7 +28,7 @@ import {
   type ZoneCardView,
 } from "../../engine";
 import { useSideZones } from "../../engine/zoneViews";
-import { useLastSoldCardForSide } from "./useLastSoldCard";
+import { canShowSellCue } from "./useLastSoldCard";
 import { useDeckRevealForSide } from "./deckReveal";
 import classes from "./GameBoard.module.css";
 
@@ -69,8 +71,33 @@ export function GameBoard({
   const selectedMove = useMoveSelectionForSide(side);
   const visualMode = mode === "select-action" && selectedMove ? "select-target" : mode;
   const zones = useSideZones(side);
-  const { moveLogs, matchState, canUndo, canUndoToTurnStart, dispatch } = useEngine();
-  const lastSold = useLastSoldCardForSide(moveLogs, side);
+  const cardContextMenu = useCardContextMenuApi();
+  const {
+    moveLogs,
+    matchState,
+    canUndo,
+    canUndoToTurnStart,
+    dispatch,
+    boardCorrectionEnabled,
+    boardCorrectionProposalPending,
+    boardCorrectionNeedsConsent,
+    canRequestBoardCorrection,
+    requestBoardCorrection,
+    exitBoardCorrection,
+  } = useEngine();
+  // The persistent "sell here" slot cue mirrors the engine's sellCard
+  // availability and belongs to the local player's row only. It must not read
+  // unspent eddie counts — selling is legal with every eddie spent.
+  const sellCue =
+    !opponent &&
+    canShowSellCue({
+      isOwnTurn: isActive,
+      isMainPhase: phase === "MAIN",
+      gameEnded,
+      soldThisTurn: zones.soldThisTurn,
+      attackInProgress: matchState.G.attackState != null,
+      hasSellableCardInHand: zones.hand.some((c) => c.hasSellTag),
+    });
   const deckReveal = useDeckRevealForSide(side);
   const peekedLegends = usePeekedLegendsForSide(
     moveLogs,
@@ -155,8 +182,11 @@ export function GameBoard({
       activeEffects: g.activeEffects,
       hasSellTag: g.hasSellTag,
     })),
-    peeked: c.faceDown && (peekedLegends.ids.has(c.cardId) || peekedLegends.indexes.has(index)),
+    peeked:
+      c.revealed ||
+      (c.faceDown && (peekedLegends.ids.has(c.cardId) || peekedLegends.indexes.has(index))),
   }));
+  const legendGearCount = Math.max(0, ...legendCards.map((legend) => legend.gear.length));
   const readyLegendCount = zones.legendArea.filter((c) => !c.spent).length;
   const availableEddieCount = zones.eddies + readyLegendCount;
   const eddieCardCount = Math.max(zones.eddieCardCount, zones.eddies + zones.spentEddies);
@@ -201,6 +231,14 @@ export function GameBoard({
 
   const contextMenuActions = useMemo<BoardContextMenuAction[]>(() => {
     return [
+      boardCorrectionMenuAction({
+        boardCorrectionEnabled,
+        boardCorrectionProposalPending,
+        boardCorrectionNeedsConsent,
+        canRequestBoardCorrection,
+        requestBoardCorrection,
+        exitBoardCorrection,
+      }),
       {
         id: "pass-phase",
         label: isActive ? `Pass ${phase} phase` : "Pass phase",
@@ -259,6 +297,12 @@ export function GameBoard({
     canUndoToTurnStart,
     dispatch,
     bannerState,
+    boardCorrectionEnabled,
+    boardCorrectionProposalPending,
+    boardCorrectionNeedsConsent,
+    canRequestBoardCorrection,
+    requestBoardCorrection,
+    exitBoardCorrection,
   ]);
 
   const modeClass =
@@ -281,6 +325,7 @@ export function GameBoard({
         .filter(Boolean)
         .join(" ")}
       data-testid="game-board"
+      data-board-correction={boardCorrectionEnabled ? "on" : "off"}
       data-mode={visualMode}
       data-side={side}
       data-game-status={gameEnded ? "ended" : "active"}
@@ -302,26 +347,33 @@ export function GameBoard({
       />
       <div className={classes.midCol}>
         <FieldZone units={fieldUnits} opponent={opponent} side={side} />
-        <LegendsZone legends={legendCards} opponent={opponent} side={side} />
-        <EddiesZone
-          count={zones.eddies}
-          cards={zones.eddieCards.map((c, i, arr) => ({
-            cardId: c.cardId,
-            definitionId: c.definitionId,
-            spent: c.spent,
-            revealed:
-              (zones.soldThisTurn && !c.spent && i === arr.length - 1) ||
-              c.cardId === lastSold?.cardId,
-            imageUrl: c.imageUrl,
-            name: c.name,
-          }))}
-          cardCount={eddieCardCount}
-          spentCardCount={zones.spentEddies}
-          availableCount={availableEddieCount}
-          totalCount={totalEddieCount}
-          opponent={opponent}
-          side={side}
-        />
+        <div
+          className={classes.identityRow}
+          data-testid="mid-identity"
+          data-legend-gear-count={legendGearCount}
+        >
+          <LegendsZone legends={legendCards} opponent={opponent} side={side} />
+          <EddiesZone
+            count={zones.eddies}
+            cards={zones.eddieCards.map((c) => ({
+              cardId: c.cardId,
+              definitionId: c.definitionId,
+              spent: c.spent,
+              revealed: c.revealed,
+              imageUrl: c.imageUrl,
+              name: c.name,
+            }))}
+            cardCount={eddieCardCount}
+            spentCardCount={zones.spentEddies}
+            availableCount={availableEddieCount}
+            totalCount={totalEddieCount}
+            opponent={opponent}
+            side={side}
+            fill
+            soldThisTurn={zones.soldThisTurn}
+            sellCue={sellCue}
+          />
+        </div>
       </div>
       <div className={classes.stackCol}>
         <PInfoZone opponent={opponent} phase={phase}>
@@ -362,6 +414,17 @@ export function GameBoard({
           closeButton: classes.trashViewerCloseButton,
         }}
         onClose={() => setTrashViewerOpen(false)}
+        interactionStateFor={
+          boardCorrectionEnabled
+            ? () => ({ kind: "actionable" as const, actionCount: 1 })
+            : undefined
+        }
+        onSelect={
+          boardCorrectionEnabled
+            ? (entity) => openCorrectionMenuForModalCard(cardContextMenu, entity.id)
+            : undefined
+        }
+        cardInspection={boardCorrectionEnabled ? { kind: "external" } : undefined}
       />
       {contextMenu ? (
         <BoardContextMenu
@@ -402,13 +465,20 @@ export function ConfirmDialog({
       size={420}
       padding={0}
       withCloseButton={false}
-      overlayProps={{ backgroundOpacity: 0.72, blur: 3 }}
+      overlayProps={{ backgroundOpacity: 0.78, blur: 6 }}
       classNames={{
         content: classes.confirmDialogContent,
         body: classes.confirmDialogBody,
         header: classes.confirmDialogHeader,
       }}
-      title={<span className={classes.confirmDialogTitle}>{title}</span>}
+      title={
+        <span className={classes.confirmDialogTitleRow}>
+          <span className={classes.confirmDialogIcon} aria-hidden>
+            <IconAlertTriangle size={16} stroke={2} />
+          </span>
+          <span className={classes.confirmDialogTitle}>{title}</span>
+        </span>
+      }
     >
       <p className={classes.confirmDialogText}>{body}</p>
       <div className={classes.confirmDialogActions}>
@@ -421,6 +491,18 @@ export function ConfirmDialog({
       </div>
     </Modal>
   );
+}
+
+export function openCorrectionMenuForModalCard(
+  api: ReturnType<typeof useCardContextMenuApi>,
+  entityId: string,
+): void {
+  if (!api) return;
+  const escaped = CSS.escape(entityId);
+  const anchor = document.querySelector<HTMLElement>(
+    `[data-testid="target-filter-modal"] [data-sim-entity-id="${escaped}"]`,
+  );
+  if (anchor) api.openFor(entityId, anchor);
 }
 
 type TrashViewerCard = ZoneCardView;

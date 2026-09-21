@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01OffWhite019 } from "@tcg/op-cards";
-import { op12VinsmokeReiju063 } from "../../../../../cards/src/cards/OP12/characters/063-vinsmoke-reiju.ts";
+import { op12VinsmokeReiju063 } from "../../../../../cards/src/cards/characters/op12-063-vinsmoke-reiju.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

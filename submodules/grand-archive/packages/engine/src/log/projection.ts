@@ -428,6 +428,8 @@ function projectEvent(
     case "stack-item-removed":
       return event.internal ? [] : [message(event, "grand-archive.stack.resolved", {})];
     case "keyword-action-performed":
+      if (event.action === "glimpse" && event.glimpseStage === "start") return [];
+      if (event.action === "suppress" && event.suppressStage === "start") return [];
       return [
         message(event, "grand-archive.keyword-action", {
           playerId: event.playerId,

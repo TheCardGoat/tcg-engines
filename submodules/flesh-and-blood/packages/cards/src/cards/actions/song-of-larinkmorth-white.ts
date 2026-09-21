@@ -10,6 +10,7 @@ export const songOfLarinkmorthWhite = definePitchFamily(
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "each-other-hero",
         },
       },

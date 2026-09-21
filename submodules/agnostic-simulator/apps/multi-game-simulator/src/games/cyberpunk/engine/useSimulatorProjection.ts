@@ -38,7 +38,7 @@ interface ActionContext {
  */
 export function useSimulatorProjection(): UseSimulatorProjectionResult {
   const engine = useEngine();
-  const { matchState, interactionViews, humanSide } = engine;
+  const { matchState, interactionViews, humanSide, dispatch } = engine;
   const viewerSide = humanSide;
 
   const fixture = useMemo(
@@ -52,7 +52,7 @@ export function useSimulatorProjection(): UseSimulatorProjectionResult {
         },
         "Cyberpunk live match",
       ),
-    [matchState.ctx.stateID, viewerSide, interactionViews, humanSide],
+    [matchState, viewerSide, interactionViews, humanSide],
   );
 
   // Keep a stable map from projected interaction id back to the original
@@ -79,7 +79,12 @@ export function useSimulatorProjection(): UseSimulatorProjectionResult {
       },
     ) => {
       const context = actionContextById.get(interactionId);
-      if (!context) return;
+      if (!context) {
+        // The view changed between render and submit (state push) — the
+        // prompt is stale and the player must act on the re-rendered one.
+        console.warn("[cyberpunk] interaction dropped: stale prompt", interactionId);
+        return;
+      }
 
       let values = selectionToValues(context.inputs, selection);
       if (context.action.id === "attackUnit") {
@@ -94,26 +99,60 @@ export function useSimulatorProjection(): UseSimulatorProjectionResult {
         actionId: context.action.id,
         values,
       });
-      if (!submission) return;
+      if (!submission) {
+        console.warn(
+          "[cyberpunk] interaction dropped: submission build failed",
+          context.action.id,
+          values,
+        );
+        return;
+      }
 
       const as = PLAYER_SIDE_TO_ID[viewerSide];
       let engineAction: ReturnType<typeof interactionSubmissionToEngineAction>;
       try {
         engineAction = interactionSubmissionToEngineAction(submission, as);
-      } catch {
+      } catch (error) {
+        console.warn(
+          "[cyberpunk] interaction dropped: value conversion failed",
+          context.action.id,
+          error,
+        );
         return;
       }
-      if (!engineAction) return;
+      if (!engineAction) {
+        console.warn("[cyberpunk] interaction dropped: unsupported action", context.action.id);
+        return;
+      }
 
-      engine.dispatch(engineAction);
+      const result = dispatch(engineAction);
+      if (result && result.success === false) {
+        console.warn(
+          "[cyberpunk] interaction rejected by dispatch",
+          context.action.id,
+          result.error,
+        );
+      }
     },
-    [actionContextById, engine, viewerSide],
+    [actionContextById, dispatch, viewerSide],
   );
 
   return { fixture, onSubmitInteraction };
 }
 
-function selectionToValues(
+// Entity-selection inputs whose native engine payload is a string array must
+// keep the array form even for a single pick: both the local engine-action
+// converter (interactionDispatch.requireStringArray) and the server adapter
+// read them strictly. The scalar collapse is only correct for singular inputs
+// (cardId, dieId, attackerId, ...).
+const ARRAY_VALUED_SELECTION_IDS: ReadonlySet<string> = new Set([
+  "targetIds",
+  "cardIds",
+  "dieIds",
+  "selectedCardIds",
+]);
+
+export function selectionToValues(
   inputs: readonly InteractionInput[],
   selection: {
     entityIds: string[];
@@ -123,17 +162,47 @@ function selectionToValues(
   },
 ): Record<string, InteractionSubmissionValue> {
   const values: Record<string, InteractionSubmissionValue> = {};
+  // Actions can carry several entity/payment/option inputs. Each input must
+  // consume its own slice of the submitted pool in declaration order —
+  // reading ids[0] for every input bound playCard's gear to itself instead
+  // of the chosen host.
+  let entityCursor = 0;
+  let paymentCursor = 0;
+  let optionCursor = 0;
 
   for (const input of inputs) {
     switch (input.kind) {
       case "entity-selection": {
-        const ids = input.role === "cost" ? selection.paymentIds : selection.entityIds;
-        if (ids.length > 0) values[input.id] = input.max <= 1 ? ids[0]! : ids;
+        const isCost = input.role === "cost";
+        const pool = isCost ? selection.paymentIds : selection.entityIds;
+        const cursor = isCost ? paymentCursor : entityCursor;
+        const remaining = pool.length - cursor;
+        if (remaining <= 0) {
+          if (input.min === 0 && ARRAY_VALUED_SELECTION_IDS.has(input.id)) {
+            values[input.id] = [];
+          } else if (
+            input.min === 0 &&
+            input.id === "cardId" &&
+            inputs.some((candidate) => candidate.kind === "boolean" && candidate.id === "pass")
+          ) {
+            values.pass = true;
+          }
+          break;
+        }
+        const take = input.max <= 1 ? 1 : Math.min(input.max, remaining);
+        const slice = pool.slice(cursor, cursor + take);
+        values[input.id] =
+          input.max <= 1 && !ARRAY_VALUED_SELECTION_IDS.has(input.id) ? slice[0]! : slice;
+        if (isCost) paymentCursor += take;
+        else entityCursor += take;
         break;
       }
       case "option-selection": {
-        const id = selection.optionIds[0];
-        if (id) values[input.id] = id;
+        const id = selection.optionIds[optionCursor];
+        if (id) {
+          values[input.id] = id;
+          optionCursor += 1;
+        }
         break;
       }
       case "ordering": {

@@ -34,6 +34,8 @@ export const florianRotwoodHarbinger = defineCard(
           replacementKind: "standard",
           replaces: {
             name: "create",
+            creator: "controller",
+            occurrences: "every",
             filter: {
               typeBox: {
                 metatypes: ["Token"],

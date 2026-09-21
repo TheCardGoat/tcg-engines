@@ -7,21 +7,27 @@ export const didnTSeeThatComing = defineCard(fabCardIdentitiesByCanonicalId.JgNN
       kind: "static",
       staticKind: "continuous",
       effect: {
-        type: "conditional",
-        condition: {
-          type: "life-comparison",
-          player: "self",
-          vs: "each-hero",
-          op: "lt",
+        type: "for-each",
+        target: {
+          selector: "each-hero",
         },
-        then: {
-          type: "discard",
-          target: {
-            selector: "object",
-            declared: "at-resolution",
-            player: "each",
-            zones: ["hand"],
-            count: 1,
+        effect: {
+          type: "conditional",
+          condition: {
+            type: "life-comparison",
+            player: "iteration-subject",
+            vs: "controller",
+            op: "gt",
+          },
+          then: {
+            type: "discard",
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "iteration-subject",
+              zones: ["hand"],
+              count: 1,
+            },
           },
         },
       },

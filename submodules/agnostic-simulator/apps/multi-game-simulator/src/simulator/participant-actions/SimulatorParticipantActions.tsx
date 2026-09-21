@@ -24,7 +24,7 @@ import {
 import { createPortal } from "react-dom";
 import { Popover, Text, Tooltip } from "@mantine/core";
 import type { PlayableGameSlug } from "@tcg/protocol";
-import { useSimulatorViewportLayout } from "@tcg/simulator-ui";
+import { SimulatorSidebarIconButton, useSimulatorViewportLayout } from "@tcg/simulator-ui";
 
 import { apiUrl } from "../../runtime/gameRuntimeApi";
 import { AnimationSpeedControl, useSimulatorSettings } from "../settings";
@@ -78,9 +78,15 @@ export interface SimulatorBotParticipantIdentity {
   readonly displayName: string;
 }
 
+export interface SimulatorLocalParticipantIdentity {
+  readonly kind: "local";
+  readonly displayName: string;
+}
+
 export type SimulatorParticipantIdentity =
   | SimulatorHumanParticipantIdentity
-  | SimulatorBotParticipantIdentity;
+  | SimulatorBotParticipantIdentity
+  | SimulatorLocalParticipantIdentity;
 
 export interface SimulatorMatchIdentityContext {
   readonly matchId: string;
@@ -203,10 +209,10 @@ export const SimulatorParticipantActionButton = forwardRef<
     });
   };
   const button = (
-    <button
+    <SimulatorSidebarIconButton
       ref={setButtonRef}
       {...props}
-      className={[classes.trigger, className].filter(Boolean).join(" ")}
+      className={className}
       aria-describedby={tooltip && tooltipPosition ? tooltipId : props["aria-describedby"]}
       onBlur={(event) => {
         setTooltipPosition(null);
@@ -863,11 +869,13 @@ export function SimulatorOpponentParticipantActions({
   const subtitle =
     participant.kind === "bot"
       ? "Automated opponent"
-      : participant.connected === undefined
-        ? "Player"
-        : participant.connected
-          ? "Online"
-          : "Offline";
+      : participant.kind === "local"
+        ? "Local seat"
+        : participant.connected === undefined
+          ? "Player"
+          : participant.connected
+            ? "Online"
+            : "Offline";
 
   return (
     <>
@@ -938,7 +946,7 @@ export function SimulatorOpponentParticipantActions({
                 }}
               >
                 <Gamepad2 aria-hidden="true" size={16} />
-                <span>{takeoverActive ? "Return to your seat" : "Take over seat"}</span>
+                <span>{takeoverActive ? "Return opponent to bot" : "Control opponent"}</span>
               </button>
             ) : null}
           </>

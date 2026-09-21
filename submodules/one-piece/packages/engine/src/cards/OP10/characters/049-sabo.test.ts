@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import type { EventCard } from "@tcg/op-types";
 import { eb01Doma005, eb01OffWhite019 } from "@tcg/op-cards";
-import { op10Sabo049 } from "../../../../../cards/src/cards/OP10/characters/049-sabo.ts";
+import { op10Sabo049 } from "../../../../../cards/src/cards/characters/op10-049-sabo.ts";
 import { registerCards } from "../../../../../cards/src/runtime-catalog.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";

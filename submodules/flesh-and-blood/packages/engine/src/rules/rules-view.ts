@@ -345,6 +345,10 @@ export interface FabRulesFacts {
       {
         readonly turn: Readonly<Record<"arcane" | "physical" | "generic", number>>;
         readonly chainLink: Readonly<Record<"arcane" | "physical" | "generic", number>>;
+        readonly opposingHeroes?: {
+          readonly turn: Readonly<Record<"arcane" | "physical" | "generic", number>>;
+          readonly chainLink: Readonly<Record<"arcane" | "physical" | "generic", number>>;
+        };
       }
     >
   >;

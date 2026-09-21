@@ -3,11 +3,14 @@ import { createPortal } from "react-dom";
 import {
   IconArrowBarToDown,
   IconArrowBarToUp,
+  IconCircleDashedCheck,
+  IconDots,
   IconKeyboard,
   IconListDetails,
   IconMaximize,
   IconMinus,
   IconPlus,
+  IconTargetArrow,
 } from "@tabler/icons-react";
 import { InteractionResolutionPrompt, interactionBoundsCopy } from "@tcg/simulator-ui";
 import {
@@ -17,23 +20,27 @@ import {
   type PendingChoice,
 } from "@tcg/cyberpunk-engine";
 import {
-  getGearAttachTargets,
-  getProgramSpatialTargets,
   PLAYER_SIDE_TO_ID,
   useBoardMode,
   useEngine,
   useEngineInteractionView,
   useNativePromptPresentation,
+  useSideZones,
   type MoveId,
   type Side,
 } from "../../engine";
-import { interactionViewHasAttackers } from "../../engine/interactionViewHelpers";
+import {
+  interactionViewHasAttackers,
+  interactionViewHasBlockers,
+} from "../../engine/interactionViewHelpers";
 import {
   collectPendingAttackTriggerSummaries,
   type AttackTriggerSummary,
 } from "../../engine/attackTriggers";
 import { useMoveSelection, type DirectCardMoveId } from "../GameBoard/MoveSelectionContext";
+import { useAttackSelection } from "../GameBoard/useAttackSelection";
 import { CardNameToken } from "../CardDisplay/CardNameToken";
+import { useLocalTargetSelection } from "./useLocalTargetSelection";
 import {
   choiceActionHasRenderableDrawerContent,
   choiceModalActionFromInteractionView,
@@ -51,6 +58,8 @@ import {
   useChoiceModalOpen,
 } from "./choiceModalState";
 import { showBlockedPassTurnNotification } from "../blockedPassFeedback";
+import { MulliganStatsStrip } from "./MulliganStatsStrip";
+import { computeMulliganStats } from "./mulliganStats";
 import classes from "./PromptBanner.module.css";
 
 type BannerPosition = "top" | "bottom";
@@ -236,10 +245,13 @@ export function PromptBanner({
   const { canUndo, dispatch, effectCardTargetSelection, matchState, submitEffectCardTargets } =
     useEngine();
   const moveSelection = useMoveSelection();
+  const attackSelection = useAttackSelection();
   const confirmTitleId = useId();
   const selectedMove =
     moveSelection.selection?.side === side ? moveSelection.selection.moveId : armedVerb;
   const selectedDirectMove = selectedMove && isDirectCardMove(selectedMove) ? selectedMove : null;
+  const pendingAttackSelection =
+    attackSelection.selection?.side === side ? attackSelection.selection : null;
   const selectedSourceCardId =
     moveSelection.selection?.side === side ? moveSelection.selection.sourceCardId : undefined;
   const selectedSourceCard = selectedSourceCardId
@@ -250,35 +262,34 @@ export function PromptBanner({
     selectedDirectMove === "playCard" &&
     selectedSourceDef !== null &&
     (selectedSourceDef.type === "program" || selectedSourceDef.type === "gear");
-  const selectedPlayTargetIds =
-    selectedPlayCardTargeting && selectedSourceCardId
-      ? selectedSourceDef.type === "gear"
-        ? getGearAttachTargets({ interactionView }, selectedSourceCardId, "gear")
-        : getProgramSpatialTargets({ matchState, side, interactionView }, selectedSourceCardId)
-      : [];
-  const selectedPlayTargetRequestId =
-    selectedPlayTargetIds.length > 0 && selectedSourceCardId
-      ? ["selected-play-target", side, selectedSourceCardId, selectedPlayTargetIds.join("|")].join(
-          ":",
-        )
-      : null;
+  const localTargetSelection = useLocalTargetSelection(side);
+  const localTargetRequestId = localTargetSelection?.requestId ?? null;
+  const localTargeting = localTargetSelection !== null;
   const inSetup = matchState.G.gamePhase === "setup";
+  const sideZones = useSideZones(side);
+  const mulliganStats = inSetup ? computeMulliganStats(sideZones.hand) : null;
   const gamePhase = matchState.G.gamePhase;
   const stealChoice = prompt.choice?.type === "chooseGigsToSteal" ? prompt.choice : null;
   const [selectedStealGigIds, setSelectedStealGigIds] = useState<string[]>([]);
   const [selectedInlineGigIds, setSelectedInlineGigIds] = useState<string[]>([]);
-  const [confirmingPassWithAttackers, setConfirmingPassWithAttackers] = useState(false);
+  const [pendingConfirmation, setPendingConfirmation] = useState<
+    "pass-with-attackers" | "skip-block" | null
+  >(null);
+  const [mobileCardTextExpanded, setMobileCardTextExpanded] = useState(false);
+  const mobileCardTextId = useId();
   const shouldConfirmPass =
     gamePhase === "main" &&
     !matchState.G.attackState &&
     interactionViewHasAttackers(interactionView);
+  const shouldConfirmSkipBlock =
+    matchState.G.attackState?.step === "react" && interactionViewHasBlockers(interactionView);
   const modalAction = choiceModalActionFromInteractionView(interactionView.actions, matchState, {
     visibleHandOwnerId: PLAYER_SIDE_TO_ID[side],
   });
   const targetPromptPresentation = getTargetPromptPresentation({
     actions: interactionView.actions,
     matchState,
-    selectedPlayTargetRequestId,
+    localTargetRequestId,
     choice: prompt.choice,
     visibleHandOwnerId: PLAYER_SIDE_TO_ID[side],
   });
@@ -308,10 +319,9 @@ export function PromptBanner({
     targetPromptPresentation.presentation === "drawer" ||
     targetPromptPresentation.presentation === "spatial";
   const showTargetModalAction =
-    (mode === "select-target" || selectedPlayTargetRequestId !== null) &&
+    (mode === "select-target" || localTargetRequestId !== null) &&
     targetModalRequestId !== null &&
-    hasTargetModalAction &&
-    targetPromptPresentation.presentation === "drawer";
+    hasTargetModalAction;
   const targetModalButton = showTargetModalAction ? (
     <button
       type="button"
@@ -325,8 +335,7 @@ export function PromptBanner({
     </button>
   ) : null;
   const promptPlacementButton =
-    (mode === "select-target" || selectedPlayTargetRequestId !== null) &&
-    onTogglePromptPlacement ? (
+    (mode === "select-target" || localTargetRequestId !== null) && onTogglePromptPlacement ? (
       <button
         type="button"
         className={`${classes.iconButton} ${classes.promptPlacementButton}`}
@@ -370,7 +379,7 @@ export function PromptBanner({
     ) : null;
   const compactClass = compact ? ` ${classes.compact}` : "";
   const surfaceClass = surface === "mobile" ? ` ${classes.mobile}` : "";
-  const inlineSelectedPlayActions = selectedPlayCardTargeting && compact && surface === "mobile";
+  const inlineLocalTargetActions = localTargeting && compact && surface === "mobile";
   const headerActions = (
     <HeaderActions
       minimized={minimized}
@@ -378,7 +387,7 @@ export function PromptBanner({
       onToggleMinimize={onToggleMinimize}
       onTogglePosition={onTogglePosition}
       extraAction={extraAction}
-      inline={inlineSelectedPlayActions}
+      inline={inlineLocalTargetActions}
     />
   );
 
@@ -388,7 +397,8 @@ export function PromptBanner({
 
   useEffect(() => {
     setSelectedInlineGigIds([]);
-  }, [targetModalRequestId]);
+    setMobileCardTextExpanded(false);
+  }, [matchState.G.turnMetadata.pendingChoice, targetModalRequestId]);
 
   useEffect(() => {
     if (
@@ -431,10 +441,13 @@ export function PromptBanner({
   }, [orderedGigCopyActive, orderedGigCopyRequestId]);
 
   useEffect(() => {
-    if (!shouldConfirmPass) {
-      setConfirmingPassWithAttackers(false);
+    if (
+      (pendingConfirmation === "pass-with-attackers" && !shouldConfirmPass) ||
+      (pendingConfirmation === "skip-block" && !shouldConfirmSkipBlock)
+    ) {
+      setPendingConfirmation(null);
     }
-  }, [shouldConfirmPass]);
+  }, [pendingConfirmation, shouldConfirmPass, shouldConfirmSkipBlock]);
 
   const passPhase = useCallback(() => {
     dispatch({ type: "passPhase", as: PLAYER_SIDE_TO_ID[side] });
@@ -442,8 +455,14 @@ export function PromptBanner({
     onArmVerb?.(null);
   }, [dispatch, moveSelection, onArmVerb, side]);
 
+  const skipBlock = useCallback(() => {
+    dispatch({ type: "resolveAttack", pass: true, as: PLAYER_SIDE_TO_ID[side] });
+    moveSelection.clearSelection();
+    onArmVerb?.(null);
+  }, [dispatch, moveSelection, onArmVerb, side]);
+
   useEffect(() => {
-    if (!confirmingPassWithAttackers) {
+    if (!pendingConfirmation) {
       return;
     }
 
@@ -454,29 +473,87 @@ export function PromptBanner({
       if (ev.key === "Escape") {
         ev.preventDefault();
         ev.stopPropagation();
-        setConfirmingPassWithAttackers(false);
+        setPendingConfirmation(null);
         return;
       }
       if (ev.key === " " || ev.code === PASS_CONFIRM_HOTKEY) {
         ev.preventDefault();
         ev.stopPropagation();
-        setConfirmingPassWithAttackers(false);
-        passPhase();
+        const confirmation = pendingConfirmation;
+        setPendingConfirmation(null);
+        if (confirmation === "skip-block") {
+          skipBlock();
+        } else {
+          passPhase();
+        }
       }
     };
 
     window.addEventListener("keydown", onKeyDown, true);
     return () => window.removeEventListener("keydown", onKeyDown, true);
-  }, [confirmingPassWithAttackers, passPhase]);
+  }, [passPhase, pendingConfirmation, skipBlock]);
+
+  useEffect(() => {
+    if (!pendingAttackSelection) {
+      return;
+    }
+
+    const onKeyDown = (ev: KeyboardEvent) => {
+      if (ev.key !== "Escape" || ev.defaultPrevented) {
+        return;
+      }
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (targetModalOpen && targetModalRequestId) {
+        setChoiceModalOpen(side, targetModalRequestId, false);
+      } else {
+        localTargetSelection?.cancel();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => window.removeEventListener("keydown", onKeyDown, true);
+  }, [localTargetSelection, pendingAttackSelection, side, targetModalOpen, targetModalRequestId]);
 
   if (mode === "view") {
+    // Narrate the acting side's in-flight decision while one is pending.
+    // With nothing to narrate, the shared rail renders null; fall back to a
+    // passive waiting ribbon instead of an empty prompt slot. A finished game
+    // stays silent — the post-game surface owns that moment.
+    if (interactionView.resolution) {
+      return (
+        <InteractionResolutionPrompt view={interactionView} viewerId={PLAYER_SIDE_TO_ID[side]} />
+      );
+    }
+    if (matchState.G.gameEnded) {
+      return null;
+    }
     return (
-      <InteractionResolutionPrompt view={interactionView} viewerId={PLAYER_SIDE_TO_ID[side]} />
+      <div
+        className={`${classes.banner}${compactClass}${surfaceClass}`}
+        data-side={side}
+        data-testid="prompt-banner"
+        data-state="waiting-opponent"
+        role="region"
+        aria-label={`${side} prompt — waiting for opponent`}
+      >
+        <p className={classes.title} data-testid="prompt-banner-title">
+          Waiting
+        </p>
+        <p className={classes.message} data-testid="prompt-banner-message">
+          {inSetup
+            ? "Opponent is making their mulligan decision…"
+            : side === "player"
+              ? "Rival has priority."
+              : "You have priority."}
+        </p>
+        {headerActions}
+      </div>
     );
   }
 
   if (
-    (mode === "select-target" || selectedPlayTargetRequestId !== null) &&
+    (mode === "select-target" || localTargetRequestId !== null) &&
     ((surface !== "mobile" &&
       modalAction &&
       modalAction.id !== "resolveTrigger" &&
@@ -489,7 +566,7 @@ export function PromptBanner({
   if (minimized) {
     const source = pickBannerSource(prompt, moveSelection.selection, matchState);
     const isReaction = prompt.choice?.type === "chooseTrigger";
-    const isTarget = mode === "select-target" && !isReaction;
+    const isTarget = (mode === "select-target" || localTargeting) && !isReaction;
     const variantClass = isReaction
       ? classes.bannerReaction
       : isTarget
@@ -672,6 +749,11 @@ export function PromptBanner({
                 triggerCopy.message
               )}
             </p>
+            {primaryOption?.abilityText ? (
+              <p className={classes.effectText} data-testid="prompt-banner-effect">
+                {primaryOption.abilityText}
+              </p>
+            ) : null}
           </div>
           <div className={classes.verbs} data-testid="prompt-banner-verbs">
             {prompt.choice.payload.options.map((option) => (
@@ -722,10 +804,11 @@ export function PromptBanner({
     const choice = prompt.choice;
     const orderedGigCopyChoice = orderedGigCopyActive;
     const adjustGigChoice =
-      choice?.type === "chooseTarget" && choice.payload.type === "adjustGig" ? choice : null;
-    const adjustGigOptions = adjustGigChoice
-      ? buildAdjustGigPromptOptions(adjustGigChoice.payload, interactionView)
-      : [];
+      choice?.type === "chooseTarget" &&
+      (choice.payload.type === "adjustGig" ||
+        (choice.payload.type === "effectTarget" && choice.payload.adjustGig))
+        ? choice
+        : null;
     const inlineGigTargetChoice =
       surface === "mobile" &&
       choice?.type === "chooseTarget" &&
@@ -738,6 +821,18 @@ export function PromptBanner({
         inlineGigTargetChoice.payload.cards?.map((card) => card.instanceId) ??
         [])
       : [];
+    const fixedAdjustGigId =
+      adjustGigChoice?.payload.type === "adjustGig" ? adjustGigChoice.payload.dieId : undefined;
+    const selectedAdjustGigId = selectedInlineGigIds[0] ?? fixedAdjustGigId;
+    const adjustGigOptions =
+      adjustGigChoice && selectedAdjustGigId
+        ? buildAdjustGigPromptOptions(
+            adjustGigChoice.payload,
+            matchState,
+            selectedAdjustGigId,
+            interactionView,
+          )
+        : [];
     const inlineGigTargetMin = inlineGigTargetChoice?.payload.min ?? 1;
     const inlineGigTargetMax = inlineGigTargetChoice?.payload.max ?? inlineGigTargetMin;
     const canConfirmInlineGigTargets =
@@ -756,6 +851,10 @@ export function PromptBanner({
       }
     };
     const chooseInlineGigTarget = (dieId: string) => {
+      if (adjustGigChoice) {
+        setSelectedInlineGigIds([dieId]);
+        return;
+      }
       if (inlineGigTargetMax <= 1) {
         submitInlineGigTargets([dieId]);
         return;
@@ -770,6 +869,7 @@ export function PromptBanner({
     };
     const sentence = describeChoice(prompt);
     const effectTargetCopy = effectTargetChoiceCopy(choice);
+    const readyLegendsCopy = readyLegendChoiceCopy(choice);
     const choiceTitle =
       choice?.type === "chooseTarget" && choice.payload.type === "adjustGig"
         ? "Adjust Gig"
@@ -779,9 +879,13 @@ export function PromptBanner({
             ? sentence
             : choice?.type === "chooseCardType"
               ? "Choose card type"
-              : orderedGigCopyChoice
-                ? "Choose Gigs"
-                : "Choose target";
+              : choice?.type === "chooseEffect"
+                ? "Choose effect"
+                : choice?.type === "preventGigSteal"
+                  ? "Prevent Gig Steal"
+                  : orderedGigCopyChoice
+                    ? "Choose Gigs"
+                    : "Choose target";
     const effectSource =
       choice?.type === "chooseTarget" && choice.payload.type === "effectTarget"
         ? choice.payload.source
@@ -791,7 +895,7 @@ export function PromptBanner({
       effectSource ??
       moveSource ??
       pendingChoiceSource(matchState.G.turnMetadata.pendingChoice, matchState);
-    const displaySourceForTitle = adjustGigChoice ? null : sourceForTitle;
+    const displaySourceForTitle = sourceForTitle;
     const titlePrefix = orderedGigCopyChoice
       ? "Choose Gigs for "
       : choice?.type === "chooseTarget" && choice.payload.type === "discardFromHand"
@@ -809,8 +913,32 @@ export function PromptBanner({
       (choice.payload.type === "effectTarget" || choice.payload.type === "discardFromHand")
         ? (effectTargetCopy?.subtitle ?? sentence)
         : null;
+    const compactTargetRequirement =
+      choice?.type === "chooseTarget" &&
+      choice.payload.type === "effectTarget" &&
+      choice.payload.targetPurpose !== "playCard" &&
+      !orderedGigCopyChoice &&
+      titleRequirement
+        ? {
+            optional: choice.payload.canDecline === true || (choice.payload.min ?? 1) === 0,
+            label: [
+              sentence.replace(" · ", " — "),
+              titleRequirement !== sentence ? titleRequirement : null,
+            ]
+              .filter((part): part is string => Boolean(part))
+              .map((part) => part.replace(/[.!?]+$/, ""))
+              .join(". ")
+              .concat("."),
+          }
+        : null;
+    const TargetRequirementIcon = compactTargetRequirement?.optional
+      ? IconCircleDashedCheck
+      : IconTargetArrow;
     const declineTargetChoice =
-      choice?.type === "chooseTarget" && (choice.payload.canDecline || choice.payload.min === 0)
+      choice?.type === "chooseTarget" &&
+      (choice.payload.canDecline ||
+        choice.payload.min === 0 ||
+        choice.payload.targetPurpose === "playCard")
         ? () => {
             dispatch({
               type:
@@ -842,6 +970,9 @@ export function PromptBanner({
             });
           }
         : null;
+    const canCancelActivatedAbility = prompt.availableMoves.some(
+      (move) => move.moveId === "cancelPendingResolution",
+    );
     const stagedTargets =
       effectCardTargetSelection?.side === side ? effectCardTargetSelection : null;
     const stagedTargetCount = stagedTargets?.targetIds.length ?? 0;
@@ -850,62 +981,139 @@ export function PromptBanner({
       stagedTargetCount >= stagedTargets.min &&
       stagedTargetCount <= stagedTargets.max;
     const compactTargetChoice = Boolean(displaySourceForTitle && !orderedGigCopyChoice && !compact);
+    const mobileCardPrompt = surface === "mobile" && displaySourceForTitle !== null;
+    const mobileCardTextButton =
+      (mobileCardPrompt || readyLegendsCopy) && effectSource?.rulesText ? (
+        <button
+          type="button"
+          className={`${classes.iconButton} ${readyLegendsCopy ? classes.readyTextButton : classes.cardTextButton}`}
+          data-testid="prompt-card-text-toggle"
+          aria-label={`${mobileCardTextExpanded ? "Hide" : "Show"} ${displaySourceForTitle?.displayName ?? "source"} card text`}
+          aria-controls={mobileCardTextId}
+          aria-expanded={mobileCardTextExpanded}
+          title={mobileCardTextExpanded ? "Hide card text" : "Show card text"}
+          onClick={() => setMobileCardTextExpanded((expanded) => !expanded)}
+        >
+          {readyLegendsCopy ? (
+            mobileCardTextExpanded ? (
+              <IconMinus size={14} stroke={1.8} />
+            ) : (
+              <IconPlus size={14} stroke={1.8} />
+            )
+          ) : (
+            <IconDots size={22} stroke={1.8} />
+          )}
+        </button>
+      ) : null;
+    const targetHeaderActions = mobileCardTextButton ? (
+      <HeaderActions
+        minimized={minimized}
+        position={position}
+        onToggleMinimize={onToggleMinimize}
+        onTogglePosition={onTogglePosition}
+        extraAction={
+          <>
+            {readyLegendsCopy ? (
+              <>
+                {promptPlacementButton}
+                {mobileCardTextButton}
+                {targetModalButton}
+                {modalRestoreAction}
+              </>
+            ) : (
+              <>
+                {mobileCardTextButton}
+                {extraAction}
+              </>
+            )}
+          </>
+        }
+      />
+    ) : (
+      headerActions
+    );
     return (
       <div
         className={`${classes.banner} ${classes.bannerTarget} ${
           compactTargetChoice ? classes.bannerTargetSlim : ""
-        }${compactClass}${surfaceClass}`}
+        }${mobileCardPrompt ? ` ${classes.mobileCardPrompt}` : ""}${readyLegendsCopy ? ` ${classes.readyLegendsPrompt}` : ""}${compactClass}${surfaceClass}`}
         data-side={side}
+        data-card-prompt={mobileCardPrompt ? "true" : undefined}
         data-testid="prompt-banner"
         data-state="select-target"
         role="region"
         aria-label={`${side} prompt — choose target`}
       >
-        <p className={classes.title} data-testid="prompt-banner-title">
-          <span className={classes.titleText} aria-label={sourceTitleLabel}>
-            {displaySourceForTitle ? (
-              effectTargetCopy?.title ? (
-                effectTargetCopy.title
-              ) : (
+        <div className={classes.promptLead}>
+          <p
+            className={classes.title}
+            data-testid="prompt-banner-title"
+            data-has-target-requirement={compactTargetRequirement ? true : undefined}
+          >
+            {compactTargetRequirement ? (
+              <span
+                className={classes.targetRequirementHint}
+                data-testid="prompt-banner-message"
+                role="img"
+                aria-label={compactTargetRequirement.label}
+                title={compactTargetRequirement.label}
+                tabIndex={0}
+              >
+                <TargetRequirementIcon size={14} stroke={2.2} aria-hidden="true" />
+              </span>
+            ) : null}
+            <span
+              className={classes.titleText}
+              aria-label={displaySourceForTitle ? undefined : sourceTitleLabel}
+            >
+              {displaySourceForTitle ? (
                 <CardNameToken
                   cardId={displaySourceForTitle.cardId}
                   fallbackName={displaySourceForTitle.displayName}
                   className={classes.sourceCardName}
                 />
-              )
-            ) : (
-              choiceTitle
-            )}
-          </span>
-        </p>
-        {titleRequirement ? (
-          <span className={classes.titleMeta} data-testid="prompt-banner-message">
-            {titleRequirement}
-          </span>
-        ) : null}
-        {effectSource?.rulesText ? (
-          <div className={classes.promptCopy}>
+              ) : (
+                choiceTitle
+              )}
+            </span>
+          </p>
+          {readyLegendsCopy ? (
+            <div className={classes.readyInstructions}>
+              <h2 data-testid="prompt-banner-message">{readyLegendsCopy}</h2>
+            </div>
+          ) : titleRequirement && !compactTargetRequirement ? (
+            <span className={classes.titleMeta} data-testid="prompt-banner-message">
+              {titleRequirement}
+            </span>
+          ) : null}
+          {orderedGigCopyChoice ||
+          adjustGigChoice ||
+          (!displaySourceForTitle && !titleRequirement) ? (
+            <div className={`${classes.promptCopy} ${classes.instructionCopy}`}>
+              {orderedGigCopyChoice ? (
+                <p className={classes.sequenceHint} data-testid="prompt-banner-sequence">
+                  {gigCopySource
+                    ? `${gigCopySource.label} showing ${gigCopySource.value} is the source. Choose the Gig to change; smaller dice cap at their max.`
+                    : "First, choose the Gig to copy from. Then choose the Gig that changes."}
+                </p>
+              ) : null}
+              {adjustGigChoice || (!displaySourceForTitle && !titleRequirement) ? (
+                <p className={classes.message} data-testid="prompt-banner-message">
+                  {sentence}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+        {effectSource?.rulesText &&
+        ((surface !== "mobile" && !readyLegendsCopy) || mobileCardTextExpanded) ? (
+          <div
+            id={surface === "mobile" || readyLegendsCopy ? mobileCardTextId : undefined}
+            className={`${classes.promptCopy} ${classes.cardRulesCopy}`}
+          >
             <p className={classes.effectText} data-testid="prompt-banner-effect">
               {effectSource.rulesText}
             </p>
-          </div>
-        ) : null}
-        {orderedGigCopyChoice ||
-        adjustGigChoice ||
-        (!displaySourceForTitle && !titleRequirement) ? (
-          <div className={classes.promptCopy}>
-            {orderedGigCopyChoice ? (
-              <p className={classes.sequenceHint} data-testid="prompt-banner-sequence">
-                {gigCopySource
-                  ? `${gigCopySource.label} showing ${gigCopySource.value} is the source. Choose the Gig to change; smaller dice cap at their max.`
-                  : "First, choose the Gig to copy from. Then choose the Gig that changes."}
-              </p>
-            ) : null}
-            {adjustGigChoice || (!displaySourceForTitle && !titleRequirement) ? (
-              <p className={classes.message} data-testid="prompt-banner-message">
-                {sentence}
-              </p>
-            ) : null}
           </div>
         ) : null}
         {inlineGigTargetIds.length > 0 ||
@@ -963,11 +1171,23 @@ export function PromptBanner({
                 data-value={option.value}
                 aria-label={option.label}
                 onClick={() => {
+                  const selectedDie = selectedAdjustGigId
+                    ? matchState.G.gigDice[selectedAdjustGigId]
+                    : undefined;
+                  if (!selectedAdjustGigId || !selectedDie) return;
+                  const adjustment =
+                    adjustGigChoice?.payload.type === "effectTarget"
+                      ? adjustGigChoice.payload.adjustGig
+                      : adjustGigChoice?.payload;
                   dispatch({
                     type: "resolveAdjustGig",
-                    value: option.value,
+                    choice:
+                      adjustment?.chooseUpTo && option.value === selectedDie.faceValue
+                        ? { kind: "noAdjustment" }
+                        : { kind: "adjust", dieId: selectedAdjustGigId, value: option.value },
                     as: PLAYER_SIDE_TO_ID[side],
                   });
+                  setSelectedInlineGigIds([]);
                 }}
               >
                 {option.label}
@@ -975,43 +1195,87 @@ export function PromptBanner({
             ))}
             {stagedTargets ? (
               <>
-                <span className={classes.count} data-testid="prompt-target-selection-count">
-                  {stagedTargetCount}/{stagedTargets.max}
+                <span
+                  className={classes.count}
+                  data-testid="prompt-target-selection-count"
+                  aria-live="polite"
+                >
+                  {readyLegendsCopy
+                    ? `${stagedTargetCount} of ${stagedTargets.max} Legends selected`
+                    : `${stagedTargetCount}/${stagedTargets.max}`}
                 </span>
                 <button
                   type="button"
                   className={classes.verb}
                   data-testid="prompt-target-confirm"
-                  disabled={!canSubmitStagedTargets}
+                  disabled={
+                    !canSubmitStagedTargets ||
+                    (Boolean(readyLegendsCopy) && stagedTargetCount === 0)
+                  }
                   onClick={() => {
                     submitEffectCardTargets(side);
                   }}
                 >
-                  Confirm
+                  {readyLegendsCopy
+                    ? stagedTargetCount === 0
+                      ? "Ready selected"
+                      : `Ready ${stagedTargetCount} ${stagedTargetCount === 1 ? "Legend" : "Legends"}`
+                    : "Confirm"}
                 </button>
               </>
             ) : null}
-            {declineTargetChoice || declineCardToMove || declineCardToPlay ? (
+            {canCancelActivatedAbility ? (
+              <button
+                type="button"
+                className={classes.verb}
+                data-testid="prompt-cancel-ability"
+                onClick={() => {
+                  dispatch({
+                    type: "cancelPendingResolution",
+                    as: PLAYER_SIDE_TO_ID[side],
+                  });
+                }}
+              >
+                Cancel ability
+              </button>
+            ) : null}
+            {declineCardToPlay ||
+            declineCardToMove ||
+            (declineTargetChoice &&
+              !(
+                canCancelActivatedAbility &&
+                choice?.type === "chooseTarget" &&
+                choice.payload.targetPurpose === "playCard"
+              )) ? (
               <button
                 type="button"
                 className={classes.verb}
                 data-testid="prompt-target-pass"
                 onClick={declineTargetChoice ?? declineCardToMove ?? declineCardToPlay ?? undefined}
               >
-                {choice?.type === "chooseTarget" &&
-                choice.payload.type === "discardFromHand" &&
-                choice.payload.canDecline
-                  ? "Skip effect"
-                  : choice?.type === "chooseCardToPlay" && choice.payload.canDecline
-                    ? "Add to hand"
-                    : choice?.type === "chooseTarget" && choice.payload.min === 0
-                      ? "Take none"
-                      : "Pass"}
+                {readyLegendsCopy
+                  ? "Ready none"
+                  : choice?.type === "chooseTarget" &&
+                      choice.payload.type === "discardFromHand" &&
+                      choice.payload.canDecline
+                    ? "Skip effect"
+                    : choice?.type === "chooseCardToMove" && choice.payload.canDecline
+                      ? "Skip effect"
+                      : choice?.type === "chooseCardToPlay" && choice.payload.canDecline
+                        ? choice.payload.free
+                          ? "Add to hand"
+                          : "Skip"
+                        : choice?.type === "chooseTarget" &&
+                            choice.payload.targetPurpose === "playCard"
+                          ? "Cancel ability"
+                          : choice?.type === "chooseTarget" && choice.payload.min === 0
+                            ? "Take none"
+                            : "Pass"}
               </button>
             ) : null}
           </div>
         ) : null}
-        {headerActions}
+        {targetHeaderActions}
       </div>
     );
   }
@@ -1025,6 +1289,7 @@ export function PromptBanner({
     matchState,
     matchState.G.attackState,
     attackTriggers,
+    shouldConfirmSkipBlock,
   );
   const disabledPassReason = verbs.find(
     (verb) => verb.moveId === "passPhase" && !verb.enabled,
@@ -1053,28 +1318,39 @@ export function PromptBanner({
     );
   }
 
-  const showForcedActionPrompt = inSetup || selectedDirectMove !== null;
+  const showForcedActionPrompt =
+    inSetup || selectedDirectMove !== null || pendingAttackSelection !== null;
   if (!showActionPrompt && !showForcedActionPrompt) {
     return null;
   }
   if (!showForcedActionPrompt && !hasOnlyIdlePromptActions(verbs) && !disabledPassReason) {
     return null;
   }
-  const state = inSetup ? "mulligan" : selectedDirectMove ? "select-target" : "select-action";
+  const state = inSetup
+    ? "mulligan"
+    : selectedDirectMove || pendingAttackSelection
+      ? "select-target"
+      : "select-action";
   const cancelSelection = () => {
-    moveSelection.clearSelection();
+    if (localTargetSelection) localTargetSelection.cancel();
+    else {
+      moveSelection.clearSelection();
+      attackSelection.clearSelection();
+    }
     onArmVerb?.(null);
   };
-  const cancelButton = selectedDirectMove ? (
-    <button
-      type="button"
-      className={classes.cancel}
-      data-testid="prompt-cancel-selection"
-      onClick={cancelSelection}
-    >
-      Cancel
-    </button>
-  ) : null;
+  const cancelButton =
+    selectedDirectMove || pendingAttackSelection ? (
+      <button
+        type="button"
+        className={classes.cancel}
+        data-testid="prompt-cancel-selection"
+        aria-keyshortcuts="Escape"
+        onClick={cancelSelection}
+      >
+        {pendingAttackSelection ? "Cancel attack" : "Cancel"}
+      </button>
+    ) : null;
   const selectedPlayTargetLabel =
     selectedPlayCardTargeting && selectedSourceDef
       ? `Choose a target for ${selectedSourceDef.displayName ?? selectedSourceDef.name}`
@@ -1088,6 +1364,8 @@ export function PromptBanner({
       />
     ) : inSetup ? (
       "Mulligan"
+    ) : pendingAttackSelection ? (
+      "Choose attack target"
     ) : selectedDirectMove ? (
       selectedMoveTitle(selectedDirectMove, moveSelection.selection?.sourceCardId)
     ) : matchState.G.attackState ? (
@@ -1100,28 +1378,34 @@ export function PromptBanner({
       ? selectedSourceDef.type === "gear"
         ? "Select a friendly Unit to attach this Gear."
         : (selectedSourceDef.rulesText ?? "Select a highlighted target to resolve the program.")
-      : actionPromptMessage({
-          selectedMove: selectedDirectMove,
-          selectedSourceCardId: moveSelection.selection?.sourceCardId,
-          inSetup,
-          verbs,
-          disabledPassReason,
-        });
-  const showVerbRow = !selectedPlayCardTargeting;
+      : pendingAttackSelection
+        ? pendingAttackSelection.intent === "fight"
+          ? "Choose a spent rival Unit. Cancel if you do not want to attack."
+          : "Choose a spent rival Unit or the rival. Cancel if you do not want to attack."
+        : actionPromptMessage({
+            selectedMove: selectedDirectMove,
+            selectedSourceCardId: moveSelection.selection?.sourceCardId,
+            inSetup,
+            verbs,
+            disabledPassReason,
+          });
+  const showVerbRow = !localTargeting;
   return (
     <>
       <div
         className={`${classes.banner} ${
-          selectedPlayCardTargeting ? classes.bannerTarget : classes.bannerAction
-        } ${
-          selectedPlayCardTargeting ? classes.selectedPlayPrompt : ""
-        }${compactClass}${surfaceClass}`}
+          localTargeting ? classes.bannerTarget : classes.bannerAction
+        } ${localTargeting ? classes.selectedPlayPrompt : ""}${compactClass}${surfaceClass}`}
         data-side={side}
         data-testid="prompt-banner"
         data-state={state}
         role="region"
         aria-label={`${side} prompt — ${
-          selectedPlayCardTargeting ? "choose target" : inSetup ? "mulligan decision" : "your move"
+          selectedPlayCardTargeting || pendingAttackSelection
+            ? "choose target"
+            : inSetup
+              ? "mulligan decision"
+              : "your move"
         }`}
       >
         <div className={classes.actionSummary}>
@@ -1137,31 +1421,47 @@ export function PromptBanner({
               {actionMessage}
             </p>
           ) : null}
+          {mulliganStats ? (
+            <MulliganStatsStrip
+              stats={mulliganStats}
+              compact={compact}
+              mobile={surface === "mobile"}
+            />
+          ) : null}
         </div>
         {showVerbRow ? (
           <div className={classes.verbs} data-testid="prompt-banner-verbs">
             {cancelButton}
-            <button
-              type="button"
-              className={classes.verb}
-              disabled={!canUndo}
-              data-testid="prompt-verb-undo"
-              data-verb="undo"
-              aria-label={canUndo ? "Undo last move" : "No undoable move available"}
-              onClick={() => {
-                dispatch({ type: "undo" });
-                moveSelection.clearSelection();
-                onArmVerb?.(null);
-              }}
-            >
-              Undo
-            </button>
+            {surface === "mobile" ? (
+              <button
+                type="button"
+                className={classes.verb}
+                disabled={!canUndo}
+                data-testid="prompt-verb-undo"
+                data-verb="undo"
+                aria-label={canUndo ? "Undo last move" : "No undoable move available"}
+                onClick={() => {
+                  dispatch({ type: "undo" });
+                  moveSelection.clearSelection();
+                  onArmVerb?.(null);
+                }}
+              >
+                Undo
+              </button>
+            ) : null}
             {verbs.map((verb) => {
               const enabled = verb.enabled;
               const active = selectedMove === verb.moveId;
               const ariaLabel = verb.disabledReason
                 ? `${verb.label}. ${verb.disabledReason}`
-                : verbAriaLabel(verb.moveId, matchState, matchState.G.attackState, attackTriggers);
+                : verb.moveId === "resolveAttack" && shouldConfirmSkipBlock
+                  ? "Skip blocking with a ready BLOCKER"
+                  : verbAriaLabel(
+                      verb.moveId,
+                      matchState,
+                      matchState.G.attackState,
+                      attackTriggers,
+                    );
               const blockedPassReason =
                 verb.moveId === "passPhase" && !enabled ? verb.disabledReason : undefined;
               const button = (
@@ -1180,16 +1480,18 @@ export function PromptBanner({
                   onClick={() => {
                     if (verb.moveId === "passPhase") {
                       if (shouldConfirmPass) {
-                        setConfirmingPassWithAttackers(true);
+                        setPendingConfirmation("pass-with-attackers");
                         return;
                       }
                       passPhase();
                       return;
                     }
                     if (verb.moveId === "resolveAttack") {
-                      dispatch({ type: "resolveAttack", pass: true, as: PLAYER_SIDE_TO_ID[side] });
-                      moveSelection.clearSelection();
-                      onArmVerb?.(null);
+                      if (shouldConfirmSkipBlock) {
+                        setPendingConfirmation("skip-block");
+                        return;
+                      }
+                      skipBlock();
                       return;
                     }
                     if (verb.moveId === "mulligan") {
@@ -1233,7 +1535,7 @@ export function PromptBanner({
               return button;
             })}
           </div>
-        ) : inlineSelectedPlayActions ? (
+        ) : inlineLocalTargetActions ? (
           <div className={classes.selectedPlayActions}>
             {cancelButton}
             {headerActions}
@@ -1241,9 +1543,9 @@ export function PromptBanner({
         ) : (
           cancelButton
         )}
-        {inlineSelectedPlayActions ? null : headerActions}
+        {inlineLocalTargetActions ? null : headerActions}
       </div>
-      {confirmingPassWithAttackers
+      {pendingConfirmation
         ? createPortal(
             <div
               className={classes.confirmScrim}
@@ -1253,31 +1555,52 @@ export function PromptBanner({
             >
               <div className={classes.confirmSheet}>
                 <p id={confirmTitleId} className={classes.confirmTitle}>
-                  Pass with attackers ready?
+                  {pendingConfirmation === "skip-block"
+                    ? "Skip your chance to block?"
+                    : "Pass with attackers ready?"}
                 </p>
                 <p className={classes.confirmText}>
-                  You still have Units that can attack. Passing ends your turn.
+                  {pendingConfirmation === "skip-block"
+                    ? "You have a ready BLOCKER. To block, choose it and select BLOCK. Continuing lets the attack through."
+                    : "You still have Units that can attack. Passing ends your turn."}
                 </p>
                 <div className={classes.confirmActions}>
                   <button
                     type="button"
                     className={classes.confirmSecondary}
                     aria-keyshortcuts="Escape"
-                    onClick={() => setConfirmingPassWithAttackers(false)}
+                    data-testid={
+                      pendingConfirmation === "skip-block"
+                        ? "skip-block-confirm-cancel"
+                        : "pass-confirm-cancel"
+                    }
+                    onClick={() => setPendingConfirmation(null)}
                   >
-                    <span>Keep attacking</span>
+                    <span>
+                      {pendingConfirmation === "skip-block" ? "Back to blockers" : "Keep attacking"}
+                    </span>
                     <DialogHotkeyHint label="Esc" />
                   </button>
                   <button
                     type="button"
                     className={classes.confirmPrimary}
                     aria-keyshortcuts="Space"
+                    data-testid={
+                      pendingConfirmation === "skip-block"
+                        ? "skip-block-confirm-submit"
+                        : "pass-confirm-submit"
+                    }
                     onClick={() => {
-                      setConfirmingPassWithAttackers(false);
-                      passPhase();
+                      const confirmation = pendingConfirmation;
+                      setPendingConfirmation(null);
+                      if (confirmation === "skip-block") {
+                        skipBlock();
+                      } else {
+                        passPhase();
+                      }
                     }}
                   >
-                    <span>Pass turn</span>
+                    <span>{pendingConfirmation === "skip-block" ? "Skip block" : "Pass turn"}</span>
                     <DialogHotkeyHint label="Space" />
                   </button>
                 </div>
@@ -1580,6 +1903,7 @@ function collectVerbs(
   matchState: ReturnType<typeof useEngine>["matchState"],
   attack: AttackLabelState | null,
   attackTriggers: readonly AttackTriggerSummary[],
+  hasValidBlocker: boolean,
 ): VerbRow[] {
   // Note `enabled` is "has at least one candidate". Verbs with no candidates
   // appear disabled so the player can see the full action surface even when
@@ -1598,7 +1922,9 @@ function collectVerbs(
       id === "passPhase"
         ? passPhaseLabel(gamePhase)
         : id === "resolveAttack"
-          ? resolveAttackLabel(matchState, attack, attackTriggers)
+          ? hasValidBlocker
+            ? "Skip block"
+            : resolveAttackLabel(matchState, attack, attackTriggers)
           : VERB_LABELS[id];
     if (!label) {
       return [];
@@ -1687,6 +2013,12 @@ function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>):
         }`;
       }
       if (choice.payload.type === "effectTarget") {
+        if (choice.payload.targetPurpose === "playCard") {
+          const remaining = choice.payload.availableEddiesAfterCosts;
+          const remainingCopy =
+            typeof remaining === "number" ? ` You have ${remaining} €$ left.` : "";
+          return `Choose a Program to play. You still pay its Eddie cost.${remainingCopy} Cancel if you don't want to play one.`;
+        }
         if (isOrderedGigCopyChoice(choice)) {
           return `1 Copy value from a Gig, then 2 choose the Gig to change${
             choice.payload.canDecline ? ", or pass" : ""
@@ -1715,19 +2047,35 @@ function describeChoice(prompt: ReturnType<typeof useNativePromptPresentation>):
       return "Choose whether revealed cards go to hand or trash";
     case "gainGig":
       return "Pick a gig die from the fixer area";
+    case "redirectDefeat":
+      return `You may spend ${choice.payload.cost} €$ to defeat this Legend instead of a friendly Unit`;
+    case "chooseSacrificialGear":
+      return "Choose which attached Gear is defeated instead of this Unit";
+    case "preventGigSteal": {
+      const stolen = choice.payload.stealEntries.length;
+      return `Discard card${choice.payload.handEntries.length === 1 ? "" : "s"} with matching cost to protect ${stolen === 1 ? "the stolen Gig" : `${stolen} stolen Gigs`}, or let the Rival steal.`;
+    }
+    case "chooseFirstPlayer":
+      return "You won the random determination. Choose first or second.";
   }
   return "Awaiting input…";
 }
 
 function buildAdjustGigPromptOptions(
   payload: AdjustGigPromptPayload,
+  matchState: MatchState,
+  dieId: string,
   interactionView: ReturnType<typeof useEngineInteractionView>,
 ): AdjustGigPromptOption[] {
-  if (payload.type !== "adjustGig") {
-    return [];
-  }
-  const currentValue = payload.currentValue;
-  const maxFaceValue = payload.maxFaceValue;
+  const die = matchState.G.gigDice[dieId];
+  const adjustment = payload.type === "effectTarget" ? payload.adjustGig : payload;
+  const currentValue =
+    die?.faceValue ?? (payload.type === "adjustGig" ? payload.currentValue : undefined);
+  const maxFaceValue = die
+    ? ({ d4: 4, d6: 6, d8: 8, d10: 10, d12: 12, d20: 20 } as const)[die.dieType]
+    : payload.type === "adjustGig"
+      ? payload.maxFaceValue
+      : undefined;
   if (typeof currentValue !== "number" || typeof maxFaceValue !== "number") {
     return [];
   }
@@ -1740,9 +2088,9 @@ function buildAdjustGigPromptOptions(
   return buildAdjustGigOptions({
     currentValue,
     maxFaceValue,
-    maxAmount: payload.maxAmount,
-    direction: payload.direction,
-    chooseUpTo: payload.chooseUpTo,
+    maxAmount: adjustment?.maxAmount,
+    direction: adjustment?.direction,
+    chooseUpTo: adjustment?.chooseUpTo,
     minValue: inputMin,
     maxValue: inputMax,
   });
@@ -1755,7 +2103,11 @@ function chooseCardToPlayCopy(prompt: ReturnType<typeof useNativePromptPresentat
   }
   const cards = choice.payload.cards;
   const allGear = cards.length > 0 && cards.every((card) => card.type === "gear");
-  const declineSuffix = choice.payload.canDecline ? ", or add it to hand" : "";
+  const declineSuffix = choice.payload.canDecline
+    ? choice.payload.free
+      ? ", or add it to hand"
+      : ", or skip"
+    : "";
   if (allGear && choice.payload.free && choice.payload.resolvedAttachToId) {
     return `Play selected Gear for free${declineSuffix}`;
   }
@@ -1765,7 +2117,29 @@ function chooseCardToPlayCopy(prompt: ReturnType<typeof useNativePromptPresentat
   if (choice.payload.free) {
     return `Play for free${declineSuffix}`;
   }
-  return "Choose a card to play";
+  return `Choose a card to play${declineSuffix}`;
+}
+
+function readyLegendChoiceCopy(
+  choice: ReturnType<typeof useNativePromptPresentation>["choice"],
+): string | null {
+  if (choice?.type !== "chooseTarget" || choice.payload.type !== "effectTarget") return null;
+  const effect = choice.payload.effect;
+  if (effect?.effect !== "ready" || effect.target.selector !== "card") return null;
+  const target = effect.target;
+  if (
+    target.controller !== "friendly" ||
+    target.state !== "spent" ||
+    target.zones?.length !== 1 ||
+    target.zones[0] !== "legendArea" ||
+    target.cardTypes?.length !== 1 ||
+    target.cardTypes[0] !== "legend" ||
+    (target.classifications?.length ?? 0) > 1 ||
+    choice.payload.min !== 0
+  )
+    return null;
+  const classifications = target.classifications?.map((name) => name.toUpperCase()).join(" ");
+  return `Ready up to ${choice.payload.max} of your spent ${classifications ? `${classifications} ` : ""}Legends`;
 }
 
 function effectTargetChoiceCopy(

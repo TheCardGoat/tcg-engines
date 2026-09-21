@@ -44,15 +44,16 @@ describe("Fresh from the Forge (IAR255) AAA", () => {
     Fang.must.playReaction(freshFromTheForgeRed);
     game.passBoth();
 
-    // Obsidian Fire Vein base 1 + sharpen.
-    expectCombat(game).toHaveAttackPower(2);
+    // Obsidian Fire Vein base 1 + sharpen, plus its live "+1{p} and go
+    // again" turned on by this link's Draconic reaction.
+    expectCombat(game).toHaveAttackPower(3);
     expectFabCard(Fang, attacking).toHaveCounters(1);
     expectFabCard(Fang, idle).toHaveCounters(1);
     expectFabCard(Fang, freshFromTheForgeRed).toBeIn("graveyard");
 
     game.closeCombat({ optionals: "accept", ordering: "listed" });
     expectFabPlayer(Dash).toBeMarked();
-    expectFabPlayer(Dash).toHaveLife(18);
+    expectFabPlayer(Dash).toHaveLife(17);
     expectFabCard(Fang, attacking).toHaveCounters(0);
     expectFabCard(Fang, idle).toHaveCounters(1);
   });
@@ -80,6 +81,6 @@ describe("Fresh from the Forge (IAR255) AAA", () => {
 
     expectFabCard(Fang, obsidianFireVein).toHaveCounters(1);
     expectFabPlayer(Dash).notToBeMarked();
-    expectFabPlayer(Dash).toHaveLife(18);
+    expectFabPlayer(Dash).toHaveLife(17);
   });
 });

@@ -84,61 +84,59 @@ export const crossroadsSpecter: GrandArchiveCard<GrandArchiveAbilityDefinition, 
             },
           },
           effect: {
-            kind: "sequence",
-            effects: [
-              {
-                kind: "conditional",
-                condition: {
-                  kind: "compare",
-                  comparison: {
-                    left: {
-                      kind: "count",
-                      collection: {
-                        zones: ["banishment"],
-                        player: "each-player",
-                        filter: {
-                          kind: "supertype",
-                          oneOf: ["REGALIA"],
-                        },
-                      },
+            kind: "conditional",
+            condition: {
+              kind: "compare",
+              comparison: {
+                left: {
+                  kind: "count",
+                  collection: {
+                    zones: ["banishment"],
+                    player: "each-player",
+                    filter: {
+                      kind: "supertype",
+                      oneOf: ["REGALIA"],
                     },
-                    operator: "gte",
-                    right: 7,
                   },
                 },
-                then: {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "move",
-                      subject: {
-                        kind: "source",
-                      },
-                      from: "graveyard",
-                      destination: {
-                        zone: "field",
-                      },
-                    },
-                    {
-                      kind: "add-counter",
-                      subject: {
-                        kind: "source",
-                      },
-                      counter: "buff",
-                      amount: 1,
-                    },
-                  ],
-                },
+                operator: "gte",
+                right: 7,
               },
-              {
-                kind: "set-object-state",
-                subject: {
-                  kind: "source",
+            },
+            then: {
+              kind: "sequence",
+              effects: [
+                {
+                  kind: "move",
+                  subject: {
+                    kind: "source",
+                  },
+                  from: "graveyard",
+                  destination: {
+                    zone: "field",
+                  },
+                  bindResultAs: "returned-source",
                 },
-                state: "ephemeral",
-                value: true,
-              },
-            ],
+                {
+                  kind: "add-counter",
+                  subject: {
+                    kind: "bound",
+                    binding: "returned-source",
+                  },
+                  counter: "buff",
+                  amount: 1,
+                },
+                {
+                  kind: "set-object-state",
+                  subject: {
+                    kind: "bound",
+                    binding: "returned-source",
+                  },
+                  state: "ephemeral",
+                  value: true,
+                },
+              ],
+            },
           },
         },
       ],

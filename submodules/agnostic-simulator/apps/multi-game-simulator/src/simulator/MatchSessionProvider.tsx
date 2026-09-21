@@ -20,12 +20,13 @@ import {
   initRootSocket,
   destroyRootSocket,
 } from "../lib/gateway/root-socket";
+import { logDebugPayload } from "../lib/debug-logging";
 import { playUrl } from "../runtime/gameRuntimeApi";
 import type { GameSlug } from "@tcg/simulator-contract";
 
 interface SessionController {
   session: MatchSession | null;
-  refresh: () => Promise<void>;
+  refresh: (reason?: string) => Promise<void>;
   error: string | null;
   refreshing: boolean;
 }
@@ -36,6 +37,11 @@ export function useMatchSession() {
   if (!value) throw new Error("MatchSessionProvider is required.");
   return value;
 }
+
+/** Mirror of the provider's HTTP deadline. When it fires, the player sees the
+ * "Match synchronization interrupted" toast — always log that moment, with the
+ * request context, so a hung session read is diagnosable from the console. */
+const REFRESH_TIMEOUT_MS = 10_000;
 
 /** Owns HTTP lifecycle recovery. Game renderers own only versioned gameplay updates. */
 export function MatchSessionProvider({
@@ -66,70 +72,111 @@ export function MatchSessionProvider({
     current.current = accepted;
     setSession(accepted);
   }, [initial]);
-  const refresh = useCallback((): Promise<void> => {
-    if (!initial || !gameSlug) return Promise.resolve();
-    if (running.current) {
-      dirty.current = true;
-      return running.current;
-    }
-    const requestGeneration = generation.current;
-    setRefreshing(true);
-    const load = async () => {
-      do {
-        dirty.current = false;
-        const abort = new AbortController();
-        controller.current = abort;
-        let timedOut = false;
-        const timeout = window.setTimeout(() => {
-          timedOut = true;
-          abort.abort();
-        }, 10_000);
-        try {
-          const response = await fetch(
-            playUrl(
+  const refresh = useCallback(
+    (reason?: string): Promise<void> => {
+      if (!initial || !gameSlug) return Promise.resolve();
+      if (running.current) {
+        dirty.current = true;
+        return running.current;
+      }
+      const matchId = initial.match.matchId;
+      const gameId = sessionGameId(initial);
+      const requestGeneration = generation.current;
+      setRefreshing(true);
+      const load = async () => {
+        do {
+          dirty.current = false;
+          const abort = new AbortController();
+          controller.current = abort;
+          let timedOut = false;
+          const timeout = window.setTimeout(() => {
+            timedOut = true;
+            // Always surfaced: this timer firing is what shows the player the
+            // synchronization-interrupted toast.
+            console.warn("[match-session] refresh timed out", {
               gameSlug,
-              `/matches/${encodeURIComponent(initial.match.matchId)}/games/${encodeURIComponent(sessionGameId(initial))}/session`,
-            ),
-            {
+              matchId,
+              gameId,
+              reason,
+              timeoutMs: REFRESH_TIMEOUT_MS,
+              attempt: failures.current + 1,
+            });
+            abort.abort();
+          }, REFRESH_TIMEOUT_MS);
+          const startedAt = performance.now();
+          logDebugPayload("[match-session] refresh start", {
+            gameSlug,
+            matchId,
+            gameId,
+            reason,
+            attempt: failures.current + 1,
+            phase: current.current?.phase ?? null,
+          });
+          try {
+            const response = await fetch(playUrl(gameSlug, `/matches/${encodeURIComponent(matchId)}/games/${encodeURIComponent(gameId)}/session`), {
               credentials: "include",
               headers: { Accept: "application/json" },
               signal: abort.signal,
-            },
-          );
-          if (!response.ok) throw new Error(`Match synchronization failed (${response.status}).`);
-          const incoming = MatchSessionSchema.parse(await response.json());
-          if (requestGeneration !== generation.current) return;
-          const accepted = current.current ? acceptSession(current.current, incoming) : incoming;
-          current.current = accepted;
-          setSession(accepted);
-          failures.current = 0;
-          setError(null);
-        } catch (cause) {
-          if (requestGeneration !== generation.current) return;
-          failures.current++;
-          // Retry on the recovery schedule, not in an immediate dirty loop.
-          dirty.current = false;
-          setError(
-            timedOut
-              ? "Refreshing the match timed out. Please check your connection."
-              : cause instanceof Error
-                ? cause.message
-                : "Could not synchronize the match.",
-          );
-        } finally {
-          window.clearTimeout(timeout);
+            });
+            if (!response.ok) throw new Error(`Match synchronization failed (${response.status}).`);
+            const incoming = MatchSessionSchema.parse(await response.json());
+            if (requestGeneration !== generation.current) return;
+            const accepted = current.current ? acceptSession(current.current, incoming) : incoming;
+            current.current = accepted;
+            setSession(accepted);
+            failures.current = 0;
+            setError(null);
+            logDebugPayload("[match-session] refresh ok", {
+              gameSlug,
+              matchId,
+              gameId,
+              reason,
+              durationMs: Math.round(performance.now() - startedAt),
+              revision: accepted.revision,
+              phase: accepted.phase,
+            });
+          } catch (cause) {
+            if (requestGeneration !== generation.current) return;
+            failures.current++;
+            // Retry on the recovery schedule, not in an immediate dirty loop.
+            dirty.current = false;
+            const durationMs = Math.round(performance.now() - startedAt);
+            const message =
+              timedOut
+                ? "Refreshing the match timed out. The match server may be restarting — try again in a moment."
+                : cause instanceof Error
+                  ? cause.message
+                  : "Could not synchronize the match.";
+            // Always surfaced: failures are rare and are the browser-side
+            // fingerprint of a game-server outage or restart herd.
+            console.warn("[match-session] refresh failed", {
+              gameSlug,
+              matchId,
+              gameId,
+              reason,
+              durationMs,
+              attempt: failures.current,
+              timedOut,
+              aborted: abort.signal.aborted,
+              message,
+            });
+            setError(message);
+          } finally {
+            window.clearTimeout(timeout);
+          }
+        } while (dirty.current && requestGeneration === generation.current);
+      };
+      const promise = load().finally(() => {
+        if (running.current === promise) {
+          running.current = null;
+          setRefreshing(false);
         }
-      } while (dirty.current && requestGeneration === generation.current);
-    };
-    const promise = load().finally(() => {
-      if (running.current === promise) {
-        running.current = null;
-        setRefreshing(false);
-      }
-    });
-    running.current = promise;
-    return promise;
-  }, [initial, gameSlug]);
+      });
+      running.current = promise;
+      return promise;
+    },
+    [initial, gameSlug],
+  );
 
   useEffect(
     () => () => {
@@ -153,7 +200,7 @@ export function MatchSessionProvider({
     const schedule = () => {
       const delay = Math.min(30_000, 3_000 * 2 ** Math.min(failures.current, 4));
       timer = setTimeout(async () => {
-        await (running.current ?? refresh());
+        await (running.current ?? refresh("recovery_schedule"));
         if (!stopped) schedule();
       }, delay);
     };
@@ -170,7 +217,7 @@ export function MatchSessionProvider({
     if (!deadline) return;
     const timer = setTimeout(
       () => {
-        if (!running.current) void refresh();
+        if (!running.current) void refresh("preparation_deadline");
       },
       Math.max(0, Date.parse(deadline) - Date.now()) + 250,
     );
@@ -186,7 +233,7 @@ export function MatchSessionProvider({
           event.matchId === initial.match.matchId &&
           event.revision > (current.current?.revision ?? -1)
         )
-          void refresh();
+          void refresh("match_session_changed");
       }),
       handle.on("match_state", (payload) => {
         const parsed = RawGatewayMatchStateMessageSchema.safeParse({
@@ -209,16 +256,16 @@ export function MatchSessionProvider({
               match.scores[player.id] !==
                 (player.seat === 1 ? event.player1Score : event.player2Score),
           )
-        )
-          void refresh();
+          )
+          void refresh("match_state");
       }),
       // Subscriptions precede this recovery read, closing the SSR-to-connection gap.
       handle.onAuthenticated(() => {
-        void refresh();
+        void refresh("authenticated");
       }),
     ];
     const onFocus = () => {
-      if (document.visibilityState === "visible") void refresh();
+      if (document.visibilityState === "visible") void refresh("visibility");
     };
     document.addEventListener("visibilitychange", onFocus);
     return () => {

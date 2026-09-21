@@ -10,12 +10,21 @@
  */
 import {
   fabInteractionControl,
+  fabScopedAutoPassActionIdentity,
   FAB_ARM_PRIORITY_HOLD_LABEL,
   FAB_AUTOMATION_PREFERENCE_LABELS,
   FAB_PRIORITY_MODE_ACTION_LABEL,
+  FAB_SCOPED_AUTO_PASS_LABELS,
 } from "@tcg/flesh-and-blood-server-adapter";
 import type { EngineInteractionView, InteractionAction } from "@tcg/protocol";
 import type { FabPriorityAutomationMode } from "./state";
+
+/** The one-shot scoped auto-pass arms the simulator exposes. */
+export type FabScopedAutoPassTarget = "combat" | "opponent-turn";
+export const FabScopedAutoPassTargets = [
+  "combat",
+  "opponent-turn",
+] as const satisfies readonly FabScopedAutoPassTarget[];
 
 /** The adapter-owned Pass identity is independent of labels, ordering, and End turn. */
 export function fabPassInteractionAction(
@@ -130,6 +139,45 @@ export function fabArmHoldAction(
   view: EngineInteractionView | null | undefined,
 ): InteractionAction | null {
   return sourcelessCustomActionForLabel(view, FAB_ARM_PRIORITY_HOLD_LABEL);
+}
+
+/** The `set-automation-preferences` interaction action arming one scope. */
+export function fabArmScopedAutoPassAction(
+  view: EngineInteractionView | null | undefined,
+  scope: FabScopedAutoPassTarget,
+): InteractionAction | null {
+  if (!view) return null;
+  const byId = view.actions.find((candidate) => {
+    const identity = fabScopedAutoPassActionIdentity(candidate);
+    return (
+      candidate.enabled &&
+      candidate.inputs.length === 0 &&
+      identity?.operation === "arm" &&
+      identity.scope === scope
+    );
+  });
+  if (byId) return byId;
+  return sourcelessCustomActionForLabel(
+    view,
+    scope === "combat"
+      ? FAB_SCOPED_AUTO_PASS_LABELS.combatArm
+      : FAB_SCOPED_AUTO_PASS_LABELS.opponentTurnArm,
+  );
+}
+
+/** The `set-automation-preferences` interaction action disarming any scope. */
+export function fabDisarmScopedAutoPassAction(
+  view: EngineInteractionView | null | undefined,
+): InteractionAction | null {
+  if (!view) return null;
+  return (
+    view.actions.find(
+      (candidate) =>
+        candidate.enabled &&
+        candidate.inputs.length === 0 &&
+        fabScopedAutoPassActionIdentity(candidate)?.operation === "disarm",
+    ) ?? null
+  );
 }
 
 /**

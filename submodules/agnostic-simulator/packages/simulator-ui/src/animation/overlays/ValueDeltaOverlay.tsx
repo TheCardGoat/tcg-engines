@@ -10,6 +10,7 @@ export function ValueDeltaOverlay() {
   const runtime = useAnimationRuntime();
   const ValueDeltaVisual = runtime.valueDeltaRenderer;
   useAnimationRegistryVersion(runtime.registry);
+  if (runtime.suppressedOverlayStepTypes?.includes("valueDelta")) return null;
   if (typeof document === "undefined" || runtime.activeTransition?.phase !== "running") return null;
   const items = (runtime.compiledPlan?.steps ?? []).flatMap((compiled) => {
     if (compiled.step.type !== "valueDelta") return [];

@@ -42,6 +42,8 @@ function normalizeNameForConversion(str: string): string {
 function toKebabCase(str: string): string {
   const normalized = normalizeNameForConversion(str);
   return normalized
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, "") // Remove special chars except spaces and hyphens
     .replace(/\s+/g, "-") // Replace spaces with hyphens

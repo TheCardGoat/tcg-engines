@@ -1,224 +1,306 @@
 import { describe, expect, test } from "vite-plus/test";
-import { AnimationPlanV2Schema } from "@tcg/protocol";
-import type { AnimationScript, CardMoveStep } from "@tcg/cyberpunk-engine";
+import { AnimationPlanV2Schema, type AnimationPlanV2, type AnimationStepV2 } from "@tcg/protocol";
+import type { AnimationScript } from "@tcg/cyberpunk-engine";
+import { cyberpunkAnimationPlan } from "@tcg/cyberpunk-server-adapter/animation";
+import { AnimationInteractionBoundary } from "@tcg/simulator-ui";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 
 import { PLAYER_SIDE_TO_ID } from "../engine/index.js";
 import {
   cyberpunkAnimationScriptToAnimationPlans,
-  cyberpunkAnimationStepToAnimationPlan,
   isCyberpunkAuthoritativeRollback,
   projectCyberpunkAuthoritativeAnimationPlan,
 } from "./sharedEvents.js";
 
-const context = {
-  viewerSeatId: String(PLAYER_SIDE_TO_ID.player),
-  idPrefix: "transition-1",
-};
+const viewerSeatId = String(PLAYER_SIDE_TO_ID.player);
+const P1 = "p1";
+const P2 = "p2";
 
-describe("Cyberpunk AnimationPlanV2 adapter", () => {
-  test("combines engine records into one canonical plan", () => {
-    const plans = cyberpunkAnimationScriptToAnimationPlans(
+const representativeScripts: Record<string, AnimationScript> = {
+  playToField: {
+    totalDurationMs: 240,
+    steps: [
       {
-        steps: [
-          cardMove({
-            id: "move-a",
-            cardId: "card-a",
-            fromZone: "field",
-            toZone: "trash",
-          }),
-          cardMove({
-            id: "move-b",
-            cardId: "card-b",
-            fromZone: "hand",
-            toZone: "field",
-          }),
-        ],
-      } as AnimationScript,
-      context,
-    );
-
-    expect(plans).toHaveLength(1);
-    expect(AnimationPlanV2Schema.parse(plans[0])).toEqual(plans[0]);
-    expect(plans[0]?.steps.map((step) => step.type)).toEqual(["entityTransfer", "entityTransfer"]);
-  });
-
-  test("keeps explicit viewer-safe faces and absolute starts", () => {
-    const plan = cyberpunkAnimationStepToAnimationPlan(
-      cardMove({
-        id: "move",
-        cardId: "blocker",
-        fromZone: "field",
-        toZone: "trash",
-        startMs: 120,
-      }),
-      context,
-    );
-    expect(plan?.version).toBe(2);
-    expect(plan?.steps[0]).toMatchObject({
-      type: "entityTransfer",
-      sourceFace: "public",
-      destinationFace: "public",
-      startAtMs: 120,
-    });
-  });
-
-  test("hides a public card when it returns to the opponent's private hand", () => {
-    const plan = cyberpunkAnimationStepToAnimationPlan(
-      cardMove({
-        id: "bounce",
-        cardId: "rival-unit",
-        playerId: PLAYER_SIDE_TO_ID.opponent,
-        fromZone: "field",
-        toZone: "hand",
-      }),
-      context,
-    );
-
-    expect(plan?.steps[0]).toMatchObject({
-      type: "entityTransfer",
-      sourceFace: "public",
-      destinationFace: "hidden",
-    });
-  });
-
-  test("keeps the viewer's own private hand public", () => {
-    const plan = cyberpunkAnimationStepToAnimationPlan(
-      cardMove({
-        id: "return",
-        cardId: "friendly-unit",
-        fromZone: "field",
-        toZone: "hand",
-      }),
-      context,
-    );
-
-    expect(plan?.steps[0]).toMatchObject({
-      type: "entityTransfer",
-      sourceFace: "public",
-      destinationFace: "public",
-    });
-  });
-
-  test("shows a card face-up throughout a private-to-public transfer", () => {
-    const plan = cyberpunkAnimationStepToAnimationPlan(
-      cardMove({
-        id: "deploy",
-        cardId: "friendly-unit",
+        id: "play",
+        kind: "cardMove",
+        startMs: 0,
+        durationMs: 240,
+        reason: "cardMoved",
+        cardId: "unit-1",
         fromZone: "hand",
         toZone: "field",
-      }),
-      context,
-    );
-
-    expect(plan?.steps[0]).toMatchObject({
-      type: "entityTransfer",
-      sourceFace: "public",
-      destinationFace: "public",
-    });
-  });
-
-  test("keeps a revealed card face-up while it moves to the resolving area", () => {
-    const plan = cyberpunkAnimationStepToAnimationPlan(
+        playerId: P1,
+      },
+    ],
+  } as AnimationScript,
+  draw: {
+    totalDurationMs: 280,
+    steps: [
       {
-        id: "reveal",
-        kind: "cardReveal",
-        cardId: "top-card",
-        playerId: PLAYER_SIDE_TO_ID.player,
-        fromZone: "deck",
-        toZone: "trash",
+        id: "draw",
+        kind: "cardEnter",
         startMs: 0,
-        durationMs: 560,
-        reason: "test",
-      } as AnimationScript["steps"][number],
-      context,
-    );
-
-    expect(plan?.steps[0]).toMatchObject({
-      id: "reveal:to-resolution",
-      type: "entityTransfer",
-      sourceFace: "public",
-      destinationFace: "public",
-    });
-  });
-
-  test("keeps a revealed legend face-up and holds rather than flipping it", () => {
-    const plan = cyberpunkAnimationStepToAnimationPlan(
+        durationMs: 280,
+        reason: "cardsDrawn",
+        cardId: "card-d",
+        toZone: "hand",
+        playerId: P1,
+      },
+    ],
+  } as AnimationScript,
+  attach: {
+    totalDurationMs: 320,
+    steps: [
+      {
+        id: "attach",
+        kind: "cardAttach",
+        startMs: 0,
+        durationMs: 320,
+        reason: "cardAttached",
+        gearId: "gear-1",
+        hostId: "host-1",
+        playerId: P1,
+      },
+    ],
+  } as AnimationScript,
+  gigGainAndTurn: {
+    totalDurationMs: 1860,
+    steps: [
+      {
+        id: "gain",
+        kind: "gigMove",
+        startMs: 0,
+        durationMs: 360,
+        reason: "gigDieMoved",
+        dieId: "d6-1",
+        from: "fixerArea",
+        to: "gigArea",
+        fromPlayerId: P1,
+        toPlayerId: P1,
+        moveKind: "gain",
+      },
+      {
+        id: "turn",
+        kind: "phaseChange",
+        startMs: 360,
+        durationMs: 1500,
+        reason: "phaseChanged",
+        from: "main",
+        to: "start",
+        playerId: P1,
+        variant: "turn",
+        turnPlayerId: P2,
+        turnNumber: 2,
+      },
+    ],
+  } as AnimationScript,
+  spend: {
+    totalDurationMs: 420,
+    steps: [
+      {
+        id: "spend",
+        kind: "entityStateChange",
+        startMs: 0,
+        durationMs: 420,
+        reason: "cardSpent",
+        cardId: "unit-1",
+        playerId: P1,
+        change: "spent",
+      },
+    ],
+  } as AnimationScript,
+  callLegend: {
+    totalDurationMs: 460,
+    steps: [
       {
         id: "legend",
         kind: "legendReveal",
-        cardId: "legend-card",
-        playerId: PLAYER_SIDE_TO_ID.player,
         startMs: 0,
-        durationMs: 560,
-        reason: "test",
-      } as AnimationScript["steps"][number],
-      context,
-    );
+        durationMs: 460,
+        reason: "legendCalled",
+        cardId: "legend-1",
+        playerId: P1,
+      },
+    ],
+  } as AnimationScript,
+  revealWithDestination: {
+    totalDurationMs: 1600,
+    steps: [
+      {
+        id: "reveal",
+        kind: "cardReveal",
+        startMs: 0,
+        durationMs: 1600,
+        reason: "cardsRevealed",
+        cardId: "top-1",
+        fromZone: "deck",
+        toZone: "hand",
+        playerId: P1,
+      },
+    ],
+  } as AnimationScript,
+  revealWithoutDestination: {
+    totalDurationMs: 1600,
+    steps: [
+      {
+        id: "reveal",
+        kind: "cardReveal",
+        startMs: 0,
+        durationMs: 1600,
+        reason: "cardsRevealed",
+        cardId: "top-1",
+        fromZone: "deck",
+        playerId: P1,
+      },
+    ],
+  } as AnimationScript,
+  combatAndRedirect: {
+    totalDurationMs: 720,
+    steps: [
+      {
+        id: "combat",
+        kind: "combat",
+        startMs: 0,
+        durationMs: 360,
+        reason: "attackDeclared",
+        attackerId: "atk",
+        defenderId: "def",
+        attackKind: "fight",
+        playerId: P1,
+      },
+      {
+        id: "redirect",
+        kind: "combatRedirect",
+        startMs: 360,
+        durationMs: 360,
+        reason: "blockerActivated",
+        attackerId: "atk",
+        blockerId: "blocker",
+        originalTargetId: "def",
+        playerId: P2,
+      },
+    ],
+  } as AnimationScript,
+  eddieSpend: {
+    totalDurationMs: 700,
+    steps: [
+      {
+        id: "eddies",
+        kind: "resourceFloat",
+        startMs: 0,
+        durationMs: 700,
+        reason: "eddiesSpent",
+        resource: "eddies",
+        playerId: P1,
+        delta: -3,
+      },
+    ],
+  } as AnimationScript,
+};
 
-    expect(plan?.steps[0]).toMatchObject({
-      id: "legend:to-resolution",
-      type: "entityTransfer",
-      sourceFace: "public",
-      destinationFace: "public",
-    });
-    expect(plan?.steps[1]).toMatchObject({ id: "legend:hold", type: "hold" });
+function stepShape(step: AnimationStepV2) {
+  if (step.type === "entityTransfer") {
+    return {
+      type: step.type,
+      entity: step.entity.id,
+      fromKind: step.from?.kind ?? null,
+      toKind: step.to?.kind ?? null,
+    };
+  }
+  if (step.type === "entityStateChange") {
+    return { type: step.type, entity: step.entity.id, change: step.change };
+  }
+  if (step.type === "valueDelta") {
+    return { type: step.type, subjectKind: step.subject.kind };
+  }
+  if (step.type === "phaseChange") {
+    return { type: step.type, variant: step.variant };
+  }
+  return { type: step.type };
+}
+
+function shapes(plan: AnimationPlanV2 | null | undefined) {
+  return (plan?.steps ?? []).map(stepShape);
+}
+
+describe("Cyberpunk AnimationPlanV2 adapter", () => {
+  test("practice projection matches the adapter plan for representative scripts", () => {
+    for (const [name, script] of Object.entries(representativeScripts)) {
+      const adapter = cyberpunkAnimationPlan(`adapter:${name}`, script);
+      const practice = cyberpunkAnimationScriptToAnimationPlans(script, {
+        viewerSeatId,
+        idPrefix: `practice:${name}`,
+      });
+      if (!adapter) {
+        expect(practice, name).toEqual([]);
+        continue;
+      }
+      expect(practice, name).toHaveLength(1);
+      expect(AnimationPlanV2Schema.parse(practice[0])).toEqual(practice[0]);
+      expect(shapes(practice[0]), name).toEqual(shapes(adapter));
+      expect(JSON.stringify(practice[0])).not.toContain("resolving-program");
+      expect(practice[0]?.steps.some((step) => step.type === "hold")).toBe(false);
+    }
   });
 
-  test("maps state changes, randomization, values, and results to shared semantics", () => {
-    const plans = cyberpunkAnimationScriptToAnimationPlans(
-      {
-        steps: [
-          {
-            id: "spend",
-            kind: "entityStateChange",
-            startMs: 0,
-            durationMs: 420,
-            reason: "cardSpent",
-            cardId: "unit",
-            playerId: PLAYER_SIDE_TO_ID.player,
-            change: "spent",
-          },
-          {
-            id: "shuffle",
-            kind: "randomization",
-            startMs: 420,
-            durationMs: 720,
-            reason: "deckShuffled",
-            playerId: PLAYER_SIDE_TO_ID.player,
-            randomization: "shuffle",
-          },
-          {
-            id: "result",
-            kind: "gameResult",
-            startMs: 1140,
-            durationMs: 1200,
-            reason: "gameEnded",
-            winnerId: PLAYER_SIDE_TO_ID.player,
-            reasonLabel: "seven gigs",
-          },
-        ],
-        totalDurationMs: 2340,
-      } as AnimationScript,
-      context,
-    );
+  test("play-to-field is a hand→field transfer", () => {
+    const [plan] = cyberpunkAnimationScriptToAnimationPlans(representativeScripts.playToField, {
+      viewerSeatId,
+    });
+    expect(plan?.steps[0]).toMatchObject({
+      type: "entityTransfer",
+      entity: { id: "unit-1" },
+      from: { kind: "zone", id: "p-hand" },
+      to: { kind: "zone", id: "p-field" },
+    });
+  });
 
-    expect(plans.flatMap((plan) => plan.steps)).toMatchObject([
+  test("Call Legend is an in-place face change", () => {
+    const [plan] = cyberpunkAnimationScriptToAnimationPlans(representativeScripts.callLegend, {
+      viewerSeatId,
+    });
+    expect(plan?.steps).toMatchObject([
       {
         type: "entityStateChange",
-        change: "orientation",
-        fromRotationDeg: 0,
-        toRotationDeg: 90,
-      },
-      { type: "randomization", kind: "shuffle" },
-      {
-        type: "gameResult",
-        outcome: "winner",
-        winner: { kind: "player", id: String(PLAYER_SIDE_TO_ID.player) },
+        change: "face",
+        entity: { id: "legend-1" },
       },
     ]);
+    expect(JSON.stringify(plan)).not.toContain("resolving-program");
   });
 
-  test("projects authoritative engine zones and faces for the current viewer", () => {
+  test("Eddie spend targets the registered Eddie zone", () => {
+    const [plan] = cyberpunkAnimationScriptToAnimationPlans(representativeScripts.eddieSpend, {
+      viewerSeatId,
+    });
+    expect(plan?.steps[0]).toMatchObject({
+      type: "valueDelta",
+      subject: { kind: "zone", id: "p-eddieArea" },
+    });
+  });
+
+  test("gig gain does not drop a turn announcement", () => {
+    const [plan] = cyberpunkAnimationScriptToAnimationPlans(representativeScripts.gigGainAndTurn, {
+      viewerSeatId,
+    });
+    expect(plan?.steps.map((step) => step.type)).toEqual(["entityTransfer", "phaseChange"]);
+    expect(plan?.steps[1]).toMatchObject({ type: "phaseChange", variant: "turn" });
+  });
+
+  test("the shipped interaction boundary sets aria-busy while a transition is active", () => {
+    const active = renderToStaticMarkup(
+      createElement(AnimationInteractionBoundary, { active: true }, "board"),
+    );
+    const idle = renderToStaticMarkup(
+      createElement(AnimationInteractionBoundary, { active: false }, "board"),
+    );
+    expect(active).toContain("aria-busy");
+    expect(idle).not.toContain("aria-busy");
+    expect(active).toContain("data-animation-interaction-boundary");
+  });
+
+  test("projects authoritative engine zones for the current viewer", () => {
     const plan = projectCyberpunkAuthoritativeAnimationPlan(
       {
         id: "server-plan",
@@ -228,22 +310,14 @@ describe("Cyberpunk AnimationPlanV2 adapter", () => {
             id: "return",
             type: "entityTransfer",
             entity: { kind: "entity", id: "friendly-unit" },
-            from: {
-              kind: "zone",
-              id: "field",
-              ownerId: String(PLAYER_SIDE_TO_ID.player),
-            },
-            to: {
-              kind: "zone",
-              id: "hand",
-              ownerId: String(PLAYER_SIDE_TO_ID.player),
-            },
+            from: { kind: "zone", id: "field", ownerId: viewerSeatId },
+            to: { kind: "zone", id: "hand", ownerId: viewerSeatId },
             sourceFace: "public",
             destinationFace: "hidden",
           },
         ],
       },
-      String(PLAYER_SIDE_TO_ID.player),
+      viewerSeatId,
     );
 
     expect(plan.steps[0]).toMatchObject({
@@ -254,53 +328,9 @@ describe("Cyberpunk AnimationPlanV2 adapter", () => {
     });
   });
 
-  test("projects authoritative Gig transfers into rendered Fixer and Gig zones", () => {
-    const plan = projectCyberpunkAuthoritativeAnimationPlan(
-      {
-        id: "gain-gig",
-        version: 2,
-        steps: [
-          {
-            id: "move-die",
-            type: "entityTransfer",
-            entity: { kind: "entity", id: "gig-die" },
-            from: { kind: "zone", id: "fixerArea", ownerId: String(PLAYER_SIDE_TO_ID.opponent) },
-            to: { kind: "zone", id: "gigArea", ownerId: String(PLAYER_SIDE_TO_ID.opponent) },
-            sourceFace: "public",
-            destinationFace: "public",
-          },
-        ],
-      },
-      String(PLAYER_SIDE_TO_ID.player),
-    );
-
-    expect(plan.steps[0]).toMatchObject({
-      from: { kind: "zone", id: "opp-fixer" },
-      to: { kind: "zone", id: "opp-gigArea" },
-    });
-  });
-
   test("classifies an undo version as an authoritative rollback", () => {
     expect(isCyberpunkAuthoritativeRollback(4, 9)).toBe(true);
     expect(isCyberpunkAuthoritativeRollback(10, 9)).toBe(false);
     expect(isCyberpunkAuthoritativeRollback(0, null)).toBe(false);
   });
 });
-
-function cardMove(overrides: {
-  id: string;
-  cardId: string;
-  playerId?: CardMoveStep["playerId"];
-  fromZone: CardMoveStep["fromZone"];
-  toZone: CardMoveStep["toZone"];
-  startMs?: number;
-}): CardMoveStep {
-  return {
-    kind: "cardMove",
-    playerId: PLAYER_SIDE_TO_ID.player,
-    startMs: 0,
-    durationMs: 560,
-    reason: "test",
-    ...overrides,
-  } as CardMoveStep;
-}

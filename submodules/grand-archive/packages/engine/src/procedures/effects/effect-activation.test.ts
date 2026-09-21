@@ -152,7 +152,10 @@ function setup(
       objectId: playedObject.id,
       from: playedObject.zone,
       to: "banishment",
-      banishedBySourceId: sourceObject.id,
+      banishedBy: {
+        sourceId: sourceObject.id,
+        sourceIncarnation: sourceObject.incarnation + (sourceObject.zone === "hand" ? 0 : 1) + 1,
+      },
     },
     ...(paymentObject.zone === "hand"
       ? []

@@ -78,6 +78,7 @@ export const groundbreakerCrix = defineCard(
             prize: {
               type: "create-token",
               token: "seismic-surge",
+              creator: "token-controller",
               controller: "winner",
             },
           },

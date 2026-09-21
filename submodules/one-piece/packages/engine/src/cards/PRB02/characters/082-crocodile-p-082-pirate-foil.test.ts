@@ -1,6 +1,6 @@
 import { eb01Doma005, op01Crocodile062, op03Kaya044, op09Buggy042 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02CrocodileP082PirateFoil082 } from "../../../../../cards/src/cards/PRB02/characters/082-crocodile-p-082-pirate-foil.ts";
+import { prb02CrocodileP082PirateFoil082 } from "../../../../../cards/src/cards/characters/p-082-crocodile-p-082-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

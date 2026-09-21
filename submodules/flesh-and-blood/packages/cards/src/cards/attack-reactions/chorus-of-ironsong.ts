@@ -92,6 +92,7 @@ export const chorusOfIronsong = definePitchFamily(fabPitchFamilies["chorus-of-ir
         effect: {
           type: "create-token",
           token: "courage",
+          creator: "effect-controller",
           controller: "any",
         },
       },

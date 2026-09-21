@@ -1,6 +1,6 @@
 import { eb01Doma005 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Shanks028 } from "../../../../../cards/src/cards/OP13/characters/028-shanks.ts";
+import { op13Shanks028 } from "../../../../../cards/src/cards/characters/op13-028-shanks.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

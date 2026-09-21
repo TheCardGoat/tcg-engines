@@ -22,6 +22,10 @@
     "./preparation": {
       "types": "./src/preparation.ts",
       "default": "./src/preparation.ts"
+    },
+    "./native": {
+      "types": "./src/native.ts",
+      "default": "./src/native.ts"
     }
   },
   "scripts": {

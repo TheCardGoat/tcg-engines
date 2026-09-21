@@ -38,8 +38,7 @@
   --zone-border: 1px solid rgb(var(--side-accent-rgb, 245 230 66) / 32%);
 
   /* Shared size for unit cards in FIELD and LEGENDS slots so the two zones
-     read as visual peers. Fits inside LEGENDS' 40%-row zone with vertical
-     `--zone-pad` showing. */
+     read as visual peers. The identity row is auto-sized from this height. */
   --unit-card-h: 15vh;
   --board-edge-gutter: clamp(22px, 2.6cqh, 34px);
   --center-row-h: minmax(58px, 5.4%);

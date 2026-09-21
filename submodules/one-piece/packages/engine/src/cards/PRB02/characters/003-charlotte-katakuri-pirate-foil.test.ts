@@ -1,6 +1,6 @@
 import { eb01Doma005, op01RoronoaZoro001, op06Uta001 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02CharlotteKatakuriPirateFoil003 } from "../../../../../cards/src/cards/PRB02/characters/003-charlotte-katakuri-pirate-foil.ts";
+import { prb02CharlotteKatakuriPirateFoil003 } from "../../../../../cards/src/cards/characters/st16-003-charlotte-katakuri-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

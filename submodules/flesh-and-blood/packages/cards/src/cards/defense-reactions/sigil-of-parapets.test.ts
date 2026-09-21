@@ -1,9 +1,12 @@
+import { nimblismBlue } from "../actions/nimblism.ts";
 import { describe, it } from "vitest";
 import {
   FAB_MANUAL_HARNESS,
   FabTestEngine,
   expectFabCard,
   expectFabPlayer,
+  expectCombat,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
 import { blazeFiremind } from "../heroes/blaze-firemind.ts";
@@ -20,13 +23,18 @@ import { sigilOfParapetsBlue } from "./sigil-of-parapets.ts";
 describe("Sigil of Parapets (EVR122) AAA", () => {
   it("happy: playing a Wizard card while this defends grants +2{d}", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [snatchRed], actionPoints: 1, deck: 6 },
+      {
+        hero: dash,
+        hand: [snatchRed],
+        actionPoints: 1,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       {
         hero: blazeFiremind,
         hand: [sigilOfParapetsBlue, tomeOfQuandariesBlue],
         resourcePoints: 4,
         life: 20,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
@@ -41,16 +49,33 @@ describe("Sigil of Parapets (EVR122) AAA", () => {
     game.passBoth();
     Dash.pass();
     Blaze.play(tomeOfQuandariesBlue);
-    game.helpers.resolveUntilIdle({ optionalBoolean: false, entityTargets: "minimum" });
+    // Resolve the Wizard-play trigger while the instant is still on the stack.
+    game.passBoth();
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
     expectFabCard(Blaze, sigilOfParapetsBlue).toHaveDefense(4);
+    game.closeCombat({ optionals: "throw" });
+    expectFabPlayer(Blaze).toHaveTokenCount("ponder", 2);
     expectFabPlayer(Blaze).toHaveLife(20);
+    expectFabCard(Blaze, sigilOfParapetsBlue).toBeIn("graveyard").toHaveDefense(2);
+    expectCombat(game).toBeClosed();
   });
 
   it("boundary: defending without a Wizard play stays 2{d}", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [snatchRed], actionPoints: 1, deck: 6 },
-      { hero: blazeFiremind, hand: [sigilOfParapetsBlue], resourcePoints: 1, life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [snatchRed],
+        actionPoints: 1,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: blazeFiremind,
+        hand: [sigilOfParapetsBlue],
+        resourcePoints: 1,
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
 
@@ -60,26 +85,29 @@ describe("Sigil of Parapets (EVR122) AAA", () => {
     game.passBoth();
 
     expectFabCard(game.as(blazeFiremind), sigilOfParapetsBlue).toHaveDefense(2);
-    game.helpers.resolveRestOfCombat();
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(game.as(blazeFiremind)).toHaveLife(18);
+    expectFabCard(game.as(blazeFiremind), sigilOfParapetsBlue).toBeIn("graveyard").toHaveDefense(2);
   });
 
   it("timing: a Wizard play that is not while this is defending does not buff this", () => {
     const game = FabTestEngine.start(
       {
         hero: blazeFiremind,
-        hand: [tomeOfQuandariesBlue],
+        hand: [tomeOfQuandariesBlue, sigilOfParapetsBlue],
         resourcePoints: 3,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [sigilOfParapetsBlue], deck: 6 },
+      { hero: dash, hand: [], deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue] },
       FAB_MANUAL_HARNESS,
     );
 
     game.as(blazeFiremind).play(tomeOfQuandariesBlue);
-    game.helpers.resolveUntilIdle({ optionalBoolean: false, entityTargets: "minimum" });
+    game.untilIdle({ optionals: "throw" });
 
-    expectFabCard(game.as(dash), sigilOfParapetsBlue).toHaveDefense(2);
+    expectFabCard(game.as(blazeFiremind), sigilOfParapetsBlue).toBeIn("hand").toHaveDefense(2);
+    expectFabPlayer(game.as(blazeFiremind)).toHaveTokenCount("ponder", 2);
+    expectWait(game).notToHaveDecision();
   });
 });

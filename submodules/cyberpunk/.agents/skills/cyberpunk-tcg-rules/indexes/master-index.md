@@ -1,6 +1,6 @@
 # Cyberpunk TCG Comprehensive Rules Index
 
-> Source mirror: `references/comprehensive-rules.md`, downloaded from the official [Comprehensive Rules](https://cyberpunktcg.com/comprehensive-rules) reader on 2026-08-28T17:25:39.537Z.
+> Source mirror: `references/comprehensive-rules.md`, downloaded from the official [Comprehensive Rules](https://cyberpunktcg.com/comprehensive-rules) reader on 2026-09-01T19:28:10.028Z.
 
 Read `references/glossary.md` first. Then use the chapter map below to locate the narrowest applicable rule by heading, term, or numbered citation.
 

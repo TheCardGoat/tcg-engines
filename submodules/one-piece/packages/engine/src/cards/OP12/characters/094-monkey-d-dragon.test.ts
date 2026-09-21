@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op12Koala081 } from "@tcg/op-cards";
-import { op12Hack089 } from "../../../../../cards/src/cards/OP12/characters/089-hack.ts";
-import { op12Karasu085 } from "../../../../../cards/src/cards/OP12/characters/085-karasu.ts";
-import { op12Koala086 } from "../../../../../cards/src/cards/OP12/characters/086-koala.ts";
-import { op12MonkeyDDragon094 } from "../../../../../cards/src/cards/OP12/characters/094-monkey-d-dragon.ts";
-import { op12Morley093 } from "../../../../../cards/src/cards/OP12/characters/093-morley.ts";
+import { op12Hack089 } from "../../../../../cards/src/cards/characters/op12-089-hack.ts";
+import { op12Karasu085 } from "../../../../../cards/src/cards/characters/op12-085-karasu.ts";
+import { op12Koala086 } from "../../../../../cards/src/cards/characters/op12-086-koala.ts";
+import { op12MonkeyDDragon094 } from "../../../../../cards/src/cards/characters/op12-094-monkey-d-dragon.ts";
+import { op12Morley093 } from "../../../../../cards/src/cards/characters/op12-093-morley.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

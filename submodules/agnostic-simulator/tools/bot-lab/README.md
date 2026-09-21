@@ -28,6 +28,16 @@ promotion requires at least 200 paired blocks. Without `--dry-run`, it updates t
 Full reports and replays belong in temporary or ignored artifact directories. The compact current
 promotion record is the committed source of truth used by production registries.
 
+## Cyberpunk decks
+
+The Cyberpunk adapter evaluates over the authored archetype pool from
+`submodules/cyberpunk/tools/ai-runner/src/authored-decks.ts`: ten hand-built
+40-card decks (3 legends outside the main deck, 3-copy cap, per-color legend
+RAM budget) resolved and validated against the real card catalog at
+construction. Deck ids are prefixed `authored-`. Editing the pool changes
+promotion pairings, and reports that reference removed deck ids can no longer
+replay.
+
 ## One Piece suites
 
 Adapter v2 uses ST01 plus the six mono-color automation archetypes from

@@ -109,13 +109,36 @@ snapshots are currently active.
 V1 stored an array and repeated lifecycle roles:
 
 ```json
-{"schemaVersion":1,"game":"lorcana","formatId":"infinity","sections":[{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"L1","printingId":"L1_p2","quantity":4}]}]}
+{
+  "schemaVersion": 1,
+  "game": "lorcana",
+  "formatId": "infinity",
+  "sections": [
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "L1", "printingId": "L1_p2", "quantity": 4 }]
+    }
+  ]
+}
 ```
 
 V2 keys the registered section and attaches artwork to the copies:
 
 ```json
-{"schemaVersion":2,"game":"lorcana","formatId":"infinity","sections":{"main":[{"card":{"canonicalId":"L1","quantity":4},"appearance":{"printingAllocations":[{"printingId":"L1_p2","quantity":4}]}}]}}
+{
+  "schemaVersion": 2,
+  "game": "lorcana",
+  "formatId": "infinity",
+  "sections": {
+    "main": [
+      {
+        "card": { "canonicalId": "L1", "quantity": 4 },
+        "appearance": { "printingAllocations": [{ "printingId": "L1_p2", "quantity": 4 }] }
+      }
+    ]
+  }
+}
 ```
 
 Existing Lorcana versions are migrated losslessly, including mixed printing
@@ -134,14 +157,44 @@ tokens, not deck or Resource Deck cards.
 V1 represented token artwork as fake registered copies:
 
 ```json
-{"schemaVersion":1,"game":"gundam","formatId":"standard","sections":[{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"GD01-001","quantity":4}]},{"id":"resource","roles":["validation","runtime"],"entries":[{"canonicalId":"R-001","quantity":10}]},{"id":"setup","roles":["presentation"],"entries":[{"canonicalId":"EXB-001","printingId":"EXB-001_p5","quantity":1}]}]}
+{
+  "schemaVersion": 1,
+  "game": "gundam",
+  "formatId": "standard",
+  "sections": [
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "GD01-001", "quantity": 4 }]
+    },
+    {
+      "id": "resource",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "R-001", "quantity": 10 }]
+    },
+    {
+      "id": "setup",
+      "roles": ["presentation"],
+      "entries": [{ "canonicalId": "EXB-001", "printingId": "EXB-001_p5", "quantity": 1 }]
+    }
+  ]
+}
 ```
 
 V2 keeps only registered copies in sections and moves token artwork to root
 appearance:
 
 ```json
-{"schemaVersion":2,"game":"gundam","formatId":"standard","sections":{"main":[{"card":{"canonicalId":"GD01-001","quantity":4}}],"resource":[{"card":{"canonicalId":"R-001","quantity":10}}]},"appearance":{"setup":{"ex-base":"EXB-001_p5","ex-resource":"EXR-001_p6"}}}
+{
+  "schemaVersion": 2,
+  "game": "gundam",
+  "formatId": "standard",
+  "sections": {
+    "main": [{ "card": { "canonicalId": "GD01-001", "quantity": 4 } }],
+    "resource": [{ "card": { "canonicalId": "R-001", "quantity": 10 } }]
+  },
+  "appearance": { "setup": { "ex-base": "EXB-001_p5", "ex-resource": "EXR-001_p6" } }
+}
 ```
 
 Existing Gundam versions are migrated losslessly. BO3 preserves `side`; V1
@@ -156,14 +209,40 @@ are capped at three, and the Legends establish the deck's RAM limits.
 V1 declared a fixed global topology including editor workspaces:
 
 ```json
-{"schemaVersion":1,"game":"cyberpunk","formatId":"alpha","sections":[{"id":"legend","roles":["validation","runtime"],"entries":[{"canonicalId":"LEGEND-1","quantity":1}]},{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"CP-1","quantity":3}]},{"id":"side","roles":[],"entries":[]},{"id":"maybe","roles":[],"entries":[]}]}
+{
+  "schemaVersion": 1,
+  "game": "cyberpunk",
+  "formatId": "alpha",
+  "sections": [
+    {
+      "id": "legend",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "LEGEND-1", "quantity": 1 }]
+    },
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "CP-1", "quantity": 3 }]
+    },
+    { "id": "side", "roles": [], "entries": [] },
+    { "id": "maybe", "roles": [], "entries": [] }
+  ]
+}
 ```
 
 V2 contains the submitted deck only. Side/maybeboard editor state is not part
 of the authoritative document:
 
 ```json
-{"schemaVersion":2,"game":"cyberpunk","formatId":"alpha","sections":{"legend":[{"card":{"canonicalId":"LEGEND-1","quantity":1}}],"main":[{"card":{"canonicalId":"CP-1","quantity":3}}]}}
+{
+  "schemaVersion": 2,
+  "game": "cyberpunk",
+  "formatId": "alpha",
+  "sections": {
+    "legend": [{ "card": { "canonicalId": "LEGEND-1", "quantity": 1 } }],
+    "main": [{ "card": { "canonicalId": "CP-1", "quantity": 3 } }]
+  }
+}
 ```
 
 Cyberpunk is reset to blank-slate V2 storage; V1 is not accepted.
@@ -178,14 +257,44 @@ V1 already named the right sections, but the adapter remapped `leader` into
 `main` at runtime because the historical engine searched for it there:
 
 ```json
-{"schemaVersion":1,"game":"one-piece","formatId":"standard","sections":[{"id":"leader","roles":["validation","runtime"],"entries":[{"canonicalId":"OP-L1","quantity":1}]},{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"OP-1","quantity":4}]},{"id":"don","roles":["validation","runtime"],"entries":[{"canonicalId":"DON-1","quantity":10}]}]}
+{
+  "schemaVersion": 1,
+  "game": "one-piece",
+  "formatId": "standard",
+  "sections": [
+    {
+      "id": "leader",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "OP-L1", "quantity": 1 }]
+    },
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "OP-1", "quantity": 4 }]
+    },
+    {
+      "id": "don",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "DON-1", "quantity": 10 }]
+    }
+  ]
+}
 ```
 
 V2 preserves native sections end to end; the game lifecycle consumes them
 without a document-level remapping workaround:
 
 ```json
-{"schemaVersion":2,"game":"one-piece","formatId":"standard","sections":{"leader":[{"card":{"canonicalId":"OP-L1","quantity":1}}],"main":[{"card":{"canonicalId":"OP-1","quantity":4}}],"don":[{"card":{"canonicalId":"DON-1","quantity":10}}]}}
+{
+  "schemaVersion": 2,
+  "game": "one-piece",
+  "formatId": "standard",
+  "sections": {
+    "leader": [{ "card": { "canonicalId": "OP-L1", "quantity": 1 } }],
+    "main": [{ "card": { "canonicalId": "OP-1", "quantity": 4 } }],
+    "don": [{ "card": { "canonicalId": "DON-1", "quantity": 10 } }]
+  }
+}
 ```
 
 One Piece is reset to blank-slate V2 storage; V1 is not accepted.
@@ -202,14 +311,54 @@ V1 mixed registered components with editor-only workspaces and treated the
 sideboard as non-runtime data:
 
 ```json
-{"schemaVersion":1,"game":"riftbound","formatId":"standard","sections":[{"id":"legend","roles":["validation","runtime"],"entries":[{"canonicalId":"RB-L1","quantity":1}]},{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"RB-1","quantity":3}]},{"id":"battlefield","roles":["validation","runtime"],"entries":[{"canonicalId":"BF-1","quantity":1}]},{"id":"rune","roles":["validation","runtime"],"entries":[{"canonicalId":"RUNE-1","quantity":12}]},{"id":"side","roles":[],"entries":[]},{"id":"bench","roles":[],"entries":[]}]}
+{
+  "schemaVersion": 1,
+  "game": "riftbound",
+  "formatId": "standard",
+  "sections": [
+    {
+      "id": "legend",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "RB-L1", "quantity": 1 }]
+    },
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "RB-1", "quantity": 3 }]
+    },
+    {
+      "id": "battlefield",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "BF-1", "quantity": 1 }]
+    },
+    {
+      "id": "rune",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "RUNE-1", "quantity": 12 }]
+    },
+    { "id": "side", "roles": [], "entries": [] },
+    { "id": "bench", "roles": [], "entries": [] }
+  ]
+}
 ```
 
 V2 keeps the registered sideboard, drops the editor-only bench, and records
 which registered main-deck card is the starting Chosen Champion:
 
 ```json
-{"schemaVersion":2,"game":"riftbound","formatId":"standard","sections":{"legend":[{"card":{"canonicalId":"RB-L1","quantity":1}}],"main":[{"card":{"canonicalId":"RB-1","quantity":3}}],"battlefield":[{"card":{"canonicalId":"BF-1","quantity":1}}],"rune":[{"card":{"canonicalId":"RUNE-1","quantity":12}}],"side":[]},"declarations":{"chosenChampionId":"RB-1"}}
+{
+  "schemaVersion": 2,
+  "game": "riftbound",
+  "formatId": "standard",
+  "sections": {
+    "legend": [{ "card": { "canonicalId": "RB-L1", "quantity": 1 } }],
+    "main": [{ "card": { "canonicalId": "RB-1", "quantity": 3 } }],
+    "battlefield": [{ "card": { "canonicalId": "BF-1", "quantity": 1 } }],
+    "rune": [{ "card": { "canonicalId": "RUNE-1", "quantity": 12 } }],
+    "side": []
+  },
+  "declarations": { "chosenChampionId": "RB-1" }
+}
 ```
 
 Riftbound is reset to blank-slate V2 storage; V1 is not accepted.
@@ -225,13 +374,49 @@ clearly provisional topology: 1 Leader, 50 main-deck cards, 5 Chakra cards, and
 V1:
 
 ```json
-{"schemaVersion":1,"game":"naruto","formatId":"preview","sections":[{"id":"leader","roles":["validation","runtime"],"entries":[{"canonicalId":"N-L1","quantity":1}]},{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"N-1","quantity":4}]},{"id":"chakra","roles":["validation","runtime"],"entries":[{"canonicalId":"N-C1","quantity":5}]},{"id":"summon","roles":["validation","runtime"],"entries":[{"canonicalId":"N-S1","quantity":1}]}]}
+{
+  "schemaVersion": 1,
+  "game": "naruto",
+  "formatId": "preview",
+  "sections": [
+    {
+      "id": "leader",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "N-L1", "quantity": 1 }]
+    },
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "N-1", "quantity": 4 }]
+    },
+    {
+      "id": "chakra",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "N-C1", "quantity": 5 }]
+    },
+    {
+      "id": "summon",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "N-S1", "quantity": 1 }]
+    }
+  ]
+}
 ```
 
 V2 retains the topology but makes its provisional format ownership explicit:
 
 ```json
-{"schemaVersion":2,"game":"naruto","formatId":"preview","sections":{"leader":[{"card":{"canonicalId":"N-L1","quantity":1}}],"main":[{"card":{"canonicalId":"N-1","quantity":4}}],"chakra":[{"card":{"canonicalId":"N-C1","quantity":5}}],"summon":[{"card":{"canonicalId":"N-S1","quantity":1}}]}}
+{
+  "schemaVersion": 2,
+  "game": "naruto",
+  "formatId": "preview",
+  "sections": {
+    "leader": [{ "card": { "canonicalId": "N-L1", "quantity": 1 } }],
+    "main": [{ "card": { "canonicalId": "N-1", "quantity": 4 } }],
+    "chakra": [{ "card": { "canonicalId": "N-C1", "quantity": 5 } }],
+    "summon": [{ "card": { "canonicalId": "N-S1", "quantity": 1 } }]
+  }
+}
 ```
 
 Naruto is reset to blank-slate V2 storage; V1 is not accepted. The model must
@@ -240,21 +425,58 @@ be revised when an authoritative comprehensive rulebook resolves composition.
 ### Flesh and Blood
 
 Constructed play registers one Hero plus a card-pool. Classic Constructed and
-Living Legend allow up to 80 arena/deck cards; Blitz up to 52; Silver Age up to
-55. The actual arena cards and starting deck are selected from that pool during
+Living Legend allow up to 80 arena/deck cards; Blitz up to 52; Silver Age up to 55. The actual arena cards and starting deck are selected from that pool during
 the start-of-game procedure (CC/LL start with at least 60 deck cards; Blitz and
 Silver Age exactly 40).
 
 V1 persisted one temporary split as if it were the durable registration:
 
 ```json
-{"schemaVersion":1,"game":"flesh-and-blood","formatId":"cc","sections":[{"id":"hero","roles":["validation","runtime"],"entries":[{"canonicalId":"HERO-1","quantity":1}]},{"id":"equipment","roles":["validation","runtime"],"entries":[{"canonicalId":"EQ-1","quantity":1}]},{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"FAB-1-R","quantity":3}]},{"id":"inventory","roles":["validation","runtime"],"entries":[{"canonicalId":"FAB-2-B","quantity":2}]}]}
+{
+  "schemaVersion": 1,
+  "game": "flesh-and-blood",
+  "formatId": "cc",
+  "sections": [
+    {
+      "id": "hero",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "HERO-1", "quantity": 1 }]
+    },
+    {
+      "id": "equipment",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "EQ-1", "quantity": 1 }]
+    },
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "FAB-1-R", "quantity": 3 }]
+    },
+    {
+      "id": "inventory",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "FAB-2-B", "quantity": 2 }]
+    }
+  ]
+}
 ```
 
 V2 stores the registered pool; pregame selection owns the per-game split:
 
 ```json
-{"schemaVersion":2,"game":"flesh-and-blood","formatId":"cc","sections":{"hero":[{"card":{"canonicalId":"HERO-1","quantity":1}}],"cardPool":[{"card":{"canonicalId":"EQ-1","quantity":1}},{"card":{"canonicalId":"FAB-1-R","quantity":3}},{"card":{"canonicalId":"FAB-2-B","quantity":2}}]}}
+{
+  "schemaVersion": 2,
+  "game": "flesh-and-blood",
+  "formatId": "cc",
+  "sections": {
+    "hero": [{ "card": { "canonicalId": "HERO-1", "quantity": 1 } }],
+    "cardPool": [
+      { "card": { "canonicalId": "EQ-1", "quantity": 1 } },
+      { "card": { "canonicalId": "FAB-1-R", "quantity": 3 } },
+      { "card": { "canonicalId": "FAB-2-B", "quantity": 2 } }
+    ]
+  }
+}
 ```
 
 Flesh and Blood is reset to blank-slate V2 storage; V1 is not accepted.
@@ -272,14 +494,41 @@ V1 could store the three card piles but could not say which level-0 Champion
 starts the game or represent Pantheon's Boons without inventing more sections:
 
 ```json
-{"schemaVersion":1,"game":"grand-archive","formatId":"standard","sections":[{"id":"main","roles":["validation","runtime"],"entries":[{"canonicalId":"GA-1","quantity":4}]},{"id":"material","roles":["validation","runtime"],"entries":[{"canonicalId":"GA-C1","quantity":1}]},{"id":"sideboard","roles":["validation","runtime"],"entries":[]}]}
+{
+  "schemaVersion": 1,
+  "game": "grand-archive",
+  "formatId": "standard",
+  "sections": [
+    {
+      "id": "main",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "GA-1", "quantity": 4 }]
+    },
+    {
+      "id": "material",
+      "roles": ["validation", "runtime"],
+      "entries": [{ "canonicalId": "GA-C1", "quantity": 1 }]
+    },
+    { "id": "sideboard", "roles": ["validation", "runtime"], "entries": [] }
+  ]
+}
 ```
 
 V2 keeps registered piles in sections and the rules-significant choice in
 `declarations`:
 
 ```json
-{"schemaVersion":2,"game":"grand-archive","formatId":"standard","sections":{"main":[{"card":{"canonicalId":"GA-1","quantity":4}}],"material":[{"card":{"canonicalId":"GA-C1","quantity":1}}],"sideboard":[]},"declarations":{"startingChampionId":"GA-C1"}}
+{
+  "schemaVersion": 2,
+  "game": "grand-archive",
+  "formatId": "standard",
+  "sections": {
+    "main": [{ "card": { "canonicalId": "GA-1", "quantity": 4 } }],
+    "material": [{ "card": { "canonicalId": "GA-C1", "quantity": 1 } }],
+    "sideboard": []
+  },
+  "declarations": { "startingChampionId": "GA-C1" }
+}
 ```
 
 Pantheon adds `lesserBoonId` and `greaterBoonId` declarations. A cosmetic

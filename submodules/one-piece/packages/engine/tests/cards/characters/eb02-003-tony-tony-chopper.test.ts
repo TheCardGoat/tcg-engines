@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb02TonyTonyChopper001, eb02TonyTonyChopper003 } from "@tcg/op-cards";
+import { op08TonyTonyChopper001, eb02TonyTonyChopper003 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
@@ -7,7 +7,7 @@ describe("EB02-003 Tony Tony.Chopper", () => {
   test("gives a rested DON!! on play, then gains opponent-turn power with two attached DON!!", () => {
     const engine = OnePieceTestEngine.create(
       {
-        leaderCardId: eb02TonyTonyChopper001,
+        leaderCardId: op08TonyTonyChopper001,
         hand: [eb02TonyTonyChopper003],
         activeDon: 6,
       },

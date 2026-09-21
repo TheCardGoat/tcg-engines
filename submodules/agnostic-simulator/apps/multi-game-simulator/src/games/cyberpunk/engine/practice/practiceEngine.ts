@@ -4,9 +4,12 @@ import {
   createPlayerId,
   DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
   getSafeAutomatedActionStrategyOption,
+  withDeckProfile,
   type AIStrategy,
   type DeckList,
+  type DeckStrategyProfile,
 } from "@tcg/cyberpunk-engine";
+import { resolveDeckProfile } from "@tcg/cyberpunk-utils";
 import {
   DEFAULT_BOT_PRACTICE_DECK_ID,
   getPracticeCardCatalog,
@@ -40,8 +43,19 @@ export function createPracticeEngine(config: PracticeMatchConfig): CyberpunkTest
 }
 
 export function createPracticeAiConfig(config: PracticeMatchConfig): AISideConfig {
-  const playerStrategy = config.playerStrategyId ? strategyForId(config.playerStrategyId) : null;
-  const botStrategy = strategyForId(config.botStrategyId);
+  const playerDeck = resolvePlayerDeck(config);
+  const botDeck = resolveBotDeck(config);
+  const playerStrategy = config.playerStrategyId
+    ? strategyForSeat(
+        config.playerStrategyId,
+        config.playerDeck ? undefined : config.playerDeckFixtureId,
+        playerDeck?.deck,
+      )
+    : null;
+  const botFixtureId = config.botDeck
+    ? undefined
+    : (config.botDeckFixtureId ?? DEFAULT_BOT_PRACTICE_DECK_ID);
+  const botStrategy = strategyForSeat(config.botStrategyId, botFixtureId, botDeck?.deck);
   return { player: playerStrategy, opponent: botStrategy };
 }
 
@@ -66,6 +80,17 @@ function resolveBotDeck(config: PracticeMatchConfig): { deck: DeckList; name: st
   return fixture ? { deck: fixture.deck, name: fixture.label } : undefined;
 }
 
-function strategyForId(id: PracticeMatchConfig["botStrategyId"]): AIStrategy {
-  return getSafeAutomatedActionStrategyOption(id ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID).strategy;
+function strategyForSeat(
+  strategyId: PracticeMatchConfig["botStrategyId"] | undefined,
+  fixtureId: string | undefined,
+  deck?: DeckList,
+): AIStrategy {
+  const base = getSafeAutomatedActionStrategyOption(
+    strategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+  ).strategy;
+  const profile = resolveDeckProfile({
+    deckId: fixtureId,
+    cards: deck ? [...deck.legends, ...deck.mainDeck] : undefined,
+  });
+  return profile ? withDeckProfile(base, profile as DeckStrategyProfile) : base;
 }

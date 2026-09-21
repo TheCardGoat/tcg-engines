@@ -10,6 +10,19 @@ make the simulator understandable, and carry lessons into the next game.
 The agent chooses moves; POM helpers and bot heuristics are advisers/executors.
 This differs from `fab-self-improve-bot`, whose benchmark player is deterministic.
 
+## Sync checkout with origin/main (required each game)
+
+Before starting **each** new game (and when resuming a run after a long gap), sync the playtest checkout to `origin/main` so evidence matches current code:
+
+1. In the monorepo root (`the-card-goat-online`): `git fetch origin main`.
+2. If the working tree is clean: `git pull --ff-only origin main` (or reset soft only if the user explicitly allows discarding local commits — default is ff-only).
+3. Update submodules used by the simulator/FAB playtest (`git submodule update --init --recursive` as needed for `submodules/agnostic-simulator` and `submodules/flesh-and-blood`).
+4. Rebuild prerequisites if the pull changed packages (at minimum `@tcg/flesh-and-blood-types` when its sources changed): from FAB `packages/types` run the package build, then ensure `vp run dev` / preview is restarted on the new tree.
+5. Record in `run.md` / the upcoming `games/game-NN.md`: sync time, `origin/main` SHA (and submodule SHAs if relevant), and whether the serving process was restarted.
+6. If local uncommitted playtest reports or skill edits would block pull: stash or move report-only changes aside, pull, then restore. Never force-push. Never discard user/shared dirty product work without asking.
+
+Pace and clean games both require this sync. A game started on a stale checkout is diagnostic unless the ledger records an intentional pinned SHA.
+
 ## Start or resume
 
 1. Classify this as FAB-specific work spanning the FAB engine/cards and the
@@ -121,6 +134,19 @@ replace the missing browser interaction evidence.
 Load `impeccable` when diagnosing or repairing a demonstrated UI/UX issue;
 keep repairs focused on the observed player difficulty. Follow its relevant
 guidance without turning every game into an unrelated redesign.
+
+## End-of-game report (required)
+
+After **every** completed or abandoned game — clean, diagnostic, or pace — issue a game-end report **before** starting the next game. Follow [references/game-end-report.md](references/game-end-report.md).
+
+Minimum deliverables:
+
+1. `## Game-end report` section on `games/game-NN.md` (result, turn, mode, clean eligibility, findings table, QA notes, next action).
+2. Update `run.md` (game row + open findings).
+3. Short chat summary to the user (result + findings + eligibility).
+4. If the game confirmed **new** product defects (or materially changed an open finding), create or update a Linear ticket on The Card Goat Online and link it from the game record and `run.md`.
+
+Do not skip the report because the game used a bot seat, was diagnostic, or was a loss.
 
 ## Finish, triage, repair, replay
 

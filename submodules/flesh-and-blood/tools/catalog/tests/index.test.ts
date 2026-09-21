@@ -214,6 +214,59 @@ describe("Flesh and Blood catalog parser", () => {
     expect(standard?.id).not.toBe(rainbow?.id);
   });
 
+  it("applies authored B&R legality overrides over disagreeing source legalities", () => {
+    const overrideCard = (
+      uniqueId: string,
+      name: string,
+      flags: Partial<{
+        cc_banned: boolean;
+        silver_age_legal: boolean;
+      }>,
+    ) => ({
+      ...rawCard,
+      unique_id: uniqueId,
+      name,
+      printings: rawCard.printings.map((printing, index) => ({
+        ...printing,
+        unique_id: `${uniqueId}-printing-${index + 1}`,
+        set_printing_unique_id: `${uniqueId}-art-${index + 1}`,
+      })),
+      ...flags,
+    });
+    const catalog = normalizeFabCubeCatalog(
+      {
+        cards: [
+          overrideCard("card-entwine", "Entwine Lightning", { cc_banned: false }),
+          overrideCard("card-brand", "Brand with Cinderclaw", { cc_banned: true }),
+          overrideCard("card-briar", "Briar", { silver_age_legal: true }),
+        ],
+        sets: [rawSet],
+      },
+      {
+        source: "fab-cube",
+        sourceUrl: "https://github.com/the-fab-cube/flesh-and-blood-cards",
+        sourceRef: "test-ref",
+        sourceVersion: "a".repeat(40),
+        locale: "en-US",
+        fetchedAt: "2026-09-18T08:00:00.000Z",
+        sha256: "a".repeat(64),
+      },
+    );
+
+    const entwine = catalog.cards.find((card) => card.name === "Entwine Lightning");
+    expect(entwine?.legalities.cc.banned).toBe(true);
+    expect(entwine?.legalities.blitz.banned).toBe(false);
+
+    const brand = catalog.cards.find((card) => card.name === "Brand with Cinderclaw");
+    expect(brand?.legalities.cc.banned).toBe(false);
+    expect(brand?.legalities.cc.legal).toBe(true);
+
+    const briar = catalog.cards.find((card) => card.name === "Briar");
+    expect(briar?.legalities.silverAge.legal).toBe(false);
+    expect(briar?.legalities.silverAge.banned).toBe(false);
+    expect(briar?.legalities.blitz.legal).toBe(true);
+  });
+
   it("keeps snapshot unique_ids whose printings array is still empty", () => {
     const unpublished = {
       ...rawCard,

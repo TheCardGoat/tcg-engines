@@ -53,24 +53,28 @@ export const bishopsCross: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
           effect: {
             kind: "conditional",
             condition: {
-              kind: "subject-matches",
-              subject: {
-                kind: "event-recipient",
-              },
-              filter: {
-                kind: "all",
-                filters: [
-                  {
+              kind: "all",
+              conditions: [
+                {
+                  kind: "subject-matches",
+                  subject: {
+                    kind: "event-recipient",
+                  },
+                  filter: {
                     kind: "type",
                     oneOf: ["ALLY", "CHAMPION"],
                   },
-                  {
-                    kind: "parity",
-                    property: "life",
-                    value: "odd",
+                },
+                {
+                  kind: "numeric-property-parity",
+                  subject: {
+                    kind: "event-recipient",
                   },
-                ],
-              },
+                  property: "life",
+                  basis: "last-known",
+                  value: "odd",
+                },
+              ],
             },
             then: {
               kind: "draw",

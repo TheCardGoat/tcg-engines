@@ -42,6 +42,8 @@ const catalog: RiftboundCatalog = {
       keywords: ["Test Keyword"],
       flags: [],
       rulesTextPlain: "Printed reference text.",
+      effectTextPlain: "When summoned, ward another allied unit.",
+      flavorText: "Stalwart flavor prose.",
       orientation: "portrait",
     },
   ],
@@ -62,7 +64,17 @@ describe("Riftbound card catalog", () => {
     expect(index.getCard("ogn-001-298")?.name).toBe("Test Unit");
     expect(index.getSet("OGN")?.name).toBe("Origins");
     expect(index.cardsBySetCollectorNumber.get("OGN:001")?.name).toBe("Test Unit");
-    for (const query of ["test unit", "unit", "order", "demacia", "keyword", "ogn", "001"]) {
+    for (const query of [
+      "test unit",
+      "unit",
+      "order",
+      "demacia",
+      "keyword",
+      "ogn",
+      "001",
+      "ward another allied",
+      "stalwart flavor",
+    ]) {
       expect(index.search(query), query).toHaveLength(1);
     }
   });

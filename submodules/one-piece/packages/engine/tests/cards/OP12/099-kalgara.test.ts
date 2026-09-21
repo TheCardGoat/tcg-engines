@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01EdwardWeevil023 } from "../../../../cards/src/cards/EB01/characters/023-edward-weevil.ts";
-import { op02Squard009 } from "../../../../cards/src/cards/OP02/characters/009-squard.ts";
-import { op02EdwardNewgate001 } from "../../../../cards/src/cards/OP02/leaders/001-edward-newgate.ts";
-import { op12Kalgara099 } from "../../../../cards/src/cards/OP12/characters/099-kalgara.ts";
-import { op14eb04Killer005 } from "../../../../cards/src/cards/OP14EB04/characters/005-killer.ts";
+import { eb01EdwardWeevil023 } from "../../../../cards/src/cards/characters/eb01-023-edward-weevil.ts";
+import { op02Squard009 } from "../../../../cards/src/cards/characters/op02-009-squard.ts";
+import { op02EdwardNewgate001 } from "../../../../cards/src/cards/leaders/op02-001-edward-newgate.ts";
+import { op12Kalgara099 } from "../../../../cards/src/cards/characters/op12-099-kalgara.ts";
+import { op14eb04Killer005 } from "../../../../cards/src/cards/characters/op14-005-killer.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP12-099 Kalgara", () => {

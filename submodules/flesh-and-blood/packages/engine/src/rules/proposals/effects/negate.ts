@@ -1,6 +1,6 @@
 import type { FabEffect } from "@tcg/flesh-and-blood-types";
 import type { FabEffectProposalResult, ProposalContext } from "../shared.ts";
-import { baseEvent, objectTargets, unsupported } from "../shared.ts";
+import { baseEvent, conditionHolds, objectTargets, unsupported } from "../shared.ts";
 import { nextFabDestinationRef, snapshotPlayerId } from "../../snapshots.ts";
 
 export function proposeNegate(
@@ -17,13 +17,27 @@ export function proposeNegate(
   );
   if (!objects) return unsupported(effect, "negate target is unresolved");
   const events = objects.flatMap((object, index) => {
-    const recipient = object.ownerId ?? object.controllerId ?? snapshotPlayerId(object);
+    const recipient = snapshotPlayerId(object);
     const bindings = {
       ...ctx.layer.bindings,
       ...(effect.outputBinding ? { [effect.outputBinding]: object } : {}),
       it: object,
       ...(recipient ? { "target-controller": recipient } : {}),
     };
+    if (
+      effect.type === "negate" &&
+      effect.ifTargetMatches &&
+      !conditionHolds(
+        ctx.state,
+        { ...ctx.layer, bindings },
+        {
+          type: "binding-matches",
+          binding: "it",
+          filter: effect.ifTargetMatches,
+        },
+      )
+    )
+      return [];
     if (effect.type === "negate" && effect.triggeredKeyword) {
       const keywordId = `keyword:${effect.triggeredKeyword}`;
       return ctx.state.rulesStack.flatMap((layer) =>

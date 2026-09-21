@@ -33,7 +33,6 @@ export const confidantsOath: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
             kind: "event",
             event: {
               name: "counter-added",
-              actor: "controller",
               counter: "omen",
               subject: {
                 kind: "event-object",

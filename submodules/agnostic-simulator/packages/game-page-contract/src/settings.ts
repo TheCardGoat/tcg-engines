@@ -92,6 +92,8 @@ export const CyberpunkGameSettingsSchema = z
           ])
           .optional(),
         fieldCardSize: z.enum(["compact", "standard", "large"]).optional(),
+        // Legacy persisted preference. The simulator no longer reads or writes
+        // it, but accepting the field keeps older settings records readable.
         animationPacing: z.enum(["fast", "standard", "cinematic"]).optional(),
       })
       .strict()

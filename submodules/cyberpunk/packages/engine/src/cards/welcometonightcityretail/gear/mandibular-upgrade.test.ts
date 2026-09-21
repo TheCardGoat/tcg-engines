@@ -19,16 +19,54 @@ describe("Mandibular Upgrade", () => {
     );
   }
 
-  it("can attach to a friendly Unit or face-up Legend, but not a face-down Legend", () => {
-    const engine = CyberpunkTestEngine.createWithFixture({
-      hand: [welcomeToNightCityRetailMandibularUpgrade],
-      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
-      legendArea: [
-        { card: theHeistRetailStarterDeckVCorporateExile, faceDown: false },
-        { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
-      ],
-      eddies: 1,
+  it("is the exact 1-cost yellow Cyberware Gear that grants Blocker to its host", () => {
+    expect(welcomeToNightCityRetailMandibularUpgrade).toMatchObject({
+      canonicalId: "mandibular-upgrade",
+      slug: "mandibular-upgrade",
+      name: "Mandibular Upgrade",
+      displayName: "Mandibular Upgrade",
+      type: "gear",
+      color: "yellow",
+      classifications: ["Cyberware"],
+      cost: 1,
+      power: 0,
+      ram: 2,
+      hasSellTag: true,
+      printNumber: "062",
+      keywords: ["blocker"],
+      rulesText:
+        "(Equip to a friendly Unit or face-up Legend.)\n{Blocker} (You may spend this Unit to redirect a rival Unit's attack to it instead.)",
+      attachment: {
+        target: {
+          selector: "card",
+          controller: "friendly",
+          zones: ["field", "legendArea"],
+          cardTypes: ["unit", "legend"],
+          face: "faceUp",
+        },
+      },
     });
+    expect(welcomeToNightCityRetailMandibularUpgrade.abilities).toEqual([
+      expect.objectContaining({
+        keyword: "blocker",
+        source: { selector: "host" },
+      }),
+    ]);
+  });
+
+  it("offers only a friendly Unit and friendly face-up Legend as attachment hosts", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailMandibularUpgrade],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
+        legendArea: [
+          { card: theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: true },
+        ],
+        eddies: 1,
+      },
+      { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: false }] },
+    );
 
     expectAttachTarget(
       engine,
@@ -43,6 +81,29 @@ describe("Mandibular Upgrade", () => {
       engine.getCard(embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, "legendArea", P1)
         .instanceId,
     );
+    expect(attachTargets).not.toContain(
+      engine.getCard(embracingPowerRetailStarterDeckMinotaur, "field", P2).instanceId,
+    );
+  });
+
+  it("pays one Eddie and records both sides of the attachment graph", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailMandibularUpgrade],
+      field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
+      eddies: 1,
+    });
+
+    engine.attachGear(
+      welcomeToNightCityRetailMandibularUpgrade,
+      welcomeToNightCityRetailFieldOperator,
+      { as: P1 },
+    );
+
+    const host = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P1);
+    const gear = engine.getCard(welcomeToNightCityRetailMandibularUpgrade, "field", P1);
+    expect(engine.getEddies(P1)).toBe(0);
+    expect(host.meta.attachedGearIds).toContain(gear.instanceId);
+    expect(gear.meta.attachedToId).toBe(host.instanceId);
   });
 
   it("has no attach targets when there is no friendly Unit or face-up Legend", () => {
@@ -53,6 +114,43 @@ describe("Mandibular Upgrade", () => {
     });
 
     expect(getAttachTargets(engine)).toEqual([]);
+  });
+
+  it("rejects a face-down friendly Legend and rival Unit without paying or moving the Gear", () => {
+    const faceDownEngine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailMandibularUpgrade],
+      legendArea: [{ card: theHeistRetailStarterDeckVCorporateExile, faceDown: true }],
+      eddies: 1,
+    });
+    const faceDownFailure = faceDownEngine.expectFailure(() =>
+      faceDownEngine.attachGear(
+        welcomeToNightCityRetailMandibularUpgrade,
+        theHeistRetailStarterDeckVCorporateExile,
+        { as: P1 },
+      ),
+    );
+    expect(faceDownFailure.errorCode).toBe("INVALID_CHOICE");
+    expect(faceDownEngine.getEddies(P1)).toBe(1);
+    expect(
+      faceDownEngine.getCard(welcomeToNightCityRetailMandibularUpgrade, "hand", P1),
+    ).toBeDefined();
+
+    const rivalEngine = CyberpunkTestEngine.createWithFixture(
+      { hand: [welcomeToNightCityRetailMandibularUpgrade], eddies: 1 },
+      { field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: false }] },
+    );
+    const rivalFailure = rivalEngine.expectFailure(() =>
+      rivalEngine.attachGear(
+        welcomeToNightCityRetailMandibularUpgrade,
+        embracingPowerRetailStarterDeckMinotaur,
+        { as: P1 },
+      ),
+    );
+    expect(rivalFailure.errorCode).toBe("INVALID_CHOICE");
+    expect(rivalEngine.getEddies(P1)).toBe(1);
+    expect(
+      rivalEngine.getCard(welcomeToNightCityRetailMandibularUpgrade, "hand", P1),
+    ).toBeDefined();
   });
 
   it("grants BLOCKER to the attached host", () => {

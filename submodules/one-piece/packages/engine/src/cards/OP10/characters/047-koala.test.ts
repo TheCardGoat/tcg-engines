@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op10Koala047 } from "../../../../../cards/src/cards/OP10/characters/047-koala.ts";
-import { op10Sabo049 } from "../../../../../cards/src/cards/OP10/characters/049-sabo.ts";
+import { op10Koala047 } from "../../../../../cards/src/cards/characters/op10-047-koala.ts";
+import { op10Sabo049 } from "../../../../../cards/src/cards/characters/op10-049-sabo.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

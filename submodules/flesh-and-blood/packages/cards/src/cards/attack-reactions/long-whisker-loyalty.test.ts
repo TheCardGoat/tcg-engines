@@ -5,6 +5,7 @@ import {
   FAB_MANUAL_HARNESS,
   FabTestEngine,
   expectFabPlayer,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
 import { fang } from "../heroes/fang.ts";
@@ -44,7 +45,10 @@ describe("Long Whisker Loyalty (HNT102) AAA", () => {
     });
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(3);
+    // Playing the Draconic reaction turns on Obsidian Fire Vein's printed
+    // "+1{p} and go again", so the dagger attacks for 1 + 2 + 1.
+    expectCombat(game).toHaveAttackPower(4);
+    expectCombat(game).toHaveKeyword("go-again");
     expectFabCard(Fang, longWhiskerLoyaltyRed).toBeIn("graveyard");
   });
 
@@ -102,7 +106,7 @@ describe("Long Whisker Loyalty (HNT102) AAA", () => {
     expectFabCard(Fang, longWhiskerLoyaltyRed).toBeIn("graveyard");
   });
 
-  it("timing: extra-activation mode lets the dagger attack a second time this turn", () => {
+  it("timing: extra-activation mode grants the second dagger attack without an optional prompt", () => {
     const game = FabTestEngine.start(
       {
         hero: fang,
@@ -129,7 +133,10 @@ describe("Long Whisker Loyalty (HNT102) AAA", () => {
       "explicit",
     );
     game.passBoth();
-    Fang.accept();
+    // CR 5.2.3c: choosing the mode is the only decision — the activation-limit
+    // allowance applies by itself, so no "use the optional effect?" prompt may
+    // appear while the reaction resolves.
+    expectWait(game).notToHaveDecision();
     game.helpers.resolveUntilIdle();
 
     Fang.must.activate(obsidianFireVein);

@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vite-plus/test";
 
 import { asPlayerId, type FilteredMatchView } from "@tcg/gundam-engine";
-import { reduceLiveGatewayMessage } from "./liveMessages.ts";
+import { engineLogRecordsFromBootstrapHistory, reduceLiveGatewayMessage } from "./liveMessages.ts";
 import type { EngineInteractionView } from "@tcg/protocol";
+import type { GameLogEntry } from "@tcg/game-page-contract";
 import type { LiveMatchView } from "./matchContext.ts";
 import { createDevRuntime, DEV_PLAYER_ONE } from "../../game/dev-runtime.ts";
 
@@ -226,6 +227,104 @@ function view(): LiveMatchView {
     animationPackets: [],
     engineLogRecords: [],
     ended: null,
+  };
+}
+
+describe("refresh log restoration", () => {
+  it("rebuilds log records from bootstrap history entries", () => {
+    const records = engineLogRecordsFromBootstrapHistory([
+      bootstrapEntry({
+        stateVersion: 3,
+        ts: 1000,
+        data: canonicalLog("drawCard", 900),
+      }),
+      // Legacy emitters without a stored version are skipped, not fabricated.
+      { tag: "engine_log", data: canonicalLog("playCard", 950), ts: 1050 },
+      { tag: "engine_log", stateVersion: 4, data: canonicalLog("passTurn", 980) },
+      {
+        tag: "engine_log",
+        stateVersion: 4,
+        ts: 1100,
+        log: { type: "legacyMove", playerId: "p1", timestamp: 990 },
+      },
+    ]);
+
+    expect(records).toEqual([
+      {
+        stateVersion: 3,
+        timestamp: 1000,
+        log: canonicalLog("drawCard", 900),
+      },
+    ]);
+  });
+
+  it("appends game_recent_history records into the existing log", () => {
+    const seeded = reduceLiveGatewayMessage(
+      { ...view(), engineLogRecords: bootstrapSeededRecords() },
+      {
+        type: "game_recent_history",
+        gameId: "g_1",
+        acceptedMoves: [],
+        engineLogs: [
+          { stateVersion: 3, timestamp: 1000, log: canonicalLog("drawCard", 900) },
+          { stateVersion: 5, timestamp: 1200, log: canonicalLog("playCard", 1150) },
+        ],
+      },
+      { gameId: "g_1" },
+    );
+
+    expect(seeded.type).toBe("state");
+    if (seeded.type !== "state") return;
+    expect(seeded.view.engineLogRecords.map((record) => record.log.moveType)).toEqual([
+      "drawCard",
+      "playCard",
+    ]);
+
+    // Replaying the same records must not duplicate them.
+    const replayed = reduceLiveGatewayMessage(
+      seeded.view,
+      {
+        type: "game_recent_history",
+        gameId: "g_1",
+        acceptedMoves: [],
+        engineLogs: [{ stateVersion: 3, timestamp: 1000, log: canonicalLog("drawCard", 900) }],
+      },
+      { gameId: "g_1" },
+    );
+    expect(replayed.type).toBe("ignore");
+  });
+
+  it("ignores recent history for another game", () => {
+    const effect = reduceLiveGatewayMessage(
+      view(),
+      {
+        type: "game_recent_history",
+        gameId: "g_other",
+        acceptedMoves: [],
+        engineLogs: [{ stateVersion: 3, timestamp: 1000, log: canonicalLog("drawCard", 900) }],
+      },
+      { gameId: "g_1" },
+    );
+    expect(effect).toEqual({ type: "ignore" });
+  });
+});
+
+function bootstrapEntry(entry: GameLogEntry): GameLogEntry {
+  return entry;
+}
+
+function bootstrapSeededRecords(): LiveMatchView["engineLogRecords"] {
+  return engineLogRecordsFromBootstrapHistory([
+    { tag: "engine_log", stateVersion: 3, ts: 1000, data: canonicalLog("drawCard", 900) },
+  ]);
+}
+
+function canonicalLog(moveType: string, timestamp: number) {
+  return {
+    moveType,
+    playerId: "p1",
+    timestamp,
+    public: [{ key: `gundam:${moveType}`, values: { count: 1 } }],
   };
 }
 

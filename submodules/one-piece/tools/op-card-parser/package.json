@@ -29,10 +29,6 @@
     "audit:stage": "node scripts/audit-event-stage.ts stage",
     "build": "vp pack",
     "dev": "vp pack --watch",
-    "inventory:characters": "node scripts/inventory-characters.ts",
-    "inventory:events": "node scripts/inventory-event-stages.ts event",
-    "inventory:leaders": "node scripts/inventory-leaders.ts",
-    "inventory:stages": "node scripts/inventory-event-stages.ts stage",
     "test": "vp test run",
     "check": "vp check",
     "prepublishOnly": "vp run build"

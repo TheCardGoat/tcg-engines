@@ -7,8 +7,13 @@ import { useFabCardPresentation } from "./useFabCardPresentation";
 import { testPresentationEnvelope } from "./presentation-test-provider";
 const missing = [{ canonicalId: "missing-authored-token" }];
 function Board() {
-  useFabCardPresentation(missing, "state-1");
-  return <button>Pass priority</button>;
+  const presentation = useFabCardPresentation(missing, "state-1");
+  return (
+    <>
+      <output data-testid="presentation-state">{presentation.kind}</output>
+      <button>Pass priority</button>
+    </>
+  );
 }
 afterEach(() => {
   cleanup();
@@ -33,7 +38,9 @@ it("keeps gameplay usable during failed pinned recovery and retries only explici
     </MantineProvider>,
   );
   expect(view.getByRole("button", { name: "Pass priority" })).toBeTruthy();
+  expect(view.getByTestId("presentation-state").textContent).toBe("loading");
   await waitFor(() => expect(view.getByTestId("fab-presentation-warning")).toBeTruthy());
+  expect(view.getByTestId("presentation-state").textContent).toBe("error");
   expect(fetcher).toHaveBeenCalledTimes(2);
   fireEvent.click(view.getByRole("button", { name: "Retry images" }));
   await waitFor(() => expect(fetcher).toHaveBeenCalledTimes(4));

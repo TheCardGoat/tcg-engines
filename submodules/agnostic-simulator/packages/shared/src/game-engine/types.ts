@@ -1,6 +1,12 @@
 import type { CardsMaps, PlayableGameSlug } from "../game-adapter/types.js";
 import type { TimeControlConfig } from "./time-control.js";
-import type { AnimationPlanV2, EngineInteractionView, InteractionSubmission } from "@tcg/protocol";
+import type {
+  AnimationPlanV2,
+  DropReasonCode,
+  EngineInteractionView,
+  InteractionSubmission,
+  TimeoutFacts,
+} from "@tcg/protocol";
 
 /**
  * Engine-native animation record retained for persistence and replay.
@@ -180,23 +186,36 @@ export interface PublicGameEndSummary {
 }
 
 /**
- * Game-owned timeout projection used by the platform's opponent-triggered
- * stall recovery. Engines that do not expose clock semantics omit the
- * capability and the platform rejects `skip_opponent_turn` cleanly.
+ * Game-owned timeout projection used by skip-turn recovery and timeout drops.
+ * Engines that do not expose clock semantics omit the capability; skip is
+ * rejected cleanly and drop falls through to disconnect-only eligibility.
  */
-export type OpponentTimeoutEvaluation =
+export type OpponentTimeoutSkipEvaluation =
   | {
-      outcome: "not_allowed";
-      reason: "no_time_control" | "requester_has_priority" | "within_limit";
+      allowed: false;
+      reason: "no_time_control" | "requester_has_priority" | "within_limit" | "skip_unsupported";
     }
   | {
-      outcome: "timed_out";
+      allowed: true;
       timeout: "first" | "second";
       stallerPlayerId: string;
       timeoutCount: number;
       forceDrop: boolean;
       resetTimeOnSkipMs: number;
     };
+
+export interface OpponentTimeoutDropEvaluation {
+  allowed: boolean;
+  reason: DropReasonCode;
+  eligibleAtMs?: number;
+  remainingMs?: number;
+  facts: Omit<TimeoutFacts, "source">;
+}
+
+export interface OpponentTimeoutEvaluation {
+  skip: OpponentTimeoutSkipEvaluation;
+  drop: OpponentTimeoutDropEvaluation;
+}
 
 export interface EvaluateOpponentTimeoutInput {
   requesterPlayerId: string;
@@ -313,6 +332,14 @@ export interface ServerGameEngine {
 
   canUndo?(playerId: string): boolean;
   undo?(playerId: string, context: DispatchContext, prevStateID?: number): DispatchResult;
+  /** Whether this engine can restore the current turn's clean main-phase checkpoint. */
+  canUndoToTurnStart?(playerId: string): boolean;
+  /** Restore the current turn's clean main-phase checkpoint as a new state version. */
+  undoToTurnStart?(
+    playerId: string,
+    context: DispatchContext,
+    prevStateID?: number,
+  ): DispatchResult;
 
   /** Build the current prompt/action projection for a seated actor. */
   getInteractionView?(actorId: string): EngineInteractionView | undefined;

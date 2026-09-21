@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, expect, test, vi } from "vite-plus/test";
 import {
@@ -33,7 +35,7 @@ test("hydrates matchmaking preferences and saves only the changed Cyberpunk fiel
             : {
                 gameSettings: {
                   cyberpunk: {
-                    simulator: { fieldCardSize: "large", animationPacing: "cinematic" },
+                    simulator: { fieldCardSize: "large" },
                   },
                 },
               },
@@ -68,7 +70,6 @@ test("hydrates matchmaking preferences and saves only the changed Cyberpunk fiel
   );
   expect(JSON.parse(localStorage.getItem("cyberpunk:userConfig") ?? "{}")).toMatchObject({
     fieldCardSize: "large",
-    animationPacing: "cinematic",
     diceDisplayMode: "image",
   });
 });

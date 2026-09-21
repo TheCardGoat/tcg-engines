@@ -104,55 +104,66 @@ export const caoCaoAspirantOfChaos: GrandArchiveCard<GrandArchiveAbilityDefiniti
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "has-keyword",
-                        keyword: "floating-memory",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["graveyard"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "has-keyword",
+                          keyword: "floating-memory",
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "deal-damage",
-                  source: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  recipient: {
-                    kind: "each",
-                    collection: {
-                      zones: ["field"],
-                      player: "each-opponent",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ALLY", "CHAMPION"],
-                          },
-                          {
-                            kind: "object-state",
-                            state: "rested",
-                          },
-                        ],
+                  then: {
+                    kind: "deal-damage",
+                    source: {
+                      kind: "source",
+                    },
+                    recipient: {
+                      kind: "each",
+                      collection: {
+                        zones: ["field"],
+                        player: "each-opponent",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["ALLY", "CHAMPION"],
+                            },
+                            {
+                              kind: "object-state",
+                              state: "rested",
+                            },
+                          ],
+                        },
                       },
                     },
+                    amount: 2,
                   },
-                  amount: 2,
                 },
               ],
             },

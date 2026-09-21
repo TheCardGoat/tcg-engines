@@ -36,6 +36,7 @@ const PUBLIC_PRODUCTION_GAME_RUNTIME_API_ORIGINS: Record<GameSlug, string> = {
   "flesh-and-blood": "https://api.tcg.online",
   "grand-archive": "https://api.tcg.online",
   naruto: "https://api.tcg.online",
+  "alpha-clash": "https://api.tcg.online",
 };
 
 export function gameApiBaseUrl(gameSlug: GameSlug, env: RuntimeApiEnv = runtimeApiEnv()): string {

@@ -176,8 +176,8 @@ export const ANIMATION_FIXTURE_GAMES: readonly AnimationFixtureGame[] = [
   {
     id: "cyberpunk",
     label: "Cyberpunk 2077",
-    summary: "9 ready · 1 partial",
-    note: "The local adapter adds multi-stage choreography; the server adapter remains semantic and viewer-safe. Each row identifies the path it proves.",
+    summary: "transfers + in-place + turn",
+    note: "Live and practice share one script→plan mapper. Transfers, in-place spend/ready and Call Legend flips, and turn announcements play; overlay film is omitted.",
   },
   {
     id: "flesh-and-blood",
@@ -273,13 +273,11 @@ export const ANIMATION_STEP_INVENTORY: readonly AnimationFixtureInventoryItem[] 
     frameworkRole: "Pulse or spotlight any registered entity, zone, player, or anchor",
     games: {
       cyberpunk: {
-        status: "partial",
-        fixture: "Authoritative card landing",
+        status: "missing",
+        fixture: "No landing pulse",
         cards: "Played Units",
-        action:
-          "The server adapter emits emphasize after a played Unit lands; local choreography represents the same event as an effect emphasis.",
+        action: "Play is a hand→field transfer. The adapters do not emit emphasize.",
         route: null,
-        pathKind: "server",
       },
       "flesh-and-blood": {
         status: "disabled",
@@ -361,14 +359,11 @@ export const ANIMATION_STEP_INVENTORY: readonly AnimationFixtureInventoryItem[] 
     frameworkRole: "Connect a semantic source to one or more targets",
     games: {
       cyberpunk: {
-        status: "ready",
-        fixture: "Live with the Aftermath",
-        cards: "Live with the Aftermath · Mox Inciters · Corpo Security",
-        action:
-          "Play the Program, choose Mox Inciters, switch to P2, then choose Corpo Security. Verify the staged source, target effects, two exits, and source cleanup.",
-        route:
-          "/cyberpunk/simulator/tests/progLiveWithTheAftermathRetail?ai=off&auto-advance-attack=off",
-        pathKind: "local",
+        status: "missing",
+        fixture: "No effect-beam choreography",
+        cards: "Programs",
+        action: "Program resolution is a card transfer into trash. Effect beams are not emitted.",
+        route: null,
       },
       "flesh-and-blood": {
         status: "disabled",
@@ -404,13 +399,12 @@ export const ANIMATION_STEP_INVENTORY: readonly AnimationFixtureInventoryItem[] 
     frameworkRole: "Declare, block, redirect, or resolve combat",
     games: {
       cyberpunk: {
-        status: "ready",
-        fixture: "Corpo Security blocker reproduction",
+        status: "missing",
+        fixture: "Board combat chrome only",
         cards: "Swordwise Huscle · Corpo Security",
         action:
-          "Attack with Swordwise Huscle, advance into React, take P2 control, and block with Corpo Security. Verify the blocker stays the real visual throughout redirect and exit.",
-        route: "/cyberpunk/simulator/tests/unitCorpoSecurity?ai=off&auto-advance-attack=off",
-        pathKind: "local",
+          "Attack arrows remain board chrome. The animation adapters do not emit combat overlay steps.",
+        route: null,
       },
       "flesh-and-blood": {
         status: "disabled",
@@ -497,10 +491,10 @@ export const ANIMATION_STEP_INVENTORY: readonly AnimationFixtureInventoryItem[] 
     games: {
       cyberpunk: {
         status: "ready",
-        fixture: "Opening main-phase lifecycle",
+        fixture: "Turn handoff",
         cards: "Board-level event · real retail fixture deck",
         action:
-          "Advance/pass the phase. Verify the phase overlay remains visible while the next legal action is already available.",
+          "Pass the turn. Verify a turn announcement plays; ordinary start/main/run phase changes do not.",
         route: "/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off",
         pathKind: "both",
       },
@@ -537,13 +531,11 @@ export const ANIMATION_STEP_INVENTORY: readonly AnimationFixtureInventoryItem[] 
     frameworkRole: "Show a shuffle, die roll, coin flip, or random selection at a registered node",
     games: {
       cyberpunk: {
-        status: "ready",
-        fixture: "Start-of-turn Gig roll",
-        cards: "Real retail fixture deck · real Gig die",
-        action:
-          "Advance into the next start phase. Verify the real Gig die reports its roll before moving from the fixer area.",
-        route: "/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off",
-        pathKind: "both",
+        status: "missing",
+        fixture: "No shuffle/die overlay",
+        cards: "Gig dice",
+        action: "Gig gain is an entity transfer. The adapters do not emit randomization overlays.",
+        route: null,
       },
       "flesh-and-blood": {
         status: "disabled",
@@ -583,13 +575,11 @@ export const ANIMATION_STEP_INVENTORY: readonly AnimationFixtureInventoryItem[] 
     frameworkRole: "Present a viewer-relative victory, defeat, or draw for a terminal update",
     games: {
       cyberpunk: {
-        status: "ready",
-        fixture: "Fixture concession",
+        status: "missing",
+        fixture: "End-game modal only",
         cards: "Real retail fixture deck",
-        action:
-          "Concede from the game menu and confirm. Verify the result overlay is viewer-relative and settles before the end-game UI.",
-        route: "/cyberpunk/simulator/tests/openingMain?ai=off&auto-advance-attack=off",
-        pathKind: "both",
+        action: "The adapters do not emit gameResult; the end-game UI remains.",
+        route: null,
       },
       "flesh-and-blood": {
         status: "disabled",
@@ -664,14 +654,11 @@ export const ANIMATION_STEP_INVENTORY: readonly AnimationFixtureInventoryItem[] 
     frameworkRole: "Reserve deterministic timeline time without a spatial visual",
     games: {
       cyberpunk: {
-        status: "ready",
-        fixture: "Legend reveal choreography",
+        status: "missing",
+        fixture: "No hold choreography",
         cards: "Viktor Vektor — Sit Down and Relax",
-        action:
-          "Reveal the Legend. Verify transfer → hold → return stays command-blocked and clears without replacing the card visual.",
-        route:
-          "/cyberpunk/simulator/tests/legendViktorVektorSitDownAndRelax?ai=off&auto-advance-attack=off",
-        pathKind: "both",
+        action: "Call Legend is an in-place face change. The adapters do not emit hold.",
+        route: null,
       },
       "flesh-and-blood": {
         status: "disabled",

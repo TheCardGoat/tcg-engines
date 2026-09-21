@@ -1,4 +1,4 @@
-import { describe, test } from "vite-plus/test";
+import { describe, expect, test } from "vite-plus/test";
 import {
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailLiveWithTheAftermath,
@@ -49,6 +49,116 @@ describe("Live with the Aftermath (Retail) jsdom", () => {
         welcomeToNightCityRetailCorpoSecurity.id,
       );
       await pom.expectStructuralState();
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("only the active player chooses when only they control a Unit", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "progLiveWithTheAftermathActiveOnlyRetail",
+    });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+      const program = await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailLiveWithTheAftermath.id,
+      );
+      const friendly = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailMoxInciters.id,
+      );
+
+      await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+      await pom.resolveEffectTarget([friendly.instanceId], CYBERPUNK_P1);
+
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+      await pom.expectPendingChoiceType(CYBERPUNK_P2, null);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailMoxInciters.id,
+      );
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailLiveWithTheAftermath.id,
+      );
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("skips the active player's empty choice and gives the rival their own choice", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "progLiveWithTheAftermathRivalOnlyRetail",
+    });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+      const program = await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailLiveWithTheAftermath.id,
+      );
+      const rival = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P2,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
+
+      await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
+
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+      await pom.expectPendingChoiceType(CYBERPUNK_P2, "chooseTarget");
+      expect(document.body.querySelector('[data-testid="choice-modal-sheet"]')).toBeNull();
+      expect(
+        document.body.querySelector(
+          `[data-entity-id="${rival.instanceId}"][data-selectable="true"]`,
+        ),
+      ).toBeNull();
+
+      await pom.resolveEffectTarget([rival.instanceId], CYBERPUNK_P2);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P2,
+        welcomeToNightCityRetailCorpoSecurity.id,
+      );
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("finishes resolving without a choice when neither player controls a Unit", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "progLiveWithTheAftermathNoUnitsRetail",
+    });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+      const program = await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailLiveWithTheAftermath.id,
+      );
+
+      await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
+
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+      await pom.expectPendingChoiceType(CYBERPUNK_P2, null);
+      await pom.getCardInZoneByDefinitionId(
+        "trash",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailLiveWithTheAftermath.id,
+      );
+      expect(document.body.querySelector('[data-testid="choice-modal-sheet"]')).toBeNull();
     } finally {
       view.unmount();
     }

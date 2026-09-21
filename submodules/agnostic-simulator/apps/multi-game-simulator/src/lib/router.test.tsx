@@ -48,6 +48,7 @@ describe("SimulatorRouterProvider", () => {
             soundVolume: 35,
             cardInteractionMode: "detailed",
             animationSpeed: "normal",
+            paymentSelectionMode: "automatic",
           }}
         >
           <SimulatorAudioProvider>

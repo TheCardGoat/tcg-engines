@@ -22,6 +22,7 @@ export const welcomeToNightCityRetailFoolOnTheHill = defineCyberpunkCard({
   legality: "legal",
   hasSellTag: true,
   ram: 3,
+  timingTriggers: ["play"],
   type: "program",
   cost: 2,
   power: null,

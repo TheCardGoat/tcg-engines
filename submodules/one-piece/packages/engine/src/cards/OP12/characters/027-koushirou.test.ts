@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01MountainGod018, op08BurnBlade117 } from "@tcg/op-cards";
-import { op12Koushirou027 } from "../../../../../cards/src/cards/OP12/characters/027-koushirou.ts";
+import { op12Koushirou027 } from "../../../../../cards/src/cards/characters/op12-027-koushirou.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

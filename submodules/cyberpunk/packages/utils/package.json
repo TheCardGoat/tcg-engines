@@ -43,6 +43,7 @@
     "prepublishOnly": "vp run build"
   },
   "dependencies": {
+    "@tcg/cyberpunk-cards": "workspace:*",
     "@tcg/cyberpunk-types": "workspace:*"
   },
   "devDependencies": {

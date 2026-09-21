@@ -1,0 +1,113 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op03Buggy008I18n } from "./op03-008-buggy.i18n.ts";
+
+export const op03Buggy008: CharacterCard = {
+  id: "OP03-008",
+  canonicalId: "OP03-008",
+  slug: "buggy/op03-008",
+  name: "Buggy",
+  printings: [
+    {
+      id: "OP03-008",
+      artId: "OP03-008",
+      setCode: "OP03",
+      collectorNumber: "008",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-008.jpg",
+    },
+    {
+      id: "OP03-008_p1",
+      artId: "OP03-008_p1",
+      setCode: "OP03",
+      collectorNumber: "008",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-008_p1.jpg",
+    },
+    {
+      id: "OP03-008_p2",
+      artId: "OP03-008_p2",
+      setCode: "OP03",
+      collectorNumber: "008",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-008_p2.jpg",
+    },
+    {
+      id: "OP03-008_r1",
+      artId: "OP03-008_r1",
+      setCode: "OP03",
+      collectorNumber: "008",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-008_r1.jpg",
+      label: "Buggy - OP03-008 (Reprint)",
+    },
+  ],
+  cardType: "character",
+  color: ["red"],
+  rarity: "UC",
+  setId: "OP03",
+  cost: 1,
+  power: 3000,
+  traits: ["Buggy Pirates"],
+  attribute: "slash",
+  effect:
+    'This Character cannot be K.O.\'d in battle by "Slash" attribute cards. [On Play] Look at 5 cards from the top of your deck; reveal up to 1 red Event and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "search",
+            lookCount: 5,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 1,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "color",
+                value: "red",
+              },
+              {
+                filter: "cardCategory",
+                value: "event",
+              },
+            ],
+            revealDestination: "hand",
+            remainderPosition: "bottom",
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        actions: [
+          {
+            action: "cannotBeKod",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            duration: "permanent",
+            restriction: "inBattle",
+            byFilter: [
+              {
+                filter: "attribute",
+                value: "slash",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op03Buggy008I18n,
+};

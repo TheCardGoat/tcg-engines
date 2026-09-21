@@ -243,7 +243,7 @@ This document proves that every concrete card source currently has a matching ca
   - cannot select non-gear cards from the search window
   - bottom-decks the remaining cards after search
   - flips Viktor face-up when called
-  - costs 2 eddies to call
+  - costs 1 eddie to call
   - fails to call with insufficient eddies
   - emits a searchPerformed event
   - emits a reveal log with card IDs for the top 5
@@ -660,7 +660,7 @@ This document proves that every concrete card source currently has a matching ca
 - Coverage note: Has named happy-path coverage (draw, defeat, call).
 - Test cases:
   - calling flips Dum Dum face-up
-  - costs 2 eddies to call
+  - costs 1 eddie to call
   - fails to call with insufficient eddies
   - draws 1 card when no friendly gear exists
   - prompts to choose a friendly Gear when one can be defeated
@@ -684,7 +684,7 @@ This document proves that every concrete card source currently has a matching ca
   - clamps the gig value to a minimum of 1
   - decreases a d4 gig correctly
   - emits a gigValueChanged event
-  - costs 2 eddies to call
+  - costs 1 eddie to call
   - fails to call with insufficient eddies
   - flips Evelyn face-up when called
   - emits action log for the call
@@ -713,7 +713,7 @@ This document proves that every concrete card source currently has a matching ca
 - Test cases:
   - Goro is face-up after being called
   - Goro is readied (not spent) after being called
-  - calling Goro costs 2 eddies
+  - calling Goro costs 1 eddie
   - emits a callLegend action log
   - rival attack grants +1 power and BLOCKER to eligible friendly unit
   - granted BLOCKER is functional — unit can block the attack

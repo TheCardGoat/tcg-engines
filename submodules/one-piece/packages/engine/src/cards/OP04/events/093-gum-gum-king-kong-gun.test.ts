@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op04GumGumKingKongGun093 } from "../../../../../cards/src/cards/OP04/events/093-gum-gum-king-kong-gun.ts";
+import { op04GumGumKingKongGun093 } from "../../../../../cards/src/cards/events/op04-093-gum-gum-king-kong-gun.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-093 Gum-Gum King Kong Gun", () => {

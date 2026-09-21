@@ -5,7 +5,7 @@ import {
   op13SaintCharlos087,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Morgans093 } from "../../../../../cards/src/cards/OP13/characters/093-morgans.ts";
+import { op13Morgans093 } from "../../../../../cards/src/cards/characters/op13-093-morgans.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

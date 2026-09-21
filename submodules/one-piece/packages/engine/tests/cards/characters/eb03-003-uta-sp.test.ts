@@ -3,7 +3,7 @@ import {
   eb01Doma005,
   eb01MountainGod018,
   eb02FakeStrawHatCrew005,
-  eb02Uta001,
+  op06Uta001,
   eb03UtaSp003,
 } from "@tcg/op-cards";
 
@@ -12,7 +12,7 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 describe("EB03-003 Uta (SP)", () => {
   test("draws two with an Uta Leader, then plays only an effectless power-6000-or-less Character", () => {
     const engine = OnePieceTestEngine.create({
-      leaderCardId: eb02Uta001,
+      leaderCardId: op06Uta001,
       hand: [eb03UtaSp003, eb01Doma005, eb02FakeStrawHatCrew005, eb01MountainGod018],
       deck: [eb02FakeStrawHatCrew005, eb01MountainGod018],
       activeDon: 5,

@@ -64,7 +64,7 @@ export function handleSetOptionalTriggerAutomation(
   if (!eligible) {
     return {
       accepted: false,
-      error: "Only the owner may automate eligible Hero, Equipment, or Weapon triggers.",
+      error: "Only the owner may automate their own in-play optional triggers.",
       errorCode: "ineligible_trigger_automation_source",
     };
   }

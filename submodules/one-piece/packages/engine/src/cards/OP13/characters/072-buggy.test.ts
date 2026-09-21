@@ -1,6 +1,6 @@
 import { eb01Doma005, op12SilversRayleigh001 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Buggy072 } from "../../../../../cards/src/cards/OP13/characters/072-buggy.ts";
+import { op13Buggy072 } from "../../../../../cards/src/cards/characters/op13-072-buggy.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

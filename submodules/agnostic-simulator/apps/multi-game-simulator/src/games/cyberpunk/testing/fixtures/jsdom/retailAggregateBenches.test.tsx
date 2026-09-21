@@ -1,5 +1,5 @@
 import { describe, test, vi } from "vite-plus/test";
-import { act, waitFor } from "@testing-library/react";
+import { act, fireEvent, waitFor } from "@testing-library/react";
 import * as c from "@tcg/cyberpunk-cards";
 
 vi.mock("../../../animation", async () => {
@@ -42,6 +42,61 @@ describe("retail aggregate visual benches", () => {
         CYBERPUNK_P2,
         c.embracingPowerRetailStarterDeckMinotaur.id,
       );
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("keeps the sidebar undo available after a Program finishes resolving", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "retailProgramTargetBench" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+
+      const program = await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        c.welcomeToNightCityRetailCorporateSurveillance.id,
+      );
+      const target = await pom.getCardInZoneByDefinitionId(
+        "field",
+        CYBERPUNK_P2,
+        c.welcomeToNightCityRetailDelamainCab.id,
+      );
+
+      await pom.playCardFromHand(program.instanceId, CYBERPUNK_P1);
+      await pom.resolveEffectTarget([target.instanceId], CYBERPUNK_P1);
+      await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
+
+      const undo = await waitFor(() => {
+        const button = view.container.querySelector<HTMLButtonElement>(
+          '[data-testid="sidebar-undo"]',
+        );
+        if (!button || button.disabled) {
+          throw new Error("Expected sidebar Undo to enable after Program resolution.");
+        }
+        return button;
+      });
+      fireEvent.click(undo);
+
+      await waitFor(async () => {
+        await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
+      });
+      const undoDuringChoice = await waitFor(() => {
+        const button = view.container.querySelector<HTMLButtonElement>(
+          '[data-testid="sidebar-undo"]',
+        );
+        if (!button || button.disabled) {
+          throw new Error("Expected sidebar Undo to remain enabled during target choice.");
+        }
+        return button;
+      });
+      fireEvent.click(undoDuringChoice);
+
+      await waitFor(async () => {
+        await pom.getCardInZoneByInstanceId("hand", CYBERPUNK_P1, program.instanceId);
+      });
     } finally {
       view.unmount();
     }
@@ -419,12 +474,25 @@ async function resolvePendingAttackChoices(
       if (!targetId) {
         throw new Error("Expected effect target choice to expose at least one target.");
       }
+      if (pendingChoice.payload.adjustGig) {
+        const die = await pom.getGigDie(String(targetId));
+        const delta = pendingChoice.payload.adjustGig.direction === "decrease" ? -1 : 1;
+        await pom.resolveAdjustGig(
+          String(targetId),
+          Math.max(1, Math.min(Number(die.dieType.slice(1)), die.faceValue + delta)),
+          pendingChoice.chooserId,
+        );
+        continue;
+      }
       await pom.resolveEffectTarget([String(targetId)], pendingChoice.chooserId);
       continue;
     }
     if (pendingChoice.type === "chooseTarget" && pendingChoice.payload.type === "adjustGig") {
       const value = adjustedGigValue(pendingChoice.payload);
-      await pom.resolveAdjustGig(value, pendingChoice.chooserId);
+      if (!pendingChoice.payload.dieId) {
+        throw new Error("Expected fixed Gig adjustment to expose its die id.");
+      }
+      await pom.resolveAdjustGig(String(pendingChoice.payload.dieId), value, pendingChoice.chooserId);
       continue;
     }
     if (pendingChoice.type === "chooseTrigger") {

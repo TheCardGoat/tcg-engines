@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op09CrossGuild057 } from "../../../../../cards/src/cards/OP09/events/057-cross-guild.ts";
+import { op09CrossGuild057 } from "../../../../../cards/src/cards/events/op09-057-cross-guild.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP09-057 Cross Guild", () => {

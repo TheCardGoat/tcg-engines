@@ -1656,6 +1656,53 @@ describe("Flesh and Blood board", () => {
     expect(recall.querySelector('[data-revealed-entity-id="revealed-pummel"]')).not.toBeNull();
   });
 
+  it("falls back to engine-projected turn reveals when no recall props are passed", async () => {
+    const state: FabPresentationState = {
+      ...createOpeningFixtureState(),
+      deckRevealsByOwnerId: {
+        "player-2": {
+          id: "fab-turn-reveal:player-2",
+          zoneId: "player-2:deck",
+          ownerId: "player-2",
+          position: "top",
+          visibility: "public",
+          turnNumber: 1,
+          count: 1,
+          cards: [
+            {
+              entityId: "revealed-deck-top",
+              definitionId: "def-for-the-dracai",
+              title: "For the Dracai",
+            },
+          ],
+        },
+      },
+      handRevealsByOwnerId: {
+        "player-2": [{ entityId: "revealed-pummel", title: "Pummel" }],
+      },
+    };
+    state.cardDefinitions["def-for-the-dracai"] = {
+      name: "For the Dracai",
+      cardType: "action",
+    };
+
+    renderTabletop(state);
+
+    const shelf = screen.getByTestId("deck-reveal-shelf");
+    expect(shelf.getAttribute("data-reveal-position")).toBe("top");
+    expect(shelf.getAttribute("data-reveal-count")).toBe("1");
+    fireEvent.click(shelf);
+    // Revealed cards inspect through the game-wide hover preview, not the
+    // generic inspector popover.
+    const shelfCard = await screen.findByTestId("deck-reveal-card");
+    expect(shelfCard.getAttribute("data-fab-preview-id")).not.toBeNull();
+    expect(shelfCard.getAttribute("data-fab-canonical-id")).toBe("def-for-the-dracai");
+    const recall = screen.getByTestId("fab-hand-reveal-recall");
+    expect(recall.getAttribute("aria-label")).toBe("Revealed in opponent hand: Pummel");
+    expect(recall.querySelector('[data-revealed-entity-id="revealed-pummel"]')).not.toBeNull();
+    expect(recall.querySelector("[data-fab-preview-id]")).not.toBeNull();
+  });
+
   it("keeps the desktop sidebar and removes mobile rails at laptop width", async () => {
     Object.defineProperty(window, "innerWidth", {
       configurable: true,
@@ -3929,6 +3976,66 @@ describe("Flesh and Blood board", () => {
     expect(screen.getByTestId("fab-card-preview").getAttribute("data-visible")).toBe("true");
   });
 
+  it("renders per-card automation controls on own permanents and dispatches the yield toggle", () => {
+    const state = createClosedWithPermanentsFixtureState({ bothPlayers: true });
+    // buildPlayerState derives zone order from state.cards, so the first own
+    // permanent in insertion order is its stack's representative.
+    const ownPermanentId = Object.values(state.cards).find(
+      (card) => card.ownerId === "player-1" && card.zone === "permanent",
+    )!.id;
+    const instantYieldToggle: FabLegalCommand = {
+      move: "set-automation-preferences",
+      label: "Auto-yield this card",
+      payload: { addInstantYieldCardId: state.cards[ownPermanentId]!.cardId },
+      sourceInstanceId: ownPermanentId,
+    };
+    const onLegalCommand = vi.fn();
+    renderTabletop(
+      { ...state, optionalTriggerAutomation: { [ownPermanentId]: "ask" } },
+      { readOnly: false, legalCommands: [instantYieldToggle], onLegalCommand },
+    );
+
+    const ownPermanentZone = document.querySelector(
+      '[data-player-id="player-1"] [data-zone="permanent"]',
+    ) as HTMLElement | null;
+    expect(ownPermanentZone).not.toBeNull();
+    const ownZone = ownPermanentZone!;
+    expect(
+      within(ownZone)
+        .getByRole("button", { name: /Configure optional effects for/ })
+        .getAttribute("aria-label"),
+    ).toContain("Current setting: Ask every time");
+
+    fireEvent.click(
+      within(ownZone).getByRole("button", { name: /Configure Instant auto-yield for/ }),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /Auto-yield this card/ }));
+    expect(onLegalCommand).toHaveBeenCalledWith(instantYieldToggle);
+
+    const opponentPermanentZone = document.querySelector(
+      '[data-player-id="player-2"] [data-zone="permanent"]',
+    );
+    expect(opponentPermanentZone?.querySelectorAll(".fab-trigger-automation__button")).toHaveLength(
+      0,
+    );
+  });
+
+  it("renders automation controls on own permanents in the mobile permanents row only", () => {
+    const state = createClosedWithPermanentsFixtureState({ bothPlayers: true });
+    const ownPermanentId = Object.values(state.cards).find(
+      (card) => card.ownerId === "player-1" && card.zone === "permanent",
+    )!.id;
+    renderTabletop(
+      { ...state, optionalTriggerAutomation: { [ownPermanentId]: "ask" } },
+      { forceMobileLayout: true },
+    );
+
+    const selfRow = screen.getByTestId("fab-permanents-player");
+    expect(selfRow.querySelectorAll(".fab-trigger-automation__button").length).toBeGreaterThan(0);
+    const opponentRow = screen.getByTestId("fab-permanents-opponent");
+    expect(opponentRow.querySelectorAll(".fab-trigger-automation__button")).toHaveLength(0);
+  });
+
   it("opens the shared card popover for a real card with a payable optional additional cost", async () => {
     const match = getFabEngineScenario("additional-cost-keyword-lab")?.boot();
     if (!match) throw new Error("Missing additional-cost keyword lab scenario.");
@@ -4059,7 +4166,12 @@ describe("Flesh and Blood board", () => {
       fireEvent.click(screen.getByRole("button", { name: /^Sand Sketched Plan, card, player-1,/ }));
 
       let modal = await screen.findByTestId("target-filter-modal");
-      expect(within(modal).getByRole("heading", { name: "Search your deck" })).not.toBeNull();
+      // The chooser titles itself with the card whose effect is asking.
+      expect(within(modal).getByRole("heading", { name: "Sand Sketched Plan" })).not.toBeNull();
+      expect(
+        within(modal).getByText("Choose the card this effect requires from your deck."),
+      ).not.toBeNull();
+      expect(within(modal).getByTestId("fab-choice-source-text")).not.toBeNull();
       expect(within(modal).getByText("0/1 selected")).not.toBeNull();
 
       for (const cardName of ["Alpha Rampage", "Snatch", "Nimblism"]) {
@@ -4109,7 +4221,7 @@ describe("Flesh and Blood board", () => {
         "/public/fab/assets/full/",
       );
 
-      fireEvent.click(within(modal).getByRole("button", { name: "Minimize Search your deck" }));
+      fireEvent.click(within(modal).getByRole("button", { name: "Minimize Sand Sketched Plan" }));
       expect(screen.queryByTestId("target-filter-modal")).toBeNull();
       const prompt = screen.getByTestId("interaction-resolution-prompt");
       fireEvent.click(within(prompt).getByRole("button", { name: "Choose card" }));

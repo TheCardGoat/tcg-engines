@@ -1,6 +1,6 @@
 import { op01MonkeyDLuffy003, op06Uta001, op09Shanks001 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Usopp022 } from "../../../../../cards/src/cards/OP14EB04/characters/022-usopp.ts";
+import { op14eb04Usopp022 } from "../../../../../cards/src/cards/characters/op14-022-usopp.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

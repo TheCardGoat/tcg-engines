@@ -157,7 +157,7 @@ packages/engine/src/moves/
   play-card.ts              ← Play unit/program/gear (pay cost, resolve PLAY trigger)
   play-gosolo.ts            ← GO SOLO: play as ready unit that can attack
   sell-card.ts              ← Sell for 1 eddie (hasSellTag check)
-  call-legend.ts            ← Flip face-down legend for 2 eddies, resolve FLIP trigger
+  call-legend.ts            ← Flip face-down legend for 1 €$ (CR 11.11.1), resolve CALL trigger
   attack-unit.ts            ← Attack spent rival unit → fight resolution
   attack-rival.ts           ← Direct attack → steal gigs
   use-blocker.ts            ← Defensive interrupt: redirect attack

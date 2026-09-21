@@ -96,7 +96,7 @@ export const moltenArrow: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
           kind: "activated",
           text: "Banish three other fire element cards from your graveyard: Load the card from your graveyard into target unloaded Bow weapon you control.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "select-and-move",
             player: "controller",

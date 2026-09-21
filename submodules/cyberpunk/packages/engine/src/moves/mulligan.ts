@@ -2,6 +2,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { SeededRNG } from "../state/rng.ts";
 import type { CardInstanceId } from "../types/branded.ts";
 import { privateField } from "../logging/private-field.ts";
+import { isOpeningHandDecisionWindow } from "../state/turn-info.ts";
 import { advanceIfBothDecided } from "./keep-hand.ts";
 import { createDefaultMetaForZone } from "../types/card-instance.ts";
 
@@ -19,8 +20,11 @@ export const mulliganMove: MoveDefinition<MulliganInput> = {
     if (!player) {
       return false;
     }
+    if (player.mulliganDone) {
+      return false;
+    }
 
-    return !player.mulliganDone;
+    return isOpeningHandDecisionWindow(state, playerId);
   },
 
   validate({ state, playerId }) {
@@ -33,6 +37,13 @@ export const mulliganMove: MoveDefinition<MulliganInput> = {
     }
     if (player.mulliganDone) {
       return { valid: false, error: "Already mulliganed", errorCode: "ALREADY_MULLIGANED" };
+    }
+    if (!isOpeningHandDecisionWindow(state, playerId)) {
+      return {
+        valid: false,
+        error: "The player going first must decide whether to mulligan first",
+        errorCode: "NOT_YOUR_TURN",
+      };
     }
     return { valid: true };
   },

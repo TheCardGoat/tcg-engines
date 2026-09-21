@@ -9,14 +9,9 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 function startP1TurnAndGainOnlyFixerDie(engine: CyberpunkTestEngine, rngState: number): void {
-  engine.completeTurn({ as: P2 });
-  const choice = engine.getState().G.turnMetadata.pendingChoice;
-  expect(choice?.type).toBe("gainGig");
-  if (!choice || choice.type !== "gainGig") {
-    throw new Error("Expected P1 to choose a Gig at turn start.");
-  }
   engine.getState().ctx.rngState = { state: rngState };
-  engine.gainGig(choice.payload.allowedDieIds[0]!, { as: P1 });
+  engine.completeTurn({ as: P2 });
+  expect(engine.getState().G.turnMetadata.pendingChoice?.type).not.toBe("gainGig");
 }
 
 function resolveKerryRollTriggersByDecliningReroll(engine: CyberpunkTestEngine): void {
@@ -65,6 +60,52 @@ function resolveKerryRerollPrompt(engine: CyberpunkTestEngine, dieId: string): v
 }
 
 describe("Kerry Eurodyne - Axe, Attitude, Audience", () => {
+  it("is the exact yellow Rocker Samurai Legend with both Gig-roll abilities", () => {
+    const kerry = welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience;
+    expect(kerry).toMatchObject({
+      type: "legend",
+      color: "yellow",
+      classifications: ["Rocker", "Samurai"],
+      printNumber: "037",
+      ram: 2,
+      hasSellTag: true,
+    });
+    expect(kerry.abilities).toEqual([
+      expect.objectContaining({
+        trigger: {
+          trigger: "event",
+          event: expect.objectContaining({
+            event: "gigRolled",
+            player: "friendly",
+            origin: "gainGig",
+          }),
+        },
+        effects: [
+          expect.objectContaining({
+            effect: "rerollGig",
+            optional: true,
+            target: expect.objectContaining({
+              selector: "context",
+              key: "triggeredGigs",
+              selection: { mode: "choose", min: 0, max: 1 },
+            }),
+          }),
+        ],
+      }),
+      expect.objectContaining({
+        trigger: {
+          trigger: "event",
+          event: expect.objectContaining({ event: "gigRolled", player: "friendly" }),
+        },
+        effects: [
+          expect.objectContaining({ effect: "draw", amount: 1 }),
+          expect.objectContaining({ effect: "draw", amount: 2 }),
+          expect.objectContaining({ effect: "draw", amount: 2 }),
+        ],
+      }),
+    ]);
+  });
+
   it("draws 1 after rolling a max non-d20 Gig and declining the optional reroll", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
@@ -79,6 +120,35 @@ describe("Kerry Eurodyne - Axe, Attitude, Audience", () => {
     );
 
     startP1TurnAndGainOnlyFixerDie(engine, 1);
+    const prompt = engine.getPrompt(P1);
+    expect(prompt.choice?.type).toBe("chooseTrigger");
+    if (!prompt.choice || prompt.choice.type !== "chooseTrigger") {
+      throw new Error("Expected Kerry's projected trigger choices.");
+    }
+    expect(prompt.choice.payload.canPass).toBe(false);
+    expect(
+      prompt.choice.payload.options.map((option) => ({
+        optional: option.optional,
+        containsOptionalEffect: option.containsOptionalEffect,
+        context: option.context && {
+          kind: option.context.kind,
+          dieType: option.context.dieType,
+          result: option.context.result,
+          origin: option.context.origin,
+        },
+      })),
+    ).toEqual([
+      {
+        optional: false,
+        containsOptionalEffect: true,
+        context: { kind: "gigRoll", dieType: "d4", result: 4, origin: "gainGig" },
+      },
+      {
+        optional: false,
+        containsOptionalEffect: false,
+        context: { kind: "gigRoll", dieType: "d4", result: 4, origin: "gainGig" },
+      },
+    ]);
     resolveKerryRollTriggersByDecliningReroll(engine);
 
     expect(engine.getGigDice(P1).find((die) => die.dieType === "d4")?.faceValue).toBe(4);
@@ -148,6 +218,90 @@ describe("Kerry Eurodyne - Axe, Attitude, Audience", () => {
     expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
   });
 
+  it("draws 3 instead after rolling a min d20 Gig", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        deck: [
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailDelamainCab,
+          welcomeToNightCityRetailFieldOperator,
+          welcomeToNightCityRetailSwordwiseHuscle,
+        ],
+        legendArea: [
+          { card: welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
+        ],
+        fixerDice: ["d20"],
+      },
+      { deck: [welcomeToNightCityRetailFieldOperator] },
+      { activePlayerId: P2, autoGainGig: false, preserveDeckOrder: true },
+    );
+
+    startP1TurnAndGainOnlyFixerDie(engine, 4);
+    resolveKerryRollTriggersByDecliningReroll(engine);
+
+    expect(engine.getGigDice(P1).find((die) => die.dieType === "d20")?.faceValue).toBe(1);
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toEqual([
+      welcomeToNightCityRetailCorpoSecurity.id,
+      welcomeToNightCityRetailDelamainCab.id,
+      welcomeToNightCityRetailFieldOperator.id,
+      welcomeToNightCityRetailSwordwiseHuscle.id,
+    ]);
+  });
+
+  it("draws from a rerolled boundary result without offering a second reroll", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        deck: [welcomeToNightCityRetailCorpoSecurity, welcomeToNightCityRetailDelamainCab],
+        legendArea: [
+          { card: welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
+        ],
+        fixerDice: ["d12"],
+      },
+      { deck: [welcomeToNightCityRetailFieldOperator] },
+      { activePlayerId: P2, autoGainGig: false, preserveDeckOrder: true },
+    );
+
+    startP1TurnAndGainOnlyFixerDie(engine, 6);
+    const die = engine.getGigDice(P1).find((candidate) => candidate.dieType === "d12");
+    if (!die) throw new Error("Expected P1 to have gained the d12.");
+    expect(die.faceValue).toBe(10);
+
+    resolveKerryRerollPrompt(engine, die.id);
+
+    expect(engine.getGigDice(P1).find((candidate) => candidate.id === die.id)?.faceValue).toBe(1);
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toEqual([
+      welcomeToNightCityRetailCorpoSecurity.id,
+      welcomeToNightCityRetailDelamainCab.id,
+    ]);
+    expectNoKerryRerollPrompt(engine);
+  });
+
+  it("keeps the mandatory draw from the original boundary roll after rerolling", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        deck: [welcomeToNightCityRetailCorpoSecurity, welcomeToNightCityRetailDelamainCab],
+        legendArea: [
+          { card: welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience, faceDown: false },
+        ],
+        fixerDice: ["d4"],
+      },
+      { deck: [welcomeToNightCityRetailFieldOperator] },
+      { activePlayerId: P2, autoGainGig: false, preserveDeckOrder: true },
+    );
+
+    startP1TurnAndGainOnlyFixerDie(engine, 1);
+    const die = engine.getGigDice(P1).find((candidate) => candidate.dieType === "d4");
+    if (!die) throw new Error("Expected P1 to have gained the d4.");
+    expect(die.faceValue).toBe(4);
+
+    resolveKerryRerollPrompt(engine, die.id);
+
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+  });
+
   it("does not offer the reroll ability again after rerolling the just-rolled Gig", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
@@ -176,7 +330,7 @@ describe("Kerry Eurodyne - Axe, Attitude, Audience", () => {
       .find((event) => event.messageKey === "trigger.targetResolved.rerollGig");
     expect(rerollLog?.params).toMatchObject({
       targetNames: "D12",
-      sourceCardName: "Kerry Eurodyne — Axe, Attitude, Audience",
+      sourceCardName: "Kerry Eurodyne: Axe, Attitude, Audience",
       previousValue: rollEvents[0]?.result,
       newValue: rollEvents[1]?.result,
     });

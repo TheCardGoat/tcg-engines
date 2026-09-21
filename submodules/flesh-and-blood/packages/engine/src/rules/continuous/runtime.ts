@@ -126,7 +126,7 @@ function activeLatchedSubjects(
   if (subjects.length === 0) {
     return instance.futureApplicability ||
       instance.initialSubjects.some(isExactAttackRef) ||
-      (isPlayPermission && instance.initialSubjects.length > 0)
+      instance.initialSubjects.length > 0
       ? []
       : undefined;
   }
@@ -367,11 +367,11 @@ function exactSubjectObjectRef(
       ? { instanceId: subject.instanceId, incarnation: subject.incarnation }
       : null;
   }
-  // Duration grants follow the physical card across zone-reset incarnations
-  // (Tear Through the Portal: go again on a banished card, then play it).
+  // CR 3.0.9: a duration does not carry a locked effect onto a new object.
+  // Moving a card to the stack does not reset it; genuine zone resets do.
   const live = state.objects[subject.instanceId];
-  if (!live) return null;
-  return { instanceId: live.instanceId, incarnation: live.incarnation };
+  if (!live || live.incarnation !== subject.incarnation) return null;
+  return subject;
 }
 
 function continuousExpiryIsActive(

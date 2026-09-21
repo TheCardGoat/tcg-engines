@@ -50,8 +50,17 @@ export const weissKnight: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
               subject: {
                 kind: "event-object",
                 filter: {
-                  kind: "subtype",
-                  oneOf: ["COMMAND"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "subtype",
+                      oneOf: ["CHESSMAN"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["COMMAND"],
+                    },
+                  ],
                 },
               },
             },

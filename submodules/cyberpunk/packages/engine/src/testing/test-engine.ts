@@ -18,7 +18,7 @@ import type {
   MoveInput,
 } from "../types/commands.ts";
 import type { CardInstance } from "../types/card-instance.ts";
-import type { CardInstanceId, PlayerId } from "../types/branded.ts";
+import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import type { GigDie } from "../types/gig-die.ts";
 import type { GameEvent, ActionLogEvent } from "../types/game-events.ts";
 import type {
@@ -189,7 +189,7 @@ function resolveCardRef(
   const pid = playerId ? (playerId as string) : "p1";
   const searchZones: CardZone[] = zone
     ? [zone]
-    : ["hand", "field", "legendArea", "deck", "trash", "eddieArea"];
+    : ["hand", "field", "legendArea", "deck", "trash", "eddieArea", "removedFromGame"];
 
   for (const pidToSearch of [pid, "p1", "p2"]) {
     const player = state.G.players[pidToSearch];
@@ -250,6 +250,8 @@ export class CyberpunkTestEngine {
   private engine: LocalEngine;
   private eventLog: GameEvent[] = [];
   private autoGainGig: boolean;
+  private autoChooseFirstPlayer: boolean;
+  private stagedAdjustGigTarget: { dieId: GigDieId; chooserId: PlayerId } | null = null;
   // Monotonic counter for synthesised command IDs. Replaces wall-clock /
   // Math.random ids so runs (and replays) are byte-identical given the same
   // sequence of moves.
@@ -262,11 +264,13 @@ export class CyberpunkTestEngine {
     this.engine = new LocalEngine(stateWithActiveEffects);
     registerMoves({ ...allMoves, ...judgeAllMoves });
     this.autoGainGig = opts?.autoGainGig ?? true;
+    this.autoChooseFirstPlayer = opts?.autoChooseFirstPlayer ?? true;
     // The auto-advance from setup→play (via mulligan/keepHand inside
     // createTestMatchState path) may already have set a `gainGig` pending
     // choice. Resolve it on construction so plain skipSetup:true tests don't
     // see a hanging choice.
     this.maybeAutoResolveGainGig();
+    this.maybeAutoResolveFirstPlayer();
   }
 
   static createWithFixture(
@@ -402,7 +406,7 @@ export class CyberpunkTestEngine {
 
   gainGig(die: string | { id: string }, opts?: MoveOpts): CommandSuccess {
     const playerId = opts?.as ?? this.getActivePlayerId();
-    const dieId = typeof die === "string" ? die : die.id;
+    const dieId = (typeof die === "string" ? die : die.id) as GigDieId;
     return this.exec("gainGig", { args: { dieId } }, playerId);
   }
 
@@ -547,20 +551,74 @@ export class CyberpunkTestEngine {
     return this.exec("resolveDiscardFromHand", { args: { cardIds } }, playerId);
   }
 
-  /**
-   * Resolves a `chooseTarget / adjustGig` pending choice by setting the
-   * targeted die to `value`. Use after a card like Jackie Welles suspends with
-   * an adjustGig value choice (e.g. decrease by up to 2). `value` is the
-   * absolute face value to set, not a delta.
-   */
-  resolveAdjustGig(value: number, opts?: MoveOpts): CommandSuccess {
+  /** Resolve the Gig and value as one authoritative adjustment command. */
+  resolveAdjustGig(die: string | GigDie, value: number, opts?: MoveOpts): CommandSuccess;
+  /** @deprecated Pass the Gig explicitly so the test models the atomic player action. */
+  resolveAdjustGig(value: number, opts?: MoveOpts): CommandSuccess;
+  resolveAdjustGig(
+    dieOrValue: string | GigDie | number,
+    valueOrOpts?: number | MoveOpts,
+    explicitOpts?: MoveOpts,
+  ): CommandSuccess {
     const state = this.getState();
     const choice = state.G.turnMetadata.pendingChoice;
-    if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "adjustGig") {
-      throw new Error("No chooseTarget adjustGig pending choice to resolve");
+    if (
+      !choice ||
+      choice.type !== "chooseTarget" ||
+      (choice.payload.type !== "adjustGig" &&
+        !(choice.payload.type === "effectTarget" && choice.payload.adjustGig))
+    ) {
+      throw new Error("No atomic adjustGig pending choice to resolve");
     }
+    const legacyCall = typeof dieOrValue === "number";
+    const opts = (legacyCall ? valueOrOpts : explicitOpts) as MoveOpts | undefined;
+    const value = legacyCall ? dieOrValue : (valueOrOpts as number);
     const playerId = opts?.as ?? choice.chooserId;
-    return this.exec("resolveAdjustGig", { args: { value } }, playerId);
+    const inferredDieId =
+      this.stagedAdjustGigTarget?.chooserId === playerId
+        ? this.stagedAdjustGigTarget.dieId
+        : choice.payload.type === "adjustGig"
+          ? choice.payload.dieId
+          : choice.payload.eligibleIds?.length === 1
+            ? choice.payload.eligibleIds[0]
+            : undefined;
+    const dieId = (
+      legacyCall ? inferredDieId : typeof dieOrValue === "string" ? dieOrValue : dieOrValue.id
+    ) as GigDieId | undefined;
+    if (!dieId) {
+      throw new Error("Atomic adjustGig tests must specify which Gig is adjusted");
+    }
+    const adjustment =
+      choice.payload.type === "effectTarget" ? choice.payload.adjustGig : choice.payload;
+    if (adjustment?.chooseUpTo && state.G.gigDice[dieId]?.faceValue === value) {
+      const result = this.exec("resolveAdjustGig", { args: { kind: "noAdjustment" } }, playerId);
+      this.stagedAdjustGigTarget = null;
+      return result;
+    }
+    const result = this.exec(
+      "resolveAdjustGig",
+      { args: { kind: "adjust", dieId, value } },
+      playerId,
+    );
+    this.stagedAdjustGigTarget = null;
+    return result;
+  }
+
+  declineAdjustGig(opts?: MoveOpts): CommandSuccess {
+    const choice = this.getState().G.turnMetadata.pendingChoice;
+    if (
+      !choice ||
+      choice.type !== "chooseTarget" ||
+      (choice.payload.type !== "adjustGig" &&
+        !(choice.payload.type === "effectTarget" && choice.payload.adjustGig))
+    ) {
+      throw new Error("No atomic adjustGig pending choice to decline");
+    }
+    return this.exec(
+      "resolveAdjustGig",
+      { args: { kind: "noAdjustment" } },
+      opts?.as ?? choice.chooserId,
+    );
   }
 
   /**
@@ -589,6 +647,49 @@ export class CyberpunkTestEngine {
     }
     const playerId = opts?.as ?? choice.chooserId;
     return this.exec("resolvePreventGigSteal", { args: { pass: true, preventions: [] } }, playerId);
+  }
+
+  /** Spend 1 €$ and defeat Jackie (or another redirect source) instead of the protected Unit. */
+  applyRedirectDefeat(opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "redirectDefeat") {
+      throw new Error("No redirectDefeat pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveRedirectDefeat", { args: { pass: false } }, playerId);
+  }
+
+  /** Decline the optional defeat replacement so the original Unit is defeated. */
+  declineRedirectDefeat(opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "redirectDefeat") {
+      throw new Error("No redirectDefeat pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveRedirectDefeat", { args: { pass: true } }, playerId);
+  }
+
+  /** Choose which attached Gear is defeated instead of its host (CR 10.28.1). */
+  chooseSacrificialGear(cardId: string, opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseSacrificialGear") {
+      throw new Error("No chooseSacrificialGear pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveSacrificialGear", { args: { cardId } }, playerId);
+  }
+
+  resolveFirstPlayer(goFirst: boolean, opts?: MoveOpts): CommandSuccess {
+    const state = this.getState();
+    const choice = state.G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseFirstPlayer") {
+      throw new Error("No chooseFirstPlayer pending choice to resolve");
+    }
+    const playerId = opts?.as ?? choice.chooserId;
+    return this.exec("resolveFirstPlayer", { args: { goFirst } }, playerId);
   }
 
   resolve(card: CardRef, targets: ResolveTargets, opts?: MoveOpts): CommandSuccess {
@@ -644,7 +745,7 @@ export class CyberpunkTestEngine {
   resolveEffectTargetIds(
     targetIds: ReadonlyArray<string>,
     opts?: ResolveEffectTargetOpts,
-  ): CommandSuccess {
+  ): CommandSuccess | undefined {
     const state = this.getState();
     const choice = state.G.turnMetadata.pendingChoice;
     if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
@@ -661,6 +762,19 @@ export class CyberpunkTestEngine {
           .map((id) => describeCardId(state, id))
           .join(", ")}].`,
       );
+    }
+    if (choice.payload.adjustGig) {
+      if (targetIds.length === 0) {
+        return this.declineAdjustGig({ as: playerId });
+      }
+      if (targetIds.length !== 1) {
+        throw new Error("An atomic Gig adjustment requires exactly one staged Gig target");
+      }
+      this.stagedAdjustGigTarget = {
+        dieId: targetIds[0] as GigDieId,
+        chooserId: playerId,
+      };
+      return undefined;
     }
     const result = this.exec(
       "resolveEffectTarget",
@@ -1230,6 +1344,7 @@ export class CyberpunkTestEngine {
       // they don't have to call gainGig() after every turn end. Tests that
       // need rules-faithful behavior pass `autoGainGig: false`.
       if (move !== "gainGig") this.maybeAutoResolveGainGig();
+      if (move !== "resolveFirstPlayer") this.maybeAutoResolveFirstPlayer();
     }
 
     return result;
@@ -1256,6 +1371,23 @@ export class CyberpunkTestEngine {
         commandID: `auto-gaingig-${++this.commandCounter}`,
         move: "gainGig",
         input: { args: { dieId: dieId as string } },
+      },
+      choice.chooserId,
+    );
+    if (result.success) {
+      this.eventLog.push(...result.gameEvents);
+    }
+  }
+
+  private maybeAutoResolveFirstPlayer(): void {
+    if (!this.autoChooseFirstPlayer) return;
+    const choice = this.engine.getState().G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseFirstPlayer") return;
+    const result = this.engine.processCommand(
+      {
+        commandID: `auto-first-player-${++this.commandCounter}`,
+        move: "resolveFirstPlayer",
+        input: { args: { goFirst: true } },
       },
       choice.chooserId,
     );

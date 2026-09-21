@@ -42,8 +42,9 @@ describe("Endear Devotion (FNG012) AAA", () => {
     Fang.must.playReaction(endearDevotionRed);
     game.passBoth();
 
-    // Obsidian Fire Vein 1 + 3.
-    expectCombat(game).toHaveAttackPower(4);
+    // Obsidian Fire Vein 1 + 3, plus its live "+1{p} and go again" turned on
+    // by this link's Draconic reaction.
+    expectCombat(game).toHaveAttackPower(5);
     expectFabCard(Fang, endearDevotionRed).toBeIn("graveyard");
     expectFabPlayer(Fang).toHaveTokenCount("fealty", 0);
   });
@@ -96,7 +97,8 @@ describe("Endear Devotion (FNG012) AAA", () => {
     Fang.must.playReaction(endearDevotionRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(4);
+    // 1 + 3 + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(5);
     expectFabPlayer(Fang).toHaveTokenCount("fealty", 1);
   });
 });

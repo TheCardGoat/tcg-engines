@@ -224,12 +224,35 @@ export interface FabPresentationState {
   /** Owner-private one-shot priority-hold arm; null when not seated. */
   readonly priorityHoldArmed?: boolean | null;
   /**
+   * Owner-private one-shot auto-pass scope ("this combat" / "the opponent's
+   * turn") while inside its boundary; null when unarmed or expired. While
+   * armed the engine drains the seat's pass-only windows — instants blanket-
+   * yielded, optional triggers auto-declined — until the scope's boundary.
+   */
+  readonly scopedAutoPass?: import("@tcg/flesh-and-blood-engine/simulator").FabViewerState["scopedAutoPass"];
+  /**
    * Pending rules layers, ordered so index 0 resolves next.
    * This remains available outside a combat chain (for example, an action
    * followed by an instant ability while its controller retains priority).
    */
   readonly stackInstanceIds?: readonly string[];
   readonly combat: FabPresentationCombat | null;
+  /**
+   * Turn-scoped public deck-edge reveals (CR 8.5.17) derived from the engine
+   * viewer state, keyed by deck owner. The tabletop renders each entry on the
+   * owner's deck shelf until the turn ends. Absent when no deck-edge reveal
+   * is currently inspectable.
+   */
+  readonly deckRevealsByOwnerId?: Readonly<
+    Record<string, import("@tcg/simulator-contract").SimulatorDeckReveal | undefined>
+  >;
+  /**
+   * Turn-scoped public hand reveals (CR 8.5.17) derived from the engine viewer
+   * state, keyed by hand owner. Absent when no hand reveal is inspectable.
+   */
+  readonly handRevealsByOwnerId?: Readonly<
+    Record<string, readonly import("@tcg/simulator-contract").SimulatorDeckRevealCard[] | undefined>
+  >;
   /** Public context for a card that remains announced while its cost is paid. */
   readonly prompt?: {
     readonly kind: "pay-resource-cost";
@@ -242,6 +265,12 @@ export interface FabPresentationState {
 
 export type FabPresentationHeroSignal =
   | { readonly kind: "flag"; readonly id: "cheered" | "booed" | "charged" }
+  | {
+      /** CR 9.3 marked — persists until an opponent's hit removes it (CR 9.3.3). */
+      readonly kind: "flag";
+      readonly id: "marked";
+      readonly duration: "until-hit";
+    }
   | {
       readonly kind: "count";
       readonly id: "intimidate" | "weapon-attacks" | "soul-added";

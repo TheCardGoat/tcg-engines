@@ -1,9 +1,10 @@
+import { GrandArchiveCardActions } from "./GrandArchiveCardActions";
 import { getGrandArchiveCard } from "@tcg/grand-archive-cards";
 import { GrandArchiveRoleCard } from "./GrandArchiveRoleCard";
 import { Modal, Group, Tooltip } from "@mantine/core";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { SimulatorViewportRailPortal, useSimulatorViewportLayout } from "@tcg/simulator-ui";
-import { Layers, Library, Skull, Flame, Brain } from "lucide-react";
+import { Layers, Library, Skull, Flame, Brain, Zap } from "lucide-react";
 import {
   grandArchiveCardPresentation,
   grandArchiveConcealedCard,
@@ -80,6 +81,9 @@ export function GrandArchivePlayerTable({
         <button
           type="button"
           className="ga-player-target"
+          data-card-interaction={
+            interaction.selectedIds.includes(seat.id) ? "selected" : "targetable"
+          }
           data-selected={interaction.selectedIds.includes(seat.id) || undefined}
           aria-pressed={interaction.selectedIds.includes(seat.id)}
           onClick={() => interaction.selectEntity(seat.id)}
@@ -189,6 +193,13 @@ function GrandArchiveSeatZone({
       <div
         key={entity.id}
         className="ga-seat-zone__card"
+        data-card-interaction={
+          interaction.selectedIds.includes(entity.id)
+            ? "selected"
+            : targetable
+              ? "targetable"
+              : "idle"
+        }
         data-sim-entity-id={inspectionAnchor ? entity.id : undefined}
         role={inspectionAnchor ? "group" : undefined}
         tabIndex={inspectionAnchor ? -1 : undefined}
@@ -208,13 +219,27 @@ function GrandArchiveSeatZone({
         <GrandArchiveRoleCard
           entity={faceDown ? { ...entity, face: "hidden" } : entity}
           accessibleLabel={known && faceDown ? entity.title : undefined}
+          attackRole={
+            interaction.attackSourceId === entity.id
+              ? "source"
+              : interaction.attackTargetIds.includes(entity.id)
+                ? "target"
+                : interaction.attackTargeting && targetable
+                  ? "candidate"
+                  : undefined
+          }
           density="mini"
           fullImageFit="contain"
           as={known || targetable ? "button" : "div"}
           tabIndex={known || targetable ? 0 : -1}
           selected={interaction.selectedIds.includes(entity.id)}
           targetable={targetable}
-          dimmed={interaction.candidateIds.length > 0 && !targetable}
+          dimmed={
+            interaction.candidateIds.length > 0 &&
+            !targetable &&
+            interaction.attackSourceId !== entity.id &&
+            !interaction.attackTargetIds.includes(entity.id)
+          }
           onClick={() => {
             if (targetable) interaction.selectEntity(entity.id);
             else if (known) interaction.previewEntity(entity);
@@ -379,6 +404,7 @@ function GrandArchivePile({
   readonly entitiesById: ReadonlyMap<string, SimulatorEntity>;
 }) {
   const [open, setOpen] = useState(false);
+  const actions = useContext(GrandArchiveCardActions);
   const interaction = useGrandArchiveInteractionWorkspace();
   useEffect(() => {
     if (interaction.active) setOpen(false);
@@ -404,7 +430,14 @@ function GrandArchivePile({
   const countLabel = `${count} ${count === 1 ? "card" : "cards"}`;
   const deck = name === "main-deck" || name === "material-deck";
   const ownerLabel = seat.perspective === "bottom" ? "Your" : "Opponent";
-  const accessibleLabel = `${ownerLabel} ${label}, ${countLabel}`;
+  const actionableCount = visible.filter(
+    (entity) =>
+      entity.face === "public" &&
+      actions.some(
+        (action) => action.sourceEntityId === entity.id && action.availability.kind === "enabled",
+      ),
+  ).length;
+  const accessibleLabel = `${ownerLabel} ${label}, ${countLabel}${actionableCount ? `, ${actionableCount} with available actions` : ""}`;
   const targetable =
     !interaction.hasFocusedChoice &&
     visible.some((entity) => interaction.candidateIds.includes(entity.id));
@@ -421,6 +454,7 @@ function GrandArchivePile({
           aria-label={accessibleLabel}
           aria-haspopup="dialog"
           data-targetable={targetable || undefined}
+          data-actionable={actionableCount > 0 || undefined}
           onClick={() => {
             interaction.previewEntity(undefined);
             setOpen(true);
@@ -428,6 +462,9 @@ function GrandArchivePile({
         >
           <Icon size={17} aria-hidden="true" />
           <span>{count}</span>
+          {actionableCount > 0 ? (
+            <Zap className="ga-zone-counter__available" size={10} aria-hidden="true" />
+          ) : null}
         </button>
       </Tooltip>
       <Modal

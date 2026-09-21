@@ -15,6 +15,7 @@ export const coatOfFrost = defineCard(fabCardIdentitiesByCanonicalId["KdPWDMfBd8
       effect: {
         type: "create-token",
         token: "frostbite",
+        creator: "effect-controller",
         controller: "any",
       },
     },

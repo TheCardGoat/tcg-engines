@@ -29,7 +29,7 @@ export const welcomeToNightCityRetailTBugAmateurPhilosopher = defineCyberpunkCar
   abilities: [
     {
       kind: "triggered",
-      text: "Defeated Look at all friendly face-down Legends. Then, you may Call a Legend for free.",
+      text: "{Defeated} Look at all friendly face-down Legends. Then, you may Call a Legend for free.",
       trigger: { trigger: "defeated" },
       source: { selector: "self" },
       effects: [

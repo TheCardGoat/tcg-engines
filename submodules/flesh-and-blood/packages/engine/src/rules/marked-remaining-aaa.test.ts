@@ -348,11 +348,10 @@ describe("remaining Marked AAA", () => {
       const daggerId = game.getState().containers.zonesByPlayerId[attacker.id]!.combatChain[0]!;
       attacker.play(reaction, { targetInstanceId: daggerId });
       game.passBoth();
-      game.advanceToDecision(attacker, "boolean");
-      attacker.chooseBoolean(true);
-      // CR 5.2.3 changes only the activation limit. It does not create AP.
-      expect(attacker.actionPoints()).toBe(0);
       game.helpers.resolveRestOfCombat();
+      // CR 5.2.3c: the marked-hit grant applies by itself (no boolean to
+      // answer) and changes only the activation limit — it creates no AP.
+      expect(attacker.actionPoints()).toBe(0);
       attacker.expectActivationRejected(harmonizedKodachi, "insufficient_action_points");
     },
   );

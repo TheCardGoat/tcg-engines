@@ -45,6 +45,7 @@ export const ezSqeezBookieSyndicate = defineCard(
               prize: {
                 type: "create-token",
                 token: "gold",
+                creator: "token-controller",
                 controller: "winner",
                 count: 2,
               },

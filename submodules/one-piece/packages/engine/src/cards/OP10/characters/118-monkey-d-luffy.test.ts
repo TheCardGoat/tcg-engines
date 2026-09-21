@@ -6,7 +6,7 @@ import {
   op01Shanks120,
   op12UrsaShock096,
 } from "@tcg/op-cards";
-import { op10MonkeyDLuffy118 } from "../../../../../cards/src/cards/OP10/characters/118-monkey-d-luffy.ts";
+import { op10MonkeyDLuffy118 } from "../../../../../cards/src/cards/characters/op10-118-monkey-d-luffy.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -32,6 +32,7 @@ export const clashOfVigor = definePitchFamily(fabPitchFamilies["clash-of-vigor"]
           prize: {
             type: "create-token",
             token: "vigor",
+            creator: "token-controller",
             controller: "winner",
           },
         },

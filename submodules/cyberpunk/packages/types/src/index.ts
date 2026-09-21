@@ -159,6 +159,8 @@ export const KNOWN_SET_CODES = [
   "welcometonightcityretail",
   "prereleasebeta",
   "edgerunneropens1",
+  "nightcitybrawls1",
+  "nightcityshowdowns1",
 ] as const;
 
 export type KnownSetCode = (typeof KNOWN_SET_CODES)[number];
@@ -388,7 +390,15 @@ export type RelativePlayer = "friendly" | "rival" | "owner";
 
 export type EventPlayer = RelativePlayer | "any";
 
-export type CardZone = "field" | "hand" | "deck" | "trash" | "legendArea" | "gigArea" | "eddieArea";
+export type CardZone =
+  | "field"
+  | "hand"
+  | "deck"
+  | "trash"
+  | "legendArea"
+  | "gigArea"
+  | "eddieArea"
+  | "removedFromGame";
 
 export type CardState = "ready" | "spent";
 
@@ -421,6 +431,7 @@ export type RuleModifier =
   | "cantStealGigBelowPower"
   | "cantBeDefeatedInFight"
   | "sacrificeInsteadOfHostDefeat"
+  | "redirectFriendlyDefeatToSelf"
   | "callLegendFree";
 
 export interface PerCountValue {
@@ -516,6 +527,17 @@ export interface TargetSelectionDSL {
   min: number;
   max: number;
   /**
+   * Allow the chooser to decline this choice while preserving its exact
+   * non-zero selection cardinality when the choice is accepted.
+   */
+  canDecline?: boolean;
+  /**
+   * Validate an ordered two-Gig choice as a legal value-copy operation.
+   * The first selected Gig supplies the value and the second receives it.
+   * The between-players variant additionally requires different owners.
+   */
+  pairConstraint?: "gig-copy" | "gig-copy-between-players";
+  /**
    * Which player makes this choice. Defaults to the ability's controller.
    * Use this for effects such as "each player chooses" where a rival must
    * select from their own eligible cards.
@@ -551,6 +573,8 @@ export interface CardTargetDSL {
    */
   excludeOf?: TargetDSL;
   hasAttachedCards?: boolean;
+  /** Restrict to cards that currently have (or do not have) Lag. */
+  hasLag?: boolean;
   attachedTo?: TargetDSL;
   costEqualsGigValueOf?: TargetDSL;
   powerEqualsGigValueOf?: TargetDSL;
@@ -709,6 +733,14 @@ export interface TargetValueCondition {
   value: number | "min" | "max";
 }
 
+/** True only when the immediately preceding Gig adjustment changed this target to the value. */
+export interface TargetBecameValueCondition {
+  condition: "targetBecameValue";
+  target: TargetDSL;
+  property: "gigValue";
+  value: number | "min" | "max";
+}
+
 export interface AttackingCondition {
   condition: "attacking";
   target: TargetDSL;
@@ -716,6 +748,12 @@ export interface AttackingCondition {
 
 export interface LagCondition {
   condition: "hasLag";
+  target: TargetDSL;
+}
+
+/** True when the resolved card actually stole at least one Gig this turn. */
+export interface HasStolenGigThisTurnCondition {
+  condition: "hasStolenGigThisTurn";
   target: TargetDSL;
 }
 
@@ -832,6 +870,16 @@ export interface NotCondition {
 }
 
 /**
+ * Boolean disjunction of conditions. This keeps printed "A or B" clauses as
+ * one effect instead of duplicating that effect and potentially offering the
+ * same optional action more than once.
+ */
+export interface AnyCondition {
+  condition: "any";
+  of: Condition[];
+}
+
+/**
  * True when the first resolved target's requested numeric property has the
  * given parity. Used by cards that branch on even vs odd Gig values
  * (e.g. Rogue Amendiares — Preem Solo).
@@ -875,8 +923,10 @@ export type Condition =
   | TurnCondition
   | OvertimeCondition
   | TargetValueCondition
+  | TargetBecameValueCondition
   | AttackingCondition
   | LagCondition
+  | HasStolenGigThisTurnCondition
   | HasGigAtMaxValueCondition
   | HasGigPairCondition
   | HasDistinctGigValuesCondition
@@ -891,6 +941,7 @@ export type Condition =
   | CardNameCondition
   | TargetExistsCondition
   | GigSidesCondition
+  | AnyCondition
   | NotCondition
   | TargetParityCondition
   | DiscardedCountMatchesGigCondition
@@ -1039,6 +1090,21 @@ export type ScryDestinationZone = "hand" | "trash" | "deckTop" | "deckBottom";
 
 export type ScryCardOrdering = "original" | "random" | "playerChoice";
 
+export interface ScrySelectionLimitContext {
+  kind: "basePlusPerCount";
+  base: number;
+  multiplier: number;
+  matchCount: number;
+  countedTarget:
+    | {
+        selector: "gig";
+        controller?: RelativePlayer;
+        minValue?: number;
+        maxValue?: number;
+      }
+    | { selector: "other" };
+}
+
 export interface ScryDestination {
   zone: ScryDestinationZone;
   min?: number;
@@ -1047,6 +1113,8 @@ export interface ScryDestination {
   reveal?: boolean;
   remainder?: boolean;
   order?: ScryCardOrdering;
+  /** Resolved, player-safe context explaining how a dynamic selection cap was calculated. */
+  selectionLimitContext?: ScrySelectionLimitContext;
 }
 
 export interface ScryEffect extends EffectBase {
@@ -1061,7 +1129,7 @@ export interface SearchDeckEffect extends EffectBase {
   player: RelativePlayer;
   lookCount: number;
   target: CardTargetDSL;
-  select: { kind: "all" } | { kind: "upTo"; max: NumericValue };
+  select: { kind: "all" } | { kind: "upTo"; min?: NumericValue; max: NumericValue };
   reveal: boolean;
   destination: ScryDestinationZone;
   remainder?: {
@@ -1395,6 +1463,8 @@ export interface GigStolenEvent {
   player: RelativePlayer;
   target: GigTargetDSL;
   minAmount?: number;
+  /** Resolve this trigger once for each Gig in a simultaneous steal. */
+  perGig?: boolean;
   source?: TargetDSL;
   /**
    * When true, the stolen Gig's face value must be strictly less than the
@@ -1408,6 +1478,12 @@ export interface GigValueChangedEvent {
   player: RelativePlayer;
   target: GigTargetDSL;
   direction?: "increase" | "decrease";
+}
+
+export interface GigsSwappedEvent {
+  event: "gigsSwapped";
+  player: RelativePlayer;
+  target: GigTargetDSL;
 }
 
 export interface GigRolledEvent {
@@ -1436,12 +1512,14 @@ export interface FightResolvedEvent {
   event: "fightResolved";
   /** Who controls the attacker. "any" matches both. */
   player: EventPlayer;
-  /** Required filter on the fight outcome. */
-  result: FightResult;
+  /** Optional filter on the fight outcome. Omit to match any resolved fight. */
+  result?: FightResult;
   /** Optional filter on the attacker. */
   attacker?: TargetDSL;
   /** Optional filter on the defender. */
   defender?: TargetDSL;
+  /** Optional filter on the sole winner. Mutual fights have no winner. */
+  winner?: TargetDSL;
 }
 
 export interface EventTrigger {
@@ -1457,6 +1535,7 @@ export interface EventTrigger {
     | GigStolenEvent
     | GigRolledEvent
     | GigValueChangedEvent
+    | GigsSwappedEvent
     | FightResolvedEvent;
 }
 

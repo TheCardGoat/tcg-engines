@@ -35,7 +35,12 @@ export const aetherSlash = definePitchFamily(fabPitchFamilies["aether-slash"], {
           damageType: "arcane",
           amount: 1,
           target: {
-            selector: "any-hero",
+            selector: "object",
+            declared: "on-stack",
+            player: "any",
+            zones: ["hero", "permanent"],
+            filter: { hasProperty: "life" },
+            count: 1,
           },
         },
       },

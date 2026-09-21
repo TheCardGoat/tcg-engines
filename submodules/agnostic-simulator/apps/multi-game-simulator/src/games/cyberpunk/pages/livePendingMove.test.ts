@@ -57,11 +57,29 @@ describe("LiveMatch pending remote move guards", () => {
         stateUpdate({ gameId: "other_game" }),
       ),
     ).toBe(false);
+  });
+
+  test("clears after a newer authoritative state even when a server follow-up changes correlation", () => {
     expect(
       shouldClearPendingAfterAuthoritativeState(
         pendingRemoteMove,
         stateUpdate({ correlationId: "other_corr" }),
       ),
+    ).toBe(true);
+  });
+
+  test("uses correlation as the fallback for an unversioned authoritative update", () => {
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        pendingRemoteMove,
+        stateUpdate({ stateVersion: undefined, correlationId: "other_corr" }),
+      ),
     ).toBe(false);
+    expect(
+      shouldClearPendingAfterAuthoritativeState(
+        pendingRemoteMove,
+        stateUpdate({ stateVersion: undefined, correlationId: "corr_1" }),
+      ),
+    ).toBe(true);
   });
 });

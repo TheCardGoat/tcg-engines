@@ -12,24 +12,7 @@ afterEach(() => vi.unstubAllGlobals());
 // Keep this list exact: new gaps AND repaired entries fail the audit, so the
 // documented debt cannot grow silently or outlive its repair.
 const KNOWN_SOURCE_GAPS: ReadonlySet<string> = new Set([
-  "QfFBhL9WNg9pdbTGqfPrh", // Demonbound Gloomblade, yellow
-  "Jr9TkGFQQQbFzNhQbPCCR", // Demonbound Gloomblade, blue
-  "r7JgDQFn8LQRRBDDwMMTj", // Hellbound Assault, yellow
-  "zRNknjBBKWttC7kRgJG9g", // Hellbound Assault, blue
-  "qk9CgqWCcCFdkddzNngPh", // Otherworldly Sins, red
-  "HCjKd6dWLBBJbkwhbBtfC", // Otherworldly Sins, yellow
-  "nWPD8WCfJkKhb6JRhczTk", // Otherworldly Sins, blue
-  "jpGQNdgmndK8bBGmDRhp9", // Blessing of Suraya, yellow
-  "HNdCrFPzJPThCzLBqpMdt", // Bravery of the Blade, red
-  "GDPhkGLTWbJFN6LDq9HW6", // Channel Stormgarden, yellow
-  "fCHHw7hpnDBBMk7QT6t69", // Exorcism, red
-  "WCDQmHjfcPBRfrpGh9dq8", // Mark of Neverest, blue
-  "C8jPCtGhgHQnQLLnPzdRd", // Mark of Pathstone, blue
-  "LfctPwBM8nzQKQPmpLBRm", // Mark of Ushering, blue
-  "dBwz9ngzQjPkbrdqRkhFf", // Restless Looter, red
-  "MQRmLGWG6rGCHtNChtbkm", // Restless Templar, red
-  "zQmwGLpLKkjtLTdpNdFK6", // Tome of Necrosis, red
-  "b6jbtNjPhLb8BwJPWNJ6g", // Violent Gusto, red
+  "98CqQctT9798DjgnBQ6Fg", // Rise to the Challenge, red
 ]);
 
 // Exercise the production catalog loader and match-scoped registry, including

@@ -1,4 +1,5 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { Drawer, FocusTrap } from "@mantine/core";
 import {
   IconBolt,
   IconChevronRight,
@@ -15,7 +16,9 @@ import type {
   SimulatorEntity,
 } from "@tcg/simulator-contract";
 import {
+  createContext,
   useCallback,
+  useContext,
   useEffect,
   useId,
   useMemo,
@@ -157,23 +160,27 @@ export function CardContextMenu({
     (layoutOverride ?? (shellLayout === "mobile" ? shellLayout : standaloneLayout)) === "mobile";
   const previewOpen = !isMobileLayout && (previewPinned || previewHovered);
   const nativePreviewOpen = usesNativePreview && (nativePreviewPinned || nativePreviewHovered);
-  const orderedActions = useMemo(
-    () =>
-      [...actions].sort(
-        (left, right) => left.order - right.order || left.id.localeCompare(right.id),
-      ),
-    [actions],
-  );
+  const [expandedActionId, setExpandedActionId] = useState<string | null>(null);
+  const [pointerReady, setPointerReady] = useState(false);
+  const openedAtRef = useRef(0);
+  const orderedActions = useMemo(() => sortCardActions(actions), [actions]);
+  const hideDisabledInQuickMode =
+    mode === "quick" && Boolean(visualIdentity?.hideDisabledActionsInQuickMode);
   const visibleActions = useMemo(
     () =>
-      mode === "quick" && visualIdentity?.hideDisabledActionsInQuickMode
-        ? orderedActions.filter((action) => action.availability.kind === "enabled")
+      hideDisabledInQuickMode
+        ? orderedActions.filter((action) => actionGroupIsEnabled(action))
         : orderedActions,
-    [mode, orderedActions, visualIdentity?.hideDisabledActionsInQuickMode],
+    [hideDisabledInQuickMode, orderedActions],
   );
-  const enabledActionCount = visibleActions.filter(
-    (action) => action.availability.kind === "enabled",
-  ).length;
+  const renderedActionRows = useMemo(
+    () => flattenVisibleActionRows(visibleActions, expandedActionId, hideDisabledInQuickMode),
+    [expandedActionId, hideDisabledInQuickMode, visibleActions],
+  );
+  const enabledActionCount = visibleActions.reduce(
+    (count, action) => count + enabledLeafActionCount(action),
+    0,
+  );
   const anchorRef = useMemo(
     () => (anchorElement ? { current: anchorElement } : null),
     [anchorElement],
@@ -197,6 +204,20 @@ export function CardContextMenu({
 
   useEffect(() => () => hideNativePreview(), [hideNativePreview]);
 
+  useEffect(() => {
+    setExpandedActionId(null);
+  }, [entity.id, open]);
+
+  useEffect(() => {
+    if (!open) {
+      setPointerReady(false);
+      return undefined;
+    }
+    openedAtRef.current = Date.now();
+    const timer = window.setTimeout(() => setPointerReady(true), 200);
+    return () => window.clearTimeout(timer);
+  }, [open, entity.id]);
+
   const activate = useCallback(
     (action: SimulatorCardAction) => {
       if (action.availability.kind === "disabled") {
@@ -216,7 +237,10 @@ export function CardContextMenu({
 
     const runShortcut = (event: globalThis.KeyboardEvent) => {
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      const action = visibleActions.find((candidate) => candidate.shortcut === event.key);
+      const action = renderedActionRows
+        .filter((row) => row.role === "item")
+        .map((row) => row.action)
+        .find((candidate) => candidate.shortcut === event.key);
       if (!action) return;
       event.preventDefault();
       event.stopPropagation();
@@ -225,25 +249,47 @@ export function CardContextMenu({
 
     window.addEventListener("keydown", runShortcut, true);
     return () => window.removeEventListener("keydown", runShortcut, true);
-  }, [activate, open, visibleActions]);
+  }, [activate, open, renderedActionRows]);
 
   const handleMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (visibleActions.length === 0) return;
+    if (renderedActionRows.length === 0) return;
     const currentIndex = actionRefs.current.findIndex(
       (candidate) => candidate === document.activeElement,
     );
+    const currentRow = currentIndex >= 0 ? renderedActionRows[currentIndex] : undefined;
+    if (event.key === "ArrowRight" && currentRow?.role === "submenu") {
+      event.preventDefault();
+      setExpandedActionId(currentRow.action.id);
+      return;
+    }
+    if (event.key === "ArrowLeft" && currentRow) {
+      if (currentRow.depth === 1) {
+        event.preventDefault();
+        const parentIndex = renderedActionRows.findIndex(
+          (row) => row.role === "submenu" && row.action.id === expandedActionId,
+        );
+        setExpandedActionId(null);
+        window.setTimeout(() => actionRefs.current[parentIndex]?.focus(), 0);
+        return;
+      }
+      if (currentRow.role === "submenu" && expandedActionId === currentRow.action.id) {
+        event.preventDefault();
+        setExpandedActionId(null);
+        return;
+      }
+    }
     let nextIndex: number | null = null;
     if (event.key === "ArrowDown") {
-      nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % visibleActions.length;
+      nextIndex = currentIndex < 0 ? 0 : (currentIndex + 1) % renderedActionRows.length;
     } else if (event.key === "ArrowUp") {
       nextIndex =
         currentIndex < 0
-          ? visibleActions.length - 1
-          : (currentIndex - 1 + visibleActions.length) % visibleActions.length;
+          ? renderedActionRows.length - 1
+          : (currentIndex - 1 + renderedActionRows.length) % renderedActionRows.length;
     } else if (event.key === "Home") {
       nextIndex = 0;
     } else if (event.key === "End") {
-      nextIndex = visibleActions.length - 1;
+      nextIndex = renderedActionRows.length - 1;
     }
     if (nextIndex === null) return;
     event.preventDefault();
@@ -252,280 +298,381 @@ export function CardContextMenu({
 
   if (!open || !anchorElement || !anchorRef || typeof document === "undefined") return null;
 
+  const menuSurface = (
+    <div
+      ref={floatingRef}
+      className={[
+        classes.surface,
+        isMobileLayout ? classes.mobileSurface : "",
+        visualIdentity?.className,
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      data-card-context-menu
+      data-mode={mode}
+      data-actions-first-mobile={visualIdentity?.actionsFirstOnMobile || undefined}
+      data-mobile-surface={isMobileLayout || undefined}
+      data-testid="card-context-menu"
+      data-pointer-ready={pointerReady ? "true" : "false"}
+      aria-labelledby={titleId}
+      tabIndex={-1}
+      onKeyDown={handleMenuKeyDown}
+      onClick={(event) => event.stopPropagation()}
+      onPointerDown={(event) => event.stopPropagation()}
+    >
+      {isMobileLayout ? <FocusTrap.InitialFocus /> : null}
+      <header className={classes.header}>
+        <span
+          className={classes.frameMark}
+          style={{ backgroundColor: entity.frameStyle?.color ?? "var(--game-accent)" }}
+          aria-hidden="true"
+        />
+        {visualIdentity?.renderIdentity ? (
+          <>
+            <h2 id={titleId} className={classes.srOnly}>
+              {entity.title}
+            </h2>
+            <div className={classes.identity}>
+              {visualIdentity.renderIdentity({ entity, mode })}
+            </div>
+          </>
+        ) : (
+          <DefaultCardContextIdentity entity={entity} mode={mode} titleId={titleId} />
+        )}
+        {mode === "detailed" ? (
+          <button
+            ref={previewToggleRef}
+            type="button"
+            className={classes.previewToggle}
+            aria-expanded={
+              usesNativePreview
+                ? nativePreviewOpen
+                : isMobileLayout
+                  ? mobilePreviewOpen
+                  : previewOpen
+            }
+            aria-controls={usesNativePreview || isMobileLayout ? undefined : previewId}
+            aria-haspopup={usesNativePreview ? "dialog" : isMobileLayout ? "dialog" : undefined}
+            aria-label={`${previewOpen || mobilePreviewOpen || nativePreviewOpen ? "Hide" : "Show"} ${entity.title} card image`}
+            title={`${previewOpen || mobilePreviewOpen || nativePreviewOpen ? "Hide" : "Show"} card image`}
+            onPointerEnter={() => {
+              if (usesNativePreview) {
+                setNativePreviewHovered(true);
+                showNativePreview("hover");
+                return;
+              }
+              if (!isMobileLayout) setPreviewHovered(true);
+            }}
+            onPointerLeave={() => {
+              if (usesNativePreview) {
+                setNativePreviewHovered(false);
+                if (!nativePreviewPinnedRef.current) hideNativePreview(entity.id);
+                return;
+              }
+              setPreviewHovered(false);
+            }}
+            onFocus={() => {
+              if (usesNativePreview) {
+                setNativePreviewHovered(true);
+                showNativePreview("hover");
+                return;
+              }
+              if (!isMobileLayout) setPreviewHovered(true);
+            }}
+            onBlur={() => {
+              if (usesNativePreview) {
+                setNativePreviewHovered(false);
+                if (!nativePreviewPinnedRef.current) hideNativePreview(entity.id);
+                return;
+              }
+              setPreviewHovered(false);
+            }}
+            onClick={() => {
+              if (usesNativePreview) {
+                if (nativePreviewPinned) {
+                  nativePreviewPinnedRef.current = false;
+                  setNativePreviewPinned(false);
+                  setNativePreviewHovered(false);
+                  hideNativePreview();
+                } else {
+                  nativePreviewPinnedRef.current = true;
+                  setNativePreviewPinned(true);
+                  showNativePreview("pinned");
+                }
+                return;
+              }
+              if (isMobileLayout) {
+                setMobilePreviewOpen(true);
+                return;
+              }
+              setPreviewPinned((current) => !current);
+            }}
+          >
+            {visualIdentity?.renderControlIcon?.({
+              control: "preview",
+              active: previewOpen || mobilePreviewOpen || nativePreviewOpen,
+            }) ?? <IconPhoto size={15} aria-hidden="true" />}
+          </button>
+        ) : null}
+        <button
+          type="button"
+          className={classes.modeToggle}
+          aria-label={`Switch to ${mode === "quick" ? "detailed" : "quick"} card view`}
+          aria-pressed={mode === "detailed"}
+          title={`Switch to ${mode === "quick" ? "detailed" : "quick"} card view`}
+          onClick={() => onModeChange(mode === "quick" ? "detailed" : "quick")}
+        >
+          {visualIdentity?.renderControlIcon?.({
+            control: mode === "quick" ? "detailed-mode" : "quick-mode",
+            active: mode === "detailed",
+          }) ??
+            (mode === "quick" ? (
+              <IconListDetails size={17} stroke={2.2} aria-hidden="true" />
+            ) : (
+              <IconLayoutGrid size={17} stroke={2.2} aria-hidden="true" />
+            ))}
+        </button>
+        <button
+          type="button"
+          className={classes.closeButton}
+          aria-label="Close card menu"
+          onClick={() => {
+            onOpenChange(false);
+            focusAnchor();
+          }}
+        >
+          {visualIdentity?.renderControlIcon?.({ control: "close" }) ?? (
+            <IconX size={18} aria-hidden="true" />
+          )}
+        </button>
+      </header>
+
+      <div className={classes.scrollRegion}>
+        {mode === "detailed" ? (
+          <DetailedCardContext
+            entity={entity}
+            previewId={previewId}
+            previewOpen={usesNativePreview ? false : previewOpen}
+            visualIdentity={visualIdentity}
+          />
+        ) : null}
+
+        <section className={classes.actionsSection} aria-label="Card actions">
+          {enabledActionCount > 1 ? (
+            <p className={classes.actionChoiceHint}>Choose how to use this card.</p>
+          ) : null}
+          {renderedActionRows.length > 0 ? (
+            <div className={classes.actionList} role="menu" aria-label={`${entity.title} actions`}>
+              {renderedActionRows.map((row, index) => {
+                const { action } = row;
+                const disabledReason =
+                  action.availability.kind === "disabled" ? action.availability.reason : undefined;
+                const disabled = disabledReason !== undefined;
+                const expanded = row.role === "submenu" && expandedActionId === action.id;
+                return (
+                  <button
+                    key={action.id}
+                    ref={(node) => {
+                      actionRefs.current[index] = node;
+                    }}
+                    type="button"
+                    className={classes.action}
+                    role="menuitem"
+                    aria-disabled={disabled}
+                    aria-expanded={row.role === "submenu" ? expanded : undefined}
+                    aria-haspopup={row.role === "submenu" ? "menu" : undefined}
+                    aria-keyshortcuts={action.shortcut}
+                    data-action-id={action.id}
+                    data-action-availability={disabled ? "disabled" : "enabled"}
+                    data-action-role={row.role}
+                    data-action-depth={row.depth}
+                    onClick={() => {
+                      if (row.role === "submenu") {
+                        if (disabled) {
+                          setAnnouncement(
+                            `${action.label} unavailable. ${disabledReason ?? ""}`.trim(),
+                          );
+                          return;
+                        }
+                        setExpandedActionId((current) =>
+                          current === action.id ? null : action.id,
+                        );
+                        return;
+                      }
+                      activate(action);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key !== "Enter" && event.key !== " ") return;
+                      event.preventDefault();
+                      event.stopPropagation();
+                      if (row.role === "submenu") {
+                        if (disabled) return;
+                        setExpandedActionId((current) =>
+                          current === action.id ? null : action.id,
+                        );
+                        return;
+                      }
+                      activate(action);
+                    }}
+                  >
+                    <span className={classes.actionGlyph} data-disabled={disabled}>
+                      {visualIdentity?.renderActionIcon?.({ action, disabled }) ??
+                        (disabled ? (
+                          <IconLock size={16} aria-hidden="true" />
+                        ) : (
+                          <IconBolt size={16} aria-hidden="true" />
+                        ))}
+                    </span>
+                    <span className={classes.actionCopy}>
+                      <strong>
+                        {renderContextText(visualIdentity, action.label, "action-label")}
+                      </strong>
+                      {mode === "detailed" && action.detail ? (
+                        <span>
+                          {renderContextText(visualIdentity, action.detail, "action-detail")}
+                        </span>
+                      ) : null}
+                      {disabled ? (
+                        <span className={classes.disabledReason}>
+                          {renderContextText(visualIdentity, disabledReason, "disabled-reason")}
+                        </span>
+                      ) : null}
+                    </span>
+                    <span className={classes.actionEnd}>
+                      {action.shortcut ? <kbd aria-hidden="true">{action.shortcut}</kbd> : null}
+                      {disabled && visualIdentity?.renderActionIcon ? (
+                        <IconLock
+                          className={classes.actionStatusIcon}
+                          size={13}
+                          aria-hidden="true"
+                        />
+                      ) : !disabled ? (
+                        <IconChevronRight
+                          className={classes.actionChevron}
+                          data-action-affordance={row.role === "submenu" ? "submenu" : "activate"}
+                          data-expanded={expanded || undefined}
+                          size={17}
+                          aria-hidden="true"
+                        />
+                      ) : null}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <div className={classes.emptyActions}>
+              <IconInfoCircle size={17} aria-hidden="true" />
+              <span>No actions for you from this card.</span>
+            </div>
+          )}
+        </section>
+      </div>
+      {!usesNativePreview && mobilePreviewOpen ? (
+        <CardImageDialog
+          entity={entity}
+          onClose={() => {
+            setMobilePreviewOpen(false);
+            window.setTimeout(() => {
+              window.setTimeout(() => previewToggleRef.current?.focus({ preventScroll: true }), 0);
+            }, 0);
+          }}
+        />
+      ) : null}
+      <span className={classes.srOnly} aria-live="polite">
+        {announcement}
+      </span>
+    </div>
+  );
+
+  if (isMobileLayout) {
+    return (
+      <Drawer
+        opened={open}
+        onClose={() => {
+          onOpenChange(false);
+          focusAnchor();
+        }}
+        position="bottom"
+        size="min(78dvh, 640px)"
+        padding={0}
+        zIndex={2100}
+        withCloseButton={false}
+        returnFocus={false}
+        title={<span className={classes.srOnly}>{entity.title} card menu</span>}
+        overlayProps={{ backgroundOpacity: 0.58 }}
+        classNames={{
+          content: classes.mobileDrawerContent,
+          body: classes.mobileDrawerBody,
+          header: classes.mobileDrawerHeader,
+        }}
+        onEnterTransitionEnd={() => floatingRef.current?.focus({ preventScroll: true })}
+      >
+        {menuSurface}
+      </Drawer>
+    );
+  }
+
   return (
     <PopoverPrimitive.Root modal={false} open={open} onOpenChange={onOpenChange}>
       <PopoverPrimitive.Anchor key={anchorVersion} virtualRef={anchorRef} />
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
-          ref={floatingRef}
-          className={[classes.surface, visualIdentity?.className].filter(Boolean).join(" ")}
-          data-card-context-menu
-          data-mode={mode}
-          data-actions-first-mobile={visualIdentity?.actionsFirstOnMobile || undefined}
-          data-testid="card-context-menu"
-          side={isMobileLayout && visualIdentity?.anchorAboveOnMobile ? "top" : "right"}
-          align={isMobileLayout && visualIdentity?.anchorAboveOnMobile ? "center" : "start"}
+          asChild
+          side="right"
+          align="start"
           sideOffset={10}
           collisionPadding={8}
           sticky="always"
-          hideWhenDetached
-          aria-labelledby={titleId}
-          tabIndex={-1}
           onOpenAutoFocus={(event) => {
             event.preventDefault();
-            const focusTarget = actionRefs.current[0] ?? floatingRef.current;
-            focusTarget?.focus({ preventScroll: true });
+            floatingRef.current?.focus({ preventScroll: true });
           }}
           onCloseAutoFocus={(event) => {
             event.preventDefault();
             focusAnchor();
           }}
-          onKeyDown={handleMenuKeyDown}
-          onClick={(event) => event.stopPropagation()}
-          onPointerDown={(event) => event.stopPropagation()}
+          onFocusOutside={(event) => {
+            if (Date.now() - openedAtRef.current < 400) {
+              event.preventDefault();
+              return;
+            }
+            const target = event.target;
+            if (
+              target instanceof Element &&
+              target.closest("[data-testid='target-filter-modal']")
+            ) {
+              event.preventDefault();
+            }
+          }}
+          onPointerDownOutside={(event) => {
+            if (Date.now() - openedAtRef.current < 400) {
+              event.preventDefault();
+              return;
+            }
+            const target = event.target;
+            if (
+              target instanceof Element &&
+              target.closest("[data-testid='target-filter-modal']")
+            ) {
+              event.preventDefault();
+            }
+          }}
+          onInteractOutside={(event) => {
+            if (Date.now() - openedAtRef.current < 400) {
+              event.preventDefault();
+              return;
+            }
+            const target = event.target;
+            if (
+              target instanceof Element &&
+              target.closest("[data-testid='target-filter-modal']")
+            ) {
+              event.preventDefault();
+            }
+          }}
         >
-          <header className={classes.header}>
-            <span
-              className={classes.frameMark}
-              style={{ backgroundColor: entity.frameStyle?.color ?? "var(--game-accent)" }}
-              aria-hidden="true"
-            />
-            {visualIdentity?.renderIdentity ? (
-              <>
-                <h2 id={titleId} className={classes.srOnly}>
-                  {entity.title}
-                </h2>
-                <div className={classes.identity}>
-                  {visualIdentity.renderIdentity({ entity, mode })}
-                </div>
-              </>
-            ) : (
-              <DefaultCardContextIdentity entity={entity} mode={mode} titleId={titleId} />
-            )}
-            {mode === "detailed" ? (
-              <button
-                ref={previewToggleRef}
-                type="button"
-                className={classes.previewToggle}
-                aria-expanded={
-                  usesNativePreview
-                    ? nativePreviewOpen
-                    : isMobileLayout
-                      ? mobilePreviewOpen
-                      : previewOpen
-                }
-                aria-controls={usesNativePreview || isMobileLayout ? undefined : previewId}
-                aria-haspopup={usesNativePreview ? "dialog" : isMobileLayout ? "dialog" : undefined}
-                aria-label={`${previewOpen || mobilePreviewOpen || nativePreviewOpen ? "Hide" : "Show"} ${entity.title} card image`}
-                title={`${previewOpen || mobilePreviewOpen || nativePreviewOpen ? "Hide" : "Show"} card image`}
-                onPointerEnter={() => {
-                  if (usesNativePreview) {
-                    setNativePreviewHovered(true);
-                    showNativePreview("hover");
-                    return;
-                  }
-                  if (!isMobileLayout) setPreviewHovered(true);
-                }}
-                onPointerLeave={() => {
-                  if (usesNativePreview) {
-                    setNativePreviewHovered(false);
-                    if (!nativePreviewPinnedRef.current) hideNativePreview(entity.id);
-                    return;
-                  }
-                  setPreviewHovered(false);
-                }}
-                onFocus={() => {
-                  if (usesNativePreview) {
-                    setNativePreviewHovered(true);
-                    showNativePreview("hover");
-                    return;
-                  }
-                  if (!isMobileLayout) setPreviewHovered(true);
-                }}
-                onBlur={() => {
-                  if (usesNativePreview) {
-                    setNativePreviewHovered(false);
-                    if (!nativePreviewPinnedRef.current) hideNativePreview(entity.id);
-                    return;
-                  }
-                  setPreviewHovered(false);
-                }}
-                onClick={() => {
-                  if (usesNativePreview) {
-                    if (nativePreviewPinned) {
-                      nativePreviewPinnedRef.current = false;
-                      setNativePreviewPinned(false);
-                      setNativePreviewHovered(false);
-                      hideNativePreview();
-                    } else {
-                      nativePreviewPinnedRef.current = true;
-                      setNativePreviewPinned(true);
-                      showNativePreview("pinned");
-                    }
-                    return;
-                  }
-                  if (isMobileLayout) {
-                    setMobilePreviewOpen(true);
-                    return;
-                  }
-                  setPreviewPinned((current) => !current);
-                }}
-              >
-                {visualIdentity?.renderControlIcon?.({
-                  control: "preview",
-                  active: previewOpen || mobilePreviewOpen || nativePreviewOpen,
-                }) ?? <IconPhoto size={15} aria-hidden="true" />}
-              </button>
-            ) : null}
-            <button
-              type="button"
-              className={classes.modeToggle}
-              aria-label={`Switch to ${mode === "quick" ? "detailed" : "quick"} card view`}
-              aria-pressed={mode === "detailed"}
-              title={`Switch to ${mode === "quick" ? "detailed" : "quick"} card view`}
-              onClick={() => onModeChange(mode === "quick" ? "detailed" : "quick")}
-            >
-              {visualIdentity?.renderControlIcon?.({
-                control: mode === "quick" ? "detailed-mode" : "quick-mode",
-                active: mode === "detailed",
-              }) ??
-                (mode === "quick" ? (
-                  <IconListDetails size={17} stroke={2.2} aria-hidden="true" />
-                ) : (
-                  <IconLayoutGrid size={17} stroke={2.2} aria-hidden="true" />
-                ))}
-            </button>
-            <button
-              type="button"
-              className={classes.closeButton}
-              aria-label="Close card menu"
-              onClick={() => {
-                onOpenChange(false);
-                focusAnchor();
-              }}
-            >
-              {visualIdentity?.renderControlIcon?.({ control: "close" }) ?? (
-                <IconX size={18} aria-hidden="true" />
-              )}
-            </button>
-          </header>
-
-          <div className={classes.scrollRegion}>
-            {mode === "detailed" ? (
-              <DetailedCardContext
-                entity={entity}
-                previewId={previewId}
-                previewOpen={usesNativePreview ? false : previewOpen}
-                visualIdentity={visualIdentity}
-              />
-            ) : null}
-
-            <section className={classes.actionsSection} aria-label="Card actions">
-              {enabledActionCount > 1 ? (
-                <p className={classes.actionChoiceHint}>Choose how to use this card.</p>
-              ) : null}
-              {visibleActions.length > 0 ? (
-                <div
-                  className={classes.actionList}
-                  role="menu"
-                  aria-label={`${entity.title} actions`}
-                >
-                  {visibleActions.map((action, index) => {
-                    const disabledReason =
-                      action.availability.kind === "disabled"
-                        ? action.availability.reason
-                        : undefined;
-                    const disabled = disabledReason !== undefined;
-                    return (
-                      <button
-                        key={action.id}
-                        ref={(node) => {
-                          actionRefs.current[index] = node;
-                        }}
-                        type="button"
-                        className={classes.action}
-                        role="menuitem"
-                        aria-disabled={disabled}
-                        aria-keyshortcuts={action.shortcut}
-                        data-action-id={action.id}
-                        data-action-availability={disabled ? "disabled" : "enabled"}
-                        onClick={() => activate(action)}
-                        onKeyDown={(event) => {
-                          if (event.key !== "Enter" && event.key !== " ") return;
-                          event.preventDefault();
-                          event.stopPropagation();
-                          activate(action);
-                        }}
-                      >
-                        <span className={classes.actionGlyph} data-disabled={disabled}>
-                          {visualIdentity?.renderActionIcon?.({ action, disabled }) ??
-                            (disabled ? (
-                              <IconLock size={16} aria-hidden="true" />
-                            ) : (
-                              <IconBolt size={16} aria-hidden="true" />
-                            ))}
-                        </span>
-                        <span className={classes.actionCopy}>
-                          <strong>
-                            {renderContextText(visualIdentity, action.label, "action-label")}
-                          </strong>
-                          {mode === "detailed" && action.detail ? (
-                            <span>
-                              {renderContextText(visualIdentity, action.detail, "action-detail")}
-                            </span>
-                          ) : null}
-                          {disabled ? (
-                            <span className={classes.disabledReason}>
-                              {renderContextText(visualIdentity, disabledReason, "disabled-reason")}
-                            </span>
-                          ) : null}
-                        </span>
-                        <span className={classes.actionEnd}>
-                          {action.shortcut ? <kbd aria-hidden="true">{action.shortcut}</kbd> : null}
-                          {disabled && visualIdentity?.renderActionIcon ? (
-                            <IconLock
-                              className={classes.actionStatusIcon}
-                              size={13}
-                              aria-hidden="true"
-                            />
-                          ) : !disabled ? (
-                            <IconChevronRight
-                              className={classes.actionChevron}
-                              data-action-affordance="activate"
-                              size={17}
-                              aria-hidden="true"
-                            />
-                          ) : null}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className={classes.emptyActions}>
-                  <IconInfoCircle size={17} aria-hidden="true" />
-                  <span>No actions for you from this card.</span>
-                </div>
-              )}
-            </section>
-          </div>
-          {!usesNativePreview && mobilePreviewOpen ? (
-            <CardImageDialog
-              entity={entity}
-              onClose={() => {
-                setMobilePreviewOpen(false);
-                window.setTimeout(() => {
-                  window.setTimeout(
-                    () => previewToggleRef.current?.focus({ preventScroll: true }),
-                    0,
-                  );
-                }, 0);
-              }}
-            />
-          ) : null}
-          <span className={classes.srOnly} aria-live="polite">
-            {announcement}
-          </span>
+          {menuSurface}
         </PopoverPrimitive.Content>
       </PopoverPrimitive.Portal>
     </PopoverPrimitive.Root>
@@ -827,6 +974,16 @@ function DetailGroup({ title, children }: { title: string; children: ReactNode }
   );
 }
 
+export interface CardContextMenuApi {
+  openFor(entityId: string, anchor: HTMLElement): boolean;
+}
+
+const CardContextMenuApiContext = createContext<CardContextMenuApi | null>(null);
+
+export function useCardContextMenuApi(): CardContextMenuApi | null {
+  return useContext(CardContextMenuApiContext);
+}
+
 export interface CardContextMenuControllerProps {
   children: ReactNode;
   entities: readonly SimulatorEntity[];
@@ -854,6 +1011,12 @@ export interface CardContextMenuControllerProps {
    * prefer menu-first clicks leave it off.
    */
   autoActivateSingleEnabledAction?: boolean;
+  /**
+   * Lets a game open the surface for hidden cards and dice when they expose
+   * actions (board correction, face-down Call, gig edits). Public cards still
+   * open even with an empty action list.
+   */
+  allowNonPublicEntities?: boolean;
   className?: string;
   onModeChange: (mode: CardInteractionMode) => void;
   onAction: (action: SimulatorCardAction, entity: SimulatorEntity) => void;
@@ -877,6 +1040,7 @@ export function CardContextMenuController({
   stateVersion,
   promptActive = false,
   autoActivateSingleEnabledAction = false,
+  allowNonPublicEntities = false,
   className,
   onModeChange,
   onAction,
@@ -1068,13 +1232,13 @@ export function CardContextMenuController({
     const entity = entityMap.get(selection.entityId);
     if (
       !entity ||
-      entity.face === "hidden" ||
+      (!allowNonPublicEntities && entity.face === "hidden") ||
       selection.stateVersion !== stateVersion ||
       promptActive
     ) {
       close();
     }
-  }, [close, entityMap, promptActive, selection, stateVersion]);
+  }, [allowNonPublicEntities, close, entityMap, promptActive, selection, stateVersion]);
 
   const resolveCard = useCallback(
     (target: EventTarget | null): { entity: SimulatorEntity; element: HTMLElement } | null => {
@@ -1083,12 +1247,19 @@ export function CardContextMenuController({
       if (!element) return null;
       const entityId = element.dataset.simEntityId;
       const entity = entityId ? entityMap.get(entityId) : undefined;
-      if (!entity || entity.face === "hidden" || entity.kind === "die" || entity.kind === "token") {
+      if (!entity || entity.kind === "token") {
+        return null;
+      }
+      const isPublicCard = entity.face === "public" && entity.kind !== "die";
+      if (!isPublicCard && !allowNonPublicEntities) {
+        return null;
+      }
+      if (!isPublicCard && actionsForEntity(entity.id).length === 0) {
         return null;
       }
       return { entity, element };
     },
-    [entityMap],
+    [actionsForEntity, allowNonPublicEntities, entityMap],
   );
 
   const openForTarget = useCallback(
@@ -1124,7 +1295,7 @@ export function CardContextMenuController({
       if (!autoActivateSingleEnabledAction) return false;
       const resolved = resolveCard(target);
       if (!resolved) return false;
-      const enabled = autoActivationActionsForEntity(resolved.entity.id).filter(
+      const enabled = leafCardActions(autoActivationActionsForEntity(resolved.entity.id)).filter(
         (action) => action.availability.kind === "enabled",
       );
       if (enabled.length !== 1) return false;
@@ -1282,53 +1453,134 @@ export function CardContextMenuController({
     longPressPointerId.current = null;
   };
 
+  const openFor = useCallback(
+    (entityId: string, anchor: HTMLElement) => {
+      if (promptActiveRef.current) return false;
+      const candidate = entityMap.get(entityId);
+      if (!candidate) return false;
+      const isPublicCard = candidate.face === "public" && candidate.kind !== "die";
+      if (!isPublicCard && !allowNonPublicEntities) return false;
+      if (visualIdentity?.dismissPreviewOnOpen) onPreviewEnd?.();
+      setSelection({
+        entityId,
+        anchor,
+        anchorVersion: 0,
+        stateVersion: stateVersionRef.current,
+      });
+      return true;
+    },
+    [allowNonPublicEntities, entityMap, onPreviewEnd, visualIdentity?.dismissPreviewOnOpen],
+  );
+  const api = useMemo<CardContextMenuApi>(() => ({ openFor }), [openFor]);
+
   const entity = selection ? entityMap.get(selection.entityId) : undefined;
   const actions = entity ? actionsForEntity(entity.id) : [];
 
   return (
-    <div
-      ref={controllerRef}
-      className={className}
-      data-card-context-controller
-      style={{ display: "contents" }}
-      onClickCapture={handleClickCapture}
-      onContextMenuCapture={handleContextMenu}
-      onKeyDownCapture={handleKeyDown}
-      onPointerDownCapture={handlePointerDown}
-      onPointerMoveCapture={handlePointerMove}
-      onPointerUpCapture={handlePointerEnd}
-      onPointerCancelCapture={handlePointerEnd}
-    >
-      {children}
-      {entity && selection ? (
-        <CardContextMenu
-          entity={entity}
-          actions={actions}
-          mode={mode}
-          open
-          anchorElement={selection.anchor}
-          anchorVersion={selection.anchorVersion}
-          onModeChange={onModeChange}
-          onOpenChange={(nextOpen) => {
-            if (!nextOpen) close();
-          }}
-          onAction={(action) => onAction(action, entity)}
-          onPreviewEntity={onPreviewEntity}
-          onPreviewEnd={onPreviewEnd}
-          visualIdentity={visualIdentity}
-          layoutOverride={layoutOverride}
-        />
-      ) : null}
-    </div>
+    <CardContextMenuApiContext.Provider value={api}>
+      <div
+        ref={controllerRef}
+        className={className}
+        data-card-context-controller
+        style={{ display: "contents" }}
+        onClickCapture={handleClickCapture}
+        onContextMenuCapture={handleContextMenu}
+        onKeyDownCapture={handleKeyDown}
+        onPointerDownCapture={handlePointerDown}
+        onPointerMoveCapture={handlePointerMove}
+        onPointerUpCapture={handlePointerEnd}
+        onPointerCancelCapture={handlePointerEnd}
+      >
+        {children}
+        {entity && selection ? (
+          <CardContextMenu
+            entity={entity}
+            actions={actions}
+            mode={mode}
+            open
+            anchorElement={selection.anchor}
+            anchorVersion={selection.anchorVersion}
+            onModeChange={onModeChange}
+            onOpenChange={(nextOpen) => {
+              if (!nextOpen) close();
+            }}
+            onAction={(action) => onAction(action, entity)}
+            onPreviewEntity={onPreviewEntity}
+            onPreviewEnd={onPreviewEnd}
+            visualIdentity={visualIdentity}
+            layoutOverride={layoutOverride}
+          />
+        ) : null}
+      </div>
+    </CardContextMenuApiContext.Provider>
   );
+}
+
+type CardContextActionRow = {
+  action: SimulatorCardAction;
+  depth: 0 | 1;
+  role: "item" | "submenu";
+};
+
+function sortCardActions(actions: readonly SimulatorCardAction[]): SimulatorCardAction[] {
+  return [...actions].sort(
+    (left, right) => left.order - right.order || left.id.localeCompare(right.id),
+  );
+}
+
+function actionChildren(action: SimulatorCardAction): readonly SimulatorCardAction[] {
+  return action.children ?? [];
+}
+
+function actionGroupIsEnabled(action: SimulatorCardAction): boolean {
+  const children = actionChildren(action);
+  if (children.length === 0) return action.availability.kind === "enabled";
+  return children.some((child) => child.availability.kind === "enabled");
+}
+
+function enabledLeafActionCount(action: SimulatorCardAction): number {
+  const children = actionChildren(action);
+  if (children.length === 0) return action.availability.kind === "enabled" ? 1 : 0;
+  return children.filter((child) => child.availability.kind === "enabled").length;
+}
+
+function leafCardActions(actions: readonly SimulatorCardAction[]): SimulatorCardAction[] {
+  return actions.flatMap((action) => {
+    const children = actionChildren(action);
+    return children.length > 0 ? [...children] : [action];
+  });
+}
+
+function flattenVisibleActionRows(
+  actions: readonly SimulatorCardAction[],
+  expandedActionId: string | null,
+  hideDisabledChildren: boolean,
+): CardContextActionRow[] {
+  const rows: CardContextActionRow[] = [];
+  for (const action of actions) {
+    const children = sortCardActions(actionChildren(action)).filter((child) =>
+      hideDisabledChildren ? child.availability.kind === "enabled" : true,
+    );
+    if (children.length > 0) {
+      rows.push({ action, depth: 0, role: "submenu" });
+      if (expandedActionId === action.id) {
+        for (const child of children) {
+          rows.push({ action: child, depth: 1, role: "item" });
+        }
+      }
+      continue;
+    }
+    rows.push({ action, depth: 0, role: "item" });
+  }
+  return rows;
 }
 
 function isLiveCardAnchor(root: HTMLElement, element: HTMLElement, entityId: string): boolean {
   return (
     element.isConnected &&
-    root.contains(element) &&
     element.dataset.simEntityId === entityId &&
-    isEligibleCardAnchor(element)
+    isEligibleCardAnchor(element) &&
+    (root.contains(element) || Boolean(element.closest("[data-testid='target-filter-modal']")))
   );
 }
 
@@ -1337,10 +1589,19 @@ function findLiveCardAnchor(
   entityId: string,
   previous: HTMLElement,
 ): HTMLElement | null {
-  const candidates = [...root.querySelectorAll<HTMLElement>(CARD_SELECTOR)].filter(
-    (element) => element.dataset.simEntityId === entityId && isEligibleCardAnchor(element),
-  );
+  const scopes = [root, document.body];
+  const candidates = [
+    ...new Set(
+      scopes.flatMap((scope) =>
+        [...scope.querySelectorAll<HTMLElement>(CARD_SELECTOR)].filter(
+          (element) => element.dataset.simEntityId === entityId && isEligibleCardAnchor(element),
+        ),
+      ),
+    ),
+  ];
   return (
+    candidates.find((element) => element === previous) ??
+    candidates.find((element) => element.closest("[data-testid='target-filter-modal']")) ??
     candidates.find(
       (element) =>
         element.tagName === previous.tagName &&

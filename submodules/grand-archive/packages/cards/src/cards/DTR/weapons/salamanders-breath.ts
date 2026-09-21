@@ -62,15 +62,25 @@ export const salamandersBreath: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                   kind: "banish",
                   player: "controller",
                   selection: {
-                    id: "banished-cards",
+                    id: "chosen-fire-cards",
                     kind: "choice",
                     declared: "resolution",
                     chooser: "controller",
                     count: {
                       kind: "up-to",
                       amount: {
-                        kind: "variable",
-                        symbol: "X",
+                        kind: "count",
+                        collection: {
+                          zones: ["intent"],
+                          host: {
+                            kind: "event-attacker",
+                          },
+                          relationship: "intent-of",
+                          filter: {
+                            kind: "subtype",
+                            oneOf: ["AETHERCHARGE"],
+                          },
+                        },
                       },
                     },
                     candidates: {
@@ -84,11 +94,12 @@ export const salamandersBreath: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                       },
                     },
                   },
+                  bindResultAs: "banished-fire-cards",
                 },
                 {
                   kind: "continuous",
                   subjects: {
-                    kind: "source",
+                    kind: "current-attack",
                   },
                   affectedSet: "locked",
                   duration: {
@@ -106,7 +117,7 @@ export const salamandersBreath: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                     amount: {
                       kind: "count",
                       collection: {
-                        binding: "banished-cards",
+                        binding: "banished-fire-cards",
                       },
                     },
                   },

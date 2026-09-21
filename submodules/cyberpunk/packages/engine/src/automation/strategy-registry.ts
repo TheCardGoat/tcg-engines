@@ -16,7 +16,7 @@ import type { BotInformationPolicy, BotStrategyDescriptorV1 } from "@tcg/bot-cor
 import currentPromotion from "./promotions/current.json" with { type: "json" };
 
 /** Bump whenever shipped decision behavior changes in a promotion-relevant way. */
-export const CYBERPUNK_AUTOMATION_REVISION = "cyberpunk-automation-v5";
+export const CYBERPUNK_AUTOMATION_REVISION = "cyberpunk-automation-v6";
 
 export interface AutomatedActionStrategyOption extends Omit<
   BotStrategyDescriptorV1,
@@ -139,19 +139,45 @@ export function isGreedyWeights(value: unknown): value is GreedyWeights {
   );
 }
 
+/**
+ * When a promotion is active, "Default" silently follows the promoted
+ * strategy. Surface that in the label and description so players and
+ * operators can see what "Default" actually runs.
+ */
+function withPromotedDefaultLabel(
+  promotion: AutomatedActionPromotion,
+  options: readonly AutomatedActionStrategyOption[],
+): readonly AutomatedActionStrategyOption[] {
+  const promotedId = promotion.promotedStrategyId;
+  if (promotedId === "default") return options;
+  const promoted = options.find((option) => option.id === promotedId);
+  if (!promoted) return options;
+  return options.map((option) =>
+    option.id === "default"
+      ? {
+          ...option,
+          label: `Default (promoted: ${promoted.label})`,
+          description: `Production default that currently runs the promoted bot-lab strategy (${promoted.label}).`,
+        }
+      : option,
+  );
+}
+
 export function buildAutomatedActionStrategyOptions(
   promotion: AutomatedActionPromotion,
 ): readonly AutomatedActionStrategyOption[] {
   if (
     STATIC_AUTOMATED_ACTION_STRATEGIES.some((option) => option.id === promotion.promotedStrategyId)
   ) {
-    return STATIC_AUTOMATED_ACTION_STRATEGIES;
+    return withPromotedDefaultLabel(promotion, STATIC_AUTOMATED_ACTION_STRATEGIES);
   }
 
   const weights = promotion.strategyConfig?.greedyWeights;
-  if (!isGreedyWeights(weights)) return STATIC_AUTOMATED_ACTION_STRATEGIES;
+  if (!isGreedyWeights(weights)) {
+    return withPromotedDefaultLabel(promotion, STATIC_AUTOMATED_ACTION_STRATEGIES);
+  }
 
-  return [
+  return withPromotedDefaultLabel(promotion, [
     {
       id: promotion.promotedStrategyId,
       label: `${promotion.promotedStrategyId} (promoted)`,
@@ -160,7 +186,7 @@ export function buildAutomatedActionStrategyOptions(
       informationPolicy: promotion.informationPolicy,
     },
     ...STATIC_AUTOMATED_ACTION_STRATEGIES,
-  ];
+  ]);
 }
 
 export const AUTOMATED_ACTION_STRATEGIES = buildAutomatedActionStrategyOptions(

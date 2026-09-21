@@ -19,6 +19,7 @@ const GAME_PATHS: Record<GameSlug, string> = {
   "flesh-and-blood": "flesh-and-blood/cards",
   "grand-archive": "grand-archive/cards",
   naruto: "naruto/cards",
+  "alpha-clash": "alpha-clash/cards",
   platform: "platform/cards",
 };
 

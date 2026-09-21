@@ -35,27 +35,26 @@ export const flurryStance = definePitchFamily(fabPitchFamilies["flurry-stance"],
               },
             },
             {
-              type: "optional",
-              effect: {
-                type: "modify-activation-limit",
-                target: {
-                  selector: "object",
-                  declared: "at-resolution",
-                  player: "controller",
-                  zones: ["weapon", "permanent"],
-                  filter: {
-                    typeBox: {
-                      subtypes: ["Dagger"],
-                    },
-                  },
-                  count: {
-                    type: "all",
+              // CR 5.2.3c: the start-of-turn grant applies to every dagger by
+              // itself; no on-resolution decision exists.
+              type: "modify-activation-limit",
+              target: {
+                selector: "object",
+                declared: "at-resolution",
+                player: "controller",
+                zones: ["weapon", "permanent"],
+                filter: {
+                  typeBox: {
+                    subtypes: ["Dagger"],
                   },
                 },
-                operation: "additional",
-                count: 1,
-                duration: "this-turn",
+                count: {
+                  type: "all",
+                },
               },
+              operation: "additional",
+              count: 1,
+              duration: "this-turn",
             },
           ],
         },

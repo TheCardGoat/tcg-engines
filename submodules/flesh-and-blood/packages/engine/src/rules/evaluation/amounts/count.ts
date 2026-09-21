@@ -79,7 +79,14 @@ export function evaluateCount(
       } else if (amount.filter) {
         throw new FabRulesEvaluationError("unsupported chain-links filter");
       } else {
-        value = context.facts?.combat?.chainLinkNumber ?? 0;
+        const combat = context.facts?.combat;
+        // CR 7.0.3c: links inherit the active attack's controller. In 1v1,
+        // every link on the open chain belongs to its attacking player.
+        const includesAttacker =
+          combat &&
+          (!amount.player ||
+            playerIdsForFacts(amount.player, context).includes(combat.attackingPlayerId));
+        value = includesAttacker ? combat.chainLinkNumber : 0;
       }
       break;
     case "distinct-costs": {
@@ -122,7 +129,10 @@ export function evaluateCount(
       }
       value = playerIdsForFacts(amount.player ?? "controller", context).reduce(
         (total, playerId) => {
-          const damage = facts.playerDamageDealt[playerId]?.[scopeName];
+          const damage =
+            amount.recipient === "opposing-heroes"
+              ? facts.playerDamageDealt[playerId]?.opposingHeroes?.[scopeName]
+              : facts.playerDamageDealt[playerId]?.[scopeName];
           if (!damage) return total;
           return (
             total +
@@ -826,7 +836,7 @@ export function evaluateCount(
       break;
     }
     default:
-      return assertNever(amount.what, "FabCountable");
+      return assertNever(amount, "FabCountable");
   }
   const divided = amount.divisor
     ? amount.rounding === "up"

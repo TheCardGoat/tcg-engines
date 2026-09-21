@@ -577,6 +577,7 @@ describe("projectFabTabletop", () => {
     priorityManualOnly: null,
     priorityWindow: null,
     priorityHoldArmed: null,
+    scopedAutoPass: null,
     players: {
       p1: {
         playerId: "p1",
@@ -905,6 +906,7 @@ describe("matchStateToPresentation", () => {
       priorityManualOnly: null,
       priorityWindow: null,
       priorityHoldArmed: null,
+      scopedAutoPass: null,
       players: {
         "player-1": {
           playerId: "player-1",
@@ -1150,6 +1152,7 @@ describe("matchStateToPresentation", () => {
       priorityManualOnly: null,
       priorityWindow: null,
       priorityHoldArmed: null,
+      scopedAutoPass: null,
       players: {
         "player-1": {
           playerId: "player-1",
@@ -1261,6 +1264,7 @@ describe("per-instance printing art", () => {
     priorityManualOnly: null,
     priorityWindow: null,
     priorityHoldArmed: null,
+    scopedAutoPass: null,
     players: {
       "player-1": {
         playerId: "player-1",
@@ -1405,6 +1409,7 @@ describe("coerceFabPresentationState", () => {
     optionalTriggerAutomation: [],
     automation: null,
     priorityHoldArmed: null,
+    scopedAutoPass: null,
     priorityManualOnly: null,
     priorityWindow: null,
     players: {
@@ -1488,5 +1493,72 @@ describe("coerceFabPresentationState", () => {
     const coerced = coerceFabPresentationState(viewer, "p1", resources, matchArt);
     expect(coerced).toEqual(matchStateToPresentation(viewer, "p1", resources, matchArt));
     expect(coerced?.cards["card-1"]?.printingId).toBe("printing-x");
+  });
+
+  it("projects turn-scoped reveals into deck shelves and hand recalls", () => {
+    const revealResources = {
+      cardInstances: {},
+      cardDefinitions: {
+        "def-revealed": registerFabCardDefinition({
+          canonicalId: "def-revealed",
+          name: "For the Dracai",
+          types: ["Generic", "Action"],
+          pitch: 1,
+          cost: 1,
+        }),
+      },
+    };
+    const revealingViewer: FabViewerState = {
+      ...viewer,
+      turnNumber: 3,
+      turnReveals: [
+        {
+          kind: "deck-edge",
+          ownerId: "p2",
+          instanceId: "p2-deck-top",
+          canonicalId: "def-revealed",
+          position: "top",
+        },
+        {
+          kind: "hand",
+          ownerId: "p1",
+          instanceId: "card-1",
+          canonicalId: "def-revealed",
+        },
+      ],
+    };
+
+    const presentation = matchStateToPresentation(revealingViewer, "p1", revealResources);
+    expect(presentation.deckRevealsByOwnerId?.p2).toEqual({
+      id: "fab-turn-reveal:p2",
+      zoneId: "p2:deck",
+      ownerId: "p2",
+      position: "top",
+      visibility: "public",
+      turnNumber: 3,
+      count: 1,
+      cards: [
+        {
+          entityId: "p2-deck-top",
+          definitionId: "def-revealed",
+          title: "For the Dracai",
+          subtitle: "Action",
+        },
+      ],
+    });
+    expect(presentation.handRevealsByOwnerId?.p1).toEqual([
+      {
+        entityId: "card-1",
+        definitionId: "def-revealed",
+        title: "For the Dracai",
+        subtitle: "Action",
+      },
+    ]);
+  });
+
+  it("omits reveal recalls when the viewer state carries none", () => {
+    const presentation = matchStateToPresentation(viewer, "p1", resources);
+    expect(presentation.deckRevealsByOwnerId).toBeUndefined();
+    expect(presentation.handRevealsByOwnerId).toBeUndefined();
   });
 });

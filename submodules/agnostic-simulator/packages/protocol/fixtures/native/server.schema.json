@@ -1,0 +1,2055 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "type": {
+          "type": "string",
+          "const": "welcome"
+        },
+        "sessionId": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "role": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "heartbeatMs": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "fixtures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/__schema1"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": ["id", "name"],
+            "additionalProperties": false
+          }
+        },
+        "supportedInputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["v", "type", "sessionId", "role", "heartbeatMs", "fixtures", "supportedInputs"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "type": {
+          "type": "string",
+          "const": "action_result"
+        },
+        "gameId": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "correlationId": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "accepted": {
+          "type": "boolean"
+        },
+        "stateVersion": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "code": {
+          "$ref": "#/$defs/__schema1"
+        }
+      },
+      "required": ["v", "type", "gameId", "correlationId", "accepted", "stateVersion", "code"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "gameId": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "matchId": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "stateVersion": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "sequence": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "state": {
+          "$ref": "#/$defs/__schema3"
+        },
+        "interaction": {
+          "$ref": "#/$defs/__schema4"
+        },
+        "display": {
+          "$ref": "#/$defs/__schema70"
+        },
+        "type": {
+          "type": "string",
+          "const": "state_sync"
+        }
+      },
+      "required": [
+        "v",
+        "gameId",
+        "matchId",
+        "stateVersion",
+        "sequence",
+        "state",
+        "interaction",
+        "display",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "gameId": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "matchId": {
+          "$ref": "#/$defs/__schema1"
+        },
+        "stateVersion": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "sequence": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "state": {
+          "$ref": "#/$defs/__schema3"
+        },
+        "interaction": {
+          "$ref": "#/$defs/__schema4"
+        },
+        "display": {
+          "$ref": "#/$defs/__schema70"
+        },
+        "type": {
+          "type": "string",
+          "const": "state_update"
+        },
+        "previousVersion": {
+          "$ref": "#/$defs/__schema2"
+        },
+        "animation": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "number",
+              "const": 2
+            },
+            "steps": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "$ref": "#/$defs/__schema75"
+                      },
+                      "entity": {
+                        "$ref": "#/$defs/__schema76"
+                      },
+                      "from": {
+                        "$ref": "#/$defs/__schema77"
+                      },
+                      "to": {
+                        "$ref": "#/$defs/__schema81"
+                      },
+                      "sourceFace": {
+                        "$ref": "#/$defs/__schema82"
+                      },
+                      "destinationFace": {
+                        "$ref": "#/$defs/__schema82"
+                      },
+                      "quantity": {
+                        "$ref": "#/$defs/__schema83"
+                      },
+                      "sourcePresentation": {
+                        "$ref": "#/$defs/__schema84"
+                      },
+                      "destinationPresentation": {
+                        "$ref": "#/$defs/__schema85"
+                      }
+                    },
+                    "required": ["id", "type", "entity", "sourceFace", "destinationFace"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "emphasize"
+                      },
+                      "at": {
+                        "$ref": "#/$defs/__schema78"
+                      },
+                      "style": {
+                        "default": "pulse",
+                        "type": "string",
+                        "enum": ["pulse", "spotlight"]
+                      },
+                      "tone": {
+                        "type": "string",
+                        "enum": ["positive", "negative", "neutral"]
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": ["id", "type", "at"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "$ref": "#/$defs/__schema86"
+                      },
+                      "entity": {
+                        "$ref": "#/$defs/__schema76"
+                      },
+                      "at": {
+                        "$ref": "#/$defs/__schema78"
+                      },
+                      "change": {
+                        "$ref": "#/$defs/__schema87"
+                      },
+                      "sourceFace": {
+                        "$ref": "#/$defs/__schema82"
+                      },
+                      "destinationFace": {
+                        "$ref": "#/$defs/__schema82"
+                      },
+                      "fromRotationDeg": {
+                        "$ref": "#/$defs/__schema88"
+                      },
+                      "toRotationDeg": {
+                        "$ref": "#/$defs/__schema89"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "entity",
+                      "at",
+                      "change",
+                      "sourceFace",
+                      "destinationFace"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "effect"
+                      },
+                      "source": {
+                        "$ref": "#/$defs/__schema78"
+                      },
+                      "targets": {
+                        "default": [],
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/__schema78"
+                        }
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "presentation": {
+                        "type": "string",
+                        "enum": ["source-card"]
+                      },
+                      "valueLabel": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "tone": {
+                        "type": "string",
+                        "enum": ["positive", "negative", "neutral"]
+                      },
+                      "sourceFace": {
+                        "$ref": "#/$defs/__schema82"
+                      },
+                      "sourceExitTo": {
+                        "$ref": "#/$defs/__schema78"
+                      }
+                    },
+                    "required": ["id", "type"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "combat"
+                      },
+                      "source": {
+                        "$ref": "#/$defs/__schema78"
+                      },
+                      "target": {
+                        "$ref": "#/$defs/__schema78"
+                      },
+                      "reason": {
+                        "type": "string",
+                        "enum": ["declared", "blocked", "resolved"]
+                      },
+                      "attackKind": {
+                        "type": "string",
+                        "enum": ["direct", "fight"]
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "detailLabel": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": ["id", "type", "source", "target"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "valueDelta"
+                      },
+                      "subject": {
+                        "$ref": "#/$defs/__schema78"
+                      },
+                      "delta": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "fromValue": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "toValue": {
+                        "type": "integer",
+                        "minimum": -9007199254740991,
+                        "maximum": 9007199254740991
+                      },
+                      "tone": {
+                        "type": "string",
+                        "enum": ["positive", "negative", "neutral"]
+                      }
+                    },
+                    "required": ["id", "type", "subject", "delta"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "phaseChange"
+                      },
+                      "from": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "to": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "variant": {
+                        "default": "phase",
+                        "type": "string",
+                        "enum": ["phase", "turn"]
+                      },
+                      "player": {
+                        "$ref": "#/$defs/__schema80"
+                      },
+                      "turnNumber": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 9007199254740991
+                      }
+                    },
+                    "required": ["id", "type", "from", "to"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "randomization"
+                      },
+                      "at": {
+                        "$ref": "#/$defs/__schema78"
+                      },
+                      "kind": {
+                        "type": "string",
+                        "enum": ["shuffle", "die", "coin", "selection"]
+                      },
+                      "resultLabel": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": ["id", "type", "at", "kind"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "comparison"
+                      },
+                      "title": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "participants": {
+                        "type": "array",
+                        "prefixItems": [
+                          {
+                            "$ref": "#/$defs/__schema90"
+                          },
+                          {
+                            "$ref": "#/$defs/__schema90"
+                          }
+                        ]
+                      },
+                      "resultLabel": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    },
+                    "required": ["id", "type", "title", "participants", "resultLabel"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "$ref": "#/$defs/__schema73"
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "$ref": "#/$defs/__schema91"
+                      },
+                      "outcome": {
+                        "$ref": "#/$defs/__schema92"
+                      },
+                      "winner": {
+                        "$ref": "#/$defs/__schema93"
+                      },
+                      "reasonLabel": {
+                        "$ref": "#/$defs/__schema94"
+                      }
+                    },
+                    "required": ["id", "type", "outcome"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "$ref": "#/$defs/__schema71"
+                      },
+                      "startAtMs": {
+                        "$ref": "#/$defs/__schema72"
+                      },
+                      "durationMs": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "audioCue": {
+                        "$ref": "#/$defs/__schema74"
+                      },
+                      "type": {
+                        "type": "string",
+                        "const": "hold"
+                      }
+                    },
+                    "required": ["id", "durationMs", "type"],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          },
+          "required": ["id", "version"],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "v",
+        "gameId",
+        "matchId",
+        "stateVersion",
+        "sequence",
+        "state",
+        "interaction",
+        "display",
+        "type",
+        "previousVersion"
+      ],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "type": {
+          "type": "string",
+          "const": "ping"
+        },
+        "nonce": {
+          "$ref": "#/$defs/__schema1"
+        }
+      },
+      "required": ["v", "type", "nonce"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "type": {
+          "type": "string",
+          "const": "pong"
+        },
+        "nonce": {
+          "$ref": "#/$defs/__schema1"
+        }
+      },
+      "required": ["v", "type", "nonce"],
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "properties": {
+        "v": {
+          "$ref": "#/$defs/__schema0"
+        },
+        "type": {
+          "type": "string",
+          "const": "error"
+        },
+        "code": {
+          "$ref": "#/$defs/__schema1"
+        }
+      },
+      "required": ["v", "type", "code"],
+      "additionalProperties": false
+    }
+  ],
+  "$defs": {
+    "__schema0": {
+      "type": "number",
+      "const": 1
+    },
+    "__schema1": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "__schema2": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema3": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema3"
+          }
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/__schema3"
+          }
+        }
+      ]
+    },
+    "__schema4": {
+      "type": "object",
+      "properties": {
+        "protocolVersion": {
+          "type": "number",
+          "const": 2
+        },
+        "gameSlug": {
+          "type": "string",
+          "enum": [
+            "lorcana",
+            "gundam",
+            "cyberpunk",
+            "riftbound",
+            "one-piece",
+            "flesh-and-blood",
+            "grand-archive",
+            "naruto",
+            "platform"
+          ]
+        },
+        "actorId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "stateVersion": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        },
+        "status": {
+          "type": "string",
+          "enum": ["idle", "ready", "choosing", "waiting", "game-over"]
+        },
+        "resolution": {
+          "type": "object",
+          "properties": {
+            "actingPlayerId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "pendingCount": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 9007199254740991
+            },
+            "currentEffect": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "text": {
+                  "$ref": "#/$defs/__schema5"
+                },
+                "source": {
+                  "$ref": "#/$defs/__schema6"
+                }
+              },
+              "required": ["id", "text"],
+              "additionalProperties": false
+            },
+            "currentStep": {
+              "type": "object",
+              "properties": {
+                "index": {
+                  "$ref": "#/$defs/__schema8"
+                },
+                "count": {
+                  "$ref": "#/$defs/__schema9"
+                },
+                "text": {
+                  "$ref": "#/$defs/__schema5"
+                },
+                "requirement": {
+                  "$ref": "#/$defs/__schema10"
+                }
+              },
+              "required": ["index", "count", "text"],
+              "additionalProperties": false
+            }
+          },
+          "required": ["actingPlayerId", "pendingCount", "currentEffect", "currentStep"],
+          "additionalProperties": false
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "requestId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "intent": {
+                "type": "string",
+                "enum": [
+                  "play-card",
+                  "resource-card",
+                  "attack",
+                  "activate",
+                  "move-card",
+                  "pass",
+                  "undo",
+                  "concede",
+                  "mulligan",
+                  "choose-option",
+                  "choose-targets",
+                  "order-cards",
+                  "custom"
+                ]
+              },
+              "text": {
+                "$ref": "#/$defs/__schema5"
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "disabledText": {
+                "$ref": "#/$defs/__schema5"
+              },
+              "source": {
+                "$ref": "#/$defs/__schema6"
+              },
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/$defs/__schema15"
+                        },
+                        "text": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "required": {
+                          "$ref": "#/$defs/__schema16"
+                        },
+                        "requiredWhen": {
+                          "$ref": "#/$defs/__schema17"
+                        },
+                        "validationText": {
+                          "$ref": "#/$defs/__schema20"
+                        },
+                        "kind": {
+                          "$ref": "#/$defs/__schema21"
+                        },
+                        "role": {
+                          "$ref": "#/$defs/__schema22"
+                        },
+                        "entityKinds": {
+                          "$ref": "#/$defs/__schema23"
+                        },
+                        "min": {
+                          "$ref": "#/$defs/__schema24"
+                        },
+                        "max": {
+                          "$ref": "#/$defs/__schema25"
+                        },
+                        "ordered": {
+                          "$ref": "#/$defs/__schema26"
+                        },
+                        "candidates": {
+                          "$ref": "#/$defs/__schema27"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "text",
+                        "kind",
+                        "role",
+                        "entityKinds",
+                        "min",
+                        "max",
+                        "ordered",
+                        "candidates"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/$defs/__schema15"
+                        },
+                        "text": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "required": {
+                          "$ref": "#/$defs/__schema16"
+                        },
+                        "requiredWhen": {
+                          "$ref": "#/$defs/__schema17"
+                        },
+                        "validationText": {
+                          "$ref": "#/$defs/__schema20"
+                        },
+                        "kind": {
+                          "$ref": "#/$defs/__schema32"
+                        },
+                        "implicit": {
+                          "$ref": "#/$defs/__schema33"
+                        },
+                        "min": {
+                          "$ref": "#/$defs/__schema34"
+                        },
+                        "max": {
+                          "$ref": "#/$defs/__schema35"
+                        },
+                        "options": {
+                          "$ref": "#/$defs/__schema36"
+                        },
+                        "presentation": {
+                          "$ref": "#/$defs/__schema38"
+                        }
+                      },
+                      "required": ["id", "text", "kind", "min", "max", "options"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/$defs/__schema15"
+                        },
+                        "text": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "required": {
+                          "$ref": "#/$defs/__schema16"
+                        },
+                        "requiredWhen": {
+                          "$ref": "#/$defs/__schema17"
+                        },
+                        "validationText": {
+                          "$ref": "#/$defs/__schema20"
+                        },
+                        "kind": {
+                          "type": "string",
+                          "const": "boolean"
+                        },
+                        "trueText": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "falseText": {
+                          "$ref": "#/$defs/__schema5"
+                        }
+                      },
+                      "required": ["id", "text", "kind", "trueText", "falseText"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/$defs/__schema15"
+                        },
+                        "text": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "required": {
+                          "$ref": "#/$defs/__schema16"
+                        },
+                        "requiredWhen": {
+                          "$ref": "#/$defs/__schema17"
+                        },
+                        "validationText": {
+                          "$ref": "#/$defs/__schema20"
+                        },
+                        "kind": {
+                          "$ref": "#/$defs/__schema40"
+                        },
+                        "min": {
+                          "$ref": "#/$defs/__schema41"
+                        },
+                        "max": {
+                          "$ref": "#/$defs/__schema42"
+                        },
+                        "step": {
+                          "$ref": "#/$defs/__schema43"
+                        }
+                      },
+                      "required": ["id", "text", "kind"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/$defs/__schema15"
+                        },
+                        "text": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "required": {
+                          "$ref": "#/$defs/__schema16"
+                        },
+                        "requiredWhen": {
+                          "$ref": "#/$defs/__schema17"
+                        },
+                        "validationText": {
+                          "$ref": "#/$defs/__schema20"
+                        },
+                        "kind": {
+                          "$ref": "#/$defs/__schema44"
+                        },
+                        "entityKind": {
+                          "$ref": "#/$defs/__schema7"
+                        },
+                        "min": {
+                          "$ref": "#/$defs/__schema45"
+                        },
+                        "max": {
+                          "$ref": "#/$defs/__schema46"
+                        },
+                        "candidates": {
+                          "$ref": "#/$defs/__schema47"
+                        }
+                      },
+                      "required": ["id", "text", "kind", "entityKind", "min", "max", "candidates"],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/$defs/__schema15"
+                        },
+                        "text": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "required": {
+                          "$ref": "#/$defs/__schema16"
+                        },
+                        "requiredWhen": {
+                          "$ref": "#/$defs/__schema17"
+                        },
+                        "validationText": {
+                          "$ref": "#/$defs/__schema20"
+                        },
+                        "kind": {
+                          "$ref": "#/$defs/__schema48"
+                        },
+                        "entityKind": {
+                          "$ref": "#/$defs/__schema7"
+                        },
+                        "candidateSetText": {
+                          "$ref": "#/$defs/__schema49"
+                        },
+                        "candidates": {
+                          "$ref": "#/$defs/__schema50"
+                        },
+                        "routes": {
+                          "$ref": "#/$defs/__schema51"
+                        },
+                        "assignment": {
+                          "$ref": "#/$defs/__schema60"
+                        },
+                        "remainderText": {
+                          "$ref": "#/$defs/__schema61"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "text",
+                        "kind",
+                        "entityKind",
+                        "candidates",
+                        "routes",
+                        "assignment"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "$ref": "#/$defs/__schema15"
+                        },
+                        "text": {
+                          "$ref": "#/$defs/__schema5"
+                        },
+                        "required": {
+                          "$ref": "#/$defs/__schema16"
+                        },
+                        "requiredWhen": {
+                          "$ref": "#/$defs/__schema17"
+                        },
+                        "validationText": {
+                          "$ref": "#/$defs/__schema20"
+                        },
+                        "kind": {
+                          "$ref": "#/$defs/__schema62"
+                        },
+                        "role": {
+                          "$ref": "#/$defs/__schema22"
+                        },
+                        "entityKinds": {
+                          "$ref": "#/$defs/__schema63"
+                        },
+                        "totalMin": {
+                          "$ref": "#/$defs/__schema64"
+                        },
+                        "totalMax": {
+                          "$ref": "#/$defs/__schema65"
+                        },
+                        "candidates": {
+                          "$ref": "#/$defs/__schema66"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "text",
+                        "kind",
+                        "role",
+                        "entityKinds",
+                        "totalMin",
+                        "totalMax",
+                        "candidates"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              }
+            },
+            "required": ["id", "requestId", "intent", "text", "enabled", "inputs"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["protocolVersion", "gameSlug", "actorId", "stateVersion", "status", "actions"],
+      "additionalProperties": false
+    },
+    "__schema5": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "params": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          }
+        }
+      },
+      "required": ["key"],
+      "additionalProperties": false
+    },
+    "__schema6": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/__schema7"
+        },
+        "instanceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "definitionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "zoneId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["kind", "instanceId"],
+      "additionalProperties": false
+    },
+    "__schema7": {
+      "type": "string",
+      "enum": ["card", "player", "zone", "resource", "die", "effect"]
+    },
+    "__schema8": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "__schema9": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 9007199254740991
+    },
+    "__schema10": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/__schema11"
+        },
+        "text": {
+          "$ref": "#/$defs/__schema5"
+        },
+        "required": {
+          "$ref": "#/$defs/__schema12"
+        },
+        "min": {
+          "$ref": "#/$defs/__schema13"
+        },
+        "max": {
+          "$ref": "#/$defs/__schema14"
+        }
+      },
+      "required": ["kind", "text", "required"],
+      "additionalProperties": false
+    },
+    "__schema11": {
+      "type": "string",
+      "enum": [
+        "entity-selection",
+        "option-selection",
+        "boolean",
+        "number",
+        "ordering",
+        "entity-partition",
+        "entity-allocation"
+      ]
+    },
+    "__schema12": {
+      "type": "boolean"
+    },
+    "__schema13": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema14": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema15": {
+      "type": "string",
+      "minLength": 1
+    },
+    "__schema16": {
+      "type": "boolean"
+    },
+    "__schema17": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema18"
+      }
+    },
+    "__schema18": {
+      "type": "object",
+      "properties": {
+        "all": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/__schema19"
+          }
+        }
+      },
+      "required": ["all"],
+      "additionalProperties": false
+    },
+    "__schema19": {
+      "type": "object",
+      "properties": {
+        "inputId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "required": ["inputId", "value"],
+      "additionalProperties": false
+    },
+    "__schema20": {
+      "$ref": "#/$defs/__schema5"
+    },
+    "__schema21": {
+      "type": "string",
+      "const": "entity-selection"
+    },
+    "__schema22": {
+      "type": "string",
+      "enum": [
+        "source",
+        "target",
+        "from",
+        "to",
+        "attacker",
+        "defender",
+        "player",
+        "location",
+        "cost",
+        "destination"
+      ]
+    },
+    "__schema23": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema7"
+      }
+    },
+    "__schema24": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema25": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema26": {
+      "type": "boolean"
+    },
+    "__schema27": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema28"
+      }
+    },
+    "__schema28": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/$defs/__schema6"
+        },
+        "text": {
+          "$ref": "#/$defs/__schema29"
+        },
+        "enabled": {
+          "$ref": "#/$defs/__schema30"
+        },
+        "disabledText": {
+          "$ref": "#/$defs/__schema31"
+        }
+      },
+      "required": ["entity"],
+      "additionalProperties": false
+    },
+    "__schema29": {
+      "$ref": "#/$defs/__schema5"
+    },
+    "__schema30": {
+      "default": true,
+      "type": "boolean"
+    },
+    "__schema31": {
+      "$ref": "#/$defs/__schema5"
+    },
+    "__schema32": {
+      "type": "string",
+      "const": "option-selection"
+    },
+    "__schema33": {
+      "type": "boolean"
+    },
+    "__schema34": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema35": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema36": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema37"
+      }
+    },
+    "__schema37": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "$ref": "#/$defs/__schema5"
+        },
+        "enabled": {
+          "default": true,
+          "type": "boolean"
+        },
+        "disabledText": {
+          "$ref": "#/$defs/__schema5"
+        }
+      },
+      "required": ["id", "text"],
+      "additionalProperties": false
+    },
+    "__schema38": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "search"
+            },
+            "label": {
+              "$ref": "#/$defs/__schema5"
+            },
+            "placeholder": {
+              "$ref": "#/$defs/__schema5"
+            },
+            "confirmLabel": {
+              "$ref": "#/$defs/__schema5"
+            },
+            "description": {
+              "$ref": "#/$defs/__schema5"
+            },
+            "resultLimit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "suggestionGroups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "text": {
+                    "$ref": "#/$defs/__schema5"
+                  },
+                  "optionIds": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/__schema39"
+                    }
+                  }
+                },
+                "required": ["id", "text", "optionIds"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["kind", "label", "placeholder", "confirmLabel"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "direct"
+            },
+            "emptyText": {
+              "$ref": "#/$defs/__schema5"
+            }
+          },
+          "required": ["kind", "emptyText"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema39": {
+      "type": "string",
+      "minLength": 1
+    },
+    "__schema40": {
+      "type": "string",
+      "const": "number"
+    },
+    "__schema41": {
+      "type": "number"
+    },
+    "__schema42": {
+      "type": "number"
+    },
+    "__schema43": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "__schema44": {
+      "type": "string",
+      "const": "ordering"
+    },
+    "__schema45": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema46": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema47": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema28"
+      }
+    },
+    "__schema48": {
+      "type": "string",
+      "const": "entity-partition"
+    },
+    "__schema49": {
+      "$ref": "#/$defs/__schema5"
+    },
+    "__schema50": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema28"
+      }
+    },
+    "__schema51": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/__schema52"
+          },
+          "text": {
+            "$ref": "#/$defs/__schema5"
+          },
+          "kind": {
+            "$ref": "#/$defs/__schema53"
+          },
+          "ordered": {
+            "$ref": "#/$defs/__schema54"
+          },
+          "orderDirection": {
+            "$ref": "#/$defs/__schema55"
+          },
+          "min": {
+            "$ref": "#/$defs/__schema56"
+          },
+          "max": {
+            "$ref": "#/$defs/__schema57"
+          },
+          "candidateIds": {
+            "$ref": "#/$defs/__schema58"
+          },
+          "minWhenRemainingAtLeast": {
+            "$ref": "#/$defs/__schema59"
+          }
+        },
+        "required": ["id", "text", "kind", "ordered", "min", "max"],
+        "additionalProperties": false
+      }
+    },
+    "__schema52": {
+      "type": "string",
+      "minLength": 1
+    },
+    "__schema53": {
+      "type": "string",
+      "enum": ["extract", "destination"]
+    },
+    "__schema54": {
+      "type": "boolean"
+    },
+    "__schema55": {
+      "type": "string",
+      "enum": ["top-first", "bottom-first"]
+    },
+    "__schema56": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema57": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema58": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "__schema59": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        },
+        "min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": ["count", "min"],
+      "additionalProperties": false
+    },
+    "__schema60": {
+      "type": "string",
+      "enum": ["exhaustive", "remainder-automatic"]
+    },
+    "__schema61": {
+      "$ref": "#/$defs/__schema5"
+    },
+    "__schema62": {
+      "type": "string",
+      "const": "entity-allocation"
+    },
+    "__schema63": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema7"
+      }
+    },
+    "__schema64": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema65": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema66": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/__schema67"
+      }
+    },
+    "__schema67": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/$defs/__schema6"
+        },
+        "text": {
+          "$ref": "#/$defs/__schema29"
+        },
+        "enabled": {
+          "$ref": "#/$defs/__schema30"
+        },
+        "disabledText": {
+          "$ref": "#/$defs/__schema31"
+        },
+        "min": {
+          "$ref": "#/$defs/__schema68"
+        },
+        "max": {
+          "$ref": "#/$defs/__schema69"
+        }
+      },
+      "required": ["entity", "max"],
+      "additionalProperties": false
+    },
+    "__schema68": {
+      "default": 0,
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema69": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema70": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "type": "object",
+          "properties": {
+            "revision": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": ["revision", "url"],
+          "additionalProperties": false
+        },
+        "cards": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "rulesText": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "rulesText"],
+            "additionalProperties": false
+          }
+        },
+        "objects": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "definitionId": {
+                "$ref": "#/$defs/__schema1"
+              },
+              "printingId": {
+                "$ref": "#/$defs/__schema1"
+              },
+              "imageUrl": {
+                "type": "string"
+              }
+            },
+            "required": ["definitionId"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["catalog", "cards", "objects"],
+      "additionalProperties": false
+    },
+    "__schema71": {
+      "type": "string",
+      "minLength": 1
+    },
+    "__schema72": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema73": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema74": {
+      "type": "string",
+      "enum": [
+        "card.draw",
+        "card.move",
+        "card.play",
+        "card.discard",
+        "card.destroy",
+        "card.reveal",
+        "deck.shuffle",
+        "resource.gain",
+        "resource.spend",
+        "resource.steal",
+        "life.gain",
+        "life.loss",
+        "combat.start",
+        "combat.hit",
+        "combat.block",
+        "damage.prevent",
+        "effect.trigger",
+        "phase.change",
+        "turn.change",
+        "random.die",
+        "random.coin",
+        "game.win",
+        "game.loss"
+      ]
+    },
+    "__schema75": {
+      "type": "string",
+      "const": "entityTransfer"
+    },
+    "__schema76": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "entity"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["kind", "id"],
+      "additionalProperties": false
+    },
+    "__schema77": {
+      "$ref": "#/$defs/__schema78"
+    },
+    "__schema78": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/__schema76"
+        },
+        {
+          "$ref": "#/$defs/__schema79"
+        },
+        {
+          "$ref": "#/$defs/__schema80"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "anchor"
+            },
+            "id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": ["kind", "id"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "__schema79": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "zone"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ownerId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["kind", "id"],
+      "additionalProperties": false
+    },
+    "__schema80": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "player"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": ["kind", "id"],
+      "additionalProperties": false
+    },
+    "__schema81": {
+      "$ref": "#/$defs/__schema78"
+    },
+    "__schema82": {
+      "type": "string",
+      "enum": ["public", "hidden"]
+    },
+    "__schema83": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "__schema84": {
+      "type": "string",
+      "enum": ["move", "copy"]
+    },
+    "__schema85": {
+      "type": "string",
+      "enum": ["replace", "overlay"]
+    },
+    "__schema86": {
+      "type": "string",
+      "const": "entityStateChange"
+    },
+    "__schema87": {
+      "type": "string",
+      "enum": ["orientation", "face", "appearance"]
+    },
+    "__schema88": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "__schema89": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "__schema90": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/$defs/__schema76"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "valueLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tone": {
+          "type": "string",
+          "enum": ["winner", "loser", "neutral"]
+        },
+        "fallbackPresentation": {
+          "type": "object",
+          "properties": {
+            "ownerId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "canonicalId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "identityZone": {
+              "$ref": "#/$defs/__schema79"
+            }
+          },
+          "required": ["ownerId"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["entity", "label", "valueLabel", "tone"],
+      "additionalProperties": false
+    },
+    "__schema91": {
+      "type": "string",
+      "const": "gameResult"
+    },
+    "__schema92": {
+      "type": "string",
+      "enum": ["winner", "draw"]
+    },
+    "__schema93": {
+      "$ref": "#/$defs/__schema80"
+    },
+    "__schema94": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

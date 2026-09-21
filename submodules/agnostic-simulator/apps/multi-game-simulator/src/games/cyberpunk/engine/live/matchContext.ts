@@ -18,6 +18,7 @@ import { CYBERPUNK_GAME_SLUG } from "./apiOrigin";
 import { createLiveHttpError } from "./httpFeedback";
 import { cyberpunkRuntimeRequestHeaders, readServerRuntimeHeaders } from "./runtimeHeaders";
 import type { ChatPresetKey } from "../chat";
+import { defaultMatchmakingUrl, matchReturnUrl } from "../../../../routes/match-return-url.ts";
 import { buildMountedHref } from "../../../../routes/router-paths.ts";
 import { MatchResolutionSchema, type LiveMatchBootstrapV1 } from "@tcg/game-page-contract";
 import { isFilteredMatchView, isMatchState, viewerProjectionToMatchState } from "./liveState";
@@ -61,6 +62,8 @@ export interface LiveMatchContext {
 export interface LiveMatchParticipant extends PlayerIdentityInfo {
   seat: 1 | 2;
   userId?: string;
+  /** Server-authoritative bot-seat flag from the match bootstrap. */
+  isBot?: boolean;
   deckName?: string;
   deckListId?: string;
 }
@@ -119,12 +122,11 @@ export function getMatchmakingReturnUrl(
   gameSlug: GameSlug = CYBERPUNK_GAME_SLUG,
   search = window.location.search,
 ): string {
-  const params = new URLSearchParams(search);
-  const requested = params.get("returnTo");
-  if (requested && isAllowedReturnUrl(requested)) {
+  const requested = matchReturnUrl(gameSlug, search);
+  if (requested !== `/${gameSlug}/matchmaking`) {
     return requested;
   }
-  return import.meta.env.VITE_MATCHMAKING_URL || `https://tcg.online/${gameSlug}/matchmaking`;
+  return defaultMatchmakingUrl(gameSlug, import.meta.env.VITE_MATCHMAKING_URL);
 }
 
 export async function fetchLiveMatchOverview(
@@ -177,6 +179,7 @@ export function liveMatchContextFromBootstrap(bootstrap: LiveMatchBootstrapV1): 
         displayName: participant.displayName,
         seat: participant.seat === 2 ? 2 : 1,
         ...(participant.userId ? { userId: participant.userId } : {}),
+        ...(participant.isBot ? { isBot: true } : {}),
       })),
     },
     game: {
@@ -199,7 +202,10 @@ export function liveMatchContextFromBootstrap(bootstrap: LiveMatchBootstrapV1): 
         : {}),
     },
     history: {
-      engineLogs: bootstrap.history.engineLogs.map((entry) => entry.data),
+      engineLogs: bootstrap.history.engineLogs.map((entry) => ({
+        timestamp: entry.ts,
+        log: entry.data,
+      })),
       chatMessages: parseRemoteChatMessages(bootstrap.history.chatMessages),
       freeTextEnabled: bootstrap.history.freeTextEnabled === true,
     },
@@ -360,21 +366,6 @@ export function projectSimulatorValueForLive<T>(
     [String(P2), actorIds.opponent],
   ]);
   return replaceExactStrings(value, replacements) as T;
-}
-
-function isAllowedReturnUrl(value: string): boolean {
-  try {
-    const url = new URL(value);
-    const currentOrigin = typeof window === "undefined" ? null : window.location.origin;
-    return (
-      url.origin === "https://tcg.online" ||
-      url.origin === "https://staging.cardgoat.org" ||
-      url.origin === currentOrigin ||
-      (url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1"))
-    );
-  } catch {
-    return false;
-  }
 }
 
 function moveLogFromCanonical(log: CanonicalEngineMoveLog): MoveLog {

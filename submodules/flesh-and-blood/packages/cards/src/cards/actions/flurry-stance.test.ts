@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, it } from "vitest";
 import {
   FAB_MANUAL_HARNESS,
   FabTestEngine,
@@ -41,7 +41,9 @@ describe("Flurry Stance (HNT126) AAA", () => {
     const Fang = game.as(fang);
 
     game.as(dash).endTurn();
-    game.untilIdle({ optionals: "accept" });
+    // CR 5.2.3c: the start-of-turn grant is not a decision — a full decline
+    // pass must still lift each dagger's limit.
+    game.untilIdle({ optionals: "decline" });
     expectFabCard(Fang, flurryStanceRed).toBeIn("graveyard");
 
     Fang.activate(nerveScalpel);
@@ -53,35 +55,6 @@ describe("Flurry Stance (HNT126) AAA", () => {
     pitchWhilePaying(game, Fang);
     game.advanceUntil({ stopAt: "defend" });
     expectCombat(game).toBeOpen();
-  });
-
-  it("boundary: declining the extra activation keeps the once-per-turn dagger limit", () => {
-    const game = FabTestEngine.start(
-      { hero: dash, hand: [], deck: 6 },
-      {
-        hero: fang,
-        arena: [flurryStanceRed],
-        weapon1: [nerveScalpel],
-        hand: [nimblismBlue, nimblismBlue],
-        resourcePoints: 0,
-        actionPoints: 1,
-        deck: 6,
-      },
-      FAB_MANUAL_HARNESS,
-    );
-    const Fang = game.as(fang);
-
-    game.as(dash).endTurn();
-    game.untilIdle({ optionals: "decline" });
-    expectFabCard(Fang, flurryStanceRed).toBeIn("graveyard");
-
-    Fang.activate(nerveScalpel);
-    pitchWhilePaying(game, Fang);
-    game.advanceUntil({ stopAt: "defend" });
-    game.closeCombat({ optionals: "decline" });
-
-    expect(() => Fang.activate(nerveScalpel)).toThrow();
-    expectCombat(game).toBeClosed();
   });
 
   it("timing: does not fire at the start of the opponent's turn", () => {

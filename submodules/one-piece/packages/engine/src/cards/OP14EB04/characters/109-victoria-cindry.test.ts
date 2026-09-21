@@ -7,7 +7,7 @@ import {
   op12Perona034,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04VictoriaCindry109 } from "../../../../../cards/src/cards/OP14EB04/characters/109-victoria-cindry.ts";
+import { op14eb04VictoriaCindry109 } from "../../../../../cards/src/cards/characters/op14-109-victoria-cindry.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

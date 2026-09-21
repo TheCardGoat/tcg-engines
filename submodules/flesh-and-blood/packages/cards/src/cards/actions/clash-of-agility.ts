@@ -32,6 +32,7 @@ export const clashOfAgility = definePitchFamily(fabPitchFamilies["clash-of-agili
           prize: {
             type: "create-token",
             token: "agility",
+            creator: "token-controller",
             controller: "winner",
           },
         },

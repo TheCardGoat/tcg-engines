@@ -74,47 +74,58 @@ export const merlinBrilliantVestige: GrandArchiveCard<GrandArchiveAbilityDefinit
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "supertype",
-                        oneOf: ["REGALIA"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "supertype",
+                          oneOf: ["REGALIA"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                    },
-                    {
-                      kind: "add-counter",
-                      subject: {
-                        kind: "champion",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "draw",
                         player: "controller",
+                        amount: 1,
                       },
-                      counter: "preparation",
-                      amount: 1,
-                    },
-                  ],
+                      {
+                        kind: "add-counter",
+                        subject: {
+                          kind: "champion",
+                          player: "controller",
+                        },
+                        counter: "preparation",
+                        amount: 1,
+                      },
+                    ],
+                  },
                 },
               ],
             },

@@ -55,35 +55,41 @@ export const cielOmenbringer: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           effect: {
             kind: "repeat",
             count: {
-              kind: "count",
-              collection: {
-                zones: ["banishment"],
-                player: "controller",
-                filter: {
-                  kind: "has-counter",
-                  counter: "omen",
-                },
-              },
+              kind: "player-property",
+              player: "controller",
+              property: "omens",
             },
             effect: {
-              kind: "discard",
-              player: "controller",
-              selection: {
-                id: "discarded-card",
-                kind: "choice",
-                declared: "resolution",
-                chooser: "controller",
-                count: {
-                  kind: "exactly",
-                  amount: 1,
-                },
-                candidates: {
-                  kind: "card",
-                  zones: ["hand"],
-                  relationship: "zone-of",
+              kind: "sequence",
+              effects: [
+                {
+                  kind: "discard",
                   player: "controller",
+                  selection: {
+                    id: "discarded-card",
+                    kind: "choice",
+                    declared: "resolution",
+                    chooser: "controller",
+                    count: {
+                      kind: "exactly",
+                      amount: 1,
+                    },
+                    unique: true,
+                    candidates: {
+                      kind: "card",
+                      zones: ["hand", "memory"],
+                      relationship: "zone-of",
+                      player: "controller",
+                    },
+                  },
                 },
-              },
+                {
+                  kind: "draw",
+                  player: "controller",
+                  amount: 1,
+                  to: "memory",
+                },
+              ],
             },
           },
         },

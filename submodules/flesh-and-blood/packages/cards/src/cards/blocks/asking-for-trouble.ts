@@ -16,7 +16,12 @@ export const askingForTrouble = definePitchFamily(fabPitchFamilies["asking-for-t
       },
       resolution: {
         kind: "effect",
-        effect: { type: "create-token", token: "vigor", controller: "opponent" },
+        effect: {
+          type: "create-token",
+          token: "vigor",
+          creator: "effect-controller",
+          controller: "opponent",
+        },
       },
     },
   }),

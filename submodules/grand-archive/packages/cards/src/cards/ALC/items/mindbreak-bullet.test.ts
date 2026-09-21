@@ -70,7 +70,10 @@ describe("Mindbreak Bullet — Class Bonus champion hit", () => {
             const wait = game.waitState();
             if (game.state.decision?.kind === "choose-retaliators")
               answerDecision(game, "choose-retaliators", []);
-            else if (wait.kind === "opportunity") game.player(wait.playerId).pass();
+            else if (game.state.decision?.kind === "resolve-optional-effect") {
+              expect(game.state.resolution?.sourceId).toBe(gun.objectId);
+              answerDecision(game, "resolve-optional-effect", false);
+            } else if (wait.kind === "opportunity") game.player(wait.playerId).pass();
             else throw new Error(`Unexpected combat state ${wait.kind}`);
           }
           expect(

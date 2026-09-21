@@ -9,6 +9,90 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("T-Bug — Amateur Philosopher", () => {
+  it("has the exact yellow Merc Netrunner identity, private look, and optional free Call DSL", () => {
+    expect(welcomeToNightCityRetailTBugAmateurPhilosopher).toMatchObject({
+      canonicalId: "t-bug-amateur-philosopher",
+      slug: "t-bug-amateur-philosopher",
+      name: "T-Bug",
+      displayName: "T-Bug: Amateur Philosopher",
+      subname: "Amateur Philosopher",
+      type: "unit",
+      color: "yellow",
+      classifications: ["Merc", "Netrunner"],
+      cost: 4,
+      power: 4,
+      ram: 2,
+      hasSellTag: false,
+      rarity: "Uncommon",
+      printNumber: "055",
+      reminderText: ["You can only Call a Legend once per turn."],
+      rulesText:
+        "{Defeated} Look at all friendly face-down Legends. Then, you may Call a Legend for free. (You can only Call a Legend once per turn.)",
+      abilities: [
+        {
+          kind: "triggered",
+          text: "{Defeated} Look at all friendly face-down Legends. Then, you may Call a Legend for free.",
+          trigger: { trigger: "defeated" },
+          source: { selector: "self" },
+          effects: [
+            {
+              effect: "lookAt",
+              target: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["legendArea"],
+                cardTypes: ["legend"],
+                face: "faceDown",
+              },
+              revealToOpponent: false,
+            },
+            {
+              effect: "callLegend",
+              player: "friendly",
+              target: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["legendArea"],
+                cardTypes: ["legend"],
+                face: "faceDown",
+                selection: { mode: "choose", min: 0, max: 1 },
+              },
+              free: true,
+              optional: true,
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  it("costs exactly 4 to play and enters with Lag", () => {
+    const successEngine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailTBugAmateurPhilosopher],
+      eddies: 4,
+    });
+    for (const legend of successEngine.getCardsInZone("legendArea", P1)) {
+      successEngine.judgeSpendCard(legend, { as: P1 });
+    }
+    successEngine.playCard(welcomeToNightCityRetailTBugAmateurPhilosopher, { as: P1 });
+    expect(successEngine.getEddies(P1)).toBe(0);
+    expect(
+      successEngine.getCard(welcomeToNightCityRetailTBugAmateurPhilosopher, "field", P1).meta
+        .hasLag,
+    ).toBe(true);
+
+    const failureEngine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailTBugAmateurPhilosopher],
+      eddies: 3,
+    });
+    for (const legend of failureEngine.getCardsInZone("legendArea", P1)) {
+      failureEngine.judgeSpendCard(legend, { as: P1 });
+    }
+    expect(() =>
+      failureEngine.playCard(welcomeToNightCityRetailTBugAmateurPhilosopher, { as: P1 }),
+    ).toThrow(/INSUFFICIENT_EDDIES/);
+  });
+
   // Helper: t-bug (4 power) attacks a 5-power spent defender and is defeated.
   // Returns the engine after the fight resolves (defeated trigger fires).
   function setupDefeatedTBug() {
@@ -134,5 +218,33 @@ describe("T-Bug — Amateur Philosopher", () => {
     expect(engine.getCard(theHeistRetailStarterDeckJackieWellesPourOneOutForMe).meta.faceDown).toBe(
       true,
     );
+  });
+
+  it("creates no choice when no friendly face-down Legend remains", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        field: [
+          {
+            card: welcomeToNightCityRetailTBugAmateurPhilosopher,
+            spent: false,
+            hasLag: false,
+          },
+        ],
+        legendArea: [
+          { card: embracingPowerRetailStarterDeckGoroTakemuraHandsUnclean, faceDown: false },
+          { card: theHeistRetailStarterDeckJackieWellesPourOneOutForMe, faceDown: false },
+        ],
+      },
+      { field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true, powerModifier: 3 }] },
+    );
+
+    engine.attackUnit(
+      welcomeToNightCityRetailTBugAmateurPhilosopher,
+      welcomeToNightCityRetailCorpoSecurity,
+      { as: P1 },
+    );
+    engine.resolveFullFight({ as: P1 });
+
+    expect(engine.getPrompt(P1).choice).toBeNull();
   });
 });

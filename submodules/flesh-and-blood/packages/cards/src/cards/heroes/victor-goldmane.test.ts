@@ -1,6 +1,7 @@
 import { describe, it } from "vitest";
 import {
   expectCombat,
+  expectFabCard,
   expectFabPlayer,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
@@ -13,6 +14,9 @@ import { snatchRed } from "../actions/snatch.ts";
 import { nimblismBlue } from "../actions/nimblism.ts";
 import { ragingOnslaughtRed } from "../actions/raging-onslaught.ts";
 import { testOfMightRed } from "../blocks/test-of-might.ts";
+import { victorGoldmaneHighAndMighty } from "./victor-goldmane-high-and-mighty.ts";
+import { commandAndConquerRed } from "../actions/command-and-conquer.ts";
+import { trounceRed } from "../blocks/trounce.ts";
 import { victorGoldmane } from "./victor-goldmane.ts";
 
 /**
@@ -163,5 +167,82 @@ describe("Victor Goldmane (HVY048) AAA", () => {
     expectCombat(game).toHaveClashWinner(Bravo);
     expectFabPlayer(Victor).toHaveTokenCount("gold", 0).toHaveTokenCount("might", 0);
     expectFabPlayer(Bravo).toHaveTokenCount("might", 1);
+  });
+});
+
+// Both canonical hero versions must distinguish creator from effect controller.
+describe("Victor Goldmane creation effect controller", () => {
+  it.each([
+    { label: "Victor Goldmane", hero: victorGoldmane },
+    { label: "Victor Goldmane, High and Mighty", hero: victorGoldmaneHighAndMighty },
+  ])("$label does not draw from opponent-controlled Trounce", ({ hero }) => {
+    const game = FabTestEngine.start(
+      {
+        hero,
+        hand: [ragingOnslaughtRed],
+        resourcePoints: 3,
+        actionPoints: 1,
+        deck: [nimblismBlue, ragingOnslaughtRed, commandAndConquerRed],
+      },
+      {
+        hero: bravo,
+        hand: [trounceRed],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Victor = game.as(hero);
+    const Bravo = game.as(bravo);
+    Victor.playAttack(ragingOnslaughtRed);
+    Bravo.defendWith(trounceRed);
+    game.untilIdle();
+    expectFabPlayer(Victor)
+      .toHaveTokenCount("gold", 1)
+      .toHaveTokenCount("might", 1)
+      .toHaveTokenCount("vigor", 1)
+      .toHaveHandCount(0);
+    expectFabPlayer(Bravo).toHaveLife(16).toHaveTokenCount("gold", 0);
+    expectCombat(game).toBeClosed();
+  });
+  it.each([
+    { label: "Victor Goldmane", hero: victorGoldmane },
+    { label: "Victor Goldmane, High and Mighty", hero: victorGoldmaneHighAndMighty },
+  ])("$label still draws on the first own effect after opposing creation", ({ hero }) => {
+    const game = FabTestEngine.start(
+      // Extra AP is arranged as a mid-turn resource; no creation history is seeded.
+      {
+        hero,
+        hand: [ragingOnslaughtRed, visitGoldmaneEstateBlue],
+        resourcePoints: 4,
+        actionPoints: 2,
+        deck: [nimblismBlue, ragingOnslaughtRed, commandAndConquerRed],
+      },
+      {
+        hero: bravo,
+        hand: [trounceRed],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Victor = game.as(hero);
+    const Bravo = game.as(bravo);
+    const secondReveal = Victor.cardIn("deck", ragingOnslaughtRed);
+    Victor.playAttack(ragingOnslaughtRed);
+    Bravo.defendWith(trounceRed);
+    game.untilIdle();
+    expectFabPlayer(Victor).toHaveTokenCount("gold", 1).toHaveHandCount(1).toHaveAP(1);
+    expectFabCard(Victor, visitGoldmaneEstateBlue).toBeIn("hand");
+    Victor.play(visitGoldmaneEstateBlue);
+    game.untilIdle();
+    expectFabPlayer(Victor)
+      .toHaveTokenCount("gold", 2)
+      .toHaveTokenCount("might", 1)
+      .toHaveTokenCount("vigor", 1)
+      .toHaveHandCount(1);
+    expectFabCard(Victor, secondReveal).toBeIn("hand");
+    expectFabPlayer(Bravo).toHaveLife(16);
+    expectCombat(game).toBeClosed();
   });
 });

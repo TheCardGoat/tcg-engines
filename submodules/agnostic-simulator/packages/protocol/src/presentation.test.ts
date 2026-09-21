@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   mergePresentationRecords,
+  PrintingPresentationSchema,
   PresentationBundleSchema,
   PresentationEnvelopeSchema,
   type PresentationRecords,
@@ -67,4 +68,21 @@ describe("optional frozen presentation", () => {
       }).success,
     ).toBe(false);
   });
+});
+
+it("accepts per-printing proportions for mixed layouts and rejects invalid dimensions", () => {
+  const printing = {
+    locale: "EN",
+    boardImageUrl: "https://example.com/board.webp",
+    printedImageUrl: "https://example.com/full.webp",
+    boardImageAspectRatio: 446 / 396,
+    printedImageAspectRatio: 5 / 7,
+  };
+  expect(PrintingPresentationSchema.parse(printing)).toEqual(printing);
+  for (const invalid of [0, -1, Infinity, NaN]) {
+    expect(() =>
+      PrintingPresentationSchema.parse({ ...printing, boardImageAspectRatio: invalid }),
+    ).toThrow();
+  }
+  expect(PrintingPresentationSchema.parse({ locale: "EN" })).toEqual({ locale: "EN" });
 });

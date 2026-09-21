@@ -60,4 +60,20 @@ describe("human vs ai storage", () => {
       strategyId: BOARD_CONTROL_LORE_RACE_STRATEGY_ID,
     });
   });
+
+  it("preserves play-both-sides mode and defaults older sessions to bot practice", () => {
+    const storage = new MemoryStorage();
+    const base = {
+      playerOneDeckText: "1 Sail The Azurite Sea",
+      playerTwoDeckText: "1 Grab Your Bow",
+      strategyId: BOARD_CONTROL_LORE_RACE_STRATEGY_ID,
+      seed: "practice-mode",
+    };
+
+    storage.setItem(HUMAN_VS_AI_STORAGE_KEY, JSON.stringify({ ...base, opponentMode: "self" }));
+    expect(readStoredHumanVsAiConfig(storage)?.opponentMode).toBe("self");
+
+    storage.setItem(HUMAN_VS_AI_STORAGE_KEY, JSON.stringify(base));
+    expect(readStoredHumanVsAiConfig(storage)?.opponentMode).toBe("bot");
+  });
 });

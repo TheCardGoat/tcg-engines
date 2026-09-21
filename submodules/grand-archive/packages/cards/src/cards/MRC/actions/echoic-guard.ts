@@ -130,24 +130,35 @@ export const echoicGuard: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                   kind: "sequence",
                   effects: [
                     {
-                      kind: "pay",
-                      player: "controller",
-                      cost: {
-                        kind: "pay-reserve",
-                        amount: {
-                          kind: "variable",
-                          symbol: "X",
+                      kind: "attempt",
+                      effect: {
+                        kind: "pay",
+                        player: "controller",
+                        cost: {
+                          kind: "pay-reserve",
+                          amount: {
+                            kind: "variable",
+                            symbol: "X",
+                          },
                         },
                       },
+                      bindSucceededAs: "optional-action-succeeded",
                     },
                     {
-                      kind: "summon",
-                      copyOf: {
-                        kind: "bound",
-                        binding: "target-1",
+                      kind: "conditional",
+                      condition: {
+                        kind: "effect-succeeded",
+                        binding: "optional-action-succeeded",
                       },
-                      controller: "controller",
-                      bindResultAs: "summoned-token",
+                      then: {
+                        kind: "summon",
+                        copyOf: {
+                          kind: "bound",
+                          binding: "target-1",
+                        },
+                        controller: "controller",
+                        bindResultAs: "summoned-token",
+                      },
                     },
                   ],
                 },

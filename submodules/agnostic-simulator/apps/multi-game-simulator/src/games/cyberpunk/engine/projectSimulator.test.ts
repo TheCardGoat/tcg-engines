@@ -114,6 +114,26 @@ describe("projectSimulator", () => {
     }
   });
 
+  it("conceals a sold card as soon as it enters the Eddie area", () => {
+    const engine = getScenario(DEFAULT_SCENARIO).build();
+    const sellable = engine.getCardsInZone("hand", P1).find((card) => defOf(card).hasSellTag);
+    expect(sellable).toBeDefined();
+    engine.sellCard(sellable!, { as: P1 });
+
+    const matchState = engine.getState();
+    const eddieIds = matchState.G.players[P1]!.zones.eddieArea.map(String);
+    expect(eddieIds.length).toBeGreaterThan(0);
+
+    for (const cardId of eddieIds) {
+      for (const viewer of ["player", "opponent"] as const) {
+        const entity = projectEntityForCard(cardId, matchState, viewer as Side);
+        expect(entity?.face).toBe("hidden");
+        expect(entity?.imageUrl).toBeUndefined();
+        expect(entity?.title).toBe("Hidden card");
+      }
+    }
+  });
+
   it("links stack and gig layout blocks to projected zones", () => {
     const { matchState, interactionViews } = buildOpeningFixture();
     const projection = projectSimulator({

@@ -9,6 +9,7 @@ import { dash } from "../heroes/dash.ts";
 import { autumnSTouchBlue } from "./autumn-s-touch.ts";
 import { briar } from "../heroes/briar.ts";
 import { chorusOfRotwoodRed } from "./chorus-of-rotwood.ts";
+import { nimblismBlue } from "./nimblism.ts";
 import { verdantTideRed } from "./verdant-tide.ts";
 
 /**
@@ -21,6 +22,8 @@ import { verdantTideRed } from "./verdant-tide.ts";
  * Embodiment of Earth token.
  */
 
+const padding = [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue];
+
 describe("Verdant Tide (PEN203) AAA", () => {
   it("happy: Runechant creation is amped plus 1 and Earth Bond makes the Embodiment", () => {
     const game = FabTestEngine.start(
@@ -29,28 +32,26 @@ describe("Verdant Tide (PEN203) AAA", () => {
         hand: [verdantTideRed, chorusOfRotwoodRed, autumnSTouchBlue],
         resourcePoints: 0,
         actionPoints: 2,
-        deck: 6,
+        deck: padding,
       },
-      { hero: dash, hand: [], deck: 6 },
+      { hero: dash, hand: [], deck: padding },
       FAB_MANUAL_HARNESS,
     );
     const Briar = game.as(briar);
 
     // Pitching the Earth card pays for Verdant Tide and satisfies Earth Bond.
     Briar.must.pitch(autumnSTouchBlue).play(verdantTideRed);
-    game.helpers.resolveUntilIdle();
+    game.untilIdle();
 
     // Earth Bond creates 1 Embodiment — itself an Elemental aura token, so
     // Verdant Tide's amp creates a second one.
     expectFabToken(game, "embodiment-of-earth").toHaveCount(2);
 
     Briar.play(chorusOfRotwoodRed);
-    game.helpers.resolveUntilIdle({ optionalBoolean: false }); // decline Decompose
+    game.untilIdle({ optionals: "decline" }); // decline Decompose
 
-    // PIN: printed "until end of turn" should amp Chorus's 3 Runechants to 4;
-    // the amp intercepts the in-resolution Earth-Bond creation (2 Embodiments)
-    // but NOT later same-turn aura-token creations.
-    expectFabPlayer(Briar).toHaveTokenCount("runechant", 3);
+    // The turn-long replacement remains active: printed 3 Runechants plus 1.
+    expectFabPlayer(Briar).toHaveTokenCount("runechant", 4);
   });
 
   it("boundary: without an Earth pitch there is no Embodiment (amp still applies)", () => {
@@ -60,20 +61,20 @@ describe("Verdant Tide (PEN203) AAA", () => {
         hand: [verdantTideRed, chorusOfRotwoodRed],
         resourcePoints: 2,
         actionPoints: 2,
-        deck: 6,
+        deck: padding,
       },
-      { hero: dash, hand: [], deck: 6 },
+      { hero: dash, hand: [], deck: padding },
       FAB_MANUAL_HARNESS,
     );
     const Briar = game.as(briar);
 
     Briar.play(verdantTideRed);
-    game.helpers.resolveUntilIdle();
+    game.untilIdle();
 
     expectFabToken(game, "embodiment-of-earth").toHaveCount(0);
 
     Briar.play(chorusOfRotwoodRed);
-    game.helpers.resolveUntilIdle({ optionalBoolean: false });
-    expectFabPlayer(Briar).toHaveTokenCount("runechant", 3); // amp dropped later
+    game.untilIdle({ optionals: "decline" });
+    expectFabPlayer(Briar).toHaveTokenCount("runechant", 4);
   });
 });

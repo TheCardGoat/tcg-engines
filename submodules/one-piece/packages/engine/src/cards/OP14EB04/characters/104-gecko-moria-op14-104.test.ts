@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01MountainGod018, op06Inuppe082, op12Perona034 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04GeckoMoriaOp14104104 } from "../../../../../cards/src/cards/OP14EB04/characters/104-gecko-moria-op14-104.ts";
+import { op14eb04GeckoMoriaOp14104104 } from "../../../../../cards/src/cards/characters/op14-104-gecko-moria.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 
@@ -37,7 +37,8 @@ describe("OP14-104 Gecko Moria", () => {
     const lifeBefore = engine.getView("south").players.south.lifeCount;
     engine.playCard(op14eb04GeckoMoriaOp14104104, "south");
     engine.resolveDecision("effectActionChoice", { optionId: "1" }, "south");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [candidateId] }, "south");
+    // The lone eligible trash Character auto-selects as the addToLife target.
+    void candidateId;
     const view = engine.getView("south");
     expect(view.players.south.lifeCount).toBe(lifeBefore + 1);
     expect(engine.getState().players.south.life[0]).toBe(candidateId);

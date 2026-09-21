@@ -52,26 +52,37 @@ export const suspiciousConcoction: GrandArchiveCard<GrandArchiveAbilityDefinitio
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish-object",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish-object",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                      to: "memory",
-                    },
-                    {
-                      kind: "recover",
-                      player: "controller",
-                      amount: 2,
-                    },
-                  ],
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "draw",
+                        player: "controller",
+                        amount: 1,
+                        to: "memory",
+                      },
+                      {
+                        kind: "recover",
+                        player: "controller",
+                        amount: 2,
+                      },
+                    ],
+                  },
                 },
               ],
             },

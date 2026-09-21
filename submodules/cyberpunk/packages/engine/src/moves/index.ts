@@ -11,7 +11,11 @@ import { concedeMove } from "./concede.ts";
 import { mulliganMove } from "./mulligan.ts";
 import { keepHandMove } from "./keep-hand.ts";
 import { gainGigMove } from "./gain-gig.ts";
-import { resolveAttackMove } from "./resolve-attack.ts";
+import {
+  resolveAttackMove,
+  resolveRedirectDefeatMove,
+  resolveSacrificialGearMove,
+} from "./resolve-attack.ts";
 import { resolveCardToPlayMove } from "./resolve-card-to-play.ts";
 import { resolveCardToMoveMove } from "./resolve-card-to-move.ts";
 import { activateAbilityMove } from "./activate-ability.ts";
@@ -25,6 +29,8 @@ import { resolveTriggerMove } from "./resolve-trigger.ts";
 import { resolveEffectTargetMove } from "./resolve-effect-target.ts";
 import { resolveCardTypeChoiceMove } from "./resolve-card-type-choice.ts";
 import { resolveChooseEffectMove } from "./resolve-choose-effect.ts";
+import { resolveFirstPlayerMove } from "./resolve-first-player.ts";
+import { cancelPendingResolutionMove } from "./cancel-pending-resolution.ts";
 
 /**
  * Single source of truth for every move id the engine ships. Tuple form so the
@@ -58,6 +64,10 @@ export const MOVE_IDS = [
   "resolveEffectTarget",
   "resolveCardTypeChoice",
   "resolveChooseEffect",
+  "resolveRedirectDefeat",
+  "resolveSacrificialGear",
+  "resolveFirstPlayer",
+  "cancelPendingResolution",
 ] as const;
 
 export type MoveId = (typeof MOVE_IDS)[number];
@@ -89,8 +99,20 @@ export const allMoves: Record<MoveId, MoveDefinition<any>> = {
   resolveEffectTarget: resolveEffectTargetMove,
   resolveCardTypeChoice: resolveCardTypeChoiceMove,
   resolveChooseEffect: resolveChooseEffectMove,
+  resolveRedirectDefeat: resolveRedirectDefeatMove,
+  resolveSacrificialGear: resolveSacrificialGearMove,
+  resolveFirstPlayer: resolveFirstPlayerMove,
+  cancelPendingResolution: cancelPendingResolutionMove,
 };
 
+export {
+  MANUAL_MOVE_IDS,
+  MANUAL_CARD_ZONES,
+  manualMoves,
+  type ManualMoveId,
+  type ManualCardZone,
+  type ManualDeckPosition,
+} from "./manual.ts";
 export {
   playCardMove,
   sellCardMove,
@@ -118,5 +140,8 @@ export {
   resolveEffectTargetMove,
   resolveCardTypeChoiceMove,
   resolveChooseEffectMove,
+  resolveRedirectDefeatMove,
+  resolveSacrificialGearMove,
+  cancelPendingResolutionMove,
 };
 export { getProjectedDirectAttackGigStealCount } from "./resolve-attack.ts";

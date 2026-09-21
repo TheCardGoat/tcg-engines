@@ -156,11 +156,13 @@ export const shackledTheurgist: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                   destination: {
                     zone: "field",
                   },
+                  bindResultAs: "returned-source",
                 },
                 {
                   kind: "continuous",
                   subjects: {
-                    kind: "source",
+                    kind: "bound",
+                    binding: "returned-source",
                   },
                   affectedSet: "locked",
                   duration: {
@@ -181,7 +183,8 @@ export const shackledTheurgist: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                 {
                   kind: "set-object-state",
                   subject: {
-                    kind: "source",
+                    kind: "bound",
+                    binding: "returned-source",
                   },
                   state: "ephemeral",
                   value: true,

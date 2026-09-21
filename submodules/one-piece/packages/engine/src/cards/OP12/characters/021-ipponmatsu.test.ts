@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01KouzukiOden001, eb01MountainGod018, op01Izo033 } from "@tcg/op-cards";
-import { op12Ipponmatsu021 } from "../../../../../cards/src/cards/OP12/characters/021-ipponmatsu.ts";
+import { op12Ipponmatsu021 } from "../../../../../cards/src/cards/characters/op12-021-ipponmatsu.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

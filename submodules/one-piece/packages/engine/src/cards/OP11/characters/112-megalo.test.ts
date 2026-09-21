@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op11Shirahoshi022 } from "@tcg/op-cards";
-import { op11Megalo112 } from "../../../../../cards/src/cards/OP11/characters/112-megalo.ts";
+import { op11Megalo112 } from "../../../../../cards/src/cards/characters/op11-112-megalo.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

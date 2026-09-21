@@ -1,4 +1,9 @@
-import { getAllCards, getCardById, type CardType } from "@tcg-engines/naruto-cards";
+import {
+  getAllCards,
+  getCardById,
+  type CardDefinition,
+  type CardType,
+} from "@tcg-engines/naruto-cards";
 import {
   CONFIRMED_STRUCTURAL_RULES,
   PREVIEW_CHAKRA_CARD_IDS,
@@ -40,6 +45,11 @@ export interface NarutoDeckBuilderCard {
   readonly power: number | null;
   readonly health: number | null;
   readonly imageUrl: string;
+  /**
+   * Concatenated card text (skill labels + skill text + support name/text)
+   * so catalog surfaces can offer full-text search. Not rendered directly.
+   */
+  readonly searchText: string;
 }
 
 export interface NarutoDeckBuilderCatalog {
@@ -73,6 +83,18 @@ export interface NarutoDeckBuilderSetup {
 
 const NARUTO_CARD_CDN_BASE = "https://cdn.tcg.online/public/naruto/cards";
 
+/** Card text (skill labels + text + support) for full-text search surfaces. */
+function narutoCardSearchText(card: CardDefinition): string {
+  const parts: string[] = [];
+  for (const skill of card.skills) {
+    parts.push(...skill.labels, skill.text);
+  }
+  if (card.support) {
+    parts.push(card.support.name, card.support.text, card.support.timing);
+  }
+  return parts.filter(Boolean).join(" ");
+}
+
 export function getNarutoDeckBuilderCatalog(): NarutoDeckBuilderCatalog {
   const cards = getAllCards();
   return {
@@ -90,6 +112,7 @@ export function getNarutoDeckBuilderCatalog(): NarutoDeckBuilderCatalog {
       power: card.power,
       health: card.health,
       imageUrl: `${NARUTO_CARD_CDN_BASE}/${encodeURIComponent(card.id)}.webp`,
+      searchText: narutoCardSearchText(card),
     })),
     templates: PREVIEW_DECKS.map((deck) => ({
       key: deck.key,

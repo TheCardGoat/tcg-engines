@@ -1,5 +1,17 @@
 import { expect, test } from "vite-plus/test";
-import { createMatchState, getOpponentId } from "../src/state/initial-state.ts";
+import {
+  applyChooserGoesFirstIfPending,
+  createMatchState as createPendingMatchState,
+  getOpponentId,
+} from "../src/state/initial-state.ts";
+
+function createMatchState(
+  ...args: Parameters<typeof createPendingMatchState>
+): ReturnType<typeof createPendingMatchState> {
+  const state = createPendingMatchState(...args);
+  applyChooserGoesFirstIfPending(state);
+  return state;
+}
 import { LocalEngine } from "../src/transport/local-engine.ts";
 import { createPlayerId } from "../src/types/branded.ts";
 import type { CardCatalog, DeckList } from "../src/types/match-state.ts";
@@ -252,21 +264,19 @@ test("mulligan reshuffles and draws 6", () => {
   });
 
   const engine = new LocalEngine(state);
-  const p1 = createPlayerId("p1");
+  const firstPlayerId = state.G.turnMetadata.activePlayerId;
 
   const result = engine.processCommand(
     { commandID: "cmd-1", move: "mulligan", input: { args: {} } },
-    p1,
+    firstPlayerId,
   );
 
   expect(result.success).toBe(true);
   if (result.success) {
-    const player = result.state.G.players["p1"];
+    const player = result.state.G.players[firstPlayerId as string];
     expect(player.zones.hand).toHaveLength(6);
     expect(player.mulliganDone).toBe(true);
-    expect(
-      result.state.G.cardIndex[result.state.G.players["p1"].zones.hand[0] as string],
-    ).toBeDefined();
+    expect(result.state.G.cardIndex[player.zones.hand[0] as string]).toBeDefined();
   }
 });
 
@@ -313,17 +323,19 @@ test("hidden-information moves can be undone in the local simulator", () => {
   });
 
   const engine = new LocalEngine(state);
+  const firstPlayerId = state.G.turnMetadata.activePlayerId;
+  const secondPlayerId = state.ctx.playerIds.find((id) => id !== firstPlayerId)!;
 
   const keepResult = engine.processCommand(
     { commandID: "cmd-1", move: "keepHand", input: { args: {} } },
-    createPlayerId("p1"),
+    firstPlayerId,
   );
   expect(keepResult.success).toBe(true);
   expect(engine.canUndo()).toBe(true);
 
   const mulliganResult = engine.processCommand(
     { commandID: "cmd-2", move: "mulligan", input: { args: {} } },
-    createPlayerId("p2"),
+    secondPlayerId,
   );
   expect(mulliganResult.success).toBe(true);
   if (mulliganResult.success) {

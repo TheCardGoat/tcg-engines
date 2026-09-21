@@ -1,6 +1,6 @@
 import { eb01MountainGod018, op10Enel025 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02LimPirateFoil079 } from "../../../../../cards/src/cards/PRB02/characters/079-lim-pirate-foil.ts";
+import { prb02LimPirateFoil079 } from "../../../../../cards/src/cards/characters/p-079-lim-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

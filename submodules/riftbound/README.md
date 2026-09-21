@@ -15,10 +15,15 @@ vp run verify:catalog -- --input .cache/generated/riftbound-catalog.json
 ```
 
 The scraper reads the gallery page's single `__NEXT_DATA__` JSON script and
-fails if the page does not embed every record it reports. It never executes the
-script, crawls individual card pages, or calls the gallery's undocumented
-publishing backend. Raw artifacts remain under `.cache/`; generated catalog
-files may be written to `packages/cards/src/generated` for the application build.
+fails if the page does not embed a complete catalog. The gallery smart list's
+`totalItems` counts records the site never publishes (it has exceeded the
+embedded payload by the same handful across every locale), so completeness is
+proven structurally: every declared set must embed its full base collector
+number range `1..collectorNumberMax`, and the scraper fails naming any missing
+numbers. It never executes the script, crawls individual card pages, or calls
+the gallery's undocumented publishing backend. Raw artifacts remain under
+`.cache/`; generated catalog files may be written to `packages/cards/src/generated`
+for the application build.
 Generation emits deterministic `riftbound-catalog` files plus a separate
 locale-owned `riftbound-translations` companion. Card and set IDs bind the two
 artifacts; translated names are never used as identities.

@@ -3,7 +3,7 @@ import {
   eb01Doma005,
   eb01Fourtricks025,
   eb01MountainGod018,
-  eb02DonquixoteRosinante022,
+  op05DonquixoteRosinante022,
   eb02DonquixoteRosinante025,
 } from "@tcg/op-cards";
 
@@ -12,7 +12,7 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 describe("EB02-025 Donquixote Rosinante", () => {
   test("rests DON!! and itself before playing an eligible top-five Character rested", () => {
     const engine = OnePieceTestEngine.create({
-      leaderCardId: eb02DonquixoteRosinante022,
+      leaderCardId: op05DonquixoteRosinante022,
       character: [{ card: eb02DonquixoteRosinante025, playedOnTurn: 0 }],
       deck: [
         eb01Doma005,
@@ -60,7 +60,7 @@ describe("EB02-025 Donquixote Rosinante", () => {
 
   test("may decline optional so paid effect does not apply", () => {
     const engine = OnePieceTestEngine.create({
-      leaderCardId: eb02DonquixoteRosinante022,
+      leaderCardId: op05DonquixoteRosinante022,
       character: [{ card: eb02DonquixoteRosinante025, playedOnTurn: 0 }],
       deck: [
         eb01Doma005,

@@ -10,6 +10,10 @@ import { reconstructGundamMoveLogs } from "./liveEngineLogs.ts";
 
 export type RemoteSubmitFn = (submission: InteractionSubmission, expectedVersion: number) => void;
 export type RemoteUndoFn = (expectedVersion: number) => void;
+export type RemoteStallRecoveryFn = (
+  kind: "drop_player" | "skip_opponent_turn",
+  expectedVersion: number,
+) => void;
 
 /**
  * Build an {@link EngineAdapter} whose `submit` routes every move
@@ -46,6 +50,7 @@ export function createRemoteEngineAdapter(
   getEngineLogRecords: () => readonly LiveEngineLogRecord[],
   remoteUndo: RemoteUndoFn = () => undefined,
   getCanUndo: () => boolean = () => false,
+  remoteStallRecovery: RemoteStallRecoveryFn = () => undefined,
 ): EngineAdapter {
   const local = createEngineAdapter(config);
   const remote: EngineAdapter = {
@@ -78,6 +83,21 @@ export function createRemoteEngineAdapter(
         };
       }
       const stateId = config.runtime.getState().ctx._stateID;
+      if (move === "dropOpponent" || move === "skipOpponentTurn") {
+        try {
+          remoteStallRecovery(
+            move === "dropOpponent" ? "drop_player" : "skip_opponent_turn",
+            stateId,
+          );
+          return { ok: true, stateId };
+        } catch (error) {
+          return {
+            ok: false,
+            errorCode: "REMOTE_DISPATCH_FAILED",
+            error: error instanceof Error ? error.message : "Failed to send recovery to gateway.",
+          };
+        }
+      }
       try {
         const submission = moveToInteractionSubmission(move, partialInput, getInteractionView());
         if (!submission) {

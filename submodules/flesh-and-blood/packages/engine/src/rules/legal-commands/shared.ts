@@ -27,6 +27,19 @@ export const FAB_PRIORITY_MODE_ACTION_LABEL: Record<FabPriorityAutomationMode, s
 export const FAB_ARM_PRIORITY_HOLD_LABEL = "Play and hold priority";
 
 /**
+ * Stable labels for the one-shot scoped auto-pass arms ("auto-pass this
+ * combat" / "auto-pass the opponent's turn"). Like the mode labels, the
+ * adapter projects these as interaction-action text keys and clients identify
+ * the controls by them.
+ */
+export const FAB_SCOPED_AUTO_PASS_LABELS = {
+  combatArm: "Auto-pass this combat",
+  combatDisarm: "Stop auto-passing this combat",
+  opponentTurnArm: "Auto-pass the opponent's turn",
+  opponentTurnDisarm: "Stop auto-passing the opponent's turn",
+} as const;
+
+/**
  * Stable labels for the per-seat automation-preference toggles beyond the
  * three priority modes. Like the mode labels, the adapter projects these as
  * interaction-action text keys and clients identify controls by them.

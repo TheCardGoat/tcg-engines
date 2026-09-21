@@ -29,6 +29,7 @@ export const midasTouch = definePitchFamily(fabPitchFamilies["midas-touch"], {
           {
             type: "create-token",
             token: "gold",
+            creator: "token-controller",
             controller: "target-controller",
             count: {
               type: "reference",

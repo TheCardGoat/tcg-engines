@@ -9,7 +9,7 @@ import {
   op13Sabo004,
   op13Uta023,
 } from "@tcg/op-cards";
-import { op13MonkeyDGarp016 } from "../../../../../cards/src/cards/OP13/characters/016-monkey-d-garp.ts";
+import { op13MonkeyDGarp016 } from "../../../../../cards/src/cards/characters/op13-016-monkey-d-garp.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

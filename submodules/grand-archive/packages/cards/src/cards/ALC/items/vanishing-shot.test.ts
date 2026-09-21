@@ -53,9 +53,16 @@ describe("Vanishing Shot — optional ally-hit return", () => {
         ).toBe(targetKind !== "champion");
         expect(opponent.zone("memory")).toHaveLength(0);
         passEffectsStack(game);
-        if (game.state.decision?.kind === "resolve-optional-effect") {
+        for (
+          let choice = 0;
+          choice < 2 && game.state.decision?.kind === "resolve-optional-effect";
+          choice++
+        ) {
           expect(game.state.decision.playerId).toBe("player-one");
-          answerDecision(game, "resolve-optional-effect", accept);
+          const riflePayment = game.state.resolution?.sourceId === gun.objectId;
+          if (!riflePayment)
+            expect(game.state.resolution?.sourceId).toBe(player.card(vanishingShot).objectId);
+          answerDecision(game, "resolve-optional-effect", riflePayment ? false : accept);
           passEffectsStack(game);
         }
         expect(opponent.zone("memory")).toEqual(

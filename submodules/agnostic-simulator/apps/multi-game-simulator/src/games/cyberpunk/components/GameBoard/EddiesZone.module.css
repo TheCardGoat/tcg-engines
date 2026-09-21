@@ -1,12 +1,28 @@
-.zoneSlot {
+.dropSlot {
   grid-area: eddies;
+  position: relative;
+  box-sizing: border-box;
   min-width: 0;
   min-height: 0;
+  width: 100%;
+  align-self: stretch;
+}
+
+.zoneSlot {
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .zone {
   position: relative;
-  width: auto;
+  z-index: 2;
+  box-sizing: border-box;
+  width: fit-content;
+  min-width: fit-content;
+  max-width: 100%;
   height: calc(100% - 2 * var(--zone-gutter));
   min-height: 0;
   margin: var(--zone-gutter);
@@ -19,8 +35,8 @@
   transition: background 0.15s;
 }
 
-.zone.dropOver {
-  background: rgb(245 230 66 / 12%);
+.dropSlot.dropOver {
+  background: rgb(245 230 66 / 8%);
   animation: zone-pulse 1.4s ease-in-out infinite;
 }
 
@@ -28,11 +44,13 @@
   border-color: rgb(74 217 255 / 42%);
 }
 
-.zone[data-drop-ready="sell"]::after {
+.dropSlot[data-drop-ready="sell"]::after {
   content: "";
   position: absolute;
-  inset: 6px;
-  z-index: 1;
+  inset: var(--zone-gutter);
+  /* Above .zone (z-index 2): since the zone fills the whole drop slot, the
+     dashed drag cue must stack over it or the drop area shows no affordance. */
+  z-index: 3;
   pointer-events: none;
   border: 1px dashed rgb(74 217 255 / 42%);
   border-radius: 7px;
@@ -73,7 +91,7 @@
   pointer-events: none;
 }
 
-.zone[data-drop-over="true"]::after {
+.dropSlot[data-drop-over="true"]::after {
   border-color: rgb(245 230 66 / 52%);
   background:
     repeating-linear-gradient(135deg, rgb(245 230 66 / 7%) 0 7px, transparent 7px 17px),
@@ -115,6 +133,55 @@
   z-index: 2;
 }
 
+.zone :global(.empty-zone) {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 0;
+  width: auto;
+  aspect-ratio: 5 / 7;
+  padding: 6px;
+  border: 1px dashed rgb(245 230 66 / 32%);
+  border-radius: 0;
+  background:
+    repeating-linear-gradient(135deg, rgb(245 230 66 / 8%) 0 7px, transparent 7px 16px),
+    rgb(7 9 12 / 42%);
+  color: rgb(245 230 66 / 72%);
+}
+
+.zone :global(.empty-zone) span {
+  white-space: normal;
+  text-align: center;
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.zone.opponent {
+  margin-inline-start: auto;
+}
+
+/* Desktop board: the drop slot's grid column is the leftover identity-row
+   width, so a block-level auto-width zone fills it edge to edge (minus the
+   zone gutter). Player cards pack left, continuing the Legends row. The
+   opponent group stays right-aligned at its Legends, but the row direction
+   is reversed so cards flow left-to-right toward the Legends — a pure CSS
+   flip that mirrors the player strip without reordering the card list. */
+.zone.fill {
+  width: auto;
+  min-width: 0;
+  justify-content: flex-start;
+}
+
+.zone.fill.opponent {
+  justify-content: flex-end;
+}
+
+.zone.fill.opponent .row {
+  flex-direction: row-reverse;
+}
+
 .zone.opponent::before {
   left: auto;
   right: -5px;
@@ -122,41 +189,33 @@
 
 .row {
   --eddie-gap: 3px;
-  --eddie-card-count: 1;
-  --eddie-card-target-w: calc(var(--unit-card-h) * 5 / 7);
-  --eddie-card-fit-w: calc(
-    (100% - (var(--eddie-card-count) - 1) * var(--eddie-gap)) / var(--eddie-card-count)
-  );
 
-  position: absolute;
+  position: relative;
   z-index: 2;
-  inset: var(--zone-pad);
   display: flex;
   gap: var(--eddie-gap);
-  align-items: center;
-  justify-content: var(--eddies-justify, flex-start);
-  min-width: 0;
-  overflow: hidden;
+  align-items: stretch;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  width: fit-content;
+  max-width: 100%;
+  height: 100%;
+  min-height: 0;
   margin: 0;
+  padding: var(--zone-pad);
+  overflow: hidden;
 }
 
 .card {
   position: relative;
-  width: min(var(--eddie-card-target-w), var(--eddie-card-fit-w));
-  max-height: calc(100% - 2px);
-  aspect-ratio: 5 / 7;
   flex: 0 0 auto;
-  border: 1px solid rgb(245 230 66 / 18%);
-  background:
-    linear-gradient(135deg, rgb(245 230 66 / 28%) 0 18%, transparent 18% 100%),
-    repeating-linear-gradient(135deg, rgb(245 230 66 / 22%) 0 13px, rgb(7 9 12 / 18%) 13px 27px),
-    rgb(7 9 12 / 58%);
-  filter: saturate(0.78) brightness(0.86) contrast(0.96);
-  overflow: hidden;
-  transition:
-    transform 0.15s ease,
-    opacity 0.15s ease,
-    filter 0.15s ease;
+  box-sizing: border-box;
+  height: 100%;
+  width: auto;
+  min-width: auto;
+  max-height: 100%;
+  aspect-ratio: 5 / 7;
+  transition: opacity 0.15s ease;
 }
 
 .card > * {
@@ -164,21 +223,98 @@
   height: 100%;
 }
 
+/* Card chrome lives on an inner wrapper so spent cards can rotate without
+   fighting the animation layer's transforms on the slot itself. */
+.cardBody {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgb(245 230 66 / 18%);
+  background: #07090c;
+  overflow: hidden;
+  transition:
+    transform 0.15s ease,
+    filter 0.15s ease;
+}
+
+.paymentButton {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+.paymentEligible {
+  z-index: 8;
+  filter: brightness(1.18) saturate(1.12);
+}
+
+.paymentEligible .cardBody {
+  border-color: #4ad9ff;
+  box-shadow:
+    0 0 10px rgb(74 217 255 / 72%),
+    inset 0 0 8px rgb(74 217 255 / 22%);
+}
+
+.paymentEligible:hover {
+  filter: brightness(1.3) saturate(1.2);
+}
+
+.paymentEligible .paymentButton:focus-visible {
+  outline: 2px solid #f5e642;
+  outline-offset: 2px;
+}
+
+.paymentSelected::after {
+  content: "PAY";
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  z-index: 10;
+  padding: 2px 4px;
+  border: 1px solid #f5e642;
+  background: rgb(7 9 12 / 92%);
+  color: #fff9b2;
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.paymentSelected .cardBody {
+  border-color: #f5e642;
+  box-shadow:
+    0 0 12px rgb(245 230 66 / 76%),
+    inset 0 0 10px rgb(245 230 66 / 26%);
+}
+
+.cardBody > * {
+  width: 100%;
+  height: 100%;
+}
+
 .zone[data-drop-ready="sell"] .card,
 .zone[data-drop-over="true"] .card {
   opacity: 0.96;
+}
+
+.zone[data-drop-ready="sell"] .card .cardBody,
+.zone[data-drop-over="true"] .card .cardBody {
   filter: saturate(0.96) brightness(0.96) contrast(1);
 }
 
-.card.spent {
-  opacity: 0.58;
-  filter: saturate(0.46) brightness(0.62) contrast(0.9);
+.card.spent .cardBody {
+  /* Full-size rotation keeps the reveal continuous with the state-change
+     overlay, which rotates the same footprint without scaling. */
+  transform: rotate(90deg);
 }
 
-.card.revealed {
+.card.revealed .cardBody {
   border-color: rgb(74 217 255 / 64%);
   background: rgb(7 9 12 / 72%);
-  filter: saturate(1.08) brightness(1.04);
   box-shadow:
     0 0 0 1px rgb(74 217 255 / 22%),
     0 0 14px rgb(74 217 255 / 28%);
@@ -198,48 +334,6 @@
       0 0 0 1px rgb(74 217 255 / 36%),
       0 0 20px rgb(74 217 255 / 38%);
   }
-}
-
-.card.spent::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  background:
-    linear-gradient(180deg, rgb(7 9 12 / 42%) 0 28%, transparent 28%),
-    repeating-linear-gradient(135deg, rgb(7 9 12 / 34%) 0 7px, transparent 7px 16px);
-  box-shadow: inset 0 0 0 1px rgb(7 9 12 / 48%);
-}
-
-.card.spent::after {
-  content: "SPENT";
-  position: absolute;
-  right: 4px;
-  bottom: 4px;
-  left: 4px;
-  z-index: 4;
-  border: 1px solid rgb(245 230 66 / 24%);
-  background: rgb(7 9 12 / 74%);
-  color: rgb(245 230 66 / 58%);
-  font-family: Rajdhani, "Arial Narrow", sans-serif;
-  font-size: 8px;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  padding: 2px 3px;
-  text-align: center;
-  text-transform: uppercase;
-  pointer-events: none;
-}
-
-.card:not(.spent):not(.revealed) :global(.sim-card-image-frame)::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  background: linear-gradient(180deg, rgb(7 9 12 / 68%) 0%, rgb(7 9 12 / 52%) 28%, transparent 66%);
-  pointer-events: none;
 }
 
 .counter {
@@ -271,5 +365,36 @@
 }
 
 .zone.opponent .counter {
-  inset: auto auto 8px 8px;
+  top: auto;
+  right: calc(100% + 6px);
+  bottom: 8px;
+  left: auto;
+}
+
+/* Persistent "sell here" cue on the local player's desktop row: a dashed
+   slot holds the place where the next sold card lands (the row's first
+   position — leftmost on the player row), including when the Eddie row is
+   empty. data-sell-cue="true" mirrors the engine's sellCard
+   availability (own turn, main phase, no attack in progress, not already
+   sold, a Sell-tag card in hand) so the slot never advertises an illegal
+   sell — notably not on the rival's turn. It lights up cyan while a hand
+   card is dragged (data-drop-ready="sell"). */
+.zone.fill:not(.opponent)[data-sell-cue="true"] .row::before {
+  content: "";
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 5 / 7;
+  border: 1px dashed rgb(245 230 66 / 30%);
+  background:
+    linear-gradient(rgb(245 230 66 / 34%), rgb(245 230 66 / 34%)) center / 36% 1px no-repeat,
+    linear-gradient(rgb(245 230 66 / 34%), rgb(245 230 66 / 34%)) center / 1px 36% no-repeat,
+    rgb(245 230 66 / 3%);
+}
+
+.zone.fill[data-drop-ready="sell"]:not(.opponent)[data-sell-cue="true"] .row::before {
+  border-color: rgb(74 217 255 / 72%);
+  background:
+    linear-gradient(rgb(74 217 255 / 70%), rgb(74 217 255 / 70%)) center / 36% 1px no-repeat,
+    linear-gradient(rgb(74 217 255 / 70%), rgb(74 217 255 / 70%)) center / 1px 36% no-repeat,
+    rgb(74 217 255 / 8%);
 }

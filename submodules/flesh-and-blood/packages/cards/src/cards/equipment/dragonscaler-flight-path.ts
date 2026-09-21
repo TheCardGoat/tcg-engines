@@ -66,33 +66,33 @@ export const dragonscalerFlightPath = defineCard(
                 type: "binding-matches",
                 binding: "it",
                 filter: {
+                  // CR 8.3.1: weapon attacks carry the Weapon type (no Attack
+                  // subtype); living allies carry the Ally subtype.
                   or: [
                     {
                       typeBox: {
                         types: ["Weapon"],
-                        subtypes: ["Attack"],
                       },
                     },
                     {
                       typeBox: {
-                        subtypes: ["Ally", "Attack"],
+                        subtypes: ["Ally"],
                       },
                     },
                   ],
                 },
               },
               then: {
-                type: "optional",
-                effect: {
-                  type: "modify-activation-limit",
-                  target: {
-                    selector: "binding",
-                    binding: "it",
-                  },
-                  operation: "additional",
-                  count: 1,
-                  duration: "this-turn",
+                // CR 5.2.3c: the weapon/ally condition gates the allowance,
+                // not a player decision — it applies by itself.
+                type: "modify-activation-limit",
+                target: {
+                  selector: "binding",
+                  binding: "it",
                 },
+                operation: "additional",
+                count: 1,
+                duration: "this-turn",
               },
             },
           ],

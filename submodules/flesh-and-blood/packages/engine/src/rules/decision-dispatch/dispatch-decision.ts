@@ -31,6 +31,14 @@ export type LayerDecisionDispatchCtx = {
 
 export function dispatchLayerDecision(ctx: LayerDecisionDispatchCtx): FabLayerResolutionResult {
   switch (ctx.decision.kind) {
+    case "repeat-start":
+    case "repeat-commit":
+    case "optional-commit":
+      return ctx.failure(
+        ctx.state,
+        "Optional principal could not commit before its continuation.",
+        "unsupported_rules_effect",
+      );
     case "payment-amount":
       return handlePaymentAmount({ ...ctx, decision: ctx.decision });
     case "payment-commit":

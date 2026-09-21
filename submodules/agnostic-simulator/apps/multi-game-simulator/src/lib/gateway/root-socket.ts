@@ -98,6 +98,7 @@ function shouldForceCredentialHandshake(
  */
 function runtimeApiGameSlug(slug: PlayableGameSlug): GameSlug | null {
   switch (slug) {
+    case "alpha-clash":
     case "cyberpunk":
     case "flesh-and-blood":
     case "grand-archive":
@@ -246,8 +247,16 @@ export function initRootSocket({
   currentMatchId = nextMatchId;
   currentGameId = nextGameId;
   currentPlayerId = nextPlayerId;
-  currentController = buildCredentialsController(gameSlug);
+  // Another consumer (e.g. MatchSessionProvider's session-listener handle) can
+  // keep the namespace alive across our teardown. Its entry still owns the
+  // first-acquired credentials lifecycle; installing a rebuilt controller
+  // would trip the manager's first-acquire-wins guard. Adopt the installed
+  // controller instead — both close over this module's snapshot state, so the
+  // handshake reads the same refreshed credentials.
   const namespaceAlreadyExisted = manager.getState(gameSlug).status !== "idle";
+  currentController =
+    (namespaceAlreadyExisted ? manager.getInstalledCredentials(gameSlug) : null) ??
+    buildCredentialsController(gameSlug);
   currentHandle = manager.acquire(gameSlug, { credentials: currentController });
   currentSlug = gameSlug;
   if (

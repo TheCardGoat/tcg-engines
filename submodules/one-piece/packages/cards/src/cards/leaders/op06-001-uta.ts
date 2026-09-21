@@ -1,0 +1,86 @@
+import type { LeaderCard } from "@tcg/op-types";
+import { op06Uta001I18n } from "./op06-001-uta.i18n.ts";
+
+export const op06Uta001: LeaderCard = {
+  id: "OP06-001",
+  canonicalId: "OP06-001",
+  slug: "uta/op06-001",
+  name: "Uta",
+  printings: [
+    {
+      id: "OP06-001",
+      artId: "OP06-001",
+      setCode: "OP06",
+      collectorNumber: "001",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-001.jpg",
+    },
+    {
+      id: "OP06-001_p1",
+      artId: "OP06-001_p1",
+      setCode: "OP06",
+      collectorNumber: "001",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-001_p1.jpg",
+    },
+    {
+      id: "OP06-001_p2",
+      artId: "OP06-001_p2",
+      setCode: "OP06",
+      collectorNumber: "001",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-001_p2.jpg",
+      label: "Uta (SPR)",
+    },
+  ],
+  cardType: "leader",
+  color: ["purple", "red"],
+  rarity: "L",
+  setId: "OP06",
+  power: 5000,
+  life: 4,
+  traits: ["FILM"],
+  attribute: "special",
+
+  effect:
+    '[When Attacking] You may trash 1 "FILM" type card from your hand: Give up to 1 of your opponent\'s Characters -2000 power during this turn. Then, add up to 1 DON!! card from your DON!! deck and rest it.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [{ filter: "trait", value: "FILM", match: "includes" }],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -2000,
+            duration: "thisTurn",
+          },
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "rested",
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op06Uta001I18n,
+};

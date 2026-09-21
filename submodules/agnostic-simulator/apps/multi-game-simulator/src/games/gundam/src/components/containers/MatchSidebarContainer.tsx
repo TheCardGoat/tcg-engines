@@ -139,7 +139,7 @@ export function MatchSidebarContainer({
           ? {
               summary: <VsAiSummary />,
               details: <VsAiControls />,
-              label: "Bot controls",
+              label: "Opponent controls",
               panelLabel: "Bot strategy and pacing controls",
             }
           : undefined

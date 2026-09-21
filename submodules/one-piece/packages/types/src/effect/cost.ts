@@ -50,6 +50,12 @@ export interface RestDonCost {
 export interface GiveDonCost {
   cost: "giveDon";
   amount: number;
+  /** Whose DON!! pool funds the give; defaults to the effect controller. */
+  donorPlayer?: Player;
+  /** Which DON!! pool funds the give; defaults to "active". */
+  donState?: "rested" | "active";
+  /** Whose Leader/Characters receive the DON!!; defaults to the effect controller. */
+  recipientPlayer?: Player;
 }
 
 export type ReturnDonCost =
@@ -84,6 +90,8 @@ export interface RestThisCardCost {
 
 export interface TrashThisCardCost {
   cost: "trashThisCard";
+  /** Extra gate such as "with a cost of 20 or more": filters apply to the card bearing the cost. */
+  filters?: TargetFilter[];
 }
 
 export interface TurnLifeFaceUpCost {

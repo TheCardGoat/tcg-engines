@@ -1,7 +1,7 @@
 # Cyberpunk TCG Comprehensive Rules
 
 > Official source: [Cyberpunk TCG Comprehensive Rules](https://cyberpunktcg.com/comprehensive-rules)
-> Downloaded from the official rules reader API on 2026-08-28T17:25:39.537Z.
+> Downloaded from the official rules reader API on 2026-09-01T19:28:10.028Z.
 
 This local mirror preserves the official rule numbers and Markdown content. Refresh it with `scripts/sync-comprehensive-rules.mjs`; use the index to load only the sections relevant to a question.
 
@@ -57,7 +57,7 @@ You “control” the pieces currently in your friendly Gig area, field, Legends
 
 ##### 1.7.3.1 — When you take control of a Rival’s game piece, follow the rules in {GOLDEN RULES > Respect Your Rival}.
 
-When you take control of a Rival’s game piece, follow the rules in {[GOLDEN RULES > Respect Your Rival](#rule-52e7f11d-d6d2-588d-97dc-609e843c133b)}.
+When you take control of a Rival’s game piece, follow the rules in [Respect Your Rival](#rule-52e7f11d-d6d2-588d-97dc-609e843c133b).
 
 ##### 1.7.3.2 — At the end of the game, return all game pieces to their respective owners.
 
@@ -97,7 +97,7 @@ When you must draw a card from an empty deck (i.e. there are 0 cards in your dec
 
 #### 1.14.1 — If you attempt to draw more cards than remain in your deck, the first card you cannot draw counts as drawing from an…
 
-If you attempt to draw more cards than remain in your deck, the first card you cannot draw counts as drawing from an empty deck. See {[10.2.1 TERMS > Game Actions > Draw](#rule-b07d7e94-c69d-5162-a49c-f77241f8d44b)}.
+If you attempt to draw more cards than remain in your deck, the first card you cannot draw counts as drawing from an empty deck. See [Draw](#rule-b07d7e94-c69d-5162-a49c-f77241f8d44b).
 
 > **EXAMPLE:** A card effect says “Draw 2,” but you only have 1 card left in your deck area. You draw the first card, and attempt to draw the second card. The deck is now empty, so you lose immediately.
 
@@ -259,7 +259,7 @@ The subtitle distinguishes between different cards with the same name. If two ca
 
 #### 3.11.1 — A card’s “cost value” (also referred to as just “cost”) denotes the number of (€$) you must pay to play it.
 
-A card’s “cost value” (also referred to as just “cost”) denotes the number of (€$) you must pay to play it. See {[TERMS > Game Actions > Pay](#rule-0ed2bde9-70df-5941-acbe-47aae4afe45d)} and {[TERMS > Activation Shorthand > X €$](#rule-cd5d3a7e-a806-5ed0-a982-1f5dfd5fc691)}.
+A card’s “cost value” (also referred to as just “cost”) denotes the number of (€$) you must pay to play it. See [Pay](#rule-0ed2bde9-70df-5941-acbe-47aae4afe45d) and [X €$](#rule-cd5d3a7e-a806-5ed0-a982-1f5dfd5fc691).
 
 ##### 3.11.1.1 — No matter what area you play a card from (hand, trash, etc.) you must pay the card’s cost unless an effect explicitly…
 
@@ -281,7 +281,7 @@ No matter what area you play a card from (hand, trash, etc.) you must pay the ca
 
 #### 3.12.1 — If a card in your hand has a “Sell Tag,” you may sell it as an action during your main phase.
 
-If a card in your hand has a “Sell Tag,” you may sell it as an action during your main phase. See {[Turn Order > Main Phase > Sell](#rule-c215eaa3-1145-5c48-8a2d-2a94393d1d52)}.
+If a card in your hand has a “Sell Tag,” you may sell it as an action during your main phase. See [Sell](#rule-6975b781-cb43-5d29-ab97-01954f9127bb).
 
 #### 3.12.2 — Legends with a sell tag can be spent to pay 1 €$ while face-up in the Legends area.
 
@@ -329,7 +329,7 @@ If a card in your hand has a “Sell Tag,” you may sell it as an action during
 
 #### 3.17.1 — A card’s “power” determines its success in stealing and fighting.
 
-A card’s “power” determines its success in stealing and fighting. See {[ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1)}.
+A card’s “power” determines its success in stealing and fighting. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1).
 
 #### 3.17.2 — A Unit or Legend’s power is equal to the power printed on the card plus the power of its equipped Gear and any curren…
 
@@ -359,11 +359,11 @@ A Unit or Legend’s power is equal to the power printed on the card plus the po
 
 ###### 3.18.1.2.1.1 — Effect text may use symbols or keywords as shorthand for longer effects, conditions, or concepts.
 
-Effect text may use symbols or keywords as shorthand for longer effects, conditions, or concepts. See {[TERMS](#rule-d3031204-40a4-51fb-930c-feb00b9d3192)}.
+Effect text may use symbols or keywords as shorthand for longer effects, conditions, or concepts. See [TERMS](#rule-d3031204-40a4-51fb-930c-feb00b9d3192).
 
 ###### 3.18.1.2.2 — “Reminder text” reminds you of relevant rules, keyword definitions, or other implied effects.
 
-###### 3.18.1.2.2.1 — Reminder text is not effect text, and does influence gameplay.
+###### 3.18.1.2.2.1 — Reminder text is not effect text, and does not influence gameplay.
 
 ###### 3.18.1.2.2.2 — Reminder text is always italicized and parenthetical.
 
@@ -377,7 +377,7 @@ Card text addresses the player who played the card. When an effect says “you,�
 
 #### 3.18.3 — While a Gear is equipped to a Unit or Legend, that Unit or Legend inherits any text in the Gear’s bottom textbox.
 
-While a Gear is equipped to a Unit or Legend, that Unit or Legend inherits any text in the Gear’s bottom textbox. See {[CARD INFORMATION > Type > Gears](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49)}.
+While a Gear is equipped to a Unit or Legend, that Unit or Legend inherits any text in the Gear’s bottom textbox. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed) > [Gears](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49).
 
 ### 3.19 — Illustrator Credit
 
@@ -439,7 +439,7 @@ Your deck’s RAM Limits are locked after deck composition. If a Legend is remov
 
 #### 3.21.1 — A card’s type designates it as a Legend, Unit, Gear, or Program.
 
-A card’s type designates it as a Legend, Unit, Gear, or Program. See {[CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed)}.
+A card’s type designates it as a Legend, Unit, Gear, or Program. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed).
 
 ## 4 — CARD TYPES
 
@@ -455,7 +455,7 @@ A card’s type designates it as a Legend, Unit, Gear, or Program. See {[CARD TY
 
 ### 4.3 — All 3 of your Legends begin face-down in your Legends area in a random order.
 
-All 3 of your Legends begin face-down in your Legends area in a random order. See {[GAME SETUP > Pre-Game Setup](#rule-5c6c550b-a5b9-5c34-8de0-ac69293d358f)}.
+All 3 of your Legends begin face-down in your Legends area in a random order. See [GAME SETUP](#rule-549d0f31-0614-58c3-9646-2a5c13ff4adb) > [Pre-Game Setup](#rule-5c6c550b-a5b9-5c34-8de0-ac69293d358f).
 
 #### 4.3.1 — Once per turn, you may Call a Legend to flip a Legend face-up.
 
@@ -477,11 +477,11 @@ If a Legend moves to an invalid area, any effects that trigger from the card ent
 
 #### 4.5.2 — A Legend played in this way enters with Lag.
 
-A Legend played in this way enters with Lag. See {[TERMS > General Terms > Lag](#rule-6a4b19b9-eb52-5c00-af79-61a40eb948ca)}.
+A Legend played in this way enters with Lag. See [Lag](#rule-6a4b19b9-eb52-5c00-af79-61a40eb948ca).
 
 #### 4.5.3 — Legends with cost Null ( - ) do not have a cost, and cannot be played to the field.
 
-Legends with cost Null ( - ) do not have a cost, and cannot be played to the field. See {[CARD INFORMATION > Cost > 3.12.2](#rule-01f4fc04-687c-59c8-a97c-665e3ebcecde)}
+Legends with cost Null ( - ) do not have a cost, and cannot be played to the field. See [Cost Value](#rule-01f4fc04-687c-59c8-a97c-665e3ebcecde).
 
 ## Units
 
@@ -489,11 +489,11 @@ Legends with cost Null ( - ) do not have a cost, and cannot be played to the fie
 
 ### 4.7 — Units enter the field with Lag.
 
-Units enter the field with Lag. See {[TERMS > General Terms > Lag](#rule-6a4b19b9-eb52-5c00-af79-61a40eb948ca)}.
+Units enter the field with Lag. See [Lag](#rule-6a4b19b9-eb52-5c00-af79-61a40eb948ca).
 
 ### 4.8 — You may spend a Unit to declare an attack on a valid attack target.
 
-You may spend a Unit to declare an attack on a valid attack target. See {[ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1)}.
+You may spend a Unit to declare an attack on a valid attack target. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1).
 
 ## Gears
 
@@ -501,7 +501,7 @@ You may spend a Unit to declare an attack on a valid attack target. See {[ATTACK
 
 ### 4.10 — To play a Gear, reveal the card to your Rival, pay its cost, and equip it to a friendly Unit or friendly face-up Legend.
 
-To play a Gear, reveal the card to your Rival, pay its cost, and equip it to a friendly Unit or friendly face-up Legend. See {[TERMS > Game Actions > Equip](#rule-b076fca2-f099-5c4d-b80a-d789a90e2ce9)}.
+To play a Gear, reveal the card to your Rival, pay its cost, and equip it to a friendly Unit or friendly face-up Legend. See [Equip](#rule-b076fca2-f099-5c4d-b80a-d789a90e2ce9).
 
 #### 4.10.1 — By default, a Gear can be equipped to a friendly Unit or friendly face-up Legend.
 
@@ -545,7 +545,7 @@ If an equipped Legend moves to an area outside of the Field or Legends area, the
 
 #### 4.12.3 — When you bottom-deck an equipped Unit, place the cards at the bottom of your deck in a random order.
 
-When you bottom-deck an equipped Unit, place the cards at the bottom of your deck in a random order. Randomize them amongst any other cards bottom-decked at the same time. See {[TERMS > Game Actions > Bottom-deck](#rule-3cb91d69-87a6-5c59-a0ea-7aae60987910)}.
+When you bottom-deck an equipped Unit, place the cards at the bottom of your deck in a random order. Randomize them amongst any other cards bottom-decked at the same time. See [Bottom-deck](#rule-3cb91d69-87a6-5c59-a0ea-7aae60987910).
 
 ## Programs
 
@@ -605,7 +605,7 @@ If an effect requires you to reveal and move a card from a hidden area, you must
 
 ##### 5.3.2.4 — When you search for a card in a hidden area, you do not have to reveal any information about your findings if you fai…
 
-When you search for a card in a hidden area, you do not have to reveal any information about your findings if you fail to find a valid target. See {TERMS > Game Actions > Search}.
+When you search for a card in a hidden area, you do not have to reveal any information about your findings if you fail to find a valid target. See [Search](#rule-ee9c2edf-f5f1-540d-b7ca-537caa8c5203).
 
 ###### 5.3.2.4.1 — If an effect requires a player to choose from a hidden area using information that is not public, that player may cho…
 
@@ -653,7 +653,7 @@ If an effect instructs you to look at or search cards in a hidden area and does 
 
 ### 5.5.8 — Moving a card from the top of your deck to your hand is “Drawing” a card.
 
-Moving a card from the top of your deck to your hand is “Drawing” a card. See {[TERMS > Game Actions > Draw](#rule-b07d7e94-c69d-5162-a49c-f77241f8d44b)}.
+Moving a card from the top of your deck to your hand is “Drawing” a card. See [Draw](#rule-b07d7e94-c69d-5162-a49c-f77241f8d44b).
 
 ## 5.6 — Field Area
 
@@ -671,9 +671,9 @@ Moving a card from the top of your deck to your hand is “Drawing” a card. Se
 
 The field is a public area. You can look at the face-up cards any player has on their field at any time. You may always know the number of cards any player has in play.
 
-### 5.6.4 — Units and Legends enter the field with a condition called “Lag.” See TERMS > General Terms > Lag.
+### 5.6.4 — Units and Legends enter the field with a condition called “Lag.” See Lag.
 
-Units and Legends enter the field with a condition called “Lag.” See [TERMS > General Terms > Lag](#rule-1fd3abec-fd76-53bf-8158-1564130d9575).
+Units and Legends enter the field with a condition called “Lag.” See [Lag](#rule-6a4b19b9-eb52-5c00-af79-61a40eb948ca).
 
 ### 5.6.5 — There is no limit on the amount of Units you can have in the Field area.
 
@@ -709,7 +709,7 @@ If an effect asks you to look at a face-down legend, you cannot look at it again
 
 ### 5.7.5 — You may pay a Legend’s cost to play it from the Legends area to the field as a Unit.
 
-You may pay a Legend’s cost to play it from the Legends area to the field as a Unit. See [CARD INFORMATION > Type > Legends](#rule-3d3d2579-6a0c-566c-9159-9f4c32cc9f5b).
+You may pay a Legend’s cost to play it from the Legends area to the field as a Unit. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed) > [Legends](#rule-3d3d2579-6a0c-566c-9159-9f4c32cc9f5b).
 
 ### 5.7.6 — A Legend in the Legend area may use its [Spend Icon] at any point it is face-up in the Legend’s area.
 
@@ -731,7 +731,7 @@ Your Eddies area contains your Eddies. The Eddies here are “friendly Eddies.�
 
 ### 5.8.2 — Sell a card to add it to your Eddies area.
 
-Sell a card to add it to your Eddies area. See {[TERMS > Game Actions > Sell](#rule-6975b781-cb43-5d29-ab97-01954f9127bb)}.
+Sell a card to add it to your Eddies area. See [Sell](#rule-6975b781-cb43-5d29-ab97-01954f9127bb).
 
 #### 5.8.2.1 — When you sell a card, it enters the Eddies area face-down and ready.
 
@@ -739,7 +739,7 @@ Sell a card to add it to your Eddies area. See {[TERMS > Game Actions > Sell](#r
 
 #### 5.8.2.3 — During your Main Phase, you may sell a card with a Sell Tag from your hand as an action.
 
-During your Main Phase, you may sell a card with a Sell Tag from your hand as an action. See {[TURN ORDER > Main Phase > Sell a Card](#rule-c215eaa3-1145-5c48-8a2d-2a94393d1d52)}.
+During your Main Phase, you may sell a card with a Sell Tag from your hand as an action. See [Sell a Card](#rule-be5fdfb0-1cad-5806-8b14-1b3bd8aa260b).
 
 ### 5.8.3 — The Eddies area is a public area.
 
@@ -747,9 +747,9 @@ The Eddies area is a public area. Both players can count the number of cards in 
 
 #### 5.8.3.1 — You cannot look at face-down cards in the Eddies area.
 
-### 5.8.4 — During active player’s turn they are allowed to Sell as many cards they want through effect but only allowed to Sell…
+### 5.8.4 — During your turn you may Sell as many cards you want through card effects, but may only take the main phase Sell acti…
 
-During active player’s turn they are allowed to Sell as many cards they want through effect but only allowed to Sell once per turn from their hand through game action.
+During your turn you may Sell as many cards you want through card effects, but may only take the main phase Sell action once per turn.
 
 ## 5.9 — Trash Area
 
@@ -777,7 +777,7 @@ Players may freely change the order of cards in their own trash. The cards in th
 
 ### 5.10.1 — The fixer area is where you place your dice during Pre-Game Setup {GAME SETUP > Pre-Game Setup}.
 
-The fixer area is where you place your dice during Pre-Game Setup {[GAME SETUP > Pre-Game Setup](#rule-280ae118-ae77-5eb7-af1d-b0cbeb856e61)}. Dice remain in the fixer area until you roll them in. {[TURN ORDER > Start Phase](#rule-2b86cac9-5107-534b-b958-0fa6330a2a0a)}
+The fixer area is where you place your dice during [Pre-Game Setup](#rule-5c6c550b-a5b9-5c34-8de0-ac69293d358f). Dice remain in the fixer area until you roll them in during you [Main Phase](#rule-6b35d117-68b9-5655-992b-d642e8de476d).
 
 ### 5.10.2 — The fixer area is a public area.
 
@@ -945,7 +945,7 @@ To swap a Gig is to choose a friendly Gig die and a rival Gig die, then move the
 
 #### 6.7.2.2 — Move the Gig(s) to your Gig area.
 
-##### 6.7.2.2.1 — When an actor steals multiple Gigs at the same, choose both at the same time, then move both at the same time.
+##### 6.7.2.2.1 — When an actor steals multiple Gigs simultaneously, choose the Gigs first, then move them all at the same time.
 
 #### 6.7.2.3 — You take control of the Gig(s).
 
@@ -957,7 +957,7 @@ You take control of the Gig(s). They become friendly Gigs.
 
 If a card effect triggers when a Gig would be stolen, resolve the effect after the Gig is selected, but before the Gig changes control.
 
-> **EXAMPLE:** A Unit’s card text reads “When a rival Unit would steal a Gig, you may discard 1 with cost equal to that Gig's value. If you do, the Gig isn't stolen.”
+> **EXAMPLE:** A Unit’s card text reads “When a rival Unit would steal a Gig, you may discard 1 with cost equal to that Gig's value. If you do, the Gig isn't stolen.” A rival Unit attacks your Gig area to steal 2 Gigs. Your Rival chooses to steal Gigs with values 3 and 10. You discard a card with cost 3, so the rival Unit only steals the value 10 Gig.
 
 ### 6.7.5 — A Gig’s value can’t change during stealing.
 
@@ -987,7 +987,7 @@ Your 6-set of polyhedral dice must contain one of each: a four-sided (d4), six-s
 
 #### 7.3.1 — You cannot use multiple Legends with the same name.
 
-You cannot use multiple Legends with the same name. See {[CARD INFORMATION > Card Data > Name](#rule-c701fa0b-697f-5089-b149-aa9222be9d51)}.
+You cannot use multiple Legends with the same name. See [Name](#rule-b311e5d2-a624-5770-a2fa-86d1db7faf78).
 
 > **EXAMPLE:** The Legends “V: Corporate Exile” and “V: Streetkid” are both named “V,” so you can’t use both of them in the same deck.
 
@@ -999,7 +999,7 @@ Your main deck cannot include more than three (3) copies of a card with an ident
 
 #### 7.3.4 — Your main deck may only include cards within its RAM Limits.
 
-Your main deck may only include cards within its RAM Limits. See {[Card Information > RAM & Color](#rule-0667d8bc-c614-55a5-bd7d-ac8f7c6ab606)}.
+Your main deck may only include cards within its RAM Limits. See [RAM & Color](#rule-0667d8bc-c614-55a5-bd7d-ac8f7c6ab606).
 
 #### 7.3.5 — If a card’s effect includes a restriction or exception to these deck requirements, your deck must adhere to that effect.
 
@@ -1055,7 +1055,7 @@ The player going first spends their 2 left-most Legends. These two Legends don�
 
 ### Place your Gig dice in the fixer area.
 
-#### 7.8.1 — From the bottom up, place your d4, d6, d10, d12, and then d20 in your fixer area.
+#### 7.8.1 — From the bottom up, place your d4, d6, d8, d10, d12, and then d20 in your fixer area.
 
 ### 7.9 — Draw 6 cards.
 
@@ -1095,7 +1095,7 @@ Your turn concludes with an automatic “End of Turn” check after your Main Ph
 
 #### 8.2.1 — If you are going first, begin your turn after both players have completed {Pre-Game Setup}.
 
-If you are going first, begin your turn after both players have completed {[Pre-Game Setup](#rule-5c6c550b-a5b9-5c34-8de0-ac69293d358f)}.
+If you are going first, begin your turn after both players have completed [Pre-Game Setup](#rule-5c6c550b-a5b9-5c34-8de0-ac69293d358f).
 
 ### 8.3 — During your turn, you progress the phases.
 
@@ -1119,7 +1119,7 @@ When your turn starts, your Start Phase begins immediately. You must take these 
 
 #### 8.6.1 — Check if you control 7 Gig Dice.
 
-Check if you control 7 Gig Dice. See {[GAME OVERVIEW > Win Conditions](#rule-8008d6a4-9033-5412-931f-d669c00fade1)}.
+Check if you control 7 Gig Dice. See [GAME OVERVIEW](#rule-0ef7599d-d21e-5efb-bb17-375f7950991c) > [Win Conditions](#rule-8008d6a4-9033-5412-931f-d669c00fade1).
 
 #### 8.6.2 — Resolve any start of turn effects.
 
@@ -1135,7 +1135,7 @@ Draw 1. (Add one card from the top of your deck to your hand.)
 
 ##### 8.6.4.1 — If there are no cards in this area when you attempt to draw, you lose immediately.
 
-If there are no cards in this area when you attempt to draw, you lose immediately. See [Lose Conditions](#rule-6102756a-cd45-50fb-8ded-eea683b79df7).
+If there are no cards in this area when you attempt to draw, you lose immediately. See [GAME OVERVIEW](#rule-0ef7599d-d21e-5efb-bb17-375f7950991c) > [Lose Conditions](#rule-6102756a-cd45-50fb-8ded-eea683b79df7).
 
 #### 8.6.5 — “Roll in” a Gig from your fixer area.
 
@@ -1167,19 +1167,19 @@ At any point during your Main phase while you are not taking an action, you may 
 
 ### Sell a Card
 
-As an action during your Main phase, you may “Sell a Card.”; sell 1 card from your hand with a Sell Tag in the top-left corner. See {[TERMS > Game Actions > Sell](#rule-6975b781-cb43-5d29-ab97-01954f9127bb)}.
+As an action during your Main phase, you may “Sell a Card.”; sell 1 card from your hand with a Sell Tag in the top-left corner. See [Sell](#rule-6975b781-cb43-5d29-ab97-01954f9127bb).
 
 #### 8.11.1 — You may only take the “Sell a Card” game action once per turn.
 
 #### 8.11.2 — When you sell a card, it becomes an Eddie.
 
-When you sell a card, it becomes an Eddie. See {[GAME AREAS > Eddies Area](#rule-5753f17e-b02c-5b63-87e7-60fb27880068)}.
+When you sell a card, it becomes an Eddie. See [Eddies Area](#rule-5753f17e-b02c-5b63-87e7-60fb27880068).
 
 ### 8.12 — Call a Legend
 
 ### Call a Legend
 
-As an action during your Main phase, you may spend 1 €$ to Call a Legend. See {[TERMS > Game Actions > Call a Legend](#rule-f1e04ee7-12d2-565f-8917-75ea798e6c4c)}.
+As an action during your Main phase, you may spend 1 €$ to Call a Legend. See [Call a Legend](#rule-5a78278b-9f8b-5e64-b9aa-b2936f705af9).
 
 #### 8.12.1 — You may only take the “Call a Legend” game action once per turn.
 
@@ -1189,23 +1189,23 @@ As an action during your Main phase, you may spend 1 €$ to Call a Legend. See 
 
 ### Play a Card
 
-As an action during your Main phase, you may play a card from your hand. See{[TERMS > Game Actions > Play](#rule-f1e04ee7-12d2-565f-8917-75ea798e6c4c)}.
+As an action during your Main phase, you may play a card from your hand. See [Play](#rule-aa988d35-9ddc-5697-ad1b-936546a0759a).
 
 ### 8.14 — Activate an Effect
 
 ### Activate an Effect
 
-As an action during your Main phase, you may activate any activated effects on friendly Units or Legends. They may be used during the open state of the main phase. For the full rules on activating effects, see {[EFFECTS > Activated Effects](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed)}.
+As an action during your Main phase, you may activate any activated effects on friendly Units or Legends. They may be used during the open state of the main phase. For the full rules on activating effects, see [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > [Activated Effects](#rule-60be9d57-6a2a-5072-86d4-893bbe9de2b0).
 
 #### 8.14.1 — You cannot activate [Spend Icon] effects on Lagging Units.
 
-You cannot activate [Spend Icon] effects on Lagging Units. See {[TERMS > General Terms > Lag](#rule-1fd3abec-fd76-53bf-8158-1564130d9575)}.
+You cannot activate [Spend Icon] effects on Lagging Units. See [Lag](#rule-6a4b19b9-eb52-5c00-af79-61a40eb948ca).
 
 ### 8.15 — Attack
 
 ### Attack
 
-As an action during your Main phase, you may attack with a Unit. For the full rules on attacking, see {[ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1)}.
+As an action during your Main phase, you may attack with a Unit. For the full rules on attacking, see [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1).
 
 ## End of Turn
 
@@ -1229,7 +1229,7 @@ When your turn ends, after you resolve any end of turn effects, if Overtime cond
 
 ## 9.2 — You may attack as a Main Phase action.
 
-You may attack as a Main Phase action. See {[TURN ORDER > Main Phase](#rule-6b35d117-68b9-5655-992b-d642e8de476d)}.
+You may attack as a Main Phase action. See [TURN ORDER](#rule-a3a2dfd1-0994-5217-b99d-509608fc3b2e) > [Main Phase](#rule-6b35d117-68b9-5655-992b-d642e8de476d).
 
 ## Declare the Attack
 
@@ -1239,7 +1239,7 @@ You may attack as a Main Phase action. See {[TURN ORDER > Main Phase](#rule-6b35
 
 ##### 9.3.1.1 — Lagging Units can’t attack.
 
-Lagging Units can’t attack. See {TERMS > General > Lag}.
+Lagging Units can’t attack. See [Lag](#rule-6a4b19b9-eb52-5c00-af79-61a40eb948ca).
 
 #### 9.3.2 — Choose a valid attack target for that Unit.
 
@@ -1275,11 +1275,11 @@ An effect that allows a Unit to attack only grants the specific permission descr
 
 ### 9.5 — When you declare the attack to your Rival, apply effects that last “while attacking” and variations thereof.
 
-When you declare the attack to your Rival, apply effects that last “while attacking” and variations thereof. All effects triggered by attacking or spending the attacker become pending. See {[EFFECTS > Pending Resolution](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57)}.
+When you declare the attack to your Rival, apply effects that last “while attacking” and variations thereof. All effects triggered by attacking or spending the attacker become pending. See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > [Pending Resolution](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57)}.
 
 ### 9.6 — After all pending effects are resolved, if the attacker or the defending Unit is no longer in the field area, the att…
 
-After all pending effects are resolved, if the attacker or the defending Unit is no longer in the field area, the attack ends. See {[Ending an Attack](#rule-ea5b950d-f8e1-5b3d-8cd5-20dec6ef700a)}. Otherwise, the attack continues; proceed to the React Step.
+After all pending effects are resolved, if the attacker or the defending Unit is no longer in the field area, the attack ends. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1) > {[Ending an Attack](#rule-ea5b950d-f8e1-5b3d-8cd5-20dec6ef700a)}. Otherwise, the attack continues; proceed to the React Step.
 
 ## React Step
 
@@ -1291,7 +1291,7 @@ During the “React Step” of an attack, the defending player has an opportunit
 
 ### 9.8 — You may Call a Legend as a reaction.
 
-You may Call a Legend as a reaction. See {[TERMS > Game Actions > Call a Legend](#rule-5a78278b-9f8b-5e64-b9aa-b2936f705af9)}.
+You may Call a Legend as a reaction. See [Call a Legend](#rule-5a78278b-9f8b-5e64-b9aa-b2936f705af9).
 
 ### 9.9 — You may activate the [BLOCKER] effect on a ready Unit as a reaction.
 
@@ -1305,7 +1305,7 @@ You may activate any effects with the [QUICK] keyword as a reaction. See {[TERMS
 
 ### 9.11 — If a reaction triggers one or more effects, those effects become pending.
 
-If a reaction triggers one or more effects, those effects become pending. Both players must resolve all pending effects before the defending player may take another reaction. See {[ACTIVATE & RESOLVE EFFECTS > Triggered Effects](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57)}.
+If a reaction triggers one or more effects, those effects become pending. Both players must resolve all pending effects before the defending player may take another reaction. See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > {[Triggered Effects](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57)}.
 
 ### 9.12 — At any point during the React Step, while not taking a reaction and while there are no effects pending resolution, th…
 
@@ -1313,7 +1313,7 @@ At any point during the React Step, while not taking a reaction and while there 
 
 ### 9.13 — If at any point the attacker or the defending Unit is no longer in the field area, the attack ends.
 
-If at any point the attacker or the defending Unit is no longer in the field area, the attack ends. See {[Ending an Attack](#rule-ea5b950d-f8e1-5b3d-8cd5-20dec6ef700a)}.
+If at any point the attacker or the defending Unit is no longer in the field area, the attack ends. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1) > {[Ending an Attack](#rule-ea5b950d-f8e1-5b3d-8cd5-20dec6ef700a)}.
 
 ### 9.14 — When the React Step ends, the attack continues.
 
@@ -1363,7 +1363,7 @@ If an effect prevents a Unit from being defeated in a fight, it is still a loser
 
 ### 9.20 — After resolving all effects triggered by the fight’s result, the Fight Step and the attack ends.
 
-After resolving all effects triggered by the fight’s result, the Fight Step and the attack ends. See {[Ending an Attack](#rule-ea5b950d-f8e1-5b3d-8cd5-20dec6ef700a)}.
+After resolving all effects triggered by the fight’s result, the Fight Step and the attack ends. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1) > [Ending an Attack](#rule-ea5b950d-f8e1-5b3d-8cd5-20dec6ef700a).
 
 ## Steal Step
 
@@ -1387,7 +1387,7 @@ At the start of the Steal Step, before choosing which Gigs are stolen, apply eff
 
 If the attacking Unit has 1 or more power, it steals X Gigs (rounded down) according to this formula, where P = the attacking Unit’s power.
 
-X = (P / 10) + 1)
+`X = (P / 10) + 1)`
 
 > **EXAMPLE:** A Unit with 1 to 9 power steals 1 Gig. A Unit with 10 to 19 power steals 2 Gigs. Continue this pattern for higher power values.
 
@@ -1411,7 +1411,7 @@ X = (P / 10) + 1)
 
 ### 9.24 — Resolve all pending effects.
 
-Resolve all pending effects. See {[EFFECTS > Pending Resolution](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57)}.
+Resolve all pending effects. See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > [Pending Resolution](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57).
 
 ### 9.25 — After all pending effects from the Steal Step are resolved, the attack ends.
 
@@ -1463,7 +1463,7 @@ If you control the source of an effect, it is considered “your” effect. You 
 
 ### 10.2.1 — Always resolve as much of an effect as possible.
 
-Always resolve as much of an effect as possible. See {[GOLDEN RULES > Do as Much as You Can](#rule-a1137877-3824-5786-bc49-9ca22d5054ba)}.
+Always resolve as much of an effect as possible. See [GOLDEN RULES](#rule-68b314b6-4bba-5507-b8f0-929a8baff26d) > [Resolve as Much as Possible](#rule-a1137877-3824-5786-bc49-9ca22d5054ba).
 
 ### 10.2.2 — If an effect instructs both players to act at the same time, the turn player performs their actions first, followed b…
 
@@ -1475,11 +1475,9 @@ Once an effect starts resolving, you cannot play cards, activate effects, or res
 
 ### 10.2.4 — Effects cannot interrupt the activation or resolution of other effects.
 
-Effects cannot interrupt the activation or resolution of other effects. If an effect triggers in the middle of an activation or resolution, it becomes “pending resolution.” See {[EFFECTS > Pending Resolution](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57)}.
+Effects cannot interrupt the activation or resolution of other effects. If an effect triggers in the middle of an activation or resolution, it becomes “pending resolution.” See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > [Pending Resolution](#rule-9afed67a-613b-547b-bbc7-75c55ca75d57).
 
 ### 10.2.5 — After an effect resolves, perform any required rule processing before resolving a new one or taking any actions.
-
-After an effect resolves, perform any required rule processing before resolving a new one or taking any actions. See {[EFFECTS > Rule Processing](#rule-d81a968a-69df-5cc6-bcd7-83ad94fdc9fa)}.
 
 ## 10.3 — An effect may include conditions.
 
@@ -1489,7 +1487,7 @@ An effect may include conditions. A “condition” is a requirement that must b
 
 ### 10.3.2 — A condition is not a cost unless it is specifically within a cost.
 
-A condition is not a cost unless it is specifically within a cost. See {[TERMS > General Terms > Cost](#rule-a2a83a05-cee0-530e-beb1-b3b588453fa6)}.
+A condition is not a cost unless it is specifically within a cost. See [Cost](#rule-a2a83a05-cee0-530e-beb1-b3b588453fa6).
 
 ### 10.3.3 — A condition within an effect’s resolution is checked when that part of the effect resolves.
 
@@ -1579,13 +1577,13 @@ If the same trigger condition is met multiple times, the triggered effect become
 
 ### 10.17 — Triggered effects may use timing labels such as [ATTACK], [CALL], [PLAY], or [DEFEATED], or timing text such as “when…
 
-Triggered effects may use timing labels such as [ATTACK], [CALL], [PLAY], or [DEFEATED], or timing text such as “when,” “at the start of,” “at the end of,” and variations thereof. See {[TERMS > Trigger Keywords](#rule-1e209da6-0bd1-5b07-9aff-71f536048aac)}.
+Triggered effects may use timing labels such as [ATTACK], [CALL], [PLAY], or [DEFEATED], or timing text such as “when,” “at the start of,” “at the end of,” and variations thereof. See [TERMS](#rule-d3031204-40a4-51fb-930c-feb00b9d3192) > [Trigger Keywords](#rule-1e209da6-0bd1-5b07-9aff-71f536048aac).
 
 ## Activated Effects
 
 ### 10.18 — You may activate “activated effects” as an action during your Main Phase.
 
-You may activate “activated effects” as an action during your Main Phase. See {[TURN ORDER > Main Phase > Activate an Effect](#rule-c296824f-461c-52cb-a263-bab6627e4067)}.
+You may activate “activated effects” as an action during your Main Phase. See [Activate an Effect](#rule-45095f45-5c31-5a8d-826f-e122556ebc3d).
 
 #### 10.18.1 — You cannot activate an activated effect while resolving another action or effect, nor while any effects are pending r…
 
@@ -1593,9 +1591,9 @@ You cannot activate an activated effect while resolving another action or effect
 
 ### 10.19 — When an activated effect has a colon, the bolded text preceding the colon is the activation cost, and the text follow…
 
-When an activated effect has a colon, the bolded text preceding the colon is the activation cost, and the text following the colon is the effect that resolves after you pay the activation cost. See {[TERMS > General Terms > Cost](#rule-a2a83a05-cee0-530e-beb1-b3b588453fa6)}.
+When an activated effect has a colon, the bolded text preceding the colon is the activation cost, and the text following the colon is the effect that resolves after you pay the activation cost. See [Cost](#rule-a2a83a05-cee0-530e-beb1-b3b588453fa6).
 
-> **EXAMPLE:** A friendly Unit’s effect text reads "[Spend Icon:] Swap a friendly Gig with a rival Gig.” This is an activated effect. During your Main Phase, you may spend the Unit as an activation cost; if you do, you gain the effect “Swap a friendly Gig with a rival Gig.”
+> **EXAMPLE:** A friendly Unit’s effect text reads "[Spend Icon] Swap a friendly Gig with a rival Gig.” This is an activated effect. During your Main Phase, you may spend the Unit as an activation cost; if you do, you gain the effect “Swap a friendly Gig with a rival Gig.”
 
 #### 10.19.1 — Choices and costs before the colon are made or paid while activating the effect.
 
@@ -1611,7 +1609,7 @@ You must pay all activation costs for an effect. If you can’t pay all required
 
 #### 10.20.1 — Choose a valid friendly effect to activate.
 
-Choose a valid friendly effect to activate. See {[Valid & Invalid Effects](#rule-da178967-2dfb-5484-b475-46e3cae8bf31)}.
+Choose a valid friendly effect to activate. See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > [Valid & Invalid Effects](#rule-da178967-2dfb-5484-b475-46e3cae8bf31).
 
 #### 10.20.2 — If the activated effect is on a card in a hidden area (like your hand), reveal it.
 
@@ -1645,7 +1643,7 @@ Resolve the effect. When you do, any effects triggered by the resolution become 
 
 If a persistent effect has a duration, it applies only for that duration.
 
-> **EXAMPLE:** A persistent effect text reads "Other friendly Units have +2 power while attacking.”
+> **EXAMPLE:** A Unit's effect text reads "Other friendly Units have +2 power while attacking.” The Unit only gains +2 from the moment the Unit attacks until the attack ends.
 
 #### 10.23.1 — When a persistent effect’s duration ends, that effect stops applying immediately once there are no other pending effe…
 
@@ -1719,7 +1717,7 @@ If an effect instructs multiple players to make choices at the same time, the tu
 
 #### 11.1.1 — A “cost” details what you must pay to play a card, activate an effect, or perform a game action.
 
-A “cost” details what you must pay to play a card, activate an effect, or perform a game action. See {[TERMS > Game Actions > Pay](#rule-0ed2bde9-70df-5941-acbe-47aae4afe45d)}.
+A “cost” details what you must pay to play a card, activate an effect, or perform a game action. See [Pay](#rule-0ed2bde9-70df-5941-acbe-47aae4afe45d).
 
 ##### 11.1.1.1 — To play a card, you must pay its cost value in the top left corner of the card.
 
@@ -1727,7 +1725,7 @@ To play a card, you must pay its cost value in the top left corner of the card. 
 
 ##### 11.1.1.2 — An activation cost is a cost that must be paid to activate an effect.
 
-An activation cost is a cost that must be paid to activate an effect. See [Activated Effects](#rule-60be9d57-6a2a-5072-86d4-893bbe9de2b0).
+An activation cost is a cost that must be paid to activate an effect. See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > [Activated Effects](#rule-60be9d57-6a2a-5072-86d4-893bbe9de2b0).
 
 #### 11.1.2 — A cost must be paid in full; if you cannot pay all required costs, you cannot play the card, activate the effect, nor…
 
@@ -1805,7 +1803,7 @@ When you “Draw X,” draw each card individually. Do not take multiple cards f
 
 ##### 11.5.2.3 — If you attempt to draw more cards than remain in your deck, it counts as drawing from an empty deck.
 
-If you attempt to draw more cards than remain in your deck, it counts as drawing from an empty deck. See [GAME OVERVIEW > Lose Conditions](#rule-6102756a-cd45-50fb-8ded-eea683b79df7).
+If you attempt to draw more cards than remain in your deck, it counts as drawing from an empty deck. See [GAME OVERVIEW](#rule-0ef7599d-d21e-5efb-bb17-375f7950991c) > [Lose Conditions](#rule-6102756a-cd45-50fb-8ded-eea683b79df7).
 
 ### 11.6 — Equip
 
@@ -1813,7 +1811,7 @@ If you attempt to draw more cards than remain in your deck, it counts as drawing
 
 #### 11.6.1 — “Equip” is a game action in which you attach a Gear to a Unit or Legend by placing the card beneath it.
 
-“Equip” is a game action in which you attach a Gear to a Unit or Legend by placing the card beneath it. When you do, the Gear becomes “equipped to” that card. See {[CARD TYPES > Gear](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49)}.
+“Equip” is a game action in which you attach a Gear to a Unit or Legend by placing the card beneath it. When you do, the Gear becomes “equipped to” that card. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed) > [Gear](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49).
 
 ##### 11.6.1.1 — When a Gear is equipped make sure only the bottom text box is showing under the equipped card.
 
@@ -1829,15 +1827,17 @@ Gear stays equipped unless it (or the Unit/Legend it’s equipped to) is defeate
 
 #### 11.6.5 — Units and Legends gain the power of their equipped Gears.
 
-#### 11.6.6 — “Move is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another v…
+#### 11.6.6 — "Move" is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another…
 
-“Move is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another valid Unit or Legend.
+"Move" is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another valid Unit or Legend.
 
 ### 11.7 — Trash
 
 ### Trash
 
 #### 11.7.1 — When used as a location, “trash” refers to the “Trash area” of the game board.
+
+When used as a location, “trash” refers to the “Trash area” of the game board. See [Trash Area](#rule-1135bc55-1aa7-5667-beb2-33c4d60a26ce).
 
 #### 11.7.2 — When used as an instruction, “trash” refers to the game action in which you reveal the top card of your deck and move…
 
@@ -1879,13 +1879,13 @@ Effects that reduce the amount you pay to play a card or activate an effect do n
 
 ##### 11.9.1.1 — When you sell a card, it enters the Eddies area face-down and ready.
 
-When you sell a card, it enters the Eddies area face-down and ready. See [Game Areas > Eddies Area](#rule-5753f17e-b02c-5b63-87e7-60fb27880068).
+When you sell a card, it enters the Eddies area face-down and ready. See [Eddies Area](#rule-5753f17e-b02c-5b63-87e7-60fb27880068).
 
 ##### 11.9.1.2 — If you would sell multiple cards at the same time, you must sell each card individually.
 
 #### 11.9.2 — During your Main Phase, you may sell a card with a Sell Tag from your hand as an action.
 
-During your Main Phase, you may sell a card with a Sell Tag from your hand as an action. See [TURN ORDER > Main Phase > Sell a Card](#rule-c215eaa3-1145-5c48-8a2d-2a94393d1d52).
+During your Main Phase, you may sell a card with a Sell Tag from your hand as an action. See [Sell a Card](#rule-be5fdfb0-1cad-5806-8b14-1b3bd8aa260b).
 
 ##### 11.9.2.1 — Whenever an effect puts a card from another area into the Eddie area, the card isn’t required to have an Eddie symbol.
 
@@ -1913,7 +1913,7 @@ Whenever an effect puts a card from another area into the Eddie area, the card i
 
 ##### 11.11.1.4 — When you flip a Legend face up this way it activates any [CALL] keyword effects on that Legend.
 
-When you flip a Legend face up this way it activates any [CALL] keyword effects on that Legend. See {[TERMS > Trigger Keywords > \[CALL\]](#rule-d2312a93-5d92-5ea9-8931-a7ec2cf099a3)}.
+When you flip a Legend face up this way it activates any [CALL] keyword effects on that Legend. See [\[CALL\]](#rule-d2312a93-5d92-5ea9-8931-a7ec2cf099a3).
 
 #### 11.11.2 — You may only Call a Legend once per turn.
 
@@ -1937,7 +1937,7 @@ You cannot bottom-deck a card you don’t own. If you would bottom-deck a card y
 
 ##### 11.12.1.3 — When you are made to bottom-deck multiple cards at the same time, you must randomize all of them together before plac…
 
-When you are made to bottom-deck multiple cards at the same time, you must randomize all of them together before placing them at the bottom of your deck. This includes any Units or Legends with Gears attached. See {[CARD INFORMATION > Type > Gears](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49)}.
+When you are made to bottom-deck multiple cards at the same time, you must randomize all of them together before placing them at the bottom of your deck. This includes any Units or Legends with Gears attached. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed) > [Gears](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49).
 
 #### 11.12.2 — If an effect tells you to bottom-deck a group of cards “in any order,” forgo randomizing the cards and instead choose…
 
@@ -1965,7 +1965,7 @@ While searching cards in an area, the cards still count towards the total number
 
 #### 11.13.4 — When an effect allows you to search one of your hidden areas for a specific card or criteria, if you fail to find any…
 
-When an effect allows you to search one of your hidden areas for a specific card or criteria, if you fail to find anything, you don’t have to show the hidden information to the Rival player. See {[GAME AREAS > General > Hidden Areas](#rule-3fae03cf-a089-553e-91d3-88e0694e138c)}.
+When an effect allows you to search one of your hidden areas for a specific card or criteria, if you fail to find anything, you don’t have to show the hidden information to the Rival player. See [Hidden Areas](#rule-3f22994a-0339-5f20-9f10-6cf1f8113110).
 
 ##### 11.13.4.1 — When you search a hidden area for a specific target(s) and you’re not obligated to reveal the searched cards, you may…
 
@@ -2059,7 +2059,7 @@ The effect attached to the [DEFEATED] trigger enters pending when the Unit has b
 
 #### 11.20.2 — The effect attached to the [PLAY] trigger enters pending when you meet all the requirements when playing that card type.
 
-The effect attached to the [PLAY] trigger enters pending when you meet all the requirements when playing that card type. See {[CARD INFORMATION > Type](#rule-550c9024-e88c-5618-a7d0-7741f493f973)}.
+The effect attached to the [PLAY] trigger enters pending when you meet all the requirements when playing that card type. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed).
 
 ### 11.21 — [ATTACK]
 
@@ -2073,11 +2073,11 @@ The effect attached to the [ATTACK] trigger enters pending when you spend the Un
 
 ##### 11.21.2.1 — Any effects triggered by spending this Unit enter pending at the same time as any [ATTACK] effect(s).
 
-Any effects triggered by spending this Unit enter pending at the same time as any [ATTACK] effect(s). See {[EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed)}.
+Any effects triggered by spending this Unit enter pending at the same time as any [ATTACK] effect(s). See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed).
 
 ##### 11.21.2.2 — Resolve all pending [ATTACK] effects before your Rival’s react step.
 
-Resolve all pending [ATTACK] effects before your Rival’s react step. See {[ATTACK, FIGHT, AND STEAL > React Step](#rule-8e1db91d-c376-5f3a-b208-7df7a64bed30)}.
+Resolve all pending [ATTACK] effects before your Rival’s react step. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1) > [React Step](#rule-8e1db91d-c376-5f3a-b208-7df7a64bed30).
 
 ## Effect Keywords
 
@@ -2091,7 +2091,7 @@ Resolve all pending [ATTACK] effects before your Rival’s react step. See {[ATT
 
 #### 11.23.2 — Units with [ADRENALINE] may attack even if they’re lagging.
 
-Units with [ADRENALINE] may attack even if they’re lagging. All other criteria for valid attack targets still apply. See {ATTACK, FIGHT, AND STEAL > Declare the Attack}.
+Units with [ADRENALINE] may attack even if they’re lagging. All other criteria for valid attack targets still apply. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1) > [Declare the Attack](#rule-d65346a6-8898-5f13-8729-0693c12610fa).
 
 ### 11.24 — [BLOCKER]
 

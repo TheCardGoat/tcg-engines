@@ -24,37 +24,30 @@ export const nullShock = definePitchFamily(fabPitchFamilies["null-shock"], {
             kind: "resolution",
             effect: {
               type: "negate",
+              ifTargetMatches: {
+                numeric: [
+                  {
+                    property: "cost",
+                    basis: "base",
+                    comparison: {
+                      op: "lt",
+                      value: {
+                        type: "count",
+                        what: "damage-dealt",
+                        recipient: "opposing-heroes",
+                        damageType: "arcane",
+                        per: "turn",
+                      },
+                    },
+                  },
+                ],
+              },
               target: {
                 selector: "object",
                 declared: "on-stack",
                 player: "any",
                 zones: ["stack"],
-                filter: {
-                  and: [
-                    {
-                      typeBox: {
-                        types: ["Instant"],
-                      },
-                    },
-                    {
-                      numeric: [
-                        {
-                          property: "cost",
-                          basis: "base",
-                          comparison: {
-                            op: "lt",
-                            value: {
-                              type: "count",
-                              what: "damage-dealt",
-                              damageType: "arcane",
-                              per: "turn",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  ],
-                },
+                filter: { typeBox: { types: ["Instant"] } },
                 count: 1,
               },
             },

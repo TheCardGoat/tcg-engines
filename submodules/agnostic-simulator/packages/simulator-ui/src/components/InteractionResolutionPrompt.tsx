@@ -72,6 +72,10 @@ export interface InteractionChoiceModalPresentation {
   readonly autoOpen?: boolean;
   readonly duplicateFilter?: TargetFilterDuplicateFilter;
   readonly renderPreview?: (entity: SimulatorEntity) => ReactNode;
+  /** Replaces the visible modal heading; `title` remains the accessible name. */
+  readonly renderTitle?: (title: string) => ReactNode;
+  /** Context rendered beside the cards-per-row control, such as the effect's card text. */
+  readonly toolbarNote?: ReactNode;
 }
 
 export interface InteractionResolutionPromptProps {
@@ -850,6 +854,8 @@ export function InteractionResolutionPrompt({
           emptyLabel={choiceModal.emptyLabel}
           duplicateFilter={choiceModal.duplicateFilter}
           renderPreview={choiceModal.renderPreview}
+          renderTitle={choiceModal.renderTitle}
+          toolbarNote={choiceModal.toolbarNote}
           selectedIds={selection}
           max={input.max}
           disabledEntityIds={

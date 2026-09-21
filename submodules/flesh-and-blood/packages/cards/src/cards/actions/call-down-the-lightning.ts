@@ -104,6 +104,7 @@ export const callDownTheLightning = definePitchFamily(fabPitchFamilies["call-dow
         effect: {
           type: "create-token",
           token: "embodiment-of-lightning",
+          creator: "effect-controller",
           controller: "any",
         },
       },

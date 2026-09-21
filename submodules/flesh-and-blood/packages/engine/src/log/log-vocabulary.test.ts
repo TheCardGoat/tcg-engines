@@ -373,11 +373,17 @@ const SAMPLE_VALUES = {
   "flesh-and-blood.ability.triggered": { cardName: "Dawnblade" },
   "flesh-and-blood.ability.layer": { cardName: "Dawnblade" },
 
+  "flesh-and-blood.marked": { sourceName: "Obsidian Fire Vein", playerId: "beta" },
+
   "flesh-and-blood.turn.started": { turnNumber: 7 },
   "flesh-and-blood.game.ended": { playerId: "beta", reason: "no-life" },
   "flesh-and-blood.decision.awaiting": { actorId: "alpha" },
+  "flesh-and-blood.decision.chosen": { actorId: "alpha", choice: "Snatch, Wounding Blow" },
   "flesh-and-blood.decision.private": { label: "Choose a card to banish" },
+  "flesh-and-blood.deck-top": { playerId: "alpha", cardName: "Wounding Blow", from: "graveyard" },
   "flesh-and-blood.phase.start": { turnPlayerId: "alpha", phase: "action" },
+
+  "flesh-and-blood.decision-automation.auto-decline": { actorId: "alpha" },
 } as const satisfies { readonly [TKey in FabLogKey]: FabLogValuesFor<TKey> };
 
 describe("FabLog vocabulary rendering", () => {

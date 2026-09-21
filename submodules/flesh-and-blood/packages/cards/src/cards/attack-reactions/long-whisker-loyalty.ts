@@ -42,17 +42,16 @@ export const longWhiskerLoyalty = definePitchFamily(fabPitchFamilies["long-whisk
         },
         additionalDaggerAttack: {
           kind: "resolution",
+          // CR 5.2.3c: choosing the mode is the only decision; the allowance
+          // applies by itself and is exercised when the dagger is activated.
           effect: {
-            type: "optional",
-            effect: {
-              type: "modify-activation-limit",
-              target: {
-                selector: "this-attack",
-              },
-              operation: "additional",
-              count: 1,
-              duration: "this-turn",
+            type: "modify-activation-limit",
+            target: {
+              selector: "this-attack",
             },
+            operation: "additional",
+            count: 1,
+            duration: "this-turn",
           },
         },
         markOnNextHit: {

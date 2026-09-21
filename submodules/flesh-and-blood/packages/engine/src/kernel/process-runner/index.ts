@@ -17,6 +17,7 @@ export {
   resumeFabReplacementFirstPlayer,
   resumeFabReplacementPlayerChoice,
   resumeFabReplacementCostTarget,
+  resumeFabReplacementCostPayment,
   resumeFabReplacementConsequenceTarget,
   commitFabReplacementConsequenceTarget,
   commitFabReplacementCostTarget,

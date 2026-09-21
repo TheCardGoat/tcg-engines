@@ -2,6 +2,7 @@ import { describe, expect, it } from "vite-plus/test";
 
 import {
   welcomeToNightCityRetailAugmentedNegotiators,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailJohnnySilverhandNeverStopFighting,
   welcomeToNightCityRetailOffdutyMalfini,
   welcomeToNightCityRetailPlacideVoodooSentinel,
@@ -10,18 +11,22 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Johnny Silverhand — Never Stop Fighting (registration)", () => {
-  it("is registered with the ingested card data", () => {
-    expect(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting).toBeDefined();
-    expect(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting.slug).toBe(
-      "johnny-silverhand-never-stop-fighting",
-    );
-    expect(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting.type).toBe("unit");
-    expect(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting.color).toBe("red");
-    expect(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting.set.code).toBe(
-      "welcometonightcityretail",
-    );
-    expect(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting.cost).toBe(6);
-    expect(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting.power).toBe(8);
+  it("is the exact 6-cost red Merc Rocker Samurai Unit with both printed abilities", () => {
+    const johnny = welcomeToNightCityRetailJohnnySilverhandNeverStopFighting;
+    expect(johnny).toMatchObject({
+      canonicalId: "johnny-silverhand-never-stop-fighting",
+      slug: "johnny-silverhand-never-stop-fighting",
+      type: "unit",
+      color: "red",
+      classifications: ["Merc", "Rocker", "Samurai"],
+      cost: 6,
+      power: 8,
+      ram: 2,
+      hasSellTag: false,
+      printNumber: "011",
+      set: { code: "welcometonightcityretail" },
+    });
+    expect(johnny.abilities).toHaveLength(2);
   });
 });
 
@@ -56,6 +61,10 @@ describe("Johnny Silverhand — Never Stop Fighting", () => {
           (card) => card.definitionId === welcomeToNightCityRetailYorinobuArasakaSteelDragon.id,
         ),
     ).toBe(true);
+    expect(
+      engine.getCard(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting, "field", P1).meta
+        .spent,
+    ).toBe(false);
     expect(
       engine
         .getCardsInZone("field", P1)
@@ -170,6 +179,75 @@ describe("Johnny Silverhand — Never Stop Fighting", () => {
     ).toBe(true);
   });
 
+  it("resets the first-fight-win ready limit on the next turn", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        field: [
+          {
+            card: welcomeToNightCityRetailJohnnySilverhandNeverStopFighting,
+            spent: false,
+            hasLag: false,
+          },
+        ],
+        gigArea: [
+          { dieType: "d4", faceValue: 1 },
+          { dieType: "d6", faceValue: 2 },
+        ],
+      },
+      {
+        field: [
+          { card: welcomeToNightCityRetailOffdutyMalfini, spent: true },
+          { card: welcomeToNightCityRetailAugmentedNegotiators, spent: true },
+          {
+            card: welcomeToNightCityRetailYorinobuArasakaSteelDragon,
+            spent: false,
+            hasLag: false,
+          },
+          { card: welcomeToNightCityRetailFieldOperator, spent: true, hasLag: false },
+        ],
+      },
+    );
+
+    engine.attackUnit(
+      welcomeToNightCityRetailJohnnySilverhandNeverStopFighting,
+      welcomeToNightCityRetailOffdutyMalfini,
+      { as: P1 },
+    );
+    engine.resolveFullFight({ as: P1 });
+    engine.attackUnit(
+      welcomeToNightCityRetailJohnnySilverhandNeverStopFighting,
+      welcomeToNightCityRetailAugmentedNegotiators,
+      { as: P1 },
+    );
+    engine.resolveFullFight({ as: P1 });
+    expect(
+      engine.getCard(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting, "field", P1).meta
+        .spent,
+    ).toBe(true);
+
+    engine.skipToNextPlayerTurn(P1);
+    engine.attackRival(welcomeToNightCityRetailFieldOperator, { as: P2 });
+    engine.resolveFullSteal({ as: P2 });
+    engine.attackUnit(
+      welcomeToNightCityRetailYorinobuArasakaSteelDragon,
+      welcomeToNightCityRetailJohnnySilverhandNeverStopFighting,
+      { as: P2 },
+    );
+    engine.resolveFullFight({ as: P2 });
+    engine.skipToNextPlayerTurn(P2);
+    engine.attackUnit(
+      welcomeToNightCityRetailJohnnySilverhandNeverStopFighting,
+      welcomeToNightCityRetailFieldOperator,
+      { as: P1 },
+    );
+    engine.resolveFullFight({ as: P1 });
+
+    expect(
+      engine.getCard(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting, "field", P1).meta
+        .spent,
+    ).toBe(false);
+  });
+
   it("also auto-wins as the defender when a CORPO Unit attacks it", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
@@ -211,6 +289,10 @@ describe("Johnny Silverhand — Never Stop Fighting", () => {
             card.definitionId === welcomeToNightCityRetailJohnnySilverhandNeverStopFighting.id,
         ),
     ).toBe(true);
+    expect(
+      engine.getCard(welcomeToNightCityRetailJohnnySilverhandNeverStopFighting, "field", P1).meta
+        .spent,
+    ).toBe(false);
   });
 
   it("does not ready from a direct attack (no fight)", () => {
@@ -252,5 +334,13 @@ describe("Johnny Silverhand — Never Stop Fighting", () => {
     const triggered = card.abilities.find((a) => a.kind === "triggered")!;
     expect(triggered.limits).toContain("firstTimeEachTurn");
     expect(triggered.effects.map((e) => e.effect)).toContain("ready");
+    expect(triggered.trigger).toMatchObject({
+      trigger: "event",
+      event: {
+        event: "fightResolved",
+        player: "any",
+        winner: { selector: "self" },
+      },
+    });
   });
 });

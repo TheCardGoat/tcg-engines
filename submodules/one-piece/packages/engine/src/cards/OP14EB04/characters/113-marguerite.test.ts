@@ -7,7 +7,7 @@ import {
   op13BoaHancock051,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Marguerite113 } from "../../../../../cards/src/cards/OP14EB04/characters/113-marguerite.ts";
+import { op14eb04Marguerite113 } from "../../../../../cards/src/cards/characters/op14-113-marguerite.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

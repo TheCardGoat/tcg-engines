@@ -81,5 +81,12 @@ for (const job of jobs) {
       2,
     )}\n`,
   );
-  console.log(job.slug, JSON.stringify(terms), "unplayable", unplayableCount, "p1", report.summary.p1Wins);
+  console.log(
+    job.slug,
+    JSON.stringify(terms),
+    "unplayable",
+    unplayableCount,
+    "p1",
+    report.summary.p1Wins,
+  );
 }

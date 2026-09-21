@@ -82,6 +82,47 @@ describe("SimulatorMatchSidebar", () => {
     );
   });
 
+  test("renders a status-only participant without synthetic identity chrome", () => {
+    container = document.createElement("div");
+    document.body.append(container);
+    root = createRoot(container);
+    act(() =>
+      root?.render(
+        <SimulatorMatchSidebar
+          opponent={{
+            id: "opponent",
+            role: "opponent",
+            layout: "stacked",
+            showAvatar: false,
+            status: "Waiting",
+            clock: "12:00",
+          }}
+          activity={{ log: <div>Battle log</div> }}
+          actions={{
+            undo: <button type="button">Undo</button>,
+            primary: <button type="button">Pass turn</button>,
+            danger: <button type="button">Concede</button>,
+          }}
+          self={{
+            id: "self",
+            role: "self",
+            layout: "stacked",
+            showAvatar: false,
+            status: "Priority",
+            clock: "11:54",
+          }}
+        />,
+      ),
+    );
+
+    const opponent = container.querySelector('[aria-label="Opponent match status"]')!;
+    const self = container.querySelector('[aria-label="Your match status"]')!;
+    expect(opponent.textContent).toBe("Waiting12:00");
+    expect(self.textContent).toBe("Priority11:54");
+    expect(container.querySelectorAll('[data-has-visible-name="false"]')).toHaveLength(2);
+    expect(container.querySelectorAll('[data-has-avatar="false"]')).toHaveLength(2);
+  });
+
   test("keeps the shared match anatomy in a stable order", () => {
     container = document.createElement("div");
     document.body.append(container);

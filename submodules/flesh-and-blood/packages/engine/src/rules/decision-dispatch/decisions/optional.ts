@@ -5,7 +5,7 @@ import { createFabOptionalDecision } from "../../../kernel/decision-builders.ts"
 import { publishFabDecision } from "../../../kernel/decision-state.ts";
 import { fabLayerTargets } from "../../layers.ts";
 import { collectDeclaredTargets } from "../../../kernel/trigger-declaration.ts";
-import { playersForFabPlayer, resolveLayerAmount } from "../../proposals/shared.ts";
+import { heroTargets, playersForFabPlayer, resolveLayerAmount } from "../../proposals/shared.ts";
 import { activationPaymentCandidates } from "../../../procedures/activate-ability/helpers.ts";
 
 /** Resolve who answers an optional ("each other hero may…"). */
@@ -111,6 +111,26 @@ function optionalDecisionLabels(
     : undefined;
 }
 
+/** Each required hero occurrence must be feasible before offering the enclosing may. */
+function optionalPrincipalOccurrences(
+  state: LayerDecisionCtx<"optional">["state"],
+  layer: LayerDecisionCtx<"optional">["layer"],
+  effect: FabEffect,
+  targetPath: string,
+): readonly { effect: FabEffect; layer: LayerDecisionCtx<"optional">["layer"] }[] {
+  if (effect.type !== "for-each") return [{ effect, layer }];
+  const subjects = heroTargets(state, layer, effect.target, targetPath);
+  if (subjects === null) return [{ effect, layer }];
+  return subjects.flatMap((playerId, index) =>
+    optionalPrincipalOccurrences(
+      state,
+      { ...layer, bindings: { ...layer.bindings, "iteration-subject": playerId } },
+      effect.effect,
+      `${targetPath}:for-each-${index}`,
+    ),
+  );
+}
+
 export function handleOptional(ctx: LayerDecisionCtx<"optional">): FabLayerResolutionResult {
   const { state, layer, process, options, decision } = ctx;
   const chooserId = optionalChooserActorId(layer, state, decision.effect.chooser);
@@ -190,38 +210,45 @@ export function handleOptional(ctx: LayerDecisionCtx<"optional">): FabLayerResol
   // A choice-principal optional ("you may discard or destroy…") must persist
   // the boolean even when one arm has no legal target. The player still
   // answers yes/no, then picks an available arm.
-  const requiredTarget =
-    decision.effect.effect.type === "choice"
-      ? null
-      : ctx.firstRequiredAtResolutionTarget(decision.effect.effect);
-  if (requiredTarget) {
-    // Pre-check uses the layer controller + bindings (same as resolution),
-    // not the chooser seat. For-each optionals bind iteration-subject and
-    // target `player: "iteration-subject"` so the scan finds that seat's
-    // cards without rebinding controllerId to the chooser.
-    const candidates = options.legalTargets(
-      state,
-      {
-        controllerId: layer.controllerId,
-        source: layer.source,
-        abilityId: layer.kind === "triggered" ? layer.abilityId : layer.layerId,
-        bindings: layer.bindings,
-      },
-      requiredTarget as Parameters<typeof options.legalTargets>[2],
-    );
-    // "You may destroy 3 Gold" requires enough legal targets for a non-upTo
-    // numeric count — fewer than N is not a legal acceptance path (match-fixer).
-    const requiredCount =
-      requiredTarget &&
-      typeof requiredTarget === "object" &&
-      "count" in requiredTarget &&
-      typeof (requiredTarget as { count?: unknown }).count === "number" &&
-      !(requiredTarget as { upTo?: boolean }).upTo
-        ? ((requiredTarget as { count: number }).count as number)
-        : 1;
-    if (candidates.length < requiredCount) {
-      process.effectChoices[decision.path.join(".")] = false;
-      return ctx.advance(state, layer, options);
+  for (const occurrence of optionalPrincipalOccurrences(
+    state,
+    layer,
+    principal,
+    `${decision.targetPath}:effect`,
+  )) {
+    const requiredTarget =
+      occurrence.effect.type === "choice"
+        ? null
+        : ctx.firstRequiredAtResolutionTarget(occurrence.effect);
+    if (requiredTarget) {
+      // Pre-check uses the layer controller + bindings (same as resolution),
+      // not the chooser seat. For-each optionals bind iteration-subject and
+      // target `player: "iteration-subject"` so the scan finds that seat's
+      // cards without rebinding controllerId to the chooser.
+      const candidates = options.legalTargets(
+        state,
+        {
+          controllerId: layer.controllerId,
+          source: layer.source,
+          abilityId: layer.kind === "triggered" ? layer.abilityId : layer.layerId,
+          bindings: occurrence.layer.bindings,
+        },
+        requiredTarget as Parameters<typeof options.legalTargets>[2],
+      );
+      // "You may destroy 3 Gold" requires enough legal targets for a non-upTo
+      // numeric count — fewer than N is not a legal acceptance path (match-fixer).
+      const requiredCount =
+        requiredTarget &&
+        typeof requiredTarget === "object" &&
+        "count" in requiredTarget &&
+        typeof (requiredTarget as { count?: unknown }).count === "number" &&
+        !(requiredTarget as { upTo?: boolean }).upTo
+          ? ((requiredTarget as { count: number }).count as number)
+          : 1;
+      if (candidates.length < requiredCount) {
+        process.effectChoices[decision.path.join(".")] = false;
+        return ctx.advance(state, layer, options);
+      }
     }
   }
   publishFabDecision(

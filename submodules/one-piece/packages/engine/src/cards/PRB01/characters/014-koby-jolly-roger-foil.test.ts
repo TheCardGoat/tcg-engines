@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb01KobyJollyRogerFoil014 } from "../../../../../cards/src/cards/PRB01/characters/014-koby-jolly-roger-foil.ts";
+import { prb01KobyJollyRogerFoil014 } from "../../../../../cards/src/cards/characters/p-014-koby-jolly-roger-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

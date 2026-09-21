@@ -91,15 +91,15 @@ was baseline, candidate, candidate, baseline. The longer coverage sweeps were
 paused and the full test suites had finished during these timing runs. This is
 a shared development machine, not controlled production hardware.
 
-| Metric | Baseline, two runs | Candidate, two runs |
-| --- | ---: | ---: |
-| Whole harness time / 320 actions | 35.4–36.1 s | 12.87–12.88 s |
-| Sum of command-submission spans | 22.4–22.8 s | 8.6–8.7 s |
-| Settled viewer query p95 | 7.4–7.5 ms | 0.62–0.65 ms |
-| Payment viewer query p95 | 8.4–9.7 ms | 3.2–3.7 ms |
-| Pass submission p95 | 133–140 ms | 51–52 ms |
-| Decision-answer submission p95 | 608–718 ms | 273–282 ms |
-| End-turn submission p95 | 344–346 ms | 92–99 ms |
+| Metric                           | Baseline, two runs | Candidate, two runs |
+| -------------------------------- | -----------------: | ------------------: |
+| Whole harness time / 320 actions |        35.4–36.1 s |       12.87–12.88 s |
+| Sum of command-submission spans  |        22.4–22.8 s |           8.6–8.7 s |
+| Settled viewer query p95         |         7.4–7.5 ms |        0.62–0.65 ms |
+| Payment viewer query p95         |         8.4–9.7 ms |          3.2–3.7 ms |
+| Pass submission p95              |         133–140 ms |            51–52 ms |
+| Decision-answer submission p95   |         608–718 ms |          273–282 ms |
+| End-turn submission p95          |         344–346 ms |            92–99 ms |
 
 The p95 columns are ranges across runs, not pooled percentiles. Viewer rows
 measure one viewer request, combining both seats and the spectator. Decision

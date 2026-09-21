@@ -4,6 +4,7 @@ import type { ChooseTargetPendingChoice } from "../types/match-state.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
 import { resolveEffect } from "../effects/handlers/index.ts";
 import {
+  abandonCurrentTrigger,
   enqueueEventTriggers,
   executeAbilityEffects,
   resumeCurrentTrigger,
@@ -14,6 +15,9 @@ import type { MatchState } from "../types/match-state.ts";
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import type { EffectTarget, GameEvent, GigDieRolledEvent } from "../types/game-events.ts";
 import { resumeSuspendedEndTurn } from "./pass-phase.ts";
+import { computeEffectiveCost } from "./compute-effective-cost.ts";
+import { availableEddies } from "./eddie-resources.ts";
+import { isValidGigCopyPair } from "../effects/gig-copy-selection.ts";
 
 export interface ResolveEffectTargetInput extends MoveInput {
   args: {
@@ -32,6 +36,9 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
       return false;
     }
+    // A selectable Gig immediately consumed by adjustGig is one atomic
+    // target/value decision. It is resolved only through resolveAdjustGig.
+    if (choice.payload.adjustGig) return false;
     return (choice.chooserId as string) === (playerId as string);
   },
 
@@ -40,11 +47,20 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
       return { valid: false, error: "No effect target pending", errorCode: "NO_PENDING_CHOICE" };
     }
+    if (choice.payload.adjustGig) {
+      return {
+        valid: false,
+        error: "Gig target and value must be resolved atomically",
+        errorCode: "ATOMIC_ADJUST_GIG_REQUIRED",
+      };
+    }
     if ((choice.chooserId as string) !== (playerId as string)) {
       return { valid: false, error: "Not your choice to resolve", errorCode: "NOT_YOUR_CHOICE" };
     }
     if (input.args.pass) {
-      return choice.payload.canDecline || (choice.payload.min ?? 1) === 0
+      return choice.payload.canDecline ||
+        (choice.payload.min ?? 1) === 0 ||
+        choice.payload.targetPurpose === "playCard"
         ? { valid: true }
         : { valid: false, error: "Cannot pass this target choice", errorCode: "CANNOT_PASS" };
     }
@@ -69,6 +85,32 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
     for (const id of targetIds) {
       if (!eligible.has(id)) {
         return { valid: false, error: "Target is not a valid choice", errorCode: "INVALID_CHOICE" };
+      }
+    }
+    if (
+      choice.payload.pairConstraint !== undefined &&
+      !isValidGigCopyPair(state as MatchState, targetIds, choice.payload.pairConstraint)
+    ) {
+      return {
+        valid: false,
+        error: "Selected Gigs do not form a legal ordered value-copy pair",
+        errorCode: "INVALID_CHOICE",
+      };
+    }
+    if (choice.payload.targetPurpose === "playCard") {
+      const remaining =
+        choice.payload.availableEddiesAfterCosts ?? availableEddies(state as MatchState, playerId);
+      for (const id of targetIds) {
+        const cost =
+          choice.payload.effectiveCostsByCardId?.[id] ??
+          computeEffectiveCost(state as MatchState, id as CardInstanceId, playerId);
+        if (cost > remaining) {
+          return {
+            valid: false,
+            error: "Not enough eddies",
+            errorCode: "INSUFFICIENT_EDDIES",
+          };
+        }
       }
     }
     return { valid: true };
@@ -109,6 +151,10 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
           nested: true,
         });
         if (status === "suspended") return;
+      } else if (payload.targetPurpose === "playCard") {
+        abandonCurrentTrigger(state, operations);
+        resumeSuspendedEndTurn(state, operations);
+        return;
       }
       resumeCurrentTrigger(state, operations);
       resumeSuspendedEndTurn(state, operations);
@@ -209,12 +255,16 @@ export const resolveEffectTargetMove: MoveDefinition<ResolveEffectTargetInput> =
       const emitted = eventsAfter[i]!;
       if (
         emitted.type === "gigValueChanged" ||
+        emitted.type === "gigsSwapped" ||
         emitted.type === "gigDieRolled" ||
         emitted.type === "legendFlipped" ||
         emitted.type === "legendCalled" ||
         emitted.type === "gigStolen" ||
         emitted.type === "cardPlayed" ||
-        emitted.type === "cardSpent"
+        emitted.type === "cardSpent" ||
+        // CR 11.19.2 — effect defeats must queue {Defeated} triggers like
+        // combat defeats do (resolve-attack enqueues its own cardDefeated).
+        emitted.type === "cardDefeated"
       ) {
         enqueueEventTriggers(emitted, state, operations);
       }

@@ -1,7 +1,7 @@
 import type { GigDieId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseGigsToStealPendingChoice } from "../types/match-state.ts";
-import { getEffectivePower } from "../active-effects/index.ts";
+import { filterGigsByAttackerPowerCap, getEffectivePower } from "../active-effects/index.ts";
 import { buildGigStealPrevention, performGigSteal } from "./resolve-attack.ts";
 import { tryGetDefinition } from "../state/card-registry.ts";
 
@@ -13,9 +13,9 @@ export interface ResolveStealGigsInput extends MoveInput {
 
 /**
  * Resolves a `chooseGigsToSteal` pending choice. Validates the picked die
- * ids against the snapshotted eligible pool and the required count, then
- * delegates to {@link performGigSteal} to apply the steal, fire triggers,
- * and finalize the attack state.
+ * ids against the snapshotted eligible pool and the required count, applies
+ * post-selection steal restrictions, then delegates to {@link performGigSteal}
+ * to apply the steal, fire triggers, and finalize the attack state.
  */
 export const resolveStealGigsMove: MoveDefinition<ResolveStealGigsInput> = {
   handlesPendingChoice: true,
@@ -76,7 +76,13 @@ export const resolveStealGigsMove: MoveDefinition<ResolveStealGigsInput> = {
       attack.attackerId as string,
     );
     operations.game.setPendingChoice(undefined);
-    const resolvedGigIds = input.args.dieIds.map((id) => id as GigDieId);
+    const selectedGigIds = input.args.dieIds.map((id) => id as GigDieId);
+    const resolvedGigIds = filterGigsByAttackerPowerCap(
+      state,
+      attack.attackerId,
+      attack.rivalId,
+      selectedGigIds,
+    );
     const prevention = buildGigStealPrevention(
       state,
       attack,
@@ -105,7 +111,7 @@ export const resolveStealGigsMove: MoveDefinition<ResolveStealGigsInput> = {
       turnNumber: state.G.turnMetadata.turnNumber,
       attackerName,
       attackerPower,
-      stolenCount: input.args.dieIds.length,
+      stolenCount: resolvedGigIds.length,
     });
   },
 };

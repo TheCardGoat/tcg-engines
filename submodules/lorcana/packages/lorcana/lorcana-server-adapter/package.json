@@ -27,6 +27,7 @@
     "@tcg/lorcana-cards": "workspace:*",
     "@tcg/lorcana-engine": "workspace:*",
     "@tcg/lorcana-types": "workspace:*",
+    "@tcg/protocol": "link:../../../../agnostic-simulator/packages/protocol",
     "@tcg/shared": "link:../../../../agnostic-simulator/packages/shared"
   },
   "devDependencies": {

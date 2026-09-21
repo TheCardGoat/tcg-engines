@@ -40,6 +40,13 @@ describe("CyberpunkSimulatorPom jsdom driver", () => {
       expect(
         view.container.querySelector('[data-testid="card"][data-face="hidden"][data-entity-id]'),
       ).not.toBeNull();
+      expect(
+        view.container.querySelector(
+          '[data-zone-id="p-legendArea"] [data-testid="legend-slot"][data-occupied="true"] [data-sim-entity-id]',
+        ),
+        "expected occupied legend slots to register animation entities",
+      ).not.toBeNull();
+      expect(view.container.querySelector("[data-animation-interaction-boundary]")).not.toBeNull();
     } finally {
       view.unmount();
     }

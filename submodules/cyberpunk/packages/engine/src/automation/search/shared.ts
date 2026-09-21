@@ -23,7 +23,7 @@ export function enumerateCandidateActions(
 ): (MoveDecision & { kind: "command" })[] {
   const out: (MoveDecision & { kind: "command" })[] = [];
   for (const move of prompt.availableMoves) {
-    if (move.moveId === "concede") continue;
+    if (move.moveId === "concede" || move.moveId === "cancelPendingResolution") continue;
     out.push(...expandMove(move));
   }
   if (out.length === 0) {
@@ -82,6 +82,18 @@ export function enumerateChoiceActions(
       );
     case "gainGig":
       return choice.payload.allowedDieIds.map((dieId) => command("gainGig", { dieId }));
+    case "redirectDefeat":
+      return [
+        command("resolveRedirectDefeat", { pass: false }),
+        command("resolveRedirectDefeat", { pass: true }),
+      ];
+    case "chooseSacrificialGear":
+      return choice.payload.gearIds.map((cardId) => command("resolveSacrificialGear", { cardId }));
+    case "chooseFirstPlayer":
+      return [
+        command("resolveFirstPlayer", { goFirst: true }),
+        command("resolveFirstPlayer", { goFirst: false }),
+      ];
   }
 }
 
@@ -107,7 +119,13 @@ function enumerateTargetChoices(
         : Math.min(payload.maxFaceValue, payload.currentValue + payload.maxAmount);
     const actions: (MoveDecision & { kind: "command" })[] = [];
     for (let value = min; value <= max; value++) {
-      actions.push(command("resolveAdjustGig", { value }));
+      if (value === payload.currentValue) {
+        if (payload.chooseUpTo) {
+          actions.push(command("resolveAdjustGig", { kind: "noAdjustment" }));
+        }
+        continue;
+      }
+      actions.push(command("resolveAdjustGig", { kind: "adjust", dieId: payload.dieId, value }));
     }
     return actions;
   }

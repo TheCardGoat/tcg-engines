@@ -67,7 +67,7 @@ describe("Take a Stab (HNT211) AAA", () => {
     expectFabCard(Arakni, takeAStabRed).toBeIn("hand");
   });
 
-  it("timing: hitting a marked hero may lift the dagger's once-per-turn limit", () => {
+  it("timing: hitting the marked hero grants the extra dagger swing without a prompt", () => {
     const game = FabTestEngine.start(
       {
         hero: arakni,
@@ -89,11 +89,9 @@ describe("Take a Stab (HNT211) AAA", () => {
     game.passBoth();
     expectCombat(game).toHaveAttackPower(4);
 
-    const wait = game.waitState();
-    if (wait.kind === "decision" && wait.decision.kind === "boolean") {
-      Arakni.accept();
-    }
-    game.closeCombat({ optionals: "accept", ordering: "listed" });
+    // CR 5.2.3c: "you may" is the later activation choice, not an on-hit
+    // decision — a full decline pass must still lift the dagger's limit.
+    game.closeCombat({ optionals: "decline", ordering: "listed" });
     expectFabPlayer(Dash).toHaveLife(16);
 
     Arakni.must.activate(nerveScalpel);

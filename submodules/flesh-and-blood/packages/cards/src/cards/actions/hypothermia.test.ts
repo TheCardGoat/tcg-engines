@@ -69,6 +69,8 @@ describe("Hypothermia (UPR139) AAA", () => {
     Bravo.endTurn();
     Dash.endTurn();
     game.untilIdle();
-    expectFabCard(Dash, hypothermiaBlue).toBeIn("graveyard");
+    // CR 3.8.2: graveyards hold only their owner's cards, so Bravo's aura
+    // resolves there even though it sat in Dash's arena.
+    expectFabCard(Bravo, hypothermiaBlue).toBeIn("graveyard");
   });
 });

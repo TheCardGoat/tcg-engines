@@ -5,7 +5,7 @@ import {
   op01MonkeyDLuffy003,
   op12RoronoaZoro020,
 } from "@tcg/op-cards";
-import { op12Baby5112 } from "../../../../../cards/src/cards/OP12/characters/112-baby-5.ts";
+import { op12Baby5112 } from "../../../../../cards/src/cards/characters/op12-112-baby-5.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

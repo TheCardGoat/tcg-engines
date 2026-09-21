@@ -89,6 +89,23 @@ it("preserves trusted return navigation without leaking session credentials", ()
       }).toString(),
     ),
   ).toBe("https://tcg.online/gundam/matchmaking?mode=ranked");
+  expect(
+    matchReturnUrl(
+      "cyberpunk",
+      new URLSearchParams({
+        returnTo: "https://staging.cardgoat.org/cyberpunk/matchmaking",
+      }).toString(),
+    ),
+  ).toBe("https://staging.cardgoat.org/cyberpunk/matchmaking");
+  expect(
+    matchReturnUrl(
+      "cyberpunk",
+      new URLSearchParams({
+        returnTo: "https://tcg.online/cyberpunk/matchmaking",
+      }).toString(),
+      "https://staging.cardgoat.org",
+    ),
+  ).toBe("/cyberpunk/matchmaking");
   for (const returnTo of [
     "https://evil.example",
     "//evil.example",

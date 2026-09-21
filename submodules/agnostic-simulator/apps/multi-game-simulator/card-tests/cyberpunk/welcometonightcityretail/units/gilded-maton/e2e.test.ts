@@ -5,7 +5,7 @@ import {
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailKiroshiOptics,
   welcomeToNightCityRetailSwordwiseHuscle,
-  welcomeToNightCityRetailGildedMatoN,
+  welcomeToNightCityRetailGildedMaton,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
@@ -25,7 +25,7 @@ test("Gilded Maton (Retail) - defeats friendly gear to defeat cheap rival unit",
   const maton = await pom.getCardInZoneByDefinitionId(
     "hand",
     CYBERPUNK_P1,
-    welcomeToNightCityRetailGildedMatoN.id,
+    welcomeToNightCityRetailGildedMaton.id,
   );
   const host = await pom.getCardInZoneByDefinitionId(
     "field",

@@ -27,7 +27,7 @@ export const welcomeToNightCityRetailWakakoOkadaPeaceAndHarmony = defineCyberpun
   abilities: [
     {
       kind: "triggered",
-      text: "CALL Choose one effect. Give a rival Unit -2 power this turn. // Draw 1.",
+      text: "{Call} Choose one effect. Give a rival Unit -2 power this turn. // Draw 1.",
       trigger: {
         trigger: "call",
       },
@@ -77,7 +77,7 @@ export const welcomeToNightCityRetailWakakoOkadaPeaceAndHarmony = defineCyberpun
     },
     {
       kind: "triggered",
-      text: "SPEND: Decrease a Gig by up to 2.",
+      text: "{Spend}: Decrease a Gig by up to 2.",
       trigger: {
         trigger: "activated",
       },

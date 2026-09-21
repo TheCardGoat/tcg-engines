@@ -1,5 +1,7 @@
 import {
   STANDARD_CARD_IMAGE_ASPECT_RATIO,
+  type SimulatorDeckReveal,
+  type SimulatorDeckRevealCard,
   type SimulatorEntity,
   type SimulatorZone,
 } from "@tcg/simulator-contract";
@@ -9,6 +11,7 @@ import {
   type FabViewer,
   type FabViewerResources,
   type FabViewerState,
+  type FabViewerTurnReveal,
   type FabZoneKind,
 } from "@tcg/flesh-and-blood-engine/simulator";
 import { fixturePresentationCanonicalId } from "./fixture-presentation";
@@ -1227,6 +1230,19 @@ export function matchStateToPresentation(
     soulCounts[playerId] = player?.zones.soul?.length ?? 0;
   }
 
+  const deckRevealsByOwnerId = projectViewerDeckEdgeReveals(
+    viewer,
+    cardDefinitions,
+    resolver,
+    matchArt,
+  );
+  const handRevealsByOwnerId = projectViewerHandReveals(
+    viewer,
+    cardDefinitions,
+    resolver,
+    matchArt,
+  );
+
   return {
     players: [...viewer.playerIds],
     cards,
@@ -1244,7 +1260,9 @@ export function matchStateToPresentation(
         (viewer.players[playerId]?.heroSignals ?? []).map((signal) =>
           signal.kind === "count"
             ? { kind: signal.kind, id: signal.id, value: signal.value }
-            : { kind: signal.kind, id: signal.id },
+            : signal.id === "marked"
+              ? { kind: "flag", id: "marked", duration: "until-hit" }
+              : { kind: "flag", id: signal.id },
         ),
       ]),
     ),
@@ -1261,12 +1279,96 @@ export function matchStateToPresentation(
     priorityManualOnly: viewer.priorityManualOnly ?? null,
     priorityWindow: viewer.priorityWindow ?? null,
     priorityHoldArmed: viewer.priorityHoldArmed ?? null,
+    scopedAutoPass: viewer.scopedAutoPass ?? null,
     stackInstanceIds,
     combat,
+    ...(deckRevealsByOwnerId ? { deckRevealsByOwnerId } : {}),
+    ...(handRevealsByOwnerId ? { handRevealsByOwnerId } : {}),
     prompt: null,
     terminal: viewer.gameEnded,
     result: projectFabResult(viewer, viewerId),
   };
+}
+
+/**
+ * Turn-scoped public reveals (CR 8.5.17) from the engine viewer state become
+ * presentation recalls: deck-edge reveals render on the owner's deck shelf and
+ * hand reveals in the recall strip, until the turn ledger resets. Art resolves
+ * from the same viewer-disclosed definitions the log references use.
+ */
+function revealedRecallCard(
+  reveal: FabViewerTurnReveal,
+  cardDefinitions: FabPresentationState["cardDefinitions"],
+  resolver: FabCardArtResolver,
+  matchArt?: Readonly<Record<string, string>>,
+): SimulatorDeckRevealCard {
+  const canonicalId = reveal.canonicalId;
+  const definition = canonicalId ? cardDefinitions[canonicalId] : undefined;
+  const name = definition?.presentationName ?? definition?.name ?? "Revealed card";
+  const printingId = matchArt?.[reveal.instanceId];
+  const art = canonicalId
+    ? resolver.resolveFabCardArt({
+        canonicalId,
+        name,
+        ...(printingId ? { printingId } : {}),
+      })
+    : undefined;
+  return {
+    entityId: reveal.instanceId,
+    ...(canonicalId ? { definitionId: canonicalId } : {}),
+    title: name,
+    subtitle: definition?.typeLine ?? definition?.cardType ?? "Flesh and Blood",
+    ...(art?.boardImageUrl ? { imageUrl: art.boardImageUrl } : {}),
+  };
+}
+
+function projectViewerDeckEdgeReveals(
+  viewer: FabViewerState,
+  cardDefinitions: FabPresentationState["cardDefinitions"],
+  resolver: FabCardArtResolver,
+  matchArt?: Readonly<Record<string, string>>,
+): Record<string, SimulatorDeckReveal | undefined> | undefined {
+  const edges = new Map<string, { position: "top" | "bottom"; cards: SimulatorDeckRevealCard[] }>();
+  for (const reveal of viewer.turnReveals ?? []) {
+    if (reveal.kind !== "deck-edge") continue;
+    const entry = edges.get(reveal.ownerId) ?? { position: reveal.position, cards: [] };
+    // A top-edge reveal wins the shelf direction when both edges were revealed.
+    if (reveal.position === "top") entry.position = "top";
+    entry.cards.push(revealedRecallCard(reveal, cardDefinitions, resolver, matchArt));
+    edges.set(reveal.ownerId, entry);
+  }
+  if (edges.size === 0) return undefined;
+  return Object.fromEntries(
+    [...edges.entries()].map(([ownerId, edge]) => [
+      ownerId,
+      {
+        id: `fab-turn-reveal:${ownerId}`,
+        zoneId: `${ownerId}:deck`,
+        ownerId,
+        position: edge.position,
+        visibility: "public",
+        turnNumber: viewer.turnNumber,
+        count: edge.cards.length,
+        cards: edge.cards,
+      } satisfies SimulatorDeckReveal,
+    ]),
+  );
+}
+
+function projectViewerHandReveals(
+  viewer: FabViewerState,
+  cardDefinitions: FabPresentationState["cardDefinitions"],
+  resolver: FabCardArtResolver,
+  matchArt?: Readonly<Record<string, string>>,
+): Record<string, readonly SimulatorDeckRevealCard[] | undefined> | undefined {
+  const byOwner: Record<string, SimulatorDeckRevealCard[]> = {};
+  for (const reveal of viewer.turnReveals ?? []) {
+    if (reveal.kind !== "hand") continue;
+    (byOwner[reveal.ownerId] ??= []).push(
+      revealedRecallCard(reveal, cardDefinitions, resolver, matchArt),
+    );
+  }
+  return Object.keys(byOwner).length > 0 ? byOwner : undefined;
 }
 
 export function presentRuntime(

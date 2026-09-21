@@ -24,10 +24,13 @@ interface PreScan {
   revealedDestinations: Map<CardInstanceId, CardZone>;
   /** gearId -> hostId for cards being attached in this command. */
   attached: Map<CardInstanceId, CardInstanceId>;
-  /** cardIds with a cardPlayed event in this command — used to emit cardLand. */
-  played: Set<CardInstanceId>;
+  /** gearId -> hostId for cards detached in this command. */
+  detachedFrom: Map<CardInstanceId, CardInstanceId>;
   /** dieIds already represented by a gigStolen step. */
   stolenGigs: Set<GigDieId>;
+  /** Legends whose face reveal owns any simultaneous spend animation. */
+  calledLegends: Set<CardInstanceId>;
+  spentCards: Set<CardInstanceId>;
 }
 
 export interface BuildAnimationScriptContext {
@@ -44,8 +47,10 @@ function prescan(events: ReadonlyArray<GameEvent>): PreScan {
   const revealed = new Set<CardInstanceId>();
   const revealedDestinations = new Map<CardInstanceId, CardZone>();
   const attached = new Map<CardInstanceId, CardInstanceId>();
-  const played = new Set<CardInstanceId>();
+  const detachedFrom = new Map<CardInstanceId, CardInstanceId>();
   const stolenGigs = new Set<GigDieId>();
+  const calledLegends = new Set<CardInstanceId>();
+  const spentCards = new Set<CardInstanceId>();
   for (const ev of events) {
     if (ev.type === "cardsRevealed") {
       for (const cardId of ev.cardIds) {
@@ -78,13 +83,25 @@ function prescan(events: ReadonlyArray<GameEvent>): PreScan {
       }
     } else if (ev.type === "cardAttached") {
       attached.set(ev.gearId, ev.hostId);
-    } else if (ev.type === "cardPlayed") {
-      played.add(ev.cardId);
+    } else if (ev.type === "cardDetached") {
+      detachedFrom.set(ev.gearId, ev.hostId);
     } else if (ev.type === "gigStolen") {
       stolenGigs.add(ev.dieId);
+    } else if (ev.type === "legendCalled") {
+      calledLegends.add(ev.cardId);
+    } else if (ev.type === "cardSpent") {
+      spentCards.add(ev.cardId);
     }
   }
-  return { exits, revealedDestinations, attached, played, stolenGigs };
+  return {
+    exits,
+    revealedDestinations,
+    attached,
+    detachedFrom,
+    stolenGigs,
+    calledLegends,
+    spentCards,
+  };
 }
 
 /**
@@ -93,31 +110,40 @@ function prescan(events: ReadonlyArray<GameEvent>): PreScan {
  * processor after `gameEvents` are accumulated.
  *
  * Sequencing rules:
- * - `cardMove`, `cardExit`, `cardAttach`, `effectTarget`, `cardLand` steps
- *   are sequential (advance the cursor).
+ * - `cardMove`, `cardExit`, `cardAttach` steps are sequential (advance the cursor).
  * - `resourceFloat` steps run in parallel with the surrounding move
  *   (cursor is not advanced, but `totalDurationMs` includes them).
+ * - `cardSpent`/`cardReadied` rotations run in parallel with surrounding
+ *   movement so payment and turn-start readiness remain part of one gesture.
  *
  * Suppression rules:
  * - `cardMoved` whose `cardId` matches a `cardDefeated`/`cardSold` in the
  *   same batch is suppressed in favour of the exit step.
  * - `cardMoved` whose `cardId` matches a `cardAttached` (gear) is
- *   suppressed; the `cardAttach` step owns motion + emphasis.
+ *   suppressed; the `cardAttach` step owns motion.
  *
- * Emphasis rules:
- * - After a `cardMove` whose destination is `field` for a `cardPlayed`
- *   card (i.e. a unit landing), emit a `cardLand` step for a subtle
- *   pulse on the just-played card.
+ * Targeting film overlaps its consequences at the impact beat so causality is
+ * readable without serializing the whole command. Combat consequences still
+ * wait until `attackResolved` so exits follow impact order.
  */
 export function buildAnimationScript(
   input: ReadonlyArray<GameEvent> | BuildAnimationScriptContext,
 ): AnimationScript {
-  const events = isBuildAnimationScriptContext(input) ? input.events : input;
+  let context: BuildAnimationScriptContext | null;
+  let events: ReadonlyArray<GameEvent>;
+  if (isBuildAnimationScriptContext(input)) {
+    context = input;
+    events = input.events;
+  } else {
+    context = null;
+    events = input as ReadonlyArray<GameEvent>;
+  }
   if (events.length === 0) {
     return EMPTY_ANIMATION_SCRIPT;
   }
 
   const scan = prescan(events);
+  const resolvingSourceCardId = context ? pendingChoiceSourceCardId(context.toState) : undefined;
   const steps: AnimationStep[] = [];
   let cursor = 0;
   let totalEnd = 0;
@@ -147,6 +173,7 @@ export function buildAnimationScript(
       toZone: exit?.toZone ?? "trash",
       playerId: ev.playerId,
       exitReason: sold ? "sold" : "defeated",
+      ...(scan.detachedFrom.get(ev.cardId) ? { fromHostId: scan.detachedFrom.get(ev.cardId) } : {}),
     });
     advance(duration);
   };
@@ -169,6 +196,9 @@ export function buildAnimationScript(
       advance(duration);
       return;
     }
+    const from = ev.from === "fixerArea" ? "fixerArea" : "gigArea";
+    const to = ev.to === "fixerArea" ? "fixerArea" : "gigArea";
+    const isGain = from === "fixerArea" && to === "gigArea" && ev.fromPlayerId === undefined;
     steps.push({
       kind: "gigMove",
       id: id(),
@@ -176,11 +206,11 @@ export function buildAnimationScript(
       durationMs: duration,
       reason: "gigDieMoved",
       dieId: ev.dieId,
-      from: "fixerArea",
-      to: "gigArea",
-      fromPlayerId: ev.playerId,
+      from,
+      to,
+      fromPlayerId: ev.fromPlayerId ?? ev.playerId,
       toPlayerId: ev.playerId,
-      moveKind: "gain",
+      moveKind: isGain ? "gain" : "correct",
     });
     advance(duration);
   };
@@ -222,23 +252,14 @@ export function buildAnimationScript(
           fromZone: ev.fromZone,
           toZone: ev.toZone,
           playerId: ev.playerId,
+          ...(scan.detachedFrom.get(ev.cardId)
+            ? { fromHostId: scan.detachedFrom.get(ev.cardId) }
+            : {}),
+          ...(ev.cardId === resolvingSourceCardId && ev.fromZone === "hand" && ev.toZone === "trash"
+            ? { presentation: "resolving-effect" as const }
+            : {}),
         });
         advance(duration);
-        // If this move lands a played card on the field, follow with a
-        // brief landing pulse so the "I just played this" beat reads.
-        if (ev.toZone === "field" && scan.played.has(ev.cardId)) {
-          const landDur = ANIMATION_DURATIONS_MS.cardLand;
-          steps.push({
-            kind: "cardLand",
-            id: id(),
-            startMs: cursor,
-            durationMs: landDur,
-            reason: "cardPlayed",
-            cardId: ev.cardId,
-            playerId: ev.playerId,
-          });
-          advance(landDur);
-        }
         break;
       }
       case "cardAttached": {
@@ -268,24 +289,12 @@ export function buildAnimationScript(
         pushCardExit(ev);
         break;
       }
-      case "effectTargeted": {
-        if (ev.targets.length === 0) break;
-        const duration = ANIMATION_DURATIONS_MS.effectTarget;
-        steps.push({
-          kind: "effectTarget",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "effectTargeted",
-          sourceCardId: ev.sourceCardId,
-          targets: ev.targets,
-          playerId: ev.playerId,
-        });
-        advance(duration);
-        break;
-      }
       case "legendCalled": {
         const duration = ANIMATION_DURATIONS_MS.legendReveal;
+        const fromSpent = context?.fromState.G.cardIndex[ev.cardId as string]?.meta.spent ?? false;
+        const toSpent =
+          context?.toState.G.cardIndex[ev.cardId as string]?.meta.spent ??
+          (fromSpent || scan.spentCards.has(ev.cardId));
         steps.push({
           kind: "legendReveal",
           id: id(),
@@ -294,6 +303,8 @@ export function buildAnimationScript(
           reason: "legendCalled",
           cardId: ev.cardId,
           playerId: ev.playerId,
+          fromRotationDeg: fromSpent ? 90 : 0,
+          toRotationDeg: toSpent ? 90 : 0,
         });
         advance(duration);
         break;
@@ -341,53 +352,7 @@ export function buildAnimationScript(
         advance(total);
         break;
       }
-      case "attackDeclared": {
-        const duration = ANIMATION_DURATIONS_MS.combatDeclare;
-        steps.push({
-          kind: "combat",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "attackDeclared",
-          attackerId: ev.attackerId,
-          defenderId: ev.defenderId,
-          attackKind: ev.attackKind,
-          playerId: ev.playerId,
-        });
-        advance(duration);
-        break;
-      }
-      case "blockerActivated": {
-        const duration = ANIMATION_DURATIONS_MS.combatDeclare;
-        steps.push({
-          kind: "combatRedirect",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "blockerActivated",
-          attackerId: ev.attackerId,
-          blockerId: ev.blockerId,
-          originalTargetId: ev.originalTarget,
-          playerId: ev.playerId,
-        });
-        advance(duration);
-        break;
-      }
       case "attackResolved": {
-        const duration = ANIMATION_DURATIONS_MS.combatResolve;
-        steps.push({
-          kind: "combat",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: "attackResolved",
-          attackerId: ev.attackerId,
-          defenderId: ev.defenderId,
-          attackKind: ev.attackKind,
-          gigsStolen: ev.gigsStolen,
-          playerId: ev.playerId,
-        });
-        advance(duration);
         flushPendingCombatConsequences();
         break;
       }
@@ -402,9 +367,6 @@ export function buildAnimationScript(
       case "gigDieMoved": {
         if (scan.stolenGigs.has(ev.dieId)) {
           // Suppressed — gigStolen carries both the source and destination players.
-          break;
-        }
-        if (ev.from !== "fixerArea" || ev.to !== "gigArea") {
           break;
         }
         pushGigMove(ev);
@@ -434,11 +396,22 @@ export function buildAnimationScript(
               }
             : {}),
         });
-        advance(duration);
+        // The turn banner is feedback, not a gate: the readies and draw that
+        // follow must play underneath it instead of queuing behind 1.5s.
+        if (turnStarted) {
+          parallel(duration);
+        } else {
+          advance(duration);
+        }
         break;
       }
       case "cardSpent":
       case "cardReadied": {
+        if (ev.type === "cardSpent" && scan.calledLegends.has(ev.cardId)) {
+          // The Legend reveal combines the face flip and orientation change;
+          // two overlays on the same card produce doubled, conflicting clones.
+          break;
+        }
         const duration = ANIMATION_DURATIONS_MS.entityStateChange;
         steps.push({
           kind: "entityStateChange",
@@ -450,51 +423,7 @@ export function buildAnimationScript(
           playerId: ev.playerId,
           change: ev.type === "cardSpent" ? "spent" : "readied",
         });
-        advance(duration);
-        break;
-      }
-      case "deckShuffled": {
-        const duration = ANIMATION_DURATIONS_MS.randomization;
-        steps.push({
-          kind: "randomization",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: ev.type,
-          playerId: ev.playerId,
-          randomization: "shuffle",
-        });
-        advance(duration);
-        break;
-      }
-      case "gigDieRolled": {
-        const duration = ANIMATION_DURATIONS_MS.randomization;
-        steps.push({
-          kind: "randomization",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: ev.type,
-          playerId: ev.playerId,
-          randomization: "die",
-          dieId: ev.dieId,
-          resultLabel: String(ev.result),
-        });
-        advance(duration);
-        break;
-      }
-      case "gameEnded": {
-        const duration = ANIMATION_DURATIONS_MS.gameResult;
-        steps.push({
-          kind: "gameResult",
-          id: id(),
-          startMs: cursor,
-          durationMs: duration,
-          reason: ev.type,
-          winnerId: ev.winnerId,
-          reasonLabel: ev.reason,
-        });
-        advance(duration);
+        parallel(duration);
         break;
       }
       case "eddiesSpent": {
@@ -549,7 +478,41 @@ export function buildAnimationScript(
         parallel(duration);
         break;
       }
-      // Phase 2+ — events we don't yet animate. Intentionally fall through.
+      case "effectTargeted": {
+        if (ev.targets.length === 0) break;
+        const duration = ANIMATION_DURATIONS_MS.effectTarget;
+        const sourceCard = context?.fromState.G.cardIndex[ev.sourceCardId as string];
+        const defeatedTarget = events.some(
+          (candidate) =>
+            candidate.type === "cardDefeated" &&
+            candidate.defeatedBy === ev.sourceCardId &&
+            ev.targets.some(
+              (target) => target.kind === "card" && target.cardId === candidate.cardId,
+            ),
+        );
+        const stageSource = sourceCard?.zone === "trash";
+        steps.push({
+          kind: "effectTarget",
+          id: id(),
+          startMs: cursor,
+          durationMs: duration,
+          reason: "effectTargeted",
+          sourceCardId: ev.sourceCardId,
+          targets: ev.targets,
+          playerId: ev.playerId,
+          label: defeatedTarget ? "Defeat" : "Effect",
+          tone: defeatedTarget ? "negative" : "neutral",
+          ...(stageSource
+            ? {
+                presentation: "source-card" as const,
+                sourceExit: { zone: "trash" as const, playerId: sourceCard.ownerId },
+              }
+            : {}),
+        });
+        parallel(duration);
+        advance(ANIMATION_DURATIONS_MS.effectTargetImpactDelayMs);
+        break;
+      }
       default:
         break;
     }
@@ -561,6 +524,14 @@ export function buildAnimationScript(
     steps,
     totalDurationMs: totalEnd,
   };
+}
+
+function pendingChoiceSourceCardId(state: MatchState): CardInstanceId | undefined {
+  const choice = state.G.turnMetadata.pendingChoice;
+  if (!choice || !("payload" in choice) || !("sourceCardId" in choice.payload)) {
+    return undefined;
+  }
+  return choice.payload.sourceCardId;
 }
 
 function isBuildAnimationScriptContext(

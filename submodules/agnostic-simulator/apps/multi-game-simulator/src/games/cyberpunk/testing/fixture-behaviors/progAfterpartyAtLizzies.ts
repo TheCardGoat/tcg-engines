@@ -28,8 +28,7 @@ export const progAfterpartyAtLizziesBehavior: CyberpunkFixtureBehavior = {
       throw new Error("Expected rival d6 to be eligible for Afterparty at Lizzie's.");
     }
 
-    await pom.resolveEffectTarget([rivalD6.id], CYBERPUNK_P1);
-    await pom.resolveAdjustGig(2, CYBERPUNK_P1);
+    await pom.resolveAdjustGig(rivalD6.id, 2, CYBERPUNK_P1);
 
     await pom.expectGigValue(rivalD6.id, 2);
     await pom.expectHandSize(CYBERPUNK_P1, 1);

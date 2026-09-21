@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { reduceLiveGatewayMessage } from "./liveMessages.js";
+import { liveGatewayJoinFromEvent, reduceLiveGatewayMessage } from "./liveMessages.js";
 import type { LiveGatewayMessage } from "./liveGateway.js";
 import type { LiveMatchContext } from "./matchContext.js";
 
@@ -29,6 +29,18 @@ describe("live gateway message reducer", () => {
       href: "/cyberpunk/simulator/matches/match%201/games/game%202",
     });
   });
+
+  test("seats a player from the raw game_joined envelope", () => {
+    expect(
+      liveGatewayJoinFromEvent("game_joined", {
+        gameId: "game 1",
+        role: "player",
+        stateVersion: 1,
+        presentation: { kind: "not-a-real-envelope" },
+      }),
+    ).toEqual({ gameId: "game 1", role: "player" });
+  });
+
 });
 
 function liveMatchContext(): LiveMatchContext {

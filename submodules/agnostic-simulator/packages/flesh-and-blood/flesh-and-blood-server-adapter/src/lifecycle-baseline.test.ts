@@ -57,15 +57,15 @@ describe("FAB server adapter lifecycle baseline", () => {
         }),
       ]),
     );
+    // Deck→hand draws collapse into one step per route whose `quantity`
+    // preserves the count, and the opponent must not learn the drawn
+    // identities (redaction renames the entity to `fab-hidden:`).
     const drawn = opponentPlan?.steps.filter(
       (step) => step.type === "entityTransfer" && step.to?.id === `${actorId}:hand`,
     );
-    expect(drawn).toHaveLength(4);
-    expect(
-      drawn?.every(
-        (step) => step.type === "entityTransfer" && step.entity.id.startsWith("fab-hidden:"),
-      ),
-    ).toBe(true);
+    expect(drawn).toHaveLength(1);
+    expect(drawn?.[0]).toMatchObject({ quantity: 4 });
+    expect(drawn?.[0]?.entity.id.startsWith("fab-hidden:")).toBe(true);
   });
 
   it("continues a restored real-card payment decision without changing the host contract", () => {

@@ -581,9 +581,15 @@ export function expectAdjustGigChoice(
   if (!choice || choice.type !== "chooseTarget") {
     throw new Error(`Expected a chooseTarget pending choice, but got: ${choice?.type ?? "none"}`);
   }
-  const payload = choice.payload;
-  if (payload.type !== "adjustGig") {
-    throw new Error(`Expected adjustGig choice, but got "${payload.type}"`);
+  const pendingPayload = choice.payload;
+  const payload =
+    pendingPayload.type === "effectTarget"
+      ? pendingPayload.adjustGig
+      : pendingPayload.type === "adjustGig"
+        ? pendingPayload
+        : undefined;
+  if (!payload) {
+    throw new Error(`Expected adjustGig choice, but got "${pendingPayload.type}"`);
   }
   if (expected.maxAmount !== undefined && payload.maxAmount !== expected.maxAmount) {
     throw new Error(

@@ -45,65 +45,76 @@ export const whereFuturesStir: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "chosen-controlled-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    unique: true,
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ALLY"],
-                          },
-                          {
-                            kind: "numeric",
-                            comparison: {
-                              left: {
-                                kind: "property",
-                                subject: {
-                                  kind: "candidate",
-                                },
-                                property: "power",
-                                basis: "base",
-                              },
-                              operator: "eq",
-                              right: 0,
-                            },
-                          },
-                        ],
-                      },
-                      relationship: "controlled-by",
-                      player: "controller",
-                    },
-                  },
+                  kind: "attempt",
                   effect: {
-                    kind: "rest",
-                    subject: {
-                      kind: "bound",
-                      binding: "chosen-controlled-object",
+                    kind: "choose",
+                    selection: {
+                      id: "chosen-controlled-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      unique: true,
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["ALLY"],
+                            },
+                            {
+                              kind: "numeric",
+                              comparison: {
+                                left: {
+                                  kind: "property",
+                                  subject: {
+                                    kind: "candidate",
+                                  },
+                                  property: "power",
+                                  basis: "base",
+                                },
+                                operator: "eq",
+                                right: 0,
+                              },
+                            },
+                          ],
+                        },
+                        relationship: "controlled-by",
+                        player: "controller",
+                      },
+                    },
+                    effect: {
+                      kind: "rest",
+                      subject: {
+                        kind: "bound",
+                        binding: "chosen-controlled-object",
+                      },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: {
-                    named: "training",
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "source",
+                    },
+                    counter: {
+                      named: "training",
+                    },
+                    amount: 1,
                   },
-                  amount: 1,
                 },
               ],
             },

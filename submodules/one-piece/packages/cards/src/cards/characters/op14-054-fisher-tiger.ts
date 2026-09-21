@@ -1,0 +1,62 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op14eb04FisherTiger054I18n } from "./op14-054-fisher-tiger.i18n.ts";
+
+export const op14eb04FisherTiger054: CharacterCard = {
+  id: "OP14-054",
+  canonicalId: "OP14-054",
+  slug: "fisher-tiger/op14-054",
+  name: "Fisher Tiger",
+  printings: [
+    {
+      id: "OP14-054",
+      artId: "OP14-054",
+      setCode: "OP14",
+      collectorNumber: "054",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP14-054_GnHUmPp.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["blue"],
+  rarity: "UC",
+  setId: "OP14",
+  cost: 6,
+  power: 7000,
+  counter: 1000,
+  traits: ["Fish-Man", "The Sun Pirates"],
+  attribute: "strike",
+  effect:
+    "[On Play] If your Leader has the {Fish-Man} type, draw 3 cards.\n[End of Your Turn] Trash cards from your hand until you have 5 cards in your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Fish-Man",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 3,
+          },
+        ],
+      },
+      {
+        trigger: "endOfYourTurn",
+        actions: [
+          {
+            action: "trashFromHandUntil",
+            player: "self",
+            handSize: 5,
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op14eb04FisherTiger054I18n,
+};

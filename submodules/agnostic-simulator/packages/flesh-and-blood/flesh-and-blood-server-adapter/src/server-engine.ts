@@ -1,4 +1,5 @@
-import { advanceFabClock, type FabClock } from "./clock.ts";
+import { evaluateReserveTimeoutDrop } from "@tcg/protocol";
+import { advanceFabClock, fabRemainingMs, type FabClock } from "./clock.ts";
 import {
   FAB_FACE_DOWN,
   FabMatchRuntime,
@@ -20,6 +21,8 @@ import type {
   DispatchContext,
   DispatchResult,
   EngineLogRecord,
+  EvaluateOpponentTimeoutInput,
+  OpponentTimeoutEvaluation,
   ServerGameEngine,
 } from "@tcg/shared/game-engine";
 import {
@@ -27,7 +30,7 @@ import {
   type EngineInteractionView,
   type InteractionSubmission,
 } from "@tcg/protocol";
-import { commandForFabSubmission, projectFabInteraction } from "./interaction.ts";
+import { commandForFabSubmission, projectFabInteractionCached } from "./interaction.ts";
 import {
   captureFabZoneLocations,
   fabLatestAnnouncementTransition,
@@ -169,7 +172,7 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
   }
 
   getInteractionView(actorId: string): EngineInteractionView {
-    return projectFabInteraction(this.runtime, actorId).view;
+    return projectFabInteractionCached(this.runtime, actorId).view;
   }
 
   takeAutomatedAction(options: BotActionOptions, context: DispatchContext): BotActionResult {
@@ -218,7 +221,7 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
     submission: InteractionSubmission,
     context: DispatchContext,
   ): DispatchResult {
-    const view = this.getInteractionView(actorId);
+    const view = projectFabInteractionCached(this.runtime, actorId).view;
     const validation = validateInteractionSubmission(view, submission);
     if (!validation.ok) {
       return {
@@ -274,6 +277,38 @@ export class FleshAndBloodServerEngine implements ServerGameEngine {
       ),
       context,
     );
+  }
+
+  evaluateOpponentTimeout(input: EvaluateOpponentTimeoutInput): OpponentTimeoutEvaluation {
+    const clock = this.clock;
+    if (!clock) {
+      return {
+        skip: { allowed: false, reason: "no_time_control" },
+        drop: { allowed: false, reason: "no_time_control", facts: {} },
+      };
+    }
+    const player = clock.clockState[input.opponentPlayerId];
+    if (!player) {
+      return {
+        skip: { allowed: false, reason: "skip_unsupported" },
+        drop: {
+          allowed: false,
+          reason: "clock_unavailable",
+          facts: { mode: clock.timeControl.mode },
+        },
+      };
+    }
+    return {
+      skip: { allowed: false, reason: "skip_unsupported" },
+      drop: evaluateReserveTimeoutDrop({
+        nowMs: input.nowMs,
+        mode: clock.timeControl.mode,
+        graceMs: clock.timeControl.config.graceMs,
+        effectiveReserveMs: fabRemainingMs(clock, input.opponentPlayerId, input.nowMs),
+        isActive: player.isOnClock,
+        skipSupported: false,
+      }),
+    };
   }
 
   private toDispatchResult(

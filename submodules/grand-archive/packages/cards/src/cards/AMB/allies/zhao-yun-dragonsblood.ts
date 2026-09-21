@@ -59,36 +59,47 @@ export const zhaoYunDragonsblood: GrandArchiveCard<GrandArchiveAbilityDefinition
               kind: "sequence",
               effects: [
                 {
-                  kind: "deal-damage",
-                  source: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "deal-damage",
+                    source: {
+                      kind: "source",
+                    },
+                    recipient: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    amount: 2,
+                    preventable: false,
                   },
-                  recipient: {
-                    kind: "champion",
-                    player: "controller",
-                  },
-                  amount: 2,
-                  preventable: false,
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "current-attack",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "this-attack",
-                  },
-                  layer: {
-                    layer: "E",
-                    modifies: "stat",
-                    sublayer: "modifier",
-                  },
-                  change: {
-                    kind: "numeric",
-                    property: "power",
-                    operation: "add",
-                    amount: 2,
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "current-attack",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "this-attack",
+                    },
+                    layer: {
+                      layer: "E",
+                      modifies: "stat",
+                      sublayer: "modifier",
+                    },
+                    change: {
+                      kind: "numeric",
+                      property: "power",
+                      operation: "add",
+                      amount: 2,
+                    },
                   },
                 },
               ],

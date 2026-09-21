@@ -869,6 +869,73 @@ describe("projectMoveLogEntries", () => {
     ).toBe("Discarded 1 additional card because the discarded card's cost matched a friendly Gig.");
   });
 
+  test("projects discard logs with discarded card names", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const log: MoveLog = {
+      type: "resolveDiscardFromHand",
+      discardedCount: 2,
+      discardedCards: [
+        { cardId: "card-p2-hand-1" as CardInstanceId, cardName: "Mox Inciters" },
+        { cardId: "card-p2-hand-2" as CardInstanceId, cardName: "Corpo Security" },
+      ],
+      playerId: P2,
+      timestamp: 0,
+      turnNumber: 1,
+    };
+
+    const entry = projectMoveLogEntries(
+      matchState,
+      [{ id: 1, side: "opponent", log }],
+      "player",
+    )[0];
+
+    expect(entry?.message).toBe("Discarded 2 cards: Mox Inciters, Corpo Security.");
+    expect(entry?.cardRefs).toEqual([
+      { id: "card-p2-hand-1", name: "Mox Inciters" },
+      { id: "card-p2-hand-2", name: "Corpo Security" },
+    ]);
+    expect(entry?.entityIds).toEqual(["card-p2-hand-1", "card-p2-hand-2"]);
+  });
+
+  test("projects bonus discard logs with the discarded card name", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const log: MoveLog = {
+      type: "resolveDiscardFromHand",
+      discardedCount: 1,
+      discardedCards: [{ cardId: "card-p2-hand-1" as CardInstanceId, cardName: "Mox Inciters" }],
+      reason: "costMatchedFriendlyGig",
+      playerId: P2,
+      timestamp: 0,
+      turnNumber: 1,
+    };
+
+    const entry = projectMoveLogEntries(
+      matchState,
+      [{ id: 1, side: "opponent", log }],
+      "player",
+    )[0];
+
+    expect(entry?.message).toBe(
+      "Discarded Mox Inciters because the discarded card's cost matched a friendly Gig.",
+    );
+    expect(entry?.cardRefs).toEqual([{ id: "card-p2-hand-1", name: "Mox Inciters" }]);
+  });
+
+  test("projects discard logs without card names as a count fallback", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const log: MoveLog = {
+      type: "resolveDiscardFromHand",
+      discardedCount: 1,
+      playerId: P2,
+      timestamp: 0,
+      turnNumber: 1,
+    };
+
+    expect(
+      projectMoveLogEntries(matchState, [{ id: 1, side: "opponent", log }], "player")[0]?.message,
+    ).toBe("Discarded 1 card.");
+  });
+
   test("projects Misty's selected type reveal result as card references", () => {
     const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
     const log: MoveLog = {
@@ -1099,5 +1166,68 @@ describe("projectMoveLogEntries", () => {
     expect(
       projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.message),
     ).toEqual(["Opponent timed out and was dropped.", "Opponent disconnected and was dropped."]);
+  });
+
+  test("renders rules-accurate end-of-game reasons instead of raw engine slugs", () => {
+    const matchState = getScenario(DEFAULT_SCENARIO).build().getState();
+    const moveLogs: MoveLogEntry[] = [
+      {
+        id: 1,
+        side: "system",
+        log: {
+          type: "gameEnded",
+          playerId: P1,
+          timestamp: 0,
+          turnNumber: 15,
+          winnerId: P1,
+          reason: "overtime_majority",
+        },
+      },
+      {
+        id: 2,
+        side: "system",
+        log: {
+          type: "gameEnded",
+          playerId: P2,
+          timestamp: 1,
+          turnNumber: 9,
+          winnerId: P2,
+          reason: "gig_victory",
+        },
+      },
+      {
+        id: 3,
+        side: "system",
+        log: {
+          type: "gameEnded",
+          playerId: P1,
+          timestamp: 2,
+          turnNumber: 4,
+          winnerId: P2,
+          reason: "deck_out_victory",
+        },
+      },
+      {
+        id: 4,
+        side: "system",
+        log: {
+          type: "gameEnded",
+          playerId: P2,
+          timestamp: 3,
+          turnNumber: 6,
+          winnerId: P2,
+          reason: "concede",
+        },
+      },
+    ];
+
+    expect(
+      projectMoveLogEntries(matchState, moveLogs, "player").map((entry) => entry.message),
+    ).toEqual([
+      "Game over (Overtime: first to 7 Gig dice).",
+      "Game over (Gig victory: 7 Gigs).",
+      "Game over (Deck out).",
+      "Game over (Concession).",
+    ]);
   });
 });

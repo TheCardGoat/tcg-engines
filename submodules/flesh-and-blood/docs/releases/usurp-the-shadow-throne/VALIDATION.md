@@ -12,14 +12,14 @@ The generated catalog (`flesh-and-blood-card-data.json` + `flesh-and-blood-print
 
 Missing from the catalog versus the 260-card product inventory:
 
-| Collector | Name | Pitch |
-| --- | --- | --- |
-| IAR050 | Rise to the Challenge | 1 |
-| IAR051 | Rise to the Challenge | 2 |
-| IAR052 | Rise to the Challenge | 3 |
-| IAR224 | Dark Arcanite Helm | — |
-| IAR225 | Dark Arcanite Plating | — |
-| IAR226 | Dark Arcanite Gloves | — |
+| Collector | Name                  | Pitch |
+| --------- | --------------------- | ----- |
+| IAR050    | Rise to the Challenge | 1     |
+| IAR051    | Rise to the Challenge | 2     |
+| IAR052    | Rise to the Challenge | 3     |
+| IAR224    | Dark Arcanite Helm    | —     |
+| IAR225    | Dark Arcanite Plating | —     |
+| IAR226    | Dark Arcanite Gloves  | —     |
 
 Those six cards are also absent from the current FAB Cube snapshot. Catalog-only IAR collectors (not on the product page): IAR158, IAR159, IAR222, IAR666.
 

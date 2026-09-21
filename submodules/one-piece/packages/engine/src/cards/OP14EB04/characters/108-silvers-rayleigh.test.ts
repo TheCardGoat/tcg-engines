@@ -8,7 +8,7 @@ import {
   op04Rebecca039,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04SilversRayleigh108 } from "../../../../../cards/src/cards/OP14EB04/characters/108-silvers-rayleigh.ts";
+import { op14eb04SilversRayleigh108 } from "../../../../../cards/src/cards/characters/op14-108-silvers-rayleigh.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

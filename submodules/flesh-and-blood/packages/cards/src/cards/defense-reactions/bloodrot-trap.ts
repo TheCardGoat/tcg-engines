@@ -30,6 +30,7 @@ export const bloodrotTrap = definePitchFamily(fabPitchFamilies["bloodrot-trap"],
         effect: {
           type: "create-token",
           token: "bloodrot-pox",
+          creator: "effect-controller",
           controller: "attacking-hero",
         },
       },

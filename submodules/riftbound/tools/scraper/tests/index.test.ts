@@ -14,10 +14,47 @@ describe("Riftbound official-source scraper", () => {
   it("extracts the single complete Card Gallery payload without executing it", async () => {
     const html = await readFile(fixtureUrl, "utf8");
     expect(extractGalleryPayloadFromHtml(html)).toEqual({
-      sets: [{ id: "OGN", name: "Origins", collectorNumberMax: 298 }],
-      cards: [{ id: "ogn-001-298", collectorNumber: 1, name: "Test Unit" }],
-      reportedTotal: 1,
+      sets: [{ id: "OGN", name: "Origins", collectorNumberMax: 1 }],
+      cards: [
+        { id: "ogn-001-298", collectorNumber: 1, name: "Test Unit", set: { value: { id: "OGN" } } },
+      ],
+      reportedTotal: 2,
     });
+  });
+
+  it("rejects a payload missing base collector numbers of a declared set", () => {
+    const html = [
+      '<html><script id="__NEXT_DATA__" type="application/json">',
+      JSON.stringify({
+        props: {
+          pageProps: {
+            page: {
+              blades: [
+                {
+                  type: "riftboundCardGallery",
+                  sets: { items: [{ id: "OGN", name: "Origins", collectorNumberMax: 2 }] },
+                  cards: {
+                    items: [
+                      {
+                        id: "ogn-001-298",
+                        collectorNumber: 1,
+                        name: "Test Unit",
+                        set: { value: { id: "OGN" } },
+                      },
+                    ],
+                    async: { linkdata: {}, metadata: { totalItems: 2 } },
+                  },
+                },
+              ],
+            },
+          },
+        },
+      }),
+      "</script></html>",
+    ].join("");
+    expect(() => extractGalleryPayloadFromHtml(html)).toThrow(
+      "set OGN is missing base collector numbers 2",
+    );
   });
 
   it("rejects missing, duplicated, injected, and incomplete Next data", () => {

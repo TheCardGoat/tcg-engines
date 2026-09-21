@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op01Shanks120, op07JewelryBonney019 } from "@tcg/op-cards";
-import { op10Caribou104 } from "../../../../../cards/src/cards/OP10/characters/104-caribou.ts";
+import { op10Caribou104 } from "../../../../../cards/src/cards/characters/op10-104-caribou.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP10-104 Caribou", () => {

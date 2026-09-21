@@ -10,8 +10,10 @@
     --fab-board-gap: clamp(0.3rem, 0.8vh, 0.6rem);
     --fab-board-padding: clamp(0.35rem, 0.65vw, 0.6rem);
     --fab-effects-edge-width: 2.25rem;
-    --fab-board-grid-rows: calc(var(--fab-hand-card-height) * 0.34) minmax(0, 1fr)
-      minmax(2.75rem, max-content) minmax(0, 1fr) var(--fab-hand-card-height);
+    /* Both hand rails own a full card-height track. Shrinking the opponent
+       rail made lifted card backs clip to a sliver, hiding the hand count. */
+    --fab-board-grid-rows: var(--fab-hand-card-height) minmax(0, 1fr) minmax(2.75rem, max-content)
+      minmax(0, 1fr) var(--fab-hand-card-height);
     position: relative;
     /* Desktop landmarks are fixed across combat and prompt states. Transient
        surfaces overlay these tracks; they never reclaim space from a hand. */
@@ -729,9 +731,11 @@
 
   /* FAB commonly draws to four, but effects can create larger hands. Preserve
      each physical card and its ordering while progressively overlapping the
-     row so no clickable card extends beneath adjacent match controls. */
+     row so no clickable card extends beneath adjacent match controls. The top
+     hand must stay inside its track: lifting the backs clips them against the
+     zone edge and hides the opponent's hand count. */
   .fab-tabletop-hand[data-side="top"] .card-fan-item {
-    transform: translateY(-50%) !important;
+    transform: none !important;
   }
 
   .fab-tabletop-hand[data-side="top"] .card-fan-desktop {

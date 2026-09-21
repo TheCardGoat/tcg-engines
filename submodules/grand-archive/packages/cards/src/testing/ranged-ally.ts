@@ -13,12 +13,14 @@ export function proveRangedAlly({
   power,
   ranged,
   classBonus,
+  additionalClassRanged = 0,
   declineOptionalAttackEffect = false,
 }: {
   readonly card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   readonly power: number;
   readonly ranged: number;
   readonly classBonus: boolean;
+  readonly additionalClassRanged?: number;
   readonly declineOptionalAttackEffect?: boolean;
 }): void {
   for (const matchingClass of [true, false]) {
@@ -29,7 +31,11 @@ export function proveRangedAlly({
         const game = GrandArchiveTestEngine.startFixture({
           playerOne: {
             champion,
-            zones: { field: [card], hand: distant ? [reposition, woodlandSquirrels] : [] },
+            zones: {
+              field: [card],
+              hand: distant ? [reposition, woodlandSquirrels] : [],
+              "main-deck": [woodlandSquirrels],
+            },
           },
           playerTwo: { champion: defender },
         });
@@ -54,7 +60,10 @@ export function proveRangedAlly({
         }
         game.resolveCombatWithoutRetaliation();
         expect(game.state.objects[target.objectId]?.damage).toBe(
-          power + (distant && (!classBonus || matchingClass) ? ranged : 0),
+          power +
+            (distant && (!classBonus || matchingClass)
+              ? ranged + (matchingClass ? additionalClassRanged : 0)
+              : 0),
         );
       });
     }

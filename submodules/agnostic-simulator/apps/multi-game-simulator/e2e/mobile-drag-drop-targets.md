@@ -29,13 +29,13 @@ drop source.
 
 ## Droppable Targets
 
-| Use case                      | Source    | Target                           | Target type | Expected action | Legal only when                                            |
-| ----------------------------- | --------- | -------------------------------- | ----------- | --------------- | ---------------------------------------------------------- |
-| Play a non-Gear card          | `p-hand`  | `p-field`                        | Zone        | `playCard`      | Source card has legal `playCard`.                          |
-| Attach Gear                   | `p-hand`  | Friendly field card in `p-field` | Card        | `playCard`      | Source card is `cardType="gear"` and has legal `playCard`. |
-| Sell a card                   | `p-hand`  | `p-eddies`                       | Zone        | `sellCard`      | Source card has legal `sellCard`.                          |
-| Attack a rival unit           | `p-field` | Rival field card in `opp-field`  | Card        | `attackUnit`    | Source and target form a legal `attackUnit` pair.          |
-| Attack rival directly / steal | `p-field` | `opp-pinfo`                      | Zone        | `attackRival`   | Source card has legal `attackRival`.                       |
+| Use case                      | Source    | Target                                                         | Target type | Expected action | Legal only when                                                                                |
+| ----------------------------- | --------- | -------------------------------------------------------------- | ----------- | --------------- | ---------------------------------------------------------------------------------------------- |
+| Play a non-Gear card          | `p-hand`  | `p-field`                                                      | Zone        | `playCard`      | Source card has legal `playCard`.                                                              |
+| Attach Gear                   | `p-hand`  | Friendly Unit in `p-field` or face-up Legend in `p-legendArea` | Card        | `playCard`      | Source card is `cardType="gear"`, has legal `playCard`, and the target is a legal attach host. |
+| Sell a card                   | `p-hand`  | `p-eddies`                                                     | Zone        | `sellCard`      | Source card has legal `sellCard`.                                                              |
+| Attack a rival unit           | `p-field` | Rival field card in `opp-field`                                | Card        | `attackUnit`    | Source and target form a legal `attackUnit` pair.                                              |
+| Attack rival directly / steal | `p-field` | `opp-pinfo`                                                    | Zone        | `attackRival`   | Source card has legal `attackRival`.                                                           |
 
 ## Mobile Target Surfaces
 
@@ -75,6 +75,25 @@ Expected QA checks:
 Useful selectors:
 
 - Friendly field card: `[data-zone="p-field"][data-card-id="<target unit id>"]`
+- Source Gear: `[data-zone="p-hand"][data-card-type="gear"]`
+
+### Friendly Face-up Legend: `p-legendArea` Card Target
+
+Surface: an individual face-up friendly Legend.
+
+Component path:
+`apps/multi-game-simulator/src/games/cyberpunk/components/GameBoard/LegendsZone.tsx`
+
+Expected QA checks:
+
+- Drag a legal Gear card from hand onto a face-up friendly Legend.
+- Expected dispatch/effect: `playCard` pays the Gear's cost and attaches it to that Legend.
+- Drag the same Gear onto a face-down Legend.
+- Expected effect: no state change.
+
+Useful selectors:
+
+- Friendly Legend: `[data-zone="p-legendArea"][data-card-id="<target legend id>"]`
 - Source Gear: `[data-zone="p-hand"][data-card-type="gear"]`
 
 ### Eddies Helper: `p-eddies`
@@ -155,7 +174,7 @@ drop action:
 
 - `p-deck`, `opp-deck`
 - `p-trash`, `opp-trash`
-- `p-legends`, `opp-legends`
+- `opp-legendArea` (only the human player's face-up Legends are valid Gear hosts)
 - `p-fixer`, `opp-fixer`
 - `opp-hand`
 - `opp-eddies`

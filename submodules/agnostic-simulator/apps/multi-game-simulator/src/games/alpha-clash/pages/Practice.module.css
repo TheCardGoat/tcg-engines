@@ -1,0 +1,86 @@
+/* Alpha Clash practice page: a dim room around the table, actions on the side. */
+
+.page {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  min-height: 100vh;
+  padding: 18px;
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(255, 214, 150, 0.07), transparent 60%),
+    linear-gradient(180deg, #191512 0%, #0f0d0b 100%);
+}
+
+.tableArea {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidePanel {
+  flex: 0 0 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 18px;
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+}
+
+.actionPanel {
+  background: rgba(20, 26, 24, 0.92);
+  border-color: rgba(242, 239, 230, 0.16);
+  color: #f2efe6;
+}
+
+.actionCard {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(242, 239, 230, 0.12);
+  color: #f2efe6;
+}
+
+/* The live page arms the action that board clicks feed; practice never sets it. */
+.actionCard[data-armed="true"] {
+  border-color: rgba(111, 216, 192, 0.65);
+}
+
+.logPanel {
+  background: rgba(20, 26, 24, 0.92);
+  border-color: rgba(242, 239, 230, 0.16);
+  color: #f2efe6;
+}
+
+.resultBanner {
+  background: rgba(20, 26, 24, 0.95);
+}
+
+.resultWin {
+  border-color: rgba(88, 179, 104, 0.7);
+  color: #bfe8c6;
+}
+
+.resultLose {
+  border-color: rgba(217, 83, 79, 0.7);
+  color: #f2c4c1;
+}
+
+.errorBanner {
+  background: rgba(46, 18, 16, 0.92);
+  border-color: rgba(217, 83, 79, 0.5);
+}
+
+@media (max-width: 900px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .sidePanel {
+    flex: 1 1 auto;
+    position: static;
+    max-height: none;
+    width: 100%;
+  }
+}

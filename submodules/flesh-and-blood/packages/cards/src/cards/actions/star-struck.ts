@@ -115,6 +115,7 @@ export const starStruck = definePitchFamily(fabPitchFamilies["star-struck"], {
         effect: {
           type: "create-token",
           token: "seismic-surge",
+          creator: "effect-controller",
           controller: "any",
         },
       },

@@ -3,6 +3,7 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseCardToPlayPendingChoice } from "../types/match-state.ts";
 import type { MatchState } from "../types/match-state.ts";
 import {
+  abandonCurrentTrigger,
   executeAbilityEffects,
   processCardSpentEventsSince,
   processEventTriggers,
@@ -13,6 +14,7 @@ import { defOf } from "../state/lookups.ts";
 import { computeEffectiveCost } from "./compute-effective-cost.ts";
 import { availableEddies } from "./eddie-resources.ts";
 import { playSelectedCard } from "./play-selected-card.ts";
+import { listLegalGearAttachHosts } from "../state/gear-attachment.ts";
 
 export interface ResolveCardToPlayInput extends MoveInput {
   args: {
@@ -63,7 +65,7 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
       const attachId =
         attachToId ??
         typedChoice.payload.resolvedAttachToId ??
-        soleGearHost(state as MatchState, playerId);
+        soleGearHost(state as MatchState, cardId as CardInstanceId, playerId);
       if (!attachId) {
         return {
           valid: false,
@@ -71,7 +73,11 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
           errorCode: "INVALID_ARGS",
         };
       }
-      const hosts = listFriendlyGearAttachHosts(state as MatchState, playerId);
+      const hosts = listLegalGearAttachHosts(
+        state as MatchState,
+        cardId as CardInstanceId,
+        playerId,
+      );
       if (!hosts.includes(attachId)) {
         return { valid: false, error: "Invalid gear attach host", errorCode: "INVALID_CHOICE" };
       }
@@ -113,8 +119,10 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
           nested: true,
         });
         if (followupStatus === "suspended") return;
+        resumeCurrentTrigger(state as MatchState, operations);
+        return;
       }
-      resumeCurrentTrigger(state as MatchState, operations);
+      abandonCurrentTrigger(state as MatchState, operations);
       return;
     }
 
@@ -123,7 +131,7 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
     const card = (state as MatchState).G.cardIndex[cardId];
     let attachId = resolvedAttachToId ?? attachToId;
     if (card && defOf(card).type === "gear") {
-      attachId = attachId ?? soleGearHost(state as MatchState, playerId);
+      attachId = attachId ?? soleGearHost(state as MatchState, cardId as CardInstanceId, playerId);
       if (!attachId) return;
     }
     const result = playSelectedCard({
@@ -166,21 +174,11 @@ export const resolveCardToPlayMove: MoveDefinition<ResolveCardToPlayInput> = {
   },
 };
 
-function listFriendlyGearAttachHosts(state: MatchState, playerId: PlayerId): string[] {
-  const player = state.G.players[playerId as string];
-  if (!player) return [];
-  const out: string[] = [];
-  for (const id of [...player.zones.field, ...player.zones.legendArea]) {
-    const card = state.G.cardIndex[id as string];
-    if (!card) continue;
-    const type = defOf(card).type;
-    if (type === "unit") out.push(id as string);
-    if (type === "legend" && !card.meta.faceDown) out.push(id as string);
-  }
-  return out;
-}
-
-function soleGearHost(state: MatchState, playerId: PlayerId): string | undefined {
-  const hosts = listFriendlyGearAttachHosts(state, playerId);
+function soleGearHost(
+  state: MatchState,
+  gearId: CardInstanceId,
+  playerId: PlayerId,
+): string | undefined {
+  const hosts = listLegalGearAttachHosts(state, gearId, playerId);
   return hosts.length === 1 ? hosts[0] : undefined;
 }

@@ -7,7 +7,7 @@ import {
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dromai } from "../heroes/dromai.ts";
 import { dash } from "../heroes/dash.ts";
-import { nimblismRed } from "../actions/nimblism.ts";
+import { nimblismRed, nimblismBlue } from "../actions/nimblism.ts";
 import { pledgeFealtyRed } from "../instants/pledge-fealty.ts";
 
 /**
@@ -21,28 +21,38 @@ describe("Fealty (CIN028) AAA", () => {
     const game = FabTestEngine.start(
       {
         hero: dromai,
-        hand: [pledgeFealtyRed, nimblismRed],
+        hand: [pledgeFealtyRed, nimblismRed, nimblismBlue],
         resourcePoints: 0,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Dromai = game.as(dromai);
 
     Dromai.play(pledgeFealtyRed);
-    game.helpers.untilIdle();
+    game.untilIdle({ optionals: "throw" });
     expectFabPlayer(Dromai).toHaveTokenCount("fealty", 1);
 
     Dromai.activate("token:fealty");
-    game.helpers.untilIdle();
+    game.untilIdle({ optionals: "throw" });
     expectFabPlayer(Dromai).toHaveTokenCount("fealty", 0);
 
     Dromai.play(nimblismRed);
-    game.helpers.untilIdle();
+    expectFabCard(Dromai, nimblismRed).toHaveSupertype("Draconic");
+    game.untilIdle({ optionals: "throw" });
+    expectFabCard(Dromai, nimblismRed).toBeIn("graveyard").notToHaveSupertype("Draconic");
 
-    const played = Dromai.cardsIn("graveyard", nimblismRed)[0]!;
-    expectFabCard(Dromai, played).toHaveSupertype("Draconic");
+    // The grant is consumed by the first card, not inherited by the next play.
+    Dromai.play(nimblismBlue);
+    expectFabCard(Dromai, Dromai.cardIn("stack", nimblismBlue)).notToHaveSupertype("Draconic");
+    game.untilIdle({ optionals: "throw" });
+    expectFabCard(Dromai, Dromai.cardIn("graveyard", nimblismBlue)).notToHaveSupertype("Draconic");
   });
 
   it("boundary: without burning the Fealty, the played card is not Draconic", () => {
@@ -51,17 +61,23 @@ describe("Fealty (CIN028) AAA", () => {
         hero: dromai,
         hand: [pledgeFealtyRed, nimblismRed],
         resourcePoints: 0,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Dromai = game.as(dromai);
 
     Dromai.play(pledgeFealtyRed);
-    game.helpers.untilIdle();
+    game.untilIdle({ optionals: "throw" });
     Dromai.play(nimblismRed);
-    game.helpers.untilIdle();
+    expectFabCard(Dromai, nimblismRed).notToHaveSupertype("Draconic");
+    game.untilIdle({ optionals: "throw" });
 
     const played = Dromai.cardsIn("graveyard", nimblismRed)[0]!;
     expectFabCard(Dromai, played).notToHaveSupertype("Draconic");
@@ -74,26 +90,31 @@ describe("Fealty (CIN028) AAA", () => {
         hero: dromai,
         hand: [pledgeFealtyRed],
         resourcePoints: 0,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Dromai = game.as(dromai);
 
     Dromai.play(pledgeFealtyRed);
-    game.helpers.untilIdle();
+    game.untilIdle({ optionals: "throw" });
 
     // Created a Fealty this turn — the end-phase destroy does not fire.
     Dromai.endTurn();
-    game.helpers.untilIdle();
+    game.untilIdle({ optionals: "throw" });
     expectFabPlayer(Dromai).toHaveTokenCount("fealty", 1);
 
     // A quiet turn with no Fealty creation and no Draconic card played.
     game.as(dash).endTurn();
-    game.helpers.untilIdle();
+    game.untilIdle({ optionals: "throw" });
     Dromai.endTurn();
-    game.helpers.untilIdle();
+    game.untilIdle({ optionals: "throw" });
     expectFabPlayer(Dromai).toHaveTokenCount("fealty", 0);
   });
 });

@@ -220,6 +220,18 @@ describe("Riftbound deck interchange", () => {
     expect(serializeRiftboundDeckText(parsed.document)).toBe(serialized);
   });
 
+  it("skips unknown cards with a warning instead of failing the whole list", () => {
+    const parsed = parseRiftboundDeckText("[Main Deck]\n1 Test Unit\n1 Missing Card\n", catalog);
+    expect(parsed.document.boards.mainDeck[0]).toEqual(entry(cards.unit, 1));
+    expect(parsed.warnings.some((warning) => /Missing Card/.test(warning))).toBe(true);
+  });
+
+  it("rejects a list when no card can be resolved", () => {
+    expect(() => parseRiftboundDeckText("[Main Deck]\n1 Missing Card\n", catalog)).toThrow(
+      /Missing Card/,
+    );
+  });
+
   it("allows a unique name fallback with a warning and rejects ambiguous names", () => {
     const unique = parseRiftboundDeckText("[Main Deck]\n1 Test Unit\n", catalog);
     expect(unique.document.boards.mainDeck[0]).toEqual(entry(cards.unit, 1));

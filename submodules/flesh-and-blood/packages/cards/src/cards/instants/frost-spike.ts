@@ -8,6 +8,7 @@ export const frostSpike = definePitchFamily(fabPitchFamilies["frost-spike"], {
       effect: {
         type: "create-token",
         token: "frostbite",
+        creator: "effect-controller",
         controller: "opponent",
         amongExposed: ["equipment-head", "equipment-chest", "equipment-arms", "equipment-legs"],
       },

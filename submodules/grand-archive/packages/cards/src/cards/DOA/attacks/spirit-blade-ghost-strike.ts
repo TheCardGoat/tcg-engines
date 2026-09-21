@@ -48,48 +48,59 @@ export const spiritBladeGhostStrike: GrandArchiveCard<GrandArchiveAbilityDefinit
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                      },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "attacks-by",
-                    attacker: {
-                      kind: "champion",
-                      player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "attacks-by",
+                      attacker: {
+                        kind: "champion",
+                        player: "controller",
+                      },
                     },
-                  },
-                  affectedSet: "dynamic",
-                  duration: {
-                    kind: "this-turn",
-                  },
-                  layer: {
-                    layer: "E",
-                    modifies: "stat",
-                    sublayer: "modifier",
-                  },
-                  change: {
-                    kind: "numeric",
-                    property: "power",
-                    operation: "add",
-                    amount: 1,
+                    affectedSet: "dynamic",
+                    duration: {
+                      kind: "this-turn",
+                    },
+                    layer: {
+                      layer: "E",
+                      modifies: "stat",
+                      sublayer: "modifier",
+                    },
+                    change: {
+                      kind: "numeric",
+                      property: "power",
+                      operation: "add",
+                      amount: 1,
+                    },
                   },
                 },
               ],

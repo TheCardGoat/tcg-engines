@@ -8,6 +8,8 @@ import {
   isGreedyWeights,
   createGreedyStrategy,
   runAutoMatch,
+  withDeckProfile,
+  type AIStrategy,
   type AutoMatchResult,
 } from "@tcg/cyberpunk-engine";
 import {
@@ -19,11 +21,13 @@ import {
 
 import { createTestPlayers } from "../../../../../cyberpunk/tools/ai-runner/src/test-catalog.ts";
 import {
-  createLegalDeckPool,
   createStructuredCatalog,
+  createAuthoredBotLabDecks,
   deckListFromGenerated,
   type GeneratedDeck,
 } from "../../../../../cyberpunk/tools/ai-runner/src/legal-decks.ts";
+import { resolveDeckProfile } from "../../../../../cyberpunk/tools/ai-runner/src/deck-profiles.ts";
+import type { DeckStrategyProfile } from "@tcg/cyberpunk-engine";
 import { trainGreedy } from "../../../../../cyberpunk/tools/ai-runner/src/train.ts";
 import type { BotLabAdapter, BotLabMatchInput } from "../adapter.ts";
 import { candidateWinner, promotionWrite, strategyDescriptor } from "./shared.ts";
@@ -35,7 +39,7 @@ const PROMOTION_PATH = fileURLToPath(
   ),
 );
 
-const REAL_DECK_POOL = createLegalDeckPool("legal-permutations").decks.slice(0, 6);
+const REAL_DECK_POOL = createAuthoredBotLabDecks();
 const REAL_DECKS_BY_ID = new Map(REAL_DECK_POOL.map((deck) => [deck.id, deck]));
 
 function requiredDeck(id: string): GeneratedDeck {
@@ -62,6 +66,19 @@ function requiredEvaluationStrategy(id: string) {
   const option = getAutomatedActionStrategyOption(id);
   if (!option) throw new Error(`Unknown Cyberpunk evaluation strategy: ${id}`);
   return option.strategy;
+}
+
+/**
+ * Bind the seat's authored plan (fixture id, else core-interaction
+ * signature) so both candidate and baseline play that deck's mulligan,
+ * Gear hosts, and sell protection.
+ */
+function strategyForSeat(base: AIStrategy, deck: GeneratedDeck): AIStrategy {
+  const profile = resolveDeckProfile({
+    deckId: deck.id,
+    cards: [...deck.legends, ...deck.mainDeck],
+  });
+  return profile ? withDeckProfile(base, profile as DeckStrategyProfile) : base;
 }
 
 function termination(reason: AutoMatchResult["reason"]): BotTerminationReason {
@@ -99,7 +116,9 @@ function run(input: {
   const result = runAutoMatch({
     players: createTestPlayers(),
     decks: [deckListFromGenerated(p1Deck, "p1"), deckListFromGenerated(p2Deck, "p2")],
-    strategies: candidateIsP1 ? [candidate, baseline] : [baseline, candidate],
+    strategies: candidateIsP1
+      ? [strategyForSeat(candidate, p1Deck), strategyForSeat(baseline, p2Deck)]
+      : [strategyForSeat(baseline, p1Deck), strategyForSeat(candidate, p2Deck)],
     catalog: createStructuredCatalog(),
     seed: input.seed,
   });
@@ -121,7 +140,7 @@ function run(input: {
 
 export const cyberpunkBotLabAdapter: BotLabAdapter = {
   game: "cyberpunk",
-  adapterVersion: "3",
+  adapterVersion: "5",
   getEngineRevision: () =>
     stableBotHash({
       revision: CYBERPUNK_AUTOMATION_REVISION,

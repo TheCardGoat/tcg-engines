@@ -1,4 +1,5 @@
 import type { FabMatchState } from "../../state.ts";
+import { withoutFabScopedAutoPass } from "../../state.ts";
 import type { ProposedEvent } from "../events.ts";
 import type { FabEventReduction } from "../../kernel/transaction-kernel.ts";
 import { nextFabDestinationRef } from "../snapshots.ts";
@@ -157,6 +158,11 @@ export function reduceCombatEvent(
         participant.history.chainLink.chainLinkNumber = chainLinkNumber;
         participant.history.chainLink.playedInstant = false;
         participant.history.chainLink.damageDealtByType = {
+          arcane: 0,
+          physical: 0,
+          generic: 0,
+        };
+        participant.history.chainLink.damageDealtToOpposingHeroesByType = {
           arcane: 0,
           physical: 0,
           generic: 0,
@@ -569,6 +575,8 @@ export function reduceCombatEvent(
         (delayed) => delayed.policy.expiresAt.kind !== "combat-chain",
       );
       state.combat = null;
+      // A "this combat" auto-pass scope dies with the chain it was armed on.
+      state.automationPreferences = withoutFabScopedAutoPass(state.automationPreferences, "combat");
       // CR 1.4.3c: an attack-proxy cannot outlive its chain link. The closed
       // chain link retains its regular immutable object LKI independently.
       state.attackProxies = {};
@@ -581,6 +589,11 @@ export function reduceCombatEvent(
         player.history.chainLink.chainLinkNumber = null;
         player.history.chainLink.playedInstant = false;
         player.history.chainLink.damageDealtByType = { arcane: 0, physical: 0, generic: 0 };
+        player.history.chainLink.damageDealtToOpposingHeroesByType = {
+          arcane: 0,
+          physical: 0,
+          generic: 0,
+        };
         player.history.chainLink.damageDealtBySource = {};
         player.history.chainLink.damageDealtBySourceToHero = {};
       }
@@ -658,6 +671,18 @@ export function reduceCombatEvent(
           dealer.history.turn.damageDealtByType[event.data.damageType] += event.data.amount;
         }
         dealer.history.chainLink.damageDealtByType[event.data.damageType] += event.data.amount;
+        // Damage to self or an ally is not damage to an opposing hero.
+        if (
+          !sourceIsAlly &&
+          "kind" in event.data.target &&
+          event.data.target.kind === "hero" &&
+          event.data.target.playerId !== event.controllerId
+        ) {
+          dealer.history.turn.damageDealtToOpposingHeroesByType[event.data.damageType] +=
+            event.data.amount;
+          dealer.history.chainLink.damageDealtToOpposingHeroesByType[event.data.damageType] +=
+            event.data.amount;
+        }
         // Per-source damage (Surge CR 8.4.8 "If this deals N damage"). Keyed by
         // the dealing object's instanceId on both scopes; recorded regardless of
         // the ally-dealer exclusion because the source object itself dealt it.

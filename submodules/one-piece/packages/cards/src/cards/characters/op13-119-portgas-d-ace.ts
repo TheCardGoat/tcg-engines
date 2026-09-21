@@ -1,0 +1,138 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op13PortgasDAce119I18n } from "./op13-119-portgas-d-ace.i18n.ts";
+
+export const op13PortgasDAce119: CharacterCard = {
+  id: "OP13-119",
+  canonicalId: "OP13-119",
+  slug: "portgas-d-ace/op13-119",
+  name: "Portgas.D.Ace",
+  printings: [
+    {
+      id: "OP13-119",
+      artId: "OP13-119",
+      setCode: "OP13",
+      collectorNumber: "119",
+      rarity: "SEC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP13-119_2YugQh1.jpg",
+      label: "Portgas.D.Ace (119)",
+    },
+    {
+      id: "OP13-119_p4",
+      artId: "OP13-119_p4",
+      setCode: "OP13",
+      collectorNumber: "119",
+      rarity: "SEC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP13-119_p4.jpg",
+      label: "Portgas.D.Ace (119) (Wanted Poster)",
+    },
+    {
+      id: "OP13-119_p2",
+      artId: "OP13-119_p2",
+      setCode: "OP13",
+      collectorNumber: "119",
+      rarity: "SEC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP13-119_p2.jpg",
+      label: "Portgas.D.Ace (119) (Super Alternate Art)",
+    },
+    {
+      id: "OP13-119_p3",
+      artId: "OP13-119_p3",
+      setCode: "OP13",
+      collectorNumber: "119",
+      rarity: "SEC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP13-119_p3.jpg",
+      label: "Portgas.D.Ace (119) (Red Super Alternate Art)",
+    },
+    {
+      id: "OP13-119_p1",
+      artId: "OP13-119_p1",
+      setCode: "OP13",
+      collectorNumber: "119",
+      rarity: "SEC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP13-119_p1_duXGvRJ.jpg",
+      label: "Portgas.D.Ace (119) (Parallel)",
+    },
+  ],
+  cardType: "character",
+  color: ["blue"],
+  rarity: "SEC",
+  setId: "OP13",
+  cost: 6,
+  power: 7000,
+  traits: ["Whitebeard Pirates"],
+  attribute: "special",
+  effect:
+    "If you have 3 or less Life cards, this Character gains [Rush].\n[On Play] Give up to 1 rested DON!! card to your Leader. Then, you may return up to 1 of your opponent's Characters with a cost of 5 or less to the owner's hand. If you do, your opponent plays up to 1 Character card with a cost of 4 or less from their hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "giveDon",
+            target: {
+              player: "self",
+              zones: ["leader"],
+              count: {
+                amount: 1,
+              },
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            donState: "rested",
+          },
+          {
+            action: "returnToHand",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 5,
+                },
+              ],
+            },
+            thenActions: [
+              {
+                action: "play",
+                source: { player: "opponent", zone: "hand" },
+                count: { amount: 1, upTo: true },
+                filters: [
+                  { filter: "cost", comparison: "lte", value: 4 },
+                  { filter: "cardCategory", value: "character" },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    permanentEffects: [
+      {
+        conditions: [{ condition: "lifeCount", player: "self", comparison: "lte", value: 3 }],
+        actions: [
+          {
+            action: "grantKeyword",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: { amount: 1 },
+              self: true,
+            },
+            keyword: "rush",
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op13PortgasDAce119I18n,
+};

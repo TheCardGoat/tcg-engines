@@ -100,7 +100,7 @@ describe("temporary hand reveal rendering", () => {
   });
 
   test("desktop opponent hand keeps hidden cards private while rendering temporary reveals face-up", () => {
-    const view = render(<HandZone faceDown cards={testCards()} side="opponent" />, {
+    const view = render(<HandZone opponent faceDown cards={testCards()} side="opponent" />, {
       wrapper: Providers,
     });
 
@@ -118,7 +118,7 @@ describe("temporary hand reveal rendering", () => {
   });
 
   test("mobile opponent hand uses the same privacy boundary", () => {
-    const view = render(<MobileHandZone faceDown cards={testCards()} side="opponent" />, {
+    const view = render(<MobileHandZone opponent faceDown cards={testCards()} side="opponent" />, {
       wrapper: Providers,
     });
 
@@ -133,6 +133,29 @@ describe("temporary hand reveal rendering", () => {
     expect(handCards[1]?.getAttribute("data-card-id")).toBe("recovered-card");
     expect(handCards[1]?.getAttribute("data-definition-id")).toBe("recovered-definition");
     expect(view.getByAltText("Recovered Card")).not.toBeNull();
+  });
+
+  test("desktop bottom hand can stay viewer-private without becoming the opponent zone", () => {
+    const view = render(<HandZone faceDown cards={testCards()} side="player" />, {
+      wrapper: Providers,
+    });
+
+    const handZone = view.getByTestId("hand-zone");
+    expect(handZone.getAttribute("data-zone-id")).toBe("p-hand");
+    expect(handZone.getAttribute("data-hand-layout")).toBe("player");
+    expect(handZone.getAttribute("data-drop-zone")).toBeNull();
+    expect(view.getAllByTestId("hand-card")[0]?.getAttribute("data-face-down")).toBe("true");
+  });
+
+  test("mobile bottom hand can stay viewer-private without becoming the opponent zone", () => {
+    const view = render(<MobileHandZone faceDown cards={testCards()} side="player" />, {
+      wrapper: Providers,
+    });
+
+    const handZone = view.getByTestId("hand-zone");
+    expect(handZone.getAttribute("data-zone-id")).toBe("p-hand");
+    expect(handZone.getAttribute("data-drop-zone")).toBeNull();
+    expect(view.getAllByTestId("hand-card")[0]?.getAttribute("data-face-down")).toBe("true");
   });
 
   test("mobile player hand exposes overflow cues for hidden cards", async () => {

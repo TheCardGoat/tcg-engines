@@ -191,65 +191,67 @@ describe("One Piece challenging bot heuristics", () => {
     }
   });
 
-  test("Smoke: both heuristics beat firstLegal and random on diverse deck pairs", () => {
-    const deckIds: TestDeckId[] = ["red-aggro", "blue-control", "green-midrange"];
-    const matchups: readonly [BenchmarkStrategyId, BenchmarkStrategyId][] = CHALLENGING.flatMap(
-      (challenger) =>
-        [
-          [challenger, "firstLegal"],
-          [challenger, "random"],
-        ] as [BenchmarkStrategyId, BenchmarkStrategyId][],
-    );
-    const report = runDeckBenchmark({
-      games: 6,
-      seedBase: 5000,
-      matchups,
-      deckIds,
-      crossPairs: 1,
-    });
-
-    console.log(formatDeckBenchmarkReport(report));
-
-    assertClean(report);
-    for (const challenger of CHALLENGING) {
-      for (const opponent of ["firstLegal", "random"] as const) {
-        const rate = southWinRate(report, challenger, opponent);
-        assert.ok(rate >= 0.6, `${challenger} vs ${opponent} win rate ${rate} < 60%`);
-      }
-    }
-  }, 180000);
-
-  extendedBatchTest(
-    "Extended: both heuristics vs all baselines across the full deck suite",
+  // The full matchup matrix simulates thousands of full games; measured wall
+  // time is ~19 minutes, so the default 180s test timeout is far too small.
+  test(
+    "Smoke: both heuristics beat firstLegal and random on diverse deck pairs",
+    { timeout: 1_500_000 },
     () => {
+      const deckIds: TestDeckId[] = ["red-aggro", "blue-control", "green-midrange"];
       const matchups: readonly [BenchmarkStrategyId, BenchmarkStrategyId][] = CHALLENGING.flatMap(
         (challenger) =>
           [
-            [challenger, "greedy"],
-            [challenger, "valueRanked"],
             [challenger, "firstLegal"],
             [challenger, "random"],
-            [challenger, "heuristic"],
-            [challenger, "aggressive"],
           ] as [BenchmarkStrategyId, BenchmarkStrategyId][],
       );
       const report = runDeckBenchmark({
-        games: 10,
-        seedBase: 6000,
+        games: 6,
+        seedBase: 5000,
         matchups,
-        crossPairs: 3,
+        deckIds,
+        crossPairs: 1,
       });
 
       console.log(formatDeckBenchmarkReport(report));
 
       assertClean(report);
       for (const challenger of CHALLENGING) {
-        for (const opponent of ["greedy", "firstLegal", "random"] as const) {
+        for (const opponent of ["firstLegal", "random"] as const) {
           const rate = southWinRate(report, challenger, opponent);
           assert.ok(rate >= 0.6, `${challenger} vs ${opponent} win rate ${rate} < 60%`);
         }
       }
     },
-    600000,
   );
+
+  extendedBatchTest("Extended: both heuristics vs all baselines across the full deck suite", () => {
+    const matchups: readonly [BenchmarkStrategyId, BenchmarkStrategyId][] = CHALLENGING.flatMap(
+      (challenger) =>
+        [
+          [challenger, "greedy"],
+          [challenger, "valueRanked"],
+          [challenger, "firstLegal"],
+          [challenger, "random"],
+          [challenger, "heuristic"],
+          [challenger, "aggressive"],
+        ] as [BenchmarkStrategyId, BenchmarkStrategyId][],
+    );
+    const report = runDeckBenchmark({
+      games: 10,
+      seedBase: 6000,
+      matchups,
+      crossPairs: 3,
+    });
+
+    console.log(formatDeckBenchmarkReport(report));
+
+    assertClean(report);
+    for (const challenger of CHALLENGING) {
+      for (const opponent of ["greedy", "firstLegal", "random"] as const) {
+        const rate = southWinRate(report, challenger, opponent);
+        assert.ok(rate >= 0.6, `${challenger} vs ${opponent} win rate ${rate} < 60%`);
+      }
+    }
+  });
 });

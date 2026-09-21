@@ -58,6 +58,99 @@ export function collectApplicableReplacementCandidates(
 }
 
 /**
+ * Hand cards that can pitch toward a resource-point cost (CR 1.14.2d): a
+ * rules-view evaluated pitch value above zero. Chi cards are excluded —
+ * their pitch generates chi points, which the pay-resources cost of a
+ * static-keyword prevention cannot spend.
+ */
+export function replacementPitchCandidates(
+  state: FabRulesSnapshot,
+  playerId: string,
+  excludeInstanceIds: readonly string[] = [],
+): { readonly instanceId: string; readonly value: number }[] {
+  const view = buildFabRulesView(state);
+  return (state.containers.zonesByPlayerId[playerId]?.hand ?? []).flatMap((instanceId) => {
+    if (excludeInstanceIds.includes(instanceId)) return [];
+    const record = state.objects[instanceId];
+    const evaluated = record
+      ? view.object({ instanceId: record.instanceId, incarnation: record.incarnation })
+      : null;
+    const value = evaluated?.current.numeric.pitch ?? 0;
+    const chi = evaluated?.current.typeBox.subtypes.includes("Chi") ?? false;
+    return value > 0 && !chi ? [{ instanceId, value }] : [];
+  });
+}
+
+/**
+ * Unpaid remainder of a resource-point asset cost (CR 1.14.2d): banked
+ * resource points and every pitchable hand card count toward the payment,
+ * including cards already bound as payment — they stay in hand until the
+ * prevention application commits their pitch.
+ */
+export function payResourcesShortfall(
+  state: FabRulesSnapshot,
+  playerId: string,
+  amount: number,
+  bound: readonly { readonly instanceId: string; readonly incarnation: number }[] = [],
+): number {
+  const player = state.players[playerId];
+  if (!player || amount <= 0) return 0;
+  const view = buildFabRulesView(state);
+  const boundValue = bound.reduce((total, binding) => {
+    const evaluated = view.object({
+      instanceId: binding.instanceId,
+      incarnation: binding.incarnation,
+    });
+    const value = evaluated?.current.numeric.pitch ?? 0;
+    const chi = evaluated?.current.typeBox.subtypes.includes("Chi") ?? false;
+    return total + (chi ? 0 : Math.max(0, value));
+  }, 0);
+  const remaining = amount - player.resourcePoints - boundValue;
+  if (remaining <= 0) return 0;
+  const pitchable = replacementPitchCandidates(
+    state,
+    playerId,
+    bound.map((binding) => binding.instanceId),
+  );
+  const coverable = pitchable.reduce((total, candidate) => total + candidate.value, 0);
+  return Math.max(0, remaining - coverable);
+}
+
+/**
+ * How much of a candidate's static-keyword pay-resources cost is still
+ * uncovered by banked resource points and already-bound pitch cards. This —
+ * not the coverage-aware {@link payResourcesShortfall} — drives the pitch
+ * rounds: unbound hand cards may cover the cost, but only bound pitches
+ * generate the resource points the application will spend.
+ */
+export function staticPreventionPayShortfall(
+  state: FabRulesSnapshot,
+  candidate: FabReplacementCandidate,
+): number {
+  if (
+    candidate.staticPreventionApplication?.kind !== "static-keyword" ||
+    candidate.staticPreventionApplication.cost !== "pay-resources" ||
+    candidate.effect.type !== "prevention" ||
+    typeof candidate.effect.amount !== "number"
+  ) {
+    return 0;
+  }
+  const player = state.players[candidate.controllerId];
+  if (!player) return 0;
+  const view = buildFabRulesView(state);
+  const boundValue = (candidate.persistedPitchedInstanceIds ?? []).reduce((total, binding) => {
+    const evaluated = view.object({
+      instanceId: binding.instanceId,
+      incarnation: binding.incarnation,
+    });
+    const value = evaluated?.current.numeric.pitch ?? 0;
+    const chi = evaluated?.current.typeBox.subtypes.includes("Chi") ?? false;
+    return total + (chi ? 0 : Math.max(0, value));
+  }, 0);
+  return Math.max(0, candidate.effect.amount - player.resourcePoints - boundValue);
+}
+
+/**
  * Candidate universe for commit-time CR 6.4.2a re-evaluation. Unlike the UI
  * boundary collector, this retains supported sources that are not active for
  * the original event but may become active after another replacement.
@@ -166,6 +259,21 @@ export function createTokenKey(event: ProposedEvent<"create">): string {
   return event.data.object.canonicalId ?? (event.data.object.current.names.join(" // ") || "token");
 }
 
+/** Creation owner is the creator; player filters independently select recipients. */
+function creationMatchesCreator(
+  effect: CanonicalReplacement,
+  creatorId: string,
+  controllerId: string,
+): boolean {
+  if (effect.replaces.name !== "create") return false;
+  switch (effect.replaces.creator) {
+    case "any":
+      return true;
+    case "controller":
+      return creatorId === controllerId;
+  }
+}
+
 function distinctCreateTokenKeys(
   state: FabRulesSnapshot,
   events: readonly ProposedEvent[],
@@ -181,13 +289,17 @@ function distinctCreateTokenKeys(
     // evaluated by "create that many plus N" replacements in this transaction.
     if (
       event.name === "wager-loss" &&
-      event.data.winnerId === controllerId &&
+      creationMatchesCreator(effect, event.data.winnerId, controllerId) &&
       event.data.prize?.kind === "create-token"
     ) {
       for (const canonicalId of event.data.prize.canonicalIds) keys.add(canonicalId);
       continue;
     }
-    if (event.name !== "create" || event.data.playerId !== controllerId) continue;
+    if (
+      event.name !== "create" ||
+      !creationMatchesCreator(effect, event.data.object.ownerId, controllerId)
+    )
+      continue;
     if (
       effect.replaces.filter &&
       !matchesFabSnapshotFilter(state, event.data.object, effect.replaces.filter)
@@ -280,9 +392,18 @@ function staticReplacementCandidates(
           if (amount === null) continue;
           const policy = staticPreventionKeywordPolicy(keywordName);
           // A costed optional prevention is not offered when its fixed asset
-          // cost cannot be paid. Choosing it remains an explicit player choice.
-          if (policy.application.cost === "pay-resources" && player.resourcePoints < amount)
+          // cost cannot be paid. CR 1.14.2d: banked resource points and
+          // pitchable hand cards both count toward the payment. Choosing it
+          // remains an explicit player choice.
+          const scope = state.rulesProcess?.replacementCostBindingScope ?? "direct";
+          const boundPitch =
+            state.rulesProcess?.replacementPitchBindings?.[`${scope}:${instanceId}:${keywordName}`];
+          if (
+            policy.application.cost === "pay-resources" &&
+            payResourcesShortfall(state, targetPlayerId, amount, boundPitch ?? []) > 0
+          ) {
             continue;
+          }
           candidates.push({
             replacementId: `${instanceId}:${keywordName}`,
             controllerId: targetPlayerId,
@@ -301,6 +422,7 @@ function staticReplacementCandidates(
             consumptionPolicy: { kind: "never" },
             optional: policy.optional,
             staticPreventionApplication: policy.application,
+            ...(boundPitch ? { persistedPitchedInstanceIds: boundPitch } : {}),
           });
         }
       }
@@ -323,8 +445,14 @@ function staticReplacementCandidates(
         if (!quell || !("value" in quell)) continue;
         const quellAmount = quell.value;
         if (typeof quellAmount !== "number" || quellAmount <= 0) continue;
-        if (player.resourcePoints < quellAmount) continue;
         const policy = staticPreventionKeywordPolicy("quell");
+        // CR 1.14.2d: banked resource points and pitchable hand cards both
+        // count toward the payment.
+        const scope = state.rulesProcess?.replacementCostBindingScope ?? "direct";
+        const boundPitch =
+          state.rulesProcess?.replacementPitchBindings?.[`${scope}:${instanceId}:quell`];
+        if (payResourcesShortfall(state, targetPlayerId, quellAmount, boundPitch ?? []) > 0)
+          continue;
         candidates.push({
           replacementId: `${instanceId}:quell`,
           controllerId: targetPlayerId,
@@ -342,6 +470,7 @@ function staticReplacementCandidates(
           consumptionPolicy: { kind: "never" },
           optional: policy.optional,
           staticPreventionApplication: policy.application,
+          ...(boundPitch ? { persistedPitchedInstanceIds: boundPitch } : {}),
         });
       }
     }
@@ -503,7 +632,7 @@ function staticReplacementCandidates(
         const seenTokenKeys = new Set<string>();
         for (const event of events) {
           if (event.name !== "create") continue;
-          if (event.data.playerId !== controllerId) continue;
+          if (!creationMatchesCreator(effect, event.data.object.ownerId, controllerId)) continue;
           if (
             createExtra.replaces.filter &&
             !matchesFabSnapshotFilter(state, event.data.object, createExtra.replaces.filter)
@@ -853,8 +982,9 @@ export function replacementApplies(
   }
   if (isCreateExtraReplacement(effect)) {
     if (event.name !== "create") return false;
-    // "If you would create…" — only the ability controller's creates.
-    if (event.data.playerId !== candidate.controllerId) return false;
+    // "If you would create…" refers to the creator, not the token recipient.
+    if (!creationMatchesCreator(effect, event.data.object.ownerId, candidate.controllerId))
+      return false;
     if (!eventMatchesPattern(state, candidate, effect, event)) return false;
     // Per-token-type candidates only match their token key.
     if (candidate.createTokenKey !== createTokenKey(event)) return false;
@@ -1047,6 +1177,12 @@ export function eventMatchesPattern(
 ): boolean {
   const pattern = effect.replaces;
   if (!eventNameMatchesPattern(pattern, event)) return false;
+  if (
+    pattern.name === "create" &&
+    event.name === "create" &&
+    !creationMatchesCreator(effect, event.data.object.ownerId, candidate.controllerId)
+  )
+    return false;
   if (pattern.subject === "self") {
     const selfId = candidate.source.instanceId;
     if (event.name === "clash-outcome" && "revealed" in event.data) {

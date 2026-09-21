@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { op05Koala006, op12UrsaShock096 } from "@tcg/op-cards";
-import { op13EmporioIvankov008 } from "../../../../../cards/src/cards/OP13/characters/008-emporio-ivankov.ts";
+import { op13EmporioIvankov008 } from "../../../../../cards/src/cards/characters/op13-008-emporio-ivankov.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

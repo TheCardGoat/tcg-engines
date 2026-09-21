@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op10Hajrudin050 } from "../../../../../cards/src/cards/OP10/characters/050-hajrudin.ts";
+import { op10Hajrudin050 } from "../../../../../cards/src/cards/characters/op10-050-hajrudin.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-050 Hajrudin", () => {

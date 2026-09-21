@@ -1,3 +1,4 @@
+import type { DropEligibility } from "@tcg/protocol";
 import type { PresentationEnvelope } from "@tcg/protocol/presentation";
 import type { MatchInfo } from "./match.js";
 
@@ -113,6 +114,8 @@ export interface LiveMatchBootstrapV1 {
   viewer: ResolvedMatchViewer;
   capabilities: LiveMatchCapabilities;
   presence: LiveMatchPresence;
+  /** Server-projected drop claim for this viewer's opponent. */
+  dropEligibility?: DropEligibility;
   history: LiveMatchHistory;
   realtime?: ScopedRealtimeAccess;
   userSettings?: UserSettings;

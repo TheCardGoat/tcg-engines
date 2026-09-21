@@ -94,10 +94,8 @@
   );
 }
 
-.board.active .stackCol,
-.board.active .midCol {
-  filter: drop-shadow(0 0 8px rgb(var(--side-accent-rgb) / 12%));
-}
+/* Keep active-turn decoration on the board surface and perimeter. Filtering
+   whole columns also rasterizes their card artwork into an offscreen layer. */
 
 /* ── Board UI modes ──────────────────────────────────────────────────────
    Three discrete states map 1:1 to engine PlayerPromptStatus:
@@ -140,17 +138,44 @@
   position: relative;
 }
 
-/* Middle column: FIELD spans both inner columns; LEGENDS / EDDIES split the bottom row. */
+/* Middle column: Field takes leftover space. Legends + Eddies are one identity
+   row whose height comes from the Legend slots, not a percentage of the seat. */
 .midCol {
   grid-area: mid;
   display: grid;
-  grid-template: "field field" 60% "legends eddies" 40% / auto 1fr;
+  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-areas: "field" "identity";
   min-width: 0;
   min-height: 0;
 }
 
 .board.opponent .midCol {
-  grid-template: "eddies legends" 40% "field field" 60% / 1fr auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-areas: "identity" "field";
+}
+
+.identityRow {
+  /* Extra horizontal breathing room between Legend slots so the glow of two
+     adjacent highlighted slots stays visually separate. */
+  --legend-slot-gap: 8px;
+
+  grid-area: identity;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: "legends eddies";
+  align-items: stretch;
+  box-sizing: border-box;
+  /* Legends and Eddies are a stable secondary row. Attached Gear layers
+     toward Field instead of reallocating the board during play. */
+  height: calc(var(--unit-card-h) + 2 * var(--zone-gutter) + 2 * var(--zone-pad) + 2px);
+  min-width: 0;
+  min-height: 0;
+  overflow: visible;
+}
+
+.board.opponent .identityRow {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "eddies legends";
 }
 
 .stackCol {
@@ -195,79 +220,141 @@
 }
 
 .confirmDialogContent {
-  border: 1px solid rgb(245 230 66 / 62%);
-  border-radius: 8px;
-  background: rgb(12 15 20 / 96%);
-  color: #e6f4fb;
+  overflow: hidden;
+  border: 1px solid rgb(var(--cp-signal-magenta-rgb, 255 61 138) / 36%);
+  border-radius: 6px;
+  --modal-bg: #0b0e15;
+  background: #0b0e15;
+  color: var(--cp-fg, #fff);
   box-shadow:
-    0 12px 44px rgb(0 0 0 / 72%),
-    0 0 24px rgb(245 230 66 / 18%);
-}
-
-.confirmDialogBody {
-  padding: 6px 20px 18px;
+    0 0 0 1px rgb(0 0 0 / 70%),
+    0 22px 56px rgb(0 0 0 / 75%);
 }
 
 .confirmDialogHeader {
   min-height: 0;
-  padding: 18px 20px 0;
+  display: flex;
+  align-items: center;
+  padding: 20px 20px 0;
   background: transparent;
 }
 
+.confirmDialogTitleRow {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.confirmDialogIcon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgb(var(--cp-signal-magenta-rgb, 255 61 138) / 34%);
+  border-radius: 4px;
+  background: rgb(var(--cp-signal-magenta-rgb, 255 61 138) / 10%);
+  color: rgb(255 119 151);
+}
+
 .confirmDialogTitle {
-  margin: 0 0 6px;
-  color: rgb(245 230 66 / 90%);
+  margin: 0;
+  color: rgb(255 154 175);
   font-family: Rajdhani, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 800;
-  letter-spacing: 0;
+  line-height: 1.25;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
+.confirmDialogBody {
+  padding: 0;
+}
+
 .confirmDialogText {
-  margin: 0;
-  color: rgb(207 232 246 / 84%);
+  margin: 10px 20px 0 62px;
+  color: rgb(210 232 238 / 78%);
+  font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 13px;
-  line-height: 1.45;
+  line-height: 1.55;
 }
 
 .confirmDialogActions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 20px 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgb(var(--cp-signal-magenta-rgb, 255 61 138) / 18%);
 }
 
 .confirmDialogPrimary,
 .confirmDialogSecondary {
   appearance: none;
-  min-height: 34px;
+  min-height: 38px;
   border-radius: 4px;
-  padding: 7px 12px;
-  font: inherit;
-  font-size: 11px;
+  padding: 0 16px;
+  font-family: Rajdhani, sans-serif;
+  font-size: 14px;
   font-weight: 800;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .confirmDialogPrimary {
-  border: 1px solid #f5e642;
-  background: #f5e642;
-  color: #07090c;
-  box-shadow: 0 0 12px rgb(245 230 66 / 28%);
+  border: 1px solid rgb(255 119 168 / 70%);
+  background: rgb(var(--cp-signal-magenta-rgb, 255 61 138));
+  color: #16020b;
+  box-shadow: 0 0 14px rgb(var(--cp-signal-magenta-rgb, 255 61 138) / 28%);
+}
+
+.confirmDialogPrimary:hover {
+  border-color: rgb(255 134 178 / 90%);
+  background: rgb(255 77 150);
+  box-shadow: 0 0 18px rgb(var(--cp-signal-magenta-rgb, 255 61 138) / 42%);
+}
+
+.confirmDialogPrimary:active {
+  background: rgb(240 52 128);
 }
 
 .confirmDialogSecondary {
-  border: 1px solid rgb(255 255 255 / 22%);
-  background: transparent;
-  color: rgb(207 232 246 / 76%);
+  border: 1px solid rgb(255 255 255 / 16%);
+  background: rgb(255 255 255 / 4%);
+  color: rgb(210 232 238 / 85%);
 }
 
 .confirmDialogSecondary:hover {
-  border-color: rgb(255 255 255 / 48%);
+  border-color: rgb(255 255 255 / 36%);
+  background: rgb(255 255 255 / 8%);
   color: #fff;
+}
+
+.confirmDialogPrimary:focus-visible,
+.confirmDialogSecondary:focus-visible {
+  outline: 2px solid rgb(var(--cp-signal-magenta-rgb, 255 61 138) / 60%);
+  outline-offset: 2px;
+}
+
+@media (max-width: 30em) {
+  .confirmDialogText {
+    margin-right: 16px;
+    margin-left: 58px;
+  }
+
+  .confirmDialogActions {
+    grid-template-columns: 1fr;
+    margin-right: 16px;
+    margin-left: 16px;
+  }
 }
 
 .trashViewerBackdrop {

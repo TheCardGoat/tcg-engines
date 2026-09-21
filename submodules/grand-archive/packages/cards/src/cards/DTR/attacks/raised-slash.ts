@@ -40,27 +40,17 @@ export const raisedSlash: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
               },
             },
           },
-          restrictions: [
+          targets: [
             {
-              kind: "static",
-              name: "class-bonus",
-              condition: {
-                kind: "champion-matches-source",
-                characteristic: "class",
-              },
-            },
-          ],
-          effect: {
-            kind: "choose",
-            selection: {
               id: "counter-recipients",
-              kind: "choice",
-              declared: "resolution",
+              kind: "target",
+              declared: "announcement",
               chooser: "controller",
               count: {
                 kind: "up-to",
                 amount: 2,
               },
+              unique: true,
               candidates: {
                 kind: "object",
                 zones: ["field"],
@@ -81,15 +71,25 @@ export const raisedSlash: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                 },
               },
             },
-            effect: {
-              kind: "add-counter",
-              subject: {
-                kind: "bound",
-                binding: "counter-recipients",
+          ],
+          restrictions: [
+            {
+              kind: "static",
+              name: "class-bonus",
+              condition: {
+                kind: "champion-matches-source",
+                characteristic: "class",
               },
-              counter: "buff",
-              amount: 1,
             },
+          ],
+          effect: {
+            kind: "add-counter",
+            subject: {
+              kind: "bound",
+              binding: "counter-recipients",
+            },
+            counter: "buff",
+            amount: 1,
           },
         },
       ],

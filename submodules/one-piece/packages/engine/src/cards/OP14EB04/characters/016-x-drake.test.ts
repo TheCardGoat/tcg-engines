@@ -1,7 +1,7 @@
 import { eb01Doma005, op02ArabesqueBrickFist067 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Urouge002 } from "../../../../../cards/src/cards/OP14EB04/characters/002-urouge.ts";
-import { op14eb04XDrake016 } from "../../../../../cards/src/cards/OP14EB04/characters/016-x-drake.ts";
+import { op14eb04Urouge002 } from "../../../../../cards/src/cards/characters/op14-002-urouge.ts";
+import { op14eb04XDrake016 } from "../../../../../cards/src/cards/characters/op14-016-x-drake.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

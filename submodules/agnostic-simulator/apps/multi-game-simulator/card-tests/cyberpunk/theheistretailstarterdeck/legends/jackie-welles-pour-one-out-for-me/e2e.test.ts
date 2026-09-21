@@ -34,7 +34,7 @@ test("Jackie Welles (The Heist) - blue Gear prompts Gig decrease", async ({ page
 
   await pom.attachGearFromHand(gear.instanceId, host.instanceId, CYBERPUNK_P1);
   await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
-  await pom.resolveAdjustGig(1, CYBERPUNK_P1);
+  await pom.resolveAdjustGig(gig.id, 1, CYBERPUNK_P1);
 
   await pom.expectGigValue(gig.id, 1);
   await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, host.instanceId, 1);

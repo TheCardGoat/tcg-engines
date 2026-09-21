@@ -40,6 +40,7 @@ export const jarlVetreiI = defineCard(fabCardIdentitiesByCanonicalId["9QL68DDb9h
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "opponent",
           // CR 3.0.1a: first empty equipment zone among head/chest/arms/legs.
           amongExposed: ["equipment-head", "equipment-chest", "equipment-arms", "equipment-legs"],

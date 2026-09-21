@@ -6,8 +6,8 @@ import {
   op01Kaido094,
   op01Shanks120,
 } from "@tcg/op-cards";
-import { op13GolDRoger064 } from "../../../../../cards/src/cards/OP13/characters/064-gol-d-roger.ts";
-import { op13Shanks065 } from "../../../../../cards/src/cards/OP13/characters/065-shanks.ts";
+import { op13GolDRoger064 } from "../../../../../cards/src/cards/characters/op13-064-gol-d-roger.ts";
+import { op13Shanks065 } from "../../../../../cards/src/cards/characters/op13-065-shanks.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 
 import {
+  legacyAccentMangledSlugAliases,
   CYBERPUNK_ALT_ART_SET_CODES,
   CYBERPUNK_RARITY_RANK,
   CYBERPUNK_RARITY_TO_CODE,
@@ -77,19 +78,23 @@ describe("CYBERPUNK_RARITY_RANK", () => {
 });
 
 describe("CYBERPUNK_ALT_ART_SET_CODES + isCyberpunkAlternateArtPrinting", () => {
-  it("flags exactly the promo, PRM01, boxtoppersretail, and boxtoppersbeta sets as alt-art", () => {
+  it("flags exactly the promo, PRM01, boxtoppers, and organized-play promo sets as alt-art", () => {
     expect(CYBERPUNK_ALT_ART_SET_CODES.has("PRM01")).toBe(true);
     expect(CYBERPUNK_ALT_ART_SET_CODES.has("promo")).toBe(true);
     expect(CYBERPUNK_ALT_ART_SET_CODES.has("boxtoppersretail")).toBe(true);
     expect(CYBERPUNK_ALT_ART_SET_CODES.has("boxtoppersbeta")).toBe(true);
-    expect(CYBERPUNK_ALT_ART_SET_CODES.size).toBe(4);
+    expect(CYBERPUNK_ALT_ART_SET_CODES.has("nightcitybrawls1")).toBe(true);
+    expect(CYBERPUNK_ALT_ART_SET_CODES.has("nightcityshowdowns1")).toBe(true);
+    expect(CYBERPUNK_ALT_ART_SET_CODES.size).toBe(6);
   });
 
-  it("treats promo/PRM01/boxtoppersretail/boxtoppersbeta printings as alt-art", () => {
+  it("treats promo/PRM01/boxtoppers/organized-play promo printings as alt-art", () => {
     expect(isCyberpunkAlternateArtPrinting({ setCode: "PRM01" })).toBe(true);
     expect(isCyberpunkAlternateArtPrinting({ setCode: "promo" })).toBe(true);
     expect(isCyberpunkAlternateArtPrinting({ setCode: "boxtoppersretail" })).toBe(true);
     expect(isCyberpunkAlternateArtPrinting({ setCode: "boxtoppersbeta" })).toBe(true);
+    expect(isCyberpunkAlternateArtPrinting({ setCode: "nightcitybrawls1" })).toBe(true);
+    expect(isCyberpunkAlternateArtPrinting({ setCode: "nightcityshowdowns1" })).toBe(true);
   });
 
   it("treats base-set printings as non-alt-art", () => {
@@ -116,6 +121,16 @@ describe("getCyberpunkCanonicalForCardId", () => {
 
   it("returns null for a truly-unknown card id (strict rejection preserved)", () => {
     expect(getCyberpunkCanonicalForCardId("00000000-0000-0000-0000-000000000000")).toBeNull();
+  });
+
+  it("maps the accent-folded Gilded Matón display slug to the retail canonical", () => {
+    expect(getCyberpunkCanonicalForCardId("gilded-maton")).toBe("gilded-maton");
+  });
+
+  it("maps legacy accent-mangled slugs to the folded canonical", () => {
+    for (const [legacySlug, canonicalSlug] of Object.entries(legacyAccentMangledSlugAliases)) {
+      expect(getCyberpunkCanonicalForCardId(legacySlug)).toBe(canonicalSlug);
+    }
   });
 });
 
@@ -225,25 +240,34 @@ describe("defaultCyberpunkPrintingId", () => {
   });
 
   it("breaks rarity ties by lowest sortNumber, then by collectorNumber", () => {
-    // Mandibular Upgrade has four Common printings across sets with distinct
-    // `setPriority` values, so it is a clean fixture for the tie-break rule:
+    // Mandibular Upgrade printings across sets with distinct `setPriority`
+    // values make it a clean fixture for the tie-break rule:
     //   - welcometonightcityretail (priority 100): collectorNumber "062"
     //   - welcometonightcitybeta   (priority  50): collectorNumber "β062"
     //   - theheistretailstarterdeck(priority  90): collectorNumber "008"
     //   - theheistbetastarterdeck  (priority  50): collectorNumber "β008"
-    // All Common, none alt-art. Lowest priority (50) ties the two beta
-    // printings; ascending collectorNumber breaks the tie → "β008" wins.
+    //   - nightcitybrawls1         (priority  50): "006" / "024" — Nova Rare
+    //     full-art promo foils, i.e. alt-art, so the default picker excludes
+    //     them and they must never win the tie-break.
+    // All non-alt-art printings are Common, so the rarity tie-break is
+    // inactive; lowest priority (50) ties the two beta printings, and ascending
+    // collectorNumber breaks the tie → "β008" wins.
     const canonical = getCyberpunkCanonicalForCardId(MANDIBULAR_CARD_ID)!;
     const defaultId = defaultCyberpunkPrintingId(canonical);
     const defaultInfo = getCyberpunkPrintingInfo(defaultId!)!;
 
     const allInfos = getCyberpunkPrintingInfosForCanonical(canonical);
-    // Sanity: every Mandibular printing is Common so the rarity tie-break is
-    // inactive and the sortNumber tie-break is what selects the winner.
-    expect(allInfos.every((i) => cyberpunkRarityCode(i) === "common")).toBe(true);
+    const nonAltArtInfos = allInfos.filter(
+      (i) => !isCyberpunkAlternateArtPrinting({ setCode: i.set }),
+    );
+    expect(nonAltArtInfos.length).toBeLessThan(allInfos.length);
+    // Sanity: every default-eligible Mandibular printing is Common so the
+    // rarity tie-break is inactive and the sortNumber tie-break is what
+    // selects the winner.
+    expect(nonAltArtInfos.every((i) => cyberpunkRarityCode(i) === "common")).toBe(true);
 
-    const minSort = Math.min(...allInfos.map((i) => i.sortNumber));
-    const lowestSortInfos = allInfos
+    const minSort = Math.min(...nonAltArtInfos.map((i) => i.sortNumber));
+    const lowestSortInfos = nonAltArtInfos
       .filter((i) => i.sortNumber === minSort)
       .slice()
       .sort((a, b) => a.cardNumber.localeCompare(b.cardNumber));

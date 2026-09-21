@@ -88,7 +88,7 @@ export const relentlessHexchaser: GrandArchiveCard<GrandArchiveAbilityDefinition
           kind: "activated",
           text: "[Element Bonus] (2): Return Relentless Hexchaser from your graveyard to the field rested.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "pay-reserve",
             amount: 2,

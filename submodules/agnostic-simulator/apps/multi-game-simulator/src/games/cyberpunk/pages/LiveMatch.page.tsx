@@ -9,10 +9,12 @@ import {
 import type {
   AnimationPlanV2,
   ClientToServerEvents,
+  DropEligibility,
   EngineInteractionView,
   InteractionSubmission,
   InteractionSubmissionValue,
   ServerToClientEvents,
+  UndoScopeValue,
 } from "@tcg/protocol";
 import type {
   ConnectionDiagnosticEvent,
@@ -21,8 +23,20 @@ import type {
   SimulatorConnectionDiagnosticInput,
   SimulatorConnectionStatus,
 } from "@tcg/game-page-contract/connection-diagnostic";
-import { type NormalizedPresenceChange } from "@tcg/game-page-contract";
-import { AnimationPlanV2Schema, buildInteractionSubmissionForActionId } from "@tcg/protocol";
+import {
+  canEmitLiveMatchWriteFromHandle,
+  describeLiveMatchWriteGate,
+  LIVE_MATCH_HEARTBEAT_INTERVAL_MS,
+  LIVE_MATCH_OLDER_BOARD_FEEDBACK,
+  LIVE_MATCH_SYNCING_BOARD_COPY,
+  shouldShowLiveBoardSyncing,
+  type NormalizedPresenceChange,
+} from "@tcg/game-page-contract";
+import {
+  AnimationPlanV2Schema,
+  buildInteractionSubmissionForActionId,
+  validateInteractionSubmission,
+} from "@tcg/protocol";
 import {
   buildDiscordRichPresenceMatchUrl,
   clearDiscordPlayingGamePresence,
@@ -33,6 +47,7 @@ import { buildGatewaySocketIoUrl, type LiveGatewayMessage } from "../engine/live
 import type { GatewayConnectionState, GatewayHandle } from "@tcg/gateway-client";
 import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket";
 import {
+  liveGatewayJoinFromEvent,
   parseGatewayEvent,
   prepareLiveContext,
   reduceLiveGatewayMessage,
@@ -92,6 +107,7 @@ import {
   type RawEngineEventEntry,
   type Side,
 } from "../engine";
+import { fetchPracticeMatchConfigFromServer } from "../engine/practice/sessionStorage";
 import { P1, P2 } from "../engine/fixtures/scenarios";
 import { BoardSharedPage } from "./BoardShared.page";
 import {
@@ -101,7 +117,23 @@ import {
   shouldClearPendingAfterSubmitInteractionOk,
   type PendingOptimisticMove,
 } from "./livePendingMove";
+import {
+  clientAuthorityPushedVersionOffset,
+  describeLiveMatchServerFeedback,
+  initialClientAuthorityLastPushedVersion,
+  MATCH_RELOAD_FEEDBACK,
+  resolveClientAuthorityStaleRejection,
+  shouldAutoSyncFromServerCode,
+  shouldToastClientAuthorityRejection,
+} from "./clientAuthoritySync";
 import classes from "./Practice.module.css";
+
+interface ClientAuthorityStaleRejection {
+  gameId: string;
+  currentVersion: number;
+  state?: unknown;
+  nonce: number;
+}
 
 type ActiveProposalAction =
   | "cancel_match"
@@ -112,6 +144,7 @@ type ActiveProposalAction =
 
 interface ActiveProposal {
   actionType: ActiveProposalAction;
+  undoScope?: UndoScopeValue;
   senderPlayerId: string;
   deadline: number;
 }
@@ -143,6 +176,8 @@ type LoadState =
       chatMessages: ChatMessage[];
       freeTextEnabled: boolean;
       freeTextProposalPending: boolean;
+      boardCorrectionEnabled: boolean;
+      boardCorrectionProposalPending: boolean;
     };
 
 interface RemoteEngineLogRecord {
@@ -219,14 +254,22 @@ export function LiveMatchPage() {
   const [loadState, setLoadState] = useState<LoadState>({ status: "loading" });
   const [gatewayJoin, setGatewayJoin] = useState<GatewayJoinState | null>(null);
   const [playerConnections, setPlayerConnections] = useState<PlayerConnectionBySide>({});
+  const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
+    simulatorRoute.matchPageData?.dropEligibility ?? null,
+  );
   const [gatewayDiagnostic, setGatewayDiagnostic] = useState<LiveGatewayDiagnosticState>(() =>
     createInitialGatewayDiagnostic(),
   );
   const [gatewayHandle, setGatewayHandle] = useState<GatewayHandle | null>(null);
   const [syncRequestNonce, setSyncRequestNonce] = useState(0);
+  const [clientAuthorityStaleRejection, setClientAuthorityStaleRejection] =
+    useState<ClientAuthorityStaleRejection | null>(null);
   const [pendingOptimisticMove, setPendingOptimisticMove] = useState<PendingOptimisticMove | null>(
     null,
   );
+  const [sessionJoined, setSessionJoined] = useState(false);
+  const [sessionJoinedRole, setSessionJoinedRole] = useState<"player" | "spectator" | null>(null);
+  const [knownServerVersion, setKnownServerVersion] = useState<number | null>(null);
   const [activeProposal, setActiveProposal] = useState<ActiveProposal | null>(null);
   const handleRef = useRef<GatewayHandle | null>(null);
   const liveConnectionRef = useRef<SimulatorLiveConnectionContextValue | null>(null);
@@ -241,6 +284,7 @@ export function LiveMatchPage() {
   const previousConnectionLatencyRef = useRef<number | null>(null);
   const reconnectNotificationOpenRef = useRef(false);
   const startedAtMsRef = useRef(Date.now());
+  const bootstrappedIdentityRef = useRef<string | null>(null);
   const readyContext = loadState.status === "ready" ? loadState.context : null;
   const readyGameId = readyContext?.game.gameId ?? null;
   const hasReadyGameState = Boolean(readyContext?.game.state);
@@ -252,10 +296,61 @@ export function LiveMatchPage() {
     () => (readyContext ? resolveLocalPlayerId(readyContext) : undefined),
     [readyContext],
   );
-  const clientAuthorityConfig = useMemo(
-    () => (readyContext?.game.authority === "client" ? loadPracticeMatchConfig(matchId) : null),
-    [matchId, readyContext?.game.authority],
+  // sessionStorage is per-tab: a rejoin in a new tab or browser finds no local
+  // practice config even for the seated owner. Recover it from the server's
+  // stored quick-match setup so the rejoin remounts the client-authority board
+  // instead of the server-authority fallback, whose interaction path can never
+  // apply against a rebased client chain (stateID vs chain version).
+  const [serverPracticeConfig, setServerPracticeConfig] = useState<PracticeMatchConfig | null>(
+    null,
   );
+  const [serverPracticeConfigMisses, setServerPracticeConfigMisses] = useState<ReadonlySet<string>>(
+    () => new Set<string>(),
+  );
+  const clientAuthorityConfig = useMemo(
+    () =>
+      readyContext?.game.authority === "client"
+        ? (loadPracticeMatchConfig(matchId) ?? serverPracticeConfig)
+        : null,
+    [matchId, readyContext?.game.authority, serverPracticeConfig],
+  );
+  useEffect(() => {
+    const gameId = readyContext?.game.gameId;
+    if (readyContext?.game.authority !== "client" || !readyContext.game.state || !gameId) {
+      return;
+    }
+    if (loadPracticeMatchConfig(matchId) || serverPracticeConfig) {
+      return;
+    }
+    if (serverPracticeConfigMisses.has(gameId)) {
+      return;
+    }
+    let cancelled = false;
+    void fetchPracticeMatchConfigFromServer(gameId)
+      .then((config) => {
+        if (cancelled) return;
+        if (config) {
+          setServerPracticeConfig(config);
+        } else {
+          setServerPracticeConfigMisses((misses) => new Set(misses).add(gameId));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setServerPracticeConfigMisses((misses) => new Set(misses).add(gameId));
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    matchId,
+    readyContext?.game.authority,
+    readyContext?.game.gameId,
+    readyContext?.game.state,
+    serverPracticeConfig,
+    serverPracticeConfigMisses,
+  ]);
   const canRunClientAuthorityPractice = Boolean(
     canRunClientAuthorityPracticeForContext(
       readyContext,
@@ -311,17 +406,32 @@ export function LiveMatchPage() {
   ]);
 
   useEffect(() => {
+    const matchPageData = simulatorRoute.matchPageData;
+    // MatchSessionProvider refreshes commit a freshly parsed bootstrap object
+    // on every poll (acceptSession returns the incoming session, not the
+    // previous ref). Re-running the full reset on those commits would clear
+    // the gateway join and unmount the board right after game_joined, and no
+    // second join ever fires for the same socket. Only a real match/game
+    // change may re-bootstrap the page.
+    const identity = matchPageData
+      ? `${matchPageData.match.matchId}:${matchPageData.game.gameId}`
+      : null;
+    if (!identity || bootstrappedIdentityRef.current === identity) {
+      return;
+    }
+    bootstrappedIdentityRef.current = identity;
     setLoadState({ status: "loading" });
     setGatewayJoin(null);
     setPlayerConnections({});
     setActiveProposal(null);
     setGatewayDiagnostic(createInitialGatewayDiagnostic());
     setSyncRequestNonce(0);
+    setClientAuthorityStaleRejection(null);
     setPendingOptimisticMove(null);
     submittedInteractionMessagesRef.current.clear();
     try {
-      if (!simulatorRoute.matchPageData) return;
-      const context = liveMatchContextFromBootstrap(simulatorRoute.matchPageData);
+      if (!matchPageData) return;
+      const context = liveMatchContextFromBootstrap(matchPageData);
       seenLogKeysRef.current = new Set();
       seenAnimationIdsRef.current = new Set();
       const preparedContext = prepareLiveContext(context);
@@ -341,6 +451,8 @@ export function LiveMatchPage() {
         ),
         freeTextEnabled: preparedContext.history?.freeTextEnabled === true,
         freeTextProposalPending: false,
+        boardCorrectionEnabled: false,
+        boardCorrectionProposalPending: false,
       });
     } catch (error) {
       setLoadState({
@@ -406,15 +518,39 @@ export function LiveMatchPage() {
   const handleRejectedOptimisticMove = useCallback(
     (message: Extract<LiveGatewayMessage, { type: "move_rejected" }>) => {
       const context = latestContextRef.current;
+      if (
+        canRunClientAuthorityPractice &&
+        message.code === "rejected_stale" &&
+        context?.game.gameId === message.gameId
+      ) {
+        setClientAuthorityStaleRejection({
+          gameId: message.gameId,
+          currentVersion: message.currentVersion,
+          state: message.state,
+          nonce: Date.now(),
+        });
+        if (
+          !shouldToastClientAuthorityRejection({
+            code: message.code,
+            clientAuthority: true,
+          })
+        ) {
+          return;
+        }
+      }
       const needsAuthoritativeSync =
         context?.game.gameId === message.gameId &&
-        message.currentVersion > context.game.version &&
-        !message.state;
+        !message.state &&
+        (message.currentVersion > context.game.version ||
+          // An equal-version illegal rejection still means our mirror
+          // diverged (e.g. a stale automation fork attached a no-longer-valid
+          // entity); the authoritative state is the only way to repair it.
+          (message.code === "rejected_illegal" && message.currentVersion === context.game.version));
       const handled = rejectPendingOptimisticMove(message.reason, message.correlationId, {
         keepPendingUntilSync: needsAuthoritativeSync,
       });
       if (!handled) {
-        showMoveRejectedNotification(message);
+        showMoveRejectedNotification(message, context?.game.authority ?? "server");
       }
       if (needsAuthoritativeSync && context) {
         // Route through the session so the dedup window shared with the
@@ -422,7 +558,7 @@ export function LiveMatchPage() {
         liveConnectionRef.current?.requestStateSyncIfDue(context.game.version);
       }
     },
-    [rejectPendingOptimisticMove],
+    [canRunClientAuthorityPractice, rejectPendingOptimisticMove],
   );
 
   const handleSubmitInteractionResponse = useCallback(
@@ -478,12 +614,35 @@ export function LiveMatchPage() {
     liveConnectionRef.current?.requestStateSyncIfDue(version);
   }, []);
 
+  // Recovery hook for the missed-setup-update affordance: re-request the
+  // authoritative snapshot for the currently loaded game.
+  const handleSetupStallSync = useCallback(() => {
+    const context = latestContextRef.current;
+    if (context) requestLiveStateSync(context.game.version);
+  }, [requestLiveStateSync]);
+
   const handleGatewayEvent = useCallback(
     (
       type: keyof ServerToClientEvents,
       payload: Parameters<ServerToClientEvents[keyof ServerToClientEvents]>[0],
     ) => {
       const handle = handleRef.current;
+      if (type === "drop_eligibility" && payload && typeof payload === "object") {
+        const record = payload as { gameId?: string; dropEligibility?: DropEligibility };
+        if ((!record.gameId || record.gameId === gameId) && record.dropEligibility) {
+          setDropEligibility(record.dropEligibility);
+        }
+      }
+      if (type === "game_joined" && payload && typeof payload === "object") {
+        const record = payload as { dropEligibility?: DropEligibility };
+        if (record.dropEligibility) setDropEligibility(record.dropEligibility);
+        const rawJoin = liveGatewayJoinFromEvent(type, payload);
+        if (rawJoin) {
+          const joined = { ...rawJoin, nonce: Date.now() };
+          gatewayJoinRef.current = joined;
+          setGatewayJoin(joined);
+        }
+      }
       if (type === "presence_change" && payload && typeof payload === "object") {
         setPlayerConnections((current) =>
           applyPresenceChange(current, latestContextRef.current?.game.actorIds, payload),
@@ -522,6 +681,9 @@ export function LiveMatchPage() {
         if (typeof serverVersion !== "number") {
           return;
         }
+        setKnownServerVersion((current) =>
+          current === null ? serverVersion : Math.max(current, serverVersion),
+        );
         const localVersion = context.game.version;
         if (serverVersion > localVersion) {
           requestLiveStateSync(localVersion);
@@ -534,7 +696,22 @@ export function LiveMatchPage() {
       }
       const message = parseGatewayEvent(type, payload);
       if (!message) {
+        if (type === "game_joined") {
+          console.warn(
+            "[live-match] game_joined payload failed schema parse; seat kept from envelope",
+            {
+              gameId,
+              socketId: handle?.getState().connectionId,
+            },
+          );
+        }
         return;
+      }
+      if ("stateVersion" in message && typeof message.stateVersion === "number") {
+        const stateVersion: number = message.stateVersion;
+        setKnownServerVersion((current) =>
+          current === null ? stateVersion : Math.max(current, stateVersion),
+        );
       }
       if (message.type === "gateway_error" || message.type === "error") {
         if (message.code?.startsWith("proposal_")) {
@@ -546,8 +723,24 @@ export function LiveMatchPage() {
           },
           { type: message.type, message: message.message, details: message },
         );
-        showGatewayErrorNotification(message);
-        rejectPendingOptimisticMove(message.message, message.correlationId);
+        if (shouldAutoSyncFromServerCode(message.code) && canRunClientAuthorityPractice) {
+          const context = latestContextRef.current;
+          if (context) {
+            setClientAuthorityStaleRejection({
+              gameId: context.game.gameId,
+              currentVersion: context.game.version,
+              state: context.game.state,
+              nonce: Date.now(),
+            });
+            rejectPendingOptimisticMove(MATCH_RELOAD_FEEDBACK.message, message.correlationId);
+          }
+        } else {
+          showGatewayErrorNotification(
+            message,
+            latestContextRef.current?.game.authority ?? "server",
+          );
+          rejectPendingOptimisticMove(message.message, message.correlationId);
+        }
       }
       if (message.type === "move_accepted") {
         const pending = pendingOptimisticMoveRef.current;
@@ -573,6 +766,11 @@ export function LiveMatchPage() {
         clearPendingOptimisticMove(undefined);
       }
       if (message.type === "move_rejected") {
+        if (typeof message.currentVersion === "number") {
+          setKnownServerVersion((current) =>
+            current === null ? message.currentVersion : Math.max(current, message.currentVersion),
+          );
+        }
         handleRejectedOptimisticMove(message);
       }
       if (message.type === "proposal_received" && message.gameId === gameId && handle) {
@@ -594,6 +792,11 @@ export function LiveMatchPage() {
         const joined = { gameId: message.gameId, role: message.role, nonce: Date.now() };
         gatewayJoinRef.current = joined;
         setGatewayJoin(joined);
+        if (typeof message.stateVersion === "number") {
+          setKnownServerVersion((current) =>
+            current === null ? message.stateVersion : Math.max(current, message.stateVersion),
+          );
+        }
         setActiveProposal(activeProposalFromJoined(message));
         setPlayerConnections((current) =>
           applyPresencePlayers(current, latestContextRef.current?.game.actorIds, message.players),
@@ -620,10 +823,18 @@ export function LiveMatchPage() {
           },
           message,
         );
+        const boardCorrectionPolicy = reduceLiveBoardCorrectionPolicy(
+          {
+            boardCorrectionEnabled: previous.boardCorrectionEnabled,
+            boardCorrectionProposalPending: previous.boardCorrectionProposalPending,
+          },
+          message,
+        );
         if (message.type === "game_chat_history" && message.gameId === gameId) {
           return {
             ...previous,
             ...chatPolicy,
+            ...boardCorrectionPolicy,
             chatMessages: remoteChatMessagesForContext(
               parseRemoteChatMessages(message.messages),
               previous.context,
@@ -638,6 +849,7 @@ export function LiveMatchPage() {
           return {
             ...previous,
             ...chatPolicy,
+            ...boardCorrectionPolicy,
             chatMessages: mergeRemoteChatMessage(previous.chatMessages, chatMessage),
           };
         }
@@ -651,8 +863,9 @@ export function LiveMatchPage() {
           return previous;
         }
         if (effect.type !== "state") {
-          return isLiveChatPolicyChanged(previous, chatPolicy)
-            ? { ...previous, ...chatPolicy }
+          return isLiveChatPolicyChanged(previous, chatPolicy) ||
+            isLiveBoardCorrectionPolicyChanged(previous, boardCorrectionPolicy)
+            ? { ...previous, ...chatPolicy, ...boardCorrectionPolicy }
             : previous;
         }
         if (
@@ -692,6 +905,7 @@ export function LiveMatchPage() {
           engineEvents: nextEngineEvents,
           chatMessages: previous.chatMessages,
           ...chatPolicy,
+          ...boardCorrectionPolicy,
         };
       });
       if (message.type === "move_rejected") {
@@ -712,6 +926,7 @@ export function LiveMatchPage() {
       }
     },
     [
+      canRunClientAuthorityPractice,
       clearPendingOptimisticMove,
       gameId,
       handleRejectedOptimisticMove,
@@ -791,6 +1006,8 @@ export function LiveMatchPage() {
         }
         return { ...current, ...patch };
       });
+      setSessionJoined(s.joined);
+      setSessionJoinedRole(s.joinedRole);
 
       const context = latestContextRef.current;
       const side = context ? localConnectionSideForContext(context, contextPlayerId) : null;
@@ -812,14 +1029,15 @@ export function LiveMatchPage() {
       const isReady = s.status === "connected" && s.authenticated;
       if (!wasReady && isReady) {
         markLocalConnection("connected");
+        // The gateway (re)connected: anything streamed while the socket was
+        // down — including the setup updates that carry the first prompts —
+        // never reached this client. Ask for a fresh authoritative snapshot.
+        const context = latestContextRef.current;
+        if (context) requestLiveStateSync(context.game.version);
       } else if (s.status === "reconnecting" && previousStatus !== "reconnecting") {
         markLocalConnection("reconnecting");
-        gatewayJoinRef.current = null;
-        setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
       } else if (s.status === "disconnected" && previousStatus !== "disconnected") {
         markLocalConnection("disconnected");
-        gatewayJoinRef.current = null;
-        setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
       }
 
       if (s.latencyMs !== null && s.latencyMs !== previousLatencyMs && side) {
@@ -848,8 +1066,26 @@ export function LiveMatchPage() {
       previousConnectionAuthenticatedRef.current = s.authenticated;
       previousConnectionLatencyRef.current = s.latencyMs;
     },
-    [contextPlayerId, gameId],
+    [contextPlayerId, gameId, requestLiveStateSync],
   );
+
+  // Coming back to a background tab is a classic missed-update window: gate
+  // holds, timers throttle, sockets idle. Ask the server for an authoritative
+  // snapshot so a frozen setup/board self-heals without a manual reload.
+  useEffect(() => {
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== "visible") return;
+      const context = latestContextRef.current;
+      if (!context || context.game.status === "completed") return;
+      requestLiveStateSync(context.game.version);
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("focus", onVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("focus", onVisibilityChange);
+    };
+  }, [requestLiveStateSync]);
 
   useEffect(() => {
     if (!readyGameId || (!hasReadyGameState && !canRunClientAuthorityPractice)) {
@@ -881,8 +1117,9 @@ export function LiveMatchPage() {
       }
       setGatewayHandle((current) => (current === handle ? null : current));
       liveConnectionRef.current = null;
-      gatewayJoinRef.current = null;
-      setGatewayJoin((current) => (current?.gameId === gameId ? null : current));
+      setSessionJoined(false);
+      setSessionJoinedRole(null);
+      setKnownServerVersion(null);
       handle.release();
     };
   }, [
@@ -968,32 +1205,32 @@ export function LiveMatchPage() {
         return false;
       }
       const handle = handleRef.current;
-      if (!handle || handle.getState().status !== "connected") {
-        // eslint-disable-next-line no-console
-        console.warn("[live-match] gateway is not open; interaction not sent", submission.actionId);
+      const bootstrap = simulatorRoute.matchPageData;
+      const gate = bootstrap
+        ? canEmitLiveMatchWriteFromHandle({
+            handle,
+            viewer: bootstrap.viewer,
+            capabilities: {
+              actions: bootstrap.capabilities?.actions ?? bootstrap.viewer.role === "player",
+            },
+            gameStatus: bootstrap.game.status,
+            bootstrapGameId: bootstrap.game.gameId,
+            emitGameId: gameId,
+          })
+        : ({ ok: false, reason: "not_connected" } as const);
+      if (!handle || !gate.ok) {
+        const feedback = describeLiveMatchWriteGate(gate.ok ? "not_connected" : gate.reason);
+        console.warn("[live-match] interaction not sent", {
+          actionId: submission.actionId,
+          gameId,
+          reason: gate.ok ? "not_connected" : gate.reason,
+          socketId: handle?.getState().connectionId,
+        });
         showServerFeedbackNotification({
           id: `live-match:interaction-not-sent:${gameId}`,
           severity: "warning",
-          title: "Action not sent",
-          message: "The match server is reconnecting. Try the action again in a moment.",
-        });
-        return false;
-      }
-      const joined = gatewayJoinRef.current;
-      if (joined?.gameId !== gameId || joined.role !== "player") {
-        console.warn("[live-match] interaction blocked before gateway join", {
-          actionId: submission.actionId,
-          gameId,
-          joinedGameId: joined?.gameId,
-          joinedRole: joined?.role,
-          socketId: handle.getState().connectionId,
-          socketConnected: true,
-        });
-        showServerFeedbackNotification({
-          id: `live-match:interaction-before-join:${gameId}`,
-          severity: "warning",
-          title: "Rejoining match",
-          message: "The match connection is still seating you. Try the action again in a moment.",
+          title: feedback.title,
+          message: feedback.message,
         });
         return false;
       }
@@ -1045,7 +1282,7 @@ export function LiveMatchPage() {
       handle.emit("submit_interaction", message);
       return true;
     },
-    [gameId, matchId],
+    [gameId, matchId, simulatorRoute.matchPageData],
   );
 
   const remoteDispatch = useCallback(
@@ -1063,6 +1300,28 @@ export function LiveMatchPage() {
         values: input.values,
       });
       if (!submission) {
+        // The view no longer carries this action (state advanced or the
+        // adapter disabled it). Surface it — a silent false here previously
+        // deadlocked scry prompts with no diagnostic trail.
+        // eslint-disable-next-line no-console
+        console.warn("[live-match] interaction submission unavailable", {
+          actionId: input.actionId,
+          side: input.side,
+          stateVersion: input.interactionView.stateVersion,
+          actions: input.interactionView.actions.map((action) => ({
+            id: action.id,
+            enabled: action.enabled,
+          })),
+        });
+        return false;
+      }
+      const validation = validateInteractionSubmission(input.interactionView, submission);
+      if (!validation.ok) {
+        console.warn("[live-match] interaction submission rejected locally", {
+          actionId: input.actionId,
+          side: input.side,
+          issues: validation.issues,
+        });
         return false;
       }
       return submitInteractionForSide(state, input.side, submission);
@@ -1070,7 +1329,7 @@ export function LiveMatchPage() {
     [submitInteractionForSide],
   );
 
-  const requestRemoteUndo = useCallback(() => {
+  const requestRemoteUndo = useCallback((undoScope: UndoScopeValue) => {
     const handle = handleRef.current;
     const context = latestContextRef.current;
     if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
@@ -1084,17 +1343,22 @@ export function LiveMatchPage() {
     handle.emit("proposal_send", {
       gameId: context.game.gameId,
       actionType: "undo",
+      undoScope,
     });
     setActiveProposal({
       actionType: "undo",
+      undoScope,
       senderPlayerId: contextPlayerIdForProposal(context),
       deadline: Date.now() + 15_000,
     });
     notifications.show({
       id: `undo-proposal-sent:${context.game.gameId}`,
       color: "blue",
-      title: "Undo requested",
-      message: "Waiting for your opponent to approve the undo.",
+      title: undoScope === "turn_start" ? "Turn undo requested" : "Undo requested",
+      message:
+        undoScope === "turn_start"
+          ? "Waiting for your opponent to approve rewinding to the beginning of the turn."
+          : "Waiting for your opponent to approve the last-action undo.",
     });
     return true;
   }, []);
@@ -1179,17 +1443,81 @@ export function LiveMatchPage() {
     return sent;
   }, []);
 
+  const requestRemoteBoardCorrection = useCallback(() => {
+    const handle = handleRef.current;
+    const context = latestContextRef.current;
+    if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
+      notifications.show({
+        color: "red",
+        title: "Gateway unavailable",
+        message: "Reconnect before requesting board correction.",
+      });
+      return false;
+    }
+    const sent = emitGatewayBoardCorrectionRequest(handle, context.game.gameId);
+    if (sent) {
+      setLoadState((previous) =>
+        previous.status === "ready"
+          ? { ...previous, boardCorrectionProposalPending: true }
+          : previous,
+      );
+      setActiveProposal({
+        actionType: "enable_manual_mode",
+        senderPlayerId: contextPlayerIdForProposal(context),
+        deadline: Date.now() + 15_000,
+      });
+      notifications.show({
+        id: `board-correction-proposal-sent:${context.game.gameId}`,
+        color: "blue",
+        title: "Board correction requested",
+        message: "Waiting for your opponent to approve board state correction.",
+      });
+    }
+    return sent;
+  }, []);
+
+  const requestRemoteBoardCorrectionExit = useCallback(() => {
+    const handle = handleRef.current;
+    const context = latestContextRef.current;
+    if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
+      notifications.show({
+        color: "red",
+        title: "Gateway unavailable",
+        message: "Reconnect before exiting board correction.",
+      });
+      return false;
+    }
+    return emitGatewayBoardCorrectionExit(handle, context.game.gameId);
+  }, []);
+
+  const remoteExecuteMove = useCallback(
+    (input: { moveType: string; payload: Record<string, unknown>; expectedVersion: number }) => {
+      const handle = handleRef.current;
+      const context = latestContextRef.current;
+      if (!handle || handle.getState().status !== "connected" || !context?.game.gameId) {
+        notifications.show({
+          color: "red",
+          title: "Gateway unavailable",
+          message: "Reconnect before correcting the board.",
+        });
+        return false;
+      }
+      return emitGatewayExecuteMove(
+        handle,
+        context.game.gameId,
+        input.expectedVersion,
+        input.moveType,
+        input.payload,
+      );
+    },
+    [],
+  );
+
   const sendPushState = useCallback((payload: PushStatePayload) => {
     const handle = handleRef.current;
-    if (!handle || handle.getState().status !== "connected") {
+    if (!handle) {
       // eslint-disable-next-line no-console
       console.warn("[live-match] gateway is not open; state not pushed", payload.moveType);
-      showServerFeedbackNotification({
-        id: `live-match:state-not-pushed:${payload.gameId}`,
-        severity: "warning",
-        title: "State sync delayed",
-        message: "The match server is reconnecting before it can receive updates.",
-      });
       return;
     }
     handle.emit("push_state", payload);
@@ -1220,8 +1548,7 @@ export function LiveMatchPage() {
     const localPlayerId = contextPlayerId ?? resolveLocalPlayerId(context);
     const canSendHostedChat = Boolean(localPlayerId);
     const canRequestFreeText = false;
-    const clientAuthorityJoined =
-      gatewayJoin?.gameId === context.game.gameId && gatewayJoin.role === "player";
+    const clientAuthorityJoined = sessionJoined && sessionJoinedRole === "player";
     if (
       context.game.authority === "client" &&
       clientAuthorityConfig &&
@@ -1251,6 +1578,7 @@ export function LiveMatchPage() {
           connectionDiagnostic={connectionDiagnostic}
           syncRequestNonce={syncRequestNonce}
           sendPushState={sendPushState}
+          staleRejection={clientAuthorityStaleRejection}
         />
       );
     }
@@ -1292,11 +1620,18 @@ export function LiveMatchPage() {
         sendRemoteChatPreset={sendRemoteChatPreset}
         sendRemoteChatText={sendRemoteChatText}
         requestRemoteFreeTextChat={requestRemoteFreeTextChat}
+        remoteBoardCorrectionEnabled={loadState.boardCorrectionEnabled}
+        remoteBoardCorrectionProposalPending={loadState.boardCorrectionProposalPending}
+        canRequestBoardCorrection={!viewerOnly}
+        requestRemoteBoardCorrection={requestRemoteBoardCorrection}
+        requestRemoteBoardCorrectionExit={requestRemoteBoardCorrectionExit}
+        remoteExecuteMove={remoteExecuteMove}
         hasPendingRemoteMove={pendingOptimisticMove !== null}
         playerIdentities={playerIdentities}
         playerConnections={boardPlayerConnections}
         connectionDiagnostic={connectionDiagnostic}
         onClaimRivalDrop={claimRivalDrop}
+        dropEligibility={dropEligibility}
         liveMatchSidebar={{
           matchId: context.match.matchId,
           gameId: context.game.gameId,
@@ -1306,6 +1641,7 @@ export function LiveMatchPage() {
           player2Score: context.match.player2Score,
           returnUrl,
         }}
+        onSetupStallSync={handleSetupStallSync}
         remoteReturnUrl={returnUrl}
         postGameContext={{
           gameId: context.game.gameId,
@@ -1326,6 +1662,8 @@ export function LiveMatchPage() {
     clientAuthorityConfig,
     connectionDiagnostic,
     gatewayJoin,
+    sessionJoined,
+    sessionJoinedRole,
     loadState,
     location.search,
     liveViewerEngineBuilder,
@@ -1335,11 +1673,16 @@ export function LiveMatchPage() {
     remoteSubmitInteraction,
     requestRemoteUndo,
     requestRemoteFreeTextChat,
+    requestRemoteBoardCorrection,
+    requestRemoteBoardCorrectionExit,
+    remoteExecuteMove,
     contextPlayerId,
     sendRemoteChatPreset,
     sendRemoteChatText,
     sendPushState,
     syncRequestNonce,
+    clientAuthorityStaleRejection,
+    handleSetupStallSync,
   ]);
 
   const returnUrl = getMatchmakingReturnUrl(CYBERPUNK_GAME_SLUG, location.search);
@@ -1374,6 +1717,10 @@ export function LiveMatchPage() {
       </div>
     </main>
   );
+  const localVersion = readyContext?.game.version ?? 0;
+  const showLiveSyncing =
+    Boolean(simulatorRoute.matchPageData?.viewer.role === "player") &&
+    shouldShowLiveBoardSyncing({ knownServerVersion, localVersion });
   const content = board ?? fallback;
   const proposalBanner =
     loadState.status === "ready" ? (
@@ -1404,7 +1751,7 @@ export function LiveMatchPage() {
       handle={gatewayHandle}
       bootstrap={simulatorRoute.matchPageData}
       buildHeartbeatPayload={buildLiveHeartbeatPayload}
-      heartbeatIntervalMs={15_000}
+      heartbeatIntervalMs={LIVE_MATCH_HEARTBEAT_INTERVAL_MS}
       authority={readyContext?.game.authority}
       onGameEvent={handleLiveGameEvent}
       onPresenceChange={derivePresenceChat}
@@ -1413,6 +1760,11 @@ export function LiveMatchPage() {
     >
       <CyberpunkLiveConnectionBridge onState={handleLiveConnectionState} />
       {proposalBanner}
+      {showLiveSyncing ? (
+        <p role="status" className={classes.lead}>
+          {LIVE_MATCH_SYNCING_BOARD_COPY}
+        </p>
+      ) : null}
       {content}
     </SimulatorLiveConnectionProvider>
   );
@@ -1448,6 +1800,7 @@ interface ClientAuthorityPracticeBoardProps {
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
   syncRequestNonce: number;
   sendPushState: (payload: PushStatePayload) => void;
+  staleRejection: ClientAuthorityStaleRejection | null;
 }
 
 function ClientAuthorityPracticeBoard({
@@ -1468,17 +1821,44 @@ function ClientAuthorityPracticeBoard({
   connectionDiagnostic,
   syncRequestNonce,
   sendPushState,
+  staleRejection,
 }: ClientAuthorityPracticeBoardProps) {
   const engineRef = useRef<CyberpunkTestEngine | null>(null);
   const engineGameIdRef = useRef<string | null>(null);
   const lastPushedVersionRef = useRef<number>(-1);
+  // Push versions must form a gapless chain against the server's stored chain
+  // (version == expectedVersion + 1). After a silent rebuild, numbering matches
+  // the restored snapshot; after a stale-rebase, it maps onto the server's
+  // reported head. This offset maps local stateIDs onto that chain.
+  const pushedVersionOffsetRef = useRef(0);
+  const recoveredOnceRef = useRef(false);
+  const [engineGeneration, setEngineGeneration] = useState(0);
+  const handledStaleNonceRef = useRef<number | null>(null);
 
   if (!engineRef.current || engineGameIdRef.current !== context.game.gameId) {
+    const hydratedFromServer = Boolean(context.game.state);
     engineRef.current = context.game.state
       ? createLiveMatchViewerEngine(context.game.state)
       : createPracticeEngine(config);
     engineGameIdRef.current = context.game.gameId;
-    lastPushedVersionRef.current = -1;
+    const engineStateId = engineRef.current.getState().ctx.stateID;
+    // Anchor pushes to the server's stored chain version, not the snapshot's
+    // internal stateID: after a rebase or recovered baseline the two diverge
+    // (stateID 1 against chain head 5) and stateID-numbered pushes would be
+    // stale-rejected forever.
+    const serverVersion = hydratedFromServer ? context.game.version : null;
+    lastPushedVersionRef.current = initialClientAuthorityLastPushedVersion({
+      hydratedFromServer,
+      localVersion: engineStateId,
+      serverVersion,
+    });
+    pushedVersionOffsetRef.current = clientAuthorityPushedVersionOffset({
+      hydratedFromServer,
+      serverVersion,
+      engineStateId,
+    });
+    recoveredOnceRef.current = false;
+    handledStaleNonceRef.current = null;
   }
 
   const pushCurrentState = useCallback(
@@ -1489,7 +1869,7 @@ function ClientAuthorityPracticeBoard({
       }
 
       const localState = engine.getState();
-      const version = localState.ctx.stateID;
+      const version = localState.ctx.stateID + pushedVersionOffsetRef.current;
       if (!force && !commit && version === lastPushedVersionRef.current) {
         return;
       }
@@ -1530,6 +1910,9 @@ function ClientAuthorityPracticeBoard({
   );
 
   useEffect(() => {
+    if (lastPushedVersionRef.current >= 0) {
+      return;
+    }
     pushCurrentState("init");
   }, [pushCurrentState]);
 
@@ -1537,8 +1920,89 @@ function ClientAuthorityPracticeBoard({
     if (syncRequestNonce <= 0) {
       return;
     }
+    const engine = engineRef.current;
+    if (!engine) {
+      return;
+    }
+    const localVersion = engine.getState().ctx.stateID;
+    if (localVersion === lastPushedVersionRef.current) {
+      return;
+    }
     pushCurrentState("sync", undefined, true);
   }, [pushCurrentState, syncRequestNonce]);
+
+  useEffect(() => {
+    if (!staleRejection || staleRejection.gameId !== context.game.gameId) {
+      return;
+    }
+    if (handledStaleNonceRef.current === staleRejection.nonce) {
+      return;
+    }
+    handledStaleNonceRef.current = staleRejection.nonce;
+    const engine = engineRef.current;
+    if (!engine) {
+      return;
+    }
+    const localVersion = engine.getState().ctx.stateID;
+    const snapshot = context.game.state;
+    const resolution = resolveClientAuthorityStaleRejection({
+      localVersion,
+      serverCurrentVersion: staleRejection.currentVersion,
+      snapshot,
+      // The context snapshot is the page-load bootstrap: after a remount it
+      // can be arbitrarily stale. Acking is only safe when it is current —
+      // a stale snapshot gets the same rebase treatment as no snapshot.
+      snapshotVersion: snapshot == null ? undefined : context.game.version,
+      recoveredOnce: recoveredOnceRef.current,
+    });
+    if (resolution.action === "ack") {
+      lastPushedVersionRef.current = Math.max(lastPushedVersionRef.current, localVersion);
+      return;
+    }
+    if (resolution.action === "silent_rebuild") {
+      recoveredOnceRef.current = true;
+      engineRef.current = createLiveMatchViewerEngine(resolution.snapshot, context.match.matchId);
+      engineGameIdRef.current = context.game.gameId;
+      const rebuiltStateId = engineRef.current.getState().ctx.stateID;
+      // Same anchor as the mount path: the restored snapshot's stateID does
+      // not necessarily equal the server chain version it was stored under.
+      lastPushedVersionRef.current = initialClientAuthorityLastPushedVersion({
+        hydratedFromServer: true,
+        localVersion: rebuiltStateId,
+        serverVersion: context.game.version,
+      });
+      pushedVersionOffsetRef.current = clientAuthorityPushedVersionOffset({
+        hydratedFromServer: true,
+        serverVersion: context.game.version,
+        engineStateId: rebuiltStateId,
+      });
+      setEngineGeneration((generation) => generation + 1);
+      return;
+    }
+    if (resolution.action === "rebase") {
+      // Diverged chain bookkeeping: the server reports a head it has no
+      // snapshot for. Renumber local stateIDs onto that head so the force
+      // push lands at version = baseVersion with expectedVersion =
+      // baseVersion - 1, exactly the head the server's CAS will accept.
+      pushedVersionOffsetRef.current = resolution.baseVersion - localVersion;
+      pushCurrentState("rebase", undefined, true);
+      return;
+    }
+    if (resolution.action !== "ask_reload") {
+      const unhandledResolution: never = resolution;
+      throw new Error(
+        `Unhandled client-authority stale resolution: ${JSON.stringify(unhandledResolution)}`,
+      );
+    }
+    showReloadNotification(context.game.gameId);
+  }, [
+    context.game.gameId,
+    context.game.state,
+    context.match.matchId,
+    context.game.version,
+    pushCurrentState,
+    staleRejection,
+  ]);
 
   const boardPlayerConnections = useMemo(
     () => playerConnectionsForBoard(context, playerConnections),
@@ -1554,6 +2018,7 @@ function ClientAuthorityPracticeBoard({
 
   return (
     <BoardSharedPage
+      key={`${context.game.gameId}:${engineGeneration}`}
       scenarioId={DEFAULT_SCENARIO}
       initialEngineBuilder={() => engineRef.current ?? createPracticeEngine(config)}
       initialAi={createPracticeAiConfig(config)}
@@ -2087,6 +2552,75 @@ function isLiveChatPolicyChanged(
   );
 }
 
+export interface LiveBoardCorrectionPolicyState {
+  boardCorrectionEnabled: boolean;
+  boardCorrectionProposalPending: boolean;
+}
+
+export function reduceLiveBoardCorrectionPolicy(
+  state: LiveBoardCorrectionPolicyState,
+  message: LiveGatewayMessage,
+): LiveBoardCorrectionPolicyState {
+  if (message.type === "game_joined") {
+    const pendingAction =
+      message.pendingProposal && typeof message.pendingProposal === "object"
+        ? (message.pendingProposal as { actionType?: unknown }).actionType
+        : undefined;
+    return {
+      boardCorrectionEnabled: message.manualModeEnabled === true,
+      boardCorrectionProposalPending: pendingAction === "enable_manual_mode",
+    };
+  }
+
+  if (message.type === "proposal_resolved") {
+    if (message.actionType === "enable_manual_mode") {
+      return {
+        boardCorrectionEnabled: state.boardCorrectionEnabled || message.resolution === "accepted",
+        boardCorrectionProposalPending: false,
+      };
+    }
+    if (message.actionType === "disable_manual_mode") {
+      return {
+        boardCorrectionEnabled:
+          message.resolution === "accepted" ? false : state.boardCorrectionEnabled,
+        boardCorrectionProposalPending: false,
+      };
+    }
+  }
+
+  if (
+    message.type === "proposal_expired" &&
+    (message.actionType === "enable_manual_mode" || message.actionType === "disable_manual_mode")
+  ) {
+    return { ...state, boardCorrectionProposalPending: false };
+  }
+
+  if (message.type === "chat_message") {
+    const systemEvent =
+      message.message && typeof message.message === "object"
+        ? (message.message as { kind?: unknown; systemEvent?: unknown }).systemEvent
+        : undefined;
+    if (systemEvent === "enable_manual_mode_accepted") {
+      return { boardCorrectionEnabled: true, boardCorrectionProposalPending: false };
+    }
+    if (systemEvent === "disable_manual_mode_accepted") {
+      return { boardCorrectionEnabled: false, boardCorrectionProposalPending: false };
+    }
+  }
+
+  return state;
+}
+
+function isLiveBoardCorrectionPolicyChanged(
+  previous: LiveBoardCorrectionPolicyState,
+  next: LiveBoardCorrectionPolicyState,
+): boolean {
+  return (
+    previous.boardCorrectionEnabled !== next.boardCorrectionEnabled ||
+    previous.boardCorrectionProposalPending !== next.boardCorrectionProposalPending
+  );
+}
+
 export function emitGatewayChatPreset(
   handle: Pick<GatewayHandle, "emit"> | null,
   gameId: string,
@@ -2119,6 +2653,42 @@ export function emitGatewayFreeTextRequest(
   void handle;
   void gameId;
   return false;
+}
+
+export function emitGatewayBoardCorrectionRequest(
+  handle: Pick<GatewayHandle, "emit"> | null,
+  gameId: string,
+): boolean {
+  if (!handle || !gameId) {
+    return false;
+  }
+  handle.emit("proposal_send", { gameId, actionType: "enable_manual_mode" });
+  return true;
+}
+
+export function emitGatewayBoardCorrectionExit(
+  handle: Pick<GatewayHandle, "emit"> | null,
+  gameId: string,
+): boolean {
+  if (!handle || !gameId) {
+    return false;
+  }
+  handle.emit("proposal_send", { gameId, actionType: "disable_manual_mode" });
+  return true;
+}
+
+export function emitGatewayExecuteMove(
+  handle: Pick<GatewayHandle, "emit"> | null,
+  gameId: string,
+  expectedVersion: number,
+  moveType: string,
+  payload: Record<string, unknown>,
+): boolean {
+  if (!handle || !gameId) {
+    return false;
+  }
+  handle.emit("execute_move", { gameId, expectedVersion, moveType, payload });
+  return true;
 }
 
 function stableNumericId(value: string): number {
@@ -2235,16 +2805,43 @@ function correlationId(): string {
 type GatewayErrorMessage = Extract<LiveGatewayMessage, { type: "gateway_error" | "error" }>;
 type MoveRejectedMessage = Extract<LiveGatewayMessage, { type: "move_rejected" }>;
 
-function showGatewayErrorNotification(message: GatewayErrorMessage): void {
+function showReloadNotification(gameId: string): void {
   showServerFeedbackNotification({
-    id: message.correlationId ? `gateway-error:${message.correlationId}` : undefined,
-    severity: "error",
-    title: message.code ? `Server error: ${message.code}` : "Server error",
-    message: message.message,
+    id: `live-match:reload:${gameId}`,
+    severity: "warning",
+    title: MATCH_RELOAD_FEEDBACK.title,
+    message: MATCH_RELOAD_FEEDBACK.message,
   });
 }
 
-function showMoveRejectedNotification(message: MoveRejectedMessage): void {
+function showGatewayErrorNotification(
+  message: GatewayErrorMessage,
+  authority: "server" | "client" = "server",
+): void {
+  const feedback = describeLiveMatchServerFeedback({ ...message, authority });
+  showServerFeedbackNotification({
+    id: message.correlationId ? `gateway-error:${message.correlationId}` : undefined,
+    severity: feedback.severity,
+    title: feedback.title,
+    message: feedback.message,
+  });
+}
+
+function showMoveRejectedNotification(
+  message: MoveRejectedMessage,
+  authority: "server" | "client" = "server",
+): void {
+  if (message.code === "rejected_stale" && authority === "server") {
+    showServerFeedbackNotification({
+      id: message.correlationId
+        ? `move-rejected:${message.correlationId}`
+        : `move-rejected:${message.gameId}:${message.reason}`,
+      severity: "warning",
+      title: LIVE_MATCH_OLDER_BOARD_FEEDBACK.title,
+      message: LIVE_MATCH_OLDER_BOARD_FEEDBACK.message,
+    });
+    return;
+  }
   const isLoadStateFailure = message.reason.toLowerCase().includes("could not load game state");
   showServerFeedbackNotification({
     id: message.correlationId
@@ -2265,6 +2862,9 @@ function activeProposalFromReceived(
   }
   return {
     actionType,
+    ...(actionType === "undo"
+      ? { undoScope: message.undoScope === "turn_start" ? "turn_start" : "last_move" }
+      : {}),
     senderPlayerId: message.senderPlayerId,
     deadline: message.deadline,
   };
@@ -2281,6 +2881,7 @@ function activeProposalFromJoined(
     actionType?: unknown;
     senderPlayerId?: unknown;
     deadline?: unknown;
+    undoScope?: unknown;
   };
   const actionType =
     typeof candidate.actionType === "string"
@@ -2295,6 +2896,9 @@ function activeProposalFromJoined(
   }
   return {
     actionType,
+    ...(actionType === "undo"
+      ? { undoScope: candidate.undoScope === "turn_start" ? "turn_start" : "last_move" }
+      : {}),
     senderPlayerId: candidate.senderPlayerId,
     deadline: candidate.deadline,
   };
@@ -2317,7 +2921,7 @@ function contextPlayerIdForProposal(context: LiveMatchContext): string {
   return resolveLocalPlayerId(context) ?? "";
 }
 
-function proposalCopy(actionType: ActiveProposalAction): {
+function proposalCopy(proposal: ActiveProposal): {
   actionLabel: string;
   requesterTitle: string;
   requesterMessage: string;
@@ -2326,17 +2930,28 @@ function proposalCopy(actionType: ActiveProposalAction): {
   acceptLabel: string;
   declineLabel: string;
 } {
-  switch (actionType) {
+  switch (proposal.actionType) {
     case "undo":
-      return {
-        actionLabel: "Undo request",
-        requesterTitle: "Undo requested",
-        requesterMessage: "Waiting for opponent response.",
-        responderTitle: "Opponent requested undo",
-        responderMessage: "Approve or decline the last-move undo request.",
-        acceptLabel: "Accept undo",
-        declineLabel: "Reject",
-      };
+      return proposal.undoScope === "turn_start"
+        ? {
+            actionLabel: "Turn undo request",
+            requesterTitle: "Turn undo requested",
+            requesterMessage: "Waiting for opponent response.",
+            responderTitle: "Opponent requested a turn undo",
+            responderMessage:
+              "Approve or decline returning to the beginning of the current turn's Main Phase.",
+            acceptLabel: "Accept turn undo",
+            declineLabel: "Reject",
+          }
+        : {
+            actionLabel: "Undo request",
+            requesterTitle: "Undo requested",
+            requesterMessage: "Waiting for opponent response.",
+            responderTitle: "Opponent requested undo",
+            responderMessage: "Approve or decline the last-action undo request.",
+            acceptLabel: "Accept undo",
+            declineLabel: "Reject",
+          };
     case "enable_free_text_chat":
       return {
         actionLabel: "Free text request",
@@ -2394,7 +3009,7 @@ function LiveProposalBanner({
   if (!proposal) {
     return null;
   }
-  const copy = proposalCopy(proposal.actionType);
+  const copy = proposalCopy(proposal);
   const isRequester = localPlayerId !== undefined && proposal.senderPlayerId === localPlayerId;
   const secondsRemaining = Math.max(0, Math.ceil((proposal.deadline - Date.now()) / 1000));
   return (
@@ -2498,6 +3113,32 @@ function handleProposalResolved(
     return;
   }
 
+  if (message.actionType === "enable_manual_mode") {
+    notifications.show({
+      id: `board-correction-proposal-resolved:${message.gameId}:${message.resolution}`,
+      color: message.resolution === "accepted" ? "green" : "yellow",
+      title:
+        message.resolution === "accepted"
+          ? "Board correction enabled"
+          : "Board correction declined",
+      message:
+        message.resolution === "accepted"
+          ? "Both players can now correct the board."
+          : "The board correction request was not approved.",
+    });
+    return;
+  }
+
+  if (message.actionType === "disable_manual_mode") {
+    notifications.show({
+      id: `board-correction-disabled:${message.gameId}`,
+      color: "blue",
+      title: "Board correction off",
+      message: "Board state correction is no longer active.",
+    });
+    return;
+  }
+
   if (message.actionType !== "undo") {
     return;
   }
@@ -2520,6 +3161,16 @@ function handleProposalExpired(
       id: `free-text-proposal-expired:${message.gameId}`,
       color: "yellow",
       title: "Free text request expired",
+      message: "Your opponent did not respond in time.",
+    });
+    return;
+  }
+
+  if (message.actionType === "enable_manual_mode") {
+    notifications.show({
+      id: `board-correction-proposal-expired:${message.gameId}`,
+      color: "yellow",
+      title: "Board correction request expired",
       message: "Your opponent did not respond in time.",
     });
     return;

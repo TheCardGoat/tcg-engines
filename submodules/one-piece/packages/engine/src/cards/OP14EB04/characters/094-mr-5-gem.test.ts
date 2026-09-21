@@ -1,7 +1,7 @@
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, op01Shanks120 } from "@tcg/op-cards";
 import type { CharacterCard } from "@tcg/op-types";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Mr5Gem094 } from "../../../../../cards/src/cards/OP14EB04/characters/094-mr-5-gem.ts";
+import { op14eb04Mr5Gem094 } from "../../../../../cards/src/cards/characters/op14-094-mr-5-gem.ts";
 import { registerCards } from "../../../../../cards/src/runtime-catalog.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";

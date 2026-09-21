@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op08Kaido079 } from "../../../../../cards/src/cards/OP08/characters/079-kaido.ts";
+import { op08Kaido079 } from "../../../../../cards/src/cards/characters/op08-079-kaido.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP08-079 Kaido", () => {

@@ -15,6 +15,12 @@ export interface GameLogEntry {
   data?: unknown;
   /** Wall-clock timestamp at which the event was emitted. */
   ts?: number;
+  /**
+   * Stored state-chain version the log was produced at, when the source
+   * record carries one. Games whose log feeds dedupe or order by state
+   * version (e.g. gundam) read this; absent for legacy emitters.
+   */
+  stateVersion?: number;
 }
 
 export interface MoveRecord {

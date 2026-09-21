@@ -43,7 +43,7 @@ export const seasideRangefinder: GrandArchiveCard<GrandArchiveAbilityDefinition,
           kind: "activated",
           text: "[Class Bonus] [Element Bonus] (2), Banish this card from your graveyard: Target unit becomes distant. (Activate this ability only if your champion's class matches this card's class.)",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "all",
             costs: [

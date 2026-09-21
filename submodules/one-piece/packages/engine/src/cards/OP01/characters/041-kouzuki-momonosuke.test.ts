@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op01KouzukiMomonosuke041 } from "../../../../../cards/src/cards/OP01/characters/041-kouzuki-momonosuke.ts";
+import { op01KouzukiMomonosuke041 } from "../../../../../cards/src/cards/characters/op01-041-kouzuki-momonosuke.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-041 Kouzuki Momonosuke", () => {

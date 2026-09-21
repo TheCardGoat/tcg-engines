@@ -1,6 +1,6 @@
 import { eb01Doma005, op14eb04EdwardNewgate044 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Gladius062 } from "../../../../../cards/src/cards/OP14EB04/characters/062-gladius.ts";
+import { op14eb04Gladius062 } from "../../../../../cards/src/cards/characters/op14-062-gladius.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

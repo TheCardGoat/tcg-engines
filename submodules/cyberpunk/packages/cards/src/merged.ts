@@ -149,6 +149,62 @@ const mergedCyberpunkCards: CardDefinition[] = mergeDuplicateCards(allStructured
 );
 
 /**
+ * Legacy catalog slugs that embedded accent-mangling artifacts (a combining
+ * mark turned into a stray hyphen by an upstream slugifier, e.g. "Gilded
+ * Matón" → `gilded-mato-n`). Catalog slugs are accent-folded since the
+ * scraper converged on the canonical slugify, so these map onto the folded
+ * canonical slug. Kept as lookup aliases so deck rows, URLs, and snapshots
+ * stored under the legacy slugs keep resolving.
+ */
+export const legacyAccentMangledSlugAliases: Readonly<Record<string, string>> = {
+  "gilded-mato-n": "gilded-maton",
+  "el-sombrero-n-la-venganza-lenta": "el-sombreron-la-venganza-lenta",
+  "judy-a-lvarez-braindance-maestro": "judy-alvarez-braindance-maestro",
+  "judy-a-lvarez-nothing-to-doubt": "judy-alvarez-nothing-to-doubt",
+  "les-e-le-mens": "les-elemens",
+  "muamar-reyes-el-capita-n": "muamar-reyes-el-capitan",
+};
+
+/**
+ * Fold a printed name the way stored deck rows are slugified: decompose
+ * accents, drop marks, then hyphenate. Catalog slugs are folded the same way
+ * (`gilded-maton`), so this is an exact match for current slugs and only
+ * differs for data stored under legacy aliases.
+ */
+function foldDisplaySlug(text: string): string {
+  return text
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_\u2014-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function indexUnambiguousDerivedDisplaySlugs(
+  cards: readonly CardDefinition[],
+  byId: Map<string, CardDefinition>,
+): void {
+  const derived = new Map<string, CardDefinition>();
+  const ambiguous = new Set<string>();
+  for (const card of cards) {
+    const slug = foldDisplaySlug(card.displayName);
+    if (!slug) continue;
+    const existing = derived.get(slug);
+    if (existing && existing.canonicalId !== card.canonicalId) {
+      derived.delete(slug);
+      ambiguous.add(slug);
+      continue;
+    }
+    if (!ambiguous.has(slug)) derived.set(slug, card);
+  }
+  for (const [slug, card] of derived) {
+    if (!byId.has(slug)) byId.set(slug, card);
+  }
+}
+
+/**
  * Lookup keyed by each stable canonical slug, merged runtime id, and authored
  * source id. Preview-only ids are intentionally absent, so callers can keep a
  * strict "Unknown Cyberpunk card" rejection while resolving any legitimately
@@ -167,6 +223,11 @@ const mergedCyberpunkCardsById: ReadonlyMap<string, CardDefinition> = (() => {
   for (const source of allStructuredCards) {
     const merged = slugToMerged.get(source.slug);
     if (merged) byId.set(source.id, merged);
+  }
+  indexUnambiguousDerivedDisplaySlugs(mergedCyberpunkCards, byId);
+  for (const [legacySlug, canonicalSlug] of Object.entries(legacyAccentMangledSlugAliases)) {
+    const merged = slugToMerged.get(canonicalSlug);
+    if (merged && !byId.has(legacySlug)) byId.set(legacySlug, merged);
   }
   return byId;
 })();

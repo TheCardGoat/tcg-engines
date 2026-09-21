@@ -1,3 +1,8 @@
+import {
+  bindGrandArchiveArt,
+  restoreGrandArchiveArt,
+  type GrandArchiveArtPin,
+} from "./presentation.ts";
 import { grandArchivePregameAdapter } from "./preparation.ts";
 import { getGrandArchiveCard, grandArchiveCards } from "@tcg/grand-archive-cards";
 import {
@@ -125,7 +130,12 @@ async function createEngine(input: ServerEngineCreateInput): Promise<GrandArchiv
     firstPlayerId,
     randomSeed,
   });
-  return new GrandArchiveServerEngine(program, new GrandArchiveMatchRuntime(program, state));
+  const engine = new GrandArchiveServerEngine(
+    program,
+    new GrandArchiveMatchRuntime(program, state),
+  );
+  bindGrandArchiveArt(engine.art, input.cardsMaps, state.objects);
+  return engine;
 }
 
 export const grandArchiveServerAdapter: GameAdapter = {
@@ -137,6 +147,7 @@ export const grandArchiveServerAdapter: GameAdapter = {
   buildCardInstances(decks: ReadonlyArray<DeckBuildInput>): CardsMaps {
     const cardInstances: Record<string, string> = {};
     const owners: Record<string, string[]> = {};
+    const printingIdByInstanceId: Record<string, string> = {};
     const instanceSections: Record<string, string> = {};
     const deckDeclarationsByOwnerId: NonNullable<CardsMaps["deckDeclarationsByOwnerId"]> = {};
     let hasSections = false;
@@ -147,6 +158,12 @@ export const grandArchiveServerAdapter: GameAdapter = {
         for (let copy = 0; copy < entry.qty; copy += 1) {
           const instanceId = `${owner}-${canonicalId(entry.cardId)}-${ordinal++}`;
           cardInstances[instanceId] = entry.cardId;
+          if (entry.printingId) {
+            const card = getGrandArchiveCard(entry.cardId);
+            if (!card?.printings.some((p) => p.id === entry.printingId))
+              throw new Error("Selected printing does not belong to card");
+            printingIdByInstanceId[instanceId] = entry.printingId;
+          }
           owned.push(instanceId);
           if (entry.sectionId && !isGrandArchiveDeckSection(entry.sectionId)) {
             throw new Error(`Unknown Grand Archive deck section: ${entry.sectionId}`);
@@ -169,10 +186,11 @@ export const grandArchiveServerAdapter: GameAdapter = {
       ? {
           cardInstances,
           owners,
+          presentation: { printingIdByInstanceId },
           instanceSections,
           ...(Object.keys(deckDeclarationsByOwnerId).length ? { deckDeclarationsByOwnerId } : {}),
         }
-      : { cardInstances, owners };
+      : { cardInstances, owners, presentation: { printingIdByInstanceId } };
   },
   getCardById(publicId) {
     const card = getGrandArchiveCard(publicId);
@@ -314,6 +332,10 @@ export const grandArchiveServerAdapter: GameAdapter = {
       metadata: {
         schemaVersion: 1,
         replayJournal: engine.replayJournal,
+        presentation: {
+          catalog: engine.art.catalog,
+          printingIdByObjectId: engine.art.printingIdByObjectId,
+        },
       } satisfies GrandArchiveAdapterMetadataV1,
     };
   },
@@ -331,6 +353,7 @@ export const grandArchiveServerAdapter: GameAdapter = {
       program,
       new GrandArchiveMatchRuntime(program, state),
       replayJournal,
+      await restoreGrandArchiveArt(metadata.presentation),
     );
   },
   extractCardsMapsFromSnapshot(snapshot) {
@@ -342,6 +365,7 @@ export const grandArchiveServerAdapter: GameAdapter = {
 interface GrandArchiveAdapterMetadataV1 {
   readonly schemaVersion: 1;
   readonly replayJournal: GrandArchiveReplayJournalV1;
+  readonly presentation?: GrandArchiveArtPin;
 }
 
 function parseGrandArchiveAdapterMetadata(value: unknown): GrandArchiveAdapterMetadataV1 {

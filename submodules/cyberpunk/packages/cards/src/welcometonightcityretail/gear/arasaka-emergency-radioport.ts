@@ -71,37 +71,35 @@ export const welcomeToNightCityRetailArasakaEmergencyRadioport = defineCyberpunk
           target: {
             selector: "bound",
             id: "selectedLegend",
-          },
-          free: true,
-          optional: true,
-          conditions: [
-            {
-              condition: "targetExists",
-              target: {
-                selector: "bound",
-                id: "selectedLegend",
-                classifications: ["Arasaka"],
-              },
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
             },
-          ],
-        },
-        {
-          effect: "callLegend",
-          player: "friendly",
-          target: {
-            selector: "bound",
-            id: "selectedLegend",
           },
           free: true,
           optional: true,
           conditions: [
             {
-              condition: "targetExists",
-              target: {
-                selector: "bound",
-                id: "selectedLegend",
-                keywords: ["goSolo"],
-              },
+              condition: "any",
+              of: [
+                {
+                  condition: "targetExists",
+                  target: {
+                    selector: "bound",
+                    id: "selectedLegend",
+                    classifications: ["Arasaka"],
+                  },
+                },
+                {
+                  condition: "targetExists",
+                  target: {
+                    selector: "bound",
+                    id: "selectedLegend",
+                    keywords: ["goSolo"],
+                  },
+                },
+              ],
             },
           ],
         },

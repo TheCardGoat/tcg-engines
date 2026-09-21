@@ -4,9 +4,22 @@ import {
   type CollisionDetection,
   type UniqueIdentifier,
 } from "@dnd-kit/core";
-import { PointerDragDropSurface } from "@tcg/simulator-ui";
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
-import { Card } from "./Card";
+import {
+  PointerDragDropSurface,
+  ViewerSafeCardImage,
+  type DropDisposition,
+} from "@tcg/simulator-ui";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { CARD_BACK } from "./CardImage";
+import { getGearAttachTargets, getProgramSpatialTargets, useEngineOptional } from "../../engine";
 import type { CardDragSource, CardDropEvent, DropTarget } from "../../engine";
 import { useCardPreview } from "../CardPreview/CardPreviewContext";
 import classes from "./DragDrop.module.css";
@@ -15,9 +28,11 @@ export type { CardDragSource, CardDropEvent, DropTarget };
 
 interface DragDropContextValue {
   /** Replace the per-page drop handler. Called once on mount. */
-  registerCardDropHandler: (handler: ((event: CardDropEvent) => void) | null) => void;
+  registerCardDropHandler: (handler: ((event: CardDropEvent) => DropDisposition) | null) => void;
   /** Source card currently being dragged, if any. Used for target affordances. */
   activeSource: CardDragSource | null;
+  programTargets: ReadonlySet<string>;
+  gearTargets: ReadonlySet<string>;
 }
 
 const Ctx = createContext<DragDropContextValue | null>(null);
@@ -103,6 +118,44 @@ function findZoneAtPoint(
   return null;
 }
 
+const DIRECT_ATTACK_DROP_ZONES = ["opp-gigArea", "opp-pinfo"] as const;
+
+/**
+ * A direct attack is aimed at a thin scoring lane next to other large drop
+ * surfaces. `rectIntersection` ranks the dragged card's rectangle, so an
+ * adjacent field can win when the pointer itself is visibly inside Rival
+ * Gigs. Prefer the direct-attack surface under the pointer so the released
+ * location, not the card's grab offset, determines the player's intent.
+ */
+export function prioritizeDirectAttackCollisions<T extends CollisionLike>(
+  source: CardDragSource | null,
+  collisions: T[],
+  options: {
+    pointerCoordinates?: PointLike | null;
+    droppableRects?: RectLookupLike | null;
+  } = {},
+): T[] {
+  if (source?.zone !== "p-field") {
+    return collisions;
+  }
+
+  const directAttackTarget = DIRECT_ATTACK_DROP_ZONES.map((zone) =>
+    findZoneAtPoint(zone, options.pointerCoordinates, options.droppableRects),
+  ).find((collision) => collision !== null);
+  if (!directAttackTarget) {
+    return collisions;
+  }
+
+  const targetIndex = collisions.findIndex(
+    (collision) => String(collision.id) === String(directAttackTarget.id),
+  );
+  if (targetIndex >= 0) {
+    const targetCollision = collisions[targetIndex];
+    return [targetCollision, ...collisions.filter((_, index) => index !== targetIndex)];
+  }
+  return [directAttackTarget as T, ...collisions];
+}
+
 export function prioritizeHandReturnCollisions<T extends CollisionLike>(
   source: CardDragSource | null,
   collisions: T[],
@@ -142,24 +195,55 @@ export function prioritizeHandReturnCollisions<T extends CollisionLike>(
 
 const collisionDetection: CollisionDetection = (args) => {
   const source = decodeSource(String(args.active.id));
-  return prioritizeHandReturnCollisions(source, rectIntersection(args), {
+  const options = {
     pointerCoordinates: args.pointerCoordinates,
     droppableRects: args.droppableRects,
-  });
+  };
+  const collisions = prioritizeHandReturnCollisions(source, rectIntersection(args), options);
+  return prioritizeDirectAttackCollisions(source, collisions, options);
 };
 
 export function DragDropProvider({ children }: { children: ReactNode }) {
-  const [handler, setHandler] = useState<((event: CardDropEvent) => void) | null>(null);
+  const handler = useRef<((event: CardDropEvent) => DropDisposition) | null>(null);
   const [activeSource, setActiveSource] = useState<CardDragSource | null>(null);
   const { hide: hideCardPreview } = useCardPreview();
+  const engine = useEngineOptional();
+  const matchState = engine?.matchState;
+  const side = engine?.humanSide;
+  const interactionView = side ? engine?.interactionViews[side] : undefined;
+  const pending = engine?.hasPendingRemoteMove;
+  // One derivation per source/state revision, never one rules walk per visible card.
+  const targets = useMemo(() => {
+    if (
+      !matchState ||
+      !side ||
+      !interactionView ||
+      pending ||
+      activeSource?.zone !== "p-hand" ||
+      !activeSource.cardId
+    ) {
+      return { programTargets: new Set<string>(), gearTargets: new Set<string>() };
+    }
+    return {
+      programTargets: new Set(
+        getProgramSpatialTargets({ matchState, side, interactionView }, activeSource.cardId),
+      ),
+      gearTargets: new Set(
+        getGearAttachTargets({ interactionView }, activeSource.cardId, activeSource.cardType),
+      ),
+    };
+  }, [matchState, side, interactionView, pending, activeSource]);
 
-  const registerCardDropHandler = useCallback((next: ((event: CardDropEvent) => void) | null) => {
-    setHandler(() => next);
-  }, []);
+  const registerCardDropHandler = useCallback(
+    (next: ((event: CardDropEvent) => DropDisposition) | null) => {
+      handler.current = next;
+    },
+    [],
+  );
 
   const value = useMemo<DragDropContextValue>(
-    () => ({ registerCardDropHandler, activeSource }),
-    [registerCardDropHandler, activeSource],
+    () => ({ registerCardDropHandler, activeSource, ...targets }),
+    [registerCardDropHandler, activeSource, targets],
   );
 
   const onDragStart = (source: CardDragSource | null) => {
@@ -171,23 +255,23 @@ export function DragDropProvider({ children }: { children: ReactNode }) {
     setActiveSource(null);
   };
 
-  const onDragEnd = (source: CardDragSource | null, overId: string | null) => {
+  const onDragEnd = (source: CardDragSource | null, overId: string | null): DropDisposition => {
     setActiveSource(null);
     if (!overId) {
-      return;
+      return { kind: "rejected" };
     }
     const target = decodeTarget(overId);
-    if (!source || !target || !handler) {
-      return;
+    if (!source || !target || !handler.current) {
+      return { kind: "rejected" };
     }
     if (target.type === "zone" && target.zone === source.zone) {
-      return;
+      return { kind: "rejected" };
     }
     // Ignore drops onto the source's own slot.
     if (target.type === "card" && target.zone === source.zone && target.index === source.index) {
-      return;
+      return { kind: "rejected" };
     }
-    handler({ source, target });
+    return handler.current({ source, target });
   };
 
   return (
@@ -195,7 +279,23 @@ export function DragDropProvider({ children }: { children: ReactNode }) {
       <PointerDragDropSurface
         id="cyberpunk-board-dnd"
         decodeSource={decodeSource}
-        renderOverlay={(source) => <Card imageUrl={source.imageUrl} name={source.name} />}
+        renderOverlay={(source) => (
+          <ViewerSafeCardImage
+            entity={{
+              id: source.cardId ?? "drag-card",
+              title: source.name ?? "Card",
+              subtitle: "",
+              kind: "card",
+              ownerId: "viewer",
+              face: "public",
+              states: [],
+              stats: [],
+              traits: [],
+              imageUrl: source.imageUrl ?? CARD_BACK,
+            }}
+            className={classes.image}
+          />
+        )}
         overlayClassName={classes.overlay}
         collisionDetection={collisionDetection}
         onDragStart={onDragStart}
@@ -211,7 +311,14 @@ export function DragDropProvider({ children }: { children: ReactNode }) {
 export function useDragDrop(): DragDropContextValue {
   const ctx = useContext(Ctx);
   if (!ctx) {
-    return { registerCardDropHandler: () => {}, activeSource: null };
+    return {
+      registerCardDropHandler: () => {},
+      activeSource: null,
+      programTargets: EMPTY_TARGETS,
+      gearTargets: EMPTY_TARGETS,
+    };
   }
   return ctx;
 }
+
+const EMPTY_TARGETS: ReadonlySet<string> = new Set();

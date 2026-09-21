@@ -107,6 +107,10 @@ export const obsequiousBlow: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                 kind: "next-turn",
                 whose: "event-recipient-controller",
               },
+              expires: {
+                kind: "during-next-turn",
+                whose: "event-recipient-controller",
+              },
             },
           },
         },

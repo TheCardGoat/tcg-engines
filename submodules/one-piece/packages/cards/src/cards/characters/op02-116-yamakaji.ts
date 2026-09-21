@@ -1,0 +1,29 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op02Yamakaji116I18n } from "./op02-116-yamakaji.i18n.ts";
+
+export const op02Yamakaji116: CharacterCard = {
+  id: "OP02-116",
+  canonicalId: "OP02-116",
+  slug: "yamakaji",
+  name: "Yamakaji",
+  printings: [
+    {
+      id: "OP02-116",
+      artId: "OP02-116",
+      setCode: "OP02",
+      collectorNumber: "116",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-116.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["black"],
+  rarity: "C",
+  setId: "OP02",
+  cost: 3,
+  power: 5000,
+  counter: 1000,
+  traits: ["Navy"],
+  attribute: "slash",
+  i18n: op02Yamakaji116I18n,
+};

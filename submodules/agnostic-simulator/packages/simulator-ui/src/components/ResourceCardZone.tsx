@@ -86,7 +86,7 @@ export function ResourceCardZone({
       role="region"
       aria-label={`${resolvedLabel}, ${counterValue} available`}
       className={cx(
-        "resource-card-zone relative flex min-h-[118px] min-w-0 items-center justify-center overflow-x-auto rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)] px-2 pb-2 pt-7 text-[var(--board-text)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+        "resource-card-zone relative flex min-h-0 min-w-0 items-center justify-center overflow-hidden rounded-lg border border-[var(--board-border)] bg-[var(--board-surface-soft)] px-2 pb-2 pt-7 text-[var(--board-text)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
         className,
       )}
       data-zone-id={zone?.id}

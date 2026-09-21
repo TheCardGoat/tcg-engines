@@ -104,6 +104,7 @@ export const alluringInducement = definePitchFamily(fabPitchFamilies["alluring-i
         effect: {
           type: "create-token",
           token: "eloquence",
+          creator: "effect-controller",
           controller: "any",
         },
       },

@@ -6,7 +6,7 @@ import {
   op13Otama043,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Giolla064 } from "../../../../../cards/src/cards/OP14EB04/characters/064-giolla.ts";
+import { op14eb04Giolla064 } from "../../../../../cards/src/cards/characters/op14-064-giolla.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

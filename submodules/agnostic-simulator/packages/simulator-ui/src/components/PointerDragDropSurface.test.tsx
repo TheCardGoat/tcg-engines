@@ -41,7 +41,7 @@ vi.mock("@dnd-kit/core", () => ({
   useSensors: (...sensors: unknown[]) => sensors,
 }));
 
-import { PointerDragDropSurface } from "./PointerDragDropSurface";
+import { PointerDragDropSurface, type DropDisposition } from "./PointerDragDropSurface";
 
 let activeRoot: Root | null = null;
 let activeContainer: HTMLDivElement | null = null;
@@ -61,7 +61,7 @@ describe("PointerDragDropSurface", () => {
   test("keeps source decoding generic while owning the drag lifecycle and overlay", () => {
     const onDragStart = vi.fn();
     const onDragCancel = vi.fn();
-    const onDragEnd = vi.fn();
+    const onDragEnd = vi.fn((): DropDisposition => ({ kind: "rejected" }));
     activeContainer = document.createElement("div");
     document.body.append(activeContainer);
     activeRoot = createRoot(activeContainer);
@@ -110,7 +110,7 @@ describe("PointerDragDropSurface", () => {
   });
 
   test("ends an accepted overlay at its release transform instead of snapping it back", () => {
-    const onDragEnd = vi.fn(() => true);
+    const onDragEnd = vi.fn((): DropDisposition => ({ kind: "accepted" }));
     activeContainer = document.createElement("div");
     document.body.append(activeContainer);
     activeRoot = createRoot(activeContainer);
@@ -154,5 +154,16 @@ describe("PointerDragDropSurface", () => {
 
     expect(keyframes).toHaveLength(2);
     expect(keyframes[0]).toEqual(keyframes[1]);
+
+    onDragEnd.mockReturnValue({ kind: "rejected" });
+    act(() => dndHarness.contextProps?.onDragStart(startEvent));
+    act(() => dndHarness.contextProps?.onDragEnd(endEvent));
+    expect(config.keyframes(parameters)[0]).not.toEqual(config.keyframes(parameters)[1]);
+    expect(onDragEnd).toHaveBeenCalledTimes(2);
+
+    act(() => dndHarness.contextProps?.onDragStart(startEvent));
+    act(() => dndHarness.contextProps?.onDragCancel());
+    expect(onDragEnd).toHaveBeenCalledTimes(2);
+    expect(config.keyframes(parameters)[0]).not.toEqual(config.keyframes(parameters)[1]);
   });
 });

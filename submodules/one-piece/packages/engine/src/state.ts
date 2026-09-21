@@ -1,5 +1,5 @@
 import { getCard } from "../../cards/src/runtime-catalog.ts";
-import type { LeaderCard } from "@tcg/op-types";
+import type { DeckBuildingRule, LeaderCard, OPCard } from "@tcg/op-types";
 import {
   cardName,
   emitEvent,
@@ -29,6 +29,17 @@ import type {
 import { donGivenFromDonPhase } from "./effects/permanent.ts";
 
 const DEFAULT_DON_DECK_COUNT = 10;
+
+/** Reads a deck-building rule the Leader card itself declares. */
+function leaderEffectsDeckBuildingRule(
+  leader: OPCard,
+  rule: "donDeckCount",
+): Extract<DeckBuildingRule, { rule: "donDeckCount" }> | undefined {
+  return leader.effects?.deckBuildingRules?.find(
+    (candidate): candidate is Extract<DeckBuildingRule, { rule: "donDeckCount" }> =>
+      candidate.rule === rule,
+  );
+}
 
 function removeFromList(list: string[], value: string) {
   const index = list.indexOf(value);
@@ -102,16 +113,34 @@ export function finalizeDraw(state: MatchState) {
   finalizeMatchImmediately(state, null, "draw", "The game is a draw.");
 }
 
-function processEmptyDeckDefeat(state: MatchState, seat: MatchSeat) {
+export function processEmptyDeckDefeat(state: MatchState, seat: MatchSeat, atEndOfTurn = false) {
   if (state.status !== "active" || getPlayer(state, seat).deck.length > 0) {
     return;
   }
 
   const leaderId = getPlayer(state, seat).leaderInstanceId;
-  const replacement = getCardForInstance(state, leaderId).effects?.replacementEffects?.find(
-    (effect) =>
-      effect.replacedEvent === "loseGame" && effect.replacementAction.action === "winGame",
+  const loseGameReplacement = getCardForInstance(state, leaderId).effects?.replacementEffects?.find(
+    (effect) => effect.replacedEvent === "loseGame",
   );
+  const replacementAction = loseGameReplacement?.replacementAction.action;
+  // 6-2-3-1 variants: a Leader can replace the deck-empty defeat either with
+  // an alternate win or by deferring it to the end of the current turn. The
+  // deferred defeat expires once that turn ends, so the end-of-turn check
+  // ignores the deferral.
+  if (replacementAction === "deferEmptyDeckLoss" && !atEndOfTurn) {
+    emitLog(
+      state,
+      "system",
+      `${getPlayer(state, seat).playerName} does not lose while their deck has 0 cards; the defeat is deferred to the end of this turn.`,
+      {
+        sourceCardId: getInstance(state, leaderId).cardId,
+        sourceInstanceId: leaderId,
+        visibility: "public",
+      },
+    );
+    return;
+  }
+  const replacement = replacementAction === "winGame" ? loseGameReplacement : undefined;
   const winner = replacement ? seat : otherSeat(seat);
   state.status = "finished";
   state.phase = "finished";
@@ -154,7 +183,7 @@ function zoneLabel(zone: CardZone): string {
     case "trash":
       return "Trash";
     case "resolution":
-      return "effect resolution";
+      return "resolution area";
   }
 }
 
@@ -649,7 +678,10 @@ export function drawCards(state: MatchState, seat: MatchSeat, amount: number, re
   const drawn: string[] = [];
 
   for (let index = 0; index < amount; index += 1) {
-    const instanceId = drawTopCard(state, seat);
+    // The batch "draws N card(s)." line below is the single player-facing
+    // record; suppress the per-card zone-movement line to avoid logging the
+    // same draw twice.
+    const instanceId = drawTopCard(state, seat, { suppressLog: true });
     if (!instanceId) {
       break;
     }
@@ -720,7 +752,10 @@ export function buildInitialPlayerState(
     stageArea: null,
     activeDon: 0,
     restedDon: 0,
-    donDeckCount: playerConfig.donDeckCount ?? DEFAULT_DON_DECK_COUNT,
+    donDeckCount:
+      playerConfig.donDeckCount ??
+      leaderEffectsDeckBuildingRule(leader, "donDeckCount")?.count ??
+      DEFAULT_DON_DECK_COUNT,
     turnsStarted: 0,
   };
 

@@ -354,8 +354,11 @@ describe("FAB priority automation modes", () => {
     it("is legal for any priority holder, including defenders during the opponent's combat", () => {
       const runtime = createReactionStepRuntime();
       expect(runtime.enumerateMoves(PLAYER_2)).toContain("set-automation-preferences");
-      const legal = listLegalCommands(runtime, PLAYER_2);
-      const toggle = legal.find((command) => command.move === "set-automation-preferences");
+      const toggle = listLegalCommands(runtime, PLAYER_2).find(
+        (command) =>
+          command.move === "set-automation-preferences" &&
+          command.label === FAB_PRIORITY_MODE_ACTION_LABEL["auto-pass"],
+      );
       // Player-owned UI configuration, never a bot action candidate.
       expect(toggle?.automation).toBe("player-only");
       expect(toggle?.payload).toEqual({ priorityMode: "auto-pass" });
@@ -364,7 +367,9 @@ describe("FAB priority automation modes", () => {
     it("offers the inverse mode once a seat is in auto-pass", () => {
       const runtime = createReactionStepRuntime({ defenderMode: "auto-pass" });
       const toggle = listLegalCommands(runtime, PLAYER_2).find(
-        (command) => command.move === "set-automation-preferences",
+        (command) =>
+          command.move === "set-automation-preferences" &&
+          command.label === FAB_PRIORITY_MODE_ACTION_LABEL["always-hold"],
       );
       expect(toggle?.payload).toEqual({ priorityMode: "always-hold" });
     });
@@ -1472,15 +1477,41 @@ describe("FAB automation fixed point", () => {
    * the fixed point must consume it inside the triggering command's receipt.
    */
   it.each([
-    { mode: "auto-decline" as const, expectedLifeGain: 0 },
-    { mode: "auto-accept" as const, expectedLifeGain: 1 },
+    {
+      mode: "auto-decline" as const,
+      expectedLifeGain: 0,
+      zone: "chest" as const,
+      types: ["Equipment", "Chest"],
+      where: "chest watcher",
+    },
+    {
+      mode: "auto-decline" as const,
+      expectedLifeGain: 0,
+      zone: "arena" as const,
+      types: ["Token", "Aura"],
+      where: "arena aura watcher",
+    },
+    {
+      mode: "auto-accept" as const,
+      expectedLifeGain: 1,
+      zone: "chest" as const,
+      types: ["Equipment", "Chest"],
+      where: "chest watcher",
+    },
+    {
+      mode: "auto-accept" as const,
+      expectedLifeGain: 1,
+      zone: "arena" as const,
+      types: ["Token", "Aura"],
+      where: "arena aura watcher",
+    },
   ])(
-    "$mode drains a latched trigger after an automatic priority pass within one command",
-    ({ mode, expectedLifeGain }) => {
+    "$mode drains a latched trigger from the $where after an automatic priority pass within one command",
+    ({ mode, expectedLifeGain, zone, types, where }) => {
       const watcher: FabCardDefinitionInput = {
         canonicalId: "end-phase-watcher",
         name: "End Phase Watcher",
-        types: ["Equipment", "Chest"],
+        types,
         abilities: [
           {
             kind: "static",
@@ -1534,19 +1565,16 @@ describe("FAB automation fixed point", () => {
         const zones = state.containers.zonesByPlayerId[playerId]!;
         zones.deck.push(...zones.hand.splice(0, zones.hand.length));
       }
-      // Seat the watcher in the opponent's chest and latch its optional trigger.
-      for (const zone of Object.values(state.containers.zonesByPlayerId[PLAYER_2]!)) {
-        const index = zone.indexOf("watcher-1");
-        if (index >= 0) zone.splice(index, 1);
+      // Seat the watcher in the opponent's target zone and latch its optional trigger.
+      for (const zoneIds of Object.values(state.containers.zonesByPlayerId[PLAYER_2]!)) {
+        const index = zoneIds.indexOf("watcher-1");
+        if (index >= 0) zoneIds.splice(index, 1);
       }
-      state.containers.zonesByPlayerId[PLAYER_2]!.chest.push("watcher-1");
+      state.containers.zonesByPlayerId[PLAYER_2]![zone].push("watcher-1");
       const watcherSource = eligibleOptionalTriggerSources(state, PLAYER_2).find(
         (source) => source.source.ownerId === PLAYER_2,
       );
-      expect(
-        watcherSource,
-        "expected the chest watcher to be an eligible trigger source",
-      ).toBeDefined();
+      expect(watcherSource, `expected the ${where} to be an eligible trigger source`).toBeDefined();
       state.optionalTriggerAutomation = {
         ...state.optionalTriggerAutomation,
         [PLAYER_2]: { [watcherSource!.source.instanceId]: mode },

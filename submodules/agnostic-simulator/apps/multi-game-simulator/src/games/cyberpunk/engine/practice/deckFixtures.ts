@@ -1,5 +1,10 @@
 import { createCardCatalog, structuredCards } from "@tcg/cyberpunk-cards";
-import { validateDeck } from "@tcg/cyberpunk-utils";
+import {
+  authoredBotLabDeckSpecs,
+  resolveAuthoredBotLabDeck,
+  validateDeck,
+} from "@tcg/cyberpunk-utils";
+import type { AuthoredBotLabDeckSpec } from "@tcg/cyberpunk-utils";
 import type { DeckList } from "@tcg/cyberpunk-engine";
 
 export interface PracticeDeckFixture {
@@ -112,7 +117,7 @@ const mixedOpsBase = [
   "afterparty-at-lizzie-s",
 ] as const;
 
-export const PRACTICE_DECK_FIXTURES: readonly PracticeDeckFixture[] = [
+const enginePracticeDeckFixtures: readonly PracticeDeckFixture[] = [
   makeFixture({
     id: "street-heat",
     label: "Street Heat",
@@ -207,6 +212,43 @@ export const PRACTICE_DECK_FIXTURES: readonly PracticeDeckFixture[] = [
       "jackie-welles-ride-or-die-choom",
     ],
   }),
+];
+
+/**
+ * Bot-lab authored archetype decks, shared with the platform practice tab
+ * through `/v1/cyberpunk/practice-catalog`. Names resolve against the same
+ * structured catalog and each list must pass full deck validation.
+ */
+function makeAuthoredPracticeFixture(spec: AuthoredBotLabDeckSpec): PracticeDeckFixture {
+  const resolved = resolveAuthoredBotLabDeck(spec);
+  const errors = validateDeck(resolved.legends, resolved.mainDeck);
+  if (errors.length > 0) {
+    throw new Error(
+      `Invalid authored practice deck "${spec.id}": ${errors.map((error) => error.message).join("; ")}`,
+    );
+  }
+  return {
+    id: spec.id,
+    label: spec.title,
+    description: `Authored bot-lab archetype. Legends: ${resolved.legends
+      .map((card) => card.displayName ?? card.name)
+      .join(" · ")}.`,
+    deck: {
+      playerId: spec.id,
+      playerName: spec.title,
+      legends: resolved.legends.map((card) => card.id),
+      mainDeck: resolved.mainDeck.map((card) => card.id),
+    },
+  };
+}
+
+const authoredPracticeDeckFixtures: readonly PracticeDeckFixture[] = authoredBotLabDeckSpecs.map(
+  makeAuthoredPracticeFixture,
+);
+
+export const PRACTICE_DECK_FIXTURES: readonly PracticeDeckFixture[] = [
+  ...enginePracticeDeckFixtures,
+  ...authoredPracticeDeckFixtures,
 ];
 
 export const DEFAULT_PLAYER_PRACTICE_DECK_ID = PRACTICE_DECK_FIXTURES[0]!.id;

@@ -1,0 +1,79 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06MonkeyDLuffy013I18n } from "./op06-013-monkey-d-luffy.i18n.ts";
+
+export const op06MonkeyDLuffy013: CharacterCard = {
+  id: "OP06-013",
+  canonicalId: "OP06-013",
+  slug: "monkey-d-luffy/op06-013",
+  name: "Monkey.D.Luffy",
+  printings: [
+    {
+      id: "OP06-013",
+      artId: "OP06-013",
+      setCode: "OP06",
+      collectorNumber: "013",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-013.jpg",
+    },
+    {
+      id: "OP06-013_p1",
+      artId: "OP06-013_p1",
+      setCode: "OP06",
+      collectorNumber: "013",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-013_p1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["red"],
+  rarity: "R",
+  setId: "OP06",
+  cost: 2,
+  power: 3000,
+  counter: 1000,
+  trigger: "Activate this card's [On Play] effect.",
+  traits: ["FILM", "Straw Hat Crew"],
+  attribute: "strike",
+  effect:
+    '[On Play] Look at 3 cards from the top of your deck; reveal up to 1 "FILM" type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "search",
+            lookCount: 3,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 1,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "trait",
+                value: "FILM",
+                match: "includes",
+              },
+            ],
+            revealDestination: "hand",
+            remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "activateEffect",
+            effectTrigger: "onPlay",
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op06MonkeyDLuffy013I18n,
+};

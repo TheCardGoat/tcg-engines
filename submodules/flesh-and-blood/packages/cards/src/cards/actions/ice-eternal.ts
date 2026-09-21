@@ -19,6 +19,7 @@ export const iceEternal = definePitchFamily(fabPitchFamilies["ice-eternal"], {
           {
             type: "create-token",
             token: "frostbite",
+            creator: "effect-controller",
             controller: "any",
             count: {
               type: "x",

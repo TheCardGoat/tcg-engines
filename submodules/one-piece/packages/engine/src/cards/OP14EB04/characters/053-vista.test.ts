@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01MountainGod018, op06HodyJones020 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Vista053 } from "../../../../../cards/src/cards/OP14EB04/characters/053-vista.ts";
+import { op14eb04Vista053 } from "../../../../../cards/src/cards/characters/op14-053-vista.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

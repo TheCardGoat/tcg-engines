@@ -9,7 +9,7 @@ export const bigBlinder = definePitchFamily(fabPitchFamilies["big-blinder"], {
     boostSwordAndWagerFlurry: targetAttackPowerAndWager({
       amount,
       filter: { typeBox: { subtypes: ["Sword"] } },
-      prize: createToken({ token: "flurry", controller: "winner" }),
+      prize: createToken({ token: "flurry", creator: "token-controller", controller: "winner" }),
     }),
   }),
 });

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op11LordOfTheCoast028 } from "../../../../cards/src/cards/OP11/characters/028-lord-of-the-coast.ts";
-import { op14eb04Killer005 } from "../../../../cards/src/cards/OP14EB04/characters/005-killer.ts";
+import { op11LordOfTheCoast028 } from "../../../../cards/src/cards/characters/op11-028-lord-of-the-coast.ts";
+import { op14eb04Killer005 } from "../../../../cards/src/cards/characters/op14-005-killer.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 function pendingPrompt(engine: OnePieceTestEngine, intent: string) {

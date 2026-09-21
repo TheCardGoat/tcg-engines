@@ -45,6 +45,43 @@ function evaluateCondition(
             ? state.activeSeat === controller
             : state.activeSeat !== controller,
       };
+    case "activatedEvent": {
+      const record = controllerPlayer.activatedEvent;
+      if (!record || record.turnNumber !== state.turnNumber) {
+        return { supported: true, matches: false };
+      }
+      if (!condition.baseCost) {
+        return { supported: true, matches: true };
+      }
+      switch (condition.baseCost.comparison) {
+        case "eq":
+          return { supported: true, matches: record.bestBaseCost === condition.baseCost.value };
+        case "lt":
+          return { supported: true, matches: record.bestBaseCost < condition.baseCost.value };
+        case "lte":
+          return { supported: true, matches: record.bestBaseCost <= condition.baseCost.value };
+        case "gt":
+          return { supported: true, matches: record.bestBaseCost > condition.baseCost.value };
+        case "gte":
+          return { supported: true, matches: record.bestBaseCost >= condition.baseCost.value };
+      }
+      break;
+    }
+    case "playerTurnCount": {
+      switch (condition.comparison) {
+        case "eq":
+          return { supported: true, matches: controllerPlayer.turnsStarted === condition.value };
+        case "lt":
+          return { supported: true, matches: controllerPlayer.turnsStarted < condition.value };
+        case "lte":
+          return { supported: true, matches: controllerPlayer.turnsStarted <= condition.value };
+        case "gt":
+          return { supported: true, matches: controllerPlayer.turnsStarted > condition.value };
+        case "gte":
+          return { supported: true, matches: controllerPlayer.turnsStarted >= condition.value };
+      }
+      break;
+    }
     case "leaderName":
       return { supported: true, matches: cardNames(leader).includes(condition.name) };
     case "leaderAttribute":
@@ -571,6 +608,11 @@ function evaluateCondition(
     case "replacement":
     case "triggerEvent":
       return { supported: false, matches: false };
+    case "triggerEventFromZone":
+      if (triggerEvent === undefined) {
+        return { supported: false, matches: false };
+      }
+      return { supported: true, matches: triggerEvent.fromZone === condition.zone };
   }
 
   return { supported: false, matches: false };

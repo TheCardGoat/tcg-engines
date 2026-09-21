@@ -43,6 +43,7 @@ export const snowUnder = definePitchFamily(fabPitchFamilies["snow-under"], {
               effect: {
                 type: "create-token",
                 token: "frostbite",
+                creator: "effect-controller",
                 controller: "attack-target",
               },
             },

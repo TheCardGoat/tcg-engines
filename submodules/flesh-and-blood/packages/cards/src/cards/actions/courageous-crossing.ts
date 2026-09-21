@@ -12,6 +12,7 @@ export const courageousCrossing = definePitchFamily(fabPitchFamilies["courageous
       effect: {
         type: "create-token",
         token: "courage",
+        creator: "effect-controller",
         controller: "target-controller",
         target: { selector: "any-hero" },
       },

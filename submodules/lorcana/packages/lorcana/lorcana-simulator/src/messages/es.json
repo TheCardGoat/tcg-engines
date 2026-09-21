@@ -707,5 +707,8 @@
   "sim.settings.tab.game": "Juego",
   "sim.settings.tab.account": "Cuenta",
   "sim.settings.accountHelp": "Gestiona tu perfil, seguridad y preferencias de toda la cuenta.",
-  "sim.settings.openAccount": "Abrir ajustes de la cuenta"
+  "sim.settings.openAccount": "Abrir ajustes de la cuenta",
+  "practice_mode_self_title": "Jugar ambos lados",
+  "practice_mode_self_controlling": "Controlando al jugador {player}",
+  "practice_mode_self_status": "El tablero sigue al jugador que toma la siguiente decisión."
 }

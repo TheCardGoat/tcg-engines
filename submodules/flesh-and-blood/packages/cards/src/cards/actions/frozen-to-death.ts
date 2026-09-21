@@ -38,6 +38,7 @@ export const frozenToDeath = definePitchFamily(fabPitchFamilies["frozen-to-death
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "opponent",
           amongExposed: ["equipment-head", "equipment-chest", "equipment-arms", "equipment-legs"],
         },

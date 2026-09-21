@@ -137,6 +137,7 @@ export function getGrandArchiveDeckBuilderCatalog() {
         setName: printing.set.name,
         setCode: printing.setCode,
         collectorNumber: printing.collectorNumber,
+        rarity: printing.rarity,
       })),
     })),
   };

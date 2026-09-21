@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op08JewelryBonneySp007 } from "../../../../../cards/src/cards/OP08/characters/007-jewelry-bonney-sp.ts";
+import { op08JewelryBonneySp007 } from "../../../../../cards/src/cards/characters/st02-007-jewelry-bonney-sp.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST02-007 Jewelry Bonney (SP)", () => {

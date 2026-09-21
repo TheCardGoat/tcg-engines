@@ -29,35 +29,44 @@ export const inducePanic = definePitchFamily(fabPitchFamilies["induce-panic"], {
               type: "choose-color",
             },
             {
-              type: "reveal",
+              type: "for-each",
               target: {
-                selector: "object",
-                declared: "at-resolution",
-                player: "each",
-                zones: ["hand"],
-                count: 1,
-                random: true,
+                selector: "each-hero",
               },
-              duration: "until-triggered",
-            },
-            {
-              type: "conditional",
-              condition: {
-                type: "binding-matches",
-                binding: "it",
-                filter: {
-                  color: ["chosen"],
-                },
-              },
-              then: {
-                type: "discard",
-                target: {
-                  selector: "object",
-                  declared: "at-resolution",
-                  player: "each",
-                  zones: ["hand"],
-                  count: 1,
-                },
+              effect: {
+                type: "sequence",
+                steps: [
+                  {
+                    type: "reveal",
+                    target: {
+                      selector: "object",
+                      declared: "at-resolution",
+                      player: "iteration-subject",
+                      zones: ["hand"],
+                      count: 1,
+                      random: true,
+                    },
+                    outputBinding: "it",
+                    duration: "until-triggered",
+                  },
+                  {
+                    type: "conditional",
+                    condition: {
+                      type: "binding-matches",
+                      binding: "it",
+                      filter: {
+                        color: ["chosen"],
+                      },
+                    },
+                    then: {
+                      type: "discard",
+                      target: {
+                        selector: "binding",
+                        binding: "it",
+                      },
+                    },
+                  },
+                ],
               },
             },
           ],

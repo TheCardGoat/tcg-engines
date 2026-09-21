@@ -1,6 +1,6 @@
 import { eb01Doma005, op13SunnyKun026 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb01BartolomeoP029JollyRogerFoil029 } from "../../../../../cards/src/cards/PRB01/characters/029-bartolomeo-p-029-jolly-roger-foil.ts";
+import { prb01BartolomeoP029JollyRogerFoil029 } from "../../../../../cards/src/cards/characters/p-029-bartolomeo-p-029-jolly-roger-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

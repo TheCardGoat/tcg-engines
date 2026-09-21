@@ -7,7 +7,7 @@ import {
   op09Mr1DazBonez055,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04MissValentineMikitaDashPack087 } from "../../../../../cards/src/cards/OP14EB04/characters/087-miss-valentine-mikita-dash-pack.ts";
+import { op14eb04MissValentineMikitaDashPack087 } from "../../../../../cards/src/cards/characters/op14-087-miss-valentine-mikita.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -312,6 +312,19 @@ function derivedAmount(raw: string, sourceName?: string): GrandArchiveAmount | n
         },
       };
   }
+  if (/^the lowest reserve cost among your omens$/iu.test(text))
+    return {
+      kind: "aggregate-property",
+      operation: "minimum",
+      collection: {
+        zones: ["banishment"],
+        player: "controller",
+        filter: { kind: "has-counter", counter: "omen" },
+      },
+      property: "reserve-cost",
+      basis: "base",
+      emptyValue: 0,
+    };
   if (text === "the amount of omens you have")
     return { kind: "player-property", player: "controller", property: "omens" };
   if (/^the amount of omens you have with different (?:reserve )?costs$/iu.test(text))
@@ -524,6 +537,19 @@ function derivedAmount(raw: string, sourceName?: string): GrandArchiveAmount | n
       return {
         kind: "count",
         collection: { zones: ["pantheon"], player: "controller", filter },
+      };
+  }
+  const distinctControlledCosts =
+    /^the amount of (.+?) you control with different (?:reserve )?costs$/iu.exec(text);
+  if (distinctControlledCosts) {
+    const filter = describedCardFilter(
+      distinctControlledCosts[1].replace(/ies$/u, "y").replace(/s$/u, ""),
+    );
+    if (filter)
+      return {
+        kind: "count",
+        distinctBy: "reserve-cost",
+        collection: { zones: ["field"], player: "controller", filter },
       };
   }
   const controlledMatching = /^the amount of (.+?) you control (with .+)$/iu.exec(text);
@@ -931,6 +957,13 @@ function peelRestrictions(text: string): {
     }
     break;
   }
+  const trailingClassRestriction =
+    /\s*\(Apply this effect only if your champion['’]s class matches this card['’]s class\.\)$/u;
+  if (
+    trailingClassRestriction.test(body) &&
+    !restrictions.some((restriction) => restriction.name === "class-bonus")
+  )
+    restrictions.push(classBonusRestriction());
   if (restrictions.some((restriction) => restriction.name === "class-bonus"))
     body = body.replace(
       /\s*\(Apply this effect only if your champion['’]s class matches this card['’]s class\.\)$/u,
@@ -1215,6 +1248,8 @@ function describedObjectTarget(
     if (new RegExp(`\\b${state}\\b`, "iu").test(description))
       filters.push({ kind: "activation-state", state });
   if (/\bfast speed\b/iu.test(description)) filters.push({ kind: "speed", oneOf: ["fast"] });
+  if (/\bthat entered the field this turn$/iu.test(description))
+    filters.push({ kind: "entered-field-this-turn" });
   if (/^ally you control with stealth$/iu.test(description))
     filters.push({ kind: "has-keyword", keyword: "stealth" });
   if (/\bwith fast activation\b/iu.test(description))
@@ -1292,7 +1327,7 @@ function describedObjectTarget(
   else if (/\badvanced element\b/iu.test(description))
     filters.push({ kind: "element-category", value: "advanced" });
   const subtype =
-    /^target (?:another )?(?:rested |unloaded )?([A-Z][A-Za-z'-]+) (?:ally|item|weapon)/u.exec(
+    /^target (?:another )?(?:rested |unloaded )?([A-Z][A-Za-z'-]+) (ally|item|weapon|unit)\b/u.exec(
       `target ${description}`,
     );
   const pairedSubtype =
@@ -1320,8 +1355,17 @@ function describedObjectTarget(
         { kind: "subtype", oneOf: [paired[2].toUpperCase()] },
       ],
     });
-  else if (subtype) filters.push({ kind: "subtype", oneOf: [subtype[1].toUpperCase()] });
-  else if (standaloneSubtype)
+  else if (subtype) {
+    const unitClass =
+      subtype[2] === "unit"
+        ? GRAND_ARCHIVE_CLASSES.find((candidate) => candidate === subtype[1].toUpperCase())
+        : undefined;
+    filters.push(
+      unitClass
+        ? { kind: "class", oneOf: [unitClass] }
+        : { kind: "subtype", oneOf: [subtype[1].toUpperCase()] },
+    );
+  } else if (standaloneSubtype)
     filters.push({ kind: "subtype", oneOf: [standaloneSubtype[1].toUpperCase()] });
   const memoryCost = /memory cost (\d+)(?: or less)?/iu.exec(description);
   const reserveCost = /reserve cost (\d+)(?: or less)?/iu.exec(description);
@@ -1520,11 +1564,14 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
         }
       : { kind: "name", value: first, match: "exact" };
   }
-  if (description === "unit with stealth") {
+  if (description === "unit with stealth" || description === "ally with stealth") {
     return {
       kind: "all",
       filters: [
-        { kind: "type", oneOf: ["ALLY", "CHAMPION"] },
+        {
+          kind: "type",
+          oneOf: description === "ally with stealth" ? ["ALLY"] : ["ALLY", "CHAMPION"],
+        },
         { kind: "has-keyword", keyword: "stealth" },
       ],
     };
@@ -1539,11 +1586,32 @@ function describedCardFilter(raw: string, sourceName?: string): GrandArchiveCard
       ],
     };
   }
+  if (description === "Chessman Command" || description === "Chessman Command attack") {
+    return {
+      kind: "all",
+      filters: [
+        ...(description === "Chessman Command attack"
+          ? [{ kind: "type" as const, oneOf: ["ATTACK" as const] }]
+          : []),
+        { kind: "subtype", oneOf: ["CHESSMAN"] },
+        { kind: "subtype", oneOf: ["COMMAND"] },
+      ],
+    };
+  }
   if (description === "Animal or Beast") {
     return { kind: "subtype", oneOf: ["ANIMAL", "BEAST"] };
   }
-  if (description === "Harmony or Melody") {
+  if (description === "Harmony or Melody" || description === "Melody or Harmony") {
     return { kind: "subtype", oneOf: ["HARMONY", "MELODY"] };
+  }
+  if (description === "Book or Scripture") {
+    return {
+      kind: "any",
+      filters: [
+        { kind: "subtype", oneOf: ["BOOK"] },
+        { kind: "subtype", oneOf: ["SCRIPTURE"] },
+      ],
+    };
   }
   // These are conjunctive characteristics, not an unqualified action type.
   // Keep the accepted grammar exact so additional descriptors cannot disappear.
@@ -1835,7 +1903,14 @@ function staticSubject(raw: string, sourceName: string): GrandArchiveSubject | n
           kind: "all",
           filters: [
             { kind: "type", oneOf: ["ALLY"] },
-            { kind: "name", value: controlledNamedAllies[1] },
+            {
+              kind: "name",
+              // Printed plural reference; the canonical token name is singular.
+              value:
+                controlledNamedAllies[1] === "Vacuous Servants"
+                  ? "Vacuous Servant"
+                  : controlledNamedAllies[1],
+            },
           ],
         },
       },
@@ -2120,10 +2195,45 @@ function compileSelectionAction(text: string): CompiledInstruction | null {
     return { effect: { kind: "discard", player: "controller", selection } };
   }
 
+  const banishIntoOmen =
+    /^Banish a card from your (hand|graveyard|graveyard or hand|hand or graveyard) and put an omen counter on it$/iu.exec(
+      text,
+    );
+  if (banishIntoOmen) {
+    const selection: GrandArchiveResolutionChoice = {
+      id: "new-omen",
+      kind: "choice",
+      declared: "resolution",
+      chooser: "controller",
+      count: { kind: "exactly", amount: 1 },
+      candidates: {
+        kind: "card",
+        zones: banishIntoOmen[1].toLowerCase().includes(" or ")
+          ? ["hand", "graveyard"]
+          : banishIntoOmen[1].toLowerCase() === "hand"
+            ? ["hand"]
+            : ["graveyard"],
+        relationship: "zone-of",
+        player: "controller",
+      },
+    };
+    return {
+      effect: sequence([
+        { kind: "banish", player: "controller", selection, bindResultAs: selection.id },
+        {
+          kind: "add-counter",
+          subject: { kind: "bound", binding: selection.id },
+          counter: "omen",
+          amount: 1,
+        },
+      ]),
+    };
+  }
+
   const faceDown = / face down$/iu.test(text);
   const normalizedText = text.replace(/ face down$/iu, "");
   const selected =
-    /^(Discard|Banish|Reveal) (a|an|one|two|three|four|five|six|seven|eight|nine|ten|X|LV|any amount of|up to one|up to two|up to three|up to four|up to five|up to six|up to seven|up to eight|up to nine|up to ten|up to X|up to LV) (.+?)( at random)?(?: from your (hand|memory|graveyard|material deck))?( at random)?$/iu.exec(
+    /^(Discard|Banish|Reveal) (a|an|one|two|three|four|five|six|seven|eight|nine|ten|X|LV|any amount of|up to one|up to two|up to three|up to four|up to five|up to six|up to seven|up to eight|up to nine|up to ten|up to X|up to LV) (.+?)( at random)?(?: from your (hand or memory|memory or hand|hand|memory|graveyard|material deck))?( at random)?$/iu.exec(
       normalizedText,
     );
   if (!selected || (selected[4] && selected[6])) return null;
@@ -2136,20 +2246,23 @@ function compileSelectionAction(text: string): CompiledInstruction | null {
       : rawCount.startsWith("up to ")
         ? { kind: "up-to", amount: numeric ?? 0 }
         : { kind: "exactly", amount: numeric ?? 1 };
-  const zone = selected[5]
-    ? (
-        {
-          hand: "hand",
-          memory: "memory",
-          graveyard: "graveyard",
-          "material deck": "material-deck",
-        } as const
-      )[selected[5].toLowerCase() as "hand" | "memory" | "graveyard" | "material deck"]
-    : verb === "discard"
-      ? "hand"
-      : "hand";
+  const combinedZones = /^(?:hand or memory|memory or hand)$/iu.test(selected[5] ?? "");
+  const zone = combinedZones
+    ? "hand"
+    : selected[5]
+      ? (
+          {
+            hand: "hand",
+            memory: "memory",
+            graveyard: "graveyard",
+            "material deck": "material-deck",
+          } as const
+        )[selected[5].toLowerCase() as "hand" | "memory" | "graveyard" | "material deck"]
+      : verb === "discard"
+        ? "hand"
+        : "hand";
   const filter = describedCardFilter(selected[3]);
-  const selection = resolutionChoice({
+  const basicSelection = resolutionChoice({
     id:
       verb === "banish"
         ? "banished-cards"
@@ -2161,6 +2274,18 @@ function compileSelectionAction(text: string): CompiledInstruction | null {
     filter,
     ...(selected[4] || selected[6] ? { method: "random" as const } : {}),
   });
+  const selection: GrandArchiveResolutionChoice = combinedZones
+    ? {
+        ...basicSelection,
+        candidates: {
+          kind: "card",
+          zones: ["hand", "memory"],
+          relationship: "zone-of",
+          player: "controller",
+          ...(filter ? { filter } : {}),
+        },
+      }
+    : basicSelection;
   return {
     effect:
       verb === "reveal"
@@ -2862,22 +2987,24 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
   );
   if (killedParity)
     return {
-      kind: "subject-matches",
-      subject: { kind: "event-recipient" },
-      filter: {
-        kind: "all",
-        filters: [
-          {
+      kind: "all",
+      conditions: [
+        {
+          kind: "subject-matches",
+          subject: { kind: "event-recipient" },
+          filter: {
             kind: "type",
             oneOf: killedParity[1].toLowerCase() === "ally" ? ["ALLY"] : ["ALLY", "CHAMPION"],
           },
-          {
-            kind: "parity",
-            property: /life/iu.test(killedParity[0]) ? "life" : "power",
-            value: killedParity[2].toLowerCase() as "odd" | "even",
-          },
-        ],
-      },
+        },
+        {
+          kind: "numeric-property-parity",
+          subject: { kind: "event-recipient" },
+          property: /life/iu.test(killedParity[0]) ? "life" : "power",
+          basis: "last-known",
+          value: killedParity[2].toLowerCase() === "odd" ? "odd" : "even",
+        },
+      ],
     };
   const banishedCardMatches = /^(?:a |the )?(.+?) card was banished this way$/iu.exec(text);
   if (banishedCardMatches) {
@@ -3459,7 +3586,7 @@ function compileCondition(raw: string, sourceName?: string): GrandArchiveConditi
         kind: "history",
         event: "attack-declared",
         window: "this-turn",
-        filter: { kind: "type", oneOf: ["CHAMPION"] },
+        recipient: { kind: "champion", player: "controller" },
         minimum: 1,
       },
     };
@@ -4614,7 +4741,6 @@ function compileEventClause(raw: string, sourceName: string): GrandArchiveEventP
       return {
         name:
           sourceCounterChanged[2].toLowerCase() === "put on" ? "counter-added" : "counter-removed",
-        actor: "controller",
         counter: { named: sourceCounterChanged[1].toLowerCase() },
         subject: sourceHolder
           ? { kind: "source" }
@@ -4690,14 +4816,17 @@ function compileEventClause(raw: string, sourceName: string): GrandArchiveEventP
     const filter = describedCardFilter(`${passiveCardBanished[1]} card`);
     return {
       name: "card-banished",
-      actor: passiveCardBanished[2].toLowerCase() === "your" ? "controller" : "opponent",
       from:
         passiveCardBanished[3].toLowerCase() === "graveyard"
           ? "graveyard"
           : passiveCardBanished[3].toLowerCase() === "memory"
             ? "memory"
             : "hand",
-      subject: { kind: "event-object", ...(filter ? { filter } : {}) },
+      subject: {
+        kind: "event-object",
+        owner: passiveCardBanished[2].toLowerCase() === "your" ? "controller" : "opponent",
+        ...(filter ? { filter } : {}),
+      },
     };
   }
 
@@ -5030,6 +5159,24 @@ export function compileInstruction(
     .replace(/\s+\(This effect lasts indefinitely\.\)$/u, "")
     .replace(/[.]$/u, "");
 
+  const addThenGlimpse =
+    /^Put (?:a|one) ([a-z-]+) counter on (.+?)\. Then glimpse X, where X is the amount of \1 counters on \2$/iu.exec(
+      text,
+    );
+  if (addThenGlimpse && refersToSource(addThenGlimpse[2], sourceName)) {
+    const counter = compileCounterKind(addThenGlimpse[1]);
+    return {
+      effect: sequence([
+        { kind: "add-counter", subject: { kind: "source" }, counter, amount: 1 },
+        {
+          kind: "keyword-action",
+          action: "glimpse",
+          amount: { kind: "counter-count", subject: { kind: "source" }, counter },
+        },
+      ]),
+    };
+  }
+
   if (
     /^Your champion gains stealth until end of turn\. Prevent the next 4 non-combat damage that would be dealt to them this turn$/iu.test(
       text,
@@ -5219,7 +5366,7 @@ export function compileInstruction(
       candidates: {
         kind: "card",
         zones: ["banishment"],
-        relationship: "banished-by",
+        relationship: "activation-payment-of",
         host: { kind: "source" },
         filter: {
           kind: "all",
@@ -5587,6 +5734,80 @@ export function compileInstruction(
             state: { named: "crowds-favor" },
             value: true,
           },
+        },
+      ]),
+    };
+  }
+
+  const conditionalReturnWithBuff =
+    /^If there are (one|two|three|four|five|six|seven|eight|nine|ten|\d+) or more regalia cards among all banishments, return (.+) to the field with a buff counter on it\. It becomes ephemeral$/iu.exec(
+      text,
+    );
+  if (conditionalReturnWithBuff && refersToSource(conditionalReturnWithBuff[2], sourceName)) {
+    const threshold = amount(conditionalReturnWithBuff[1]);
+    if (threshold === null) return null;
+    const returned = "returned-source";
+    return {
+      effect: {
+        kind: "conditional",
+        condition: {
+          kind: "compare",
+          comparison: {
+            left: {
+              kind: "count",
+              collection: {
+                zones: ["banishment"],
+                player: "each-player",
+                filter: { kind: "supertype", oneOf: ["REGALIA"] },
+              },
+            },
+            operator: "gte",
+            right: threshold,
+          },
+        },
+        then: sequence([
+          {
+            kind: "move",
+            subject: { kind: "source" },
+            from: "graveyard",
+            destination: { zone: "field" },
+            bindResultAs: returned,
+          },
+          {
+            kind: "add-counter",
+            subject: { kind: "bound", binding: returned },
+            counter: "buff",
+            amount: 1,
+          },
+          {
+            kind: "set-object-state",
+            subject: { kind: "bound", binding: returned },
+            state: "ephemeral",
+            value: true,
+          },
+        ]),
+      },
+    };
+  }
+
+  const returnSourceEphemeral =
+    /^Return (.+) from your graveyard to the field\. It becomes ephemeral$/iu.exec(text);
+  if (returnSourceEphemeral && refersToSource(returnSourceEphemeral[1], sourceName)) {
+    const returned = "returned-source";
+    return {
+      effect: sequence([
+        {
+          kind: "move",
+          subject: { kind: "source" },
+          from: "graveyard",
+          destination: { zone: "field" },
+          bindResultAs: returned,
+        },
+        {
+          kind: "set-object-state",
+          subject: { kind: "bound", binding: returned },
+          state: "ephemeral",
+          value: true,
         },
       ]),
     };
@@ -7856,6 +8077,24 @@ export function compileInstruction(
     };
   }
 
+  const championDamageAndRecover =
+    /^Deal (\d+) damage to target champion and recover (\d+)$/iu.exec(text);
+  if (championDamageAndRecover) {
+    const recipient = target("target-1", ["CHAMPION"]);
+    return {
+      targets: [recipient],
+      effect: sequence([
+        {
+          kind: "deal-damage",
+          source: { kind: "source" },
+          recipient: { kind: "bound", binding: recipient.id },
+          amount: Number(championDamageAndRecover[1]),
+        },
+        { kind: "recover", player: "controller", amount: Number(championDamageAndRecover[2]) },
+      ]),
+    };
+  }
+
   const sourceDamageAndEmpower =
     /^Deal ([0-9XYZLV+ -]+) (unpreventable )?damage to (.+?) and empower ([0-9XYZLV+ -]+)$/iu.exec(
       text,
@@ -8615,6 +8854,24 @@ export function compileInstruction(
     };
   }
 
+  const banishSourceAsOmen = /^Banish (.+?) and put an omen counter on it$/iu.exec(text);
+  if (banishSourceAsOmen && refersToSource(banishSourceAsOmen[1], sourceName))
+    return {
+      effect: sequence([
+        {
+          kind: "banish-object",
+          subject: { kind: "source" },
+          bindResultAs: "banished-source-omen",
+        },
+        {
+          kind: "add-counter",
+          subject: { kind: "bound", binding: "banished-source-omen" },
+          counter: "omen",
+          amount: 1,
+        },
+      ]),
+    };
+
   const lowOmensBanishSource =
     /^If you have two or less omens, banish (.+?) and put an omen counter on it$/iu.exec(text);
   if (lowOmensBanishSource && refersToSource(lowOmensBanishSource[1], sourceName))
@@ -9331,6 +9588,7 @@ export function compileInstruction(
           kind: "for-next-event",
           event: "card-activated",
           starts: { kind: "next-turn", whose: "event-recipient-controller" },
+          expires: { kind: "during-next-turn", whose: "event-recipient-controller" },
         },
       },
     };
@@ -10621,13 +10879,13 @@ export function compileInstruction(
               action: "activate",
               subject,
               fromZone: "banishment",
-              condition: {
-                kind: "subjects-in-zone",
-                subject,
+              affectedSet: "locked",
+              duration: {
+                kind: "while-subjects-in-zone",
+                subjects: subject,
                 zone: "banishment",
-                quantifier: "all",
+                scope: "per-object",
               },
-              duration: { kind: "while-condition" },
             },
           ]),
         },
@@ -11208,6 +11466,37 @@ export function compileInstruction(
         },
       };
   }
+  if (
+    /^For each omen you have, discard a card from your hand or memory and draw a card into your memory$/iu.test(
+      text,
+    )
+  ) {
+    const selection: GrandArchiveResolutionChoice = {
+      id: "discarded-card",
+      kind: "choice",
+      declared: "resolution",
+      chooser: "controller",
+      count: { kind: "exactly", amount: 1 },
+      unique: true,
+      candidates: {
+        kind: "card",
+        zones: ["hand", "memory"],
+        relationship: "zone-of",
+        player: "controller",
+      },
+    };
+    return {
+      effect: {
+        kind: "repeat",
+        count: { kind: "player-property", player: "controller", property: "omens" },
+        effect: sequence([
+          { kind: "discard", player: "controller", selection },
+          { kind: "draw", player: "controller", amount: 1, to: "memory" },
+        ]),
+      },
+    };
+  }
+
   const repeatForEachDescriptor =
     /^For each(?: of up to (one|two|three|four|five|six|seven|eight|nine|ten|\d+))? (.+?), ([^]*)$/iu.exec(
       text,
@@ -12612,8 +12901,14 @@ export function compileInstruction(
       },
     };
 
-  if (/^Banish this card from your (?:graveyard|memory|banishment)$/iu.test(text))
-    return { effect: { kind: "banish-object", subject: { kind: "source" } } };
+  const banishSourceFromZone = /^Banish this card from your (graveyard|memory|banishment)$/iu.exec(
+    text,
+  );
+  if (banishSourceFromZone) {
+    const from = banishSourceFromZone[1].toLowerCase();
+    if (from !== "graveyard" && from !== "memory" && from !== "banishment") return null;
+    return { effect: { kind: "banish-object", subject: { kind: "source" }, from } };
+  }
 
   const multiZoneCardsToDeckBottom =
     /^Put (one|two|three|four|five|\d+) cards from your hand and\/or memory on the bottom of your deck$/iu.exec(
@@ -13313,7 +13608,18 @@ export function compileInstruction(
                 consequence: consequence.effect,
                 ...(consequence.targets?.length ? { targets: consequence.targets } : {}),
               }
-            : sequence([action.effect, consequence.effect]),
+            : sequence([
+                {
+                  kind: "attempt",
+                  effect: action.effect,
+                  bindSucceededAs: "optional-action-succeeded",
+                },
+                {
+                  kind: "conditional",
+                  condition: { kind: "effect-succeeded", binding: "optional-action-succeeded" },
+                  then: consequence.effect,
+                },
+              ]),
         },
         ...(targets.length ? { targets } : {}),
         ...(variables.length ? { variables } : {}),
@@ -14149,8 +14455,7 @@ export function compileInstruction(
         kind: "replacement",
         event: {
           name: "card-moved",
-          actor: { binding },
-          subject: { kind: "event-object" },
+          subject: { kind: "event-object", owner: { binding } },
           fromNot: ["field"],
           to: "graveyard",
         },
@@ -15690,36 +15995,6 @@ export function compileInstruction(
         },
       };
   }
-  if (
-    /^For each omen you have, discard a card from your hand or memory and draw a card into your memory$/iu.test(
-      text,
-    )
-  ) {
-    const selection: GrandArchiveResolutionChoice = {
-      id: "discarded-card",
-      kind: "choice",
-      declared: "resolution",
-      chooser: "controller",
-      count: { kind: "exactly", amount: 1 },
-      unique: true,
-      candidates: {
-        kind: "card",
-        zones: ["hand", "memory"],
-        relationship: "zone-of",
-        player: "controller",
-      },
-    };
-    return {
-      effect: {
-        kind: "repeat",
-        count: { kind: "player-property", player: "controller", property: "omens" },
-        effect: sequence([
-          { kind: "discard", player: "controller", selection },
-          { kind: "draw", player: "controller", amount: 1, to: "memory" },
-        ]),
-      },
-    };
-  }
 
   if (text === "Until end of turn, you can't draw cards")
     return {
@@ -15794,7 +16069,7 @@ export function compileInstruction(
   if (text === "Until end of turn, target opponent can't recover") {
     const binding = "target-player";
     return {
-      targets: [playerTarget(binding)],
+      targets: [playerTarget(binding, "opponent")],
       effect: {
         kind: "rule-modification",
         mode: "forbid",
@@ -15891,6 +16166,11 @@ export function compileInstruction(
           mode: "allow",
           action: "activate",
           subject: { kind: "bound", binding },
+          affectedSet: "locked",
+          fromZone:
+            temporaryGraveyardActivation[2].toLowerCase() === "graveyard"
+              ? "graveyard"
+              : "banishment",
           duration: { kind: "this-turn" },
         },
       };
@@ -17212,6 +17492,27 @@ export function compileInstruction(
     }
   }
 
+  const banishGraveyardTarget = /^Banish (up to one )?target card (?:in|from) a graveyard$/iu.exec(
+    text,
+  );
+  if (banishGraveyardTarget) {
+    const binding = "target-card";
+    return {
+      targets: [
+        {
+          id: binding,
+          kind: "target",
+          declared: "announcement",
+          chooser: "controller",
+          count: { kind: banishGraveyardTarget[1] ? "up-to" : "exactly", amount: 1 },
+          unique: true,
+          candidates: { kind: "card", zones: ["graveyard"] },
+        },
+      ],
+      effect: { kind: "banish-object", subject: { kind: "bound", binding } },
+    };
+  }
+
   const selectionAction = compileSelectionAction(text);
   if (selectionAction) return selectionAction;
 
@@ -17236,7 +17537,7 @@ export function compileInstruction(
           kind: "all",
           filters: [
             { kind: "type", oneOf: ["WEAPON"] },
-            { kind: "has-keyword", keyword: "aetherwing" },
+            { kind: "subtype", oneOf: ["AETHERWING"] },
           ],
         },
       },
@@ -18547,24 +18848,6 @@ export function compileInstruction(
     };
   }
 
-  if (/^Banish target card (?:in|from) a graveyard$/iu.test(text)) {
-    const binding = "target-card";
-    return {
-      targets: [
-        {
-          id: binding,
-          kind: "target",
-          declared: "announcement",
-          chooser: "controller",
-          count: { kind: "exactly", amount: 1 },
-          unique: true,
-          candidates: { kind: "card", zones: ["graveyard"] },
-        },
-      ],
-      effect: { kind: "banish-object", subject: { kind: "bound", binding } },
-    };
-  }
-
   const banishGraveyardUntilSourceLeaves =
     /^Banish target card in a graveyard until (.+?) leaves the field$/iu.exec(text);
   if (
@@ -18742,7 +19025,7 @@ export function compileInstruction(
       },
     };
 
-  const sacrifice = /^Sacrifice (.+)$/iu.exec(text);
+  const sacrifice = /^Sacrifice (?!each\b)(.+)$/iu.exec(text);
   if (sacrifice) {
     const subject = sacrifice[1];
     if (refersToSource(subject, sourceName) || subject === "this object" || subject === "this card")
@@ -19288,6 +19571,32 @@ export function compileInstruction(
         filter,
         relationship: "controlled-by",
       });
+      if (/^target /iu.test(putCounterOnChosen[3])) {
+        const recipientTarget: GrandArchiveTargetDeclaration = {
+          id: selection.id,
+          kind: "target",
+          declared: "announcement",
+          chooser: "controller",
+          count: { kind: "up-to", amount: count },
+          unique: true,
+          candidates: {
+            kind: "object",
+            zones: ["field"],
+            relationship: "controlled-by",
+            player: "controller",
+            filter,
+          },
+        };
+        return {
+          targets: [recipientTarget],
+          effect: {
+            kind: "add-counter",
+            subject: { kind: "bound", binding: recipientTarget.id },
+            counter: compileCounterKind(putCounterOnChosen[1]),
+            amount: 1,
+          },
+        };
+      }
       return {
         effect: {
           kind: "choose",
@@ -20143,8 +20452,13 @@ export function compileInstruction(
           kind: "rule-modification",
           mode: "allow",
           action: "activate-fast",
+          subject: { kind: "player", player: "controller" },
           filter: fastActivationFilter,
-          duration: { kind: "for-next-event", event: "card-activated" },
+          duration: {
+            kind: "for-next-event",
+            event: "card-activated",
+            expires: { kind: "this-turn" },
+          },
         },
       };
     }
@@ -20229,7 +20543,7 @@ export function compileInstruction(
           },
         },
       ],
-      effect: { kind: "look-at", player, selection },
+      effect: { kind: "look-at", player: "controller", selection },
     };
   }
 
@@ -21771,7 +22085,7 @@ export function compileInstruction(
           subjects,
           affectedSet: "locked",
           duration: controlledGroupModifier[4].toLowerCase().includes("next turn")
-            ? { kind: "until-end-of-turn", whose: "controller" }
+            ? { kind: "until-end-of-next-turn", whose: "controller" }
             : { kind: "this-turn" },
           layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
           change: {
@@ -23169,9 +23483,16 @@ export function compileInstruction(
   }
 
   const groupDamage =
-    /^Deal ([0-9XYZLVD+ -]+) (unpreventable )?damage to (?:all|each) (.+)$/iu.exec(text);
+    /^Deal ([0-9XYZLVD+ -]+) (unpreventable )?damage to (?:all|each) (.+?)(?:, where X is (.+))?$/iu.exec(
+      text,
+    );
   if (groupDamage) {
-    const value = rulesAmount(groupDamage[1]);
+    const derived = groupDamage[4] ? derivedAmount(groupDamage[4], sourceName) : null;
+    const value = groupDamage[4]
+      ? groupDamage[1] === "X"
+        ? derived
+        : null
+      : rulesAmount(groupDamage[1]);
     let description = groupDamage[3];
     const excludeChampion = / except for your champion$/iu.test(description);
     description = description.replace(/ except for your champion$/iu, "");
@@ -24249,25 +24570,33 @@ export function compileInstruction(
   if (eachAwakeSubtypePrevention)
     return {
       effect: {
-        kind: "replacement",
-        event: {
-          name: "damage-dealt",
-          recipient: {
-            kind: "event-object",
-            controller: "controller",
-            filter: {
-              kind: "all",
-              filters: [
-                { kind: "type", oneOf: ["ALLY"] },
-                { kind: "subtype", oneOf: [eachAwakeSubtypePrevention[1].toUpperCase()] },
-                { kind: "object-state", state: "awake" },
-              ],
-            },
+        kind: "for-each",
+        collection: {
+          zones: ["field"],
+          player: "controller",
+          filter: {
+            kind: "all",
+            filters: [
+              { kind: "type", oneOf: ["ALLY"] },
+              { kind: "subtype", oneOf: [eachAwakeSubtypePrevention[1].toUpperCase()] },
+              { kind: "object-state", state: "awake" },
+            ],
           },
         },
-        operation: { kind: "prevent" },
-        capacity: { amount: Number(eachAwakeSubtypePrevention[2]), scope: "per-object" },
-        duration: { kind: "this-turn" },
+        bindEachAs: "protected-awake-ally",
+        effect: {
+          kind: "replacement",
+          event: {
+            name: "damage-dealt",
+            recipient: { kind: "bound-object", binding: "protected-awake-ally" },
+          },
+          operation: { kind: "prevent" },
+          capacity: {
+            amount: Number(eachAwakeSubtypePrevention[2]),
+            scope: "replacement-instance",
+          },
+          duration: { kind: "this-turn" },
+        },
       },
     };
   const describedPrevention =
@@ -24501,7 +24830,9 @@ function compileCost(raw: string, sourceName: string): GrandArchiveAbilityCost |
       const subject = sacrifice[2];
       const sacrificeCount = sacrifice[1] ? rulesAmount(sacrifice[1]) : 1;
       if (sacrificeCount === null) return null;
-      if (refersToSource(subject, sourceName) || subject === "this")
+      // An articulated sacrifice ("sacrifice a Shield") names an object kind,
+      // never the source itself, even when that noun prefixes the source name.
+      if (!sacrifice[1] && (refersToSource(subject, sourceName) || subject === "this"))
         costs.push({ kind: "sacrifice", subject: { kind: "source" } });
       else {
         const filter = describedCardFilter(subject.replace(/s$/u, ""));
@@ -25157,6 +25488,48 @@ function compileParagraph(
             subject: { kind: "source" },
             costKind: counterCostAlternative[2].toLowerCase() === "reserve" ? "reserve" : "memory",
             cost,
+            duration: { kind: "while-source-in-functional-zone" },
+          },
+        ],
+      };
+  }
+
+  const aggregateGraveyardReserveAlternative =
+    /^You may banish (one|two|three|four|five|six|seven|eight|nine|ten|\d+) or more (.+?) ally cards with total reserve cost (\d+) from your graveyard rather than pay this card['’]s reserve cost\.?$/iu.exec(
+      body,
+    );
+  if (aggregateGraveyardReserveAlternative) {
+    const minimum = amount(aggregateGraveyardReserveAlternative[1]);
+    const filter = describedCardFilter(`${aggregateGraveyardReserveAlternative[2]} ally card`);
+    if (minimum !== null && filter)
+      return {
+        id,
+        kind: "static",
+        staticKind: "effects",
+        text: printedText,
+        ...(restrictions.length ? { restrictions } : {}),
+        effects: [
+          {
+            kind: "rule-modification",
+            mode: "replace-cost",
+            action: "pay-cost",
+            subject: { kind: "source" },
+            costKind: "reserve",
+            cost: {
+              kind: "select-and-move",
+              player: "controller",
+              from: "graveyard",
+              to: "banishment",
+              count: { kind: "at-least", amount: minimum },
+              filter,
+              aggregateConstraint: {
+                property: "reserve-cost",
+                operation: "sum",
+                operator: "eq",
+                value: Number(aggregateGraveyardReserveAlternative[3]),
+                basis: "base",
+              },
+            },
             duration: { kind: "while-source-in-functional-zone" },
           },
         ],
@@ -26365,18 +26738,21 @@ function compileParagraph(
         },
       ],
     };
-    return cardResolution(
-      sequence([
-        { kind: "draw", player: "controller", amount: x, to: "memory" },
+    const amount: GrandArchiveAmount = { kind: "binding", binding: "influence-deficit" };
+    return cardResolution({
+      kind: "bind-value",
+      value: x,
+      bindAs: "influence-deficit",
+      effect: sequence([
+        { kind: "draw", player: "controller", amount, to: "memory" },
         {
           kind: "deal-damage",
           source: { kind: "source" },
           recipient: { kind: "champion", player: "controller" },
-          amount: x,
+          amount,
         },
       ]),
-      { variables: [{ symbol: "X", kind: "derived", amount: x }] },
-    );
+    });
   }
 
   if (
@@ -26671,13 +27047,19 @@ function compileParagraph(
             kind: "rule-modification",
             mode: "forbid",
             action: "level-up",
-            subject: { kind: "player", player: "controller" },
-            filter: {
-              kind: "all",
-              filters: [
-                { kind: "type", oneOf: ["CHAMPION"] },
-                { kind: "not", filter: { kind: "subtype", oneOf: ["SPIRIT"] } },
-              ],
+            subject: {
+              kind: "each",
+              collection: {
+                zones: ["field"],
+                player: "controller",
+                filter: {
+                  kind: "all",
+                  filters: [
+                    { kind: "type", oneOf: ["CHAMPION"] },
+                    { kind: "not", filter: { kind: "class", oneOf: ["SPIRIT"] } },
+                  ],
+                },
+              },
             },
             duration: { kind: "permanent" },
           },
@@ -31341,22 +31723,25 @@ function compileParagraph(
       count: { kind: "exactly", amount: 1 },
       candidates: { kind: "option", options: ["ACTION", "ALLY"] },
     };
-    const discarded: GrandArchiveResolutionChoice = {
-      id: "random-discard",
-      kind: "choice",
-      declared: "resolution",
-      chooser: "turn-player",
-      method: "random",
-      count: { kind: "exactly", amount: 1 },
-      unique: true,
-      candidates: {
-        kind: "union",
-        sources: [
-          { kind: "card", zones: ["hand"], relationship: "zone-of", player: "turn-player" },
-          { kind: "card", zones: ["memory"], relationship: "zone-of", player: "turn-player" },
-        ],
+    const discardFrom = (zone: "hand" | "memory"): GrandArchiveEffect => ({
+      kind: "discard",
+      player: "turn-player",
+      selection: {
+        id: `random-discard-${zone}`,
+        kind: "choice",
+        declared: "resolution",
+        chooser: "turn-player",
+        method: "random",
+        count: { kind: "exactly", amount: 1 },
+        unique: true,
+        candidates: {
+          kind: "card",
+          zones: [zone],
+          relationship: "zone-of",
+          player: "turn-player",
+        },
       },
-    };
+    });
     return cardResolution(
       sequence([
         { kind: "draw", player: "each-player", amount: 1 },
@@ -31383,10 +31768,67 @@ function compileParagraph(
                 minimum: 1,
               },
             },
-            then: { kind: "discard", player: "turn-player", selection: discarded },
+            then: sequence([discardFrom("hand"), discardFrom("memory")]),
           },
         },
       ]),
+    );
+  }
+
+  if (
+    /^Look at target opponent['’]s memory and discard a card from among them\. If you have five or more omens with different reserve costs, discard an additional card from among them\.$/u.test(
+      body,
+    )
+  ) {
+    const opponent = playerTarget("target-opponent", "opponent");
+    const cards: GrandArchiveResolutionChoice = {
+      id: "discarded-opponent-memory",
+      kind: "choice",
+      declared: "resolution",
+      chooser: "controller",
+      count: { kind: "exactly", amount: 1 },
+      unique: true,
+      candidates: {
+        kind: "card",
+        zones: ["memory"],
+        relationship: "zone-of",
+        player: { binding: opponent.id },
+      },
+    };
+    return cardResolution(
+      sequence([
+        {
+          kind: "look-at",
+          player: "controller",
+          selection: { ...cards, id: "inspected-memory", count: { kind: "all" } },
+        },
+        { kind: "discard", player: { binding: opponent.id }, selection: cards },
+        {
+          kind: "conditional",
+          condition: {
+            kind: "compare",
+            comparison: {
+              left: {
+                kind: "count",
+                distinctBy: "reserve-cost",
+                collection: {
+                  zones: ["banishment"],
+                  player: "controller",
+                  filter: { kind: "has-counter", counter: "omen" },
+                },
+              },
+              operator: "gte",
+              right: 5,
+            },
+          },
+          then: {
+            kind: "discard",
+            player: { binding: opponent.id },
+            selection: { ...cards, id: "additional-discarded-opponent-memory" },
+          },
+        },
+      ]),
+      { targets: [opponent] },
     );
   }
 
@@ -33154,11 +33596,15 @@ function compileParagraph(
         kind: "choose",
         selection: action,
         effect: sequence([
-          { kind: "banish", player: "controller", selection: action },
+          {
+            kind: "banish-object",
+            subject: { kind: "bound", binding: action.id },
+            from: "graveyard",
+          },
           {
             kind: "copy",
             subject: { kind: "bound", binding: action.id },
-            copy: "card-activation",
+            copy: "object",
             bindResultAs: "copied-action",
           },
           {
@@ -33869,29 +34315,32 @@ function compileParagraph(
         {
           id: "grant-on-hit",
           text: "If a unit is attacking, each Aethercharge card in that attacker's intent gains an on-hit loading ability.",
-          condition: {
-            kind: "collection-exists",
-            collection: {
-              zones: ["field"],
-              player: "each-player",
-              filter: { kind: "object-state", state: "attacking" },
-            },
-          },
           effect: {
-            kind: "continuous",
-            subjects: {
-              kind: "each",
+            kind: "conditional",
+            condition: {
+              kind: "collection-exists",
               collection: {
-                zones: ["intent"],
-                host: { kind: "current-attack" },
-                relationship: "intent-of",
-                filter: { kind: "subtype", oneOf: ["AETHERCHARGE"] },
+                zones: ["field"],
+                player: "each-player",
+                filter: { kind: "object-state", state: "attacking" },
               },
             },
-            affectedSet: "locked",
-            duration: { kind: "permanent" },
-            layer: { layer: "D", modifies: "ability" },
-            change: { kind: "grant-ability", ability: onHit },
+            then: {
+              kind: "continuous",
+              subjects: {
+                kind: "each",
+                collection: {
+                  zones: ["intent"],
+                  host: { kind: "current-attack" },
+                  relationship: "intent-of",
+                  filter: { kind: "subtype", oneOf: ["AETHERCHARGE"] },
+                },
+              },
+              affectedSet: "locked",
+              duration: { kind: "permanent" },
+              layer: { layer: "D", modifies: "ability" },
+              change: { kind: "grant-ability", ability: onHit },
+            },
           },
         },
       ],
@@ -34131,24 +34580,17 @@ function compileParagraph(
   ) {
     const cards = resolutionChoice({
       id: "fire-cards",
-      count: { kind: "up-to", amount: 2 },
+      count: { kind: "exactly", amount: 2 },
       zone: "graveyard",
       filter: { kind: "element", oneOf: ["FIRE"] },
     });
     return cardResolution({
-      kind: "reflexive",
-      action: { kind: "banish", player: "controller", selection: cards },
-      consequence: {
-        kind: "conditional",
-        condition: {
-          kind: "compare",
-          comparison: {
-            left: { kind: "count", collection: { binding: cards.id } },
-            operator: "eq",
-            right: 2,
-          },
-        },
-        then: {
+      kind: "optional",
+      player: "controller",
+      allOrNothing: true,
+      effect: sequence([
+        { kind: "banish", player: "controller", selection: cards },
+        {
           kind: "create-delayed-trigger",
           trigger: {
             kind: "event",
@@ -34173,7 +34615,7 @@ function compileParagraph(
             duration: { kind: "this-attack" },
           },
         },
-      },
+      ]),
     });
   }
 
@@ -35089,8 +35531,21 @@ function compileParagraph(
           { kind: "rest", subject: { kind: "source" } },
           {
             kind: "select-and-reveal",
-            player: "controller",
+            player: "each-player",
             from: "banishment",
+            filter: {
+              kind: "numeric",
+              comparison: {
+                left: {
+                  kind: "property",
+                  subject: { kind: "candidate" },
+                  property: "reserve-cost",
+                  basis: "base",
+                },
+                operator: "gte",
+                right: 0,
+              },
+            },
             count: { kind: "exactly", amount: 1 },
             host: { kind: "source" },
             relationship: "banished-by",
@@ -35163,7 +35618,6 @@ function compileParagraph(
       candidates: {
         kind: "card",
         zones: ["banishment"],
-        player: "controller",
         filter: {
           kind: "all",
           filters: [
@@ -35200,7 +35654,12 @@ function compileParagraph(
           triggerName: "on-attack",
           count: "each",
         },
-        { kind: "retarget", subject: { kind: "current-attack" }, chooser: "controller" },
+        {
+          kind: "optional",
+          player: "controller",
+          effect: { kind: "retarget", subject: { kind: "current-attack" }, chooser: "controller" },
+          allOrNothing: true,
+        },
       ]),
       { targets: [omen] },
     );
@@ -36304,6 +36763,7 @@ function compileParagraph(
       id: `${grantedAbilityId("Whenever an opponent activates a card with the same reserve cost as this omen, recover 1 and deal 1 damage to their champion.")}-a1`,
       kind: "triggered",
       text: "Whenever an opponent activates a card with the same reserve cost as this omen, recover 1 and deal 1 damage to their champion.",
+      functionalZones: ["banishment"],
       trigger: {
         kind: "event",
         event: { name: "card-activated", actor: "opponent" },
@@ -36776,6 +37236,7 @@ function compileParagraph(
       id,
       kind: "triggered",
       text: printedText,
+      functionalZones: ["graveyard"],
       trigger: {
         kind: "event",
         event: {
@@ -36804,6 +37265,35 @@ function compileParagraph(
       },
     };
   }
+
+  if (
+    /^Whenever this card is banished from your graveyard to pay for a reserve cost, put it onto the field\.$/u.test(
+      body,
+    )
+  )
+    return {
+      id,
+      kind: "triggered",
+      text: printedText,
+      functionalZones: ["graveyard"],
+      trigger: {
+        kind: "event",
+        event: {
+          name: "card-banished",
+          actor: "controller",
+          subject: { kind: "source" },
+          from: "graveyard",
+          payment: { costKind: "reserve" },
+        },
+      },
+      ...(restrictions.length ? { restrictions } : {}),
+      effect: {
+        kind: "move",
+        subject: { kind: "source" },
+        from: "banishment",
+        destination: { zone: "field" },
+      },
+    };
 
   if (
     body.startsWith(
@@ -37064,7 +37554,7 @@ function compileParagraph(
                 selection: activations,
                 effect: {
                   kind: "for-each",
-                  collection: { binding: activations.id },
+                  collection: { kind: "stack-items", binding: activations.id },
                   bindEachAs: "targeting-activation",
                   effect: {
                     kind: "unless-paid",
@@ -37138,7 +37628,7 @@ function compileParagraph(
         id: `choose-${zone}`,
         text: `Look at that opponent's ${zone} and discard a card from it.`,
         effect: sequence([
-          { kind: "look-at", player: { binding: opponent }, selection: looked },
+          { kind: "look-at", player: "controller", selection: looked },
           {
             kind: "discard",
             player: { binding: opponent },
@@ -37166,7 +37656,6 @@ function compileParagraph(
         kind: "not",
         condition: { kind: "turn-player", player: "controller" },
       },
-      targets: [target],
       ...(restrictions.length ? { restrictions } : {}),
       effect: {
         kind: "optional",
@@ -37174,6 +37663,7 @@ function compileParagraph(
         allOrNothing: true,
         effect: {
           kind: "reflexive",
+          targets: [target],
           action: { kind: "banish-object", subject: { kind: "source" } },
           consequence: {
             kind: "select-modes",
@@ -39278,26 +39768,28 @@ function compileParagraph(
         {
           kind: "conditional",
           condition: { kind: "collection-exists", collection: { binding: revealed.id } },
-          then: sequence([
-            {
-              kind: "select-modes",
-              choose: { kind: "exactly", amount: 1 },
-              modes: [
-                {
-                  id: "discard",
-                  text: "Discard it.",
-                  effect: {
-                    kind: "move",
-                    subject: { kind: "bound", binding: revealed.id },
-                    from: "hand",
-                    destination: { zone: "graveyard" },
-                  },
-                },
-                {
-                  id: "load",
-                  text: "Load it into an Aetherwing weapon you control.",
-                  condition: weaponExists,
-                  effect: {
+          then: {
+            kind: "optional",
+            player: "controller",
+            allOrNothing: true,
+            effect: sequence([
+              {
+                kind: "move",
+                subject: { kind: "bound", binding: revealed.id },
+                from: "hand",
+                destination: { zone: "graveyard" },
+              },
+              { kind: "draw", player: "controller", amount: 1 },
+            ]),
+            otherwise: {
+              kind: "conditional",
+              condition: weaponExists,
+              then: {
+                kind: "optional",
+                player: "controller",
+                allOrNothing: true,
+                effect: sequence([
+                  {
                     kind: "choose",
                     selection: weapon,
                     effect: {
@@ -39307,11 +39799,11 @@ function compileParagraph(
                       destination: { zone: "loaded", host: { kind: "bound", binding: weapon.id } },
                     },
                   },
-                },
-              ],
+                  { kind: "draw", player: "controller", amount: 1 },
+                ]),
+              },
             },
-            { kind: "draw", player: "controller", amount: 1 },
-          ]),
+          },
         },
       ]),
     );
@@ -40323,6 +40815,54 @@ function compileParagraph(
   }
 
   if (
+    /^On Attack: You may banish up to X fire element cards from your graveyard where X is the amount of Aethercharge cards in the attacker's intent\. This attack gets \+1POWER for each card banished this way\.$/u.test(
+      body,
+    )
+  ) {
+    const selection = resolutionChoice({
+      id: "chosen-fire-cards",
+      count: {
+        kind: "up-to",
+        amount: {
+          kind: "count",
+          collection: {
+            zones: ["intent"],
+            host: { kind: "event-attacker" },
+            relationship: "intent-of",
+            filter: { kind: "subtype", oneOf: ["AETHERCHARGE"] },
+          },
+        },
+      },
+      zone: "graveyard",
+      filter: { kind: "element", oneOf: ["FIRE"] },
+    });
+    return onAttack({
+      kind: "optional",
+      player: "controller",
+      allOrNothing: true,
+      effect: sequence([
+        { kind: "banish", player: "controller", selection, bindResultAs: "banished-fire-cards" },
+        {
+          kind: "continuous",
+          subjects: { kind: "current-attack" },
+          affectedSet: "locked",
+          duration: { kind: "this-attack" },
+          layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
+          change: {
+            kind: "numeric",
+            property: "power",
+            operation: "add",
+            amount: {
+              kind: "count",
+              collection: { binding: "banished-fire-cards" },
+            },
+          },
+        },
+      ]),
+    });
+  }
+
+  if (
     /^On Attack: For each wind element card in the attacker's intent, choose an ally you control\. That ally gets \+1POWER until end of turn\.$/u.test(
       body,
     )
@@ -40693,7 +41233,7 @@ function compileParagraph(
               kind: "continuous",
               subjects: { kind: "source" },
               affectedSet: "locked",
-              duration: { kind: "this-attack" },
+              duration: { kind: "while-source-on-field" },
               layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
               change: { kind: "numeric", property: "power", operation: "add", amount: x },
             },
@@ -41136,10 +41676,11 @@ function compileParagraph(
             subject: { kind: "source" },
             from: "graveyard",
             destination: { zone: "field" },
+            bindResultAs: "returned-source",
           },
           {
             kind: "continuous",
-            subjects: { kind: "source" },
+            subjects: { kind: "bound", binding: "returned-source" },
             affectedSet: "locked",
             duration: { kind: "this-turn" },
             layer: { layer: "E", modifies: "stat", sublayer: "modifier" },
@@ -41147,7 +41688,7 @@ function compileParagraph(
           },
           {
             kind: "set-object-state",
-            subject: { kind: "source" },
+            subject: { kind: "bound", binding: "returned-source" },
             state: "ephemeral",
             value: true,
           },
@@ -42600,7 +43141,7 @@ function compileParagraph(
           kind: "all",
           filters: [
             { kind: "type", oneOf: ["WEAPON"] },
-            { kind: "has-keyword", keyword: "aetherwing" },
+            { kind: "subtype", oneOf: ["AETHERWING"] },
           ],
         },
       },
@@ -43365,6 +43906,7 @@ function compileParagraph(
       kind: "static",
       staticKind: "effects",
       text: printedText,
+      ...(restrictions.length ? { restrictions } : {}),
       effects: [
         {
           kind: "continuous",
@@ -43489,7 +44031,12 @@ function compileParagraph(
     /^(.+?) gets \+(\d+)\s*(POWER|LIFE|level)(?: and \+(\d+)\s*(POWER|LIFE|level))? for (?:each|every) (.+)\.$/iu.exec(
       body,
     );
-  if (countedSourceStats && refersToSource(countedSourceStats[1], sourceName)) {
+  if (
+    countedSourceStats &&
+    refersToSource(countedSourceStats[1], sourceName) &&
+    // Independently scaled second stats belong to the exact dual-stat grammar below.
+    !/ and \+\d+\s*(?:POWER|LIFE|level) for each /iu.test(countedSourceStats[6])
+  ) {
     const count = perDescriptorAmount(countedSourceStats[6], sourceName);
     if (count) {
       const statAmount = (multiplier: number): GrandArchiveAmount =>
@@ -45944,6 +46491,14 @@ function compileParagraph(
           ...(/^linked /iu.test(conditionalContinuous[2])
             ? { executionSource: "linked-object" as const }
             : {}),
+          // A condition explicitly requiring banishment must be evaluated there.
+          ...((condition.kind === "source-zone" && condition.zone === "banishment") ||
+          (condition.kind === "all" &&
+            condition.conditions.some(
+              (entry) => entry.kind === "source-zone" && entry.zone === "banishment",
+            ))
+            ? { functionalZones: ["banishment"] as const }
+            : {}),
           ...(restrictions.length ? { restrictions } : {}),
           effects: [first, ...rest],
         };
@@ -46598,6 +47153,13 @@ function compileParagraph(
         ? { ...instruction.effect, subject: { kind: "source" as const } }
         : instruction?.effect;
     const firstReturnEffect = effect?.kind === "sequence" ? effect.effects[0] : effect;
+    const banishesSourceFromGraveyard =
+      /^you may banish this card from your graveyard and pay \(\d+\)\. If you do, empower \d+\.$/iu.test(
+        triggeredText,
+      ) ||
+      /^you may banish this card from your graveyard\. If you do, recover \d+\.$/iu.test(
+        triggeredText,
+      );
     const returnsFromGraveyard =
       firstReturnEffect?.kind === "move" &&
       firstReturnEffect.subject.kind === "source" &&
@@ -46608,7 +47170,7 @@ function compileParagraph(
         id,
         kind: "triggered",
         text: printedText,
-        ...(returnsFromGraveyard
+        ...(returnsFromGraveyard || banishesSourceFromGraveyard
           ? { functionalZones: ["graveyard"] as const }
           : selfActivationZones),
         trigger: { kind: "event", event },
@@ -48836,7 +49398,7 @@ function compileParagraph(
         ...(intentOnlyActivation
           ? { functionalZones: ["intent"] as const }
           : costIncludesBanishSelfFromGraveyard(cost, activated[1], sourceName)
-            ? { functionalZones: ["graveyard", "intent"] as const }
+            ? { functionalZones: ["graveyard"] as const }
             : {}),
         ...(slowActivation ? { speed: "slow" as const } : {}),
         cost,
@@ -48863,9 +49425,11 @@ function compileParagraph(
     }
     const instruction = compileInstruction(activated[2], sourceName);
     if (cost && instruction && (!hasActivationCondition || activatedCondition)) {
-      const firstEffect =
+      let firstEffect: GrandArchiveEffect | undefined =
         instruction.effect.kind === "sequence" ? instruction.effect.effects[0] : instruction.effect;
-      const returnsSourceFromGraveyard =
+      // Selecting a destination does not change the source zone required by its move.
+      while (firstEffect?.kind === "choose") firstEffect = firstEffect.effect;
+      const movesSourceFromGraveyard =
         firstEffect?.kind === "move" &&
         firstEffect.subject.kind === "source" &&
         firstEffect.from === "graveyard";
@@ -48876,9 +49440,9 @@ function compileParagraph(
         activation: "ability",
         ...(intentOnlyActivation
           ? { functionalZones: ["intent"] as const }
-          : returnsSourceFromGraveyard ||
+          : movesSourceFromGraveyard ||
               costIncludesBanishSelfFromGraveyard(cost, activated[1], sourceName)
-            ? { functionalZones: ["graveyard", "intent"] as const }
+            ? { functionalZones: ["graveyard"] as const }
             : {}),
         ...(slowActivation ? { speed: "slow" as const } : {}),
         cost,
@@ -49496,7 +50060,7 @@ function compileParagraph(
     /^This card costs (\d+) less to (activate|materialize) for each (different element )?(.+?)(?: you control| in your (graveyard|banishment)| you've activated this turn)\.$/u.exec(
       body,
     );
-  if (genericCountedCostReduction) {
+  if (genericCountedCostReduction && !genericCountedCostReduction[4].startsWith("of up to ")) {
     const perObject = Number(genericCountedCostReduction[1]);
     const description = genericCountedCostReduction[4].replace(/^other /u, "");
     const filter = describedCardFilter(description);

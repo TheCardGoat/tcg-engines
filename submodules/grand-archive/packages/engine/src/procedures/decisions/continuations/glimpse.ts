@@ -195,6 +195,7 @@ export const resolveGrandArchiveGlimpseDecision: GrandArchiveDecisionResolver<
       {
         type: "keyword-action-performed",
         action: "glimpse",
+        glimpseStage: "complete",
         playerId,
         objectIds: decision.cardIds,
         actorId: playerId,

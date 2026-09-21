@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005 } from "@tcg/op-cards";
-import { op10EmporioIvankov102 } from "../../../../../cards/src/cards/OP10/characters/102-emporio-ivankov.ts";
-import { op10Inazuma100 } from "../../../../../cards/src/cards/OP10/characters/100-inazuma.ts";
+import { op10EmporioIvankov102 } from "../../../../../cards/src/cards/characters/op10-102-emporio-ivankov.ts";
+import { op10Inazuma100 } from "../../../../../cards/src/cards/characters/op10-100-inazuma.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP10-102 Emporio.Ivankov", () => {

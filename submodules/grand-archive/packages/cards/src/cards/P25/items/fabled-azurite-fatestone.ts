@@ -68,30 +68,41 @@ export const fabledAzuriteFatestone: GrandArchiveCard<GrandArchiveAbilityDefinit
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["memory"],
+                        relationship: "zone-of",
+                        player: "controller",
+                      },
+                      method: "random",
                     },
-                    candidates: {
-                      kind: "card",
-                      zones: ["memory"],
-                      relationship: "zone-of",
-                      player: "controller",
-                    },
-                    method: "random",
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 1,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 1,
+                  },
                 },
               ],
             },
@@ -153,33 +164,44 @@ export const fabledAzuriteFatestone: GrandArchiveCard<GrandArchiveAbilityDefinit
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: {
+                      named: "quest",
+                    },
+                    amount: 10,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: {
-                    named: "quest",
-                  },
-                  amount: 10,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "wake",
-                      subject: {
-                        kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "wake",
+                        subject: {
+                          kind: "source",
+                        },
                       },
-                    },
-                    {
-                      kind: "transform",
-                      subject: {
-                        kind: "source",
+                      {
+                        kind: "transform",
+                        subject: {
+                          kind: "source",
+                        },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
               ],
             },

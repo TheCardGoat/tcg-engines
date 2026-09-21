@@ -41,7 +41,12 @@ export function CombatArrowOverlay({ containerRef }: CombatArrowOverlayProps) {
   const [line, setLine] = useState<CombatLine | null>(null);
   const frameRef = useRef<number | null>(null);
 
-  const shouldShow = Boolean(attack && attacker);
+  const pendingChoice = matchState.G.turnMetadata.pendingChoice;
+  const hideAttackArrowForGigChoice =
+    pendingChoice?.type === "chooseTarget" &&
+    pendingChoice.payload.type === "effectTarget" &&
+    pendingChoice.payload.targetKind === "gig";
+  const shouldShow = Boolean(attack && attacker) && !hideAttackArrowForGigChoice;
   const attackerPower = attacker?.effectivePower ?? 0;
   const defenderPower = defender?.effectivePower ?? 0;
   const isBlocked = attack?.redirectedByBlocker === true && Boolean(defenderId);

@@ -54,15 +54,29 @@ export const maidenOfGlimmersDusk: GrandArchiveCard<GrandArchiveAbilityDefinitio
               costKind: "reserve",
               costOperation: "subtract",
               amount: {
-                kind: "count",
-                collection: {
-                  zones: ["field"],
-                  player: "controller",
-                  filter: {
-                    kind: "type",
-                    oneOf: ["PHANTASIA"],
+                kind: "calculate",
+                operator: "multiply",
+                operands: [
+                  {
+                    kind: "calculate",
+                    operator: "minimum",
+                    operands: [
+                      {
+                        kind: "count",
+                        collection: {
+                          zones: ["field"],
+                          player: "controller",
+                          filter: {
+                            kind: "type",
+                            oneOf: ["PHANTASIA"],
+                          },
+                        },
+                      },
+                      2,
+                    ],
                   },
-                },
+                  1,
+                ],
               },
               duration: {
                 kind: "while-source-in-functional-zone",

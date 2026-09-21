@@ -1,6 +1,6 @@
 import { eb01Doma005, op03Kuro021, op04Kuro023 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Kuro025 } from "../../../../../cards/src/cards/OP14EB04/characters/025-kuro.ts";
+import { op14eb04Kuro025 } from "../../../../../cards/src/cards/characters/op14-025-kuro.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

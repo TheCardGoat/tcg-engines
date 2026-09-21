@@ -55,13 +55,16 @@ describe("LorcanaServerEngine timeout recovery", () => {
         opponentPlayerId: "p2",
         nowMs: Date.now(),
       }),
-    ).toEqual({
-      outcome: "timed_out",
-      timeout: "first",
-      stallerPlayerId: "p2",
-      timeoutCount: 0,
-      forceDrop: false,
-      resetTimeOnSkipMs: 45_000,
+    ).toMatchObject({
+      skip: {
+        allowed: true,
+        timeout: "first",
+        stallerPlayerId: "p2",
+        timeoutCount: 0,
+        forceDrop: false,
+        resetTimeOnSkipMs: 45_000,
+      },
+      drop: { allowed: true, reason: "timeout_allowed" },
     });
   });
 
@@ -87,6 +90,51 @@ describe("LorcanaServerEngine timeout recovery", () => {
     });
   });
 
+  it("waits for negative-time grace before a reserve drop", () => {
+    const now = 1_700_000_000_000;
+    const state = {
+      ctx: {
+        _stateID: 7,
+        time: {
+          mode: "dynamic",
+          running: true,
+          activePlayerID: "p2",
+          startedAtMs: now,
+          players: {
+            p2: {
+              reserveMsRemaining: 0,
+              timeoutCount: 0,
+              isInNegativeTime: true,
+            },
+          },
+          config: { graceMs: 15_000, resetTimeOnSkipMs: 45_000, maxDecisionTimeMs: 180_000 },
+        },
+      },
+    };
+    const engine = new LorcanaServerEngine({
+      getState: () => state,
+    } as unknown as LorcanaServer);
+
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now + 14_999,
+      }).drop,
+    ).toMatchObject({
+      allowed: false,
+      reason: "timeout_grace_pending",
+      remainingMs: 1,
+    });
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now + 15_000,
+      }).drop.allowed,
+    ).toBe(true);
+  });
+
   it("keeps the second offense on the bot path while the opponent has priority", () => {
     const state = timedState("p2", 1);
     const engine = new LorcanaServerEngine({
@@ -99,13 +147,16 @@ describe("LorcanaServerEngine timeout recovery", () => {
         opponentPlayerId: "p2",
         nowMs: Date.now(),
       }),
-    ).toEqual({
-      outcome: "timed_out",
-      timeout: "second",
-      stallerPlayerId: "p2",
-      timeoutCount: 1,
-      forceDrop: false,
-      resetTimeOnSkipMs: 45_000,
+    ).toMatchObject({
+      skip: {
+        allowed: true,
+        timeout: "second",
+        stallerPlayerId: "p2",
+        timeoutCount: 1,
+        forceDrop: false,
+        resetTimeOnSkipMs: 45_000,
+      },
+      drop: { allowed: true, reason: "timeout_allowed" },
     });
   });
 });

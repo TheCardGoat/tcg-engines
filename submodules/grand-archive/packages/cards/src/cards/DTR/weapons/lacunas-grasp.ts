@@ -103,7 +103,7 @@ export const lacunasGrasp: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                   },
                   affectedSet: "locked",
                   duration: {
-                    kind: "this-attack",
+                    kind: "while-source-on-field",
                   },
                   layer: {
                     layer: "E",

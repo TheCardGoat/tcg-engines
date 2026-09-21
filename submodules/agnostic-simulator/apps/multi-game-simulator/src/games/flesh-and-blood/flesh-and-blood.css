@@ -383,14 +383,38 @@ body:has(.fab-tabletop),
 }
 
 .fab-participant-name {
+  position: relative;
   display: flex;
+  box-sizing: border-box;
+  width: 100%;
   min-width: 0;
   align-items: center;
-  gap: 0.2rem;
 }
 
 .fab-participant-name .supporter-player-name {
   flex: 1 1 auto;
+}
+
+.fab-participant-name:has(> button) {
+  padding-inline-end: 0.75rem;
+}
+
+.fab-participant-name > button {
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 0;
+  transform: translateY(-50%);
+}
+
+@media (pointer: coarse) {
+  .fab-participant-name:has(> button) {
+    padding-inline-end: 1.375rem;
+  }
+
+  .fab-participant-name > button {
+    top: 0;
+    transform: none;
+  }
 }
 
 .fab-participant-rating {
@@ -602,42 +626,6 @@ body:has(.fab-tabletop),
   }
 }
 
-/* Mirror the participant action rhythm at the top of the desktop sidebar. */
-.fab-tabletop [aria-label="Collapse sidebar"] {
-  top: 2.5rem;
-  right: 0.5rem;
-  width: 1.75rem;
-  min-width: 1.75rem;
-  height: 1.75rem;
-  min-height: 1.75rem;
-}
-
-.fab-match-sidebar [data-role="opponent"] {
-  --simulator-sidebar-collapse-inset: 0;
-  position: relative;
-}
-
-.fab-match-sidebar [data-role="opponent"] > div {
-  padding-right: 1.75rem;
-}
-
-.fab-match-sidebar
-  [data-role="opponent"]
-  > div
-  > div:last-child:has(button[aria-label$="actions"]) {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  min-width: 1.75rem;
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
-.fab-match-sidebar [data-role="opponent"] button[aria-label$="actions"] {
-  width: 1.75rem;
-  height: 1.75rem;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .fab-priority-participant-menu__trigger > svg:last-child,
   .fab-board-context-menu__trigger > svg:last-child {
@@ -652,8 +640,8 @@ body:has(.fab-tabletop),
   position: fixed;
   z-index: 4300;
   top: 1rem;
-  left: var(--fab-preview-left, 0);
-  width: min(240px, calc(100vw - 2rem));
+  left: 0;
+  width: min(300px, calc(100vw - 2rem), calc((100dvh - 3rem) * var(--fab-preview-ratio, 0.715909)));
   aspect-ratio: 5 / 7;
   opacity: 0;
   transform: translateY(-0.4rem);
@@ -664,9 +652,12 @@ body:has(.fab-tabletop),
 }
 
 .fab-card-preview[data-visible="true"] {
-  pointer-events: auto;
   opacity: 1;
   transform: translateY(0);
+}
+
+.fab-card-preview[data-mode="pinned"] {
+  pointer-events: auto;
 }
 
 .fab-card-preview-surface {
@@ -803,7 +794,8 @@ body:has(.fab-tabletop),
   white-space: pre-line;
 }
 
-.fab-card-preview-close {
+.fab-card-preview-close,
+.fab-card-preview-original {
   position: absolute;
   z-index: 1;
   /* Center the control on the corner so it never covers printed card text. */
@@ -822,11 +814,17 @@ body:has(.fab-tabletop),
   pointer-events: auto;
 }
 
-.fab-card-preview-close:hover {
+.fab-card-preview-original {
+  right: 1.25rem;
+}
+
+.fab-card-preview-close:hover,
+.fab-card-preview-original:hover {
   background: rgb(115 25 29 / 96%);
 }
 
-.fab-card-preview-close:focus-visible {
+.fab-card-preview-close:focus-visible,
+.fab-card-preview-original:focus-visible {
   outline: 2px solid #fff8eb;
   outline-offset: 2px;
 }
@@ -915,22 +913,16 @@ body:has(.fab-tabletop),
 }
 
 @media (max-width: 640px), (hover: none), (pointer: coarse) {
-  .fab-card-preview {
-    top: 50%;
-    left: 50%;
-    width: min(82vw, 24rem);
-    transform: translate(-50%, -48%);
-  }
-
-  .fab-card-preview[data-visible="true"] {
-    transform: translate(-50%, -50%);
-  }
-
-  .fab-card-preview-close {
+  .fab-card-preview-close,
+  .fab-card-preview-original {
     top: -1.375rem;
     right: -1.375rem;
     width: 2.75rem;
     height: 2.75rem;
+  }
+
+  .fab-card-preview-original {
+    right: 1.75rem;
   }
 }
 
@@ -2237,10 +2229,38 @@ body:has(.fab-tabletop),
   z-index: 3;
   inset-block-start: 50%;
   inset-inline-start: 50%;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
   transform: translate(-50%, -50%);
   pointer-events: none;
+}
+
+/* Keep floating resources readable over both bright pitch art and the dark
+   card back. The compact badge deliberately stays horizontal so the glyph
+   and total scan as one resource readout. */
+.fab-pitch-zone-mark .fab-stat-badge {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.26rem;
+  min-height: 1.65rem;
+  padding: 0.22rem 0.42rem;
+  border: 1px solid rgb(255 218 167 / 78%);
+  border-radius: 999px;
+  background: rgb(27 8 12 / 94%);
+  box-shadow: 0 0.25rem 0.7rem rgb(0 0 0 / 72%);
+}
+
+.fab-pitch-zone-mark .fab-stat-badge-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.fab-pitch-zone-mark .fab-stat-badge--resource .fab-stat-badge-value {
+  color: #fff5e8;
+  font-size: 0.88rem;
+  font-weight: 900;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 80%);
 }
 
 .fab-zone-official-icon {
@@ -8248,6 +8268,33 @@ button.fab-chain-mobile-gallery-card[data-provisional-defender="true"]:active,
   list-style: none;
 }
 
+/* The tapped badge takes the last free corner (bottom-left): pitch gem,
+   keywords, and stat badge claim the other three. */
+.fab-mobile-chain-card .fab-chain-card-tapped {
+  top: auto;
+  bottom: 0.12rem;
+  left: 0.12rem;
+  padding: 0.1rem 0.26rem;
+  font-size: 0.44rem;
+}
+
+/* Gallery tiles are too small for badge copy; show the tap glyph alone. */
+.fab-chain-mobile-gallery-card .fab-chain-card-tapped {
+  top: 0.08rem;
+  left: 0.08rem;
+  padding: 0.12rem;
+}
+
+.fab-chain-mobile-gallery-card .fab-chain-card-tapped > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .fab-combat-chain--mobile .fab-chain-equation {
   position: static;
   min-height: 100%;
@@ -13129,6 +13176,8 @@ body:has(.fab-tabletop[data-layout="desktop"])
 .fab-card-slot-with-automation:focus-within .fab-card-automation-cluster,
 .fab-mobile-hero-slot-group:hover .fab-card-automation-cluster,
 .fab-mobile-hero-slot-group:focus-within .fab-card-automation-cluster,
+.fab-permanent-tile-shell:hover .fab-card-automation-cluster,
+.fab-permanent-tile-shell:focus-within .fab-card-automation-cluster,
 .fab-card-automation-cluster:has(.fab-trigger-automation[data-enabled="true"]),
 .fab-card-automation-cluster:has(.fab-trigger-automation[data-popover-open="true"]) {
   opacity: 1;
@@ -13557,6 +13606,10 @@ body:has(.fab-tabletop[data-layout="desktop"])
   place-items: center;
   min-inline-size: 12px;
   block-size: 16px;
+}
+
+.fab-hero-signal-pip[data-signal="marked"] {
+  color: #ff7a6b;
 }
 
 .fab-hero-signal-pip strong {

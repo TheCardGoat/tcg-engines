@@ -40,6 +40,7 @@ export const clashOfMountains = definePitchFamily(fabPitchFamilies["clash-of-mou
           prize: {
             type: "create-token",
             token: "seismic-surge",
+            creator: "token-controller",
             controller: "winner",
           },
         },

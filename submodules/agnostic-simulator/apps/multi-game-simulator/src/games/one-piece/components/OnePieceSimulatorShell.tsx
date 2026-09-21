@@ -24,6 +24,8 @@ export interface OnePieceSimulatorShellProps {
   onAction?: (action: LegalCommandDescriptor) => void;
   onJoKenPoTimeout?: () => void;
   bugReportContext?: BugReportContext;
+  practiceMode?: "bot" | "self";
+  controlledSeat?: "south" | "north";
 }
 
 export function OnePieceSimulatorShell({
@@ -33,18 +35,28 @@ export function OnePieceSimulatorShell({
   onAction,
   onJoKenPoTimeout,
   bugReportContext,
+  practiceMode = "bot",
+  controlledSeat = "south",
 }: OnePieceSimulatorShellProps) {
   const [bugReportOpen, setBugReportOpen] = useState(false);
   const player = board.table.seats.find((seat) => seat.id === "player");
   const opponent = board.table.seats.find((seat) => seat.id === "opponent");
   const openBugReport = bugReportContext ? () => setBugReportOpen(true) : undefined;
+  const controllerLabel = controlledSeat === "south" ? "Player 1" : "Player 2";
   const sidebar = (
-    <OnePieceSidebar
-      board={board}
-      actions={actions}
-      onAction={onAction}
-      onReportBug={openBugReport}
-    />
+    <>
+      {practiceMode === "self" ? (
+        <p className={classes.practiceControllerStatus} role="status" aria-live="polite">
+          Play both sides · controlling {controllerLabel}
+        </p>
+      ) : null}
+      <OnePieceSidebar
+        board={board}
+        actions={actions}
+        onAction={onAction}
+        onReportBug={openBugReport}
+      />
+    </>
   );
 
   return (
@@ -78,8 +90,10 @@ export function OnePieceSimulatorShell({
             }
             right={
               <div>
-                <small>Opponent</small>
-                <strong>{opponent?.label ?? "Opponent"}</strong>
+                <small>{practiceMode === "self" ? "Player 2" : "Opponent"}</small>
+                <strong>
+                  {opponent?.label ?? (practiceMode === "self" ? "Player 2" : "Opponent")}
+                </strong>
               </div>
             }
           />
@@ -90,11 +104,21 @@ export function OnePieceSimulatorShell({
             className={classes.mobileBottomRail}
             left={
               <div>
-                <small>You</small>
-                <strong>{player?.label ?? "Player"}</strong>
+                <small>{practiceMode === "self" ? "Player 1" : "You"}</small>
+                <strong>
+                  {player?.label ?? (practiceMode === "self" ? "Player 1" : "Player")}
+                </strong>
               </div>
             }
-            center={<span>{actions.length ? "Your action" : "Fixture view"}</span>}
+            center={
+              <span>
+                {practiceMode === "self" && actions.length
+                  ? `${controllerLabel}'s action`
+                  : actions.length
+                    ? "Your action"
+                    : "Fixture view"}
+              </span>
+            }
             right={<OnePieceMatchActions actions={actions} onAction={onAction} />}
           />
         }

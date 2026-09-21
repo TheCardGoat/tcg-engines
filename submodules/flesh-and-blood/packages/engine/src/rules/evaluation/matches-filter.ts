@@ -425,7 +425,16 @@ export function matchesFilter(
       p.supertypes.some((value) => normalizeText(value) === want);
     if (!nameHit && !typeHit) return false;
   }
-  if (filter.color && (!p.color || !filter.color.includes(p.color))) return false;
+  // "Choose a color … If it's the chosen color" (Induce Panic family): the
+  // chosen pitch color rides the resolution bindings as a string, mirroring
+  // the `name: "chosen"` object-binding handler above.
+  if (filter.color?.includes("chosen")) {
+    const chosenColor =
+      context.bindings.strings["chosen-color"] ?? context.bindings.strings.chosenColor;
+    if (!chosenColor || !p.color || p.color !== chosenColor) return false;
+  } else if (filter.color && (!p.color || !filter.color.includes(p.color))) {
+    return false;
+  }
   if (filter.typeBox) {
     const exact = filter.typeBox;
     if (exact.metatypes && !exact.metatypes.every((value) => p.metatypes.includes(value)))
@@ -790,6 +799,8 @@ function rejectUnsupportedFilterFields(filter: FabCardFilter): void {
   // uniqueness. Do not throw here (Spoiled Skull / different-names tutors).
   const unsupported = [filter.pitchAsset && "pitchAsset"].find(Boolean);
   if (unsupported) throw new FabRulesEvaluationError(`filter field ${unsupported}`);
-  if (filter.color?.some((color) => color === "chosen" || color.startsWith("same-as-")))
+  // `color: ["chosen"]` is handled in matchesFilter from the resolution
+  // bindings; the bound-object relative tokens stay unsupported here.
+  if (filter.color?.some((color) => color.startsWith("same-as-")))
     throw new FabRulesEvaluationError("dynamic filter color");
 }

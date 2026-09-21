@@ -397,8 +397,9 @@ describe("Assassin play lines", () => {
     // 2-versus-3 Fealty cost delta is public on HNT098: empty-hand 0{r} rejects
     // at 2 and opens combat at 3; a seeded 1{r} is spent at 2 and left at 3.
 
-    it("FA-E1 [AAA] Decimator halves only the first non-equipment defender's base {d}", () => {
-      for (const variant of ["six-base", "modified"] as const) {
+    it.each(["six-base", "modified"] as const)(
+      "FA-E1 [AAA] Decimator halves base defense before bonuses: %s",
+      (variant) => {
         const game = FabTestEngine.start(
           {
             hero: fangDracaiOfBlades,
@@ -406,15 +407,35 @@ describe("Assassin play lines", () => {
             hand: [fellingSwingRed, cleaveRed, brothersInArmsBlue, overpowerBlue],
             arsenal: [provokeBlue],
             resourcePoints: 6,
-            deck: 8,
+            deck: [
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+            ],
           },
           {
             hero: dash,
+            life: 20,
+            resourcePoints: variant === "six-base" ? 3 : 1,
             hand:
               variant === "six-base"
                 ? [steelbladeShuntRed, snatchRed, snatchRed, fateForeseenRed]
                 : [brothersInArmsBlue, snatchRed, snatchRed, fateForeseenRed],
-            deck: 8,
+            deck: [
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+              snatchRed,
+            ],
           },
           manual,
         );
@@ -422,41 +443,43 @@ describe("Assassin play lines", () => {
         const Defender = game.as(dash);
 
         Fang.must.play(fellingSwingRed);
-        game.helpers.resolveUntilIdle({ ordering: "listed" });
-        Fang.must.activate(decimatorGreatAxe);
-        game.advanceCombatTo("defend");
+        game.untilIdle({ optionals: "throw" });
+        Fang.activateAttack(decimatorGreatAxe);
+        game.advanceUntil({ stopAt: "defend", optionals: "throw" });
         expectCombat(game).toHaveAttackPower(10);
 
         if (variant === "six-base") {
-          Defender.must.defend();
-          game.advanceCombatTo("reaction");
-          game.helpers.passPriorityTo(Defender);
+          Defender.defendWith();
+          game.toReaction("defender");
           Defender.must.playReaction(steelbladeShuntRed);
-          game.helpers.resolveUntilIdle({
-            ordering: "listed",
-            entityTargets: "minimum",
-            optionalBoolean: false,
-          });
+          game.passBoth();
+          game.advanceToDecision(Fang, "option");
+          // Fang adds the Axe trigger first; Dash adds Shunt's damage trigger.
+          Fang.choose(Fang.id);
+          // Resolve Shunt's damage, then the Axe's defense reduction.
+          game.passBoth();
+          game.passBoth();
+          game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
           expectFabCard(Defender, steelbladeShuntRed).toHaveDefense(3);
+          game.closeCombat({ optionals: "throw" });
           expectFabPlayer(Defender).toHaveLife(13);
-          expect(Defender.zone("hand")).toContain(snatchRed.canonicalId);
+          expectFabCard(Defender, steelbladeShuntRed).toBeIn("graveyard").toHaveDefense(6);
         } else {
-          Defender.must.defend(brothersInArmsBlue);
-          game.helpers.resolveUntilIdle({
-            ordering: "listed",
-            entityTargets: "minimum",
-            optionalBoolean: true,
-            paymentCanonicalId: snatchRed.canonicalId,
-          });
+          Defender.defendWith(brothersInArmsBlue);
+          game.advanceToDecision(Defender, "boolean");
+          Defender.accept();
+          game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
           expectFabCard(Defender, brothersInArmsBlue).toHaveDefense(3);
+          game.closeCombat({ optionals: "throw" });
           expectFabPlayer(Defender).toHaveLife(13);
+          expectFabCard(Defender, brothersInArmsBlue).toBeIn("graveyard").toHaveDefense(2);
         }
 
-        expect(Fang.zone("arsenal")).toEqual([provokeBlue.canonicalId]);
-        Fang.must.endTurn();
+        expectFabCard(Fang, provokeBlue).toBeIn("arsenal");
+        Fang.endTurn();
         expectFabPlayer(Fang).toHaveHandCount(4).toHaveAP(0).toHaveResourceCount(0);
-      }
-    });
+      },
+    );
 
     it("FA-E2 [AAA] Braveforge is illegal before a weapon hit and Battleworn only after it defends", () => {
       const game = FabTestEngine.start(

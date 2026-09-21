@@ -159,15 +159,25 @@ export const devouringMalice: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                     },
                   ],
                   effect: {
-                    kind: "deal-damage",
-                    source: {
-                      kind: "source",
-                    },
-                    recipient: {
-                      kind: "bound",
-                      binding: "target-1",
-                    },
-                    amount: 3,
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "deal-damage",
+                        source: {
+                          kind: "source",
+                        },
+                        recipient: {
+                          kind: "bound",
+                          binding: "target-1",
+                        },
+                        amount: 3,
+                      },
+                      {
+                        kind: "recover",
+                        player: "controller",
+                        amount: 3,
+                      },
+                    ],
                   },
                 },
                 {

@@ -40,7 +40,9 @@ describe("Scalding Iron (HNT110) AAA", () => {
     Fang.must.playReaction(scaldingIronRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(2);
+    // 1 + 1 — this link's Draconic reaction also turns on Obsidian Fire
+    // Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(3);
     expectFabCard(Fang, scaldingIronRed).toBeIn("graveyard");
   });
 
@@ -90,6 +92,7 @@ describe("Scalding Iron (HNT110) AAA", () => {
     Fang.must.playReaction(scaldingIronRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(3);
+    // 1 + 1 + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(4);
   });
 });

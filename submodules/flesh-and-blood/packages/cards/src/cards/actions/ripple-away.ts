@@ -15,6 +15,8 @@ export const rippleAway = definePitchFamily(fabPitchFamilies["ripple-away"], {
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "any",
+          occurrences: "every",
           subject: {
             typeBox: {
               types: ["Action"],

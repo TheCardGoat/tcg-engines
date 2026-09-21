@@ -43,6 +43,7 @@ export const welcomeToNightCityRetailRogueAmendiaresPreemSolo = defineCyberpunkC
             amount: 1,
           },
           minAmount: 1,
+          perGig: true,
           source: {
             selector: "card",
             controller: "friendly",

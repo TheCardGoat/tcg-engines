@@ -804,23 +804,24 @@ function recordBoundedRulesFacts(state: FabReducerDraft, event: CommittedEvent):
       return;
     }
     case "create": {
-      const player = state.players[event.data.playerId];
+      const player = state.players[event.data.object.ownerId];
+      const controller = state.players[event.data.playerId];
       if (!player) return;
       player.history.turn.createdCardThisTurn = true;
       const kind = historyTokenKindOf(event.data.object);
       switch (kind) {
         case "toughness":
-          player.history.turn.controlledToughnessThisTurn = true;
+          if (controller) controller.history.turn.controlledToughnessThisTurn = true;
           return;
         case "vigor":
-          player.history.turn.controlledVigorThisTurn = true;
+          if (controller) controller.history.turn.controlledVigorThisTurn = true;
           return;
         case "might":
-          player.history.turn.controlledMightThisTurn = true;
+          if (controller) controller.history.turn.controlledMightThisTurn = true;
           return;
         case "seismic-surge":
           player.history.turn.createdSeismicSurge = true;
-          player.history.turn.controlledSeismicSurge = true;
+          if (controller) controller.history.turn.controlledSeismicSurge = true;
           return;
         case "gold":
           player.history.turn.createdOrStolenGold = true;
@@ -1085,6 +1086,9 @@ function createCommittedEvent<Event extends ProposedEvent>(
  * explicit; the trigger matcher never guesses from causes or controllers.
  */
 function committedActorId(event: ProposedEvent): string | null {
+  // Creating an object is performed by its creator, even when another player
+  // controls the originating effect. baseEvent carries that effect controller.
+  if (event.name === "create") return event.data.object.ownerId;
   if (event.actorId !== undefined) return event.actorId;
   if (event.name === "reaction-step" || event.name === "combat-chain-close") return null;
   const data = event.data as { readonly actorId?: unknown; readonly playerId?: unknown };

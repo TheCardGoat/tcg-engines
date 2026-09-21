@@ -328,7 +328,7 @@ function CombatResourceCore({
           selectedIds={selectedCardSet}
           highlightedIds={highlightedCardSet}
           zoneSlotClassName="col-start-2 row-start-1 min-w-0"
-          className="h-full min-h-[96px] w-full !border-hud-accent/55 !bg-hud-deep/75 !p-1 text-hud-text"
+          className="h-full min-h-[96px] w-full overflow-x-auto !border-hud-accent/55 !bg-hud-deep/75 !p-1 text-hud-text"
           rowClassName="flex h-full w-max !min-w-full items-center !justify-start gap-1 pl-3 pr-12 leading-none"
           counterClassName="!left-auto !right-1.5 !top-1 !border-hud-accent/45 !bg-hud-deep/90 !px-1.5 !py-0.5 leading-normal text-hud-2xs tracking-hud-label !text-hud-accent-hot [&>span]:hidden [&_strong]:font-bold"
           entityClassName={(_entity, state) => cn("leading-none", state.rested && "opacity-45")}

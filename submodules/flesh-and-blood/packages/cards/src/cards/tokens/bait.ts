@@ -17,7 +17,7 @@ export const bait = defineCard(fabCardIdentitiesByCanonicalId.ndNkP7p6FDnNWzt7ck
             // Game-scope restrict; filter is cards the Bait controller owns
             // (CR 8.6.34 "You can't play or activate cards you own").
             filter: {
-              and: [{ hasStatus: "owned-by-controller" }, { hasStatus: "other-than-source" }],
+              hasStatus: "owned-by-controller",
             },
             duration: "while-in-arena",
           },
@@ -26,7 +26,7 @@ export const bait = defineCard(fabCardIdentitiesByCanonicalId.ndNkP7p6FDnNWzt7ck
             mode: "restrict",
             action: "activate",
             filter: {
-              and: [{ hasStatus: "owned-by-controller" }, { hasStatus: "other-than-source" }],
+              hasStatus: "owned-by-controller",
             },
             duration: "while-in-arena",
           },
@@ -59,7 +59,8 @@ export const bait = defineCard(fabCardIdentitiesByCanonicalId.ndNkP7p6FDnNWzt7ck
               kind: "event",
               event: {
                 name: "chain-link-resolve",
-                actor: { kind: "none" },
+                // Resolving this attack is the condition; the event may have an actor.
+                actor: { kind: "any" },
                 observes: { kind: "source", selector: "attack" },
               },
             },

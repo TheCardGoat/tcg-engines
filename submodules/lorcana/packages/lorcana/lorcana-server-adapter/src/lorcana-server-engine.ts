@@ -14,6 +14,7 @@ import {
   type MoveLog,
   type PlayerId,
 } from "@tcg/lorcana-engine";
+import { evaluateReserveTimeoutDrop } from "@tcg/protocol";
 import type {
   AcceptedMoveRecord,
   BotActionOptions,
@@ -23,6 +24,7 @@ import type {
   EvaluateOpponentTimeoutInput,
   EngineLogRecord,
   OpponentTimeoutEvaluation,
+  OpponentTimeoutSkipEvaluation,
   PacketAnimation,
   ServerGameEngine,
   SkipClockResetOptions,
@@ -143,37 +145,43 @@ export class LorcanaServerEngine implements ServerGameEngine {
   evaluateOpponentTimeout(input: EvaluateOpponentTimeoutInput): OpponentTimeoutEvaluation {
     const state = this.engine.getState() as MatchState;
     if (state.ctx.time.mode !== "chess" && state.ctx.time.mode !== "dynamic") {
-      return { outcome: "not_allowed", reason: "no_time_control" };
+      return {
+        skip: { allowed: false, reason: "no_time_control" },
+        drop: { allowed: false, reason: "no_time_control", facts: { mode: state.ctx.time.mode } },
+      };
     }
     const settled = settleClocks(state, input.nowMs);
     const time = settled.ctx.time as ChessClockContext | DynamicClockContext;
     const opponent = time.players[input.opponentPlayerId];
-    if (!opponent) return { outcome: "not_allowed", reason: "within_limit" };
-
-    if (!time.activePlayerID || time.activePlayerID === input.requesterPlayerId) {
-      if (!opponent.isInNegativeTime || opponent.timeoutCount < 1) {
-        return { outcome: "not_allowed", reason: "requester_has_priority" };
-      }
+    if (!opponent) {
       return {
-        outcome: "timed_out",
-        timeout: "second",
-        stallerPlayerId: input.opponentPlayerId,
-        timeoutCount: opponent.timeoutCount,
-        forceDrop: true,
-        resetTimeOnSkipMs: time.config.resetTimeOnSkipMs,
+        skip: { allowed: false, reason: "within_limit" },
+        drop: { allowed: false, reason: "clock_unavailable", facts: { mode: time.mode } },
       };
     }
 
-    const timeout = checkTimeout(settled, input.opponentPlayerId, input.nowMs);
-    if (!timeout) return { outcome: "not_allowed", reason: "within_limit" };
-    return {
-      outcome: "timed_out",
-      timeout,
-      stallerPlayerId: input.opponentPlayerId,
+    const isActive = time.running === true && time.activePlayerID === input.opponentPlayerId;
+    const elapsedMs =
+      isActive && typeof time.startedAtMs === "number"
+        ? Math.max(0, input.nowMs - time.startedAtMs)
+        : 0;
+    const maxDecisionTimeMs = time.config.maxDecisionTimeMs;
+    const activeDecisionMs = (time.activePlayerAccumulatedMs ?? 0) + elapsedMs;
+    const decisionCapExceeded =
+      isActive && typeof maxDecisionTimeMs === "number" && activeDecisionMs > maxDecisionTimeMs;
+    const drop = evaluateReserveTimeoutDrop({
+      nowMs: input.nowMs,
+      mode: time.mode,
+      graceMs: time.config.graceMs ?? 0,
+      effectiveReserveMs: opponent.reserveMsRemaining - elapsedMs,
+      isActive,
+      isInNegativeTime: opponent.isInNegativeTime,
       timeoutCount: opponent.timeoutCount,
-      forceDrop: false,
-      resetTimeOnSkipMs: time.config.resetTimeOnSkipMs,
-    };
+      decisionCapExceeded,
+      skipSupported: true,
+    });
+
+    return { skip: lorcanaSkipEvaluation(time, opponent, input, settled), drop };
   }
 
   resetPlayerTimeAfterSkip(playerId: string, options: SkipClockResetOptions): void {
@@ -326,6 +334,37 @@ export class LorcanaServerEngine implements ServerGameEngine {
       processedCommand: result.processedCommand,
     };
   }
+}
+
+function lorcanaSkipEvaluation(
+  time: ChessClockContext | DynamicClockContext,
+  opponent: { isInNegativeTime: boolean; timeoutCount: number },
+  input: EvaluateOpponentTimeoutInput,
+  settled: MatchState,
+): OpponentTimeoutSkipEvaluation {
+  if (!time.activePlayerID || time.activePlayerID === input.requesterPlayerId) {
+    if (!opponent.isInNegativeTime || opponent.timeoutCount < 1) {
+      return { allowed: false, reason: "requester_has_priority" };
+    }
+    return {
+      allowed: true,
+      timeout: "second",
+      stallerPlayerId: input.opponentPlayerId,
+      timeoutCount: opponent.timeoutCount,
+      forceDrop: true,
+      resetTimeOnSkipMs: time.config.resetTimeOnSkipMs,
+    };
+  }
+  const timeout = checkTimeout(settled, input.opponentPlayerId, input.nowMs);
+  if (!timeout) return { allowed: false, reason: "within_limit" };
+  return {
+    allowed: true,
+    timeout,
+    stallerPlayerId: input.opponentPlayerId,
+    timeoutCount: opponent.timeoutCount,
+    forceDrop: false,
+    resetTimeOnSkipMs: time.config.resetTimeOnSkipMs,
+  };
 }
 
 function isProcessedCommandForMove(value: unknown, moveId: string): boolean {

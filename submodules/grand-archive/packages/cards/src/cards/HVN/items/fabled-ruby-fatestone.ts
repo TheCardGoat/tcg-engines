@@ -145,33 +145,44 @@ export const fabledRubyFatestone: GrandArchiveCard<GrandArchiveAbilityDefinition
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: {
+                      named: "quest",
+                    },
+                    amount: 7,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: {
-                    named: "quest",
-                  },
-                  amount: 7,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "wake",
-                      subject: {
-                        kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "wake",
+                        subject: {
+                          kind: "source",
+                        },
                       },
-                    },
-                    {
-                      kind: "transform",
-                      subject: {
-                        kind: "source",
+                      {
+                        kind: "transform",
+                        subject: {
+                          kind: "source",
+                        },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
               ],
             },

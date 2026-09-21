@@ -6,7 +6,7 @@ import {
   op09Mr1DazBonez055,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04MissDoublefingerZala086 } from "../../../../../cards/src/cards/OP14EB04/characters/086-miss-doublefinger-zala.ts";
+import { op14eb04MissDoublefingerZala086 } from "../../../../../cards/src/cards/characters/op14-086-miss-doublefinger-zala.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

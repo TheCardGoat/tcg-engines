@@ -12,16 +12,162 @@ import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 const towerfall = welcomeToNightCityRetailTowerfall;
 
 describe("Towerfall", () => {
-  it("offers one mode, or both when Street Cred is lower than the Rival's", () => {
-    expect(towerfall.abilities[0]?.effects[0]).toMatchObject({
-      effect: "chooseEffect",
-      options: [{ id: "both" }, { id: "power-down" }, { id: "bottom-deck" }],
+  it("has the exact blue Braindance identity and conditional three-option DSL", () => {
+    expect(towerfall).toMatchObject({
+      canonicalId: "towerfall",
+      slug: "towerfall",
+      name: "Towerfall",
+      displayName: "Towerfall",
+      type: "program",
+      color: "blue",
+      classifications: ["Braindance"],
+      cost: 6,
+      power: null,
+      ram: 4,
+      hasSellTag: true,
+      rarity: "Epic",
+      printNumber: "138",
+      timingTriggers: ["play"],
+      reminderText: ["Discard programs after they resolve."],
+      rulesText:
+        "Choose one effect. If you have less ☆ (Street Cred) than a Rival, choose both instead.\nGive all rival Units -5 power this turn. // Bottom-deck all rival Units with power 0.",
+      abilities: [
+        {
+          kind: "triggered",
+          trigger: { trigger: "play" },
+          source: { selector: "self" },
+          effects: [
+            {
+              effect: "chooseEffect",
+              options: [
+                {
+                  id: "both",
+                  conditions: [
+                    {
+                      condition: "streetCredComparison",
+                      controller: "friendly",
+                      comparison: "lt",
+                      other: "rival",
+                    },
+                  ],
+                  effects: [
+                    {
+                      effect: "modifyPower",
+                      target: {
+                        selector: "card",
+                        controller: "rival",
+                        zones: ["field"],
+                        cardTypes: ["unit"],
+                      },
+                      value: -5,
+                      duration: "turn",
+                    },
+                    {
+                      effect: "moveCard",
+                      target: {
+                        selector: "card",
+                        controller: "rival",
+                        zones: ["field"],
+                        cardTypes: ["unit"],
+                        maxPower: 0,
+                      },
+                      destination: "deckBottom",
+                    },
+                  ],
+                },
+                {
+                  id: "power-down",
+                  conditions: [
+                    {
+                      condition: "not",
+                      of: {
+                        condition: "streetCredComparison",
+                        controller: "friendly",
+                        comparison: "lt",
+                        other: "rival",
+                      },
+                    },
+                  ],
+                  effects: [
+                    {
+                      effect: "modifyPower",
+                      target: {
+                        selector: "card",
+                        controller: "rival",
+                        zones: ["field"],
+                        cardTypes: ["unit"],
+                      },
+                      value: -5,
+                      duration: "turn",
+                    },
+                  ],
+                },
+                {
+                  id: "bottom-deck",
+                  conditions: [
+                    {
+                      condition: "not",
+                      of: {
+                        condition: "streetCredComparison",
+                        controller: "friendly",
+                        comparison: "lt",
+                        other: "rival",
+                      },
+                    },
+                  ],
+                  effects: [
+                    {
+                      effect: "moveCard",
+                      target: {
+                        selector: "card",
+                        controller: "rival",
+                        zones: ["field"],
+                        cardTypes: ["unit"],
+                        maxPower: 0,
+                      },
+                      destination: "deckBottom",
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
     });
+  });
+
+  it("pays exactly 6 and rejects one less before offering a mode", () => {
+    const createEngine = (eddies: number) => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [towerfall],
+          eddies,
+          gigArea: [{ dieType: "d4", faceValue: 1 }],
+        },
+        { gigArea: [{ dieType: "d4", faceValue: 1 }] },
+      );
+      for (const legend of engine.getCardsInZone("legendArea", P1)) {
+        engine.judgeSpendCard(legend, { as: P1 });
+      }
+      return engine;
+    };
+
+    const success = createEngine(6);
+    success.playCard(towerfall, { as: P1 });
+    expect(success.getEddies(P1)).toBe(0);
+    expect(success.getState().G.turnMetadata.pendingChoice?.type).toBe("chooseEffect");
+
+    const short = createEngine(5);
+    expect(short.expectFailure(() => short.playCard(towerfall, { as: P1 })).errorCode).toBe(
+      "INSUFFICIENT_EDDIES",
+    );
   });
 
   it("gives all rival Units -5 power when that mode is chosen", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
+        field: [{ card: welcomeToNightCityRetailJapantownJonin, spent: false }],
         hand: [towerfall],
         eddies: 6,
         gigArea: [{ dieType: "d12", faceValue: 12 }],
@@ -49,6 +195,15 @@ describe("Towerfall", () => {
         ),
     ).toBe(true);
     expect(getEffectivePower(engine.getState(), operator.instanceId as string)).toBe(0);
+    const friendly = engine.getCard(welcomeToNightCityRetailJapantownJonin, "field", P1);
+    expect(getEffectivePower(engine.getState(), friendly.instanceId as string)).toBe(
+      welcomeToNightCityRetailJapantownJonin.power,
+    );
+
+    engine.completeTurn({ as: P1 });
+    expect(getEffectivePower(engine.getState(), operator.instanceId as string)).toBe(
+      welcomeToNightCityRetailFieldOperator.power,
+    );
   });
 
   it("bottom-decks rival Units that already have power 0", () => {

@@ -1,11 +1,12 @@
 import { getCard } from "../../../cards/src/runtime-catalog.ts";
-import type { Target, TargetFilter } from "@tcg/op-types";
+import type { Target, TargetFilter, TotalConstraint } from "@tcg/op-types";
 import {
   baseCost,
   basePower,
   cardNames,
   donCardsOnField,
   effectBlocksFor,
+  getCardAttribute,
   getCardCost,
   getCardPower,
   getInstance,
@@ -51,9 +52,8 @@ export function matchesTargetFilter(
     }
     case "attribute":
       return (() => {
-        const matches = Array.isArray(card.attribute)
-          ? card.attribute.includes(filter.value)
-          : card.attribute === filter.value;
+        const effective = getCardAttribute(state, candidateId);
+        const matches = effective.includes(filter.value);
         return { supported: true, matches: filter.negate ? !matches : matches };
       })();
     case "cost":
@@ -116,6 +116,21 @@ export function matchesTargetFilter(
       return { supported: true, matches: card.color.includes(filter.value) };
     case "cardCategory":
       return { supported: true, matches: card.cardType === filter.value };
+    case "attachedDon": {
+      switch (filter.comparison) {
+        case "eq":
+          return { supported: true, matches: candidate.attachedDon === filter.value };
+        case "lt":
+          return { supported: true, matches: candidate.attachedDon < filter.value };
+        case "lte":
+          return { supported: true, matches: candidate.attachedDon <= filter.value };
+        case "gt":
+          return { supported: true, matches: candidate.attachedDon > filter.value };
+        case "gte":
+          return { supported: true, matches: candidate.attachedDon >= filter.value };
+      }
+      break;
+    }
     case "state":
       return {
         supported: true,
@@ -205,6 +220,8 @@ export function matchesTargetFilter(
             return donCardsOnField(state, controller);
           case "opponentDonCount":
             return donCardsOnField(state, otherSeat(controller));
+          case "candidateAttachedDon":
+            return candidate.attachedDon;
         }
       })();
       const candidateCost = baseCost(card);
@@ -223,6 +240,24 @@ export function matchesTargetFilter(
   }
 }
 
+export function resolveTargetCount(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string | null,
+  target: Target,
+): number {
+  if (target.count.amountFromMatchingCards) {
+    const pool = candidatePoolForTarget(state, controller, sourceInstanceId, {
+      player: "self",
+      zones: ["character", "leader", "stage"],
+      count: { amount: "all" },
+      filters: target.count.amountFromMatchingCards,
+    });
+    return pool.supported ? pool.candidateIds.length : 0;
+  }
+  return typeof target.count.amount === "number" ? target.count.amount : 0;
+}
+
 export function candidatesForTarget(
   state: MatchState,
   controller: MatchSeat,
@@ -236,15 +271,25 @@ export function candidatesForTarget(
 
   const filtered = pool.candidateIds;
 
+  const effectiveAmount = resolveTargetCount(state, controller, sourceInstanceId, target);
+
   if (target.count.amount === "all") {
-    return target.count.upTo ? (filtered.length === 0 ? [] : null) : filtered;
+    if (target.count.upTo || target.totalConstraint) {
+      // A total constraint caps the set, so the player must choose which
+      // subset to take rather than the engine auto-taking every candidate.
+      return filtered.length === 0 ? [] : null;
+    }
+    return filtered;
   }
 
   if (target.count.upTo) {
-    return filtered.length === 0 ? [] : null;
+    if (effectiveAmount === 0 || filtered.length === 0) {
+      return [];
+    }
+    return null;
   }
 
-  if (target.count.amount === 1) {
+  if (effectiveAmount === 1) {
     if (filtered.length === 0) {
       return [];
     }
@@ -256,7 +301,7 @@ export function candidatesForTarget(
     return null;
   }
 
-  if (filtered.length === target.count.amount) {
+  if (filtered.length === effectiveAmount) {
     return filtered;
   }
 
@@ -266,30 +311,30 @@ export function candidatesForTarget(
 export function selectionSatisfiesTotalConstraint(
   state: MatchState,
   selectedIds: string[],
-  target: Target,
+  constraint: TotalConstraint | undefined,
 ): boolean {
-  if (!target.totalConstraint) {
+  if (!constraint) {
     return true;
   }
   const total = selectedIds.reduce(
     (sum, instanceId) =>
       sum +
-      (target.totalConstraint!.property === "power"
+      (constraint.property === "power"
         ? getCardPower(state, instanceId)
         : getCardCost(state, instanceId)),
     0,
   );
-  switch (target.totalConstraint.comparison) {
+  switch (constraint.comparison) {
     case "eq":
-      return total === target.totalConstraint.value;
+      return total === constraint.value;
     case "lt":
-      return total < target.totalConstraint.value;
+      return total < constraint.value;
     case "lte":
-      return total <= target.totalConstraint.value;
+      return total <= constraint.value;
     case "gt":
-      return total > target.totalConstraint.value;
+      return total > constraint.value;
     case "gte":
-      return total >= target.totalConstraint.value;
+      return total >= constraint.value;
   }
 }
 

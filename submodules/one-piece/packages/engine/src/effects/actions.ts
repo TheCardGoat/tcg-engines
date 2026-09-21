@@ -58,7 +58,14 @@ import {
   findRestReplacement,
   restActionCandidateIds,
 } from "./replacements.ts";
-import { candidatePoolForTarget, candidatesForTarget, matchesTargetFilter } from "./targeting.ts";
+import type { TargetFilter } from "@tcg/op-types";
+import {
+  candidatePoolForTarget,
+  candidatesForTarget,
+  matchesTargetFilter,
+  resolveTargetCount,
+  selectionSatisfiesTotalConstraint,
+} from "./targeting.ts";
 
 type RestCardsCost = Extract<Cost, { cost: "restCards" }>;
 type TrashCharacterCost = Extract<Cost, { cost: "trashCharacter" }>;
@@ -176,7 +183,7 @@ function promptForEffectRestReplacement(
   createChoicePrompt(state, {
     choiceKind: "confirm",
     seat: replacement.controller,
-    label: `${effectSourceName(state, replacement.sourceInstanceId)} may replace being rested`,
+    label: `${effectSourceName(state, replacement.sourceInstanceId)} may replace being rested.`,
     details: "Apply the replacement effect instead of resting this Character?",
     sourceCardId: getInstance(state, replacement.sourceInstanceId).cardId,
     sourceInstanceId: replacement.sourceInstanceId,
@@ -253,6 +260,7 @@ export function koCharacterByEffect(
     faceUp: true,
     publicKnowledge: true,
     actor: controller,
+    suppressLog: true,
   });
   emitLog(
     state,
@@ -379,7 +387,7 @@ export function promptForEffectRemovalReplacement(
   createChoicePrompt(state, {
     choiceKind: "confirm",
     seat: replacement.controller,
-    label: `${effectSourceName(state, replacement.sourceInstanceId)} may replace the removal`,
+    label: `${effectSourceName(state, replacement.sourceInstanceId)} may replace the removal.`,
     details: "Apply the replacement effect instead of removing the card from the field?",
     sourceCardId: getInstance(state, replacement.sourceInstanceId).cardId,
     sourceInstanceId: replacement.sourceInstanceId,
@@ -437,7 +445,7 @@ function promptForReturnToDeckOwnerOrder(
   createChoicePrompt(state, {
     choiceKind: "orderCards",
     seat: continuation.owner,
-    label: `${effectSourceName(state, sourceInstanceId)} orders cards returned to the deck`,
+    label: `${effectSourceName(state, sourceInstanceId)} orders cards returned to the deck.`,
     details: `Order the cards from first to last at the ${action.position} of your deck.`,
     sourceCardId: getInstance(state, sourceInstanceId).cardId,
     sourceInstanceId,
@@ -1289,6 +1297,8 @@ export function playCardFromEffect(
       faceUp: true,
       publicKnowledge: true,
       actor: controller,
+      // The public "plays X." line below supersedes the raw zone movement.
+      suppressLog: true,
     });
     const played = getInstance(state, instanceId);
     played.playedOnTurn = state.turnNumber;
@@ -1396,7 +1406,7 @@ export function promptForEffectCharacterReplacement(
   createChoicePrompt(state, {
     choiceKind: "selectCards",
     seat: playingSeat,
-    label: `${player.playerName} trashes 1 Character to play ${cardName(card)}`,
+    label: `${player.playerName} trashes 1 Character to play ${cardName(card)}.`,
     details: "Select 1 of your Characters to trash.",
     sourceCardId: card.id,
     sourceInstanceId,
@@ -1511,6 +1521,8 @@ export function completePlayThisCard(
       faceUp: true,
       publicKnowledge: true,
       actor: controller,
+      // The public "plays X." line below supersedes the raw zone movement.
+      suppressLog: true,
     });
     const played = getInstance(state, sourceInstanceId);
     played.playedOnTurn = state.turnNumber;
@@ -1583,6 +1595,110 @@ export function completePlayThisCard(
   return true;
 }
 
+function promptForSetPowerFromSource(
+  state: MatchState,
+  controller: MatchSeat,
+  sourceInstanceId: string,
+  action: Extract<Action, { action: "setBasePowerFrom" }>,
+  candidateIds: string[],
+  previousActionTargetIds?: string[],
+) {
+  const sourceCard = getCardForInstance(state, sourceInstanceId);
+  const chooser = action.source.chosenBy === "opponent" ? otherSeat(controller) : controller;
+  createChoicePrompt(state, {
+    choiceKind: "selectTargets",
+    seat: chooser,
+    label: `${cardName(sourceCard)} selects a card.`,
+    details: "Choose 1 card to copy the base power from.",
+    sourceCardId: sourceCard.id,
+    sourceInstanceId,
+    eventId: null,
+    options: candidateIds.map((instanceId) => ({
+      id: instanceId,
+      label: cardName(getCardForInstance(state, instanceId)),
+      value: instanceId,
+      targetId: instanceId,
+    })),
+    minSelections: action.source.count.upTo ? 0 : 1,
+    maxSelections: 1,
+    context: { action: action.action },
+    resolutionContext: {
+      intent: "effectSetPowerFromSource",
+      sourceInstanceId,
+      controller,
+      action,
+      sourceCandidateIds: candidateIds,
+      previousActionTargetIds,
+    },
+  });
+}
+
+const TARGET_SUMMARY_MAX_NAMES = 3;
+const TARGET_SUMMARY_MAX_TOTAL_LENGTH = 190;
+const HIDDEN_TARGET_LABEL = "a hidden card";
+
+/**
+ * Public label for a target-selection prompt: names up to three candidates so
+ * the log line tells both players what the effect can hit, without leaking
+ * hidden information. A candidate is only named when it is already public
+ * knowledge (same rule as the spectator view and describeHiddenCard); every
+ * other candidate renders as {@link HIDDEN_TARGET_LABEL}, and pooled
+ * candidates like DON!! keep their prompt-option label. The total label stays
+ * under the log audit's overlong-line threshold.
+ */
+function targetSelectionLabel(
+  state: MatchState,
+  sourceName: string,
+  orderedCandidateIds: readonly string[],
+  opaqueLabels: ReadonlyMap<string, string>,
+): string {
+  const prefix = `${sourceName} chooses its target: `;
+  const isPubliclyNamed = (instanceId: string): boolean => {
+    if (opaqueLabels.has(instanceId)) {
+      return false;
+    }
+    const instance = getInstance(state, instanceId);
+    return instance.publicKnowledge || instance.zone === "leader" || instance.zone === "character";
+  };
+  const displayFor = (instanceId: string): string =>
+    opaqueLabels.get(instanceId) ??
+    (isPubliclyNamed(instanceId)
+      ? cardName(getCardForInstance(state, instanceId))
+      : HIDDEN_TARGET_LABEL);
+  const summaryFor = (count: number): string => {
+    const parts: string[] = [];
+    let namedRun: string[] = [];
+    const flushNamedRun = () => {
+      if (namedRun.length > 0) {
+        parts.push(formatCardList(state, namedRun));
+        namedRun = [];
+      }
+    };
+    for (const instanceId of orderedCandidateIds.slice(0, count)) {
+      if (isPubliclyNamed(instanceId)) {
+        namedRun.push(instanceId);
+      } else {
+        flushNamedRun();
+        parts.push(displayFor(instanceId));
+      }
+    }
+    flushNamedRun();
+    return parts.join(", ");
+  };
+  const labelFor = (count: number): string => {
+    const remaining = orderedCandidateIds.length - count;
+    const suffix = remaining > 0 ? `, + ${remaining} more` : "";
+    return `${prefix}${summaryFor(count)}${suffix}.`;
+  };
+  let shown = Math.min(TARGET_SUMMARY_MAX_NAMES, orderedCandidateIds.length);
+  let label = labelFor(shown);
+  while (label.length > TARGET_SUMMARY_MAX_TOTAL_LENGTH && shown > 0) {
+    shown -= 1;
+    label = labelFor(shown);
+  }
+  return label;
+}
+
 function promptForTargetSelection(
   state: MatchState,
   controller: MatchSeat,
@@ -1622,20 +1738,21 @@ function promptForTargetSelection(
       ...(!concealedFromChooser && { targetId: instanceId }),
     };
   });
-  const maximum =
-    target?.count.amount === "all" || target?.count.amount === undefined
+  const maximum = target?.count.amountFromMatchingCards
+    ? Math.min(resolveTargetCount(state, chooser, sourceInstanceId, target), options.length)
+    : target?.count.amount === "all" || target?.count.amount === undefined
       ? options.length
       : Math.min(target.count.amount, options.length);
   createChoicePrompt(state, {
     choiceKind: "selectTargets",
     seat: chooser,
-    label: `${cardName(sourceCard)} needs a target`,
+    label: targetSelectionLabel(state, cardName(sourceCard), orderedCandidateIds, new Map()),
     details: "Choose valid targets to continue resolving the effect.",
     sourceCardId: sourceCard.id,
     sourceInstanceId,
     eventId: null,
     options,
-    minSelections: target?.count.upTo ? 0 : maximum,
+    minSelections: target?.count.upTo || target?.totalConstraint ? 0 : maximum,
     maxSelections: maximum,
     context: {
       action: action.action,
@@ -1789,7 +1906,7 @@ export function promptForRearrangeDeckOrder(
   createChoicePrompt(state, {
     choiceKind: "orderCards",
     seat: controller,
-    label: `${effectSourceName(state, sourceInstanceId)} orders cards from the deck`,
+    label: `${effectSourceName(state, sourceInstanceId)} orders the ${lookedIds.length} looked-at card(s) in the deck.`,
     details: `Order the ${lookedIds.length} looked-at card(s) from first to last.`,
     sourceCardId: getInstance(state, sourceInstanceId).cardId,
     sourceInstanceId,
@@ -1822,6 +1939,7 @@ export function processEffectAction(
   previousActionTargetIds?: string[],
   skipRemovalReplacementIds?: string[],
   returnToDeckContinuation?: ReturnToDeckContinuation,
+  setPowerFromSourceIds?: string[],
 ): boolean {
   switch (action.action) {
     case "sequence":
@@ -1843,7 +1961,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "confirm",
         seat: controller,
-        label: `${effectSourceName(state, sourceInstanceId)} has an optional action`,
+        label: `${effectSourceName(state, sourceInstanceId)} has an optional action.`,
         details: "Resolve the optional action?",
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -1916,7 +2034,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "chooseOption",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} may draw cards`,
+          label: `${effectSourceName(state, sourceInstanceId)} may draw cards.`,
           details: `Choose how many cards to draw, up to ${resolvedAction.amount}.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -2024,7 +2142,9 @@ export function processEffectAction(
           createChoicePrompt(state, {
             choiceKind: "selectCards",
             seat: choiceSeat,
-            label: `${effectSourceName(state, sourceInstanceId)} trashes from hand`,
+            label: `${effectSourceName(state, sourceInstanceId)} requires trashing ${
+              resolvedAction.upTo ? "up to " : ""
+            }${maximum} card(s) from hand.`,
             details: resolvedAction.upTo
               ? resolvedAction.amount === "all"
                 ? "Choose any number of eligible cards to trash from hand."
@@ -2061,11 +2181,15 @@ export function processEffectAction(
       }
       const selected = selectedTargetIds;
       for (const instanceId of selected) {
+        // The aggregate "trashes N card(s) from hand." line below is the
+        // single player-facing record; per-card zone movements would repeat
+        // it once per card.
         moveCard(state, instanceId, getInstance(state, instanceId).owner, "trash", {
           faceUp: true,
           publicKnowledge: true,
           actor: controller,
           visibility: "private",
+          suppressLog: true,
         });
       }
       emitLog(
@@ -2155,7 +2279,7 @@ export function processEffectAction(
           createChoicePrompt(state, {
             choiceKind: "selectCards",
             seat: choiceSeat,
-            label: `${effectSourceName(state, sourceInstanceId)} reveals from hand`,
+            label: `${effectSourceName(state, sourceInstanceId)} reveals from hand.`,
             details: `Choose ${maximum} card(s) to reveal from hand.`,
             sourceCardId: getInstance(state, sourceInstanceId).cardId,
             sourceInstanceId,
@@ -2248,21 +2372,44 @@ export function processEffectAction(
       return true;
     }
     case "modifyPower": {
-      const targetIds = action.previousActionTargets
-        ? (previousActionTargetIds ?? []).filter((instanceId) => {
-            const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
-            return pool.supported && pool.candidateIds.includes(instanceId);
-          })
-        : resolveActionTargets(
-            state,
-            controller,
-            sourceInstanceId,
-            action,
-            selectedTargetIds,
-            previousActionTargetIds,
-          );
+      const targetIds =
+        // "previousActionTargets" with a self target keeps the previous ids for
+        // value scaling (e.g. power per revealed Life cost) while the modifier
+        // still lands on the card itself.
+        action.previousActionTargets && !action.target.self
+          ? (previousActionTargetIds ?? []).filter((instanceId) => {
+              const pool = candidatePoolForTarget(
+                state,
+                controller,
+                sourceInstanceId,
+                action.target,
+              );
+              return pool.supported && pool.candidateIds.includes(instanceId);
+            })
+          : resolveActionTargets(
+              state,
+              controller,
+              sourceInstanceId,
+              action,
+              selectedTargetIds,
+              previousActionTargetIds,
+            );
       if (targetIds === "prompt" || !targetIds) {
         return false;
+      }
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
       }
       const cardGroupPool = action.valuePerCardGroup
         ? candidatePoolForTarget(
@@ -2272,18 +2419,32 @@ export function processEffectAction(
             action.valuePerCardGroup.target,
           )
         : undefined;
+      const attachedDonPool = action.valuePerAttachedDonOn
+        ? candidatePoolForTarget(state, controller, sourceInstanceId, action.valuePerAttachedDonOn)
+        : undefined;
       const modifierValue = action.restedDonGroupSize
         ? Math.floor(getPlayer(state, controller).restedDon / action.restedDonGroupSize) *
           action.value
         : action.valuePerCardGroup && cardGroupPool?.supported
           ? Math.floor(cardGroupPool.candidateIds.length / action.valuePerCardGroup.size) *
             action.value
-          : action.value +
-            (action.valuePerPreviousActionTarget ?? 0) *
-              Math.floor(
-                (previousActionTargetIds?.length ?? 0) /
-                  (action.previousActionTargetGroupSize ?? 1),
-              );
+          : action.valuePerAttachedDonOn && attachedDonPool?.supported
+            ? attachedDonPool.candidateIds.reduce(
+                (total, instanceId) => total + getInstance(state, instanceId).attachedDon,
+                0,
+              ) * action.value
+            : action.valuePerPreviousActionTargetCost
+              ? action.value *
+                (previousActionTargetIds ?? []).reduce(
+                  (total, instanceId) => total + getCardCost(state, instanceId),
+                  0,
+                )
+              : action.value +
+                (action.valuePerPreviousActionTarget ?? 0) *
+                  Math.floor(
+                    (previousActionTargetIds?.length ?? 0) /
+                      (action.previousActionTargetGroupSize ?? 1),
+                  );
       for (const [targetIndex, targetId] of targetIds.entries()) {
         const targetModifierValue = action.distributedValues?.[targetIndex] ?? modifierValue;
         addModifier(state, sourceInstanceId, targetId, {
@@ -2370,6 +2531,49 @@ export function processEffectAction(
       );
       return true;
     }
+    case "setBasePower": {
+      const targetIds = resolveActionTargets(
+        state,
+        controller,
+        sourceInstanceId,
+        action,
+        selectedTargetIds,
+        previousActionTargetIds,
+      );
+      if (targetIds === "prompt" || !targetIds) {
+        return false;
+      }
+      for (const targetId of targetIds) {
+        const duration = action.duration ?? "thisTurn";
+        addModifier(state, sourceInstanceId, targetId, {
+          type: "basePower",
+          value: action.value,
+          duration,
+          expiresAtTurn:
+            duration === "thisTurn"
+              ? state.turnNumber
+              : duration === "untilEndOfYourNextTurn" ||
+                  duration === "untilEndOfOpponentNextTurn" ||
+                  duration === "untilEndOfOpponentNextEndPhase"
+                ? state.turnNumber + 1
+                : null,
+          expiresAtBattleId: duration === "thisBattle" ? (state.battle?.id ?? null) : null,
+          expiresOnTurnStartOfSeat: null,
+        });
+      }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} sets the base power of ${targetNames(state, targetIds)} to ${action.value} ${durationLabel(action.duration ?? "thisTurn")}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
+      return true;
+    }
     case "setBasePowerFrom": {
       const targetIds = resolveActionTargets(
         state,
@@ -2382,7 +2586,39 @@ export function processEffectAction(
       if (targetIds === "prompt" || !targetIds) {
         return false;
       }
-      const sourceIds = candidatesForTarget(state, controller, sourceInstanceId, action.source);
+      if (setPowerFromSourceIds?.length === 0) {
+        // The player declined to choose a source: skip the copy.
+        return true;
+      }
+      const sourcePoolResult = candidatePoolForTarget(
+        state,
+        controller,
+        sourceInstanceId,
+        action.source,
+      );
+      const sourcePool = sourcePoolResult.supported ? sourcePoolResult.candidateIds : null;
+      if (
+        action.source.chosenBy &&
+        sourcePool &&
+        sourcePool.length >= 1 &&
+        !setPowerFromSourceIds
+      ) {
+        promptForSetPowerFromSource(
+          state,
+          controller,
+          sourceInstanceId,
+          action,
+          sourcePool,
+          previousActionTargetIds,
+        );
+        return false;
+      }
+      const sourceIds =
+        setPowerFromSourceIds ??
+        candidatesForTarget(state, controller, sourceInstanceId, {
+          ...action.source,
+          count: { amount: 1 },
+        });
       if (!sourceIds || sourceIds.length !== 1) {
         enqueueJudgePrompt(
           state,
@@ -2454,6 +2690,60 @@ export function processEffectAction(
       );
       return true;
     }
+    case "grantAttribute": {
+      const targetIds = action.previousActionTargets
+        ? (previousActionTargetIds ?? []).filter((instanceId) => {
+            const pool = candidatePoolForTarget(state, controller, sourceInstanceId, action.target);
+            return pool.supported && pool.candidateIds.includes(instanceId);
+          })
+        : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
+      if (targetIds === "prompt" || !targetIds) {
+        return false;
+      }
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
+      }
+      for (const targetId of targetIds) {
+        addModifier(state, sourceInstanceId, targetId, {
+          type: "attribute",
+          attribute: action.value,
+          duration: action.duration,
+          expiresAtTurn:
+            action.duration === "thisTurn"
+              ? state.turnNumber
+              : action.duration === "untilEndOfYourNextTurn" ||
+                  action.duration === "untilEndOfOpponentNextTurn" ||
+                  action.duration === "untilEndOfOpponentNextEndPhase"
+                ? state.turnNumber + 1
+                : null,
+          expiresAtBattleId: action.duration === "thisBattle" ? (state.battle?.id ?? null) : null,
+          expiresOnTurnStartOfSeat: null,
+        });
+      }
+      emitLog(
+        state,
+        controller,
+        `${effectSourceName(state, sourceInstanceId)} gives ${targetNames(state, targetIds)} the ${action.value} attribute ${durationLabel(action.duration)}.`,
+        {
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          targetIds,
+          visibility: "public",
+        },
+      );
+      return true;
+    }
     case "grantKeyword": {
       const targetIds = action.previousActionTargets
         ? (previousActionTargetIds ?? []).filter((instanceId) => {
@@ -2463,6 +2753,20 @@ export function processEffectAction(
         : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
       if (targetIds === "prompt" || !targetIds) {
         return false;
+      }
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
       }
       for (const targetId of targetIds) {
         addModifier(state, sourceInstanceId, targetId, {
@@ -2505,6 +2809,20 @@ export function processEffectAction(
       );
       if (targetIds === "prompt" || !targetIds) {
         return false;
+      }
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
       }
       for (const targetId of targetIds) {
         addModifier(state, sourceInstanceId, targetId, {
@@ -2716,7 +3034,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "costPayment",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} rests cards`,
+          label: `${effectSourceName(state, sourceInstanceId)} rests cards.`,
           details: `Choose ${requested} card${requested === 1 ? "" : "s"} or DON!! to rest.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -2760,7 +3078,7 @@ export function processEffectAction(
           createChoicePrompt(state, {
             choiceKind: "chooseOption",
             seat: choiceSeat,
-            label: `${effectSourceName(state, sourceInstanceId)} may rest DON!! cards`,
+            label: `${effectSourceName(state, sourceInstanceId)} may rest DON!! cards.`,
             details: `Choose how many of ${getPlayer(state, targetSeat).playerName}'s active DON!! cards to rest.`,
             sourceCardId: getInstance(state, sourceInstanceId).cardId,
             sourceInstanceId,
@@ -2872,7 +3190,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "chooseOption",
         seat: controller,
-        label: `${effectSourceName(state, sourceInstanceId)} may rest DON!! cards`,
+        label: `${effectSourceName(state, sourceInstanceId)} may rest DON!! cards.`,
         details: `Choose how many active DON!! cards to rest for +${action.valuePerDon} power each.`,
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -2912,7 +3230,7 @@ export function processEffectAction(
           createChoicePrompt(state, {
             choiceKind: "chooseOption",
             seat: controller,
-            label: `${effectSourceName(state, sourceInstanceId)} may set DON!! cards as active`,
+            label: `${effectSourceName(state, sourceInstanceId)} may set up to ${maximum} DON!! card(s) as active.`,
             details: `Choose how many rested DON!! cards to set as active, up to ${maximum}.`,
             sourceCardId: getInstance(state, sourceInstanceId).cardId,
             sourceInstanceId,
@@ -3043,7 +3361,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "orderCards",
           seat: orderedHandOwner,
-          label: `${effectSourceName(state, sourceInstanceId)} orders cards for the deck`,
+          label: `${effectSourceName(state, sourceInstanceId)} orders cards for the deck.`,
           details: `Order the ${targetIds.length} cards from first to last.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -3073,7 +3391,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "chooseOption",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} chooses a deck position`,
+          label: `${effectSourceName(state, sourceInstanceId)} chooses the deck position for the selected card(s).`,
           details: `Place the selected card${targetIds.length === 1 ? "" : "s"} at the top or bottom of your deck.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -3257,6 +3575,57 @@ export function processEffectAction(
       return true;
     }
     case "addToLife": {
+      const isSupportedTrashTarget =
+        action.target.player !== "both" &&
+        action.target.zones.length === 1 &&
+        action.target.zones[0] === "trash" &&
+        action.position !== "choice";
+      if (isSupportedTrashTarget) {
+        const poolResult = candidatePoolForTarget(
+          state,
+          controller,
+          sourceInstanceId,
+          action.target,
+        );
+        const availableIds = poolResult.supported ? poolResult.candidateIds : [];
+        const targetIds = selectedTargetIds ?? availableIds;
+        const requestedCount =
+          typeof action.target.count.amount === "number"
+            ? action.target.count.amount
+            : targetIds.length;
+        if (!selectedTargetIds && targetIds.length > requestedCount) {
+          promptForTargetSelection(
+            state,
+            controller,
+            sourceInstanceId,
+            action,
+            targetIds,
+            previousActionTargetIds,
+          );
+          return false;
+        }
+        for (const targetId of targetIds) {
+          const owner = getInstance(state, targetId).owner;
+          moveCard(state, targetId, owner, "life", {
+            faceUp: action.faceUp ?? false,
+            publicKnowledge: action.faceUp ?? false,
+            actor: controller,
+            lifePosition: action.position === "bottom" ? "bottom" : "top",
+          });
+        }
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} adds ${targetNames(state, targetIds)} to the top of ${getPlayer(state, controller).playerName}'s Life.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
+      }
       const requestedAmount = action.target.count.amount;
       const isSupportedDeckTarget =
         action.target.player !== "both" &&
@@ -3286,7 +3655,7 @@ export function processEffectAction(
           createChoicePrompt(state, {
             choiceKind: "chooseOption",
             seat: controller,
-            label: `${effectSourceName(state, sourceInstanceId)} may add cards to Life`,
+            label: `${effectSourceName(state, sourceInstanceId)} may add up to ${maximum} card(s) to Life.`,
             details: `Choose how many cards to add from the top of the deck to Life, up to ${maximum}.`,
             sourceCardId: getInstance(state, sourceInstanceId).cardId,
             sourceInstanceId,
@@ -3328,7 +3697,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "chooseOption",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} Life position`,
+          label: `${effectSourceName(state, sourceInstanceId)} Life position.`,
           details: "Choose whether to add the selected card to the top or bottom of Life.",
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -3386,7 +3755,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "chooseOption",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} may trash cards from the deck`,
+          label: `${effectSourceName(state, sourceInstanceId)} may trash cards from the deck.`,
           details: `Choose how many cards to trash from the top of the deck, up to ${maximum}.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -3450,7 +3819,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "chooseOption",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} Life position`,
+          label: `${effectSourceName(state, sourceInstanceId)} Life position.`,
           details: "Choose whether to remove from the top or bottom of Life.",
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -3481,7 +3850,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "selectCards",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} removes Life cards`,
+          label: `${effectSourceName(state, sourceInstanceId)} removes Life cards.`,
           details: upTo
             ? `Choose up to ${maximum} card(s) to remove from Life.`
             : `Choose ${maximum} card(s) to remove from Life.`,
@@ -3513,7 +3882,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "chooseOption",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} may remove Life cards`,
+          label: `${effectSourceName(state, sourceInstanceId)} may remove Life cards.`,
           details: `Choose how many cards to remove from Life, up to ${maximum}.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -3552,7 +3921,16 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "selectTargets",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} needs a target`,
+          label: targetSelectionLabel(
+            state,
+            effectSourceName(state, sourceInstanceId),
+            candidateIds,
+            new Map(
+              candidateIds
+                .filter((id) => id.startsWith("rested-don:"))
+                .map((id): [string, string] => [id, "Rested DON!! in cost area"]),
+            ),
+          ),
           details: "Choose valid targets to continue resolving the effect.",
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -3659,8 +4037,16 @@ export function processEffectAction(
       return true;
     }
     case "giveDon": {
-      const player = getPlayer(state, controller);
-      const availableDon = action.donState === "rested" ? player.restedDon : player.activeDon;
+      const player = getPlayer(
+        state,
+        action.donorPlayer === "opponent" ? otherSeat(controller) : controller,
+      );
+      const availableDon =
+        action.donState === "rested"
+          ? player.restedDon
+          : action.donState === "active"
+            ? player.activeDon
+            : player.restedDon + player.activeDon;
       if (action.distribution === "each") {
         if (action.count.amount === "all") {
           return false;
@@ -3791,7 +4177,7 @@ export function processEffectAction(
           return false;
         }
         player.restedDon -= amount;
-      } else {
+      } else if (action.donState === "active") {
         if (player.activeDon < amount) {
           enqueueJudgePrompt(
             state,
@@ -3802,6 +4188,10 @@ export function processEffectAction(
           return false;
         }
         player.activeDon -= amount;
+      } else {
+        const fromRested = Math.min(player.restedDon, amount);
+        player.restedDon -= fromRested;
+        player.activeDon -= amount - fromRested;
       }
       getInstance(state, targetIds[0]!).attachedDon += amount;
       emitLog(
@@ -3952,7 +4342,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "selectCards",
         seat: controller,
-        label: `${effectSourceName(state, sourceInstanceId)} may move a given DON!! card`,
+        label: `${effectSourceName(state, sourceInstanceId)} may move a given DON!! card.`,
         details: "Choose a Leader or Character currently given a DON!! card, or skip.",
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -4091,7 +4481,9 @@ export function processEffectAction(
       if (
         action.source.player !== "self" ||
         action.source.zone !== "deck" ||
-        (action.revealDestination !== "hand" && action.revealDestination !== "character") ||
+        (action.revealDestination !== "hand" &&
+          action.revealDestination !== "character" &&
+          action.revealDestination !== "life") ||
         (action.remainderPosition !== "bottom" &&
           action.remainderPosition !== "top" &&
           action.remainderPosition !== "trash" &&
@@ -4147,7 +4539,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "selectCards",
         seat: controller,
-        label: `${effectSourceName(state, sourceInstanceId)} looks at the top of the deck`,
+        label: `${effectSourceName(state, sourceInstanceId)} looks at the top ${lookedIds.length} card(s) of the deck.`,
         details:
           action.revealDestination === "character"
             ? `Choose up to ${maximum} eligible card(s) to play.`
@@ -4231,7 +4623,7 @@ export function processEffectAction(
           createChoicePrompt(state, {
             choiceKind: "selectCards",
             seat: playingSeat,
-            label: `${effectSourceName(state, sourceInstanceId)} may play cards`,
+            label: `${effectSourceName(state, sourceInstanceId)} may play cards.`,
             details: action.count.upTo
               ? `Choose up to ${maximum} eligible card(s) to play.`
               : `Choose ${maximum} eligible card(s) to play.`,
@@ -4275,6 +4667,9 @@ export function processEffectAction(
         action.differentNames &&
         new Set(selectedCards.map((card) => card.name)).size !== selectedCards.length
       ) {
+        return false;
+      }
+      if (!selectionSatisfiesTotalConstraint(state, selectedTargetIds, action.totalConstraint)) {
         return false;
       }
       if (selectedCards.filter((card) => card.cardType === "stage").length > 1) {
@@ -4339,7 +4734,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "selectCards",
         seat: playingSeat,
-        label: `${effectSourceName(state, sourceInstanceId)} may play cards`,
+        label: `${effectSourceName(state, sourceInstanceId)} may play cards.`,
         details: `Choose up to ${maximum} eligible card(s) to play together.`,
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -4529,7 +4924,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "chooseOption",
         seat: choiceSeat,
-        label: `${effectSourceName(state, sourceInstanceId)} requires a choice`,
+        label: `${effectSourceName(state, sourceInstanceId)} requires a choice.`,
         details: "Choose one effect to resolve.",
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -4621,7 +5016,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "chooseOption",
         seat: controller,
-        label: `${effectSourceName(state, sourceInstanceId)} chooses a cost`,
+        label: `${effectSourceName(state, sourceInstanceId)} chooses a cost.`,
         details: "Choose a cost, then reveal the top card of your opponent's deck.",
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -4651,6 +5046,20 @@ export function processEffectAction(
         : resolveActionTargets(state, controller, sourceInstanceId, action, selectedTargetIds);
       if (targetIds === "prompt" || !targetIds) {
         return false;
+      }
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
       }
       for (const targetId of targetIds) {
         addModifier(state, sourceInstanceId, targetId, {
@@ -4692,6 +5101,20 @@ export function processEffectAction(
       );
       if (targetIds === "prompt" || !targetIds) {
         return false;
+      }
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
       }
       for (const targetId of targetIds) {
         addModifier(state, sourceInstanceId, targetId, {
@@ -4803,6 +5226,20 @@ export function processEffectAction(
       );
       if (targetIds === "prompt" || !targetIds) {
         return false;
+      }
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
       }
       for (const targetId of targetIds) {
         addModifier(state, sourceInstanceId, targetId, {
@@ -4929,6 +5366,23 @@ export function processEffectAction(
               action.duration === "untilStartOfNextTurn" ? controller : null,
           });
         }
+      }
+      // The leader-scope branch above may legitimately add the Leader even
+      // when no resolved candidate had the keyword, so only the log line is
+      // guarded here — the modifier application must still run.
+      if (targetIds.length === 0) {
+        emitLog(
+          state,
+          controller,
+          `${effectSourceName(state, sourceInstanceId)} resolves without a target.`,
+          {
+            sourceCardId: getInstance(state, sourceInstanceId).cardId,
+            sourceInstanceId,
+            targetIds,
+            visibility: "public",
+          },
+        );
+        return true;
       }
       emitLog(
         state,
@@ -5126,6 +5580,34 @@ export function processEffectAction(
       if (!revealedInstanceId) {
         return true;
       }
+      if (action.upTo && !selectedTargetIds) {
+        createChoicePrompt(state, {
+          choiceKind: "chooseOption",
+          seat: controller,
+          label: `${effectSourceName(state, sourceInstanceId)} may reveal a Life card.`,
+          details: "Choose whether to reveal the top card of your Life.",
+          sourceCardId: getInstance(state, sourceInstanceId).cardId,
+          sourceInstanceId,
+          eventId: null,
+          options: [
+            { id: "0", label: "Do not reveal", value: "0" },
+            { id: "1", label: "Reveal 1", value: "1" },
+          ],
+          minSelections: 1,
+          maxSelections: 1,
+          context: { action: "revealFromLife", resource: "life" },
+          resolutionContext: {
+            intent: "effectRevealFromLifeSelection",
+            sourceInstanceId,
+            controller,
+            action,
+          },
+        });
+        return false;
+      }
+      if (action.upTo && selectedTargetIds?.length === 0) {
+        return true;
+      }
       const revealed = getInstance(state, revealedInstanceId);
       revealed.faceUp = true;
       revealed.publicKnowledge = true;
@@ -5158,7 +5640,7 @@ export function processEffectAction(
       createChoicePrompt(state, {
         choiceKind: "confirm",
         seat: controller,
-        label: `${effectSourceName(state, sourceInstanceId)} may play the revealed card`,
+        label: `${effectSourceName(state, sourceInstanceId)} may play the revealed card.`,
         details: `Play ${cardName(card)} from Life?`,
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -5190,10 +5672,13 @@ export function processEffectAction(
       if (availableSeats.length === 0) {
         return true;
       }
+      const lifeOwners = availableSeats
+        .map((seat) => `${getPlayer(state, seat).playerName}'s Life`)
+        .join(" or ");
       createChoicePrompt(state, {
         choiceKind: "chooseOption",
         seat: controller,
-        label: `${effectSourceName(state, sourceInstanceId)} looks at Life`,
+        label: `${effectSourceName(state, sourceInstanceId)} looks at the top card of ${lifeOwners}.`,
         details: "Choose whose top Life card to look at.",
         sourceCardId: getInstance(state, sourceInstanceId).cardId,
         sourceInstanceId,
@@ -5252,7 +5737,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "costPayment",
           seat: returningSeat,
-          label: `${effectSourceName(state, sourceInstanceId)} returns your DON!!`,
+          label: `${effectSourceName(state, sourceInstanceId)} requires returning ${amount} DON!! to the DON!! deck.`,
           details: `Choose ${amount} DON!! card(s) from your field to return to your DON!! deck.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -5313,7 +5798,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "costPayment",
           seat: returningSeat,
-          label: `${effectSourceName(state, sourceInstanceId)} returns your DON!!`,
+          label: `${effectSourceName(state, sourceInstanceId)} requires returning ${amount} DON!! to the DON!! deck.`,
           details: `Choose ${amount} DON!! card(s) from your field to return to your DON!! deck.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -5365,7 +5850,7 @@ export function processEffectAction(
         createChoicePrompt(state, {
           choiceKind: "selectCards",
           seat: controller,
-          label: `${effectSourceName(state, sourceInstanceId)} looks at the top of the deck`,
+          label: `${effectSourceName(state, sourceInstanceId)} looks at the top ${lookedIds.length} card(s) of the deck.`,
           details: `Choose up to ${maximum} card(s) to trash.`,
           sourceCardId: getInstance(state, sourceInstanceId).cardId,
           sourceInstanceId,
@@ -5556,6 +6041,22 @@ export function processEffectAction(
       return true;
     }
   }
+  // Unhandled action kinds previously fell through to an implicit undefined;
+  // keep the falsy behavior explicit for the compiler.
+  return false;
+}
+
+/** Resolve a giveDon cost's donor/recipient seats and available pool. */
+export function giveDonCostParts(
+  state: MatchState,
+  controller: MatchSeat,
+  cost: Extract<Cost, { cost: "giveDon" }>,
+): { donorSeat: MatchSeat; recipientSeat: MatchSeat; poolAmount: number } {
+  const donorSeat = cost.donorPlayer === "opponent" ? otherSeat(controller) : controller;
+  const recipientSeat = cost.recipientPlayer === "opponent" ? otherSeat(controller) : controller;
+  const donor = getPlayer(state, donorSeat);
+  const poolAmount = cost.donState === "rested" ? donor.restedDon : donor.activeDon;
+  return { donorSeat, recipientSeat, poolAmount };
 }
 
 export function canPayCosts(
@@ -5577,20 +6078,37 @@ export function canPayCosts(
 
   for (const cost of costs) {
     switch (cost.cost) {
+      case "trashThisCard": {
+        const trashThisCost = cost as Extract<
+          Cost,
+          { cost: "trashThisCard"; filters?: TargetFilter[] }
+        >;
+        const gateMatches = (trashThisCost.filters ?? []).every((filter) => {
+          const result = matchesTargetFilter(state, sourceInstanceId, sourceInstanceId, filter);
+          return result.supported && result.matches;
+        });
+        if (!gateMatches) {
+          return false;
+        }
+        break;
+      }
       case "restDon":
         if (getPlayer(state, controller).activeDon < cost.amount) {
           return false;
         }
         break;
       case "giveDon": {
-        const player = getPlayer(state, controller);
+        const { recipientSeat, poolAmount } = giveDonCostParts(state, controller, cost);
+        const recipient = getPlayer(state, recipientSeat);
         const candidates = [
-          player.leaderInstanceId,
-          ...player.characterArea.filter((instanceId): instanceId is string => instanceId !== null),
+          recipient.leaderInstanceId,
+          ...recipient.characterArea.filter(
+            (instanceId): instanceId is string => instanceId !== null,
+          ),
         ];
         const selected = costPaymentIdsByType?.giveDon ?? candidates.slice(0, 1);
         if (
-          player.activeDon < cost.amount ||
+          poolAmount < cost.amount ||
           selected.length !== 1 ||
           !candidates.includes(selected[0]!)
         ) {
@@ -5632,8 +6150,6 @@ export function canPayCosts(
         ) {
           return false;
         }
-        break;
-      case "trashThisCard":
         break;
       case "returnThisToHand": {
         const source = getInstance(state, sourceInstanceId);
@@ -5923,14 +6439,23 @@ export function payCosts(
         getPlayer(state, controller).restedDon += cost.amount;
         break;
       case "giveDon": {
-        const player = getPlayer(state, controller);
-        const targetId = (costPaymentIdsByType?.giveDon ?? [player.leaderInstanceId])[0]!;
-        player.activeDon -= cost.amount;
+        const { donorSeat, recipientSeat, poolAmount } = giveDonCostParts(state, controller, cost);
+        const donor = getPlayer(state, donorSeat);
+        const recipient = getPlayer(state, recipientSeat);
+        const targetId = (costPaymentIdsByType?.giveDon ?? [recipient.leaderInstanceId])[0]!;
+        if (poolAmount < cost.amount) {
+          return false;
+        }
+        if (cost.donState === "rested") {
+          donor.restedDon -= cost.amount;
+        } else {
+          donor.activeDon -= cost.amount;
+        }
         getInstance(state, targetId).attachedDon += cost.amount;
         emitLog(
           state,
           controller,
-          `${effectSourceName(state, sourceInstanceId)} gives ${cost.amount} active DON!! to ${cardName(getCardForInstance(state, targetId))} as an activation cost.`,
+          `${effectSourceName(state, sourceInstanceId)} gives ${cost.amount} ${cost.donState ?? "active"} DON!! to ${cardName(getCardForInstance(state, targetId))} as an activation cost.`,
           {
             sourceCardId: getInstance(state, sourceInstanceId).cardId,
             sourceInstanceId,
@@ -6003,12 +6528,32 @@ export function payCosts(
           candidatesForTrashFromHandCost(state, seat, sourceInstanceId, cost).slice(0, cost.amount);
         for (const instanceId of selected) {
           returnAttachedDonToCostArea(state, instanceId);
+          // The aggregate "trashes N card(s) from hand." line below is the
+          // single player-facing record; per-card zone movements would repeat
+          // it once per card.
           moveCard(state, instanceId, getInstance(state, instanceId).owner, "trash", {
             faceUp: true,
             publicKnowledge: true,
             actor: controller,
             visibility: "private",
+            suppressLog: true,
           });
+        }
+        if (selected.length > 0) {
+          emitLog(
+            state,
+            controller,
+            `${getPlayer(state, seat).playerName} trashes ${selected.length} card${
+              selected.length === 1 ? "" : "s"
+            } from hand.`,
+            {
+              visibility: "private",
+              privateMessages: {
+                [seat]: `You trashed ${formatCardList(state, selected)}.`,
+              },
+              judgeMessage: `${getPlayer(state, seat).playerName} trashes ${formatCardList(state, selected)} from hand.`,
+            },
+          );
         }
         break;
       }

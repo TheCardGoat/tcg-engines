@@ -9,6 +9,8 @@ import {
 import { dash } from "../heroes/dash.ts";
 import { betsy } from "../heroes/betsy.ts";
 import { nimblismBlue } from "./nimblism.ts";
+import { brutalAssaultBlue } from "./brutal-assault.ts";
+import { browbeatBlue } from "./browbeat.ts";
 import { drinkEmUnderTheTableRed } from "./drink-em-under-the-table.ts";
 
 /**
@@ -95,5 +97,41 @@ describe("Drink 'em Under the Table (ROS244) AAA", () => {
 
     expectFabPlayer(Dash).toHaveLife(20);
     expectFabPlayer(Betsy).toHaveHandCount(0);
+  });
+
+  it("seat: the wager loser is asked to discard from their own hand", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: betsy,
+        hand: [drinkEmUnderTheTableRed],
+        resourcePoints: 4,
+        actionPoints: 1,
+        deck: 6,
+      },
+      {
+        hero: dash,
+        hand: [nimblismBlue, brutalAssaultBlue, browbeatBlue],
+        life: 20,
+        deck: 6,
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Betsy = game.as(betsy);
+    const Dash = game.as(dash);
+
+    Betsy.playAttack(drinkEmUnderTheTableRed, { stopAt: "on-attack" });
+    Betsy.accept(); // Betsy wins the wager on the hit
+    game.advanceUntil({ stopAt: "defend" });
+    Dash.defendWith();
+    // CR 1.8.6: "the other hero discards" — Dash, the wager loser, picks from
+    // his own hand; the clash source's controller never chooses for him.
+    game.advanceToDecision(Dash, "entity-target");
+    Dash.target(brutalAssaultBlue);
+    game.untilIdle({ optionals: "decline", ordering: "listed" });
+
+    expectFabPlayer(Dash).toHaveLife(12); // 8{p} hit
+    expectFabPlayer(Betsy).toHaveHandCount(1); // the winner draws
+    expectFabCard(Dash, brutalAssaultBlue).toBeIn("graveyard");
+    expectFabPlayer(Dash).toHaveHandCount(2);
   });
 });

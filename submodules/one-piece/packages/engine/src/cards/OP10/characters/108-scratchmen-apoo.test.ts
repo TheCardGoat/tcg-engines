@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01MountainGod018 } from "@tcg/op-cards";
-import { op10ScratchmenApoo108 } from "../../../../../cards/src/cards/OP10/characters/108-scratchmen-apoo.ts";
-import { op10Urouge101 } from "../../../../../cards/src/cards/OP10/characters/101-urouge.ts";
+import { op10ScratchmenApoo108 } from "../../../../../cards/src/cards/characters/op10-108-scratchmen-apoo.ts";
+import { op10Urouge101 } from "../../../../../cards/src/cards/characters/op10-101-urouge.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP10-108 Scratchmen Apoo", () => {

@@ -27,7 +27,7 @@ export const wtnc22QaScenarios: Scenario[] = [
           ],
           legendArea: [
             { card: c.welcomeToNightCityRetailDexterDeshawnOffTheGrid, faceDown: true },
-            { card: c.welcomeToNightCityRetailMuamarReyesElCapitaN, faceDown: true },
+            { card: c.welcomeToNightCityRetailMuamarReyesElCapitan, faceDown: true },
             { card: c.welcomeToNightCityRetailPadreManOfTheCross, faceDown: true },
           ],
           eddies: 6,

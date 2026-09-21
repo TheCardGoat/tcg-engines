@@ -6,7 +6,7 @@ import {
   op12Alvida042,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02DraculeMihawkP081PirateFoil081 } from "../../../../../cards/src/cards/PRB02/characters/081-dracule-mihawk-p-081-pirate-foil.ts";
+import { prb02DraculeMihawkP081PirateFoil081 } from "../../../../../cards/src/cards/characters/p-081-dracule-mihawk-p-081-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

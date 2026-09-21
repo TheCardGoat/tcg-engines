@@ -2,20 +2,19 @@ import type { Patch } from "mutative";
 import type { MatchState } from "../types/match-state.ts";
 import type { PlayerId } from "../types/branded.ts";
 import type { CommandEnvelope, CommandResult } from "../types/commands.ts";
-import type { GameEvent } from "../types/game-events.ts";
 import type { FilteredMatchView } from "../view/filter.ts";
 import { processCommand, registerMoves } from "../command/index.ts";
-import { allMoves } from "../moves/index.ts";
+import { allMoves, manualMoves } from "../moves/index.ts";
 import { filterMatchView } from "../view/filter.ts";
 import { buildPlayerPrompt, type PlayerPrompt } from "../view/player-prompt.ts";
 import { getEffectiveActivePlayerId } from "../state/turn-info.ts";
 
-interface UndoEntry {
+export interface LocalEngineUndoEntry {
   state: MatchState;
   inversePatches: Patch[];
 }
 
-interface TurnStartCheckpoint {
+export interface TurnStartCheckpoint {
   state: MatchState;
   activePlayerId: PlayerId;
   turnNumber: number;
@@ -23,15 +22,34 @@ interface TurnStartCheckpoint {
   signature: string;
 }
 
+export interface LocalEngineContinuationSnapshot {
+  version: 1;
+  undoStack: LocalEngineUndoEntry[];
+  turnStartCheckpoint: TurnStartCheckpoint | null;
+}
+
+interface LocalEngineConstructionOptions {
+  continuation?: LocalEngineContinuationSnapshot;
+  /** Fresh games/fixtures begin at a legitimate checkpoint; restored legacy snapshots do not. */
+  initializeTurnStartCheckpoint?: boolean;
+}
+
 export class LocalEngine {
   private _state: MatchState;
-  private undoStack: UndoEntry[] = [];
+  private undoStack: LocalEngineUndoEntry[] = [];
   private turnStartCheckpoint: TurnStartCheckpoint | null = null;
 
-  constructor(initialState: MatchState) {
+  constructor(initialState: MatchState, options: LocalEngineConstructionOptions = {}) {
     this._state = initialState;
-    registerMoves(allMoves);
-    this.turnStartCheckpoint = checkpointForState(initialState, 0);
+    registerMoves({ ...allMoves, ...manualMoves });
+    if (options.continuation) {
+      this.undoStack = structuredClone(options.continuation.undoStack);
+      this.turnStartCheckpoint = options.continuation.turnStartCheckpoint
+        ? structuredClone(options.continuation.turnStartCheckpoint)
+        : null;
+    } else if (options.initializeTurnStartCheckpoint !== false) {
+      this.turnStartCheckpoint = checkpointForState(initialState, 0);
+    }
   }
 
   get state(): MatchState {
@@ -42,12 +60,21 @@ export class LocalEngine {
     return this._state;
   }
 
+  /** Engine-private continuation data persisted by the server adapter. */
+  getContinuationSnapshot(): LocalEngineContinuationSnapshot {
+    return structuredClone({
+      version: 1,
+      undoStack: this.undoStack,
+      turnStartCheckpoint: this.turnStartCheckpoint,
+    });
+  }
+
   /**
    * "Who has priority right now?" — same semantics as
    * {@link getEffectiveActivePlayerId}. Server-side bot drivers and
    * priority-aware UIs should prefer this over reading
    * `state.G.turnMetadata.activePlayerId` directly so the SETUP-phase
-   * parallel-decision window resolves to the still-undecided player.
+   * sequential keep/mulligan window resolves to the still-undecided player.
    */
   getEffectiveActivePlayerId(): PlayerId | undefined {
     return getEffectiveActivePlayerId(this._state);
@@ -84,15 +111,12 @@ export class LocalEngine {
       this._state = result.state;
 
       const nextCheckpoint = detectTurnStartCheckpoint(previousState, result.state);
-      const reviewedHiddenInformation = reviewsHiddenInformation(result.gameEvents);
-
-      if (reviewedHiddenInformation) {
+      if (nextCheckpoint) {
+        // Older turns are intentionally not undoable once the new Main Phase
+        // begins. Drop that unreachable history so authoritative continuation
+        // snapshots only retain the current turn.
         this.undoStack = [];
-        this.turnStartCheckpoint = nextCheckpoint
-          ? { ...nextCheckpoint, stackDepth: this.undoStack.length }
-          : null;
-      } else if (nextCheckpoint) {
-        this.turnStartCheckpoint = { ...nextCheckpoint, stackDepth: this.undoStack.length };
+        this.turnStartCheckpoint = { ...nextCheckpoint, stackDepth: 0 };
       }
     }
 
@@ -127,6 +151,42 @@ export class LocalEngine {
     this._state = checkpoint.state;
     this.undoStack = this.undoStack.slice(0, checkpoint.stackDepth);
     return true;
+  }
+
+  /**
+   * Whether a board-correction rewind to the start of the current turn is
+   * possible. Unlike {@link canUndoToTurnStart} this does not require any
+   * undoable move to have happened — restoring an untouched turn is a no-op.
+   */
+  hasTurnStartCheckpoint(): boolean {
+    return this.currentTurnStartCheckpoint() !== null;
+  }
+
+  /**
+   * Board-correction rewind: restore the in-memory start-of-current-turn
+   * checkpoint, discarding everything that happened this turn (including
+   * wedged triggers and combat — a rewind supersedes them all).
+   *
+   * The checkpoint is engine-private and never appears in {@link getState}.
+   * Server adapters may persist it separately as continuation metadata so a
+   * process restore preserves the same correction boundary.
+   */
+  restoreToTurnStart():
+    | { success: true; restoredTurnNumber: number }
+    | { success: false; error: string; errorCode: string } {
+    const checkpoint = this.currentTurnStartCheckpoint();
+    if (!checkpoint) {
+      return {
+        success: false,
+        error: "No in-memory turn-start checkpoint is available for the current turn",
+        errorCode: "NO_TURN_START_CHECKPOINT",
+      };
+    }
+    const restored: MatchState = structuredClone(checkpoint.state);
+    restored.ctx.stateID = this._state.ctx.stateID + 1;
+    this._state = restored;
+    this.undoStack = this.undoStack.slice(0, checkpoint.stackDepth);
+    return { success: true, restoredTurnNumber: checkpoint.turnNumber };
   }
 
   /**
@@ -217,21 +277,4 @@ function detectTurnStartCheckpoint(
   }
 
   return checkpointForState(nextState, 0);
-}
-
-function reviewsHiddenInformation(events: ReadonlyArray<GameEvent>): boolean {
-  return events.some((event) => {
-    switch (event.type) {
-      case "cardsDrawn":
-      case "cardsRevealed":
-      case "legendFlipped":
-      case "legendCalled":
-      case "deckShuffled":
-        return true;
-      case "actionLog":
-        return event.messageKey === "move.searchDeck.reveal";
-      default:
-        return false;
-    }
-  });
 }

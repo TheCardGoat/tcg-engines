@@ -1,7 +1,8 @@
 import type { MatchState } from "../types/match-state.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { Operations } from "../operations/index.ts";
-import { allowedGainGigDice, readySpentCards } from "./gain-gig.ts";
+import { isOpeningHandDecisionWindow } from "../state/turn-info.ts";
+import { beginGainGigStep, readySpentCards } from "./gain-gig.ts";
 
 export interface KeepHandInput extends MoveInput {
   args: Record<string, never>;
@@ -18,7 +19,8 @@ export const keepHandMove: MoveDefinition<KeepHandInput> = {
     if (state.G.gamePhase !== "setup") return false;
     const player = state.G.players[playerId as string];
     if (!player) return false;
-    return !player.mulliganDone;
+    if (player.mulliganDone) return false;
+    return isOpeningHandDecisionWindow(state, playerId);
   },
 
   validate({ state, playerId }) {
@@ -31,6 +33,13 @@ export const keepHandMove: MoveDefinition<KeepHandInput> = {
     }
     if (player.mulliganDone) {
       return { valid: false, error: "Already decided", errorCode: "ALREADY_DECIDED" };
+    }
+    if (!isOpeningHandDecisionWindow(state, playerId)) {
+      return {
+        valid: false,
+        error: "The player going first must decide whether to mulligan first",
+        errorCode: "NOT_YOUR_TURN",
+      };
     }
     return { valid: true };
   },
@@ -77,8 +86,9 @@ export function advanceIfBothDecided(state: MatchState, operations: Operations):
  *
  * Step 1 fires immediately (skipped on turn 1 since the first player begins
  * with two Legends spent as a setup handicap). Step 2 draws immediately.
- * Step 3 sets a `gainGig` pending choice that the active player resolves with
- * the {@link gainGigMove}.
+ * Step 3 auto-resolves when only one die is legal; otherwise it sets a
+ * `gainGig` pending choice that the active player resolves with the
+ * {@link gainGigMove}.
  */
 export function enterStartPhase(state: MatchState, operations: Operations): void {
   const firstPlayerId = state.ctx.playerIds.find(
@@ -103,17 +113,6 @@ export function enterStartPhase(state: MatchState, operations: Operations): void
     return;
   }
 
-  // Step 3: GAIN A GIG — open a pending choice for the active player.
-  const allowedDieIds = allowedGainGigDice(state, firstPlayerId as string);
-  if (allowedDieIds.length > 0) {
-    operations.game.setPendingChoice({
-      type: "gainGig",
-      chooserId: firstPlayerId,
-      effectId: "start-phase",
-      payload: { allowedDieIds },
-    });
-    return;
-  }
-
-  operations.game.setPhase("main");
+  // Step 3: GAIN A GIG — auto-resolve a forced die or ask the active player.
+  beginGainGigStep(state, firstPlayerId, operations);
 }

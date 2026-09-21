@@ -1,0 +1,12 @@
+.shortcut {
+  --simulator-sidebar-control-accent: var(--game-friendly, rgb(74 217 255 / 88%));
+}
+
+.shortcut[data-active="true"] {
+  background: color-mix(
+    in srgb,
+    var(--game-friendly, rgb(74 217 255 / 88%)) 20%,
+    transparent
+  );
+  color: var(--game-friendly, rgb(74 217 255 / 100%));
+}

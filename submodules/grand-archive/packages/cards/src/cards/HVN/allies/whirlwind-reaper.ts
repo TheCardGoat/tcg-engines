@@ -48,19 +48,30 @@ export const whirlwindReaper: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "preparation",
+                    amount: 1,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: "preparation",
-                  amount: 1,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "wake",
-                  subject: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "wake",
+                    subject: {
+                      kind: "source",
+                    },
                   },
                 },
               ],

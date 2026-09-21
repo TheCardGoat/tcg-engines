@@ -52,6 +52,8 @@ export { CardDetailSheet } from "./components/CardDetailSheet";
 export {
   CardContextMenu,
   CardContextMenuController,
+  useCardContextMenuApi,
+  type CardContextMenuApi,
   type CardContextMenuActionIconProps,
   type CardContextMenuControl,
   type CardContextMenuControlIconProps,
@@ -109,6 +111,10 @@ export {
   type SimulatorMatchParticipant,
   type SimulatorMatchSidebarProps,
 } from "./components/SimulatorMatchSidebar";
+export {
+  SimulatorSidebarIconButton,
+  type SimulatorSidebarIconButtonProps,
+} from "./components/SimulatorSidebarIconButton";
 export {
   SimulatorRouteStatus,
   type SimulatorRouteStatusProps,
@@ -230,6 +236,15 @@ export {
   type TabletopActionButtonProps,
 } from "./components/TabletopActionButton";
 export {
+  DropClaimControl,
+  anchoredServerNowMs,
+  isDropControlVisible,
+  isTimeoutDropOverlayVisible,
+  shouldTickDropControl,
+  useDropControlClock,
+  type DropClaimControlProps,
+} from "./components/DropClaimControl";
+export {
   TabletopCounterBadge,
   type TabletopCounterBadgeProps,
 } from "./components/TabletopCounterBadge";
@@ -261,6 +276,7 @@ export { ChessClock } from "./components/ChessClock";
 export { ClockReadout, type ClockReadoutProps } from "./components/ClockReadout";
 export {
   PointerDragDropSurface,
+  type DropDisposition,
   type PointerDragDropSurfaceProps,
 } from "./components/PointerDragDropSurface";
 export { ZoneFrame } from "./components/ZoneFrame";

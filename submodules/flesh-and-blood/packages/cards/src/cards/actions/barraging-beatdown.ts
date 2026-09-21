@@ -11,41 +11,47 @@ export const barragingBeatdown = definePitchFamily(fabPitchFamilies["barraging-b
     resolutionGrantPropertyIntimidate: {
       kind: "resolution",
       effect: {
-        type: "grant-property",
-        property: {
-          kind: "ability",
-          ability: {
-            id: "staticWhileHasStatusDefendedByFewerThan2Non",
-            text: "",
-            kind: "static",
-            staticKind: "while",
-            condition: {
-              type: "has-status",
-              status: "defended-by-fewer-than-2-non-equipment-cards",
-            },
-            effect: {
-              type: "modify-numeric",
-              property: "power",
-              op: "add",
-              amount,
-              target: {
-                selector: "self",
+        type: "sequence",
+        steps: [
+          { type: "intimidate", target: "opponent" },
+          {
+            type: "grant-property",
+            property: {
+              kind: "ability",
+              ability: {
+                id: "staticWhileHasStatusDefendedByFewerThan2Non",
+                text: "",
+                kind: "static",
+                staticKind: "while",
+                condition: {
+                  type: "has-status",
+                  status: "defended-by-fewer-than-2-non-equipment-cards",
+                },
+                effect: {
+                  type: "modify-numeric",
+                  property: "power",
+                  op: "add",
+                  amount,
+                  target: {
+                    selector: "self",
+                  },
+                  duration: "permanent",
+                },
               },
-              duration: "permanent",
+            },
+            target: {
+              selector: "this-attack",
+            },
+            duration: "this-turn",
+            appliesTo: {
+              next: {
+                typeBox: {
+                  supertypes: ["Brute"],
+                },
+              },
             },
           },
-        },
-        target: {
-          selector: "this-attack",
-        },
-        duration: "this-turn",
-        appliesTo: {
-          next: {
-            typeBox: {
-              supertypes: ["Brute"],
-            },
-          },
-        },
+        ],
       },
       label: {
         name: "intimidate",

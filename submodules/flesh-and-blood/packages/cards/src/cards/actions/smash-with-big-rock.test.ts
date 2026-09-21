@@ -1,7 +1,10 @@
+import { nimblismBlue } from "./nimblism.ts";
 import { describe, it } from "vitest";
 import {
   expectFabCard,
   expectFabPlayer,
+  expectCombat,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
@@ -17,10 +20,8 @@ import { smashWithBigRockYellow } from "./smash-with-big-rock.ts";
  *
  * Printed: Cards defending this can't gain {d}.
  *
- * CR 6.3.1 / 6.3.7: restrict-gain-defense is a game-rule CE applied before
- * later numeric adds. Galvanize's +2{d} is until-end-of-turn, so after this
- * chain closes the restriction expires and the leftover CE can apply — the
- * printed proof is combat math (6{p} vs printed 1{d} → 5 damage).
+ * The restriction controls defense during this attack. Blade Break destroys
+ * Adaptive Plating when the chain closes; CR3.0.9 resets its bonus then.
  */
 
 describe("Smash with Big Rock (SUP133) AAA", () => {
@@ -31,7 +32,7 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
         hand: [smashWithBigRockYellow],
         resourcePoints: 2,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       {
         hero: dash,
@@ -39,7 +40,7 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
         arena: [hyperDriverRed],
         hand: [],
         life: 20,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
@@ -48,12 +49,16 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
 
     Rhinar.playAttack(smashWithBigRockYellow);
     Dash.defendWith(adaptivePlating);
-    game.untilIdle({ optionals: "accept", ordering: "listed" });
-    Dash.target(hyperDriverRed);
+    game.advanceToDecision(Dash, "boolean");
+    Dash.accept();
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
-    // 6{p} vs printed 1{d} = 5 damage. 6 vs galvanized 3{d} would be life 17.
+    expectFabCard(Dash, hyperDriverRed).toBeIn("graveyard");
+    expectFabCard(Dash, adaptivePlating).toHaveDefense(1);
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Dash).toHaveLife(15);
-    expectFabCard(Dash, adaptivePlating).toBeIn("graveyard");
+    expectFabCard(Dash, adaptivePlating).toBeIn("graveyard").toHaveDefense(1);
+    expectCombat(game).toBeClosed();
   });
 
   it("boundary: galvanize still grants +2{d} against a Generic attack", () => {
@@ -62,7 +67,7 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
         hero: rhinar,
         hand: [snatchRed],
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       {
         hero: dash,
@@ -70,7 +75,7 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
         arena: [hyperDriverRed],
         hand: [],
         life: 20,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
@@ -79,11 +84,15 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
 
     Rhinar.playAttack(snatchRed);
     Dash.defendWith(adaptivePlating);
-    game.untilIdle({ optionals: "accept", ordering: "listed" });
-    Dash.target(hyperDriverRed);
+    game.advanceToDecision(Dash, "boolean");
+    Dash.accept();
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
     expectFabCard(Dash, adaptivePlating).toHaveDefense(3);
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Dash).toHaveLife(19);
+    expectFabCard(Dash, adaptivePlating).toBeIn("graveyard").toHaveDefense(1);
+    expectCombat(game).toBeClosed();
   });
 
   it("timing: after this chain closes, galvanize works on the next attack", () => {
@@ -93,7 +102,7 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
         hand: [smashWithBigRockYellow, snatchRed],
         resourcePoints: 2,
         actionPoints: 2,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       {
         hero: dash,
@@ -101,7 +110,7 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
         arena: [hyperDriverRed],
         hand: [],
         life: 20,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
@@ -110,13 +119,18 @@ describe("Smash with Big Rock (SUP133) AAA", () => {
 
     Rhinar.playAttack(smashWithBigRockYellow);
     Dash.defendWith();
-    game.helpers.resolveRestOfCombat();
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Dash).toHaveLife(14);
 
     Rhinar.playAttack(snatchRed);
     Dash.defendWith(adaptivePlating);
-    game.untilIdle({ optionals: "accept", ordering: "listed" });
-    Dash.target(hyperDriverRed);
+    game.advanceToDecision(Dash, "boolean");
+    Dash.accept();
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
     expectFabCard(Dash, adaptivePlating).toHaveDefense(3);
+    game.closeCombat({ optionals: "throw" });
+    expectFabPlayer(Dash).toHaveLife(13);
+    expectFabCard(Dash, adaptivePlating).toBeIn("graveyard").toHaveDefense(1);
+    expectWait(game).notToHaveDecision();
   });
 });

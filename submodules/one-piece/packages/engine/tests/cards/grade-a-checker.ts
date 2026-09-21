@@ -341,7 +341,7 @@ export function subjectTokensForCard(card: OPCard | null | undefined, source: st
   const setSlug = (setPart ?? "").toLowerCase(); // st04, eb03, op04
   const num = numPart ?? "";
   // Strip parenthetical variants: "Queen (Full Art)" / "Queen (SP)" → "Queen"
-  const baseName = (card.name ?? "").replace(/\s*\([^)]*\)\s*/g, " ").trim();
+  const baseName = (card.name ?? card.i18n?.en?.name ?? "").replace(/\s*\([^)]*\)\s*/g, " ").trim();
   // "Monkey.D.Luffy" → monkeydluffy; "Trafalgar Law" → trafalgarlaw
   const nameSlug = baseName.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
   // Significant name tokens (≥4 chars) for matching exports like prb01QueenFullArt005
@@ -356,6 +356,12 @@ export function subjectTokensForCard(card: OPCard | null | undefined, source: st
   // Also bare first 4–6 letters of the cleaned name (queen from queensp edge cases)
   if (nameSlug.length >= 4) nameFrags.push(nameSlug.slice(0, 4));
   if (nameSlug.length >= 5) nameFrags.push(nameSlug.slice(0, 5));
+  // Name fragments are themselves subject tokens: local consts named after the
+  // card (const shinobu = "OP16-087") bind playCard to the subject.
+  for (const part of baseName.split(/[\s.·"']+/)) {
+    const frag = part.replace(/[^a-zA-Z0-9]/g, "").toLowerCase();
+    if (frag.length >= 3) tokens.add(frag);
+  }
 
   for (const m of source.matchAll(
     /import\s*\{([^}]+)\}\s*from\s*["'](?:@tcg\/op-cards|[^"']+)["']/g,
@@ -386,7 +392,7 @@ export function subjectTokensForCard(card: OPCard | null | undefined, source: st
   }
 
   return [...tokens].filter(
-    (t) => t.length >= 4 && !/^(from|import|const|test|describe)$/i.test(t),
+    (t) => t.length >= 3 && !/^(from|import|const|test|describe)$/i.test(t),
   );
 }
 

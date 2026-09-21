@@ -1,5 +1,9 @@
 import "./FabBoardCardFace.css";
-import { useFabCardArt } from "./FabPresentationCatalog";
+import {
+  useFabCardArt,
+  useFabPresentationRegistry,
+  useFabPresentationSnapshot,
+} from "./FabPresentationCatalog";
 import { CardFace } from "@tcg/simulator-ui";
 import type { SimulatorEntity, SimulatorEntityDecoration } from "@tcg/simulator-contract";
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
@@ -8,6 +12,7 @@ import { useFabCardLocale } from "./FabPresentationCatalog";
 import { useFabImageRetry } from "./useFabImageRetry";
 import { FabCardPreviewFallback, useFabPreviewTarget } from "./FabCardPreview";
 import { hiddenCardPresentationForFabLayout } from "./projection";
+import { isFabFixtureArtPlaceholder } from "./fixture-art-placeholders";
 
 const FAB_COUNTER_DECORATION_PREFIX = "fab-counter-";
 const MAX_VISIBLE_COUNTER_TYPES = 3;
@@ -76,6 +81,8 @@ export function FabBoardCardFace({
   preview?: boolean;
 }) {
   const locale = useFabCardLocale();
+  const registry = useFabPresentationRegistry();
+  const presentation = useFabPresentationSnapshot();
   const {
     resolveFabCardArt,
     boardImageCandidatesForFabCard,
@@ -110,6 +117,7 @@ export function FabBoardCardFace({
     .join("\n");
   const retry = useFabImageRetry(candidateSource || undefined);
   const boardImageCandidateKey = retry.key;
+  const [loadedImageKey, setLoadedImageKey] = useState("");
   const [imageFailure, setImageFailure] = useState({ candidateKey: "", failedCount: 0 });
   const failedImageCount =
     imageFailure.candidateKey === boardImageCandidateKey ? imageFailure.failedCount : 0;
@@ -179,6 +187,31 @@ export function FabBoardCardFace({
       : {}),
   };
   const usesImageFallback = boardEntity.face === "public" && !boardImageCandidate;
+  const canonicalId = typeof canonicalIdAttribute === "string" ? canonicalIdAttribute : undefined;
+  const placeholder = isFabFixtureArtPlaceholder(canonicalId);
+  const records = registry.getRecords();
+  const presentationRecordKnown = [canonicalId, entity.title].some(
+    (identity) =>
+      identity !== undefined &&
+      Boolean(records.records[identity] || records.records[records.aliases[identity] ?? ""]),
+  );
+  const unavailable = canonicalId
+    ? presentation.unavailableCanonicalIds.includes(canonicalId)
+    : false;
+  const missingImageStatus =
+    presentation.status !== "error" && !presentationRecordKnown && !unavailable
+      ? "loading"
+      : "error";
+  const imageState =
+    entity.face === "hidden"
+      ? "hidden"
+      : placeholder
+        ? "placeholder"
+        : boardImageCandidate
+          ? loadedImageKey === boardImageCandidateKey
+            ? "ready"
+            : "loading"
+          : missingImageStatus;
   const previewTarget = useFabPreviewTarget(previewEntity, {
     enabled: preview && previewEntity.face === "public",
   });
@@ -186,6 +219,7 @@ export function FabBoardCardFace({
   return (
     <div
       className="fab-board-card-face-shell"
+      data-fab-image-state={imageState}
       style={{
         aspectRatio:
           boardImageCandidates[0]?.imageAspectRatio ??
@@ -203,6 +237,7 @@ export function FabBoardCardFace({
         fill={fill}
         fullImageChrome="edge-to-edge"
         fullImageFit="cover"
+        onImageLoad={() => setLoadedImageKey(boardImageCandidateKey)}
         onImageError={
           boardImageCandidate
             ? () => {
@@ -215,7 +250,7 @@ export function FabBoardCardFace({
         }
       />
       {usesImageFallback ? (
-        <FabCardPreviewFallback entity={boardEntity} status="error" variant="board" />
+        <FabCardPreviewFallback entity={boardEntity} status={missingImageStatus} variant="board" />
       ) : null}
       {counterDecorations.length > 0 ? (
         <span className="fab-card-counter-row" aria-hidden="true">

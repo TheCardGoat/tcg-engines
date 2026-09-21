@@ -1,5 +1,27 @@
 import { isPlayableGameSlug, type PlayableGameSlug } from "./games.js";
 
+/** Reconnect-safe viewer-scope lifetime issued by the General API. */
+export const VIEWER_SCOPE_TTL_SECONDS = 60 * 60;
+export const VIEWER_SCOPE_TTL_MS = VIEWER_SCOPE_TTL_SECONDS * 1000;
+
+/** Proactive credential refresh starts this far before `expiresAt`. */
+export const VIEWER_SCOPE_REFRESH_LEAD_MS = 15 * 60 * 1000;
+
+export function viewerScopeRefreshDelayMs(expiresAt: number, now: number = Date.now()): number {
+  if (!Number.isFinite(expiresAt) || !Number.isFinite(now)) return 0;
+  return Math.max(0, expiresAt - now - VIEWER_SCOPE_REFRESH_LEAD_MS);
+}
+
+export function isViewerScopeInRefreshWindow(expiresAt: number, now: number = Date.now()): boolean {
+  if (!Number.isFinite(expiresAt) || !Number.isFinite(now)) return false;
+  return expiresAt - now <= VIEWER_SCOPE_REFRESH_LEAD_MS;
+}
+
+export function isViewerScopeExpired(expiresAt: number, now: number = Date.now()): boolean {
+  if (!Number.isFinite(expiresAt) || !Number.isFinite(now)) return false;
+  return expiresAt <= now;
+}
+
 interface RealtimeViewerScopeBase {
   /** Optional only for credentials issued before namespace binding was introduced. */
   gameSlug?: PlayableGameSlug;

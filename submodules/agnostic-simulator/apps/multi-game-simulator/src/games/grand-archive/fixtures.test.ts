@@ -21,6 +21,7 @@ describe("Grand Archive visual fixtures", () => {
 
   it("projects each named engine wait state without fabricated controls", () => {
     expect(GRAND_ARCHIVE_VISUAL_FIXTURES.map((fixture) => fixture.id)).toEqual([
+      "champion-lineage",
       "counter-identity",
       "combat-retaliation",
       "combat-damage",
@@ -30,7 +31,9 @@ describe("Grand Archive visual fixtures", () => {
       "pregame-action",
       "materialization-choice",
       "materialization-hand",
+      "attack-targeting",
       "opportunity",
+      "art-only",
       "decision",
       "decision-observer",
       "resolving",

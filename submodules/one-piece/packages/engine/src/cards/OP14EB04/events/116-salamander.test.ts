@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op14eb04Salamander116 } from "../../../../../cards/src/cards/OP14EB04/events/116-salamander.ts";
+import { op14eb04Salamander116 } from "../../../../../cards/src/cards/events/op14-116-salamander.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP14-116 Salamander", () => {

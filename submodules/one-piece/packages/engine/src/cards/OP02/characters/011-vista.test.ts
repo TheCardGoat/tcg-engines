@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op02Vista011 } from "../../../../../cards/src/cards/OP02/characters/011-vista.ts";
+import { op02Vista011 } from "../../../../../cards/src/cards/characters/op02-011-vista.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-011 Vista", () => {

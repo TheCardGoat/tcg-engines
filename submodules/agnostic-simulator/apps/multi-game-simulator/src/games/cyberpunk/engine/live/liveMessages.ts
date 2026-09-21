@@ -22,11 +22,13 @@ export function prepareLiveContext(context: LiveMatchContext): LiveMatchContext 
   if (!context.game.state) {
     return context;
   }
+  const projectedState = projectLiveStateForSimulator(context.game.state, context.game.actorIds);
+  const state = reconcileAuthoritativeTerminalState(context, projectedState);
   return {
     ...context,
     game: {
       ...context.game,
-      state: projectLiveStateForSimulator(context.game.state, context.game.actorIds),
+      state,
       ...(context.game.viewerProjection
         ? {
             viewerProjection: projectLiveValueForSimulator(
@@ -63,7 +65,7 @@ export function reduceLiveGatewayMessage(
   if (!state || !("gameId" in message) || message.gameId !== options.gameId) {
     const terminalContext = terminalContextFromMessage(context, message, options.gameId);
     if (terminalContext) {
-      return { type: "state", context: terminalContext };
+      return { type: "state", context: prepareLiveContext(terminalContext) };
     }
     return { type: "ignore" };
   }
@@ -106,11 +108,63 @@ export function reduceLiveGatewayMessage(
   };
 }
 
+function reconcileAuthoritativeTerminalState(
+  context: LiveMatchContext,
+  state: NonNullable<LiveMatchContext["game"]["state"]>,
+): NonNullable<LiveMatchContext["game"]["state"]> {
+  if (
+    (context.game.status !== "completed" && context.match.status !== "completed") ||
+    state.G.gameEnded
+  ) {
+    return state;
+  }
+
+  const projectedWinner = context.match.winnerId
+    ? projectLiveValueForSimulator(
+        context.match.winnerId,
+        context.game.state!,
+        context.game.actorIds,
+      )
+    : null;
+  const winnerId =
+    state.ctx.playerIds.find((playerId) => String(playerId) === projectedWinner) ??
+    state.G.winnerId;
+
+  return {
+    ...state,
+    G: {
+      ...state.G,
+      gameEnded: true,
+      winnerId,
+    },
+  };
+}
+
 export function parseGatewayEvent(
   type: keyof ServerToClientEvents,
   payload: unknown,
 ): LiveGatewayMessage | null {
   return parseLiveGatewayEvent(type, payload);
+}
+
+export type LiveGatewayJoin = {
+  gameId: string;
+  role: "player" | "spectator";
+};
+
+/** Seat from the raw envelope so a nested schema miss cannot unseat a player. */
+export function liveGatewayJoinFromEvent(type: string, payload: unknown): LiveGatewayJoin | null {
+  if (type !== "game_joined" || payload === null || typeof payload !== "object") {
+    return null;
+  }
+  const record = payload as { gameId?: unknown; role?: unknown };
+  if (typeof record.gameId !== "string" || record.gameId.length === 0) {
+    return null;
+  }
+  if (record.role !== "player" && record.role !== "spectator") {
+    return null;
+  }
+  return { gameId: record.gameId, role: record.role };
 }
 
 function redirectForMessage(

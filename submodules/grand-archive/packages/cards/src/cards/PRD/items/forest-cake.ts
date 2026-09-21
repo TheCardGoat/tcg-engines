@@ -98,19 +98,30 @@ export const forestCake: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
               kind: "sequence",
               effects: [
                 {
-                  kind: "sacrifice",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "sacrifice",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "bound",
-                    binding: "target-1",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "buff",
-                  amount: 1,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "bound",
+                      binding: "target-1",
+                    },
+                    counter: "buff",
+                    amount: 1,
+                  },
                 },
               ],
             },

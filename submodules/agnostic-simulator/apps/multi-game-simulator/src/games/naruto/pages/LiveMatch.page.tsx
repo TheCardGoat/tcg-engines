@@ -7,7 +7,8 @@ import {
   type InteractionSubmissionValue,
   type SimulatorAudioCueId,
 } from "@tcg/protocol";
-import { SimulatorRouteStatus } from "@tcg/simulator-ui";
+import { DropClaimControl, SimulatorRouteStatus } from "@tcg/simulator-ui";
+import type { DropEligibility } from "@tcg/protocol";
 import { acquireRootGatewayHandle } from "../../../lib/gateway/root-socket";
 import { useSimulatorAudio } from "../../../simulator/audio";
 import { useSimulatorRoute } from "../../../simulator/providers";
@@ -37,6 +38,9 @@ export function NarutoLiveMatchPage() {
   const [state, setState] = useState<GameState | null>(() => projectedState(bootstrap?.game.view));
   const [interactionView, setInteractionView] = useState<EngineInteractionView | null>(() =>
     parseInteractionView(bootstrap?.game.interactionView),
+  );
+  const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
+    bootstrap?.dropEligibility ?? null,
   );
   const { playCue } = useSimulatorAudio();
   const heardLogLengthRef = useRef(state?.log.length ?? 0);
@@ -70,7 +74,15 @@ export function NarutoLiveMatchPage() {
       if (view) setInteractionView(view);
     };
     const unsubscribers = [
-      handle.on("game_joined", accept),
+      handle.on("game_joined", (payload) => {
+        accept(payload);
+        if (payload.gameId === gameId && payload.dropEligibility) {
+          setDropEligibility(payload.dropEligibility);
+        }
+      }),
+      handle.on("drop_eligibility", (payload) => {
+        if (payload.gameId === gameId) setDropEligibility(payload.dropEligibility);
+      }),
       handle.on("state_sync", accept),
       handle.on("state_update", accept),
       handle.on("move_rejected", (payload) => {
@@ -95,6 +107,10 @@ export function NarutoLiveMatchPage() {
       const submission = submissionForAction(action, view, state);
       if (!submission) return;
       const handle = acquireRootGatewayHandle("naruto");
+      if (handle.wouldHoldEmit()) {
+        handle.release();
+        return;
+      }
       handle.emit("submit_interaction", {
         gameId,
         expectedVersion: submission.stateVersion,
@@ -124,21 +140,36 @@ export function NarutoLiveMatchPage() {
     );
   }
   return (
-    <NarutoBoard
-      state={state}
-      viewer={viewer}
-      participantNames={participantNames}
-      onAction={submit}
-      bugReportContext={{
-        gameSlug: "naruto",
-        gameId,
-        ...(matchId ? { matchId } : {}),
-        playerCount: 2,
-        turn: state.turn,
-        stateVersion: interactionView?.stateVersion ?? state.log.length,
-        platform: typeof window !== "undefined" && window.innerWidth < 900 ? "mobile" : "desktop",
-      }}
-    />
+    <>
+      {dropEligibility ? (
+        <div className="pointer-events-auto absolute right-4 top-4 z-20">
+          <DropClaimControl
+            eligibility={dropEligibility}
+            serverNowMs={dropEligibility.projectedAtMs}
+            onClaim={() => {
+              const handle = acquireRootGatewayHandle("naruto");
+              handle.emit("drop_player", { gameId });
+              handle.release();
+            }}
+          />
+        </div>
+      ) : null}
+      <NarutoBoard
+        state={state}
+        viewer={viewer}
+        participantNames={participantNames}
+        onAction={submit}
+        bugReportContext={{
+          gameSlug: "naruto",
+          gameId,
+          ...(matchId ? { matchId } : {}),
+          playerCount: 2,
+          turn: state.turn,
+          stateVersion: interactionView?.stateVersion ?? state.log.length,
+          platform: typeof window !== "undefined" && window.innerWidth < 900 ? "mobile" : "desktop",
+        }}
+      />
+    </>
   );
 }
 

@@ -14,7 +14,7 @@ import { welcomeToNightCityRetailFloorIt } from "./floor-it.ts";
 import { welcomeToNightCityRetailFoolOnTheHill } from "./fool-on-the-hill.ts";
 import { welcomeToNightCityRetailGunpointDiplomacy } from "./gunpoint-diplomacy.ts";
 import { welcomeToNightCityRetailIndustrialAssembly } from "./industrial-assembly.ts";
-import { welcomeToNightCityRetailLesELeMens } from "./les-e-le-mens.ts";
+import { welcomeToNightCityRetailLesElemens } from "./les-elemens.ts";
 import { welcomeToNightCityRetailLiveWithTheAftermath } from "./live-with-the-aftermath.ts";
 import { welcomeToNightCityRetailMemoryRelapse } from "./memory-relapse.ts";
 import { welcomeToNightCityRetailNocturneOp55N1 } from "./nocturne-op55-n1.ts";
@@ -49,7 +49,7 @@ export { welcomeToNightCityRetailFloorIt } from "./floor-it.ts";
 export { welcomeToNightCityRetailFoolOnTheHill } from "./fool-on-the-hill.ts";
 export { welcomeToNightCityRetailGunpointDiplomacy } from "./gunpoint-diplomacy.ts";
 export { welcomeToNightCityRetailIndustrialAssembly } from "./industrial-assembly.ts";
-export { welcomeToNightCityRetailLesELeMens } from "./les-e-le-mens.ts";
+export { welcomeToNightCityRetailLesElemens } from "./les-elemens.ts";
 export { welcomeToNightCityRetailLiveWithTheAftermath } from "./live-with-the-aftermath.ts";
 export { welcomeToNightCityRetailMemoryRelapse } from "./memory-relapse.ts";
 export { welcomeToNightCityRetailNocturneOp55N1 } from "./nocturne-op55-n1.ts";
@@ -85,7 +85,7 @@ export const welcomeToNightCityRetailPrograms = [
   welcomeToNightCityRetailFoolOnTheHill,
   welcomeToNightCityRetailGunpointDiplomacy,
   welcomeToNightCityRetailIndustrialAssembly,
-  welcomeToNightCityRetailLesELeMens,
+  welcomeToNightCityRetailLesElemens,
   welcomeToNightCityRetailLiveWithTheAftermath,
   welcomeToNightCityRetailMemoryRelapse,
   welcomeToNightCityRetailNocturneOp55N1,

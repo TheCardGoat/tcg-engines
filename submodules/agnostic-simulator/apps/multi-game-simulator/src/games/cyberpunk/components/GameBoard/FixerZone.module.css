@@ -106,11 +106,21 @@
    the player can see what's pickable. d20 (or other ineligible dice) dims
    to communicate "not yet". */
 .candidate {
+  position: relative;
   cursor: pointer;
+}
+
+.candidate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: 0 0 0 3px rgb(245 230 66 / 35%);
   animation: fixer-pulse 1.4s ease-in-out infinite;
 }
 
-.candidate:hover {
+.candidate:hover::after {
   animation-play-state: paused;
 }
 
@@ -122,10 +132,10 @@
 @keyframes fixer-pulse {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgb(245 230 66 / 0%);
+    opacity: 0;
   }
 
   50% {
-    box-shadow: 0 0 0 3px rgb(245 230 66 / 35%);
+    opacity: 1;
   }
 }

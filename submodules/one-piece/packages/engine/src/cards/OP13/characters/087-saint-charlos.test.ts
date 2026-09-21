@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13SaintCharlos087 } from "../../../../../cards/src/cards/OP13/characters/087-saint-charlos.ts";
+import { op13SaintCharlos087 } from "../../../../../cards/src/cards/characters/op13-087-saint-charlos.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

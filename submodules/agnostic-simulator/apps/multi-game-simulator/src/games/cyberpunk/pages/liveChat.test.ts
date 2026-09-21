@@ -3,9 +3,13 @@ import type { GatewayHandle } from "@tcg/gateway-client";
 import type { LiveGatewayMessage } from "../engine/live/liveGateway";
 import {
   canRunClientAuthorityPracticeForContext,
+  emitGatewayBoardCorrectionExit,
+  emitGatewayBoardCorrectionRequest,
   emitGatewayChatPreset,
   emitGatewayChatText,
+  emitGatewayExecuteMove,
   emitGatewayFreeTextRequest,
+  reduceLiveBoardCorrectionPolicy,
   reduceLiveChatPolicy,
   systemChatMessageText,
 } from "./LiveMatch.page";
@@ -76,6 +80,47 @@ describe("live chat gateway helpers", () => {
 
     expect(sent).toBe(false);
     expect(handle.emit).not.toHaveBeenCalled();
+  });
+
+  test("emits a board-correction enable proposal", () => {
+    const handle = fakeHandle();
+
+    const sent = emitGatewayBoardCorrectionRequest(handle, "game-1");
+
+    expect(sent).toBe(true);
+    expect(handle.emit).toHaveBeenCalledWith("proposal_send", {
+      gameId: "game-1",
+      actionType: "enable_manual_mode",
+    });
+  });
+
+  test("emits a board-correction disable proposal", () => {
+    const handle = fakeHandle();
+
+    const sent = emitGatewayBoardCorrectionExit(handle, "game-1");
+
+    expect(sent).toBe(true);
+    expect(handle.emit).toHaveBeenCalledWith("proposal_send", {
+      gameId: "game-1",
+      actionType: "disable_manual_mode",
+    });
+  });
+
+  test("emits execute_move for a gig correction", () => {
+    const handle = fakeHandle();
+
+    const sent = emitGatewayExecuteMove(handle, "game-1", 4, "manualSetGigValue", {
+      dieId: "gd_1",
+      value: 3,
+    });
+
+    expect(sent).toBe(true);
+    expect(handle.emit).toHaveBeenCalledWith("execute_move", {
+      gameId: "game-1",
+      expectedVersion: 4,
+      moveType: "manualSetGigValue",
+      payload: { dieId: "gd_1", value: 3 },
+    });
   });
 });
 
@@ -189,6 +234,63 @@ describe("live chat policy reducer", () => {
     } as LiveGatewayMessage);
 
     expect(next).toEqual({ freeTextEnabled: true, freeTextProposalPending: false });
+  });
+});
+
+describe("live board-correction policy reducer", () => {
+  test("hydrates enabled correction from game_joined", () => {
+    const next = reduceLiveBoardCorrectionPolicy(
+      { boardCorrectionEnabled: false, boardCorrectionProposalPending: true },
+      {
+        type: "game_joined",
+        gameId: "game-1",
+        role: "player",
+        stateVersion: 3,
+        players: [],
+        manualModeEnabled: true,
+      } as LiveGatewayMessage,
+    );
+
+    expect(next).toEqual({
+      boardCorrectionEnabled: true,
+      boardCorrectionProposalPending: false,
+    });
+  });
+
+  test("enables correction when the proposal is accepted", () => {
+    const next = reduceLiveBoardCorrectionPolicy(
+      { boardCorrectionEnabled: false, boardCorrectionProposalPending: true },
+      {
+        type: "proposal_resolved",
+        gameId: "game-1",
+        matchId: "match-1",
+        actionType: "enable_manual_mode",
+        resolution: "accepted",
+      },
+    );
+
+    expect(next).toEqual({
+      boardCorrectionEnabled: true,
+      boardCorrectionProposalPending: false,
+    });
+  });
+
+  test("disables correction when disable is accepted", () => {
+    const next = reduceLiveBoardCorrectionPolicy(
+      { boardCorrectionEnabled: true, boardCorrectionProposalPending: false },
+      {
+        type: "proposal_resolved",
+        gameId: "game-1",
+        matchId: "match-1",
+        actionType: "disable_manual_mode",
+        resolution: "accepted",
+      },
+    );
+
+    expect(next).toEqual({
+      boardCorrectionEnabled: false,
+      boardCorrectionProposalPending: false,
+    });
   });
 });
 

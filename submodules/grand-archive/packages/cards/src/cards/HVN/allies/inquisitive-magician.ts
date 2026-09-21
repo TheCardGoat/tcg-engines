@@ -49,37 +49,48 @@ export const inquisitiveMagician: GrandArchiveCard<GrandArchiveAbilityDefinition
               kind: "sequence",
               effects: [
                 {
-                  kind: "reveal",
-                  player: "controller",
-                  selection: {
-                    id: "reveal-selection",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 2,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["hand"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "subtype",
-                        oneOf: ["MAGE"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "reveal",
+                    player: "controller",
+                    selection: {
+                      id: "reveal-selection",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 2,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["hand"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "subtype",
+                          oneOf: ["MAGE"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "enlighten",
-                  amount: 1,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "enlighten",
+                    amount: 1,
+                  },
                 },
               ],
             },

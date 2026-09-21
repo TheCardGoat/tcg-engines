@@ -528,8 +528,8 @@ describe("player narrative acceptance", () => {
     const Dash = game.as(dash);
 
     Dori.activate(durendal);
-    game.advanceToDecision(Dori, "boolean");
-    Dori.chooseBoolean(true);
+    // CR 5.2.3c: no boolean prompt — the Flurry burn grants the second swing
+    // by itself.
     game.advanceUntil({ stopAt: "defend" });
     Dash.defendWith(snatchRed, enlightenedStrikeRed);
     game.closeCombat({ optionals: "decline", ordering: "listed" });

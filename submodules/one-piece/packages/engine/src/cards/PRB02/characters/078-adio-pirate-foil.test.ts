@@ -1,6 +1,6 @@
 import { eb01Doma005, op01Shanks120, op10Brook035, op10Franky034 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02AdioPirateFoil078 } from "../../../../../cards/src/cards/PRB02/characters/078-adio-pirate-foil.ts";
+import { prb02AdioPirateFoil078 } from "../../../../../cards/src/cards/characters/p-078-adio-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

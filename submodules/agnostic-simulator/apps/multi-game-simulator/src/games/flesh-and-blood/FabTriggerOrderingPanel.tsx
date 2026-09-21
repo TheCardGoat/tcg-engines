@@ -319,6 +319,7 @@ export function FabTriggerOrderingPanel({
         <button
           type="button"
           className="fab-trigger-order-confirm"
+          data-testid="fab-trigger-order-confirm"
           disabled={disabled}
           onClick={() => onConfirm(resolutionOrder.map((entry) => entry.id).reverse())}
         >

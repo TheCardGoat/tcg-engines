@@ -143,6 +143,9 @@ importers:
 
   packages/utils:
     dependencies:
+      '@tcg/cyberpunk-cards':
+        specifier: workspace:*
+        version: link:../cards
       '@tcg/cyberpunk-types':
         specifier: workspace:*
         version: link:../types

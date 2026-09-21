@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01MountainGod018, op10TrafalgarLaw119 } from "@tcg/op-cards";
-import { op12DonquixoteRosinante108 } from "../../../../../cards/src/cards/OP12/characters/108-donquixote-rosinante.ts";
+import { op12DonquixoteRosinante108 } from "../../../../../cards/src/cards/characters/op12-108-donquixote-rosinante.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

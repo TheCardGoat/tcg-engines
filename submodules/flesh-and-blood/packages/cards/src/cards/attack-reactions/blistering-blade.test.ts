@@ -41,8 +41,9 @@ describe("Blistering Blade (FNG010) family AAA", () => {
     Fang.must.playReaction(blisteringBladeRed);
     game.passBoth();
 
-    // Obsidian Fire Vein 1 + 2.
-    expectCombat(game).toHaveAttackPower(3);
+    // Obsidian Fire Vein 1 + 2 (this link's Draconic reaction turns on its
+    // printed "+1{p} and go again").
+    expectCombat(game).toHaveAttackPower(4);
     expectFabCard(Fang, blisteringBladeRed).toBeIn("graveyard");
   });
 
@@ -79,8 +80,9 @@ describe("Blistering Blade (FNG010) family AAA", () => {
     });
     game.passBoth();
 
-    // Obsidian Fire Vein 1 + 3 (the instead branch replaces the +2).
-    expectCombat(game).toHaveAttackPower(4);
+    // Obsidian Fire Vein 1 + 3 (the instead branch replaces the +2) + its
+    // live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(5);
     expectFabCard(Fang, blisteringBladeRed).toBeIn("graveyard");
   });
 

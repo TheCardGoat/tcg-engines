@@ -10,6 +10,8 @@ export const PrintingPresentationSchema = z
     artId: id.optional(),
     boardImageUrl: imageUrl.optional(),
     printedImageUrl: imageUrl.optional(),
+    boardImageAspectRatio: z.number().positive().finite().optional(),
+    printedImageAspectRatio: z.number().positive().finite().optional(),
   })
   .strict()
   .refine(

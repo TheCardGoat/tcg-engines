@@ -32,6 +32,7 @@ export const clashOfMight = definePitchFamily(fabPitchFamilies["clash-of-might"]
           prize: {
             type: "create-token",
             token: "might",
+            creator: "token-controller",
             controller: "winner",
           },
         },

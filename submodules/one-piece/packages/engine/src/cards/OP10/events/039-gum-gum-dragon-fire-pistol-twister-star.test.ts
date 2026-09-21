@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op10GumGumDragonFirePistolTwisterStar039 } from "../../../../../cards/src/cards/OP10/events/039-gum-gum-dragon-fire-pistol-twister-star.ts";
+import { op10GumGumDragonFirePistolTwisterStar039 } from "../../../../../cards/src/cards/events/op10-039-gum-gum-dragon-fire-pistol-twister-star.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-039 Gum-Gum Dragon Fire Pistol Twister Star", () => {

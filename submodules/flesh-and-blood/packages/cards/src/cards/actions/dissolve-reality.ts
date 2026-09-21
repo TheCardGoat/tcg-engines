@@ -36,6 +36,7 @@ export const dissolveReality = definePitchFamily(fabPitchFamilies["dissolve-real
             {
               type: "create-token",
               token: "ponder",
+              creator: "token-controller",
               controller: "iteration-subject",
             },
           ],

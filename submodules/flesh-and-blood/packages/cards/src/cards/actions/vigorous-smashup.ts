@@ -33,6 +33,7 @@ export const vigorousSmashup = definePitchFamily(fabPitchFamilies["vigorous-smas
               prize: {
                 type: "create-token",
                 token: "vigor",
+                creator: "token-controller",
                 controller: "winner",
               },
             },

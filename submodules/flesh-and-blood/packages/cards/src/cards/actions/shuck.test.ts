@@ -64,7 +64,8 @@ describe("Shuck (AHA024) AAA", () => {
 
     Hala.activate(zenithBlade);
     game.passBoth();
-    Hala.decline();
+    // The Flurry grant is promptless (CR 5.2.3c): activating the weapon
+    // destroys the Flurry and grants the extra activation with no decision.
     game.helpers.resolveRestOfCombat();
 
     expect(Hala.zone("arena")).not.toContain("token:flurry");

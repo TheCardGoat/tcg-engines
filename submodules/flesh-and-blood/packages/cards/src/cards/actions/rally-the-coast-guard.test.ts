@@ -1,10 +1,12 @@
-import { describe, expect, it } from "vitest";
+import { nimblismBlue } from "./nimblism.ts";
+import { describe, it } from "vitest";
 import {
   FAB_MANUAL_HARNESS,
   FabTestEngine,
   expectCombat,
   expectFabCard,
   expectFabPlayer,
+  expectFabUnplayable,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
 import { bravo } from "../heroes/bravo.ts";
@@ -22,8 +24,18 @@ describe("rally-the-coast-guard family AAA", () => {
     [rallyTheCoastGuardBlue, 5, 15],
   ])("happy: unblocked attack deals printed %i", (card, power, life) => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [card], resourcePoints: 3, deck: 6 },
-      { hero: bravo, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [card],
+        resourcePoints: 3,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: bravo,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
     );
     const Dash = game.as(dash);
 
@@ -37,18 +49,36 @@ describe("rally-the-coast-guard family AAA", () => {
 
   it("boundary: insufficient resources cannot play the attack", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [rallyTheCoastGuardRed], resourcePoints: 2, actionPoints: 1, deck: 6 },
-      { hero: bravo, hand: [], deck: 6 },
+      {
+        hero: dash,
+        hand: [rallyTheCoastGuardRed],
+        resourcePoints: 2,
+        actionPoints: 1,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      { hero: bravo, hand: [], deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue] },
     );
 
-    expect(() => game.as(dash).playAttack(rallyTheCoastGuardRed)).toThrow();
+    expectFabUnplayable(
+      () => game.as(dash).playAttack(rallyTheCoastGuardRed),
+      /resource|unpayable|cannot be paid/i,
+    );
     expectFabCard(game.as(dash), rallyTheCoastGuardRed).toBeIn("hand");
   });
 
   it("timing: defending with it reduces an attack by printed 2", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [snatchRed], deck: 6 },
-      { hero: bravo, hand: [rallyTheCoastGuardRed], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: bravo,
+        hand: [rallyTheCoastGuardRed],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
     );
     const Bravo = game.as(bravo);
 
@@ -60,28 +90,42 @@ describe("rally-the-coast-guard family AAA", () => {
     expectFabCard(Bravo, rallyTheCoastGuardRed).toBeIn("graveyard");
   });
 
-  it("interaction: while defending, discard a card to give it +3 defense", () => {
-    const game = FabTestEngine.start(
-      { hero: dash, hand: [snatchRed], deck: 6 },
-      {
-        hero: bravo,
-        hand: [rallyTheCoastGuardRed, snatchRed],
-        life: 20,
-        deck: 6,
-      },
-      FAB_MANUAL_HARNESS,
-    );
-    const Bravo = game.as(bravo);
+  it.each([
+    ["Red", rallyTheCoastGuardRed],
+    ["Yellow", rallyTheCoastGuardYellow],
+    ["Blue", rallyTheCoastGuardBlue],
+  ] as const)(
+    "interaction %s: discard grants +3 defense only before object reset",
+    (_color, card) => {
+      const game = FabTestEngine.start(
+        {
+          hero: dash,
+          hand: [snatchRed],
+          deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+        },
+        {
+          hero: bravo,
+          hand: [card, snatchRed],
+          life: 20,
+          deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      const Bravo = game.as(bravo);
 
-    game.as(dash).playAttack(snatchRed);
-    Bravo.defendWith(rallyTheCoastGuardRed);
-    game.helpers.passPriorityTo(Bravo);
-    Bravo.activate(rallyTheCoastGuardRed);
-    game.helpers.resolveUntilIdle();
+      game.as(dash).playAttack(snatchRed);
+      Bravo.defendWith(card);
+      game.toReaction("defender");
+      Bravo.activate(card);
+      game.passBoth();
+      game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
-    expectFabCard(Bravo, rallyTheCoastGuardRed).toHaveDefense(5);
-    expectFabCard(Bravo, snatchRed).toBeIn("graveyard");
-    game.helpers.resolveRestOfCombat();
-    expectFabPlayer(Bravo).toHaveLife(20);
-  });
+      expectFabCard(Bravo, card).toHaveDefense(5);
+      expectFabCard(Bravo, snatchRed).toBeIn("graveyard");
+      game.closeCombat({ optionals: "throw" });
+      expectFabPlayer(Bravo).toHaveLife(20);
+      expectFabCard(Bravo, card).toBeIn("graveyard").toHaveDefense(2);
+      expectCombat(game).toBeClosed();
+    },
+  );
 });

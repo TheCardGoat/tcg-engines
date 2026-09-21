@@ -73,17 +73,25 @@ export function automaticPassMoveLogs(
                     },
                     defaultMessage: `${automaticAction.actorId} selected all required targets automatically.`,
                   }
-                : {
-                    key: "flesh-and-blood.decision-automation.auto-order",
-                    values: {
-                      actorId: automaticAction.actorId,
-                      decisionKind: automaticAction.decisionKind,
+                : automaticAction.decisionKind === "optional-effect-decline"
+                  ? {
+                      key: "flesh-and-blood.decision-automation.auto-decline",
+                      values: {
+                        actorId: automaticAction.actorId,
+                      },
+                      defaultMessage: `${automaticAction.actorId} declined an optional effect automatically.`,
+                    }
+                  : {
+                      key: "flesh-and-blood.decision-automation.auto-order",
+                      values: {
+                        actorId: automaticAction.actorId,
+                        decisionKind: automaticAction.decisionKind,
+                      },
+                      defaultMessage:
+                        automaticAction.decisionKind === "trigger-first-player"
+                          ? `${automaticAction.actorId} accepted the default simultaneous-trigger player order automatically.`
+                          : `${automaticAction.actorId} accepted the default simultaneous-trigger order automatically.`,
                     },
-                    defaultMessage:
-                      automaticAction.decisionKind === "trigger-first-player"
-                        ? `${automaticAction.actorId} accepted the default simultaneous-trigger player order automatically.`
-                        : `${automaticAction.actorId} accepted the default simultaneous-trigger order automatically.`,
-                  },
           };
         default: {
           void index;

@@ -64,4 +64,54 @@ describe("actionToInteractionSubmission", () => {
       },
     });
   });
+
+  test("serializes activateAbility with the string abilityIndex option id", () => {
+    const view: EngineInteractionView = {
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      gameSlug: "cyberpunk",
+      actorId: "p1",
+      stateVersion: 7,
+      status: "choosing",
+      actions: [
+        {
+          id: "activateAbility",
+          requestId: "cyberpunk:7:activateAbility",
+          intent: "choose-option",
+          text: { key: "cyberpunk.move.activateAbility" },
+          enabled: true,
+          inputs: [
+            {
+              kind: "entity-selection",
+              id: "cardId",
+              text: { key: "cyberpunk.input.source" },
+              role: "source",
+              entityKinds: ["card"],
+              min: 1,
+              max: 1,
+              ordered: false,
+              candidates: [{ entity: { kind: "card", instanceId: "legend-1" }, enabled: true }],
+            },
+            {
+              kind: "option-selection",
+              id: "abilityIndex",
+              text: { key: "cyberpunk.input.ability" },
+              min: 1,
+              max: 1,
+              options: [{ id: "0", text: { key: "cyberpunk.ability.index" }, enabled: true }],
+            },
+          ],
+        },
+      ],
+    };
+
+    expect(
+      actionToInteractionSubmission(
+        { type: "activateAbility", cardId: "legend-1", abilityIndex: 0 },
+        view,
+      ),
+    ).toMatchObject({
+      actionId: "activateAbility",
+      values: { cardId: "legend-1", abilityIndex: "0" },
+    });
+  });
 });

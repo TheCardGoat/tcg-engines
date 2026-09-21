@@ -13,9 +13,10 @@
 
 .opponentZone {
   overflow: visible;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgb(255 61 138 / 10%), transparent 62%),
-    linear-gradient(0deg, transparent 0%, rgb(7 9 12 / 20%) 42%, rgb(7 9 12 / 78%) 100%);
+  /* No scrim on purpose: the dark gradient was anchored to the strip's top
+     edge, so wherever the rival hand sat flush with the board top it shaded
+     the LEGENDS/FIXER chrome and read as a dirty band over the board. The
+     card backs already read fine over the near-black board. */
 }
 
 .zone[data-drop-ready="return"]::before,
@@ -96,11 +97,20 @@
   overflow: visible;
   box-shadow: 0 4px 14px rgb(0 0 0 / 60%);
   transform: rotate(var(--card-rotate, 0deg));
+  /* Standard ease-out, matching the animation framework's LAYOUT_EASE. An
+     overshoot curve here makes every hand re-fan spring past its slot and
+     settle back, which reads as the whole board bouncing on each state push. */
   transition:
-    transform 0.18s cubic-bezier(0.34, 1.4, 0.64, 1),
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.18s ease;
   cursor: pointer;
   pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }
 
 .card.player:hover {

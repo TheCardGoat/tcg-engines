@@ -38,6 +38,7 @@ export const welcomeToNightCityRetailHeywoodRipperdoc = defineCyberpunkCard({
           id: "selectedGear",
           target: {
             selector: "card",
+            zones: ["field", "legendArea"],
             cardTypes: ["gear"],
             selection: {
               mode: "choose",

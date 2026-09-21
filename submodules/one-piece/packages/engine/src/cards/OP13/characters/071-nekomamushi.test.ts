@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005 } from "@tcg/op-cards";
-import { op13DouglasBullet068 } from "../../../../../cards/src/cards/OP13/characters/068-douglas-bullet.ts";
-import { op13Nekomamushi071 } from "../../../../../cards/src/cards/OP13/characters/071-nekomamushi.ts";
+import { op13DouglasBullet068 } from "../../../../../cards/src/cards/characters/op13-068-douglas-bullet.ts";
+import { op13Nekomamushi071 } from "../../../../../cards/src/cards/characters/op13-071-nekomamushi.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

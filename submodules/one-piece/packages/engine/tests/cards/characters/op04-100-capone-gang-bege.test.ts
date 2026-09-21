@@ -78,4 +78,32 @@ describe('OP04-100 Capone"Gang"Bege', () => {
     ).toBe("The selected attacker cannot attack.");
     expect(engine.getView("north").prompts).toHaveLength(0);
   });
+
+  test("Trigger resolves without a target when the selection is declined", () => {
+    const engine = OnePieceTestEngine.create(
+      {
+        character: [
+          { card: eb01MountainGod018, playedOnTurn: 0 },
+          { card: eb01Doma005, playedOnTurn: 0 },
+        ],
+      },
+      { life: [op04CaponeGangBege100] },
+      { firstPlayer: "north", activeSeat: "south" },
+    );
+    const attackerId = engine.findCardInZone("south", "character", eb01MountainGod018);
+    const southLeaderId = engine.leader("south");
+
+    engine.declareAttack(attackerId, engine.leader("north"), "south");
+    engine.resolveDecision("lifeTrigger", { optionId: "activate" }, "north");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [] }, "north");
+
+    const spectatorLogs = engine.getView("spectator").logs.map((entry) => entry.message);
+    expect(spectatorLogs.find((message) => /prevents\s+from/.test(message))).toBeUndefined();
+    expect(
+      spectatorLogs.find((message) => /resolves without a target\./.test(message)),
+    ).toBeTruthy();
+
+    // No cannotAttack modifier was applied: the Leader is free to attack.
+    engine.declareAttack(southLeaderId, engine.leader("north"), "south");
+  });
 });

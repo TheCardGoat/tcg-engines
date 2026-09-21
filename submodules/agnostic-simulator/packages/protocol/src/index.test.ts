@@ -9,11 +9,17 @@ import {
   inboxProcessedKey,
   inboxStreamKey,
   isPlayableGameSlug,
+  isViewerScopeExpired,
+  isViewerScopeInRefreshWindow,
   isWsTicketFresh,
   NEEDS_DEDUP,
   parseEnvelope,
   parseWsTicketPayload,
   serializeEnvelope,
+  viewerScopeRefreshDelayMs,
+  VIEWER_SCOPE_REFRESH_LEAD_MS,
+  VIEWER_SCOPE_TTL_MS,
+  VIEWER_SCOPE_TTL_SECONDS,
   WS_TICKET_MAX_AGE_MS,
 } from "./index.js";
 import { GatewayClientMessage, GatewayPingMessage } from "./schemas.js";
@@ -187,6 +193,29 @@ describe("@tcg/protocol", () => {
       const legacy = parseWsTicketPayload('{"userId":"legacy","gameSlug":"lorcana"}');
       expect(legacy).not.toBeNull();
       expect(isWsTicketFresh(legacy!)).toBe(true);
+    });
+  });
+
+  describe("viewer-scope credential lifetime", () => {
+    it("issues a one-hour lease and refreshes with fifteen minutes remaining", () => {
+      expect(VIEWER_SCOPE_TTL_SECONDS).toBe(3600);
+      expect(VIEWER_SCOPE_TTL_MS).toBe(60 * 60 * 1000);
+      expect(VIEWER_SCOPE_REFRESH_LEAD_MS).toBe(15 * 60 * 1000);
+
+      const now = 1_000_000;
+      const expiresAt = now + VIEWER_SCOPE_TTL_MS;
+      expect(viewerScopeRefreshDelayMs(expiresAt, now)).toBe(
+        VIEWER_SCOPE_TTL_MS - VIEWER_SCOPE_REFRESH_LEAD_MS,
+      );
+      expect(isViewerScopeInRefreshWindow(expiresAt, now)).toBe(false);
+      expect(
+        isViewerScopeInRefreshWindow(
+          expiresAt,
+          now + VIEWER_SCOPE_TTL_MS - VIEWER_SCOPE_REFRESH_LEAD_MS,
+        ),
+      ).toBe(true);
+      expect(isViewerScopeExpired(expiresAt, now)).toBe(false);
+      expect(isViewerScopeExpired(expiresAt, expiresAt)).toBe(true);
     });
   });
 

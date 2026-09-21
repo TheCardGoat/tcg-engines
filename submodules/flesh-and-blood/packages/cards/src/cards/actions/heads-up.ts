@@ -22,24 +22,27 @@ export const headsUp = definePitchFamily(fabPitchFamilies["heads-up"], {
               id: "triggeredAttackCompareAmountCountThisChainLink",
               text: "",
               trigger: {
-                kind: "event-and-state",
+                kind: "event",
                 event: {
                   name: "attack",
                   actor: { kind: "player", player: "ability-controller" },
                   observes: { kind: "source", selector: "attack" },
                 },
-                state: {
-                  type: "compare-amount",
-                  amount: { type: "count", what: "times-it-has-wagered" },
-                  comparison: { op: "gte", value: 1 },
-                },
               },
               resolution: {
                 kind: "effect",
-                effect: grantKeyword(dominate, {
-                  target: { selector: "self" },
-                  duration: "this-chain-link",
-                }),
+                effect: {
+                  type: "conditional",
+                  condition: {
+                    type: "compare-amount",
+                    amount: { type: "count", what: "times-it-has-wagered" },
+                    comparison: { op: "gte", value: 1 },
+                  },
+                  then: grantKeyword(dominate, {
+                    target: { selector: "self" },
+                    duration: "this-chain-link",
+                  }),
+                },
               },
             },
           },

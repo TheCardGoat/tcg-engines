@@ -7,6 +7,7 @@ import { FORSAKEN_STRIKE_SCENARIOS } from "./forsaken-strike";
 import { USURP_BOARD_LAB_SCENARIOS } from "./usurp-board-labs";
 import { MALICE_ZOMBIE_BOARD_SCENARIOS } from "./malice-zombie-board";
 import { MARK_BINDINGS_BOARD_SCENARIOS } from "./mark-bindings-board";
+import { MARKED_HERO_SCENARIOS } from "./marked-hero";
 import { DECAY_SCENARIOS } from "./decay";
 import { BOARDS_SCENARIOS } from "./boards";
 import { INTERACTIONS_SCENARIOS } from "./interactions";
@@ -22,6 +23,7 @@ import { FLURRY_SCENARIOS } from "./flurry";
 import { UNDO_DECLINE_OPTIONAL_SCENARIOS } from "./undo-decline-optional";
 import { PERMANENT_ACTION_SCENARIOS } from "./permanent-actions";
 import { TRAVERSE_SCENARIOS } from "./traverse";
+import { WARMONGERS_DIPLOMACY_SCENARIOS } from "./warmongers-diplomacy";
 import type { FabEngineScenario, FabScenarioCollection } from "./types";
 
 export { FAB_KEYWORD_ANIMATION_FIXTURE_IDS } from "./animations";
@@ -34,6 +36,7 @@ const SCENARIO_COLLECTIONS: readonly FabScenarioCollection[] = [
   USURP_BOARD_LAB_SCENARIOS,
   MALICE_ZOMBIE_BOARD_SCENARIOS,
   MARK_BINDINGS_BOARD_SCENARIOS,
+  MARKED_HERO_SCENARIOS,
   DECAY_SCENARIOS,
   BOARDS_SCENARIOS,
   INTERACTIONS_SCENARIOS,
@@ -50,6 +53,7 @@ const SCENARIO_COLLECTIONS: readonly FabScenarioCollection[] = [
   FLURRY_SCENARIOS,
   UNDO_DECLINE_OPTIONAL_SCENARIOS,
   TRAVERSE_SCENARIOS,
+  WARMONGERS_DIPLOMACY_SCENARIOS,
 ];
 
 export const FAB_ENGINE_SCENARIO_IDS = [
@@ -57,6 +61,8 @@ export const FAB_ENGINE_SCENARIO_IDS = [
   "courage-consumption-and-logs",
   "undo-decline-danse-macabre",
   "viserai-traverse-threshold",
+  "warmongers-diplomacy-choice",
+  "warmongers-diplomacy-resolved",
   "enlightened-strike-modes",
   "codex-graveyard-choice",
   "authority-effect-owner",
@@ -68,9 +74,12 @@ export const FAB_ENGINE_SCENARIO_IDS = [
   "usurp-zombie-choice-board",
   "malice-zombie-allies-board",
   "mark-bindings-zombie-board",
+  "usurp-corpse-cover-defense-board",
   "usurp-gloomblade-usurp-board",
+  "usurp-gloomblade-pitch-board",
   "opening",
   "multiple-playable-banished-cards",
+  "playable-graveyard-zombie",
   "dynamic-property-values",
   "both-players-zones",
   "active-effects-lab",
@@ -115,6 +124,7 @@ export const FAB_ENGINE_SCENARIO_IDS = [
   "phantasm-ward-lab",
   "contract-completion-lab",
   "additional-cost-keyword-lab",
+  "optional-additional-cost-choice",
   "keyword-counter-lab",
   "pilfer-legal-targets",
   "pilfer-invalid-targets",
@@ -150,6 +160,7 @@ export const FAB_ENGINE_SCENARIO_IDS = [
   "multi-block",
   "between-links",
   "endgame",
+  "marked-hero-signal",
   "phase-turn-announcement-lab",
   "attack-action-lethal",
   "weapon-lethal",
@@ -174,6 +185,7 @@ const _cataloguedCollections: readonly [
   AssertCatalogued<typeof COURAGE_REGRESSION_SCENARIOS>,
   AssertCatalogued<typeof UNDO_DECLINE_OPTIONAL_SCENARIOS>,
   AssertCatalogued<typeof TRAVERSE_SCENARIOS>,
+  AssertCatalogued<typeof WARMONGERS_DIPLOMACY_SCENARIOS>,
   AssertCatalogued<typeof BOARDS_SCENARIOS>,
   AssertCatalogued<typeof INTERACTIONS_SCENARIOS>,
   AssertCatalogued<typeof PERMANENT_ACTION_SCENARIOS>,
@@ -181,6 +193,7 @@ const _cataloguedCollections: readonly [
   AssertCatalogued<typeof ANIMATIONS_SCENARIOS>,
   AssertCatalogued<typeof TRIGGERS_SCENARIOS>,
   AssertCatalogued<typeof COMBAT_SCENARIOS>,
+  AssertCatalogued<typeof MARKED_HERO_SCENARIOS>,
   AssertCatalogued<typeof EDGE_SCENARIOS>,
   AssertCatalogued<typeof BOLTYN_COMBO_SCENARIOS>,
   AssertCatalogued<typeof FLURRY_SCENARIOS>,
@@ -188,6 +201,7 @@ const _cataloguedCollections: readonly [
   COURAGE_REGRESSION_SCENARIOS,
   UNDO_DECLINE_OPTIONAL_SCENARIOS,
   TRAVERSE_SCENARIOS,
+  WARMONGERS_DIPLOMACY_SCENARIOS,
   BOARDS_SCENARIOS,
   INTERACTIONS_SCENARIOS,
   PERMANENT_ACTION_SCENARIOS,
@@ -195,6 +209,7 @@ const _cataloguedCollections: readonly [
   ANIMATIONS_SCENARIOS,
   TRIGGERS_SCENARIOS,
   COMBAT_SCENARIOS,
+  MARKED_HERO_SCENARIOS,
   EDGE_SCENARIOS,
   BOLTYN_COMBO_SCENARIOS,
   FLURRY_SCENARIOS,

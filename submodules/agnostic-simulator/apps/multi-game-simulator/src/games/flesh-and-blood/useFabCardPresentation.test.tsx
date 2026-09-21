@@ -52,6 +52,7 @@ describe("useFabCardPresentation", () => {
         lookupCanonicalId={snatch.canonicalId}
       />,
     );
+    expect(screen.getByTestId("presentation-harness").getAttribute("data-state")).toBe("loading");
 
     await waitFor(
       () =>

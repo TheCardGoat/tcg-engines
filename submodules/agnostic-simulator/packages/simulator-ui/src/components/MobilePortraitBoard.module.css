@@ -16,6 +16,18 @@
 
   position: fixed;
   inset: 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+  background: var(--mobile-portrait-surface);
+  color: var(--mobile-portrait-text);
+}
+
+.layout {
+  position: absolute;
+  inset: 0;
   display: grid;
   grid-template-rows:
     var(--mobile-portrait-top-rail-h)
@@ -28,13 +40,9 @@
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  overscroll-behavior: contain;
-  touch-action: manipulation;
-  background: var(--mobile-portrait-surface);
-  color: var(--mobile-portrait-text);
 }
 
-.root[data-zone-summaries="true"] {
+.root[data-zone-summaries="true"] .layout {
   grid-template-rows:
     var(--mobile-portrait-top-rail-h)
     var(--mobile-portrait-opponent-hand-h)
@@ -49,6 +57,9 @@
 
 .root[data-external-rails="true"] {
   position: absolute;
+}
+
+.root[data-external-rails="true"] .layout {
   grid-template-rows:
     var(--mobile-portrait-opponent-hand-h)
     minmax(0, 1fr)
@@ -57,7 +68,7 @@
     var(--mobile-portrait-hand-h);
 }
 
-.root[data-external-rails="true"][data-zone-summaries="true"] {
+.root[data-external-rails="true"][data-zone-summaries="true"] .layout {
   grid-template-rows:
     var(--mobile-portrait-opponent-hand-h)
     var(--mobile-zone-summary-bar-h, 24px)

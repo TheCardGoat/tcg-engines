@@ -1,9 +1,9 @@
 import { eb01Doma005, op01RoronoaZoro001 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04CrocodileOp14079079 } from "../../../../../cards/src/cards/OP14EB04/leaders/079-crocodile-op14-079.ts";
-import { op14eb04MsWednesday083 } from "../../../../../cards/src/cards/OP14EB04/characters/083-ms-wednesday.ts";
-import { op14eb04MsAllSunday084 } from "../../../../../cards/src/cards/OP14EB04/characters/084-ms-all-sunday.ts";
-import { op14eb04Mr4Babe093 } from "../../../../../cards/src/cards/OP14EB04/characters/093-mr-4-babe.ts";
+import { op14eb04CrocodileOp14079079 } from "../../../../../cards/src/cards/leaders/op14-079-crocodile-op14-079.ts";
+import { op14eb04MsWednesday083 } from "../../../../../cards/src/cards/characters/op14-083-ms-wednesday.ts";
+import { op14eb04MsAllSunday084 } from "../../../../../cards/src/cards/characters/op14-084-ms-all-sunday.ts";
+import { op14eb04Mr4Babe093 } from "../../../../../cards/src/cards/characters/op14-093-mr-4-babe.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

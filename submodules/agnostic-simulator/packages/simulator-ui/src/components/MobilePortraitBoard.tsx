@@ -116,19 +116,54 @@ export const MobilePortraitBoard = forwardRef<HTMLDivElement, MobilePortraitBoar
         {...props}
       >
         {overlays}
-        {externalRails ? topRail : <div className={classes.topRail}>{topRail}</div>}
-        <div className={classes.opponentHand}>{opponentHand}</div>
-        {hasZoneSummaries ? (
-          <div className={classes.opponentZoneSummary}>{opponentZoneSummary}</div>
-        ) : null}
-        <div className={classes.opponentBattlefield}>{opponentBattlefield}</div>
-        <div className={classes.ledger}>{ledger}</div>
-        <div className={classes.playerBattlefield}>{playerBattlefield}</div>
-        {hasZoneSummaries ? (
-          <div className={classes.playerZoneSummary}>{playerZoneSummary}</div>
-        ) : null}
-        <div className={classes.playerHand}>{playerHand}</div>
-        {externalRails ? bottomRail : <div className={classes.bottomRail}>{bottomRail}</div>}
+        {externalRails ? topRail : null}
+        <div className={classes.layout} data-mobile-portrait-layout="true">
+          {externalRails ? null : (
+            <div className={classes.topRail} data-mobile-portrait-slot="top-rail">
+              {topRail}
+            </div>
+          )}
+          <div className={classes.opponentHand} data-mobile-portrait-slot="opponent-hand">
+            {opponentHand}
+          </div>
+          {hasZoneSummaries ? (
+            <div
+              className={classes.opponentZoneSummary}
+              data-mobile-portrait-slot="opponent-zone-summary"
+            >
+              {opponentZoneSummary}
+            </div>
+          ) : null}
+          <div
+            className={classes.opponentBattlefield}
+            data-mobile-portrait-slot="opponent-battlefield"
+          >
+            {opponentBattlefield}
+          </div>
+          <div className={classes.ledger} data-mobile-portrait-slot="ledger">
+            {ledger}
+          </div>
+          <div className={classes.playerBattlefield} data-mobile-portrait-slot="player-battlefield">
+            {playerBattlefield}
+          </div>
+          {hasZoneSummaries ? (
+            <div
+              className={classes.playerZoneSummary}
+              data-mobile-portrait-slot="player-zone-summary"
+            >
+              {playerZoneSummary}
+            </div>
+          ) : null}
+          <div className={classes.playerHand} data-mobile-portrait-slot="player-hand">
+            {playerHand}
+          </div>
+          {externalRails ? null : (
+            <div className={classes.bottomRail} data-mobile-portrait-slot="bottom-rail">
+              {bottomRail}
+            </div>
+          )}
+        </div>
+        {externalRails ? bottomRail : null}
         {children}
       </div>
     );

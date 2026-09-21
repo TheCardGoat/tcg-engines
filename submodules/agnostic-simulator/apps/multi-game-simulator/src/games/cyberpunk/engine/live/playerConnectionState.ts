@@ -87,7 +87,7 @@ export function markLocalConnectionStatus(
   current: PlayerConnectionBySide,
   side: Side | null,
   status: PlayerConnectionStatus,
-  nowIso = new Date().toISOString(),
+  _nowIso = new Date().toISOString(),
 ): PlayerConnectionBySide {
   if (!side) {
     return current;
@@ -102,7 +102,7 @@ export function markLocalConnectionStatus(
       ...previous,
       status,
       connected: status === "connected",
-      disconnectedAt: interrupted ? (previous?.disconnectedAt ?? nowIso) : undefined,
+      disconnectedAt: interrupted ? previous?.disconnectedAt : undefined,
       disconnectCount:
         interrupted && !wasInterrupted
           ? (previous?.disconnectCount ?? 0) + 1

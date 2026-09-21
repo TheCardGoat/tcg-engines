@@ -73,6 +73,7 @@ describe("FAB engine scenarios · triggers", () => {
           playAndSkipHoldCardIds: [],
           opponentTriggerYieldCardIds: [],
           instantYieldCardIds: [],
+          scopedAutoPass: null,
         },
       ]),
     );

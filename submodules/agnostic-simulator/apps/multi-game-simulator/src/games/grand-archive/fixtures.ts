@@ -1,5 +1,7 @@
 import { GrandArchiveTestEngine } from "@tcg/grand-archive-engine/testing";
 import {
+  getGrandArchiveCard,
+  spiritOfFortuitousFire,
   portSmuggler,
   spiritOfWind,
   spiritOfFire,
@@ -17,7 +19,10 @@ import {
   serializeGrandArchiveMatchSnapshot,
   type GrandArchiveMatchState,
 } from "@tcg/grand-archive-engine/simulator";
-import { projectGrandArchiveSimulator } from "@tcg/grand-archive-server-adapter";
+import {
+  projectGrandArchiveSimulator,
+  GrandArchiveServerEngine,
+} from "@tcg/grand-archive-server-adapter";
 import { grandArchiveHarnessFixture, type GrandArchiveHarnessFixture } from "./fixtureProjection";
 import { createGrandArchivePracticeEngineFromSetup } from "./practice-setup";
 import { grandArchivePracticeDecks } from "@tcg/grand-archive-server-adapter/practice";
@@ -119,6 +124,27 @@ export function createMaterialHandFixtureServer() {
     );
   }
   throw new Error("Material hand fixture did not reach materialization");
+}
+/** Real server submissions make target selection and the resulting combat inspectable. */
+export function createAttackTargetingFixtureServer(fullArtOpponent = false) {
+  const game = GrandArchiveTestEngine.startFixture({
+    playerOne: {
+      id: "p1",
+      name: "You",
+      champion: spiritOfWind,
+      zones: { field: [portSmuggler, woodlandSquirrels] },
+    },
+    playerTwo: {
+      id: "p2",
+      name: "Opponent",
+      champion: fullArtOpponent ? spiritOfFortuitousFire : spiritOfWind,
+      zones: { field: [portSmuggler, woodlandSquirrels] },
+    },
+  });
+  return new GrandArchiveServerEngine(
+    game.program,
+    new GrandArchiveMatchRuntime(game.program, game.state),
+  );
 }
 const terminal = new GrandArchiveMatchRuntime(program, initialState);
 terminal.execute(
@@ -357,11 +383,25 @@ const WAIT_FIXTURES = [
     ["materialization", "hand", "starter"],
   ],
   [
+    "attack-targeting",
+    "Choose an attack target",
+    "Select Port Smuggler, inspect legal targets, and declare an attack. Reset to try another target.",
+    "combat",
+    ["attack", "targeting", "interactive"],
+  ],
+  [
     "opportunity",
     "Opportunity",
     "The current holder may take a legal action or pass.",
     "turn-flow",
     ["opportunity", "pass", "action"],
+  ],
+  [
+    "art-only",
+    "Framed and full-art field cards",
+    "Framed crops beside an unchanged full-art printing, with exact full-card inspection.",
+    "combat",
+    ["art", "printing", "preview"],
   ],
   [
     "decision",
@@ -441,10 +481,40 @@ export const GRAND_ARCHIVE_VISUAL_FIXTURES: readonly GrandArchiveVisualFixture[]
     const resolve = () => {
       if (!cached) {
         const projection =
-          id === "materialization-hand"
+          id === "art-only" || id === "materialization-hand" || id === "attack-targeting"
             ? (() => {
-                const server = createMaterialHandFixtureServer();
-                return projectGrandArchiveSimulator(server.program, server.runtime.state, p1);
+                const server =
+                  id === "art-only" || id === "attack-targeting"
+                    ? createAttackTargetingFixtureServer(id === "art-only")
+                    : createMaterialHandFixtureServer();
+                if (id === "art-only") {
+                  // Pin one visible opponent champion to its real full-art edition.
+                  const record = Object.values(server.art.records.records).find(
+                    (card) => card.canonicalId === spiritOfFortuitousFire.canonicalId,
+                  );
+                  const fullArt =
+                    record &&
+                    Object.entries(record.printings).find(
+                      ([, printing]) => printing.boardImageUrl === printing.printedImageUrl,
+                    );
+                  const object =
+                    record &&
+                    Object.values(server.runtime.state.objects).find(
+                      (candidate) =>
+                        candidate.ownerId === "p2" &&
+                        getGrandArchiveCard(candidate.definitionId)?.canonicalId ===
+                          record.canonicalId,
+                    );
+                  if (object && fullArt) server.art.printingIdByObjectId[object.id] = fullArt[0];
+                }
+                return projectGrandArchiveSimulator(
+                  server.program,
+                  server.runtime.state,
+                  p1,
+                  id === "art-only"
+                    ? server.getViewerResources({ role: "player", actorId: p1 })
+                    : {},
+                );
               })()
             : PROJECTIONS[id];
         cached = grandArchiveHarnessFixture(id, name, summary, projection);

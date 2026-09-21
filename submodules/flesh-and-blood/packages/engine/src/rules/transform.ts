@@ -23,6 +23,8 @@ export function resolveTransformIntoCanonicalId(
   if (noArticle !== trimmed) candidates.push(noArticle);
   // Title Case / spaces → kebab slug.
   const kebab = noArticle
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/['']/g, "")
     .replace(/[^a-z0-9]+/g, "-")

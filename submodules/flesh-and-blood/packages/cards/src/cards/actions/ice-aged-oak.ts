@@ -59,6 +59,7 @@ export const iceAgedOak = definePitchFamily(fabPitchFamilies["ice-aged-oak"], {
                     effect: {
                       type: "create-token",
                       token: "frostbite",
+                      creator: "effect-controller",
                       controller: "attack-target",
                       amongExposed: [
                         "equipment-head",

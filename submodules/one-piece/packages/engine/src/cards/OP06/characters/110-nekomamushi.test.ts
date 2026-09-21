@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op06Nekomamushi110 } from "../../../../../cards/src/cards/OP06/characters/110-nekomamushi.ts";
+import { op06Nekomamushi110 } from "../../../../../cards/src/cards/characters/op06-110-nekomamushi.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-110 Nekomamushi", () => {

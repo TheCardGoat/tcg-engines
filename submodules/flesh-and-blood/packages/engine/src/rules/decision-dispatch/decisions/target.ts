@@ -45,6 +45,11 @@ export function handleTarget(ctx: LayerDecisionCtx<"target">): FabLayerResolutio
         requestedCount: 1,
         upTo: false,
         candidates,
+        source: {
+          instanceId: layer.source.instanceId,
+          ...(layer.source.canonicalId ? { canonicalId: layer.source.canonicalId } : {}),
+          ownerId: layer.source.ownerId,
+        },
         continuation: {
           kind: "effect-resolution",
           processId: process.processId,
@@ -104,6 +109,11 @@ export function handleTarget(ctx: LayerDecisionCtx<"target">): FabLayerResolutio
         requestedCount: candidates.length,
         upTo: true,
         candidates,
+        source: {
+          instanceId: layer.source.instanceId,
+          ...(layer.source.canonicalId ? { canonicalId: layer.source.canonicalId } : {}),
+          ownerId: layer.source.ownerId,
+        },
         continuation: {
           kind: "effect-resolution",
           processId: process.processId,
@@ -160,6 +170,11 @@ export function handleTarget(ctx: LayerDecisionCtx<"target">): FabLayerResolutio
       requestedCount: resolvedCount,
       upTo: isUpTo,
       candidates,
+      source: {
+        instanceId: layer.source.instanceId,
+        ...(layer.source.canonicalId ? { canonicalId: layer.source.canonicalId } : {}),
+        ownerId: layer.source.ownerId,
+      },
       continuation: {
         kind: "effect-resolution",
         processId: process.processId,

@@ -1,8 +1,22 @@
 import type { FabTriggeredResolution } from "./layers.ts";
 import type { FabTriggerSource } from "./trigger-matcher.ts";
 
-const ELIGIBLE_ZONES = new Set(["heroZone", "head", "chest", "arms", "legs", "weapon1", "weapon2"]);
-const ELIGIBLE_TYPES = new Set(["Hero", "Equipment", "Weapon"]);
+/**
+ * Zones whose resident objects the owner may pre-automate: the hero, the
+ * equipment and weapon slots, and the arena (auras, items, tokens). Zone
+ * membership — not the type line — is the source of truth, so newly authored
+ * permanents stay eligible without extending a type list here.
+ */
+const ELIGIBLE_ZONES = new Set([
+  "heroZone",
+  "head",
+  "chest",
+  "arms",
+  "legs",
+  "weapon1",
+  "weapon2",
+  "arena",
+]);
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -28,7 +42,6 @@ export function isEligibleOptionalTriggerSource(source: FabTriggerSource): boole
     source.origin === "static" &&
     source.source.ownerId === source.controllerId &&
     ELIGIBLE_ZONES.has(source.source.zoneRef.zone) &&
-    source.source.current.typeBox.types.some((type) => ELIGIBLE_TYPES.has(type)) &&
     resolutionContainsControllerOptional(source.resolution)
   );
 }

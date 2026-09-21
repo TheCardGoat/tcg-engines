@@ -32,7 +32,7 @@ export const inductionStrike: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           kind: "activated",
           text: "(1), Banish this card from your graveyard: Put a static counter on target arcane element object you control and each object linked to it.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "all",
             costs: [

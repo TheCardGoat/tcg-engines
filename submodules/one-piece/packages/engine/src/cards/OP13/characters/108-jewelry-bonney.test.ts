@@ -6,7 +6,7 @@ import {
   op01Kaido094,
   op13JewelryBonney100,
 } from "@tcg/op-cards";
-import { op13JewelryBonney108 } from "../../../../../cards/src/cards/OP13/characters/108-jewelry-bonney.ts";
+import { op13JewelryBonney108 } from "../../../../../cards/src/cards/characters/op13-108-jewelry-bonney.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

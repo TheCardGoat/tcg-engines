@@ -188,6 +188,12 @@ export class FabSimulatorPlayerHandle {
     this.game.assertHumanIs(this.id);
     await this.game.resolveSelectTarget(target);
   }
+
+  /** Select one option in the active interaction prompt; single-select commits. */
+  async chooseOption(match: RegExp | string): Promise<void> {
+    this.game.assertHumanIs(this.id);
+    await this.game.choosePromptOption(match);
+  }
 }
 
 export class FabSimulatorPom {
@@ -589,11 +595,26 @@ export class FabSimulatorPom {
     );
   }
 
+  /**
+   * Confirm the pending trigger-ordering panel with the presented order (the
+   * auto-order default) when one is up. Returns false when no panel renders.
+   */
+  async tryConfirmTriggerOrder(): Promise<boolean> {
+    const panel = this.dom.getByTestId("fab-trigger-order-panel");
+    if ((await panel.count()) === 0) return false;
+    const confirmButton = panel.locator("[data-testid='fab-trigger-order-confirm']");
+    if ((await confirmButton.count()) === 0) return false;
+    await confirmButton.click();
+    await this.waitForAnimations();
+    return true;
+  }
+
   /** Pass repeatedly until combat closes or max rounds (for undefended resolve). */
   async resolveRestOfCombat(maxPasses = 16): Promise<void> {
     for (let i = 0; i < maxPasses; i++) {
       await this.waitForAnimations();
       if ((await this.combatStep()) == null) return;
+      if (await this.tryConfirmTriggerOrder()) continue;
 
       if (!(await this.canPass())) {
         // Wait for pass-only bot (or UI refresh) to return a pass control, or combat to close.
@@ -721,6 +742,29 @@ export class FabSimulatorPom {
     );
   }
 
+  /**
+   * Select one option in the active interaction prompt. Single-select option
+   * decisions (min = max = 1) commit on click; multi-select waits for the
+   * caller's confirm affordance.
+   */
+  async choosePromptOption(match: RegExp | string): Promise<void> {
+    // The prompt's option name is specific (card + cost + outcome), so a
+    // driver-scoped role query cannot collide with other controls. Options
+    // render as single-select radios when the input is min=max=1 and as
+    // plain buttons otherwise; try the radio first, then the button.
+    const radio = this.dom.getByRole("radio", { name: match }).first();
+    try {
+      await radio.waitFor({ state: "visible", timeoutMs: 1_500 });
+      await radio.click();
+      return;
+    } catch {
+      // Fall through to the plain-button presentation.
+    }
+    const button = this.dom.getByRole("button", { name: match }).first();
+    await button.waitFor({ state: "visible" });
+    await button.click();
+  }
+
   async resolveSelectTarget(target: string): Promise<void> {
     // Open select flow if needed
     if ((await this.dom.getByTestId("fab-action-choose-card").count()) > 0) {
@@ -763,6 +807,13 @@ export class FabSimulatorPom {
       timeoutMs: 3000,
       message: "Expected a current FAB pass control after returning to Now",
     });
+    // The combat-resolution prompt is the authoritative pass surface while it
+    // owns the window; the quick/sidebar controls render disabled there.
+    const promptPass = this.interactionPassButton();
+    if (promptPass) {
+      await promptPass.click();
+      return;
+    }
     const quickPass = this.dom.getByTestId("fab-quick-pass");
     if ((await quickPass.count()) > 0 && (await quickPass.getAttribute("disabled")) == null) {
       await quickPass.click();
@@ -1068,10 +1119,13 @@ export class FabSimulatorPom {
       Array.from(document.querySelectorAll<HTMLButtonElement>('[role="tab"]')).find(
         (tab) => tab.textContent?.trim() === "Now",
       );
-    await this.dom.waitFor(async () => findNowTab() != null, {
-      timeoutMs: 3000,
-      message: "Expected the Now tab to appear",
-    });
+    try {
+      await this.dom.waitFor(async () => findNowTab() != null, { timeoutMs: 1500 });
+    } catch {
+      // A collapsed mobile panel renders no tab strip at all; there is no
+      // wrong-tab risk, so drive whatever pass control is currently mounted.
+      return;
+    }
     // React may replace the controlled tab strip while deferred command work
     // commits, so resolve and click the live DOM node in one synchronous step.
     findNowTab()!.click();

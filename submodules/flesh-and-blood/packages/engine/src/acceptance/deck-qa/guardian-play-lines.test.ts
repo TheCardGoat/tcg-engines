@@ -214,6 +214,7 @@ describe("Guardian play lines", () => {
       expect(game.renderedPlayerNarrative(Jarl.id)).toEqual([
         "You played Channel Iceloch Glaze.",
         "Opponent created Frostbite.",
+        "Jarl Vetrei I created Frostbite for Opponent.",
         "You played Felling Of The Crown.",
         "You attacked Opponent with Felling Of The Crown.",
         "Felling Of The Crown hit Opponent for 4.",
@@ -221,6 +222,7 @@ describe("Guardian play lines", () => {
       expect(game.renderedPlayerNarrative(Opponent.id)).toEqual([
         "Opponent played Channel Iceloch Glaze.",
         "You created Frostbite.",
+        "Jarl Vetrei I created Frostbite for You.",
         "Opponent played Felling Of The Crown.",
         "Opponent attacked You with Felling Of The Crown.",
         "Felling Of The Crown hit You for 4.",

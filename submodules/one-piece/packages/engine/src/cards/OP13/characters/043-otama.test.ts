@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Otama043 } from "../../../../../cards/src/cards/OP13/characters/043-otama.ts";
+import { op13Otama043 } from "../../../../../cards/src/cards/characters/op13-043-otama.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

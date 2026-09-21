@@ -1,5 +1,6 @@
+import type { OPAttribute } from "../card.ts";
 import type { Duration, EffectTrigger, Keyword, Player, TargetCount, Zone } from "./primitives.ts";
-import type { Target, TargetFilter } from "./target.ts";
+import type { Target, TotalConstraint, TargetFilter } from "./target.ts";
 import type { Condition } from "./condition.ts";
 
 export type Action =
@@ -26,10 +27,12 @@ export type Action =
   | AddDonAction
   | GiveDonFromDonPhaseAction
   | GiveDonAction
+  | GrantAttributeAction
   | GrantKeywordAction
   | AddToLifeAction
   | RemoveFromLifeAction
   | SetPowerAction
+  | SetBasePowerAction
   | SetBasePowerFromAction
   | CopyPowerAction
   | SwapBasePowerAction
@@ -45,6 +48,7 @@ export type Action =
   | TrashFromFieldAction
   | TrashThisCardAction
   | WinGameAction
+  | DeferEmptyDeckLossAction
   | ChangeBattleTargetAction
   | AttackRestrictionAction
   | CannotAttackTargetsAction
@@ -114,6 +118,20 @@ export interface ModifyPowerAction {
     target: Target;
     size: number;
   };
+  /**
+   * Multiplies the value by the total attached DON!! across the resolved
+   * pool, for text such as "-1000 power for every DON!! card given to that
+   * Character".
+   */
+  valuePerAttachedDonOn?: Target;
+  /**
+   * Multiplies the value by the number of distinct card names in the resolved
+   * pool, for text such as "+1000 power for each of your Characters with a
+   * different card name".
+   */
+  valuePerDifferentNameOn?: Target;
+  /** Multiplies the value by the total cost of the previous action's targets. */
+  valuePerPreviousActionTargetCost?: boolean;
   condition?: Condition;
 }
 
@@ -121,6 +139,8 @@ export interface ModifyCounterAction {
   action: "modifyCounter";
   target: Target;
   value: number;
+  /** Optional for dynamic permanent modifiers evaluated live at query time. */
+  duration?: Duration;
   condition?: Condition;
 }
 
@@ -181,6 +201,8 @@ export interface PlayAction {
   differentColorFromPreviousCharacter?: boolean;
   differentNames?: boolean;
   sameNameAsPreviousCard?: boolean;
+  /** Caps the combined printed cost of the selected cards. */
+  totalConstraint?: TotalConstraint;
   playState?: "rested" | "active";
   topOnly?: boolean;
   /** Actions that resolve only when at least one card was actually played. */
@@ -291,8 +313,21 @@ export interface GiveDonAction {
   action: "giveDon";
   target: Target;
   count: TargetCount;
-  donState?: "rested" | "active";
+  /** "any" funds the give from both DON!! pools (a "cost area" source). */
+  donState?: "rested" | "active" | "any";
   distribution?: "single" | "each";
+  /** Whose DON!! pool funds the give; defaults to the effect controller. */
+  donorPlayer?: Player;
+  condition?: Condition;
+}
+
+export interface GrantAttributeAction {
+  action: "grantAttribute";
+  target: Target;
+  /** The attribute the targets gain (e.g. "Slash"). */
+  value: OPAttribute;
+  duration: Duration;
+  previousActionTargets?: boolean;
   condition?: Condition;
 }
 
@@ -333,6 +368,15 @@ export interface SetPowerAction {
   value: number;
   duration: Duration;
   condition?: Condition;
+}
+
+/** Permanent text that fixes a card's base power at a printed value. */
+export interface SetBasePowerAction {
+  action: "setBasePower";
+  target: Target;
+  value: number;
+  /** Defaults to thisTurn for triggered uses of the action. */
+  duration?: Duration;
 }
 
 /** Set a card's base power from another card while preserving other modifiers. */
@@ -451,6 +495,16 @@ export interface TrashThisCardAction {
 
 export interface WinGameAction {
   action: "winGame";
+  condition?: Condition;
+}
+
+/**
+ * Replaces the deck-empty loss for the remainder of the turn in which the deck
+ * reached 0 cards; the player loses at that turn's end unless the deck gained
+ * cards again.
+ */
+export interface DeferEmptyDeckLossAction {
+  action: "deferEmptyDeckLoss";
   condition?: Condition;
 }
 
@@ -666,6 +720,8 @@ export interface LookAtLifeAction {
 export interface RevealFromLifeAction {
   action: "revealFromLife";
   player: Player;
+  /** Reveal fewer cards than the full amount when true ("reveal up to 1"). */
+  upTo?: boolean;
   conditionalPlay?: {
     filters: TargetFilter[];
     thenActions?: Action[];

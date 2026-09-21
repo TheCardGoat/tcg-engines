@@ -63,6 +63,7 @@ export class HumanVsAiOrchestrator {
     aiSpeed: "balanced",
     strategyId: "",
     strategyLabel: "",
+    opponentMode: "bot",
     currentPerspective: "playerOne",
     turnNumber: 0,
   });
@@ -94,6 +95,7 @@ export class HumanVsAiOrchestrator {
     this.#initSession(
       config.initialAiPlayMode ?? "auto",
       options?.initialPerspective ?? "playerOne",
+      config.opponentMode ?? "bot",
     );
   }
 
@@ -133,7 +135,11 @@ export class HumanVsAiOrchestrator {
   }
 
   /** Shared initialization used by both the constructor and `fromEngine`. */
-  #initSession(initialAiPlayMode: AiPlayMode, initialPerspective: "playerOne" | "playerTwo"): void {
+  #initSession(
+    initialAiPlayMode: AiPlayMode,
+    initialPerspective: "playerOne" | "playerTwo",
+    opponentMode: HumanVsAiMatchConfig["opponentMode"],
+  ): void {
     this.#cardsMaps = this.#testEngine.getCardsMaps();
 
     const readModel = new AutomatedMatchPlaybackReadModel(this.#testEngine);
@@ -152,6 +158,7 @@ export class HumanVsAiOrchestrator {
       aiSpeed: "balanced",
       strategyId: this.#strategyOption.id,
       strategyLabel: this.#strategyOption.label,
+      opponentMode: opponentMode ?? "bot",
       currentPerspective: initialPerspective,
       turnNumber: this.#session.server.getTurnNumber(),
     };
@@ -293,6 +300,7 @@ export class HumanVsAiOrchestrator {
   }
 
   takeover(): void {
+    if (this.state.opponentMode === "self") return;
     this.#clearTimer();
     this.state = {
       ...this.state,
@@ -304,6 +312,7 @@ export class HumanVsAiOrchestrator {
   }
 
   releaseTakeover(): void {
+    if (this.state.opponentMode === "self") return;
     this.#clearTimer();
     this.state = {
       ...this.state,

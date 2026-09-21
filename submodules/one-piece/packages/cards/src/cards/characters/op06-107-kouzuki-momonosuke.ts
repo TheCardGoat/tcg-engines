@@ -1,0 +1,81 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06KouzukiMomonosuke107I18n } from "./op06-107-kouzuki-momonosuke.i18n.ts";
+
+export const op06KouzukiMomonosuke107: CharacterCard = {
+  id: "OP06-107",
+  canonicalId: "OP06-107",
+  slug: "kouzuki-momonosuke/op06-107",
+  name: "Kouzuki Momonosuke",
+  printings: [
+    {
+      id: "OP06-107",
+      artId: "OP06-107",
+      setCode: "OP06",
+      collectorNumber: "107",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-107.jpg",
+    },
+    {
+      id: "OP06-107_p1",
+      artId: "OP06-107_p1",
+      setCode: "OP06",
+      collectorNumber: "107",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-107_p1.jpg",
+    },
+    {
+      id: "OP06-107_r1",
+      artId: "OP06-107_r1",
+      setCode: "OP06",
+      collectorNumber: "107",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-107_r1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["yellow"],
+  rarity: "SR",
+  setId: "OP06",
+  cost: 5,
+  power: 6000,
+  traits: ["Land of Wano Kouzuki Clan"],
+  attribute: "wisdom",
+
+  effect:
+    '[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)\n[On Play] Add up to 1 of your "Land of Wano" type Characters other than [Kouzuki Momonosuke] to the top or bottom of the owner\'s Life cards face-up.',
+  effects: {
+    keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Land of Wano",
+                  match: "includes",
+                },
+                {
+                  filter: "excludeName",
+                  value: "Kouzuki Momonosuke",
+                },
+              ],
+            },
+            position: "choice",
+            faceUp: true,
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op06KouzukiMomonosuke107I18n,
+};

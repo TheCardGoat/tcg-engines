@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op01Komachiyo010 } from "../../../../../cards/src/cards/OP01/characters/010-komachiyo.ts";
+import { op01Komachiyo010 } from "../../../../../cards/src/cards/characters/op01-010-komachiyo.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-010 Komachiyo", () => {

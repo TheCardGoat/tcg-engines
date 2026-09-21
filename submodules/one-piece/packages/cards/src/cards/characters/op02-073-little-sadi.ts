@@ -1,0 +1,69 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op02LittleSadi073I18n } from "./op02-073-little-sadi.i18n.ts";
+
+export const op02LittleSadi073: CharacterCard = {
+  id: "OP02-073",
+  canonicalId: "OP02-073",
+  slug: "little-sadi/op02-073",
+  name: "Little Sadi",
+  printings: [
+    {
+      id: "OP02-073",
+      artId: "OP02-073",
+      setCode: "OP02",
+      collectorNumber: "073",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-073.jpg",
+    },
+    {
+      id: "OP02-073_p1",
+      artId: "OP02-073_p1",
+      setCode: "OP02",
+      collectorNumber: "073",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-073_p1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["purple"],
+  rarity: "R",
+  setId: "OP02",
+  cost: 3,
+  power: 3000,
+  counter: 2000,
+  traits: ["Impel Down"],
+  attribute: "wisdom",
+  effect: "[On Play] Play up to 1 [Jailer Beast] type Character card from your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "hand",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "trait",
+                value: "Jailer Beast",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op02LittleSadi073I18n,
+};

@@ -82,6 +82,7 @@ export const lexiLivewire = defineCard(fabCardIdentitiesByCanonicalId["PFmgFK9dF
                 // Printed "under target hero's control" — 1v1 sole opponent.
                 type: "create-token",
                 token: "frostbite",
+                creator: "effect-controller",
                 controller: "opponent",
               },
             },

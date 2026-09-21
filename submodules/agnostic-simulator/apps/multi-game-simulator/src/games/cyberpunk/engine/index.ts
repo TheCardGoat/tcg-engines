@@ -103,6 +103,7 @@ export {
 export type StrategyId =
   | "default"
   | "tactical"
+  | "tactical-ability-aware"
   | "greedy"
   | "random"
   | "first-legal"
@@ -147,14 +148,22 @@ export function getStrategyById(id: string): StrategyDescriptor | undefined {
   return AI_STRATEGIES.find((s) => s.id === id);
 }
 
-/** Reverse lookup: which descriptor wraps the given strategy reference? */
+/**
+ * Reverse lookup: which descriptor does this strategy belong to?
+ *
+ * Practice seats bind a DeckStrategyProfile onto the registry strategy, which
+ * produces a wrapped copy, so a reference match alone would report every
+ * deck-plan-bound seat as "No strategy". The engine registry keeps every
+ * option's strategy name equal to its id (strategy-registry.test.ts) and
+ * profile binding preserves the name, so the name identifies the descriptor.
+ */
 export function findStrategyDescriptor(
   strategy: AIStrategy | null,
 ): StrategyDescriptor | undefined {
   if (!strategy) {
     return undefined;
   }
-  return AI_STRATEGIES.find((s) => s.strategy === strategy);
+  return AI_STRATEGIES.find((s) => s.strategy === strategy || s.id === strategy.name);
 }
 
 export {
@@ -212,6 +221,7 @@ export {
   useSideZones,
   useCardView,
   useCardViewByName,
+  handContainsPrivateCards,
   WIN_GIG_THRESHOLD,
   type ZoneCardView,
   type CardActiveEffectView,
@@ -234,5 +244,4 @@ export {
   type DiceImageColor,
   type DicierStyle,
   type FieldCardSize,
-  type AnimationPacing,
 } from "./UserConfigContext";

@@ -15,7 +15,9 @@
 .slots {
   flex: 1;
   display: flex;
-  gap: 4px;
+  /* Desktop widens this via --legend-slot-gap (set on .identityRow) so the
+     glow of two adjacent highlighted slots does not read as one border. */
+  gap: var(--legend-slot-gap, 4px);
   padding: var(--zone-pad);
   min-height: 0;
   align-items: center;
@@ -23,13 +25,13 @@
 }
 
 /*
-  Definite vh-based height (with aspect-ratio for width) so the parent grid's
-  `auto` legends track can resolve intrinsic width — height: 100% would create
-  a circular dependency with aspect-ratio and collapse the column. The shared
-  `--unit-card-h` value leaves visible room for `.slots` vertical padding
-  inside the 40%-row LEGENDS zone, and keeps slots in sync with FIELD units.
+  Definite height (with aspect-ratio for width) so the identity row can size
+  from Legend slots. height: 100% would cycle with the auto row. `--unit-card-h`
+  also sizes Field units so the two zones stay visual peers.
 */
 .slot {
+  --attached-gear-count: 0;
+
   height: var(--unit-card-h);
   aspect-ratio: 5 / 7;
   border: 1px dashed rgb(245 230 66 / 22%);
@@ -38,6 +40,10 @@
   position: relative;
   overflow: visible;
   z-index: 1;
+}
+
+.slot[data-attached-gear-count]:not([data-attached-gear-count="0"]) {
+  z-index: 12;
 }
 
 .slot:hover,
@@ -93,20 +99,21 @@
 .slot[data-spent="true"] {
   border-color: rgb(245 230 66 / 18%);
   background: rgb(245 230 66 / 3%);
-  filter: saturate(0.46) brightness(0.62) contrast(0.9);
 }
 
 .slot[data-spent="true"][data-call-legend-actionable="true"] {
   border-color: rgb(74 217 255 / 72%);
   background: rgb(74 217 255 / 9%);
-  filter: brightness(1.02) saturate(1.05);
   box-shadow:
     0 0 0 1px rgb(7 9 12 / 82%) inset,
     0 0 16px rgb(74 217 255 / 50%),
     0 0 32px rgb(245 230 66 / 22%);
 }
 
-.slot[data-spent="true"]::before {
+/* Hatch + SPENT badge apply to face-up spent Legends only. On face-down
+   spent Legends the slot-sized hatch reads as a second, unrotated card back
+   behind the rotated one; the 90° rotation alone marks them spent. */
+.slot[data-spent="true"]:not([data-face-down="true"])::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -125,21 +132,7 @@
     repeating-linear-gradient(135deg, rgb(7 9 12 / 18%) 0 7px, transparent 7px 16px);
 }
 
-.slot[data-face-down="true"]:not([data-spent="true"]):not([data-log-highlight="true"]):not(
-    [data-call-legend-actionable="true"]
-  )
-  :global(.sim-card-image-frame)::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  z-index: 40;
-  border-radius: 2px;
-  background: linear-gradient(180deg, rgb(7 9 12 / 68%) 0%, rgb(7 9 12 / 52%) 28%, transparent 66%);
-  pointer-events: none;
-}
-
-.slot[data-spent="true"]::after,
-.slot[data-call-legend-actionable="true"]::after {
+.slot[data-spent="true"]:not([data-face-down="true"])::after {
   position: absolute;
   right: 4px;
   bottom: 4px;
@@ -157,19 +150,7 @@
   pointer-events: none;
   text-align: center;
   text-transform: uppercase;
-}
-
-.slot[data-spent="true"]::after {
   content: "SPENT";
-}
-
-.slot[data-call-legend-actionable="true"]::after {
-  content: "CALL LEGEND";
-  z-index: 80;
-  border-color: rgb(74 217 255 / 70%);
-  background: rgb(7 9 12 / 82%);
-  color: #4ad9ff;
-  box-shadow: 0 0 12px rgb(74 217 255 / 42%);
 }
 
 .slot[data-selection-candidate="true"]::after {
@@ -179,7 +160,6 @@
 }
 
 .slot[data-spent="true"][data-log-highlight="true"]::after {
-  content: "SPENT";
   border-color: rgb(245 230 66 / 34%);
   color: rgb(245 230 66 / 74%);
 }

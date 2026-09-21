@@ -36,11 +36,31 @@ export type Condition =
   | PreviousActionTargetCondition
   | TriggerEventCardCondition
   | TriggerEventCondition
+  | TriggerEventFromZoneCondition
   | BattledOpponentCharacterThisTurnCondition
-  | ActiveDonCountCondition;
+  | ActiveDonCountCondition
+  | PlayerTurnCountCondition
+  | ActivatedEventCondition;
 
 export interface ActiveDonCountCondition {
   condition: "activeDonCount";
+  comparison: Comparison;
+  value: number;
+}
+
+/** True when the effect controller has activated an Event card during the current turn. */
+export interface ActivatedEventCondition {
+  condition: "activatedEvent";
+  /** Optional bound on the activated Event's base (printed) cost. */
+  baseCost?: {
+    comparison: Comparison;
+    value: number;
+  };
+}
+
+/** Compares how many turns the effect controller has started, including the current one. */
+export interface PlayerTurnCountCondition {
+  condition: "playerTurnCount";
   comparison: Comparison;
   value: number;
 }
@@ -234,6 +254,11 @@ export interface ExistsOnFieldCondition {
 export interface PreviousActionTargetCondition {
   condition: "previousActionTarget";
   filters: TargetFilter[];
+}
+
+export interface TriggerEventFromZoneCondition {
+  condition: "triggerEventFromZone";
+  zone: Zone;
 }
 
 export interface TriggerEventCondition {

@@ -303,6 +303,7 @@ function projectTimerView(
   // none of these, so we default them.
   const hasDecisionCap = time.mode === "chess" || time.mode === "dynamic";
   const configMaxDecisionTimeMs = hasDecisionCap ? time.config.maxDecisionTimeMs : undefined;
+  const graceMs = time.config.graceMs;
   const accumulatedMs = hasDecisionCap ? (time.activePlayerAccumulatedMs ?? 0) : undefined;
 
   const players: LorcanaProjectedBoardView["timerView"]["players"] = {};
@@ -313,6 +314,7 @@ function projectTimerView(
 
     players[String(playerId)] = {
       reserveMsRemaining: playerState?.reserveMsRemaining ?? 0,
+      graceMs,
       isRunning,
       startedAtMs: isRunning ? time.startedAtMs : undefined,
       timeoutCount: playerState && "timeoutCount" in playerState ? playerState.timeoutCount : 0,

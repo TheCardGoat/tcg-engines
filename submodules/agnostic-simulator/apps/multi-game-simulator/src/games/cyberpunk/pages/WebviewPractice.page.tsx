@@ -25,6 +25,7 @@ import { CYBERPUNK_GAME_SLUG } from "../engine/live/apiOrigin";
 import { playUrl } from "../../../runtime/gameRuntimeApi";
 import { BoardSharedPage } from "./BoardShared.page";
 import classes from "./Practice.module.css";
+import { defaultMatchmakingUrl } from "../../../routes/match-return-url";
 import { buildMountedHref } from "../../../routes/router-paths";
 
 interface ActiveImport {
@@ -50,6 +51,66 @@ interface QuickMatchResponse {
 }
 
 const cardsById = new Map(structuredCards.map((card) => [card.id, card]));
+
+// One matchmaking launch must create exactly one server match even though the
+// mount effect can re-run (React StrictMode double-invokes it in development,
+// and webview hosts may reload the practice URL). Keyed by the raw URL payload,
+// which is the stable launch intent: config.matchId is regenerated per parse
+// and would not dedupe anything.
+const hostedPracticeLaunchCache = new Map<string, Promise<QuickMatchResponse>>();
+
+export function launchHostedPracticeForPayload(
+  rawPayload: string,
+  config: PracticeMatchConfig,
+): Promise<QuickMatchResponse> {
+  const existing = hostedPracticeLaunchCache.get(rawPayload);
+  if (existing) {
+    return existing;
+  }
+  const launch = practiceIdempotencyKey(rawPayload)
+    .then((idempotencyKey) => launchHostedPractice(config, idempotencyKey))
+    .catch((error: unknown) => {
+      // A failed launch must be retryable; a cached rejection would pin the
+      // page to the error until a full reload.
+      hostedPracticeLaunchCache.delete(rawPayload);
+      throw error;
+    });
+  hostedPracticeLaunchCache.set(rawPayload, launch);
+  return launch;
+}
+
+/**
+ * Stable idempotency key for one matchmaking launch intent. The quick-match
+ * route reserves this key in Redis (30s lock, 5min result replay), so a
+ * duplicate request — reload, retry, double effect — replays the first
+ * response instead of creating a sibling in-progress match.
+ */
+export async function practiceIdempotencyKey(rawPayload: string): Promise<string> {
+  try {
+    const digest = await globalThis.crypto?.subtle?.digest(
+      "SHA-256",
+      new TextEncoder().encode(rawPayload),
+    );
+    if (digest) {
+      const hex = [...new Uint8Array(digest)]
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+      return hex.slice(0, 48);
+    }
+  } catch {
+    // Fall through to the non-crypto hash.
+  }
+  // FNV-1a variants — only used where WebCrypto is unavailable.
+  const pair = [0x811c9dc5, 0x01000193].map((seed) => {
+    let hash = seed;
+    for (let index = 0; index < rawPayload.length; index += 1) {
+      hash ^= rawPayload.charCodeAt(index);
+      hash = Math.imul(hash, 0x01000193) >>> 0;
+    }
+    return hash.toString(16).padStart(8, "0");
+  });
+  return `fnv${pair[0]}${pair[1]}${rawPayload.length.toString(16).padStart(8, "0")}`;
+}
 
 export function WebviewPracticePage() {
   const [activeImport, setActiveImport] = useState<ActiveImport | null>(null);
@@ -125,7 +186,7 @@ export function WebviewPracticePage() {
     const matchmakingImport = loadMatchmakingPayloadFromQuery();
     if (matchmakingImport) {
       setStartup({ status: "launching", warnings: matchmakingImport.warnings });
-      launchClientPractice(matchmakingImport.config)
+      launchHostedPracticeForPayload(matchmakingImport.payload, matchmakingImport.config)
         .then((response) => {
           savePracticeMatchConfig(configForLiveMatchRedirect(matchmakingImport.config, response));
           window.location.replace(liveMatchHref(response, matchmakingImport.config.botStrategyId));
@@ -311,6 +372,7 @@ function base64UrlDecode(value: string): string {
 }
 
 function loadMatchmakingPayloadFromQuery(): {
+  payload: string;
   config: PracticeMatchConfig;
   warnings: string[];
 } | null {
@@ -328,13 +390,16 @@ function loadMatchmakingPayloadFromQuery(): {
   try {
     const decoded = JSON.parse(base64UrlDecode(payload));
     const result = createPracticeConfigFromDeckPayload(decoded);
-    return result.success ? { config: result.config, warnings: result.warnings } : null;
+    return result.success ? { payload, config: result.config, warnings: result.warnings } : null;
   } catch {
     return null;
   }
 }
 
-async function launchClientPractice(config: PracticeMatchConfig): Promise<QuickMatchResponse> {
+async function launchHostedPractice(
+  config: PracticeMatchConfig,
+  idempotencyKey?: string,
+): Promise<QuickMatchResponse> {
   await primeAuthSession();
 
   // The URL payload may include a full bot deck, a bot fixture id, or only a
@@ -348,10 +413,14 @@ async function launchClientPractice(config: PracticeMatchConfig): Promise<QuickM
   const response = await fetch(playUrl(CYBERPUNK_GAME_SLUG, "/quick-match"), {
     method: "POST",
     credentials: "include",
-    headers: { "content-type": "application/json", ...cyberpunkRuntimeRequestHeaders() },
+    headers: {
+      "content-type": "application/json",
+      ...(idempotencyKey ? { "idempotency-key": idempotencyKey } : {}),
+      ...cyberpunkRuntimeRequestHeaders(),
+    },
     body: JSON.stringify({
       gameType: "cyberpunk",
-      authority: "client",
+      authority: "server",
       playerDeck: deckToHistoricDeck(config.playerDeck),
       botDeck: deckToHistoricDeck(botDeck),
       botStrategyId: config.botStrategyId,
@@ -438,9 +507,7 @@ export function liveMatchHref(
 }
 
 function matchmakingReturnUrl(): string {
-  return (
-    import.meta.env.VITE_MATCHMAKING_URL || `https://tcg.online/${CYBERPUNK_GAME_SLUG}/matchmaking`
-  );
+  return defaultMatchmakingUrl(CYBERPUNK_GAME_SLUG, import.meta.env.VITE_MATCHMAKING_URL);
 }
 
 function currentSimulatorBasename(): string {

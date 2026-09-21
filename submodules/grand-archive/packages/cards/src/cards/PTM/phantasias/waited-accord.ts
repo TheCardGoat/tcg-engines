@@ -46,75 +46,86 @@ export const waitedAccord: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "sequence",
               effects: [
                 {
-                  kind: "reveal",
-                  player: "controller",
-                  selection: {
-                    id: "reveal-selection",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 3,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element-category",
-                        value: "advanced",
+                  kind: "attempt",
+                  effect: {
+                    kind: "reveal",
+                    player: "controller",
+                    selection: {
+                      id: "reveal-selection",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 3,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element-category",
+                          value: "advanced",
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "permanent",
-                  },
-                  layer: {
-                    layer: "D",
-                    modifies: "ability",
-                  },
-                  change: {
-                    kind: "grant-ability",
-                    ability: {
-                      id: "granted-jgj7xp-a1",
-                      kind: "static",
-                      staticKind: "effects",
-                      text: "The first advanced element card each player activates each turn costs 2 more to activate.",
-                      effects: [
-                        {
-                          kind: "rule-modification",
-                          mode: "modify-cost",
-                          action: "activate",
-                          subject: {
-                            kind: "player",
-                            player: "each-player",
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "source",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "permanent",
+                    },
+                    layer: {
+                      layer: "D",
+                      modifies: "ability",
+                    },
+                    change: {
+                      kind: "grant-ability",
+                      ability: {
+                        id: "granted-jgj7xp-a1",
+                        kind: "static",
+                        staticKind: "effects",
+                        text: "The first advanced element card each player activates each turn costs 2 more to activate.",
+                        effects: [
+                          {
+                            kind: "rule-modification",
+                            mode: "modify-cost",
+                            action: "activate",
+                            subject: {
+                              kind: "player",
+                              player: "each-player",
+                            },
+                            filter: {
+                              kind: "element-category",
+                              value: "advanced",
+                            },
+                            occurrence: {
+                              count: 1,
+                              window: "this-turn",
+                              actorScope: "same-player",
+                            },
+                            costKind: "reserve",
+                            costOperation: "add",
+                            amount: 2,
+                            duration: {
+                              kind: "while-source-in-functional-zone",
+                            },
                           },
-                          filter: {
-                            kind: "element-category",
-                            value: "advanced",
-                          },
-                          occurrence: {
-                            count: 1,
-                            window: "this-turn",
-                            actorScope: "same-player",
-                          },
-                          costKind: "reserve",
-                          costOperation: "add",
-                          amount: 2,
-                          duration: {
-                            kind: "while-source-in-functional-zone",
-                          },
-                        },
-                      ],
+                        ],
+                      },
                     },
                   },
                 },

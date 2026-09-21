@@ -6,7 +6,7 @@ import {
   op01ScratchmenApoo103,
   op01Shanks120,
 } from "@tcg/op-cards";
-import { prb02LuckyRoux003 } from "../../../../../cards/src/cards/PRB02/characters/003-lucky-roux.ts";
+import { prb02LuckyRoux003 } from "../../../../../cards/src/cards/characters/prb02-003-lucky-roux.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

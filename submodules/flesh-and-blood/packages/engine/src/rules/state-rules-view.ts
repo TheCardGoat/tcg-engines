@@ -540,6 +540,7 @@ function rulesFacts(
           "create-card": state.players[playerId]?.history.turn.createdCardThisTurn ?? false,
           "activate-cannon": state.players[playerId]?.history.turn.activatedCannonThisTurn ?? false,
           "activate-weapon": state.players[playerId]?.history.turn.activatedWeaponThisTurn ?? false,
+          "sharpen-sword": state.players[playerId]?.history.turn.sharpenedSwordThisTurn ?? false,
           "phantasm-destroy-illusionist-attack-action":
             state.players[playerId]?.history.turn
               .phantasmDestroyedIllusionistAttackActionThisTurn ?? false,
@@ -1131,6 +1132,10 @@ function rulesFacts(
       state.playerIds.map((playerId) => [
         playerId,
         {
+          opposingHeroes: {
+            turn: state.players[playerId]!.history.turn.damageDealtToOpposingHeroesByType,
+            chainLink: state.players[playerId]!.history.chainLink.damageDealtToOpposingHeroesByType,
+          },
           turn: state.players[playerId]?.history.turn.damageDealtByType ?? {
             arcane: 0,
             physical: 0,

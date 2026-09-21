@@ -9,6 +9,7 @@ import {
   resumeReplacementKinds,
   resumeContinuousOrder,
   resumeReplacementCostTarget,
+  resumeReplacementCostPayment,
   resumeReplacementConsequenceTarget,
 } from "./continuations/replacement.ts";
 import {
@@ -53,6 +54,7 @@ const continuationRegistry = {
   "replacement-player": resumeReplacementKinds,
   "replacement-first-player": resumeReplacementKinds,
   "replacement-cost-target": resumeReplacementCostTarget,
+  "replacement-cost-payment": resumeReplacementCostPayment,
   "replacement-consequence-target": resumeReplacementConsequenceTarget,
   "replacement-order": resumeReplacementKinds,
   "journal-replacement-order": resumeReplacementKinds,

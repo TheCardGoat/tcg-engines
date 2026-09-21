@@ -309,6 +309,17 @@ export class FabPlayerHandle {
     return this.engine.answerDecision(this.playerId, { kind: "option", optionIds });
   }
 
+  /** Select several displayed options by unique printed label or option ID. */
+  chooseNamedOptions(
+    ...namesOrIds: readonly string[]
+  ): Extract<FabTestDispatchResult, { accepted: true }> {
+    const decision = this.expectDecision("option");
+    const ids = namesOrIds.map(
+      (name) => matchClosedListOption(decision.options, name, decision).id,
+    );
+    return this.chooseOptions(...ids);
+  }
+
   /**
    * Choose cards from the currently presented target prompt by real card
    * reference. Empty args is choose-none (same as {@link target}).

@@ -28,6 +28,7 @@ import {
   matchesFabSnapshotFilter,
 } from "./state-rules-view.ts";
 import { snapshotObject } from "./snapshots.ts";
+import { banishedObjectForRules } from "./banish-observation.ts";
 import { normalizeToCatalogZone } from "./zones.ts";
 import { comparePrimitive } from "./evaluation/compare.ts";
 import type { FabZoneKind } from "../state.ts";
@@ -234,10 +235,9 @@ export function collectEventTriggers(
       if (usage[inlineWindowKey]) continue;
       usage[inlineWindowKey] = 1;
     }
-    // CR 1.9.2a: at most one pending trigger per source per batch. When the
-    // batch contains multiple matching events (e.g. Draw 2 → two `draw`
-    // events), sum their amounts so "create that many" / "for each card drawn
-    // this way" (Valda) still scales with the batch.
+    // CR 1.9.2a: a multi-event trigger does not also trigger for its individual
+    // events. "Draw a card" instead observes each card; "one or more" observes
+    // the shared occurrence and aggregates its amount (e.g. Valda).
     const matchingEntries = batch.events.flatMap((candidate) => {
       const pattern = patterns.find((entry) =>
         matchesTriggerEvent(
@@ -253,12 +253,15 @@ export function collectEventTriggers(
     });
     const matchesByOccurrence = new Map<string, typeof matchingEntries>();
     for (const entry of matchingEntries) {
-      const occurrenceId = entry.event.occurrence.occurrenceId;
+      const occurrenceId =
+        entry.pattern.name === "draw" && entry.pattern.grouping === "individual"
+          ? entry.event.eventId
+          : entry.event.occurrence.occurrenceId;
       const group = matchesByOccurrence.get(occurrenceId) ?? [];
       group.push(entry);
       matchesByOccurrence.set(occurrenceId, group);
     }
-    for (const occurrenceMatches of matchesByOccurrence.values()) {
+    for (const [triggerOccurrenceId, occurrenceMatches] of matchesByOccurrence) {
       const firstMatch = occurrenceMatches[0];
       if (!firstMatch) continue;
       const { event, pattern: matchedPattern } = firstMatch;
@@ -272,7 +275,7 @@ export function collectEventTriggers(
       if (source.abilityCondition && !abilityConditionHolds(state, source, event, context))
         continue;
 
-      const occurrenceClaim = `${occurrenceKey}:${event.occurrence.occurrenceId}`;
+      const occurrenceClaim = `${occurrenceKey}:${triggerOccurrenceId}`;
       if (!bumpedOccurrenceKeys.has(occurrenceClaim)) {
         usage[occurrenceKey] =
           Math.max(
@@ -345,7 +348,7 @@ export function collectEventTriggers(
       );
       const automation = automationForSource(state, source);
       pendingTriggers.push({
-        pendingTriggerId: `${event.occurrence.occurrenceId}:${source.source.instanceId}:${source.abilityId}`,
+        pendingTriggerId: `${triggerOccurrenceId}:${source.source.instanceId}:${source.abilityId}`,
         abilityId: source.abilityId,
         controllerId: source.controllerId,
         source: source.source,
@@ -555,6 +558,7 @@ function globalStateOccurrenceKey(state: FabRulesSnapshot, source: FabTriggerSou
 }
 
 interface TriggerConstraintView {
+  readonly effectController?: "ability-controller" | "opponent";
   readonly name?: string;
   readonly actor?: FabTriggerActor;
   readonly observes?: unknown;
@@ -740,6 +744,22 @@ function matchesNormalizedTriggerEvent(
     return false;
   }
   if (!matchesActor(state, pattern.actor, eventActorId(event), controllerId, event)) return false;
+  if (pattern.effectController !== undefined) {
+    // A rules event or player command is not itself a controlled effect.
+    if (event.cause.kind !== "layer" && event.cause.kind !== "effect") return false;
+    switch (pattern.effectController) {
+      case "ability-controller":
+        if (event.cause.controllerId !== controllerId) return false;
+        break;
+      case "opponent":
+        if (event.cause.controllerId === controllerId) return false;
+        break;
+      default: {
+        const unreachable: never = pattern.effectController;
+        return unreachable;
+      }
+    }
+  }
   if (
     pattern.abilityType !== undefined &&
     (event.name !== "activate" || event.data.ability?.abilityType !== pattern.abilityType)
@@ -963,10 +983,9 @@ function matchesNormalizedTriggerEvent(
           }
         }
       } else {
-        const object = primaryEventObject(event);
         if (
-          !object ||
-          !matchesFabSnapshotFilter(state, object, pattern.filter, undefined, controllerId)
+          !observed ||
+          !matchesFabSnapshotFilter(state, observed, pattern.filter, undefined, controllerId)
         )
           return false;
       }
@@ -1229,6 +1248,9 @@ function observedTriggerObject(
     case "activated-card":
     case "looked-at-card":
     case "modified-object":
+      if (event.name === "banish" || (event.name === "move-zone" && event.data.to === "banished")) {
+        return banishedObjectForRules(event.data);
+      }
       return "object" in event.data && isObjectSnapshot(event.data.object)
         ? event.data.object
         : null;

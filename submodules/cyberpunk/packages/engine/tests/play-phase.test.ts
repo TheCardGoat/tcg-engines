@@ -163,15 +163,53 @@ describe("Main Phase", () => {
         expect(card.meta.faceDown).toBe(false);
       });
 
-      it("deducts 1 eddie", () => {
+      it("pays exactly 1 eddie from the eddie pool", () => {
         const engine = CyberpunkTestEngine.createWithFixture({
-          eddies: 5,
+          eddies: 1,
         });
+        engine.spendAllLegends();
 
         const legend = engine.getFaceDownLegends(P1)[0]!;
         engine.callLegend(legend);
 
-        expect(engine.getEddies(P1)).toBe(4);
+        expect(engine.getEddies(P1)).toBe(0);
+        const spent = engine.getEvents("eddiesSpent");
+        expect(spent).toHaveLength(1);
+        expect(spent[0]).toMatchObject({ amount: 1, forWhat: "callLegend" });
+      });
+
+      it("does not spend a second eddie", () => {
+        const engine = CyberpunkTestEngine.createWithFixture({
+          eddies: 2,
+        });
+        engine.spendAllLegends();
+
+        const legend = engine.getFaceDownLegends(P1)[0]!;
+        engine.callLegend(legend);
+
+        expect(engine.getEddies(P1)).toBe(1);
+      });
+
+      it("can pay the 1 €$ cost by spending a ready Legend", () => {
+        const engine = CyberpunkTestEngine.createWithFixture({
+          legendArea: [
+            { card: structuredLegend(0), faceDown: true },
+            { card: structuredLegend(1), faceDown: false },
+          ],
+          eddies: 0,
+        });
+
+        const toCall = engine.getFaceDownLegends(P1)[0]!;
+        engine.callLegend(toCall);
+
+        expect(engine.getCard(toCall).meta.faceDown).toBe(false);
+        expect(engine.getEddies(P1)).toBe(0);
+        expect(engine.getEvents("eddiesSpent")[0]).toMatchObject({
+          amount: 1,
+          forWhat: "callLegend",
+        });
+        const legends = engine.getCardsInZone("legendArea", P1);
+        expect(legends.filter((card) => card.meta.spent)).toHaveLength(1);
       });
 
       it("emits legendFlipped and legendCalled events", () => {

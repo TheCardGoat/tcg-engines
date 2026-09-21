@@ -31,6 +31,7 @@ export const wither = definePitchFamily(fabPitchFamilies["wither"], {
         effect: {
           type: "create-token",
           token: "frailty",
+          creator: "effect-controller",
           controller: "attack-target",
         },
       },

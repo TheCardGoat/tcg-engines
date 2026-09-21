@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op05Sakazuki041 } from "../../../../../cards/src/cards/OP05/leaders/041-sakazuki.ts";
+import { op05Sakazuki041 } from "../../../../../cards/src/cards/leaders/op05-041-sakazuki.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-041 Sakazuki", () => {

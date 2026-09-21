@@ -38,20 +38,31 @@ export const discoverTheDivine: GrandArchiveCard<GrandArchiveAbilityDefinition, 
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "enlighten",
+                    amount: 4,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: "enlighten",
-                  amount: 4,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "level-up",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "level-up",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
                   },
                 },
               ],

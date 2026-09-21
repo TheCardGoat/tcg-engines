@@ -59,59 +59,70 @@ export const votiveRuneblade: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "sacrificed-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "choose",
+                    selection: {
+                      id: "sacrificed-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "all",
+                              filters: [
+                                {
+                                  kind: "supertype",
+                                  oneOf: ["REGALIA"],
+                                },
+                                {
+                                  kind: "not-source",
+                                },
+                                {
+                                  kind: "subtype",
+                                  oneOf: ["SWORD"],
+                                },
+                              ],
+                            },
+                            {
+                              kind: "not-source",
+                            },
+                          ],
+                        },
+                      },
                     },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "all",
-                            filters: [
-                              {
-                                kind: "supertype",
-                                oneOf: ["REGALIA"],
-                              },
-                              {
-                                kind: "not-source",
-                              },
-                              {
-                                kind: "subtype",
-                                oneOf: ["SWORD"],
-                              },
-                            ],
-                          },
-                          {
-                            kind: "not-source",
-                          },
-                        ],
+                    effect: {
+                      kind: "sacrifice",
+                      subject: {
+                        kind: "bound",
+                        binding: "sacrificed-object",
                       },
                     },
                   },
-                  effect: {
-                    kind: "sacrifice",
-                    subject: {
-                      kind: "bound",
-                      binding: "sacrificed-object",
-                    },
-                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "wake",
-                  subject: {
-                    kind: "event-attacker",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "wake",
+                    subject: {
+                      kind: "event-attacker",
+                    },
                   },
                 },
               ],

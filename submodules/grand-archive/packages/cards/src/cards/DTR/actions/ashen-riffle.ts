@@ -126,17 +126,15 @@ export const ashenRiffle: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                         binding: "banished-suited-cards",
                       },
                       fromZone: "banishment",
-                      condition: {
-                        kind: "subjects-in-zone",
-                        subject: {
+                      affectedSet: "locked",
+                      duration: {
+                        kind: "while-subjects-in-zone",
+                        subjects: {
                           kind: "bound",
                           binding: "banished-suited-cards",
                         },
                         zone: "banishment",
-                        quantifier: "all",
-                      },
-                      duration: {
-                        kind: "while-condition",
+                        scope: "per-object",
                       },
                     },
                   ],

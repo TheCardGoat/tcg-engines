@@ -54,6 +54,7 @@ export const spikeWithFrailty = definePitchFamily(fabPitchFamilies["spike-with-f
                   effect: {
                     type: "create-token",
                     token: "frailty",
+                    creator: "effect-controller",
                     controller: "attack-target",
                   },
                 },

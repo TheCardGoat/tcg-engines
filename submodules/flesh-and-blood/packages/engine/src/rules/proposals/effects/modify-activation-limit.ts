@@ -11,6 +11,9 @@ export function proposeModifyActivationLimit(
   const { state, layer, processId, effectTargets, effectPath, targetPath } = ctx;
   const objects = objectTargets(state, layer, effect.target, targetPath, effectTargets, effectPath);
   if (!objects) return unsupported(effect, "activation-limit target is unresolved");
+  // "You may attack with each X an additional time" over an empty bound set
+  // is a vacuous grant, not a rules gap (CR 5.2.3c allowance with no subject).
+  if (objects.length === 0) return { supported: true, events: [] };
   const count =
     typeof effect.count === "number"
       ? effect.count

@@ -211,8 +211,9 @@ function RiftboundTabletopContent({
         <SimulatorEntityVisual entity={entityFor(state.cards[cardId]!, state)} density="compact" />
       )}
       onDragEnd={(cardId, overId) => {
-        if (!cardId || !overId?.startsWith("zone:")) return;
+        if (!cardId || !overId?.startsWith("zone:")) return { kind: "rejected" };
         dispatch({ type: "move_card", cardId, zone: overId.split(":").at(-1) as RiftboundZone });
+        return { kind: "accepted" };
       }}
     >
       <div className="riftbound-board">

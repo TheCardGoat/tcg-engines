@@ -2,7 +2,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vite-plus/test";
 
 import { createSimulatorAnimationScope } from "../provider/createSimulatorAnimationScope";
-import { EffectArrow, shouldRenderEffectOverlay } from "./EffectOverlay";
+import { EffectArrow, shouldRenderEffectOverlay, sourceCardEffectTiming } from "./EffectOverlay";
 
 describe("EffectArrow", () => {
   test("renders a directional arrow from a resolving source to its selected target", () => {
@@ -37,11 +37,55 @@ describe("EffectArrow", () => {
   });
 });
 
+describe("sourceCardEffectTiming", () => {
+  test("places the impact halfway through a smooth 1.24 second resolution", () => {
+    expect(sourceCardEffectTiming(1_240)).toEqual({
+      impactAtMs: 620,
+      arrowStartMs: 310,
+      arrowDurationMs: 484,
+      targetStartMs: 496,
+      targetDurationMs: 471,
+    });
+  });
+
+  test("keeps every segment non-negative when motion is suppressed", () => {
+    expect(sourceCardEffectTiming(0)).toEqual({
+      impactAtMs: 0,
+      arrowStartMs: 0,
+      arrowDurationMs: 0,
+      targetStartMs: 0,
+      targetDurationMs: 0,
+    });
+  });
+});
+
 describe("shouldRenderEffectOverlay", () => {
   test("keeps the completed overlay mounted through reflow for a seamless handoff", () => {
     expect(shouldRenderEffectOverlay("preparing")).toBe(false);
     expect(shouldRenderEffectOverlay("running")).toBe(true);
     expect(shouldRenderEffectOverlay("reflowing")).toBe(true);
     expect(shouldRenderEffectOverlay(null)).toBe(false);
+  });
+});
+
+describe("sourceCardEffectTiming", () => {
+  test("places the impact halfway through a smooth 1.24 second resolution", () => {
+    expect(sourceCardEffectTiming(1_240)).toEqual({
+      impactAtMs: 620,
+      arrowStartMs: 310,
+      arrowDurationMs: 484,
+      targetStartMs: 496,
+      targetDurationMs: 471,
+    });
+  });
+
+  test("keeps every segment non-negative when motion is suppressed", () => {
+    expect(sourceCardEffectTiming(0)).toEqual({
+      impactAtMs: 0,
+      arrowStartMs: 0,
+      arrowDurationMs: 0,
+      targetStartMs: 0,
+      targetDurationMs: 0,
+    });
   });
 });

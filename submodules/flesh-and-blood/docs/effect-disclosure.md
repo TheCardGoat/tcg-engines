@@ -28,13 +28,13 @@ representative cards. The linked CR and card sources were checked on 2026-09-04.
 
 ## Representative cases
 
-| Case | Expected disclosure |
-| --- | --- |
-| Authority of Ataya pitched to pay for an attack | Both players and spectators identify its lasting defense-reaction surcharge. |
-| Authority followed by Potion of Déjà Vu | Keep the known effect and artwork; omit any link to the physical card now in the deck. |
-| Deny Redemption activated from hand | Its lasting life-gain restriction names Deny Redemption after activation. Merely holding the card creates no public artifact. |
-| Skybody Keikoi activated while cloaked | The declared activation and resulting prevention are public. An unactivated cloaked card does not advertise its prevention. |
-| Mutated Mass held in hand | Its private property-static modifiers are visible only to its owner; opponents and spectators receive no effect entry or source definition. |
+| Case                                            | Expected disclosure                                                                                                                         |
+| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authority of Ataya pitched to pay for an attack | Both players and spectators identify its lasting defense-reaction surcharge.                                                                |
+| Authority followed by Potion of Déjà Vu         | Keep the known effect and artwork; omit any link to the physical card now in the deck.                                                      |
+| Deny Redemption activated from hand             | Its lasting life-gain restriction names Deny Redemption after activation. Merely holding the card creates no public artifact.               |
+| Skybody Keikoi activated while cloaked          | The declared activation and resulting prevention are public. An unactivated cloaked card does not advertise its prevention.                 |
+| Mutated Mass held in hand                       | Its private property-static modifiers are visible only to its owner; opponents and spectators receive no effect entry or source definition. |
 
 [Potion of Déjà Vu's official release notes](https://legacy.fabtcg.com/en/resources/rules-and-policy-center/release-notes/everfest/)
 explicitly distinguish the known cards from their unknown order in the deck.

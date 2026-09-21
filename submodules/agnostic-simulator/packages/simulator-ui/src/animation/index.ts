@@ -15,6 +15,10 @@ export {
 } from "./components/SimulatorEntityVisual";
 export type {
   SimulatorEntityVisualProps,
+  SimulatorSpatialTransfer,
+  SimulatorSpatialStateChange,
+  SimulatorSpatialStateChangeRendererProps,
+  SimulatorSpatialTransferRendererProps,
   SimulatorValueDeltaVisualProps,
 } from "./provider/contexts";
 export { AnimationInteractionBoundary } from "./components/AnimationInteractionBoundary";
@@ -25,6 +29,7 @@ export { AnimatedZoneSlot, type AnimatedZoneSlotProps } from "./components/Anima
 export { AnimationAnchor } from "./components/AnimationAnchor";
 export { useAnimationNode } from "./hooks/useAnimationNode";
 export { simulatorBoardCenterAnimationRef } from "./overlays/overlay-utils";
+export { useAnimationRuntime, useOptionalAnimationRuntime } from "./provider/contexts";
 export {
   createAnimationNodeRegistry,
   type AnimationNodeRecord,

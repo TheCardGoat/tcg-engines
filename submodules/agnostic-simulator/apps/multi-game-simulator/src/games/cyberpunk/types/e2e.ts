@@ -67,7 +67,15 @@ export type ScenarioGroup =
   | "release-qa";
 
 export type ScenarioId =
+  | "pendingEffectsRiverRelicAdamSmasher"
+  | "deckSearchThreeMouthsPrompt"
+  | "deckSearchHanakoPrompt"
+  | "deckSearchSketchyRipperPrompt"
+  | "deckSearchViktorPrompt"
+  | "deckSearchRiverWardPrompt"
+  | "deckSearchTetratronicPrompt"
   | "gameStart"
+  | "boardTappedResourcesQa"
   | "retailCardCatalog"
   | "retailProgramTargetBench"
   | "retailCombatGigBench"
@@ -80,6 +88,7 @@ export type ScenarioId =
   | "mobileLedgerFriendlyZeroRivalTwo"
   | "retailPr2295Cards"
   | "retailNewCardAbilities"
+  | "pepeReadyLegendsPrompt"
   | "openingMain"
   | "attackStep"
   | "stealGigTest"
@@ -115,7 +124,12 @@ export type ScenarioId =
   | "legendVCorporateExile"
   | "legendGoroTakemuraHandsUnclean"
   | "legendVStreetkid"
+  | "legendVStreetkidEquippedPower"
   | "legendRoycePsychoOnTheEdge"
+  | "legendCallEquippedSelfPay"
+  | "regressionRedirectDefeatChoice"
+  | "regressionCardEffectRedirectDefeatChoice"
+  | "regressionCardEffectSacrificialGearChoice"
   | "legendAltCunninghamSoulkillerArchitect"
   | "legendSaburoArasakaStubbornPatriach"
   | "legendYorinobuArasakaEmbracingDestruction"
@@ -124,14 +138,18 @@ export type ScenarioId =
   | "legendViktorOpponentPrivateSearch"
   | "legendEvelynParkerBeautifulEnigma"
   | "legendRiverWardDetectiveOnTheHunt"
+  | "legendDexterDeshawnOffTheGrid"
   | "legendDumDumMaelstromTriggerman"
   | "legendPanamPalmerNomadCavalry"
   | "legendGoroTakemuraVengefulBodyguard"
   | "legendLucynaKushinada"
   | "legendVStreetkidRetail"
   | "legendAltCunninghamSoulkillerArchitectRetail"
+  | "legendAltCunninghamUnaffordableTrashPlay"
   | "legendRoycePsychoOnTheEdgeRetail"
   | "legendDumDumMaelstromTriggermanRetail"
+  | "legendDumDumDuplicateGearRetail"
+  | "legendDumDumLegendGearRetail"
   | "legendEvelynParkerBeautifulEnigmaRetail"
   | "legendGoroTakemuraVengefulBodyguardRetail"
   | "legendPanamPalmerNomadCavalryRetail"
@@ -142,6 +160,9 @@ export type ScenarioId =
   | "progCyberpsychosisRetail"
   | "progPeaceOfferingRetail"
   | "progLiveWithTheAftermathRetail"
+  | "progLiveWithTheAftermathActiveOnlyRetail"
+  | "progLiveWithTheAftermathRivalOnlyRetail"
+  | "progLiveWithTheAftermathNoUnitsRetail"
   | "unitSecondhandBombus"
   | "unitCorpoSecurity"
   | "unitDelamainCab"
@@ -263,10 +284,16 @@ export type ScenarioId =
  * (e.g. `{ type: "mulligan", as: P1 }`) instead of stringly-typed `Record`s.
  */
 export type EngineAction =
-  | { type: "playCard"; cardId: string; attachToId?: string; as?: PlayerId }
+  | {
+      type: "playCard";
+      cardId: string;
+      attachToId?: string;
+      paymentSourceIds?: string[];
+      as?: PlayerId;
+    }
   | { type: "sellCard"; cardId: string; as?: PlayerId }
-  | { type: "callLegend"; cardId: string; as?: PlayerId }
-  | { type: "goSolo"; cardId: string; as?: PlayerId }
+  | { type: "callLegend"; cardId: string; paymentSourceIds?: string[]; as?: PlayerId }
+  | { type: "goSolo"; cardId: string; paymentSourceIds?: string[]; as?: PlayerId }
   | {
       type: "attackUnit";
       attackerId: string;
@@ -279,9 +306,21 @@ export type EngineAction =
   | { type: "resolveAttack"; pass?: boolean; as?: PlayerId }
   | { type: "resolveStealGigs"; dieIds: string[]; as?: PlayerId }
   | { type: "resolveTrigger"; triggerId?: string; pass?: boolean; as?: PlayerId }
-  | { type: "resolveAdjustGig"; value: number; as?: PlayerId }
+  | {
+      type: "resolveAdjustGig";
+      choice: { kind: "adjust"; dieId: string; value: number } | { kind: "noAdjustment" };
+      as?: PlayerId;
+    }
   | { type: "resolveEffectTarget"; targetIds?: string[]; pass?: boolean; as?: PlayerId }
   | { type: "resolveDiscardFromHand"; cardIds?: string[]; pass?: boolean; as?: PlayerId }
+  | {
+      type: "resolvePreventGigSteal";
+      /** One prevented Gig per discarded card, paired by index. */
+      dieIds: string[];
+      cardIds: string[];
+      pass?: boolean;
+      as?: PlayerId;
+    }
   | { type: "resolveScry"; destinations: Array<{ zone: string; cardIds: string[] }>; as?: PlayerId }
   | { type: "resolveRevealDestination"; destination: "hand" | "trash"; as?: PlayerId }
   | { type: "resolveCardTypeChoice"; cardType: CardType; as?: PlayerId }
@@ -298,9 +337,53 @@ export type EngineAction =
     }
   | { type: "resolveChooseEffect"; optionId: string; as?: PlayerId }
   | { type: "resolveCardToMove"; cardId?: string; pass?: boolean; as?: PlayerId }
+  | { type: "resolveRedirectDefeat"; pass?: boolean; as?: PlayerId }
+  | { type: "resolveSacrificialGear"; cardId: string; as?: PlayerId }
+  | { type: "resolveFirstPlayer"; goFirst: boolean; as?: PlayerId }
+  | { type: "cancelPendingResolution"; as?: PlayerId }
   | { type: "concede"; as?: PlayerId }
   | { type: "undo" }
-  | { type: "undoToTurnStart" };
+  | { type: "undoToTurnStart" }
+  | { type: "manualSetGigValue"; dieId: string; value: number; as?: PlayerId }
+  | {
+      type: "manualMoveGig";
+      dieId: string;
+      toPlayerId: PlayerId;
+      location: "gigArea" | "fixerArea";
+      as?: PlayerId;
+    }
+  | {
+      type: "manualMoveCard";
+      cardId: string;
+      toZone: "hand" | "field" | "eddieArea" | "trash" | "legendArea" | "deck";
+      deckPosition?: "top" | "bottom";
+      trashPosition?: "top" | "bottom";
+      as?: PlayerId;
+    }
+  | { type: "manualAttachGear"; gearId: string; hostId: string; as?: PlayerId }
+  | { type: "manualDetachGear"; gearId: string; as?: PlayerId }
+  | { type: "manualExertCard"; cardId: string; as?: PlayerId }
+  | { type: "manualReadyCard"; cardId: string; as?: PlayerId }
+  | {
+      type: "manualDrawCard";
+      from: "top" | "bottom";
+      playerId?: PlayerId;
+      as?: PlayerId;
+    }
+  | {
+      type: "manualClearPendingResolution";
+      scope: "current" | "all";
+      as?: PlayerId;
+    }
+  | { type: "manualResetCombat"; as?: PlayerId }
+  | { type: "manualForcePassTurn"; as?: PlayerId }
+  | { type: "manualSetEddies"; playerId?: PlayerId; amount: number; as?: PlayerId }
+  | { type: "manualResetOncePerTurn"; playerId?: PlayerId; as?: PlayerId }
+  | { type: "manualSetCardFace"; cardId: string; faceDown: boolean; as?: PlayerId }
+  | { type: "manualReadyAll"; playerId?: PlayerId; as?: PlayerId }
+  | { type: "manualRecomputeActiveEffects"; as?: PlayerId }
+  | { type: "manualDropEffectBagEntry"; entryId: string; as?: PlayerId }
+  | { type: "rewindToTurnStart"; as?: PlayerId };
 
 /**
  * Helper for matchers that want to assert a partial shape of an

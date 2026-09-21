@@ -13,8 +13,10 @@ describe("Fool on the Hill", () => {
   it("is cataloged from the official retail printing", () => {
     expect(welcomeToNightCityRetailFoolOnTheHill).toMatchObject({
       id: "c5d2fed1-1470-4ac5-9f84-bf66705901ce",
+      canonicalId: "fool-on-the-hill",
       slug: "fool-on-the-hill",
       name: "Fool on the Hill",
+      displayName: "Fool on the Hill",
       type: "program",
       color: "green",
       classifications: ["Merc"],
@@ -24,10 +26,15 @@ describe("Fool on the Hill", () => {
       },
       printNumber: "099",
       rarity: "Rare",
+      legality: "legal",
       hasSellTag: true,
       ram: 3,
+      timingTriggers: ["play"],
       cost: 2,
       power: null,
+      rulesText:
+        "Reveal the top 2 cards of your deck. A Rival chooses whether you add them to your hand or trash them. If you trash them, draw 2.",
+      reminderText: ["Discard programs after they resolve."],
     });
     expect(welcomeToNightCityRetailFoolOnTheHill.printings).toEqual([
       {
@@ -71,6 +78,7 @@ describe("Fool on the Hill", () => {
         ],
       }),
     ]);
+    expect(welcomeToNightCityRetailFoolOnTheHill.abilities).toHaveLength(1);
   });
 
   it("lets the rival add the revealed cards to the caster's hand", () => {
@@ -127,6 +135,7 @@ describe("Fool on the Hill", () => {
       welcomeToNightCityRetailFoolOnTheHill.id,
     ]);
     expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+    expect(engine.getEddies(P1)).toBe(0);
 
     const moveSteps = resolveResult.animationScript.steps.filter(
       (step) => step.kind === "cardMove",
@@ -220,5 +229,6 @@ describe("Fool on the Hill", () => {
       value: "Riding Nomad, Sketchy Ripper",
       visibleTo: [P1],
     });
+    expect(engine.getEddies(P1)).toBe(0);
   });
 });

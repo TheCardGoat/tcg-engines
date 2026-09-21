@@ -15,14 +15,14 @@ export const hoovesOfTheShadowbeast = defineCard(
           event: {
             name: "banish",
             actor: {
-              kind: "player",
-              player: "ability-controller",
+              kind: "any",
             },
             observes: {
               kind: "event-object",
               selector: "moved-object",
               relationship: {
-                kind: "any",
+                kind: "owner",
+                player: "ability-controller",
               },
               filter: {
                 power: {

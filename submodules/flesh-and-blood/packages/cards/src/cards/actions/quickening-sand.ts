@@ -10,6 +10,7 @@ export const quickeningSand = definePitchFamily(fabPitchFamilies["quickening-san
       effect: {
         type: "create-token",
         token: "quicken",
+        creator: "effect-controller",
         controller: "target-controller",
         target: { selector: "any-hero" },
       },

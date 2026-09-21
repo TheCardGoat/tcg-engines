@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb01KouzukiOden001 } from "../../../../../cards/src/cards/EB01/leaders/001-kouzuki-oden.ts";
+import { eb01KouzukiOden001 } from "../../../../../cards/src/cards/leaders/eb01-001-kouzuki-oden.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-001 Kouzuki Oden", () => {

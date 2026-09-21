@@ -1,4 +1,13 @@
-import { Anchor, Check, ChevronRight, FastForward, Hand, SkipForward } from "lucide-react";
+import {
+  Anchor,
+  Check,
+  ChevronRight,
+  FastForward,
+  Hand,
+  Hourglass,
+  SkipForward,
+  Swords,
+} from "lucide-react";
 import { Popover } from "@mantine/core";
 import { motion } from "motion/react";
 import {
@@ -14,7 +23,7 @@ import {
   FAB_PRIORITY_MODE_ACTION_LABEL,
   FAB_PRIORITY_MODES,
 } from "@tcg/flesh-and-blood-server-adapter";
-import { holdsPassOnlyWindows } from "./priority-automation";
+import { holdsPassOnlyWindows, type FabScopedAutoPassTarget } from "./priority-automation";
 import type { FabPriorityAutomationMode } from "./state";
 import { SimulatorParticipantActionButton } from "../../simulator/participant-actions/SimulatorParticipantActions";
 import { SimulatorSidebarTip } from "../../simulator/participant-actions/SimulatorSidebarTips";
@@ -24,6 +33,30 @@ interface FabPriorityCountdownPresentation {
   readonly durationMs: number;
   readonly onCancel: () => void;
 }
+
+export const FAB_SCOPED_AUTO_PASS_META: Record<
+  FabScopedAutoPassTarget,
+  {
+    readonly label: string;
+    readonly disarmLabel: string;
+    readonly body: string;
+    readonly armedBody: string;
+  }
+> = {
+  combat: {
+    label: "Auto-pass this combat",
+    disarmLabel: "Stop auto-passing this combat",
+    body: "Skip the rest of this combat chain. Stops when the chain closes, at your defense, or at any choice.",
+    armedBody: "Auto-passing until this combat chain closes. You are still asked to defend.",
+  },
+  "opponent-turn": {
+    label: "Auto-pass the opponent's turn",
+    disarmLabel: "Stop auto-passing the opponent's turn",
+    body: "Skip your windows for the rest of their turn. You are still asked to defend and make choices.",
+    armedBody:
+      "Auto-passing until your turn starts. You are still asked to defend and make choices.",
+  },
+};
 
 const MODE_ICONS: Record<FabPriorityAutomationMode, typeof FastForward> = {
   "auto-pass": FastForward,
@@ -49,6 +82,75 @@ export interface FabSavedOpponentTriggerYield {
   readonly currentMatchRemovalAvailable: boolean;
 }
 
+/** Window context that decides which scoped auto-pass arm is offerable. */
+export interface FabScopeContext {
+  readonly combatOpen: boolean;
+  readonly opponentsTurn: boolean;
+}
+
+function scopeArmable(scope: FabScopedAutoPassTarget, context: FabScopeContext): boolean {
+  return scope === "combat" ? context.combatOpen : context.opponentsTurn;
+}
+
+function scopeMenuItemProps(
+  scope: FabScopedAutoPassTarget,
+  armed: FabScopedAutoPassTarget | null | undefined,
+): { readonly label: string; readonly body: string; readonly disarm: boolean } {
+  if (armed === scope) {
+    return {
+      label: FAB_SCOPED_AUTO_PASS_META[scope].disarmLabel,
+      body: FAB_SCOPED_AUTO_PASS_META[scope].armedBody,
+      disarm: true,
+    };
+  }
+  return {
+    label: FAB_SCOPED_AUTO_PASS_META[scope].label,
+    body: FAB_SCOPED_AUTO_PASS_META[scope].body,
+    disarm: false,
+  };
+}
+
+/** The scoped auto-pass row in the Game settings tab. */
+function FabScopedAutoPassSettingsRow({
+  scopedAutoPass,
+  scopeContext,
+  onArmScope,
+  onDisarmScope,
+}: {
+  readonly scopedAutoPass: FabScopedAutoPassTarget | null;
+  readonly scopeContext: FabScopeContext;
+  readonly onArmScope?: (scope: FabScopedAutoPassTarget) => void;
+  readonly onDisarmScope?: () => void;
+}) {
+  const scope: FabScopedAutoPassTarget | null =
+    scopedAutoPass ?? (scopeContext.combatOpen ? "combat" : "opponent-turn");
+  if (!scope) return null;
+  const armed = scopedAutoPass === scope;
+  const props = scopeMenuItemProps(scope, scopedAutoPass);
+  const disabled = armed ? !onDisarmScope : !onArmScope || !scopeArmable(scope, scopeContext);
+  return (
+    <div className="fab-priority-settings__hold-next" data-testid="fab-scoped-auto-pass-row">
+      <div>
+        <strong>{props.label}</strong>
+        <small>{armed ? props.body : FAB_SCOPED_AUTO_PASS_META[scope].body}</small>
+      </div>
+      <button
+        type="button"
+        data-testid={armed ? "fab-scoped-auto-pass-disarm" : `fab-scoped-auto-pass-arm-${scope}`}
+        disabled={disabled}
+        onClick={() => (armed ? onDisarmScope?.() : onArmScope?.(scope))}
+      >
+        {armed ? (
+          <Check aria-hidden="true" size={16} />
+        ) : (
+          <FastForward aria-hidden="true" size={16} />
+        )}
+        {armed ? "Armed" : "Auto-pass"}
+      </button>
+    </div>
+  );
+}
+
 /** Match-level controls that belong in the Game settings tab. */
 export function FabPriorityAutomationSettings({
   mode,
@@ -63,6 +165,10 @@ export function FabPriorityAutomationSettings({
   onSetAutoSelectSingletonTargets,
   savedOpponentTriggerYields = [],
   onRemoveOpponentTriggerYield,
+  scopedAutoPass = null,
+  scopeContext = { combatOpen: false, opponentsTurn: false },
+  onArmScope,
+  onDisarmScope,
 }: {
   readonly mode: FabPriorityAutomationMode | null | undefined;
   readonly holdArmed?: boolean | null;
@@ -76,6 +182,10 @@ export function FabPriorityAutomationSettings({
   readonly onSetAutoSelectSingletonTargets?: (enabled: boolean) => void;
   readonly savedOpponentTriggerYields?: readonly FabSavedOpponentTriggerYield[];
   readonly onRemoveOpponentTriggerYield?: (canonicalId: string) => void;
+  readonly scopedAutoPass?: FabScopedAutoPassTarget | null;
+  readonly scopeContext?: FabScopeContext;
+  readonly onArmScope?: (scope: FabScopedAutoPassTarget) => void;
+  readonly onDisarmScope?: () => void;
 }) {
   if (!mode) return null;
   const disabled = Boolean(disabledReason || !onSelectMode);
@@ -178,6 +288,12 @@ export function FabPriorityAutomationSettings({
           </button>
         </div>
       ) : null}
+      <FabScopedAutoPassSettingsRow
+        scopedAutoPass={scopedAutoPass}
+        scopeContext={scopeContext}
+        onArmScope={onArmScope}
+        onDisarmScope={onDisarmScope}
+      />
       <div className="fab-priority-settings__auto-order">
         <div>
           <strong>Auto-order simultaneous triggers</strong>
@@ -259,10 +375,14 @@ interface FabPriorityQuickActionsProps {
   readonly autoOrderTriggers?: boolean;
   readonly autoSelectSingletonTargets?: boolean;
   readonly disabledReason?: string;
+  readonly scopedAutoPass?: FabScopedAutoPassTarget | null;
+  readonly scopeContext?: FabScopeContext;
   readonly onSelectMode?: (mode: FabPriorityAutomationMode) => void;
   readonly onArmHold?: () => void;
   readonly onSetAutoOrderTriggers?: (enabled: boolean) => void;
   readonly onSetAutoSelectSingletonTargets?: (enabled: boolean) => void;
+  readonly onArmScope?: (scope: FabScopedAutoPassTarget) => void;
+  readonly onDisarmScope?: () => void;
 }
 
 function FabPriorityModeIcon({
@@ -310,6 +430,60 @@ function FabPriorityModeMenuItems({
       </button>
     );
   });
+}
+
+/** One-shot scoped auto-pass items, offered while their context exists. */
+function ScopedAutoPassMenuItems({
+  scopedAutoPass = null,
+  scopeContext = { combatOpen: false, opponentsTurn: false },
+  disabledReason,
+  onArmScope,
+  onDisarmScope,
+  onComplete,
+}: FabPriorityQuickActionsProps & { readonly onComplete?: () => void }) {
+  const scopes = (["combat", "opponent-turn"] as const).filter(
+    (scope) => scopeArmable(scope, scopeContext) || scopedAutoPass === scope,
+  );
+  if (scopes.length === 0) return null;
+  return (
+    <div className="fab-priority-menu__related" role="group" aria-label="Auto-pass scope">
+      <span className="fab-priority-menu__related-label">Auto-pass scope</span>
+      {scopes.map((scope) => {
+        const props = scopeMenuItemProps(scope, scopedAutoPass);
+        const armed = scopedAutoPass === scope;
+        const disabled = armed ? !onDisarmScope : !onArmScope || Boolean(disabledReason);
+        const Icon = scope === "combat" ? Swords : Hourglass;
+        return (
+          <button
+            key={scope}
+            type="button"
+            role="menuitem"
+            className="fab-priority-menu__item fab-priority-menu__suboption"
+            data-testid={
+              armed ? "fab-scoped-auto-pass-disarm" : `fab-scoped-auto-pass-arm-${scope}`
+            }
+            disabled={disabled}
+            title={props.body}
+            onClick={() => {
+              if (armed) {
+                onDisarmScope?.();
+              } else {
+                onArmScope?.(scope);
+              }
+              onComplete?.();
+            }}
+          >
+            {armed ? <Check aria-hidden="true" size={14} /> : <Icon aria-hidden="true" size={14} />}
+            <span>
+              <strong>{props.label}</strong>
+              <small>{armed ? props.body : (disabledReason ?? props.body)}</small>
+            </span>
+            <span />
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
 function HoldNextMenuItem({
@@ -489,6 +663,7 @@ export function FabPriorityAutomationQuickControl(props: FabPriorityQuickActions
           aria-label="Priority behavior"
         >
           <FabPriorityModeMenuItems {...props} onComplete={() => setOpen(false)} />
+          <ScopedAutoPassMenuItems {...props} onComplete={() => setOpen(false)} />
           <RelatedAutomationMenuItems {...props} />
         </Popover.Dropdown>
       </Popover>
@@ -525,6 +700,7 @@ export function FabPriorityAutomationParticipantMenu({
           aria-label="Priority behavior"
         >
           <FabPriorityModeMenuItems {...props} onComplete={onComplete} />
+          <ScopedAutoPassMenuItems {...props} onComplete={onComplete} />
           <RelatedAutomationMenuItems {...props} />
           <HoldNextMenuItem {...props} onComplete={onComplete} />
         </div>
@@ -606,6 +782,7 @@ export function FabBoardContextMenu({
           aria-label="Priority behavior"
         >
           <FabPriorityModeMenuItems {...props} onComplete={onClose} />
+          <ScopedAutoPassMenuItems {...props} onComplete={onClose} />
           <RelatedAutomationMenuItems {...props} />
         </div>
       ) : null}
@@ -615,13 +792,18 @@ export function FabBoardContextMenu({
   );
 }
 
-/** In-match quick control: only the active countdown cancel replaces Undo. */
+/** In-match quick control: the active countdown cancel or the armed
+ * scoped-auto-pass chip replaces Undo while either is live. */
 export function FabPriorityAutomationControl({
   mode,
   countdown,
+  scopedAutoPass = null,
+  onDisarmScope,
 }: {
   readonly mode: FabPriorityAutomationMode | null | undefined;
   readonly countdown?: FabPriorityCountdownPresentation;
+  readonly scopedAutoPass?: FabScopedAutoPassTarget | null;
+  readonly onDisarmScope?: () => void;
 }) {
   const [announcement, setAnnouncement] = useState("");
   const [remainingMs, setRemainingMs] = useState(countdown?.durationMs ?? 0);
@@ -640,7 +822,48 @@ export function FabPriorityAutomationControl({
     return () => window.clearInterval(tick);
   }, [countdown?.durationMs, countdown?.windowKey]);
 
-  if (!mode || !countdown || !holdsPassOnlyWindows(mode)) return null;
+  if (!mode) return null;
+
+  if (scopedAutoPass && !countdown) {
+    const meta = FAB_SCOPED_AUTO_PASS_META[scopedAutoPass];
+    return (
+      <>
+        <div
+          className="fab-priority-automation"
+          data-testid="fab-scoped-auto-pass-chip"
+          data-scope={scopedAutoPass}
+          role="group"
+          aria-label="Scoped auto-pass"
+        >
+          <button
+            type="button"
+            className="fab-priority-automation__button"
+            data-scope={scopedAutoPass}
+            aria-label={`${meta.disarmLabel} now`}
+            title={`${meta.armedBody} Stop passing future windows.`}
+            onPointerDown={(event) => event.stopPropagation()}
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              onDisarmScope?.();
+              setAnnouncement(`${meta.disarmLabel}. Your windows are yours again.`);
+            }}
+          >
+            <FastForward aria-hidden="true" size={15} />
+            <span className="fab-priority-automation__label">
+              {scopedAutoPass === "combat" ? "Auto-passing · combat" : "Auto-passing · their turn"}
+            </span>
+            <kbd aria-hidden="true">Esc</kbd>
+          </button>
+        </div>
+        <span className="fab-visually-hidden" role="status" aria-live="polite" aria-atomic="true">
+          {announcement}
+        </span>
+      </>
+    );
+  }
+
+  if (!countdown || !holdsPassOnlyWindows(mode)) return null;
   const seconds = Math.ceil(remainingMs / 1000);
   return (
     <>

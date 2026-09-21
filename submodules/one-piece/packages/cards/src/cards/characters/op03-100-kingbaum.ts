@@ -1,0 +1,51 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op03Kingbaum100I18n } from "./op03-100-kingbaum.i18n.ts";
+
+export const op03Kingbaum100: CharacterCard = {
+  id: "OP03-100",
+  canonicalId: "OP03-100",
+  slug: "kingbaum",
+  name: "Kingbaum",
+  printings: [
+    {
+      id: "OP03-100",
+      artId: "OP03-100",
+      setCode: "OP03",
+      collectorNumber: "100",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-100.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["yellow"],
+  rarity: "C",
+  setId: "OP03",
+  cost: 3,
+  power: 5000,
+  trigger: "You may trash 1 card from the top or bottom of your Life cards: Play this card.",
+  traits: ["Big Mom Pirates Homies"],
+  attribute: "strike",
+  effect:
+    "[Trigger] You may trash 1 card from the top or bottom of your Life cards: Play this card.",
+  effects: {
+    effects: [
+      {
+        trigger: "trigger",
+        costs: [
+          {
+            cost: "trashLife",
+            amount: 1,
+            position: "choice",
+          },
+        ],
+        actions: [
+          {
+            action: "playThisCard",
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op03Kingbaum100I18n,
+};

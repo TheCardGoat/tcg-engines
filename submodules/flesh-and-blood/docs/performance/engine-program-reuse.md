@@ -65,11 +65,11 @@ practice fixture, 20 warm-up commands, and 120 measured first priority passes.
 Fixtures were prepared outside the timed command loop. Baseline and candidate
 ran sequentially in alternating order after the gameplay sweeps finished.
 
-| First-pass metric | Baseline, two runs | Candidate, two runs |
-| --- | --- | --- |
-| Median | 6.04–6.82 ms | 1.36–1.41 ms |
-| p95 | 6.65–9.05 ms | 3.40–3.45 ms |
-| Total, 120 commands | 716–832 ms | 215–219 ms |
+| First-pass metric   | Baseline, two runs | Candidate, two runs |
+| ------------------- | ------------------ | ------------------- |
+| Median              | 6.04–6.82 ms       | 1.36–1.41 ms        |
+| p95                 | 6.65–9.05 ms       | 3.40–3.45 ms        |
+| Total, 120 commands | 716–832 ms         | 215–219 ms          |
 
 A separate 120-sample run timed `restoreFabMatchSnapshot`, runtime admission,
 and the first priority pass together, using an already prepared match context

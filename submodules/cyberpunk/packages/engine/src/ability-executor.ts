@@ -14,23 +14,22 @@ import type { Operations } from "./operations/index.ts";
 import type { GameEvent } from "./types/game-events.ts";
 import type { CardInstanceId, PlayerId } from "./types/branded.ts";
 import { matchTriggers } from "./triggers/index.ts";
-import {
-  resolveTarget,
-  evaluateCondition,
-  validateTargetOptions,
-} from "./effects/target-resolver.ts";
+import { resolveTarget, evaluateCondition } from "./effects/target-resolver.ts";
 import { resolveEffect } from "./effects/handlers/index.ts";
 import type { ResolutionContext } from "./effects/target-resolver.ts";
-import { defOf } from "./state/lookups.ts";
+import { defOf, hasAnyEffectiveCardType } from "./state/lookups.ts";
 import { getEffectivePower } from "./active-effects/index.ts";
 import {
   abilityCostBindingId,
-  availableEddies,
   availableEddiesAfterAbilityCosts,
+  canPayAbilityEddieCosts,
+  reservedLegendIdsForAbilityCosts,
 } from "./moves/eddie-resources.ts";
 import { computeEffectiveCost } from "./moves/compute-effective-cost.ts";
 import { assertNever } from "./types/exhaustive.ts";
 import { privateField } from "./logging/private-field.ts";
+import { maybeEndAttackIfParticipantsLeft } from "./moves/end-attack.ts";
+import { hasValidGigCopyPair } from "./effects/gig-copy-selection.ts";
 
 type AbilityCost = NonNullable<Ability["costs"]>[number];
 type AbilityExecutionStatus = "resolved" | "suspended";
@@ -66,10 +65,15 @@ function enqueueTriggerEventsSince(
       event.type === "gigStolen" ||
       event.type === "gigDieRolled" ||
       event.type === "gigValueChanged" ||
+      event.type === "gigsSwapped" ||
       event.type === "legendFlipped" ||
       event.type === "legendCalled" ||
       event.type === "cardPlayed" ||
-      event.type === "cardSpent"
+      event.type === "cardSpent" ||
+      // CR 11.19.2 — [Defeated] enters pending when the Unit moves to trash,
+      // no matter what defeated it (combat enqueues its own cardDefeated
+      // events in resolve-attack; effect defeats rely on this loop).
+      event.type === "cardDefeated"
     ) {
       enqueueEventTriggers(event, state, operations);
     }
@@ -82,101 +86,105 @@ export function enqueueEventTriggers(
   operations: Operations,
 ): void {
   const matches = matchTriggers(event, state);
-  const contextTargets = buildContextTargets(event);
 
   for (const match of matches) {
     const { cardId, playerId, ability, abilityIndex } = match;
+    const matchedEvents: GameEvent[] =
+      event.type === "gigStolen" &&
+      ability.trigger?.trigger === "event" &&
+      ability.trigger.event.event === "gigStolen" &&
+      ability.trigger.event.perGig === true &&
+      event.dieIds?.length
+        ? event.dieIds.map((dieId) => ({ ...event, dieId, dieIds: [dieId] }))
+        : [event];
 
-    if (!passesEventFilter(event, ability, state, playerId, cardId)) continue;
+    for (const matchedEvent of matchedEvents) {
+      const contextTargets = buildContextTargets(matchedEvent);
 
-    const boundTargets = resolveBindings(ability, state, cardId, playerId, contextTargets);
+      if (!passesEventFilter(matchedEvent, ability, state, playerId, cardId)) continue;
 
-    // Skip ability if any required non-selectable binding has no valid targets.
-    // Selectable bindings are checked later in resumeCurrentTrigger so that
-    // mandatory abilities auto-drain when no targets exist instead of being
-    // silently skipped. Program play abilities are still pre-filtered (old
-    // behaviour) because the card is already in trash by the time triggers are
-    // processed and the player has no meaningful choice to make.
-    if (ability.bindings) {
-      const allSatisfied = ability.bindings.every((binding) => {
-        if (isSelectableBinding(binding)) {
-          const targets = resolveTarget(binding.target, {
-            state,
-            sourceCardId: cardId,
-            sourcePlayerId: playerId,
-            abilityIndex,
-            contextTargets,
-            boundTargets,
-          });
-          const min = getSelection(binding.target)?.min ?? 1;
-          if (targets.length < min) {
-            // For program play abilities, skip before enqueue (old behaviour).
-            // For mandatory abilities, let them through to auto-drain.
-            return (
-              !isProgramPlayAbility(cardId, ability, state) &&
-              !isOptionalTrigger(state, cardId, ability)
-            );
+      const boundTargets = resolveBindings(ability, state, cardId, playerId, contextTargets);
+
+      // Skip ability if any required non-selectable binding has no valid targets.
+      // Selectable bindings are checked later in resumeCurrentTrigger so that a
+      // mandatory ability resolves as much as possible when one of several
+      // bindings is unavailable (CR 2.4), while optional triggers with no legal
+      // choice remain filtered here.
+      if (ability.bindings) {
+        const allSatisfied = ability.bindings.every((binding) => {
+          if (isSelectableBinding(binding)) {
+            const targets = resolveTarget(binding.target, {
+              state,
+              sourceCardId: cardId,
+              sourcePlayerId: playerId,
+              abilityIndex,
+              contextTargets,
+              boundTargets,
+            });
+            const min = getSelection(binding.target)?.min ?? 1;
+            if (targets.length < min) {
+              return !isOptionalTrigger(state, cardId, ability);
+            }
+            return true;
           }
-          return true;
+          return (boundTargets[binding.id]?.length ?? 0) > 0;
+        });
+        if (!allSatisfied) {
+          emitNoValidTargetsLog(cardId, playerId, state, operations);
+          continue;
         }
-        return (boundTargets[binding.id]?.length ?? 0) > 0;
+      }
+
+      const ctx: ResolutionContext = {
+        state,
+        sourceCardId: cardId,
+        sourcePlayerId: playerId,
+        abilityIndex,
+        contextTargets,
+        boundTargets,
+      };
+
+      if (
+        ability.conditions?.length &&
+        !ability.conditions.every((c) => evaluateCondition(c, ctx))
+      ) {
+        continue;
+      }
+
+      if (!abilityHasApplicableEffects(ability, ctx)) {
+        continue;
+      }
+
+      if (!canPayAbilityCosts(ability, ctx)) {
+        continue;
+      }
+
+      if (!abilityHasRequiredEffectTargets(ability, ctx)) {
+        // For mandatory abilities with no valid targets, enqueue them so they
+        // can auto-drain in resumeCurrentTrigger.
+      }
+
+      const order = state.G.turnMetadata.nextTriggerId++;
+      const id = `trigger-${order}`;
+      state.G.turnMetadata.triggerQueue.push({
+        id,
+        sourceCardId: cardId,
+        sourcePlayerId: playerId,
+        abilityIndex,
+        abilityText: ability.text,
+        optional: isOptionalTrigger(state, cardId, ability),
+        event: matchedEvent,
+        contextTargets,
+        boundTargets,
+        order,
       });
-      if (!allSatisfied) {
-        emitNoValidTargetsLog(cardId, playerId, state, operations);
-        continue;
-      }
+      operations.event.emit({
+        type: "effectTriggered",
+        sourceCardId: cardId,
+        effectType: ability.trigger?.trigger ?? "event",
+        playerId,
+      });
     }
-
-    const ctx: ResolutionContext = {
-      state,
-      sourceCardId: cardId,
-      sourcePlayerId: playerId,
-      abilityIndex,
-      contextTargets,
-      boundTargets,
-    };
-
-    if (ability.conditions?.length && !ability.conditions.every((c) => evaluateCondition(c, ctx))) {
-      continue;
-    }
-
-    if (!abilityHasApplicableEffects(ability, ctx)) {
-      continue;
-    }
-
-    if (!canPayAbilityCosts(ability, ctx)) {
-      continue;
-    }
-
-    if (!abilityHasRequiredEffectTargets(ability, ctx)) {
-      if (isProgramPlayAbility(cardId, ability, state)) {
-        emitNoValidTargetsLog(cardId, playerId, state, operations);
-        continue;
-      }
-      // For mandatory abilities with no valid targets, enqueue them so they
-      // can auto-drain in resumeCurrentTrigger.
-    }
-
-    const order = state.G.turnMetadata.nextTriggerId++;
-    const id = `trigger-${order}`;
-    state.G.turnMetadata.triggerQueue.push({
-      id,
-      sourceCardId: cardId,
-      sourcePlayerId: playerId,
-      abilityIndex,
-      abilityText: ability.text,
-      optional: isOptionalTrigger(state, cardId, ability),
-      event,
-      contextTargets,
-      boundTargets,
-      order,
-    });
-    operations.event.emit({
-      type: "effectTriggered",
-      sourceCardId: cardId,
-      effectType: ability.trigger?.trigger ?? "event",
-      playerId,
-    });
   }
 }
 
@@ -189,6 +197,7 @@ export function continueTriggerResolution(state: MatchState, operations: Operati
       if (resolveAfterTriggerDelayedEffects(state, operations)) {
         continue;
       }
+      maybeEndAttackIfParticipantsLeft(state, operations);
       return;
     }
 
@@ -199,25 +208,44 @@ export function continueTriggerResolution(state: MatchState, operations: Operati
       .sort((a, b) => a.order - b.order);
 
     if (controllerTriggers.length > 1 || controllerTriggers.some((trigger) => trigger.optional)) {
+      const options = controllerTriggers.map((trigger) => {
+        const card = state.G.cardIndex[trigger.sourceCardId as string];
+        const cardName = card ? defOf(card).displayName : "Unknown card";
+        return {
+          triggerId: trigger.id,
+          sourceCardId: trigger.sourceCardId,
+          sourcePlayerId: trigger.sourcePlayerId,
+          abilityIndex: trigger.abilityIndex,
+          abilityText: trigger.abilityText,
+          cardName,
+          optional: trigger.optional,
+        };
+      });
+
+      if (options.length > 1) {
+        operations.event.emit({
+          type: "actionLog",
+          messageKey: "trigger.orderPending",
+          params: {
+            triggerCount: options.length,
+            triggerNames: options.map((option) => option.cardName).join(" | "),
+            triggerIds: options.map((option) => option.triggerId),
+            sourceCardIds: options.map((option) => option.sourceCardId as string),
+            abilityIndexes: options.map((option) => String(option.abilityIndex)),
+          },
+          playerId: controllerId,
+          category: "trigger",
+          cardIds: options.map((option) => option.sourceCardId as string),
+        });
+      }
+
       operations.game.setPendingChoice({
         type: "chooseTrigger",
         chooserId: controllerId,
         effectId: "",
         payload: {
           canPass: controllerTriggers.some((trigger) => trigger.optional),
-          options: controllerTriggers.map((trigger) => {
-            const card = state.G.cardIndex[trigger.sourceCardId as string];
-            const cardName = card ? defOf(card).displayName : "Unknown card";
-            return {
-              triggerId: trigger.id,
-              sourceCardId: trigger.sourceCardId,
-              sourcePlayerId: trigger.sourcePlayerId,
-              abilityIndex: trigger.abilityIndex,
-              abilityText: trigger.abilityText,
-              cardName,
-              optional: trigger.optional,
-            };
-          }),
+          options,
         },
       });
       return;
@@ -286,6 +314,13 @@ export function resolveQueuedTrigger(
   if (state.G.turnMetadata.currentTrigger) return;
   const index = state.G.turnMetadata.triggerQueue.findIndex((trigger) => trigger.id === triggerId);
   if (index === -1) return;
+  const pendingChoice = state.G.turnMetadata.pendingChoice;
+  const orderedOptions =
+    !opts.auto &&
+    pendingChoice?.type === "chooseTrigger" &&
+    pendingChoice.payload.options.length > 1
+      ? pendingChoice.payload.options
+      : undefined;
   const [queued] = state.G.turnMetadata.triggerQueue.splice(index, 1);
   if (!queued) return;
 
@@ -316,6 +351,29 @@ export function resolveQueuedTrigger(
   operations.game.setPendingChoice(undefined);
 
   const cardName = card ? defOf(card).displayName : "Unknown card";
+  if (orderedOptions) {
+    const remainingOptions = orderedOptions.filter((option) => option.triggerId !== triggerId);
+    operations.event.emit({
+      type: "actionLog",
+      messageKey: "trigger.orderSelected",
+      params: {
+        selectedTriggerId: queued.id,
+        selectedSourceCardId: queued.sourceCardId as string,
+        selectedAbilityIndex: queued.abilityIndex,
+        cardName,
+        abilityText: queued.abilityText,
+        remainingCount: remainingOptions.length,
+        remainingTriggerNames:
+          remainingOptions.map((option) => option.cardName).join(" | ") || "none",
+        remainingTriggerIds: remainingOptions.map((option) => option.triggerId),
+        remainingSourceCardIds: remainingOptions.map((option) => option.sourceCardId as string),
+        remainingAbilityIndexes: remainingOptions.map((option) => String(option.abilityIndex)),
+      },
+      playerId: queued.sourcePlayerId,
+      category: "trigger",
+      cardIds: orderedOptions.map((option) => option.sourceCardId as string),
+    });
+  }
   operations.event.emit({
     type: "actionLog",
     messageKey: opts.auto ? "trigger.autoResolved" : "trigger.resolved",
@@ -330,6 +388,21 @@ export function resolveQueuedTrigger(
   });
 
   resumeCurrentTrigger(state, operations);
+}
+
+export function isPlayerActivatedResolution(trigger: { event: GameEvent }): boolean {
+  return (
+    trigger.event.type === "actionLog" &&
+    (trigger.event.messageKey === "move.activateAbility" ||
+      trigger.event.messageKey === "move.activateAbility.attached")
+  );
+}
+
+/** Drop the in-progress ability and continue any remaining queued triggers. */
+export function abandonCurrentTrigger(state: MatchState, operations: Operations): void {
+  operations.game.setPendingChoice(undefined);
+  state.G.turnMetadata.currentTrigger = undefined;
+  continueTriggerResolution(state, operations);
 }
 
 export function resumeCurrentTrigger(state: MatchState, operations: Operations): void {
@@ -374,23 +447,21 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
     return;
   }
 
-  if (!allResolvableRequiredSelectableBindingsHaveTargets(ability, current.boundTargets, ctx)) {
-    emitNoValidTargetsLog(current.sourceCardId, current.sourcePlayerId, state, operations);
-    state.G.turnMetadata.currentTrigger = undefined;
-    continueTriggerResolution(state, operations);
-    return;
-  }
-
   const pendingBinding = getPendingSelectableBinding(ability, current.boundTargets);
   if (pendingBinding) {
     const selection = getSelection(pendingBinding.target);
     const targets = resolveTarget(pendingBinding.target, ctx);
     const min = selection?.min ?? 1;
     const max = selection?.max ?? 1;
-    if (targets.length < min) {
-      emitNoValidTargetsLog(current.sourceCardId, current.sourcePlayerId, state, operations);
-      state.G.turnMetadata.currentTrigger = undefined;
-      continueTriggerResolution(state, operations);
+    const lacksRequiredPair =
+      selection?.pairConstraint !== undefined &&
+      !hasValidGigCopyPair(state, targets, selection.pairConstraint);
+    if (targets.length < min || lacksRequiredPair) {
+      // CR 2.4: an impossible portion of a mandatory effect is ignored while
+      // the remaining portions still resolve. Mark this binding as resolved
+      // with no targets so a later binding/effect can continue normally.
+      current.boundTargets[pendingBinding.id] = [];
+      resumeCurrentTrigger(state, operations);
       return;
     }
     // Auto-select the single mandatory target (excluding program play abilities,
@@ -420,7 +491,11 @@ export function resumeCurrentTrigger(state: MatchState, operations: Operations):
         adjustGig: findFollowingAdjustGig(ability, pendingBinding.id),
         min,
         max,
-        canDecline: min === 0,
+        pairConstraint: selection?.pairConstraint,
+        canDecline:
+          selection?.canDecline === true ||
+          min === 0 ||
+          bindingFeedsPaidPlayCard(ability, pendingBinding.id),
         sourceCardId: current.sourceCardId,
         sourcePlayerId: current.sourcePlayerId,
         abilityIndex: current.abilityIndex,
@@ -542,7 +617,7 @@ function passesEventFilter(
       }
     }
     const cardDef = defOf(card);
-    if (filter.target.cardTypes && !filter.target.cardTypes.includes(cardDef.type)) {
+    if (filter.target.cardTypes && !hasAnyEffectiveCardType(card, filter.target.cardTypes)) {
       return false;
     }
     if (filter.target.colors && !filter.target.colors.includes(cardDef.color)) {
@@ -570,7 +645,7 @@ function passesEventFilter(
     }
     if (filter.target) {
       const attackerDef = defOf(attacker);
-      if (filter.target.cardTypes && !filter.target.cardTypes.includes(attackerDef.type)) {
+      if (filter.target.cardTypes && !hasAnyEffectiveCardType(attacker, filter.target.cardTypes)) {
         return false;
       }
       if (filter.target.classifications) {
@@ -671,6 +746,21 @@ function passesEventFilter(
     }
   }
 
+  if (ability.trigger.event.event === "gigsSwapped" && event.type === "gigsSwapped") {
+    const filter = ability.trigger.event;
+    if (filter.player === "friendly" && event.playerId !== sourcePlayerId) return false;
+    if (filter.player === "rival" && event.playerId === sourcePlayerId) return false;
+    if (filter.target.controller === "friendly" && !event.fromPlayerIds.includes(sourcePlayerId)) {
+      return false;
+    }
+    if (
+      filter.target.controller === "rival" &&
+      !event.fromPlayerIds.some((playerId) => playerId !== sourcePlayerId)
+    ) {
+      return false;
+    }
+  }
+
   if (ability.trigger.event.event === "gigRolled" && event.type === "gigDieRolled") {
     const filter = ability.trigger.event;
     if (filter.origin !== undefined && event.origin !== filter.origin) {
@@ -748,7 +838,7 @@ function passesEventFilter(
       return false;
     }
     const filter = ability.trigger.event;
-    if (filter.result !== event.result) return false;
+    if (filter.result !== undefined && filter.result !== event.result) return false;
     const attacker = state.G.cardIndex[event.attackerId as string];
     const defender = event.defenderId ? state.G.cardIndex[event.defenderId as string] : undefined;
     if (!attacker) return false;
@@ -775,10 +865,28 @@ function passesEventFilter(
         return false;
       }
     }
+    if (filter.winner) {
+      const winner =
+        event.result === "attackerWins"
+          ? attacker
+          : event.result === "defenderWins"
+            ? defender
+            : undefined;
+      if (
+        !winner ||
+        !cardMatchesEventFilter(filter.winner, winner, abilityCardId, state, sourcePlayerId)
+      ) {
+        return false;
+      }
+    }
   }
 
   if (ability.trigger.event.event === "gigStolen" && event.type === "gigStolen") {
     const filter = ability.trigger.event;
+    const stolenDieIds = event.dieIds?.length ? event.dieIds : [event.dieId];
+    if (filter.minAmount !== undefined && stolenDieIds.length < filter.minAmount) {
+      return false;
+    }
     if (filter.player) {
       if (
         filter.player === "friendly" &&
@@ -823,36 +931,56 @@ function passesEventFilter(
       }
     }
     if (filter.target) {
+      if (
+        filter.target.controller === "friendly" &&
+        (event.fromPlayerId as string) !== (sourcePlayerId as string)
+      ) {
+        return false;
+      }
+      if (
+        filter.target.controller === "rival" &&
+        (event.fromPlayerId as string) === (sourcePlayerId as string)
+      ) {
+        return false;
+      }
       // Filter the stolen die (event.dieId) by the Gig target's die-level
       // filters: sides, minValue, maxValue, valueParity. Used by cards that
       // trigger only when a specific kind of Gig is stolen (e.g. 6th-street-
       // recruits only cares about a stolen d6).
-      if (!event.dieId) return false;
-      const die = state.G.gigDice[event.dieId as string];
-      if (!die) return false;
-      if (filter.target.sides !== undefined) {
-        const wanted = Array.isArray(filter.target.sides)
-          ? filter.target.sides
-          : [filter.target.sides];
-        if (!wanted.includes(die.dieType)) return false;
-      }
-      if (filter.target.minValue !== undefined && die.faceValue < filter.target.minValue) {
-        return false;
-      }
-      if (filter.target.maxValue !== undefined && die.faceValue > filter.target.maxValue) {
-        return false;
-      }
-      if (filter.target.valueParity !== undefined) {
-        const wantEven = filter.target.valueParity === "even";
-        if ((die.faceValue % 2 === 0) !== wantEven) return false;
-      }
+      const matchesTarget = stolenDieIds.some((dieId) => {
+        const die = state.G.gigDice[dieId as string];
+        if (!die) return false;
+        if (filter.target.sides !== undefined) {
+          const wanted = Array.isArray(filter.target.sides)
+            ? filter.target.sides
+            : [filter.target.sides];
+          if (!wanted.includes(die.dieType)) return false;
+        }
+        if (filter.target.minValue !== undefined && die.faceValue < filter.target.minValue) {
+          return false;
+        }
+        if (filter.target.maxValue !== undefined && die.faceValue > filter.target.maxValue) {
+          return false;
+        }
+        if (filter.target.valueParity !== undefined) {
+          const wantEven = filter.target.valueParity === "even";
+          if ((die.faceValue % 2 === 0) !== wantEven) return false;
+        }
+        return true;
+      });
+      if (!matchesTarget) return false;
     }
     if (filter.valueLessThanSourcePower) {
-      if (!event.sourceCardId || !event.dieId) return false;
-      const stolen = state.G.gigDice[event.dieId as string];
-      if (!stolen) return false;
+      if (!event.sourceCardId) return false;
       const thiefPower = getEffectivePower(state, event.sourceCardId as string);
-      if (stolen.faceValue >= thiefPower) return false;
+      if (
+        !stolenDieIds.some((dieId) => {
+          const stolen = state.G.gigDice[dieId as string];
+          return stolen !== undefined && stolen.faceValue < thiefPower;
+        })
+      ) {
+        return false;
+      }
     }
   }
 
@@ -885,7 +1013,7 @@ function cardMatchesEventFilter(
   }
   if (filter.selector === "card") {
     const def = defOf(card);
-    if (filter.cardTypes && !filter.cardTypes.includes(def.type)) return false;
+    if (filter.cardTypes && !hasAnyEffectiveCardType(card, filter.cardTypes)) return false;
     if (filter.classifications) {
       const cardClassifications = def.classifications ?? [];
       const hasMatch = filter.classifications.some((c) => cardClassifications.includes(c));
@@ -947,7 +1075,7 @@ function buildContextTargets(event: GameEvent): Record<string, string[]> {
     ctx["triggerCard"] = [event.blockerId as string];
   }
   if (event.type === "gigStolen" && event.dieId) {
-    ctx["triggeredGigs"] = [event.dieId as string];
+    ctx["triggeredGigs"] = (event.dieIds?.length ? event.dieIds : [event.dieId]).map(String);
     if (event.sourceCardId) {
       ctx["triggerCard"] = [event.sourceCardId as string];
     }
@@ -1184,10 +1312,14 @@ function describeConditionFailure(condition: Condition): string {
       return condition.active === false ? "overtime is active" : "overtime is not active";
     case "targetValue":
       return "the target value condition is not true";
+    case "targetBecameValue":
+      return "the target did not change to the required value";
     case "attacking":
       return "the required card is not attacking";
     case "hasLag":
       return "the required card does not have Lag";
+    case "hasStolenGigThisTurn":
+      return "the required card did not steal a Gig this turn";
     case "fightKind":
       return "the attack type condition is not true";
     case "costMatchesGig":
@@ -1202,6 +1334,8 @@ function describeConditionFailure(condition: Condition): string {
       return "the required target does not exist";
     case "gigSides":
       return "the required gig die sides are not present";
+    case "any":
+      return "none of the alternative conditions are true";
     case "not":
       return "negated condition is true";
     case "targetParity":
@@ -1255,24 +1389,21 @@ function canPayAbilityCosts(ability: Ability, ctx: ResolutionContext): boolean {
         }
         break;
       }
-      case "payCardCost": {
-        const card = ctx.state.G.cardIndex[ctx.sourceCardId as string];
-        const player = ctx.state.G.players[ctx.sourcePlayerId as string];
-        if (!card || !player) return false;
-        if (availableEddies(ctx.state, ctx.sourcePlayerId) < (defOf(card).cost ?? 0)) return false;
-        break;
-      }
+      case "payCardCost":
       case "payEddies": {
-        if (availableEddies(ctx.state, ctx.sourcePlayerId) < computePayEddiesAmount(cost, ctx)) {
-          return false;
-        }
         break;
       }
       default:
         return assertNever(cost);
     }
   }
-  return true;
+  return canPayAbilityEddieCosts(
+    ability,
+    ctx.state,
+    ctx.sourceCardId,
+    ctx.sourcePlayerId,
+    ctx.boundTargets,
+  );
 }
 
 function computePayEddiesAmount(
@@ -1291,6 +1422,13 @@ function computePayEddiesAmount(
 
 function payAbilityCosts(ability: Ability, ctx: ResolutionContext, operations: Operations): void {
   if (!ability.costs) return;
+  const excludedLegendIds = reservedLegendIdsForAbilityCosts(
+    ability,
+    ctx.state,
+    ctx.sourceCardId,
+    ctx.sourcePlayerId,
+    ctx.boundTargets,
+  );
   for (let i = 0; i < (ability.costs as AbilityCost[]).length; i++) {
     const cost = (ability.costs as AbilityCost[])[i]!;
     switch (cost.cost) {
@@ -1304,7 +1442,9 @@ function payAbilityCosts(ability: Ability, ctx: ResolutionContext, operations: O
       case "payCardCost": {
         const card = ctx.state.G.cardIndex[ctx.sourceCardId as string];
         if (card) {
-          operations.game.spendEddies(ctx.sourcePlayerId, defOf(card).cost ?? 0, "abilityCost");
+          operations.game.spendEddies(ctx.sourcePlayerId, defOf(card).cost ?? 0, "abilityCost", {
+            excludedLegendIds,
+          });
           if (card.zone === "hand" && defOf(card).type === "program") {
             operations.zone.moveCard(ctx.sourceCardId, "trash", ctx.sourcePlayerId);
           }
@@ -1316,6 +1456,7 @@ function payAbilityCosts(ability: Ability, ctx: ResolutionContext, operations: O
           ctx.sourcePlayerId,
           computePayEddiesAmount(cost, ctx),
           "abilityCost",
+          { excludedLegendIds },
         );
         break;
       }
@@ -1351,7 +1492,13 @@ export function abilityHasRequiredEffectTargets(
   const effects = ability.effects.slice(startIndex);
   let hasIndependentResolvable = false;
   for (const effect of effects) {
-    if (effectResolvesWithoutCardTarget(effect, ability, ctx)) {
+    const conditionsPass =
+      !effect.conditions?.length ||
+      effect.conditions.every((condition) => evaluateCondition(condition, ctx));
+    if (
+      conditionsPass &&
+      (effectResolvesWithoutCardTarget(effect, ability, ctx) || effectHasTarget(effect, ctx))
+    ) {
       hasIndependentResolvable = true;
       break;
     }
@@ -1428,13 +1575,43 @@ function effectResolvesWithoutCardTarget(
   return false;
 }
 
+function optionalEffectWaitsOnSelectableBinding(
+  effect: Effect,
+  ability: Ability,
+  ctx: ResolutionContext,
+): boolean {
+  const refs = [getEffectTarget(effect), getEffectSource(effect)];
+  for (const ref of refs) {
+    if (!ref || ref.selector !== "bound") continue;
+    const binding = ability.bindings?.find((candidate) => candidate.id === ref.id);
+    if (binding && isSelectableBinding(binding) && ctx.boundTargets[binding.id] === undefined) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getEffectTarget(effect: Effect): { selector?: string; id?: string } | undefined {
+  return "target" in effect
+    ? (effect.target as { selector?: string; id?: string } | undefined)
+    : undefined;
+}
+
+function getEffectSource(effect: Effect): { selector?: string; id?: string } | undefined {
+  return "source" in effect
+    ? (effect.source as { selector?: string; id?: string } | undefined)
+    : undefined;
+}
+
 function abilityHasApplicableEffects(ability: Ability, ctx: ResolutionContext): boolean {
   return ability.effects.some((effect) => {
     if (effect.conditions?.length && !effect.conditions.every((c) => evaluateCondition(c, ctx))) {
       return false;
     }
     if (effect.optional) {
-      return effectHasTarget(effect, ctx);
+      return (
+        effectHasTarget(effect, ctx) || optionalEffectWaitsOnSelectableBinding(effect, ability, ctx)
+      );
     }
     return true;
   });
@@ -1466,11 +1643,39 @@ function isOptionalTrigger(state: MatchState, cardId: CardInstanceId, ability: A
     ability.costs?.some((cost) => cost.cost === "payCardCost" || cost.cost === "payEddies") ===
     true;
   if (ability.trigger && hasPayCost && /\bmay pay\b/i.test(ability.text)) return true;
+  if (optionalEffectsRequirePreselectedBindings(ability)) {
+    return true;
+  }
   return (
     card.zone === "hand" &&
     def.type === "program" &&
     ability.costs?.some((cost) => cost.cost === "payCardCost") === true
   );
+}
+
+function optionalEffectsRequirePreselectedBindings(ability: Ability): boolean {
+  if (
+    ability.effects.length === 0 ||
+    !ability.effects.every((effect) => effect.optional === true)
+  ) {
+    return false;
+  }
+  const selectableBindingIds = new Set(
+    (ability.bindings ?? [])
+      .filter((binding) => isSelectableBinding(binding))
+      .map((binding) => binding.id),
+  );
+  return ability.effects.some((effect) =>
+    collectBoundSelectorIds(effect).some((id) => selectableBindingIds.has(id)),
+  );
+}
+
+function collectBoundSelectorIds(value: unknown): string[] {
+  if (Array.isArray(value)) return value.flatMap(collectBoundSelectorIds);
+  if (typeof value !== "object" || value === null) return [];
+  const record = value as Record<string, unknown>;
+  const ownId = record.selector === "bound" && typeof record.id === "string" ? [record.id] : [];
+  return [...ownId, ...Object.values(record).flatMap(collectBoundSelectorIds)];
 }
 
 function isProgramPlayAbility(
@@ -1544,32 +1749,20 @@ function getPendingSelectableBinding(
   );
 }
 
-function allResolvableRequiredSelectableBindingsHaveTargets(
-  ability: Ability,
-  boundTargets: Record<string, string[]>,
-  ctx: ResolutionContext,
-): boolean {
-  for (const binding of ability.bindings ?? []) {
-    if (!isSelectableBinding(binding) || boundTargets[binding.id] !== undefined) continue;
-
-    const selection = getSelection(binding.target);
-    const min = selection?.min ?? 1;
-    if (validateTargetOptions(binding.target, ctx, min) === "invalid") return false;
-  }
-  return true;
-}
-
 function findFollowingAdjustGig(
   ability: Ability,
   bindingId: string,
-): { direction?: string; maxAmount?: number; chooseUpTo?: boolean } | undefined {
-  const effect = ability.effects.find(
+):
+  | { direction?: string; maxAmount?: number; chooseUpTo?: boolean; effectIndex: number }
+  | undefined {
+  const effectIndex = ability.effects.findIndex(
     (candidate) =>
       candidate.effect === "adjustGig" &&
       "target" in candidate &&
       candidate.target?.selector === "bound" &&
       candidate.target.id === bindingId,
   );
+  const effect = ability.effects[effectIndex];
   if (!effect || effect.effect !== "adjustGig") {
     return undefined;
   }
@@ -1577,6 +1770,7 @@ function findFollowingAdjustGig(
     direction: effect.direction,
     maxAmount: effect.maxAmount,
     chooseUpTo: effect.chooseUpTo,
+    effectIndex,
   };
 }
 

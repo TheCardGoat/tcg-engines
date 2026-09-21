@@ -146,6 +146,22 @@ describe("Grand Archive Standard practice", () => {
     expect(screen.queryByRole("dialog", { name: "Defeat" })).toBeNull();
   }, 15_000);
 
+  it("keeps automation unavailable in play-both-sides mode", () => {
+    window.history.replaceState(null, "", "/grand-archive/simulator/practice?mode=self");
+    render(
+      <GrandArchiveSimulatorProviders>
+        <GrandArchivePracticePage />
+      </GrandArchiveSimulatorProviders>,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Confirm selection" }));
+    expect(screen.getByTestId("ga-practice-self-play-status").textContent).toContain(
+      "seats switch automatically",
+    );
+    expect(screen.queryByTestId("ga-practice-bot-play")).toBeNull();
+    expect(screen.queryByTestId("ga-practice-bot-next")).toBeNull();
+    expect(screen.queryByTestId("ga-practice-bot-strategy")).toBeNull();
+  }, 15_000);
+
   it(
     "undoes the bot response without stranding the player in empty pregame",
     () => {
@@ -178,7 +194,7 @@ describe("Grand Archive Standard practice", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Confirm selection" }));
-    fireEvent.click(screen.getByRole("button", { name: "Practice opponent controls" }));
+    fireEvent.click(screen.getByRole("button", { name: "Opponent controls" }));
     const setupTrigger = screen.getByRole("button", { name: "New deck matchup" });
     setupTrigger.focus();
     fireEvent.click(setupTrigger);
@@ -186,10 +202,8 @@ describe("Grand Archive Standard practice", () => {
     expect(document.activeElement).toBe(screen.getByRole("button", { name: "Close deck setup" }));
     fireEvent.keyDown(document, { key: "Escape" });
     expect(screen.queryByRole("dialog", { name: "New deck matchup" })).toBeNull();
-    expect(document.activeElement).toBe(
-      screen.getByRole("button", { name: "Practice opponent controls" }),
-    );
-    fireEvent.click(screen.getByRole("button", { name: "Practice opponent controls" }));
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Opponent controls" }));
+    fireEvent.click(screen.getByRole("button", { name: "Opponent controls" }));
     fireEvent.click(screen.getByRole("button", { name: "New deck matchup" }));
     fireEvent.click(screen.getByRole("button", { name: "Start matchup" }));
     expect(screen.queryByRole("dialog", { name: "New deck matchup" })).toBeNull();

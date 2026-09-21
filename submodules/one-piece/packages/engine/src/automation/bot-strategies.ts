@@ -322,7 +322,14 @@ export const greedyStrategy: OnePieceBotStrategy = (state, seat, legalCommands) 
 
   for (const best of scored) {
     const command = commandFromDescriptor(state, seat, best.cmd);
-    if (command) return command;
+    if (command) {
+      // Attach the full active DON!! stack at once: repeated amount-1
+      // attaches log duplicate lines and burn commands without changing the
+      // outcome. canAttachDon validates activeDon >= amount.
+      return command.type === "attachDon"
+        ? { ...command, amount: getPlayer(state, seat).activeDon }
+        : command;
+    }
   }
   return null;
 };
@@ -452,7 +459,13 @@ export const valueRankedStrategy: OnePieceBotStrategy = (state, seat, legalComma
 
   for (const best of scored) {
     const command = commandFromDescriptor(state, seat, best.cmd);
-    if (command) return command;
+    if (command) {
+      // Same full-stack attach as greedyStrategy: one command, no duplicate
+      // amount-1 attach lines.
+      return command.type === "attachDon"
+        ? { ...command, amount: getPlayer(state, seat).activeDon }
+        : command;
+    }
   }
   return null;
 };

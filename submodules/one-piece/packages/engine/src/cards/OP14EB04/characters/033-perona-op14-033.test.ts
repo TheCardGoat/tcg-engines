@@ -1,7 +1,7 @@
 import { eb01Doma005, op01Shanks120, op14eb04Shanks027 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04MonkeyDLuffyOp1434034 } from "../../../../../cards/src/cards/OP14EB04/characters/034-monkey-d-luffy-op14-34.ts";
-import { op14eb04PeronaOp14033033 } from "../../../../../cards/src/cards/OP14EB04/characters/033-perona-op14-033.ts";
+import { op14eb04MonkeyDLuffyOp1434034 } from "../../../../../cards/src/cards/characters/op14-034-monkey-d-luffy-op14-34.ts";
+import { op14eb04PeronaOp14033033 } from "../../../../../cards/src/cards/characters/op14-033-perona-op14-033.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

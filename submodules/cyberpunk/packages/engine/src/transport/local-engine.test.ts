@@ -49,17 +49,19 @@ describe("LocalEngine undo history", () => {
     expect(engine.getPhase()).toBe("main");
     expect(engine.canUndo()).toBe(false);
     expect(engine.canUndoToTurnStart()).toBe(false);
+    expect(engine.getLocalEngine().getContinuationSnapshot().undoStack).toHaveLength(0);
 
     engine.playCard(p2Unit, { as: P2 });
     expect(engine.canUndo()).toBe(true);
     expect(engine.canUndoToTurnStart()).toBe(true);
+    expect(engine.getLocalEngine().getContinuationSnapshot().undoStack).toHaveLength(1);
 
     expect(engine.undoToTurnStart()).toBe(true);
     expect(engine.getCardsInZone("hand", P2).map((card) => card.definitionId)).toContain(p2Unit.id);
     expect(engine.getCardsInZone("field", P2)).toHaveLength(0);
   });
 
-  it("turns hidden-information reveals into an undo barrier while allowing later moves", () => {
+  it("keeps undo available after a hidden-information reveal", () => {
     const legend = createMockLegend({ name: "Hidden Legend" });
     const unit = createMockUnit({ name: "After Reveal Unit", cost: 0 });
     const engine = CyberpunkTestEngine.createWithFixture({
@@ -70,13 +72,15 @@ describe("LocalEngine undo history", () => {
     });
 
     engine.callLegend(legend, { as: P1 });
-    expect(engine.canUndo()).toBe(false);
-    expect(engine.canUndoToTurnStart()).toBe(false);
+    expect(engine.canUndo()).toBe(true);
+    expect(engine.getFaceDownLegends(P1)).toHaveLength(0);
 
+    expect(engine.undo()).toBe(true);
+    expect(engine.getFaceDownLegends(P1)).toHaveLength(1);
+
+    engine.callLegend(legend, { as: P1 });
     engine.playCard(unit, { as: P1 });
     expect(engine.canUndo()).toBe(true);
-    expect(engine.canUndoToTurnStart()).toBe(false);
-
     expect(engine.undo()).toBe(true);
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(unit.id);
     expect(engine.getFaceDownLegends(P1)).toHaveLength(0);
@@ -159,5 +163,51 @@ describe("LocalEngine dynamic time control", () => {
     expect(expired.success).toBe(true);
     expect(expiredEngine.getState().ctx.clockState![P1 as string]!.reserveMsRemaining).toBe(-1);
     expect(expiredEngine.getState().G.gameEnded).toBe(false);
+  });
+});
+
+describe("LocalEngine board-correction rewind", () => {
+  it("restores the in-memory turn-start checkpoint and bumps stateID", () => {
+    const first = createMockUnit({ name: "First Unit", cost: 0 });
+    const engine = CyberpunkTestEngine.createWithFixture({ hand: [first], deck: 10 });
+    const local = engine.getLocalEngine();
+    const handBefore = engine.getCardsInZone("hand", P1).map((card) => card.definitionId);
+    const turnBefore = engine.getState().G.turnMetadata.turnNumber;
+    const stateIDBefore = engine.getState().ctx.stateID;
+
+    engine.playCard(first, { as: P1 });
+    const stateIDAfterMove = engine.getState().ctx.stateID;
+    expect(stateIDAfterMove).toBe(stateIDBefore + 1);
+    expect(engine.getCardsInZone("field", P1)).toHaveLength(1);
+    expect(local.hasTurnStartCheckpoint()).toBe(true);
+
+    const outcome = local.restoreToTurnStart();
+    expect(outcome).toEqual({ success: true, restoredTurnNumber: turnBefore });
+    expect(engine.getCardsInZone("field", P1)).toHaveLength(0);
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toEqual(handBefore);
+    // The restore is a fresh engine version so remote sync treats it as new.
+    expect(engine.getState().ctx.stateID).toBe(stateIDAfterMove + 1);
+    // The checkpoint stays valid for the same turn: a second rewind is a no-op.
+    expect(local.hasTurnStartCheckpoint()).toBe(true);
+    // Undo history earlier than the checkpoint is gone.
+    expect(engine.canUndo()).toBe(false);
+  });
+
+  it("never exposes the checkpoint through the match state or its serialization", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({ hand: [createMockUnit()], deck: 10 });
+    engine.getLocalEngine().restoreToTurnStart();
+    const raw = JSON.stringify(engine.getState());
+    expect(raw).not.toContain("turnStartCheckpoint");
+    expect(raw).not.toContain("stackDepth");
+    expect(engine.getState()).not.toHaveProperty("turnStartCheckpoint");
+  });
+
+  it("reports NO_TURN_START_CHECKPOINT before any main/start-phase checkpoint exists", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({ deck: 10 }, {}, { skipSetup: false });
+    expect(engine.getState().G.gamePhase).toBe("setup");
+    const outcome = engine.getLocalEngine().restoreToTurnStart();
+    expect(outcome.success).toBe(false);
+    if (outcome.success) return;
+    expect(outcome.errorCode).toBe("NO_TURN_START_CHECKPOINT");
   });
 });

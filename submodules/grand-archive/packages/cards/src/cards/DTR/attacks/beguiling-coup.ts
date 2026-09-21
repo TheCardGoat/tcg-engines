@@ -66,7 +66,6 @@ export const beguilingCoup: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               candidates: {
                 kind: "card",
                 zones: ["banishment"],
-                player: "controller",
                 filter: {
                   kind: "all",
                   filters: [
@@ -126,11 +125,16 @@ export const beguilingCoup: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 count: "each",
               },
               {
-                kind: "retarget",
-                subject: {
-                  kind: "current-attack",
+                kind: "optional",
+                player: "controller",
+                effect: {
+                  kind: "retarget",
+                  subject: {
+                    kind: "current-attack",
+                  },
+                  chooser: "controller",
                 },
-                chooser: "controller",
+                allOrNothing: true,
               },
             ],
           },

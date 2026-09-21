@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb02NicoRobin036 } from "../../../../cards/src/cards/EB02/characters/036-nico-robin.ts";
-import { eb03Alvida021 } from "../../../../cards/src/cards/EB03/characters/021-alvida.ts";
-import { eb03Isuka022 } from "../../../../cards/src/cards/EB03/characters/022-isuka.ts";
-import { eb03NefeltariVivi024 } from "../../../../cards/src/cards/EB03/characters/024-nefeltari-vivi.ts";
-import { op13Higuma013 } from "../../../../cards/src/cards/OP13/characters/013-higuma.ts";
-import { op13Otama043 } from "../../../../cards/src/cards/OP13/characters/043-otama.ts";
+import { eb02NicoRobin036 } from "../../../../cards/src/cards/characters/eb02-036-nico-robin.ts";
+import { eb03Alvida021 } from "../../../../cards/src/cards/characters/eb03-021-alvida.ts";
+import { eb03Isuka022 } from "../../../../cards/src/cards/characters/eb03-022-isuka.ts";
+import { eb03NefeltariVivi024 } from "../../../../cards/src/cards/characters/eb03-024-nefeltari-vivi.ts";
+import { op13Higuma013 } from "../../../../cards/src/cards/characters/op13-013-higuma.ts";
+import { op13Otama043 } from "../../../../cards/src/cards/characters/op13-043-otama.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 function pendingPrompt(engine: OnePieceTestEngine, intent: string) {

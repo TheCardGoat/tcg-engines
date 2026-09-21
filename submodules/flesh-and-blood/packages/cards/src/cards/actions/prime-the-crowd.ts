@@ -28,7 +28,7 @@ export const primeTheCrowd = definePitchFamily(fabPitchFamilies["prime-the-crowd
       effect: {
         type: "crowd-cheers",
         target: "each",
-        filter: { typeBox: { traits: ["Revered"] } },
+        filter: { typeBox: { supertypes: ["Revered"] } },
       },
     },
     booReviled: {

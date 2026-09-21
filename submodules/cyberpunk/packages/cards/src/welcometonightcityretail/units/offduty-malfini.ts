@@ -38,6 +38,7 @@ export const welcomeToNightCityRetailOffdutyMalfini = defineCyberpunkCard({
             controller: "rival",
             zones: ["field"],
             cardTypes: ["unit"],
+            state: "ready",
             selection: {
               mode: "choose",
               min: 1,

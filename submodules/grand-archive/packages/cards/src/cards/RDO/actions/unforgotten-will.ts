@@ -43,11 +43,13 @@ export const unforgottenWill: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                       subject: {
                         kind: "source",
                       },
+                      bindResultAs: "banished-source-omen",
                     },
                     {
                       kind: "add-counter",
                       subject: {
-                        kind: "event-subject",
+                        kind: "bound",
+                        binding: "banished-source-omen",
                       },
                       counter: "omen",
                       amount: 1,

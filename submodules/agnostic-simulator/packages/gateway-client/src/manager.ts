@@ -1,5 +1,10 @@
 import type { ClientToServerEvents, PlayableGameSlug, ServerToClientEvents } from "@tcg/protocol";
-import { VIEWER_SCOPE_EXPIRED } from "@tcg/protocol";
+import {
+  VIEWER_SCOPE_EXPIRED,
+  isViewerScopeExpired,
+  isViewerScopeInRefreshWindow,
+  viewerScopeRefreshDelayMs,
+} from "@tcg/protocol";
 import type {
   AuthMethod,
   CredentialsController,
@@ -13,6 +18,7 @@ import type {
 } from "./types.js";
 import { INITIAL_GATEWAY_STATE, createStateStore, type StateStore } from "./state.js";
 import { createGatewaySocket, type GatewayHandshakeAuth, type GatewaySocket } from "./socket.js";
+import { isGatewayPacketLoggingEnabled } from "./debug.js";
 
 const AUTH_METHODS: readonly AuthMethod[] = [
   "ticket",
@@ -79,8 +85,6 @@ function listenerView(socket: GatewaySocket): ListenerView {
   return socket as unknown as ListenerView;
 }
 
-const GATEWAY_PACKET_LOG_STORAGE_KEY = "tcg:gateway-packet-log";
-
 type GatewayPacketDirection = "send" | "receive" | "lifecycle" | "handshake";
 
 interface GatewayPacketLogEntry {
@@ -89,14 +93,6 @@ interface GatewayPacketLogEntry {
   event: string;
   socketId?: string | null;
   payload?: unknown;
-}
-
-function isGatewayPacketLoggingEnabled(): boolean {
-  try {
-    return globalThis.localStorage?.getItem(GATEWAY_PACKET_LOG_STORAGE_KEY) === "1";
-  } catch {
-    return false;
-  }
 }
 
 function redactHandshakeAuth(payload: GatewayHandshakeAuth): Record<string, unknown> {
@@ -155,13 +151,24 @@ interface SocketEntry {
   destroyed: boolean;
   credentialTimer?: ReturnType<typeof setTimeout>;
   refreshFailures?: number;
+  /**
+   * Application emits held while the viewer scope is expired or a credential
+   * refresh is disconnecting the socket. Flushed after the next authenticated
+   * join so client-authoritative version chains stay consecutive.
+   */
+  queuedEmits: Array<{ event: string; payload: unknown }>;
 }
+
+const MAX_QUEUED_EMITS = 32;
+const NON_QUEUED_EMIT_EVENTS = new Set<string>(["ping", "heartbeat", "activity_update"]);
 
 export interface GatewayConnectionManager {
   /** Acquire (or join) the socket for a slug. Ref-counted: same slug returns a new handle on the SAME socket. */
   acquire(slug: PlayableGameSlug, opts?: GatewayAcquireOptions): GatewayHandle;
   /** Push credentials for a slug's socket (SSR-hydrated values or refreshed tokens). Triggers nothing by itself. */
   setCredentials(slug: PlayableGameSlug, credentials: GatewayCredentials): void;
+  /** The credentials lifecycle installed by the first acquire, if any. */
+  getInstalledCredentials(slug: PlayableGameSlug): CredentialsController | null;
   /** Read-only state for a slug (idle if never acquired). */
   getState(slug: PlayableGameSlug): GatewayConnectionState;
   /** Subscribe to a slug's state. Returns unsubscribe. */
@@ -183,12 +190,49 @@ export function createGatewayConnectionManager(
     clearTimeout(entry.credentialTimer);
     const expiry = entry.snapshot.expiresAt;
     if (entry.destroyed || !entry.credentials || !expiry || !Number.isFinite(expiry)) return;
-    entry.credentialTimer = setTimeout(
-      () => {
-        void attemptCredentialRefresh(entry, "scope_renewal");
-      },
-      Math.max(0, expiry - Date.now() - 15 * 60_000),
-    );
+    entry.credentialTimer = setTimeout(() => {
+      void attemptCredentialRefresh(entry, "scope_renewal");
+    }, viewerScopeRefreshDelayMs(expiry));
+  }
+
+  function isScopeExpired(entry: SocketEntry): boolean {
+    return entry.snapshot.expiresAt != null && isViewerScopeExpired(entry.snapshot.expiresAt);
+  }
+
+  function shouldHoldEmit(entry: SocketEntry): boolean {
+    if (isScopeExpired(entry)) return true;
+    if (entry.refreshInFlight || entry.wasRefreshing) {
+      return !entry.socket.connected || !entry.state.get().authenticated;
+    }
+    return false;
+  }
+
+  function enqueueEmit(entry: SocketEntry, event: string, payload: unknown): void {
+    if (NON_QUEUED_EMIT_EVENTS.has(event)) return;
+    if (entry.queuedEmits.length >= MAX_QUEUED_EMITS) {
+      entry.queuedEmits.shift();
+    }
+    entry.queuedEmits.push({ event, payload });
+  }
+
+  function sendEmit(entry: SocketEntry, event: string, payload: unknown): void {
+    logGatewayPacket({
+      direction: "send",
+      namespace: `/${entry.slug}`,
+      event,
+      socketId: entry.socket.id ?? null,
+      payload,
+    });
+    listenerView(entry.socket).emit(event, payload);
+  }
+
+  function flushQueuedEmits(entry: SocketEntry): void {
+    if (entry.destroyed || entry.queuedEmits.length === 0) return;
+    if (shouldHoldEmit(entry)) return;
+    const queued = entry.queuedEmits.splice(0);
+    for (const item of queued) {
+      sendEmit(entry, item.event, item.payload);
+    }
   }
 
   /**
@@ -254,7 +298,7 @@ export function createGatewayConnectionManager(
     if (entry.socket.connected) return;
 
     const creds = peekCredentials(entry);
-    if (creds.expiresAt && creds.expiresAt <= Date.now() && entry.credentials) {
+    if (creds.expiresAt && isViewerScopeExpired(creds.expiresAt) && entry.credentials) {
       if (!entry.refreshAttempted) void attemptCredentialRefresh(entry, "viewer_scope_expired");
       return;
     }
@@ -366,7 +410,7 @@ export function createGatewayConnectionManager(
       try {
         const refreshed = await entry.credentials!.refresh();
         if (entry.destroyed) return refreshed;
-        if (refreshed.expiresAt != null && refreshed.expiresAt <= Date.now()) {
+        if (refreshed.expiresAt != null && isViewerScopeExpired(refreshed.expiresAt)) {
           throw new Error("Refreshed realtime credentials have already expired.");
         }
         mergeRefreshedCredentials(entry, refreshed);
@@ -562,6 +606,7 @@ export function createGatewayConnectionManager(
         } else if (state.get().authFailureReason !== null) {
           state.set({ authFailureReason: null });
         }
+        flushQueuedEmits(entry);
       }
     };
     socket.on("welcome", onWelcome);
@@ -575,7 +620,7 @@ export function createGatewayConnectionManager(
 
     const onVisible = (): void => {
       if (globalThis.document?.visibilityState !== "visible") return;
-      if (entry.snapshot.expiresAt && entry.snapshot.expiresAt - Date.now() <= 15 * 60_000) {
+      if (entry.snapshot.expiresAt && isViewerScopeInRefreshWindow(entry.snapshot.expiresAt)) {
         void attemptCredentialRefresh(entry, "scope_renewal");
       }
     };
@@ -653,6 +698,7 @@ export function createGatewayConnectionManager(
     entry.refreshAttempted = false;
     entry.wasRefreshing = false;
     entry.refreshInFlight = null;
+    entry.queuedEmits = [];
     if (remove) {
       entries.delete(entry.slug);
     }
@@ -753,6 +799,7 @@ export function createGatewayConnectionManager(
       }
       joinedSocketId = socketId;
       joinInFlightSince = now;
+      flushQueuedEmits(entry);
     };
 
     const handle: GatewayHandle = {
@@ -765,24 +812,29 @@ export function createGatewayConnectionManager(
         handleCleanups.add(off);
         return off;
       },
+      wouldHoldEmit: () => shouldHoldEmit(entry),
       emit: <K extends keyof ClientToServerEvents>(
         event: K,
         payload: Parameters<ClientToServerEvents[K]>[0],
       ): void => {
-        // Background tabs can delay timers. Never buffer an action using expired scope.
-        if (entry.snapshot.expiresAt && entry.snapshot.expiresAt <= Date.now()) {
-          if (entry.socket.connected) entry.socket.disconnect();
-          if (!entry.refreshAttempted) void attemptCredentialRefresh(entry, "viewer_scope_expired");
+        // Background tabs can delay timers. Hold application emits until a
+        // fresh viewer scope is on the socket, then flush in order.
+        if (shouldHoldEmit(entry)) {
+          logGatewayPacket({
+            direction: "lifecycle",
+            namespace: `/${entry.slug}`,
+            event: "emit_held",
+            socketId: entry.socket.id ?? null,
+            payload: { event: String(event), payload },
+          });
+          enqueueEmit(entry, String(event), payload);
+          if (isScopeExpired(entry) && entry.socket.connected) entry.socket.disconnect();
+          if (isScopeExpired(entry) && !entry.refreshAttempted) {
+            void attemptCredentialRefresh(entry, "viewer_scope_expired");
+          }
           return;
         }
-        logGatewayPacket({
-          direction: "send",
-          namespace: `/${entry.slug}`,
-          event: String(event),
-          socketId: entry.socket.id ?? null,
-          payload,
-        });
-        listenerView(entry.socket).emit(event, payload);
+        sendEmit(entry, String(event), payload);
       },
       onConnected: (cb) => {
         if (entry.socket.connected) cb();
@@ -947,6 +999,7 @@ export function createGatewayConnectionManager(
       state: createStateStore(),
       internalCleanups: [],
       destroyed: false,
+      queuedEmits: [],
     };
     entry.socket = createGatewaySocket({
       url,
@@ -996,6 +1049,10 @@ export function createGatewayConnectionManager(
     return entries.get(slug)?.state.get() ?? { ...INITIAL_GATEWAY_STATE };
   }
 
+  function getInstalledCredentials(slug: PlayableGameSlug): CredentialsController | null {
+    return entries.get(slug)?.credentials ?? null;
+  }
+
   function subscribeState(
     slug: PlayableGameSlug,
     cb: (state: GatewayConnectionState) => void,
@@ -1012,7 +1069,7 @@ export function createGatewayConnectionManager(
     pendingCredentials.clear();
   }
 
-  return { acquire, setCredentials, getState, subscribeState, destroy };
+  return { acquire, setCredentials, getInstalledCredentials, getState, subscribeState, destroy };
 }
 
 /** Strip everything after the host/port so `${origin}/${slug}` is always valid. */

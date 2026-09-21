@@ -35,6 +35,8 @@
  */
 export interface ClockSnapshot {
   reserveMsRemaining: number;
+  /** Server-configured negative-time grace that must elapse before a drop is legal. */
+  graceMs: number;
   isRunning: boolean;
   startedAtMs?: number;
   timeoutCount: number;
@@ -74,7 +76,7 @@ export interface ClockView {
   canSkipOpponent: boolean;
   /**
    * Drop is available when:
-   * - opponent's reserve is exhausted (isNegativeTime or displayMs < 0), OR
+   * - opponent's reserve has exceeded the configured negative-time grace, OR
    * - opponent is stalling (decision cap exceeded, reserve still positive) AND
    *   has already been warned once (timeoutCount >= 1).
    */
@@ -142,8 +144,10 @@ export function deriveClockView(
   // Reserve exhausted → drop immediately (no prior warning needed), regardless
   // of whether the opponent currently holds priority.
   // Stalling (decision cap, reserve still positive) → drop on second offense.
+  const reserveDropAllowed = displayMs <= -snapshot.graceMs;
   const canDropOpponent =
-    isNegative || (running && decisionCapExceeded && !isNegative && snapshot.timeoutCount >= 1);
+    reserveDropAllowed ||
+    (running && decisionCapExceeded && !isNegative && snapshot.timeoutCount >= 1);
 
   // Skip is only for the stalling case: decision cap exceeded but reserve not
   // yet gone. When reserve is negative the only option is Drop.

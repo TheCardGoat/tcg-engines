@@ -306,7 +306,7 @@ describe("Grand Archive attack rule modifications", () => {
         objectId: banished.id,
         from: banished.zone,
         to: "banishment",
-        banishedBySourceId: lancer.id,
+        banishedBy: { sourceId: lancer.id, sourceIncarnation: lancer.incarnation + 1 },
       },
     ]).state;
     const ready = {

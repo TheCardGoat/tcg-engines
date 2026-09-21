@@ -27,6 +27,7 @@ export const civicSteps = defineCard(fabCardIdentitiesByCanonicalId["qQ9JC8Btngf
         effect: {
           type: "create-token",
           token: "quicken",
+          creator: "effect-controller",
           controller: "another-hero",
         },
       },

@@ -95,5 +95,40 @@ export const welcomeToNightCityRetailMeredithStoutStoneColdCorpo = defineCyberpu
         },
       ],
     },
+    {
+      kind: "triggered",
+      text: "When a Rival adjusts or swaps 1 or more friendly Gigs, you may add a card from your trash to your hand.",
+      trigger: {
+        trigger: "event",
+        event: {
+          event: "gigsSwapped",
+          player: "rival",
+          target: {
+            selector: "gig",
+            controller: "friendly",
+          },
+        },
+      },
+      source: {
+        selector: "self",
+      },
+      effects: [
+        {
+          effect: "moveCard",
+          target: {
+            selector: "card",
+            controller: "friendly",
+            zones: ["trash"],
+            selection: {
+              mode: "choose",
+              min: 1,
+              max: 1,
+            },
+          },
+          destination: "hand",
+          optional: true,
+        },
+      ],
+    },
   ],
 }) satisfies UnitCardDefinition;

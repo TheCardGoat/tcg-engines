@@ -1,0 +1,94 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op04Crocodile060I18n } from "./op04-060-crocodile.i18n.ts";
+
+export const op04Crocodile060: CharacterCard = {
+  id: "OP04-060",
+  canonicalId: "OP04-060",
+  slug: "crocodile/op04-060",
+  name: "Crocodile",
+  printings: [
+    {
+      id: "OP04-060",
+      artId: "OP04-060",
+      setCode: "OP04",
+      collectorNumber: "060",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP04-060.jpg",
+    },
+    {
+      id: "OP04-060_p1",
+      artId: "OP04-060_p1",
+      setCode: "OP04",
+      collectorNumber: "060",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP04-060_p1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["purple"],
+  rarity: "SR",
+  setId: "OP04",
+  cost: 8,
+  power: 9000,
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
+  attribute: "special",
+  effect:
+    "[On Play] DON!! -2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): If your Leader's type includes \"Baroque Works\", add up to 1 card from the top of your deck to the top of your Life cards. [On Your Opponent's Attack] [Once Per Turn] DON!! -1: Draw 1 card and trash 1 card from your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 2,
+          },
+        ],
+        actions: [
+          {
+            action: "addToLife",
+            target: {
+              player: "self",
+              zones: ["deck"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            position: "top",
+            condition: {
+              condition: "leaderTrait",
+              trait: "Baroque Works",
+              match: "includes",
+            },
+          },
+        ],
+        optional: true,
+      },
+      {
+        trigger: "onOpponentAttack",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
+          },
+        ],
+        optional: true,
+        oncePerTurn: true,
+      },
+    ],
+  },
+  i18n: op04Crocodile060I18n,
+};

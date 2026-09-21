@@ -11,7 +11,7 @@ import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import type { MatchState } from "../types/match-state.ts";
 import type { CardInstance } from "../types/card-instance.ts";
 import { getEffectivePower } from "../active-effects/index.ts";
-import { defOf } from "../state/lookups.ts";
+import { defOf, hasAnyEffectiveCardType } from "../state/lookups.ts";
 import { assertNever } from "../types/exhaustive.ts";
 
 export interface ResolutionContext {
@@ -43,7 +43,7 @@ export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string
       if (target.cardTypes && target.cardTypes.length > 0) {
         bound = bound.filter((id) => {
           const card = ctx.state.G.cardIndex[id];
-          return card ? target.cardTypes!.includes(defOf(card).type) : false;
+          return card ? hasAnyEffectiveCardType(card, target.cardTypes!) : false;
         });
       }
       if (target.classifications && target.classifications.length > 0) {
@@ -79,7 +79,7 @@ export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string
       const card = ctx.state.G.cardIndex[attackerId as string];
       if (!card) return [];
       const def = defOf(card);
-      if (target.cardTypes && !target.cardTypes.includes(def.type)) return [];
+      if (target.cardTypes && !hasAnyEffectiveCardType(card, target.cardTypes)) return [];
       if (
         target.classifications &&
         !target.classifications.some((classification) =>
@@ -97,7 +97,7 @@ export function resolveTarget(target: TargetDSL, ctx: ResolutionContext): string
       const card = ctx.state.G.cardIndex[defenderId as string];
       if (!card) return [];
       const def = defOf(card);
-      if (target.cardTypes && !target.cardTypes.includes(def.type)) return [];
+      if (target.cardTypes && !hasAnyEffectiveCardType(card, target.cardTypes)) return [];
       if (
         target.classifications &&
         !target.classifications.some((classification) =>
@@ -185,7 +185,7 @@ function getCardCandidates(
   }
 
   if (target.cardTypes) {
-    candidates = candidates.filter((c) => target.cardTypes!.includes(defOf(c).type));
+    candidates = candidates.filter((card) => hasAnyEffectiveCardType(card, target.cardTypes!));
   }
 
   if (target.colors) {
@@ -298,6 +298,10 @@ function getCardCandidates(
     } else {
       candidates = candidates.filter((c) => c.meta.attachedGearIds.length === 0);
     }
+  }
+
+  if (target.hasLag !== undefined) {
+    candidates = candidates.filter((card) => card.meta.hasLag === target.hasLag);
   }
 
   if (target.attachedTo) {
@@ -435,11 +439,19 @@ function computeGigCount(player: RelativePlayer, ctx: ResolutionContext): number
   return ctx.state.G.players[playerId as string]?.gigArea.length ?? 0;
 }
 
+function computeComparableStreetCred(player: RelativePlayer, ctx: ResolutionContext): number {
+  // CR 5.11.4.2 defines Null as smaller than 0. A negative-infinity sentinel
+  // preserves that ordering without conflating Null with numeric Street Cred.
+  return computeGigCount(player, ctx) === 0
+    ? Number.NEGATIVE_INFINITY
+    : computeStreetCred(player, ctx);
+}
+
 /**
- * Count of friendly value-pairs of Gigs. With `n` dice and `k` dice sharing
- * a value, the pair count is `k choose 2`; we sum across all value buckets
- * with `k >= 2`. Visible to the engine's effect handlers so that
- * `forEachFriendlyGigPair` can multiply a wrapped effect.
+ * Count friendly value-pairs of Gigs without reusing a Gig in more than one
+ * pair (CR 6.5.1). Each value bucket therefore contributes `floor(k / 2)`.
+ * Visible to the engine's effect handlers so that `forEachFriendlyGigPair`
+ * can multiply a wrapped effect.
  */
 export function countFriendlyGigPairs(ctx: ResolutionContext): number {
   const player = ctx.state.G.players[ctx.sourcePlayerId as string];
@@ -451,7 +463,7 @@ export function countFriendlyGigPairs(ctx: ResolutionContext): number {
   }
   let pairs = 0;
   for (const count of counts.values()) {
-    if (count >= 2) pairs += (count * (count - 1)) / 2;
+    pairs += Math.floor(count / 2);
   }
   return pairs;
 }
@@ -459,17 +471,13 @@ export function countFriendlyGigPairs(ctx: ResolutionContext): number {
 export function evaluateCondition(condition: Condition, ctx: ResolutionContext): boolean {
   switch (condition.condition) {
     case "streetCred": {
-      const playerId = resolveRelativePlayer(condition.controller, ctx);
-      const player = ctx.state.G.players[playerId as string];
-      if (!player) return false;
-      const dice = player.gigArea.map((id) => ctx.state.G.gigDice[id as string]).filter(Boolean);
-      const streetCred = dice.reduce((sum, d) => sum + d.faceValue, 0);
+      const streetCred = computeComparableStreetCred(condition.controller, ctx);
       return compareValues(streetCred, condition.comparison, condition.value);
     }
 
     case "streetCredComparison": {
-      const left = computeStreetCred(condition.controller, ctx);
-      const right = computeStreetCred(condition.other, ctx);
+      const left = computeComparableStreetCred(condition.controller, ctx);
+      const right = computeComparableStreetCred(condition.other, ctx);
       return compareValues(left, condition.comparison, right);
     }
 
@@ -480,6 +488,12 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
     }
 
     case "streetCredDifference": {
+      if (
+        computeGigCount(condition.controller, ctx) === 0 ||
+        computeGigCount(condition.other, ctx) === 0
+      ) {
+        return false;
+      }
       const left = computeStreetCred(condition.controller, ctx);
       const right = computeStreetCred(condition.other, ctx);
       return compareValues(Math.abs(left - right), condition.comparison, condition.value);
@@ -494,6 +508,8 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
     }
 
     case "streetCredParity": {
+      // CR 5.11.4 / 5.11.4.1 / 2.10.2 — Null Street Cred (no Gigs) is not even or odd.
+      if (computeGigCount(condition.controller, ctx) === 0) return false;
       const streetCred = computeStreetCred(condition.controller, ctx);
       return condition.parity === "even" ? streetCred % 2 === 0 : streetCred % 2 !== 0;
     }
@@ -563,6 +579,13 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       if (ids.length === 0) return false;
       const card = ctx.state.G.cardIndex[ids[0]!];
       return card?.meta.hasLag ?? false;
+    }
+
+    case "hasStolenGigThisTurn": {
+      const ids = resolveTarget(condition.target, ctx);
+      if (ids.length === 0) return false;
+      const card = ctx.state.G.cardIndex[ids[0]!];
+      return card?.meta.hasStolenGigThisTurn ?? false;
     }
 
     case "hasGigAtMaxValue": {
@@ -711,6 +734,22 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
       return resolveTarget(condition.target, ctx).length > 0;
     }
 
+    case "targetBecameValue": {
+      const ids = resolveTarget(condition.target, ctx);
+      const adjustment = ctx.state.G.turnMetadata.currentTrigger?.lastGigAdjustment;
+      if (!adjustment || !ids.includes(adjustment.dieId as string)) return false;
+      if (adjustment.previousValue === adjustment.newValue) return false;
+      const die = ctx.state.G.gigDice[adjustment.dieId as string];
+      if (!die) return false;
+      const expected =
+        condition.value === "min"
+          ? 1
+          : condition.value === "max"
+            ? DIE_MAX_VALUES[die.dieType]
+            : condition.value;
+      return adjustment.newValue === expected;
+    }
+
     case "gigSides": {
       const ids = resolveTarget(condition.target, ctx);
       const wanted = Array.isArray(condition.sides) ? condition.sides : [condition.sides];
@@ -719,6 +758,9 @@ export function evaluateCondition(condition: Condition, ctx: ResolutionContext):
         return die ? wanted.includes(die.dieType) : false;
       });
     }
+
+    case "any":
+      return condition.of.some((candidate) => evaluateCondition(candidate, ctx));
 
     case "not":
       return !evaluateCondition(condition.of, ctx);
@@ -766,7 +808,7 @@ function cardMatchesTargetFilter(
   if (playerId && card.controllerId !== playerId) return false;
   if (target.zones && !target.zones.includes(card.zone)) return false;
   const def = defOf(card);
-  if (target.cardTypes && !target.cardTypes.includes(def.type)) return false;
+  if (target.cardTypes && !hasAnyEffectiveCardType(card, target.cardTypes)) return false;
   if (target.colors && !target.colors.includes(def.color)) return false;
   if (
     target.classifications &&
@@ -787,6 +829,7 @@ function cardMatchesTargetFilter(
   if (target.hasAttachedCards !== undefined) {
     if (target.hasAttachedCards !== card.meta.attachedGearIds.length > 0) return false;
   }
+  if (target.hasLag !== undefined && card.meta.hasLag !== target.hasLag) return false;
   return true;
 }
 

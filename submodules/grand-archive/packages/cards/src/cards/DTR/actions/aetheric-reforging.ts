@@ -32,27 +32,31 @@ export const aethericReforging: GrandArchiveCard<GrandArchiveAbilityDefinition, 
           id: "yd56vkebu9-a1",
           kind: "card-resolution",
           text: "Banish up to one target card in a graveyard. Then you may load Aetheric Reforging into an Aetherwing weapon you control.",
+          targets: [
+            {
+              id: "target-card",
+              kind: "target",
+              declared: "announcement",
+              chooser: "controller",
+              count: {
+                kind: "up-to",
+                amount: 1,
+              },
+              unique: true,
+              candidates: {
+                kind: "card",
+                zones: ["graveyard"],
+              },
+            },
+          ],
           effect: {
             kind: "sequence",
             effects: [
               {
-                kind: "banish",
-                player: "controller",
-                selection: {
-                  id: "banished-cards",
-                  kind: "choice",
-                  declared: "resolution",
-                  chooser: "controller",
-                  count: {
-                    kind: "up-to",
-                    amount: 1,
-                  },
-                  candidates: {
-                    kind: "card",
-                    zones: ["hand"],
-                    relationship: "zone-of",
-                    player: "controller",
-                  },
+                kind: "banish-object",
+                subject: {
+                  kind: "bound",
+                  binding: "target-card",
                 },
               },
               {

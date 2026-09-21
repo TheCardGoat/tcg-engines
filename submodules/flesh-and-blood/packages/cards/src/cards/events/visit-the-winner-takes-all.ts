@@ -42,6 +42,7 @@ export const visitTheWinnerTakesAll = defineCard(
                     {
                       type: "create-token",
                       token: "gold",
+                      creator: "token-controller",
                       controller: "each",
                     },
                     {

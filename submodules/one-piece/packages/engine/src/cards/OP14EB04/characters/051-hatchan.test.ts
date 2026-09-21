@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, op02Vista011 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Hatchan051 } from "../../../../../cards/src/cards/OP14EB04/characters/051-hatchan.ts";
+import { op14eb04Hatchan051 } from "../../../../../cards/src/cards/characters/op14-051-hatchan.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

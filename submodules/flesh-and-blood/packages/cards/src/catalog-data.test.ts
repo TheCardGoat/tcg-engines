@@ -31,4 +31,47 @@ describe("lightweight catalog data export", () => {
       ),
     ).toBe(true);
   });
+
+  it("ships the 2026-09-18 Banned and Restricted legalities", async () => {
+    const { fleshAndBloodCardData } = await import("@tcg/flesh-and-blood-cards/catalog-data");
+    type SparseLegalities = NonNullable<(typeof fleshAndBloodCardData.cards)[number]["legalities"]>;
+    // https://fabtcg.com/articles/scheduled-banned-and-restricted-announcement-17-09-26/
+    const allMatch = (name: string, match: (legalities: SparseLegalities) => boolean): boolean => {
+      const cards = fleshAndBloodCardData.cards.filter((card) => card.name === name);
+      return cards.length > 0 && cards.every((card) => match(card.legalities ?? {}));
+    };
+    const bannedIn = (format: keyof SparseLegalities) => (legalities: SparseLegalities) =>
+      legalities[format]?.banned === true;
+
+    expect(allMatch("Entwine Lightning", bannedIn("cc"))).toBe(true);
+    expect(allMatch("Brand with Cinderclaw", bannedIn("cc"))).toBe(false);
+
+    for (const name of [
+      "Absorb in Aether",
+      "Beaten Trackers",
+      "Emeritus Scolding",
+      "Harmonized Kodachi",
+      "Lightning Press",
+      "Pulping",
+      "Sigil of Suffering",
+      "Snapback",
+    ]) {
+      expect(allMatch(name, bannedIn("silverAge"))).toBe(true);
+    }
+    for (const name of [
+      "Beckoning Haunt",
+      "Deathly Delight",
+      "Flourish",
+      "Sirens of Safe Harbor",
+      "Vantom Wraith",
+      "Ira, Crimson Haze",
+      "Kano",
+      "Kayo",
+    ]) {
+      expect(allMatch(name, bannedIn("silverAge"))).toBe(false);
+    }
+    for (const name of ["Briar", "Oldhim", "Oscilio", "Chane"]) {
+      expect(allMatch(name, (legalities) => legalities.silverAge?.legal === false)).toBe(true);
+    }
+  });
 });

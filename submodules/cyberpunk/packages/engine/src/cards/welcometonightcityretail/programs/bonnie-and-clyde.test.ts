@@ -10,6 +10,21 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe('Bonnie and Clyde — "Defeat a rival Unit with power 4 or less. You may defeat 2 instead if a Rival controls at least 2 Gigs more than you."', () => {
+  it("is a 3-cost red Braindance Program with RAM 3 and a Sell Tag", () => {
+    expect(welcomeToNightCityRetailBonnieAndClyde).toMatchObject({
+      type: "program",
+      color: "red",
+      classifications: ["Braindance"],
+      cost: 3,
+      power: null,
+      ram: 3,
+      hasSellTag: true,
+      timingTriggers: ["play"],
+      reminderText: ["Discard programs after they resolve."],
+    });
+    expect(welcomeToNightCityRetailBonnieAndClyde.abilities).toHaveLength(1);
+  });
+
   it("defeats a single rival Unit with power ≤ 4 when the gig-differential condition is not met", () => {
     // P1 has 1 gig, P2 has 1 gig → differential is 0 (< 2), so only 1 target.
     const engine = CyberpunkTestEngine.createWithFixture(
@@ -89,6 +104,33 @@ describe('Bonnie and Clyde — "Defeat a rival Unit with power 4 or less. You ma
     const payload = (choice as { payload?: { max?: number; eligibleIds?: string[] } }).payload;
     expect(payload?.max).toBe(2);
     expect(payload?.eligibleIds).toHaveLength(2);
+  });
+
+  it("does not use an absolute Gig difference when the controller has 2 more Gigs", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailBonnieAndClyde],
+        gigArea: [
+          { dieType: "d4", faceValue: 1 },
+          { dieType: "d6", faceValue: 1 },
+        ],
+        eddies: 3,
+      },
+      {
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, hasLag: false },
+          { card: welcomeToNightCityRetailFieldOperator, hasLag: false },
+        ],
+        gigArea: [],
+      },
+    );
+
+    engine.playCard(welcomeToNightCityRetailBonnieAndClyde, { as: P1 });
+
+    expect(engine.getState().G.turnMetadata.pendingChoice).toMatchObject({
+      type: "chooseTarget",
+      payload: { min: 1, max: 1 },
+    });
   });
 
   it("can defeat 2 targets when the gig-differential condition is met", () => {
@@ -201,6 +243,37 @@ describe('Bonnie and Clyde — "Defeat a rival Unit with power 4 or less. You ma
     // Psycho Squad remains on the field.
     const field = engine.getCardsInZone("field", P2).map((c) => c.definitionId);
     expect(field).toContain(welcomeToNightCityRetailPsychoSquad.id);
+    expect(engine.getEddies(P1)).toBe(2);
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailBonnieAndClyde.id,
+    );
+  });
+
+  it("uses effective power: excludes a boosted low-power Unit and includes a reduced high-power Unit", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailBonnieAndClyde],
+        gigArea: [{ dieType: "d4", faceValue: 1 }],
+        eddies: 3,
+      },
+      {
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, powerModifier: 3 },
+          { card: welcomeToNightCityRetailPsychoSquad, powerModifier: -2 },
+        ],
+        gigArea: [{ dieType: "d4", faceValue: 1 }],
+      },
+    );
+
+    engine.playCard(welcomeToNightCityRetailBonnieAndClyde, { as: P1 });
+
+    const choice = engine.getState().G.turnMetadata.pendingChoice;
+    if (!choice || choice.type !== "chooseTarget" || choice.payload.type !== "effectTarget") {
+      throw new Error("Expected one effective-power-qualified rival Unit");
+    }
+    expect(choice.payload.eligibleIds).toEqual([
+      engine.getCard(welcomeToNightCityRetailPsychoSquad, "field", P2).instanceId,
+    ]);
   });
 
   it("the played Program ends up in the controller's trash after resolving", () => {
@@ -208,7 +281,7 @@ describe('Bonnie and Clyde — "Defeat a rival Unit with power 4 or less. You ma
       {
         hand: [welcomeToNightCityRetailBonnieAndClyde],
         gigArea: [{ dieType: "d4", faceValue: 1 }],
-        eddies: 5,
+        eddies: 3,
       },
       {
         field: [{ card: welcomeToNightCityRetailCorpoSecurity, hasLag: false }],
@@ -221,6 +294,7 @@ describe('Bonnie and Clyde — "Defeat a rival Unit with power 4 or less. You ma
 
     const trash = engine.getCardsInZone("trash", P1).map((c) => c.definitionId);
     expect(trash).toContain(welcomeToNightCityRetailBonnieAndClyde.id);
+    expect(engine.getEddies(P1)).toBe(0);
   });
 
   it("emits an actionLog entry when it resolves", () => {

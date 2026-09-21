@@ -5,7 +5,7 @@ import {
   eb01MountainGod018,
   op10EustassCaptainKid112,
 } from "@tcg/op-cards";
-import { op10MonkeyDLuffy111 } from "../../../../../cards/src/cards/OP10/characters/111-monkey-d-luffy.ts";
+import { op10MonkeyDLuffy111 } from "../../../../../cards/src/cards/characters/op10-111-monkey-d-luffy.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

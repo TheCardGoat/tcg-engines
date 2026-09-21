@@ -1,0 +1,40 @@
+.control {
+  --sidebar-control-accent: var(
+    --simulator-sidebar-control-accent,
+    var(--participant-accent, var(--match-sidebar-accent, var(--board-accent, currentColor)))
+  );
+
+  display: grid;
+  width: var(--simulator-sidebar-control-size, 2rem);
+  min-width: var(--simulator-sidebar-control-size, 2rem);
+  height: var(--simulator-sidebar-control-size, 2rem);
+  min-height: var(--simulator-sidebar-control-size, 2rem);
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--sidebar-control-accent) 28%, transparent);
+  border-radius: 0.45rem;
+  padding: 0;
+  background: color-mix(in srgb, var(--sidebar-control-accent) 7%, transparent);
+  color: inherit;
+  cursor: pointer;
+}
+
+.control:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--sidebar-control-accent) 15%, transparent);
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--sidebar-control-accent);
+  outline-offset: 2px;
+}
+
+.control:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (pointer: coarse) {
+  .control {
+    --simulator-sidebar-control-size: 44px;
+  }
+}

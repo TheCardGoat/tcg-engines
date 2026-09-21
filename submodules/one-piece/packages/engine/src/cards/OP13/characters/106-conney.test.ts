@@ -7,7 +7,7 @@ import {
   op13SaintCharlos087,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Conney106 } from "../../../../../cards/src/cards/OP13/characters/106-conney.ts";
+import { op13Conney106 } from "../../../../../cards/src/cards/characters/op13-106-conney.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

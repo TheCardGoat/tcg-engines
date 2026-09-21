@@ -9,6 +9,7 @@ import {
   FAB_LOG_KEY_NARRATIVE_ROLES,
   type FabLogActorLabelUsage,
   type FabLogCategory,
+  type FabLogNarrativeRole,
 } from "@tcg/flesh-and-blood-engine/log";
 import {
   renderFabPlayerLogMessage,
@@ -99,8 +100,19 @@ function isPaymentPitch(message: FabPlayerLogMessage): message is FabPaymentPitc
   return message.key === "flesh-and-blood.pitch";
 }
 
+/** Per-message provenance overrides the static key table (engine event causes). */
+function narrativeRoleFor(message: FabPlayerLogMessage): FabLogNarrativeRole {
+  return message.narrativeRole ?? FAB_LOG_KEY_NARRATIVE_ROLES[message.key];
+}
+
+/** The paid-activity family: play and activation variants, zone-qualified or targeted. */
 function isPaidActivity(message: FabPlayerLogMessage): boolean {
-  return message.key === "flesh-and-blood.play" || message.key === "flesh-and-blood.activate";
+  return (
+    message.key === "flesh-and-blood.play" ||
+    message.key === "flesh-and-blood.play.from-zone" ||
+    message.key === "flesh-and-blood.activate" ||
+    message.key === "flesh-and-blood.activate.targeting"
+  );
 }
 
 function historyTitle(message: FabPlayerLogMessage, actorLabel: FabPlayerLogActorLabel): string {
@@ -160,6 +172,16 @@ function paidActivityDetails(
       }
       if (message.key === "flesh-and-blood.cost-chi") {
         return [{ kind: "text", label: "Cost", text: `Paid ${message.values.chi} chi` }];
+      }
+      if (message.key === "flesh-and-blood.set-tapped") {
+        return [
+          {
+            kind: "cards",
+            label: "Cost",
+            lead: message.values.state === "tapped" ? "Tapped" : "Untapped",
+            cards: cardReferences(message) ?? [{ name: message.values.cardName }],
+          },
+        ];
       }
       return [{ kind: "text", label: "Cost", text: historyTitle(message, actorLabel) }];
     }),
@@ -249,21 +271,21 @@ export function projectFabPlayerNarrativeHistory(
   const actorLabel = options.actorLabel ?? actorLabelFor(options.viewerId, options.seatIds);
   return logs.flatMap((log) => {
     const visibleEntries = log.entries.filter(({ message }) => {
-      const role = FAB_LOG_KEY_NARRATIVE_ROLES[message.key];
+      const role = narrativeRoleFor(message);
       return role !== "diagnostic" && role !== "transient";
     });
     const paidActivity = visibleEntries.find(({ message }) => isPaidActivity(message));
     const paidDetails = paidActivity
       ? visibleEntries.filter(({ message }) => {
-          const role = FAB_LOG_KEY_NARRATIVE_ROLES[message.key];
-          return role === "detail" || message.key === "flesh-and-blood.beat-chest";
+          return (
+            narrativeRoleFor(message) === "detail" || message.key === "flesh-and-blood.beat-chest"
+          );
         })
       : [];
     return visibleEntries.flatMap(({ entryId, message }) => {
       if (
         paidActivity &&
-        (FAB_LOG_KEY_NARRATIVE_ROLES[message.key] === "detail" ||
-          message.key === "flesh-and-blood.beat-chest")
+        (narrativeRoleFor(message) === "detail" || message.key === "flesh-and-blood.beat-chest")
       ) {
         return [];
       }

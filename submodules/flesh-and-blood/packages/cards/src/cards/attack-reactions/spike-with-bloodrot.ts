@@ -54,6 +54,7 @@ export const spikeWithBloodrot = definePitchFamily(fabPitchFamilies["spike-with-
                   effect: {
                     type: "create-token",
                     token: "bloodrot-pox",
+                    creator: "effect-controller",
                     controller: "attack-target",
                   },
                 },

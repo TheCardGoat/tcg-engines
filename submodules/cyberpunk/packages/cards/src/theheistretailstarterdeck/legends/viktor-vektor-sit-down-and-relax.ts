@@ -30,7 +30,7 @@ export const theHeistRetailStarterDeckViktorVektorSitDownAndRelax = defineCyberp
   abilities: [
     {
       kind: "triggered",
-      text: "CALL Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
+      text: "{Call} Search the top 5 cards of your deck. Reveal up to 2 Gears with cost 2 or less and add them to your hand. Bottom-deck the rest in a random order.",
       trigger: {
         trigger: "call",
       },

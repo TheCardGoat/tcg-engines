@@ -11,6 +11,7 @@ export interface FabDeckRevealRecall {
   readonly instanceId: string;
   readonly position: SimulatorDeckReveal["position"];
   readonly turnNumber: number;
+  readonly definitionId?: string;
   readonly title?: string;
   readonly subtitle?: string;
   readonly imageUrl?: string;
@@ -21,6 +22,7 @@ export interface FabHandRevealRecall {
   readonly ownerId: string;
   readonly instanceId: string;
   readonly turnNumber: number;
+  readonly definitionId?: string;
   readonly title?: string;
   readonly subtitle?: string;
   readonly imageUrl?: string;
@@ -28,7 +30,7 @@ export interface FabHandRevealRecall {
 
 export type FabRevealCardPresentation = Pick<
   SimulatorDeckRevealCard,
-  "title" | "subtitle" | "imageUrl"
+  "definitionId" | "title" | "subtitle" | "imageUrl"
 >;
 
 export function nextFabDeckRevealRecalls(input: {
@@ -116,6 +118,7 @@ export function projectFabDeckReveal(
     cards: [
       {
         entityId: recall.instanceId,
+        ...(recall.definitionId ? { definitionId: recall.definitionId } : {}),
         title: recall.title,
         subtitle: recall.subtitle,
         imageUrl: recall.imageUrl,
@@ -173,6 +176,7 @@ export function projectFabHandRevealCards(
 ): readonly SimulatorDeckRevealCard[] {
   return (recalls ?? []).map((recall) => ({
     entityId: recall.instanceId,
+    ...(recall.definitionId ? { definitionId: recall.definitionId } : {}),
     title: recall.title,
     subtitle: recall.subtitle,
     imageUrl: recall.imageUrl,

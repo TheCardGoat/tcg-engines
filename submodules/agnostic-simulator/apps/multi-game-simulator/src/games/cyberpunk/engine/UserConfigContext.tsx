@@ -15,11 +15,8 @@ import {
   DEFAULT_BASE_GAME_USER_CONFIG,
   clampSoundVolume,
   normalizeBaseGameUserConfig,
-  parseAnimationPacing,
   type GameUserConfig,
 } from "../../../simulator/gameConfig";
-
-export type { AnimationPacing } from "../../../simulator/gameConfig";
 
 export type DiceDisplayMode = "shape" | "image" | "font";
 
@@ -169,10 +166,6 @@ export function UserConfigProvider({ children }: { children: ReactNode }) {
             patch.soundVolume === undefined
               ? prev.soundVolume
               : clampSoundVolume(patch.soundVolume),
-          animationPacing:
-            patch.animationPacing === undefined
-              ? prev.animationPacing
-              : parseAnimationPacing(patch.animationPacing),
           fieldCardSize:
             patch.fieldCardSize === undefined
               ? prev.fieldCardSize

@@ -1,6 +1,9 @@
 import { describe, it } from "vitest";
 import {
   expectFabCard,
+  expectFabPlayer,
+  expectCombat,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
@@ -20,37 +23,48 @@ import { truthOrTrickeryYellow } from "./truth-or-trickery.ts";
  */
 
 describe("Truth or Trickery (SUP077) AAA", () => {
-  it("happy: a wrong guess makes the attacking hero discard a card", () => {
+  it.each([
+    ["red", "no", true],
+    ["red", "yes", false],
+    ["blue", "yes", true],
+    ["blue", "no", false],
+  ] as const)("choose %s and guess %s: discard only when wrong (%s)", (color, guess, wrong) => {
     const game = FabTestEngine.start(
       {
         hero: kassai,
         hand: [snatchRed, nimblismBlue],
         resourcePoints: 1,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       {
         hero: dash,
         hand: [truthOrTrickeryYellow],
         life: 20,
-        deckTop: [snatchRed], // top card is red
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue],
+        deckTop: [snatchRed], // explicitly red at the top
       },
       { ...FAB_MANUAL_HARNESS, firstPlayer: kassai },
     );
     const Kassai = game.as(kassai);
     const Dash = game.as(dash);
+    const heldCard = Kassai.cardIn("hand", nimblismBlue);
 
     Kassai.playAttack(snatchRed);
     game.advanceUntil({ stopAt: "defend" });
     Dash.defendWith(truthOrTrickeryYellow);
-    game.passBoth(); // resolve the defend trigger up to the look optional
-    // Dash accepts the look, chooses Red; Kassai guesses "no" — wrong.
+    game.advanceToDecision(Dash, "boolean");
+    // The defender knows the top card is red before choosing a color.
     Dash.accept();
-    Dash.choose("red");
-    Kassai.choose("no"); // guessed wrong on purpose
+    Dash.choose(color);
+    game.advanceToDecision(Kassai, "effect-resolution");
+    Kassai.choose(guess);
     game.closeCombat({ optionals: "decline", ordering: "listed" });
 
-    expectFabCard(Kassai, nimblismBlue).toBeIn("graveyard"); // the wrong-guess discard
+    expectFabCard(Kassai, heldCard).toBeIn(wrong ? "graveyard" : "hand");
+    expectFabPlayer(Dash).toHaveLife(19);
+    expectFabCard(Dash, Dash.cardIn("deck", snatchRed)).toBeIn("deck");
+    expectCombat(game).toBeClosed();
     expectFabCard(Kassai, snatchRed).toBeIn("graveyard");
   });
 
@@ -61,24 +75,29 @@ describe("Truth or Trickery (SUP077) AAA", () => {
         hand: [snatchRed, nimblismBlue],
         resourcePoints: 1,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       {
         hero: dash,
         hand: [truthOrTrickeryYellow],
         life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue],
         deckTop: [snatchRed],
       },
       { ...FAB_MANUAL_HARNESS, firstPlayer: kassai },
     );
     const Kassai = game.as(kassai);
     const Dash = game.as(dash);
+    const heldCard = Kassai.cardIn("hand", nimblismBlue);
 
     Kassai.playAttack(snatchRed);
     game.advanceUntil({ stopAt: "defend" });
     Dash.defendWith(truthOrTrickeryYellow);
     game.closeCombat({ optionals: "decline", ordering: "listed" });
 
-    expectFabCard(Kassai, nimblismBlue).toBeIn("hand"); // nothing was discarded
+    expectFabCard(Kassai, heldCard).toBeIn("hand");
+    expectFabPlayer(Dash).toHaveLife(19);
+    expectWait(game).notToHaveDecision();
+    expectCombat(game).toBeClosed();
   });
 });

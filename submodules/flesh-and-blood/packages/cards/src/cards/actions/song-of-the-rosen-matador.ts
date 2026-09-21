@@ -10,6 +10,7 @@ export const songOfTheRosenMatador = definePitchFamily(
         effect: {
           type: "create-token",
           token: "vigor",
+          creator: "effect-controller",
           controller: "each-other-hero",
         },
       },

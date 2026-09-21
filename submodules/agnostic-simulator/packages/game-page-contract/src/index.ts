@@ -102,6 +102,16 @@ export {
   materializeReplayFrameAtCursor,
   materializeReplayStateAtCursor,
 } from "./replay-materializer.js";
+export {
+  clientAuthorityPushedVersionOffset,
+  describeLiveMatchServerFeedback,
+  initialClientAuthorityLastPushedVersion,
+  MATCH_RELOAD_FEEDBACK,
+  resolveClientAuthorityStaleRejection,
+  shouldAutoSyncFromServerCode,
+  shouldToastClientAuthorityRejection,
+} from "./live-match-recovery.js";
+export type { ClientAuthorityStaleResolution } from "./live-match-recovery.js";
 
 export type {
   SimulatorDebugExportDomainEventV1,
@@ -145,7 +155,16 @@ export type {
   LiveMatchSessionState,
   NormalizedPresenceChange,
 } from "./live-match-session.js";
-export { createLiveMatchSession } from "./live-match-session.js";
+export { createLiveMatchSession, LIVE_MATCH_HEARTBEAT_INTERVAL_MS } from "./live-match-session.js";
+export {
+  canEmitLiveMatchWrite,
+  canEmitLiveMatchWriteFromHandle,
+  describeLiveMatchWriteGate,
+  LIVE_MATCH_OLDER_BOARD_FEEDBACK,
+  LIVE_MATCH_SYNCING_BOARD_COPY,
+  shouldShowLiveBoardSyncing,
+} from "./live-match-write.js";
+export type { LiveMatchWriteGate, LiveMatchWriteGateReason } from "./live-match-write.js";
 export type {
   CompletedHeartbeatProbe,
   HeartbeatProbeFields,

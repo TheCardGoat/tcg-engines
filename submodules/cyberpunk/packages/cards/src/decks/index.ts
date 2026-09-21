@@ -24,18 +24,19 @@ Main Deck
 ];
 
 /**
- * Publisher-authored Welcome to Night City retail starter decks. These are
- * complete, legal player decks rather than the compact generator seeds above.
- * Keep the quantities aligned with the official published decklists:
+ * Publisher-authored Welcome to Night City starter decks. Card names and
+ * quantities follow the official lists, using catalog display names:
  * https://cyberpunktcg.com/blog/wnc-starter-decks
  */
+export const CYBERPUNK_STARTER_DECK_SOURCE_URL = "https://cyberpunktcg.com/blog/wnc-starter-decks";
+
 export const starterDeckLists: string[] = [
-  `Embracing Power — Retail Starter Deck
+  `Embracing Power Starter Deck
 
 Legends
-1 Goro Takemura — Hands Unclean
-1 Yorinobu Arasaka — Embracing Destruction
-1 Saburo Arasaka — Stubborn Patriarch
+1 Goro Takemura: Hands Unclean
+1 Yorinobu Arasaka: Embracing Destruction
+1 Saburo Arasaka: Stubborn Patriarch
 
 Main Deck (40)
 2 Chrome Fang
@@ -44,39 +45,39 @@ Main Deck (40)
 2 Swordwise Huscle
 2 Emergency Atlus
 2 Field Operator
-2 Goro Takemura — Losing His Way
+2 Goro Takemura: Losing His Way
 2 MaxTac AV
 2 Arasaka Emergency Radioport
 3 Mantis Blades
-3 Satori — Sword of Saburo
+3 Satori: Sword of Saburo
 2 Industrial Assembly
 2 Over the Edge
 2 Shattered Memories
 3 Corpo Security
 3 Sandevistan
 3 Corporate Surveillance`,
-  `The Heist — Retail Starter Deck
+  `The Heist Starter Deck
 
 Legends
-1 V — Corporate Exile
-1 Viktor Vektor — Sit Down and Relax
-1 Jackie Welles — Pour One Out For Me
+1 V: Corporate Exile
+1 Viktor Vektor: Sit Down and Relax
+1 Jackie Welles: Pour One Out For Me
 
 Main Deck (40)
-2 Dexter DeShawn — One Last Chance
+2 Dexter DeShawn: One Last Chance
 2 Heywood Ripperdoc
 2 Offduty Malfini
 2 Secondhand Bombus
-2 T-Bug — Amateur Philosopher
+2 T-Bug: Amateur Philosopher
 3 Kiroshi Optics
 3 Mandibular Upgrade
 3 Zetatech Faceplate
 2 Afterparty at Lizzie's
 3 Delamain Cab
-3 Evelyn Parker — Scheming Siren
+3 Evelyn Parker: Scheming Siren
 2 MT0D12 Flathead
 2 Psycho Squad
-2 Dying Night — V's Pistol
+2 Dying Night: V's Pistol
 2 Tetratronic Rippler
 3 Floor It
 2 Reboot Optics`,

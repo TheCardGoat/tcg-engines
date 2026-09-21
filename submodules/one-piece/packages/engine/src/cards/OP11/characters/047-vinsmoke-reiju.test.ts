@@ -6,7 +6,7 @@ import {
   op06VinsmokeReiju042,
   op11VinsmokeYonji046,
 } from "@tcg/op-cards";
-import { op11VinsmokeReiju047 } from "../../../../../cards/src/cards/OP11/characters/047-vinsmoke-reiju.ts";
+import { op11VinsmokeReiju047 } from "../../../../../cards/src/cards/characters/op11-047-vinsmoke-reiju.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

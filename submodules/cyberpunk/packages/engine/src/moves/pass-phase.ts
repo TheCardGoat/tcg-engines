@@ -6,10 +6,11 @@ import type { CardInstanceId, PlayerId as PlayerIdType } from "../types/branded.
 import type { MatchState } from "../types/match-state.ts";
 import type { Operations } from "../operations/index.ts";
 import { enterStartPhase } from "./keep-hand.ts";
-import { allowedGainGigDice, readySpentCards } from "./gain-gig.ts";
+import { beginGainGigStep, readySpentCards } from "./gain-gig.ts";
 import { defOf } from "../state/lookups.ts";
 import { getCardsMarkedForEndTurnDefeat } from "../active-effects/index.ts";
 import { getMustAttackCardIds } from "./attack-requirements.ts";
+import { resolveEndOfTurnDefeats } from "./resolve-attack.ts";
 
 export interface PassPhaseInput extends MoveInput {
   args: Record<string, never>;
@@ -79,8 +80,15 @@ export const passPhaseMove: MoveDefinition<PassPhaseInput> = {
   },
 };
 
-function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operations) {
+/** End the active player's turn: end-of-turn triggers, cleanup, next turn. */
+export function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operations) {
   const currentTurn = state.G.turnMetadata.turnNumber;
+  operations.event.emit({
+    type: "actionLog",
+    messageKey: "move.turnEnded",
+    params: { turnNumber: currentTurn },
+    playerId,
+  });
   const turnEndedEvent = {
     type: "turnEnded" as const,
     playerId,
@@ -92,7 +100,7 @@ function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operatio
   // delayed-effects-bag cleanup so immediate end-of-turn triggers resolve
   // first. Every emitted event must have its triggers processed.
   processEventTriggers(turnEndedEvent, state, operations);
-  if (state.G.turnMetadata.pendingChoice || state.G.turnMetadata.currentTrigger) {
+  if (pendingResolutionBlocksEndTurn(state)) {
     state.G.turnMetadata.suspendedEndTurn = { playerId, turnNumber: currentTurn };
     return;
   }
@@ -100,16 +108,19 @@ function endTurn(state: MatchState, playerId: PlayerIdType, operations: Operatio
   finishEndTurn(state, playerId, operations, currentTurn);
 }
 
+/** True while a trigger prompt, in-progress trigger, or queued trigger is open. */
+function pendingResolutionBlocksEndTurn(state: MatchState): boolean {
+  return (
+    state.G.turnMetadata.pendingChoice !== undefined ||
+    state.G.turnMetadata.currentTrigger !== undefined ||
+    state.G.turnMetadata.triggerQueue.length > 0
+  );
+}
+
 export function resumeSuspendedEndTurn(state: MatchState, operations: Operations): void {
   const suspended = state.G.turnMetadata.suspendedEndTurn;
   if (!suspended) return;
-  if (
-    state.G.turnMetadata.pendingChoice ||
-    state.G.turnMetadata.currentTrigger ||
-    state.G.turnMetadata.triggerQueue.length > 0
-  ) {
-    return;
-  }
+  if (pendingResolutionBlocksEndTurn(state)) return;
 
   state.G.turnMetadata.suspendedEndTurn = undefined;
   finishEndTurn(state, suspended.playerId, operations, suspended.turnNumber);
@@ -121,13 +132,6 @@ function finishEndTurn(
   operations: Operations,
   currentTurn: number,
 ): void {
-  operations.event.emit({
-    type: "actionLog",
-    messageKey: "move.turnEnded",
-    params: { turnNumber: currentTurn },
-    playerId,
-  });
-
   // Process delayed effects from the effectBag before cleanup
   const bagEntries = [...state.G.effectBag];
   for (const entry of bagEntries) {
@@ -153,6 +157,15 @@ function finishEndTurn(
   }
 
   defeatCardsMarkedForEndTurn(state, operations);
+
+  // Defeated-card triggers ({Defeated} abilities, defeat-observing Legends)
+  // queue a prompt that must resolve BEFORE the turn flips — resetTurnFlags
+  // wipes triggerQueue/currentTrigger, and a prompt left pointing at an
+  // emptied queue can never be satisfied (stuck chooseTrigger loop).
+  if (pendingResolutionBlocksEndTurn(state)) {
+    state.G.turnMetadata.suspendedEndTurn = { playerId, turnNumber: currentTurn };
+    return;
+  }
 
   const opponentId = state.ctx.playerIds.find((id) => id !== playerId)!;
   operations.game.cleanupTurnEffects();
@@ -209,56 +222,29 @@ function finishEndTurn(
     return;
   }
 
-  // Step 3: GAIN A GIG. If the fixer area has dice, open a pending choice —
-  // the win/deck-out checks fire when the active player resolves the choice
-  // via the `gainGig` move.
-  const allowedDieIds = allowedGainGigDice(state, opponentId as string);
-  if (allowedDieIds.length > 0) {
-    operations.game.setPendingChoice({
-      type: "gainGig",
-      chooserId: opponentId,
-      effectId: "start-phase",
-      payload: { allowedDieIds },
-    });
-    return;
-  }
-
-  operations.game.setPhase("main");
+  // Step 3: GAIN A GIG. Auto-resolve a forced die or ask the active player.
+  beginGainGigStep(state, opponentId, operations);
 }
 
 function defeatCardsMarkedForEndTurn(state: MatchState, operations: Operations): void {
-  for (const cardId of getCardsMarkedForEndTurnDefeat(state)) {
+  const marked = getCardsMarkedForEndTurnDefeat(state).filter((cardId) => {
     const card = state.G.cardIndex[cardId as string];
-    if (!card || card.zone !== "field") continue;
-    const attachedGearIds = [...card.meta.attachedGearIds];
-    const hadAttachedCards = attachedGearIds.length > 0;
-    operations.card.moveAttachedGear(cardId, "trash", { detachAfterMove: true });
-    operations.zone.moveCard(cardId, "trash", card.controllerId);
-    const event = {
-      type: "cardDefeated" as const,
-      cardId,
-      defeatedBy: null,
-      playerId: card.controllerId,
-      hadAttachedCards,
-    };
-    operations.event.emit(event);
-    processEventTriggers(event, state, operations);
-
-    for (const gearId of attachedGearIds) {
-      const gear = state.G.cardIndex[gearId as string];
-      if (!gear) continue;
-      const gearEvent = {
-        type: "cardDefeated" as const,
-        cardId: gearId,
-        hostId: cardId,
-        defeatedBy: null,
-        playerId: gear.controllerId,
-        hadAttachedCards: false,
-      };
-      operations.event.emit(gearEvent);
-      processEventTriggers(gearEvent, state, operations);
+    return card?.zone === "field";
+  });
+  // Consume the delayed process before it can suspend for a replacement
+  // choice. Resuming the end turn re-enters finishEndTurn, and the same
+  // process must not apply twice (CR 10.29.1).
+  const markedIds = new Set(marked.map((cardId) => cardId as string));
+  for (const effect of state.G.activeEffects) {
+    if (
+      effect.kind === "defeatAtEndOfTurnIfAttacked" &&
+      effect.triggered &&
+      markedIds.has(effect.targetCardId as string)
+    ) {
+      operations.game.removeActiveEffect(effect.id);
     }
   }
+  resolveEndOfTurnDefeats(state, operations, marked);
 }
 
 function maybeEndForTurnStart(

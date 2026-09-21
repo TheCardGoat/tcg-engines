@@ -83,6 +83,12 @@
   z-index: 260;
 }
 
+/* A targetable Unit is one interaction surface. Internal ability/stat controls
+   must not intercept the target click before it reaches the card wrapper. */
+.selectable > .unit {
+  pointer-events: none;
+}
+
 .selectable .unit::after,
 .activeTriggerSource .unit::after {
   content: "";
@@ -105,6 +111,40 @@
     0 0 40px rgb(74 217 255 / 48%),
     inset 0 0 16px rgb(74 217 255 / 30%);
   animation: none;
+}
+
+.paymentEligible .unit::after {
+  border-color: #4ad9ff;
+  box-shadow:
+    0 0 14px rgb(74 217 255 / 86%),
+    0 0 28px rgb(74 217 255 / 38%),
+    inset 0 0 12px rgb(74 217 255 / 24%);
+}
+
+.paymentSelected .unit::after {
+  border-color: #f5e642;
+  box-shadow:
+    0 0 16px rgb(245 230 66 / 90%),
+    0 0 34px rgb(245 230 66 / 44%),
+    inset 0 0 14px rgb(245 230 66 / 28%);
+}
+
+.paymentSelected::before {
+  content: "PAY";
+  position: absolute;
+  inset: auto 4px 4px auto;
+  z-index: 290;
+  padding: 2px 5px;
+  border: 1px solid #f5e642;
+  border-radius: 2px;
+  background: rgb(7 9 12 / 92%);
+  color: #fff9b2;
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .selectable[data-choice-type="chooseTrigger"]::before,
@@ -879,6 +919,13 @@
   }
 }
 
+/* The combat badge renders outside the card edge, so its stack must out-rank
+   combat-state neighbors (.selectable 260 / .validAttackDropTarget 270) or the
+   neighbor's stacking context buries the badge. */
+.stack:has(.combatDamageBadge) {
+  z-index: 300;
+}
+
 .combatDamageBadge {
   position: absolute;
   left: 50%;
@@ -933,4 +980,27 @@
   font-size: 16px;
   letter-spacing: 0;
   text-shadow: 0 0 8px rgb(245 230 66 / 54%);
+}
+
+:global([data-testid="mobile-cyberpunk-board"]) .combatDamageBadge {
+  top: 6px;
+  transform: translate(-50%, 0);
+}
+
+:global([data-testid="mobile-cyberpunk-board"]) .stack:has(.tappedUnit) .combatDamageBadge,
+:global([data-testid="mobile-cyberpunk-board"])
+  .stack:has(.tappedUnit)
+  .combatDamageBadge[data-combat-role="attacker"] {
+  left: 50%;
+  top: 6px;
+  transform: translate(-50%, 0);
+}
+
+:global([data-testid="mobile-cyberpunk-board"]) .powerBadge {
+  right: 3%;
+  bottom: 3%;
+}
+
+:global([data-testid="mobile-cyberpunk-board"]) .powerLabel {
+  overflow: visible;
 }

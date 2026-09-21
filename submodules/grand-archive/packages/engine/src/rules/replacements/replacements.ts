@@ -1506,6 +1506,12 @@ export function collectGrandArchiveReplacementCandidates(
   if (event.type === "object-removed-from-game" || event.gameActionKind === "special-game-action") {
     return [];
   }
+  if (
+    event.type === "keyword-action-performed" &&
+    ((event.action === "glimpse" && event.glimpseStage === "complete") ||
+      (event.action === "suppress" && event.suppressStage === "complete"))
+  )
+    return [];
   const candidates: GrandArchiveReplacementCandidate[] = [];
   const gameOutcome = intrinsicGameOutcomeCandidate(program, state, event);
   if (gameOutcome) candidates.push(gameOutcome);
@@ -1631,6 +1637,12 @@ export function collectGrandArchiveReplacementCandidates(
         controllerId: executionObject.controllerId,
         sourceId: executionObject.id,
         abilityBearerId: executionObject.id,
+        variables:
+          event.type === "object-moved" &&
+          event.objectId === executionObject.id &&
+          event.to === "field"
+            ? (event.entryActivationVariables ?? {})
+            : executionObject.activationVariables,
         bindings: replacementEventBindings(evaluationState, event),
       });
       if (

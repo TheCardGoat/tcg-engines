@@ -2,13 +2,14 @@ import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { defOf } from "../state/lookups.ts";
-import { availableEddies } from "./eddie-resources.ts";
+import { availableEddies, canSpendSelectedEddies } from "./eddie-resources.ts";
 import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
 import type { MatchState } from "../types/match-state.ts";
 
 export interface GoSoloInput extends MoveInput {
   args: {
     cardId: string;
+    paymentSourceIds?: string[];
   };
 }
 
@@ -61,6 +62,17 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
     if (availableEddies(state as MatchState, playerId) < cost) {
       return { valid: false, error: "Not enough eddies", errorCode: "INSUFFICIENT_EDDIES" };
     }
+    if (
+      input.args.paymentSourceIds !== undefined &&
+      !canSpendSelectedEddies(
+        state.G,
+        playerId,
+        cost,
+        input.args.paymentSourceIds as CardInstanceId[],
+      )
+    ) {
+      return { valid: false, error: "Invalid payment sources", errorCode: "INVALID_PAYMENT" };
+    }
 
     return { valid: true };
   },
@@ -73,7 +85,16 @@ export const goSoloMove: MoveDefinition<GoSoloInput> = {
     const def = defOf(card);
     const cost = goSoloCost(state as MatchState, cardId as CardInstanceId, playerId);
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
-    operations.game.spendEddies(playerId, cost, "goSolo");
+    // CR 11.25.1 — the legend enters the field ready regardless of how its
+    // cost was paid, so let it fund itself first and spare the other resources.
+    operations.game.spendEddies(
+      playerId,
+      cost,
+      "goSolo",
+      input.args.paymentSourceIds === undefined
+        ? { preferredLegendIds: [cardId as CardInstanceId] }
+        : { sourceIds: input.args.paymentSourceIds as CardInstanceId[] },
+    );
     consumeCostModifierUse(state as MatchState, cardId as CardInstanceId, playerId);
     operations.zone.moveCard(cardId as CardInstanceId, "field", playerId);
     operations.card.moveAttachedGear(cardId as CardInstanceId, "field");

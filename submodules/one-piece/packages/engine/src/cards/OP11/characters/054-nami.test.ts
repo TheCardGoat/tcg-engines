@@ -5,7 +5,7 @@ import {
   eb01MountainGod018,
   op06VinsmokeReiju042,
 } from "@tcg/op-cards";
-import { op11Nami054 } from "../../../../../cards/src/cards/OP11/characters/054-nami.ts";
+import { op11Nami054 } from "../../../../../cards/src/cards/characters/op11-054-nami.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

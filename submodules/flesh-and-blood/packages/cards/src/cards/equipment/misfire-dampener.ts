@@ -32,7 +32,7 @@ export const misfireDampener = defineCard(fabCardIdentitiesByCanonicalId["bCqKML
         condition: { type: "performed-this-turn", event: "boost", player: "controller" },
         then: {
           type: "prevention",
-          preventionKind: "fixed",
+          preventionKind: "shielding",
           amount: 2,
           damageType: "arcane",
           shielded: {
@@ -42,7 +42,7 @@ export const misfireDampener = defineCard(fabCardIdentitiesByCanonicalId["bCqKML
         },
         else: {
           type: "prevention",
-          preventionKind: "fixed",
+          preventionKind: "shielding",
           amount: 1,
           damageType: "arcane",
           shielded: {

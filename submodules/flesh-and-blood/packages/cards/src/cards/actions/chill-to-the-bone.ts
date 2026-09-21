@@ -13,6 +13,7 @@ export const chillToTheBone = definePitchFamily(fabPitchFamilies["chill-to-the-b
       effect: {
         type: "create-token",
         token: "frostbite",
+        creator: "effect-controller",
         controller: "attack-target",
         count,
         appliesTo: {

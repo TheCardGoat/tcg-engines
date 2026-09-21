@@ -73,88 +73,56 @@ export const butlersAugury: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           id: "5u5ic64930-a2",
           kind: "card-resolution",
           text: "Draw X cards into your memory, where X is five minus your influence. Then deal X damage to your champion. (If X is negative, don't draw cards and don't deal damage.)",
-          variables: [
-            {
-              symbol: "X",
-              kind: "derived",
-              amount: {
-                kind: "calculate",
-                operator: "maximum",
-                operands: [
-                  0,
-                  {
-                    kind: "calculate",
-                    operator: "subtract",
-                    operands: [
-                      5,
-                      {
-                        kind: "player-property",
-                        player: "controller",
-                        property: "influence",
-                      },
-                    ],
-                  },
-                ],
-              },
-            },
-          ],
           effect: {
-            kind: "sequence",
-            effects: [
-              {
-                kind: "draw",
-                player: "controller",
-                amount: {
+            kind: "bind-value",
+            value: {
+              kind: "calculate",
+              operator: "maximum",
+              operands: [
+                0,
+                {
                   kind: "calculate",
-                  operator: "maximum",
+                  operator: "subtract",
                   operands: [
-                    0,
+                    5,
                     {
-                      kind: "calculate",
-                      operator: "subtract",
-                      operands: [
-                        5,
-                        {
-                          kind: "player-property",
-                          player: "controller",
-                          property: "influence",
-                        },
-                      ],
+                      kind: "player-property",
+                      player: "controller",
+                      property: "influence",
                     },
                   ],
                 },
-                to: "memory",
-              },
-              {
-                kind: "deal-damage",
-                source: {
-                  kind: "source",
-                },
-                recipient: {
-                  kind: "champion",
+              ],
+            },
+            bindAs: "influence-deficit",
+            effect: {
+              kind: "sequence",
+              effects: [
+                {
+                  kind: "draw",
                   player: "controller",
+                  amount: {
+                    kind: "binding",
+                    binding: "influence-deficit",
+                  },
+                  to: "memory",
                 },
-                amount: {
-                  kind: "calculate",
-                  operator: "maximum",
-                  operands: [
-                    0,
-                    {
-                      kind: "calculate",
-                      operator: "subtract",
-                      operands: [
-                        5,
-                        {
-                          kind: "player-property",
-                          player: "controller",
-                          property: "influence",
-                        },
-                      ],
-                    },
-                  ],
+                {
+                  kind: "deal-damage",
+                  source: {
+                    kind: "source",
+                  },
+                  recipient: {
+                    kind: "champion",
+                    player: "controller",
+                  },
+                  amount: {
+                    kind: "binding",
+                    binding: "influence-deficit",
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
         },
       ],

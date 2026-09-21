@@ -53,6 +53,7 @@ export const welcomeToNightCityRetailJapantownJonin = defineCyberpunkCard({
       ],
     },
   ],
+  reminderText: ["Units with power 0 don't steal Gigs."],
   type: "unit",
   cost: 2,
   power: 0,

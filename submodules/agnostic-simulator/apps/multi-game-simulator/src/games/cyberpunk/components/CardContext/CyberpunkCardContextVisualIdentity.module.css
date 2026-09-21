@@ -1,0 +1,201 @@
+.surface {
+  --game-accent: rgb(var(--cp-signal-yellow-rgb, 245 230 66));
+  --board-surface: rgb(7 9 12 / 98%);
+  --board-surface-soft: rgb(10 16 21 / 96%);
+  --board-border: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 16%);
+  --board-border-strong: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 38%);
+  --board-text: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 94%);
+  --board-muted: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 62%);
+  --pill-bg: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 7%);
+  --pill-border: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 24%);
+  --pill-text: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 78%);
+  --card-context-muted: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 64%);
+
+  border-color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 72%);
+  border-radius: 7px;
+  background:
+    linear-gradient(145deg, rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 5%), transparent 38%),
+    rgb(7 9 12 / 98%);
+  box-shadow: 0 18px 44px rgb(0 0 0 / 66%);
+  color: var(--board-text);
+  font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  scrollbar-color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 58%) rgb(0 0 0 / 24%);
+}
+
+.surface::selection,
+.surface *::selection {
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 82%);
+  color: #07090c;
+}
+
+.surface button {
+  font-family: inherit;
+}
+
+.surface :global([data-card-context-rule-label]) {
+  border-radius: 2px;
+  background: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 12%);
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 94%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.surface :global([data-card-context-rule-text]),
+.surface :global([data-cyberpunk-context-text="active-effect"]) {
+  color: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 76%);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.surface :global([aria-label="Card state and traits"] span) {
+  min-height: 19px;
+  border-radius: 2px;
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.surface :global([data-card-context-details-toggle]) {
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 88%);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.surface :global([aria-label="Card actions"]) > p {
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 64%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.surface :global([data-action-id]) {
+  border-radius: 4px;
+}
+
+.surface :global([data-action-id*="attackUnit"]),
+.surface :global([data-action-id*="attackRival"]) {
+  --game-accent: rgb(var(--cp-signal-magenta-rgb, 255 61 138));
+}
+
+.surface :global([data-action-id*="useBlocker"]) {
+  --game-accent: rgb(var(--cp-signal-cyan-rgb, 74 217 255));
+}
+
+.surface :global([data-action-id]) strong {
+  color: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 96%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+}
+
+.surface :global([data-action-id]) :global([data-cyberpunk-context-text="action-detail"]),
+.surface :global([data-action-id]) :global([data-cyberpunk-context-text="disabled-reason"]) {
+  font-size: 10px;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+.surface :global(button[aria-label^="Show"][aria-label$="card image"]),
+.surface :global(button[aria-label^="Hide"][aria-label$="card image"]),
+.surface :global(button[aria-label^="Switch to"]) {
+  border-color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 34%);
+  border-radius: 3px;
+  background: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 6%);
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 88%);
+}
+
+.surface :global(button[aria-label="Close card menu"]) {
+  border-radius: 3px;
+  color: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 72%);
+}
+
+.surface :global(button:focus-visible) {
+  outline-color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 92%);
+}
+
+.identity {
+  display: grid;
+  min-width: 0;
+  gap: 5px;
+}
+
+.titleRow,
+.stats {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+}
+
+.titleRow {
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.titleRow strong {
+  min-width: 0;
+  overflow: hidden;
+  color: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 98%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.015em;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.titleRow > span {
+  flex: none;
+  color: rgb(var(--cp-signal-cyan-rgb, 74 217 255) / 76%);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stats {
+  gap: 6px;
+}
+
+.stats span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  color: rgb(var(--cp-signal-frost-rgb, 213 245 255) / 54%);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.stats b {
+  color: rgb(var(--cp-signal-yellow-rgb, 245 230 66) / 94%);
+  font-family: Rajdhani, "Arial Narrow", sans-serif;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+@media (max-width: 560px) {
+  .surface {
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 7px 7px 0 0;
+  }
+
+  .titleRow strong {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .surface :global([data-card-context-rule-text]) {
+    font-size: 12px;
+  }
+}

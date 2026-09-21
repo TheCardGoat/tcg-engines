@@ -37,6 +37,9 @@ interface HandCard {
 }
 
 interface HandZoneProps {
+  /** Whether the hand occupies the rival/top layout. Independent from card visibility. */
+  opponent?: boolean;
+  /** Whether card identities are hidden from this viewer. */
   faceDown?: boolean;
   cardCount?: number;
   /** When provided, render these specific cards (engine-driven). */
@@ -78,6 +81,7 @@ function useElementWidth<TElement extends HTMLElement>(): [
 }
 
 export function HandZone({
+  opponent = false,
   faceDown = false,
   cardCount = 6,
   cards,
@@ -86,8 +90,8 @@ export function HandZone({
 }: HandZoneProps) {
   const renderCount = cards ? cards.length : cardCount;
   const [setZoneElement, zoneWidth] = useElementWidth<HTMLDivElement>();
-  const layoutVariant = faceDown ? "opponent" : "player";
-  const layoutAlignment = faceDown ? "start" : "center";
+  const layoutVariant = opponent ? "opponent" : "player";
+  const layoutAlignment = opponent ? "start" : "center";
   const playerLayout = computePlayerHandLayout(
     renderCount,
     zoneWidth,
@@ -96,8 +100,8 @@ export function HandZone({
   );
   const layout = playerLayout.cards;
   const cardW = playerLayout.cardWidth;
-  const variantClass = faceDown ? classes.opponent : classes.player;
-  const zoneName = faceDown ? "opp-hand" : "p-hand";
+  const variantClass = opponent ? classes.opponent : classes.player;
+  const zoneName = opponent ? "opp-hand" : "p-hand";
   const ownerId = side ? String(PLAYER_SIDE_TO_ID[side]) : undefined;
   const setAnimationZoneRef = useAnimationNode(
     {
@@ -132,7 +136,7 @@ export function HandZone({
   return (
     <div
       ref={setZoneRef}
-      className={`${classes.zone} ${faceDown ? classes.opponentZone : classes.playerZone}`}
+      className={`${classes.zone} ${opponent ? classes.opponentZone : classes.playerZone}`}
       data-testid="hand-zone"
       data-zone-id={zoneName}
       data-sim-zone-id={zoneName}
@@ -150,7 +154,7 @@ export function HandZone({
         ["--hand-card-w" as string]: `${playerLayout.cardWidth}px`,
       }}
     >
-      {faceDown ? (
+      {opponent ? (
         <span
           className={classes.opponentCount}
           data-testid="opponent-hand-count"
@@ -199,6 +203,7 @@ export function HandZone({
                   "data-card-color": card.color,
                   "data-cost": card.cost ?? undefined,
                   "data-effective-cost": card.effectiveCost ?? card.cost ?? undefined,
+                  "data-has-sell-tag": card.hasSellTag ? "true" : "false",
                   "data-power": card.effectivePower ?? card.power ?? undefined,
                   "data-affordable":
                     affordable === undefined ? undefined : affordable ? "true" : "false",

@@ -32,7 +32,7 @@ export const welcomeToNightCityRetailCyberpsychosis = defineCyberpunkCard({
     quickAbility(),
     {
       kind: "triggered",
-      text: "Give an equipped Unit +3 power this turn for each if its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
+      text: "Give an equipped Unit +3 power this turn for each of its equipped Gears. If that Unit steals or fights, defeat it at the end of this turn.",
       trigger: {
         trigger: "play",
       },
@@ -44,7 +44,6 @@ export const welcomeToNightCityRetailCyberpsychosis = defineCyberpunkCard({
           id: "selectedUnit",
           target: {
             selector: "card",
-            controller: "friendly",
             zones: ["field"],
             cardTypes: ["unit"],
             hasAttachedCards: true,
@@ -68,7 +67,6 @@ export const welcomeToNightCityRetailCyberpsychosis = defineCyberpunkCard({
             multiplier: 3,
             target: {
               selector: "card",
-              controller: "friendly",
               cardTypes: ["gear"],
               attachedTo: {
                 selector: "bound",

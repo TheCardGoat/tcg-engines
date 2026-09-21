@@ -1,13 +1,19 @@
 import { beforeAll, describe, expect, it } from "vite-plus/test";
 import "../testing/matchers.d.ts";
-import { CyberpunkTestEngine, P1, P2, createMockUnit, registerMatchers } from "../testing/index.ts";
+import { CyberpunkTestEngine, P1, registerMatchers } from "../testing/index.ts";
 
 beforeAll(() => {
   registerMatchers();
 });
 
-const moveIds = (engine: CyberpunkTestEngine, pid = P1) =>
+const moveIds = (engine: CyberpunkTestEngine, pid = engine.getActivePlayerId()) =>
   engine.getPrompt(pid).availableMoves.map((m) => m.moveId);
+
+function openingSeats(engine: CyberpunkTestEngine) {
+  const first = engine.getActivePlayerId();
+  const second = engine.getOpponentOf(first);
+  return { first, second };
+}
 
 describe("mulligan", () => {
   describe("available()", () => {
@@ -29,15 +35,27 @@ describe("mulligan", () => {
 
     it("returns false after the player has already mulliganed", () => {
       const engine = CyberpunkTestEngine.createWithFixture({}, {}, { skipSetup: false });
-      engine.mulligan({ as: P1 });
-      expect(moveIds(engine)).not.toContain("mulligan");
+      const { first } = openingSeats(engine);
+      engine.mulligan({ as: first });
+      expect(moveIds(engine, first)).not.toContain("mulligan");
+    });
+
+    it("is unavailable for the second player until the first player decides", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({}, {}, { skipSetup: false });
+      const { first, second } = openingSeats(engine);
+      expect(moveIds(engine, second)).not.toContain("mulligan");
+      expect(moveIds(engine, second)).not.toContain("keepHand");
+      engine.keepHand({ as: first });
+      expect(moveIds(engine, second)).toContain("mulligan");
+      expect(moveIds(engine, second)).toContain("keepHand");
     });
   });
 
   describe("validate()", () => {
     it("succeeds for a fresh player in the setup phase", () => {
       const engine = CyberpunkTestEngine.createWithFixture({}, {}, { skipSetup: false });
-      const result = engine.mulligan({ as: P1 });
+      const { first } = openingSeats(engine);
+      const result = engine.mulligan({ as: first });
       expect(result).toBeSuccessfulCommand();
     });
 
@@ -49,42 +67,44 @@ describe("mulligan", () => {
 
     it("fails with ALREADY_MULLIGANED on a second attempt", () => {
       const engine = CyberpunkTestEngine.createWithFixture({}, {}, { skipSetup: false });
-      engine.mulligan({ as: P1 });
-      const failure = engine.expectFailure(() => engine.mulligan({ as: P1 }));
+      const { first } = openingSeats(engine);
+      engine.mulligan({ as: first });
+      const failure = engine.expectFailure(() => engine.mulligan({ as: first }));
       expect(failure.errorCode).toBe("ALREADY_MULLIGANED");
+    });
+
+    it("fails with NOT_YOUR_TURN if the second player acts first", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({}, {}, { skipSetup: false });
+      const { second } = openingSeats(engine);
+      const failure = engine.expectFailure(() => engine.mulligan({ as: second }));
+      expect(failure.errorCode).toBe("NOT_YOUR_TURN");
     });
   });
 
   describe("execute()", () => {
     it("shuffles the hand into the deck and redraws six cards", () => {
-      const handCards = [
-        createMockUnit({ name: "A" }),
-        createMockUnit({ name: "B" }),
-        createMockUnit({ name: "C" }),
-      ];
       const engine = CyberpunkTestEngine.createWithFixture(
-        { hand: handCards, deck: 30 },
-        {},
+        { deck: 30 },
+        { deck: 30 },
         { skipSetup: false },
       );
+      const { first } = openingSeats(engine);
 
-      expect(engine.getHandCount(P1)).toBe(3);
-      engine.mulligan({ as: P1 });
+      expect(engine.getHandCount(first)).toBe(6);
+      engine.mulligan({ as: first });
 
-      expect(engine.getHandCount(P1)).toBe(6);
-      // `deck: 30` is the total deck size; 3 hand cards are pulled from those
-      // 30 by the fixture. Mulligan reshuffles them in and draws 6, leaving
-      // 30 − 6 = 24 in deck.
-      const deck = engine.getCardsInZone("deck", P1);
+      expect(engine.getHandCount(first)).toBe(6);
+      const deck = engine.getCardsInZone("deck", first);
       expect(deck).toHaveLength(24);
     });
 
     it("marks the player as mulliganDone for the mulliganing player only", () => {
       const engine = CyberpunkTestEngine.createWithFixture({}, {}, { skipSetup: false });
-      engine.mulligan({ as: P1 });
+      const { first, second } = openingSeats(engine);
+      engine.mulligan({ as: first });
 
-      expect(engine.isMulliganDone(P1)).toBe(true);
-      expect(engine.isMulliganDone(P2)).toBe(false);
+      expect(engine.isMulliganDone(first)).toBe(true);
+      expect(engine.isMulliganDone(second)).toBe(false);
     });
 
     it("is deterministic for a given seed", () => {
@@ -100,11 +120,13 @@ describe("mulligan", () => {
 
       const a = fixture();
       const b = fixture();
-      a.mulligan({ as: P1 });
-      b.mulligan({ as: P1 });
+      const firstA = a.getActivePlayerId();
+      const firstB = b.getActivePlayerId();
+      a.mulligan({ as: firstA });
+      b.mulligan({ as: firstB });
 
-      const aIds = a.getCardsInZone("hand", P1).map((c) => c.definitionId);
-      const bIds = b.getCardsInZone("hand", P1).map((c) => c.definitionId);
+      const aIds = a.getCardsInZone("hand", firstA).map((c) => c.definitionId);
+      const bIds = b.getCardsInZone("hand", firstB).map((c) => c.definitionId);
       expect(aIds).toEqual(bIds);
     });
   });

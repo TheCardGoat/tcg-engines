@@ -431,6 +431,7 @@ export type GrandArchiveAtomicEffect = GrandArchiveEffectBase &
     | {
         readonly kind: "banish-object";
         readonly subject: GrandArchiveSubject;
+        readonly from?: GrandArchiveZone;
         readonly faceDown?: boolean;
       }
     | {
@@ -791,7 +792,10 @@ export type GrandArchiveEffect =
     }
   | {
       readonly kind: "for-each";
-      readonly collection: GrandArchiveCollection;
+      /** Stack-item iteration preserves activation identity instead of treating it as a card. */
+      readonly collection:
+        | GrandArchiveCollection
+        | { readonly kind: "stack-items"; readonly binding: string };
       readonly bindEachAs: string;
       readonly effect: GrandArchiveEffect;
     }

@@ -1051,13 +1051,14 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
             ? [...firstScopedActions!.parsed, ...trailingThenActions!.parsed]
             : [...firstScopedActions!.parsed, ...trailingThenActions!.parsed].map((action) => ({
                 ...action,
-                condition: action.condition
-                  ? {
-                      condition: "compound" as const,
-                      operator: "and" as const,
-                      conditions: [scopedThenCondition, action.condition],
-                    }
-                  : scopedThenCondition,
+                condition:
+                  "condition" in action && action.condition
+                    ? {
+                        condition: "compound" as const,
+                        operator: "and" as const,
+                        conditions: [scopedThenCondition, action.condition],
+                      }
+                    : scopedThenCondition,
               })),
           unparsed: "",
         }
@@ -1066,13 +1067,14 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
             parsed: [
               ...firstScopedActions!.parsed.map((action) => ({
                 ...action,
-                condition: action.condition
-                  ? {
-                      condition: "compound" as const,
-                      operator: "and" as const,
-                      conditions: [scopedThenCondition, action.condition],
-                    }
-                  : scopedThenCondition,
+                condition:
+                  "condition" in action && action.condition
+                    ? {
+                        condition: "compound" as const,
+                        operator: "and" as const,
+                        conditions: [scopedThenCondition, action.condition],
+                      }
+                    : scopedThenCondition,
               })),
               ...trailingThenActions!.parsed,
             ],
@@ -1123,13 +1125,14 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
           options.push(
             itemResult.parsed.map((action) => {
               if (!itemCond) return action;
-              const condition = action.condition
-                ? {
-                    condition: "compound" as const,
-                    operator: "and" as const,
-                    conditions: [itemCond.condition, action.condition],
-                  }
-                : itemCond.condition;
+              const condition =
+                "condition" in action && action.condition
+                  ? {
+                      condition: "compound" as const,
+                      operator: "and" as const,
+                      conditions: [itemCond.condition, action.condition],
+                    }
+                  : itemCond.condition;
               return { ...action, condition };
             }),
           );
@@ -1187,13 +1190,14 @@ export function buildCardEffects(effectText: string): CardEffects | undefined {
       if (actionsResult.parsed.length === 1) {
         actionsResult.parsed = actionsResult.parsed.map((action) => ({
           ...action,
-          condition: action.condition
-            ? {
-                condition: "compound" as const,
-                operator: "and" as const,
-                conditions: [postCostCondition, action.condition],
-              }
-            : postCostCondition,
+          condition:
+            "condition" in action && action.condition
+              ? {
+                  condition: "compound" as const,
+                  operator: "and" as const,
+                  conditions: [postCostCondition, action.condition],
+                }
+              : postCostCondition,
         }));
       } else {
         actionsResult.parsed = [

@@ -17,7 +17,12 @@ export const ancientEarthOak = definePitchFamily(fabPitchFamilies["ancient-earth
       },
       resolution: {
         kind: "effect",
-        effect: { type: "create-token", token: "frostbite", controller: "attack-target" },
+        effect: {
+          type: "create-token",
+          token: "frostbite",
+          creator: "effect-controller",
+          controller: "attack-target",
+        },
       },
     },
     earthBond: {

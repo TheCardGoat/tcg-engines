@@ -115,6 +115,7 @@ import { prism } from "../src/cards/heroes/prism.ts";
 import { shiyanaDiamondGemini } from "../src/cards/heroes/shiyana-diamond-gemini.ts";
 import { teklovossen } from "../src/cards/heroes/teklovossen.ts";
 import { zen } from "../src/cards/heroes/zen.ts";
+import { warmongerSDiplomacyBlue } from "../src/cards/actions/warmonger-s-diplomacy.ts";
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const outputPath = path.join(packageRoot, "src/simulator-scenario-cards.generated.ts");
@@ -232,6 +233,7 @@ const definitions = {
   shiyanaDiamondGemini,
   teklovossen,
   zen,
+  warmongerSDiplomacyBlue,
 };
 
 const exports = Object.entries(definitions)

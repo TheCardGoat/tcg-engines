@@ -59,7 +59,7 @@ export const proofOfLife: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
           kind: "activated",
           text: "[Damage 40+] (2), Banish this card from your graveyard: Wake up your champion.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "all",
             costs: [

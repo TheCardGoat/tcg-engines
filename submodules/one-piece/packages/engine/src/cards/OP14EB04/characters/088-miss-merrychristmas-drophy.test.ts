@@ -1,7 +1,7 @@
 import { eb01Doma005, eb01MiniMerry011, op02Vista011 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04CrocodileOp14079079 } from "../../../../../cards/src/cards/OP14EB04/leaders/079-crocodile-op14-079.ts";
-import { op14eb04MissMerrychristmasDrophy088 } from "../../../../../cards/src/cards/OP14EB04/characters/088-miss-merrychristmas-drophy.ts";
+import { op14eb04CrocodileOp14079079 } from "../../../../../cards/src/cards/leaders/op14-079-crocodile-op14-079.ts";
+import { op14eb04MissMerrychristmasDrophy088 } from "../../../../../cards/src/cards/characters/op14-088-miss-merrychristmas-drophy.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP14-088 Miss.MerryChristmas(Drophy)", () => {

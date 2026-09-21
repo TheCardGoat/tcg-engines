@@ -1,6 +1,7 @@
 import { makeSimulatorRouteLoader, SimulatorRouteModule } from "./simulator-route-module";
 import type { ClientLoaderFunctionArgs } from "react-router";
 import { initRootSocket, destroyRootSocket } from "../lib/gateway/root-socket";
+import { logDebugPayload } from "../lib/debug-logging";
 import { sessionGameId } from "@tcg/game-page-contract";
 import { isPlayableGameSlug } from "@tcg/protocol";
 
@@ -11,6 +12,7 @@ export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
     destroyRootSocket();
     throw error;
   });
+  logDebugPayload("[simulator:ssr] live-match loader payload", data);
   const session = data.session;
   if (session?.realtime && data.gameSlug && isPlayableGameSlug(data.gameSlug)) {
     initRootSocket({

@@ -45,7 +45,9 @@ for (const hero of heroes) {
       deckId: fixture.id,
       termination: played.termination,
     });
-    console.error(`ok ${hero.name} ${fixture.id} ${played.termination} actions=${played.actionCount}`);
+    console.error(
+      `ok ${hero.name} ${fixture.id} ${played.termination} actions=${played.actionCount}`,
+    );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     results.push({ hero: hero.name, deckId: fixture.id, error: message });
@@ -54,5 +56,7 @@ for (const hero of heroes) {
 }
 
 const failures = results.filter((row) => row.error);
-console.log(JSON.stringify({ seated: results.length, failures: failures.length, results }, null, 2));
+console.log(
+  JSON.stringify({ seated: results.length, failures: failures.length, results }, null, 2),
+);
 if (failures.length) process.exitCode = 1;

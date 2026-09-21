@@ -58,6 +58,7 @@ export const laceWithBloodrot = definePitchFamily(fabPitchFamilies["lace-with-bl
                   effect: {
                     type: "create-token",
                     token: "bloodrot-pox",
+                    creator: "effect-controller",
                     controller: "attack-target",
                   },
                 },

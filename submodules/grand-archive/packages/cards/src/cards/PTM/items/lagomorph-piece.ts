@@ -91,8 +91,17 @@ export const lagomorphPiece: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                 relationship: "zone-of",
                 player: "controller",
                 filter: {
-                  kind: "subtype",
-                  oneOf: ["COMMAND"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "subtype",
+                      oneOf: ["CHESSMAN"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["COMMAND"],
+                    },
+                  ],
                 },
               },
             },

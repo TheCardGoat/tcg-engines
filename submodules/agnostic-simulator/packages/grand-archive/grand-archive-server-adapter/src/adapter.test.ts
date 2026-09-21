@@ -210,6 +210,40 @@ function realStructuredDecisionFixture() {
 }
 
 describe("Grand Archive simulator adapter", () => {
+  it("projects only the pending ability text", () => {
+    const champion = structuredDecisionCard("response-champion", "CHAMPION", [
+      {
+        id: "response-draw",
+        kind: "activated",
+        activation: "ability",
+        text: "Draw a card.",
+        cost: { kind: "pay-reserve", amount: 0 },
+        effect: { kind: "no-op" },
+      },
+      {
+        id: "response-other",
+        kind: "activated",
+        activation: "ability",
+        text: "Unrelated ability text.",
+        cost: { kind: "pay-reserve", amount: 0 },
+        effect: { kind: "no-op" },
+      },
+    ]);
+    const fixture = GrandArchiveTestEngine.startFixture({
+      playerOne: { id: "p1", champion },
+      playerTwo: { id: "p2", champion },
+    });
+    const player = fixture.player("p1");
+    player.activateAbility(player.card(champion), "response-draw");
+    const projection = projectGrandArchiveSimulator(fixture.program, fixture.state, player.id);
+    const stackId = projection.table.zones
+      .find((zone) => zone.id === "effects-stack")!
+      .entityIds.at(-1);
+    expect(projection.entities.find((entity) => entity.id === stackId)?.details?.rules).toEqual([
+      { id: "printed-text", kind: "text", text: "Draw a card." },
+    ]);
+  });
+
   it("preserves memory facing independently of permission to inspect its identity", () => {
     const champion = structuredDecisionCard("memory-champion", "CHAMPION");
     const card = structuredDecisionCard("memory-card", "ACTION");

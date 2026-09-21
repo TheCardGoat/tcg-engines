@@ -24,6 +24,7 @@ export {
   defOf,
   tryDefOf,
   getEffectiveActivePlayerId,
+  isOpeningHandDecisionWindow,
 } from "./state/index.ts";
 export {
   processCommand,
@@ -33,8 +34,18 @@ export {
   registerMoves,
   getMoveRegistry,
 } from "./command/index.ts";
-export { allMoves, MOVE_IDS, type MoveId } from "./moves/index.ts";
+export {
+  allMoves,
+  MOVE_IDS,
+  MANUAL_MOVE_IDS,
+  manualMoves,
+  type MoveId,
+  type ManualMoveId,
+} from "./moves/index.ts";
 export { getProjectedDirectAttackGigStealCount } from "./moves/index.ts";
+export { callLegendEddieCost, CALL_LEGEND_COST } from "./moves/call-legend.ts";
+export { legendCanPayEddie } from "./moves/eddie-resources.ts";
+export { goSoloCost } from "./moves/go-solo.ts";
 export {
   computeEffectiveCost,
   computeEffectiveCostDetails,
@@ -87,6 +98,7 @@ export { startTurn, checkWinConditions } from "./flow/index.ts";
 export {
   getEffectivePower,
   getEffectivePower as computeEffectivePower,
+  getEffectivePowerFromCatalog,
   getEffectiveKeywords,
   getEffectiveRules,
   isReadyFieldBlocker,
@@ -96,6 +108,11 @@ export {
 } from "./active-effects/index.ts";
 export { matchTriggers, type TriggerMatch } from "./triggers/index.ts";
 export { LocalEngine } from "./transport/local-engine.ts";
+export type {
+  LocalEngineContinuationSnapshot,
+  LocalEngineUndoEntry,
+  TurnStartCheckpoint,
+} from "./transport/local-engine.ts";
 
 // Fixture-driven engine — exported so prototype apps (e.g. the simulator)
 // can bootstrap a real MatchState using the same idioms as engine tests.
@@ -242,7 +259,15 @@ export {
   greedyStrategy,
   createGreedyStrategy,
   DEFAULT_GREEDY_WEIGHTS,
+  isGreedyAIStrategy,
+  isTacticalAIStrategy,
+  withDeckProfile,
+  boundDeckProfile,
   type GreedyWeights,
+  type GreedyAIStrategy,
+  type TacticalAIStrategy,
+  type DeckStrategyProfile,
+  type DeckMulliganTuning,
   AUTOMATED_ACTION_STRATEGIES,
   CYBERPUNK_AUTOMATION_REVISION,
   DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
@@ -268,6 +293,12 @@ export {
   DEFAULT_BOARD_EVALUATION_WEIGHTS,
   type BoardEvaluationWeights,
   type BoardFeatures,
+  buildCoachDump,
+  type CoachDumpMeta,
+  type CoachDumpStep,
+  type CoachDumpMoveLog,
+  type CoachDumpGameEvent,
+  type CoachMatchDump,
   decisionFromMove,
   type ArgPicker,
   runAutoMatch,

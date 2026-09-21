@@ -1,4 +1,10 @@
 .token {
+  appearance: none;
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
   color: var(--card-name-accent);
   text-decoration-line: underline;
   text-decoration-color: color-mix(in srgb, var(--card-name-accent), transparent 32%);

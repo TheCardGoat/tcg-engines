@@ -1,4 +1,5 @@
 // @vitest-environment jsdom
+import { HeadlessMantineProvider } from "@mantine/core";
 import type { SimulatorCardAction, SimulatorEntity } from "@tcg/simulator-contract";
 import { act, type ReactNode } from "react";
 import { createRoot, type Root } from "react-dom/client";
@@ -270,6 +271,58 @@ describe("CardContextMenuController", () => {
     expect(document.body.textContent).not.toContain("Printed 3");
   });
 
+  test("expands nested move actions in a submenu instead of executing the parent", () => {
+    const onAction = vi.fn();
+    const moveGroup: SimulatorCardAction = {
+      id: "move",
+      sourceEntityId: entity.id,
+      label: "Move",
+      detail: "Send this card to another zone.",
+      order: 30,
+      activation: "begin-selection",
+      availability: { kind: "enabled" },
+      children: [
+        {
+          id: "move-field",
+          sourceEntityId: entity.id,
+          label: "Field",
+          order: 31,
+          activation: "execute",
+          commandRef: "manualMoveCard:field",
+          availability: { kind: "enabled" },
+        },
+        {
+          id: "move-trash",
+          sourceEntityId: entity.id,
+          label: "Trash",
+          order: 32,
+          activation: "execute",
+          commandRef: "manualMoveCard:trash",
+          availability: { kind: "enabled" },
+        },
+      ],
+    };
+    renderController({
+      mode: "quick",
+      onAction,
+      actions: [actions[0]!, moveGroup],
+    });
+    openCard();
+
+    expect(actionIds()).toEqual(["play", "move"]);
+    expect(document.body.textContent).not.toContain("Field");
+    act(() => {
+      (document.querySelector('[data-action-id="move"]') as HTMLButtonElement).click();
+    });
+    expect(actionIds()).toEqual(["play", "move", "move-field", "move-trash"]);
+    expect(onAction).not.toHaveBeenCalled();
+    act(() => {
+      (document.querySelector('[data-action-id="move-field"]') as HTMLButtonElement).click();
+    });
+    expect(onAction).toHaveBeenCalledTimes(1);
+    expect(onAction.mock.calls[0]?.[0].id).toBe("move-field");
+  });
+
   test("omits placeholder-only rules text from card details", () => {
     renderController({
       mode: "detailed",
@@ -319,6 +372,22 @@ describe("CardContextMenuController", () => {
     expect(document.querySelector("[data-card-context-menu]")).toBeNull();
     expect(onAction).toHaveBeenCalledTimes(1);
     expect(onAction).toHaveBeenCalledWith(actions[0], entity);
+  });
+
+  test("opens the menu when multiple primary actions are enabled", () => {
+    const onAction = vi.fn();
+    renderController({
+      mode: "quick",
+      onAction,
+      actions,
+      autoActivationActions: actions,
+      autoActivateSingleEnabledAction: true,
+    });
+    openCard();
+
+    expect(document.querySelector("[data-card-context-menu]")).not.toBeNull();
+    expect(onAction).not.toHaveBeenCalled();
+    expect(actionIds()).toEqual(["play", "attack"]);
   });
 
   test("does not auto-activate single actions unless the game opts in", () => {
@@ -690,6 +759,11 @@ describe("CardContextMenuController", () => {
       });
       openCard();
 
+      const mobileMenu = document.querySelector("[data-card-context-menu]") as HTMLElement;
+      expect(mobileMenu.dataset.mobileSurface).toBe("true");
+      expect(mobileMenu.closest('[role="dialog"]')).not.toBeNull();
+      expect(mobileMenu.closest("[data-radix-popper-content-wrapper]")).toBeNull();
+
       const previewToggle = document.querySelector(
         '[data-card-context-menu] button[aria-label="Show Test Card card image"]',
       ) as HTMLButtonElement;
@@ -791,15 +865,15 @@ describe("CardContextMenuController", () => {
     const toggle = document.querySelector(
       '[data-card-context-menu] button[aria-label="Show Test Card card image"]',
     ) as HTMLButtonElement;
-    act(() => toggle.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
+    act(() => void toggle.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
     expect(onPreviewEntity).toHaveBeenLastCalledWith(entity, "hover");
-    act(() => toggle.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
+    act(() => void toggle.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
     expect(onPreviewEnd).toHaveBeenLastCalledWith(entity.id);
     onPreviewEnd.mockClear();
-    act(() => toggle.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
+    act(() => void toggle.dispatchEvent(new MouseEvent("pointerover", { bubbles: true })));
     act(() => toggle.click());
     expect(onPreviewEntity).toHaveBeenLastCalledWith(entity, "pinned");
-    act(() => toggle.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
+    act(() => void toggle.dispatchEvent(new MouseEvent("pointerout", { bubbles: true })));
     expect(onPreviewEnd).not.toHaveBeenCalled();
     act(() => toggle.click());
     expect(onPreviewEnd).toHaveBeenLastCalledWith(undefined);
@@ -1032,7 +1106,7 @@ function renderController({
       )}
     </CardContextMenuController>
   );
-  act(() => root?.render(controller));
+  act(() => root?.render(<HeadlessMantineProvider>{controller}</HeadlessMantineProvider>));
 }
 
 function openCard() {

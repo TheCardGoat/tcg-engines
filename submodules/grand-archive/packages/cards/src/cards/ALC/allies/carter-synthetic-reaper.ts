@@ -91,75 +91,23 @@ export const carterSyntheticReaper: GrandArchiveCard<GrandArchiveAbilityDefiniti
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "sacrificed-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ALLY"],
-                          },
-                          {
-                            kind: "not-source",
-                          },
-                        ],
-                      },
-                    },
-                  },
+                  kind: "attempt",
                   effect: {
-                    kind: "sacrifice",
-                    subject: {
-                      kind: "bound",
-                      binding: "sacrificed-object",
-                    },
-                  },
-                },
-                {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "continuous",
-                      subjects: {
-                        kind: "source",
+                    kind: "choose",
+                    selection: {
+                      id: "sacrificed-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
                       },
-                      affectedSet: "locked",
-                      duration: {
-                        kind: "this-turn",
-                      },
-                      layer: {
-                        layer: "E",
-                        modifies: "stat",
-                        sublayer: "modifier",
-                      },
-                      change: {
-                        kind: "numeric",
-                        property: "power",
-                        operation: "add",
-                        amount: 2,
-                      },
-                    },
-                    {
-                      kind: "conditional",
-                      condition: {
-                        kind: "subject-matches",
-                        subject: {
-                          kind: "bound",
-                          binding: "sacrificed-object",
-                        },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
                         filter: {
                           kind: "all",
                           filters: [
@@ -168,19 +116,82 @@ export const carterSyntheticReaper: GrandArchiveCard<GrandArchiveAbilityDefiniti
                               oneOf: ["ALLY"],
                             },
                             {
-                              kind: "subtype",
-                              oneOf: ["AUTOMATON"],
+                              kind: "not-source",
                             },
                           ],
                         },
                       },
-                      then: {
-                        kind: "draw",
-                        player: "controller",
-                        amount: 1,
+                    },
+                    effect: {
+                      kind: "sacrifice",
+                      subject: {
+                        kind: "bound",
+                        binding: "sacrificed-object",
                       },
                     },
-                  ],
+                  },
+                  bindSucceededAs: "optional-action-succeeded",
+                },
+                {
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "continuous",
+                        subjects: {
+                          kind: "source",
+                        },
+                        affectedSet: "locked",
+                        duration: {
+                          kind: "this-turn",
+                        },
+                        layer: {
+                          layer: "E",
+                          modifies: "stat",
+                          sublayer: "modifier",
+                        },
+                        change: {
+                          kind: "numeric",
+                          property: "power",
+                          operation: "add",
+                          amount: 2,
+                        },
+                      },
+                      {
+                        kind: "conditional",
+                        condition: {
+                          kind: "subject-matches",
+                          subject: {
+                            kind: "bound",
+                            binding: "sacrificed-object",
+                          },
+                          filter: {
+                            kind: "all",
+                            filters: [
+                              {
+                                kind: "type",
+                                oneOf: ["ALLY"],
+                              },
+                              {
+                                kind: "subtype",
+                                oneOf: ["AUTOMATON"],
+                              },
+                            ],
+                          },
+                        },
+                        then: {
+                          kind: "draw",
+                          player: "controller",
+                          amount: 1,
+                        },
+                      },
+                    ],
+                  },
                 },
               ],
             },

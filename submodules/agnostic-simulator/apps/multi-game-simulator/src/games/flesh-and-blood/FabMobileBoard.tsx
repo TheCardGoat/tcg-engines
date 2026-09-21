@@ -48,8 +48,7 @@ import {
 import type { FabCombatChainView } from "./combatChainView";
 import { FabBoardCardFace } from "./FabBoardCardFace";
 import { countPublicBloodDebt, FabBloodDebtCue } from "./FabBloodDebtCue";
-import { FabInstantYieldAutomationControl } from "./FabInstantYieldAutomation";
-import { FabOptionalTriggerAutomationControl } from "./FabOptionalTriggerAutomation";
+import { FabCardAutomationCluster } from "./FabCardAutomationCluster";
 import { FabOfficialIcon, FabPitchZoneIcon } from "./FabIconography";
 import type { FabCardMetadata } from "./projection";
 import { entityFor, entityForFabPresentationCard, entityForFabViewer } from "./projection";
@@ -122,6 +121,8 @@ export interface FabMobileBoardProps {
   onOpenZone?: (selection: { ownerId: string; zone: FabInspectableZone }) => void;
   /** Enabled actions sourced from cards in the player's banished zone. */
   banishedAvailableCount?: number;
+  /** Enabled actions sourced from cards in the player's graveyard. */
+  graveyardAvailableCount?: number;
   /** Engine-probed actions; inspection never guesses whether a permanent can act. */
   legalCommands?: readonly FabLegalCommand[];
   onOpenLegalActions?: () => void;
@@ -494,14 +495,11 @@ function HeroRow({
           />
         ) : null}
         {slot.id && metadata ? (
-          <span className="fab-card-automation-cluster">
-            <FabOptionalTriggerAutomationControl
-              instanceId={slot.id}
-              cardName={metadata.name}
-              canonicalId={metadata.canonicalId}
-            />
-            <FabInstantYieldAutomationControl instanceId={slot.id} cardName={metadata.name} />
-          </span>
+          <FabCardAutomationCluster
+            instanceId={slot.id}
+            cardName={metadata.name}
+            canonicalId={metadata.canonicalId}
+          />
         ) : null}
       </div>
     );
@@ -786,6 +784,13 @@ function PermanentRow({
                       </span>
                     ) : null}
                   </button>
+                  {side === "player" && metadata ? (
+                    <FabCardAutomationCluster
+                      instanceId={id}
+                      cardName={name}
+                      canonicalId={metadata?.canonicalId}
+                    />
+                  ) : null}
                   <FabHostedCards hostName={name} cards={hostedCards} />
                 </div>
               );
@@ -960,12 +965,14 @@ function ZoneInventory({
   cardMetadata,
   onOpenZone,
   banishedAvailableCount = 0,
+  graveyardAvailableCount = 0,
 }: {
   seat: FabMobileSeat;
   side: "top" | "bottom";
   cardMetadata?: Map<string, FabCardMetadata>;
   onOpenZone?: (selection: { ownerId: string; zone: FabInspectableZone }) => void;
   banishedAvailableCount?: number;
+  graveyardAvailableCount?: number;
 }) {
   const ownerName = side === "top" ? "Opponent" : "Your";
   const ownerLabel = side === "top" ? "Opponent " : "";
@@ -1053,7 +1060,12 @@ function ZoneInventory({
         const resourcePoints = "resourcePoints" in zone ? zone.resourcePoints : null;
         const hasFloatingResources = resourcePoints != null && resourcePoints > 0;
         const inspectable = id !== "deck";
-        const availableCount = id === "banished" ? banishedAvailableCount : 0;
+        const availableCount =
+          id === "banished"
+            ? banishedAvailableCount
+            : id === "graveyard"
+              ? graveyardAvailableCount
+              : 0;
         const zoneBloodDebtCount = id === "banished" ? bloodDebtCount : 0;
         const zoneKind = id as FabInspectableZone | "deck";
         const ariaLabel = `${inspectable ? "Open " : ""}${ownerLabel}${zoneLabel}, ${count} ${
@@ -1157,6 +1169,7 @@ export function FabMobileBoard({
   onPlayActivate,
   onOpenZone,
   banishedAvailableCount = 0,
+  graveyardAvailableCount = 0,
   legalCommands,
   onOpenLegalActions,
   interactionStateFor,
@@ -1429,6 +1442,7 @@ export function FabMobileBoard({
         cardMetadata={cardMetadata}
         onOpenZone={onOpenZone}
         banishedAvailableCount={banishedAvailableCount}
+        graveyardAvailableCount={graveyardAvailableCount}
       />
 
       <div

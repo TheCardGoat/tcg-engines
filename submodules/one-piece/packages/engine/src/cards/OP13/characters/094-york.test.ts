@@ -1,6 +1,6 @@
 import { eb01Doma005, op13SaintCharlos087, op13StShepherdJuPeter084 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13York094 } from "../../../../../cards/src/cards/OP13/characters/094-york.ts";
+import { op13York094 } from "../../../../../cards/src/cards/characters/op13-094-york.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

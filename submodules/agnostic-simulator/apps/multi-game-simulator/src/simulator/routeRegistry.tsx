@@ -127,6 +127,10 @@ const OnePieceSimulatorProviders = lazyProvider(async () => {
   const module = await import("../games/one-piece/App");
   return { default: module.OnePieceSimulatorProviders };
 });
+const AlphaClashSimulatorProviders = lazyProvider(async () => {
+  const module = await import("../games/alpha-clash/App");
+  return { default: module.AlphaClashSimulatorProviders };
+});
 const NarutoSimulatorProviders = lazyProvider(async () => {
   const module = await import("../games/naruto/App");
   return { default: module.NarutoSimulatorProviders };
@@ -200,6 +204,22 @@ const OnePiecePracticePage = lazy(async () => {
   const module = await import("../games/one-piece/pages/Practice.page");
   return { default: module.OnePiecePracticePage };
 });
+const AlphaClashPracticePage = lazy(async () => {
+  const module = await import("../games/alpha-clash/pages/Practice.page");
+  return { default: module.AlphaClashPracticePage };
+});
+const AlphaClashHomePage = lazy(async () => {
+  const module = await import("../games/alpha-clash/pages/Home.page");
+  return { default: module.AlphaClashHomePage };
+});
+const AlphaClashLiveMatchPage = lazy(async () => {
+  const module = await import("../games/alpha-clash/pages/LiveMatch.page");
+  return { default: module.AlphaClashLiveMatchPage };
+});
+const AlphaClashLiveMatchLandingPage = lazy(async () => {
+  const module = await import("../games/alpha-clash/pages/LiveMatchLanding.page");
+  return { default: module.AlphaClashLiveMatchLandingPage };
+});
 const OnePieceFixtureIndexPage = lazy(async () => {
   const module = await import("../games/one-piece/pages/FixtureRoutes.page");
   return { default: module.OnePieceFixtureIndexPage };
@@ -241,7 +261,9 @@ const TesterHubPage = lazy(async () => {
   return { default: module.TesterHubPage };
 });
 
-function testerHubPage(game: Exclude<RegisteredRouteGame, "grand-archive">): PageComponent {
+function testerHubPage(
+  game: Exclude<RegisteredRouteGame, "grand-archive" | "alpha-clash">,
+): PageComponent {
   return function GameTesterHubPage() {
     return <TesterHubPage game={game} />;
   };
@@ -274,6 +296,7 @@ const narutoLiveMatch = withSuspense(NarutoLiveMatchPage);
 const narutoLiveMatchLanding = withSuspense(NarutoLiveMatchLandingPage);
 type RegisteredRouteGame =
   | "one-piece"
+  | "alpha-clash"
   | "gundam"
   | "cyberpunk"
   | "riftbound"
@@ -325,6 +348,16 @@ const ROUTE_REGISTRY: Record<RegisteredRouteGame, SimulatorRouteRegistration> = 
       "match-landing": RiftboundLiveMatchLandingPage,
       "live-match": RiftboundLiveMatchPage,
       replay: RiftboundReplayPage,
+    },
+  },
+  "alpha-clash": {
+    Providers: AlphaClashSimulatorProviders,
+    pages: {
+      "game-index": withSuspense(AlphaClashHomePage),
+      "play-practice": withSuspense(AlphaClashPracticePage),
+      "practice-vs-ai": withSuspense(AlphaClashPracticePage),
+      "match-landing": withSuspense(AlphaClashLiveMatchLandingPage),
+      "live-match": withSuspense(AlphaClashLiveMatchPage),
     },
   },
   "one-piece": {

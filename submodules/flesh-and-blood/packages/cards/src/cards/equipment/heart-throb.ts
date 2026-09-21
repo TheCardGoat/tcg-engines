@@ -15,6 +15,7 @@ export const heartThrob = defineCard(fabCardIdentitiesByCanonicalId["h7NLHrBf7dN
       effect: {
         type: "create-token",
         token: "vigor",
+        creator: "token-controller",
         controller: "each",
       },
     },

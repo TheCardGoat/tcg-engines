@@ -1,4 +1,4 @@
-import type { AnimationPlanV2, AnimationZoneRef } from "@tcg/protocol/animations";
+import type { AnimationPlanV2, AnimationStepV2, AnimationZoneRef } from "@tcg/protocol/animations";
 import type { SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
 import {
   compileAnimationPlan,
@@ -32,6 +32,8 @@ import {
   AnimationRuntimeContext,
   AnimationStoreContext,
   type SimulatorEntityVisualProps,
+  type SimulatorSpatialStateChangeRendererProps,
+  type SimulatorSpatialTransferRendererProps,
   type SimulatorValueDeltaVisualProps,
 } from "./contexts";
 
@@ -47,6 +49,14 @@ export interface SimulatorAnimationRootProps<TState> {
   readonly projection: SimulatorAnimationProjection<TState>;
   readonly entityRenderer: ComponentType<SimulatorEntityVisualProps>;
   readonly valueDeltaRenderer?: ComponentType<SimulatorValueDeltaVisualProps>;
+  /** Optional renderer for selected moving entity kinds. Settled entities remain normal DOM. */
+  readonly spatialTransferRenderer?: ComponentType<SimulatorSpatialTransferRendererProps>;
+  readonly spatialTransferKinds?: readonly SimulatorEntity["kind"][];
+  /** Optional renderer for in-place state changes such as flips and rotations. */
+  readonly spatialStateChangeRenderer?: ComponentType<SimulatorSpatialStateChangeRendererProps>;
+  readonly spatialStateChangeKinds?: readonly SimulatorEntity["kind"][];
+  /** Step overlays rendered by a game-specific layer instead of the shared DOM driver. */
+  readonly suppressedOverlayStepTypes?: readonly AnimationStepV2["type"][];
   readonly viewerSeatId: string | null;
   readonly animationSpeed: AnimationSpeed;
   readonly onScheduleAudio?: (steps: readonly CompiledAudioCue[]) => void;
@@ -107,6 +117,11 @@ export function createSimulatorAnimationScope<TState>() {
       projection,
       entityRenderer,
       valueDeltaRenderer,
+      spatialTransferRenderer,
+      spatialTransferKinds,
+      spatialStateChangeRenderer,
+      spatialStateChangeKinds,
+      suppressedOverlayStepTypes,
       viewerSeatId,
       animationSpeed,
       onScheduleAudio,
@@ -245,7 +260,15 @@ export function createSimulatorAnimationScope<TState>() {
       }
       if (activePhase === "preparing") {
         const frame = requestAnimationFrame(() => store.startActive(activeId));
-        return () => cancelAnimationFrame(frame);
+        // Occluded or hidden panes never paint, so the rAF start can stall the
+        // preparing phase — and the interaction lock with it — indefinitely.
+        // A wall-clock fallback guarantees the transition still starts; timers
+        // only clamp to ≥1s in background tabs instead of never firing.
+        const fallback = window.setTimeout(() => store.startActive(activeId), 250);
+        return () => {
+          cancelAnimationFrame(frame);
+          window.clearTimeout(fallback);
+        };
       }
       const duration =
         activePhase === "running"
@@ -390,6 +413,11 @@ export function createSimulatorAnimationScope<TState>() {
         registry,
         entityRenderer,
         valueDeltaRenderer,
+        spatialTransferRenderer,
+        spatialTransferKinds,
+        spatialStateChangeRenderer,
+        spatialStateChangeKinds,
+        suppressedOverlayStepTypes,
         getEntity: (state: unknown, entityId: string, face: "public" | "hidden") =>
           projection.getEntity(state as TState, entityId, face),
         getZone: (state: unknown, ref: AnimationZoneRef) =>
@@ -404,6 +432,11 @@ export function createSimulatorAnimationScope<TState>() {
         compiledPlan,
         entityRenderer,
         valueDeltaRenderer,
+        spatialTransferRenderer,
+        spatialTransferKinds,
+        spatialStateChangeRenderer,
+        spatialStateChangeKinds,
+        suppressedOverlayStepTypes,
         projection,
         registry,
         scopeId,

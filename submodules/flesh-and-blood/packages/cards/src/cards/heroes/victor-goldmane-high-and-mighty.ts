@@ -12,6 +12,7 @@ export const victorGoldmaneHighAndMighty = defineCard(
           kind: "event",
           event: {
             name: "create",
+            effectController: "ability-controller",
             actor: {
               kind: "player",
               player: "ability-controller",

@@ -9,7 +9,7 @@ import {
   snapshotObject,
   syntheticTokenBaseProperties,
 } from "../../rules/snapshots.ts";
-import { matchesFabSnapshotFilter } from "../../rules/state-rules-view.ts";
+import { buildFabRulesView, matchesFabSnapshotFilter } from "../../rules/state-rules-view.ts";
 import type { FabReplacementEffect, FabRulesSnapshot } from "../transaction-kernel.ts";
 import {
   damageIncreaseIsRestricted,
@@ -133,7 +133,8 @@ function applyReplacement(
       canonicalId,
       objectKind: "created-token",
       baseSource: { kind: "registered" },
-      ownerId: playerId,
+      ownerId:
+        effect.modification.creator === "token-controller" ? playerId : candidate.controllerId,
       controllerId: playerId,
       zone: "unknown",
       zoneRef: { playerId: fabPlayerId(playerId), zone: "arena" },
@@ -212,8 +213,8 @@ function applyReplacement(
         canonicalId: original.canonicalId ?? instanceId,
         objectKind: original.objectKind,
         baseSource: original.baseSource,
-        ownerId: event.data.playerId,
-        controllerId: event.data.playerId,
+        ownerId: original.ownerId,
+        controllerId: original.controllerId,
         zone: original.zone,
         zoneRef: original.zoneRef,
         base: original.base,
@@ -437,6 +438,46 @@ function applyReplacement(
     // CR 8.3.8 Arcane Barrier / CR 8.3.19 Quell: pay N resources for prevention.
     if (staticPreventionApplication?.cost === "pay-resources") {
       const payAmount = typeof effect.amount === "number" && effect.amount > 0 ? effect.amount : 0;
+      // CR 1.14.2d: cards bound through the replacement cost-payment decision
+      // pitch first, generating the resource points this cost spends. Chi
+      // cards are never bound here — their pitch generates chi, which this
+      // resource-point cost cannot use.
+      const paymentView = buildFabRulesView(state);
+      for (const binding of candidate.persistedPitchedInstanceIds ?? []) {
+        const evaluated = paymentView.object({
+          instanceId: binding.instanceId,
+          incarnation: binding.incarnation,
+        });
+        const generated = evaluated?.current.numeric.pitch ?? 0;
+        if (generated <= 0) continue;
+        const pitchedObject = snapshotObject(
+          state,
+          binding.instanceId,
+          candidate.controllerId,
+          "hand",
+        );
+        subEvents.push({
+          ...damageEvent,
+          name: "pitch",
+          cause: {
+            kind: "effect",
+            abilityId: candidate.replacementId,
+            source: candidate.source,
+            controllerId: candidate.controllerId,
+          },
+          controllerId: candidate.controllerId,
+          source: pitchedObject,
+          affected: [pitchedObject],
+          bindings: { pitchedCard: pitchedObject },
+          data: {
+            playerId: candidate.controllerId,
+            object: pitchedObject,
+            destinationRef: nextFabDestinationRef(state, pitchedObject, destinationOffset),
+            resourcesGenerated: generated,
+            chiGenerated: 0,
+          },
+        });
+      }
       if (payAmount > 0) {
         subEvents.push({
           ...damageEvent,

@@ -1,5 +1,5 @@
 import type { AnimationRef, EntityTransferStepV2 } from "@tcg/protocol/animations";
-import type { SimulatorEntity } from "@tcg/simulator-contract";
+import { STANDARD_CARD_IMAGE_ASPECT_RATIO, type SimulatorEntity } from "@tcg/simulator-contract";
 import type { AnimationSequence } from "motion";
 import { useAnimate } from "motion/react";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 import { SimulatorEntityVisual, projectEntityVisual } from "../components/SimulatorEntityVisual";
 import { useAnimationRegistryVersion } from "../hooks/useAnimationRegistryVersion";
 import { type AnimationNodeRecord } from "../lib/node-registry";
-import { useAnimationRuntime } from "../provider/contexts";
+import { useAnimationRuntime, type SimulatorSpatialTransfer } from "../provider/contexts";
 
 interface PortalTransfer {
   readonly step: EntityTransferStepV2;
@@ -55,6 +55,13 @@ export function EntityTransferLayer() {
       setCaptureReadyId(null);
       return;
     }
+    // Hidden documents never fire rAF (background tabs, occluded panes). Without
+    // arming here the transfer is never captured, the suppressed source has no
+    // flying clone, and the entity reads as vanished when the document returns.
+    if (document.hidden) {
+      setCaptureReadyId(transition.id);
+      return;
+    }
     const frame = requestAnimationFrame(() => setCaptureReadyId(transition.id));
     return () => cancelAnimationFrame(frame);
   }, [transition?.id, transition?.phase]);
@@ -81,7 +88,12 @@ export function EntityTransferLayer() {
           const entity = runtime.getEntity(transition.fromState, step.entity.id, step.sourceFace);
           sources.current.set(step.id, {
             node,
-            rect: transferNodeRect(node, step.entity.id, entity?.imageAspectRatio),
+            rect: transferNodeRect(
+              node,
+              step.entity.id,
+              entity?.imageAspectRatio ??
+                (entity?.kind === "card" ? STANDARD_CARD_IMAGE_ASPECT_RATIO : undefined),
+            ),
           });
         }
       }
@@ -197,14 +209,20 @@ export function EntityTransferLayer() {
           ? transferNodeRect(
               transfer.source,
               transfer.step.entity.id,
-              transfer.sourceEntity.imageAspectRatio,
+              transfer.sourceEntity.imageAspectRatio ??
+                (transfer.sourceEntity.kind === "card"
+                  ? STANDARD_CARD_IMAGE_ASPECT_RATIO
+                  : undefined),
             )
           : null);
       const destinationRect = transfer.destination
         ? transferNodeRect(
             transfer.destination,
             transfer.step.entity.id,
-            transfer.destinationEntity.imageAspectRatio,
+            transfer.destinationEntity.imageAspectRatio ??
+              (transfer.destinationEntity.kind === "card"
+                ? STANDARD_CARD_IMAGE_ASPECT_RATIO
+                : undefined),
           )
         : null;
       const normalizedRects = normalizePositionOnlyZoneRects(
@@ -291,31 +309,102 @@ export function EntityTransferLayer() {
     };
   }, [entitySteps, elapsedMs, runtime, transfers, transition]);
 
+  const running = transition?.phase === "running";
+  const SpatialTransferRenderer = runtime.spatialTransferRenderer;
   if (
     typeof document === "undefined" ||
-    transfers.length === 0 ||
-    transition?.phase !== "running"
-  ) {
+    (!SpatialTransferRenderer && (!running || transfers.length === 0))
+  )
     return null;
-  }
+
+  const visibleTransfers = transfers.filter((transfer) => {
+    if (!running) return false;
+    const timing = entitySteps.find((entry) => entry.step.id === transfer.step.id);
+    return !timing || elapsedMs < timing.endAtMs;
+  });
+  const spatialTransferKinds = runtime.spatialTransferKinds;
+  const spatialTransfers =
+    SpatialTransferRenderer && !runtime.spatialMotionSuppressed
+      ? visibleTransfers
+          .filter(
+            (transfer) =>
+              !spatialTransferKinds || spatialTransferKinds.includes(transfer.sourceEntity.kind),
+          )
+          .flatMap((transfer) => {
+            const visual = buildSpatialTransfer(runtime, transfer);
+            return visual ? [visual] : [];
+          })
+      : [];
+  const spatialTransferIds = new Set(spatialTransfers.map((transfer) => transfer.id));
 
   return createPortal(
     <div
       aria-hidden
-      data-animation-transfer-layer=""
+      data-animation-transfer-layer={running && transfers.length > 0 ? "" : undefined}
+      data-animation-spatial-renderer={SpatialTransferRenderer ? "custom" : "dom"}
+      data-animation-spatial-transfer-count={spatialTransfers.length}
+      data-animation-visible-transfer-count={visibleTransfers.length}
       style={{ position: "fixed", inset: 0, zIndex: 1000, pointerEvents: "none" }}
     >
-      {transfers
-        .filter((transfer) => {
-          const timing = entitySteps.find((entry) => entry.step.id === transfer.step.id);
-          return !timing || elapsedMs < timing.endAtMs;
-        })
+      {/* Custom renderers own persistent graphics resources. Empty input clears
+          transient visuals without destroying and recreating those resources. */}
+      {SpatialTransferRenderer ? (
+        <SpatialTransferRenderer
+          transfers={spatialTransfers}
+          playbackStartedAtMs={runtime.playbackStartedAtMs}
+        />
+      ) : null}
+      {visibleTransfers
+        .filter((transfer) => !spatialTransferIds.has(transfer.step.id))
         .map((transfer) => (
           <PortalTransferVisual key={transfer.step.id} transfer={transfer} />
         ))}
     </div>,
     document.body,
   );
+}
+
+function buildSpatialTransfer(
+  runtime: ReturnType<typeof useAnimationRuntime>,
+  transfer: PortalTransfer,
+): SimulatorSpatialTransfer | null {
+  const rawSourceRect = transfer.sourceRect ?? transfer.destinationRect;
+  const destinationRect = transfer.destinationRect ?? transfer.sourceRect;
+  if (!rawSourceRect || !destinationRect) return null;
+  const compiled = runtime.compiledPlan?.steps.find((entry) => entry.step.id === transfer.step.id);
+  const transition = runtime.activeTransition;
+  const isDraw =
+    transition !== null &&
+    transfer.step.from?.kind === "zone" &&
+    transfer.step.to?.kind === "zone" &&
+    runtime.getZone(transition.fromState, transfer.step.from)?.role === "deck" &&
+    runtime.getZone(transition.toState, transfer.step.to)?.role === "hand";
+  const sourceRect = isDraw
+    ? rectToDomRect(drawTransferRect(rawSourceRect, destinationRect))
+    : rawSourceRect;
+  return {
+    id: transfer.step.id,
+    step: transfer.step,
+    sourceEntity: projectEntityVisual(transfer.sourceEntity, transfer.step.sourceFace),
+    destinationEntity: projectEntityVisual(
+      transfer.destinationEntity,
+      transfer.step.destinationFace,
+    ),
+    sourceRect,
+    destinationRect,
+    density: transfer.source?.density ?? transfer.destination?.density ?? "normal",
+    startAtMs: compiled?.startAtMs ?? 0,
+    durationMs: compiled?.durationMs ?? 0,
+    faceChanges:
+      runtime.transferFaceChange !== "instant" &&
+      transfer.step.sourceFace !== transfer.step.destinationFace,
+    sourceVisible: transfer.sourceRect !== null,
+    destinationVisible: transfer.destinationRect !== null,
+  };
+}
+
+function rectToDomRect(rect: TransferRect): DOMRect {
+  return new DOMRect(rect.left, rect.top, rect.width, rect.height);
 }
 
 export function entityTransferSuppressesEndpoint(
@@ -685,7 +774,7 @@ export function transferNodeRect(
   const geometry = record.node.querySelector<HTMLElement>("[data-sim-animation-geometry]");
   const rect = (visual ?? geometry ?? record.node).getBoundingClientRect();
   const aspectRatio = entityAspectRatio ?? record.entity?.imageAspectRatio;
-  if (visual || !aspectRatio || aspectRatio <= 0) return rect;
+  if (!aspectRatio || aspectRatio <= 0) return rect;
 
   const fitted = fitRectToAspectRatio(rect, aspectRatio);
   return new DOMRect(fitted.left, fitted.top, fitted.width, fitted.height);

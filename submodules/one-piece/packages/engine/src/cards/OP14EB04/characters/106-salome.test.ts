@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Salome106 } from "../../../../../cards/src/cards/OP14EB04/characters/106-salome.ts";
+import { op14eb04Salome106 } from "../../../../../cards/src/cards/characters/op14-106-salome.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

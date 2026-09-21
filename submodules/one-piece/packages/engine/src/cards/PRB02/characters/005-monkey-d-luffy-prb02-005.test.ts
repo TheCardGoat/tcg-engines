@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { op02Sanji026, op09Shanks001 } from "@tcg/op-cards";
-import { prb02MonkeyDLuffyPrb02005005 } from "../../../../../cards/src/cards/PRB02/characters/005-monkey-d-luffy-prb02-005.ts";
+import { prb02MonkeyDLuffyPrb02005005 } from "../../../../../cards/src/cards/characters/prb02-005-monkey-d-luffy-prb02-005.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

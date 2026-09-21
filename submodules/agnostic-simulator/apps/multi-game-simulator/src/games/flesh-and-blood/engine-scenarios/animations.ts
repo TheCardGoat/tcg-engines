@@ -6,6 +6,8 @@ import { nullruneRobe } from "@tcg/flesh-and-blood-cards/cards/equipment/nullrun
 import { blazeFiremind } from "@tcg/flesh-and-blood-cards/cards/heroes/blaze-firemind";
 import { oscilio } from "@tcg/flesh-and-blood-cards/cards/heroes/oscilio";
 import { volticBoltRed } from "@tcg/flesh-and-blood-cards/cards/actions/voltic-bolt";
+import { nimbleStrikeRed } from "@tcg/flesh-and-blood-cards/cards/actions/nimble-strike";
+import { nimblismBlue } from "@tcg/flesh-and-blood-cards/cards/actions/nimblism";
 import {
   alphaRampageRed,
   blizzardBlue,
@@ -461,6 +463,36 @@ function bootAdditionalCostKeywordLab(): FabPracticeMatch {
   return matchFromEngine(engine, "fab-scenario-additional-cost-keyword-lab");
 }
 
+function bootOptionalAdditionalCostChoice(): FabPracticeMatch {
+  const definitions = [bonebreakerBellowRed, alphaRampageRed, nimbleStrikeRed, nimblismBlue];
+  const engine = createEngine({
+    seed: "fab-scenario-optional-additional-cost-choice",
+    cardDefinitions: Object.fromEntries(
+      definitions.map((definition) => [definition.canonicalId, toFabCardDefinition(definition)]),
+    ),
+    player1: {
+      heroCardId: catalogIds.bravo,
+      life: 20,
+      hand: [
+        bonebreakerBellowRed.canonicalId,
+        alphaRampageRed.canonicalId,
+        nimbleStrikeRed.canonicalId,
+      ],
+      graveyard: [nimblismBlue.canonicalId],
+      deck: 8,
+      actionPoints: 2,
+      resourcePoints: 3,
+    },
+    player2: {
+      heroCardId: catalogIds.bravo,
+      life: 20,
+      hand: [],
+      deck: 8,
+    },
+  });
+  return matchFromEngine(engine, "fab-scenario-optional-additional-cost-choice");
+}
+
 function bootKeywordCounterLab(): FabPracticeMatch {
   const ids = FAB_KEYWORD_ANIMATION_FIXTURE_IDS;
   const cardDefinitions = Object.fromEntries(
@@ -594,6 +626,17 @@ export const ANIMATIONS_SCENARIOS = {
     viewerId: "player-1",
     botMode: "pass-only",
     boot: bootAdditionalCostKeywordLab,
+  },
+  "optional-additional-cost-choice": {
+    id: "optional-additional-cost-choice",
+    label: "Additional costs · compare choices",
+    description:
+      "Open Bonebreaker Bellow to compare playing it normally with paying Beat Chest by discarding Alpha Rampage. Open Nimble Strike to compare keeping or banishing Nimblism from your graveyard.",
+    group: "opening",
+    tags: ["engine", "interaction", "additional-cost", "beat-chest", "banish"],
+    viewerId: "player-1",
+    botMode: "pass-only",
+    boot: bootOptionalAdditionalCostChoice,
   },
   "keyword-counter-lab": {
     id: "keyword-counter-lab",

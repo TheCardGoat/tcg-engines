@@ -1,4 +1,9 @@
-import { getAllCards, getCard, validateDeckForFormat as validateOnePieceDeck } from "@tcg/op-cards";
+import {
+  getAllCards,
+  getCard,
+  legacyPrintingIdAliases,
+  validateDeckForFormat as validateOnePieceDeck,
+} from "@tcg/op-cards";
 import type {
   CardSummary,
   CardsMaps,
@@ -29,6 +34,10 @@ const onePieceCanonicalByPublicId: ReadonlyMap<string, string> = (() => {
       map.set(printing.id, card.canonicalId);
     }
   }
+  // Ids from before the canonical-card consolidation resolve to their owner.
+  for (const [legacyId, canonicalId] of Object.entries(legacyPrintingIdAliases)) {
+    if (!map.has(legacyId)) map.set(legacyId, canonicalId);
+  }
   return map;
 })();
 
@@ -38,6 +47,10 @@ const onePieceCardByAnyId = (() => {
     map.set(card.id, card);
     map.set(card.canonicalId, card);
     for (const printing of card.printings) map.set(printing.id, card);
+  }
+  for (const [legacyId, canonicalId] of Object.entries(legacyPrintingIdAliases)) {
+    const card = map.get(canonicalId);
+    if (card && !map.has(legacyId)) map.set(legacyId, card);
   }
   return map;
 })();

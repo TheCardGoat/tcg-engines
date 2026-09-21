@@ -12,6 +12,7 @@ import {
   extractRawCardFromRouter,
   extractTsrScript,
   fetchAllRawCards,
+  foldAccentMangledSlug,
   loadDocument,
   normalizeCard,
   parseRouterState,
@@ -266,4 +267,26 @@ test("preserves stable card ids when refreshed API records change ids", async ()
 
   expect(snapshot.rawCards[0]?.id).toBe("stable-local-id");
   expect(snapshot.cards[0]?.id).toBe("stable-local-id");
+});
+
+test("keeps upstream slugs untouched for names without diacritics", async () => {
+  const html = await readFixture("detail-page.html");
+  const rawCard = extractRawCardFromRouter(parseRouterState(extractTsrScript(loadDocument(html))!));
+
+  expect(foldAccentMangledSlug(rawCard).slug).toBe(rawCard.slug);
+});
+
+test("folds accent-mangled upstream slugs onto the canonical slugify of the display name", async () => {
+  const html = await readFixture("detail-page.html");
+  const rawCard = extractRawCardFromRouter(parseRouterState(extractTsrScript(loadDocument(html))!));
+
+  // Upstream slugifier turned the combining acute in "Matón" into a hyphen.
+  const folded = foldAccentMangledSlug({
+    ...rawCard,
+    slug: "gilded-mato-n",
+    name: "Gilded Matón",
+    display_name: "Gilded Matón",
+  });
+
+  expect(folded.slug).toBe("gilded-maton");
 });

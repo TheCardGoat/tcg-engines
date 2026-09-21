@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { Action, CardEffects, CharacterCard } from "@tcg/op-types";
@@ -30,25 +30,16 @@ function parseArgs(args: string[]): CliOptions {
 }
 
 function characterFiles(): string[] {
-  const files: string[] = [];
-  for (const setEntry of readdirSync(CARDS_DIR, { withFileTypes: true })) {
-    if (!setEntry.isDirectory()) continue;
-    const legacyIndex = join(CARDS_DIR, setEntry.name, "index.ts");
-    if (existsSync(legacyIndex)) files.push(legacyIndex);
-    const directory = join(CARDS_DIR, setEntry.name, "characters");
-    if (!existsSync(directory)) continue;
-    for (const entry of readdirSync(directory, { withFileTypes: true })) {
-      if (
+  const directory = join(CARDS_DIR, "characters");
+  return readdirSync(directory, { withFileTypes: true })
+    .filter(
+      (entry) =>
         entry.isFile() &&
         entry.name.endsWith(".ts") &&
         !entry.name.endsWith(".i18n.ts") &&
-        entry.name !== "index.ts"
-      ) {
-        files.push(join(directory, entry.name));
-      }
-    }
-  }
-  return files;
+        entry.name !== "index.ts",
+    )
+    .map((entry) => join(directory, entry.name));
 }
 
 function findCardFile(cardId: string): string {

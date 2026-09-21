@@ -9,11 +9,11 @@ import { welcomeToNightCityRetailChromeFang } from "./chrome-fang.ts";
 import { welcomeToNightCityRetailCorpoSecurity } from "./corpo-security.ts";
 import { welcomeToNightCityRetailDelamainCab } from "./delamain-cab.ts";
 import { welcomeToNightCityRetailDelamainRideshareAi } from "./delamain-rideshare-ai.ts";
-import { welcomeToNightCityRetailElSombreroNLaVenganzaLenta } from "./el-sombrero-n-la-venganza-lenta.ts";
+import { welcomeToNightCityRetailElSombreronLaVenganzaLenta } from "./el-sombreron-la-venganza-lenta.ts";
 import { welcomeToNightCityRetailEmergencyAtlus } from "./emergency-atlus.ts";
 import { welcomeToNightCityRetailEvelynParkerSchemingSiren } from "./evelyn-parker-scheming-siren.ts";
 import { welcomeToNightCityRetailFieldOperator } from "./field-operator.ts";
-import { welcomeToNightCityRetailGildedMatoN } from "./gilded-mato-n.ts";
+import { welcomeToNightCityRetailGildedMaton } from "./gilded-maton.ts";
 import { welcomeToNightCityRetailHackedCorpo } from "./hacked-corpo.ts";
 import { welcomeToNightCityRetailHanakoArasakaInAGildedCage } from "./hanako-arasaka-in-a-gilded-cage.ts";
 import { welcomeToNightCityRetailHeywoodRipperdoc } from "./heywood-ripperdoc.ts";
@@ -21,7 +21,7 @@ import { welcomeToNightCityRetailJackedInVoodooBoy } from "./jacked-in-voodoo-bo
 import { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "./jackie-welles-ride-or-die-choom.ts";
 import { welcomeToNightCityRetailJapantownJonin } from "./japantown-jonin.ts";
 import { welcomeToNightCityRetailJohnnySilverhandNeverStopFighting } from "./johnny-silverhand-never-stop-fighting.ts";
-import { welcomeToNightCityRetailJudyALvarezNothingToDoubt } from "./judy-a-lvarez-nothing-to-doubt.ts";
+import { welcomeToNightCityRetailJudyAlvarezNothingToDoubt } from "./judy-alvarez-nothing-to-doubt.ts";
 import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "./kerry-eurodyne-the-last-rockerboy.ts";
 import { welcomeToNightCityRetailLaLloronaGhostOfThePast } from "./la-llorona-ghost-of-the-past.ts";
 import { welcomeToNightCityRetailLizzyWizzyDelicateWeapon } from "./lizzy-wizzy-delicate-weapon.ts";
@@ -79,11 +79,11 @@ export { welcomeToNightCityRetailChromeFang } from "./chrome-fang.ts";
 export { welcomeToNightCityRetailCorpoSecurity } from "./corpo-security.ts";
 export { welcomeToNightCityRetailDelamainCab } from "./delamain-cab.ts";
 export { welcomeToNightCityRetailDelamainRideshareAi } from "./delamain-rideshare-ai.ts";
-export { welcomeToNightCityRetailElSombreroNLaVenganzaLenta } from "./el-sombrero-n-la-venganza-lenta.ts";
+export { welcomeToNightCityRetailElSombreronLaVenganzaLenta } from "./el-sombreron-la-venganza-lenta.ts";
 export { welcomeToNightCityRetailEmergencyAtlus } from "./emergency-atlus.ts";
 export { welcomeToNightCityRetailEvelynParkerSchemingSiren } from "./evelyn-parker-scheming-siren.ts";
 export { welcomeToNightCityRetailFieldOperator } from "./field-operator.ts";
-export { welcomeToNightCityRetailGildedMatoN } from "./gilded-mato-n.ts";
+export { welcomeToNightCityRetailGildedMaton } from "./gilded-maton.ts";
 export { welcomeToNightCityRetailHackedCorpo } from "./hacked-corpo.ts";
 export { welcomeToNightCityRetailHanakoArasakaInAGildedCage } from "./hanako-arasaka-in-a-gilded-cage.ts";
 export { welcomeToNightCityRetailHeywoodRipperdoc } from "./heywood-ripperdoc.ts";
@@ -91,7 +91,7 @@ export { welcomeToNightCityRetailJackedInVoodooBoy } from "./jacked-in-voodoo-bo
 export { welcomeToNightCityRetailJackieWellesRideOrDieChoom } from "./jackie-welles-ride-or-die-choom.ts";
 export { welcomeToNightCityRetailJapantownJonin } from "./japantown-jonin.ts";
 export { welcomeToNightCityRetailJohnnySilverhandNeverStopFighting } from "./johnny-silverhand-never-stop-fighting.ts";
-export { welcomeToNightCityRetailJudyALvarezNothingToDoubt } from "./judy-a-lvarez-nothing-to-doubt.ts";
+export { welcomeToNightCityRetailJudyAlvarezNothingToDoubt } from "./judy-alvarez-nothing-to-doubt.ts";
 export { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "./kerry-eurodyne-the-last-rockerboy.ts";
 export { welcomeToNightCityRetailLaLloronaGhostOfThePast } from "./la-llorona-ghost-of-the-past.ts";
 export { welcomeToNightCityRetailLizzyWizzyDelicateWeapon } from "./lizzy-wizzy-delicate-weapon.ts";
@@ -150,11 +150,11 @@ export const welcomeToNightCityRetailUnits = [
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailDelamainCab,
   welcomeToNightCityRetailDelamainRideshareAi,
-  welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+  welcomeToNightCityRetailElSombreronLaVenganzaLenta,
   welcomeToNightCityRetailEmergencyAtlus,
   welcomeToNightCityRetailEvelynParkerSchemingSiren,
   welcomeToNightCityRetailFieldOperator,
-  welcomeToNightCityRetailGildedMatoN,
+  welcomeToNightCityRetailGildedMaton,
   welcomeToNightCityRetailHackedCorpo,
   welcomeToNightCityRetailHanakoArasakaInAGildedCage,
   welcomeToNightCityRetailHeywoodRipperdoc,
@@ -162,7 +162,7 @@ export const welcomeToNightCityRetailUnits = [
   welcomeToNightCityRetailJackieWellesRideOrDieChoom,
   welcomeToNightCityRetailJapantownJonin,
   welcomeToNightCityRetailJohnnySilverhandNeverStopFighting,
-  welcomeToNightCityRetailJudyALvarezNothingToDoubt,
+  welcomeToNightCityRetailJudyAlvarezNothingToDoubt,
   welcomeToNightCityRetailKerryEurodyneTheLastRockerboy,
   welcomeToNightCityRetailLaLloronaGhostOfThePast,
   welcomeToNightCityRetailLizzyWizzyDelicateWeapon,

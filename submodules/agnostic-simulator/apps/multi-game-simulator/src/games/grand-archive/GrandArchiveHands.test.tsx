@@ -8,15 +8,23 @@ import {
   within,
   waitFor,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { buildInteractionSubmission, type InteractionAction } from "@tcg/protocol";
 import { grandArchivePlayerId, grandArchiveObjectId } from "@tcg/grand-archive-engine/runtime";
+import { GrandArchiveTestEngine } from "@tcg/grand-archive-engine/testing";
+import { GrandArchiveMatchRuntime } from "@tcg/grand-archive-engine/simulator";
+import {
+  GrandArchiveServerEngine,
+  projectGrandArchiveSimulator,
+} from "@tcg/grand-archive-server-adapter";
+import { libraryWitch, savageSlash, spiritOfFire, spiritOfWind } from "@tcg/grand-archive-cards";
 import { GrandArchiveSimulatorProviders } from "./App";
 import { GRAND_ARCHIVE_VISUAL_FIXTURES } from "./fixtures";
 import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
 import { GrandArchiveHands } from "./GrandArchiveHands";
 import { GrandArchiveInteractionLayer } from "./GrandArchiveInteractionLayer";
-import type { GrandArchiveHarnessFixture } from "./fixtureProjection";
+import { grandArchiveHarnessFixture, type GrandArchiveHarnessFixture } from "./fixtureProjection";
 
 afterEach(() => {
   cleanup();
@@ -71,6 +79,216 @@ function withAction(action: InteractionAction): GrandArchiveHarnessFixture {
 }
 
 describe("Grand Archive shared hands", () => {
+  it("opens a field card's choices with the keyboard and begins only the chosen action", async () => {
+    const field = fixture.table.zones.find((zone) => zone.id === `${hand.ownerId}:field`)!;
+    const sourceId = field.entityIds[0]!;
+    const source = fixture.entities.find((entity) => entity.id === sourceId)!;
+    const original = fixture.interactions.find((entry) => entry.id === declaration.id)!;
+    const choices = ["First ability", "Second ability"].map((label, index) => ({
+      ...declaration,
+      id: `field-ability-${index}`,
+      source: { kind: "card" as const, instanceId: sourceId },
+      text: { key: label },
+    }));
+    const { submit } = mount({
+      ...fixture,
+      interactionView: { ...nativeView, actions: choices },
+      interactions: choices.map((action) => ({
+        ...original,
+        id: action.id,
+        sourceEntityId: sourceId,
+        label: `${action.text.key} · Draw a card.`,
+        movePreview: { ...original.movePreview, command: "activate-ability" },
+      })),
+    });
+    const card = within(screen.getByRole("region", { name: /Your field,/ })).getByRole("button", {
+      name: new RegExp(`^${source.title}`),
+    });
+    expect(card.closest(".ga-role-card")?.textContent).toContain("Activate");
+    card.focus();
+    await userEvent.setup().keyboard("{Enter}");
+    expect(await screen.findAllByRole("menuitem", { hidden: true })).toHaveLength(2);
+    expect(screen.getAllByText("Draw a card.")).toHaveLength(2);
+    expect(submit).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByText("Second ability"));
+    expect(screen.getByTestId("interaction-resolution-prompt")).toBeTruthy();
+    expect(document.querySelector(".ga-role-card[data-actionable]")).toBeNull();
+    expect(submit).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(screen.queryByTestId("interaction-resolution-prompt")).toBeNull();
+    expect(document.querySelector(".ga-role-card[data-actionable]")).not.toBeNull();
+  });
+
+  it("guides attack targeting on the field and clears the guide on cancel or state change", async () => {
+    const current = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "attack-targeting")!;
+    const attack = current.interactions.find(
+      (entry) => entry.movePreview.command === "declare-attack",
+    )!;
+    const action = current.interactionView!.actions.find((entry) => entry.id === attack.id)!;
+    const { submit, update } = mount({
+      ...current,
+      interactions: [attack],
+      interactionView: { ...current.interactionView!, actions: [action] },
+    });
+    const source = document.querySelector<HTMLButtonElement>(
+      `.ga-seat-zone--field button[data-sim-entity-id="${attack.sourceEntityId}"]`,
+    )!;
+    fireEvent.click(source);
+    expect(screen.getByText("Choose attack targets")).toBeTruthy();
+    expect(source.closest(".ga-role-card")?.getAttribute("data-attack-role")).toBe("source");
+    const input = action.inputs.find((input) => input.id === "attack-targets");
+    if (!input || input.kind !== "entity-selection") throw new Error("Expected attack targets");
+    for (const candidate of input.candidates.filter((candidate) => candidate.enabled !== false)) {
+      const target = document.querySelector<HTMLButtonElement>(
+        `.ga-seat-zone--field button[data-sim-entity-id="${candidate.entity.instanceId}"]`,
+      )!;
+      expect(target.closest(".ga-role-card")?.getAttribute("data-attack-role")).toBe("candidate");
+    }
+    const targetId = input.candidates.find((candidate) => candidate.enabled !== false)!.entity
+      .instanceId;
+    const target = document.querySelector<HTMLButtonElement>(
+      `.ga-seat-zone--field button[data-sim-entity-id="${targetId}"]`,
+    )!;
+    fireEvent.mouseEnter(target);
+    fireEvent.click(target);
+    expect(target.closest(".ga-role-card")?.getAttribute("data-attack-role")).toBe("target");
+    expect(screen.getByText("Choose the defending player")).toBeTruthy();
+    expect(submit).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole("button", { name: "Choose none" }));
+    expect(submit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        actionId: action.id,
+        values: expect.objectContaining({
+          attacker: [attack.sourceEntityId],
+          "attack-targets": [targetId],
+          "delegated-player": [],
+        }),
+      }),
+    );
+    fireEvent.click(source);
+    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    expect(document.querySelector("[data-attack-role]")).toBeNull();
+    fireEvent.click(source);
+    update({
+      ...current,
+      table: {
+        ...current.table,
+        status: { ...current.table.status, stateVersion: current.table.status.stateVersion + 1 },
+      },
+    });
+    expect(document.querySelector("[data-attack-role]")).toBeNull();
+    expect(submit).toHaveBeenCalledTimes(1);
+  });
+
+  it("publishes board card interaction state through data-card-interaction", () => {
+    const current = withAction(declaration);
+    const { submit } = mount(current);
+    const target = declaration.inputs[0];
+    if (target?.kind !== "entity-selection") {
+      throw new Error("Expected a structured GA target input");
+    }
+    const opponentFieldId = target.candidates.find((candidate) =>
+      current.table.zones.some(
+        (zone) => zone.id === "p2:field" && zone.entityIds.includes(candidate.entity.instanceId),
+      ),
+    )!.entity.instanceId;
+    const boardCard = () =>
+      document
+        .querySelector<HTMLButtonElement>(
+          `.ga-seat-zone--field button[data-sim-entity-id="${opponentFieldId}"]`,
+        )!
+        .closest<HTMLElement>(".ga-seat-zone__card");
+    expect(boardCard()!.getAttribute("data-card-interaction")).toBe("idle");
+    fireEvent.click(cardButton(declaration.source!.instanceId));
+    expect(screen.getByTestId("interaction-resolution-prompt")).toBeTruthy();
+    expect(boardCard()!.getAttribute("data-card-interaction")).toBe("targetable");
+    expect(submit).not.toHaveBeenCalled();
+  });
+
+  it.each(["first-card", "second-card", "sidebar"] as const)(
+    "preserves attacker choice from %s with multiple legal attackers",
+    async (entry) => {
+      const original = GRAND_ARCHIVE_VISUAL_FIXTURES.find(
+        (fixture) => fixture.id === "attack-targeting",
+      )!;
+      const interaction = original.interactions.find(
+        (item) => item.movePreview.command === "declare-attack",
+      )!;
+      const action = original.interactionView!.actions.find((item) => item.id === interaction.id)!;
+      const attacker = action.inputs.find((input) => input.id === "attacker");
+      const targets = action.inputs.find((input) => input.id === "attack-targets");
+      if (attacker?.kind !== "entity-selection" || targets?.kind !== "entity-selection")
+        throw new Error("Missing attack choices");
+      expect(attacker.candidates.length).toBeGreaterThan(1);
+      const current = {
+        ...original,
+        interactions: [interaction],
+        interactionView: { ...original.interactionView!, actions: [action] },
+      };
+      const submit = vi.fn(() => true);
+      render(
+        <GrandArchiveSimulatorProviders>
+          <GrandArchiveTabletop fixture={current} onSubmitProtocolInteraction={submit} />
+        </GrandArchiveSimulatorProviders>,
+      );
+      const card = (id: string) =>
+        document.querySelector<HTMLButtonElement>(
+          `.ga-seat-zone--field button[data-sim-entity-id="${id}"]`,
+        )!;
+      for (const candidate of attacker.candidates) {
+        expect(card(candidate.entity.instanceId).closest(".ga-role-card")?.textContent).toContain(
+          "Attack",
+        );
+      }
+      const chosenId = attacker.candidates[entry === "first-card" ? 0 : 1]!.entity.instanceId;
+      if (entry === "sidebar") {
+        fireEvent.click(screen.getByRole("tab", { name: "Now" }));
+        fireEvent.click(within(screen.getByLabelText("Legal actions")).getByRole("button"));
+        expect(document.querySelector('[data-attack-role="source"]')).toBeNull();
+        expect(screen.queryByText("Choose attack targets")).toBeNull();
+      }
+      fireEvent.click(card(chosenId));
+      expect(screen.getByText("Choose attack targets")).toBeTruthy();
+      expect(card(chosenId).closest(".ga-role-card")?.getAttribute("data-attack-role")).toBe(
+        "source",
+      );
+      const targetId = targets.candidates[0]!.entity.instanceId;
+      fireEvent.click(card(targetId));
+      fireEvent.click(screen.getByRole("button", { name: "Choose none" }));
+      expect(submit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          actionId: action.id,
+          values: expect.objectContaining({ attacker: [chosenId], "attack-targets": [targetId] }),
+        }),
+      );
+    },
+  );
+
+  it("does not mark an attack intent source as the selected attacker", () => {
+    const original = GRAND_ARCHIVE_VISUAL_FIXTURES.find(
+      (fixture) => fixture.id === "attack-targeting",
+    )!;
+    const interaction = original.interactions.find(
+      (item) => item.movePreview.command === "declare-attack",
+    )!;
+    const action = original.interactionView!.actions.find((item) => item.id === interaction.id)!;
+    const attacker = action.inputs.find((input) => input.id === "attacker")!;
+    const decision = { ...action, inputs: [{ ...attacker, id: "attack" }] };
+    const { submit } = mount({
+      ...original,
+      interactions: [interaction],
+      interactionView: { ...original.interactionView!, actions: [decision] },
+    });
+    fireEvent.click(
+      document.querySelector<HTMLButtonElement>(
+        `.ga-seat-zone--field button[data-sim-entity-id="${interaction.sourceEntityId}"]`,
+      )!,
+    );
+    expect(screen.getByTestId("interaction-resolution-prompt")).toBeTruthy();
+    expect(document.querySelector('[data-attack-role="source"]')).toBeNull();
+    expect(submit).not.toHaveBeenCalled();
+  });
+
   it("keeps mobile counters, inspection, and hand actions in the viewport rails", async () => {
     vi.spyOn(window, "innerWidth", "get").mockReturnValue(390);
     const submit = vi.fn(() => true);
@@ -401,16 +619,74 @@ describe("Grand Archive shared hands", () => {
     expect(screen.queryByTestId("interaction-resolution-prompt")).toBeNull();
   });
 
-  it("renders the shared Effects Stack and reveals its printed text on demand", async () => {
+  it("shows the pending effect text immediately without opening prompt controls", async () => {
     const current = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "effects-stack")!;
     mount(current);
     const stack = screen.getByRole("region", { name: /Effects Stack, \d+ layers?/ });
     expect(stack.querySelector('[data-top="true"]')).toBeTruthy();
-    expect(screen.getByRole("button", { name: "Pass Opportunity" })).toBeTruthy();
-    expect(screen.queryByText(/Cardistry/)).toBeNull();
-    fireEvent.click(screen.getByRole("button", { name: "Prompt controls" }));
-    fireEvent.click(await screen.findByText("Show details"));
+    expect(screen.queryByRole("button", { name: "Pass Opportunity" })).toBeNull();
+    expect(screen.getAllByRole("button", { name: "Pass Space" })).toHaveLength(1);
+
     expect(screen.getByText(/Cardistry/)).toBeTruthy();
+  });
+
+  it.each(["card-activation", "materialization", "activated-ability", "triggered-ability"])(
+    "explains a pending %s and passes through the fixed control",
+    (kind) => {
+      const current = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "effects-stack")!;
+      const selfId = current.table.seats.find((seat) => seat.perspective === "bottom")!.id;
+      const topId = current.table.zones
+        .find((zone) => zone.id === "effects-stack")!
+        .entityIds.at(-1);
+      const projected = {
+        ...current,
+        entities: current.entities.map((entity) =>
+          entity.id === topId
+            ? {
+                ...entity,
+                ownerId: selfId,
+                details: { rules: [] },
+                dataAttributes: { ...entity.dataAttributes, "data-stack-item-kind": kind },
+              }
+            : entity,
+        ),
+      };
+      const { submit } = mount(projected);
+      const subject = kind.endsWith("ability") ? "ability" : "card";
+      expect(
+        screen.getByText(`You have Opportunity. Respond to your ${subject} or use Pass.`),
+      ).toBeTruthy();
+      expect(
+        within(screen.getByTestId("interaction-resolution-prompt")).queryByRole("button", {
+          name: /Pass/,
+        }),
+      ).toBeNull();
+      fireEvent.click(screen.getByRole("button", { name: "Pass Space" }));
+      const pass = projected.interactionView!.actions.find(
+        (action) => action.intent === "pass" && action.enabled,
+      )!;
+      expect(submit).toHaveBeenCalledExactlyOnceWith(
+        buildInteractionSubmission({ view: projected.interactionView!, action: pass, values: {} }),
+      );
+    },
+  );
+
+  it("responds to an opponent card with the existing Space shortcut", () => {
+    const current = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "effects-stack")!;
+    const opponentId = current.table.seats.find((seat) => seat.perspective === "top")!.id;
+    const topId = current.table.zones.find((zone) => zone.id === "effects-stack")!.entityIds.at(-1);
+    const projected = {
+      ...current,
+      entities: current.entities.map((entity) =>
+        entity.id === topId ? { ...entity, ownerId: opponentId, details: { rules: [] } } : entity,
+      ),
+    };
+    const { submit } = mount(projected);
+    expect(
+      screen.getByText("You have Opportunity. Respond to your opponent’s card or use Pass."),
+    ).toBeTruthy();
+    fireEvent.keyDown(document.body, { code: "Space", key: " " });
+    expect(submit).toHaveBeenCalledTimes(1);
   });
 
   it("renders GA combat roles in a dedicated workspace", () => {
@@ -684,7 +960,11 @@ describe("Grand Archive shared hands", () => {
     const deck = arena.querySelector<HTMLElement>('[data-zone="main-deck"]')!;
     expect(deck.querySelector("img")).toBeNull();
     expect(within(deck).getByRole("button", { name: /Your Deck,/ })).toBeTruthy();
-    fireEvent.click(within(arena).getByRole("button", { name: "Your Material Deck, 1 card" }));
+    fireEvent.click(
+      within(arena).getByRole("button", {
+        name: "Your Material Deck, 1 card, 1 with available actions",
+      }),
+    );
     const dialog = await screen.findByRole("dialog", { name: "Material Deck · 1 card" });
     expect(within(dialog).getByRole("button", { name: new RegExp(known.title) })).toBeTruthy();
   });
@@ -795,6 +1075,14 @@ describe("Grand Archive shared hands", () => {
           dialog.querySelector<HTMLButtonElement>(`button[data-sim-entity-id="${sourceId}"]`)!,
         );
       } else if (entry === "field") {
+        expect(screen.queryByRole("button", { name: "Board and material actions" })).toBeNull();
+        const source = document.querySelector<HTMLButtonElement>(
+          `.ga-seat-zone--field button[data-sim-entity-id="${sourceId}"]`,
+        )!;
+        expect(source.closest(".ga-role-card")?.getAttribute("data-actionable")).toBe("true");
+        expect(
+          source.closest(".ga-role-card")?.querySelector(".ga-role-card__actions")?.textContent,
+        ).toBeTruthy();
         fireEvent.click(
           document.querySelector<HTMLButtonElement>(
             `.ga-seat-zone--field button[data-sim-entity-id="${sourceId}"]`,
@@ -802,6 +1090,7 @@ describe("Grand Archive shared hands", () => {
         );
       } else fireEvent.click(cardButton(sourceId));
       const prompt = screen.getByTestId("interaction-resolution-prompt");
+      expect(document.querySelector(".ga-role-card[data-actionable] ")).toBeNull();
       expect(prompt.textContent).not.toMatch(/object-\d/);
       const targetInput = declaration.inputs[0]!;
       if (targetInput.kind !== "entity-selection") {
@@ -928,4 +1217,243 @@ describe("Grand Archive shared hands", () => {
     expect(submit).toHaveBeenCalledTimes(1);
     input.remove();
   });
+});
+
+describe("Grand Archive resolved-attack decision recovery", () => {
+  const dispatchContext = { gameId: "ga-hands-decision", sourceAuthority: "client" as const };
+  const ENGINE_DECISION_TIMEOUT = 30_000;
+
+  function submitInputFreeIntent(
+    server: GrandArchiveServerEngine,
+    actorId: string,
+    intent: string,
+  ): boolean {
+    const view = server.getInteractionView(actorId);
+    const action = view.actions.find(
+      (candidate) =>
+        candidate.enabled && candidate.inputs.length === 0 && candidate.intent === intent,
+    );
+    if (!action) return false;
+    return server.submitInteraction(
+      actorId,
+      {
+        protocolVersion: view.protocolVersion,
+        stateVersion: view.stateVersion,
+        requestId: action.requestId,
+        actionId: action.id,
+        values: {},
+      },
+      dispatchContext,
+    ).success;
+  }
+
+  /** Activating Savage Slash resolves into a declare-resolved-attack decision for p1. */
+  function attackDecisionServer(): GrandArchiveServerEngine {
+    const game = GrandArchiveTestEngine.startFixture({
+      playerOne: {
+        id: "p1",
+        name: "You",
+        champion: spiritOfFire,
+        zones: { hand: [savageSlash, libraryWitch, libraryWitch] },
+      },
+      playerTwo: {
+        id: "p2",
+        name: "Opponent",
+        champion: spiritOfWind,
+        zones: { field: [libraryWitch] },
+      },
+      firstPlayer: "playerOne",
+    });
+    const server = new GrandArchiveServerEngine(
+      game.program,
+      new GrandArchiveMatchRuntime(game.program, game.state),
+    );
+    if (!submitInputFreeIntent(server, "p1", "play-card")) {
+      throw new Error("Could not activate Savage Slash");
+    }
+    for (let count = 0; count < 12 && !server.runtime.state.decision; count++) {
+      const wait = server.runtime.waitState();
+      if (wait.kind !== "opportunity") break;
+      if (!submitInputFreeIntent(server, wait.playerId, "pass")) break;
+    }
+    return server;
+  }
+
+  function decisionFixture(
+    server: GrandArchiveServerEngine,
+    id: string,
+  ): GrandArchiveHarnessFixture {
+    const projection = projectGrandArchiveSimulator(
+      server.program,
+      server.runtime.state,
+      grandArchivePlayerId("p1"),
+    );
+    return grandArchiveHarnessFixture(
+      id,
+      "Standard practice match",
+      "Decision recovery",
+      projection,
+    );
+  }
+
+  function decisionActionOf(current: GrandArchiveHarnessFixture) {
+    return current.interactionView!.actions.find((action) =>
+      action.id.startsWith("grand-archive:decision:"),
+    )!;
+  }
+
+  function targetableButtons(): HTMLButtonElement[] {
+    return [
+      ...document.querySelectorAll<HTMLElement>('[data-card-interaction="targetable"]'),
+    ].flatMap((element) => {
+      const button = element.querySelector<HTMLButtonElement>("button[data-sim-entity-id]");
+      return button ? [button] : [];
+    });
+  }
+
+  function promptButton(pattern: RegExp): HTMLButtonElement | undefined {
+    return [...document.querySelectorAll<HTMLButtonElement>("button")].find(
+      (button) => pattern.test(button.textContent ?? "") && !button.hasAttribute("disabled"),
+    );
+  }
+
+  /** Clicks attacker then target and finishes the decision through its prompt controls. */
+  async function answerAttackDecision(
+    current: GrandArchiveHarnessFixture,
+    submit: ReturnType<typeof vi.fn>,
+  ) {
+    const action = decisionActionOf(current);
+    const attacker = action.inputs.find((input) => input.id === "attackerId");
+    if (attacker?.kind !== "entity-selection") throw new Error("Expected the attacker choice");
+    const targets = action.inputs.find((input) => input.id === "targetIds");
+    if (targets?.kind !== "entity-selection") throw new Error("Expected the target choice");
+    const attackerId = attacker.candidates.find((c) => c.enabled !== false)!.entity.instanceId;
+    const targetId = targets.candidates.find((c) => c.enabled !== false)!.entity.instanceId;
+
+    fireEvent.click(
+      targetableButtons().find((button) => button.dataset.simEntityId === attackerId)!,
+    );
+    await waitFor(() => {
+      if (!targetableButtons().some((button) => button.dataset.simEntityId === targetId)) {
+        throw new Error("Attack target was not projected");
+      }
+    });
+    fireEvent.click(targetableButtons().find((button) => button.dataset.simEntityId === targetId)!);
+    // The decision advances attacker -> target(s) (Confirm) -> defending player.
+    const finishControl = () =>
+      promptButton(/^confirm$/i) ?? promptButton(/choose none/i) ?? promptButton(/^select /i);
+    for (let step = 0; step < 6 && submit.mock.calls.length === 0; step++) {
+      const control = finishControl();
+      if (!control) break;
+      fireEvent.click(control);
+    }
+    await waitFor(() => expect(submit).toHaveBeenCalled());
+    expect(submit.mock.calls[0]![0]).toMatchObject({
+      actionId: action.id,
+      values: expect.objectContaining({
+        attackerId: [attackerId],
+        targetIds: expect.arrayContaining([targetId]),
+      }),
+    });
+  }
+
+  it(
+    "auto-begins the declare-resolved-attack decision and submits the chosen attack",
+    async () => {
+      const server = attackDecisionServer();
+      expect(server.runtime.state.decision?.kind).toBe("declare-resolved-attack");
+      const current = decisionFixture(server, "ga-decision-direct");
+      const { submit } = mount(current);
+      await waitFor(() => expect(targetableButtons().length).toBeGreaterThan(0));
+      await answerAttackDecision(current, submit);
+    },
+    ENGINE_DECISION_TIMEOUT,
+  );
+
+  it(
+    "publishes the defending-player seat as a targetable control with guiding copy",
+    async () => {
+      const server = attackDecisionServer();
+      const current = decisionFixture(server, "ga-decision-seat");
+      const { submit } = mount(current);
+      await waitFor(() => expect(targetableButtons().length).toBeGreaterThan(0));
+      const action = decisionActionOf(current);
+      const attackerInput = action.inputs.find((input) => input.id === "attackerId");
+      if (attackerInput?.kind !== "entity-selection") throw new Error("Expected attacker choice");
+      const targetsInput = action.inputs.find((input) => input.id === "targetIds");
+      if (targetsInput?.kind !== "entity-selection") throw new Error("Expected target choice");
+      const attackerId = attackerInput.candidates.find((c) => c.enabled !== false)!.entity
+        .instanceId;
+      const targetId = targetsInput.candidates.find((c) => c.enabled !== false)!.entity.instanceId;
+      fireEvent.click(
+        targetableButtons().find((button) => button.dataset.simEntityId === attackerId)!,
+      );
+      await waitFor(() => {
+        if (!targetableButtons().some((button) => button.dataset.simEntityId === targetId)) {
+          throw new Error("Attack target was not projected");
+        }
+      });
+      fireEvent.click(
+        targetableButtons().find((button) => button.dataset.simEntityId === targetId)!,
+      );
+      // targetIds is 1..2 in this fixture: confirm the single target to advance.
+      const confirmTarget = promptButton(/^confirm$/i);
+      if (confirmTarget) fireEvent.click(confirmTarget);
+      // Terminal step: the defending player is a seat button, not a card — it
+      // must carry the shared interaction attribute and name itself in the copy.
+      await waitFor(() => {
+        const seat = document.querySelector<HTMLButtonElement>(".ga-player-target");
+        if (!seat || seat.getAttribute("data-card-interaction") !== "targetable") {
+          throw new Error("Defending-player seat is not published as targetable");
+        }
+      });
+      expect(screen.getByText("Select a highlighted player.")).toBeTruthy();
+      fireEvent.click(document.querySelector<HTMLButtonElement>(".ga-player-target")!);
+      await waitFor(() => expect(submit).toHaveBeenCalled());
+      expect(submit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          actionId: action.id,
+          values: expect.objectContaining({
+            attackerId: [attackerId],
+            targetIds: expect.arrayContaining([targetId]),
+          }),
+        }),
+      );
+    },
+    ENGINE_DECISION_TIMEOUT,
+  );
+
+  it(
+    "keeps the decision answerable when the stale-draft invalidation wipes the auto-begun draft",
+    async () => {
+      const server = attackDecisionServer();
+      const before = GRAND_ARCHIVE_VISUAL_FIXTURES.find(
+        (entry) => entry.id === "attack-targeting",
+      )!;
+      const interaction = before.interactions.find(
+        (entry) => entry.movePreview.command === "declare-attack",
+      )!;
+      const action = before.interactionView!.actions.find((entry) => entry.id === interaction.id)!;
+      const { submit, update } = mount({
+        ...before,
+        id: "ga-decision-race",
+        interactions: [interaction],
+        interactionView: { ...before.interactionView!, actions: [action] },
+      });
+      // Leave a stale draft open, then flip the same workspace into the decision
+      // view: the child auto-begin and the provider's stale-draft invalidation
+      // race inside one commit.
+      fireEvent.click(
+        document.querySelector<HTMLButtonElement>(
+          `.ga-seat-zone--field button[data-sim-entity-id="${interaction.sourceEntityId}"]`,
+        )!,
+      );
+      expect(screen.getByText("Choose attack targets")).toBeTruthy();
+      const current = decisionFixture(server, "ga-decision-race");
+      update(current);
+      await waitFor(() => expect(targetableButtons().length).toBeGreaterThan(0));
+      await answerAttackDecision(current, submit);
+    },
+    ENGINE_DECISION_TIMEOUT,
+  );
 });

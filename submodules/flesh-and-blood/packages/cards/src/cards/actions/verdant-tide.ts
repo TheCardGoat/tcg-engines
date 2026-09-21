@@ -12,6 +12,8 @@ export const verdantTide = definePitchFamily(fabPitchFamilies["verdant-tide"], {
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "controller",
+          occurrences: "every",
           filter: {
             and: [
               {

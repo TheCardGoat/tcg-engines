@@ -91,6 +91,8 @@ export const recursiveConfidant: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "bound",
               binding: "target-card",
             },
+            affectedSet: "locked",
+            fromZone: "banishment",
             duration: {
               kind: "this-turn",
             },

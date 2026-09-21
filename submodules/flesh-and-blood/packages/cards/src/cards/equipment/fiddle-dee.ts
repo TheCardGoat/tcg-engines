@@ -15,6 +15,7 @@ export const fiddleDee = defineCard(fabCardIdentitiesByCanonicalId["p7CLrzj7kGMt
       effect: {
         type: "create-token",
         token: "might",
+        creator: "token-controller",
         controller: "each",
       },
     },

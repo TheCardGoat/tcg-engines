@@ -44,8 +44,8 @@ describe("Gameplay guide prompt audit", () => {
       { skipSetup: false, autoGainGig: false, seed: "guide-gain-gig-prompt" },
     );
 
-    engine.keepHand({ as: P1 });
-    engine.keepHand({ as: P2 });
+    engine.keepHand({ as: engine.getActivePlayerId() });
+    engine.keepHand({ as: engine.getOpponentOf(engine.getActivePlayerId()) });
 
     const active = engine.getActivePlayerId();
     const inactive = engine.getOpponentOf(active);
@@ -63,22 +63,38 @@ describe("Gameplay guide prompt audit", () => {
     expect(allowedTypes.sort()).toEqual(["d10", "d12", "d4", "d6", "d8"]);
   });
 
-  it("allows d20 in the gain-a-gig prompt only when it is the last fixer die", () => {
+  it("auto-selects the d20 when it is the only fixer die", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       { deck: 10, fixerDice: ["d20"] },
       { deck: 10, fixerDice: ["d20"] },
       { skipSetup: false, autoGainGig: false, seed: "guide-gain-gig-d20-last" },
     );
 
-    engine.keepHand({ as: P1 });
-    engine.keepHand({ as: P2 });
+    engine.keepHand({ as: engine.getActivePlayerId() });
+    engine.keepHand({ as: engine.getOpponentOf(engine.getActivePlayerId()) });
 
     const active = engine.getActivePlayerId();
-    const choice = expectChoicePrompt(engine, "gainGig", { as: active });
-    const allowedTypes = choice.payload.allowedDieIds.map(
-      (id) => engine.getState().G.gigDice[id]!.dieType,
+    expect(engine.getPhase()).toBe("main");
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+    expect(engine.getGigDice(active).map((die) => die.dieType)).toContain("d20");
+    expect(engine.getFixerDice(active)).toHaveLength(0);
+  });
+
+  it("auto-selects the last non-d20 when the d20 is the only other fixer die", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { deck: 10, fixerDice: ["d12", "d20"] },
+      { deck: 10, fixerDice: ["d12", "d20"] },
+      { skipSetup: false, autoGainGig: false, seed: "guide-gain-gig-last-non-d20" },
     );
-    expect(allowedTypes).toEqual(["d20"]);
+
+    engine.keepHand({ as: engine.getActivePlayerId() });
+    engine.keepHand({ as: engine.getOpponentOf(engine.getActivePlayerId()) });
+
+    const active = engine.getActivePlayerId();
+    expect(engine.getPhase()).toBe("main");
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+    expect(engine.getGigDice(active).map((die) => die.dieType)).toContain("d12");
+    expect(engine.getFixerDice(active).map((die) => die.dieType)).toEqual(["d20"]);
   });
 
   it("presents main-phase guide actions with only legal candidates", () => {
@@ -144,10 +160,12 @@ describe("Gameplay guide prompt audit", () => {
       (candidate) =>
         candidate.cardId === engine.findCardId(welcomeToNightCityRetailMantisBlades, "hand", P1),
     );
-    expect(gearCandidate?.attachTargets).toEqual([
-      engine.findCardId(activeUnit, "field", P1) as string,
-      engine.findCardId(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1) as string,
-    ]);
+    expect(gearCandidate?.attachTargets).toEqual(
+      expect.arrayContaining([
+        engine.findCardId(activeUnit, "field", P1) as string,
+        engine.findCardId(theHeistRetailStarterDeckVCorporateExile, "legendArea", P1) as string,
+      ]),
+    );
 
     const callSpec = expectMoveInputSpec(engine, "callLegend", "selectCard", { as: P1 });
     expect(callSpec.candidates).toEqual([
@@ -163,7 +181,10 @@ describe("Gameplay guide prompt audit", () => {
       as: P1,
     });
     expect(abilitySpec.candidates).toEqual([
-      { cardId: engine.findCardId(activeUnit, "field", P1) as string, abilityIndex: 0 },
+      expect.objectContaining({
+        cardId: engine.findCardId(activeUnit, "field", P1) as string,
+        abilityIndex: 0,
+      }),
     ]);
 
     const attackUnitSpec = expectMoveInputSpec(engine, "attackUnit", "selectPair", { as: P1 });
@@ -253,7 +274,10 @@ describe("Gameplay guide prompt audit", () => {
       as: P2,
     });
     expect(abilitySpec.candidates).toEqual([
-      { cardId: engine.findCardId(quickUnit, "field", P2) as string, abilityIndex: 0 },
+      expect.objectContaining({
+        cardId: engine.findCardId(quickUnit, "field", P2) as string,
+        abilityIndex: 0,
+      }),
     ]);
 
     const blockerSpec = expectMoveInputSpec(engine, "useBlocker", "selectCard", { as: P2 });

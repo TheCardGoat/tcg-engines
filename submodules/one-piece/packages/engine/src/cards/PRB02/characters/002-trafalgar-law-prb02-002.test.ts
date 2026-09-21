@@ -1,6 +1,6 @@
 import { eb01MountainGod018, op04GumGumRedRoc056 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02TrafalgarLawPrb02002002 } from "../../../../../cards/src/cards/PRB02/characters/002-trafalgar-law-prb02-002.ts";
+import { prb02TrafalgarLawPrb02002002 } from "../../../../../cards/src/cards/characters/prb02-002-trafalgar-law-prb02-002.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

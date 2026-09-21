@@ -45,7 +45,8 @@ describe("Searing Gaze (FNG016) AAA", () => {
     Fang.must.playReaction(searingGazeRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(3);
+    // + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(4);
     expectFabCard(Fang, searingGazeRed).toBeIn("graveyard");
     expectFabPlayer(Dash).notToBeMarked();
 
@@ -74,7 +75,8 @@ describe("Searing Gaze (FNG016) AAA", () => {
     Fang.must.playReaction(searingGazeRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(3);
+    // + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(4);
 
     game.helpers.resolveRestOfCombat();
     expectFabPlayer(Dash).notToBeMarked();

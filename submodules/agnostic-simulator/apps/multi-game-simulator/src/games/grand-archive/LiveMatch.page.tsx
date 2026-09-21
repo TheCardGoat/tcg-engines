@@ -20,11 +20,17 @@ import {
 import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
 import {
   ChatPanel,
+  DropClaimControl,
   SimulatorRouteStatus,
   type ChatMessage as UiChatMessage,
 } from "@tcg/simulator-ui";
+import type { DropEligibility } from "@tcg/protocol";
 import { CHAT_PRESET_KEYS, CHAT_PRESETS } from "@tcg/simulator-runtime/chat";
 
+import {
+  canEmitLiveMatchWriteFromHandle,
+  describeLiveMatchWriteGate,
+} from "@tcg/game-page-contract";
 import { acquireRootGatewayHandle } from "../../lib/gateway/root-socket";
 import { useSimulatorRoute } from "../../simulator/providers";
 import { grandArchiveHarnessFixture } from "./fixtureProjection";
@@ -225,14 +231,58 @@ function parseAuthorizedCardOwners(raw: unknown): Readonly<Record<string, string
 }
 
 interface AuthorizedCardResources {
+  readonly imageUrls: Readonly<Record<string, string>>;
+  readonly boardImageUrls: Readonly<Record<string, string>>;
+  readonly boardImageAspectRatios: Readonly<Record<string, number>>;
+  readonly imageAspectRatios: Readonly<Record<string, number>>;
   readonly definitionIds: Readonly<Record<string, string>>;
   readonly ownerIds: Readonly<Record<string, string>>;
   readonly names: Readonly<Record<string, string>>;
   readonly commandNamesByActionId: Readonly<Record<string, string>>;
 }
 
+function parseImageAspectRatios(value: unknown): Readonly<Record<string, number>> {
+  return isRecord(value)
+    ? Object.fromEntries(
+        Object.entries(value).filter(
+          (entry): entry is [string, number] =>
+            typeof entry[1] === "number" && Number.isFinite(entry[1]) && entry[1] > 0,
+        ),
+      )
+    : {};
+}
 function parseAuthorizedCardResources(raw: unknown): AuthorizedCardResources {
   return {
+    imageUrls:
+      isRecord(raw) && isRecord(raw.cardImageUrls)
+        ? Object.fromEntries(
+            Object.entries(raw.cardImageUrls).filter(
+              (entry): entry is [string, string] =>
+                typeof entry[1] === "string" &&
+                /^https:\/\/cdn\.tcg\.online\/public\/grand-archive\/assets\/full\/[a-f0-9]{64}\.webp$/.test(
+                  entry[1],
+                ),
+            ),
+          )
+        : {},
+    boardImageUrls:
+      isRecord(raw) && isRecord(raw.cardBoardImageUrls)
+        ? Object.fromEntries(
+            Object.entries(raw.cardBoardImageUrls).filter(
+              (entry): entry is [string, string] =>
+                typeof entry[1] === "string" &&
+                /^https:\/\/cdn\.tcg\.online\/public\/grand-archive\/assets\/(?:board|full)\/[a-f0-9]{64}\.webp$/.test(
+                  entry[1],
+                ),
+            ),
+          )
+        : {},
+    boardImageAspectRatios: parseImageAspectRatios(
+      isRecord(raw) ? raw.cardBoardImageAspectRatios : undefined,
+    ),
+    imageAspectRatios: parseImageAspectRatios(
+      isRecord(raw) ? raw.cardImageAspectRatios : undefined,
+    ),
     definitionIds: parseAuthorizedCards(raw),
     ownerIds: parseAuthorizedCardOwners(raw),
     names:
@@ -444,7 +494,10 @@ function GrandArchiveLiveGamePage() {
   );
   const interactionRef = useRef(interactionView);
   const gatewayHandleRef = useRef<ReturnType<typeof acquireRootGatewayHandle> | null>(null);
-  const [gatewayAttached, setGatewayAttached] = useState(false);
+  const [, setGatewayAttached] = useState(false);
+  const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
+    bootstrap?.dropEligibility ?? null,
+  );
 
   useEffect(() => {
     interactionRef.current = interactionView;
@@ -495,7 +548,13 @@ function GrandArchiveLiveGamePage() {
       handle.onDisconnected(() => setGatewayAttached(false)),
       handle.on("game_joined", (payload) => {
         accept(payload);
-        if (payload.gameId === gameId) setGatewayAttached(true);
+        if (payload.gameId === gameId) {
+          setGatewayAttached(true);
+          if (payload.dropEligibility) setDropEligibility(payload.dropEligibility);
+        }
+      }),
+      handle.on("drop_eligibility", (payload) => {
+        if (payload.gameId === gameId) setDropEligibility(payload.dropEligibility);
       }),
       handle.on("state_sync", accept),
       handle.on("state_update", accept),
@@ -561,11 +620,26 @@ function GrandArchiveLiveGamePage() {
 
   const submitInteraction = useCallback(
     (submission: InteractionSubmission) => {
-      if (!gameId || !viewerId) return false;
+      if (!gameId || !viewerId || !bootstrap) return false;
       const handle = gatewayHandleRef.current;
-      if (!handle) return false;
+      const gate = canEmitLiveMatchWriteFromHandle({
+        handle,
+        viewer: {
+          role: bootstrap.viewer.role,
+          permissions: { act: bootstrap.viewer.permissions?.act ?? true },
+        },
+        capabilities: { actions: bootstrap.capabilities?.actions ?? true },
+        gameStatus: bootstrap.game.status,
+        bootstrapGameId: bootstrap.game.gameId,
+        emitGameId: gameId,
+      });
+      if (!gate.ok) {
+        if (gate.reason === "not_connected")
+          setConnectionError(describeLiveMatchWriteGate(gate.reason).message);
+        return false;
+      }
       setConnectionError(null);
-      handle.emit("submit_interaction", {
+      handle!.emit("submit_interaction", {
         gameId,
         expectedVersion: submission.stateVersion,
         submission,
@@ -575,12 +649,16 @@ function GrandArchiveLiveGamePage() {
       // An asynchronous rejection exposes the explicit retry path.
       return true;
     },
-    [gameId, viewerId],
+    [bootstrap, gameId, viewerId],
   );
 
   const projectionOptions = useMemo<GrandArchiveViewerSimulatorProjectionOptions>(
     () => ({
       ...(interactionView ? { interactionView } : {}),
+      cardImageUrls: authorizedCards.imageUrls,
+      cardBoardImageUrls: authorizedCards.boardImageUrls,
+      cardBoardImageAspectRatios: authorizedCards.boardImageAspectRatios,
+      cardImageAspectRatios: authorizedCards.imageAspectRatios,
       authorizedCardDefinitionIds: authorizedCards.definitionIds,
       authorizedCardOwnerIds: authorizedCards.ownerIds,
       authorizedCardNames: authorizedCards.names,
@@ -652,6 +730,19 @@ function GrandArchiveLiveGamePage() {
 
   return (
     <>
+      {dropEligibility ? (
+        <div className="pointer-events-auto absolute right-4 top-4 z-20">
+          <DropClaimControl
+            eligibility={dropEligibility}
+            serverNowMs={dropEligibility.projectedAtMs}
+            onClaim={() => {
+              const handle = gatewayHandleRef.current;
+              if (!handle) return;
+              handle.emit("drop_player", { gameId });
+            }}
+          />
+        </div>
+      ) : null}
       <GrandArchiveTabletop
         fixture={fixture}
         canUndo={canUndo}
@@ -680,7 +771,7 @@ function GrandArchiveLiveGamePage() {
           />
         }
         errorMessage={connectionError ?? undefined}
-        onSubmitProtocolInteraction={gatewayAttached ? submitInteraction : undefined}
+        onSubmitProtocolInteraction={submitInteraction}
       />
       {state.status === "finished" && summaryOpen ? (
         <GrandArchiveGameSummary

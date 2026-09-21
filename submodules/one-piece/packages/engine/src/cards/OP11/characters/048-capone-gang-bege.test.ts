@@ -5,7 +5,7 @@ import {
   op11CharlotteLola052,
   op11TonyTonyChopper053,
 } from "@tcg/op-cards";
-import { op11CaponeGangBege048 } from "../../../../../cards/src/cards/OP11/characters/048-capone-gang-bege.ts";
+import { op11CaponeGangBege048 } from "../../../../../cards/src/cards/characters/op11-048-capone-gang-bege.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

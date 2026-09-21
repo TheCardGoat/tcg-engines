@@ -14,6 +14,7 @@ import { eligibleOptionalTriggerSources } from "./rules/optional-trigger-automat
 import {
   fabPriorityWindowContext,
   fabPriorityWindowManualOnly,
+  fabScopedAutoPassActive,
   type FabPriorityWindowContext,
 } from "./rules/automation-verdict.ts";
 import type { FabCounterRecord } from "./game/objects.ts";
@@ -78,6 +79,13 @@ export interface FabViewerState {
   >;
   /** Public remaining attack activations for arena weapons, keyed by physical object. */
   attackActivationsByInstanceId?: Readonly<Record<string, FabViewerAttackActivations>>;
+  /**
+   * Cards revealed this turn (CR 8.5.17) that presentation keeps inspectable
+   * for the rest of the turn, validated against current zones. Public to
+   * every viewer; empty once the turn ends (the turn ledger resets).
+   * Optional so viewer states projected before this field existed still parse.
+   */
+  readonly turnReveals?: readonly FabViewerTurnReveal[];
   /** Owner-private source configuration; empty for spectators and replay. */
   readonly optionalTriggerAutomation: readonly {
     readonly sourceInstanceId: string;
@@ -93,6 +101,12 @@ export interface FabViewerState {
    * while the seat is armed; null for spectators and replay.
    */
   readonly priorityHoldArmed: boolean | null;
+  /**
+   * Owner-private one-shot auto-pass scope for the viewing seat while inside
+   * its boundary ("this combat" / "the opponent's turn"); null when unarmed,
+   * expired, for spectators, and for replay.
+   */
+  readonly scopedAutoPass: import("./state.ts").FabScopedAutoPassScope | null;
   /**
    * Engine-computed stop-points for the viewing seat's current window (the
    * {@link fabPriorityWindowManualOnly} doctrine). True windows must never be
@@ -113,6 +127,74 @@ export interface FabViewerAttackActivations {
   readonly total: number;
   readonly used: number;
   readonly remaining: number;
+}
+
+/**
+ * A card revealed this turn (CR 8.5.17) that presentation keeps inspectable
+ * for the rest of the turn. Deck-edge entries are revalidated against the
+ * current deck order on every projection — a revealed card that moved deeper
+ * into the deck is dropped rather than disclosed; hand entries must still be
+ * in their owner's hand.
+ */
+export type FabViewerTurnReveal =
+  | {
+      readonly kind: "deck-edge";
+      readonly ownerId: string;
+      readonly instanceId: string;
+      readonly canonicalId: string | null;
+      readonly position: "top" | "bottom";
+    }
+  | {
+      readonly kind: "hand";
+      readonly ownerId: string;
+      readonly instanceId: string;
+      readonly canonicalId: string | null;
+    };
+
+/**
+ * Validate this turn's reveal ledger entries against current zone membership.
+ * Only the deck's two edge positions can be presented without disclosing the
+ * rest of the deck (CR 3.7.1), and a revealed hand card only stays inspectable
+ * while it remains there.
+ */
+function projectTurnReveals(state: FabRulesSnapshot): readonly FabViewerTurnReveal[] {
+  const reveals: FabViewerTurnReveal[] = [];
+  const seen = new Set<string>();
+  for (const playerId of state.playerIds) {
+    const revealed = state.players[playerId]?.history.turn.revealedPrivateInstancesThisTurn ?? [];
+    for (const entry of revealed) {
+      if (seen.has(entry.instanceId)) continue;
+      const ownerZones = state.containers.zonesByPlayerId[entry.ownerId];
+      if (!ownerZones) continue;
+      if (entry.zoneKind === "deck") {
+        const position =
+          ownerZones.deck.at(-1) === entry.instanceId
+            ? "top"
+            : ownerZones.deck[0] === entry.instanceId
+              ? "bottom"
+              : null;
+        if (!position) continue;
+        seen.add(entry.instanceId);
+        reveals.push({
+          kind: "deck-edge",
+          ownerId: entry.ownerId,
+          instanceId: entry.instanceId,
+          canonicalId: state.objects[entry.instanceId]?.canonicalId ?? null,
+          position,
+        });
+      } else {
+        if (!ownerZones.hand.includes(entry.instanceId)) continue;
+        seen.add(entry.instanceId);
+        reveals.push({
+          kind: "hand",
+          ownerId: entry.ownerId,
+          instanceId: entry.instanceId,
+          canonicalId: state.objects[entry.instanceId]?.canonicalId ?? null,
+        });
+      }
+    }
+  }
+  return reveals;
 }
 
 export type FabViewerCombatState = Omit<NonNullable<FabRulesSnapshot["combat"]>, "activeLink"> & {
@@ -215,6 +297,17 @@ export function projectFabViewerResources(
   for (const layer of presentationState.rulesStack) {
     if (layer.source.canonicalId) visibleCanonicalIds.add(layer.source.canonicalId);
   }
+  // A card revealed this turn (CR 8.5.17) stays inspectable presentation-side
+  // for the turn, wherever it moves afterwards — the reveal already made its
+  // identity public. Disclose the definition without adding a hidden instance
+  // to cardInstances, the same boundary as active-effect sources above.
+  for (const playerId of presentationState.playerIds) {
+    for (const entry of presentationState.players[playerId]?.history.turn
+      .revealedPrivateInstancesThisTurn ?? []) {
+      const canonicalId = presentationState.objects[entry.instanceId]?.canonicalId;
+      if (canonicalId) visibleCanonicalIds.add(canonicalId);
+    }
+  }
   for (const [definitionKey, definition] of Object.entries(presentationState.cardDefinitions)) {
     if (visibleCanonicalIds.has(definitionKey) || visibleCanonicalIds.has(definition.canonicalId)) {
       cardDefinitions[definitionKey] = structuredClone(definition);
@@ -274,6 +367,7 @@ export function projectFabViewerState(state: FabRulesSnapshot, viewer: FabViewer
     countersByInstanceId: publicObjectState.countersByInstanceId,
     currentNumericByInstanceId,
     attackActivationsByInstanceId,
+    turnReveals: projectTurnReveals(presentationState),
     optionalTriggerAutomation:
       viewer.role === "player"
         ? [
@@ -297,6 +391,13 @@ export function projectFabViewerState(state: FabRulesSnapshot, viewer: FabViewer
     priorityHoldArmed:
       viewer.role === "player"
         ? presentationState.priorityHoldArmed[viewer.actorId] === true
+        : null,
+    scopedAutoPass:
+      viewer.role === "player" && fabScopedAutoPassActive(presentationState, viewer.actorId)
+        ? ((
+            presentationState.automationPreferences[viewer.actorId] ??
+            FAB_DEFAULT_AUTOMATION_PREFERENCES
+          ).scopedAutoPass ?? null)
         : null,
     priorityManualOnly:
       viewer.role === "player"

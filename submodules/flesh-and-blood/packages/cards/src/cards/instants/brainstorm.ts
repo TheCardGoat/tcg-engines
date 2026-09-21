@@ -18,6 +18,8 @@ export const brainstorm = definePitchFamily(fabPitchFamilies["brainstorm"], {
               kind: "event",
               event: {
                 name: "draw",
+                grouping: "individual",
+                during: { kind: "phase", phase: "action" },
                 actor: {
                   kind: "player",
                   player: "ability-controller",
@@ -37,6 +39,7 @@ export const brainstorm = definePitchFamily(fabPitchFamilies["brainstorm"], {
                   selector: "object",
                   declared: "on-stack",
                   zones: ["hero", "permanent"],
+                  filter: { hasProperty: "life" },
                   count: 1,
                 },
               },

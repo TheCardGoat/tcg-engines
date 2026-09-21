@@ -43,6 +43,7 @@ export const infectiousHost = definePitchFamily(fabPitchFamilies["infectious-hos
                 then: {
                   type: "create-token",
                   token: "frailty",
+                  creator: "effect-controller",
                   controller: "attack-target",
                 },
               },
@@ -60,6 +61,7 @@ export const infectiousHost = definePitchFamily(fabPitchFamilies["infectious-hos
                 then: {
                   type: "create-token",
                   token: "inertia",
+                  creator: "effect-controller",
                   controller: "attack-target",
                 },
               },
@@ -77,6 +79,7 @@ export const infectiousHost = definePitchFamily(fabPitchFamilies["infectious-hos
                 then: {
                   type: "create-token",
                   token: "bloodrot-pox",
+                  creator: "effect-controller",
                   controller: "attack-target",
                 },
               },

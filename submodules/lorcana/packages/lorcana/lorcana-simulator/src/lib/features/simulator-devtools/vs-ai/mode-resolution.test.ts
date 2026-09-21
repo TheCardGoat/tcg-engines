@@ -13,6 +13,7 @@ function createState(
     aiSpeed: "balanced",
     strategyId: "default",
     strategyLabel: "Default",
+    opponentMode: "bot",
     currentPerspective: "playerOne",
     turnNumber: 1,
     ...overrides,
@@ -78,6 +79,28 @@ describe("human vs ai mode resolution", () => {
     expect(result.nextState.turnNumber).toBe(5);
     expect(result.shouldScheduleAi).toBe(false);
     expect(result.shouldClearTimer).toBe(true);
+  });
+
+  it("follows the current actor without scheduling automation in play-both-sides mode", () => {
+    const playerTwo = resolveHumanVsAiMode({
+      state: createState({ opponentMode: "self" }),
+      actorId: "player_two" as PlayerId,
+      turnNumber: 5,
+    });
+
+    expect(playerTwo.nextState.mode).toBe("takeover");
+    expect(playerTwo.nextState.currentPerspective).toBe("playerTwo");
+    expect(playerTwo.shouldScheduleAi).toBe(false);
+    expect(playerTwo.shouldClearTimer).toBe(true);
+
+    const playerOne = resolveHumanVsAiMode({
+      state: playerTwo.nextState,
+      actorId: "player_one" as PlayerId,
+      turnNumber: 6,
+    });
+
+    expect(playerOne.nextState.currentPerspective).toBe("playerOne");
+    expect(playerOne.shouldScheduleAi).toBe(false);
   });
 
   it("completes immediately when there is a winner", () => {

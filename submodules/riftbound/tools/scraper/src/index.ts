@@ -136,13 +136,71 @@ export function extractGalleryPayloadFromHtml(html: string): unknown {
   if (cards.length === 0) {
     throw new RiftboundScrapeError("The official Card Gallery returned no cards.");
   }
-  if (cards.length !== reportedTotal) {
+  if (cards.length > reportedTotal) {
     throw new RiftboundScrapeError(
-      `Card Gallery payload is incomplete: received ${cards.length} of ${reportedTotal} cards.`,
+      `Card Gallery payload embeds ${cards.length} cards but reports only ${reportedTotal}.`,
     );
   }
+  assertGalleryBaseNumbersCovered(sets, cards);
 
   return { sets, cards, reportedTotal };
+}
+
+function galleryCardSetId(card: JsonRecord): string | undefined {
+  const set = card.set;
+  if (!isRecord(set)) return undefined;
+  const value = set.value;
+  if (!isRecord(value)) return undefined;
+  const id = value.id;
+  return typeof id === "string" ? id : undefined;
+}
+
+/**
+ * The gallery smart list's totalItems counts records the site never publishes
+ * (it has exceeded the embedded payload by the same handful across every
+ * locale), so an equality check against it can never hold. Completeness is
+ * proven structurally instead: every declared set must embed its full base
+ * collector number range 1..collectorNumberMax. Alternate printings beyond the
+ * base range are optional by definition.
+ */
+function assertGalleryBaseNumbersCovered(
+  sets: readonly unknown[],
+  cards: readonly unknown[],
+): void {
+  const embedded = new Map<string, Set<number>>();
+  for (const card of cards) {
+    if (!isRecord(card)) continue;
+    const setId = galleryCardSetId(card);
+    const collectorNumber = card.collectorNumber;
+    if (setId === undefined) continue;
+    if (typeof collectorNumber !== "number" || !Number.isInteger(collectorNumber)) continue;
+    let numbers = embedded.get(setId);
+    if (!numbers) embedded.set(setId, (numbers = new Set<number>()));
+    numbers.add(collectorNumber);
+  }
+  for (const set of sets) {
+    if (!isRecord(set)) continue;
+    const setId = set.id;
+    const collectorNumberMax = set.collectorNumberMax;
+    if (typeof setId !== "string") continue;
+    if (
+      typeof collectorNumberMax !== "number" ||
+      !Number.isInteger(collectorNumberMax) ||
+      collectorNumberMax < 1
+    ) {
+      continue;
+    }
+    const numbers = embedded.get(setId);
+    const missing: number[] = [];
+    for (let n = 1; n <= collectorNumberMax; n += 1) {
+      if (!numbers?.has(n)) missing.push(n);
+    }
+    if (missing.length > 0) {
+      throw new RiftboundScrapeError(
+        `Card Gallery payload is incomplete: set ${setId} is missing base collector numbers ${missing.join(", ")}.`,
+      );
+    }
+  }
 }
 
 export async function scrapeRiotCardGallery(

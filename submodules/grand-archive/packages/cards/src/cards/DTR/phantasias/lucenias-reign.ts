@@ -67,8 +67,17 @@ export const luceniasReign: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                   amount: 1,
                 },
                 filter: {
-                  kind: "subtype",
-                  oneOf: ["COMMAND"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "subtype",
+                      oneOf: ["CHESSMAN"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["COMMAND"],
+                    },
+                  ],
                 },
               },
             ],

@@ -52,7 +52,6 @@ export const welcomeToNightCityRetailChromeReverie = defineCyberpunkCard({
           },
           rule: "cantAttack",
           duration: "untilSourceNextTurn",
-          optional: true,
         },
         {
           effect: "callLegend",

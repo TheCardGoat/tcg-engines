@@ -32,7 +32,11 @@ function gameplaySignature(card: OPCard): unknown {
 
 describe("@tcg/op-cards", () => {
   test("exports a populated catalog", () => {
-    expect(allCards.length).toBeGreaterThan(2200);
+    // One definition per canonical card (reprints/alt-arts live in
+    // printings[]); ~3.3k physical prints across ~2.4k canonical cards after
+    // the OP15–OP17 import. The upper bound catches accidental duplication.
+    expect(allCards.length).toBeGreaterThan(1900);
+    expect(allCards.length).toBeLessThan(3000);
     expect(allCards.length).toBe(authoredCards.length);
     expect(getAllCards()).toHaveLength(allCards.length);
   });
@@ -46,9 +50,11 @@ describe("@tcg/op-cards", () => {
     expect(hasCard("NOPE-999")).toBe(false);
     expect(cardCatalog.get("OP13-001")?.id).toBe("OP13-001");
 
+    // A printing id resolves to the card it prints (rules 2-14 / 5-1-2-3).
     const namiSp = getCard("OP08-106_p2");
-    expect(namiSp.id).toBe("OP08-106_p2");
+    expect(namiSp.id).toBe("OP08-106");
     expect(namiSp.canonicalId).toBe("OP08-106");
+    expect(namiSp.printings.map((printing) => printing.id)).toContain("OP08-106_p2");
   });
 
   test("includes the canonical DON!! resource card", () => {
@@ -97,15 +103,15 @@ describe("@tcg/op-cards", () => {
         expect(typeof printing.artId).toBe("string");
         expect(printing.artId.length).toBeGreaterThan(0);
         expect(printing.setCode).toBe(card.setId);
-        expect(printing.rarity).toBe(card.rarity);
         expect(printing.imageUrl.length).toBeGreaterThan(0);
       }
-      // Base printing always mirrors the authored card id.
+      // The card's own rarity mirrors its primary print; reprints may carry a
+      // different rarity on their printing entry.
+      expect(card.printings[0]?.rarity).toBe(card.rarity);
+      // Canonical definitions mirror their authored id on the primary print.
       expect(card.printings[0]?.id).toBe(card.id);
-      // artVariants stays as a derived back-compat view alongside printings.
-      if (card.artVariants !== undefined) {
-        expect(card.artVariants.length).toBeGreaterThan(0);
-      }
+      // artVariants is no longer authored; consumers derive it from printings.
+      expect(card.artVariants).toBeUndefined();
     }
   });
 

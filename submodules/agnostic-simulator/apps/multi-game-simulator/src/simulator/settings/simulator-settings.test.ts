@@ -3,6 +3,7 @@ import {
   LEGACY_CYBERPUNK_USER_CONFIG_STORAGE_KEY,
   SIMULATOR_ANIMATION_SPEED_STORAGE_KEY,
   SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY,
+  SIMULATOR_PAYMENT_SELECTION_MODE_STORAGE_KEY,
   SIMULATOR_SOUND_VOLUME_STORAGE_KEY,
   clampSoundVolume,
   normalizeSimulatorSettings,
@@ -23,17 +24,20 @@ describe("simulator settings", () => {
       soundVolume: 50,
       cardInteractionMode: "detailed",
       animationSpeed: "normal",
+      paymentSelectionMode: "automatic",
     });
     expect(
       normalizeSimulatorSettings({
         soundVolume: 150,
         cardInteractionMode: "quick",
         animationSpeed: "slow",
+        paymentSelectionMode: "choose",
       }),
     ).toEqual({
       soundVolume: 100,
       cardInteractionMode: "quick",
       animationSpeed: "slow",
+      paymentSelectionMode: "choose",
     });
   });
 
@@ -43,15 +47,18 @@ describe("simulator settings", () => {
       soundVolume: 24,
       cardInteractionMode: "quick",
       animationSpeed: "slow",
+      paymentSelectionMode: "choose",
     });
 
     expect(storage.getItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY)).toBe("24");
     expect(storage.getItem(SIMULATOR_CARD_INTERACTION_MODE_STORAGE_KEY)).toBe("quick");
     expect(storage.getItem(SIMULATOR_ANIMATION_SPEED_STORAGE_KEY)).toBe("slow");
+    expect(storage.getItem(SIMULATOR_PAYMENT_SELECTION_MODE_STORAGE_KEY)).toBe("choose");
     expect(readLocalSimulatorSettings(storage)).toEqual({
       soundVolume: 24,
       cardInteractionMode: "quick",
       animationSpeed: "slow",
+      paymentSelectionMode: "choose",
     });
   });
 
@@ -63,6 +70,7 @@ describe("simulator settings", () => {
       soundVolume: 100,
       cardInteractionMode: "detailed",
       animationSpeed: "normal",
+      paymentSelectionMode: "automatic",
     });
     expect(storage.getItem(SIMULATOR_SOUND_VOLUME_STORAGE_KEY)).toBe("100");
   });

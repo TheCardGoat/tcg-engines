@@ -4,6 +4,7 @@ import type {
   LorcanaGameLogEntry,
   MoveLog,
 } from "@tcg/lorcana-engine";
+import type { TimeControlConfig } from "@tcg/lorcana-engine";
 import type {
   LorcanaProjectedBoardView,
   LorcanaCardTarget,
@@ -66,6 +67,7 @@ export interface LorcanaSimulatorFixture {
   playerTwo: TestInitialState;
   seed?: string;
   skipPreGame?: boolean;
+  timeControl?: TimeControlConfig;
 }
 
 export interface SimulatorViewUpdateMetadata {

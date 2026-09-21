@@ -11,7 +11,11 @@ export {
   greedyStrategy,
   createGreedyStrategy,
   DEFAULT_GREEDY_WEIGHTS,
+  isGreedyAIStrategy,
+  bindGreedyDeckProfile,
+  withDeckProfile,
   type GreedyWeights,
+  type GreedyAIStrategy,
 } from "./greedy.ts";
 export { decisionFromMove } from "./move-args.ts";
 export type { ArgPicker } from "./move-args.ts";

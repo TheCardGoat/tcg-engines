@@ -41,6 +41,7 @@ export const FAB_LOG_KEYS = [
   "flesh-and-blood.priority-automation.auto-pass",
   "flesh-and-blood.decision-automation.auto-order",
   "flesh-and-blood.decision-automation.auto-target",
+  "flesh-and-blood.decision-automation.auto-decline",
 
   // Core play facts.
   "flesh-and-blood.play",
@@ -79,6 +80,7 @@ export const FAB_LOG_KEYS = [
   "flesh-and-blood.banish.hidden-identity.by-source",
   "flesh-and-blood.deck-bottom",
   "flesh-and-blood.deck-bottom.private",
+  "flesh-and-blood.deck-top",
   "flesh-and-blood.destroy",
   "flesh-and-blood.destroy.by-source",
   "flesh-and-blood.dies",
@@ -157,6 +159,7 @@ export const FAB_LOG_KEYS = [
   "flesh-and-blood.gain-keyword",
   "flesh-and-blood.gave-keyword",
   "flesh-and-blood.gave-power",
+  "flesh-and-blood.marked",
   "flesh-and-blood.name-card",
   "flesh-and-blood.sharpen",
   "flesh-and-blood.modify-power",
@@ -175,6 +178,7 @@ export const FAB_LOG_KEYS = [
   "flesh-and-blood.turn.started",
   "flesh-and-blood.game.ended",
   "flesh-and-blood.decision.awaiting",
+  "flesh-and-blood.decision.chosen",
   "flesh-and-blood.decision.private",
   "flesh-and-blood.phase.start",
 ] as const;
@@ -233,6 +237,9 @@ export interface FabLogMessageValuesByName {
     readonly decisionKind: string;
   };
   readonly "flesh-and-blood.decision-automation.auto-target": {
+    readonly actorId: string;
+  };
+  readonly "flesh-and-blood.decision-automation.auto-decline": {
     readonly actorId: string;
   };
 
@@ -314,6 +321,11 @@ export interface FabLogMessageValuesByName {
     readonly from: string;
   };
   readonly "flesh-and-blood.deck-bottom": { readonly playerId: string; readonly from: string };
+  readonly "flesh-and-blood.deck-top": {
+    readonly playerId: string;
+    readonly cardName: string;
+    readonly from: string;
+  };
   readonly "flesh-and-blood.deck-bottom.private": {
     readonly playerId: string;
     readonly cardName: string;
@@ -557,7 +569,7 @@ export interface FabLogMessageValuesByName {
     readonly plural: string;
   };
   readonly "flesh-and-blood.gain-keyword": { readonly cardName: string; readonly keyword: string };
-  readonly "flesh-and-blood.gave-keyword": {
+  "flesh-and-blood.gave-keyword": {
     readonly sourceName: string;
     readonly cardName: string;
     readonly keyword: string;
@@ -566,6 +578,10 @@ export interface FabLogMessageValuesByName {
     readonly sourceName: string;
     readonly cardName: string;
     readonly amount: string;
+  };
+  readonly "flesh-and-blood.marked": {
+    readonly sourceName: string;
+    readonly playerId: string;
   };
   readonly "flesh-and-blood.name-card": {
     readonly playerId: string;
@@ -614,6 +630,10 @@ export interface FabLogMessageValuesByName {
   };
   readonly "flesh-and-blood.game.ended": { readonly playerId: string; readonly reason: string };
   readonly "flesh-and-blood.decision.awaiting": { readonly actorId: string };
+  readonly "flesh-and-blood.decision.chosen": {
+    readonly actorId: string;
+    readonly choice: string;
+  };
   readonly "flesh-and-blood.decision.private": { readonly label: string };
   readonly "flesh-and-blood.phase.start": { readonly turnPlayerId: string; readonly phase: string };
 }
@@ -647,6 +667,7 @@ export const FAB_LOG_KEY_CATEGORIES = {
   "flesh-and-blood.priority-automation.auto-pass": "rules",
   "flesh-and-blood.decision-automation.auto-order": "rules",
   "flesh-and-blood.decision-automation.auto-target": "rules",
+  "flesh-and-blood.decision-automation.auto-decline": "rules",
 
   "flesh-and-blood.play": "action",
   "flesh-and-blood.play.from-zone": "action",
@@ -680,6 +701,7 @@ export const FAB_LOG_KEY_CATEGORIES = {
   "flesh-and-blood.banish.hidden-identity": "action",
   "flesh-and-blood.banish.hidden-identity.by-source": "action",
   "flesh-and-blood.deck-bottom": "action",
+  "flesh-and-blood.deck-top": "action",
   "flesh-and-blood.deck-bottom.private": "action",
   "flesh-and-blood.destroy": "action",
   "flesh-and-blood.destroy.by-source": "action",
@@ -756,6 +778,7 @@ export const FAB_LOG_KEY_CATEGORIES = {
   "flesh-and-blood.gain-keyword": "rules",
   "flesh-and-blood.gave-keyword": "rules",
   "flesh-and-blood.gave-power": "rules",
+  "flesh-and-blood.marked": "rules",
   "flesh-and-blood.name-card": "rules",
   "flesh-and-blood.sharpen": "rules",
   "flesh-and-blood.modify-power": "rules",
@@ -772,6 +795,7 @@ export const FAB_LOG_KEY_CATEGORIES = {
   "flesh-and-blood.turn.started": "system",
   "flesh-and-blood.game.ended": "system",
   "flesh-and-blood.decision.awaiting": "system",
+  "flesh-and-blood.decision.chosen": "action",
   "flesh-and-blood.decision.private": "system",
   "flesh-and-blood.phase.start": "system",
 } as const satisfies Readonly<Record<FabLogKey, FabLogCategory>>;
@@ -801,6 +825,7 @@ export const FAB_LOG_KEY_NARRATIVE_ROLES: Readonly<Record<FabLogKey, FabLogNarra
   "flesh-and-blood.priority-automation.auto-pass": "diagnostic",
   "flesh-and-blood.decision-automation.auto-order": "diagnostic",
   "flesh-and-blood.decision-automation.auto-target": "diagnostic",
+  "flesh-and-blood.decision-automation.auto-decline": "diagnostic",
   "flesh-and-blood.play": "activity",
   "flesh-and-blood.play.from-zone": "activity",
   "flesh-and-blood.bind": "detail",
@@ -830,6 +855,7 @@ export const FAB_LOG_KEY_NARRATIVE_ROLES: Readonly<Record<FabLogKey, FabLogNarra
   "flesh-and-blood.banish.hidden-identity": "activity",
   "flesh-and-blood.banish.hidden-identity.by-source": "activity",
   "flesh-and-blood.deck-bottom": "activity",
+  "flesh-and-blood.deck-top": "activity",
   "flesh-and-blood.deck-bottom.private": "activity",
   "flesh-and-blood.destroy": "activity",
   "flesh-and-blood.destroy.by-source": "activity",
@@ -903,6 +929,7 @@ export const FAB_LOG_KEY_NARRATIVE_ROLES: Readonly<Record<FabLogKey, FabLogNarra
   "flesh-and-blood.gain-keyword": "activity",
   "flesh-and-blood.gave-keyword": "activity",
   "flesh-and-blood.gave-power": "activity",
+  "flesh-and-blood.marked": "activity",
   "flesh-and-blood.name-card": "activity",
   "flesh-and-blood.sharpen": "activity",
   "flesh-and-blood.modify-power": "activity",
@@ -917,6 +944,7 @@ export const FAB_LOG_KEY_NARRATIVE_ROLES: Readonly<Record<FabLogKey, FabLogNarra
   "flesh-and-blood.turn.started": "activity",
   "flesh-and-blood.game.ended": "outcome",
   "flesh-and-blood.decision.awaiting": "diagnostic",
+  "flesh-and-blood.decision.chosen": "activity",
   "flesh-and-blood.decision.private": "diagnostic",
   "flesh-and-blood.phase.start": "diagnostic",
 };
@@ -924,7 +952,7 @@ export const FAB_LOG_KEY_NARRATIVE_ROLES: Readonly<Record<FabLogKey, FabLogNarra
 // Deliberate compile-time tripwire. When FAB_LOG_KEYS grows, this fails until
 // the author reviews the narrative classifier above and acknowledges the new
 // key by updating the audited count.
-const FAB_LOG_NARRATIVE_KEY_COUNT: 138 = FAB_LOG_KEYS.length;
+const FAB_LOG_NARRATIVE_KEY_COUNT: 142 = FAB_LOG_KEYS.length;
 void FAB_LOG_NARRATIVE_KEY_COUNT;
 
 /**

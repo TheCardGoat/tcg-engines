@@ -121,6 +121,8 @@ export function fabCreatedObjectCanonicalId(name: string): string {
   const slug = name
     .replace(/^token:/i, "")
     .trim()
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
     .replace(/[\s_]+/g, "-")
     .replace(/-+/g, "-")
@@ -511,7 +513,10 @@ const FAB_TRIGGER_EVENT_SPECS = {
   usurp: triggerEventSpec(["object"]),
   crank: triggerEventSpec(["object"]),
   transcend: triggerEventSpec(["object"]),
-  create: triggerEventSpec(["created-object"], undefined, undefined, ["amount"]),
+  create: triggerEventSpec(["created-object"], undefined, undefined, [
+    "amount",
+    "effectController",
+  ]),
   "complete-contract": triggerEventSpec(["object"]),
   trigger: triggerEventSpec(["trigger-source"], undefined, undefined, ["abilityType"]),
   fragment: triggerEventSpec(["object"]),
@@ -713,6 +718,13 @@ function assertTriggerPattern(definition: FabCardDefinitionInput, value: unknown
       definition,
       `unsupported relative player ${String(value.actor.player)}`,
     );
+  }
+  if (
+    value.effectController !== undefined &&
+    value.effectController !== "ability-controller" &&
+    value.effectController !== "opponent"
+  ) {
+    throw invalidTriggerProgram(definition, "unsupported creation effect controller");
   }
   if (value.during !== undefined) {
     if (!isRecord(value.during) || !["phase", "combat-step"].includes(String(value.during.kind))) {

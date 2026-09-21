@@ -220,6 +220,9 @@ importers:
       '@tcg/lorcana-types':
         specifier: workspace:*
         version: link:../lorcana-types
+      '@tcg/protocol':
+        specifier: link:../../../../agnostic-simulator/packages/protocol
+        version: link:../../../../agnostic-simulator/packages/protocol
       '@tcg/shared':
         specifier: link:../../../../agnostic-simulator/packages/shared
         version: link:../../../../agnostic-simulator/packages/shared

@@ -68,8 +68,17 @@ export const zhouYuEnlightenedSage: GrandArchiveCard<GrandArchiveAbilityDefiniti
                 relationship: "zone-of",
                 player: "controller",
                 filter: {
-                  kind: "subtype",
-                  oneOf: ["SCRIPTURE"],
+                  kind: "any",
+                  filters: [
+                    {
+                      kind: "subtype",
+                      oneOf: ["BOOK"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["SCRIPTURE"],
+                    },
+                  ],
                 },
               },
             },

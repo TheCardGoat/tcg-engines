@@ -531,6 +531,8 @@ export function applyQueuedCommandMutation(
         faceUp: true,
         publicKnowledge: true,
         actor: command.seat,
+        // The public "plays X." line below supersedes the raw zone movement.
+        suppressLog: true,
       });
       emitEvent(state, "cardPlayed", command.seat, {
         sourceCardId: card.id,
@@ -594,7 +596,7 @@ export function applyQueuedCommandMutation(
         createChoicePrompt(state, {
           choiceKind: "costPayment",
           seat: command.seat,
-          label: "Attack cost payment",
+          label: `${cardName(getCardForInstance(state, command.attackerId))} attack cost: trash ${handTrashAmount} card(s) from hand.`,
           details: `Choose ${handTrashAmount} card(s) to trash from hand before attacking.`,
           sourceCardId: getInstance(state, command.attackerId).cardId,
           sourceInstanceId: command.attackerId,

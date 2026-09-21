@@ -1,5 +1,5 @@
 import type { MatchState } from "../types/match-state.ts";
-import type { GigDieId } from "../types/branded.ts";
+import type { GigDieId, PlayerId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { Operations } from "../operations/index.ts";
 import { SeededRNG } from "../state/rng.ts";
@@ -51,42 +51,79 @@ export const gainGigMove: MoveDefinition<GainGigInput> = {
   },
 
   execute({ state, playerId, input, operations }) {
-    const dieId = input.args.dieId as GigDieId;
-
-    const rng = new SeededRNG(state.ctx.seed);
-    if (state.ctx.rngState) rng.setState(state.ctx.rngState);
-    const eventsBefore = operations.event.getEmittedEvents().length;
-    operations.gig.takeFromFixer(playerId, dieId, (dieType) => rng.rollDie(dieType));
-    state.ctx.rngState = rng.getState();
-    state.G.turnMetadata.gigTakenThisTurn = true;
-    operations.game.setPendingChoice(undefined);
-
-    for (const event of operations.event.getEmittedEvents().slice(eventsBefore)) {
-      if (event.type === "gigDieRolled") {
-        processEventTriggers(event, state as MatchState, operations);
-      }
-    }
-
-    const die = state.G.gigDice[dieId as string];
-
-    operations.log.emit({
-      type: "gainGig",
-      playerId,
-      timestamp: Date.now(),
-      turnNumber: state.G.turnMetadata.turnNumber,
-      dieId,
-      dieType: die?.dieType ?? "unknown",
-      faceValue: die?.faceValue ?? 0,
-    });
-
-    operations.game.setPhase("main");
+    resolveGainGig(state, playerId, input.args.dieId as GigDieId, operations);
   },
 };
+
+/**
+ * Begin Start Phase step 8.6.5. A single legal die is not a meaningful player
+ * decision, so roll it in immediately; otherwise expose the legal selection.
+ */
+export function beginGainGigStep(
+  state: MatchState,
+  playerId: PlayerId,
+  operations: Operations,
+): void {
+  const allowedDieIds = allowedGainGigDice(state, playerId as string);
+  const onlyLegalDie = allowedDieIds.length === 1 ? allowedDieIds[0] : undefined;
+
+  if (onlyLegalDie) {
+    resolveGainGig(state, playerId, onlyLegalDie, operations);
+    return;
+  }
+
+  if (allowedDieIds.length > 1) {
+    operations.game.setPendingChoice({
+      type: "gainGig",
+      chooserId: playerId,
+      effectId: "start-phase",
+      payload: { allowedDieIds },
+    });
+    return;
+  }
+
+  operations.game.setPhase("main");
+}
+
+function resolveGainGig(
+  state: MatchState,
+  playerId: PlayerId,
+  dieId: GigDieId,
+  operations: Operations,
+): void {
+  const rng = new SeededRNG(state.ctx.seed);
+  if (state.ctx.rngState) rng.setState(state.ctx.rngState);
+  const eventsBefore = operations.event.getEmittedEvents().length;
+  operations.gig.takeFromFixer(playerId, dieId, (dieType) => rng.rollDie(dieType));
+  state.ctx.rngState = rng.getState();
+  state.G.turnMetadata.gigTakenThisTurn = true;
+  operations.game.setPendingChoice(undefined);
+
+  for (const event of operations.event.getEmittedEvents().slice(eventsBefore)) {
+    if (event.type === "gigDieRolled") {
+      processEventTriggers(event, state, operations);
+    }
+  }
+
+  const die = state.G.gigDice[dieId as string];
+
+  operations.log.emit({
+    type: "gainGig",
+    playerId,
+    timestamp: Date.now(),
+    turnNumber: state.G.turnMetadata.turnNumber,
+    dieId,
+    dieType: die?.dieType ?? "unknown",
+    faceValue: die?.faceValue ?? 0,
+  });
+
+  operations.game.setPhase("main");
+}
 
 export function readySpentCards(
   state: MatchState,
   operations: Operations,
-  playerId: import("../types/branded.ts").PlayerId,
+  playerId: PlayerId,
 ): number {
   const player = state.G.players[playerId as string];
   if (!player) return 0;
@@ -102,7 +139,7 @@ export function readySpentCards(
     readiedCount++;
   }
   if ((player.spentEddies ?? 0) > 0) {
-    player.eddies += player.spentEddies;
+    operations.game.gainEddies(playerId, player.spentEddies);
     player.spentEddies = 0;
   }
   return readiedCount;

@@ -1,3 +1,4 @@
+import { nimblismBlue } from "../actions/nimblism.ts";
 import { describe, it } from "vitest";
 import {
   FAB_MANUAL_HARNESS,
@@ -20,21 +21,28 @@ describe("Decimator Great Axe (DTD205) AAA", () => {
         weapon1: [decimatorGreatAxe],
         resourcePoints: 3,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, life: 20, hand: [snatchRed], deck: 6 },
+      {
+        hero: dash,
+        life: 20,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Dash = game.as(dash);
 
-    game.as(kassaiOfTheGoldenSand).activate(decimatorGreatAxe);
-    game.advanceCombatTo("defend");
+    game.as(kassaiOfTheGoldenSand).activateAttack(decimatorGreatAxe);
+    game.advanceUntil({ stopAt: "defend", optionals: "throw" });
     Dash.defendWith(snatchRed);
-    game.helpers.resolveUntilIdle({ entityTargets: "minimum", optionalBoolean: false });
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
     expectFabCard(Dash, snatchRed).toHaveDefense(1);
-    game.helpers.resolveRestOfCombat();
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Dash).toHaveLife(17);
+    expectFabCard(Dash, snatchRed).toBeIn("graveyard").toHaveDefense(2);
+    expectCombat(game).toBeClosed();
   });
 
   it("happy: pay 3 resources to attack for 4", () => {
@@ -44,18 +52,18 @@ describe("Decimator Great Axe (DTD205) AAA", () => {
         weapon1: [decimatorGreatAxe],
         resourcePoints: 3,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, life: 20, deck: 6 },
+      { hero: dash, life: 20, deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue] },
       FAB_MANUAL_HARNESS,
     );
     const Kassai = game.as(kassaiOfTheGoldenSand);
 
-    Kassai.activate(decimatorGreatAxe);
+    Kassai.activateAttack(decimatorGreatAxe);
     game.passBoth();
 
     expectCombat(game).toHaveAttackPower(4);
-    game.helpers.resolveRestOfCombat();
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(game.as(dash)).toHaveLife(16);
   });
 
@@ -66,20 +74,25 @@ describe("Decimator Great Axe (DTD205) AAA", () => {
         weapon1: [decimatorGreatAxe],
         resourcePoints: 3,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, life: 20, chest: [ironrotPlate], deck: 6 },
+      {
+        hero: dash,
+        life: 20,
+        chest: [ironrotPlate],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Dash = game.as(dash);
 
-    game.as(kassaiOfTheGoldenSand).activate(decimatorGreatAxe);
-    game.advanceCombatTo("defend");
+    game.as(kassaiOfTheGoldenSand).activateAttack(decimatorGreatAxe);
+    game.advanceUntil({ stopAt: "defend", optionals: "throw" });
     Dash.defendWith(ironrotPlate);
     game.passBoth();
 
     expectFabCard(Dash, ironrotPlate).toHaveDefense(1);
-    game.helpers.resolveRestOfCombat();
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Dash).toHaveLife(17);
   });
 
@@ -90,15 +103,15 @@ describe("Decimator Great Axe (DTD205) AAA", () => {
         weapon1: [decimatorGreatAxe],
         resourcePoints: 6,
         actionPoints: 2,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, life: 20, deck: 6 },
+      { hero: dash, life: 20, deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue] },
       FAB_MANUAL_HARNESS,
     );
     const Kassai = game.as(kassaiOfTheGoldenSand);
 
-    Kassai.activate(decimatorGreatAxe);
-    game.helpers.resolveRestOfCombat();
+    Kassai.activateAttack(decimatorGreatAxe);
+    game.closeCombat({ optionals: "throw" });
     Kassai.expectActivationRejected(decimatorGreatAxe);
   });
 });

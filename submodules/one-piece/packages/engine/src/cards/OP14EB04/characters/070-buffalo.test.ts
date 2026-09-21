@@ -1,6 +1,6 @@
 import { op13Otama043, op14eb04Humandrill032 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Buffalo070 } from "../../../../../cards/src/cards/OP14EB04/characters/070-buffalo.ts";
+import { op14eb04Buffalo070 } from "../../../../../cards/src/cards/characters/op14-070-buffalo.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

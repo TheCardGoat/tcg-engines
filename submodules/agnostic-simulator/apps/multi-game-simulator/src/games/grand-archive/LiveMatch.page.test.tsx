@@ -129,8 +129,12 @@ function liveBootstrap() {
             { id: "p2", connected: true },
           ],
         },
-        viewer: { role: "player" as const, actorId: viewerId, permissions: { chat: true } },
-        capabilities: { conceding: true },
+        viewer: {
+          role: "player" as const,
+          actorId: viewerId,
+          permissions: { chat: true, act: true },
+        },
+        capabilities: { conceding: true, actions: true },
         history: { engineLogs: [], chatMessages: [], freeTextEnabled: false },
       },
     },
@@ -146,13 +150,27 @@ describe("Grand Archive live match", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mocks.listeners.clear();
+    let status: "connected" | "disconnected" = "connected";
     mocks.acquire.mockReturnValue({
       emit: mocks.emit,
       join: mocks.join,
       leave: mocks.leave,
       release: mocks.release,
       on: mocks.on,
-      onDisconnected: mocks.onDisconnected,
+      onDisconnected: (listener: () => void) => {
+        mocks.listeners.set("disconnect", () => {
+          status = "disconnected";
+          listener();
+        });
+        return vi.fn();
+      },
+      getState: () => ({
+        status,
+        authenticated: status === "connected",
+        authStatus: "ok",
+        authFailureReason: null,
+      }),
+      wouldHoldEmit: () => false,
     });
     vi.stubGlobal("crypto", { randomUUID: () => "correlation-1" });
   });
@@ -169,9 +187,6 @@ describe("Grand Archive live match", () => {
 
     render(<GrandArchiveLiveMatchPage />);
     expect(mocks.join).toHaveBeenCalledWith({ gameId: "game-1" });
-    fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
-    expect(mocks.emit).not.toHaveBeenCalledWith("submit_interaction", expect.anything());
-    act(() => emitGateway("game_joined", { gameId: "game-1" }));
     fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
 
     const action = interactionView.actions[0]!;
@@ -203,11 +218,10 @@ describe("Grand Archive live match", () => {
     expect(mocks.acquire).toHaveBeenCalledTimes(1);
   });
 
-  it("blocks submissions after disconnect until this game is joined again", () => {
+  it("blocks submissions after disconnect until the socket is connected again", () => {
     const { route } = liveBootstrap();
     mocks.route.mockReturnValue(route);
     render(<GrandArchiveLiveMatchPage />);
-    act(() => emitGateway("game_joined", { gameId: "game-1" }));
     fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
     const submissions = () =>
       mocks.emit.mock.calls.filter(([event]) => event === "submit_interaction");
@@ -215,12 +229,6 @@ describe("Grand Archive live match", () => {
     act(() => emitGateway("disconnect", undefined));
     fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
     expect(submissions()).toHaveLength(1);
-    act(() => emitGateway("game_joined", { gameId: "another-game" }));
-    fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
-    expect(submissions()).toHaveLength(1);
-    act(() => emitGateway("game_joined", { gameId: "game-1" }));
-    fireEvent.click(screen.getByRole("button", { name: "Submit live action" }));
-    expect(submissions()).toHaveLength(2);
   });
 
   it("applies live presence and recent history updates", () => {

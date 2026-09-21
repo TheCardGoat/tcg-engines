@@ -8,7 +8,7 @@ import {
   op12UrsaShock096,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Oinkchuck082 } from "../../../../../cards/src/cards/OP14EB04/characters/082-oinkchuck.ts";
+import { op14eb04Oinkchuck082 } from "../../../../../cards/src/cards/characters/op14-082-oinkchuck.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -2,10 +2,12 @@ import { describe, expect, it } from "vitest";
 import {
   expectFabCard,
   expectFabPlayer,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { viserai } from "../heroes/viserai.ts";
+import { nimblismBlue } from "./nimblism.ts";
 import { bravo } from "../heroes/bravo.ts";
 import { brutalAssaultBlue } from "../shared/test-recipients.ts";
 import { readTheRunesYellow } from "./read-the-runes.ts";
@@ -36,24 +38,37 @@ describe("Become the Arknight (ARC083) AAA", () => {
         hand: [becomeTheArknightBlue, brutalAssaultBlue],
         resourcePoints: 0,
         actionPoints: 1,
-        deck: 6,
-        deckTop: [readTheRunesYellow],
+        deck: [
+          readTheRunesYellow,
+          nimblismBlue,
+          nimblismBlue,
+          nimblismBlue,
+          nimblismBlue,
+          nimblismBlue,
+        ],
       },
-      { hero: bravo, hand: [], deck: 6 },
+      {
+        hero: bravo,
+        hand: [],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Viserai = game.as(viserai);
 
     Viserai.play(becomeTheArknightBlue);
-    game.helpers.resolveUntilIdle({
-      optionalBoolean: true,
-      entityTargetCanonicalId: brutalAssaultBlue.canonicalId,
-    });
+    game.advanceToDecision(Viserai, "boolean");
+    Viserai.accept();
+    game.advanceToDecision(Viserai, "entity-target");
+    Viserai.target(readTheRunesYellow);
+    game.untilIdle();
 
     // The attack-action discard branch searched the Runeblade non-attack
     // action into hand; the discard itself went to the graveyard.
     expectFabCard(Viserai, brutalAssaultBlue).toBeIn("graveyard");
     expectFabCard(Viserai, readTheRunesYellow).toBeIn("hand");
+    expectFabPlayer(Viserai).toHaveAP(1);
+    expectWait(game).toBeIdle();
   });
 
   it("boundary: declining the optional discards nothing and searches nothing", () => {
@@ -63,9 +78,13 @@ describe("Become the Arknight (ARC083) AAA", () => {
         hand: [becomeTheArknightBlue, brutalAssaultBlue],
         resourcePoints: 0,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: bravo, hand: [], deck: 6 },
+      {
+        hero: bravo,
+        hand: [],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Viserai = game.as(viserai);

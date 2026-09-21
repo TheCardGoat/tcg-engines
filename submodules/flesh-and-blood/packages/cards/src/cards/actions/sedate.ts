@@ -31,6 +31,7 @@ export const sedate = definePitchFamily(fabPitchFamilies["sedate"], {
         effect: {
           type: "create-token",
           token: "inertia",
+          creator: "effect-controller",
           controller: "attack-target",
         },
       },

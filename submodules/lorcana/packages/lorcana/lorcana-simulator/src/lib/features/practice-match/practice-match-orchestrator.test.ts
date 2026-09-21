@@ -13,7 +13,15 @@ describe("PracticeMatchOrchestrator", () => {
       gameId,
       playerId: "human-profile",
       botPlayerId: "bot-profile",
-      gateway: gateway as GatewayClientStore,
+      gateway: {
+        // The orchestrator registers a stale-rejection listener on every
+        // client-authority gateway; tests override only the push methods
+        // they assert on.
+        addGameMessageListener: mock(
+          (_handler: Parameters<GatewayClientStore["addGameMessageListener"]>[0]) => () => {},
+        ),
+        ...gateway,
+      } as GatewayClientStore,
       authority: "client",
       deckConfig: {
         playerOneDeckText: steelSapphireMidrange.cards,
@@ -53,7 +61,7 @@ describe("PracticeMatchOrchestrator", () => {
     }
   });
 
-  it("still flushes a terminal snapshot after the debounce already sent", async () => {
+  it("does not re-push on a terminal flush when every snapshot is already durable", async () => {
     const send = mock((_message: object) => true);
     const sendWithAck = mock(async (_message: object, _timeoutMs?: number) => ({
       type: "push_state:response",
@@ -72,7 +80,7 @@ describe("PracticeMatchOrchestrator", () => {
     );
 
     try {
-      await Bun.sleep(125);
+      await Bun.sleep(150);
       expect(sendWithAck).toHaveBeenCalledTimes(1);
 
       const server = orchestrator.orchestrator.server;
@@ -88,13 +96,12 @@ describe("PracticeMatchOrchestrator", () => {
         };
       }) as typeof server.getState;
 
-      await orchestrator.flushPendingState("return");
-
-      expect(sendWithAck).toHaveBeenCalledTimes(2);
-      expect(sendWithAck.mock.calls[1]?.[0]).toMatchObject({
-        type: "push_state",
-        moveType: "return",
-      });
+      // The runtime only accepts forward-only versions, so a flush with no
+      // unpersisted moves must not re-send the already-durable snapshot —
+      // the repeat would only bounce as rejected_stale.
+      await expect(orchestrator.flushPendingState("return")).resolves.toBeUndefined();
+      expect(sendWithAck).toHaveBeenCalledTimes(1);
+      expect(send).not.toHaveBeenCalled();
     } finally {
       orchestrator.dispose();
     }
@@ -111,16 +118,20 @@ describe("PracticeMatchOrchestrator", () => {
     );
 
     try {
-      await Bun.sleep(125);
-      const server = orchestrator.orchestrator.server;
-      const originalGetState = server.getState.bind(server);
-      server.getState = (() => {
-        const state = originalGetState();
-        return {
-          ...state,
-          ctx: { ...state.ctx, status: { ...state.ctx.status, gameEnded: true } },
-        };
-      }) as typeof server.getState;
+      await Bun.sleep(150);
+      expect(sendWithAck).toHaveBeenCalledTimes(1);
+
+      // Unpersisted moves arm the flush while the move debounce is still
+      // pending, so flushPendingState is what carries them — and its awaited
+      // acknowledgement times out. stepAi() no-ops before the AI is the
+      // active actor, so drive the current actor's automated action instead.
+      const playbackServer = orchestrator.orchestrator.server;
+      const actorId = playbackServer.getCurrentActorId()!;
+      const strategy = playbackServer.resolveAutomatedActionStrategyForPlayer(
+        DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+        actorId,
+      )!;
+      playbackServer.takeAutomatedActionForCurrentActor({ strategy: strategy.strategy });
       await expect(orchestrator.flushPendingState("return")).resolves.toBeUndefined();
       expect(sendWithAck).toHaveBeenCalledTimes(2);
     } finally {

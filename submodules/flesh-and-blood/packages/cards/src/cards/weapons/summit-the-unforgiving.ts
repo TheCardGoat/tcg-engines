@@ -49,6 +49,7 @@ export const summitTheUnforgiving = defineCard(
           effect: {
             type: "create-token",
             token: "frostbite",
+            creator: "effect-controller",
             controller: "attack-target",
             amongExposed: ["equipment-head", "equipment-chest", "equipment-arms", "equipment-legs"],
           },

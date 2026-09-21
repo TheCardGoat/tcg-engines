@@ -59,62 +59,73 @@ export const madHatterMoroseHeritor: GrandArchiveCard<GrandArchiveAbilityDefinit
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                      },
+                      method: "random",
                     },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
-                    },
-                    method: "random",
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "materialized-card",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "supertype",
-                            oneOf: ["REGALIA"],
-                          },
-                          {
-                            kind: "subtype",
-                            oneOf: ["RANGER"],
-                          },
-                        ],
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "choose",
+                    selection: {
+                      id: "materialized-card",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "supertype",
+                              oneOf: ["REGALIA"],
+                            },
+                            {
+                              kind: "subtype",
+                              oneOf: ["RANGER"],
+                            },
+                          ],
+                        },
                       },
                     },
-                  },
-                  effect: {
-                    kind: "materialize-card",
-                    subject: {
-                      kind: "bound",
-                      binding: "materialized-card",
+                    effect: {
+                      kind: "materialize-card",
+                      subject: {
+                        kind: "bound",
+                        binding: "materialized-card",
+                      },
                     },
                   },
                 },

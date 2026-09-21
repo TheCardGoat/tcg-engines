@@ -192,6 +192,18 @@ export function runResolver(
       return pick(overrides?.chooseCardType, defaultChoiceResolvers.chooseCardType)(choice, ctx);
     case "gainGig":
       return pick(overrides?.gainGig, defaultChoiceResolvers.gainGig)(choice, ctx);
+    case "redirectDefeat":
+      return pick(overrides?.redirectDefeat, defaultChoiceResolvers.redirectDefeat)(choice, ctx);
+    case "chooseSacrificialGear":
+      return pick(overrides?.chooseSacrificialGear, defaultChoiceResolvers.chooseSacrificialGear)(
+        choice,
+        ctx,
+      );
+    case "chooseFirstPlayer":
+      return pick(overrides?.chooseFirstPlayer, defaultChoiceResolvers.chooseFirstPlayer)(
+        choice,
+        ctx,
+      );
     default:
       return assertNever(choice, "ChoicePrompt");
   }

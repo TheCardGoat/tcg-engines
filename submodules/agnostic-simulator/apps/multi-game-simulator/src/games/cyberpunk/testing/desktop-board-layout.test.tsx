@@ -124,11 +124,37 @@ describe("Cyberpunk desktop board layout", () => {
       );
       expect(dock, "expected the player board phase-control dock").not.toBeNull();
       expect(dock?.querySelector('[data-testid="phase-advance"]')).not.toBeNull();
-      expect(dock?.querySelector('[data-testid="phase-undo"]')).not.toBeNull();
+      expect(dock?.querySelector('[data-testid="phase-undo"]')).toBeNull();
       expect(dock?.dataset.attackInProgress).toBe("true");
       expect(
         dock?.querySelector('[aria-label="Attack step"] [aria-current="step"]'),
       ).not.toBeNull();
+    } finally {
+      view.unmount();
+    }
+  });
+
+  test("attacker cannot resolve while the Rival has priority", async () => {
+    const view = renderCyberpunkSimulatorScenario({
+      scenarioId: "unitSecondhandBombus",
+      initialHumanSide: "opponent",
+    });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+
+      const advance = view.container.querySelector<HTMLButtonElement>(
+        '[data-testid="pinfo-zone"] [data-testid="phase-advance"]',
+      );
+      expect(advance, "expected the attack control in the player dock").not.toBeNull();
+      expect(advance!.disabled).toBe(true);
+      expect(advance!.textContent?.trim()).toBe("WAITING");
+      expect(advance!.getAttribute("aria-label")).toBe("Waiting for Rival");
+
+      const attackBeforeClick = await pom.getAttackState();
+      expect(attackBeforeClick?.step).toBe("react");
+      fireEvent.click(advance!);
+      expect(await pom.getAttackState()).toEqual(attackBeforeClick);
     } finally {
       view.unmount();
     }

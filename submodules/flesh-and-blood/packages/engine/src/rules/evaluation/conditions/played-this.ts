@@ -66,15 +66,14 @@ export function evaluatePlayedThis(
           !(move.from !== null && originZones.includes(toCatalogZone(move.from.zone)))
         )
           return false;
+        // "You've played" scopes the count to the evaluating controller: the
+        // origin zone's seat is the playing player (hand, arsenal, banished,
+        // and graveyard are all player-owned), so a defending player's instant
+        // on this chain link cannot satisfy the attacker's condition.
+        if (!move.from || move.from.playerId !== context.controllerId) return false;
+        if (!lkiFilterActive) return true;
         return move.lki
-          ? lkiFilterActive
-            ? matchesFilter(
-                mutableObjectFromMoveLki(move.lki, context),
-                lkiFilter,
-                context,
-                objects,
-              )
-            : true
+          ? matchesFilter(mutableObjectFromMoveLki(move.lki, context), lkiFilter, context, objects)
           : false;
       }).length
     );

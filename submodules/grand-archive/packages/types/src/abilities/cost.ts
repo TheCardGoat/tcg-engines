@@ -5,7 +5,7 @@ import type {
   GrandArchiveRelativePlayer,
   GrandArchiveZone,
 } from "./primitives.ts";
-import type { GrandArchiveSubject } from "./selection.ts";
+import type { GrandArchiveSubject, GrandArchiveTargetDeclaration } from "./selection.ts";
 
 interface GrandArchiveCostBase {
   /** Captures what was paid for “that many” and “if you do” continuations. */
@@ -59,6 +59,8 @@ export type GrandArchiveAtomicCost = GrandArchiveCostBase &
         /** Every selected card must have a different value for this characteristic. */
         readonly distinctBy?: "name" | "type" | "class" | "element" | "subtype";
         readonly singleZoneOwner?: true;
+        /** Constraint on the selected cards as a group, checked before paying. */
+        readonly aggregateConstraint?: GrandArchiveTargetDeclaration["aggregateConstraint"];
       }
     | {
         readonly kind: "select-and-remove-counters";

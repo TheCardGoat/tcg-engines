@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb02KokoroNoChizu050 } from "../../../../../cards/src/cards/EB02/events/050-kokoro-no-chizu.ts";
+import { eb02KokoroNoChizu050 } from "../../../../../cards/src/cards/events/eb02-050-kokoro-no-chizu.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB02-050 Kokoro no Chizu", () => {

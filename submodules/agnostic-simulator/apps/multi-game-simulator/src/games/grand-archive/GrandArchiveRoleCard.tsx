@@ -1,7 +1,8 @@
+import { grandArchiveActionSummary, useGrandArchiveCardActions } from "./GrandArchiveCardActions";
 import { Tooltip } from "@mantine/core";
 import { CardFace } from "@tcg/simulator-ui";
 import { Flag, Sword, Target, Undo2 } from "lucide-react";
-import { useCallback, useRef, type ComponentProps } from "react";
+import { useCallback, useRef, type CSSProperties, type ComponentProps } from "react";
 import { GrandArchiveCounters, isGrandArchiveCounter } from "./GrandArchiveCounters";
 
 const ROLE_BADGES = {
@@ -20,7 +21,19 @@ function isCombatRole(id: string): id is keyof typeof ROLE_BADGES {
   return Object.hasOwn(ROLE_BADGES, id);
 }
 
-export function GrandArchiveRoleCard({ entity, ...props }: ComponentProps<typeof CardFace>) {
+export function GrandArchiveRoleCard({
+  entity,
+  attackRole,
+  ...props
+}: ComponentProps<typeof CardFace> & {
+  attackRole?: "source" | "candidate" | "target";
+}) {
+  const actions = useGrandArchiveCardActions(entity.id);
+  const actionable =
+    (entity.face === "public" || Boolean(props.accessibleLabel)) &&
+    props.as !== "div" &&
+    actions.length > 0;
+  const actionSummary = grandArchiveActionSummary(actions);
   const cardRef = useRef<HTMLButtonElement>(null);
   const restoreCardFocus = useCallback(() => cardRef.current?.focus(), []);
   const inspectable = props.as !== "div" && !props.targetable && !props.selected;
@@ -36,16 +49,35 @@ export function GrandArchiveRoleCard({ entity, ...props }: ComponentProps<typeof
         })
       : [];
   return (
-    <div className="ga-role-card" data-fill={props.fill || undefined}>
+    <div
+      className="ga-role-card"
+      style={{ "--ga-board-aspect-ratio": entity.imageAspectRatio ?? 1 } as CSSProperties}
+      data-fill={props.fill || undefined}
+      data-art-only={
+        (entity.face === "public" && entity.dataAttributes?.["data-ga-art-only"] === true) ||
+        undefined
+      }
+      data-actionable={actionable || undefined}
+      data-attack-role={attackRole}
+    >
       <CardFace
         {...props}
         ref={cardRef}
+        highlighted={props.highlighted || actionable}
         entity={{
           ...entity,
           // Visual role badges live outside CardFace; retain their labels in
           // the card button's accessible name when removing the decorations.
           accessibilityDescription: [
             entity.accessibilityDescription,
+            actionable ? `Available: ${actionSummary}` : undefined,
+            attackRole === "source"
+              ? "Selected attacker"
+              : attackRole === "target"
+                ? "Selected defender"
+                : attackRole === "candidate"
+                  ? "Available attack target"
+                  : undefined,
             ...(entity.decorations ?? [])
               .filter(
                 (decoration) =>
@@ -65,6 +97,29 @@ export function GrandArchiveRoleCard({ entity, ...props }: ComponentProps<typeof
           ),
         }}
       />
+      {entity.face === "public" && entity.dataAttributes?.["data-ga-art-only"] === true ? (
+        <div className="ga-role-card__art-caption" aria-hidden="true">
+          <span>{entity.title}</span>
+          {entity.stats.length ? (
+            <small>{entity.stats.map((stat) => `${stat.label}: ${stat.value}`).join(" · ")}</small>
+          ) : null}
+        </div>
+      ) : null}
+      {attackRole ? (
+        <span className="ga-role-card__attack-label" aria-hidden="true">
+          {attackRole === "source" ? <Sword size={12} /> : <Target size={12} />}
+          {attackRole === "source"
+            ? "Attacker"
+            : attackRole === "target"
+              ? "Defender"
+              : "Attack target"}
+        </span>
+      ) : null}
+      {actionable ? (
+        <span className="ga-role-card__actions" aria-hidden="true">
+          {actionSummary}
+        </span>
+      ) : null}
       {inspectable && counters.length ? (
         <GrandArchiveCounters
           key={`${entity.id}:${entity.dataAttributes?.["data-incarnation"]}:${entity.face}`}

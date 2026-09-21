@@ -33,7 +33,7 @@ export const rosewingedHollow: GrandArchiveCard<GrandArchiveAbilityDefinition, "
           kind: "activated",
           text: "[Alice Bonus] [Element Bonus] (2), Banish this card from your graveyard: Put a haunt counter on your Phantasmagoria. Then if there are six or more haunt counters on it, choose a Specter ally you control and it gets +2POWER until end of turn. (Activate this ability only if your champion’s element matches this card’s element.)",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "all",
             costs: [

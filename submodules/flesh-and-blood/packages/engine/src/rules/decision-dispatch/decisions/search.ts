@@ -56,6 +56,11 @@ export function handleSearch(ctx: LayerDecisionCtx<"search">): FabLayerResolutio
       label: `Search for ${count === 1 ? "a card" : `up to ${count} cards`}.`,
       requestedCount: count,
       upTo: resolved.upTo,
+      source: {
+        instanceId: layer.source.instanceId,
+        ...(layer.source.canonicalId ? { canonicalId: layer.source.canonicalId } : {}),
+        ownerId: layer.source.ownerId,
+      },
       candidates: candidates.map((candidate) => {
         if (candidate.target.kind !== "object") return candidate;
         const object = state.objects[candidate.target.ref.instanceId];

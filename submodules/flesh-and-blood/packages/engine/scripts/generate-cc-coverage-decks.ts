@@ -147,7 +147,8 @@ function pickArena(hero: FabValidationCard, pool: readonly IndexedCard[]): Index
     .map((card) => fabWeaponAreaEntry(card.validation, hero));
   if (validateWeaponArea(equipped).length > 0) {
     const withoutOffHand = picked.filter(
-      (card) => !card.validation.types.includes("Off-Hand") && !card.validation.types.includes("Quiver"),
+      (card) =>
+        !card.validation.types.includes("Off-Hand") && !card.validation.types.includes("Quiver"),
     );
     const retry = withoutOffHand
       .filter((card) =>
@@ -248,7 +249,9 @@ function validateList(
     entries,
     cards,
   });
-  return registered.valid ? [] : registered.issues.map((issue) => `${issue.code}: ${issue.message}`);
+  return registered.valid
+    ? []
+    : registered.issues.map((issue) => `${issue.code}: ${issue.message}`);
 }
 
 function resolveCheck(heroName: string, arena: string, mainDeck: string): readonly string[] {

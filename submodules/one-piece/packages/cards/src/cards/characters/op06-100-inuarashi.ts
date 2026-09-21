@@ -1,0 +1,110 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06Inuarashi100I18n } from "./op06-100-inuarashi.i18n.ts";
+
+export const op06Inuarashi100: CharacterCard = {
+  id: "OP06-100",
+  canonicalId: "OP06-100",
+  slug: "inuarashi/op06-100",
+  name: "Inuarashi",
+  printings: [
+    {
+      id: "OP06-100",
+      artId: "OP06-100",
+      setCode: "OP06",
+      collectorNumber: "100",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-100.jpg",
+    },
+    {
+      id: "OP06-100_p2",
+      artId: "OP06-100_p2",
+      setCode: "OP06",
+      collectorNumber: "100",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-100_p2.jpg",
+    },
+    {
+      id: "OP06-100_p3",
+      artId: "OP06-100_p3",
+      setCode: "OP06",
+      collectorNumber: "100",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-100_p3.jpg",
+      label: "Inuarashi (Full Art)",
+    },
+    {
+      id: "OP06-100_r1",
+      artId: "OP06-100_r1",
+      setCode: "OP06",
+      collectorNumber: "100",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-100_r1_kZqbzGg.jpg",
+      label: "Inuarashi (Reprint)",
+    },
+  ],
+  cardType: "character",
+  color: ["yellow"],
+  rarity: "UC",
+  setId: "OP06",
+  cost: 4,
+  power: 5000,
+  counter: 1000,
+  trigger: "If your opponent has 3 or less Life cards, play this card.",
+  traits: ["Land of Wano", "Minks", "The Akazaya Nine"],
+  attribute: "slash",
+  effect:
+    "[DON!! x2][When Attacking] You may trash 1 card from your hand: K.O. up to 1 of your opponent's Characters with a cost equal to or less than the number of your opponent's Life cards.",
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 2,
+          },
+        ],
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "dynamicCost",
+                  comparison: "lte",
+                  source: "opponentLifeCount",
+                },
+              ],
+            },
+          },
+        ],
+        optional: true,
+      },
+      {
+        trigger: "trigger",
+        conditions: [
+          {
+            condition: "lifeCount",
+            player: "opponent",
+            comparison: "lte",
+            value: 3,
+          },
+        ],
+        actions: [{ action: "playThisCard" }],
+      },
+    ],
+  },
+  i18n: op06Inuarashi100I18n,
+};

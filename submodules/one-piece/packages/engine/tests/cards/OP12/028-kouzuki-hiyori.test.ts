@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op01XDrake054 } from "../../../../cards/src/cards/OP01/characters/054-x-drake.ts";
-import { op01PunkGibson058 } from "../../../../cards/src/cards/OP01/events/058-punk-gibson.ts";
-import { op01RoundTable027 } from "../../../../cards/src/cards/OP01/events/027-round-table.ts";
-import { op01RoronoaZoro001 } from "../../../../cards/src/cards/OP01/leaders/001-roronoa-zoro.ts";
-import { op04Dellinger029 } from "../../../../cards/src/cards/OP04/characters/029-dellinger.ts";
-import { op12KouzukiHiyori028 } from "../../../../cards/src/cards/OP12/characters/028-kouzuki-hiyori.ts";
+import { op01XDrake054 } from "../../../../cards/src/cards/characters/op01-054-x-drake.ts";
+import { op01PunkGibson058 } from "../../../../cards/src/cards/events/op01-058-punk-gibson.ts";
+import { op01RoundTable027 } from "../../../../cards/src/cards/events/op01-027-round-table.ts";
+import { op01RoronoaZoro001 } from "../../../../cards/src/cards/leaders/op01-001-roronoa-zoro.ts";
+import { op04Dellinger029 } from "../../../../cards/src/cards/characters/op04-029-dellinger.ts";
+import { op12KouzukiHiyori028 } from "../../../../cards/src/cards/characters/op12-028-kouzuki-hiyori.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 function pendingPrompt(engine: OnePieceTestEngine, intent: string) {

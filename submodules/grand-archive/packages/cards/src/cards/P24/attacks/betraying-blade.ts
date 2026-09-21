@@ -48,21 +48,32 @@ export const betrayingBlade: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               kind: "sequence",
               effects: [
                 {
-                  kind: "pay",
-                  player: "controller",
-                  cost: {
-                    kind: "pay-reserve",
-                    amount: 2,
+                  kind: "attempt",
+                  effect: {
+                    kind: "pay",
+                    player: "controller",
+                    cost: {
+                      kind: "pay-reserve",
+                      amount: 2,
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "preparation",
-                  amount: 1,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "preparation",
+                    amount: 1,
+                  },
                 },
               ],
             },

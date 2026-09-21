@@ -26,7 +26,7 @@ export const templarSpellbane = defineCard(
           },
           then: {
             type: "prevention",
-            preventionKind: "fixed",
+            preventionKind: "shielding",
             amount: 2,
             damageType: "arcane",
             shielded: {
@@ -36,7 +36,7 @@ export const templarSpellbane = defineCard(
           },
           else: {
             type: "prevention",
-            preventionKind: "fixed",
+            preventionKind: "shielding",
             amount: 1,
             damageType: "arcane",
             shielded: {

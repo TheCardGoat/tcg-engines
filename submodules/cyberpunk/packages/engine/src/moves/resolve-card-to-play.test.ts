@@ -11,6 +11,7 @@ function setChooseCardToPlayChoice(
   engine: CyberpunkTestEngine,
   cardId: CardInstanceId,
   free = false,
+  canDecline = false,
 ) {
   engine.judgeSetPendingChoice({
     type: "chooseCardToPlay",
@@ -19,6 +20,7 @@ function setChooseCardToPlayChoice(
     payload: {
       cardIds: [cardId],
       free,
+      canDecline,
       boundTargets: {},
       sourceCardId: cardId,
       sourcePlayerId: P1,
@@ -34,13 +36,18 @@ describe("resolveCardToPlay", () => {
     const engine = CyberpunkTestEngine.createWithFixture({ hand: [unit], eddies: 1 });
     engine.spendAllLegends();
     const cardId = engine.findCardId(unit, "hand", P1) as CardInstanceId;
-    setChooseCardToPlayChoice(engine, cardId);
+    setChooseCardToPlayChoice(engine, cardId, false, true);
 
     const failure = engine.expectFailure(() => engine.resolveCardToPlay(unit, { as: P1 }));
 
     expect(failure.errorCode).toBe("INSUFFICIENT_EDDIES");
     expect(engine.getCard(unit, "hand", P1)).toBeInZone("hand");
     expect(engine.getState()).toHaveEddies({ player: "p1", count: 1 });
+
+    expect(engine.resolveCardToPlay(undefined, { as: P1, pass: true })).toBeSuccessfulCommand();
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+    expect(engine.getCard(unit, "hand", P1)).toBeInZone("hand");
+    expect(engine.completeTurn({ as: P1 })).toBeSuccessfulCommand();
   });
 
   it("allows a free pending card choice without eddies", () => {

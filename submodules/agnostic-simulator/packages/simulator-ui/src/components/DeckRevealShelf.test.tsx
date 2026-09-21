@@ -57,6 +57,15 @@ function revealedCard(container: HTMLElement): HTMLElement {
 }
 
 describe("DeckRevealShelf card preview", () => {
+  test("shows revealed cards immediately when embedded in a decision surface", () => {
+    const container = renderShelf(<DeckRevealShelf reveal={reveal} presentation="inline" />);
+
+    expect(container.querySelector('[data-testid="deck-reveal-inline"]')).toBeTruthy();
+    expect(container.querySelector('[data-testid="deck-reveal-shelf"]')).toBeNull();
+    expect(revealedCard(container).getAttribute("title")).toBe("Signal Runner");
+    expect(container.textContent).toContain("Top revealed");
+  });
+
   test("opens a revealed-card surface from the deck trigger", () => {
     vi.useFakeTimers();
     const container = renderShelf(<DeckRevealShelf reveal={reveal} />);

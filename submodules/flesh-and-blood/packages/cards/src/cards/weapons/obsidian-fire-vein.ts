@@ -6,7 +6,7 @@ export const obsidianFireVein = defineCard(
   fabCardIdentitiesByCanonicalId["qMBpL7WdHmD7rgtMwQpfR"],
   {
     abilities: {
-      oncePerTurnActionResourceAttackPlayedDraconicChainLinkAttackGets1PowerGoAgain: {
+      oncePerTurnActionResourceAttack: {
         kind: "activated",
         limit: {
           count: 1,
@@ -19,55 +19,57 @@ export const obsidianFireVein = defineCard(
           amount: 1,
         },
         effect: {
+          type: "attack-with",
+          target: {
+            selector: "self",
+          },
+        },
+      },
+      playedDraconicChainLinkAttackGets1PowerGoAgain: {
+        kind: "static",
+        staticKind: "continuous",
+        condition: {
+          type: "played-this",
+          per: "chain-link",
+          filter: {
+            typeBox: {
+              supertypes: ["Draconic"],
+            },
+          },
+          comparison: {
+            op: "gte",
+            value: 1,
+          },
+        },
+        effect: {
           type: "sequence",
-          steps: [
-            {
-              type: "attack-with",
-              target: {
-                selector: "self",
+          appliesTo: {
+            attacksOf: true,
+            next: {
+              typeBox: {
+                types: ["Weapon"],
               },
             },
+            count: { type: "all" },
+            events: ["attack"],
+          },
+          steps: [
             {
-              type: "conditional",
-              condition: {
-                type: "played-this",
-                per: "chain-link",
-                filter: {
-                  typeBox: {
-                    supertypes: ["Draconic"],
-                  },
-                },
-                comparison: {
-                  op: "gte",
-                  value: 1,
-                },
+              type: "modify-numeric",
+              property: "power",
+              op: "add",
+              amount: 1,
+              target: { selector: "self" },
+              duration: "while-in-arena",
+            },
+            {
+              type: "grant-property",
+              property: {
+                kind: "keyword",
+                keyword: goAgain,
               },
-              then: {
-                type: "sequence",
-                steps: [
-                  {
-                    type: "modify-numeric",
-                    property: "power",
-                    op: "add",
-                    amount: 1,
-                    target: {
-                      selector: "this-attack",
-                    },
-                    duration: "permanent",
-                  },
-                  {
-                    type: "grant-property",
-                    property: {
-                      kind: "keyword",
-                      keyword: goAgain,
-                    },
-                    target: {
-                      selector: "this-attack",
-                    },
-                    duration: "permanent",
-                  },
-                ],
-              },
+              target: { selector: "self" },
+              duration: "while-in-arena",
             },
           ],
         },

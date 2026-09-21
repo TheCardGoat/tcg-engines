@@ -52,17 +52,16 @@ export const duskPathPilgrimage = definePitchFamily(fabPitchFamilies["dusk-path-
                 },
                 resolution: {
                   kind: "effect",
+                  // CR 5.2.3c: the hit grants the allowance by itself; "you
+                  // may" is the later activation choice.
                   effect: {
-                    type: "optional",
-                    effect: {
-                      type: "modify-activation-limit",
-                      target: {
-                        selector: "self",
-                      },
-                      operation: "additional",
-                      count: 1,
-                      duration: "this-turn",
+                    type: "modify-activation-limit",
+                    target: {
+                      selector: "self",
                     },
+                    operation: "additional",
+                    count: 1,
+                    duration: "this-turn",
                   },
                 },
               },

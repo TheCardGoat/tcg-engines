@@ -186,6 +186,8 @@ function optionalNumber(value: string): number | undefined {
 
 function slugify(value: string): string {
   return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
@@ -247,6 +249,161 @@ function normalizeLegality(raw: z.infer<typeof FabCubeCardSchema>): FleshAndBloo
       livingLegend: false,
       restricted: false,
     },
+  };
+}
+
+/**
+ * Authored format-legality corrections from official LSS B&R announcements.
+ * The FAB Cube ingests announcements late, so the catalog states the official
+ * legality here and every source refresh re-applies the overlay; an entry is
+ * removed once the source snapshot agrees with it. Keyed by exact English
+ * card name and applied to every printing variant of the card. Benched
+ * Silver Age heroes are recorded as not legal (a bench is a seasonal
+ * exclusion, not a ban).
+ */
+interface CatalogLegalityOverride {
+  /** Official announcement that states the encoded legality. */
+  readonly announcement: string;
+  /** ISO date the legality takes effect. */
+  readonly effectiveFrom: string;
+  /** Sparse per-format patch over the source legalities. */
+  readonly patch: {
+    readonly [F in keyof FleshAndBloodLegality]?: Partial<FleshAndBloodFormatLegality>;
+  };
+}
+
+const FAB_BNR_2026_09_18 =
+  "https://fabtcg.com/articles/scheduled-banned-and-restricted-announcement-17-09-26/";
+
+const CATALOG_LEGALITY_OVERRIDES: Readonly<Record<string, CatalogLegalityOverride>> = {
+  "Brand with Cinderclaw": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { cc: { banned: false } },
+  },
+  "Entwine Lightning": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { cc: { banned: true } },
+  },
+  Briar: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { legal: false } },
+  },
+  Oldhim: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { legal: false } },
+  },
+  Oscilio: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { legal: false } },
+  },
+  Chane: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { legal: false } },
+  },
+  "Ira, Crimson Haze": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  Kano: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  Kayo: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  "Beckoning Haunt": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  "Deathly Delight": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  Flourish: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  "Sirens of Safe Harbor": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  "Vantom Wraith": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: false } },
+  },
+  "Absorb in Aether": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+  "Beaten Trackers": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+  "Emeritus Scolding": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+  "Harmonized Kodachi": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+  "Lightning Press": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+  Pulping: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+  "Sigil of Suffering": {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+  Snapback: {
+    announcement: FAB_BNR_2026_09_18,
+    effectiveFrom: "2026-09-18",
+    patch: { silverAge: { banned: true } },
+  },
+};
+
+function applyCatalogLegalityOverride(
+  name: string,
+  legalities: FleshAndBloodLegality,
+): FleshAndBloodLegality {
+  const override = CATALOG_LEGALITY_OVERRIDES[name];
+  if (!override) return legalities;
+  const patched = (
+    legality: FleshAndBloodFormatLegality,
+    patch: Partial<FleshAndBloodFormatLegality> | undefined,
+  ): FleshAndBloodFormatLegality => ({ ...legality, ...patch });
+  return {
+    blitz: patched(legalities.blitz, override.patch.blitz),
+    cc: patched(legalities.cc, override.patch.cc),
+    commoner: patched(legalities.commoner, override.patch.commoner),
+    ll: patched(legalities.ll, override.patch.ll),
+    silverAge: patched(legalities.silverAge, override.patch.silverAge),
   };
 }
 
@@ -507,7 +664,7 @@ function normalizeCard(
     ...(functionalTextPlain ? { functionalTextPlain } : {}),
     typeText: metadataOverride?.typeText ?? raw.type_text,
     playedHorizontally: raw.played_horizontally,
-    legalities: normalizeLegality(raw),
+    legalities: applyCatalogLegalityOverride(raw.name, normalizeLegality(raw)),
     ...(raw.cards_referenced_by ? { cardsReferencedBy: raw.cards_referenced_by } : {}),
   };
 }

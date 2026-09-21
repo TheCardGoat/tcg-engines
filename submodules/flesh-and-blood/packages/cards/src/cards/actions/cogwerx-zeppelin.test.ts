@@ -6,6 +6,7 @@ import {
   expectFabCard,
   expectFabPlayer,
 } from "@tcg/flesh-and-blood-engine/testing";
+import { nimblismBlue } from "./nimblism.ts";
 import { dash } from "../heroes/dash.ts";
 import { bravo } from "../heroes/bravo.ts";
 import { brutalAssaultBlue } from "./brutal-assault.ts";
@@ -28,9 +29,13 @@ describe("Cogwerx Zeppelin family AAA", () => {
         arena: [goldenCog],
         resourcePoints: 2,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: bravo, hand: [], deck: 6 },
+      {
+        hero: bravo,
+        hand: [],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
     );
     const Dash = game.as(dash);
 
@@ -39,7 +44,7 @@ describe("Cogwerx Zeppelin family AAA", () => {
     Dash.target(goldenCog);
 
     expectFabCard(Dash, goldenCog).toBeIn("arena");
-    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 1);
+    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 2);
   });
 
   it("boundary: a miss does not create a Golden Cog", () => {
@@ -50,20 +55,24 @@ describe("Cogwerx Zeppelin family AAA", () => {
         arena: [goldenCog],
         resourcePoints: 2,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: bravo, hand: [brutalAssaultBlue], deck: 6 },
+      {
+        hero: bravo,
+        hand: [brutalAssaultBlue, brutalAssaultBlue],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
     );
     const Dash = game.as(dash);
     const Bravo = game.as(bravo);
 
     Dash.playAttack(cogwerxZeppelinRed);
-    Bravo.defendWith(brutalAssaultBlue);
-    game.closeCombat({ optionals: "decline", ordering: "listed" });
+    Bravo.defendWith(...Bravo.cardsIn("hand", brutalAssaultBlue));
+    game.closeCombat({ optionals: "throw", ordering: "listed" });
 
     expectFabCard(Dash, goldenCog).toBeIn("arena");
-    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 0);
-    expectFabPlayer(Bravo).toHaveLife(17);
+    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 1);
+    expectFabPlayer(Bravo).toHaveLife(20);
   });
 
   it("timing: twice-per-turn tap-a-cog grants +1{p} while the chain is open", () => {
@@ -74,9 +83,13 @@ describe("Cogwerx Zeppelin family AAA", () => {
         arena: [goldenCog, goldenCog],
         resourcePoints: 2,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: bravo, hand: [], deck: 6 },
+      {
+        hero: bravo,
+        hand: [],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Dash = game.as(dash);

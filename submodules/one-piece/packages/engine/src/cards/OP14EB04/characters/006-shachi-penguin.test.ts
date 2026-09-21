@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01MountainGod018 } from "@tcg/op-cards";
-import { op14eb04ShachiPenguin006 } from "../../../../../cards/src/cards/OP14EB04/characters/006-shachi-penguin.ts";
+import { op14eb04ShachiPenguin006 } from "../../../../../cards/src/cards/characters/op14-006-shachi-penguin.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

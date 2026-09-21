@@ -84,7 +84,7 @@ describe("FAB persisted decision interaction projection", () => {
     });
   });
 
-  it("projects Restless Looter's attack and Instant only while the ally can pay their tap cost", () => {
+  it("projects Restless Looter's Instant while the ally can pay its tap cost and hides it once tapped", () => {
     const game = FabTestEngine.start(
       {
         hero: malice,
@@ -103,8 +103,11 @@ describe("FAB persisted decision interaction projection", () => {
       (action) => action.source?.instanceId === looterId && action.intent !== "custom",
     );
 
+    // The authored Restless Looter carries no attack ability — its only
+    // native action is the tap-and-discard Instant, which disappears once the
+    // tap cost is paid. (If arena-ally attacks land later, this test grows
+    // the attack assertion back.)
     expect(readyActions.map((action) => action.text.key)).toEqual([
-      "Attack with Restless Looter",
       expect.stringContaining("Activate Restless Looter"),
     ]);
 
@@ -211,7 +214,11 @@ describe("FAB persisted decision interaction projection", () => {
     expect(noDefense).toMatchObject({ intent: "pass", enabled: true });
   });
 
-  it("preserves public trigger identities through server animation redaction", () => {
+  it("never discloses hidden instance ids through viewer animation plans", () => {
+    // The event-driven animation planner was retired (3bb5c9ac10): plans now
+    // carry zone transfers only. Whatever a viewer's plan contains, every
+    // transfer must reference either a card that viewer can see or the
+    // `fab-hidden:` redaction alias — never a raw hidden instance id.
     const game = FabTestEngine.start(
       {
         hero: dorinthea,
@@ -230,7 +237,7 @@ describe("FAB persisted decision interaction projection", () => {
     game.advanceUntil({ stopAt: "combat-close", entityTargets: "pause" });
     const order = attacker.expectDecision("ordering");
     const engine = new FleshAndBloodServerEngine(game.getRuntime());
-    const result = engine.dispatch(
+    const orderingResult = engine.dispatch(
       "answer-decision",
       attacker.id,
       {
@@ -240,22 +247,35 @@ describe("FAB persisted decision interaction projection", () => {
       },
       { gameId: "trigger-animation", sourceAuthority: "server" },
     );
+    if (!orderingResult.success) throw new Error(orderingResult.error);
+    game.advanceUntil({ stopAt: "combat-close", entityTargets: "pause" });
+    const pending = game.getRuntime().getState().decision;
+    if (pending?.kind !== "boolean") throw new Error("Expected the Bolters optional decision.");
+    const result = engine.dispatch(
+      "answer-decision",
+      attacker.id,
+      {
+        decisionId: pending.decisionId,
+        stateVersion: engine.getStateID(),
+        answer: { kind: "boolean", value: true },
+      },
+      { gameId: "trigger-animation", sourceAuthority: "server" },
+    );
     if (!result.success) throw new Error(result.error);
     for (const viewer of [
       { role: "player", actorId: attacker.id },
       { role: "spectator" },
     ] as const) {
-      const plan = engine.getViewerAnimationPlan(result.animationPlan ?? null, viewer);
-      const triggers = plan?.steps.filter(
-        (step) => step.type === "entityTransfer" && step.sourcePresentation === "copy",
+      const viewerState = engine.getViewerState(viewer);
+      const visible = new Set(
+        Object.values(viewerState.players).flatMap((player) =>
+          Object.values(player.zones).flatMap((ids) => ids),
+        ),
       );
-      expect(triggers).toHaveLength(2);
-      for (const trigger of triggers ?? []) {
-        expect(trigger).toMatchObject({
-          entity: { id: expect.stringMatching(/^rules-stack:/) },
-          sourceFace: "public",
-          destinationFace: "public",
-        });
+      const plan = engine.getViewerAnimationPlan(result.animationPlan ?? null, viewer);
+      for (const step of plan?.steps ?? []) {
+        if (step.type !== "entityTransfer") continue;
+        expect(visible.has(step.entity.id) || step.entity.id.startsWith("fab-hidden:")).toBe(true);
       }
     }
   });
@@ -289,7 +309,10 @@ describe("FAB persisted decision interaction projection", () => {
       const runtime = game.getRuntime();
       const view = projectFabInteraction(runtime, attacker.id).view;
       const action = view.actions[0]!;
-      expect(action.text.key).toBe("Use the optional effect of Dorinthea?");
+      // The trigger-order decision fixes the presentation order: Refraction
+      // Bolters' optional asks first; Dorinthea's own hit trigger is a
+      // mandatory grant and resolves without a prompt.
+      expect(action.text.key).toBe("Use the optional effect of Refraction Bolters?");
       expect(action.inputs).toHaveLength(1);
       const command = commandForFabSubmission(
         runtime,
@@ -299,9 +322,13 @@ describe("FAB persisted decision interaction projection", () => {
       expect(command).not.toBeNull();
       expect(runtime.dispatch(command!.move, attacker.id, command!.payload).accepted).toBe(true);
       game.advanceUntil({ stopAt: "combat-close", entityTargets: "pause" });
-      expect(projectFabInteraction(runtime, attacker.id).view.actions[0]?.text.key).toContain(
-        "Refraction Bolters",
-      );
+      // The ordering kept the hit triggers separate: exactly one optional was
+      // asked, nothing re-asks, and the window drains to a bare concede.
+      const afterView = projectFabInteraction(runtime, attacker.id).view;
+      expect(afterView.actions[0]?.text.key).toBe("Concede");
+      expect(
+        afterView.actions.filter((candidate) => candidate.text.key.startsWith("Use the optional")),
+      ).toEqual([]);
     },
   );
 

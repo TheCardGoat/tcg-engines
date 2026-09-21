@@ -2,11 +2,14 @@ import { describe, expect, it } from "vitest";
 import {
   expectCombat,
   expectFabCard,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
 import { cintariSaber } from "../weapons/cintari-saber.ts";
+import { gravenCall } from "../weapons/graven-call.ts";
+import { arakniMarionette } from "../heroes/arakni-marionette.ts";
 import { kassaiOfTheGoldenSand } from "../heroes/kassai-of-the-golden-sand.ts";
 import { snatchRed } from "../actions/snatch.ts";
 import { backsideOfTheBladeBlue } from "./backside-of-the-blade.ts";
@@ -64,5 +67,38 @@ describe("Backside of the Blade (AHA019) AAA", () => {
     game.advanceCombatTo("reaction");
 
     expect(() => Kassai.must.playReaction(backsideOfTheBladeBlue)).toThrow();
+  });
+
+  it("timing: a go-again weapon attack gains the extra swing without a prompt", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: arakniMarionette,
+        weapon1: [gravenCall],
+        hand: [backsideOfTheBladeBlue],
+        resourcePoints: 6,
+        actionPoints: 2,
+        deck: 6,
+      },
+      { hero: dash, hand: [], deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Arakni = game.as(arakniMarionette);
+
+    Arakni.activate(gravenCall, {
+      abilityId: "Ng9LqqDzcwcTmQmDzWzjT:oncePerTurnActionResourceResourceAttackGoAgain",
+    });
+    game.advanceCombatTo("reaction");
+    Arakni.must.playReaction(backsideOfTheBladeBlue);
+    game.passBoth();
+    // CR 5.2.3c: with go again present the grant is unconditional — no
+    // "use the optional effect?" decision may appear while the reaction
+    // resolves.
+    expectWait(game).notToHaveDecision();
+    game.helpers.resolveRestOfCombat();
+
+    Arakni.activate(gravenCall, {
+      abilityId: "Ng9LqqDzcwcTmQmDzWzjT:oncePerTurnActionResourceResourceAttackGoAgain",
+    });
+    expectCombat(game).toBeOpen();
   });
 });

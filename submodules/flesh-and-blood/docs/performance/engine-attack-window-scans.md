@@ -42,13 +42,13 @@ A package type check briefly overlapped candidate 2 startup. No own test suite
 or other self-play run overlapped these timing runs; unrelated host jobs were
 active. Baseline variability is reported rather than averaged away.
 
-| Metric | Baseline, two runs | Candidate, two runs |
-| --- | ---: | ---: |
-| Whole harness / 320 actions | 12.42–14.87 s | 8.488–8.493 s |
-| Sum of command spans | 8.55–10.11 s | 4.63–4.67 s |
-| Decision submission p95 | 287–351 ms | 132–137 ms |
-| Pass submission p95 | 42.6–52.7 ms | 27.4–28.5 ms |
-| End-turn submission p95 | 80.5–132.1 ms | 49.1–55.4 ms |
+| Metric                      | Baseline, two runs | Candidate, two runs |
+| --------------------------- | -----------------: | ------------------: |
+| Whole harness / 320 actions |      12.42–14.87 s |       8.488–8.493 s |
+| Sum of command spans        |       8.55–10.11 s |         4.63–4.67 s |
+| Decision submission p95     |         287–351 ms |          132–137 ms |
+| Pass submission p95         |       42.6–52.7 ms |        27.4–28.5 ms |
+| End-turn submission p95     |      80.5–132.1 ms |        49.1–55.4 ms |
 
 This is approximately 32–43% lower whole-harness time and 45–54% lower command
 span time relative to the already optimized baseline. All four runs have exactly

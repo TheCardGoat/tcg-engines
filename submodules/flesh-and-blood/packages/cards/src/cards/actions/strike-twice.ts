@@ -10,14 +10,29 @@ export const strikeTwice = definePitchFamily(fabPitchFamilies["strike-twice"], {
         damageType: "arcane",
         amount: 3,
         target: {
-          selector: "any-hero",
+          selector: "object",
+          declared: "on-stack",
+          player: "any",
+          zones: ["hero", "permanent"],
+          filter: { hasProperty: "life" },
+          count: 1,
         },
       },
     },
     veDealtArcaneDamageOpposingHeroTurnPlayAsThoughWereInstant: {
       kind: "static",
       staticKind: "play",
-      condition: { type: "performed-this-turn", event: "deal-arcane-damage", player: "controller" },
+      condition: {
+        type: "compare-amount",
+        amount: {
+          type: "count",
+          what: "damage-dealt",
+          recipient: "opposing-heroes",
+          damageType: "arcane",
+          per: "turn",
+        },
+        comparison: { op: "gt", value: 0 },
+      },
       playEffect: {
         role: "permission",
         fromZones: ["hand", "arsenal"],

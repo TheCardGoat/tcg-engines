@@ -5,6 +5,8 @@ function normalizedCreatedObjectSlug(value: string): string {
   return value
     .replace(/^token:/i, "")
     .trim()
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .replace(/\s+/g, "-")
     .toLowerCase();
 }

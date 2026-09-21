@@ -12,8 +12,23 @@ import {
 } from "@tcg/protocol/presentation";
 import { FAB_PRESENTATION_CATALOG } from "@tcg/flesh-and-blood-cards/presentation-revision";
 import { selectFabPresentationRecords } from "@tcg/flesh-and-blood-cards/presentation";
-import { createFabCardArtResolver, type FabPresentationDefinition } from "./cardArt";
+import {
+  createFabCardArtResolver,
+  type FabCardArtResolver,
+  type FabPresentationDefinition,
+} from "./cardArt";
 import { isFabFixtureArtPlaceholder } from "./fixture-art-placeholders";
+
+export type FabPresentationRegistryStatus = "loading" | "ready" | "error";
+
+export interface FabPresentationRegistrySnapshot {
+  readonly revision: number;
+  readonly status: FabPresentationRegistryStatus;
+  readonly resolver: FabCardArtResolver;
+  readonly bindings: PresentationEnvelope["bindings"];
+  readonly unavailableCanonicalIds: readonly string[];
+  readonly error?: string;
+}
 
 const failedCatalogs = new Set<string>();
 const catalogRequests = new Map<string, Promise<PresentationRecords>>();
@@ -80,11 +95,12 @@ export class FabPresentationRegistry {
   private requestedDefinitions = new Map<string, FabPresentationDefinition>();
   private fingerprint = "";
   private recovering: Promise<void> | undefined;
-  private snapshot = {
+  private snapshot: FabPresentationRegistrySnapshot = {
     revision: 0,
+    status: "loading",
     resolver: createFabCardArtResolver(),
     bindings: { printingIdByInstanceId: {} } as PresentationEnvelope["bindings"],
-    error: undefined as string | undefined,
+    unavailableCanonicalIds: [],
   };
 
   constructor(initial?: PresentationEnvelope) {
@@ -121,7 +137,7 @@ export class FabPresentationRegistry {
       this.publish(envelope.bindings);
       return true;
     } catch (error) {
-      this.snapshot = { ...this.snapshot, error: String(error) };
+      this.snapshot = { ...this.snapshot, status: "error", error: String(error) };
       this.emit();
       return false;
     }
@@ -173,6 +189,7 @@ export class FabPresentationRegistry {
       return this.ensure(definitions, retry);
     }
     this.attempted.add(recoveryKey);
+    this.markLoading();
     const reference: PresentationCatalogReference =
       this.bundle?.catalog ?? FAB_PRESENTATION_CATALOG;
     this.recovering = (async () => {
@@ -212,6 +229,7 @@ export class FabPresentationRegistry {
           (id) =>
             !this.records.records[id] && !this.records.records[this.records.aliases[id] ?? ""],
         );
+        this.markUnavailable(unavailable);
         if (unavailable.length)
           console.warn("fab.presentation.missing_descriptor", {
             revision: reference.revision,
@@ -222,7 +240,12 @@ export class FabPresentationRegistry {
           revision: reference.revision,
           error: String(error),
         });
-        this.snapshot = { ...this.snapshot, error: String(error) };
+        this.snapshot = {
+          ...this.snapshot,
+          status: "error",
+          unavailableCanonicalIds: [],
+          error: String(error),
+        };
         this.emit();
       }
     })();
@@ -235,14 +258,42 @@ export class FabPresentationRegistry {
 
   private publish(bindings: PresentationEnvelope["bindings"]) {
     const fingerprint = stablePresentationJson({ records: this.records, bindings });
-    if (fingerprint === this.fingerprint && !this.snapshot.error) return;
+    if (
+      fingerprint === this.fingerprint &&
+      this.snapshot.status === "ready" &&
+      !this.snapshot.error
+    )
+      return;
     this.fingerprint = fingerprint;
     this.snapshot = {
       revision: this.snapshot.revision + 1,
+      status: "ready",
       resolver: createFabCardArtResolver(this.records),
       bindings,
+      unavailableCanonicalIds: [],
+    };
+    this.emit();
+  }
+  private markLoading() {
+    if (this.snapshot.status === "loading" && !this.snapshot.error) return;
+    this.snapshot = {
+      ...this.snapshot,
+      status: "loading",
+      unavailableCanonicalIds: [],
       error: undefined,
     };
+    this.emit();
+  }
+  private markUnavailable(canonicalIds: readonly string[]) {
+    const unavailableCanonicalIds = [...new Set(canonicalIds)].sort();
+    if (
+      unavailableCanonicalIds.length === this.snapshot.unavailableCanonicalIds.length &&
+      unavailableCanonicalIds.every(
+        (canonicalId, index) => canonicalId === this.snapshot.unavailableCanonicalIds[index],
+      )
+    )
+      return;
+    this.snapshot = { ...this.snapshot, unavailableCanonicalIds };
     this.emit();
   }
   private emit() {

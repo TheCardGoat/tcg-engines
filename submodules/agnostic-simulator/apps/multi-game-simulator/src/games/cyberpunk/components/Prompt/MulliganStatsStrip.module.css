@@ -1,0 +1,83 @@
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-top: 3px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 2px 6px;
+  border: 1px solid rgb(74 217 255 / 30%);
+  border-radius: 3px;
+  background: rgb(74 217 255 / 7%);
+  font-size: 10px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.chipLabel {
+  color: rgb(207 232 246 / 64%);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.chipValue {
+  color: rgb(230 244 251 / 92%);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.chipGood {
+  border-color: rgb(57 255 136 / 46%);
+  background: rgb(57 255 136 / 9%);
+}
+
+.chipGood .chipValue {
+  color: rgb(57 255 136 / 92%);
+}
+
+.chipGood .chipLabel {
+  color: rgb(57 255 136 / 62%);
+}
+
+.chipWarn {
+  border-color: rgb(255 61 138 / 52%);
+  background: rgb(255 61 138 / 10%);
+}
+
+.chipWarn .chipValue {
+  color: rgb(255 143 187 / 95%);
+}
+
+.chipWarn .chipLabel {
+  color: rgb(255 143 187 / 66%);
+}
+
+.compact .chip {
+  gap: 3px;
+  padding: 1px 4px;
+  font-size: 9px;
+}
+
+.compact .chipLabel {
+  font-size: 8px;
+}
+
+.mobile .strip {
+  gap: 4px;
+}
+
+.mobile .chip {
+  padding: 3px 7px;
+  font-size: 11px;
+}
+
+.mobile .chipLabel {
+  font-size: 10px;
+}

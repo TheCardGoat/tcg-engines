@@ -38,17 +38,16 @@ export const backsideOfTheBlade = definePitchFamily(fabPitchFamilies["backside-o
               },
             },
             then: {
-              type: "optional",
-              effect: {
-                type: "modify-activation-limit",
-                target: {
-                  selector: "binding",
-                  binding: "it",
-                },
-                operation: "additional",
-                count: 1,
-                duration: "this-turn",
+              // CR 5.2.3c: the go-again condition gates the allowance, not a
+              // player decision — it applies by itself.
+              type: "modify-activation-limit",
+              target: {
+                selector: "binding",
+                binding: "it",
               },
+              operation: "additional",
+              count: 1,
+              duration: "this-turn",
             },
           },
         ],

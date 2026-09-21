@@ -7,7 +7,7 @@ import {
   op14eb04EdwardNewgate044,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04JinbeOp14049049 } from "../../../../../cards/src/cards/OP14EB04/characters/049-jinbe-op14-049.ts";
+import { op14eb04JinbeOp14049049 } from "../../../../../cards/src/cards/characters/op14-049-jinbe.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -1,0 +1,108 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op11Helmeppo092I18n } from "./op11-092-helmeppo.i18n.ts";
+
+export const op11Helmeppo092: CharacterCard = {
+  id: "OP11-092",
+  canonicalId: "OP11-092",
+  slug: "helmeppo/op11-092",
+  name: "Helmeppo",
+  printings: [
+    {
+      id: "OP11-092",
+      artId: "OP11-092",
+      setCode: "OP11",
+      collectorNumber: "092",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP11-092.jpg",
+    },
+    {
+      id: "OP11-092_p1",
+      artId: "OP11-092_p1",
+      setCode: "OP11",
+      collectorNumber: "092",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP11-092_p1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["black"],
+  rarity: "SR",
+  setId: "OP11",
+  cost: 6,
+  power: 7000,
+  traits: ["Navy SWORD"],
+  attribute: "slash",
+  effect:
+    '[On Play] You may trash 1 card from your hand: Draw 1 card and play up to 1 "SWORD" type Character card with a cost of 8 or less other than [Helmeppo] from your trash. Then, place the 1 Character played by this effect at the bottom of the owner\'s deck at the end of this turn.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+          },
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "excludeName",
+                value: "Helmeppo",
+              },
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 8,
+              },
+              {
+                filter: "trait",
+                value: "SWORD",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
+          {
+            action: "delayed",
+            timing: "endOfThisTurn",
+            actions: [
+              {
+                action: "returnToDeck",
+                target: {
+                  player: "self",
+                  zones: ["character"],
+                  count: {
+                    amount: 1,
+                  },
+                },
+                position: "bottom",
+                previousActionTargets: true,
+              },
+            ],
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op11Helmeppo092I18n,
+};

@@ -1,6 +1,6 @@
 import { eb01Fourtricks025, op01Kaido094, op12UrsaShock096, op13Inuarashi061 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13AmatsukiToki060 } from "../../../../../cards/src/cards/OP13/characters/060-amatsuki-toki.ts";
+import { op13AmatsukiToki060 } from "../../../../../cards/src/cards/characters/op13-060-amatsuki-toki.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

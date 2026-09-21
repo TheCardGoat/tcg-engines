@@ -2,7 +2,7 @@ import { waitFor } from "@testing-library/react";
 import { describe, test } from "vite-plus/test";
 import {
   welcomeToNightCityRetailCorpoSecurity,
-  welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+  welcomeToNightCityRetailElSombreronLaVenganzaLenta,
   welcomeToNightCityRetailSketchyRipper,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
@@ -68,7 +68,7 @@ describe("El Sombreron (Retail) jsdom happy path", () => {
       const elSombreron = await pom.getCardInZoneByDefinitionId(
         "field",
         CYBERPUNK_P1,
-        welcomeToNightCityRetailElSombreroNLaVenganzaLenta.id,
+        welcomeToNightCityRetailElSombreronLaVenganzaLenta.id,
       );
       const target = await pom.getCardInZoneByDefinitionId(
         "field",

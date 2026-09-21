@@ -9,6 +9,13 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Appetite for Destruction", () => {
+  /**
+   * Oracle: after the 3-cost Program resolves and is discarded, it creates a
+   * one-use effect lasting this turn. The first friendly attacking Unit whose
+   * fight margin is at least 3 becomes the actor for exactly one chosen rival
+   * Gig; lower margins do not consume it, and end of turn expires it (CR 6.7,
+   * 9.19, 10.2, 10.23). Normal Gig-steal prevention still applies.
+   */
   it("offers Alt Cunningham's prevention against the fight-win Gig steal", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
@@ -74,11 +81,19 @@ describe("Appetite for Destruction", () => {
             spent: false,
             hasLag: false,
           },
+          {
+            card: welcomeToNightCityRetailOffdutyMalfini,
+            spent: false,
+            hasLag: false,
+          },
         ],
         eddies: 3,
       },
       {
-        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }],
+        field: [
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: true },
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: true },
+        ],
         gigArea: [
           { dieType: "d4", faceValue: 2 },
           { dieType: "d8", faceValue: 5 },
@@ -91,27 +106,40 @@ describe("Appetite for Destruction", () => {
       "hand",
       P1,
     );
-    const attackerId = engine.findCardId(welcomeToNightCityRetailOffdutyMalfini, "field", P1);
+    const attackers = engine
+      .getCardsInZone("field", P1)
+      .filter((card) => card.definitionId === welcomeToNightCityRetailOffdutyMalfini.id);
+    const defenders = engine
+      .getCardsInZone("field", P2)
+      .filter((card) => card.definitionId === welcomeToNightCityRetailCorpoSecurity.id);
+    expect(attackers).toHaveLength(2);
+    expect(defenders).toHaveLength(2);
+    const attackerId = attackers[0]!.instanceId;
 
     engine.playCard(welcomeToNightCityRetailAppetiteForDestruction, { as: P1 });
+    expect(engine.getEddies(P1)).toBe(0);
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailAppetiteForDestruction.id,
+    );
     expect(engine.getState().G.activeEffects).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ kind: "nextFightWinGigSteal", minPowerMargin: 3 }),
       ]),
     );
 
-    engine.attackUnit(
-      welcomeToNightCityRetailOffdutyMalfini,
-      welcomeToNightCityRetailCorpoSecurity,
-      { as: P1 },
-    );
+    engine.attackUnit(attackers[0]!.instanceId, defenders[0]!.instanceId, { as: P1 });
     engine.resolveFullFight({ as: P1 });
 
     const choice = engine.getState().G.turnMetadata.pendingChoice;
     expect(choice).toMatchObject({
       type: "chooseTarget",
       chooserId: P1,
-      payload: { targetKind: "gig", eligibleIds: expect.arrayContaining([selectedGigId]) },
+      payload: {
+        targetKind: "gig",
+        min: 1,
+        max: 1,
+        eligibleIds: expect.arrayContaining([selectedGigId]),
+      },
     });
     engine.resolveEffectTargetIds([selectedGigId], { as: P1 });
 
@@ -129,6 +157,13 @@ describe("Appetite for Destruction", () => {
     expect(engine.getState().G.activeEffects).not.toEqual(
       expect.arrayContaining([expect.objectContaining({ kind: "nextFightWinGigSteal" })]),
     );
+
+    engine.attackUnit(attackers[1]!.instanceId, defenders[1]!.instanceId, { as: P1 });
+    engine.resolveFullFight({ as: P1 });
+
+    engine.expectNoPendingChoice();
+    expect(engine.getGigDice(P1).map((die) => die.id)).toEqual([selectedGigId]);
+    expect(engine.getGigDice(P2).map((die) => die.dieType)).toContain("d4");
   });
 
   it("does not consume the effect when a friendly Unit wins by less than 3 power", () => {

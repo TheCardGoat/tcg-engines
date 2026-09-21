@@ -8,6 +8,7 @@ import {
   GRAND_ARCHIVE_FIXTURE_GROUPS,
   GRAND_ARCHIVE_VISUAL_FIXTURES,
   createMaterialHandFixtureServer,
+  createAttackTargetingFixtureServer,
   type GrandArchiveFixtureGroupId,
 } from "./fixtures";
 import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
@@ -112,7 +113,8 @@ export function GrandArchiveFixturesPage() {
     );
   }
 
-  if (fixtureId === "materialization-hand") return <GrandArchiveMaterialHandFixture />;
+  if (fixtureId === "materialization-hand" || fixtureId === "attack-targeting")
+    return <GrandArchivePlayableFixture key={fixtureId} kind={fixtureId} />;
 
   return (
     <GrandArchiveTabletop
@@ -126,16 +128,26 @@ export function GrandArchiveFixturesPage() {
 }
 
 /** Playable decision fixture using the same server submission path as practice. */
-function GrandArchiveMaterialHandFixture() {
-  const [server, setServer] = useState(createMaterialHandFixtureServer);
+function GrandArchivePlayableFixture({
+  kind,
+}: {
+  kind: "materialization-hand" | "attack-targeting";
+}) {
+  const createServer =
+    kind === "attack-targeting"
+      ? createAttackTargetingFixtureServer
+      : createMaterialHandFixtureServer;
+  const [server, setServer] = useState(createServer);
   const [resetVersion, reset] = useReducer((version: number) => version + 1, 0);
   const [, refresh] = useReducer((version: number) => version + 1, 0);
   const [error, setError] = useState<string>();
   const viewer = grandArchivePlayerId("p1");
   const fixture = grandArchiveHarnessFixture(
-    "materialization-hand",
-    "Material deck in hand",
-    "Try one materialization choice, then use Reset materialization to try another.",
+    kind,
+    kind === "attack-targeting" ? "Choose an attack target" : "Material deck in hand",
+    kind === "attack-targeting"
+      ? "Choose a legal target and inspect the resulting combat."
+      : "Try one materialization choice, then use Reset materialization to try another.",
     projectGrandArchiveSimulator(server.program, server.runtime.state, viewer),
   );
   return (
@@ -148,17 +160,17 @@ function GrandArchiveMaterialHandFixture() {
           size="compact-sm"
           variant="default"
           onClick={() => {
-            setServer(createMaterialHandFixtureServer());
+            setServer(createServer());
             setError(undefined);
             reset();
           }}
         >
-          Reset materialization
+          {kind === "attack-targeting" ? "Reset attack" : "Reset materialization"}
         </Button>
       }
       onSubmitProtocolInteraction={(submission) => {
         const result = server.submitInteraction(viewer, submission, {
-          gameId: "grand-archive-material-hand-fixture",
+          gameId: `grand-archive-${kind}-fixture`,
           sourceAuthority: "client",
         });
         setError(result.success ? undefined : result.error);

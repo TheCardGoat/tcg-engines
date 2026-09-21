@@ -49,7 +49,7 @@
     "build": "vp pack",
     "dev": "vp pack --watch",
     "test": "vp test run",
-    "check": "vp check",
+    "check": "node scripts/audit-canonical-card-layout.mjs && vp check",
     "prepublishOnly": "vp run build"
   },
   "dependencies": {

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb01EdwardWeevil023 } from "../../../../../cards/src/cards/EB01/characters/023-edward-weevil.ts";
+import { eb01EdwardWeevil023 } from "../../../../../cards/src/cards/characters/eb01-023-edward-weevil.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-023 Edward Weevil", () => {

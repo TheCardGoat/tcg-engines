@@ -375,9 +375,9 @@ export function reduceGrandArchiveEvent(
         baseControllerId: event.newControllerId ?? object.ownerId,
         controllerId: event.newControllerId ?? object.ownerId,
         ...(event.hostId ? { hostId: event.hostId } : { hostId: undefined }),
-        ...(event.to === "banishment" && event.banishedBySourceId
-          ? { banishedBySourceId: event.banishedBySourceId }
-          : { banishedBySourceId: undefined }),
+        ...(event.to === "banishment" && event.banishedBy
+          ? { banishedBy: event.banishedBy }
+          : { banishedBy: undefined }),
         activeDefinitionId: event.to === "field" ? object.activeDefinitionId : undefined,
         nameOverride: event.to === "field" ? object.nameOverride : undefined,
         // A face-down double-faced card is never transformed. An explicit

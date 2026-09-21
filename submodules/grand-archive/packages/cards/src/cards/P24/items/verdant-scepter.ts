@@ -56,69 +56,80 @@ export const verdantScepter: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "banished-object-choice",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ALLY"],
-                          },
-                          {
-                            kind: "subtype",
-                            oneOf: ["SLIME"],
-                          },
-                        ],
+                  kind: "attempt",
+                  effect: {
+                    kind: "choose",
+                    selection: {
+                      id: "banished-object-choice",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["ALLY"],
+                            },
+                            {
+                              kind: "subtype",
+                              oneOf: ["SLIME"],
+                            },
+                          ],
+                        },
                       },
                     },
-                  },
-                  effect: {
-                    kind: "banish-object",
-                    subject: {
-                      kind: "bound",
-                      binding: "banished-object-choice",
+                    effect: {
+                      kind: "banish-object",
+                      subject: {
+                        kind: "bound",
+                        binding: "banished-object-choice",
+                      },
+                      bindResultAs: "banished-object",
                     },
-                    bindResultAs: "banished-object",
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: {
-                    named: "refinement",
-                  },
-                  amount: {
-                    kind: "calculate",
-                    operator: "add",
-                    operands: [
-                      {
-                        kind: "property",
-                        subject: {
-                          kind: "tracked",
-                          key: "banished-object",
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "source",
+                    },
+                    counter: {
+                      named: "refinement",
+                    },
+                    amount: {
+                      kind: "calculate",
+                      operator: "add",
+                      operands: [
+                        {
+                          kind: "property",
+                          subject: {
+                            kind: "tracked",
+                            key: "banished-object",
+                          },
+                          property: "power",
+                          basis: "last-known",
+                          missing: "zero",
                         },
-                        property: "power",
-                        basis: "last-known",
-                        missing: "zero",
-                      },
-                      1,
-                    ],
+                        1,
+                      ],
+                    },
                   },
                 },
               ],

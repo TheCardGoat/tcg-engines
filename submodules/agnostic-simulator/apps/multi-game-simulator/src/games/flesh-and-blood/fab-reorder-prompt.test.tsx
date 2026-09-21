@@ -67,6 +67,9 @@ describe("FAB deck reorder prompt", () => {
           expect(await player.zoneHas("graveyard", sourceCard)).toBe(true);
         });
       } else {
+        // The reorder flow pins a preview; in real use any outside pointer
+        // press dismisses it. Emulate that before the next hover phase.
+        fireEvent.pointerDown(document.body);
         const optPrompt = await screen.findByTestId("interaction-resolution-prompt");
         expect(within(optPrompt).getByText("Skullbone Crosswrap")).not.toBeNull();
         expect(within(optPrompt).getByRole("heading", { name: "Keep on top" })).not.toBeNull();
@@ -75,10 +78,11 @@ describe("FAB deck reorder prompt", () => {
         const sourceName = within(optPrompt).getByRole("button", { name: "Skullbone Crosswrap" });
         fireEvent.mouseEnter(sourceName);
         await waitFor(() => {
-          expect(screen.getByTestId("fab-card-preview").getAttribute("data-visible")).toBe("true");
-          expect(
-            within(screen.getByTestId("fab-card-preview")).getByText("Skullbone Crosswrap"),
-          ).not.toBeNull();
+          const preview = screen.getByTestId("fab-card-preview");
+          expect(preview.getAttribute("data-visible")).toBe("true");
+          // The catalog now carries printed art for this card, so the name
+          // reference previews the real image instead of the text fallback.
+          expect(preview.querySelector("img")?.getAttribute("alt")).toBe("Skullbone Crosswrap");
         });
         fireEvent.mouseLeave(sourceName);
 

@@ -31,6 +31,7 @@ export const testOfAgility = definePitchFamily(fabPitchFamilies["test-of-agility
           prize: {
             type: "create-token",
             token: "agility",
+            creator: "token-controller",
             controller: "winner",
           },
         },

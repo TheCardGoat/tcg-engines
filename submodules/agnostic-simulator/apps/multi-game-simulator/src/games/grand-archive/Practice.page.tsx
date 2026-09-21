@@ -42,6 +42,7 @@ import {
 import { GrandArchiveGameSummary } from "./GrandArchiveGameSummary";
 import { GrandArchivePracticeSetup } from "./GrandArchivePracticeSetup";
 import { defaultGrandArchivePracticeDeck, practiceSetupFromSearch } from "./practice-setup";
+import { practiceModeFromSearch, type PracticeMode } from "../../simulator/practiceMode";
 
 function createPracticeEngine() {
   const { program, initialState } = createGrandArchiveCatalogSmokeFixture(20260826);
@@ -55,7 +56,11 @@ function createInitialPractice(): {
   chatMessages: readonly StoredGrandArchivePracticeChatMessage[];
   sessionMessage: string | null;
   requiresPreparation: boolean;
+  practiceMode: PracticeMode;
 } {
+  const practiceMode = practiceModeFromSearch(
+    typeof window === "undefined" ? "" : window.location.search,
+  );
   try {
     const launch = practiceSetupFromSearch(
       typeof window === "undefined" ? "" : window.location.search,
@@ -67,6 +72,7 @@ function createInitialPractice(): {
         botPacing: "auto" as const,
         chatMessages: [] as readonly StoredGrandArchivePracticeChatMessage[],
         sessionMessage: null,
+        practiceMode,
       };
   } catch (error) {
     return {
@@ -76,6 +82,7 @@ function createInitialPractice(): {
       chatMessages: [] as readonly StoredGrandArchivePracticeChatMessage[],
       requiresPreparation: false,
       sessionMessage: error instanceof Error ? error.message : String(error),
+      practiceMode,
     };
   }
 
@@ -88,6 +95,7 @@ function createInitialPractice(): {
       chatMessages: restored.chatMessages,
       requiresPreparation: false,
       sessionMessage: "Restored saved practice match.",
+      practiceMode,
     } as const;
   }
   return {
@@ -97,6 +105,7 @@ function createInitialPractice(): {
     chatMessages: [] as readonly StoredGrandArchivePracticeChatMessage[],
     requiresPreparation: restored.kind !== "error",
     sessionMessage: restored.kind === "error" ? restored.message : null,
+    practiceMode,
   } as const;
 }
 
@@ -114,7 +123,7 @@ export function GrandArchivePracticePage() {
         pool={pool}
         initialSelection={pool.previous}
         playerLabel="You"
-        opponentLabel="Practice opponent"
+        opponentLabel={initialPractice.practiceMode === "self" ? "Player 2" : "Practice bot"}
         opponentReady
         turnOrderLabel={firstPlayerId === "p1" ? "You go first" : "You go second"}
         onLeave={() => window.location.assign("/grand-archive/matchmaking")}
@@ -186,13 +195,16 @@ function GrandArchivePracticeGame({
   const humanId = grandArchivePlayerId("p1");
   const botId = grandArchivePlayerId("p2");
   const activeActor = server.getActivePlayerId() ?? server.runtime.state.turnOrder[0]!;
-  const seatedViewer = takeoverActive ? botId : humanId;
+  const selfPlay = initialPractice.practiceMode === "self";
+  const seatedViewer = selfPlay ? activeActor : takeoverActive ? botId : humanId;
   const strategyOption = getSafeGrandArchiveAutomatedActionStrategyOption(strategyId);
   const stateVersion = server.runtime.state.stateVersion;
-  const canStepBot = !server.hasGameEnded() && activeActor === botId && !takeoverActive;
+  const canStepBot =
+    !selfPlay && !server.hasGameEnded() && activeActor === botId && !takeoverActive;
 
   const runBotMove = useCallback(() => {
-    if (server.hasGameEnded() || takeoverActive || server.getActivePlayerId() !== botId) return;
+    if (selfPlay || server.hasGameEnded() || takeoverActive || server.getActivePlayerId() !== botId)
+      return;
     const legal = chooseGrandArchiveAutomatedAction(
       server.program,
       server.runtime.state,
@@ -220,7 +232,7 @@ function GrandArchivePracticeGame({
     }
     setBotError(null);
     refresh();
-  }, [botId, server, strategyOption.strategy, takeoverActive]);
+  }, [botId, selfPlay, server, strategyOption.strategy, takeoverActive]);
 
   useEffect(() => {
     if (botPacing !== "auto" || !canStepBot) return;
@@ -249,8 +261,9 @@ function GrandArchivePracticeGame({
         server.program,
         runtimeState,
         grandArchivePlayerId(seatedViewer),
+        server.getViewerResources({ role: "player", actorId: seatedViewer }),
       ),
-    [server.program, runtimeState, seatedViewer],
+    [server, runtimeState, seatedViewer],
   );
   const projection = {
     ...projected,
@@ -258,24 +271,29 @@ function GrandArchivePracticeGame({
       ...projected.table,
       seats: projected.table.seats.map((seat) => ({
         ...seat,
-        role: seat.id === botId && !takeoverActive ? ("agent" as const) : ("human" as const),
+        role:
+          seat.id === botId && !takeoverActive && !selfPlay
+            ? ("agent" as const)
+            : ("human" as const),
       })),
     },
   };
   const fixture = grandArchiveHarnessFixture(
     "practice",
     "Standard practice match",
-    `Viewing as ${seatedViewer}. Active actor: ${activeActor}. ${takeoverActive ? "Bot seat under manual control." : `Bot uses ${strategyOption.label}.`}`,
+    `Viewing as ${seatedViewer}. Active actor: ${activeActor}. ${selfPlay ? "Play both sides is active." : takeoverActive ? "Opponent under manual control." : `Bot uses ${strategyOption.label}.`}`,
     projection,
   );
 
-  const automationStatus = takeoverActive
-    ? "Manual control"
-    : botPacing === "step"
-      ? "Paused · step mode"
-      : activeActor === botId
-        ? "Choosing a move…"
-        : "Waiting for you";
+  const automationStatus = selfPlay
+    ? `Play both sides · controlling ${seatedViewer === humanId ? "Player 1" : "Player 2"}`
+    : takeoverActive
+      ? "Manual control"
+      : botPacing === "step"
+        ? "Paused · step mode"
+        : activeActor === botId
+          ? "Choosing a move…"
+          : "Waiting for you";
   const undoLastMove = () => {
     const previous = undoGrandArchivePracticeCommand(server, humanId);
     if (!previous) return;
@@ -288,10 +306,14 @@ function GrandArchivePracticeGame({
     setSessionMessage("Undid the last accepted move.");
   };
   const automation: SimulatorMatchAutomation = {
-    label: "Practice opponent controls",
-    panelLabel: "Practice opponent settings",
+    label: "Opponent controls",
+    panelLabel: selfPlay ? "Play both sides" : "Practice opponent settings",
     summary: automationStatus,
-    control: (
+    control: selfPlay ? (
+      <strong data-testid="ga-practice-self-play-status">
+        Play both sides · seats switch automatically
+      </strong>
+    ) : (
       <SimulatorBotQuickControls
         pacing={botPacing}
         takeoverActive={takeoverActive}
@@ -312,31 +334,33 @@ function GrandArchivePracticeGame({
           <strong>Practice opponent</strong>
           <span>{automationStatus}</span>
         </header>
-        <label>
-          <span>Strategy</span>
-          <select
-            value={strategyId}
-            disabled={takeoverActive || server.hasGameEnded()}
-            onChange={(event) => {
-              const candidate = GRAND_ARCHIVE_AUTOMATED_ACTION_STRATEGIES.find(
-                (option) => option.id === event.currentTarget.value,
-              );
-              if (!candidate) return;
-              setStrategyId(candidate.id);
-              setBotError(null);
-            }}
-            data-testid="ga-practice-bot-strategy"
-          >
-            {GRAND_ARCHIVE_AUTOMATED_ACTION_STRATEGIES.filter(
-              (option) => !("testOnly" in option) || option.testOnly !== true,
-            ).map((option) => (
-              <option key={option.id} value={option.id}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <small>{strategyOption.description}</small>
-        </label>
+        {!selfPlay ? (
+          <label>
+            <span>Strategy</span>
+            <select
+              value={strategyId}
+              disabled={takeoverActive || server.hasGameEnded()}
+              onChange={(event) => {
+                const candidate = GRAND_ARCHIVE_AUTOMATED_ACTION_STRATEGIES.find(
+                  (option) => option.id === event.currentTarget.value,
+                );
+                if (!candidate) return;
+                setStrategyId(candidate.id);
+                setBotError(null);
+              }}
+              data-testid="ga-practice-bot-strategy"
+            >
+              {GRAND_ARCHIVE_AUTOMATED_ACTION_STRATEGIES.filter(
+                (option) => !("testOnly" in option) || option.testOnly !== true,
+              ).map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <small>{strategyOption.description}</small>
+          </label>
+        ) : null}
         <div className="ga-practice-session-actions">
           <span>{server.replayJournal.commands.length} accepted moves</span>
           <button

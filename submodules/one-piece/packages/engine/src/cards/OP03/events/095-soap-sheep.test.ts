@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op03SoapSheep095 } from "../../../../../cards/src/cards/OP03/events/095-soap-sheep.ts";
+import { op03SoapSheep095 } from "../../../../../cards/src/cards/events/op03-095-soap-sheep.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-095 Soap Sheep", () => {

@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op02Koby098 } from "@tcg/op-cards";
-import { op10Lim037 } from "../../../../../cards/src/cards/OP10/characters/037-lim.ts";
-import { op10Perona036 } from "../../../../../cards/src/cards/OP10/characters/036-perona.ts";
+import { op10Lim037 } from "../../../../../cards/src/cards/characters/op10-037-lim.ts";
+import { op10Perona036 } from "../../../../../cards/src/cards/characters/op10-036-perona.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

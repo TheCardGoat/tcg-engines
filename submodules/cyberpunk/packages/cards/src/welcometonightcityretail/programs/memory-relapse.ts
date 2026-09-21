@@ -37,6 +37,7 @@ export const welcomeToNightCityRetailMemoryRelapse = defineCyberpunkCard({
             controller: "rival",
             zones: ["field"],
             cardTypes: ["unit"],
+            state: "ready",
             selection: { mode: "choose", min: 1, max: 1 },
           },
         },

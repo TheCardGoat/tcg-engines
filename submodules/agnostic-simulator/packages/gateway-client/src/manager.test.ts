@@ -12,6 +12,7 @@ vi.mock("socket.io-msgpack-parser", () => ({
   decode: () => undefined,
 }));
 
+import { VIEWER_SCOPE_TTL_MS } from "@tcg/protocol";
 import { createGatewayConnectionManager } from "./manager.js";
 import type { CredentialsController, GatewayCredentials } from "./types.js";
 
@@ -648,7 +649,7 @@ describe("gateway-client manager", () => {
         });
         const handle = mgr.acquire("gundam", {
           credentials: {
-            get: () => ({ token: "scope", expiresAt: Date.now() + 60 * 60_000 }),
+            get: () => ({ token: "scope", expiresAt: Date.now() + VIEWER_SCOPE_TTL_MS }),
             refresh,
           },
         });
@@ -682,14 +683,14 @@ describe("gateway-client manager", () => {
           ticket: "initial",
           token: "scope-1",
           requireAuth: true,
-          expiresAt: Date.now() + 60 * 60_000,
+          expiresAt: Date.now() + VIEWER_SCOPE_TTL_MS,
         };
         const refresh = vi.fn(async () => {
           current = {
             ...current,
             ticket: "renewed",
             token: "scope-2",
-            expiresAt: Date.now() + 60 * 60_000,
+            expiresAt: Date.now() + VIEWER_SCOPE_TTL_MS,
           };
           return current;
         });
@@ -732,6 +733,63 @@ describe("gateway-client manager", () => {
         mgr.destroy();
         vi.useRealTimers();
       }
+    });
+
+    it("queues application emits while the viewer scope is expired and flushes them after refresh", async () => {
+      const flushPromises = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 0));
+      let current: GatewayCredentials = {
+        token: "scope-1",
+        requireAuth: true,
+        expiresAt: Date.now() + VIEWER_SCOPE_TTL_MS,
+      };
+      const refresh = vi.fn(async () => {
+        current = {
+          ticket: "renewed",
+          token: "scope-2",
+          requireAuth: true,
+          expiresAt: Date.now() + VIEWER_SCOPE_TTL_MS,
+        };
+        return current;
+      });
+      const mgr = createGatewayConnectionManager({ gatewayOrigin: "http://localhost:3003" });
+      const handle = mgr.acquire("cyberpunk", { credentials: { get: () => current, refresh } });
+      const socket = fakes[0];
+      socket.disconnect.mockImplementation(() =>
+        socket.__emit("disconnect", "io client disconnect"),
+      );
+      authOpts().auth(() => {});
+      socket.__emit("connect");
+      socket.__emit("welcome", { authenticated: true, connectionId: "c1" });
+      handle.join({ gameId: "game-1", role: "player" });
+      socket.emit.mockClear();
+
+      mgr.setCredentials("cyberpunk", { expiresAt: Date.now() - 1 });
+      handle.emit("push_state", {
+        gameId: "game-1",
+        state: { version: 25 },
+        expectedVersion: 24,
+        version: 25,
+        moveType: "bot",
+        actorId: "p1",
+      });
+
+      expect(socket.emit.mock.calls.filter((call) => call[0] === "push_state")).toHaveLength(0);
+      expect(refresh).toHaveBeenCalledTimes(1);
+      await flushPromises();
+      socket.emit.mockClear();
+      socket.id = "renewed-connection";
+      socket.__emit("connect");
+      socket.__emit("welcome", { authenticated: true, connectionId: "c2" });
+
+      expect(socket.emit).toHaveBeenCalledWith(
+        "join_game",
+        expect.objectContaining({ gameId: "game-1" }),
+      );
+      expect(socket.emit).toHaveBeenCalledWith(
+        "push_state",
+        expect.objectContaining({ gameId: "game-1", version: 25, expectedVersion: 24 }),
+      );
+      handle.release();
     });
 
     it("refreshes expired scope errors once and ignores refresh completion after release", async () => {

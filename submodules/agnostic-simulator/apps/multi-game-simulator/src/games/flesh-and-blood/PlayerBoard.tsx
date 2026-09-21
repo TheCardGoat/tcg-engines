@@ -1,9 +1,14 @@
-import type { SimulatorDeckReveal, SimulatorZone } from "@tcg/simulator-contract";
+import type {
+  SimulatorDeckReveal,
+  SimulatorDeckRevealCard,
+  SimulatorZone,
+} from "@tcg/simulator-contract";
 import {
   CardZone,
   DeckStackZone,
   DiscardPileZone,
   SingleCardZone,
+  ViewerSafeCardImage,
   useAnimationNode,
   type CardInteractionStateResolver,
 } from "@tcg/simulator-ui";
@@ -12,9 +17,9 @@ import { Layers3, Shield } from "lucide-react";
 import type { CSSProperties, ReactNode } from "react";
 import { FabAssetMeters, FabStatBadge } from "./FabIconography";
 import { countPublicBloodDebt, FabBloodDebtCue } from "./FabBloodDebtCue";
-import { FabInstantYieldAutomationControl } from "./FabInstantYieldAutomation";
-import { FabOptionalTriggerAutomationControl } from "./FabOptionalTriggerAutomation";
+import { FabCardAutomationCluster } from "./FabCardAutomationCluster";
 import { effectsForEntity, toSimulatorActiveEffect } from "./activeEffects";
+import { useFabPreviewTarget } from "./FabCardPreview";
 import {
   entityForFabViewer,
   type FabCardMetadata,
@@ -83,6 +88,8 @@ export interface PlayerBoardProps {
   onOpenZone?: (zone: InspectableZone) => void;
   /** Number of cards in the player's banished zone with an enabled action right now. */
   banishedAvailableCount?: number;
+  /** Number of cards in the player's graveyard with an enabled action right now. */
+  graveyardAvailableCount?: number;
   interactionStateFor?: CardInteractionStateResolver;
   onCardSelect?: (entity: SimulatorEntity) => void;
   allEffects?: readonly FabPresentationEffect[];
@@ -229,6 +236,7 @@ export function PlayerBoard({
   cardMetadata,
   onOpenZone,
   banishedAvailableCount = 0,
+  graveyardAvailableCount = 0,
   interactionStateFor,
   onCardSelect,
   allEffects = [],
@@ -354,17 +362,11 @@ export function PlayerBoard({
           onSelect={onSelect}
         />
         {isSelf && automationCardId ? (
-          <span className="fab-card-automation-cluster">
-            <FabOptionalTriggerAutomationControl
-              instanceId={automationCardId}
-              cardName={cardMetadata?.get(automationCardId)?.name ?? label}
-              canonicalId={cardMetadata?.get(automationCardId)?.canonicalId}
-            />
-            <FabInstantYieldAutomationControl
-              instanceId={automationCardId}
-              cardName={cardMetadata?.get(automationCardId)?.name ?? label}
-            />
-          </span>
+          <FabCardAutomationCluster
+            instanceId={automationCardId}
+            cardName={cardMetadata?.get(automationCardId)?.name ?? label}
+            canonicalId={cardMetadata?.get(automationCardId)?.canonicalId}
+          />
         ) : null}
       </div>
     );
@@ -461,7 +463,15 @@ export function PlayerBoard({
           </div>
 
           <div className="fab-layout-cell fab-layout-single fab-zone-graveyard">
-            <InspectablePile zone="graveyard" count={ids("graveyard").length} onOpen={onOpenZone}>
+            <InspectablePile
+              zone="graveyard"
+              count={ids("graveyard").length}
+              statusLabel={
+                graveyardAvailableCount > 0 ? `${graveyardAvailableCount} available now` : undefined
+              }
+              availableCount={graveyardAvailableCount}
+              onOpen={onOpenZone}
+            >
               <DiscardPileZone
                 zone={singleZone(
                   player.playerId,
@@ -509,26 +519,35 @@ export function PlayerBoard({
                           : undefined
                       }
                     >
-                      <SingleCardZone
-                        className="fab-permanent-stack-zone"
-                        zone={singleZone(
-                          player.playerId,
-                          "permanent",
-                          metadata?.name ?? "Permanent",
-                          [representativeId],
-                          "battlefield",
-                          `permanent:${representativeId}`,
-                        )}
-                        entities={mapEntities([representativeId], {
-                          frame: "tactical",
-                          tacticalBadgeMode: "permanent",
-                        })}
-                        entityCount={1}
-                        density="compact"
-                        style={FAB_ARENA_CARD_SLOT_STYLE}
-                        interactionStateFor={interactionStateFor}
-                        onSelect={onCardSelect ? selectInteractiveCard : undefined}
-                      />
+                      <div className="fab-card-slot-with-automation">
+                        <SingleCardZone
+                          className="fab-permanent-stack-zone"
+                          zone={singleZone(
+                            player.playerId,
+                            "permanent",
+                            metadata?.name ?? "Permanent",
+                            [representativeId],
+                            "battlefield",
+                            `permanent:${representativeId}`,
+                          )}
+                          entities={mapEntities([representativeId], {
+                            frame: "tactical",
+                            tacticalBadgeMode: "permanent",
+                          })}
+                          entityCount={1}
+                          density="compact"
+                          style={FAB_ARENA_CARD_SLOT_STYLE}
+                          interactionStateFor={interactionStateFor}
+                          onSelect={onCardSelect ? selectInteractiveCard : undefined}
+                        />
+                        {isSelf ? (
+                          <FabCardAutomationCluster
+                            instanceId={representativeId}
+                            cardName={metadata?.name ?? "Permanent"}
+                            canonicalId={metadata?.canonicalId}
+                          />
+                        ) : null}
+                      </div>
                       <FabHostedCards
                         hostName={metadata?.name ?? "Permanent"}
                         cards={hostedCards}
@@ -632,7 +651,7 @@ export function PlayerBoard({
                       stat="resource"
                       value={player.resourcePoints}
                       label="Resources"
-                      size="md"
+                      size="sm"
                       showLabel={false}
                       testId="fab-pitch-floating-resources"
                     />
@@ -663,6 +682,7 @@ export function PlayerBoard({
                 entityCount={ids("deck").length}
                 reveal={resolvedDeckReveal}
                 revealPreferredSide={isTopSeat ? "top" : "bottom"}
+                renderRevealedCard={fabRenderRevealedCard}
               />
             </div>
           </div>
@@ -758,4 +778,55 @@ export function PlayerBoard({
       </div>
     </section>
   );
+}
+
+/**
+ * Revealed deck-edge cards present through the game-wide hover preview: the
+ * same pinned/hover surface every other FAB card uses, resolved to the
+ * printed card via the disclosed catalog identity.
+ */
+function FabDeckRevealShelfCard({
+  card,
+  entity,
+}: {
+  card: SimulatorDeckRevealCard;
+  entity: SimulatorEntity;
+}) {
+  const canonicalId = card.definitionId;
+  const previewEntity: SimulatorEntity = canonicalId
+    ? {
+        ...entity,
+        dataAttributes: {
+          ...entity.dataAttributes,
+          "data-fab-canonical-id": canonicalId,
+        },
+      }
+    : entity;
+  const { previewProps } = useFabPreviewTarget(previewEntity, { pinOnClick: true });
+  return (
+    <span
+      className="relative grid h-32 w-24 cursor-zoom-in place-items-center overflow-hidden rounded-[4px] border border-white/28 bg-slate-950 shadow-sm"
+      data-testid="deck-reveal-card"
+      data-card-id={card.entityId}
+      data-fab-canonical-id={canonicalId}
+      {...previewProps}
+    >
+      {card.imageUrl ? (
+        <ViewerSafeCardImage
+          entity={previewEntity}
+          alt={card.title ?? "Revealed card"}
+          className="h-full w-full object-contain"
+          loading="eager"
+        />
+      ) : (
+        <span className="line-clamp-3 px-1 text-[10px] font-bold leading-[1.15] text-white/90">
+          {card.title ?? "Revealed"}
+        </span>
+      )}
+    </span>
+  );
+}
+
+function fabRenderRevealedCard(card: SimulatorDeckRevealCard, entity: SimulatorEntity): ReactNode {
+  return <FabDeckRevealShelfCard card={card} entity={entity} />;
 }

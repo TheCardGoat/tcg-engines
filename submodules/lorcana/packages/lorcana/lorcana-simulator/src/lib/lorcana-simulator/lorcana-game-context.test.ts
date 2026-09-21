@@ -259,6 +259,7 @@ describe("lorcana game context", () => {
       players: {
         player_one: {
           reserveMsRemaining: 180_000,
+          graceMs: 15_000,
           isRunning: true,
           startedAtMs: serverTimestamp,
           timeoutCount: 0,

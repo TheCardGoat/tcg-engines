@@ -3,13 +3,15 @@ import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { defOf } from "../state/lookups.ts";
 import { computeEffectiveCost, consumeCostModifierUse } from "./compute-effective-cost.ts";
-import { availableEddies } from "./eddie-resources.ts";
+import { availableEddies, canSpendSelectedEddies } from "./eddie-resources.ts";
 import { isReactStep } from "./is-react-step.ts";
+import { listLegalGearAttachHosts } from "../state/gear-attachment.ts";
 
 export interface PlayCardInput extends MoveInput {
   args: {
     cardId: string;
     attachToId?: string;
+    paymentSourceIds?: string[];
   };
 }
 
@@ -35,7 +37,7 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
   },
 
   validate({ state, playerId, input }) {
-    const { cardId } = input.args;
+    const { cardId, attachToId } = input.args;
     const player = state.G.players[playerId as string];
     if (!player) return { valid: false, error: "Player not found", errorCode: "PLAYER_NOT_FOUND" };
     if (state.G.gamePhase !== "main")
@@ -64,6 +66,35 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     if (!card)
       return { valid: false, error: "Card instance not found", errorCode: "CARD_NOT_FOUND" };
 
+    const def = defOf(card);
+    if (def.type === "gear") {
+      if (!attachToId) {
+        return {
+          valid: false,
+          error: "Gear must be played attached to a friendly Unit or face-up Legend",
+          errorCode: "INVALID_ATTACH_TARGET",
+        };
+      }
+      const legalHosts = listLegalGearAttachHosts(
+        state as import("../types/match-state.ts").MatchState,
+        cardId as CardInstanceId,
+        playerId,
+      );
+      if (!legalHosts.includes(attachToId)) {
+        return {
+          valid: false,
+          error: `Entity "${attachToId}" is not a legal Gear attach target`,
+          errorCode: "INVALID_ATTACH_TARGET",
+        };
+      }
+    } else if (attachToId) {
+      return {
+        valid: false,
+        error: "Only Gear can have an attachment host",
+        errorCode: "INVALID_ARGS",
+      };
+    }
+
     const cost = computeEffectiveCost(
       state as import("../types/match-state.ts").MatchState,
       cardId as CardInstanceId,
@@ -72,12 +103,23 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
     if (availableEddies(state as import("../types/match-state.ts").MatchState, playerId) < cost) {
       return { valid: false, error: "Not enough eddies", errorCode: "INSUFFICIENT_EDDIES" };
     }
+    if (
+      input.args.paymentSourceIds !== undefined &&
+      !canSpendSelectedEddies(
+        state.G,
+        playerId,
+        cost,
+        input.args.paymentSourceIds as CardInstanceId[],
+      )
+    ) {
+      return { valid: false, error: "Invalid payment sources", errorCode: "INVALID_PAYMENT" };
+    }
 
     return { valid: true };
   },
 
   execute({ state, playerId, input, operations }) {
-    const { cardId, attachToId } = input.args;
+    const { cardId, attachToId, paymentSourceIds } = input.args;
     const player = state.G.players[playerId as string];
     const card = state.G.cardIndex[cardId];
 
@@ -90,7 +132,12 @@ export const playCardMove: MoveDefinition<PlayCardInput> = {
       playerId,
     );
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
-    operations.game.spendEddies(playerId, cost, "playCard");
+    operations.game.spendEddies(
+      playerId,
+      cost,
+      "playCard",
+      paymentSourceIds === undefined ? {} : { sourceIds: paymentSourceIds as CardInstanceId[] },
+    );
     consumeCostModifierUse(
       state as import("../types/match-state.ts").MatchState,
       cardId as CardInstanceId,

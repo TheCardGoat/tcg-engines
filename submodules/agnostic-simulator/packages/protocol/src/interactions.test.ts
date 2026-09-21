@@ -624,6 +624,41 @@ describe("engine interaction protocol", () => {
     ).toBeNull();
   });
 
+  test("builds stale values for caller-owned validation to reject", () => {
+    const view = EngineInteractionView.parse(
+      buildView([
+        fromLorcanaAvailableMove({
+          moveId: "playCard",
+          selectableCardIds: ["card_1"],
+        }),
+      ]),
+    );
+
+    // The shared builder preserves its cross-game envelope-only contract.
+    // Live/client dispatch gates run the validator before submitting.
+    const stale = buildInteractionSubmissionForActionId({
+      view,
+      actionId: "move:playCard",
+      values: { cardId: "card_from_stale_mirror" },
+    });
+    expect(stale).not.toBeNull();
+    expect(validateInteractionSubmission(view, stale!)).toMatchObject({ ok: false });
+
+    // A value matching an enabled candidate still builds the same envelope.
+    expect(
+      buildInteractionSubmissionForActionId({
+        view,
+        actionId: "move:playCard",
+        values: { cardId: "card_1" },
+      }),
+    ).toMatchObject({
+      protocolVersion: INTERACTION_PROTOCOL_VERSION,
+      stateVersion: view.stateVersion,
+      actionId: "move:playCard",
+      values: { cardId: "card_1" },
+    });
+  });
+
   test("round-trips a UI submission without Lorcana-native payload knowledge", () => {
     const submission = InteractionSubmission.parse({
       protocolVersion: INTERACTION_PROTOCOL_VERSION,
@@ -943,6 +978,79 @@ describe("engine interaction protocol", () => {
         },
       }),
       ["number_step_mismatch"],
+    );
+  });
+
+  test("coerces numeric option values to their string option ids", () => {
+    const view = EngineInteractionView.parse(
+      buildView([
+        {
+          id: "chooseOption",
+          requestId: "chooseOption",
+          intent: "choose-option",
+          text: { key: "test.option" },
+          enabled: true,
+          inputs: [
+            {
+              kind: "option-selection",
+              id: "choiceIndex",
+              text: { key: "test.option" },
+              min: 1,
+              max: 1,
+              options: [
+                { id: "0", text: { key: "test.option.0" }, enabled: true },
+                { id: "1", text: { key: "test.option.1" }, enabled: true },
+                { id: "2", text: { key: "test.option.2" }, enabled: false },
+              ],
+            },
+            {
+              ...baseEntitySelectionInput(),
+              candidates: [
+                { entity: { kind: "card", instanceId: "target_1" }, enabled: true },
+                { entity: { kind: "card", instanceId: "2" }, enabled: true },
+              ],
+            },
+          ],
+        },
+      ]),
+    );
+    const action = view.actions[0]!;
+
+    // A raw number matching an enabled option id is interchangeable with its
+    // stringified form (a client that stringifies option ids must keep
+    // working alongside one that sends the raw index).
+    expect(
+      validateInteractionSubmission(
+        view,
+        buildInteractionSubmission({
+          view,
+          action,
+          values: { choiceIndex: 0, targets: "target_1" },
+        }),
+      ).ok,
+    ).toBe(true);
+
+    // A number whose string form is a disabled option is rejected
+    // semantically, not as a type error.
+    expectInvalidCodes(
+      view,
+      buildInteractionSubmission({
+        view,
+        action,
+        values: { choiceIndex: 2, targets: "target_1" },
+      }),
+      ["option_unavailable"],
+    );
+
+    // Entity selections stay strict: opaque instance ids never coerce.
+    expectInvalidCodes(
+      view,
+      buildInteractionSubmission({
+        view,
+        action,
+        values: { choiceIndex: "0", targets: 2 },
+      }),
+      ["invalid_value_type"],
     );
   });
 });

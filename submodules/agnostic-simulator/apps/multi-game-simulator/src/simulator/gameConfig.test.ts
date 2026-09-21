@@ -3,7 +3,6 @@ import { describe, expect, test } from "vite-plus/test";
 import {
   DEFAULT_BASE_GAME_USER_CONFIG,
   normalizeBaseGameUserConfig,
-  parseAnimationPacing,
   type GameUserConfig,
 } from "./gameConfig.js";
 
@@ -11,7 +10,6 @@ describe("base game user config", () => {
   test("defaults shared simulator settings", () => {
     expect(DEFAULT_BASE_GAME_USER_CONFIG).toEqual({
       soundVolume: 35,
-      animationPacing: "standard",
     });
   });
 
@@ -19,16 +17,10 @@ describe("base game user config", () => {
     expect(
       normalizeBaseGameUserConfig({
         soundVolume: 150,
-        animationPacing: "cinematic",
       }),
     ).toEqual({
       soundVolume: 100,
-      animationPacing: "cinematic",
     });
-  });
-
-  test("falls back for invalid animation pacing values", () => {
-    expect(parseAnimationPacing("instant")).toBe("standard");
   });
 
   test("allows games to extend the base config shape", () => {
@@ -38,6 +30,6 @@ describe("base game user config", () => {
     };
 
     expect(config.customMode).toBe("compact");
-    expect(config.animationPacing).toBe("standard");
+    expect(config.soundVolume).toBe(35);
   });
 });

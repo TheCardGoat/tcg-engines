@@ -14,17 +14,24 @@ import {
   type InteractionSubmissionValue,
 } from "@tcg/protocol";
 import {
+  useCallback,
+  useId,
   useRef,
   useState,
+  type ComponentPropsWithoutRef,
   type CSSProperties,
   type FocusEvent,
   type KeyboardEvent,
   type MouseEvent,
   type PointerEvent,
+  type ReactNode,
 } from "react";
-import type { CardPreviewDetails } from "../CardPreview/CardPreviewContext";
+import { AnimatedEntityNode } from "@tcg/simulator-ui";
+import { useCardPreview, type CardPreviewDetails } from "../CardPreview/CardPreviewContext";
+import { useHasHover } from "../../../../lib/media-query";
 import { CardImage } from "./CardImage";
 import { CardNameToken } from "../CardDisplay/CardNameToken";
+import { usePaymentSelectionOptional } from "../PaymentSelection/PaymentSelectionContext";
 import { encodeCardSourceId, encodeTargetId, useDragDrop } from "./DragDropContext";
 import { useAttackSelectionState } from "./useAttackSelection";
 import { useMoveSelection, useMoveSelectionStateForSide } from "./MoveSelectionContext";
@@ -170,9 +177,28 @@ export function Card({
 }: CardProps) {
   const [powerMenuOpen, setPowerMenuOpen] = useState(false);
   const powerMenuCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { show: showCardPreview, hide: hideCardPreview } = useCardPreview();
+  const hasHover = useHasHover();
   // Hooks are always called. When the card is not engine-aware (no cardId or
   // no provider), the hooks return safe defaults.
   const engineCtx = useEngineOptional();
+  const paymentSelection = usePaymentSelectionOptional();
+  // Costed plays route through the payment-selection gate so the "choose
+  // payment" mode and the one-shot arm apply to direct board interactions,
+  // not just the context menu. Falls back to plain dispatch outside the
+  // board's provider tree.
+  const dispatchCosted: NonNullable<typeof paymentSelection>["dispatchCostedAction"] = (
+    action,
+    onExecuted,
+  ) => {
+    if (!paymentSelection) {
+      if (!engineCtx) return false;
+      const result = engineCtx.dispatch(action);
+      onExecuted?.(result);
+      return result.success;
+    }
+    return paymentSelection.dispatchCostedAction(action, onExecuted);
+  };
   const choiceSide = engineCtx?.humanSide ?? side ?? NO_SIDE;
   const choicePermission = useInteractionPermission(choiceSide, cardId ?? "");
   const selectablePermission =
@@ -209,11 +235,7 @@ export function Card({
       : null;
   const attackSelection = useAttackSelectionState(side, cardId);
   const engineAware = Boolean(cardId && side && engineCtx);
-  const { activeSource } = useDragDrop();
-  const sourcePermission = useInteractionPermission(
-    engineCtx?.humanSide ?? NO_SIDE,
-    activeSource?.cardId ?? "",
-  );
+  const { activeSource, programTargets, gearTargets } = useDragDrop();
   const globalSelectedSourcePermission = useInteractionPermission(
     engineCtx?.humanSide ?? NO_SIDE,
     globalSelectedMoveState?.sourceCardId ?? "",
@@ -261,14 +283,7 @@ export function Card({
     activeSource.cardId &&
     activeSource.cardType === "gear" &&
     cardId &&
-    engineCtx &&
-    getGearAttachTargets(
-      {
-        interactionView: engineCtx.interactionViews[engineCtx.humanSide],
-      },
-      activeSource.cardId,
-      activeSource.cardType,
-    ).includes(cardId);
+    gearTargets.has(cardId);
   const selectedProgramSpatialTargets =
     globalSelectedMoveState?.moveId === "playCard" &&
     globalSelectedMoveState.sourceCardId &&
@@ -290,19 +305,7 @@ export function Card({
     selectedProgramSpatialTargets.includes(cardId),
   );
   const activeProgramSpatialTarget =
-    activeSource?.zone === "p-hand" &&
-    activeSource.cardId &&
-    cardId &&
-    sourcePermission.kind === "armable" &&
-    engineCtx &&
-    getProgramSpatialTargets(
-      {
-        matchState: engineCtx.matchState,
-        side: engineCtx.humanSide,
-        interactionView: engineCtx.interactionViews[engineCtx.humanSide],
-      },
-      activeSource.cardId,
-    ).includes(cardId);
+    activeSource?.zone === "p-hand" && activeSource.cardId && cardId && programTargets.has(cardId);
   const isValidAttackDropTarget =
     engineAware &&
     acceptsDrop &&
@@ -319,8 +322,14 @@ export function Card({
   const isValidGearDropTarget = engineAware && acceptsDrop && Boolean(activeGearAttachTarget);
   const isValidProgramDropTarget =
     engineAware && acceptsDrop && Boolean(activeProgramSpatialTarget);
+  const paymentSelectionActive = paymentSelection?.paymentSelectionActive ?? false;
+  const paymentEligible = Boolean(
+    paymentSelectionActive && cardId && paymentSelection?.eligiblePaymentSourceIds.has(cardId),
+  );
+  const paymentSelected = Boolean(cardId && paymentSelection?.selectedPaymentSourceIds.has(cardId));
 
   const draggable =
+    !paymentSelectionActive &&
     zone !== undefined &&
     index !== undefined &&
     !faceDown &&
@@ -341,11 +350,6 @@ export function Card({
     acceptsDrop && zone !== undefined && index !== undefined
       ? encodeTargetId({ type: "card", zone: zone!, index: index!, cardId })
       : "";
-
-  const drag = useDraggable({ id: sourceId, disabled: !draggable });
-  const drop = useDroppable({ id: droppableId, disabled: !droppableId });
-
-  const dragStyle = drag.isDragging ? { opacity: 0 } : undefined;
 
   const executePlayCard = (sourceCardId: string, actionSide: Side) => {
     if (!engineCtx) return;
@@ -380,7 +384,7 @@ export function Card({
       });
       return;
     }
-    engineCtx.dispatch({
+    dispatchCosted({
       type: "playCard",
       cardId: sourceCardId,
       as: PLAYER_SIDE_TO_ID[actionSide],
@@ -406,12 +410,12 @@ export function Card({
       return;
     }
     if (moveId === "callLegend") {
-      engineCtx.dispatch({ type: "callLegend", cardId: sourceCardId, as: asPlayer });
+      dispatchCosted({ type: "callLegend", cardId: sourceCardId, as: asPlayer });
       moveSelection.clearSelection();
       return;
     }
     if (moveId === "goSolo") {
-      engineCtx.dispatch({ type: "goSolo", cardId: sourceCardId, as: asPlayer });
+      dispatchCosted({ type: "goSolo", cardId: sourceCardId, as: asPlayer });
       moveSelection.clearSelection();
       return;
     }
@@ -457,7 +461,7 @@ export function Card({
     ) {
       return false;
     }
-    engineCtx.dispatch({
+    dispatchCosted({
       type: "playCard",
       cardId: selectedMoveState.sourceCardId,
       attachToId: cardId,
@@ -478,14 +482,21 @@ export function Card({
       return false;
     }
     const asPlayer = PLAYER_SIDE_TO_ID[globalSelectedMoveState.side];
-    const result = engineCtx.dispatch({
-      type: "playCard",
-      cardId: globalSelectedMoveState.sourceCardId,
-      as: asPlayer,
-    });
-    if (result.success) {
-      engineCtx.dispatch({ type: "resolveEffectTarget", targetIds: [cardId], as: asPlayer });
-    }
+    // The resolveEffectTarget follow-up must wait for a gated play: it runs
+    // after direct dispatches immediately, and after the payment modal is
+    // confirmed otherwise.
+    dispatchCosted(
+      {
+        type: "playCard",
+        cardId: globalSelectedMoveState.sourceCardId,
+        as: asPlayer,
+      },
+      (result) => {
+        if (result.success) {
+          engineCtx.dispatch({ type: "resolveEffectTarget", targetIds: [cardId], as: asPlayer });
+        }
+      },
+    );
     moveSelection.clearSelection();
     return true;
   };
@@ -544,6 +555,13 @@ export function Card({
     if (!engineAware || !engineCtx) {
       return;
     }
+    if (paymentSelectionActive) {
+      if (paymentEligible && cardId) paymentSelection?.togglePaymentSource(cardId);
+      return;
+    }
+    if (engineCtx.boardCorrectionEnabled) {
+      return;
+    }
     if (executeSelectedTarget()) {
       return;
     }
@@ -596,19 +614,23 @@ export function Card({
   };
 
   const interactionState = engineAware
-    ? nativeEffectTargetSelectable
-      ? "selectable"
-      : attackSelection.canSelectFightTarget
+    ? paymentSelectionActive
+      ? paymentEligible
         ? "selectable"
-        : selectedGearAttachTarget
+        : "inert"
+      : nativeEffectTargetSelectable
+        ? "selectable"
+        : attackSelection.canSelectFightTarget
           ? "selectable"
-          : selectedProgramSpatialTarget
+          : selectedGearAttachTarget
             ? "selectable"
-            : selectedMove
-              ? selectedMoveIsLegal
-                ? "selectable"
-                : "inert"
-              : permission.kind
+            : selectedProgramSpatialTarget
+              ? "selectable"
+              : selectedMove
+                ? selectedMoveIsLegal
+                  ? "selectable"
+                  : "inert"
+                : permission.kind
     : "legacy";
 
   const handleKeyDown = (ev: KeyboardEvent<HTMLDivElement>) => {
@@ -749,7 +771,8 @@ export function Card({
     engineCtx?.matchState.G.turnMetadata.currentTrigger?.sourceCardId &&
     String(engineCtx.matchState.G.turnMetadata.currentTrigger.sourceCardId) === cardId,
   );
-  const isSelected = armed || attackSelection.isSelectedAttacker || effectCardTargetSelected;
+  const isSelected =
+    armed || attackSelection.isSelectedAttacker || effectCardTargetSelected || paymentSelected;
   const isHandCard = zone === "p-hand" || zone === "opp-hand";
   const powerAriaLabel =
     power !== undefined && power !== null && hasModifiedPower
@@ -807,13 +830,25 @@ export function Card({
           activeEffects,
           hasSellTag,
         };
+  const hoverPreviewable =
+    !disablePreview && hasHover && Boolean(imageUrl) && Boolean(previewDetails);
+  const showHoverPreview = useCallback(() => {
+    if (!hoverPreviewable || !imageUrl) return;
+    showCardPreview({
+      imageUrl,
+      face: "public",
+      alt: peeked && faceDown ? (name ?? "Peeked face-down card") : (name ?? ""),
+      color,
+      details: previewDetails,
+    });
+  }, [color, faceDown, hoverPreviewable, imageUrl, name, peeked, previewDetails, showCardPreview]);
 
   return (
-    <div
-      ref={(node) => {
-        drag.setNodeRef(node);
-        drop.setNodeRef(node);
-      }}
+    <CardDragDropShell
+      sourceId={sourceId}
+      droppableId={droppableId}
+      draggable={draggable}
+      dropOverClassName={classes.dropOver}
       className={[
         classes.stack,
         stateClass,
@@ -822,7 +857,8 @@ export function Card({
         isValidAttackDropTarget ? classes.validAttackDropTarget : "",
         isValidGearDropTarget ? classes.validGearDropTarget : "",
         isValidProgramDropTarget ? classes.validProgramDropTarget : "",
-        drop.isOver ? classes.dropOver : "",
+        paymentEligible ? classes.paymentEligible : "",
+        paymentSelected ? classes.paymentSelected : "",
       ]
         .filter(Boolean)
         .join(" ")}
@@ -830,6 +866,7 @@ export function Card({
       data-testid="card"
       data-entity-id={cardId}
       data-sim-entity-id={cardId}
+      data-sim-animation-orientation-target=""
       data-card-kind={cardKindFromType(cardType)}
       data-zone={zone}
       data-zone-index={index}
@@ -846,6 +883,8 @@ export function Card({
       data-action-hint={isActionHint ? "true" : "false"}
       data-selection-candidate={isSelectionCandidate ? "true" : "false"}
       data-selected={isSelected ? "true" : "false"}
+      data-payment-source={paymentEligible ? "true" : undefined}
+      data-payment-selected={paymentSelected ? "true" : undefined}
       data-draggable={draggable ? "true" : "false"}
       data-choice-selected={effectCardTargetSelected ? "true" : "false"}
       data-active-trigger-source={activeTriggerSource ? "true" : "false"}
@@ -864,14 +903,21 @@ export function Card({
               : undefined
       }
       {...publicCardAttrs}
-      style={dragStyle}
       role={interactionState === "selectable" ? "button" : undefined}
       tabIndex={interactionState === "selectable" ? 0 : undefined}
-      aria-label={interactionState === "selectable" ? `Select ${name ?? "card"}` : undefined}
+      aria-label={
+        interactionState === "selectable"
+          ? paymentEligible
+            ? `${paymentSelected ? "Remove" : "Select"} ${name ?? "Legend"} for payment`
+            : `Select ${name ?? "card"}`
+          : undefined
+      }
       onClick={handleClick}
       onKeyDown={handleKeyDown}
-      {...(draggable ? drag.listeners : undefined)}
-      {...(draggable ? drag.attributes : undefined)}
+      onMouseEnter={hoverPreviewable ? showHoverPreview : undefined}
+      onMouseLeave={hoverPreviewable ? () => hideCardPreview() : undefined}
+      onFocus={hoverPreviewable ? showHoverPreview : undefined}
+      onBlur={hoverPreviewable ? () => hideCardPreview() : undefined}
     >
       {gear.map((g, i) => {
         const offsetPercent = (i + 1) * GEAR_PEEK_PERCENT;
@@ -883,6 +929,7 @@ export function Card({
             key={`${g.cardId ?? g.name}-${i}`}
             gear={g}
             side={side}
+            zone={zone}
             attachedToId={cardId}
             offsetPercent={offsetPercent}
             fanOffsetPercent={fanOffsetPercent}
@@ -891,7 +938,10 @@ export function Card({
           />
         );
       })}
-      <div className={`${classes.unit} ${tapped && rotateWhenTapped ? classes.tappedUnit : ""}`}>
+      <div
+        className={`${classes.unit} ${tapped && rotateWhenTapped ? classes.tappedUnit : ""}`}
+        data-sim-animation-face-target=""
+      >
         <CardImage
           imageUrl={imageUrl}
           faceDown={faceDown && !peeked}
@@ -899,7 +949,7 @@ export function Card({
           alt={faceDown ? (peeked ? "Peeked face-down card" : "Face-down card") : (name ?? "")}
           color={color}
           previewDetails={previewDetails}
-          disablePreview={disablePreview}
+          disablePreview
         />
         {showCostBadge ? (
           <div
@@ -998,6 +1048,66 @@ export function Card({
           <strong>{effectivePower}</strong>
         </div>
       ) : null}
+    </CardDragDropShell>
+  );
+}
+
+interface CardDragDropShellProps extends ComponentPropsWithoutRef<"div"> {
+  readonly sourceId: string;
+  readonly droppableId: string;
+  readonly draggable: boolean;
+  readonly dropOverClassName: string;
+  readonly children: ReactNode;
+}
+
+/**
+ * Keep dnd-kit's rapidly-changing contexts out of the rules-aware Card body.
+ *
+ * During a pointer drag, dnd-kit updates its internal active/over contexts on
+ * nearly every frame. Subscribing the full Card component made every update
+ * rebuild badges, menus, previews, and attached-card markup. This shell owns
+ * only the DOM bindings that actually change while dragging; React can retain
+ * the already-rendered card subtree because `children` is unchanged.
+ */
+function CardDragDropShell({
+  sourceId,
+  droppableId,
+  draggable,
+  dropOverClassName,
+  className,
+  children,
+  style,
+  ...elementProps
+}: CardDragDropShellProps) {
+  const instanceId = useId();
+  const drag = useDraggable({
+    id: sourceId || `inactive-drag:${instanceId}`,
+    disabled: !draggable,
+  });
+  const drop = useDroppable({
+    id: droppableId || `inactive-drop:${instanceId}`,
+    disabled: !droppableId,
+  });
+  const setDragNodeRef = drag.setNodeRef;
+  const setDropNodeRef = drop.setNodeRef;
+  const setNodeRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      setDragNodeRef(node);
+      setDropNodeRef(node);
+    },
+    [setDragNodeRef, setDropNodeRef],
+  );
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`${className ?? ""}${drop.isOver ? ` ${dropOverClassName}` : ""}`}
+      style={drag.isDragging ? { ...style, opacity: 0 } : style}
+      {...elementProps}
+      {...(draggable ? drag.listeners : undefined)}
+      {...(draggable ? drag.attributes : undefined)}
+    >
+      {children}
     </div>
   );
 }
@@ -1014,6 +1124,7 @@ function formatPreviewKeyword(rule: string): string {
 function AttachedGear({
   gear,
   side,
+  zone,
   attachedToId,
   offsetPercent,
   fanOffsetPercent,
@@ -1022,6 +1133,7 @@ function AttachedGear({
 }: {
   gear: CardGearAttachment;
   side?: Side;
+  zone?: string;
   attachedToId?: string;
   offsetPercent: number;
   fanOffsetPercent: number;
@@ -1038,6 +1150,7 @@ function AttachedGear({
   const permission = selectablePermission?.permission ?? { kind: "inert" as const };
   const permissionSide = selectablePermission?.side ?? side ?? NO_SIDE;
   const selectable = Boolean(gear.cardId && engineCtx && permission.kind === "selectable");
+  const correctionEnabled = engineCtx?.boardCorrectionEnabled === true;
 
   const resolveGearTarget = () => {
     if (!selectable || !engineCtx || !gear.cardId || permission.kind !== "selectable") {
@@ -1077,30 +1190,8 @@ function AttachedGear({
     resolveGearTarget();
   };
 
-  return (
-    <div
-      className={[classes.gear, selectable ? classes.selectable : ""].filter(Boolean).join(" ")}
-      style={
-        {
-          "--gear-offset": `${offsetPercent}%`,
-          "--gear-fan-x": `${fanOffsetPercent}%`,
-          "--gear-fan-rotation": `${fanRotationDegrees}deg`,
-          "--gear-z-index": zIndex,
-        } as CSSProperties
-      }
-      data-testid="attached-gear"
-      data-card-id={gear.cardId}
-      data-instance-id={gear.cardId}
-      data-definition-id={gear.definitionId}
-      data-card-name={gear.name}
-      data-card-type={gear.cardType}
-      data-card-kind="card"
-      data-attached-to-id={attachedToId}
-      data-entity-id={gear.cardId}
-      data-sim-entity-id={gear.cardId}
-      data-choice-side={selectablePermission?.side}
-      data-choice-type={selectablePermission?.permission.interaction.actionId}
-    >
+  const gearBody = (
+    <>
       <CardImage
         imageUrl={gear.imageUrl}
         alt={gear.name}
@@ -1125,11 +1216,11 @@ function AttachedGear({
           hasSellTag: gear.hasSellTag,
         }}
       />
-      {selectable ? (
+      {selectable || correctionEnabled ? (
         <button
           type="button"
           className={classes.gearHitTarget}
-          aria-label={`Select ${gear.name}`}
+          aria-label={correctionEnabled ? `${gear.name} board correction` : `Select ${gear.name}`}
           data-card-id={gear.cardId}
           data-instance-id={gear.cardId}
           data-definition-id={gear.definitionId}
@@ -1142,8 +1233,61 @@ function AttachedGear({
           onClick={handleGearClick}
         />
       ) : null}
+    </>
+  );
+  const gearClassName = [classes.gear, selectable ? classes.selectable : ""]
+    .filter(Boolean)
+    .join(" ");
+  const gearStyle = {
+    "--gear-offset": `${offsetPercent}%`,
+    "--gear-fan-x": `${fanOffsetPercent}%`,
+    "--gear-fan-rotation": `${fanRotationDegrees}deg`,
+    "--gear-z-index": zIndex,
+  } as CSSProperties;
+  const gearAttrs = {
+    "data-testid": "attached-gear",
+    "data-card-id": gear.cardId,
+    "data-instance-id": gear.cardId,
+    "data-definition-id": gear.definitionId,
+    "data-card-name": gear.name,
+    "data-card-type": gear.cardType,
+    "data-card-kind": "card",
+    "data-attached-to-id": attachedToId,
+    "data-entity-id": gear.cardId,
+    "data-sim-entity-id": gear.cardId,
+    "data-choice-side": selectablePermission?.side,
+    "data-choice-type": selectablePermission?.permission.interaction.actionId,
+  };
+  const zoneRef = attachedGearZoneRef(zone, side);
+  if (gear.cardId && zoneRef) {
+    return (
+      <AnimatedEntityNode
+        entityId={gear.cardId}
+        zoneRef={zoneRef}
+        density="compact"
+        className={gearClassName}
+        style={gearStyle}
+        {...gearAttrs}
+      >
+        {gearBody}
+      </AnimatedEntityNode>
+    );
+  }
+  return (
+    <div className={gearClassName} style={gearStyle} {...gearAttrs}>
+      {gearBody}
     </div>
   );
+}
+
+function attachedGearZoneRef(
+  zone: string | undefined,
+  side: Side | undefined,
+): { kind: "zone"; id: string; ownerId: string } | undefined {
+  if (!zone || !side) return undefined;
+  const id =
+    zone === "p-legends" ? "p-legendArea" : zone === "opp-legends" ? "opp-legendArea" : zone;
+  return { kind: "zone", id, ownerId: String(PLAYER_SIDE_TO_ID[side]) };
 }
 
 function buildAbilityBadges(

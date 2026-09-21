@@ -7,7 +7,7 @@ import {
   op12UrsaShock096,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Ryuma089 } from "../../../../../cards/src/cards/OP14EB04/characters/089-ryuma.ts";
+import { op14eb04Ryuma089 } from "../../../../../cards/src/cards/characters/op14-089-ryuma.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP14-089 Ryuma", () => {

@@ -82,24 +82,35 @@ export const arsenalKeeper: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               kind: "sequence",
               effects: [
                 {
-                  kind: "deal-damage",
-                  source: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "deal-damage",
+                    source: {
+                      kind: "source",
+                    },
+                    recipient: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    amount: 2,
                   },
-                  recipient: {
-                    kind: "champion",
-                    player: "controller",
-                  },
-                  amount: 2,
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "bound",
-                    binding: "target-1",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "durability",
-                  amount: 1,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "bound",
+                      binding: "target-1",
+                    },
+                    counter: "durability",
+                    amount: 1,
+                  },
                 },
               ],
             },

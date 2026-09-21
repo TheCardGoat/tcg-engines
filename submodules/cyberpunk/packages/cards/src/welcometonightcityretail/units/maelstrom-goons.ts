@@ -29,6 +29,7 @@ export const welcomeToNightCityRetailMaelstromGoons = defineCyberpunkCard({
         trigger: "event",
         event: {
           event: "gigStolen",
+          perGig: true,
           player: "friendly",
           target: {
             selector: "gig",

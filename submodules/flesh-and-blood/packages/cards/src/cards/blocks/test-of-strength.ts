@@ -30,6 +30,7 @@ export const testOfStrength = definePitchFamily(fabPitchFamilies["test-of-streng
           prize: {
             type: "create-token",
             token: "gold",
+            creator: "token-controller",
             controller: "winner",
           },
         },

@@ -16,6 +16,7 @@ import type {
   ChooseEffectChoicePrompt,
   ChooseGigsToStealChoicePrompt,
   ChooseTargetChoicePrompt,
+  EffectSourcePrompt,
   RevealDestinationChoicePrompt,
   ScryChoicePrompt,
 } from "../../src/view/player-prompt.ts";
@@ -35,6 +36,7 @@ const stubCtx: DecisionContext = {
               cardName: "Unit 1",
               zone: "hand",
               faceDown: false,
+              revealed: false,
               spent: false,
               damage: 0,
               power: 1,
@@ -47,6 +49,7 @@ const stubCtx: DecisionContext = {
               attachedToId: null,
               hasLag: false,
               hasAttackedThisTurn: false,
+              hasStolenGigThisTurn: false,
               grantedRules: [],
               keywords: [],
               triggerHints: [],
@@ -58,6 +61,7 @@ const stubCtx: DecisionContext = {
               cardName: "Unit 2",
               zone: "hand",
               faceDown: false,
+              revealed: false,
               spent: false,
               damage: 0,
               power: 2,
@@ -70,6 +74,7 @@ const stubCtx: DecisionContext = {
               attachedToId: null,
               hasLag: false,
               hasAttackedThisTurn: false,
+              hasStolenGigThisTurn: false,
               grantedRules: [],
               keywords: [],
               triggerHints: [],
@@ -79,6 +84,9 @@ const stubCtx: DecisionContext = {
         },
         eddies: 0,
         availableEddies: 0,
+        soldThisTurn: false,
+        calledLegendThisTurn: false,
+        calledLegendThisRivalTurn: false,
         gigCount: 0,
         fixerCount: 6,
         streetCred: 0,
@@ -114,6 +122,7 @@ function makeRevealed(
     cardName: id,
     zone: "deck",
     faceDown: false,
+    revealed: false,
     spent: false,
     damage: 0,
     power: 0,
@@ -126,6 +135,7 @@ function makeRevealed(
     attachedToId: null,
     hasLag: false,
     hasAttackedThisTurn: false,
+    hasStolenGigThisTurn: false,
     grantedRules: [],
     keywords: [],
     triggerHints: [],
@@ -161,6 +171,9 @@ function withGigs(p1: FilteredCardView[], p2: FilteredCardView[] = []): Decision
           zones: { gigArea: p2 },
           eddies: 0,
           availableEddies: 0,
+          soldThisTurn: false,
+          calledLegendThisTurn: false,
+          calledLegendThisRivalTurn: false,
           gigCount: p2.length,
           fixerCount: 6,
           streetCred: p2.reduce((total, gig) => total + gig.effectivePower, 0),
@@ -170,9 +183,10 @@ function withGigs(p1: FilteredCardView[], p2: FilteredCardView[] = []): Decision
   };
 }
 
-function colorSource(color: CardColor) {
+function colorSource(color: CardColor): EffectSourcePrompt {
   return {
     cardId: `source-${color}`,
+    controllerId: "p1",
     definitionId: `definition-${color}`,
     displayName: `${color} source`,
     cardType: "program" as const,
@@ -460,7 +474,7 @@ describe("chooseTargetResolver", () => {
     expect(chooseTargetResolver(choice, stubCtx)).toEqual({
       kind: "command",
       move: "resolveAdjustGig",
-      args: { value: 6 },
+      args: { kind: "adjust", dieId: "d-1", value: 6 },
     });
   });
 
@@ -481,7 +495,7 @@ describe("chooseTargetResolver", () => {
     expect(chooseTargetResolver(choice, stubCtx)).toEqual({
       kind: "command",
       move: "resolveAdjustGig",
-      args: { value: 1 },
+      args: { kind: "adjust", dieId: "d-2", value: 1 },
     });
   });
 
@@ -559,8 +573,8 @@ describe("chooseTargetResolver", () => {
 
     expect(chooseTargetResolver(choice, ctx)).toEqual({
       kind: "command",
-      move: "resolveEffectTarget",
-      args: { targetIds: ["large-rival"] },
+      move: "resolveAdjustGig",
+      args: { kind: "adjust", dieId: "large-rival", value: 4 },
     });
   });
 
@@ -693,8 +707,8 @@ describe("chooseTargetResolver", () => {
 
     expect(chooseTargetResolver(choice, ctx)).toEqual({
       kind: "command",
-      move: "resolveEffectTarget",
-      args: { targetIds: ["duplicate"] },
+      move: "resolveAdjustGig",
+      args: { kind: "adjust", dieId: "duplicate", value: 4 },
     });
   });
 
@@ -727,8 +741,8 @@ describe("chooseTargetResolver", () => {
 
     expect(chooseTargetResolver(choice, ctx)).toEqual({
       kind: "command",
-      move: "resolveEffectTarget",
-      args: { targetIds: ["duplicate"] },
+      move: "resolveAdjustGig",
+      args: { kind: "adjust", dieId: "duplicate", value: 4 },
     });
   });
 
@@ -751,8 +765,8 @@ describe("chooseTargetResolver", () => {
 
     expect(chooseTargetResolver(choice, ctx)).toEqual({
       kind: "command",
-      move: "resolveEffectTarget",
-      args: { pass: true },
+      move: "resolveAdjustGig",
+      args: { kind: "noAdjustment" },
     });
   });
 
@@ -893,10 +907,7 @@ describe("simple resolvers", () => {
     }
   });
 
-  test("chooseEffect with options reports stuck pending engine resolver", () => {
-    // CONTRACT(chooseEffect): until a modal-effect card lands, the resolver
-    // is correct to return stuck even when options are populated. The
-    // reason string surfaces the option ids so the failure is debuggable.
+  test("chooseEffect with options selects the first offered effect", () => {
     const choice: ChooseEffectChoicePrompt = {
       type: "chooseEffect",
       chooserId: "p1",
@@ -908,12 +919,11 @@ describe("simple resolvers", () => {
       },
     };
     const result = chooseEffectResolver(choice, stubCtx);
-    expect(result.kind).toBe("stuck");
-    if (result.kind === "stuck") {
-      expect(result.reason).toContain("CONTRACT(chooseEffect)");
-      expect(result.reason).toContain("deal-damage");
-      expect(result.reason).toContain("draw-card");
-    }
+    expect(result).toEqual({
+      kind: "command",
+      move: "resolveChooseEffect",
+      args: { optionId: "deal-damage" },
+    });
   });
 
   test("chooseGigsToSteal picks the highest-face dice (ties broken by id)", () => {
@@ -970,6 +980,9 @@ describe("defaultChoiceResolvers map", () => {
         "chooseTarget",
         "gainGig",
         "preventGigSteal",
+        "redirectDefeat",
+        "chooseSacrificialGear",
+        "chooseFirstPlayer",
         "revealDestination",
         "scry",
       ].sort(),

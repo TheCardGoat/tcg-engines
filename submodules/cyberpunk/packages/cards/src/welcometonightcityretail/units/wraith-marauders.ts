@@ -33,15 +33,11 @@ export const welcomeToNightCityRetailWraithMarauders = defineCyberpunkCard({
         trigger: "event",
         event: {
           event: "gigStolen",
+          perGig: true,
           player: "friendly",
-          target: {
-            selector: "gig",
-            controller: "rival",
-          },
+          target: { selector: "gig", controller: "rival" },
           minAmount: 1,
-          source: {
-            selector: "self",
-          },
+          source: { selector: "self" },
         },
       },
       source: {

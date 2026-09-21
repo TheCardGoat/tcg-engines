@@ -10,20 +10,20 @@ panel resolves an effect.
 Paths below are relative to `apps/multi-game-simulator/src/games/flesh-and-blood/`
 unless noted.
 
-| Layer | Owner | Responsibility |
-| --- | --- | --- |
-| Authoritative stack | `submodules/flesh-and-blood/packages/engine/src/rules/reducers/rules-stack.ts` (repository root) | Adds, removes, and updates native `rulesStack` layers through engine events. |
-| Browser projection | `projection.ts` | Projects actual stack cards and synthetic `rules-stack:<layerId>` entities for abilities; retains controller, source, card art identity, and authoritative ordering. |
-| View model | `combatChainView.ts` | Produces `FabCombatStackEntryView` entries with presentation order and source references. |
-| Composition | `FleshAndBloodTabletop.tsx` | Places stack beside combat; suppresses duplicate display of a lone pending attack already represented in combat. Uses compact presentation for 1–3 entries and detailed presentation for 4+. |
-| Compact inspection | `CompactResolutionStack.tsx` | Count, controller badge, fan expansion, desktop hover/focus previews, mobile tap expansion/preview, Escape/outside dismissal, and center/top/bottom placement. Clears removed previews and collapses on stack identity changes. |
-| Large stacks | `CombatChain.tsx` | Detailed `ResolutionStack` and sidebar stack representations. |
-| Movement | `AnimatedEntityCollection` / `AnimatedEntityListItem` | Shared entity animation integration. |
-| Decisions | `FleshAndBloodTabletop.tsx` → shared `InteractionResolutionPrompt` | Optional choices, targets, and submissions. FAB also supplies its own trigger automation/yield controls. |
+| Layer               | Owner                                                                                            | Responsibility                                                                                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authoritative stack | `submodules/flesh-and-blood/packages/engine/src/rules/reducers/rules-stack.ts` (repository root) | Adds, removes, and updates native `rulesStack` layers through engine events.                                                                                                                                                    |
+| Browser projection  | `projection.ts`                                                                                  | Projects actual stack cards and synthetic `rules-stack:<layerId>` entities for abilities; retains controller, source, card art identity, and authoritative ordering.                                                            |
+| View model          | `combatChainView.ts`                                                                             | Produces `FabCombatStackEntryView` entries with presentation order and source references.                                                                                                                                       |
+| Composition         | `FleshAndBloodTabletop.tsx`                                                                      | Places stack beside combat; suppresses duplicate display of a lone pending attack already represented in combat. Uses compact presentation for 1–3 entries and detailed presentation for 4+.                                    |
+| Compact inspection  | `CompactResolutionStack.tsx`                                                                     | Count, controller badge, fan expansion, desktop hover/focus previews, mobile tap expansion/preview, Escape/outside dismissal, and center/top/bottom placement. Clears removed previews and collapses on stack identity changes. |
+| Large stacks        | `CombatChain.tsx`                                                                                | Detailed `ResolutionStack` and sidebar stack representations.                                                                                                                                                                   |
+| Movement            | `AnimatedEntityCollection` / `AnimatedEntityListItem`                                            | Shared entity animation integration.                                                                                                                                                                                            |
+| Decisions           | `FleshAndBloodTabletop.tsx` → shared `InteractionResolutionPrompt`                               | Optional choices, targets, and submissions. FAB also supplies its own trigger automation/yield controls.                                                                                                                        |
 
 FAB calls the response permission “priority.” CR 1.11.4–5 describes successive
 passes and the absence of priority during resolution. CR 3.15 defines its stack.
-FAB’s compact UI labels the *next* displayed item “layer 1”; that display convention
+FAB’s compact UI labels the _next_ displayed item “layer 1”; that display convention
 must not overwrite GA’s projected layer numbers.
 
 ## Existing GA structure

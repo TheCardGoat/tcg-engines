@@ -93,6 +93,8 @@ export const ravenousRabbleRed = {
             ],
           },
         },
+        displayName:
+          "Triggered Attack Sequence Reveal Modify Numeric Power Reference Pitch This Turn",
       },
     ],
   },
@@ -161,6 +163,7 @@ export const dash = {
         },
         id: "kftPnNkrBLJ7rPmFGgQCm:startGameMechanologistItemCost2LessArena",
         text: "You may start the game with a Mechanologist item with cost 2 or less in the arena.",
+        displayName: "Start Game Mechanologist Item Cost 2 Less Arena",
       },
     ],
   },
@@ -243,6 +246,7 @@ export const cosmicDualityBlue = {
         },
         id: "WhggpfhhBLDnpKwCkjWDk:dealDamageCreateTokenLightningFlowActivation",
         text: "Instant - {r}, discard this: Deal 1 arcane damage to target hero. Create a Lightning Flow token.\nFragment",
+        displayName: "Deal Damage Create Token Lightning Flow Activation",
       },
     ],
   },
@@ -348,6 +352,8 @@ export const zyggyStarlight = {
         },
         id: "pnwGDgknLbHc96Ghg8f67:instantResourceResourceTapDestroyLightningFlowBanishAnotherLightningAuraPermanentNoHoloCountersReturnBanishedAuraArenaHoloCounter",
         text: "Instant - {r}{r}, {t}, destroy a Lightning Flow you control, banish another Lightning aura permanent you control with no holo counters: Return the banished aura to the arena with a holo counter.",
+        displayName:
+          "Instant Resource Resource Tap Destroy Lightning Flow Banish Another Lightning Aura Permanent No Holo Counters Return Banished Aura Arena Holo Counter",
       },
     ],
   },
@@ -465,6 +471,7 @@ export const mightyWindupRed = {
         },
         id: "RGHRQgGJdBhBPgM9Pfgw7:instantDiscardSelfCreateTokenMight",
         text: "Instant - Discard this: Create a Might token.",
+        displayName: "Instant Discard Self Create Token Might",
       },
     ],
   },
@@ -520,6 +527,7 @@ export const agileWindupRed = {
         },
         id: "Rmm8PgnzKNNfLcnKh86jd:createTokenAgilityActivation",
         text: "Instant - Discard this: Create an Agility token.",
+        displayName: "Create Token Agility Activation",
       },
     ],
   },
@@ -575,6 +583,7 @@ export const vigorousWindupRed = {
         },
         id: "6DkjQLNmzwdBmwhfGWTJG:activatedCreateToken",
         text: "Instant - Discard this: Create a Vigor token.",
+        displayName: "Activated Create Token",
       },
     ],
   },
@@ -734,6 +743,7 @@ export const ravenousMeataxe = {
         },
         id: "Kfqdk6PhqBd9tKM8T8hmN:oncePerTurnActionResourceResourceAttack",
         text: "Once per Turn Action - {r}{r}: Attack\nWhenever you attack with Ravenous Meataxe, draw a card then discard a random card. If a card with 6 or more {p} is discarded this way, Ravenous Meataxe gains +2{p} until end of turn.",
+        displayName: "Once Per Turn Action Resource Resource Attack",
       },
       {
         kind: "static",
@@ -808,6 +818,8 @@ export const ravenousMeataxe = {
             ],
           },
         },
+        displayName:
+          "Whenever Attack Ravenous Meataxe Draw Then Discard Random 6 More Power Discarded Way Ravenous Meataxe Gains 2 Power End Turn",
       },
     ],
   },
@@ -945,6 +957,7 @@ export const pilferTheTombBlue = {
         ],
         id: "pQjcMbpRPhTG8DkHftnK9:chooseModes",
         text: "Choose 1 or both;\n\nBanish target instant from an opposing hero's graveyard.\nBanish target yellow card from an opposing hero's graveyard.",
+        displayName: "Choose Modes",
       },
     ],
   },
@@ -1105,6 +1118,7 @@ export const toughAsARokBlue = {
         },
         id: "tcgLRpmfGcfgfDkBwGWbk:haveLessLifeThanEachOtherHeroSBasePowerNumber6Otherwise",
         text: "If you have less {h} than each other hero, this card's base {p} is 6, otherwise it's 0.",
+        displayName: "Have Less Life Than Each Other Hero SBase Power Number 6 Otherwise",
       },
     ],
   },
@@ -1159,6 +1173,7 @@ export const rockyardRodeoBlue = {
         },
         id: "wrwkrjbdCPTBpTKjrQNdJ:powerEqualHighestBasePowerWeapons",
         text: "This card's {p} is equal to the highest base {p} of weapons you control.",
+        displayName: "Power Equal Highest Base Power Weapons",
       },
     ],
   },
@@ -1212,6 +1227,7 @@ export const wreckerRompBlue = {
         },
         id: "nPdtpJ7BgkdccWhMGttWr:additionalCost",
         text: "As an additional cost to play this, discard a random card.",
+        displayName: "Additional Cost",
       },
     ],
   },
@@ -1277,6 +1293,8 @@ export const rok = {
         },
         id: "KrjrwRtnjcK7hNhcBdH9h:oncePerTurnActionResourceResourceResourceAttackActivateRokOnlyNoHand",
         text: "Once per Turn Action - {r}{r}{r}: Attack\nActivate Rok only if you have no cards in hand.\nDamage that would be dealt by Rok can't be prevented.",
+        displayName:
+          "Once Per Turn Action Resource Resource Resource Attack Activate Rok Only No Hand",
       },
       {
         kind: "static",
@@ -1292,6 +1310,7 @@ export const rok = {
         },
         id: "KrjrwRtnjcK7hNhcBdH9h:damageDealtRokCantPrevented",
         text: "Once per Turn Action - {r}{r}{r}: Attack\nActivate Rok only if you have no cards in hand.\nDamage that would be dealt by Rok can't be prevented.",
+        displayName: "Damage Dealt Rok Cant Prevented",
       },
     ],
   },
@@ -1349,6 +1368,7 @@ export const spectralProcessionRed = {
         },
         id: "qt6KzpDJ8JKfc9wNzgbmW:spectralProcessionSPowerEqualNumberSpectralShieldsControl",
         text: "Spectral Procession's {p} is equal to the number of Spectral Shields you control.\nPhantasm",
+        displayName: "Spectral Procession SPower Equal Number Spectral Shields Control",
       },
     ],
   },
@@ -1399,6 +1419,7 @@ export const mutatedMassBlue = {
         },
         id: "Fw7hr8tGFkDbJkJB8Gjhk:playMutatedMassBanishedZone",
         text: "You may play Mutated Mass from your banished zone.\nMutated Mass's {p} and {d} is equal to twice the number of cards in your pitch zone with different costs.\nBlood Debt",
+        displayName: "Play Mutated Mass Banished Zone",
       },
       {
         kind: "static",
@@ -1417,6 +1438,7 @@ export const mutatedMassBlue = {
         },
         id: "Fw7hr8tGFkDbJkJB8Gjhk:mutatedMasssPowerDefenseEqualTwiceNumberPitchZoneDifferentCosts",
         text: "You may play Mutated Mass from your banished zone.\nMutated Mass's {p} and {d} is equal to twice the number of cards in your pitch zone with different costs.\nBlood Debt",
+        displayName: "Mutated Masss Power Defense Equal Twice Number Pitch Zone Different Costs",
       },
       {
         kind: "static",
@@ -1435,6 +1457,8 @@ export const mutatedMassBlue = {
         },
         id: "Fw7hr8tGFkDbJkJB8Gjhk:mutatedMasssPowerDefenseEqualTwiceNumberPitchZoneDifferentCostsPropertyDefenseDoubleCount",
         text: "You may play Mutated Mass from your banished zone.\nMutated Mass's {p} and {d} is equal to twice the number of cards in your pitch zone with different costs.\nBlood Debt",
+        displayName:
+          "Mutated Masss Power Defense Equal Twice Number Pitch Zone Different Costs Property Defense Double Count",
       },
     ],
   },
@@ -1559,6 +1583,7 @@ export const splatterSkull = {
             },
           },
         },
+        displayName: "When Hits Hero Choose Face Down In Their Banished Zone Was Banished",
       },
     ],
   },
@@ -1851,6 +1876,7 @@ export const invokeYenduraiRed = {
           },
           id: "gqTpfTkztdLpN8W6TpRtR:enterWithEnduranceCounter",
           text: "Transform target ash you control into Yendurai. Go again",
+          displayName: "Enter With Endurance Counter",
         },
         {
           kind: "static",
@@ -1875,6 +1901,7 @@ export const invokeYenduraiRed = {
           },
           id: "gqTpfTkztdLpN8W6TpRtR:preventDamageWithEnduranceCounter",
           text: "Transform target ash you control into Yendurai. Go again",
+          displayName: "Prevent Damage With Endurance Counter",
         },
       ],
       numeric: {
@@ -2109,6 +2136,7 @@ export const skullboneCrosswrap = {
         },
         id: "pLT6mqkb86GG9jHh8kFRp:oncePerTurnActionTurnFaceDownArsenalFace",
         text: "Once per Turn Action - Turn a face down card in your arsenal face up: Opt 1. Go again\nArcane Barrier 1\nBlade Break",
+        displayName: "Once Per Turn Action Turn Face Down Arsenal Face",
       },
     ],
   },
@@ -2158,6 +2186,7 @@ export const talismanicLens = {
         },
         id: "JTNgbmMDfnz69RKFpjrrR:instantDestroyTalismanicLensOpt2",
         text: "Instant - Destroy Talismanic Lens: Opt 2",
+        displayName: "Instant Destroy Talismanic Lens Opt 2",
       },
     ],
   },
@@ -2220,6 +2249,7 @@ export const optekalMonocleBlue = {
         },
         id: "6Wcpcb7DQ8GMGMTwjdQTR:optekalMonocleEntersArena5SteamCounters",
         text: "Optekal Monocle enters the arena with 5 steam counters on it. When Optekal Monocle has no steam counters on it, destroy it.\nAction - Remove a steam counter from Optekal Monocle: Opt 1. Go again",
+        displayName: "Optekal Monocle Enters Arena 5 Steam Counters",
       },
       {
         kind: "static",
@@ -2252,6 +2282,7 @@ export const optekalMonocleBlue = {
             },
           },
         },
+        displayName: "Optekal Monocle No Steam Counters Destroy",
       },
       {
         kind: "activated",
@@ -2276,6 +2307,7 @@ export const optekalMonocleBlue = {
         },
         id: "6Wcpcb7DQ8GMGMTwjdQTR:actionRemoveSteamCounterOptekalMonocleOpt1GoAgain",
         text: "Optekal Monocle enters the arena with 5 steam counters on it. When Optekal Monocle has no steam counters on it, destroy it.\nAction - Remove a steam counter from Optekal Monocle: Opt 1. Go again",
+        displayName: "Action Remove Steam Counter Optekal Monocle Opt 1 Go Again",
       },
     ],
   },
@@ -2491,6 +2523,7 @@ export const wageMightBlue = {
             },
           },
         },
+        displayName: "Triggered Static On Attack Effect",
       },
     ],
   },
@@ -2552,6 +2585,7 @@ export const alphaRampageRed = {
         },
         id: "GgDFFHhLh8Kc7tJK8nBLj:asAdditionalCostPlayAlphaRampageDiscardRandom",
         text: "Rhinar Specialization\nAs an additional cost to play Alpha Rampage, discard a random card.\nWhen you attack with Alpha Rampage, intimidate.",
+        displayName: "As Additional Cost Play Alpha Rampage Discard Random",
       },
       {
         kind: "static",
@@ -2588,6 +2622,7 @@ export const alphaRampageRed = {
             target: "opponent",
           },
         },
+        displayName: "When Attack Alpha Rampage Intimidate",
       },
     ],
   },
@@ -2654,6 +2689,7 @@ export const snatchRed = {
             player: "controller",
           },
         },
+        displayName: "Draw On Hit",
       },
     ],
   },
@@ -2799,6 +2835,7 @@ export const braveforgeBracers = {
         },
         id: "GJBb8BW9zTQ8CkGbzFqmN:oncePerTurnActionNextWeaponAttackTurnGains",
         text: "Once per turn Action - {r}: Your next weapon attack this turn gains +1{p}. Activate this ability only if a weapon you control has hit this turn. Go again\nBattleworn",
+        displayName: "Once Per Turn Action Next Weapon Attack Turn Gains",
       },
     ],
   },
@@ -3051,6 +3088,7 @@ export const entwineIceRed = {
         },
         id: "jHLRPPQDpFDLGHJkPKQtz:continuousGrantProperty",
         text: "Ice Fusion\nIf Entwine Ice was fused, it gains dominate.",
+        displayName: "Continuous Grant Property",
       },
     ],
   },
@@ -3172,6 +3210,7 @@ export const holoShieldRed = {
         },
         id: "f9C7rd9WgL9b8bgFMrP9h:wardValue",
         text: "Ward X, where X is 4 if this has a holo counter. Otherwise, X is 1.",
+        displayName: "Ward Value",
       },
     ],
   },
@@ -3255,6 +3294,7 @@ export const leaveNoWitnessesRed = {
             controller: "controller",
           },
         },
+        displayName: "Whenever Complete Contract Create Silver Token",
       },
       {
         kind: "static",
@@ -3310,6 +3350,7 @@ export const leaveNoWitnessesRed = {
             ],
           },
         },
+        displayName: "Hits Banish Top Deck Up 1 Arsenal",
       },
     ],
   },
@@ -3396,6 +3437,7 @@ export const plunderThePoorRed = {
             controller: "controller",
           },
         },
+        displayName: "Triggered Complete Contract Create Token Silver Contract",
       },
       {
         kind: "static",
@@ -3434,6 +3476,7 @@ export const plunderThePoorRed = {
             outputBinding: "banished",
           },
         },
+        displayName: "Triggered Hit Banish",
       },
     ],
   },
@@ -3503,6 +3546,7 @@ export const alphaInstinctBlue = {
             controller: "controller",
           },
         },
+        displayName: "When Is Discarded Beat Chest Create Might Token",
       },
     ],
   },
@@ -3561,6 +3605,7 @@ export const hulkUpBlue = {
         },
         id: "mJKcWjzzzGmbTchphggNT:playLifeComparisonResources",
         text: "If you have less {h} than each other hero, this costs {r} less to play.",
+        displayName: "Play Life Comparison Resources",
       },
     ],
   },
@@ -3624,6 +3669,7 @@ export const windUpTheCrowdBlue = {
         },
         id: "H7QLKkw7fPCLfntKj86qp:instantDiscardCreateToughnessVigorToken",
         text: "Instant - Discard this: Create a Toughness and a Vigor token.",
+        displayName: "Instant Discard Create Toughness Vigor Token",
       },
     ],
   },
@@ -3688,6 +3734,7 @@ export const silverstrideDodgers = {
         },
         id: "qLHCbFDHBQbzKGTTBq8PW:ifControlFlurryTokenGets1",
         text: "If you control a Flurry token, this gets +1{d}.\nTemper",
+        displayName: "If Control Flurry Token Gets 1",
       },
     ],
   },
@@ -3754,6 +3801,7 @@ export const hadronColliderRed = {
         },
         id: "cjBPdpPNhzkzgdRCtKGPG:continuousReplacementEnterArenaAddCounterSteamWhileInArena",
         text: "Crank\nThis enters the arena with 4 steam counters. At the start of your turn, destroy this unless you remove a steam counter from it.\nWhen you boost an attack, destroy this. If you do, the attack gets +X{p}, where X is the number of steam counters on this.",
+        displayName: "Continuous Replacement Enter Arena Add Counter Steam While In Arena",
       },
       {
         kind: "static",
@@ -3796,6 +3844,7 @@ export const hadronColliderRed = {
             },
           },
         },
+        displayName: "Triggered Start Phase Unless Destroy Remove Counters Steam",
       },
       {
         kind: "static",
@@ -3853,6 +3902,7 @@ export const hadronColliderRed = {
             },
           },
         },
+        displayName: "Triggered Boost If You Do Destroy Modify Numeric Power Count Steam This Turn",
       },
     ],
   },
@@ -3909,6 +3959,7 @@ export const dawnblade = {
         },
         id: "NDjHqNJrckK6pjK7LwfMW:oncePerTurnActionResourceAttack",
         text: "Once per Turn Action - {r}: Attack\nThe second time this hits each turn, put a +1{p} counter on it.\nAt the beginning of your end phase, if this hasn't hit this turn, remove all +1{p} counters from it.",
+        displayName: "Once Per Turn Action Resource Attack",
       },
       {
         kind: "static",
@@ -3949,6 +4000,7 @@ export const dawnblade = {
             },
           },
         },
+        displayName: "Second Time Hits Turn Put 1 Power Counter",
       },
       {
         kind: "static",
@@ -3992,6 +4044,7 @@ export const dawnblade = {
             },
           },
         },
+        displayName: "Beginning End Phase Hasnt Hit Turn Remove All 1 Power Counters",
       },
     ],
   },
@@ -4057,6 +4110,7 @@ export const theSuspenseIsKillingMeBlue = {
         },
         id: "RBWKndBPqQHwdWCzPnj8k:firstAttackEachTurnGets1",
         text: "Suspense\nYour first attack each turn gets +1{p}.",
+        displayName: "First Attack Each Turn Gets 1",
       },
     ],
   },
@@ -4179,6 +4233,7 @@ export const indefensiblyHonedBlue = {
                   },
                 },
               },
+              displayName: "Defended 1 More Deal 1 Damage Defending",
             },
           },
           target: {
@@ -4430,6 +4485,7 @@ export const digInYellow = {
             ],
           },
         },
+        displayName: "On Defend Pay Create Token Toughness",
       },
     ],
   },
@@ -4507,6 +4563,7 @@ export const noHeroStandsAloneYellow = {
         },
         id: "FtL6dWRqtnwQzBnQGPRhT:anyZoneToughnessTokenTurnGets3DefenseAmbush",
         text: "While this is in any zone, if you've controlled a Toughness token this turn, this gets +3{d} and ambush.\nWhen this defends, clash with the attacking hero. The winner may choose an attacking or defending card to get -3{p} -3{d} this chain link.",
+        displayName: "Any Zone Toughness Token Turn Gets 3 Defense Ambush",
       },
       {
         kind: "static",
@@ -4589,6 +4646,8 @@ export const noHeroStandsAloneYellow = {
             },
           },
         },
+        displayName:
+          "Defends Clash Attacking Winner Choose Attacking Defending Get 3 Power 3 Defense Chain Link",
       },
     ],
   },
@@ -4669,6 +4728,7 @@ export const tuffnut = {
         },
         id: "wKnhnNTHKHqFfjgdn9LLP:instantTapPitchTopDeck6MorePowerCrowdCheers",
         text: "Instant - {t}: Pitch the top card of your deck. If it has 6 or more {p}, the crowd cheers you.\nWhenever the crowd cheers you, create a Toughness token.",
+        displayName: "Instant Tap Pitch Top Deck 6 More Power Crowd Cheers",
       },
       {
         kind: "static",
@@ -4696,6 +4756,7 @@ export const tuffnut = {
             controller: "controller",
           },
         },
+        displayName: "Whenever Crowd Cheers Create Toughness Token",
       },
     ],
   },
@@ -4781,6 +4842,7 @@ export const toughness = {
             ],
           },
         },
+        displayName: "Increase Next Action Defense",
       },
     ],
   },
@@ -4850,6 +4912,7 @@ export const boltyn = {
         },
         id: "Fmf8trg9w8B8BBbWrf8w9:chargedTurnAttacksGet1PowerDefendedAttackAction",
         text: "If you've charged this turn, your attacks get +1{p} while defended by an attack action card.\nAttack Reaction - Banish a card from Boltyn's soul: Target attack with {p} greater than its base {p} gains go again.",
+        displayName: "Charged Turn Attacks Get 1 Power Defended Attack Action",
       },
       {
         kind: "activated",
@@ -4889,6 +4952,8 @@ export const boltyn = {
         },
         id: "Fmf8trg9w8B8BBbWrf8w9:attackReactionBanishBoltynsSoulTargetAttackPowerGreaterThanBasePowerGainsGoAgain",
         text: "If you've charged this turn, your attacks get +1{p} while defended by an attack action card.\nAttack Reaction - Banish a card from Boltyn's soul: Target attack with {p} greater than its base {p} gains go again.",
+        displayName:
+          "Attack Reaction Banish Boltyns Soul Target Attack Power Greater Than Base Power Gains Go Again",
       },
     ],
   },
@@ -4944,6 +5009,7 @@ export const boltOfCourageRed = {
         },
         id: "qh6Ww9QDjpGFfHG8gJgb7:charge",
         text: "As an additional cost to play Bolt of Courage, you may charge your hero's soul.\nIf you've charged this turn, Bolt of Courage gains \"If this hits, draw a card.\"",
+        displayName: "Charge",
       },
       {
         kind: "resolution",
@@ -4983,6 +5049,7 @@ export const boltOfCourageRed = {
                   player: "controller",
                 },
               },
+              displayName: "Draw Card On Hit",
             },
           },
           target: {
@@ -5050,6 +5117,7 @@ export const beamingBravadoYellow = {
         },
         id: "pWf6dmb99RqhghkdKGgT8:additionalCostStatic",
         text: "As an additional cost to play this, you may charge your hero's soul.\nIf a yellow card is charged this way, this gets +1{p}",
+        displayName: "Additional Cost Static",
       },
       {
         kind: "resolution",
@@ -5234,6 +5302,7 @@ export const battlefieldBeaconYellow = {
             },
           ],
         },
+        displayName: "When Attacks Choose 1 Each Ve Banished From Soul",
       },
     ],
   },
@@ -5289,6 +5358,7 @@ export const expressLightningYellow = {
         },
         id: "DCdPb6ccGkkjwDprnLRPF:additionalCostStatic",
         text: "As an additional cost to play Express Lightning, you may charge your hero's soul.",
+        displayName: "Additional Cost Static",
       },
     ],
   },
@@ -5359,6 +5429,7 @@ export const illuminateYellow = {
             },
           },
         },
+        displayName: "Triggered Hit Move Card",
       },
     ],
   },
@@ -5414,6 +5485,7 @@ export const takeFlightYellow = {
         },
         id: "nQ8twtLDzDb9JFmDCdG7j:playUndefined",
         text: "As an additional cost to play Take Flight, you may charge your hero's soul.\nIf you've charged this turn, Take Flight gains go again.",
+        displayName: "Play Undefined",
       },
       {
         kind: "resolution",
@@ -5512,6 +5584,7 @@ export const courageOfBladehold = {
         },
         id: "cH7LdkrKdFnjP7PLwFDhD:actionDestroyCourageBladeholdSwordAttacksCostLessTurn",
         text: "Action - Destroy Courage of Bladehold: Your sword attacks cost {r} less this turn. Go again\nTemper",
+        displayName: "Action Destroy Courage Bladehold Sword Attacks Cost Less Turn",
       },
     ],
   },
@@ -5634,6 +5707,7 @@ export const cintariSaber = {
         },
         id: "PpwQBBjqmBbgBrKMPbbBr:oncePerTurnActionResourceAttack",
         text: "Once per Turn Action - {r}: Attack\nWhenever Cintari Saber is defended by 1 or more attack action cards, it gains +1{p} until end of turn.",
+        displayName: "Once Per Turn Action Resource Attack",
       },
       {
         kind: "static",
@@ -5679,6 +5753,7 @@ export const cintariSaber = {
             duration: "this-turn",
           },
         },
+        displayName: "Whenever Cintari Saber Defended 1 More Attack Action Gains 1 Power End Turn",
       },
     ],
   },
@@ -5734,6 +5809,7 @@ export const engulfingLightRed = {
         },
         id: "kpbCBbCmP8KqqggdhPRtj:charge",
         text: "As an additional cost to play Engulfing Light, you may charge your hero's soul.\nIf you've charged this turn, Engulfing Light gains \"If this hits, put it into your hero's soul.\"",
+        displayName: "Charge",
       },
       {
         kind: "resolution",
@@ -5777,6 +5853,7 @@ export const engulfingLightRed = {
                   },
                 },
               },
+              displayName: "Move To Soul On Hit",
             },
           },
           target: {
@@ -5844,6 +5921,7 @@ export const engulfingLightYellow = {
         },
         id: "tf7BQQcnH9LR6jFQTKJrC:charge",
         text: "As an additional cost to play Engulfing Light, you may charge your hero's soul.\nIf you've charged this turn, Engulfing Light gains \"If this hits, put it into your hero's soul.\"",
+        displayName: "Charge",
       },
       {
         kind: "resolution",
@@ -5887,6 +5965,7 @@ export const engulfingLightYellow = {
                   },
                 },
               },
+              displayName: "Move To Soul On Hit",
             },
           },
           target: {
@@ -6059,6 +6138,8 @@ export const luminaAscensionYellow = {
                       ],
                     },
                   },
+                  displayName:
+                    "Hits Reveal Top Deck Light Put Heros Soul Gain 1 Life Otherwise Put Bottom Deck",
                 },
               },
               target: {
@@ -6178,6 +6259,7 @@ export const serBoltynBreakerOfDawn = {
         },
         id: "QrKGJL7bHCFKbr9N9MNpm:chargedTurnAttacksGet1PowerDefendedAttackAction",
         text: "If you've charged this turn, your attacks get +1{p} while defended by an attack action card.\nAttack Reaction - Banish a card from Boltyn's soul: Target attack with {p} greater than its base {p} gains go again.",
+        displayName: "Charged Turn Attacks Get 1 Power Defended Attack Action",
       },
       {
         kind: "activated",
@@ -6217,6 +6299,8 @@ export const serBoltynBreakerOfDawn = {
         },
         id: "QrKGJL7bHCFKbr9N9MNpm:attackReactionBanishBoltynsSoulTargetAttackPowerGreaterThanBasePowerGainsGoAgain",
         text: "If you've charged this turn, your attacks get +1{p} while defended by an attack action card.\nAttack Reaction - Banish a card from Boltyn's soul: Target attack with {p} greater than its base {p} gains go again.",
+        displayName:
+          "Attack Reaction Banish Boltyns Soul Target Attack Power Greater Than Base Power Gains Go Again",
       },
     ],
   },
@@ -6289,6 +6373,7 @@ export const snapdragonScalers = {
         },
         id: "gGmbgrQrzhKpFdtcRTF9h:attackReactionDestroyTargetAttackActionCost1Less",
         text: "Attack Reaction - Destroy this: Target attack action card with cost 1 or less gets go again.",
+        displayName: "Attack Reaction Destroy Target Attack Action Cost 1 Less",
       },
     ],
   },
@@ -6463,6 +6548,7 @@ export const spireSnipingRed = {
             ],
           },
         },
+        displayName: "Triggered Static Effect",
       },
     ],
   },
@@ -6534,6 +6620,7 @@ export const barbedCastaway = {
         },
         id: "jPfMCnKDptNbCbp6T96dT:oncePerTurnInstantResourcePutArrowHandFaceUpArsenal",
         text: "Once per Turn Instant - {r}: You may put an arrow card from your hand face up into your arsenal.\nOnce per Turn Instant - {r}: You may turn a face down arrow in your arsenal face up. If you do, put an aim counter on it.",
+        displayName: "Once Per Turn Instant Resource Put Arrow Hand Face Up Arsenal",
       },
       {
         kind: "activated",
@@ -6581,6 +6668,8 @@ export const barbedCastaway = {
         },
         id: "jPfMCnKDptNbCbp6T96dT:oncePerTurnInstantResourceTurnFaceDownArrowArsenalFaceUpPutAimCounter",
         text: "Once per Turn Instant - {r}: You may put an arrow card from your hand face up into your arsenal.\nOnce per Turn Instant - {r}: You may turn a face down arrow in your arsenal face up. If you do, put an aim counter on it.",
+        displayName:
+          "Once Per Turn Instant Resource Turn Face Down Arrow Arsenal Face Up Put Aim Counter",
       },
     ],
   },
@@ -6891,6 +6980,7 @@ export const arakni = {
             },
           },
         },
+        displayName: "Whenever Play Contract Look Top Target Opponents Deck Put Bottom",
       },
     ],
   },
@@ -6948,6 +7038,7 @@ export const malignRed = {
         },
         id: "dhMB8PhdHndJLzwgtF9t7:continuousRuleModificationRestrictBePreventedMalignPermanent",
         text: "Stealth\nDamage that would be dealt by Malign can't be prevented.",
+        displayName: "Continuous Rule Modification Restrict Be Prevented Malign Permanent",
       },
     ],
   },
@@ -7068,6 +7159,8 @@ export const azaleaAceInTheHole = {
         },
         id: "PTFnJCdhWD9cFgMMNPqQj:oncePerTurnAction0PutArsenalBottomDeckPutTopDeckFaceUpArsenalArrowGainsDominateEndTurnGoAgain",
         text: "Once per Turn Action - 0: Put a card from your arsenal on the bottom of your deck. If you do, put the top card of your deck face up into your arsenal. If it's an arrow card, it gains dominate until end of turn. Go again",
+        displayName:
+          "Once Per Turn Action 0 Put Arsenal Bottom Deck Put Top Deck Face Up Arsenal Arrow Gains Dominate End Turn Go Again",
       },
     ],
   },
@@ -7158,6 +7251,7 @@ export const becomeTheBottleRed = {
             ],
           },
         },
+        displayName: "On Attack Grant Property",
       },
     ],
   },
@@ -7438,6 +7532,8 @@ export const retraceThePastBlue = {
             ],
           },
         },
+        displayName:
+          "Attacks Gustwave Name Last Attack Combat Chain Name Then Gets Name 2 Power Go Again",
       },
     ],
   },
@@ -7527,6 +7623,7 @@ export const tigrineReflexRed = {
           type: "last-attack-this-combat-chain",
           names: ["Crouching Tiger"],
         },
+        displayName: "Combo Static",
       },
       {
         kind: "activated",
@@ -7569,6 +7666,8 @@ export const tigrineReflexRed = {
         },
         id: "DmG6qBFhfRpqfBGbC8dnG:attackReactionDiscardNinjaAttackGetsNumber1PowerCreateCrouchingTigerIn",
         text: "Combo - If Crouching Tiger was the last attack this combat chain, this gets +1{p} and go again.\nAttack Reaction - Discard this: Target Ninja attack gets +1{p}. Create a Crouching Tiger in your hand.",
+        displayName:
+          "Attack Reaction Discard Ninja Attack Gets Number 1 Power Create Crouching Tiger In",
       },
     ],
   },
@@ -7671,6 +7770,7 @@ export const whelmingGustwaveRed = {
                       player: "controller",
                     },
                   },
+                  displayName: "Triggered Static On Hit Effect",
                 },
               },
               target: {
@@ -7750,6 +7850,7 @@ export const iraCrimsonHaze = {
         },
         id: "GCRQMpBtqBHWrk68GqnGP:secondAttackTurnGets1Power",
         text: "Your second attack each turn gets +1{p}.",
+        displayName: "Second Attack Turn Gets 1 Power",
       },
     ],
   },
@@ -7869,6 +7970,8 @@ export const katsu = {
             },
           },
         },
+        displayName:
+          "First Time Attack Action Hits Turn Discard Cost 0 Search Deck Combo Banish Face Up Then Shuffle Deck Play Turn",
       },
     ],
   },
@@ -7956,6 +8059,7 @@ export const blessingOfThemisYellow = {
             ],
           },
         },
+        displayName: "When Enters Arena Name Turn All Name Banished Zones",
       },
       {
         kind: "static",
@@ -7992,6 +8096,7 @@ export const blessingOfThemisYellow = {
             },
           },
         },
+        displayName: "Whenever Name Is Banished While Is Arena Turn Face",
       },
       {
         kind: "static",
@@ -8023,6 +8128,7 @@ export const blessingOfThemisYellow = {
             },
           },
         },
+        displayName: "At Start Turn Put Into Soul",
       },
     ],
   },
@@ -8105,6 +8211,7 @@ export const censorRed = {
             ],
           },
         },
+        displayName: "When Hits Hero Name They Can TPlay Named",
       },
     ],
   },
@@ -8208,6 +8315,7 @@ export const chainsOfEminenceRed = {
             ],
           },
         },
+        displayName: "When Chains Eminence Enters Arena Name Named Can T",
       },
       {
         kind: "static",
@@ -8236,6 +8344,7 @@ export const chainsOfEminenceRed = {
             },
           },
         },
+        displayName: "At Beginning Action Phase Destroy Chains Eminence",
       },
     ],
   },
@@ -8334,6 +8443,7 @@ export const headLeadsTheTailRed = {
             ],
           },
         },
+        displayName: "Attacks Name Another Attack Action Name 1 Power Combat Chain",
       },
     ],
   },
@@ -8426,6 +8536,8 @@ export const imperialEdictRed = {
         },
         id: "rFBm6FppdwTJDPRbrgqcg:actionDestroyImperialEdictNameNamedCantPlayedStartNextTurnRoyalInsteadOpponentRevealsHandThenNameGoAgain",
         text: "Legendary\nAction - Destroy Imperial Edict: Name a card. The named card can't be played until the start of your next turn. If you are Royal, instead each opponent reveals their hand, then name a card. Go again",
+        displayName:
+          "Action Destroy Imperial Edict Name Named Cant Played Start Next Turn Royal Instead Opponent Reveals Hand Then Name Go Again",
       },
     ],
   },
@@ -8481,6 +8593,7 @@ export const leaveEmSpeechlessBlue = {
         },
         id: "FB7cMqjrQpWQqFhmPn7Hk:moreLifeThanOtherPlayThoughWereInstant",
         text: "If you have more {h} than each other hero, you may play this as though it were an instant.\nWhen this enters the arena, name a card. The named card can't be played from hand while this is in the arena.\nAt the beginning of your action phase, destroy this.",
+        displayName: "More Life Than Other Play Though Were Instant",
       },
       {
         kind: "static",
@@ -8522,6 +8635,7 @@ export const leaveEmSpeechlessBlue = {
             ],
           },
         },
+        displayName: "Enters Arena Name Named Cant Played Hand Arena",
       },
       {
         kind: "static",
@@ -8550,6 +8664,7 @@ export const leaveEmSpeechlessBlue = {
             },
           },
         },
+        displayName: "Beginning Action Phase Destroy",
       },
     ],
   },
@@ -8616,6 +8731,7 @@ export const nullTimeZoneBlue = {
         },
         id: "gtRTcjNQwPdRpHrndrhMq:entersArena2SteamCounters",
         text: "Crank\nThis enters the arena with 2 steam counters. At the start of your turn, destroy this unless you remove a steam counter from it.\nWhen this enters the arena, name a card. The named card can't be pitched or played from hand while this is in the arena.",
+        displayName: "Enters Arena 2 Steam Counters",
       },
       {
         kind: "static",
@@ -8658,6 +8774,7 @@ export const nullTimeZoneBlue = {
             },
           },
         },
+        displayName: "Start Turn Destroy Unless Remove Steam Counter",
       },
       {
         kind: "static",
@@ -8714,6 +8831,7 @@ export const nullTimeZoneBlue = {
             ],
           },
         },
+        displayName: "Enters Arena Name Named Cant Pitched Played Hand Arena",
       },
     ],
   },
@@ -8808,6 +8926,7 @@ export const phantasmalSymbiosisYellow = {
             ],
           },
         },
+        displayName: "Attacks Name Name Illusionist End Turn",
       },
     ],
   },
@@ -9017,6 +9136,7 @@ export const shapelessFormBlue = {
             ],
           },
         },
+        displayName: "Whenever Play Attack Action With Ephemeral Choose Name Gets Chosen Name",
       },
     ],
   },
@@ -9240,6 +9360,7 @@ export const talismanOfCremationBlue = {
             ],
           },
         },
+        displayName: "When Play From Banished Zone Destroy Talisman Cremation Name Banish All With",
       },
     ],
   },
@@ -9369,6 +9490,7 @@ export const hunterOrHuntedBlue = {
             ],
           },
         },
+        displayName: "Name And Banish Cards",
       },
       {
         kind: "static",
@@ -9390,6 +9512,7 @@ export const hunterOrHuntedBlue = {
         },
         id: "9ktNWqbdPNrBJPNnCQCgb:chosenNameContract",
         text: "When this defends, name a card. The attacking hero reveals the top card of their deck. If it's the named card, banish it, search their hand, deck, and arsenal for up to 3 cards with that name and banish them, then they shuffle.\nContract - While this is defending, you are contracted to banish opponents' cards with the chosen name. Whenever you complete this contract, create a Silver token.",
+        displayName: "Chosen Name Contract",
       },
       {
         kind: "static",
@@ -9423,6 +9546,7 @@ export const hunterOrHuntedBlue = {
             controller: "controller",
           },
         },
+        displayName: "Create Silver On Contract",
       },
     ],
   },
@@ -9509,6 +9633,7 @@ export const maskOfManyFaces = {
         },
         id: "7qrdPcNmtPt9HN6TQHNJR:instantDestroyMaskManyFacesNameNextAttackAction",
         text: "Instant - {r}, destroy Mask of Many Faces: Name a card. The next attack action card you play this turn gains that name.\nBlade Break",
+        displayName: "Instant Destroy Mask Many Faces Name Next Attack Action",
       },
     ],
   },
@@ -9637,6 +9762,7 @@ export const benjiThePiercingWind = {
         },
         id: "HT8r8mg8rHmbWJthCFHfH:attackAction2LessPowerCantDefendedHand",
         text: "Your attack action cards with 2 or less {p} can't be defended by cards from hand.\nThe first time an attack action card you control hits each turn, your next attack gains +1{p}.",
+        displayName: "Attack Action 2 Less Power Cant Defended Hand",
       },
       {
         kind: "static",
@@ -9690,6 +9816,7 @@ export const benjiThePiercingWind = {
             },
           },
         },
+        displayName: "First Time Attack Action Hits Turn Next Attack Gains 1 Power",
       },
     ],
   },
@@ -9777,6 +9904,8 @@ export const bravoShowstopper = {
         },
         id: "NtLDgPBR7HqDqhDzJMHmk:actionResourceResourceEndTurnAttackActionCost3GreaterGainsDominateGoAgain",
         text: "Action - {r}{r}: Until end of turn, your attack action cards with cost 3 or greater gains dominate. Go again",
+        displayName:
+          "Action Resource Resource End Turn Attack Action Cost 3 Greater Gains Dominate Go Again",
       },
     ],
   },
@@ -9828,6 +9957,7 @@ export const emperorDracaiOfAesir = {
         },
         id: "QgqNQGbtcF6NNBMDbDMhh:allowOnlyRedCardsInDeck",
         text: "You may only have red cards in your deck.\nAction - {r}{r}{r}: Search your deck for Command and Conquer, attack with it, then shuffle.",
+        displayName: "Allow Only Red Cards In Deck",
       },
       {
         kind: "activated",
@@ -9872,6 +10002,8 @@ export const emperorDracaiOfAesir = {
         },
         id: "QgqNQGbtcF6NNBMDbDMhh:actionResourceResourceResourceSearchDeckCommandConquerAttackThenShuffle",
         text: "You may only have red cards in your deck.\nAction - {r}{r}{r}: Search your deck for Command and Conquer, attack with it, then shuffle.",
+        displayName:
+          "Action Resource Resource Resource Search Deck Command Conquer Attack Then Shuffle",
       },
     ],
   },
@@ -9940,6 +10072,8 @@ export const prism = {
         },
         id: "NGkHQHjzkFqfmGLKmRCpj:oncePerTurnInstantResourceResourceBanishPrismsSoulCreateSpectralShieldToken",
         text: "Once per Turn Instant - {r}{r}, banish a card from Prism's soul: Create a Spectral Shield token.",
+        displayName:
+          "Once Per Turn Instant Resource Resource Banish Prisms Soul Create Spectral Shield Token",
       },
     ],
   },
@@ -9991,6 +10125,7 @@ export const shiyanaDiamondGemini = {
         },
         id: "n9r77QwMzdWJmnfhPLN9J:specializationAnyDeck",
         text: 'You may have specialization cards of any hero in your deck.\nAt the beginning of your action phase, Shiyana becomes a copy of target hero until the start of your next turn, and gains "Cards you own are the class of your hero in addition to their other class types."',
+        displayName: "Specialization Any Deck",
       },
       {
         kind: "static",
@@ -10063,6 +10198,7 @@ export const shiyanaDiamondGemini = {
                       },
                       duration: "while-condition",
                     },
+                    displayName: "Class Addition Other Class Types",
                   },
                 },
                 target: {
@@ -10073,6 +10209,8 @@ export const shiyanaDiamondGemini = {
             ],
           },
         },
+        displayName:
+          "Beginning Action Phase Shiyana Becomes Copy Target Start Next Turn Gains Class Addition Other Class Types",
       },
     ],
   },
@@ -10124,6 +10262,7 @@ export const teklovossen = {
         },
         id: "6PPFnJ8tNtPKN6Km7NWpp:playEvosBanishedZone",
         text: "You may play Evos from your banished zone.\nOnce per Turn Instant - {r}{r}{r}: You may play your next Evo this turn as though it were an instant. When you do, draw a card.",
+        displayName: "Play Evos Banished Zone",
       },
       {
         kind: "activated",
@@ -10199,6 +10338,8 @@ export const teklovossen = {
         },
         id: "6PPFnJ8tNtPKN6Km7NWpp:oncePerTurnInstantResourceResourceResourcePlayNextEvoTurnThoughWereInstantDraw",
         text: "You may play Evos from your banished zone.\nOnce per Turn Instant - {r}{r}{r}: You may play your next Evo this turn as though it were an instant. When you do, draw a card.",
+        displayName:
+          "Once Per Turn Instant Resource Resource Resource Play Next Evo Turn Though Were Instant Draw",
       },
     ],
   },
@@ -10288,6 +10429,134 @@ export const zen = {
         },
         id: "7FHM67fkfjCjzwWzKfFKH:oncePerTurnInstantChiChiChiCreateCrouchingTigerHandSearchDeckComboBanishThenShufflePlayTurn",
         text: "Once per Turn Instant - {c}{c}{c}: Create a Crouching Tiger in your hand. Search your deck for a card with combo, banish it, then shuffle. You may play it this turn.",
+        displayName:
+          "Once Per Turn Instant Chi Chi Chi Create Crouching Tiger Hand Search Deck Combo Banish Then Shuffle Play Turn",
+      },
+    ],
+  },
+} as const satisfies FleshAndBloodCard;
+
+export const warmongerSDiplomacyBlue = {
+  canonicalId: "BkpMHRn6L8dpcgjgrPm9H",
+  slug: "warmonger-s-diplomacy-blue",
+  layout: {
+    kind: "single",
+  },
+  base: {
+    names: ["Warmonger's Diplomacy"],
+    activeFaceIds: ["BkpMHRn6L8dpcgjgrPm9H:face:front"],
+    color: "blue",
+    typeBoxes: [
+      {
+        metatypes: [],
+        supertypes: [],
+        types: ["Action"],
+        subtypes: [],
+      },
+    ],
+    typeBox: {
+      metatypes: [],
+      supertypes: [],
+      types: ["Action"],
+      subtypes: [],
+    },
+    traits: [],
+    textBoxIds: ["BkpMHRn6L8dpcgjgrPm9H"],
+    numeric: {
+      pitch: 3,
+      cost: 0,
+      defense: 3,
+    },
+    keywords: [],
+    abilities: [
+      {
+        kind: "resolution",
+        effect: {
+          type: "for-each",
+          target: {
+            selector: "each-hero",
+          },
+          effect: {
+            type: "sequence",
+            steps: [
+              {
+                type: "choose-option",
+                options: ["war", "peace"],
+                chooser: "iteration-subject",
+              },
+              {
+                type: "conditional",
+                condition: {
+                  type: "has-status",
+                  status: "chose-war",
+                },
+                then: {
+                  type: "rule-modification",
+                  mode: "require",
+                  action: "play",
+                  filter: {
+                    or: [
+                      {
+                        typeBox: {
+                          types: ["Weapon"],
+                        },
+                      },
+                      {
+                        and: [
+                          {
+                            typeBox: {
+                              types: ["Action"],
+                            },
+                          },
+                          {
+                            typeBox: {
+                              subtypes: ["Attack"],
+                            },
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  duration: "until-end-of-own-next-turn",
+                },
+              },
+              {
+                type: "conditional",
+                condition: {
+                  type: "has-status",
+                  status: "chose-peace",
+                },
+                then: {
+                  type: "rule-modification",
+                  mode: "require",
+                  action: "play",
+                  filter: {
+                    and: [
+                      {
+                        typeBox: {
+                          types: ["Action"],
+                        },
+                      },
+                      {
+                        typeBox: {
+                          excludeSubtypes: ["Attack"],
+                        },
+                      },
+                      {
+                        typeBox: {
+                          excludeTypes: ["Weapon"],
+                        },
+                      },
+                    ],
+                  },
+                  duration: "until-end-of-own-next-turn",
+                },
+              },
+            ],
+          },
+        },
+        id: "BkpMHRn6L8dpcgjgrPm9H:startingWithHeroLeftEachHeroChoosesWarPeaceTheyChooseWar",
+        text: "Starting with the hero to your left, each hero chooses war or peace.\nIf they choose war, the only actions they may play or activate during their next turn are weapon and attack actions.\nIf they choose peace, the only actions they may play or activate during their next turn are non-weapon non-attack actions.",
       },
     ],
   },

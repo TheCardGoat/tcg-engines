@@ -19,7 +19,8 @@ const exportedCards = Object.values(cardExports as Record<string, unknown>).filt
   isCardDefinition,
 );
 const cardsSourceRoot = join(dirname(fileURLToPath(import.meta.url)), "../../cards/src/cards");
-const legacyBundledSourceFiles = [join(cardsSourceRoot, "ST01/index.ts")];
+// Shared authoring helpers for the ST01 starter deck are not definitions.
+const nonDefinitionFiles = new Set([join(cardsSourceRoot, "st01-helpers.ts")]);
 
 function cardSourceFiles(directory: string): string[] {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -30,7 +31,8 @@ function cardSourceFiles(directory: string): string[] {
     if (
       !entry.name.endsWith(".ts") ||
       entry.name.endsWith(".i18n.ts") ||
-      entry.name === "index.ts"
+      entry.name === "index.ts" ||
+      nonDefinitionFiles.has(path)
     ) {
       return [];
     }
@@ -39,9 +41,8 @@ function cardSourceFiles(directory: string): string[] {
 }
 
 describe("card ability coverage inventory", () => {
-  test("exports every standalone and legacy-bundled card definition exactly once", async () => {
-    const standaloneSourceFiles = cardSourceFiles(cardsSourceRoot);
-    const sourceFiles = [...standaloneSourceFiles, ...legacyBundledSourceFiles];
+  test("exports every canonical card definition exactly once", async () => {
+    const sourceFiles = cardSourceFiles(cardsSourceRoot);
     const cardDefinitionsByFile = await Promise.all(
       sourceFiles.map(async (sourceFile) => {
         const module = (await import(pathToFileURL(sourceFile).href)) as Record<string, unknown>;
@@ -49,16 +50,7 @@ describe("card ability coverage inventory", () => {
       }),
     );
 
-    expect(
-      cardDefinitionsByFile
-        .slice(0, standaloneSourceFiles.length)
-        .every((definitions) => definitions.length === 1),
-    ).toBe(true);
-    expect(
-      cardDefinitionsByFile
-        .slice(standaloneSourceFiles.length)
-        .every((definitions) => definitions.length > 1),
-    ).toBe(true);
+    expect(cardDefinitionsByFile.every((definitions) => definitions.length === 1)).toBe(true);
 
     const sourceCardIds = cardDefinitionsByFile.flat().map((card) => card.id);
     const exportedCardIds = exportedCards.map((card) => card.id);

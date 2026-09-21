@@ -22,8 +22,12 @@ const ENGINE_PHASE_TO_LOCAL: Record<string, Phase> = {
 export function GameStateProvider({ children }: { children: ReactNode }) {
   const engine = useEngineOptional();
 
+  const matchState = engine?.matchState;
+  const dispatch = engine?.dispatch;
+  const activeSide = engine?.activeSide;
+  const prioritySide = engine?.prioritySide;
   const value = useMemo<GameState>(() => {
-    if (!engine) {
+    if (!matchState || !dispatch || !activeSide || !prioritySide) {
       return {
         activeSide: "player",
         prioritySide: "player",
@@ -36,11 +40,8 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
         advancePhase: () => {},
       };
     }
-    const matchState = engine.matchState;
     const turnNumber = matchState.G.turnMetadata.turnNumber;
     const phase = ENGINE_PHASE_TO_LOCAL[matchState.G.gamePhase] ?? "MAIN";
-    const activeSide = engine.activeSide;
-    const prioritySide = engine.prioritySide;
     const winnerId = matchState.G.winnerId;
     const winnerSide = winnerId ? (PLAYER_ID_TO_SIDE[winnerId] ?? null) : null;
     return {
@@ -55,10 +56,10 @@ export function GameStateProvider({ children }: { children: ReactNode }) {
       turnNumber,
       advancePhase: () => {
         const asPlayer = PLAYER_SIDE_TO_ID[activeSide];
-        engine.dispatch({ type: "passPhase", as: asPlayer });
+        dispatch({ type: "passPhase", as: asPlayer });
       },
     };
-  }, [engine]);
+  }, [matchState, dispatch, activeSide, prioritySide]);
 
   return <GameStateContext.Provider value={value}>{children}</GameStateContext.Provider>;
 }

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op08CharlotteOpera102 } from "../../../../../cards/src/cards/OP08/characters/102-charlotte-opera.ts";
+import { op08CharlotteOpera102 } from "../../../../../cards/src/cards/characters/op08-102-charlotte-opera.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP08-102 Charlotte Opera", () => {

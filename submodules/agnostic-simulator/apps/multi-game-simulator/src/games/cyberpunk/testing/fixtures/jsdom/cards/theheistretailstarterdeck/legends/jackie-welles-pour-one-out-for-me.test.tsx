@@ -44,7 +44,7 @@ describe("Jackie Welles - Pour One Out For Me (The Heist) jsdom behavior", () =>
       await pom.attachGearFromHand(gear.instanceId, host.instanceId, CYBERPUNK_P1);
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
-      await pom.resolveAdjustGig(1, CYBERPUNK_P1);
+      await pom.resolveAdjustGig(gig.id, 1, CYBERPUNK_P1);
 
       await pom.expectGigValue(gig.id, 1);
       await pom.expectHandSize(CYBERPUNK_P1, 2);
@@ -121,7 +121,7 @@ describe("Jackie Welles - Pour One Out For Me (The Heist) jsdom behavior", () =>
       await pom.attachGearFromHand(gear.instanceId, host.instanceId, CYBERPUNK_P1);
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
-      await pom.resolveAdjustGig(1, CYBERPUNK_P1);
+      await pom.resolveAdjustGig(gig.id, 1, CYBERPUNK_P1);
 
       await pom.expectGigValue(gig.id, 1);
       await pom.expectFieldCardAttachedGearCount(CYBERPUNK_P1, host.instanceId, 1);

@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import type { CardEffects, EventCard, StageCard } from "@tcg/op-types";
@@ -37,32 +37,16 @@ function parseArgs(args: string[]): CliOptions {
 
 function definitionFiles(cardType: AuditedType): string[] {
   const plural = cardType === "event" ? "events" : "stages";
-  const files: string[] = [];
-  for (const setEntry of readdirSync(CARDS_DIR, { withFileTypes: true })) {
-    if (!setEntry.isDirectory()) continue;
-    const setDirectory = join(CARDS_DIR, setEntry.name);
-    const directory = join(setDirectory, plural);
-    if (existsSync(directory)) {
-      for (const entry of readdirSync(directory, { withFileTypes: true })) {
-        if (
-          entry.isFile() &&
-          entry.name.endsWith(".ts") &&
-          !entry.name.endsWith(".i18n.ts") &&
-          entry.name !== "index.ts"
-        ) {
-          files.push(join(directory, entry.name));
-        }
-      }
-    }
-    const legacyIndex = join(setDirectory, "index.ts");
-    if (
-      existsSync(legacyIndex) &&
-      readFileSync(legacyIndex, "utf8").includes(`cardType: "${cardType}"`)
-    ) {
-      files.push(legacyIndex);
-    }
-  }
-  return files;
+  const directory = join(CARDS_DIR, plural);
+  return readdirSync(directory, { withFileTypes: true })
+    .filter(
+      (entry) =>
+        entry.isFile() &&
+        entry.name.endsWith(".ts") &&
+        !entry.name.endsWith(".i18n.ts") &&
+        entry.name !== "index.ts",
+    )
+    .map((entry) => join(directory, entry.name));
 }
 
 function findCardFile(cardType: AuditedType, cardId: string): string {

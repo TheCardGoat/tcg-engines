@@ -13,6 +13,42 @@ import { GrandArchiveTabletop } from "./GrandArchiveTabletop";
 afterEach(cleanup);
 
 describe("Grand Archive tabletop", () => {
+  it("shows art on the field and the exact full printing in inspection", () => {
+    const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES.find((entry) => entry.id === "art-only")!;
+    const entity = fixture.entities.find(
+      (entry) => entry.dataAttributes?.["data-ga-art-only"] === true,
+    )!;
+    expect(entity.imageAspectRatio).toBe(446 / 396);
+    const fullArt = fixture.entities.find(
+      (entry) =>
+        entry.dataAttributes?.["data-zone-id"] === "p2:field" &&
+        entry.imageUrl?.includes("/assets/full/"),
+    )!;
+    expect(fullArt).toBeTruthy();
+    expect(fullArt.imageAspectRatio).toBeLessThan(1);
+    expect(fullArt.dataAttributes?.["data-ga-art-only"]).toBeUndefined();
+
+    const { container } = render(
+      <GrandArchiveSimulatorProviders>
+        <GrandArchiveTabletop fixture={fixture} />
+      </GrandArchiveSimulatorProviders>,
+    );
+    const card = container.querySelector<HTMLElement>(`[data-sim-entity-id="${entity.id}"]`)!;
+    expect(card.querySelector("img")?.getAttribute("src")).toBe(entity.imageUrl);
+    expect(entity.imageUrl).toContain("/assets/board/");
+    expect(card.closest(".ga-role-card")?.textContent).toContain(entity.title);
+    fireEvent.focus(card);
+    expect(screen.getByTestId("ga-card-preview").querySelector("img")?.getAttribute("src")).toBe(
+      entity.dataAttributes?.["data-ga-printed-image-url"],
+    );
+    expect(
+      screen.getByTestId("ga-card-preview").querySelector("img")?.getAttribute("src"),
+    ).toContain("/assets/full/");
+    expect(
+      container.querySelector('[data-sim-zone-id="p1:hand"] img[src*="/assets/board/"]'),
+    ).toBeNull();
+  });
+
   it("renders the sidebar beside both player hands", () => {
     const fixture = GRAND_ARCHIVE_VISUAL_FIXTURES[0]!;
     render(

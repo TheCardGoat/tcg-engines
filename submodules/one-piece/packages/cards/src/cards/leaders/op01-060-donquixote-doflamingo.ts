@@ -1,0 +1,114 @@
+import type { LeaderCard } from "@tcg/op-types";
+import { op01DonquixoteDoflamingo060I18n } from "./op01-060-donquixote-doflamingo.i18n.ts";
+
+export const op01DonquixoteDoflamingo060: LeaderCard = {
+  id: "OP01-060",
+  canonicalId: "OP01-060",
+  slug: "donquixote-doflamingo/op01-060",
+  name: "Donquixote Doflamingo",
+  printings: [
+    {
+      id: "OP01-060",
+      artId: "OP01-060",
+      setCode: "OP01",
+      collectorNumber: "060",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP01-060.jpg",
+    },
+    {
+      id: "OP01-060_p1",
+      artId: "OP01-060_p1",
+      setCode: "OP01",
+      collectorNumber: "060",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP01-060_p1.jpg",
+    },
+  ],
+  cardType: "leader",
+  color: ["blue"],
+  rarity: "L",
+  setId: "OP01",
+  power: 5000,
+  life: 5,
+  traits: ["Donquixote Pirates The Seven Warlords of the Sea"],
+  attribute: "special",
+  effect:
+    '[DON!! x2] [When Attacking] (1) (You may rest the specified number of DON!! cards in your cost area.): Reveal 1 card from the top of your deck. If that card is a "The Seven Warlords of the Sea" type Character card with a cost of 4 or less, you may play that card rested.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 2,
+          },
+        ],
+        costs: [
+          {
+            cost: "restDon",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "revealTopDeckCard",
+            player: "self",
+            conditional: {
+              filters: [
+                {
+                  filter: "cardCategory",
+                  value: "character",
+                },
+                {
+                  filter: "trait",
+                  value: "The Seven Warlords of the Sea",
+                  match: "includes",
+                },
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+              actions: [
+                {
+                  action: "play",
+                  source: {
+                    player: "self",
+                    zone: "deck",
+                  },
+                  count: {
+                    amount: 1,
+                    upTo: true,
+                  },
+                  filters: [
+                    {
+                      filter: "cardCategory",
+                      value: "character",
+                    },
+                    {
+                      filter: "trait",
+                      value: "The Seven Warlords of the Sea",
+                      match: "includes",
+                    },
+                    {
+                      filter: "cost",
+                      comparison: "lte",
+                      value: 4,
+                    },
+                  ],
+                  playState: "rested",
+                  topOnly: true,
+                },
+              ],
+            },
+            finalPosition: "top",
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op01DonquixoteDoflamingo060I18n,
+};

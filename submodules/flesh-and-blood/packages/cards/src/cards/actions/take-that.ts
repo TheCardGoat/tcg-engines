@@ -27,6 +27,7 @@ export const takeThat = definePitchFamily(fabPitchFamilies["take-that"], {
         effect: {
           type: "create-token",
           token: "might",
+          creator: "token-controller",
           controller: "defending-hero",
         },
       },

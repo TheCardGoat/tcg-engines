@@ -23,6 +23,27 @@ describe("parseDeckListText", () => {
     ]);
   });
 
+  it("accepts the Nx multiplier prefix and mixes it with bare counts", () => {
+    const text = `
+3x Johnny Silverhand: Never Stop Fighting
+2x V: Streetkid
+1 Swordwise Huscle
+`;
+    expect(parseDeckListText(text)).toEqual([
+      { quantity: 3, cardName: "Johnny Silverhand: Never Stop Fighting" },
+      { quantity: 2, cardName: "V: Streetkid" },
+      { quantity: 1, cardName: "Swordwise Huscle" },
+    ]);
+  });
+
+  it("requires a space between the count and name even with the x multiplier", () => {
+    const text = `
+3xNo Space Card
+4x Spaced Card
+`;
+    expect(parseDeckListText(text)).toEqual([{ quantity: 4, cardName: "Spaced Card" }]);
+  });
+
   it("merges main and sideboard; ignores maybeboard", () => {
     const text = `
 4 Card A
@@ -133,7 +154,9 @@ describe("parseDeckListTextWithErrors", () => {
 2 Vision of the Future
 `;
     const withErrors = parseDeckListTextWithErrors(text);
-    expect(withErrors.entries).toEqual(parseDeckListText(text));
+    expect(withErrors.entries.map(({ quantity, cardName }) => ({ quantity, cardName }))).toEqual(
+      parseDeckListText(text),
+    );
     expect(withErrors.invalid).toEqual([]);
   });
 
@@ -146,8 +169,8 @@ no number here
 `;
     const { entries, invalid } = parseDeckListTextWithErrors(text);
     expect(entries).toEqual([
-      { quantity: 4, cardName: "Valid Card" },
-      { quantity: 2, cardName: "Another Valid" },
+      { quantity: 4, cardName: "Valid Card", source: "4 Valid Card", lineNumber: 2 },
+      { quantity: 2, cardName: "Another Valid", source: "2 Another Valid", lineNumber: 4 },
     ]);
     expect(invalid).toEqual([
       { kind: "malformed", text: "no number here", lineNumber: 3 },
@@ -164,8 +187,8 @@ no number here
 `;
     const { entries, invalid } = parseDeckListTextWithErrors(text);
     expect(entries).toEqual([
-      { quantity: 4, cardName: "Card A" },
-      { quantity: 1, cardName: "Card B" },
+      { quantity: 4, cardName: "Card A", source: "4 Card A", lineNumber: 2 },
+      { quantity: 1, cardName: "Card B", source: "1 Card B", lineNumber: 5 },
     ]);
     expect(invalid).toEqual([]);
   });

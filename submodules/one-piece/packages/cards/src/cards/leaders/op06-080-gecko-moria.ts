@@ -1,0 +1,106 @@
+import type { LeaderCard } from "@tcg/op-types";
+import { op06GeckoMoria080I18n } from "./op06-080-gecko-moria.i18n.ts";
+
+export const op06GeckoMoria080: LeaderCard = {
+  id: "OP06-080",
+  canonicalId: "OP06-080",
+  slug: "gecko-moria/op06-080",
+  name: "Gecko Moria",
+  printings: [
+    {
+      id: "OP06-080",
+      artId: "OP06-080",
+      setCode: "OP06",
+      collectorNumber: "080",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-080.jpg",
+    },
+    {
+      id: "OP06-080_p1",
+      artId: "OP06-080_p1",
+      setCode: "OP06",
+      collectorNumber: "080",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-080_p1.jpg",
+    },
+    {
+      id: "OP06-080_p2",
+      artId: "OP06-080_p2",
+      setCode: "OP06",
+      collectorNumber: "080",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-080_p2.jpg",
+      label: "Gecko Moria (SPR)",
+    },
+  ],
+  cardType: "leader",
+  color: ["black"],
+  rarity: "L",
+  setId: "OP06",
+  power: 5000,
+  life: 5,
+  traits: ["The Seven Warlords of the Sea Thriller Bark Pirates"],
+  attribute: "special",
+
+  effect:
+    '[DON!!×1] [When Attacking] 2 (You may rest the specified number of DON!! cards in your cost area.) You may trash 1 card from your hand: Trash 2 cards from the top of your deck and play up to 1 "Thriller Bark Pirates" type Character card with a cost of 4 or less from your trash.',
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 1,
+          },
+        ],
+        costs: [
+          {
+            cost: "restDon",
+            amount: 2,
+          },
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "trashFromDeck",
+            player: "self",
+            amount: 2,
+          },
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 4,
+              },
+              {
+                filter: "trait",
+                value: "Thriller Bark Pirates",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op06GeckoMoria080I18n,
+};

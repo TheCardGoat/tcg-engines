@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op03AirDoor094 } from "../../../../../cards/src/cards/OP03/events/094-air-door.ts";
+import { op03AirDoor094 } from "../../../../../cards/src/cards/events/op03-094-air-door.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-094 Air Door", () => {

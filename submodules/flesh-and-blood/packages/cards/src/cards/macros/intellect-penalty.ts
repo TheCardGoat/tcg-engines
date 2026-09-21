@@ -25,6 +25,8 @@ export const intellectPenalty = defineCard(fabCardIdentitiesByCanonicalId.QGjhRD
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "any",
+          occurrences: "every",
           filter: {
             name: "Intellect Penalty",
           },

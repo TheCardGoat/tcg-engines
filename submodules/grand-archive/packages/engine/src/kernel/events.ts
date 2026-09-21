@@ -99,7 +99,7 @@ export type GrandArchiveProposedEvent = GrandArchiveEventMeta &
         /** True when a resolving effect explicitly instructed this zone change. */
         readonly effectSpecified?: true;
         /** Source whose effect or explicit additional cost is responsible for this banishment. */
-        readonly banishedBySourceId?: GrandArchiveObjectId;
+        readonly banishedBy?: GrandArchiveCardInstance["banishedBy"];
         readonly placement?: "top" | "bottom" | "unordered";
         /** Visibility of this card's position within one simultaneous private placement. */
         readonly orderedPrivatePlacementKnowledge?: GrandArchiveOrderedPrivatePlacementKnowledge;
@@ -241,13 +241,23 @@ export type GrandArchiveProposedEvent = GrandArchiveEventMeta &
         /** Kernel-populated value before this state change, when one existed. */
         readonly previousValue?: boolean;
       }
-    | {
+    | ({
         readonly type: "keyword-action-performed";
-        readonly action: "brew" | "empower" | "gather" | "glimpse" | "scavenge" | "suppress";
         readonly playerId: GrandArchivePlayerId;
         readonly objectIds: readonly GrandArchiveObjectId[];
         readonly amount?: number;
-      }
+      } & (
+        | { readonly action: "brew" | "empower" | "gather" | "scavenge" }
+        | {
+            readonly action: "suppress";
+            readonly suppressStage?: "start" | "complete";
+          }
+        | {
+            readonly action: "glimpse";
+            /** Replacement admission precedes choices; completion alone triggers observers. */
+            readonly glimpseStage?: "start" | "complete";
+          }
+      ))
     | {
         readonly type: "cascade-advanced";
         readonly objectId: GrandArchiveObjectId;

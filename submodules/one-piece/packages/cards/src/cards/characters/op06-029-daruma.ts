@@ -1,0 +1,85 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06Daruma029I18n } from "./op06-029-daruma.i18n.ts";
+
+export const op06Daruma029: CharacterCard = {
+  id: "OP06-029",
+  canonicalId: "OP06-029",
+  slug: "daruma",
+  name: "Daruma",
+  printings: [
+    {
+      id: "OP06-029",
+      artId: "OP06-029",
+      setCode: "OP06",
+      collectorNumber: "029",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-029.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["green"],
+  rarity: "UC",
+  setId: "OP06",
+  cost: 3,
+  power: 4000,
+  counter: 1000,
+  traits: ["Fish-Man", "New Fish-Man Pirates"],
+  attribute: "slash",
+  effect:
+    "[DON!! x1][When Attacking][Once Per Turn] If your Leader has the [New Fish-Man Pirates] type, set this Character as active and this Character gains +1000 power during this turn. Then, add 1 card from the top of your Life cards to your hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "whenAttacking",
+        conditions: [
+          {
+            condition: "donAttached",
+            amount: 1,
+          },
+          {
+            condition: "leaderTrait",
+            trait: "New Fish-Man Pirates",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+          },
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: 1000,
+            duration: "thisTurn",
+          },
+          {
+            action: "removeFromLife",
+            player: "self",
+            count: {
+              amount: 1,
+            },
+            destination: "hand",
+            position: "top",
+          },
+        ],
+        oncePerTurn: true,
+      },
+    ],
+  },
+  i18n: op06Daruma029I18n,
+};

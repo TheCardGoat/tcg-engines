@@ -95,6 +95,14 @@ export type FabCommand =
         readonly removeOpponentTriggerYieldCardId?: string;
         readonly addInstantYieldCardId?: string;
         readonly removeInstantYieldCardId?: string;
+        /**
+         * One-shot scoped auto-pass arm. Arm and disarm are mutually
+         * exclusive and are accepted without the priority-holder gate —
+         * a seat whose windows are being drained needs the disarm to get
+         * back in, and a defender arms from the defense declaration.
+         */
+        readonly armScopedAutoPass?: import("./state.ts").FabScopedAutoPassScope;
+        readonly disarmScopedAutoPass?: true;
       };
     }
   | { readonly move: "arm-priority-hold" }
@@ -199,6 +207,8 @@ export function decodeFabCommand(
           "removeOpponentTriggerYieldCardId",
           "addInstantYieldCardId",
           "removeInstantYieldCardId",
+          "armScopedAutoPass",
+          "disarmScopedAutoPass",
         ])
       )
         return null;
@@ -211,6 +221,16 @@ export function decodeFabCommand(
         return null;
       if (!optionalBoolean(payload.autoOrderTriggers)) return null;
       if (!optionalBoolean(payload.autoSelectSingletonTargets)) return null;
+      if (
+        payload.armScopedAutoPass !== undefined &&
+        payload.armScopedAutoPass !== "combat" &&
+        payload.armScopedAutoPass !== "opponent-turn"
+      )
+        return null;
+      if (payload.disarmScopedAutoPass !== undefined && payload.disarmScopedAutoPass !== true)
+        return null;
+      if (payload.armScopedAutoPass !== undefined && payload.disarmScopedAutoPass !== undefined)
+        return null;
       const identifierKeys = [
         "addPlayAndSkipHoldCardId",
         "removePlayAndSkipHoldCardId",
@@ -226,6 +246,10 @@ export function decodeFabCommand(
         preferences.autoOrderTriggers = payload.autoOrderTriggers;
       if (payload.autoSelectSingletonTargets !== undefined)
         preferences.autoSelectSingletonTargets = payload.autoSelectSingletonTargets;
+      if (payload.armScopedAutoPass !== undefined)
+        preferences.armScopedAutoPass = payload.armScopedAutoPass;
+      if (payload.disarmScopedAutoPass !== undefined)
+        preferences.disarmScopedAutoPass = payload.disarmScopedAutoPass;
       for (const key of identifierKeys) {
         if (payload[key] !== undefined) preferences[key] = payload[key];
       }

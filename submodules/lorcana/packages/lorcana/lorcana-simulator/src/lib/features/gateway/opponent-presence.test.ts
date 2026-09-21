@@ -57,12 +57,12 @@ describe("OpponentPresenceTracker", () => {
     expect(tracker.secondsRemaining).toBe(20);
   });
 
-  it("falls back to Date.now() when no disconnectedAt is provided", () => {
+  it("does not invent a disconnect timestamp when the server omitted one", () => {
     tracker.handlePresenceChange("disconnected");
 
     expect(tracker.opponentConnected).toBe(false);
-    expect(tracker.disconnectedAtMs).toBeDefined();
-    // Should be approximately 30 seconds remaining
+    expect(tracker.disconnectedAtMs).toBeNull();
+    expect(tracker.canDrop).toBe(false);
     expect(tracker.secondsRemaining).toBe(30);
   });
 

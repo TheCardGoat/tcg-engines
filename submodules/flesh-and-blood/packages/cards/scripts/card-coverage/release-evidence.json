@@ -123,18 +123,6 @@
       "reviewedAt": "2026-09-13",
       "reviewedBy": "codex:permanent-action-labels-2026-09-13"
     },
-    "actions/aether-slash": {
-      "definitionSha256": "0f0677fade761bbd3acebfffa9d863749b25b29f6ca41693b65e51d1443d8c26",
-      "i18nSha256": "f844ff13367072d9f59e980502c8c75931016e65bc71b4014af9c17caa91b2b7",
-      "testSha256": "117a579f2ab05c6b1b9a4a27e441d43ce476a9d32fccd8b4e0f4898e85a6cb18",
-      "coveredCanonicalIds": [
-        "CNpTdPFLhRdt6N7qgQqkC",
-        "f6WQfPKfkjbdj9FpC8zDw",
-        "PgRT6QwWgcLdGhcNLHfmj"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "actions/aether-spindle": {
       "definitionSha256": "760d4a4f667ea056cd6d63378c902cebfd6ec65384706729e571ce1208b27eab",
       "i18nSha256": "35714a8c6fb6b236a1917490a6e9484c42e3e46f2092b214d75cd9ad2560bf99",
@@ -212,14 +200,6 @@
       "i18nSha256": "41438e9b50b7b86145bb8000f62b8889eba23294a9e2f3ea32bc256cf415da53",
       "testSha256": "12b1132abd7b1628536751dc7a78868170d8c067f4bbbbb570c51ea6fb74ad59",
       "coveredCanonicalIds": ["FRcp7jQfPRK6h8NfrJ77h"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/alluring-inducement": {
-      "definitionSha256": "4124531441c472881f2389d0b15bfae4fb2a18e7dfb30dbe7d697bfb5f066714",
-      "i18nSha256": "d9ffc920f89c0705fad03a8f20e466a13acc3823df761583b79c0def6cbd33bc",
-      "testSha256": "70471be9ba51d17b5e48def742303f5b5f0231ca867cd2e6af63455abb7c1e58",
-      "coveredCanonicalIds": ["nBf66Gt7ghRTqhn7nNqKh"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -363,14 +343,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
     },
-    "actions/ancient-earth-oak": {
-      "definitionSha256": "37cfb435ca83540f9c153b2b1df0c662c2578e34f3cb97f94fe8b885d25b510b",
-      "i18nSha256": "92c5bc7f7d3ea40954dce842cf958a0157e5a3d2d445368e165b50ceb4c3edb1",
-      "testSha256": "cadbd8064cad93b5f3f568ed1307d759b05f421373f98364e22bd69ab3fb953d",
-      "coveredCanonicalIds": ["jFzmfHhmDN7gJTKngdL9m"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
     "actions/and-again": {
       "definitionSha256": "e1eaa618cb58399eadbb9ed549045396ae08a98e194a1b5eaf1b6123e3594bfd",
       "i18nSha256": "d08d3aa06bddb7c902a193f04f5185309706ab93e651389d70fc0d0e1f34bb9f",
@@ -410,10 +382,10 @@
     "actions/annexation-of-all-things-known": {
       "definitionSha256": "1290477c16fa30f4d16f021b48e173ab29284c807b475e8c96fd60db67a10e78",
       "i18nSha256": "14f877d3783088044a90dda98d5be822688ed3bb671a685db3e8f7fc8b834017",
-      "testSha256": "e2e493733cd12e4a3f0904543aa088273ec886ca97cfabdc9286d4b259117288",
+      "testSha256": "f3c68cb0a5d170ed858d67061a5a262549052df529d754326185fb0ce1b1f4ca",
       "coveredCanonicalIds": ["nh8bCzbkjmR6hPkTCFLrz"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-15",
+      "reviewedBy": "owner-graveyard-routing-tests"
     },
     "actions/annexation-of-grandeur": {
       "definitionSha256": "cc45a3236fcc63086c03fd7ea339dd473c5c33999521b2253d30e15a784efc7a",
@@ -450,14 +422,6 @@
       "coveredCanonicalIds": ["7ncNDLjkpLkn9MmfKqfKM"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/anthem-of-spring": {
-      "definitionSha256": "6f790ac63aaecb832401cc8eaee83e826b3d42e3d0967c4b72845b1ecfb80f23",
-      "i18nSha256": "7296e62e734ea8eede21f30db232e78514fec849055d24a4799beb3a27965898",
-      "testSha256": "e2eaed174486f48f459bbf0c745f16408a6ac8dae97e87e272112917af1f981c",
-      "coveredCanonicalIds": ["wJQMt6Lpf6D9JFQ8BW898"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/apex-buster": {
       "definitionSha256": "d6527480767a4544e2072022652dc35053319ebe6655744b2d9eba728f0a3a79",
@@ -579,18 +543,6 @@
         "T6w9bHBQFhbH9CbnqcTcz",
         "jWLtJzRFkTRqPDkwT7T6N",
         "wQTTDGrkQHrFdqrWBd9WC"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/arctic-incarceration": {
-      "definitionSha256": "0ab9c4cbab8b7c6aca7031aa558ad6b79e61a730659763eabf1f67a94bcbfcee",
-      "i18nSha256": "782f0c16e8f564210d6c0abeabe3213dd3d6645a967532834508beee5f489b09",
-      "testSha256": "21d4ed1b869815540bfec1dcf59ce6bdadd4a7c8c46187745d2750bca12c81ca",
-      "coveredCanonicalIds": [
-        "Fq8bJCMprNbTn6rKbchgB",
-        "nPmkJGtLgnfFnWgcKqgq6",
-        "rWtcmPrWgJwnmKNhj8nMk"
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
@@ -1007,18 +959,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/barraging-beatdown": {
-      "definitionSha256": "6b4c99534432acd8723155bf24d609e6217065207d95a740207425822223c169",
-      "i18nSha256": "17625349d28803a32df6055a56aa23c6c489a06334b918707b10095087e46e7b",
-      "testSha256": "c623a522113a48c2687c1501611a66832446213fbc4054ad60eb068a5a8e3e87",
-      "coveredCanonicalIds": [
-        "7zrn7HFQgcMFKMhJh6DPc",
-        "WCgctGz6KWwfp9Dhd7H7c",
-        "mnDGzj8JLF997nnwpFpBH"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/barraging-big-horn": {
       "definitionSha256": "809e89d589f2ca3da23f4fc6872550cae4ae1e6bf71d22773172678ad52f9a98",
       "i18nSha256": "617a42acc46a4d08e6d4838d91ad5862331b6b9afffa7240d9acc80185faa377",
@@ -1255,14 +1195,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/become-the-arknight": {
-      "definitionSha256": "5381152fb3411951d14fb084f4825f3379dd63c215238ff47d29e5433ef5181d",
-      "i18nSha256": "ad64c0d001b18945c7fb6400b2e2459a0be7c24ce54b4c83886b2bc31cf0b6d2",
-      "testSha256": "bb844a9052824841314bbc423e26ced2065181a650eed26daf84439c5c380a7c",
-      "coveredCanonicalIds": ["FzmdMTfjQrhzn8bNBhhDw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/become-the-bottle": {
       "definitionSha256": "e2c46dad8a29bee76680ed5b6bd466a225a81d058bfeba2057ab610fff04e007",
       "i18nSha256": "aabdd87daf6f8d38045b79a25677a974608d2f3676d4ed2bab25f23078d70130",
@@ -1304,14 +1236,6 @@
         "CtgLqKpjrGRtLnwbHjd9f",
         "dgBTMrWQ8F7gTCt6m7ngM"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "actions/belly-buster": {
-      "definitionSha256": "970216c48e51af33483ac81fa2f2b2f0b160be951a8c9e1a6d7bdcade8a0bb09",
-      "i18nSha256": "dddc239eee18afee6b8a54fbb160723109e8d10dff801565ba406f6a9675b75d",
-      "testSha256": "312da9e52edaeb06fbf1b623a193414bd09929e0108a847bb7c20ebf14134229",
-      "coveredCanonicalIds": ["7KPHKGtMmJ7PhLJLgT6QW", "7tHWWm9MRJgCrTHN9Tg9z"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
@@ -1440,14 +1364,6 @@
         "KkrrmhNQDqWc7WWKMTTNz",
         "jCLhjJp9PcgJFQHQfLQrf"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/billowing-mist": {
-      "definitionSha256": "24821e6267dbe81bb5fa53bd6523530187b1a268701e3580fd6fa0e97b97e49b",
-      "i18nSha256": "bce4dc2dd1c41526f7755b3e6fb419aa7c06dde8fee9764af33a488dab9ce29c",
-      "testSha256": "12248002b0146d6db37e944980314d1925b3a8f0fa8c2e70323569ade0ac31a8",
-      "coveredCanonicalIds": ["N8WgrfprdwMBzNwgFqmfj"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -1775,18 +1691,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/blizzard-bolt": {
-      "definitionSha256": "a7fe2efe9802ead1024e850e7f6407d8ea2ed65ea6339da8ff3bac59f7ff984f",
-      "i18nSha256": "65b6c2980802187327c9399bd4c9f007535fdcc288f87bad8dca68c5e411fa08",
-      "testSha256": "f26c875ff4516227508610de331dc619d3d9b1cfc6387ce1df3e2804ec8ff369",
-      "coveredCanonicalIds": [
-        "gJCkLbwKKhftmCtmQqr7r",
-        "wfzwGpLbJTtQ9DDhCchdP",
-        "wqm8d9NngqkJN7dDNwtHJ"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
-    },
     "actions/blood-dripping-frenzy": {
       "definitionSha256": "72d4e392a1a0295fca25557efffaf0902a4e841d1870431a9f1f420ef80c9d75",
       "i18nSha256": "b5011fa6b3aafda2b16c8a3bf6257816f3ae388d1ac0859bcea568c414c656dc",
@@ -1892,12 +1796,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/blue-fin-harpoon": {
-      "definitionSha256": "3e9156b95e0ced0cc56c8d9e35d6ae7e92eac2f9e0e52ee8e4fea6dfedf6147b",
+      "definitionSha256": "fbcbfbae67c5ebcdc708eb74202342b08f9f8471cf2d443371fc2870de96f1cf",
       "i18nSha256": "f09f1e6d0c16f13597115e3540a14687755430376bdf82ba56e0440ae2ab8343",
-      "testSha256": "75ebe6f6af8275a12edb328a5e12fa1bcbc6b706de8e65a664bb0e36c299851d",
+      "testSha256": "5091f88db78f0e0b91a235f7b8c7a5704a37a0402659dadf3749aadb4187882d",
       "coveredCanonicalIds": ["KtQQggkn6LkFz7dGHNLWj"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/bluff-catcher": {
       "definitionSha256": "29a299a9b731f0939a75a9391418c72dcdf3d9d029a97d064c9f8038dde14a40",
@@ -2431,14 +2335,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:make-card-types-right"
     },
-    "actions/call-down-the-lightning": {
-      "definitionSha256": "7a3c43b474ce46be180125c844bb99c3f22ab95742d1936608f1bc4812b80eca",
-      "i18nSha256": "fd983958fd36c8d0137cef5eff0fec50ca710c3d30d77ff9cf64742fa88c03c9",
-      "testSha256": "2e08aeddf6f77e824ac800478f438233bdee605712ebdc2824ebee8ba96cc834",
-      "coveredCanonicalIds": ["8jWbpb8RHQWpKwDdnt9rw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/call-for-backup": {
       "definitionSha256": "149e3beb9a3db91d2f4f9797051c4381541457378335b89b32f8bed91f1efe57",
       "i18nSha256": "13ace3e6c8365297ac678673fab0624b9b0893e192389d0cfb57814e7e9161ca",
@@ -2731,14 +2627,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/cheating-scoundrel": {
-      "definitionSha256": "7f130872678a0e9976ea3e29437a96d02f467377f8c08a7f02e56a9f231a5562",
-      "i18nSha256": "6eb8f340374a08bea644548893cd6dc8a03793eb9b4fb0a1a425d7ebdb2b854a",
-      "testSha256": "6c32dc38b4206ef08846da2f6012bdbd17b2028afd79609c851508d37360c0f0",
-      "coveredCanonicalIds": ["DCtpFfTpFgWqgtWkkMQjT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/check-raise": {
       "definitionSha256": "5fe425ccfea99689509acbdd0c72f53dd50da6e10089512078c601e7861e4912",
       "i18nSha256": "99a8d9ed1e944694ebdd661dcf8e47113807c65ad29878ba316c51a0ad047e6d",
@@ -2766,18 +2654,6 @@
       "coveredCanonicalIds": ["hmdFwhcDWLWTfL7MwkhPp"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/chill-to-the-bone": {
-      "definitionSha256": "3691fc9e0803d9581a7b9724802accaee03d57fcb7a3748e9eef429e4c5fc155",
-      "i18nSha256": "aea2e0f969bc0bc88705cdc21a82c1ffa78e0bdd54b09a0919520820b2c8043b",
-      "testSha256": "3d883a8796899bab3e1e8e7e3e5918f9727c25cf4ceee05b96b2b8c54c6eb503",
-      "coveredCanonicalIds": [
-        "78zTbm7gJD7r866HNpHGW",
-        "dmcWqBfNRjBTbCtfLWtmH",
-        "hn6Jp8hBLgpwRPd8gNnN7"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/chilling-icevein": {
       "definitionSha256": "9bf01bffc0c6820643c4a2d8d201979adf19b39876c75faca1a5277667ed83a3",
@@ -2887,59 +2763,11 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/clash-of-agility": {
-      "definitionSha256": "eb3fb010747d1d1aa530dee637ab37dfa86c0a5d4fedb2ee57b22e9a6694f8a0",
-      "i18nSha256": "854c771875e351eb342ffea463f05715723df6db39771b206ff17158fb2b9d8d",
-      "testSha256": "e8400e84a898c8e5cb7f735d402016fe089626a5bf021d441dc9d6491ee1c25e",
-      "coveredCanonicalIds": [
-        "8dw7PGfBNcKMcRkgMdPJz",
-        "gRpHwzjCr7Q6RQwnGTT7t",
-        "ghCPQqFqNjMq9cn7nTrzJ"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/clash-of-bravado": {
       "definitionSha256": "12f12f1919c8139b604f80a506a06240f84aa58aa5d0bb8564f0737fc4bf24cd",
       "i18nSha256": "6db3c54cb9e0a5dcff732018bc01cc287d7f9771b6a8276fffd91c682164141a",
       "testSha256": "3beb63687b677b5fc265cc86108bc7af547f3ed9f7af3506588afbf762cdb9ac",
       "coveredCanonicalIds": ["GFNmknDkQm8tdbNCcWGR9"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/clash-of-might": {
-      "definitionSha256": "fd404d96ac7946004041567b23107c43c4c28254178aae6ef3b9f5e96de7d5b9",
-      "i18nSha256": "837a237b2c267537fddb6b45b7823f4e8b7d1033db31dd990a60c9ed87710443",
-      "testSha256": "fe02346fba09c9ccd5c0131f8b9b85e1c429b13fba8fbaad2bc14868ccfe91e5",
-      "coveredCanonicalIds": [
-        "HQGTg8btKJgCCrhmBGrDN",
-        "KnJTJP7KPKfpNC7FNLJB8",
-        "NGMpfnrcHzjWtB6bmGC6C"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/clash-of-mountains": {
-      "definitionSha256": "41ffb27c79ddc648493db69f781925974d57b9680ade7bb9205b11df6313b37a",
-      "i18nSha256": "a4e210fd87df71cb2bf31f914551df326d0e191bbd9ba380e367b47ff447e5e6",
-      "testSha256": "0f5d2cf51758c1ad240dd62b3e4b57a8093499b33cf52fd3bb0c0bc5654911d9",
-      "coveredCanonicalIds": [
-        "GGLrgHcQbNtpBQDwjLzJm",
-        "n7Qn88BQPmjpPRpdz88gm",
-        "wG6tBGKr7rb6TCjP7bBDC"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/clash-of-vigor": {
-      "definitionSha256": "814f6fa86057f216ac1220bec0d21e5369e6a9cdde49943fe7791e3961c855e6",
-      "i18nSha256": "0f2edad570d76d66846c5a49cac933a62c7a161753132ce606ca4bfd56890013",
-      "testSha256": "03f6768d3690f7e5123cbe49751aa449fcdb86eab1f6cd3d8c4d93fc0025ca74",
-      "coveredCanonicalIds": [
-        "FWQPHMnG9JDfm7JmC6hJ6",
-        "HrKnbRbWgpztmkCN6DJfR",
-        "pBjNr7MRTR6L7LMKT8j9d"
-      ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -2954,18 +2782,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "actions/clear-conscience": {
-      "definitionSha256": "4fef70f6a526a891a57a654f6ae1677a36c974baf9c5e58a285b33d406b73b1b",
-      "i18nSha256": "10ca316b6bfa929486e49351c5007a7624b814526fbf2f6b2a3912ea87fb704c",
-      "testSha256": "c114bc0906da0809dcf98300bcce69fbde65327042c108afb79a84256ec494ad",
-      "coveredCanonicalIds": [
-        "JMb6zBb6gJ78bJnfCG8wp",
-        "R9dRbDCJbNGLHFctHd9pW",
-        "mftrgDLcgF69QrzBgK6HB"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/clearing-bellow": {
       "definitionSha256": "84ba024aad8c01f5b2e58d8082ba029ce6525cad928d3156e3bea0be055d2930",
@@ -3039,38 +2855,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/coax-a-commotion": {
-      "definitionSha256": "c34c21ed79e2b53bf66aefe4e3b990eff77ae4706e265ce0d36e6fcba1e7e1a2",
-      "i18nSha256": "3ef471d3d0ff039ec72c2eea031d1f404b372da78d18ae516d63c282b7fdd868",
-      "testSha256": "2c5f37c0d8149e9cedecd9e11950737eeb1fe784b91527248bd382a153fa0e49",
-      "coveredCanonicalIds": ["LzjkDR6QcL9WBztfDTRt9"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/codex-of-bloodrot": {
-      "definitionSha256": "30ab3a2193d846824e8281872c5a13b9571bdbfcaad0603a2afc6ab797700e4b",
-      "i18nSha256": "63e287c0a15ee1981529d73ff6bb18097d1ae0bda7c14ced5b6cc5e6590af859",
-      "testSha256": "8ce8ced6078f7b89286ade7bb8131cc109fcf5620430c0010996a815fd6d8861",
-      "coveredCanonicalIds": ["tjnCb9JGD7mzznFPfDzHp"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/codex-of-frailty": {
-      "definitionSha256": "f04d1edb07911d0b8d8acfba2e0122e5111c51eb7369e148d0dd09d1beff152c",
-      "i18nSha256": "7ebb7fcee85cc64fcc529efbce7aa9242eb6599f4ce923f3d3651626e1dc1a35",
-      "testSha256": "82a7a647d087e3a9e4b85586928dbd7c57a54e18ceb6f89cfd1f0020ee250bf8",
-      "coveredCanonicalIds": ["7pc6MTFPJjzjNTRH6zdNh"],
-      "reviewedAt": "2026-09-07",
-      "reviewedBy": "codex"
-    },
-    "actions/codex-of-inertia": {
-      "definitionSha256": "ae308ef6eaaffe291ae03bc860014be8614cb58272a3ac3efd27deb33c4a9d62",
-      "i18nSha256": "e7a8daf99d9b94698666c38769b62456d2006626f0a87d01b6b5c1a29ce6ab81",
-      "testSha256": "883510887f71e5bb5cd890f70e9054a88ae5ca3d9fc30626e9cdc08413fd19db",
-      "coveredCanonicalIds": ["GtdbFwh9DGwF76LrNhJrn"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/cog-in-the-machine": {
       "definitionSha256": "1b6f7894cccd25e83eb411ffa9240f72c11612ba547bc0c62ebab0339c06e7fb",
       "i18nSha256": "5422cc78d97d58c8e62af5c2d11792435010e35fc46831fd2bfcbd724342a474",
@@ -3102,18 +2886,6 @@
       "coveredCanonicalIds": ["NtGRcJrNgDN6LcQtcN7Qb"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/cogwerx-zeppelin": {
-      "definitionSha256": "79de842717f849d6b5c0c1a50dc50d6bf7a0353eb5ab908f4764815124b3a9a7",
-      "i18nSha256": "b1919f4a969e4303a25257c0fc8079c98b1cbfdfdaf8dc5b885c9e75ed9d16d5",
-      "testSha256": "9dd32be411fa0fce28c2c1660e2fe0cf0ad6b75efe6cff717d51bae9c4ecaa17",
-      "coveredCanonicalIds": [
-        "fJzjdQTnDbfNwGCDWCBNK",
-        "kNggzqkBtLWRqfhFCMbfQ",
-        "WMNLQNgmCHD7FwnFFq6dG"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/cold-snap": {
       "definitionSha256": "647414783ad454a392ec572a3a82064f026a02a8f661ff9a01e6e12984048e50",
@@ -3435,14 +3207,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/courageous-crossing": {
-      "definitionSha256": "fced3b2533c1684f09bb2f8c5a5039c93049ed5479772a90ed55c8a6e0d7ea07",
-      "i18nSha256": "c835d98dae24963e617a887f4119f9ebc5655582a1b25839f4c1616c1c34b5bb",
-      "testSha256": "c7365f450bbc9fd0bf8f357e81bd02c2ac27f23a032cd152010a862cffc73a35",
-      "coveredCanonicalIds": ["7H6zRGbKbL8BpgNMgwh97"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/crackling": {
       "definitionSha256": "76315762bf4d0c8d13d4deeb0c7b26611443ed4b68f506445f3de7654cb98009",
       "i18nSha256": "ae4681d5dad05d55acbbef1aacae1cff8a122139625f2f26806a6f2aa8d3c644",
@@ -3650,10 +3414,10 @@
     "actions/cull": {
       "definitionSha256": "754387738907b9ef83527b16352b08a159255284c904077148b87e19ce07c9c5",
       "i18nSha256": "3a49034e2db0d59c80d6e10231cc10da7e854c2314fa4fbe4e3ab18b30f093c6",
-      "testSha256": "b2adfa9385f963a87b767a95096aca9876c72e19cdc11c701cd619b0321e53f8",
+      "testSha256": "b9ce63ec8cd3609c0542f7648acc0022772346065a44232df08a9ad9074774d7",
       "coveredCanonicalIds": ["7RhQ7rthWCfHkgfdHFFJm"],
-      "reviewedAt": "2026-09-13",
-      "reviewedBy": "codex:malice-viserai-browser-playtest"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/current-funnel": {
       "definitionSha256": "834b383938967ede35f64d4a69b5a45ac2b6995b5f82e05c4d2b06fd35955725",
@@ -4279,14 +4043,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/dissolve-reality": {
-      "definitionSha256": "e09973c8d659296d4878973242ff9affee73dcc1087c2e659b34e76d55a59e38",
-      "i18nSha256": "bc979219a71b50e034d52acd4340f18d917aa0793d33da99b37d81fe02318faa",
-      "testSha256": "d844167dc81b174454d832abe5f6312ac8f2dc282473b1c70dfedb9f14bb7b3c",
-      "coveredCanonicalIds": ["gnCCKC87FkrLRgfz9dhFf"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/dissolving-shield": {
       "definitionSha256": "904d244207a157a9d82ba4b243acff3f34a5a977472ceb79bf5fa6f1941dfcf5",
       "i18nSha256": "c730253339a409b320cef7a13ead4de1df362b50e404dc24a672ebf03201f1d4",
@@ -4344,14 +4100,6 @@
       "i18nSha256": "cc0bc053f5425bbbbfe381a22fa2ee49449b486cc692e878826373f83c597a08",
       "testSha256": "9b6219142f5f8de69be46560b13b088ad5cf59c93220f8f0e0bd9da00851ca02",
       "coveredCanonicalIds": ["pgCtKBCMMg6wmhBQHB6Tq"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/double-down": {
-      "definitionSha256": "7c323a7a4e6e55bf9ee9eea88047f36ee2341e83cd90c04bcf64952b42cf6f86",
-      "i18nSha256": "398794e502d0e36926a8e7e0c7d036c37c30c5f9ab77919c66ada3118c3e6c63",
-      "testSha256": "7f09a47266e63f217fa7694f3a78132b3e057a2e1e5b5797138e9a02dd4799dc",
-      "coveredCanonicalIds": ["8JF8CGqcQRDnGWNBhkhtD"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -4506,10 +4254,10 @@
     "actions/drink-em-under-the-table": {
       "definitionSha256": "01efdead50adcba1f6bf7aa91d0202b876f875b7f62d9ba2c8531a80d0664e42",
       "i18nSha256": "db58f2bc499149c2ecbd428832a259e7f4d24582bab4a20a7f30cabdb719b021",
-      "testSha256": "1cfdb14506fb40b51844c945b2e04fce1883b3d2a2485aa53827a55ad7707129",
+      "testSha256": "75250e086038cfa1365f5235ef06475b32673236e0af23142b723287afcd21d3",
       "coveredCanonicalIds": ["G9mhTdpGKD9kzDnBtgdkP"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/drinking-buddy": {
       "definitionSha256": "be0789199958cfaae65333e4abab6785c326bb84b92cc19b28687bf3d4b16823",
@@ -4612,16 +4360,16 @@
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/dusk-path-pilgrimage": {
-      "definitionSha256": "e0d1180526992464efcf79eddf679057f152daf6b7b3ffa3b29060e9ed3e1ef0",
+      "definitionSha256": "f13a340de85df70c19adf7aad7ae62984a943fc1182eea472d429ea379e714c6",
       "i18nSha256": "6b1873520170229ae454cf2d3dcb5664957d9fda07248e5cd89b30d31e7875d7",
-      "testSha256": "771ff430f278fbf4b3ddf3a9b6f009269929b2fd8d2ab0c93fe039c6830f1fff",
+      "testSha256": "a9d9c617b567f9b32c154960f1fac57284892557328f1acd7f9dcf403e861169",
       "coveredCanonicalIds": [
         "GwqcBWBWfNQkW8tzBhfLc",
         "kPfFLfQ8phzz6tpjd9gMb",
         "ntr99CMKDbhqRkBRFMbJN"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "actions/dust-from-stillwater-shrine": {
       "definitionSha256": "6380a8f541807fc4af8ce29f1198317b576397d19ffd8df202cdd760a19e475b",
@@ -4899,18 +4647,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/emerging-avalanche": {
-      "definitionSha256": "4e5f931361176ee3735e5a6c5310607397404bb89ff83d24f5e520ce4f51f266",
-      "i18nSha256": "44d9110890fea27783d92e48394beb56605f88b32d960f62f4114f41fcefdbbc",
-      "testSha256": "6f439329147086b5b88dad06cd67712289bbaab11720119bb42fb50ffc73ab5f",
-      "coveredCanonicalIds": [
-        "bjbb9hfw8BzbQqqqHtCjJ",
-        "FFrCkdLPFwwTzHJPwcTRC",
-        "NDkNqCchBdrhwz7RCBn77"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
-    },
     "actions/emerging-dominance": {
       "definitionSha256": "8f8431d7ef2248eb150361aa8bb140ef7feabe8bd7a6493e77813484dd4ce52f",
       "i18nSha256": "cf9dcb560e66727605c68fbb64bc1579ab43c07e0a178fc9106a4e30426d506f",
@@ -5042,14 +4778,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/endless-winter": {
-      "definitionSha256": "ae13dc62497b3657a8692e8d17efeaf3f23953247ae7e651be9688c735394161",
-      "i18nSha256": "df71508bb37a737d4cf3cd062cfac278a7d35197711da676052a9adb0bad3eee",
-      "testSha256": "d2130145169a5e6b366b34c4e582f3828a337b421ba1432dd621680445d8b076",
-      "coveredCanonicalIds": ["dncM8DzP7fJ9JWDqqWfHj"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
     },
     "actions/energetic-impact": {
       "definitionSha256": "6dfa29c07a7bc7faf5a2d24671110b2fbc16e224f49c7db21f839ed40f3e1f17",
@@ -5787,14 +5515,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/felling-of-the-crown": {
-      "definitionSha256": "13ad824cb90f5a925ec495e483cdf0d2a0566b59344cfdb751cc09b15596c209",
-      "i18nSha256": "36a6fe4d7a748dedd239fbd0d86420d0971d83cce73ebe31ca3225eddd5ec939",
-      "testSha256": "373bf7c79b9d426240e99817d49567c0c7f859cd37b1f351654f6e1502a119c5",
-      "coveredCanonicalIds": ["PkQPFgMNLn69hmMnq7jCC"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/felling-swing": {
       "definitionSha256": "5739e0394b97e59b5c9dae3ae4329c544b0b262183cbb954eb42f12834ed26d1",
       "i18nSha256": "a27a6340a93c11a3b9796fe513860869b61ee23d44e2da9fcbfd76a562666d3a",
@@ -5942,14 +5662,6 @@
       "coveredCanonicalIds": ["tCjqz6rHFKTmDpDkfHmzm"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/fix-the-match": {
-      "definitionSha256": "2c0ab422fdfc54463c0f1333e187bff4c74e9c57c33b6a39e217a1612ce4d0b2",
-      "i18nSha256": "11bf64c7ff0494a06dea0cbae9bf7916843ba107da2ffd036413ba1847699db9",
-      "testSha256": "54f0f490f773fd48e29f38ba5e76014f3e0df9fd80fbdaebe50dc7b087e1d55f",
-      "coveredCanonicalIds": ["R7B9m6hKjCKhRFpfcNzbT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/flake-out": {
       "definitionSha256": "b19b30f6282fbe3670ff080d404ef095f778af6de6e3a7bbace056bcdfb5cb18",
@@ -6188,12 +5900,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/flurry-stance": {
-      "definitionSha256": "5f3b5da99af617613800f750735abb537f9db9a9b2456c291a5609123daf5c0b",
+      "definitionSha256": "a5c53efebc64b33ff29ae40bf1e4a20bdc5ae3b36696827207f620e20807b167",
       "i18nSha256": "8c4137c4e9e52601c0f89ecf9c4b52eef7f0f4019104addf4828df64407273c8",
-      "testSha256": "3526702ca48f7d2e9bfef1c92a18a6bfeb452b7394a4524031c29dbc042b5b8e",
+      "testSha256": "04fc9ade17c801fc5feb292e9542cafc2d9a6de0672559540550c6a64e6e16be",
       "coveredCanonicalIds": ["G8kKjJCFCz6GMTWhQkdzT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "actions/fluster-fist": {
       "definitionSha256": "ffc119462c380af8753edf497f05dea00cacbda46d622eef1340871a06b90b4d",
@@ -6335,14 +6047,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/frail-swingline": {
-      "definitionSha256": "e58c58a681cfeb723f5db9c53e8dfc9e6e6a8590726cb0181d55fe3de879fc31",
-      "i18nSha256": "46d4ab3c41bd0d936abaf63881e6f8ba628d31301165167b9425c47749e9dac4",
-      "testSha256": "b0439a6e265d956621d014461d944cf9786dde052df5d8d3be7c209ba5877e77",
-      "coveredCanonicalIds": ["wtKDkD6MRwz77CmthMHMz"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/fraying-lifeforce": {
       "definitionSha256": "5c4e51fd137384ea13497213b0214d3c4afd35ed6e9503166ce92324e5322eb7",
       "i18nSha256": "df82b72b20c36baa5c86f3857e0706311e2226704365189c94d89a2b0a19cb12",
@@ -6415,14 +6119,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/frost-hex": {
-      "definitionSha256": "68130801db63b695b30d3c4abc2fbc5dc2ac2aed5b81ce44a6d21fbc6785be6a",
-      "i18nSha256": "a277843cb257a53b22e761ff7b390801dc76054ea9dc163716abb32d84b2fd2e",
-      "testSha256": "ca328954e995a099cae489c94d38d15e3ee01cc1dfdc6475a8f1ec23e71335c9",
-      "coveredCanonicalIds": ["rNW8mjhb6qbTfr9PHLQqb"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "actions/frost-lock": {
       "definitionSha256": "a3672102353b0c18e648e34947170fa8d2532eea09077471a8cf48553aa09f6e",
       "i18nSha256": "d8fd87a6fc279305565c5328905174c66bfcb0b961421959ab1e0c00e58165f7",
@@ -6442,14 +6138,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/frozen-to-death": {
-      "definitionSha256": "12917f6c47598fb4d9d896cfe6e096a0db993488985305e2adb22e6bd4057ea9",
-      "i18nSha256": "cf5d5bbb8b78133ceae3a3bfcfe580f0bc8206d3082c873774f3d6fd901975c5",
-      "testSha256": "99bafa6b33d303c95351c359317c789929bb46697c4bec74fad0663157882c2e",
-      "coveredCanonicalIds": ["f8tNHBndcKqGPGbhQNmWw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
     },
     "actions/fruits-of-the-forest": {
       "definitionSha256": "69751df52bcbdab378bd1c934ba1d110ceed2796b03efda5f9a2b7a96b0ef039",
@@ -6667,18 +6355,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/give-em-a-piece-of-your-mind": {
-      "definitionSha256": "41ded0e011b5c5c29c65a9c14ce8174448c2b5dd669d155d279db6c1f659a332",
-      "i18nSha256": "69587792a4b1f7a879c93910982213c2701754b9c08dd2c4989461ade4861bfc",
-      "testSha256": "11fd7f10370999cd837f9f27ba561d18751163c21cc4277db3f06807098761cf",
-      "coveredCanonicalIds": [
-        "RH98bg97nBD6bPmhcPLrJ",
-        "fDRTh9GqLf8Hb8QpGbTH9",
-        "pPQNFMtqrp9MCFnr8RKW8"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/give-no-quarter": {
       "definitionSha256": "a3e07458c91e0850f98b24e77032365908e5130ac2132520d13f660b1c3da32d",
       "i18nSha256": "9fbb5bbfdab3f41c146ee5911e2c6ad2b46b84e9ab105cbb567a8e1dbb13328e",
@@ -6812,14 +6488,6 @@
       "i18nSha256": "c6e0f3dedc81ab7259e451b9fcc7fe1bec1a974f8a3962f27ca926bc23d3877a",
       "testSha256": "669d36c9a66fee80a985a21939cf71cefff32eb2f717a11eef136fa061b33769",
       "coveredCanonicalIds": ["9PLjGPKQTdWLMhrwDDptm"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/golden-skywarden": {
-      "definitionSha256": "7a1cca15ffb1d7c263be4f6d396fe69a245c03d6551f7784cf36144909d328e0",
-      "i18nSha256": "2598a80677560f70c1f15d28f1c621df1e69d3ec6a4506f8f71c0d940d3d376f",
-      "testSha256": "2383c3126354b076a4c0503461d56e6dbb826915050a660f52077443187e66b7",
-      "coveredCanonicalIds": ["cTchBtPqMqnNgDGGW89Gp"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -7022,18 +6690,6 @@
       "coveredCanonicalIds": ["NCG7Gj8FnzJfDbmHQF6gF"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/gutshot": {
-      "definitionSha256": "0b6a6d86af790d54d9320d651429f104e44c7ac3143e51e2efe63e2d67a67dcf",
-      "i18nSha256": "aa63390096ff7166f47aefc1340afd2cff664a5e209796767f55919e347f79de",
-      "testSha256": "f07b2c8b531dbf5963da70f287cd7bed23f548f116280cd777b2a889f301a7e5",
-      "coveredCanonicalIds": [
-        "BrHTcWTJCgTnGjC7NFcbp",
-        "HCnqWbLnRrbdwP7RcqFrp",
-        "nGGbCMQmmdwqdhW8QGPbF"
-      ],
-      "reviewedAt": "2026-09-10",
-      "reviewedBy": "review:golden-grail-wager-lifecycle-2026-09-10"
     },
     "actions/haboob": {
       "definitionSha256": "57457481c2d0b07fa34ff1bbe712bc28863013f261ed9919be98bad6d31b0d0d",
@@ -7786,10 +7442,10 @@
     "actions/hypothermia": {
       "definitionSha256": "e108ca99db1e26a6b4a6c7610342e1557bb5919ebfcab918d0e49dcbd686c0d1",
       "i18nSha256": "e8142ae95564eae4a171aa8c5a506a23b500e060b3185c0bec4c364fb56d3f96",
-      "testSha256": "c62386960bc0bcd1355b4d20b1197db5296687316b5a131f78c50d42982e2763",
+      "testSha256": "c9b029765d92e332783e3ad4d448bfbc13e0285b90f6d692f3379b608dec6ad3",
       "coveredCanonicalIds": ["HFwjczQFRKCgTFHdbjdzW"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-15",
+      "reviewedBy": "owner-graveyard-routing-tests"
     },
     "actions/ice-bolt": {
       "definitionSha256": "00df21a009d931c929cd6602fd0b0be6469b8e16df59302ee2f72dbcd811f439",
@@ -7803,34 +7459,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/ice-eternal": {
-      "definitionSha256": "c3d1a9a440f48bd0cc845654fe92b85778abf9c2fdb1b665688b900d974ca8ac",
-      "i18nSha256": "bcad920d3fd68e17e9d239eac82aa9c759dab023b47385b5b458e0c5b5bb8e4a",
-      "testSha256": "0cac9e5b8cf3e0d98d860935fc068c1ee640f17dd8d221177329b07db6fa3666",
-      "coveredCanonicalIds": ["zBQGRp777Mj9QPL7zTb9d"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
-    },
-    "actions/ice-quake": {
-      "definitionSha256": "e58e3fab6e7be26109dc5a3297485e6e7c28addd15102e084ee2dbcedc720b07",
-      "i18nSha256": "2c0c3a68656006a684be2385667661e84c08d4bc466e06a83f13b6f09be52ccc",
-      "testSha256": "ca551f188876243237f8fa87afaac87ba11789afd82ac880f25a534fa0c50fa2",
-      "coveredCanonicalIds": [
-        "dMw97RJqc6PgTctzgWWK9",
-        "hKkwwcJqJn9gdfRzgbmcF",
-        "kTNdJ7FzJFNzgLpBWgTPM"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/ice-storm": {
-      "definitionSha256": "70543ab4b75dc78074c2a863afb018fad7007563d8592274989d9dbfc86b2562",
-      "i18nSha256": "2bf4a03bd48eb6b04fe0c58f32726936677dbd679da9e212ed8bc54a1206019a",
-      "testSha256": "c2e7c3e5397e1eb4cff4b5154f591905f407c1d7bc0e6770ccf65552b3b7f367",
-      "coveredCanonicalIds": ["8f6PJ8ztqJhcQRFDLR9nG"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
-    },
     "actions/icebind": {
       "definitionSha256": "f597af924d473044558eae3b1853617bc46f8dceec38919b0666af90a08e0375",
       "i18nSha256": "63cbdba66da56d6b48ddc393390fdf76d459166c0fd22223426b5bc8e555144e",
@@ -7842,18 +7470,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:make-card-types-right"
-    },
-    "actions/icy-encounter": {
-      "definitionSha256": "1626a0b0323edf920095300855ee59ae34e658c8563694d3f723c79a64b74ddb",
-      "i18nSha256": "45357d3d6928c2926b685e83a87228e8537a55197d7e48f365bf835bb70f3a4d",
-      "testSha256": "4b7dbe4839703cf7207e76373429f7cd72df96a88ede0132c18096b8b09c7383",
-      "coveredCanonicalIds": [
-        "hnJmqBJqmdmw886QMF6n6",
-        "nCkGmQKJwMhgGgKWNWbGH",
-        "pNjR9CjBG6nHqJ9kdMQmJ"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/ignite": {
       "definitionSha256": "510063e8172e5421daf046b24415489ec5a84422726a2f5fa0e046b47a139f09",
@@ -7987,42 +7603,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/infect": {
-      "definitionSha256": "baa7c2e023d05bf49d0a7f5d01c2556acdd31c75d8a8ad6df2d8139226d4f56a",
-      "i18nSha256": "c260c836f474e99054f7dd45e2862ca905adb54fbbf5466ea3b0427c4c1c4b74",
-      "testSha256": "6299bc22dc0710bf1741f0c8aa4f9784cf902cfc85665ea0811168e14f3961fd",
-      "coveredCanonicalIds": [
-        "LpcdHznLWndg78zmc6RHJ",
-        "NDFjzQLjMLL7LzGQNBtGd",
-        "Q8zWBnk8WGTkgwzHG8pcp"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/infecting-shot": {
-      "definitionSha256": "ed6c286b1690acceeb1ba43c18776d9d7e4edcfbe546f555cb88eaf99a96a608",
-      "i18nSha256": "1195756819947b1f7bfc9d2436874e8583398faae1f640620f77876854342003",
-      "testSha256": "90c1e52c5028dbfc859e2426e2c89288ae777cabff4c27bd65e199698496d54c",
-      "coveredCanonicalIds": [
-        "8fFPCT68cgF9gbWKppDgQ",
-        "FTnGpQhbkrRGWFLwb9TGt",
-        "Nct7799R68FjJmTPdkLwc"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/infectious-host": {
-      "definitionSha256": "15a4764d75a32ac8836e5295618a6ff3a1d6ebfed9cba426155136f36b88bd00",
-      "i18nSha256": "bab3411e61c3d041ebc591de0ab6f31cd80ed3d5f088e272d1de261816bccc4d",
-      "testSha256": "5166b93fafc77bfc384ab032541e922c28390c10012c527c7d7648e1d39392b4",
-      "coveredCanonicalIds": [
-        "9hQDRdBpQpb8B8kJ9Lq8J",
-        "LpmdRdBC8QLhFPbPwPg6h",
-        "dpwPgBFGQpTFjPWNTDdDt"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/infiltrate": {
       "definitionSha256": "4452aa83788ecea1ea3fd7eddebff31f6e1da7315c83dd483de7ba6cc5818693",
       "i18nSha256": "f0e5a58d991e53000e152a5f265ac210d5d6fb540710b2521277150ec9297766",
@@ -8036,30 +7616,6 @@
       "i18nSha256": "abdb374ac1c408e3244b5066f2d340dcbd6f7ea41042d575cfa03bf1347438b7",
       "testSha256": "e982ea7899c5cd298388283541fa07b8ca31e7dd7f4ded2cf02c36c7f51ece17",
       "coveredCanonicalIds": ["pq96Kr6wpqctKgCCQRL9z"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "actions/infuse-alloy": {
-      "definitionSha256": "31bc10ef89f4b499cb449ceafbb63dffee64334bf3af4164fc582cb39e11934a",
-      "i18nSha256": "c1916356da14bdd53fe7455a8cc0ef2f1a7e4dd5deb8bbbbb1aa69f82d4bbc22",
-      "testSha256": "e56d6389eef08dd73eeb16eb99921f53c929648fbc93f6d70b58b0a60d788e31",
-      "coveredCanonicalIds": [
-        "BdmMDknJzHtkq6dHDpMFk",
-        "fJdjjcFWMpqfCNKpJbNLr",
-        "gGFjwC7rpLfpdBWDdQwgn"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "actions/infuse-titanium": {
-      "definitionSha256": "3496e924696ff8dc844c15613bbb2104854c976d473508148bb2e670af0ffc35",
-      "i18nSha256": "64089c0bc3866c4718bd902f0e9228a2aad84d7b15725b67a9254c14f6bb26ea",
-      "testSha256": "ff682768c57ad414f18f7d522df4754abb8518f54302094fb81e882b3a1ebd4f",
-      "coveredCanonicalIds": [
-        "JhJWJjwBffmkgq69rfrgC",
-        "PnfMD9zp7JgTwTmJTQkwz",
-        "qQbcdmqJw9tPqqDBnDpH9"
-      ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
@@ -8114,14 +7670,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/intoxicating-shot": {
-      "definitionSha256": "0c71d9f1639cb6d881ccfc5b289adb86d2ac631d1dde16296e47057b1fe7117d",
-      "i18nSha256": "06f15fd3bb2cdaa354adf2c3db663ed79a8cea3a2a9e049797ab4abce732a87e",
-      "testSha256": "ff143c796f6684deaf65fc45f58d9d89d2e2b0e05f0f23ce9b6eb20f6943c6af",
-      "coveredCanonicalIds": ["BzRzJh9PcztPDn7fhNLF9"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/invigorate": {
       "definitionSha256": "ae7e798b932fef676d3c1abb75b386043c178d9ddc3f6b417bb457b1cee582cb",
@@ -8259,18 +7807,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/isenhowl-weathervane": {
-      "definitionSha256": "9e161d4a27b80931c637a99c5bafbff6194428b7623e39435d7a54e11c7dc115",
-      "i18nSha256": "6357457d183d45fac94cc079cb6009f299a7bbe48a681cd78a6086f99cf14d3f",
-      "testSha256": "5b9c243e04300fb508f7052be8bc40de8678c1dff42fc1d8c35920506342f3b2",
-      "coveredCanonicalIds": [
-        "FHLMhFd7rHFC8LqNmLcJR",
-        "KwLBJgTd78DwgLWdpqRhN",
-        "QcJHqRnCpgHQ7KBMHmbWT"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/isolate": {
       "definitionSha256": "81ec1e460ec32c07ac27722d4971ff3faa83fbea8faa7c72159cb192bdf7491d",
       "i18nSha256": "830cbcdeb6ae8c1d737ce338842e0babb5b52f79e0829121de532312b96fb7e2",
@@ -8396,20 +7932,20 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/king-kraken-harpoon": {
-      "definitionSha256": "296f06a2012a18dd2433325fc60befff2ab1a1b0b2e69e8a6fe2b9cb7f274c1d",
+      "definitionSha256": "c3997146822238b0afebddc7a0b48d8704d0636f13c3a1ce500a2e86064b532a",
       "i18nSha256": "4d6f301f5f3728e77b053a27f1792a0607b0d11f3a95a534f673f129b14d1026",
-      "testSha256": "04accab7e9f948c12c09cb229dcbeac11a02ec924e5ba8b94f780ec10645dcd2",
+      "testSha256": "7f5616fb3672b01fdb9f9b418d607b36e85ac20ca40addbf7584fc65e2546594",
       "coveredCanonicalIds": ["pnjKtMh8BcRHL8NJkFWpL"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/king-shark-harpoon": {
-      "definitionSha256": "9455eb78f99fd90216a20990e14e86efeba9c9c7be7d4a86c34fb10b57f2b293",
+      "definitionSha256": "3ebeed3f8376bdf43bd837aa0dd13daa605860ae552c10f7d4091d2aea97fe05",
       "i18nSha256": "8f63a1c27c5b1716c9eaae0a3eef9a55274d79152dacb198d67aac13cd06fb11",
-      "testSha256": "804b1b7694c557de2789415a7e6b80fb4ded721d2683e5dead4b4b34836c7146",
+      "testSha256": "1e2e75f2b066b711832d60536a32e51fe52037918e9b24d1c0f18da8234d0724",
       "coveredCanonicalIds": ["TGmtp7HrQ86JjWhcMfgrh"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/kiss-of-death": {
       "definitionSha256": "fef34e917f13e495c37a5154e682076b6c584c63c2bf5394e9e97c64220d0505",
@@ -8467,30 +8003,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/lace-with-bloodrot": {
-      "definitionSha256": "bfaf626c16a1ecaf98febe08d4d2883fac068ab1c451dc62c370a87e7e7ff09e",
-      "i18nSha256": "cb49e89c708e6d20394e1141495fdabc153828271f1c97357652eb104988a62e",
-      "testSha256": "e028fc9d7cc75a86891b915249330f15594041d40492fd653985b1decb58dbf2",
-      "coveredCanonicalIds": ["gdFrmMtzgg8DcqjN6tfBM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/lace-with-frailty": {
-      "definitionSha256": "c4a9a938f81d2ec049574d6fdc8f283a1ffadf911bbf82547f804f6772876aa7",
-      "i18nSha256": "e0c647dc71654cc84cd825e7c03c1248f0bce373c3b2c03acc319e5dc2a81d6f",
-      "testSha256": "db90adaf6dccbf33d663b798dc11ba9ca6c3e4eda47627c038c6d6d2ac6664a0",
-      "coveredCanonicalIds": ["cztrB96QNb9CqKDgBRwcN"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/lace-with-inertia": {
-      "definitionSha256": "4074680e79ead17ce313d10308415454034eaf7ee819ccfe9c258525dfee3fc9",
-      "i18nSha256": "5e532b1d059f9cbd90baab8ee1cca5bf48f8b01b76fa4705b1dc0b4df420c16f",
-      "testSha256": "1db96793bc95bfcf38f647be95cbac87364582f84c12ab33ce0168bcc1ff8827",
-      "coveredCanonicalIds": ["n877nqgWkLDfjQBwM7DM7"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/laden-with-earth": {
       "definitionSha256": "b2269f6c23bdb5c0f181ef7183b60443b9f69c4c39bcb8b6f7298c85043a232f",
       "i18nSha256": "410798f0b99e723d2a60c4aa4f118e34b8aa073ce3edbafc97bd9145dae81f03",
@@ -8498,14 +8010,6 @@
       "coveredCanonicalIds": ["QgJQKQKbPcQRM9BJ9qkGG"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/laden-with-frost": {
-      "definitionSha256": "ca108f111c42f3f9b0d8230474109b25cb75d62935c46e00b4899b951c6eaf8e",
-      "i18nSha256": "01321da5d4d20293aa89cddb88881e8bbd7d0d0fe0e95919a1ee67b647cbfff6",
-      "testSha256": "6324b7349e643d45396ac3b215997111ed62de9ce7b70cb9dc9979b02ffc058e",
-      "coveredCanonicalIds": ["kRfJmWQQmDCrHtkFtmLQt"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/laden-with-lightning": {
       "definitionSha256": "0a4d80f21524b7fd5c699f3b5de67fa06010d17b64832f2536c4a5e04f04ef14",
@@ -8980,12 +8484,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/lumina-ascension": {
-      "definitionSha256": "76ae1697d350e7fbd4216bd7c20bb4f15ae708e52bf2506d22e3926dba8a058c",
+      "definitionSha256": "38b33612b34dd9663ffcdfaddcd03db79860d5219524e7000d4a369f0f12b436",
       "i18nSha256": "be9f049cf0cfa0dbaa25b4bdc06b6b040ebf69f9d7662d8f6109b74b9d881c18",
-      "testSha256": "8b213f2452458ea2663fac1c57c1408dee656ca135db36dab601fa4bfc0caff3",
+      "testSha256": "08248f85bbbfe878797f73314536a45952048deee0eacc310dd00de0f78b5a0c",
       "coveredCanonicalIds": ["L8wq9HzdqTwM8tLWCRGcR"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "actions/lunar-mirage": {
       "definitionSha256": "7994233cdf2cdcb4f9015ec7bd126c2a4cf9dcd416931ebca7b9ad840eb3c243",
@@ -9103,14 +8607,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/manifest-muscle": {
-      "definitionSha256": "991c0d76bac028aa43d977b38f211a32d30e0e25ae96ea835fe2114376f87c4f",
-      "i18nSha256": "bd6517a7fe07b5da809623b79656b3671da361fb2b21f7b8b929d6b32f18e939",
-      "testSha256": "240796f58c752ebaecbbecc51e6837bfefb163e6f052b395f7ad6a4da0f2a3cc",
-      "coveredCanonicalIds": ["tGKpbmMLD7nkRRmzmRckm"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/march-of-loyalty": {
       "definitionSha256": "0a15cbb0e63deec6d2bfe7830a139c2dc2e2de06f7773873027b5120cb97414b",
       "i18nSha256": "1cdb416799e5013df61f43a9f42ae5305b9de3a149d2bf485b54a472135e910c",
@@ -9206,18 +8702,6 @@
       "coveredCanonicalIds": ["mkDw7d9PKRDtJT7bCCRjh"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
-    "actions/meat-and-greet": {
-      "definitionSha256": "cef1e0ecfc99052c56fc35517edd33060a892506f3327b530fe0268614df66a2",
-      "i18nSha256": "ffb34c79fc1ec897deabc2682d95bf6302193e7e7f231bdbcf278070bcf5fe31",
-      "testSha256": "4150046d5beef86df23308b697fa431cf88daaf2aaf1dbe56508b411e7edadd1",
-      "coveredCanonicalIds": [
-        "7cFGrC8JzLcFjRzJ8fnWH",
-        "kMHrRGnggnJtkzk7PhbH8",
-        "rpF86BNmBttKMGpckqJnq"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/mechanical-strength": {
       "definitionSha256": "1511d1dfbea2dea50ad1358042a682a8b15e456e7ad96fe3c4a00d54ef60f66c",
@@ -9338,14 +8822,6 @@
       "coveredCanonicalIds": ["r8fjLMCFnQhFrRjwpMTgK"],
       "reviewedAt": "2026-09-13",
       "reviewedBy": "codex:permanent-action-labels-2026-09-13"
-    },
-    "actions/midas-touch": {
-      "definitionSha256": "77ac2b19c44d755fa5fbb29dc4313a457cbe6724c5bad97f7669f2785bd9c629",
-      "i18nSha256": "d46c5596ad3b499370160e3706b58b32e932b4fcdb71c82c0b68261c2a2f8eee",
-      "testSha256": "9ddb9341f11de1053e9a0f8ee2c64415be9621b79676aa98aadd517fc0f6b6f9",
-      "coveredCanonicalIds": ["mFpKJrtphdgPmTDK7T7PJ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/mighty-windup": {
       "definitionSha256": "50b3e2f96a11a7de7811b47d60e1d4c706f43f7bbb97a54b96b158d75f66b9af",
@@ -9523,14 +8999,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/mordred-tide": {
-      "definitionSha256": "d5b81e4494ebdb4f25349deeb972d1a65e8f244c0dc85952b7d83ee32fbaad3b",
-      "i18nSha256": "44b0a98c560d57f319eb6ad3db71bb9dd0083a4193c1e615015a29b92d874110",
-      "testSha256": "7c232b0f1f457fe1c741261b0a84d470920f4d973c9b09213333b929834f3f7b",
-      "coveredCanonicalIds": ["8djTKwBRrz8W69BGtCbk9"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "actions/mounting-anger": {
       "definitionSha256": "4e0a624e52f686efcfa8670fe8fc636bcce606d716a37cef00e75554b893bc62",
       "i18nSha256": "53d3f22e17d1cc0dc31a861c6fdb256f0c1b7eece39f755c3e898aeae172db81",
@@ -9628,14 +9096,6 @@
       "i18nSha256": "ffde8dedf073aefa9a0559aa07132a21e3f6b6e0d7dc5ffdf3c1e5c52da989ab",
       "testSha256": "e03bebfa77673ff0b736b7c6a942211eb8dbc9a36b758953eff39f926a89715b",
       "coveredCanonicalIds": ["JwdBp6DFwFkG9npJ78jbK"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/mutually-assured-destruction": {
-      "definitionSha256": "e8abf68673599f025e4d7421652efdc475288fb49e448eefdd301d7cc691164a",
-      "i18nSha256": "218a3404aec386250d287d8af87a215e3af660a8ebd2c8cf40822fea078bfabb",
-      "testSha256": "f514fbd6902e2c60e3e18deabc825bfa39b87c0a1bf2767b23ffd7dd86d9fc33",
-      "coveredCanonicalIds": ["jTqtrLChdJz6wnctGhpKc"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -9772,14 +9232,6 @@
       "i18nSha256": "3928706465c42bbe4ead78303e447b5c9a16db22bfb9c9110048e88ef385df8e",
       "testSha256": "61316cec59af313bc81a004e48a2d8df8f71c158d765503912a5587f935126e0",
       "coveredCanonicalIds": ["zDLrkgc8QGm77T8qPGwqd"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/northern-winds": {
-      "definitionSha256": "2dffcfa2e8d81aab80eede158d2ccc5f15dc121afd9fc0f19fe96ad5d084ba6f",
-      "i18nSha256": "130a258de67a810b17d75a2b006d7afbd8d0d336542767f52b00b82f0fedb412",
-      "testSha256": "df27a961e1ce03aa64c658eaf7b5884679eb4f15e0aa9cd692808d80d38b52a6",
-      "coveredCanonicalIds": ["CGhtqrGGT7TL9C89GjF8R"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -10114,14 +9566,14 @@
     "actions/overcharge": {
       "definitionSha256": "20599cb9a717243033f0621b3a7e80565d5b73667339c31360ac2b5d1ae54329",
       "i18nSha256": "b35431716cfd22dd4806eb76508d894404a7b95238e679d4f35d9d9f26a0688d",
-      "testSha256": "c4d4fc97ba38e6026072eeafc02316e945198e995a2cd46a0ffcc4a8771c3252",
+      "testSha256": "e0f89d4f13946b35b4d6e6c7b3b14bc9e1292fb941d8b3626cf96c1cc00f08c5",
       "coveredCanonicalIds": [
+        "hbKPmFcFKbFq6DW9bbtBK",
         "QFHnNNCbhDptJfPMbcmHK",
-        "WLw6Ft6qgMDH7fwMpNdWR",
-        "hbKPmFcFKbFq6DW9bbtBK"
+        "WLw6Ft6qgMDH7fwMpNdWR"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "actions/overcrowded": {
       "definitionSha256": "72f15e637f5d6e2a7e0e96a40b343f9fda26236da81889c9fb063c8341f0c356",
@@ -10747,18 +10199,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/polar-cap": {
-      "definitionSha256": "ad89ef7d014f9228e36e8aa13f4cdbcf4abe5a205eda6affd7e7f6560b7eaa10",
-      "i18nSha256": "5fb32775e82f7f13ce05fbef6fa4bbc42c2f2328016e693a46f34cc400d0f750",
-      "testSha256": "ededce0c085bcaf322ec141dc92e6aa2e23dccf95d5d0117670cb24d6eee08fa",
-      "coveredCanonicalIds": [
-        "L9QHgTrJMCPMd6DfgDCNr",
-        "pdJnb8zmwpRcmqbcH7JTH",
-        "rfqChPM7KDBRhh789TtDm"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
-    },
     "actions/polarity-reversal-script": {
       "definitionSha256": "35bcfd022eef4bf5ee1448965b7db1f7ef02994600ace834304794cf18c4515b",
       "i18nSha256": "f060626ef255597bb12aa239ad60710711cb28be182ce19d661936c6f0fab702",
@@ -11019,18 +10459,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/prime-the-crowd": {
-      "definitionSha256": "d6c9d0dbb06b4c2dc7da462cbc3b850a3f5c66b14ec9ad66a21fc9dd6d67b487",
-      "i18nSha256": "cf22fa8397c432bc2739c3013cc6b6330d98b2f02db1599b39f4cf44ee2ebd4c",
-      "testSha256": "c0db84d1bebf9051c7bedab527b1f5be9cc5cda0893152b9c50094de5ce30dc9",
-      "coveredCanonicalIds": [
-        "8N7gGzcDDNK7d8jFGPrR6",
-        "DnWNQrGqLW69pqRdTDhmT",
-        "qR8DkwWmrqGqzd9BbCDbH"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/primed-to-fight": {
       "definitionSha256": "300668f386a1f275f7b9e61bf2dec1fccb118112ca4d362af9fa008338848452",
       "i18nSha256": "38295d957109211e71c01884028561542f6d6f2784d7a2cf4a68582684a3e7ef",
@@ -11088,14 +10516,6 @@
         "GTLKqwK6pfzjdmCgRgd9W",
         "WDDHGnJfg7HGgWcnRGrN7"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "actions/promising-terrain": {
-      "definitionSha256": "3bd7a6bb7b462bc2f3122e507ea945e787694487d77031f8af6a48abe3808202",
-      "i18nSha256": "7240bce2ad15e550632c4eff64a11dd582018089942384861ff4028e1df3431a",
-      "testSha256": "a1f76c7de16974399b4761b675cec7fe85ca730a77e3826ca8ce335af606ba3f",
-      "coveredCanonicalIds": ["jFpwffNmqGB8nTHt7mzp9"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
@@ -11363,14 +10783,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/quickening-sand": {
-      "definitionSha256": "f096ea8c2eca576d8c06b1cda31e3d1fa3dbe53de51734ef8ac6042b9105b6ae",
-      "i18nSha256": "1ef1dcba3d1ce4d8c3b8b88528416f9237f21736b07c38f707b422b2c277f7ec",
-      "testSha256": "4e4a397da62249ade56147858e34e23a8197557acde24a457790bbfbaa811eb9",
-      "coveredCanonicalIds": ["wB8rTc8NzdB9FkwWqwWwH"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/quickfire": {
       "definitionSha256": "9f03fbd0cf08359ac90c606a57ce7d487bf6a8f7c10d5da9ab8b0ba76c94dbd7",
       "i18nSha256": "32e9d7ee5cd9fe12bb9bd5ef3a8b965c8b201df10d17b3ffab90fef5c63d1d13",
@@ -11439,18 +10851,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/rally-the-coast-guard": {
-      "definitionSha256": "c3f2e0b3fcf38ebf07590144aca70214807d59deb2f6d5a1170e4204e29a0638",
-      "i18nSha256": "a1050e39e0f1fb065a500aa599f926f1195ba6050b523ea73cf4ecc483aec30c",
-      "testSha256": "af5e03acb5d1dce17f03accfa2492c25fff722736fba455995255248c2f17679",
-      "coveredCanonicalIds": [
-        "TB9k9LLhgLQm7jD9tnNzk",
-        "d6WrKcWGr7BHGtWHWT6dt",
-        "wL7qNGJ7hn86bLDB7kGDG"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/rally-the-rearguard": {
       "definitionSha256": "530b009f2f280aa55b593015c400cffe80e7dceb153330b2da0d4c39210f46ba",
       "i18nSha256": "98a394ad31879d65ee52db16ac8f63f091f3f660b2d97b4f2ba3dc7370eaecd0",
@@ -11502,18 +10902,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/ratchet-up": {
-      "definitionSha256": "0e24407588929b16f8d9fdc7aa44cc88f918769e757dced531f495805325f5a6",
-      "i18nSha256": "75681c35e0c9b49427f09d4028665d2627adcf1047854bd35236d89e032f156b",
-      "testSha256": "777f9de01f28ba63d55e61f1f45b5b360c30ad47c806e476d1cdd57beb925d21",
-      "coveredCanonicalIds": [
-        "FwdNLdm6dDRk6bjk9qwBQ",
-        "KcrHDMhMgQNfzHwKnPDgt",
-        "nwqRtHp9hhnB9RQgQLkpd"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/rattle-bones": {
       "definitionSha256": "4f45950e3bd6a774333ecafef6ee9231326c77f418edca0f0993bf07463c9858",
@@ -11676,12 +11064,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/red-fin-harpoon": {
-      "definitionSha256": "6db1597bb84bc390f4a05a7146393182d0aac5c1050f21357d9cad4a72d51c11",
+      "definitionSha256": "3bd74d37447ec85cf30ee540d28bd04760469df24e28588145541aa6f183e907",
       "i18nSha256": "86a39737ed05af24a1941e74d329e639d6f92081c2aa8bab0a454a3dffc30080",
-      "testSha256": "5e1a7ecb06a54f361b2139ecefebb7ed88d699cd5986ecd7e3e8f6ecee017e8f",
+      "testSha256": "be7b6430205674b5391bf5b5a0992f232e51e3d504b76334ca3aaff3d940c05c",
       "coveredCanonicalIds": ["tnznnMJqJfzTqCn8QBgBz"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/red-hot": {
       "definitionSha256": "b81dfbe9ae9aab2ad6631eb5fff91b65955b2d009fdcf452b8cfd2a7c4bc4556",
@@ -11734,14 +11122,6 @@
       "coveredCanonicalIds": ["NBHQRhkBP8d99d8Nm96zb"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/regrowth-shock": {
-      "definitionSha256": "17860a7a5b6ed6a1cee3bbed1519bf5c16cd679815a58827e655904ddbee8b33",
-      "i18nSha256": "59a2da606b646089cc692bd5684fac64557de823922519c7118a8eb04f901aa6",
-      "testSha256": "d1f08e0e02c1ca3def25f43a177374c7d988c39d0e60626e8d7f5c90b33e0cbf",
-      "coveredCanonicalIds": ["k8CgTdPKWcmLb78HKgHjk"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/regurgitating-slog": {
       "definitionSha256": "0bffd860add5901118dffa47b27f074b19d3fc453a19593fb712664b3dc68b03",
@@ -12103,14 +11483,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/ripple-away": {
-      "definitionSha256": "76cba83535c1ec82edcad86f1303fecc5d0bcbc57e6a7b135cbe7497e38d7df1",
-      "i18nSha256": "ea0d44bc01b0b348e5c58866b4b69779ea4ae109dacaa4f41ea8fd5e639d759c",
-      "testSha256": "d18f414cb9f35e713a9a4f7570950e6922e7f5b6d177f44c3be9c9b5879172a5",
-      "coveredCanonicalIds": ["QqfKkBhgJfFFnDLmwcHfL"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/rise-from-the-ashes": {
       "definitionSha256": "a281b347815c252c87a25aee0bc6434389da325e34c55fb5aac1aaaa0276c5f5",
       "i18nSha256": "50206d7f5447de86f7f72280dd60441514664ee4b1e92168d53f3795b3f307be",
@@ -12275,14 +11647,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/roiling-fissure": {
-      "definitionSha256": "d573af1cd68315c99190a7cb5983d9af954d3507d5adb4d7cb485be0e61e9447",
-      "i18nSha256": "610858021837e20256c73f5ebe6e2b4ab50ee2fcecf6e370ac7903750e50a2fa",
-      "testSha256": "35f68b392cd2ae42ec0bb94ffba3e0c5c72c4e7bc71594be01623644144f29fb",
-      "coveredCanonicalIds": ["g7hQcmhpwWdKzkj7NtgLp"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/rolling-thunder": {
       "definitionSha256": "12fcff8521be13004cc303c652d626ac769712bc7dbb67b5a044cf9fc6241dba",
       "i18nSha256": "11fa947707fbe15fa80b1fab1f5d8eb04bfc516e83b667805bb7a212886e3eae",
@@ -12312,14 +11676,6 @@
         "n9MjKgmBg8mjqF9hThqcG",
         "pKWdTpTngjM9dBzTbhjPK"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/rotten-remains": {
-      "definitionSha256": "d32c6b4c541b8a44922be1000e0535e61e1d167efa7ac61ba07e17b4067154c1",
-      "i18nSha256": "2e1f21fd035c94a89e33c9bf29368cf343fbb87fda6f06f8e5b5a05a2905f648",
-      "testSha256": "c69c2062c68a51caab5bced83107ae222816b76ab5d4b68f3cef8d13fcf617e9",
-      "coveredCanonicalIds": ["kMcJmLgJPhnbtBkWkPH77"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -12959,30 +12315,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/sedate": {
-      "definitionSha256": "e4b97414e0533af21f32d77a2c56fe31d91c798ed0ddfed538a82a7bf81b2f15",
-      "i18nSha256": "bcc476182ed35fbed8090cc926bbc482eb8bdfdfc7b6762f6a159bc0420d14f2",
-      "testSha256": "4d7c496c496a8cb4dee8510e65d3118fb8469ffbd8448cf1a2d13e151816215d",
-      "coveredCanonicalIds": [
-        "d9H6WHrdmRqWRcc7MWzHH",
-        "mpTmfWDrzmTzJbjbwqGth",
-        "qg77MwwLDDmNPnWmtjLPh"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/sedation-shot": {
-      "definitionSha256": "8628e4475d6ed642e993a0277602664fc576138bf3f4250e49735fc1d3eccecb",
-      "i18nSha256": "52ada62cc6018e719b96255dc667be998777f55a318d3cb8e07c6c3e8668f3ae",
-      "testSha256": "051a06b888c74051f084c490d92e59731da39c481e53889b2f228a42f601ba00",
-      "coveredCanonicalIds": [
-        "KHcpQKMtfHB7Cbr7hdCB9",
-        "RmJbJDhmdzRFfHhj96G9f",
-        "pwm6CghHCThJBr8WPNd9r"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/seeds-of-agony": {
       "definitionSha256": "3b3c0cd3c68042783ba51bdbf37c8473b970cd23db596a618616f9d683103b6b",
       "i18nSha256": "4e08e093eee5986fcf06b9e57791649fb1ee9ba817008580e94b83587bb2f25a",
@@ -13375,18 +12707,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/shoot-your-mouth-off": {
-      "definitionSha256": "dc69a7712b68882d80141d73dc4e711523cbb71536ca5db8e97cdc505b270587",
-      "i18nSha256": "7c5f6c4604ccb0d872d0f7be4177651e08ab5a9e0e2b23ab8e3847bc01b126a9",
-      "testSha256": "6515dd8c4dcff3f07a700d9445e9e2728bcd57914a63cdb82afd92cc965f892d",
-      "coveredCanonicalIds": [
-        "JbKQF8GNNBgDNQzBwkM6J",
-        "JhCTzpKz8JCrQGBLBMwnM",
-        "wGK7jP9wGLhMzDTr8HWzR"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/short-shrift": {
       "definitionSha256": "0a64a1cf898fc0e2d1061698cf94dc4710512353af8262d2fafc6078cf07cb3b",
       "i18nSha256": "6c9b00e033cc05a7f8b330cabe66373be80d4ff28ffbb46371af319c4d0b5c24",
@@ -13419,18 +12739,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/showdown": {
-      "definitionSha256": "6d6004b3906d1ebb4ea02e6b950b2fd7ab403a3019f1abedf2b5e4942df243af",
-      "i18nSha256": "61f8dd4955289caca228097749a18105143d5e59b405fb9e919c91bb84b5645d",
-      "testSha256": "fb18f15ab530bf1916901c7b6da1010e0bf1a97502c78b4273cdc18703e52704",
-      "coveredCanonicalIds": [
-        "RPKmTWBNkJRdCQk79mHPR",
-        "dHHDMCPmjB9nfctGcbfDF",
-        "dLHqbBN9bkQ6DtLtprJ7g"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/shrill-of-skullform": {
       "definitionSha256": "00cee238668adbecc91c5ef3ea7d41511c11fdb455a6d7b3a54573d98ef397bb",
       "i18nSha256": "f29073f289283500cee34a95a5f46a4d7850fa2a9214cdf4f9d69b9cea3f7816",
@@ -13446,10 +12754,10 @@
     "actions/shuck": {
       "definitionSha256": "68c3c93105482dfe1e72a8f1ce91168c7a15e270c4aad91403401bcc256528c6",
       "i18nSha256": "9d4af020ec4acdd946016c1effd0bff5371ef26081e08727a74db33149993fb6",
-      "testSha256": "0aac236a5a039f42447bd6f0e7e9a34c0cd79fa643ef9b1d41c2cc3707f05274",
+      "testSha256": "a8f3c7c1aaef95d2192997d8bc49c7d79c71ad10add0c27a6ce4ef29cf592f29",
       "coveredCanonicalIds": ["Rq8CK88DfJfrn9F8BjcLH"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:deploy-ci-reds-3661"
     },
     "actions/sic-em-shot": {
       "definitionSha256": "5fc46ab657c3aa2289aa66a7705b5590c8a7bd11f81d182e61fbcb5ed244c5b7",
@@ -13751,14 +13059,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
     },
-    "actions/skywarden-no-161803": {
-      "definitionSha256": "bfb36cedb546a85ae2b8184fabd4c68467dd61905895b4cd1424c025705e3567",
-      "i18nSha256": "db6073af3d193ff6e71451f00d96cc8c960362b13a96e4c9ebdd03e8b917b871",
-      "testSha256": "4138b6affddffe4b1d8e79ad306f6a31ec12a096008e32c3b7ba09a6c0bf5d2b",
-      "coveredCanonicalIds": ["fpnNtrfNGgkh6jbnGzjkt"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/skyzyk": {
       "definitionSha256": "88a5e5b6801a19d94a63cc89b02e011d9e415294d0373463752f596925d5be03",
       "i18nSha256": "0a25d759c7644bbe552eb6039ab8a41891577eafa3ba1302c8607f8b92918b00",
@@ -13864,14 +13164,6 @@
       "i18nSha256": "53206bf4ca4ba91dc9d22c2219a0a9b11dc47497d3351883baffc72de8de6f17",
       "testSha256": "03ea1a147c4f4b558ccb8054ba2e216df9e0fdada193158251abf8df970a2782",
       "coveredCanonicalIds": ["zJLgzP7LfbWB9qcgcRpRk"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/smash-with-big-rock": {
-      "definitionSha256": "5d9f58706ad968ef4d77dca25f254eeecf2c893981599b70eb81f92b56cd965e",
-      "i18nSha256": "32db97ccfbe7a7e85c5fbcc9b3bd991edba578b91cbea489e5c18a61e0934fd4",
-      "testSha256": "c74ae0a97a13698ba25a458ed31506059d5877d890ac2c51f5f00cbd340f7ca1",
-      "coveredCanonicalIds": ["CmrzJNdGDLzk9RdzkDT8H"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -13995,18 +13287,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/snow-under": {
-      "definitionSha256": "01086c9f7d7c6a012f98fcc7d7d8524bbbd99b4474b68907d5ec52f7df1008c2",
-      "i18nSha256": "31ee24917af1856382421386409a96b046e8ffd82dd6e27f2a400f4d52097351",
-      "testSha256": "86f5f632e7f7886cb97fff81c2311e492b8e6e39c4ef56913f43c0d780cd553c",
-      "coveredCanonicalIds": [
-        "MLkbJDtPDkLWPNpfwfTDJ",
-        "NzNjkqqJgrbPbJpWQ8RWp",
-        "q8rqGffz6jP9D7w8DbkcL"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
-    },
     "actions/snuff-out": {
       "definitionSha256": "fef47b25c38a562731fcb67a631904a4a613b8acf091fee5e7d50e759aa36b6b",
       "i18nSha256": "260e82b4171f658d76d183733254ad2b228bae11e7eff67c964ecd0f16989524",
@@ -14063,22 +13343,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/song-of-jack-be-quick": {
-      "definitionSha256": "1208db01f5d25231723b423825302e1f6cfcfa0cab037fbb49b0630803a152a5",
-      "i18nSha256": "8ade34e1cc194a1f68049473a95ddb96b2c1edfdc98742220e8939da305aa4c4",
-      "testSha256": "9e1dc8d965a779fba2f75e940f8411a11dc921204cf4f3709a11617598551316",
-      "coveredCanonicalIds": ["PCLwwwtFMQmLLpj6TD7hj"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/song-of-larinkmorth-white": {
-      "definitionSha256": "12c15fe2a81ecc205fa74fcea00a59be06147f08f891bd1e737d6375354670ca",
-      "i18nSha256": "f3992008a50086143bbae32fa9511e50f98fbc8cd58ccd2c8f6b6c8c10f14c4c",
-      "testSha256": "befdcad22b5c9c1380fbaa036c81d3b80bc9e0c3aa4e58990f2d1c4c937ea96e",
-      "coveredCanonicalIds": ["mpzgL9GqgdGMPdGMnDKrw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "actions/song-of-sinew": {
       "definitionSha256": "dff233c8285b4ed3feb69371eb2d6b77336f16189883fbb601d968951d4ef90d",
       "i18nSha256": "3ed5ebe3da97df1e37b904791bb0e0b75f10c4353dd6d6df475ded3670fdb0d3",
@@ -14095,22 +13359,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/song-of-the-rosen-matador": {
-      "definitionSha256": "eaced29b1d4f7cb32ebd9b0db125015656c5ae88938c88d8e1d89387810e3591",
-      "i18nSha256": "7843b55d5304c7fc014e9de437ee9913393d414fbf9078771115fe5900776211",
-      "testSha256": "3219b5e3d29ba132542f6a7f07b76d0144f9f873b49d3f1d35d4abaef710bc17",
-      "coveredCanonicalIds": ["jRGGnkWgcLPMMQ6D7bdnk"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/song-of-the-shining-knight": {
-      "definitionSha256": "3135cd41fd6079b84dd89f709a97e81ddb4baad5275ac9d45cda3f6896dbc2bf",
-      "i18nSha256": "992f9be08cccf6dd6437719403c8b68debcff20a03002087a4d9be8d1abe79a6",
-      "testSha256": "b0ba69feec975565e3416199d3ed78144a73d342ed4d38c6e25c76d3fc1d3cff",
-      "coveredCanonicalIds": ["NqkBRhGqcjNCjBhMq8qpF"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/song-of-the-wandering-mind": {
       "definitionSha256": "1dc602412b9c7cf6c8d78232f38905d6ffeef319512504473d2c0ecfef588045",
       "i18nSha256": "ce54ff754fd8adfe761b4b1e40023d4260ebb5d950f597ca232a7c179ffa774c",
@@ -14122,10 +13370,10 @@
     "actions/song-of-yesteryears": {
       "definitionSha256": "ef667a2ba76f6929b26337788cc1b8e8b428b0d4b3a2a9e7345bdcea0baee85a",
       "i18nSha256": "cfbcb291932a36a7c8194e1324722389fb6fbb8243af78337bf335b556ec9383",
-      "testSha256": "d43c3f435d4454d0fb9c9af72771f70065c0a43ba1c620a3cac2b264b9d50b29",
+      "testSha256": "f0f13bad74fb4a7631cc2c8b6e42fbae999fa6ea2f8c15460330137f2729b6d4",
       "coveredCanonicalIds": ["nzRWpgWz8fR6ChrGQWWdm"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/sonic-boom": {
       "definitionSha256": "fe80c2bf763c637748817b64b26dfdce91e8b6ab3ea2d4d1ae2ff0e8652f2b5f",
@@ -14435,14 +13683,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/spirit-of-christmas": {
-      "definitionSha256": "00f65ee1b4d9b0bf12fec563e28db3e5f49b04e02f751fef6790972d36301d39",
-      "i18nSha256": "35a951382b9b87ed85b6341421dfe41e8ca6327f921dae94e0b57467779f9a24",
-      "testSha256": "e04cffefe198f4a1ca8e0fbd7c26945308a5760506734a9a499143d2e4026d51",
-      "coveredCanonicalIds": ["bQ8GJhJQwBd9JRFkcJQqG"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/spirit-of-eirina": {
       "definitionSha256": "aea1178d887159d58a847e05f92a5ee125f770ef6e7e1b71c5b5d25206cc140f",
       "i18nSha256": "7ad484fa9b1e2a5ec0875051778bcbba2e6c87e8a49e00105fdc773ecd347814",
@@ -14492,14 +13732,6 @@
       "i18nSha256": "346eb837843e2d815f0da92a37ff3e8b26cf692ff5d5499524368ab3fd90bb1c",
       "testSha256": "09d5199916bcdf9ee7ad766b2d41bff219e1e83fc176bee2c8602da8cc953a02",
       "coveredCanonicalIds": ["cLFGmrkNKKHNwq8cFFGDT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/spreading-mist": {
-      "definitionSha256": "3b21e79e0506321fb0834da6057e8ad422129f7e4ac1dc6f27764d68b2c17606",
-      "i18nSha256": "de40c46ad6eea3b7bbf78d0ee6c9330d8a822cd1812198d10f9de2ba1187805d",
-      "testSha256": "539da994a9e86713a2b456b7cb7b92df6872397cab113ab555a45bc54e8d297f",
-      "coveredCanonicalIds": ["PF8fPNMCGHtNBbQRGqMPK"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -14559,14 +13791,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/spur-locked": {
-      "definitionSha256": "95d22c8bdb86f563e5a115c16e06928f51ff617f39579d7c75b9a7a6784e02af",
-      "i18nSha256": "0d64c78b63f44b77ad7050625e87b66fcb25dc384352826b0bffc7608f6806da",
-      "testSha256": "1d6db7cadd913c82098c0adb5d23a78d306addcd1515d2eb62b1775ffc2eafa9",
-      "coveredCanonicalIds": ["MfDRbDBGdmNDzQdNhHDqq"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/stab-wound": {
       "definitionSha256": "23a9a7b9b1afc6834873be4e209956e626043c31e7e05a6994e19c93d41e1175",
       "i18nSha256": "df620713a1cb8dfd137fd053667514af81d30fed48a29076ec5e742762b4d5ac",
@@ -14623,14 +13847,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/star-struck": {
-      "definitionSha256": "85c85928d165eb76e8c3ecf2cf887cc07b403734077147e52d6a9aa444ba1cf6",
-      "i18nSha256": "4f2443fa3fe462b389fbf79a990ba132c2e18a8b7c2ec4a0aacc57aa241ae8ba",
-      "testSha256": "30aa41ccf004fa4f2d4676fd09be66daa8b924c323325e6441c08930ff6e85e8",
-      "coveredCanonicalIds": ["zzHRCMBmNTF9KpJMqKWq8"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/starting-stake": {
       "definitionSha256": "3fdd2c0f194503038839c7a5d03f321867bfb4e6242825e2b9b9eaaee1df9304",
       "i18nSha256": "4de02eb0cfafd05a28a206a518667108cbef39235bcc214bca870b31be1fa757",
@@ -14662,14 +13878,6 @@
       "coveredCanonicalIds": ["G8bkfPWkjKCjR6qWKBLFF"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/steel-street-hoons": {
-      "definitionSha256": "25a8bd41f4cc6f12fe723161962f41833f8c057cb679ab4177f005a884ed5a7a",
-      "i18nSha256": "24f70996e4f340678da6d3db5fceda31c15ce01a809faa619e95be17ffebfd24",
-      "testSha256": "e8a2b534e9596022980f8b48ad3887823e5ce8efef656abb28e60d773cd7b9cc",
-      "coveredCanonicalIds": ["MGGw9K9QMqmFBjLLTrbhq"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/steel-to-the-dome": {
       "definitionSha256": "f7f657a17aa6eaaaad356ffb90089f21237c1773abfbc5b639f935402f7bd3bf",
@@ -14858,14 +14066,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/strike-twice": {
-      "definitionSha256": "24957e5435124b23a4ed4a581f63c6926808de464e66748f4b5701aaa04bf551",
-      "i18nSha256": "bb6df0d1b15b9cab82b0d1d29b7a7dca76ae3a64171be51ea7cd2dda13da4b9d",
-      "testSha256": "a21612c16b9a6b6cd96095c36e6bfcd9f4ab426210e886d5f0163eb7c51489ce",
-      "coveredCanonicalIds": ["B78rMBMq66MPzDMdNRjcm"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "review:fab-card-release-audit-2026-08-30"
     },
     "actions/strong-wood": {
       "definitionSha256": "284a3229d2816cb98baae66b23688afb4a4e2bdb99a4e1bbd6c043bd33753249",
@@ -15103,14 +14303,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/swing-big": {
-      "definitionSha256": "1797bf52437b1dbcee5d62a2f5df7af077ee346c5becb9e58036e27212824e3c",
-      "i18nSha256": "31f43907cbd480d1d521ce55b7944d59921009f90301e3d44e246894b4303a3e",
-      "testSha256": "118c50a3f848ff0a98f4b527555bdfa8a31190f8ed5bfea7c65d25c10ca7c651",
-      "coveredCanonicalIds": ["jPMgW9kwNF8Cj69gwJntt"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/swing-fist-think-later": {
       "definitionSha256": "539054b1918a6e29dc46cfbf8d9adf309ec7a089595b7c7e3eff3ed0c50be520",
       "i18nSha256": "2738f99c7c081316ad4ab05b92f121d96639dcacd6d6f0d116ce334d7f404911",
@@ -15211,26 +14403,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/take-that": {
-      "definitionSha256": "16925a0f352272022576cb1d39bf9bc2da9d328f35bcf0f81b20c73cfd60e3e7",
-      "i18nSha256": "0a0ec1ff367ac4529744c6e4646df0cf79ef8829742bf7e0f0295e5622577f70",
-      "testSha256": "93a624dafd049f4281ada623db2d65a0b8207d136c6b3e40d1017e9909ae6fda",
-      "coveredCanonicalIds": [
-        "NRb9nNnt9qMMLRqj9R96w",
-        "Nqzj9MrbgtzjcKdhdGcf8",
-        "wMrpDKMP9BqdqWfhBG6mm"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/take-the-bait": {
-      "definitionSha256": "bceebdfa495c83fd2089044f97d48b6e4cefb44db4976939e877b2214cbaa5c9",
-      "i18nSha256": "8a4c3f14d85c1add22c94fa362803bb2a78f097b8c44a315960560de502065e6",
-      "testSha256": "06ab035acdd6973fb3bcb9b5a703958a9dc5e24504db6717ef7a3296e94b8779",
-      "coveredCanonicalIds": ["7MhmQ8chFGLcdjP66Jgj6"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/take-the-tempo": {
       "definitionSha256": "41f98389bb6960d8fd4b6d3a17134aaf5effa94def7a665abfb45e80f88ba7d2",
       "i18nSha256": "c417173270bc60875ff0dbdf6f5ef9221662a277d488a5b11fe354791d77a095",
@@ -15238,14 +14410,6 @@
       "coveredCanonicalIds": ["TtF8Q9WNQqPmJdrd6qp7k"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
-    "actions/tales-of-adventure": {
-      "definitionSha256": "96d983e1686d1df310948ccbffe27b7075ba607089cb86a97349ef8d8fff7c55",
-      "i18nSha256": "22a71d5afe0982088ab5b9f55410234c861a58aec088e227d0bf18ca4daf432a",
-      "testSha256": "2cf478e3561dde36ab178fd0aa78b83439ce24a00fc8bd54de139f37e35f4e2a",
-      "coveredCanonicalIds": ["zbnpfqW7d6CqN9wT8Dcft"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/talisman-of-balance": {
       "definitionSha256": "e4b8f4db2ce3af78d03559430400b318ebe37721d9d8960773f8c7c41ad4c742",
@@ -15903,18 +15067,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "actions/tough-smashup": {
-      "definitionSha256": "4a54ccad469d87b15714af43497dee328283c2229439765217a9a6d1f1d1c209",
-      "i18nSha256": "dab3be4598e57bd92f4c1d9e73a28ea287a479dc85515b44e3e45d44a04be9d2",
-      "testSha256": "f92baa65098baa6561e7d6d4ef16fa606095f5604cba45ad96fda40710dd90d4",
-      "coveredCanonicalIds": [
-        "cDn9RLz6KTKccHFb8CdrW",
-        "jJhngckczLmdhGHBKPkrB",
-        "rjfPdq8HCMQqtPPT8zTkz"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/towering-titan": {
       "definitionSha256": "705bf8c6d2da8879bb016186affae10f6319efe4d5aa67780d06e498dcab1c75",
       "i18nSha256": "b2d975443e7add1e3554d608166b760216a6b55bf4c39d6985779fb91dcd06db",
@@ -16140,16 +15292,16 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/twist-and-turn": {
-      "definitionSha256": "38b157255b35bca76f65b769a823be7910e47aa9ecf35496b04022dba85c1e67",
+      "definitionSha256": "096a184a45ca96974a6297063cb13a561b8818d978547808ae8ede175b9b901a",
       "i18nSha256": "fd86373467177b180fb9e2e4fab2ed7db2337488c19d63c439c696cb87ff9158",
-      "testSha256": "1fec2d773faf57f288f62260dc566cc3f73a302cb021cecfd7f2179cd9269575",
+      "testSha256": "8a690924f6fda33efd68f69cd86ec1db966b3c28336ede94da7c94180ad18621",
       "coveredCanonicalIds": [
         "7mtjcMPmpC86wkdPPKztq",
         "RdhQwD68PqftRqmJpjLjp",
         "RnW9QJmpHNcgmnzB9bmLm"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "actions/two-steps-ahead": {
       "definitionSha256": "c4e09d2e9fba1017aab800ab117b3b7d3ae44e64d6036b080c3b5f90e7a151e3",
@@ -16218,14 +15370,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/united-we-stand": {
-      "definitionSha256": "5c5461130e084d52e3dfe67254f938e7776453f44764ceb2418d65a77af00233",
-      "i18nSha256": "c00b2e1e9aed27240f6f4c3b09d73ae283b24791b4e2b2b0e79c978e71dc230e",
-      "testSha256": "d713532a98a859edd74bc85743fbe5e2c46108a7582b6aabc00c46e1bc49beee",
-      "coveredCanonicalIds": ["wB6PP9TgHBpBbDDFrhgF7"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/unmake-the-underlings": {
       "definitionSha256": "ff0453bde25b29e316bd98848fdaa2040e7aaf294bd44ab328573563d22dd391",
@@ -16451,14 +15595,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/verdant-tide": {
-      "definitionSha256": "717440bc28297e2fe9596d292f939408eb30ca085c3ad0cda5c37414fe2fceca",
-      "i18nSha256": "df0398fe5e57e9ada13e06b0a6c69c9e200a4f86ad69f0edde81eade33232496",
-      "testSha256": "78607ca79172ca7b6a8a693f5b6d3b0bce3ce6e85fd32325078c1b22e66d1914",
-      "coveredCanonicalIds": ["QpMtrnpTR8gr7KQGDn6Jk"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "actions/vexing-gloomblade": {
       "definitionSha256": "520acad09d3dadb3f888e483cec3c9f535878583b21471f56dab8f5f3bfc943d",
       "i18nSha256": "5ff95db6eaf3d85e5f7cf30b79aa457810d270569c8adeed147e810fb23071af",
@@ -16500,18 +15636,6 @@
       "i18nSha256": "ea83d0e1890ac27359dc9bbca02354f78b4f82ee89d07eef6713ef6441e864e5",
       "testSha256": "0ae375889a140d01873ce75084986968f84b72908e27b6035bb0a5b8eb97d62f",
       "coveredCanonicalIds": ["nGGg68Dh6CFMNzbcLHCnT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/vigorous-smashup": {
-      "definitionSha256": "2d684d91a5839c8b511cd7edf3d90a4a2bc2882271c74a96906a27debbb94005",
-      "i18nSha256": "e2ace1a9c57c3a1fa0a1e2f8d4420148ff5c9b266f1912129fb2fb140500cbb1",
-      "testSha256": "d17273a17c4eb038ed593ea62519ab924748b07c1ce2300770497982dd3913cb",
-      "coveredCanonicalIds": [
-        "C8KwDBgMJ9rrbpdgkFTNm",
-        "NdwNmwRFRBQ8hFnrRTJcG",
-        "Rjg6tLjCGKhfGJkcnJFQD"
-      ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -16558,18 +15682,6 @@
       "coveredCanonicalIds": ["mcF6F69HgBntfh7QKkHWw"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/virulent-touch": {
-      "definitionSha256": "45a0ec9a88cda921c0ee2de6538d63f6296fccf8082097c7a03cf2e14327742a",
-      "i18nSha256": "04d9c074cda6eb07782f3d9b85125834eb2244b4bfd2b37b2b62c6699a282e0b",
-      "testSha256": "55db5693e23bd93efba9bd623f3feb20bf24d8e565f74ceffe19bb2cc0735829",
-      "coveredCanonicalIds": [
-        "hw9HLQQjJ9nzWtBGFzWgc",
-        "JrjbG9mbwQC8zQcnPRhHg",
-        "z78cKCmLRbWfftGfpcJGd"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/visionary-of-orbits": {
       "definitionSha256": "656fe4a073575a26fc47a00e467787735f2fa46052aa67099a7a88f251699a70",
@@ -16811,14 +15923,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/warmonger-s-diplomacy": {
-      "definitionSha256": "6511cf11ff1ba9e6cc26254540393bf32d5416b727f9e8beabec6be11ef06810",
-      "i18nSha256": "71f27be1eeea993a4245924c4e7f0ca6ae9ecf979c17d6b22d683b5da2fb685d",
-      "testSha256": "fbffc23d76841a8ffa16a31aead71aaba14dea6f025d00177dbd954e4ce86e59",
-      "coveredCanonicalIds": ["BkpMHRn6L8dpcgjgrPm9H"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/warmonger-s-recital": {
       "definitionSha256": "0df69d29eda92bf9bf90483e5500f975cea9a75a837ec9bd1af7d1b4f8c63906",
       "i18nSha256": "665eb67547f6108c6ecb43a32c1d4361d20b2446fd8289a8ceb784ab3041d17d",
@@ -16967,33 +16071,21 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "actions/who-s-the-tough-guy": {
-      "definitionSha256": "acc8898d61f46ed340e6b41cbe298ffe2c1cd47ab3d041f1f0716d6bd45dc29e",
-      "i18nSha256": "92a0f490eb26fe80f561e976b8730f16db40875cf4098888a2141bac896c289c",
-      "testSha256": "6a2af0f815115cc2552ab81ad67d7a9f51d230d98a450527b29a062d5d2d2818",
-      "coveredCanonicalIds": [
-        "FQ89dPqtqmkWFJDRrrHHg",
-        "hwJmzPDqWwfPPRBDqDQm7",
-        "kKGTFjLBcLrKRcJzHRRnQ"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "actions/widespread-annihilation": {
-      "definitionSha256": "fd7c8a02cde4a5947a50d0193d5e1aed2192151f768a02f4d0f1a6189e2907e8",
+      "definitionSha256": "bbad7b990ae8c78a2d5e68badc830beabd51fb8cc60dd97e85bdee2f43aa165c",
       "i18nSha256": "a4778534de1fbec90c45fbb063762362c74fd8fa5f9da4f02e19a46a57e71941",
-      "testSha256": "9d52c6464fa04ebd9b56eae1e8adbbef53c1dd9b9e21570cea61e801b082b73c",
+      "testSha256": "28ecd584da0be5dc2ff6ed16e5e4d756be869dc5d142365e8f6ee82e1433bcaf",
       "coveredCanonicalIds": ["QMWDbQKHnWCcj8zrpmTMk"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/widespread-destruction": {
-      "definitionSha256": "926eb4c8861b07b014922e36beb0ce27b286bc9ee8ac4e5292b7af4a1bed22e7",
+      "definitionSha256": "b222125f199a0720f494eabdcb42b9e3119b737276d5074579c0addc50758fc6",
       "i18nSha256": "b78be13cb7631175208e2475e33407189a80dabdc9c62bf49f1c77b5ff7e0a40",
-      "testSha256": "ef3b3f885d11fc6a9676e0a76c82a0ffc0af9371be4e74ec28bc32cdb01e5065",
+      "testSha256": "c28747663e98b4cbf76251d08dc0c4e2e82c2719111b095d8f065fa49aa30668",
       "coveredCanonicalIds": ["dTJpQ9hGCQBrDGzt6jgCC"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/widespread-ruin": {
       "definitionSha256": "5c8941e2b36b214db11f1fffa1bf07f0532e90490f2735a529cb4102268d4fba",
@@ -17078,30 +16170,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/wither": {
-      "definitionSha256": "9417bba47a77c48f2b3665cd503a33b2d0dcafb6842dd777d6888309f2b46d75",
-      "i18nSha256": "d5cce22982a0c8e7fb151581ffdc13dee3b3a7f79c0e223ef9aa49493489e3cf",
-      "testSha256": "3aa17bf6e7c680c8176dd6d326367fdb8bfa0b20c1a846a31141be3bd3a85a49",
-      "coveredCanonicalIds": [
-        "dwmnBHf6f8wQBBQwRJdNw",
-        "gqc6jdDMpF8RNbBhLw9G9",
-        "gr8bpnbjFntzpQjWk9DTh"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "actions/withering-shot": {
-      "definitionSha256": "9be496e01ded5fc842ef75601455d81b9b5261caff967a7856d456583db5a7ff",
-      "i18nSha256": "2d54d158f5fd97a7ebacadc05219ddb5c33aa320906749f892fa2a8c49415376",
-      "testSha256": "ab37aec1f1dc1db9062ad111f3b216d4982583510dbfa1179527134bf59054ed",
-      "coveredCanonicalIds": [
-        "bDLGjNdcCcbjdpMMNTF6t",
-        "DGN6wbTkHFhrzGfLjQ6jg",
-        "hKhfnNtkWGHNfWNmdFPCn"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "actions/wounded-bull": {
       "definitionSha256": "499353e1f3dc0ca52e9ecfd1d5b292449d2782762331a5d07c25b30efdf99696",
@@ -17188,12 +16256,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "actions/yellow-fin-harpoon": {
-      "definitionSha256": "45dff4c52546e8675d197382667bd70b02b47f192e414edf932d35fbed9fb9cc",
+      "definitionSha256": "433c66ac196ce0db6c679a079faf13a7e1fc8ee0460f694dd1ddd686c36c5d73",
       "i18nSha256": "03262ccbfdd36a60dd2e3c22ca085a1b5586c6f5e95002e4f22d77ab93e8314c",
-      "testSha256": "b190875ba22d0f1d16e3c2576c0f5f441d5bbb0da6d64c37619c8894e608eeba",
+      "testSha256": "fae4515a22a639b0c7e0f916d7b19ef3e09e37e242e7082968a4da9068265e60",
       "coveredCanonicalIds": ["QMr7k6cBWr6PJNDFFWgFw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "actions/yinti-yanti": {
       "definitionSha256": "a878fbd9c88181b4f238342e69117c24fa8cccb43e95de28fd2989bf9aa9511c",
@@ -17458,10 +16526,10 @@
     "attack-reactions/affirm-loyalty": {
       "definitionSha256": "b688bda08e32c3ae873e205059df2d6e7c2b960b261cb54a3e5fdd27eb57b7c1",
       "i18nSha256": "e862365ee87580982a16bea98ee712acb38d7a4d486fe24e9c2667c5a2cbe0bb",
-      "testSha256": "66870acd8c9905ea7061694cfd58835027930ac976c36f879c7c3356463a8d23",
+      "testSha256": "fba87161e122dac8cd0819da20db4a85165ff42cfb5e5607691d924340d2079b",
       "coveredCanonicalIds": ["7brgFMk9NrkLtzqKrhFFW"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/agile-engagement": {
       "definitionSha256": "ae8da4a7afd2283f488ef28350c9e1166591f8bd26e4e8c76454600feee10abb",
@@ -17492,12 +16560,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "attack-reactions/backside-of-the-blade": {
-      "definitionSha256": "5c0f0eb16670cdd78e0bff16b24d3f408520957d4c2d7e4b95b28f288e6d83ab",
+      "definitionSha256": "6eac3c553a0bab0567b8b3bae551ab71f1ee97b4a218d6488efcd7950f692cad",
       "i18nSha256": "89482ba82859690879334b6ed5499808ecd42f08c724bfaaebf1bd37b4f13eed",
-      "testSha256": "24244a1aaed005e26a74fdd008cbb9caeeea9d44082442983ca10e4cb495e31c",
+      "testSha256": "16c91af3ce315ecc2622f6e6cf879015c033bc130778c60574e689916a301272",
       "coveredCanonicalIds": ["gHKL66LFPJ6Jq7qkqFQqn"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "attack-reactions/beacon-of-victory": {
       "definitionSha256": "4c47ab605c590abd120c60a1bfc16daab52598686c106be025dfc89d63efdb3a",
@@ -17520,18 +16588,6 @@
       "i18nSha256": "5c6468747b3e65199304dd54cdf11d44f8e7dc78153353862ca3bdec8cd35ac2",
       "testSha256": "6930eb7ded9766304192cd8c1aa305272adc1521a42d55298c31d01e0ddd2cb1",
       "coveredCanonicalIds": ["6zdg7pmncFthJQtLB79Jc"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "attack-reactions/big-blinder": {
-      "definitionSha256": "42ae439f8163be47baaec2a45add9a66ab34b8fbac8522337d4d504be98fc699",
-      "i18nSha256": "e5a5b674f88f34bdf27a32b1d9d7cf357073199f925fcd4b71227ad2d7d1bfc1",
-      "testSha256": "5218fedbede14bb5693c0c94787e53de4d2d629ebb137cd5a9534979cb95df36",
-      "coveredCanonicalIds": [
-        "6nWPC67gz89pM77PJpqBw",
-        "P9RtP9QddBCD8QjGFcBCt",
-        "mnWKB7zj8BMrjP6MrqkfG"
-      ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -17578,10 +16634,10 @@
     "attack-reactions/blistering-blade": {
       "definitionSha256": "ecd80cabbfd66eff5002edae76406fe86b502ed74e0a336663092941819ea67b",
       "i18nSha256": "0c90a5bf1dc8250a674a6ec369d84da91ed6c2d4f509b0f5ccaa768400a4e12e",
-      "testSha256": "2f140925260f4b4d830eba8fc06314c83997aa7e2051f51b564a84229768e8c2",
+      "testSha256": "a6699813107dc9c30112bd1fa86b06fcdc1eaa9b65f7795f9c86687dda7657c8",
       "coveredCanonicalIds": ["PRNMJn6THmFNCk9h68Bcw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/blood-follows-blade": {
       "definitionSha256": "a3a1baedcc7c59859bac373e3456423e220e80c87e08a6c48f2803bb4829ea75",
@@ -17594,24 +16650,16 @@
     "attack-reactions/brothers-of-flame": {
       "definitionSha256": "c09f25222899d5d53e7eb6768c9ff2a425f81c6b44ef503f52250614bacbc1ab",
       "i18nSha256": "9ec156a3e173287d4c04ae705d931244e599aab924072d6004614970febe9467",
-      "testSha256": "e15314dbcd6c1e793e64dd1ea641ddff78b21555c720e4e22d6671dcaeb34348",
+      "testSha256": "8315bb90b910727ad818d61fd7665a7126ec09bb712c3972c95e272c0ce84cb9",
       "coveredCanonicalIds": ["tkHRmr67MT8GCPJBHMwBH"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "review:fab-card-release-audit-2026-08-30"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/carve-up": {
       "definitionSha256": "c28203507bb2fd7ac636531e0c2166c0f7bb16ff48f1a949450e15b603ae30bc",
       "i18nSha256": "73b4d017dbe6e21b197d35aaa646c5652846f6a6916e28ff9578195d1fc91e15",
       "testSha256": "4e29c11039aff9e44b7410e77d3a74936eadb7d6b8bf4a3d5d12de0d61debd6d",
       "coveredCanonicalIds": ["6NQchRgTdMDpdPjM9wfbh"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "attack-reactions/chorus-of-ironsong": {
-      "definitionSha256": "5a169afdc5e05e4ded5954da616491ad250bb40867ced2c0ce81039820223f2b",
-      "i18nSha256": "33855536d3074a77e2915847a7b16b979060adedcbf07011a2011d5528bad505",
-      "testSha256": "0e631545fb1231df2c254fa552afe7e8eada3e93886c4e2891c6920188a01084",
-      "coveredCanonicalIds": ["hcnpwrf6Brdq9rjc9TCJ7"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -17739,14 +16787,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "attack-reactions/donkey": {
-      "definitionSha256": "fdb4454ef4f3bd31204e035d12e1dc1f1d06cf10e49bba143fc7b1242d148701",
-      "i18nSha256": "130a82e1824c9ba510f6465a1142a92a3fb16647fa9790db89e2a52f8bdd33a1",
-      "testSha256": "6b0a98062fb73c00b1fb68b49fb9027cb711fc0936bb3b8ffe48bee2f190d6b9",
-      "coveredCanonicalIds": ["NmQKTmjkndPjrGGW8bBLk"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "attack-reactions/downswing": {
       "definitionSha256": "af5a2e2c07a8bc75a10b6c7d3fd1837a0a22974da1173d3a3dd55616072542d2",
       "i18nSha256": "bef1d880438df9d501181b4b20cf0b53e1e11e3c06358a29847b2cd84e6bd37d",
@@ -17755,29 +16795,21 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "attack-reactions/drawing-dead": {
-      "definitionSha256": "4cd23374e98217abd50a358e9db3f0f19bfc787509bbd6441d54d9e8991a7abc",
-      "i18nSha256": "7008f685f07c412ca2e589f2e0a0c299d28c2bdce82456d2953eb7aeb7e62814",
-      "testSha256": "a64fdfc19995678a676b82a5eb976ec584752db822282cbf459b30c3824aba90",
-      "coveredCanonicalIds": ["P9zCBnmGGJLqgH79R89Br"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "attack-reactions/dynastic-dedication": {
       "definitionSha256": "69d18df0b015aa13aaffe119fa73d1f9664acf738edddefe14cf71d80d68eef4",
       "i18nSha256": "7f1a8f7097c8945ab660eb9269b999bd28f5ee021f281913fc4f1de5b6be3324",
-      "testSha256": "86fefc23bc86959dd5e99a63c1fa3599ebb19346bbc1558ecd395453bac0f8bb",
+      "testSha256": "16590de14935ab1d1fd74e8c8db59de4ab6939b6ad1929f45c0165b0c749e0d0",
       "coveredCanonicalIds": ["tbfnpFfBddccMGLcDNbJC"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/endear-devotion": {
       "definitionSha256": "e049da52dc0682b7a59ee9345b558ef20c2518e1256519d3f0c8d28fe0322cc6",
       "i18nSha256": "9ecf8f13a60c80fa2a20084713b633109cfb4e1b4ba160e51aea259b61617050",
-      "testSha256": "c3e94a992d6eb3f26597cf19cbabc1cc6ddfcfb0b3bb211bf1185fbed6a9cce7",
+      "testSha256": "d6edba952d0b01e2e3cfba0c12109311330fc35db61b3d1e603302144a0a16d4",
       "coveredCanonicalIds": ["9zPDb7dgNqTgDTpGNDQHg"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/exposed": {
       "definitionSha256": "1215218c1ea2591f664d295846feb8eae88fa41356ffb35df0eb8a49875a7282",
@@ -17808,12 +16840,12 @@
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
     },
     "attack-reactions/fire-and-brimstone": {
-      "definitionSha256": "57d9435ed164d1a1a8b3cfa7d40b8308ed59f75676cecc0ef18c16535dc266b4",
+      "definitionSha256": "cd99b345cffad0317ddb40b25d605832539b1a935aff296b3cb88622ce1acba7",
       "i18nSha256": "127a25858f4e3042f499f2329fe7fe5309cec2ac9674f22cf13a8c99c7defbfe",
-      "testSha256": "2c2bc8e08ae13f12f51b8e150ae7bd68e9434857e1a1aed8d7a1790f66e33e57",
+      "testSha256": "4937dec93f07f4e1bea0b1b2bfd713a763023b1f89cc77d6fc23572b52328955",
       "coveredCanonicalIds": ["P8MBHdhfJLMQ6qdPdWpCL"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/gleam-of-the-blade": {
       "definitionSha256": "7a6dea8d99eb0d74642adea56a66696e6391d37b3edb738369bb07611ea653ed",
@@ -17854,18 +16886,18 @@
     "attack-reactions/hunt-s-end": {
       "definitionSha256": "686b7f06476910fcbac1628d80d621f203f9d05d60611835ea2765ee76475bba",
       "i18nSha256": "ae3a2ebbc09d0ad5590fe69ee88d3ce8532605b07be07fe2ef9ff6a03b9ee8d9",
-      "testSha256": "40ae7103c975db780717314b1fe86e606bd7bfaed99fa80c35ea88d18aa76cbb",
+      "testSha256": "1332ccafbf76f305d75384e484f050313026ce54453343227ee15b50aa8056ea",
       "coveredCanonicalIds": ["dnK9JddMWTf6RgcBWGjn6"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "review:fab-card-release-audit-2026-08-30"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/imperial-intent": {
       "definitionSha256": "0e8551ca4c3c244768aa8707cf100a133798070ab9578e1d422cea8275c88162",
       "i18nSha256": "d54534229215f38660ccc2f3990539572c91d97240d2667210daddd63d2d9077",
-      "testSha256": "f601a6a3a94c089f6d339d439bd949c7a155f773ea1b3428c6e7f4b43ccfea15",
+      "testSha256": "a361455f6d64407911dbdd698191c1b3e1077a9fd38d179883c442732a715e5f",
       "coveredCanonicalIds": ["9jMhDp7f8QpfCNk9fMmzD"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/in-the-swing": {
       "definitionSha256": "ef4d8c8d8061517bd86959c73cbd55d5abfbcc9ccc0d5b35ea1dba36fa8c1fb4",
@@ -17964,12 +16996,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "attack-reactions/long-whisker-loyalty": {
-      "definitionSha256": "0c910d6ee40835b6cb98ad17c30dec512d5bba37137852457e5083bbd19a4bab",
+      "definitionSha256": "0b5d2839e6baffd2282d9c609fcc691a2d4287dbcd074775a491fab56437eae3",
       "i18nSha256": "45fd027b4fae9e757d07c9fb7e837223bc5c476ab15425fbc36be1b0838c3bc6",
-      "testSha256": "2b1c035fec327143a9d6ffc58d0954572d6ef6d9d6c4ed08db4801e1aa60ca09",
+      "testSha256": "41cb81ce6bcd9197183b6a73de091bb851994b9a73dcccc8233f715b9df57f2c",
       "coveredCanonicalIds": ["969HqThPzMmQtFhM9mNq8"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/lumina-lance": {
       "definitionSha256": "686a58b4c4ad9a62f6ae45be85bee316fbb20022c5e51cdbdffa76f3dc284e5e",
@@ -18052,12 +17084,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "attack-reactions/perforate": {
-      "definitionSha256": "f29595f07740753450b4f4ef5f8606a8378cd88d73026e724bdd4833c251559d",
+      "definitionSha256": "fb3c1cd5665a5591d40eb3e3a799e2ba2dd02b03842504965011e4e550851c9e",
       "i18nSha256": "04ec5a6261ddab130be5caef535a7a5de83d413de816916defd2217bf3fc61a2",
-      "testSha256": "dc514b59f9d6cf85214d33c6f55345ff2ab06c01e97fa2fcdf7338cdfd84b727",
+      "testSha256": "164c95e4c5da1b9f9f00dcccb3f1e04ccda3d2d04e797c92b8682a138e5cb6f1",
       "coveredCanonicalIds": ["kcWTWNfgMCjmWT9BNKwmJ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "attack-reactions/point-of-escalation": {
       "definitionSha256": "459c39473719416830afb1a2cd899944679d986bcd71ccc4f4ee6e14df5f0ab7",
@@ -18068,12 +17100,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "attack-reactions/polished-blade": {
-      "definitionSha256": "0f942d6d71ad82b738a09d168bde43c9447bb7e3aa77f581d00811432f644b87",
+      "definitionSha256": "d4d39524c94c5902c49cf2034e50319bfa772701fc3083d27575eae89cf96c99",
       "i18nSha256": "aea0c3e397cdcb6de050923a84d7cefe7c56e05cbcf74569c01bf29bee36d0b0",
-      "testSha256": "96eef4609c1e8b546b348b281a7e99e3b4bd9fd32cb00825c63bae20244f21eb",
+      "testSha256": "480872d7aec0101364718d4abf9455d6f87c976eeef7a849c365e43ade49cf84",
       "coveredCanonicalIds": ["gggJzRrtDDmNMKht6Whk7"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "attack-reactions/provoke": {
       "definitionSha256": "5026a2dd7c360902397146889609914241f5d6c9358166e98fdb215eb9e2fab3",
@@ -18194,30 +17226,30 @@
     "attack-reactions/scalding-iron": {
       "definitionSha256": "f8a2523dac0021e9d722cd7077ce63422db7275e56749b8752a1f65abbfe6ea7",
       "i18nSha256": "e87898979a4c7f9b5ba28ff1ca5912631ebca7746499a05d27b38d10a1a4ef1f",
-      "testSha256": "9d6c8f120f21c2958d949226938d9ee36630f761efcc8bc96f29277338f1c051",
+      "testSha256": "5c228a1de97b69e2b756c3c478dcaefb8d35524e246d3dc224766b6cae8a0c2f",
       "coveredCanonicalIds": ["C8wdh6HkkQBqknGwzmnDw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/scar-tissue": {
       "definitionSha256": "77e0156cdb60b0e562b5f717b8dca947273094661f5f751fd8ccaf16e3b48056",
       "i18nSha256": "fcf8ba78229abb96c54ea580761e843f87e5d094c558351e3becd1d0dca15b90",
-      "testSha256": "d5bf6e8fafb94aab44290bafa30862dda203f1f524dc85bb7308958b7dd49d21",
+      "testSha256": "01df9cba4de82e7d5c35371c404993604f3b47232d3b492f2fb3662fb598dcdc",
       "coveredCanonicalIds": [
         "GHfNcPpwFnQttfmWMDq86",
         "KjLnGJk9WwJKDbRtpBRKG",
         "t6JCJM8LbB8DcqTwHj7Mk"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "shared-worktree-sweep:marked-hero-signal"
     },
     "attack-reactions/searing-gaze": {
       "definitionSha256": "74ec0dd511b6c4cdc16d14003b16c9be36500fe72d2ecabaa76c649b5f0e1bed",
       "i18nSha256": "a038574e83cd7ef0ecfb09d3a495dbe91171bebbb9662f113549b9c675747314",
-      "testSha256": "9bafa0372a018405369f6c6a8ab3d8cc3adcbbdbfc02eea04d544c34129f7aa8",
+      "testSha256": "4cb9804b9f2297e7acb57970daded2f0ceb0cd860588eb450432b6515ff503aa",
       "coveredCanonicalIds": ["f7Gk6PJDmMhpGpGjpp866"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/sharpening-sparks": {
       "definitionSha256": "2291c7b1a92f5076e4f5bda5c6f1bc4e4f851c82db03d7d8704e37fc8a145e09",
@@ -18314,18 +17346,18 @@
     "attack-reactions/sisters-of-fire": {
       "definitionSha256": "a0d7e70f902e07836622493fbccc1c84600da605ae2c6a7d27e89d6dd7d940b6",
       "i18nSha256": "232f6ccb6df973c1a5321073f40290fd28cbe93be6127ac2401ac5029bdb9b3a",
-      "testSha256": "a475fff9ea7164191400136205c9b22d65c16dc0e086181d515aff7dfffcadd5",
+      "testSha256": "26d4ee739e8cc9b82a85d04fdc0d75748623b193a8a3a76875abcc081c0d44eb",
       "coveredCanonicalIds": ["Hbpw6FWPgCtwPKCnW8jMQ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "review:fab-card-release-audit-2026-08-30"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/sizzling-steel": {
       "definitionSha256": "7ca4769f71b302156aec509e0951ef2de096e33d51e6751d9c0fb1ffa075f6ab",
       "i18nSha256": "acad2618e4b3b56449133df15fd3095cbdfecfd920b6e331ee14c9e62b4347ef",
-      "testSha256": "d8689150f966c39fcb77766f192906cd8e056033d7962daa3423570686d6781f",
+      "testSha256": "50f5aa5c9754e9f445ef6b1fe22172b40fd0a1455d499b5575e0ca56c3245532",
       "coveredCanonicalIds": ["DPh9t9CPG8qjfbPNPbfBK"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/slice-up": {
       "definitionSha256": "b3b4db67b5ab3ec4c0b4e1b78d1e98822425fbfb3a276e7376118dd45bc173e3",
@@ -18343,65 +17375,13 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "attack-reactions/small-blinder": {
-      "definitionSha256": "b93eb88465dfc29f6670f6560f2f982741f7e604de103900ea74422a342306ec",
-      "i18nSha256": "46aaffe8cfcee54d63daf8e3eaab4483b74cd666fd0796746581fae701d8bb4e",
-      "testSha256": "2947a95ed887fd1f19e952d29b94064352eb916253d609b8a25fe59751f0c4b8",
-      "coveredCanonicalIds": [
-        "6dRWCNgFHTQJLpTnQcCD7",
-        "LH7bm7LbWkd6NcPbK6GWC",
-        "bcKTRDJpM6bw7KPmKJWtF"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "attack-reactions/smoldering-steel": {
-      "definitionSha256": "3f2888e0e4e02ce37767691d84c36a524508e2cce87d82d082639e86da387901",
-      "i18nSha256": "691bdafd6da0f4b3c153726e69efc34addb70c1193377115dc70f4898ec5eadd",
-      "testSha256": "ca7873b63008a9acd91f3ac126de7e418d1a763f3d0bea0462f3ce5927970642",
-      "coveredCanonicalIds": ["fnwmJgw6ktTLBrnD7QHFN"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "attack-reactions/spike-with-bloodrot": {
-      "definitionSha256": "0b3cfacd1c1893203722fa0a4f56263c78e488018bb83da664c6fa803b60f10e",
-      "i18nSha256": "dbb6ef6e092996710f85eebfb2c183eefc44e779d21f8033b57b9702fd1bf967",
-      "testSha256": "a3282663a3f73c78c921ca023ddaeb5d59741847fa1b62413b5a6fe3b127c2b8",
-      "coveredCanonicalIds": ["c6tgbGMBbR77gJWhJCzhh"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "attack-reactions/spike-with-frailty": {
-      "definitionSha256": "0992c14a92615cc00eb2dafcb689176e4d11f54fafdc44d8109fc42b0a62f14d",
-      "i18nSha256": "1d22c2d6e6315220f8707e341cc968fff46100ae8c4a26f94cfdd72f4c2b4aea",
-      "testSha256": "4f12e215313b48e51bc15b3f8dd92dbaf087ab5516212ad06baaac56762ed613",
-      "coveredCanonicalIds": ["NHhCjBzmNwbfFMfL7TKf8"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "attack-reactions/spike-with-inertia": {
-      "definitionSha256": "ad860ef21e34cec97d980a6e4804dd18538b798a86141ed79b6e5483b3102dc3",
-      "i18nSha256": "d0d3866aa0ba0bb6e91d8ac43cdaa796a09259c09fbe7654cf2205ff69627d54",
-      "testSha256": "c97cfe82dae44005a71ba4a03e516423682a879c7a8561ab4b4ead7cfdc470c3",
-      "coveredCanonicalIds": ["NbddFmpDCff8m7FWk6dnQ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "attack-reactions/spreading-plague": {
-      "definitionSha256": "8bc4b30a358c1e71db5fc1cc2661025ef7d592ab012223ad180cc7ff1810989a",
-      "i18nSha256": "1f336bf51584f2d1f52fd829f2d8fd35f5792581c9db4ab804e395c3519a09d6",
-      "testSha256": "7812cc3a6dc8edf1ec1c95f1908bd865f3fbbecf6b4c1496e035b0087d5ff6a8",
-      "coveredCanonicalIds": ["R7K6C9kzFHbpHGLHHFJtg"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "attack-reactions/stabbing-pain": {
       "definitionSha256": "fa707d4adfb17d863fcfd03f027d3c45d57042568aec433e18ebbc7ae6872a38",
       "i18nSha256": "c2459abca68dbdda6d7d678153c240f3e6edc22122fedae8555edbc66fad5dbb",
-      "testSha256": "beb52fa92b27766c94ab89f7bb65925635b8fe8823db4fcdae385bf0c3a5df23",
+      "testSha256": "311cdc16dc3d80a2d04e24f8b17460cd5b3f928782155185157c242842b9f054",
       "coveredCanonicalIds": ["Jw97fMLCLqmLbfc9CmW7R"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "attack-reactions/stains-of-the-redback": {
       "definitionSha256": "36ecf9d582f46de4a0c72efe926ab6eb972f29cb3cf076ba468daaab7c190022",
@@ -18436,16 +17416,16 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "attack-reactions/take-a-stab": {
-      "definitionSha256": "fefd5dcda105e8275bd042360bfdcd5133f303ac499618ff4d690763cffaf7ec",
+      "definitionSha256": "7bb87a3bcae180fac69e1f1dcb90b6a2f03d343a3871e262f1636ba1a6c22b57",
       "i18nSha256": "c224f6595cb8212e031fbbc607c11cec628d2b677aaa9031a02974ed05de9441",
-      "testSha256": "794d60e52f61a6389b52609622d05ad0ecf49b843b0044e8976646c04f07f357",
+      "testSha256": "ec65a4aec85d941fd1170b0dc5e0b7fed0ccb190f042f0d6ccba2bc4e111bacf",
       "coveredCanonicalIds": [
-        "DkcD8cfprKB8RPWLKdMhf",
         "b7j6PpNMGdBQndqjMtcHt",
+        "DkcD8cfprKB8RPWLKdMhf",
         "mrHRpJzKbQPN9TnLb6mjd"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "attack-reactions/take-the-upper-hand": {
       "definitionSha256": "d0218b5f372e66a3816a6987094e02511f5f4e0bdc82fd12483219c8054b90b6",
@@ -18595,14 +17575,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "blocks/asking-for-trouble": {
-      "definitionSha256": "e3378d95ed90ebbadf0a5efe4ef72d6e23034487e9ec835a031901dbf7c44d68",
-      "i18nSha256": "730034933d6f1cfe55422b9b30d85df6c2f78602ad9cde2430988b077776bdfb",
-      "testSha256": "1697eaf28af7a044f67132ff55fa9ebb5a63cbc2eb356907586fb1563abd1c05",
-      "coveredCanonicalIds": ["gTFpc8PnjzBtjcJkzcCbt"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "blocks/blunten": {
       "definitionSha256": "7ad7b30e17f65c75ba50c86005f01d781483912594ed81b6167a49660f9693c4",
       "i18nSha256": "6dedb02c9b4620a3370d0943faa751eb1496b04669d6d2e37748fc2ae2d7ba7b",
@@ -18675,18 +17647,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "blocks/cognition-field": {
-      "definitionSha256": "cf7ed2984cb5f0c8a293bd2ab7adf3375c9431712d1237295978f078a59c47d8",
-      "i18nSha256": "12c275dcb3859554336406664b32994c13355f1287ebb5bcbb5aec8e059a6786",
-      "testSha256": "9d4124bc90835e3c82a3a93c510bd7b1b27a9fceb2bb3da4e2bf57c1cc17960d",
-      "coveredCanonicalIds": [
-        "HK9PTNh6JKQcNK7cqg6Dq",
-        "RpfpDfqWNgzTTJGFHrFnb",
-        "WLn8D67P6kfgMj6bmRHhz"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "blocks/crash-and-bash": {
       "definitionSha256": "f3fd12d172a957fdf5224f8b3818d260bb6efb0ee9e9bf37117207bbeb87a2f9",
       "i18nSha256": "947e04ae5db7308625ca30c31ef6e6dde9fbc775852d95ad0c4d05a2470248cb",
@@ -18698,18 +17658,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "blocks/crowd-control": {
-      "definitionSha256": "730fd7a295507a72308d233f0dd545bdf2cff2c4ff55d4203a999d7a682f43a2",
-      "i18nSha256": "1e39bbcc080ef185687dde3bda44fd613c121d47c5cf17a3a49acb23a5416f7e",
-      "testSha256": "14e8c3ee7643f5138f6a4c3f00c6315d25b64f11b8fb8cb5d4609ed85b63d306",
-      "coveredCanonicalIds": [
-        "9MMPg6FzLBnGmNtjnFtCQ",
-        "DfkBWGW6Wqk8P6NdGjtrz",
-        "WDTM8c7DNBzkphfGWtBkN"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "blocks/darling-of-the-crowd": {
       "definitionSha256": "4d7455568426431ca6cc1f5cff61a67735e7be4971c1441673201ad6e32e8634",
@@ -18767,21 +17715,13 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "blocks/hoist-em-up": {
-      "definitionSha256": "e7962f90cf3292a448a32a5c39e010b8a714945abf15b4e92a54644b0470b3d3",
-      "i18nSha256": "c6e6bff81f68b583416a7ba6474632c7d20eb91830ac2ba759e0eb7915ed4b71",
-      "testSha256": "ef8485cc8081cf04e6cd734e7bbac9b1549efda75935a4b46f1236c43aaaa1d1",
-      "coveredCanonicalIds": ["rLgf6HdKBBDFTcJrkwgtT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "blocks/induce-panic": {
-      "definitionSha256": "10110fcdf6367d9057e030a9f3e2045f91ed97b6e331a4e6a2c439b0ee0ac546",
+      "definitionSha256": "f3dc62edd4898291781f96e3b85f83cb9a9383de7884ec8cfb9ff81e2a18dd94",
       "i18nSha256": "41d4c6e4356561748ed12f63cd300111a8e37c160cef23c72a2fe105a3434e3a",
-      "testSha256": "23a0712ae90518cbb1e707c5d0920b339bb342e7a3f716843d48e895dc3eb0e6",
+      "testSha256": "1811669718e0672e876662177e3e18a8bcbf1e64dfd45f1e3fedd84f49fb3d95",
       "coveredCanonicalIds": ["JQtbmKdrD67q9w6pr8rFD"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "seat-fix-audit:resolutionTargetActorId"
     },
     "blocks/lost-in-transit": {
       "definitionSha256": "098d2a5157d9294ce7585ff4fab08ebdd38693b99a0662fd2d801fd9434c87e3",
@@ -18834,14 +17774,6 @@
       ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "blocks/pinion-sentry": {
-      "definitionSha256": "8b1bb6b0dc343e28ad59dfa5e8b353c3a92e284708e7d9617bca4dab10a6f263",
-      "i18nSha256": "85b349b59281d76438c96413a08d8cb2eca8773dc1a60f241260b8337c4d8121",
-      "testSha256": "fc7b6081fdc544612ea12b11f9d0bda0d397c84a180a216a3ef1af29f3d384a0",
-      "coveredCanonicalIds": ["gQdQfNwNMgDLJfkcNWmhH"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "blocks/return-fire": {
       "definitionSha256": "a957dcee5dae6d7b6e5dbafa11f27f465aace31445801c724c42cafb20e7ed51",
@@ -18903,14 +17835,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "blocks/test-of-agility": {
-      "definitionSha256": "05d718647a97bbc0bec5d0236f450098da7e1fe22ecd91ea4092b349aee91b36",
-      "i18nSha256": "be5a129a23d2207201f2020fbb5736fe7c5d3862006306cbd353405027cd5baa",
-      "testSha256": "845321db5fb3a01c975d56596b210cfad6285b624a03a83da39c2bce0f0d6b9e",
-      "coveredCanonicalIds": ["6ChQcHfgrFqCLTrFppwQG"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "blocks/test-of-iron-grip": {
       "definitionSha256": "9597a580f5bf952a10d05f274abd1f2a6a820874fa04b210929b52949bd613dd",
       "i18nSha256": "cd78ca9bd311325d82f0c4f262873400721270a475979f0fd015b30fbb4ddfb3",
@@ -18918,30 +17842,6 @@
       "coveredCanonicalIds": ["kMbtCPhmRMRr9fJnGRtPj"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "blocks/test-of-might": {
-      "definitionSha256": "0de0a49233242880c96ca6dc56ce09cd9b56af0b67d9873c22d98a04e44ab99f",
-      "i18nSha256": "3a2975b1e642527abec81a5d35773071ab14a9a6984bdc3b9ea187b7ac7dc595",
-      "testSha256": "07dd8139652df7da94595196d4493543a78168072423b95f7e289023f4da6c91",
-      "coveredCanonicalIds": ["QBwMd7jJGmz7cFKLRDjHd"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "blocks/test-of-strength": {
-      "definitionSha256": "36269f3512e3e4f24c4e494d499cb006661307289f6e0d2c81f2401d15c43712",
-      "i18nSha256": "f9dc59d98c6ec96e465d1589335a5ab3e6e0601d8f0b61c2df044b27ed384c08",
-      "testSha256": "d3f5ea902e4e750033ffa95846ce98e80cc57b5f6f839d85055fbf799df7e8ce",
-      "coveredCanonicalIds": ["zmkd9LqrNQFfqHCWKcQNr"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "blocks/test-of-vigor": {
-      "definitionSha256": "0fad9df35b6b636b489d36424c77e9f6345375c253fb39181acec1a31d4fdebc",
-      "i18nSha256": "55977a9e1d1d7451a1a74df7a8de2a71e7d6c303f0d7d9777246f9ba03788779",
-      "testSha256": "679ca6ae2dfbddaa7bad96d42ef27b554be3257209309c377dd2e912653fc743",
-      "coveredCanonicalIds": ["zt8NGKPrTHDJ8pDrDdJgw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "blocks/thwart": {
       "definitionSha256": "578034ee9fb090683b6bb88d75008618a9804f488eae60b5af7faadf120cb50b",
@@ -18958,14 +17858,6 @@
       "coveredCanonicalIds": ["6tj9kHRWLHbCbF6mG6tDh", "gftbNkkj9bNCBFRpnbdtq"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
-    "blocks/truth-or-trickery": {
-      "definitionSha256": "cdde674f482ef0d2dae8bce3ec11c4c580bfb8016f066d61ada31237f3081abe",
-      "i18nSha256": "7bf9e0f0d16082d39f7a9a4b2d6ec5c33e09efafe1807dbffa6dcf12d27c8b0b",
-      "testSha256": "10e99b867fbf1c08e28cc9518f4804adc5bc4d2ffab33520784f95b8f1da9815",
-      "coveredCanonicalIds": ["KhTmHGFqNFKzPkBdQJDgQ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "blocks/turning-point": {
       "definitionSha256": "adee88de592e74af2b0aeb4aa6b29b0c54e43b9e8e7454556e27825d1a66a825",
@@ -19078,14 +17970,6 @@
       "coveredCanonicalIds": ["mhWb9WptjzMQtB99PWNBr"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "defense-reactions/bloodrot-trap": {
-      "definitionSha256": "fb6879f9bb2df713213fe11760d2b63cd3d45bc984197f5fab9fd81d198480ac",
-      "i18nSha256": "a83ad21c7ab2a7c2833377156bf1ddc87208edb478d70f88623ccd6388836cd5",
-      "testSha256": "95b955b951b357f876b72887a42a02d6c69a5e06e1298e21915d4ada669a86a2",
-      "coveredCanonicalIds": ["MrtrMDKjt868mrrb9cjJW"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "defense-reactions/bone-barrier": {
       "definitionSha256": "92aff5365f3ffe958b80d2bbdd11a28322e72ed239342a86dad8437dec7606ca",
@@ -19211,22 +18095,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "defense-reactions/frailty-trap": {
-      "definitionSha256": "2d74dee3360c6446807c9f95ab998e1aa0df4d992549b851b35bdfc70b72a14d",
-      "i18nSha256": "0e864b08f394a972aba5635d935a90db2e60a4085670f426c0a11f4e23219d6b",
-      "testSha256": "2d9cedd3103c2a373071c29848166388ff8a51577a9253b763186d0da2b8b684",
-      "coveredCanonicalIds": ["gpwqqHDD7DwWNrJPdpzRT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "defense-reactions/frosthaven-sheath": {
-      "definitionSha256": "3013a7628bcd192ba86488c84071416c4aacfc62fdc2fbc57b9ad54d1792a85f",
-      "i18nSha256": "a9752691e4c7da26b460908399d2eb1f3e8a96ed79ecbbea64ac928ae4560c09",
-      "testSha256": "a2304277e16d1dd5d9ec184e58beb0bf5f91cd00ac35a52b3551b50fa4368784",
-      "coveredCanonicalIds": ["bGjFwg8ztdMPhnRmdmfRn"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "defense-reactions/golden-company": {
       "definitionSha256": "c9ebafdb16359ea8a565e9c8b45ff4aa556dea8e61c7279b5832320be6d0a2be",
       "i18nSha256": "ce08363cbffdfb506acb0f41cb188a58a6f8737473e9495d8ccd5c56e17e208f",
@@ -19262,14 +18130,6 @@
       "coveredCanonicalIds": ["ckmHzhDHLgzTzzDgKfWgH"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "defense-reactions/inertia-trap": {
-      "definitionSha256": "bade5166296b489292792ba07af1ed717abede5effb8edfa722031cc0c1b882c",
-      "i18nSha256": "89a574724cd20fa30e81f82acaf32498546a44064f35e0071ea8e4bc2de3f0b8",
-      "testSha256": "1b662a384df4b54476b38ebbb6bd62926687cfcf8d218b18d103f71742ff69c6",
-      "coveredCanonicalIds": ["Jb6MjpJPRLbM99RJC8qKR"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "defense-reactions/lair-of-the-spider": {
       "definitionSha256": "f9ebc23e0c3bd494b1c125fa35e03f6a621dc92d2e1cff9cd0335b88b752b6bb",
@@ -19450,26 +18310,6 @@
       "coveredCanonicalIds": ["RmJNprW8pD7hPmcMJ6Q7N"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
-    "defense-reactions/sigil-of-parapets": {
-      "definitionSha256": "84731801f5012f153e4e201fdab2ce4b3410df83f352099e811d49d5b25b3b4c",
-      "i18nSha256": "f969acecdfaf5e72bff0fdb65375cbd4cdd6babd8e08bd6fd3cc0f9bffda602e",
-      "testSha256": "750c3f432c34d6ac586a568195e2536afad44122f239850a67b6e36a557dae6b",
-      "coveredCanonicalIds": ["9gWCknpqtcLqfrkm6BBrK"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "defense-reactions/sigil-of-permafrost": {
-      "definitionSha256": "1302931f78847560c77cddb9e6ecd5a2617196749764d869511cca22a9090f88",
-      "i18nSha256": "8a565fe6e5f92c78fd43bac310c6d1419dede9373431d80a5f3276723c2721ab",
-      "testSha256": "d0d085a59cce1a5ad36bed157cc3972930fd8c8db124e1005d144a11ca602082",
-      "coveredCanonicalIds": [
-        "7ffzcpNTNGrMwzNHkqWKH",
-        "ng9bzdmgC7KjJKR87Qn8B",
-        "NHCQbrdqqK7FbcWgKnwWn"
-      ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:make-card-types-right"
     },
     "defense-reactions/sigil-of-suffering": {
       "definitionSha256": "acacd510db7a9928f4fb9948d48f1989e05d942691fc56f33cbdd10882908c01",
@@ -19679,14 +18519,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "defense-reactions/viral-diffusion": {
-      "definitionSha256": "9e0264b7069c46bb537881cfcc7b5dbc6fff668c6c319632b2ce835b28fceab0",
-      "i18nSha256": "af51a3cd92e8fd7b3159fa8163c6cc2040a09a6eb6108238a944fadc3d853df8",
-      "testSha256": "babc0f72213ec0fb942a79ecd55ffa0a22383d7de577f9a7a3f6876d64de042c",
-      "coveredCanonicalIds": ["dLQDGrJKDmFcmpzLNfQRG"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "defense-reactions/wash-away": {
       "definitionSha256": "62d5a695238a40aaa07d5443697dbdcdc23f927242845b1d7efaa44fa81ad201",
       "i18nSha256": "f5450c8abf3939606465da939d2c4cc4b16f2f7438f15996b4079ee61b885195",
@@ -19807,14 +18639,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "equipment/adaptive-plating": {
-      "definitionSha256": "b85527f5087e95c5e5288adfcde392de839dbd88665f39e808a32e5af27a19fe",
-      "i18nSha256": "2ec48a3b352966844db44b407940bc63b88b8ef73c47af1e29e02207d2d136db",
-      "testSha256": "c5592a31fa05eb481486efc8a166e885461e156f7ef77526f064554ae1f547cf",
-      "coveredCanonicalIds": ["mkTDPKqkm7cprrDzWbF9z"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "equipment/aether-bindings-of-the-third-age": {
       "definitionSha256": "d83a0af4b26374afaabb7ecdc440934c0a34ec8237b5d0ba004ca3b58d8de29f",
       "i18nSha256": "c3c3895532f1b528212c4ef57f7e4bebfd3da61c34129e89a75acd49027c3cec",
@@ -19908,14 +18732,6 @@
       "i18nSha256": "6a259225075067ba08f43634b8d43c5184c0715908f257818d42597bd379de68",
       "testSha256": "28e5beb9f8ce0aae440cebe44b72f275390e940c7520e93a88ad62483c8d20c1",
       "coveredCanonicalIds": ["qkLmDfFnGLhCCFtHPtLj7"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/arcanite-fortress": {
-      "definitionSha256": "4463b08e1a4e4791547bf879cb7f33636ac43f440337e55c022e2950aad1d5c9",
-      "i18nSha256": "99ec89dd8d17c064d4bd0f24219179f31942fc5a0f12ad967d759c5331c57217",
-      "testSha256": "8c5e0494ca2e4189302107504bd1077d7c5baeb6dfaa576c1d11dd1918270bd3",
-      "coveredCanonicalIds": ["876Q8WnHQCPctd89zd8tn"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -20415,22 +19231,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "equipment/civic-duty": {
-      "definitionSha256": "d6bee75442040cb2fb1e51ecff9407cfba0f01471fcc5211aa50916b2dd6e1d7",
-      "i18nSha256": "03f10c774b7b60eae99997f77e8182b307bac3ca7c41b0a2bfc08f489ffcfcb8",
-      "testSha256": "bd66409b0f91db18fc8f94b83c158fa6b435b0e2584448956f8386979495b807",
-      "coveredCanonicalIds": ["TwcL67rLrL9CfqgFdPF9t"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "equipment/civic-guide": {
-      "definitionSha256": "b3bca0e0c180e63d1356cef399448986bc78e87b13911f6754299b56b21150ac",
-      "i18nSha256": "df43ceee18179f6f2c3ece295706d5f1cb8c51af8a68a6b30504f97d7b06dc86",
-      "testSha256": "0f36fc6acdc6f416547c5bbf4b68e0241e673c0dd85bf358ede1f02c6ad917de",
-      "coveredCanonicalIds": ["zFTw6RPr76Gc7cqPMFBzz"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "equipment/civic-peak": {
       "definitionSha256": "b7e8004cbe6799a75dde6f469c79971d4f0a0f5ed6102e0419eaea969b6715f0",
       "i18nSha256": "b62076e8bba7b739e236fcf1e62ef6a00acece4c21cde513ff2f91071b4274c8",
@@ -20438,14 +19238,6 @@
       "coveredCanonicalIds": ["CjRzTWJcLTzzfkhwCRK7K"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/civic-steps": {
-      "definitionSha256": "afeafe8dfa2ea6bcdbe85652d04bf7582b8c02dea874749e7d0dcd07091a3e30",
-      "i18nSha256": "47e043b519b89b87a937dfc06ae40722ef5a55ca76c9ba12d5c78f2c3a218fbb",
-      "testSha256": "fcb052b9ef85c2b0be3ee07c736770041e285c4d8b336b58a3525ea4f6a1f04a",
-      "coveredCanonicalIds": ["qQ9JC8BtngfRq7n9pqpKM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "equipment/clip-flexor": {
       "definitionSha256": "1d0f10d32a5fa782ea0d6e8f1ad9b8ba2290c50cd751e2e9b96b95126cb1f380",
@@ -20470,14 +19262,6 @@
       "coveredCanonicalIds": ["FdMpkDBJtRgkrP6zK6rfQ"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/coat-of-frost": {
-      "definitionSha256": "5df324896d8124139b29f15b30ea9803a3bc1b0c575fcadde838de3485852f61",
-      "i18nSha256": "8f1d0b2b20aa5bd2f314385da4b1a578a6a7a12bba5b9778c7a88142e87ebcb6",
-      "testSha256": "18b7ce61c53ae15a1b9e464aee7ee16c4bd2309a76a2a345a4730ce2bc322977",
-      "coveredCanonicalIds": ["KdPWDMfBd8BQp66B9chCQ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "equipment/cogwerx-base-arms": {
       "definitionSha256": "cdcd790a7b7c100814225fe5fc44e1c651446d7bdf9cfe387997d80512bf80be",
@@ -20532,30 +19316,6 @@
       "i18nSha256": "af584aa724f48415de3c1191aa999e19560ca85c78ec39b329ea2ac0af67a2a6",
       "testSha256": "66e4c6d6839700aa8ac59c4146e6fb68f08992e586d76249f179a3f632c11ba3",
       "coveredCanonicalIds": ["cPR8tmfTh9wKmwtzbtRKR"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/concealed-nerve-gas": {
-      "definitionSha256": "4cc2cef7f09b517bc45d28640a70863bc88e6bf0229a42a595401452c6dc1ca9",
-      "i18nSha256": "c96d127f5c705b3ffb334067ac052c20e0492a45864fa27ed05b256e6868a742",
-      "testSha256": "8a68ebb224b3462c1e941a99e538b3c897c082853f407e19484d53e05a4ea809",
-      "coveredCanonicalIds": ["zNKcJKn8rMnzTNrm6jrQM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/concealed-pathogen": {
-      "definitionSha256": "0ad2c4539035ce8f65f7de19e98457149f1a451d0d987365337960553accafe0",
-      "i18nSha256": "5664ef87f1efdd9cc1fe24cbb3a471618ab331edfb1de5ecbb27c32edf5c3134",
-      "testSha256": "5df300a5fbdf2eb70c5938f32c27d2429b63551686ba8a735757c69b78590348",
-      "coveredCanonicalIds": ["mWbfgWG7j8CdTtKHfJgJr"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/concealed-sedative": {
-      "definitionSha256": "527b4195772f3c1ba8fbc8a56d53f4b96085c92bc623254424a31b822fd30873",
-      "i18nSha256": "1df956e26a1ac58d02cc53e6bbc73444002aa30e715f080cee134abb80e46ab3",
-      "testSha256": "11edb34f337a541d3253a1af79960f64192ba66e5d5f62cb42190ab66ad6f7e5",
-      "coveredCanonicalIds": ["QFf8JBQK6HBJ6Tqdzm9HJ"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -20776,12 +19536,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "equipment/dragonscaler-flight-path": {
-      "definitionSha256": "eb1545f2f7ddb3efad3f2953b870cb87b2c6f4db6e58007fefa511c266dfeda6",
+      "definitionSha256": "9142f6f236ebd9b3571a9c556df8cab83e34af3faa3b3669e7b644bcc48b7831",
       "i18nSha256": "4628c0e44b92d3c3bb8ec562750858aad3e46a085246e9b4ea295cd28bc8a5a6",
-      "testSha256": "a2d62b5291f515cfaa073557104ee9bad88253ee34561192e4f03a66c49b746e",
+      "testSha256": "406db33a28758ada440aa71471ae18f06984ab35c3e980a02cee79ee37822f9b",
       "coveredCanonicalIds": ["Tn6HrNTBn7GQJt8pGTLwQ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "equipment/dream-weavers": {
       "definitionSha256": "1b41845ab69dd4d13b4cd79701cef36da78014c72df9de092f20ba700582cae6",
@@ -20916,14 +19676,6 @@
       "i18nSha256": "a8e1f6dd68bb3b16f6d8e57e4f703fe282c090594ff52b98f83dd96d85908b5e",
       "testSha256": "d4c1b94600929d470f7d5ec0cc502182eddaeb94a699e65e60000b88dd7055e4",
       "coveredCanonicalIds": ["Q8bMrFtWrMrdPC7KtGbFz"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/fiddle-dee": {
-      "definitionSha256": "0ee298ce354e0db5d45a8913fbfe54d5d91432072791b7f705e8b43a4485d84e",
-      "i18nSha256": "ae789544bc78faeb1c05c7cd445d721a1085ca4db0d9026f5ba0a594038a27dd",
-      "testSha256": "aee43da30b772b4f6f2191e1dfaecf92fa6c038a3e10b10c0f07a427a50713cd",
-      "coveredCanonicalIds": ["p7CLrzj7kGMtt8cLfMdqT"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -21460,14 +20212,6 @@
       "i18nSha256": "0e83bc6bae305d0b9f64dd1b62c34726dc96b4f7a43acbe0631bc75ead461830",
       "testSha256": "1590aa1a8acef1e6b31f52c40023f2819ceb9d9fffb356b412303f2adf6d2ccb",
       "coveredCanonicalIds": ["CkRKLHpzHJLkmDdBFJCwM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/heart-throb": {
-      "definitionSha256": "317c5b38a960d68e9fa95a6d5a146912fe7530fe5b7775c7a80f64d40508e84d",
-      "i18nSha256": "89f2d975e5401b876b958129e6d6a88289d5a505d4904ada39b73e4d4f3affbf",
-      "testSha256": "50f5f87bb721fc9071d773d0ee5eda6d85572867466eb6e167dfda7e1ec3fe58",
-      "coveredCanonicalIds": ["h7NLHrBf7dNmKLN8zqRLn"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -22055,14 +20799,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "equipment/mask-of-the-swarming-claw": {
-      "definitionSha256": "cc157ac86d4d4cc9991b463b4128e583ec99c937d5b6a361e9f074d3cbc9bc02",
-      "i18nSha256": "2be33c065a9329ab5f985129c449b86e5fbf03471067aeafbb40d824a91d450a",
-      "testSha256": "263171839300aa4311e1876c59a1c8d5672261bc9315f00e42b88fdb7ab3c755",
-      "coveredCanonicalIds": ["g87mMPgfPPFTprgJCCkrQ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "equipment/mask-of-three-tails": {
       "definitionSha256": "4edbd964253b48d535fc7d3bc740bff56e281c4416c449e93e55a00d2a6b7b7a",
       "i18nSha256": "48eeca4b3869c1bea0bfa846faed82fa807ad22b9d60e0613881625df16c94a3",
@@ -22095,14 +20831,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "equipment/mbrio-base-vizier": {
-      "definitionSha256": "c03a38064206c552972ec221b1e7da4fe24daa73add0a91f84b85eb6bfb7afd9",
-      "i18nSha256": "71c90b26099739bcd4e2a32a537536c90ce2dde5ebf5569251e8bccbe3f5a14e",
-      "testSha256": "e36fdbaf488d61acfafc2af9797840625ffc2d21c203f3a2820a6440d7f7759a",
-      "coveredCanonicalIds": ["MLfgFRDKbTbWj8fBgMrjJ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "equipment/mbrio-base-walkers": {
       "definitionSha256": "71398d65bc05f7e6d25407aa863e17093ab85e273b7c40c457630c61f9145881",
       "i18nSha256": "904b04a37352a5dab56147e40c082f62b5d75865c332f7f69c964efbf2f86d71",
@@ -22132,14 +20860,6 @@
       "i18nSha256": "6191e230b12484a7b86260a5b002b3eb96f83924454aca1ac05f14236ec0be0d",
       "testSha256": "191ad1f20f0290a7f78accd01615431f63cd06f622d242fdf5fa9b86b7ab5f76",
       "coveredCanonicalIds": ["kjJTFcHjQdjkfFNr8kRQw"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/misfire-dampener": {
-      "definitionSha256": "16bc745411a32350625ec3ddfb46f9020faf84ba6f65554cff51e7ff6479b101",
-      "i18nSha256": "9d4bbaeae7b2963179604cc43a53cb498ee70345b1a093af525196d17c05cff5",
-      "testSha256": "baf0bf792c0eb028cc220e27c693073fe7f7d1000cd332b324909a97f23b69b4",
-      "coveredCanonicalIds": ["bCqKMLLRmjkM7K9TPKrNb"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -22270,14 +20990,6 @@
       "coveredCanonicalIds": ["JzK7qqpTrGcddqB9HBnkM"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/ollin-ice-cap": {
-      "definitionSha256": "0e21b55174f911379f55b0f979c273db45ef27a14c410ac9aa133c7250d48512",
-      "i18nSha256": "689c18c33870b94b274aa83ab3d67054fbeabe968dea88326d975f80ad57f396",
-      "testSha256": "663ed254fc5f2c3b24e5137efc8e940b5bb2711c5043a9332d95ca1d7fe00b9d",
-      "coveredCanonicalIds": ["W89dCjCrz8cQKd78zHFBR"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "equipment/ornate-tessen": {
       "definitionSha256": "879da049b7ffc5c37ad9262281b7cb1c742b038967cbb78ef6a2172dd8b10793",
@@ -22591,14 +21303,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "equipment/quickstep": {
-      "definitionSha256": "bddcca9e1a83138b19c61dfe98720a30e22254e4f25e54b26ede2e187f1302cf",
-      "i18nSha256": "49c6fac77d4502ec3b61d6cb782f7194134e020d9d1f5349a09764575d436a3b",
-      "testSha256": "a29481039a5b19663621681f37ca02c075268e76d04d15b5343c6e435300d880",
-      "coveredCanonicalIds": ["DmpnhzMR7WhCgkFWncRkk"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "equipment/quiver-of-abyssal-depths": {
       "definitionSha256": "9e4744bca2621d4d3b964bdae22940f4adc50281c8e4e2ebe3d6c8deee2f1034",
       "i18nSha256": "b99ef17d0dcb7d0a21f2d6cefac0845c940d0ecae3f8e268664125b272048eb3",
@@ -22820,14 +21524,6 @@
       "i18nSha256": "e99f05d9e783e0eafaee548c6fafd1336b99779136d521982b288dd3d787a6df",
       "testSha256": "9e8be38f95c4914769ad2857aa668062624495d0b0dc18ef7801f41773329c62",
       "coveredCanonicalIds": ["QFg6Qh7ckkNzfhkDrJdrh"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/runebleed-robe": {
-      "definitionSha256": "95185339d7faa5e2f7cc2cc61846be545a1cc6dcc59bb12a152d0f36828ad7e5",
-      "i18nSha256": "6e101f281f7b8c7c46f087dfad6a4f09c21c037cfa7a248c712f9dfa1a7da416",
-      "testSha256": "4dbda3eeb8c231022dc39521248e523325e6603a9f0efde82d18cdea85cd1a9d",
-      "coveredCanonicalIds": ["7rQWjNgrPmCm9wJRNHdbG"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -23151,14 +21847,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "equipment/smoldering-scales": {
-      "definitionSha256": "96070b9ddd5797d60d1b7a1739bd4374a1290179ffbe83e80af1deeef1c6e098",
-      "i18nSha256": "65d194fe758e96dfa1bb13f9810889aaaafe881c3dfed8af7b450ae28ef32c1d",
-      "testSha256": "34f33591bc7307d929c26db0b7df16b2fa3dec8876d6caad7025dfc8282e26ba",
-      "coveredCanonicalIds": ["mKGPnwbkjcGbmPn7JJNBF"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "equipment/snap-fingers": {
       "definitionSha256": "d5b54612dd1b65c3da688c624a1e6d55b6494d77685ab96ed1bdcefeb5e2ffd4",
       "i18nSha256": "02307841e554746b006a767b89ee101595832ed8e6240e2e585a69bfe88a2fb2",
@@ -23268,14 +21956,6 @@
       "i18nSha256": "3a4de3bfae9d9f1db10a3d7bebac8d5360db33f0e8503b330ed2db5d7c804b4a",
       "testSha256": "698bbc3e5b81faf9fb41149cdef221ad28b7522fc14950f194cec68587077f5d",
       "coveredCanonicalIds": ["L6FBCMGPMwNfTBBKrhqDT"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "equipment/stalagmite-bastion-of-isenloft": {
-      "definitionSha256": "1844945220ae53fb802e3e85c0c8b3fedbd1d977806f7be9762510a08dbd92e8",
-      "i18nSha256": "49974b437f1ba907a57e4d7ef41b84ff89a07182073c5f0dc29624ae14df8040",
-      "testSha256": "6d0891916cf79d9fcb5de432bc415fbd4b5ff7ea7f1f6f4a64bb547c3cf2de9f",
-      "coveredCanonicalIds": ["BCpDT6GfzNwKW8qz7WbrN"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -23558,14 +22238,6 @@
       "coveredCanonicalIds": ["hfTBtd9wKBC6TzhCqQ6mn"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
-    "equipment/templar-spellbane": {
-      "definitionSha256": "0fd1b21198d1ab3da03fc1d2aa7cb52775d12d74cf60050632fbcb751ba80cef",
-      "i18nSha256": "ccd31bc3bcfc9e1c14c021cbc8c398ae7880961690ab0703fca5a633ef7d93ac",
-      "testSha256": "4a07f69c893617b0017ab99551c88aaf45a5aeb91e8197a3dd19a164bd37775c",
-      "coveredCanonicalIds": ["QF7w8mPkmCmLGmtzDLDPM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "equipment/testament-of-valahai": {
       "definitionSha256": "0768407442985d7f1a8a5eda4e98fc1d1cd60c856865ee6bf0ffaf1c8b467aa2",
@@ -24023,14 +22695,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "events/tremor-of-anticipation": {
-      "definitionSha256": "9df40fe981c7750dee6c64113cbc60ad94447783435ab3b5eed00c04eb8477bb",
-      "i18nSha256": "a06ac38591beabb1e8dcd945412e5d3219f22c9d81e19c8e65e920b7462b9b91",
-      "testSha256": "3c51c083c7c5aed9c348e1d1c385760e25f92d543ce616b5929b418e04bfd2bf",
-      "coveredCanonicalIds": ["fKbwfGWzk7zrpWBTNcrjd"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "heroes/arakni": {
       "definitionSha256": "b72ba6359e91c066222e8c8f37f5de755b3cd88ac217e7524f8b79227f4dd961",
       "i18nSha256": "94e2199e1738a1388909461fad6daa362b5340f750b98158927cd05f216b204b",
@@ -24431,22 +23095,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "heroes/florian": {
-      "definitionSha256": "81eb8aac478301e1a28ef4ad32dbc964b0dad759e36bb73fb39a5e076cf5c11b",
-      "i18nSha256": "bc13b76666dcfed5db7c0233a78809124ec8b6f7d6565d952028c0071692add2",
-      "testSha256": "0146138e323a1ad43488900edc9589c297767a9ac4db4ebc892d32f7e67f42ed",
-      "coveredCanonicalIds": ["Ht8qhJWDMHjjMjzqgf6KG"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
-    "heroes/florian-rotwood-harbinger": {
-      "definitionSha256": "d945502d6ebc10c1ddfd73a5f0880c9a1fdef4c8d901e6a30452ffa4ecd4b6a0",
-      "i18nSha256": "ad7d352ac900085d4599d7a29cebd96f3ba973db2201409ccd9de874ebe792b1",
-      "testSha256": "d358d77799b29ad42d6c64697f5f4802d3651ae59fa77c77724f77b7911b3208",
-      "coveredCanonicalIds": ["hjMQGwKgDTh8LzFdnk8Rg"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "heroes/frankie-make-ends-meat": {
       "definitionSha256": "743b148a54f43297628bf0837387f029c2b3ab2721bda012134501d6cc379b35",
       "i18nSha256": "1cbf69bc9c188ae775b89c828c1286783c712885452b915bbbfb2fa5d3fc2421",
@@ -24479,14 +23127,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "heroes/groundbreaker-crix": {
-      "definitionSha256": "1502e04a62e26612caf59edfea1fc46bbcd9b778028ce1b97fab73c7da55d33f",
-      "i18nSha256": "7bf987fcd98c721111bd74f47394a54ac32228cfbc0a3fbf105736c96d4c102d",
-      "testSha256": "932277c204b4bbedaa6ab0f7ef884cf8e1bf2bf829a5ab69472b7192a653278d",
-      "coveredCanonicalIds": ["JzRH98DmhDN98PnGR8bcg"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "heroes/hala": {
       "definitionSha256": "0186bd9b791ac6c581fe517e738b705b25539e659ce48183788a423512a2c36d",
       "i18nSha256": "b67d047331696e0e635d647031c92156ef19808e7c063def9d8096643dc9e14c",
@@ -24516,30 +23156,6 @@
       "i18nSha256": "da0999c275dfe06633f9fd6fea1944b18a385d4a883edbfcbc98d01ae4e0c872",
       "testSha256": "b98f8517628f845aa5214c2a617638b7819af2659ca4254830df9e0b0447413e",
       "coveredCanonicalIds": ["DBKWbWMbrt7WK7KwmNQRL"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "heroes/iyslander": {
-      "definitionSha256": "e9bb5e1f13aacf03b976efd0b2ebe306df28a11da5998ff09a3fc5d3ed796e86",
-      "i18nSha256": "e64c2152320ced64cdb9a0a7d12607705a800e9d55d7ed8947436a787cfa7a79",
-      "testSha256": "c097b7427c15391dade2fb9fe5ddedc0fdfddcc03dd0f4dcfc2d0ea73888a7ef",
-      "coveredCanonicalIds": ["TmKrpP8tDg8bmpnqMPtgj"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "heroes/iyslander-stormbind": {
-      "definitionSha256": "bfbcfce4f7081cf6ba1b12783ec06e7b697107688b6b4302192a4bd2004283fe",
-      "i18nSha256": "db8336eebcbafe8514663bb7ee6c476a1d1c6f507c079793bcd7003344c45b36",
-      "testSha256": "171bf17e08a7689a96a21d2470567e8fbf76b1473f149fbd78bf4c1eb6deea0b",
-      "coveredCanonicalIds": ["8KRCDf6drqhFMKK7hJhbM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "heroes/jarl-vetrei-i": {
-      "definitionSha256": "cf04177aa62b1cc4ac7b8f5a85a567026aeca2f5d1f23f6e1a4371ec3827ffc8",
-      "i18nSha256": "f0401aebadf0254aece0524aad4ca87fb234a5e357ff6643bb52216586b26a7e",
-      "testSha256": "e80510f109f9d8f25a1bb791e37ed8a59f27b5534f2cc37d3312490ae9355d2e",
-      "coveredCanonicalIds": ["9QL68DDb9hCqhWWhgnQgR"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -24590,14 +23206,6 @@
       "coveredCanonicalIds": ["nM8BHGHd9qLGTPgwtWzkJ"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
-    },
-    "heroes/kavdaen-trader-of-skins": {
-      "definitionSha256": "394002a1ff01906fea787bfa967afd03c702adbc139a2e1ef475bc5aa567d5d6",
-      "i18nSha256": "dd044810fe42ccd574ebb298601b92ccec201f1f7d63d34aa4e64f5765113a34",
-      "testSha256": "2304af4a95509566e98f31c79d74a1af5b79c9269d7a335dcaf6d17a0fa6a001",
-      "coveredCanonicalIds": ["rgq8FqBMdhn9khbwjDK6Q"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "heroes/kayo": {
       "definitionSha256": "8c6346401808f4aad4ed9d2d7d70340f969642f0892e8c888eb8f7f12ec8c3b4",
@@ -24652,22 +23260,6 @@
       "i18nSha256": "46ba3834599a4f604e125a104dd6199c56b22b2b5cada1937296a9cd79c9cf4b",
       "testSha256": "50b89d1bbe842f79cb3662952f5954b85aa67b7aed2e7ccbf83cc400f95e4fb2",
       "coveredCanonicalIds": ["KCwnGqDJtnmJfth7fn8Qq"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "heroes/lexi": {
-      "definitionSha256": "dac97531dc1a4b8edd81458ee2a1c53e46b55c27552da5711c8647a2646a9508",
-      "i18nSha256": "fa9c0f13593cb78a1b4e66ee6c49a9e1f2f90d99418e88e16059be63e291338d",
-      "testSha256": "e291bf03f3cc1b8a99df07a0e086f73e02b7a77d37cd29e305ebbee1e9e3eb8c",
-      "coveredCanonicalIds": ["GFc7t8wNTwC8rCFwrqTfh"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "heroes/lexi-livewire": {
-      "definitionSha256": "660af1f14509bd3392fca644f2e5716247db10ca6fac54f155d9a992257a540a",
-      "i18nSha256": "736f801d6e1db50eea438205fb8f11e4e6fbd872188d41fbf6995a0a25cdafa5",
-      "testSha256": "408c02e6ff070162c32fba62d76eef6d53a9b6871954615f32e1a8dcdfa91823",
-      "coveredCanonicalIds": ["PFmgFK9dFr8q6PrpJFpPG"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -24887,22 +23479,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "heroes/rhinar": {
-      "definitionSha256": "278f4edff20e55dc691b32b198a67fdb209b80730f2ee0532ecb8734929c1e3c",
-      "i18nSha256": "31d68f229738190a9548cb02e14d661eb0c3c0717750d64c447d900ecfc3bef6",
-      "testSha256": "a914fa7e8dd22d733fd399a47e701bd8948a9bb793128f653d9d7cc281b249f2",
-      "coveredCanonicalIds": ["wNRqrHCn6rrKLhrDkqPwp"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
-    "heroes/rhinar-reckless-rampage": {
-      "definitionSha256": "ac0ed92135e3d8c44a75fd4c92c88f6ab41bde4a84c350770d12a1b4aebc35ca",
-      "i18nSha256": "4ad3ba0547cf887bf3601badbd76830e8638340bb2d6274d6f725af95ec555c4",
-      "testSha256": "98b47ea83401a68354a3a9c2e8988aeef74a9ccf02c295fc6ea5915d12f87143",
-      "coveredCanonicalIds": ["wr9wBtTWwRrPrdhCRHCdN"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "heroes/riptide": {
       "definitionSha256": "50b63b997809c98295d8c0c71b39da9e53e4b3cca2f2fe36695e806b8b6fb821",
       "i18nSha256": "20a4518c8cae92a7b3016de6d91837631111c9c7b4eb4839da031fff038afa93",
@@ -24942,14 +23518,6 @@
       "coveredCanonicalIds": ["n9r77QwMzdWJmnfhPLN9J"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "heroes/squizzy-floof": {
-      "definitionSha256": "1c4f8b009a46a7ec585f7302848f30e5d4aa14fb7eb8045b6248cf76c3b73686",
-      "i18nSha256": "bac9ece86eb091e99e3cec541d9db54adea8e59a9f4d48c9f830593688e692c7",
-      "testSha256": "9bbc73a65e9595d190002e4c63df5790bb7a4edf878385c791056338e5677e63",
-      "coveredCanonicalIds": ["czfMfgfthg6qKLtKBMQjD"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "heroes/teklovossen-esteemed-magnate": {
       "definitionSha256": "ddf23a7c779fa2c322c545821387ff7613e20a1226999e5a576f86f63d54232a",
@@ -25023,14 +23591,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "heroes/victor-goldmane-high-and-mighty": {
-      "definitionSha256": "32ae4f6c5c5bfd1549655d9682000bcb84607471b3387b2fed485169a35df5fb",
-      "i18nSha256": "f4d7c71eb427ad34aba31a5ad3590dcc78aaf69251cd5c0c1f3bdf3f2a088045",
-      "testSha256": "1960e068ac3313f029daf7c5b312776ea83ce96bdbd9aff9fd88526da451adad",
-      "coveredCanonicalIds": ["fc8jMwTprwnhRbPKDmF9J"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "heroes/victor-goldmane-match-fixer": {
       "definitionSha256": "c81c10b1f0ad27519d84b3bb9f5d74afb58f5c9ffaf7a788b15dc4c269fba224",
       "i18nSha256": "854dffb876b8aa952cdffb9f7ba3b28b44b6fc3102bb973833da4112aa8d689c",
@@ -25058,10 +23618,10 @@
     "heroes/viserai-the-forsaken": {
       "definitionSha256": "66125569cd26d048bd27b8e332a36a1ee54f11876afb614b4326bcb5e253cbf1",
       "i18nSha256": "9d6c854a9c7b9e9d9b5ac15e98b657e92ef9c09f69ebbcee9d97f901c056cdd4",
-      "testSha256": "6d2e7aca1407778ebcca263bad773b43d693c471b2a5438dcf6f531eaa577591",
+      "testSha256": "059f804b1a360673f5e07e502f2d9b1d9f55cf64c6623681b2edec9813ae2dd3",
       "coveredCanonicalIds": ["RLJggjWTcq6NK9PD9zQGh"],
-      "reviewedAt": "2026-09-13",
-      "reviewedBy": "codex"
+      "reviewedAt": "2026-09-15",
+      "reviewedBy": "viserai-test-evidence-refresh"
     },
     "heroes/vynnset": {
       "definitionSha256": "21bae1554d0eb4fb0e544c15ea21827fe3b30bde8b1378e4432dfc88d62f68bb",
@@ -25359,14 +23919,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "instants/brainstorm": {
-      "definitionSha256": "70f808f4b3f3e8f7c51df18b0fc8aa62678154cc31d034d734ca89c5ff7c5460",
-      "i18nSha256": "791900b94a8a802028c999a7c71544044165fe15d1b5e458e5cd6f7e21e8b9e0",
-      "testSha256": "1fa37cd8650020de3934963ded980ee833d3dd8713066b6eeb029325a6a4723a",
-      "coveredCanonicalIds": ["FhmDr7MmkjB9rnmnqdbTd"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "instants/break-of-dawn": {
       "definitionSha256": "170e5f3fac4ae75b2cfe6462c1c92a9af90ae9fc3dcdfc12e22f87fb4e032736",
       "i18nSha256": "e6607de3a7bcfcf32da95bfd69db51fc1c42cb55a01e84e159888102669729d8",
@@ -25532,18 +24084,6 @@
       "i18nSha256": "6907bd0b16056ebcc6ad190463985bfe5ef97abe628576d54974327cf4e27a4c",
       "testSha256": "20aac947713e934b73fdaffc52d390fab8788379ad74e21310a36079a064e552",
       "coveredCanonicalIds": ["M6JRMPmrkhRWnW9mhPQwP"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/core-reaction": {
-      "definitionSha256": "5a2ea67255505f191294323b705443dc4a64718f07051b57eca82ae0c8fd5713",
-      "i18nSha256": "6047c7714343bbebad37c1ad3a2ea8836bfe53eec8d7b757377bfb73ef981bc7",
-      "testSha256": "d93c6b5c471931802ec20fe0afe237bcf178c5e25b10b336202ffb82258798f9",
-      "coveredCanonicalIds": [
-        "6mhWMHfB9pFcqz7QJfbhp",
-        "C8dnFRThpKLT7Gkh7TJTm",
-        "mHLBRgG6qwPR8kznTh8Kd"
-      ],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -25767,35 +24307,11 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "review:fab-card-release-audit-2026-08-30"
     },
-    "instants/evo-atom-breaker": {
-      "definitionSha256": "7e8f4fb77d9592f19094a6f6dcccc1d21bb566802d3bdd01d02f27e8b9137ad7",
-      "i18nSha256": "f699f3a446bbc389f601869135fb368ac1afda839cf7b4230b3efe68492f46eb",
-      "testSha256": "b6d0f0d2d17ab0043586667402fd9552edab34c94d58a7abf92f3c968cddcc8d",
-      "coveredCanonicalIds": ["tGhCtnrQTn8KtcmnJdqmq"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "instants/evo-buzz-hive": {
       "definitionSha256": "e213fdf2e415127b945f5b64e75cc8c5ad37cde15070b4e9e8d3520056c4c772",
       "i18nSha256": "a6a9538722005cb39b7815339aa18e2c42010d40f2d47be50195e2b1d13ce509",
       "testSha256": "10357f67a5e904b1a413ae6abebeb8cbd96a4d0441135b766c1bb0ae3c4d9d55",
       "coveredCanonicalIds": ["8CdLzKHrrnjKTFKG77GjM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/evo-circuit-breaker": {
-      "definitionSha256": "b3ecf52663362a00d6afe4fe203e4a157a4bd9961edf92515bdce5f2e6a96dfe",
-      "i18nSha256": "f24d1b2f345164409599e437d6b41505b18094c180dd5cebfa28aadf3a50a6f0",
-      "testSha256": "6e60507d3a1731f3035dd2a5f4fad0ec2acd6dc17d69c61cc6fe5d9288998cfa",
-      "coveredCanonicalIds": ["hNkCtbWQNhtGkb77cFzhF"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/evo-face-breaker": {
-      "definitionSha256": "ba1b09198d4db2948b813cbd5dc7fd74f57fe7be7b8b18ea159e14402e914d63",
-      "i18nSha256": "55bfeef5130355f2c28fda9878c7a8fe9d74e47a37e258c690f81338bbdc4e3f",
-      "testSha256": "75703f6d67e33e297e67150dc6f42c4f7d4d5a1efd3aaf6c1450fc16cf407298",
-      "coveredCanonicalIds": ["qR9dqP7WCqkzp69ctCNcp"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -25844,14 +24360,6 @@
       "i18nSha256": "4a65093ed9b148025526b0d7c9ee1496c69b2cdff44888f5923c03cac18793e7",
       "testSha256": "bf821dde151cfed0284f005e1d0eec512609015527e12dded20d9e6481dd8af5",
       "coveredCanonicalIds": ["9th8QzMpd9n9fpzbHbwJJ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/evo-zip-line": {
-      "definitionSha256": "6b3815942b7b3b0bd7155131c7a43696596a80e62eac9bc0eb4946845756eb16",
-      "i18nSha256": "2f8917ebb5187326c854382872cf8317dc09b285902e2e0be12072be36817c59",
-      "testSha256": "3c2782c7736e47be3d86baa5a178d67c9141181f6a9c31b36723f7227bfc4874",
-      "coveredCanonicalIds": ["MdmK9dmLDpbC7GFcz6W7C"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -25996,14 +24504,6 @@
       "i18nSha256": "6808854b2b5d4dbc3922d40cfa8ba8829782cf329cce93ca900a75699da00d8e",
       "testSha256": "d6a07442a3bd422d06b2234017d81685a3302d0605b8408495e5fe3e14d54c74",
       "coveredCanonicalIds": ["PcCQGjz68TjzgQrMfRnLQ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/frost-spike": {
-      "definitionSha256": "882f45f748a57e720dfc7561b6912fa2501347dfeab6148f5be804f66bcf3e8e",
-      "i18nSha256": "dea2357a77feebba41bbf1ff2a1d8345f81933009da97578506e04231946f40f",
-      "testSha256": "fc3823ba8cf8a1acbfb9dc68cd94e5ca2081fe36acb5fdd6e949c2c483f58dad",
-      "coveredCanonicalIds": ["nrj7b7pBJCfDBqC7MgkN7"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -26312,14 +24812,6 @@
       "i18nSha256": "d712928f1cf6d2cf0f515e65aaa54f1640dcf57e641debdddfedc5e97180c0a3",
       "testSha256": "ece4c0420d12ceaadb63201f470c0f5f48477cb88a89b972dde8ad4736929f63",
       "coveredCanonicalIds": ["MqKhDHHHkLfFrdh7mBzcR"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/null-shock": {
-      "definitionSha256": "6e20f6e114e35599b5f315933b50072ead0ea8882c8e581cfde7a2cae7472141",
-      "i18nSha256": "02a74e435b02e772994059bf64f6748ea2105dc0d41015e1a0ef914e846bca77",
-      "testSha256": "0eece7237732d378f6f45fb3f49a46464e6f197f8a57ec14637110e228b32b11",
-      "coveredCanonicalIds": ["JTrNBd8TcnPmB6KdDmjRN"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -26675,14 +25167,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
-    "instants/runechant-of-wrath": {
-      "definitionSha256": "7280d000f9839dba00b7187c8c6ca11202caa7447c978def3d4dc35b13bdc48c",
-      "i18nSha256": "a8788e130f6e04c277113d51d780e19d4bc8420894c21e1b0a8484d979bfa07c",
-      "testSha256": "ea2dc23e03affed3d0bbfa3be6483dacee20f6978aa338bf34be510bee7040de",
-      "coveredCanonicalIds": ["qwpdn8CJWGgkHLqdhDtgh"],
-      "reviewedAt": "2026-09-03",
-      "reviewedBy": "codex/fab-usurp-preview"
-    },
     "instants/sacred-art-immortal-lunar-shrine": {
       "definitionSha256": "926dad189b54a6803afc7fc6ceb81552d83c55f307e12707903a3e02228b0bf5",
       "i18nSha256": "31f9a08243cef421cdd1a62e1743eb6bfa78a0b08d99c744a3ffd68fe29b7868",
@@ -26776,22 +25260,6 @@
       "i18nSha256": "95ac3267b4937f44540ccd32f37ca243f3cf10d39c108ce26135636b09cbd03c",
       "testSha256": "39c5a8ed181da66c3d6bce87d0c619baeacd0c0a855d442bc3e82190a99e2078",
       "coveredCanonicalIds": ["KCRhRBTqwf9mRfjmGnQL6"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/shining-courage": {
-      "definitionSha256": "aaeaf918220189ed31ee47b74839b2f0ce00fef765b6b0814a30896e16186be3",
-      "i18nSha256": "e1df0c3abc965a3521e1d1e4aa11ec268fee3ba3b72abab769fc154fc331731c",
-      "testSha256": "962d1c6c9773b86d2aad37dfc98e4d802df08686603a3e074bec8ab792902a4a",
-      "coveredCanonicalIds": ["FngCwjRtgtcHbcNJnPmJM"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "instants/sigil-of-aether": {
-      "definitionSha256": "b4f588f16fb3a14894edf48c40910d86ddbd9bb172ca6905c48302050b597976",
-      "i18nSha256": "56a9fd2c7fb8f0da62f7e89e98726a2b228eb596dd086be623571b84f88d2d4b",
-      "testSha256": "a26e1c40ade7703cbeeeba3330e203123870de5cd55049a57b0ae756144de9ec",
-      "coveredCanonicalIds": ["zRCmqmDrDLdDwnc9Td6j7"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -27159,14 +25627,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "instants/vaporize-shock": {
-      "definitionSha256": "d8ae7f004cf4ac6c3d1ca7ba5c3f41288c9d2fc7347284ea835b44417937698a",
-      "i18nSha256": "bf875f5d8a40e57b59e1269e6f668a7da59d3c26ab9ab0d9daacbcdac14c2c67",
-      "testSha256": "096eaa2130978df158e3f7afa25e193a8f4aadac5253f79584a9dd7f83d7a669",
-      "coveredCanonicalIds": ["NMfPbTgbMbP9pnnCKMQD9"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "instants/visit-the-boneyard": {
       "definitionSha256": "5bed8023b1f74c5f64d2950f2c043bfac13b79e2b853c5263f155a3cae1a2531",
       "i18nSha256": "73b150bf1cac9c182b44229e11eb1a73d564623b8c908c6281f612f64ff627e0",
@@ -27256,22 +25716,6 @@
         "Qk8tQfhtfP8mpHgcJBRD6",
         "TTGpGFzh9Kb8RPDDbTmnw"
       ],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "macros/intellect-penalty": {
-      "definitionSha256": "8c185a966000d0264e8f052d96be39d71e5a66c5b2209e4b0042883566915f0f",
-      "i18nSha256": "6aec3aaa05111c83992b748958ca399744d4542c24587493738266eb0a9c1b5d",
-      "testSha256": null,
-      "coveredCanonicalIds": ["QGjhRDwJdHr68gtkNqCWm"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "macros/omens-of-arcana": {
-      "definitionSha256": "ee4338c2919254406ada8bd097b52f6b4a79eac0f5c12d1489071f37400f0459",
-      "i18nSha256": "95044a94d177901ef0c8a38ecc7fffd5bcf1ae7272de9745889209ec9c54f2d3",
-      "testSha256": null,
-      "coveredCanonicalIds": ["mjprN8T6mMh9pcWCmgPrN"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -27611,21 +26055,13 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "tokens/fealty": {
-      "definitionSha256": "bd6ed94c3553e385137f69304015dc0b954d427cfc9709fc1973a3371ac08aae",
-      "i18nSha256": "25595b1bda5f81ae7cca6a2ac0c0b0a2c9e5f95ecb6cb4b2baf18e889e4518bd",
-      "testSha256": "4fdcc8400bc615f6c36fe941c3d195ee5f8f6e0888b0cda177c54871a7f28362",
-      "coveredCanonicalIds": ["n9FtLHDg97rfrTNJDMBG6"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
-    },
     "tokens/flurry": {
-      "definitionSha256": "7c1e93adb05c5bde834d2f6f9e207192660f2ff994c00451bc8d37c737117272",
+      "definitionSha256": "21678e6350909c26b558d84419467145615c0797629bc75f910ff6bbfa98a6e6",
       "i18nSha256": "9dbf7dfc89fac9064d961a8d4f32327de7366daba7415bca479fa75912ee1962",
-      "testSha256": "ff01ef4ec13155182941024b7a2bf0ec83a0c460096f3d6972e295a8c2f4d32b",
+      "testSha256": "808ae0f5ed5ff434a4ba083ddec27ccbb2389e9882fe19f827ec577d841253a9",
       "coveredCanonicalIds": ["jdkmHT8QfQmMbPLBHPrHJ"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:fab-extra-attack-optional-wrapper"
     },
     "tokens/frailty": {
       "definitionSha256": "4c80d4438e953a0fc92d752831d9aeab26dfc1117b696a91e586b3e7904ab676",
@@ -27979,14 +26415,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "weapons/decimator-great-axe": {
-      "definitionSha256": "b4a810e099493d3996e063fc6c858ca4bcc8d0b4146261a701910dd8a51fae74",
-      "i18nSha256": "722a7236561fac30df6dc426ffda337b9d057e616b60326138f1bd974a7413d6",
-      "testSha256": "a5fefb70f1e65f42dc6801ebfc7be5a4ec3423e82ef4c5beb096fb4496c2dd2b",
-      "coveredCanonicalIds": ["8h7fn6dk7PfNnckbW668r"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "weapons/dread-scythe": {
       "definitionSha256": "d8cfcf631a3cb4ad80e3dca2035e6bf09fe0ad2bca582abec9d9f2f80d21b4fa",
       "i18nSha256": "85f6ecd2d39f357852a24387a8c00f963d912ab0148f9c5c642a5e4e805a0196",
@@ -28163,14 +26591,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "weapons/hummingbird-call-of-adventure": {
-      "definitionSha256": "2d7d91ab94e64012ed46b7a9011d7d193e5392e6cb6252a7c33a28443377b8c8",
-      "i18nSha256": "5248dc8f3d6dfcb4d945c341cf8b2f5f0097ba93a36133360b786988fe01c037",
-      "testSha256": "cf614b78cbb8462e9c5d3a73bcfc158bc1225b0976663f1e7f85729a2b7cb326",
-      "coveredCanonicalIds": ["mgrmPqRmdHfMbptFfDcbC"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "weapons/humour-plunge": {
       "definitionSha256": "9ee997b1b17bdd8d9d623e3936b9f0d3df980e2d11bbcdd2e33e19d51d0854f5",
       "i18nSha256": "219058fccd6d319749e9891cc17184a62ec3278eb037f8b794c1bf6baf24fc9e",
@@ -28194,14 +26614,6 @@
       "coveredCanonicalIds": ["W8h8fMQhbjGr6hzDbFmq7"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "weapons/jinglewood-smash-hit": {
-      "definitionSha256": "71a8d65c55779ba8415586454bf52ccc55363455a7f07497d3ac54b4b248b27d",
-      "i18nSha256": "acb59edf8c45b64cc84bbc8a4238530e35495a3d63927a1b421dae6a47cef998",
-      "testSha256": "dd4e1237dd3d234e03fe14295fc81e8782b662ee3b7708c6e267295fb799640c",
-      "coveredCanonicalIds": ["GK6TKkztnwHHwqKPrGR9k"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "codex:fab-localization-and-audit-bundle"
     },
     "weapons/jubeel-spellbane": {
       "definitionSha256": "e2eca6137496704c55cd2f1cf46dcb7e704a293584567c2d0581411f56991d4a",
@@ -28324,12 +26736,12 @@
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
     "weapons/obsidian-fire-vein": {
-      "definitionSha256": "3e6ad7a3e021af67235fe545b77d354e50d462eb3ef61abfcd8776260d66c39f",
+      "definitionSha256": "930e9d1112cdf37268796700ce1ac00f18309ad46c1e6d8e1c1c36aef1f7e6ce",
       "i18nSha256": "17b29ef09e75888c35e797ffae7532a12b680ae37988a316771b4c67024e1cb8",
-      "testSha256": "7b58d13717f4935369f08cabe904da869cd7c1776d8a931e13b1644cee666f53",
+      "testSha256": "3a8577aef8d6d6e4feeff172d49f989a2462ed16eab82a5693af23b5fa650e4c",
       "coveredCanonicalIds": ["qMBpL7WdHmD7rgtMwQpfR"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-static-continuous-rewrite"
     },
     "weapons/orbitoclast": {
       "definitionSha256": "eb3f0236b90f57831a17ead27bafb5b8ee16c404fa4dfd0211426333fb9e58f8",
@@ -28574,24 +26986,16 @@
     "weapons/star-fall": {
       "definitionSha256": "1ba2afbc342cbf46ede12a6087a87222ba73db5742b40a3fcc1d579cf0267c0a",
       "i18nSha256": "aaa99ffceb1426409323bde962e4e7bf3021bb19db8d49d2fd0608dfedbf6a68",
-      "testSha256": "0cb0e8edb4fbc406dc5d04463516fea0e05069371aa588cbbb428efb1f54bf95",
+      "testSha256": "d0a7af8a52906ef6c6769d926d3c0cc24bb69aa1884c924d2320b3bfb64661d0",
       "coveredCanonicalIds": ["m7NGBRdNftTh9ntBzppbB"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
+      "reviewedAt": "2026-09-17",
+      "reviewedBy": "agent:ofv-live-draconic-buff-family-update"
     },
     "weapons/storm-of-sandikai": {
       "definitionSha256": "f558bb7a181075281ee59a6c50cf0a738b2411f3293194b6d4ffc39c9c3ad137",
       "i18nSha256": "c2131a3edff8329b0355a5dee8036b8893e68f7b7d110f7ba9187f25b6d61a8f",
       "testSha256": "2a9bfb086866fbd8bc1c93e16966304d9d11b0ed4245e9f4ff8b94834b98cfdd",
       "coveredCanonicalIds": ["PQm7zFjBPCzc68JDd8D6z"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
-    "weapons/summit-the-unforgiving": {
-      "definitionSha256": "fa6fa42146c9902e81637d26b5b1790e55fe765f4a8032bcd21e060fe3ae285b",
-      "i18nSha256": "21f9728106aea9e4850933ccea6bbb1d8cfd5c6d73a5376d2f3366aa0eb8e9ee",
-      "testSha256": "8ed8761c8a5e2ef8157e1b848e20da19692ee9247e728e9e5ee9c6513d75696b",
-      "coveredCanonicalIds": ["mdKJt7RCqRRrW6PbnJztL"],
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
@@ -28659,14 +27063,6 @@
       "reviewedAt": "2026-08-30",
       "reviewedBy": "migration:pr-224-card-release-audit"
     },
-    "weapons/voltaire-strike-twice": {
-      "definitionSha256": "d7cd4b04de1e2ec0ccdaa734d5612b733d0f6024ca83a5230ec1e2bc9ed75b34",
-      "i18nSha256": "5c8662fd4a650b4d327f5dd51bd65b5efd0ea04f189d7cc287b8f39da46caee6",
-      "testSha256": "b380ee27980c19f298d7408fef060e82440ebee9eed46f30b21195b28c23d7d8",
-      "coveredCanonicalIds": ["Nzpgn9HrbNfkzM8CkwCQp"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "weapons/volzar-meteor-storm": {
       "definitionSha256": "5cb25a5786478afbe262b62e398fa364b0bef76c3785cea3c9313b9691a25472",
       "i18nSha256": "ff0c52f0f10cb1547d0b089e369b4248e3f00cdb4e0d7ed348cbcc4d10875da7",
@@ -28691,14 +27087,6 @@
       "reviewedAt": "2026-09-13",
       "reviewedBy": "vox-identity-trigger-audit"
     },
-    "weapons/winter-s-wail": {
-      "definitionSha256": "6fe9c8984238c6210dd4db4bad0a76ed7b603d7bee1e304cd5708f115acbd9e2",
-      "i18nSha256": "720c8a137f252d361b313387d8384dfb9f749089a9569475eef5fa20c301a238",
-      "testSha256": "bc4cec1711d7f94ea7ff19bcc0c924de69d3351de5e80466399e0cd4c5c64c9a",
-      "coveredCanonicalIds": ["pCdJMzmgBMD8Mt8qhM7nC"],
-      "reviewedAt": "2026-08-30",
-      "reviewedBy": "migration:pr-224-card-release-audit"
-    },
     "weapons/zenith-blade": {
       "definitionSha256": "4b4978dedc41eaa2d7b20dfb8eedfd65d268389dc41be2012fd1f7a65665e404",
       "i18nSha256": "9b32ac6d4d3b0064e5bbd646b3c113d9b184d49c6012f335edbf72c946e78925",
@@ -28722,6 +27110,30 @@
       "coveredCanonicalIds": ["dBwz9ngzQjPkbrdqRkhFf"],
       "reviewedAt": "2026-09-13",
       "reviewedBy": "codex:permanent-action-labels-2026-09-13"
+    },
+    "actions/felling-of-the-crown": {
+      "definitionSha256": "8bcf857e895a74daa5fc6bc8ef6a403e540539b9102604725d37d314b6513c78",
+      "i18nSha256": "36a6fe4d7a748dedd239fbd0d86420d0971d83cce73ebe31ca3225eddd5ec939",
+      "testSha256": "8b899bf27fb6b654fc6dade11b751676d680111c77a070e0cd018a7e3b69155c",
+      "coveredCanonicalIds": ["PkQPFgMNLn69hmMnq7jCC"],
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "defect-triage:misdiagnosed-gaps-closed"
+    },
+    "attack-reactions/drawing-dead": {
+      "definitionSha256": "4cd23374e98217abd50a358e9db3f0f19bfc787509bbd6441d54d9e8991a7abc",
+      "i18nSha256": "7008f685f07c412ca2e589f2e0a0c299d28c2bdce82456d2953eb7aeb7e62814",
+      "testSha256": "496f3c3ed6ad0e0752a09258c9ecbe088d507d40f29b7b505c098a754d73324b",
+      "coveredCanonicalIds": ["P9zCBnmGGJLqgH79R89Br"],
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "defect-triage:misdiagnosed-gaps-closed"
+    },
+    "attack-reactions/donkey": {
+      "definitionSha256": "fdb4454ef4f3bd31204e035d12e1dc1f1d06cf10e49bba143fc7b1242d148701",
+      "i18nSha256": "130a82e1824c9ba510f6465a1142a92a3fb16647fa9790db89e2a52f8bdd33a1",
+      "testSha256": "85fa87d5d77b5ce033a1d0a5137bc5f2aff0f52d48920a29baba8581af2247b7",
+      "coveredCanonicalIds": ["NmQKTmjkndPjrGGW8bBLk"],
+      "reviewedAt": "2026-09-16",
+      "reviewedBy": "defect-triage:misdiagnosed-gaps-closed"
     }
   }
 }

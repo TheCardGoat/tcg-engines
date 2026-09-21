@@ -251,7 +251,7 @@ export {
   resetPlayerTimeAfterSkip,
   DEFAULT_DYNAMIC_CLOCK_CONFIG,
 } from "./core/runtime/time-control";
-export type { ChessClockContext, DynamicClockContext } from "#core";
+export type { ChessClockContext, DynamicClockContext, TimeControlConfig } from "#core";
 
 export { deriveClockView, formatClockTime } from "./core/runtime/clock-view";
 export type { ClockSnapshot, ClockView, DeriveClockViewOptions } from "./core/runtime/clock-view";

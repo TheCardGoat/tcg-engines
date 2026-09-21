@@ -28,7 +28,9 @@ export const warmongerSDiplomacy = definePitchFamily(fabPitchFamilies["warmonger
               },
               then: {
                 // "only weapon and attack actions" — require filter (Oath of
-                // Loyalty shape), scoped to this iteration-subject.
+                // Loyalty shape), scoped to this iteration-subject. "During
+                // their next turn" anchors each hero's restriction to that
+                // hero's own following turn.
                 type: "rule-modification",
                 mode: "require",
                 action: "play",
@@ -55,7 +57,7 @@ export const warmongerSDiplomacy = definePitchFamily(fabPitchFamilies["warmonger
                     },
                   ],
                 },
-                duration: "until-end-of-next-turn",
+                duration: "until-end-of-own-next-turn",
               },
             },
             {
@@ -87,7 +89,7 @@ export const warmongerSDiplomacy = definePitchFamily(fabPitchFamilies["warmonger
                     },
                   ],
                 },
-                duration: "until-end-of-next-turn",
+                duration: "until-end-of-own-next-turn",
               },
             },
           ],

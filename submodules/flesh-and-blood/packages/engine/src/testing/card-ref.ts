@@ -127,7 +127,7 @@ const FAB_PUBLIC_CARD_REF_SCOPE: readonly FabZoneKind[] = [
 ];
 
 /** All zone kinds in scope-order, plus deck (deck placement queries are legal). */
-const FAB_ZONE_KIND_ORDERED: readonly FabZoneKind[] = ["deck", ...FAB_CARD_REF_SCOPE];
+const FAB_ZONE_KIND_ORDERED: readonly FabZoneKind[] = ["deck", "inventory", ...FAB_CARD_REF_SCOPE];
 
 /** Zone of an instance for this player, or null when not in any of their zones. */
 export function findFabInstanceZone(

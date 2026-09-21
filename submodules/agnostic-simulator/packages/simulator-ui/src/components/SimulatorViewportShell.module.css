@@ -13,6 +13,10 @@
 }
 
 .desktop {
+  --simulator-sidebar-control-size: 2rem;
+  --simulator-sidebar-control-inset: 0.75rem;
+  --simulator-sidebar-control-gap: 0.25rem;
+
   display: grid;
   grid-template-rows: minmax(0, 1fr);
 }
@@ -33,7 +37,9 @@
 }
 
 .desktopSidebar {
-  --simulator-sidebar-collapse-inset: 3.25rem;
+  --simulator-sidebar-collapse-inset: calc(
+    var(--simulator-sidebar-control-size) + var(--simulator-sidebar-control-inset) + 0.25rem
+  );
 
   position: relative;
   z-index: 2;
@@ -43,7 +49,6 @@
   background: var(--board-surface, var(--surface, #0f172a));
 }
 
-.desktopToggle,
 .mobileMenuButton,
 .closeButton {
   display: inline-flex;
@@ -58,20 +63,30 @@
   cursor: pointer;
 }
 
+.desktopToggle {
+  color: inherit;
+}
+
 .desktopCollapse {
   position: absolute;
   z-index: 4;
-  top: 0.375rem;
-  right: 0.375rem;
-  border-radius: 0.5rem;
+  top: var(--simulator-sidebar-control-inset);
+  right: var(--simulator-sidebar-control-inset);
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.28);
+}
+
+.desktopSidebar:has([data-role="opponent"] [data-participant-actions]) .desktopCollapse {
+  top: calc(
+    var(--simulator-sidebar-control-inset) + var(--simulator-sidebar-control-size) +
+      var(--simulator-sidebar-control-gap)
+  );
 }
 
 .desktopReopen {
   position: absolute;
   z-index: 4;
-  top: 0.5rem;
-  left: 0.5rem;
+  top: var(--simulator-sidebar-control-inset);
+  left: var(--simulator-sidebar-control-inset);
   box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.28);
 }
 
@@ -196,6 +211,12 @@
 @media (prefers-reduced-motion: no-preference) {
   .drawer {
     animation: simulator-drawer-in 160ms ease-out;
+  }
+}
+
+@media (pointer: coarse) {
+  .desktop {
+    --simulator-sidebar-control-size: 44px;
   }
 }
 

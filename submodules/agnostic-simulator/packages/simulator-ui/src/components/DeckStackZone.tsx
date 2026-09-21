@@ -1,4 +1,9 @@
-import type { SimulatorDeckReveal, SimulatorEntity, SimulatorZone } from "@tcg/simulator-contract";
+import type {
+  SimulatorDeckReveal,
+  SimulatorDeckRevealCard,
+  SimulatorEntity,
+  SimulatorZone,
+} from "@tcg/simulator-contract";
 import type { ReactNode } from "react";
 
 import { cx } from "../class-names";
@@ -22,6 +27,15 @@ export interface DeckStackZoneProps {
   reveal?: SimulatorDeckReveal;
   /** Physical board side used as the preferred direction for reveal detail. */
   revealPreferredSide?: "top" | "bottom";
+  /**
+   * Host-owned presentation for one revealed card in the reveal popover; see
+   * {@link DeckRevealShelfProps.renderCard}.
+   */
+  renderRevealedCard?: (
+    card: SimulatorDeckRevealCard,
+    entity: SimulatorEntity,
+    index: number,
+  ) => ReactNode;
   className?: string;
   onSelect?: (entity: SimulatorEntity) => void;
   renderTopEntity?: (entity: SimulatorEntity) => ReactNode;
@@ -37,6 +51,7 @@ export function DeckStackZone({
   selectedId,
   reveal,
   revealPreferredSide,
+  renderRevealedCard,
   className,
   onSelect,
   renderTopEntity,
@@ -96,6 +111,7 @@ export function DeckStackZone({
         reveal={reveal ?? zone?.deckReveal}
         compact
         preferredSide={revealPreferredSide}
+        renderCard={renderRevealedCard}
         className="absolute right-1 top-1 z-20"
       />
       <StackLabel label={resolvedLabel} />

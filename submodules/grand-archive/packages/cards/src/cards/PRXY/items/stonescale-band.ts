@@ -110,6 +110,10 @@ export const stonescaleBand: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
             kind: "rule-modification",
             mode: "allow",
             action: "activate-fast",
+            subject: {
+              kind: "player",
+              player: "controller",
+            },
             filter: {
               kind: "type",
               oneOf: ["ALLY"],
@@ -117,6 +121,9 @@ export const stonescaleBand: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
             duration: {
               kind: "for-next-event",
               event: "card-activated",
+              expires: {
+                kind: "this-turn",
+              },
             },
           },
         },

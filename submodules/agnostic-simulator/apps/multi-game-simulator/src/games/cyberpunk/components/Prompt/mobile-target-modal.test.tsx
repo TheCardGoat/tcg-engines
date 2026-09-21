@@ -130,7 +130,7 @@ describe("mobile target prompt", () => {
       expectEqual("Lizzy mobile active side", board.dataset.activeSide, "player");
       expectEqual("Lizzy mobile active field balance", board.dataset.fieldBalance, "player");
 
-      await playMobileHandCard(view.container, "Lizzy Wizzy — Delicate Weapon");
+      await playMobileHandCard(view.container, "Lizzy Wizzy: Delicate Weapon");
 
       const sheet = await waitForTargetSheet("Lizzy Wizzy");
       expectEqual("Lizzy target drawer surface", sheet.getAttribute("data-surface"), "mobile");
@@ -221,7 +221,7 @@ describe("mobile target prompt", () => {
       expectEqual(
         "La Llorona prompt exposes visible Gigs inline",
         banner.querySelectorAll('[data-testid="prompt-gig-target-option"]').length,
-        1,
+        2,
       );
     } finally {
       view.unmount();
@@ -258,6 +258,34 @@ describe("mobile target prompt", () => {
         '[data-testid="prompt-banner"]',
       );
       expectEqual(
+        "Afterparty mobile prompt uses compact card treatment",
+        targetBanner.getAttribute("data-card-prompt"),
+        "true",
+      );
+      expectEqual(
+        "Afterparty card rules start collapsed",
+        targetBanner.querySelector('[data-testid="prompt-banner-effect"]'),
+        null,
+      );
+      const cardTextToggle = requiredElement<HTMLButtonElement>(
+        targetBanner,
+        '[data-testid="prompt-card-text-toggle"]',
+      );
+      expectEqual(
+        "Afterparty card text toggle starts collapsed",
+        cardTextToggle.ariaExpanded,
+        "false",
+      );
+      fireEvent.click(cardTextToggle);
+      requiredElement<HTMLElement>(targetBanner, '[data-testid="prompt-banner-effect"]');
+      expectEqual("Afterparty card text toggle expands", cardTextToggle.ariaExpanded, "true");
+      fireEvent.click(cardTextToggle);
+      expectEqual(
+        "Afterparty card rules collapse again",
+        targetBanner.querySelector('[data-testid="prompt-banner-effect"]'),
+        null,
+      );
+      expectEqual(
         "Afterparty prompt exposes Gig choices inline",
         Array.from(
           targetBanner.querySelectorAll<HTMLButtonElement>(
@@ -273,6 +301,22 @@ describe("mobile target prompt", () => {
           `[data-testid="prompt-gig-target-option"][data-die-id="${rivalD6Id}"]`,
         ),
       );
+
+      const stagedState = await harness.evalEngine((engine, dieId) => {
+        const pending = engine.getState().G.turnMetadata.pendingChoice;
+        return {
+          pendingType: pending?.type,
+          pendingPayloadType: pending?.type === "chooseTarget" ? pending.payload.type : undefined,
+          faceValue: engine.getState().G.gigDice[dieId]?.faceValue,
+        };
+      }, rivalD6Id);
+      expectEqual("staged Gig keeps the pending choice", stagedState.pendingType, "chooseTarget");
+      expectEqual(
+        "staged Gig keeps the target/value choice atomic",
+        stagedState.pendingPayloadType,
+        "effectTarget",
+      );
+      expectEqual("staged Gig does not change its value", stagedState.faceValue, 4);
 
       const valueBanner = await waitFor(() => {
         const banner = requiredElement<HTMLElement>(
@@ -398,9 +442,9 @@ async function expectSpatialTargetPrompt(container: HTMLElement, sourceName: str
       null,
     );
     expectEqual(
-      `${sourceName} target modal button absent`,
-      container.querySelector('[data-testid="prompt-target-modal-open"]'),
-      null,
+      `${sourceName} target modal button present`,
+      Boolean(container.querySelector('[data-testid="prompt-target-modal-open"]')),
+      true,
     );
   });
 }

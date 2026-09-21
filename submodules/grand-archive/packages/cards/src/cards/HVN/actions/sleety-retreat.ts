@@ -45,8 +45,17 @@ export const sleetyRetreat: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 kind: "object",
                 zones: ["field"],
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
+                    },
+                    {
+                      kind: "class",
+                      oneOf: ["RANGER"],
+                    },
+                  ],
                 },
               },
             },

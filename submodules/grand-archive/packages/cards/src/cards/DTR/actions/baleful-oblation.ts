@@ -61,6 +61,27 @@ export const balefulOblation: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           id: "oye74ibwo8-a2",
           kind: "card-resolution",
           text: "Deal X damage to all units except for your champion, where X is the lowest reserve cost among your omens.",
+          variables: [
+            {
+              symbol: "X",
+              kind: "derived",
+              amount: {
+                kind: "aggregate-property",
+                operation: "minimum",
+                collection: {
+                  zones: ["banishment"],
+                  player: "controller",
+                  filter: {
+                    kind: "has-counter",
+                    counter: "omen",
+                  },
+                },
+                property: "reserve-cost",
+                basis: "base",
+                emptyValue: 0,
+              },
+            },
+          ],
           effect: {
             kind: "deal-damage",
             source: {
@@ -71,8 +92,20 @@ export const balefulOblation: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               collection: {
                 zones: ["field"],
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
+                    },
+                    {
+                      kind: "not-subject",
+                      subject: {
+                        kind: "champion",
+                        player: "controller",
+                      },
+                    },
+                  ],
                 },
               },
             },

@@ -1,6 +1,6 @@
 import { eb01Doma005, op01Bepo049, op12DonquixoteRosinante048 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op12TrafalgarLaw073 } from "../../../../../cards/src/cards/OP12/characters/073-trafalgar-law.ts";
+import { op12TrafalgarLaw073 } from "../../../../../cards/src/cards/characters/op12-073-trafalgar-law.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 
