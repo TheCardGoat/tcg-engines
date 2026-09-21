@@ -47,8 +47,13 @@ export function RiftboundLiveMatchPage() {
   const [pending, setPending] = useState(false);
   const [conflict, setConflict] = useState<string | null>(null);
   const [initializationError, setInitializationError] = useState<string | null>(null);
-  const [chatMessages, setChatMessages] = useState<ProtocolChatMessage[]>([]);
-  const [freeTextEnabled, setFreeTextEnabled] = useState(false);
+  // Seed chat from the HTTP bootstrap (player sessions only) so a refresh
+  // shows history immediately; the gateway `game_chat_history` reply remains
+  // the authoritative hydration for spectators and reconnects.
+  const [chatMessages, setChatMessages] = useState<ProtocolChatMessage[]>(() =>
+    readChatMessages(page?.history.chatMessages ?? []),
+  );
+  const [freeTextEnabled, setFreeTextEnabled] = useState(page?.history.freeTextEnabled === true);
   const [replayStatus, setReplayStatus] = useState<string | null>(null);
   const authoritativeRef = useRef(authoritative);
   const versionRef = useRef(version);

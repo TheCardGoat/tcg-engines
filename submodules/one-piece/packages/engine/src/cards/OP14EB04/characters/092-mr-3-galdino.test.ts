@@ -7,7 +7,7 @@ import {
   op14eb04CrocodileOp14079079,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Mr3Galdino092 } from "../../../../../cards/src/cards/OP14EB04/characters/092-mr-3-galdino.ts";
+import { op14eb04Mr3Galdino092 } from "../../../../../cards/src/cards/characters/op14-092-mr-3-galdino.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op07GeckoMoria083 } from "../../../../../cards/src/cards/OP07/characters/083-gecko-moria.ts";
+import { op07GeckoMoria083 } from "../../../../../cards/src/cards/characters/op07-083-gecko-moria.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-083 Gecko Moria", () => {

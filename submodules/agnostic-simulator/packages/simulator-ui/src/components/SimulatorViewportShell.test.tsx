@@ -120,6 +120,11 @@ describe("SimulatorViewportShell", () => {
     expect(shell.getAttribute("data-sidebar-open")).toBe("true");
     expect(container!.querySelector('[aria-label="Simulator panel controls"]')).toBeNull();
     expect(container!.querySelector('[aria-label="Collapse sidebar"]')).not.toBeNull();
+    expect(
+      container!
+        .querySelector('[aria-label="Collapse sidebar"]')
+        ?.getAttribute("data-simulator-sidebar-control"),
+    ).toBe("true");
     expect(container!.querySelector('[aria-label="Simulator debug tools"]')?.textContent).toContain(
       "Export debug JSON",
     );
@@ -130,6 +135,11 @@ describe("SimulatorViewportShell", () => {
     expect(container!.textContent).not.toContain("Sidebar content");
     expect(container!.querySelector('[aria-label="Simulator panel controls"]')).toBeNull();
     expect(container!.querySelector('[aria-label="Expand sidebar"]')).not.toBeNull();
+    expect(
+      container!
+        .querySelector('[aria-label="Expand sidebar"]')
+        ?.getAttribute("data-simulator-sidebar-control"),
+    ).toBe("true");
   });
 
   test("honors an explicit desktop layout override and exposes it to board content", () => {

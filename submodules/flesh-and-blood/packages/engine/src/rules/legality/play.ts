@@ -784,6 +784,18 @@ export function quoteFabPlay(
       request.from,
       view,
     );
+    // CR 5.1.8a / 1.14.4b: a card with an unpayable mandatory effect-cost
+    // is illegal to play. Quotes are also the UI command contract, so reject
+    // deterministic failures before clients advertise a play action.
+    const unpayableRequiredCost = playCostSpecs(announced).some(
+      (spec) =>
+        spec.role === "additional-cost" &&
+        !spec.optional &&
+        !optionalPlayCostIsPayable(state, request.actorId, request.instanceId, spec),
+    );
+    if (unpayableRequiredCost) {
+      return denied("additional_cost_unpayable", "A mandatory additional cost cannot be paid.");
+    }
     const unpayableSoulBanish = playCostSpecs(announced).some((spec) => {
       if (spec.optional || spec.role === "alternative-cost") return false;
       if (!isSoulBanishPlayCost(spec.cost) || isSoulBanishXPlayCost(spec.cost)) return false;

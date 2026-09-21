@@ -4,7 +4,11 @@
   --mobile-portrait-bottom-rail-h: var(--mobile-portrait-rail-h);
   --mobile-portrait-opponent-hand-h: clamp(34px, 5.8dvh, 48px);
   --mobile-portrait-hand-h: clamp(62px, 10.5dvh, 78px);
-  --mobile-portrait-ledger-h: clamp(104px, 15.5dvh, 124px);
+  --mobile-portrait-ledger-base-h: clamp(104px, 15.5dvh, 124px);
+  --mobile-portrait-resolving-strip-h: 0px;
+  --mobile-portrait-ledger-h: calc(
+    var(--mobile-portrait-ledger-base-h) + var(--mobile-portrait-resolving-strip-h)
+  );
   --mobile-zone-summary-bar-h: clamp(22px, 3dvh, 26px);
   --mobile-portrait-border: rgb(245 230 66 / 42%);
   --mobile-portrait-surface: rgb(7 9 12 / 98%);
@@ -25,16 +29,6 @@
   background: #07090c;
   color: #f5e642;
   font-family: "Share Tech Mono", monospace;
-  display: grid;
-  grid-template-rows:
-    var(--mobile-portrait-top-rail-h)
-    var(--mobile-portrait-opponent-hand-h)
-    minmax(0, 1fr)
-    var(--mobile-portrait-ledger-h)
-    minmax(0, 1fr)
-    var(--mobile-portrait-hand-h)
-    var(--mobile-portrait-bottom-rail-h);
-
   border: 2px solid #f5e642;
   overflow: hidden;
   overscroll-behavior: contain;
@@ -42,28 +36,32 @@
 }
 
 .root[data-ledger-density="scoreOnly"] {
-  --mobile-portrait-ledger-h: 54px;
+  --mobile-portrait-ledger-base-h: 54px;
 }
 
 .root[data-ledger-density="singleRow"] {
-  --mobile-portrait-ledger-h: 76px;
+  --mobile-portrait-ledger-base-h: 76px;
 }
 
 .root[data-ledger-density="twoLegend"] {
-  --mobile-portrait-ledger-h: 92px;
+  --mobile-portrait-ledger-base-h: 92px;
 }
 
 .root[data-ledger-density="stacked"] {
-  --mobile-portrait-ledger-h: 122px;
+  --mobile-portrait-ledger-base-h: 148px;
+}
+
+.root:has([data-testid="resolving-program"]) {
+  --mobile-portrait-resolving-strip-h: 48px;
 }
 
 @media (max-width: 389px) {
   .root[data-ledger-density="twoLegend"] {
-    --mobile-portrait-ledger-h: 96px;
+    --mobile-portrait-ledger-base-h: 96px;
   }
 
   .root[data-ledger-density="stacked"] {
-    --mobile-portrait-ledger-h: 126px;
+    --mobile-portrait-ledger-base-h: 152px;
   }
 }
 
@@ -98,8 +96,7 @@
     display: none;
   }
 
-  .mobilePhaseControls :global([data-testid="phase-advance"]),
-  .mobilePhaseControls :global([data-testid="phase-undo"]) {
+  .mobilePhaseControls :global([data-testid="phase-advance"]) {
     min-height: 44px;
     padding-block: 4px;
   }
@@ -418,30 +415,6 @@
   text-transform: uppercase;
 }
 
-.root[data-prompt-active="false"] {
-  grid-template-rows:
-    var(--mobile-portrait-top-rail-h)
-    var(--mobile-portrait-opponent-hand-h)
-    minmax(0, 1fr)
-    var(--mobile-portrait-ledger-h)
-    minmax(0, 1fr)
-    var(--mobile-portrait-hand-h)
-    var(--mobile-portrait-bottom-rail-h);
-}
-
-.root[data-zone-summaries="true"][data-prompt-active="false"] {
-  grid-template-rows:
-    var(--mobile-portrait-top-rail-h)
-    var(--mobile-portrait-opponent-hand-h)
-    var(--mobile-zone-summary-bar-h)
-    minmax(0, 1fr)
-    var(--mobile-portrait-ledger-h)
-    minmax(0, 1fr)
-    var(--mobile-zone-summary-bar-h)
-    var(--mobile-portrait-hand-h)
-    var(--mobile-portrait-bottom-rail-h);
-}
-
 /* Field/legends bands - horizontal scroll for overflow, compact padding. */
 .fieldBand,
 .legendsBand {
@@ -757,8 +730,7 @@
 }
 
 .center:has([data-testid="resolving-program"]) {
-  z-index: 40;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .center > * {
@@ -767,7 +739,8 @@
   height: 100%;
 }
 
-.center > .directAttackDropTarget {
+.center > .directAttackDropTarget,
+.center > .sellDropTarget {
   position: absolute;
 }
 
@@ -1583,6 +1556,22 @@
   background: rgb(7 9 12 / 96%);
 }
 
+/* Unified activity feed: merged log+chat panel with the floating chat
+   composer docked over its lower edge. */
+.activityFeed {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.activityFeed > :first-child {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
 .settingsControl {
   flex: 0 0 auto;
   display: flex;
@@ -1612,6 +1601,9 @@
   position: relative;
   display: grid;
   place-items: center;
+  grid-auto-rows: auto;
+  align-content: center;
+  gap: 2px;
   width: 100%;
   min-width: 0;
   height: 100%;
@@ -1620,6 +1612,45 @@
   background:
     linear-gradient(90deg, rgb(255 61 138 / 9%), transparent 42%),
     linear-gradient(270deg, rgb(74 217 255 / 10%), transparent 42%), rgb(7 9 12 / 58%);
+}
+
+/* Turn-owner rail: a quiet accent edge so each rail names its side's turn
+   ownership even before the clock pill lights up for priority. The tone var
+   is set per chip below via the data-tone attribute on the tag. */
+.mobileClockChip[data-turn-owner="true"] {
+  border-inline-color: rgb(var(--turn-owner-rgb, 245 230 66) / 48%);
+  box-shadow:
+    inset 0 2px 0 rgb(var(--turn-owner-rgb, 245 230 66) / 34%),
+    inset 0 0 14px rgb(var(--turn-owner-rgb, 245 230 66) / 7%);
+}
+
+.mobileTurnTag {
+  max-width: 100%;
+  padding: 1px 3px;
+  border: 1px solid;
+  overflow: hidden;
+  font-family: Rajdhani, sans-serif;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mobileTurnTag[data-tone="friendly"] {
+  border-color: rgb(74 217 255 / 62%);
+  background: rgb(74 217 255 / 12%);
+  color: #8ee7ff;
+  box-shadow: 0 0 9px rgb(74 217 255 / 14%);
+}
+
+.mobileTurnTag[data-tone="rival"] {
+  border-color: rgb(255 61 138 / 62%);
+  background: rgb(255 61 138 / 12%);
+  color: #ff8fbb;
+  box-shadow: 0 0 9px rgb(255 61 138 / 14%);
 }
 
 .mobileClockChip .clockPill {
@@ -1769,7 +1800,9 @@
 
 .zoneSummaryLabel {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns:
+    minmax(0, 0.9fr) minmax(0, 0.9fr) minmax(0, 0.85fr) minmax(0, 1.7fr)
+    minmax(0, 0.7fr) minmax(0, 0.95fr);
   align-items: center;
   gap: 0;
   width: 100%;
@@ -2023,12 +2056,7 @@
   order: 9;
 }
 
-.mobilePhaseControls :global([data-testid="phase-undo"]) {
-  order: 8;
-}
-
-.mobilePhaseControls :global([data-testid="phase-advance"]),
-.mobilePhaseControls :global([data-testid="phase-undo"]) {
+.mobilePhaseControls :global([data-testid="phase-advance"]) {
   min-height: 44px;
   height: 44px;
   gap: 1px 4px;
@@ -2130,11 +2158,6 @@
   margin: 0;
 }
 
-.mobilePhaseControls
-  :global([data-testid="phase-hud"][data-attack-in-progress="true"] [data-testid="phase-undo"]) {
-  display: none;
-}
-
 .gameControlButton:disabled {
   cursor: not-allowed;
   opacity: 0.5;
@@ -2150,7 +2173,7 @@
   align-items: stretch;
   justify-content: center;
   min-height: clamp(56px, 10dvh, 86px);
-  max-height: min(132px, 28dvh);
+  max-height: min(176px, 36dvh);
   padding: 3px 4px;
   background: rgb(7 9 12 / 74%);
   overflow: hidden;
@@ -2159,6 +2182,7 @@
 
 .promptBand:not(:empty) {
   display: flex;
+  min-height: clamp(96px, 16dvh, 140px);
   border-bottom: 1px solid rgb(74 217 255 / 36%);
   background:
     linear-gradient(90deg, rgb(74 217 255 / 9%), transparent 36%),
@@ -2167,12 +2191,16 @@
 
 .root[data-prompt-mode="select-target"] .promptBand {
   display: flex;
-  min-height: clamp(92px, 15dvh, 132px);
+  min-height: clamp(108px, 18dvh, 156px);
   padding: 5px;
   border-bottom: 1px solid rgb(245 230 66 / 42%);
   background:
     linear-gradient(90deg, rgb(245 230 66 / 9%), transparent 36%),
     linear-gradient(180deg, rgb(7 9 12 / 94%), rgb(4 6 9 / 98%));
+}
+
+.root[data-prompt-mode="select-target"] .promptBand:has([data-card-prompt="true"]) {
+  min-height: 0;
 }
 
 .root[data-prompt-placement="rival"] .promptBand {
@@ -2220,33 +2248,6 @@
   pointer-events: auto;
 }
 
-.fieldHelpers[data-drop-ready="sellCard"] {
-  width: clamp(104px, 25dvw, 128px);
-  min-height: 66px !important;
-  padding: 8px;
-  border-color: rgb(52 245 138 / 76%);
-  background:
-    linear-gradient(135deg, rgb(52 245 138 / 22%), transparent 44%),
-    linear-gradient(90deg, rgb(74 217 255 / 13%), rgb(7 9 12 / 94%) 54%), #07090c;
-  box-shadow:
-    0 0 0 1px rgb(0 0 0 / 82%),
-    0 0 0 2px rgb(52 245 138 / 28%),
-    0 10px 24px rgb(0 0 0 / 52%),
-    0 0 22px rgb(52 245 138 / 18%),
-    inset 0 0 20px rgb(52 245 138 / 10%);
-}
-
-.fieldHelpers[data-drop-over="true"] {
-  transform: translateY(-1px);
-  border-color: rgb(196 255 213 / 92%);
-  box-shadow:
-    0 0 0 1px rgb(0 0 0 / 82%),
-    0 0 0 2px rgb(52 245 138 / 48%),
-    0 10px 28px rgb(0 0 0 / 58%),
-    0 0 30px rgb(52 245 138 / 30%),
-    inset 0 0 24px rgb(52 245 138 / 16%);
-}
-
 .fieldHelpers[data-with-legends="true"] {
   width: auto;
   height: clamp(58px, 15dvh, 78px) !important;
@@ -2265,38 +2266,6 @@
   width: clamp(88px, 21dvw, 104px);
   min-width: 0;
   gap: 1px;
-}
-
-.fieldHelperSellCue {
-  position: absolute;
-  inset: 4px;
-  z-index: 5;
-  display: grid;
-  place-items: center;
-  padding: 5px;
-  border: 1px solid rgb(52 245 138 / 62%);
-  background:
-    radial-gradient(circle at 50% 0, rgb(52 245 138 / 20%), transparent 54%), rgb(7 9 12 / 88%);
-  color: rgb(196 255 213);
-  font-family: Rajdhani, "Arial Narrow", sans-serif;
-  line-height: 1;
-  text-align: center;
-  text-transform: uppercase;
-  pointer-events: none;
-  clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
-}
-
-.fieldHelperSellCue span {
-  font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 0;
-}
-
-.fieldHelperSellCue strong {
-  color: #fff7c2;
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0;
 }
 
 .fieldHelperLegends {
@@ -2701,37 +2670,6 @@
     inset 0 0 12px rgb(245 230 66 / 7%);
 }
 
-.fieldHelperButtonSellReady {
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  min-width: 0;
-  min-height: 31px;
-  padding: 4px;
-  border: 1px dashed rgb(245 230 66 / 48%);
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgb(245 230 66 / 5%) 0,
-      rgb(245 230 66 / 5%) 1px,
-      transparent 1px,
-      transparent 7px
-    ),
-    linear-gradient(135deg, rgb(245 230 66 / 7%), transparent 50%),
-    linear-gradient(180deg, rgb(7 9 12 / 92%), rgb(7 9 12 / 98%));
-  box-shadow:
-    0 0 0 1px rgb(0 0 0 / 86%),
-    0 0 0 2px rgb(245 230 66 / 7%),
-    0 0 14px rgb(245 230 66 / 12%),
-    inset 0 0 12px rgb(245 230 66 / 6%);
-  transform: translateY(-1px);
-  transform-origin: bottom left;
-}
-
-.opponentFieldHelpers .fieldHelperButtonSellReady {
-  transform-origin: top right;
-}
-
 .matchSpine {
   display: grid;
   grid-template-columns: minmax(86px, 24dvw) minmax(0, 1fr) minmax(86px, 24dvw);
@@ -2863,8 +2801,7 @@
 }
 
 .matchSpineCore:has([data-testid="resolving-program"]) .mobileClockRail {
-  opacity: 0;
-  transform: scale(0.92);
+  opacity: 1;
 }
 
 .mobileClockRail {
@@ -2925,8 +2862,7 @@
 }
 
 .center:has([data-testid="resolving-program"]) > .mobileClockRail {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.92);
+  opacity: 1;
 }
 
 .clockPill {
@@ -3014,36 +2950,6 @@
     0 0 18px rgb(255 58 58 / 22%);
 }
 
-.fieldHelperButtonSellReady::after {
-  content: "SELL";
-  position: absolute;
-  top: -7px;
-  right: 5px;
-  padding: 1px 4px;
-  border: 1px solid rgb(245 230 66 / 52%);
-  background: #07090c;
-  color: rgb(245 230 66 / 78%);
-  font-size: 6px;
-  letter-spacing: 0.14em;
-  line-height: 1;
-}
-
-.fieldHelperButtonSellReady span {
-  color: #f5e642;
-  font-size: 8px;
-}
-
-.fieldHelperButtonSellReady strong {
-  color: #fff7c2;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-}
-
-.fieldHelperButtonSellReady em {
-  max-width: 72px;
-  color: rgb(207 232 246 / 76%);
-}
-
 .directAttackDropTarget {
   /* Direct attacks steal from the rival. Limit both the visible cue and hit
      target to the rival half so the friendly Gig lane stays interactive. */
@@ -3107,6 +3013,75 @@
 .directAttackDropTarget[data-over="true"] .directAttackDropCue {
   border-color: #f5e642;
   background: linear-gradient(90deg, rgb(245 230 66 / 24%), rgb(74 217 255 / 13%)), #07090c;
+  box-shadow:
+    inset 0 0 22px rgb(245 230 66 / 20%),
+    0 0 22px rgb(245 230 66 / 30%);
+}
+
+.sellDropTarget {
+  /* Selling belongs to the player's half of the shared ledger: friendly
+     Legends and Gigs become one large, stable touch target while dragging a
+     hand card. */
+  position: absolute;
+  inset: 0 50% 0 0;
+  z-index: 8;
+  min-width: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+}
+
+.sellDropCue {
+  position: absolute;
+  inset: 4px;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1px;
+  border: 1px dashed rgb(52 245 138 / 76%);
+  background:
+    linear-gradient(270deg, rgb(52 245 138 / 18%), rgb(7 9 12 / 72%)),
+    repeating-linear-gradient(
+      90deg,
+      rgb(74 217 255 / 10%) 0,
+      rgb(74 217 255 / 10%) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+  color: #f5e642;
+  font-family: Rajdhani, sans-serif;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 0 18px rgb(52 245 138 / 14%),
+    0 0 14px rgb(52 245 138 / 18%);
+  transition:
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.sellDropTarget[data-active="true"] {
+  opacity: 1;
+}
+
+.sellDropCue span {
+  color: rgb(144 255 184 / 96%);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.sellDropCue strong {
+  color: #fff7c2;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.sellDropTarget[data-over="true"] .sellDropCue {
+  border-color: #f5e642;
+  background: linear-gradient(270deg, rgb(245 230 66 / 24%), rgb(52 245 138 / 15%)), #07090c;
   box-shadow:
     inset 0 0 22px rgb(245 230 66 / 20%),
     0 0 22px rgb(245 230 66 / 30%);

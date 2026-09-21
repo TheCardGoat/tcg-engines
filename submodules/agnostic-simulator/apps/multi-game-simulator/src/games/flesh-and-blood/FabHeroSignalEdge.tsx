@@ -1,6 +1,7 @@
 import * as Popover from "@radix-ui/react-popover";
 import {
   BatteryCharging,
+  Crosshair,
   EyeOff,
   PartyPopper,
   Sparkles,
@@ -50,10 +51,16 @@ const SIGNAL_COPY: Record<FabPresentationHeroSignal["id"], SignalCopy> = {
     detail: "Cards put into this hero's soul this turn.",
     Icon: Sparkles,
   },
+  marked: {
+    label: "Marked",
+    detail: "CR 9.3 — the next time an opponent's attack hits this hero, Marked is removed.",
+    Icon: Crosshair,
+  },
 };
 
 function signalValue(signal: FabPresentationHeroSignal): string {
-  return signal.kind === "count" ? String(signal.value) : "Active";
+  if (signal.kind === "count") return String(signal.value);
+  return signal.id === "marked" ? "Until hit" : "Active";
 }
 
 function signalSummary(signal: FabPresentationHeroSignal): string {
@@ -79,6 +86,9 @@ export function FabHeroSignalEdge({
   const visible = signals.length > 3 ? signals.slice(0, 2) : signals;
   const overflow = signals.length > 3 ? signals.length - 2 : 0;
   const accessibleSummary = signals.map(signalSummary).join(", ");
+  // Marked outlives the turn (CR 9.3.3), so only an all-turn signal set may
+  // claim "This turn".
+  const scopeLabel = signals.some((signal) => signal.id === "marked") ? "Status" : "This turn";
 
   return (
     <Popover.Root open={open} onOpenChange={setOpen}>
@@ -89,7 +99,7 @@ export function FabHeroSignalEdge({
           className="fab-hero-signal-edge"
           data-testid="fab-hero-signal-edge"
           data-side={side}
-          aria-label={`${heroName} hero signals: ${accessibleSummary}. This turn.`}
+          aria-label={`${heroName} hero signals: ${accessibleSummary}. ${scopeLabel}.`}
           onPointerEnter={(event) => {
             if (event.pointerType === "mouse") setOpen(true);
           }}
@@ -166,7 +176,7 @@ export function FabHeroSignalEdge({
         >
           <header>
             <strong>{heroName}</strong>
-            <span>This turn</span>
+            <span>{scopeLabel}</span>
           </header>
           <ul>
             {signals.map((signal) => {

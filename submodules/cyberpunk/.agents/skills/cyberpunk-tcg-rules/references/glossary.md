@@ -12,7 +12,7 @@
 
 #### 11.1.1 — A “cost” details what you must pay to play a card, activate an effect, or perform a game action.
 
-A “cost” details what you must pay to play a card, activate an effect, or perform a game action. See {[TERMS > Game Actions > Pay](#rule-0ed2bde9-70df-5941-acbe-47aae4afe45d)}.
+A “cost” details what you must pay to play a card, activate an effect, or perform a game action. See [Pay](#rule-0ed2bde9-70df-5941-acbe-47aae4afe45d).
 
 ##### 11.1.1.1 — To play a card, you must pay its cost value in the top left corner of the card.
 
@@ -20,7 +20,7 @@ To play a card, you must pay its cost value in the top left corner of the card. 
 
 ##### 11.1.1.2 — An activation cost is a cost that must be paid to activate an effect.
 
-An activation cost is a cost that must be paid to activate an effect. See [Activated Effects](#rule-60be9d57-6a2a-5072-86d4-893bbe9de2b0).
+An activation cost is a cost that must be paid to activate an effect. See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed) > [Activated Effects](#rule-60be9d57-6a2a-5072-86d4-893bbe9de2b0).
 
 #### 11.1.2 — A cost must be paid in full; if you cannot pay all required costs, you cannot play the card, activate the effect, nor…
 
@@ -98,7 +98,7 @@ When you “Draw X,” draw each card individually. Do not take multiple cards f
 
 ##### 11.5.2.3 — If you attempt to draw more cards than remain in your deck, it counts as drawing from an empty deck.
 
-If you attempt to draw more cards than remain in your deck, it counts as drawing from an empty deck. See [GAME OVERVIEW > Lose Conditions](#rule-6102756a-cd45-50fb-8ded-eea683b79df7).
+If you attempt to draw more cards than remain in your deck, it counts as drawing from an empty deck. See [GAME OVERVIEW](#rule-0ef7599d-d21e-5efb-bb17-375f7950991c) > [Lose Conditions](#rule-6102756a-cd45-50fb-8ded-eea683b79df7).
 
 ### 11.6 — Equip
 
@@ -106,7 +106,7 @@ If you attempt to draw more cards than remain in your deck, it counts as drawing
 
 #### 11.6.1 — “Equip” is a game action in which you attach a Gear to a Unit or Legend by placing the card beneath it.
 
-“Equip” is a game action in which you attach a Gear to a Unit or Legend by placing the card beneath it. When you do, the Gear becomes “equipped to” that card. See {[CARD TYPES > Gear](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49)}.
+“Equip” is a game action in which you attach a Gear to a Unit or Legend by placing the card beneath it. When you do, the Gear becomes “equipped to” that card. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed) > [Gear](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49).
 
 ##### 11.6.1.1 — When a Gear is equipped make sure only the bottom text box is showing under the equipped card.
 
@@ -122,15 +122,17 @@ Gear stays equipped unless it (or the Unit/Legend it’s equipped to) is defeate
 
 #### 11.6.5 — Units and Legends gain the power of their equipped Gears.
 
-#### 11.6.6 — “Move is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another v…
+#### 11.6.6 — "Move" is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another…
 
-“Move is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another valid Unit or Legend.
+"Move" is a game action in which you unequip a Gear from the Unit or Legend it’s equipped to and equip it to another valid Unit or Legend.
 
 ### 11.7 — Trash
 
 ### Trash
 
 #### 11.7.1 — When used as a location, “trash” refers to the “Trash area” of the game board.
+
+When used as a location, “trash” refers to the “Trash area” of the game board. See [Trash Area](#rule-1135bc55-1aa7-5667-beb2-33c4d60a26ce).
 
 #### 11.7.2 — When used as an instruction, “trash” refers to the game action in which you reveal the top card of your deck and move…
 
@@ -172,13 +174,13 @@ Effects that reduce the amount you pay to play a card or activate an effect do n
 
 ##### 11.9.1.1 — When you sell a card, it enters the Eddies area face-down and ready.
 
-When you sell a card, it enters the Eddies area face-down and ready. See [Game Areas > Eddies Area](#rule-5753f17e-b02c-5b63-87e7-60fb27880068).
+When you sell a card, it enters the Eddies area face-down and ready. See [Eddies Area](#rule-5753f17e-b02c-5b63-87e7-60fb27880068).
 
 ##### 11.9.1.2 — If you would sell multiple cards at the same time, you must sell each card individually.
 
 #### 11.9.2 — During your Main Phase, you may sell a card with a Sell Tag from your hand as an action.
 
-During your Main Phase, you may sell a card with a Sell Tag from your hand as an action. See [TURN ORDER > Main Phase > Sell a Card](#rule-c215eaa3-1145-5c48-8a2d-2a94393d1d52).
+During your Main Phase, you may sell a card with a Sell Tag from your hand as an action. See [Sell a Card](#rule-be5fdfb0-1cad-5806-8b14-1b3bd8aa260b).
 
 ##### 11.9.2.1 — Whenever an effect puts a card from another area into the Eddie area, the card isn’t required to have an Eddie symbol.
 
@@ -206,7 +208,7 @@ Whenever an effect puts a card from another area into the Eddie area, the card i
 
 ##### 11.11.1.4 — When you flip a Legend face up this way it activates any [CALL] keyword effects on that Legend.
 
-When you flip a Legend face up this way it activates any [CALL] keyword effects on that Legend. See {[TERMS > Trigger Keywords > \[CALL\]](#rule-d2312a93-5d92-5ea9-8931-a7ec2cf099a3)}.
+When you flip a Legend face up this way it activates any [CALL] keyword effects on that Legend. See [\[CALL\]](#rule-d2312a93-5d92-5ea9-8931-a7ec2cf099a3).
 
 #### 11.11.2 — You may only Call a Legend once per turn.
 
@@ -230,7 +232,7 @@ You cannot bottom-deck a card you don’t own. If you would bottom-deck a card y
 
 ##### 11.12.1.3 — When you are made to bottom-deck multiple cards at the same time, you must randomize all of them together before plac…
 
-When you are made to bottom-deck multiple cards at the same time, you must randomize all of them together before placing them at the bottom of your deck. This includes any Units or Legends with Gears attached. See {[CARD INFORMATION > Type > Gears](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49)}.
+When you are made to bottom-deck multiple cards at the same time, you must randomize all of them together before placing them at the bottom of your deck. This includes any Units or Legends with Gears attached. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed) > [Gears](#rule-0dffbbac-b466-5f3f-9f66-0ff9ef80cd49).
 
 #### 11.12.2 — If an effect tells you to bottom-deck a group of cards “in any order,” forgo randomizing the cards and instead choose…
 
@@ -258,7 +260,7 @@ While searching cards in an area, the cards still count towards the total number
 
 #### 11.13.4 — When an effect allows you to search one of your hidden areas for a specific card or criteria, if you fail to find any…
 
-When an effect allows you to search one of your hidden areas for a specific card or criteria, if you fail to find anything, you don’t have to show the hidden information to the Rival player. See {[GAME AREAS > General > Hidden Areas](#rule-3fae03cf-a089-553e-91d3-88e0694e138c)}.
+When an effect allows you to search one of your hidden areas for a specific card or criteria, if you fail to find anything, you don’t have to show the hidden information to the Rival player. See [Hidden Areas](#rule-3f22994a-0339-5f20-9f10-6cf1f8113110).
 
 ##### 11.13.4.1 — When you search a hidden area for a specific target(s) and you’re not obligated to reveal the searched cards, you may…
 
@@ -352,7 +354,7 @@ The effect attached to the [DEFEATED] trigger enters pending when the Unit has b
 
 #### 11.20.2 — The effect attached to the [PLAY] trigger enters pending when you meet all the requirements when playing that card type.
 
-The effect attached to the [PLAY] trigger enters pending when you meet all the requirements when playing that card type. See {[CARD INFORMATION > Type](#rule-550c9024-e88c-5618-a7d0-7741f493f973)}.
+The effect attached to the [PLAY] trigger enters pending when you meet all the requirements when playing that card type. See [CARD TYPES](#rule-8f5f8271-4cf5-5f9a-9c92-a76084ed6eed).
 
 ### 11.21 — [ATTACK]
 
@@ -366,11 +368,11 @@ The effect attached to the [ATTACK] trigger enters pending when you spend the Un
 
 ##### 11.21.2.1 — Any effects triggered by spending this Unit enter pending at the same time as any [ATTACK] effect(s).
 
-Any effects triggered by spending this Unit enter pending at the same time as any [ATTACK] effect(s). See {[EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed)}.
+Any effects triggered by spending this Unit enter pending at the same time as any [ATTACK] effect(s). See [EFFECTS](#rule-3efdf554-b6f9-5c20-837e-5146363dd5ed).
 
 ##### 11.21.2.2 — Resolve all pending [ATTACK] effects before your Rival’s react step.
 
-Resolve all pending [ATTACK] effects before your Rival’s react step. See {[ATTACK, FIGHT, AND STEAL > React Step](#rule-8e1db91d-c376-5f3a-b208-7df7a64bed30)}.
+Resolve all pending [ATTACK] effects before your Rival’s react step. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1) > [React Step](#rule-8e1db91d-c376-5f3a-b208-7df7a64bed30).
 
 ## Effect Keywords
 
@@ -384,7 +386,7 @@ Resolve all pending [ATTACK] effects before your Rival’s react step. See {[ATT
 
 #### 11.23.2 — Units with [ADRENALINE] may attack even if they’re lagging.
 
-Units with [ADRENALINE] may attack even if they’re lagging. All other criteria for valid attack targets still apply. See {ATTACK, FIGHT, AND STEAL > Declare the Attack}.
+Units with [ADRENALINE] may attack even if they’re lagging. All other criteria for valid attack targets still apply. See [ATTACK, FIGHT, AND STEAL](#rule-2a2dba05-9f3d-5e54-a3ec-495c89b148e1) > [Declare the Attack](#rule-d65346a6-8898-5f13-8729-0693c12610fa).
 
 ### 11.24 — [BLOCKER]
 

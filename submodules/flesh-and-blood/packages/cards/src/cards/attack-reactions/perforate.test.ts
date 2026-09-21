@@ -35,10 +35,9 @@ describe("Perforate (HNT197) AAA", () => {
     Fang.activateAttack(nerveScalpel); // once-per-turn swing #1: {r}{r}
     game.toReaction("attacker");
     Fang.play(perforateYellow);
-    game.helpers.resolveUntilIdle({
-      optionalBoolean: true,
-      entityTargets: "minimum",
-    });
+    // CR 5.2.3c: the grant + discount + draw resolve on their own — no
+    // optional boolean may be left to answer.
+    game.helpers.resolveUntilIdle({ entityTargets: "minimum" });
     expectFabPlayer(Fang).toHaveHandCount(1); // a2 draw replaced the reaction
     expectFabPlayer(Dash).toHaveLife(19); // 20 - 1 (swing #1 through unblocked)
 
@@ -50,34 +49,6 @@ describe("Perforate (HNT197) AAA", () => {
 
     expectFabPlayer(Dash).toHaveLife(18); // 19 - 1
     expectFabPlayer(Fang).toHaveResourceCount(0); // 4 - 2 - 1 - 1
-  });
-
-  it("boundary: declining the optional keeps the dagger at its printed activation limit", () => {
-    const game = FabTestEngine.start(
-      {
-        hero: fang,
-        hand: [perforateYellow],
-        weapon1: [nerveScalpel],
-        resourcePoints: 5,
-        actionPoints: 1,
-        deckTop: [brutalAssaultBlue],
-        deck: 6,
-      },
-      { hero: dash, deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Fang = game.as(fang);
-    const Dash = game.as(dash);
-
-    Fang.activateAttack(nerveScalpel);
-    game.toReaction("attacker");
-    Fang.play(perforateYellow);
-    game.helpers.resolveUntilIdle({ optionalBoolean: false });
-    expectFabPlayer(Fang).toHaveHandCount(1);
-    expectFabPlayer(Dash).toHaveLife(19);
-    Fang.expectActivationRejected(nerveScalpel);
-    expectFabCard(Fang, perforateYellow).toBeIn("graveyard");
-    expectFabPlayer(Fang).toHaveResourceCount(2);
   });
 
   it("timing: the independent draw still resolves with no dagger to grant", () => {
@@ -96,10 +67,7 @@ describe("Perforate (HNT197) AAA", () => {
     Briar.attackWith(snatchRed);
     game.advanceCombatTo("reaction");
     Briar.play(perforateYellow);
-    game.helpers.resolveUntilIdle({
-      ordering: "listed",
-      optionalBoolean: false,
-    });
+    game.helpers.resolveUntilIdle({ ordering: "listed" });
 
     expectFabCard(Briar, brutalAssaultBlue).toBeIn("hand");
     expectFabCard(Briar, perforateYellow).toBeIn("graveyard");

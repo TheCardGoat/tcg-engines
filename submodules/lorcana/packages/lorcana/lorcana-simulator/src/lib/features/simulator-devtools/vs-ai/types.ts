@@ -2,6 +2,7 @@ import type { PlayerId } from "@tcg/lorcana-engine";
 
 export type AiPlayMode = "step" | "auto";
 export type AiSpeed = "fast" | "balanced" | "slow";
+export type PracticeOpponentMode = "bot" | "self";
 
 export const AI_SPEED_MS: Record<AiSpeed, number> = {
   fast: 250,
@@ -26,6 +27,8 @@ export interface HumanVsAiMatchConfig {
   seed: string;
   /** Initial AI play mode. Defaults to `"auto"`. */
   initialAiPlayMode?: AiPlayMode;
+  /** Who controls player two. Defaults to the practice bot. */
+  opponentMode?: PracticeOpponentMode;
 }
 
 export interface HumanVsAiOrchestratorState {
@@ -34,6 +37,7 @@ export interface HumanVsAiOrchestratorState {
   aiSpeed: AiSpeed;
   strategyId: string;
   strategyLabel: string;
+  opponentMode: PracticeOpponentMode;
   currentPerspective: "playerOne" | "playerTwo";
   error?: string;
   turnNumber: number;

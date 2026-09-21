@@ -2680,3 +2680,11 @@
     display: none !important;
   }
 }
+.practiceControllerStatus {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--sim-border, rgba(255, 255, 255, 0.14));
+  color: var(--sim-text-muted, currentColor);
+  font-size: 0.78rem;
+  font-weight: 650;
+}

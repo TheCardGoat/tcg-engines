@@ -8,6 +8,7 @@ import {
 import { dash } from "../heroes/dash.ts";
 import { fang } from "../heroes/fang.ts";
 import { forTheDracaiRed } from "../actions/for-the-dracai.ts";
+import { longWhiskerLoyaltyRed } from "../attack-reactions/long-whisker-loyalty.ts";
 import { obsidianFireVein } from "./obsidian-fire-vein.ts";
 
 /**
@@ -57,6 +58,36 @@ describe("Obsidian Fire Vein (FNG002) AAA", () => {
 
     Fang.activateAttack(obsidianFireVein);
     expectCombat(game).toHaveAttackPower(1);
+  });
+
+  it("timing: a Draconic reaction played on the chain link turns on +1{p} and go again", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: fang,
+        weapon1: [obsidianFireVein],
+        hand: [longWhiskerLoyaltyRed],
+        resourcePoints: 2,
+        actionPoints: 2,
+        deck: 6,
+      },
+      { hero: dash, hand: [], life: 20, deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Fang = game.as(fang);
+
+    Fang.activateAttack(obsidianFireVein);
+    game.toReaction("attacker");
+    // Long Whisker Loyalty is Draconic and is played on this chain link, so
+    // the printed clause must evaluate live, not only at activation time.
+    Fang.must.playReaction(longWhiskerLoyaltyRed, {
+      modeIds: ["969HqThPzMmQtFhM9mNq8:chooseForEachDraconicLink:additionalDaggerAttack"],
+    });
+
+    expectCombat(game).toHaveAttackPower(2);
+    expectCombat(game).toHaveKeyword("go-again");
+
+    game.closeCombat({ optionals: "accept" });
+    expectFabPlayer(Fang).toHaveAP(2);
   });
 
   it("boundary: once-per-turn and unpayable {r} reject extra activations", () => {

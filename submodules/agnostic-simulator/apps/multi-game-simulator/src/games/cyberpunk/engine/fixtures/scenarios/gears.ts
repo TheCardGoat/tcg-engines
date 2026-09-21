@@ -498,7 +498,7 @@ export const gearScenarios: Scenario[] = [
     group: "gear-spent-trigger",
     label: "Zetatech Faceplate (Retail) · spend trigger adjusts gig and draws",
     description:
-      "P1 has Swordwise Huscle equipped with retail Zetatech Faceplate (cost 2, yellow, power 2). Three friendly Gigs at distinct values. When the host is spent, should adjust a Gig and draw 1 card.",
+      "Both players control a Unit equipped with retail Zetatech Faceplate. P1 is active with three distinct friendly Gig values. Spending P1's Swordwise Huscle must offer the 0-adjustment choice only to P1, leave P2's Faceplate inert, and still draw for P1's three distinct Gigs.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -525,7 +525,15 @@ export const gearScenarios: Scenario[] = [
           ],
         },
         {
-          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailDelamainCab,
+              spent: false,
+              hasLag: false,
+              attachedGears: [c.welcomeToNightCityRetailZetatechFaceplate],
+            },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+          ],
           legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
           eddies: 4,
           gigArea: [{ dieType: "d10", faceValue: 4 }],

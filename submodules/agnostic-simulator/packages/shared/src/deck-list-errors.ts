@@ -40,3 +40,10 @@ export function formatInvalidEntriesComment(invalidEntries: DeckListInvalidEntry
   }
   return blocks.join("\n");
 }
+
+/** User-facing warning when a deck imported while skipping unmatched lines. */
+export function formatSkippedImportWarning(skippedLines: readonly string[]): string {
+  if (skippedLines.length === 0) return "";
+  const noun = skippedLines.length === 1 ? "line" : "lines";
+  return `Deck imported, but ${skippedLines.length} ${noun} could not be matched:\n${skippedLines.join("\n")}`;
+}

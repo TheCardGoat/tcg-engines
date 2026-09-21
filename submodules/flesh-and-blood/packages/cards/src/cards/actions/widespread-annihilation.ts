@@ -25,16 +25,22 @@ export const widespreadAnnihilation = definePitchFamily(
         resolution: {
           kind: "effect",
           effect: {
-            type: "banish",
+            type: "for-each",
             target: {
-              selector: "object",
-              declared: "at-resolution",
-              player: "each",
-              zones: ["hand"],
-              filter: {
-                controllerPerformedThisTurn: "lose-life",
+              selector: "each-hero",
+            },
+            effect: {
+              type: "banish",
+              target: {
+                selector: "object",
+                declared: "at-resolution",
+                player: "iteration-subject",
+                zones: ["hand"],
+                filter: {
+                  controllerPerformedThisTurn: "lose-life",
+                },
+                count: 1,
               },
-              count: 1,
             },
           },
         },

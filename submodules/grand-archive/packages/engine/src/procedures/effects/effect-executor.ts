@@ -1,3 +1,4 @@
+import { grandArchiveBanishmentProvenance } from "./evaluation.ts";
 import type {
   GrandArchiveEffect,
   GrandArchiveMoveDestination,
@@ -25,7 +26,7 @@ import {
   grandArchiveCounterKey,
   grandArchiveObjectCounterCount,
   matchesGrandArchiveCardFilter,
-  resolveGrandArchiveCollection,
+  resolveGrandArchiveIterationIds,
   resolveGrandArchivePlayers,
   resolveGrandArchiveSubjectObjects,
   GrandArchiveUnsupportedRuleError,
@@ -298,7 +299,9 @@ function moveEvents(
   const controllerId =
     destination.zone === "field" && destination.controller
       ? resolveSinglePlayer(destination.controller, evaluation)
-      : undefined;
+      : destination.zone === "intent"
+        ? execution.base.controllerId
+        : undefined;
   const orderedPrivateDestination =
     (destination.zone === "main-deck" || destination.zone === "material-deck") &&
     (destination.placement?.kind === "top" || destination.placement?.kind === "bottom");
@@ -327,7 +330,7 @@ function moveEvents(
         ...(controllerId ? { newControllerId: controllerId } : {}),
         ...(hostId ? { hostId } : {}),
         ...(destination.zone === "banishment" && evaluation.sourceId
-          ? { banishedBySourceId: evaluation.sourceId }
+          ? { banishedBy: grandArchiveBanishmentProvenance(evaluation) }
           : {}),
         placement: destinationPlacement(destination),
         ...(orderedPrivateDestination && execution.base.orderedPrivatePlacementKnowledge
@@ -1034,7 +1037,7 @@ function executeRandomSelection(
         to: destination,
         ...(effect.kind === "discard" ? { discarded: true as const } : {}),
         ...(effect.kind === "banish" && execution.base.sourceId
-          ? { banishedBySourceId: execution.base.sourceId }
+          ? { banishedBy: grandArchiveBanishmentProvenance(context(execution)) }
           : {}),
         ...(effect.kind === "banish" && effect.faceDown
           ? { entryFacing: "face-down" as const, revealAtEndOfGame: true as const }
@@ -1475,23 +1478,40 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
     case "banish-object": {
       commit(
         execution,
-        resolveGrandArchiveSubjectObjects(effect.subject, evaluation).flatMap((object) =>
-          object.zone === "banishment"
-            ? []
-            : [
-                {
-                  type: "object-moved" as const,
-                  objectId: object.id,
-                  from: object.zone,
-                  to: "banishment" as const,
-                  ...(effect.faceDown
-                    ? { entryFacing: "face-down" as const, revealAtEndOfGame: true as const }
-                    : {}),
-                  ...(evaluation.sourceId ? { banishedBySourceId: evaluation.sourceId } : {}),
-                  cause: { kind: "rule" as const, rule: "banish-object-effect" },
-                },
-              ],
-        ),
+        resolveGrandArchiveSubjectObjects(
+          effect.subject,
+          evaluation,
+        ).flatMap<GrandArchiveProposedEvent>((object) => {
+          if (effect.from !== undefined && object.zone !== effect.from) return [];
+          if (object.zone === "banishment") {
+            return effect.faceDown && object.facing !== "face-down"
+              ? [
+                  {
+                    type: "object-facing-changed" as const,
+                    objectId: object.id,
+                    facing: "face-down" as const,
+                    revealAtEndOfGame: true as const,
+                    cause: { kind: "rule" as const, rule: "banish-object-effect" },
+                  },
+                ]
+              : [];
+          }
+          return [
+            {
+              type: "object-moved" as const,
+              objectId: object.id,
+              from: object.zone,
+              to: "banishment" as const,
+              ...(effect.faceDown
+                ? { entryFacing: "face-down" as const, revealAtEndOfGame: true as const }
+                : {}),
+              ...(evaluation.sourceId
+                ? { banishedBy: grandArchiveBanishmentProvenance(evaluation) }
+                : {}),
+              cause: { kind: "rule" as const, rule: "banish-object-effect" },
+            },
+          ];
+        }),
       );
       return true;
     }
@@ -1610,22 +1630,20 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
       }
       const combat = execution.state.combat;
       if (!combat) return false;
-      const previousDefenders = effect.oldTarget
-        ? resolveGrandArchiveSubjectObjects(effect.oldTarget, evaluation)
+      const previousDefenderIds = effect.oldTarget
+        ? resolveGrandArchiveSubjectObjects(effect.oldTarget, evaluation).map((object) => object.id)
         : combat.targetIds.length === 1
-          ? [execution.state.objects[combat.targetIds[0]!]].filter(
-              (object): object is GrandArchiveCardInstance => object !== undefined,
-            )
+          ? combat.targetIds
           : [];
       const newDefenders = resolveGrandArchiveSubjectObjects(effect.newTarget, evaluation);
-      if (previousDefenders.length !== 1 || newDefenders.length !== 1) return false;
+      if (previousDefenderIds.length !== 1 || newDefenders.length !== 1) return false;
       try {
         commit(
           execution,
           proposeGrandArchiveAttackRedirection(
             execution.base.program,
             execution.state,
-            previousDefenders[0]!.id,
+            previousDefenderIds[0]!,
             newDefenders[0]!.id,
             effect.requireNewTargetObedience
               ? { requireNewDefenderObedience: true, asIntercept: true }
@@ -1751,7 +1769,11 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
       const matching = execution.state.stack.filter((item) =>
         isGrandArchiveTargetCandidate(item.id, declaration, evaluation),
       );
-      return negateStackItems(matching, execution).length > 0;
+      const negated = negateStackItems(matching, execution);
+      if (effect.bindResultAs) {
+        execution.bindings[effect.bindResultAs] = negated.map((item) => item.id);
+      }
+      return negated.length > 0;
     }
     case "negate-triggered-abilities": {
       const sourceIds = new Set(
@@ -2328,6 +2350,7 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
       }
       if (
         effect.mode !== "grant-keyword" &&
+        !(effect.mode === "forbid" && effect.action === "prevent-damage") &&
         !(
           effect.mode === "payment-contribution" &&
           effect.action === "pay-cost" &&
@@ -2637,7 +2660,9 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
             objectId: object.id,
             from: "field",
             to: "banishment",
-            ...(evaluation.sourceId ? { banishedBySourceId: evaluation.sourceId } : {}),
+            ...(evaluation.sourceId
+              ? { banishedBy: grandArchiveBanishmentProvenance(evaluation) }
+              : {}),
             cause: { kind: "rule", rule: "suppress-banish" },
           },
         ]);
@@ -2677,6 +2702,7 @@ function executeAtomic(effect: GrandArchiveEffect, execution: MutableExecution):
         {
           type: "keyword-action-performed",
           action: "suppress",
+          suppressStage: "complete",
           playerId,
           objectIds: suppressed.map((object) => object.id),
           cause: { kind: "rule", rule: "suppress-keyword-action" },
@@ -2733,11 +2759,9 @@ function executeCore(effect: GrandArchiveEffect, execution: MutableExecution): b
       return true;
     }
     case "for-each": {
-      const objectIds = resolveGrandArchiveCollection(effect.collection, context(execution)).map(
-        (object) => object.id,
-      );
-      for (const objectId of objectIds) {
-        execution.bindings[effect.bindEachAs] = [objectId];
+      const subjectIds = resolveGrandArchiveIterationIds(effect.collection, context(execution));
+      for (const subjectId of subjectIds) {
+        execution.bindings[effect.bindEachAs] = [subjectId];
         execute(effect.effect, execution);
       }
       return true;
@@ -2833,6 +2857,9 @@ function execute(effect: GrandArchiveEffect, execution: MutableExecution): boole
           ? committedCounterRemovalAmount(committedEvents, grandArchiveCounterKey(effect.counter))
           : committedObjectIds(committedEvents);
     }
+  }
+  if (effect.kind === "move" && effect.subject.kind === "tracked") {
+    execution.bindings[effect.subject.key] = committedObjectIds(committedEvents);
   }
   updateModifiedAbilityResultBindings(effect, committedEvents, execution.bindings);
   return succeeded;

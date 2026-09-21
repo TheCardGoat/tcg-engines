@@ -4,114 +4,233 @@ import {
   FabTestEngine,
   expectFabCard,
   expectFabPlayer,
+  expectWait,
   fabToken,
 } from "@tcg/flesh-and-blood-engine/testing";
+import { nimblismBlue } from "../actions/nimblism.ts";
+import { snatchRed } from "../actions/snatch.ts";
 import { volticBoltRed } from "../actions/voltic-bolt.ts";
-import { dash } from "../heroes/dash.ts";
 import { blazeFiremind } from "../heroes/blaze-firemind.ts";
 import { bravo } from "../heroes/bravo.ts";
+import { oscilio } from "../heroes/oscilio.ts";
+import { flashBoltYellow } from "../instants/flash-bolt.ts";
 import { runebleedRobe } from "./runebleed-robe.ts";
 
-/**
- * Runebleed Robe (PEN094) — Runeblade Chest d0 Arcane Barrier 1.
- *
- * Printed: Instant - Destroy this and a Runechant you control: Prevent the
- * next 1 arcane damage that would be dealt to you this turn.
- *
- * DYN171 response-activation flow: the mixed destroy cost consumes the robe
- * and the seeded Runechant; Voltic Bolt's 5 arcane lands as 4. With two
- * Runechants the destroy cost opens an entity-target decision.
- */
+const padding = () => Array.from({ length: 6 }, () => nimblismBlue);
 
-describe("Runebleed Robe (PEN094) AAA", () => {
-  it("happy: destroy the robe and a Runechant to prevent 1 arcane", () => {
+/**
+ * Runebleed Robe (PEN094 / SVI006) — Runeblade Equipment - Chest, d0.
+ *
+ * Printed Instant — Destroy this and a Runechant you control: prevent the next
+ * 1 arcane damage that would be dealt to you this turn. Arcane Barrier 1.
+ */
+describe("Runebleed Robe (PEN094 / SVI006) AAA", () => {
+  it("mixed cost: destroys the robe and one controlled Runechant to shield 1 arcane", () => {
     const game = FabTestEngine.start(
-      {
-        hero: blazeFiremind,
-        hand: [volticBoltRed],
-        resourcePoints: 2,
-        actionPoints: 1,
-        deck: 6,
-      },
+      { hero: oscilio, life: 20, hand: [flashBoltYellow], resourcePoints: 2, deck: padding() },
       {
         hero: bravo,
         life: 20,
         chest: [runebleedRobe],
         arena: [fabToken("runechant")],
-        hand: [],
-        deck: 6,
+        deck: padding(),
       },
       FAB_MANUAL_HARNESS,
     );
+    const Oscilio = game.as(oscilio);
     const Bravo = game.as(bravo);
-    const Blaze = game.as(blazeFiremind);
 
-    Blaze.play(volticBoltRed, { target: Bravo.id });
-    Blaze.pass();
+    Oscilio.play(flashBoltYellow, { target: Bravo.id });
+    Oscilio.pass();
     Bravo.activate(runebleedRobe);
-    game.passBoth();
-    game.helpers.resolveUntilIdle();
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
 
     expectFabCard(Bravo, runebleedRobe).toBeIn("graveyard");
-    expectFabPlayer(Bravo).toHaveTokenCount("runechant", 0);
-    expectFabPlayer(Bravo).toHaveLife(16);
+    expectFabPlayer(Bravo).toHaveTokenCount("runechant", 0).toHaveLife(19);
+    expectFabPlayer(Oscilio).toHaveResourceCount(0).toHaveHandCount(0);
+    expectWait(game).toBeIdle();
   });
 
-  it("boundary: two Runechants seeded, exactly one is destroyed", () => {
+  it("mixed cost: with two controlled Runechants, the chosen one alone is destroyed", () => {
     const game = FabTestEngine.start(
       {
-        hero: blazeFiremind,
-        hand: [volticBoltRed],
-        resourcePoints: 2,
-        actionPoints: 1,
-        deck: 6,
-      },
-      {
         hero: bravo,
-        life: 20,
         chest: [runebleedRobe],
         arena: [fabToken("runechant"), fabToken("runechant")],
-        hand: [],
-        deck: 6,
+        deck: padding(),
       },
+      { hero: oscilio, deck: padding() },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
-    const Blaze = game.as(blazeFiremind);
 
-    Blaze.play(volticBoltRed, { target: Bravo.id });
-    Blaze.pass();
     Bravo.activate(runebleedRobe);
     Bravo.expectDecision("entity-target");
     Bravo.chooseTargets(Bravo.cardsIn("arena", fabToken("runechant"))[0]!);
-    game.helpers.resolveUntilIdle();
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
 
     expectFabCard(Bravo, runebleedRobe).toBeIn("graveyard");
     expectFabPlayer(Bravo).toHaveTokenCount("runechant", 1);
-    expectFabPlayer(Bravo).toHaveLife(16);
+    expectWait(game).toBeIdle();
   });
 
-  it("timing: the prevention expires with the turn", () => {
+  it("mixed cost: an opposing Runechant cannot pay the activation cost", () => {
     const game = FabTestEngine.start(
-      {
-        hero: bravo,
-        chest: [runebleedRobe],
-        arena: [fabToken("runechant")],
-        hand: [],
-        deck: 6,
-      },
-      { hero: dash, hand: [], deck: 6 },
+      { hero: bravo, chest: [runebleedRobe], deck: padding() },
+      { hero: oscilio, arena: [fabToken("runechant")], deck: padding() },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
 
+    Bravo.expectActivationRejected(runebleedRobe);
+
+    expectFabCard(Bravo, runebleedRobe).toBeIn("chest");
+    expectFabPlayer(Bravo).toHaveTokenCount("runechant", 0);
+    expectFabPlayer(game.as(oscilio)).toHaveTokenCount("runechant", 1);
+  });
+
+  it("timing: an unused shield expires at the end of the turn", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: bravo,
+        life: 20,
+        chest: [runebleedRobe],
+        arena: [fabToken("runechant")],
+        deck: padding(),
+      },
+      { hero: oscilio, hand: [flashBoltYellow, nimblismBlue], deck: padding() },
+      FAB_MANUAL_HARNESS,
+    );
+    const Bravo = game.as(bravo);
+    const Oscilio = game.as(oscilio);
+
     Bravo.activate(runebleedRobe);
-    game.helpers.resolveUntilIdle();
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
     Bravo.endTurn();
-    game.helpers.resolveUntilIdle();
+    Oscilio.must.pitch(nimblismBlue).play(flashBoltYellow, { target: Bravo.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
 
     expectFabCard(Bravo, runebleedRobe).toBeIn("graveyard");
-    expectFabPlayer(Bravo).toHaveTokenCount("runechant", 0);
-    expectFabPlayer(Bravo).toHaveLife(20);
+    expectFabPlayer(Bravo).toHaveTokenCount("runechant", 0).toHaveLife(18);
+    expectWait(game).toBeIdle();
+  });
+
+  it("restriction: the shield does not prevent physical attack damage", () => {
+    const game = FabTestEngine.start(
+      { hero: oscilio, hand: [snatchRed], actionPoints: 1, deck: padding() },
+      {
+        hero: bravo,
+        life: 20,
+        chest: [runebleedRobe],
+        arena: [fabToken("runechant")],
+        deck: padding(),
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Oscilio = game.as(oscilio);
+    const Bravo = game.as(bravo);
+
+    Oscilio.pass();
+    Bravo.activate(runebleedRobe);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    Oscilio.playAttack(snatchRed);
+    game.closeCombat({ optionals: "throw", entityTargets: "throw" });
+
+    expectFabPlayer(Bravo).toHaveLife(16);
+    expectFabCard(Bravo, runebleedRobe).toBeIn("graveyard");
+    expectWait(game).toBeIdle();
+  });
+
+  it("Arcane Barrier 1: paying one resource prevents one without destroying the robe", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: blazeFiremind,
+        hand: [volticBoltRed],
+        resourcePoints: 2,
+        actionPoints: 1,
+        deck: padding(),
+      },
+      { hero: bravo, life: 20, chest: [runebleedRobe], resourcePoints: 1, deck: padding() },
+      FAB_MANUAL_HARNESS,
+    );
+    const Bravo = game.as(bravo);
+
+    game.as(blazeFiremind).play(volticBoltRed, { target: Bravo.id });
+    game.passBoth();
+    const choice = Bravo.expectDecision("option");
+    Bravo.chooseOptions(choice.options[0]!.id);
+
+    expectFabPlayer(Bravo).toHaveLife(16).toHaveResourceCount(0);
+    expectFabCard(Bravo, runebleedRobe).toBeIn("chest").toHaveKeyword("arcane-barrier");
+  });
+
+  it("Arcane Barrier 1: declining pays nothing and takes the full arcane event", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: blazeFiremind,
+        hand: [volticBoltRed],
+        resourcePoints: 2,
+        actionPoints: 1,
+        deck: padding(),
+      },
+      { hero: bravo, life: 20, chest: [runebleedRobe], resourcePoints: 1, deck: padding() },
+      FAB_MANUAL_HARNESS,
+    );
+    const Bravo = game.as(bravo);
+
+    game.as(blazeFiremind).play(volticBoltRed, { target: Bravo.id });
+    game.passBoth();
+    Bravo.expectDecision("option");
+    Bravo.chooseOptions();
+
+    expectFabPlayer(Bravo).toHaveLife(15).toHaveResourceCount(1);
+    expectFabCard(Bravo, runebleedRobe).toBeIn("chest");
+  });
+
+  it("Arcane Barrier 1: without resources or a pitchable hand, no prevention is offered", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: blazeFiremind,
+        hand: [volticBoltRed],
+        resourcePoints: 2,
+        actionPoints: 1,
+        deck: padding(),
+      },
+      {
+        hero: bravo,
+        life: 20,
+        chest: [runebleedRobe],
+        hand: [],
+        resourcePoints: 0,
+        deck: padding(),
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Bravo = game.as(bravo);
+
+    game.as(blazeFiremind).play(volticBoltRed, { target: Bravo.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+
+    expectFabPlayer(Bravo).toHaveLife(15).toHaveResourceCount(0);
+    expectFabCard(Bravo, runebleedRobe).toBeIn("chest");
+    expectWait(game).toBeIdle();
+  });
+
+  it("defense 0: defending with the robe prevents no physical damage and leaves it equipped", () => {
+    const game = FabTestEngine.start(
+      { hero: oscilio, hand: [snatchRed], actionPoints: 1, deck: padding() },
+      { hero: bravo, life: 20, chest: [runebleedRobe], deck: padding() },
+      FAB_MANUAL_HARNESS,
+    );
+    const Oscilio = game.as(oscilio);
+    const Bravo = game.as(bravo);
+
+    Oscilio.playAttack(snatchRed);
+    Bravo.defendWith(runebleedRobe);
+    game.closeCombat({ optionals: "throw", entityTargets: "throw" });
+
+    expectFabPlayer(Bravo).toHaveLife(16);
+    expectFabCard(Bravo, runebleedRobe).toBeIn("chest").toHaveDefense(0);
+    expectWait(game).toBeIdle();
   });
 });

@@ -183,7 +183,7 @@ function heuristicCard(
     facing: object.facing,
     isToken: object.isToken,
     hostId: object.hostId ?? null,
-    banishedBySourceId: object.banishedBySourceId ?? null,
+    banishedBySourceId: object.banishedBy?.sourceId ?? null,
     supertypes: characteristics.supertypes,
     types: characteristics.types,
     classes: characteristics.classes,

@@ -18,6 +18,7 @@
   "flesh-and-blood.priority-automation.auto-pass": "{actorId} passed priority automatically.",
   "flesh-and-blood.decision-automation.auto-order": "{actorId} accepted the default simultaneous-trigger order automatically ({decisionKind}).",
   "flesh-and-blood.decision-automation.auto-target": "{actorId} selected all required targets automatically.",
+  "flesh-and-blood.decision-automation.auto-decline": "{actorId} declined an optional effect automatically.",
   "flesh-and-blood.command.end-turn": "{actorId} ended the turn.",
   "flesh-and-blood.command.concede": "{actorId} conceded the game.",
 
@@ -54,6 +55,7 @@
   "flesh-and-blood.banish.hidden-identity.by-source": "{sourceName} banished a card from {playerId} {from}.",
   "flesh-and-blood.deck-bottom": "{playerId} put a card from {from} on the bottom of the deck.",
   "flesh-and-blood.deck-bottom.private": "{playerId} put {cardName} from {from} on the bottom of the deck.",
+  "flesh-and-blood.deck-top": "{playerId} put {cardName} from {from} on top of the deck.",
   "flesh-and-blood.destroy": "{cardName} was destroyed.",
   "flesh-and-blood.destroy.by-source": "{sourceName} destroyed {cardName}.",
   "flesh-and-blood.dies": "{cardName} died.",
@@ -129,6 +131,7 @@
   "flesh-and-blood.gain-keyword": "{cardName} gained {keyword}.",
   "flesh-and-blood.gave-keyword": "{sourceName} gave {cardName} {keyword}.",
   "flesh-and-blood.gave-power": "{sourceName} gave {cardName} {amount} power.",
+  "flesh-and-blood.marked": "{sourceName} marked {playerId}.",
   "flesh-and-blood.name-card": "{playerId} named {cardName}.",
   "flesh-and-blood.sharpen": "{playerId} sharpened {cardName} with {count} counter{plural}.",
   "flesh-and-blood.modify-power": "{cardName}'s power changed from {from} to {to}.",
@@ -145,6 +148,7 @@
   "flesh-and-blood.turn.started": "Turn {turnNumber} has begun.",
   "flesh-and-blood.game.ended": "{playerId} lost the game ({reason}).",
   "flesh-and-blood.decision.awaiting": "A decision awaits {actorId}.",
+  "flesh-and-blood.decision.chosen": "{actorId} chose {choice}.",
   "flesh-and-blood.decision.private": "{label}",
   "flesh-and-blood.phase.start": "{turnPlayerId} began the {phase} phase."
 }

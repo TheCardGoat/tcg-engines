@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op13Bepo035 } from "../../../../../cards/src/cards/OP13/characters/035-bepo.ts";
+import { op13Bepo035 } from "../../../../../cards/src/cards/characters/op13-035-bepo.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

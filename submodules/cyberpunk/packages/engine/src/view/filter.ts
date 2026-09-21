@@ -17,6 +17,8 @@ export interface FilteredCardView {
   cardName: string | null;
   zone: CardZone;
   faceDown: boolean;
+  /** Online UX: identity is shown this turn despite faceDown. */
+  revealed?: boolean;
   spent: boolean;
   damage: number;
   power: number;
@@ -33,6 +35,7 @@ export interface FilteredCardView {
   attachedToId: string | null;
   hasLag: boolean;
   hasAttackedThisTurn: boolean;
+  hasStolenGigThisTurn: boolean;
   grantedRules: string[];
   keywords: string[];
   /**
@@ -48,6 +51,9 @@ export interface FilteredPlayerView {
   zones: Record<string, FilteredCardView[] | number>;
   eddies: number;
   availableEddies: number;
+  soldThisTurn: boolean;
+  calledLegendThisTurn: boolean;
+  calledLegendThisRivalTurn: boolean;
   gigCount: number;
   fixerCount: number;
   streetCred: number;
@@ -103,6 +109,7 @@ function toCardView(card: CardInstance, state: MatchState): FilteredCardView {
     cardName: def.name,
     zone: card.zone,
     faceDown: card.meta.faceDown,
+    revealed: card.meta.revealed === true,
     spent: card.meta.spent,
     damage: card.meta.damage,
     power: getBasePower(card),
@@ -116,6 +123,7 @@ function toCardView(card: CardInstance, state: MatchState): FilteredCardView {
     attachedToId: card.meta.attachedToId as string | null,
     hasLag: card.meta.hasLag,
     hasAttackedThisTurn: card.meta.hasAttackedThisTurn,
+    hasStolenGigThisTurn: card.meta.hasStolenGigThisTurn,
     grantedRules: getEffectiveRules(state, card.instanceId as string) as string[],
     keywords: def.keywords ?? [],
     triggerHints: getTriggerHints(def),
@@ -130,7 +138,11 @@ function toFaceDownCardView(card: CardInstance, _state: MatchState): FilteredCar
     cardName: null,
     zone: card.zone,
     faceDown: true,
-    spent: false,
+    revealed: false,
+    // Orientation is public board state even when the card's identity is not.
+    // Preserve it so face-down Eddies and rival Legends render ready/spent
+    // without exposing any hidden card information.
+    spent: card.meta.spent,
     damage: 0,
     power: 0,
     effectivePower: 0,
@@ -142,6 +154,7 @@ function toFaceDownCardView(card: CardInstance, _state: MatchState): FilteredCar
     attachedToId: null,
     hasLag: false,
     hasAttackedThisTurn: false,
+    hasStolenGigThisTurn: false,
     grantedRules: [],
     keywords: [],
     triggerHints: [],
@@ -180,7 +193,11 @@ function filterZoneCards(
     .map((id) => state.G.cardIndex[id as string])
     .filter((c): c is CardInstance => c !== undefined)
     .map((card) => {
+      if (card.meta.revealed) return toCardView(card, state);
       if (zone === "legendArea" && card.meta.faceDown && !isOwner) {
+        return toFaceDownCardView(card, state);
+      }
+      if (zone === "eddieArea" && card.meta.faceDown) {
         return toFaceDownCardView(card, state);
       }
       return toCardView(card, state);
@@ -194,7 +211,15 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
     const isOwner = pid === (playerId as string);
     const zones: Record<string, FilteredCardView[] | number> = {};
 
-    const zoneList: CardZone[] = ["field", "hand", "deck", "trash", "legendArea", "eddieArea"];
+    const zoneList: CardZone[] = [
+      "field",
+      "hand",
+      "deck",
+      "trash",
+      "legendArea",
+      "eddieArea",
+      "removedFromGame",
+    ];
 
     for (const zone of zoneList) {
       const cardIds = playerState.zones[zone] ?? [];
@@ -221,6 +246,7 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
       cardName: null,
       zone: "gigArea" as CardZone,
       faceDown: false,
+      revealed: false,
       spent: false,
       damage: 0,
       power: die.faceValue,
@@ -233,6 +259,7 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
       attachedToId: null,
       hasLag: false,
       hasAttackedThisTurn: false,
+      hasStolenGigThisTurn: false,
       grantedRules: [],
       keywords: [],
       triggerHints: [],
@@ -245,6 +272,7 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
       cardName: null,
       zone: "fixerArea" as CardZone,
       faceDown: false,
+      revealed: false,
       spent: false,
       damage: 0,
       power: die.faceValue,
@@ -257,6 +285,7 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
       attachedToId: null,
       hasLag: false,
       hasAttackedThisTurn: false,
+      hasStolenGigThisTurn: false,
       grantedRules: [],
       keywords: [],
       triggerHints: [],
@@ -267,6 +296,9 @@ export function filterMatchView(state: MatchState, playerId: PlayerId): Filtered
       zones,
       eddies: playerState.eddies,
       availableEddies: availableEddies(state, pid as PlayerId),
+      soldThisTurn: playerState.soldThisTurn,
+      calledLegendThisTurn: playerState.calledLegendThisTurn,
+      calledLegendThisRivalTurn: playerState.calledLegendThisRivalTurn,
       gigCount: gigDice.length,
       fixerCount: fixerDice.length,
       streetCred: getStreetCred(gigDice),

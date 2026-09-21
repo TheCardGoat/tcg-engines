@@ -40,6 +40,7 @@ export const recurringInvocation: GrandArchiveCard<GrandArchiveAbilityDefinition
           id: "iyhlctxcrq-a2",
           kind: "triggered",
           text: "[Class Bonus] Whenever your champion levels up, you may banish this card from your graveyard and pay (1). If you do, empower 2.",
+          functionalZones: ["graveyard"],
           trigger: {
             kind: "event",
             event: {
@@ -73,28 +74,40 @@ export const recurringInvocation: GrandArchiveCard<GrandArchiveAbilityDefinition
               kind: "sequence",
               effects: [
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "banish-object",
-                      subject: {
-                        kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "banish-object",
+                        subject: {
+                          kind: "source",
+                        },
+                        from: "graveyard",
                       },
-                    },
-                    {
-                      kind: "pay",
-                      player: "controller",
-                      cost: {
-                        kind: "pay-reserve",
-                        amount: 1,
+                      {
+                        kind: "pay",
+                        player: "controller",
+                        cost: {
+                          kind: "pay-reserve",
+                          amount: 1,
+                        },
                       },
-                    },
-                  ],
+                    ],
+                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "keyword-action",
-                  action: "empower",
-                  amount: 2,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "keyword-action",
+                    action: "empower",
+                    amount: 2,
+                  },
                 },
               ],
             },

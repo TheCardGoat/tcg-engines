@@ -1,6 +1,6 @@
 import { op01Uta005 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02MonkeyDLuffySt16005PirateFoil005 } from "../../../../../cards/src/cards/PRB02/characters/005-monkey-d-luffy-st16-005-pirate-foil.ts";
+import { prb02MonkeyDLuffySt16005PirateFoil005 } from "../../../../../cards/src/cards/characters/st16-005-monkey-d-luffy-st16-005-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

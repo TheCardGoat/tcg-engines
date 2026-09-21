@@ -8,6 +8,7 @@ import { SimulatorEntityVisual, projectEntityVisual } from "../components/Simula
 import { useAnimationRegistryVersion } from "../hooks/useAnimationRegistryVersion";
 import type { AnimationNodeRecord } from "../lib/node-registry";
 import { useAnimationRuntime } from "../provider/contexts";
+import type { SimulatorSpatialStateChange } from "../provider/contexts";
 
 interface StateChangeVisual {
   readonly step: EntityStateChangeStepV2;
@@ -62,24 +63,29 @@ export function EntityStateChangeLayer() {
         reportedMissing.add(step.id);
         continue;
       }
-      if (!suppressed.has(node.node)) {
-        suppressed.set(node.node, {
-          visibility: node.node.style.visibility,
-          pointerEvents: node.node.style.pointerEvents,
-          inert: node.node.inert,
-          ariaHidden: node.node.getAttribute("aria-hidden"),
+      const visualNode = stateChangeVisualNode(node.node, step.change);
+      if (!suppressed.has(visualNode)) {
+        suppressed.set(visualNode, {
+          visibility: visualNode.style.visibility,
+          pointerEvents: visualNode.style.pointerEvents,
+          inert: visualNode.inert,
+          ariaHidden: visualNode.getAttribute("aria-hidden"),
         });
-        node.node.style.visibility = "hidden";
-        node.node.style.pointerEvents = "none";
-        node.node.inert = true;
-        node.node.setAttribute("aria-hidden", "true");
+        visualNode.style.visibility = "hidden";
+        visualNode.style.pointerEvents = "none";
+        visualNode.inert = true;
+        visualNode.setAttribute("aria-hidden", "true");
       }
       next.push({
         step,
         sourceEntity,
         destinationEntity,
         node,
-        rect: node.node.getBoundingClientRect(),
+        // Anchor the overlay to the actual card visual when the node exposes
+        // one: slot boxes can be landscape or padded around a portrait card,
+        // and the rotating copy must start/end exactly where the real card
+        // sits, or the handoff snaps in size and position.
+        rect: visualNode.getBoundingClientRect(),
       });
     }
     setVisuals(next);
@@ -95,18 +101,61 @@ export function EntityStateChangeLayer() {
   }, [registryVersion, runtime, transition, reportedMissing]);
 
   if (typeof document === "undefined" || visuals.length === 0) return null;
+  const SpatialStateChangeRenderer = runtime.spatialStateChangeRenderer;
+  const spatialKinds = runtime.spatialStateChangeKinds;
+  const spatialChanges = SpatialStateChangeRenderer
+    ? visuals
+        .filter((visual) => !spatialKinds || spatialKinds.includes(visual.sourceEntity.kind))
+        .map<SimulatorSpatialStateChange>((visual) => {
+          const compiled = runtime.compiledPlan?.steps.find(
+            (entry) => entry.step.id === visual.step.id,
+          );
+          return {
+            id: visual.step.id,
+            step: visual.step,
+            sourceEntity: visual.sourceEntity,
+            destinationEntity: visual.destinationEntity,
+            rect: visual.rect,
+            density: visual.node.density ?? "normal",
+            startAtMs: compiled?.startAtMs ?? 0,
+            durationMs: compiled?.durationMs ?? 0,
+          };
+        })
+    : [];
+  const spatialIds = new Set(spatialChanges.map((change) => change.id));
   return createPortal(
     <div
       aria-hidden
       data-animation-state-change-layer=""
       style={{ position: "fixed", inset: 0, zIndex: 1000, pointerEvents: "none" }}
     >
-      {visuals.map((visual) => (
-        <StateChangeVisual key={visual.step.id} visual={visual} />
-      ))}
+      {SpatialStateChangeRenderer && spatialChanges.length > 0 ? (
+        <SpatialStateChangeRenderer
+          changes={spatialChanges}
+          playbackStartedAtMs={runtime.playbackStartedAtMs}
+        />
+      ) : null}
+      {visuals
+        .filter((visual) => !spatialIds.has(visual.step.id))
+        .map((visual) => (
+          <StateChangeVisual key={visual.step.id} visual={visual} />
+        ))}
     </div>,
     document.body,
   );
+}
+
+export function stateChangeVisualNode(
+  node: HTMLElement,
+  change: EntityStateChangeStepV2["change"],
+): HTMLElement {
+  if (change === "face") {
+    return node.querySelector<HTMLElement>("[data-sim-animation-face-target]") ?? node;
+  }
+  if (change === "orientation") {
+    return node.querySelector<HTMLElement>("[data-sim-animation-orientation-target]") ?? node;
+  }
+  return node;
 }
 
 function StateChangeVisual({ visual }: { readonly visual: StateChangeVisual }) {

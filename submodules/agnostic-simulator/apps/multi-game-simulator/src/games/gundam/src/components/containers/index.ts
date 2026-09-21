@@ -5,6 +5,7 @@ export { SelfHandZoneContainer as MatchHandBarContainer } from "./SelfHandZoneCo
 export { OpponentHandZoneContainer } from "./OpponentHandZoneContainer.tsx";
 export { PromptContainer } from "./PromptContainer.tsx";
 export { AutoPassActionStepContainer } from "./AutoPassActionStepContainer.tsx";
+export { GundamPendingChoicePrompt } from "./GundamPendingChoicePrompt.tsx";
 export { SetupPromptContainer } from "./SetupPromptContainer.tsx";
 export { AttackTargetingOverlayContainer } from "./AttackTargetingOverlayContainer.tsx";
 export { CombatIntentOverlayContainer } from "./CombatIntentOverlayContainer.tsx";

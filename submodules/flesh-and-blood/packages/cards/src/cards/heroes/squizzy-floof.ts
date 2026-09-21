@@ -28,6 +28,7 @@ export const squizzyFloof = defineCard(fabCardIdentitiesByCanonicalId["czfMfgfth
           effect: {
             type: "create-token",
             token: "cracked-bauble",
+            creator: "token-controller",
             controller: "opponent",
             to: { zone: "hand" },
           },

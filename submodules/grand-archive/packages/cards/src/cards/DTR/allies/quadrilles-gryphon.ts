@@ -41,7 +41,7 @@ export const quadrillesGryphon: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                 kind: "event-object",
                 filter: {
                   kind: "subtype",
-                  oneOf: ["HARMONY"],
+                  oneOf: ["HARMONY", "MELODY"],
                 },
               },
             },

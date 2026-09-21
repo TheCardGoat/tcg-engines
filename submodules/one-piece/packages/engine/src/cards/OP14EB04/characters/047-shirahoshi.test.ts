@@ -6,7 +6,7 @@ import {
   op11Shirahoshi030,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Shirahoshi047 } from "../../../../../cards/src/cards/OP14EB04/characters/047-shirahoshi.ts";
+import { op14eb04Shirahoshi047 } from "../../../../../cards/src/cards/characters/op14-047-shirahoshi.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

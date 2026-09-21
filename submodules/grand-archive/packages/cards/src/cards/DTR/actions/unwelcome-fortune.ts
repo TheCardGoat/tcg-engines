@@ -48,9 +48,7 @@ export const unwelcomeFortune: GrandArchiveCard<GrandArchiveAbilityDefinition, "
           ],
           effect: {
             kind: "look-at",
-            player: {
-              binding: "target-player",
-            },
+            player: "controller",
             selection: {
               id: "memory-cards",
               kind: "choice",

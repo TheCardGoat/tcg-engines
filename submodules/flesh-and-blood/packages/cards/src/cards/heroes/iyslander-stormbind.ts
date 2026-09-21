@@ -69,6 +69,7 @@ export const iyslanderStormbind = defineCard(
           effect: {
             type: "create-token",
             token: "frostbite",
+            creator: "effect-controller",
             controller: "opponent",
           },
         },

@@ -25,7 +25,13 @@ const regrowthAbilities = expandSemanticAbilities(regrowthShockIdentity.canonica
               basis: "base",
               comparison: {
                 op: "lt",
-                value: { type: "count", what: "damage-dealt", damageType: "arcane", per: "turn" },
+                value: {
+                  type: "count",
+                  what: "damage-dealt",
+                  recipient: "opposing-heroes",
+                  damageType: "arcane",
+                  per: "turn",
+                },
               },
             },
           ],

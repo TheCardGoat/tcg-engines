@@ -143,15 +143,20 @@ import {
   FabPriorityAutomationQuickControl,
   FabPriorityAutomationSettings,
   type FabSavedOpponentTriggerYield,
+  type FabScopeContext,
 } from "./FabPriorityAutomation";
 import {
   fabArmHoldAction,
+  fabArmScopedAutoPassAction,
+  fabDisarmScopedAutoPassAction,
   fabSetAutoOrderTriggersAction,
   fabSetAutoSelectSingletonTargetsAction,
   fabPassInteractionAction,
   fabPriorityModeAction,
+  FabScopedAutoPassTargets,
   holdsPassOnlyWindows,
   isFabPassOnlyInteractionView,
+  type FabScopedAutoPassTarget,
 } from "./priority-automation";
 import { useFabAutomationSettings } from "./fab-automation-settings";
 import { FAB_COUNTDOWN_SPEED_MS } from "@tcg/game-page-contract";
@@ -206,10 +211,14 @@ interface FabPriorityAutomationSettingsValue {
   readonly autoOrderTriggers: boolean;
   readonly autoSelectSingletonTargets: boolean;
   readonly disabledReason?: string;
+  readonly scopedAutoPass: FabScopedAutoPassTarget | null;
+  readonly scopeContext: FabScopeContext;
   readonly onSelectMode?: (mode: FabPriorityAutomationMode) => void;
   readonly onArmHold?: () => void;
   readonly onSetAutoOrderTriggers?: (enabled: boolean) => void;
   readonly onSetAutoSelectSingletonTargets?: (enabled: boolean) => void;
+  readonly onArmScope?: (scope: FabScopedAutoPassTarget) => void;
+  readonly onDisarmScope?: () => void;
   readonly savedOpponentTriggerYields: readonly FabSavedOpponentTriggerYield[];
   readonly onRemoveOpponentTriggerYield: (canonicalId: string) => void;
 }
@@ -785,6 +794,7 @@ export interface FabAnimationTransition {
 }
 
 export interface FabLocalPracticeParticipants {
+  readonly mode?: "bot" | "self";
   readonly humanPlayerId: string;
   readonly botPlayerId: string;
   readonly humanDeckLabel?: string;
@@ -963,12 +973,32 @@ function isFabFocusedChoiceZone(value: string | undefined): value is FabFocusedC
   return value !== undefined && value in FAB_FOCUSED_CHOICE_ZONE_META;
 }
 
+/** Viewer-owned cards in a pile zone that currently have an enabled action. */
+function viewerAvailablePileEntityIds(
+  actions: readonly CardInteractionAction[],
+  cards: Readonly<Record<string, FabPresentationCard>>,
+  viewerId: string,
+  zone: "graveyard" | "banished",
+): ReadonlySet<string> {
+  return new Set(
+    actions.flatMap((action) =>
+      action.disabledReason
+        ? []
+        : action.sourceEntityIds.filter((entityId) => {
+            const card = cards[entityId];
+            return card?.ownerId === viewerId && card.zone === zone;
+          }),
+    ),
+  );
+}
+
 function FabZoneInspector({
   selection,
   state,
   viewerId,
   cardMetadata,
-  availableEntityIds,
+  availableBanishedEntityIds,
+  availableGraveyardEntityIds,
   interactionStateFor,
   onCardSelect,
   onClose,
@@ -977,7 +1007,8 @@ function FabZoneInspector({
   state: FabPresentationState;
   viewerId: string;
   cardMetadata: Map<string, FabCardMetadata>;
-  availableEntityIds: ReadonlySet<string>;
+  availableBanishedEntityIds: ReadonlySet<string>;
+  availableGraveyardEntityIds: ReadonlySet<string>;
   interactionStateFor?: CardInteractionStateResolver;
   onCardSelect?: (entity: SimulatorEntity) => void;
   onClose: () => void;
@@ -997,6 +1028,12 @@ function FabZoneInspector({
         (card) => card.ownerId === selection.ownerId && card.zone === selection.zone,
       )
     : [];
+  const availablePileEntityIds =
+    selection?.zone === "banished"
+      ? availableBanishedEntityIds
+      : selection?.zone === "graveyard"
+        ? availableGraveyardEntityIds
+        : undefined;
   const entities: SimulatorEntity[] = cards
     .map((card) => {
       const metadata = cardMetadata.get(card.id);
@@ -1020,11 +1057,12 @@ function FabZoneInspector({
     })
     .sort(
       (left, right) =>
-        Number(availableEntityIds.has(right.id)) - Number(availableEntityIds.has(left.id)),
+        Number(availablePileEntityIds?.has(right.id) ?? false) -
+        Number(availablePileEntityIds?.has(left.id) ?? false),
     );
   const availableCount =
-    selection?.zone === "banished" && selection.ownerId === viewerId
-      ? entities.filter((entity) => availableEntityIds.has(entity.id)).length
+    selection && availablePileEntityIds && selection.ownerId === viewerId
+      ? entities.filter((entity) => availablePileEntityIds.has(entity.id)).length
       : 0;
   useEffect(() => {
     const previous = previousZoneCountRef.current;
@@ -1286,10 +1324,13 @@ function FabHandRevealRecall({
       <span className="fab-hand-reveal-recall__label">Revealed in hand</span>
       <div className="fab-hand-reveal-recall__cards">
         {revealedCards.map((card) => {
-          const metadata = cardMetadata?.get(card.entityId) ?? {
-            name: card.title ?? "Revealed card",
-            type: card.subtitle ?? "Flesh and Blood",
-            imageUrl: card.imageUrl,
+          const metadata = {
+            ...(cardMetadata?.get(card.entityId) ?? {
+              name: card.title ?? "Revealed card",
+              type: card.subtitle ?? "Flesh and Blood",
+              imageUrl: card.imageUrl,
+            }),
+            ...(card.definitionId ? { canonicalId: card.definitionId } : {}),
           };
           const entity = entityFor(card.entityId, metadata, ownerId, true, {
             art,
@@ -1301,13 +1342,23 @@ function FabHandRevealRecall({
               className="fab-hand-reveal-recall__card"
               data-revealed-entity-id={card.entityId}
             >
-              <FabBoardCardFace entity={entity} density="mini" />
+              <FabPreviewRecallFace entity={entity} />
               <span>{card.title ?? metadata.name}</span>
             </div>
           );
         })}
       </div>
     </aside>
+  );
+}
+
+/** Revealed-recall cards inspect through the game-wide hover preview. */
+function FabPreviewRecallFace({ entity }: { entity: SimulatorEntity }) {
+  const { previewProps } = useFabPreviewTarget(entity, { pinOnClick: true });
+  return (
+    <span {...previewProps}>
+      <FabBoardCardFace entity={entity} density="mini" />
+    </span>
   );
 }
 
@@ -1595,6 +1646,11 @@ function FleshAndBloodTabletopContent({
   readonly authoritativePriorityAutomation?: FabPriorityAutomationMode | null;
   readonly authoritativePriorityHoldArmed?: boolean | null;
 }) {
+  // Practice passes recall props derived from its local event stream; live and
+  // replay have no such stream, so fall back to the turn-scoped reveals the
+  // engine projected onto the presentation state.
+  const effectiveDeckReveals = deckReveals ?? state.deckRevealsByOwnerId;
+  const effectiveHandReveals = handReveals ?? state.handRevealsByOwnerId;
   // Hosted matches expose protocol interactions, not local engine commands.
   const serverPassAction =
     interactionView?.actorId === viewerId && interactionView.status === "ready"
@@ -2155,6 +2211,79 @@ function FleshAndBloodTabletopContent({
       }
     }
   }, [armPriorityHoldCommand, interactionView, onLegalCommand, onSubmitInteraction]);
+  // One-shot scoped auto-pass arms: match-scoped like the hold arm — never
+  // written back to account settings. Disarm is submittable while the seat's
+  // windows are engine-drained, so it never depends on holding priority.
+  const scopedAutoPass = state.scopedAutoPass ?? null;
+  const armScopeCommand = (scope: FabScopedAutoPassTarget) =>
+    (legalCommands ?? []).find(
+      (command) =>
+        command.move === "set-automation-preferences" &&
+        command.payload.armScopedAutoPass === scope,
+    );
+  const disarmScopeCommand = (legalCommands ?? []).find(
+    (command) =>
+      command.move === "set-automation-preferences" &&
+      command.payload.disarmScopedAutoPass === true,
+  );
+  const armScopedAutoPass = useCallback(
+    (scope: FabScopedAutoPassTarget) => {
+      const command = armScopeCommand(scope);
+      if (command && onLegalCommand) {
+        onLegalCommand({
+          move: "set-automation-preferences",
+          payload: { armScopedAutoPass: scope },
+          label: command.label,
+        });
+        return;
+      }
+      const action = fabArmScopedAutoPassAction(interactionView, scope);
+      if (action && interactionView && onSubmitInteraction) {
+        onSubmitInteraction(
+          buildInteractionSubmission({ view: interactionView, action, values: {} }),
+        );
+      }
+    },
+    [interactionView, onLegalCommand, onSubmitInteraction, legalCommands],
+  );
+  const disarmScopedAutoPass = useCallback(() => {
+    if (disarmScopeCommand && onLegalCommand) {
+      onLegalCommand({
+        move: "set-automation-preferences",
+        payload: { disarmScopedAutoPass: true },
+        label: disarmScopeCommand.label,
+      });
+      return;
+    }
+    const action = fabDisarmScopedAutoPassAction(interactionView);
+    if (action && interactionView && onSubmitInteraction) {
+      onSubmitInteraction(
+        buildInteractionSubmission({ view: interactionView, action, values: {} }),
+      );
+    }
+  }, [disarmScopeCommand, interactionView, onLegalCommand, onSubmitInteraction]);
+  const scopeActionsAvailable =
+    FabScopedAutoPassTargets.some((scope) => armScopeCommand(scope) != null) ||
+    FabScopedAutoPassTargets.some(
+      (scope) => fabArmScopedAutoPassAction(interactionView, scope) != null,
+    ) ||
+    disarmScopeCommand != null ||
+    fabDisarmScopedAutoPassAction(interactionView) != null;
+  const scopeContext: FabScopeContext = {
+    combatOpen: state.combat != null,
+    opponentsTurn: state.activePlayerId != null && state.activePlayerId !== viewerId,
+  };
+  const armScopeIfAllowed =
+    !readOnly &&
+    (onLegalCommand != null || (interactionView != null && onSubmitInteraction != null))
+      ? armScopedAutoPass
+      : undefined;
+  const disarmScopeIfAllowed =
+    !readOnly &&
+    scopeActionsAvailable &&
+    (onLegalCommand != null || (interactionView != null && onSubmitInteraction != null))
+      ? disarmScopedAutoPass
+      : undefined;
   const priorityAutomationConfigurationAvailable =
     priorityAutomationCommands.size > 0 ||
     priorityAutomationActionAvailable ||
@@ -2273,17 +2402,11 @@ function FleshAndBloodTabletopContent({
     [closeAndPlayActions, normalizedCardActions],
   );
   const availableBanishedEntityIds = useMemo(
-    () =>
-      new Set(
-        interactiveCardActions.flatMap((action) =>
-          action.disabledReason
-            ? []
-            : action.sourceEntityIds.filter((entityId) => {
-                const card = state.cards[entityId];
-                return card?.ownerId === viewerId && card.zone === "banished";
-              }),
-        ),
-      ),
+    () => viewerAvailablePileEntityIds(interactiveCardActions, state.cards, viewerId, "banished"),
+    [interactiveCardActions, state.cards, viewerId],
+  );
+  const availableGraveyardEntityIds = useMemo(
+    () => viewerAvailablePileEntityIds(interactiveCardActions, state.cards, viewerId, "graveyard"),
     [interactiveCardActions, state.cards, viewerId],
   );
   const executePublishedCardAction = useCallback(
@@ -3003,44 +3126,6 @@ function FleshAndBloodTabletopContent({
       viewerId,
     ],
   );
-  const focusedChoiceModal = focusedChoiceInput
-    ? {
-        title:
-          focusedChoiceZone === "deck"
-            ? "Search your deck"
-            : `Choose from ${
-                focusedChoiceOwnerId === viewerId ? "your" : "the opposing"
-              } ${FAB_FOCUSED_CHOICE_ZONE_META[focusedChoiceZone].label.toLowerCase()}`,
-        description:
-          focusedChoiceInput.max === 1
-            ? "Choose the card required by this effect."
-            : `Choose up to ${focusedChoiceInput.max} cards for this effect.`,
-        filter: {
-          kind: "entity" as const,
-          entityKind: "card" as const,
-          ownerId: focusedChoiceOwnerId,
-          zoneId: focusedChoiceZoneId,
-          includeHidden: true,
-        },
-        table: focusedChoiceTable,
-        entities: focusedChoiceEntities,
-        emptyLabel: "No cards can be chosen from this zone",
-        autoOpen: true,
-        duplicateFilter:
-          focusedChoiceZone === "deck" ? FAB_DECK_SEARCH_DUPLICATE_FILTER : undefined,
-        renderPreview: (entity: SimulatorEntity) =>
-          isMobile ? (
-            <FabMobileChoicePreview
-              key={entity.id}
-              entity={entity}
-              candidates={focusedChoiceEntities}
-            />
-          ) : (
-            <FabCardPreviewSurface entity={entity} />
-          ),
-        classNames: FAB_ZONE_MODAL_CLASS_NAMES,
-      }
-    : undefined;
   const submitSimultaneousTriggerOrder = useCallback(
     (engineOrder: readonly string[]) => {
       if (
@@ -3620,20 +3705,31 @@ function FleshAndBloodTabletopContent({
         kind: "human" as const,
         heroName,
         deckLabel: localPractice.humanDeckLabel,
-        controlLabel: playerId === viewerId ? "Controlled by you · local" : "Your seat · waiting",
+        controlLabel:
+          localPractice.mode === "self"
+            ? playerId === viewerId
+              ? "Player 1 · controlled by you"
+              : "Player 1 · waiting"
+            : playerId === viewerId
+              ? "Controlled by you · local"
+              : "Your seat · waiting",
       };
     }
     if (playerId === localPractice.botPlayerId) {
       return {
-        kind: "bot" as const,
+        kind: localPractice.mode === "self" ? ("human" as const) : ("bot" as const),
         heroName,
         deckLabel: localPractice.botDeckLabel,
         controlLabel:
-          playerId === viewerId
-            ? "Controlled by you · bot paused"
-            : localPractice.botStrategyLabel
-              ? `Automated · ${localPractice.botStrategyLabel}`
-              : "Automation off",
+          localPractice.mode === "self"
+            ? playerId === viewerId
+              ? "Player 2 · controlled by you"
+              : "Player 2 · waiting"
+            : playerId === viewerId
+              ? "Controlled by you · bot paused"
+              : localPractice.botStrategyLabel
+                ? `Automated · ${localPractice.botStrategyLabel}`
+                : "Automation off",
       };
     }
     return undefined;
@@ -3643,8 +3739,10 @@ function FleshAndBloodTabletopContent({
   const interactionTextFor = (text: string) => {
     const participantName = participantPresentation?.[text]?.displayName;
     if (participantName) return participantName;
-    if (localPractice?.humanPlayerId === text) return "You";
-    if (localPractice?.botPlayerId === text) return "Practice bot";
+    if (localPractice?.humanPlayerId === text)
+      return localPractice.mode === "self" ? "Player 1" : "You";
+    if (localPractice?.botPlayerId === text)
+      return localPractice.mode === "self" ? "Player 2" : "Practice bot";
     return text;
   };
   const referencedEffectSource = useMemo(() => {
@@ -3675,6 +3773,69 @@ function FleshAndBloodTabletopContent({
     viewerId,
   ]);
   const referencedEffectEntity = referencedEffectSource?.entity;
+  // The chooser names the card whose effect is asking so players can hover it
+  // for a preview and read its text without leaving the decision.
+  const focusedChoiceLocation = focusedChoiceInput
+    ? focusedChoiceZone === "deck"
+      ? focusedChoiceOwnerId === viewerId
+        ? "your deck"
+        : "the opposing deck"
+      : `${focusedChoiceOwnerId === viewerId ? "your" : "the opposing"} ${FAB_FOCUSED_CHOICE_ZONE_META[focusedChoiceZone].label.toLowerCase()}`
+    : undefined;
+  const focusedChoiceFallbackTitle =
+    focusedChoiceZone === "deck"
+      ? "Search your deck"
+      : `Choose from ${
+          focusedChoiceOwnerId === viewerId ? "your" : "the opposing"
+        } ${FAB_FOCUSED_CHOICE_ZONE_META[focusedChoiceZone].label.toLowerCase()}`;
+  const focusedChoiceModal = focusedChoiceInput
+    ? {
+        title: referencedEffectEntity?.title ?? focusedChoiceFallbackTitle,
+        description:
+          focusedChoiceLocation && referencedEffectEntity
+            ? focusedChoiceInput.max === 1
+              ? `Choose the card this effect requires from ${focusedChoiceLocation}.`
+              : `Choose up to ${focusedChoiceInput.max} cards for this effect from ${focusedChoiceLocation}.`
+            : focusedChoiceInput.max === 1
+              ? "Choose the card required by this effect."
+              : `Choose up to ${focusedChoiceInput.max} cards for this effect.`,
+        filter: {
+          kind: "entity" as const,
+          entityKind: "card" as const,
+          ownerId: focusedChoiceOwnerId,
+          zoneId: focusedChoiceZoneId,
+          includeHidden: true,
+        },
+        table: focusedChoiceTable,
+        entities: focusedChoiceEntities,
+        emptyLabel: "No cards can be chosen from this zone",
+        autoOpen: true,
+        duplicateFilter:
+          focusedChoiceZone === "deck" ? FAB_DECK_SEARCH_DUPLICATE_FILTER : undefined,
+        renderPreview: (entity: SimulatorEntity) =>
+          isMobile ? (
+            <FabMobileChoicePreview
+              key={entity.id}
+              entity={entity}
+              candidates={focusedChoiceEntities}
+            />
+          ) : (
+            <FabCardPreviewSurface entity={entity} />
+          ),
+        renderTitle: referencedEffectEntity
+          ? () => <FabEffectTitleReference entity={referencedEffectEntity} />
+          : undefined,
+        toolbarNote: referencedEffectSource?.printedText ? (
+          <p
+            className="min-w-0 flex-1 self-center overflow-y-auto whitespace-pre-line text-xs leading-snug text-[var(--board-muted,rgba(216,229,247,0.78))]"
+            data-testid="fab-choice-source-text"
+          >
+            <FabSymbolText text={referencedEffectSource.printedText} />
+          </p>
+        ) : undefined,
+        classNames: FAB_ZONE_MODAL_CLASS_NAMES,
+      }
+    : undefined;
   const optionalPaymentPromptActive = Boolean(
     interactionView?.actions.some(
       (action) =>
@@ -3724,6 +3885,10 @@ function FleshAndBloodTabletopContent({
             autoOrderTriggers={fabAutomationSettings.autoOrderTriggers}
             autoSelectSingletonTargets={fabAutomationSettings.autoSelectSingletonTargets}
             disabledReason={priorityAutomationDisabledReason}
+            scopedAutoPass={scopedAutoPass}
+            scopeContext={scopeContext}
+            onArmScope={armScopeIfAllowed}
+            onDisarmScope={disarmScopeIfAllowed}
             onSelectMode={setPriorityAutomationIfAllowed}
             onArmHold={armPriorityHoldIfAllowed}
             onSetAutoOrderTriggers={setAutoOrderTriggers}
@@ -3815,7 +3980,7 @@ function FleshAndBloodTabletopContent({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [canUsePersistentPassAction, controlsDisabled, persistentPassAction, state.terminal]);
   useEffect(() => {
-    if (!priorityCountdown.armed) return;
+    if (!priorityCountdown.armed && !scopedAutoPass) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.code !== "Escape" || event.repeat || event.defaultPrevented) return;
       const target = event.target;
@@ -3827,15 +3992,36 @@ function FleshAndBloodTabletopContent({
         return;
       }
       event.preventDefault();
-      priorityCountdown.cancel();
+      if (priorityCountdown.armed) {
+        priorityCountdown.cancel();
+        return;
+      }
+      disarmScopedAutoPass();
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [priorityCountdown.armed, priorityCountdown.cancel]);
+  }, [priorityCountdown.armed, priorityCountdown.cancel, scopedAutoPass, disarmScopedAutoPass]);
   const sidebar = <FleshAndBloodSidebar {...sidebarProps} onPassPriority={persistentPassAction} />;
   const mobilePanel = (
     <FleshAndBloodMobilePanel {...sidebarProps} onPassPriority={persistentPassAction} />
   );
+
+  // The trigger-ordering panel answers "Order your simultaneous triggered
+  // abilities"; both viewports render it (desktop previously had no answer
+  // surface at all, leaving the decision permanently blocking).
+  const triggerOrderingPanel = simultaneousTriggerOrderingInput ? (
+    <FabTriggerOrderingPanel
+      input={simultaneousTriggerOrderingInput}
+      disabled={controlsDisabled}
+      identityForCard={identityForCard}
+      onConfirm={submitSimultaneousTriggerOrder}
+      onEnableAutoOrder={
+        !controlsDisabled && autoOrderTriggersConfigurationAvailable
+          ? () => setAutoOrderTriggers(true)
+          : undefined
+      }
+    />
+  ) : null;
 
   const board = isMobile ? (
     <FabMobileBoard
@@ -3851,6 +4037,7 @@ function FleshAndBloodTabletopContent({
       interactionAgencyOwner={interactionActorOwner}
       publicTargeting={publicTargeting}
       banishedAvailableCount={availableBanishedEntityIds.size}
+      graveyardAvailableCount={availableGraveyardEntityIds.size}
       defenderLabel={defenderLabel}
       priorityLabel={priorityLabel}
       actionsDisabled={controlsDisabled}
@@ -3878,19 +4065,7 @@ function FleshAndBloodTabletopContent({
       }
       resolutionOverlay={
         <>
-          {simultaneousTriggerOrderingInput ? (
-            <FabTriggerOrderingPanel
-              input={simultaneousTriggerOrderingInput}
-              disabled={controlsDisabled}
-              identityForCard={identityForCard}
-              onConfirm={submitSimultaneousTriggerOrder}
-              onEnableAutoOrder={
-                !controlsDisabled && autoOrderTriggersConfigurationAvailable
-                  ? () => setAutoOrderTriggers(true)
-                  : undefined
-              }
-            />
-          ) : null}
+          {triggerOrderingPanel}
           {pitchStackOrderingInput ? (
             <FabPitchStackOrderingPanel
               input={pitchStackOrderingInput}
@@ -3938,7 +4113,7 @@ function FleshAndBloodTabletopContent({
         viewerId={viewerId}
         side="top"
         cardMetadata={resolvedMetadata}
-        revealedCards={handReveals?.[opponentId]}
+        revealedCards={effectiveHandReveals?.[opponentId]}
       />
       <FabActiveEffectsRail
         effects={boardEffects}
@@ -3957,7 +4132,7 @@ function FleshAndBloodTabletopContent({
         onCardSelect={controlsDisabled ? undefined : onCardSelect}
         onOpenZone={(zone) => setZoneInspection({ ownerId: opponentId, zone })}
         allEffects={state.activeEffects}
-        deckReveal={deckReveals?.[opponentId]}
+        deckReveal={effectiveDeckReveals?.[opponentId]}
       />
       <div className="fab-board-overlay-layer" data-testid="fab-board-overlay-layer">
         <div
@@ -3994,6 +4169,14 @@ function FleshAndBloodTabletopContent({
                       : onPassPriority
             }
             priorityActionLabel={combatChainPriorityLabel}
+            scopedAutoPass={scopedAutoPass}
+            onToggleScopePass={
+              scopedAutoPass === "combat"
+                ? disarmScopeIfAllowed
+                : armScopeIfAllowed
+                  ? () => armScopeIfAllowed("combat")
+                  : undefined
+            }
             showDefensePrompt={defenseStagingActive && defenseCandidateIds.size > 0}
             onRetractDefender={retractStagedDefender}
             onPlayActivate={onOpenLegalActions}
@@ -4024,19 +4207,7 @@ function FleshAndBloodTabletopContent({
             />
           ) : null}
         </div>
-        {simultaneousTriggerOrderingInput ? (
-          <FabTriggerOrderingPanel
-            input={simultaneousTriggerOrderingInput}
-            disabled={controlsDisabled}
-            identityForCard={identityForCard}
-            onConfirm={submitSimultaneousTriggerOrder}
-            onEnableAutoOrder={
-              !controlsDisabled && autoOrderTriggersConfigurationAvailable
-                ? () => setAutoOrderTriggers(true)
-                : undefined
-            }
-          />
-        ) : null}
+        {triggerOrderingPanel}
         {pitchStackOrderingInput ? (
           <FabPitchStackOrderingPanel
             input={pitchStackOrderingInput}
@@ -4051,6 +4222,7 @@ function FleshAndBloodTabletopContent({
         player={presentedSelfPlayer}
         viewerId={viewerId}
         banishedAvailableCount={availableBanishedEntityIds.size}
+        graveyardAvailableCount={availableGraveyardEntityIds.size}
         side="bottom"
         isTurn={state.activePlayerId === viewerId}
         hasInteractionAgency={interactionActorPlayerId === viewerId}
@@ -4060,7 +4232,7 @@ function FleshAndBloodTabletopContent({
         onCardSelect={controlsDisabled ? undefined : onCardSelect}
         onOpenZone={(zone) => setZoneInspection({ ownerId: viewerId, zone })}
         allEffects={state.activeEffects}
-        deckReveal={deckReveals?.[viewerId]}
+        deckReveal={effectiveDeckReveals?.[viewerId]}
       />
       <div className="fab-desktop-hand-area" data-testid="fab-desktop-hand-area">
         <FabTabletopHand
@@ -4068,21 +4240,25 @@ function FleshAndBloodTabletopContent({
           viewerId={viewerId}
           side="bottom"
           cardMetadata={resolvedMetadata}
-          revealedCards={handReveals?.[viewerId]}
+          revealedCards={effectiveHandReveals?.[viewerId]}
           interactionStateFor={interactionStateFor}
           onCardSelect={controlsDisabled ? undefined : onDesktopHandCardSelect}
         />
         {spectatorReturnHref ? null : (
           <FabDesktopQuickControls
             onPassPriority={persistentPassAction}
-            canPassPriority={defenseStagingActive ? canDeclareDefense : canUseMobilePass}
+            canPassPriority={
+              defenseStagingActive
+                ? canDeclareDefense
+                : canUseMobilePass && !combatResolutionPromptActive
+            }
             showPass={!priorityPromptActive}
             passLabel={desktopPassLabel}
             onUndo={onUndo}
             canUndo={canUndo}
             disabled={controlsDisabled || state.terminal}
             priorityCountdownActive={priorityCountdown.armed}
-            priorityControlVisible={priorityCountdown.armed}
+            priorityControlVisible={priorityCountdown.armed || scopedAutoPass != null}
             primaryActionKind={
               defenseStagingActive
                 ? confirmingNoDefense
@@ -4095,6 +4271,8 @@ function FleshAndBloodTabletopContent({
             priorityToggle={
               <FabPriorityAutomationControl
                 mode={priorityAutomationMode}
+                scopedAutoPass={scopedAutoPass}
+                onDisarmScope={disarmScopeIfAllowed}
                 countdown={
                   priorityCountdown.armed && priorityCountdownWindowKey
                     ? {
@@ -4143,7 +4321,7 @@ function FleshAndBloodTabletopContent({
       ) : null}
       <FabHandRevealRecall
         ownerId={opponentId}
-        cards={handReveals?.[opponentId]}
+        cards={effectiveHandReveals?.[opponentId]}
         cardMetadata={resolvedMetadata}
       />
       {armedAttackTargetView ||
@@ -4371,7 +4549,8 @@ function FleshAndBloodTabletopContent({
         state={state}
         viewerId={viewerId}
         cardMetadata={resolvedMetadata}
-        availableEntityIds={availableBanishedEntityIds}
+        availableBanishedEntityIds={availableBanishedEntityIds}
+        availableGraveyardEntityIds={availableGraveyardEntityIds}
         interactionStateFor={interactionStateFor}
         onCardSelect={controlsDisabled ? undefined : onCardSelect}
         onClose={() => setZoneInspection(null)}
@@ -4523,6 +4702,10 @@ function FleshAndBloodTabletopContent({
         onSetAutoSelectSingletonTargets: setAutoSelectSingletonTargets,
         savedOpponentTriggerYields,
         onRemoveOpponentTriggerYield: removeOpponentTriggerYield,
+        scopedAutoPass,
+        scopeContext,
+        onArmScope: armScopeIfAllowed,
+        onDisarmScope: disarmScopeIfAllowed,
       }}
     >
       <FabOptionalTriggerAutomationProvider
@@ -4589,7 +4772,7 @@ function FleshAndBloodTabletopContent({
                     {participantPresentation?.[opponentId]?.clock}
                     <strong>
                       {opponentLocalIdentity ? (
-                        `${opponentLocalIdentity.kind === "human" ? "You" : "Practice bot"}${
+                        `${localPractice?.mode === "self" ? "Player 2" : opponentLocalIdentity.kind === "human" ? "You" : "Practice bot"}${
                           opponentLocalIdentity.heroName
                             ? ` · ${opponentLocalIdentity.heroName}`
                             : ""
@@ -4714,11 +4897,13 @@ function FleshAndBloodTabletopContent({
                         owner="Your"
                       />
                     </div>
-                    {priorityCountdown.armed ? (
+                    {priorityCountdown.armed || scopedAutoPass ? (
                       <FabPriorityAutomationControl
                         mode={priorityAutomationMode}
+                        scopedAutoPass={scopedAutoPass}
+                        onDisarmScope={disarmScopeIfAllowed}
                         countdown={
-                          priorityCountdownWindowKey
+                          priorityCountdown.armed && priorityCountdownWindowKey
                             ? {
                                 windowKey: priorityCountdownWindowKey,
                                 durationMs: priorityCountdownDurationMs,

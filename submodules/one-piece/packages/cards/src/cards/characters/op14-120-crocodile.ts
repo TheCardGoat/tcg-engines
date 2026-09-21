@@ -1,0 +1,126 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op14eb04CrocodileOp14120120I18n } from "./op14-120-crocodile.i18n.ts";
+
+export const op14eb04CrocodileOp14120120: CharacterCard = {
+  id: "OP14-120",
+  canonicalId: "OP14-120",
+  slug: "crocodile/op14-120",
+  name: "Crocodile",
+  printings: [
+    {
+      id: "OP14-120",
+      artId: "OP14-120",
+      setCode: "OP14",
+      collectorNumber: "120",
+      rarity: "SEC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP14-120_XqBISrN.jpg",
+      label: "Crocodile - OP14-120",
+    },
+    {
+      id: "OP14-120_p1",
+      artId: "OP14-120_p1",
+      setCode: "OP14",
+      collectorNumber: "120",
+      rarity: "SEC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP14-120_p1_JDoyJx2.jpg",
+      label: "Crocodile - OP14-120 (Alternate Art)",
+    },
+  ],
+  cardType: "character",
+  color: ["black"],
+  rarity: "SEC",
+  setId: "OP14",
+  cost: 8,
+  power: 10000,
+  traits: ["The Seven Warlords of the Sea", "Baroque Works"],
+  attribute: "special",
+  effect:
+    "[On Play] Up to 1 of your opponent's Characters with a cost of 9 or less cannot attack until the end of your opponent's next End Phase. Then, if your opponent has a Character with a cost of 0 or with a cost of 8 or more, draw 1 card.\n[On K.O.] You may trash 1 card from your hand: Play this Character card from your trash.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "cannotAttack",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 9,
+                },
+              ],
+            },
+            duration: "untilEndOfOpponentNextEndPhase",
+          },
+          {
+            action: "draw",
+            player: "self",
+            amount: 1,
+            condition: {
+              condition: "compound",
+              operator: "or",
+              conditions: [
+                {
+                  condition: "hasCard",
+                  player: "opponent",
+                  zone: "character",
+                  filters: [
+                    {
+                      filter: "cost",
+                      comparison: "eq",
+                      value: 0,
+                    },
+                  ],
+                },
+                {
+                  condition: "hasCard",
+                  player: "opponent",
+                  zone: "character",
+                  filters: [
+                    {
+                      filter: "cost",
+                      comparison: "gte",
+                      value: 8,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "onKo",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op14eb04CrocodileOp14120120I18n,
+};

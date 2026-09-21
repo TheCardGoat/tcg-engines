@@ -9,34 +9,34 @@ Opponent cards are unnamed so each line stays inside the IAR inventory.
 
 ## Inventory (36)
 
-| Collector | Name | Pitch | Type | Synergy clause |
-| --- | --- | --- | --- | --- |
-| IAR053 | Malice, Domina of the Dead | — | Shadow Necromancer Hero | Play target zombie from graveyard; when a zombie you control dies, banish it face-down and create a Corrupted Corpse in banished |
-| IAR054 | Malice | — | Shadow Necromancer Hero - Young | Same printed pair as IAR053 |
-| IAR055 | Vox Necropolis | — | Shadow Necromancer Weapon - Staff (2H) | Zombies played from graveyard/banished enter tapped and attack; zombies you control get Action — {r}, {t}: Attack |
-| IAR056 | Appalling Bearers | — | Shadow Necromancer Equipment - Arms | Instant — discard a zombie, destroy this: prevent the next 2 damage |
-| IAR057 | Forsaken Strike | 2 | Shadow Necromancer Action - Attack | Additional cost: destroy and/or discard zombies; one mode per zombie (Gate / +2{p} / go again) |
-| IAR058 | Bridge of Damnation | 3 | Shadow Necromancer Action - Aura | At the start of each turn, destroy this unless you put a zombie from banished into graveyard |
-| IAR059 | Restless Templar | 1 | Zombie Ally | Whenever a zombie you control with Decay dies, create a Gate; Decay |
-| IAR060–062 | Commit to Corruption | 1/2/3 | Shadow Necromancer Action | Next attack this turn gets +N{p} and “When this hits, create a Corrupted Corpse in banished” |
-| IAR063 | Restless Looter | 1 | Zombie Ally | Decay (fuel for Templar / Malice death) |
-| IAR064 | Restless Magister | 1 | Zombie Ally | Decay; hits a hero → they banish a card from hand |
-| IAR065 | Restless Quartermaster | 1 | Zombie Ally | Decay; hits a hero → they banish arsenal |
-| IAR066 | Mark of Neverest | 3 | Instant - Aura | Binds to an ally; +1{p} and on hit-or-die may turn a banished card face-down to create a Corrupted Corpse |
-| IAR069–071 | Acrid Stench | 1/2/3 | Action - Attack | When this attacks, you may discard a zombie. If you do, create a Corrupted Corpse in banished |
-| IAR072–074 | Bone Mass | 1/2/3 | Action - Attack | When this attacks, you may discard a zombie. If you do, next attack gets +1{p} |
-| IAR075–077 | Malignant Migration | 1/2/3 | Action - Attack | When this attacks, you may discard a zombie. If you do, put a banished card into graveyard |
-| IAR078–080 | Ominous Toll | 1/2/3 | Action - Attack | When this attacks, you may discard a zombie. If you do, create a Gate |
-| IAR081 | Shadowrealm Solace | 3 | Shadow Necromancer Action | Put a banished card into graveyard; if it is a zombie, gain 1{h} |
-| IAR082 | Shadowrealm Strength | 1 | Shadow Necromancer Action | Put a banished card into graveyard; if it is a zombie, next attack gets +3{p} |
-| IAR083 | Shadowrealm Swiftness | 2 | Shadow Necromancer Action | Put a banished card into graveyard; if it is a zombie, next attack gets go again |
-| IAR084 | Restless Cleric | 1 | Zombie Ally | Decay; Action — {t}: gain 1{h} |
-| IAR085 | Restless Corporal | 1 | Zombie Ally | Decay; Action — {t}: put a banished card into graveyard |
-| IAR086 | Restless Outlaw | 1 | Zombie Ally | When this dies, create a Corrupted Corpse in banished; Decay |
-| IAR087 | Restless Plowman | 1 | Zombie Ally | Decay; Action — {t}: gain {r} |
-| IAR088 | Restless Shieldmaiden | 1 | Zombie Ally | Decay; Shadow Resist 1 |
-| IAR089 | Restless Steed | 1 | Zombie Ally | Decay; when this hits, the attack gets go again |
-| IAR090 | Corrupted Corpse | — | Zombie Ally | Incarnate; its attacks get go again; Blood Debt while banished |
+| Collector  | Name                       | Pitch | Type                                   | Synergy clause                                                                                                                   |
+| ---------- | -------------------------- | ----- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| IAR053     | Malice, Domina of the Dead | —     | Shadow Necromancer Hero                | Play target zombie from graveyard; when a zombie you control dies, banish it face-down and create a Corrupted Corpse in banished |
+| IAR054     | Malice                     | —     | Shadow Necromancer Hero - Young        | Same printed pair as IAR053                                                                                                      |
+| IAR055     | Vox Necropolis             | —     | Shadow Necromancer Weapon - Staff (2H) | Zombies played from graveyard/banished enter tapped and attack; zombies you control get Action — {r}, {t}: Attack                |
+| IAR056     | Appalling Bearers          | —     | Shadow Necromancer Equipment - Arms    | Instant — discard a zombie, destroy this: prevent the next 2 damage                                                              |
+| IAR057     | Forsaken Strike            | 2     | Shadow Necromancer Action - Attack     | Additional cost: destroy and/or discard zombies; one mode per zombie (Gate / +2{p} / go again)                                   |
+| IAR058     | Bridge of Damnation        | 3     | Shadow Necromancer Action - Aura       | At the start of each turn, destroy this unless you put a zombie from banished into graveyard                                     |
+| IAR059     | Restless Templar           | 1     | Zombie Ally                            | Whenever a zombie you control with Decay dies, create a Gate; Decay                                                              |
+| IAR060–062 | Commit to Corruption       | 1/2/3 | Shadow Necromancer Action              | Next attack this turn gets +N{p} and “When this hits, create a Corrupted Corpse in banished”                                     |
+| IAR063     | Restless Looter            | 1     | Zombie Ally                            | Decay (fuel for Templar / Malice death)                                                                                          |
+| IAR064     | Restless Magister          | 1     | Zombie Ally                            | Decay; hits a hero → they banish a card from hand                                                                                |
+| IAR065     | Restless Quartermaster     | 1     | Zombie Ally                            | Decay; hits a hero → they banish arsenal                                                                                         |
+| IAR066     | Mark of Neverest           | 3     | Instant - Aura                         | Binds to an ally; +1{p} and on hit-or-die may turn a banished card face-down to create a Corrupted Corpse                        |
+| IAR069–071 | Acrid Stench               | 1/2/3 | Action - Attack                        | When this attacks, you may discard a zombie. If you do, create a Corrupted Corpse in banished                                    |
+| IAR072–074 | Bone Mass                  | 1/2/3 | Action - Attack                        | When this attacks, you may discard a zombie. If you do, next attack gets +1{p}                                                   |
+| IAR075–077 | Malignant Migration        | 1/2/3 | Action - Attack                        | When this attacks, you may discard a zombie. If you do, put a banished card into graveyard                                       |
+| IAR078–080 | Ominous Toll               | 1/2/3 | Action - Attack                        | When this attacks, you may discard a zombie. If you do, create a Gate                                                            |
+| IAR081     | Shadowrealm Solace         | 3     | Shadow Necromancer Action              | Put a banished card into graveyard; if it is a zombie, gain 1{h}                                                                 |
+| IAR082     | Shadowrealm Strength       | 1     | Shadow Necromancer Action              | Put a banished card into graveyard; if it is a zombie, next attack gets +3{p}                                                    |
+| IAR083     | Shadowrealm Swiftness      | 2     | Shadow Necromancer Action              | Put a banished card into graveyard; if it is a zombie, next attack gets go again                                                 |
+| IAR084     | Restless Cleric            | 1     | Zombie Ally                            | Decay; Action — {t}: gain 1{h}                                                                                                   |
+| IAR085     | Restless Corporal          | 1     | Zombie Ally                            | Decay; Action — {t}: put a banished card into graveyard                                                                          |
+| IAR086     | Restless Outlaw            | 1     | Zombie Ally                            | When this dies, create a Corrupted Corpse in banished; Decay                                                                     |
+| IAR087     | Restless Plowman           | 1     | Zombie Ally                            | Decay; Action — {t}: gain {r}                                                                                                    |
+| IAR088     | Restless Shieldmaiden      | 1     | Zombie Ally                            | Decay; Shadow Resist 1                                                                                                           |
+| IAR089     | Restless Steed             | 1     | Zombie Ally                            | Decay; when this hits, the attack gets go again                                                                                  |
+| IAR090     | Corrupted Corpse           | —     | Zombie Ally                            | Incarnate; its attacks get go again; Blood Debt while banished                                                                   |
 
 All 36 collectors are present in the generated IAR printings. Catalog provenance:
 FAB Cube `usurp-the-shadow-throne` @ `9fb8c73011311720bc7add61fb8eaab00b131bc3`,
@@ -177,11 +177,11 @@ Engine coverage uses a non-IAR next attack in the card suite; the printed latch 
 
 These mention zombie in functional text and feed Loops 1–2:
 
-| Card | Line |
-| --- | --- |
-| Bridge of Damnation | Start of turn: put a banished zombie into graveyard or the aura dies. Tested in `bridge-of-damnation.test.ts`. Fixture `usurp-preview-bridge-of-damnation-blue`. |
-| Restless Corporal | Action — {t}: put a banished card into graveyard (then Malice can replay it). Fixture `usurp-preview-restless-corporal-red`. |
-| Shadowrealm Solace / Strength / Swiftness | Put banished card to graveyard; zombie riders heal / +3{p} / go again. Strength AAA exists (`shadowrealm-strength.test.ts`) with Restless Magister in banished. |
+| Card                                      | Line                                                                                                                                                             |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bridge of Damnation                       | Start of turn: put a banished zombie into graveyard or the aura dies. Tested in `bridge-of-damnation.test.ts`. Fixture `usurp-preview-bridge-of-damnation-blue`. |
+| Restless Corporal                         | Action — {t}: put a banished card into graveyard (then Malice can replay it). Fixture `usurp-preview-restless-corporal-red`.                                     |
+| Shadowrealm Solace / Strength / Swiftness | Put banished card to graveyard; zombie riders heal / +3{p} / go again. Strength AAA exists (`shadowrealm-strength.test.ts`) with Restless Magister in banished.  |
 
 ### Playline L — Strength recycles a banished zombie into the next IAR attack (new composition)
 
@@ -193,20 +193,20 @@ These mention zombie in functional text and feed Loops 1–2:
 
 ## Already documented vs new
 
-| Playline | Label | Where |
-| --- | --- | --- |
-| A Malice death → Corpse | already documented | `malice.test.ts`, `usurp-preview-malice`, Forsaken+Malice QA |
-| B Malice GY play under Vox | already documented | `malice.test.ts`, `usurp-preview-vox-necropolis` |
-| C Vox seated Attack | already documented | `vox-necropolis.test.ts` |
-| D Corrupted Corpse Vox swing | already documented | `corrupted-corpse.test.ts`, `usurp-preview-corrupted-corpse` |
-| E Forsaken Strike payments | already documented | `forsaken-strike.test.ts`, INTERACTION-QA |
-| F Acrid Stench discard | already documented | `acrid-stench.test.ts` |
-| G Appalling Bearers | already documented | `appalling-bearers.test.ts` |
-| H Templar Decay Gate | already documented | `restless-templar.test.ts`, `decay-ability` |
-| I Outlaw death Corpse | already documented | `restless-outlaw.test.ts` |
-| J Commit arms next attack | already documented | `commit-to-corruption.test.ts` (next attack in suite is non-IAR; latch is generic) |
-| K Mark on Restless Magister | **new** IAR pairing | Mark suite binds a non-IAR ally |
-| L Strength + Bone Mass | **new** composition | Strength suite uses a non-IAR follow-up attack |
+| Playline                     | Label               | Where                                                                              |
+| ---------------------------- | ------------------- | ---------------------------------------------------------------------------------- |
+| A Malice death → Corpse      | already documented  | `malice.test.ts`, `usurp-preview-malice`, Forsaken+Malice QA                       |
+| B Malice GY play under Vox   | already documented  | `malice.test.ts`, `usurp-preview-vox-necropolis`                                   |
+| C Vox seated Attack          | already documented  | `vox-necropolis.test.ts`                                                           |
+| D Corrupted Corpse Vox swing | already documented  | `corrupted-corpse.test.ts`, `usurp-preview-corrupted-corpse`                       |
+| E Forsaken Strike payments   | already documented  | `forsaken-strike.test.ts`, INTERACTION-QA                                          |
+| F Acrid Stench discard       | already documented  | `acrid-stench.test.ts`                                                             |
+| G Appalling Bearers          | already documented  | `appalling-bearers.test.ts`                                                        |
+| H Templar Decay Gate         | already documented  | `restless-templar.test.ts`, `decay-ability`                                        |
+| I Outlaw death Corpse        | already documented  | `restless-outlaw.test.ts`                                                          |
+| J Commit arms next attack    | already documented  | `commit-to-corruption.test.ts` (next attack in suite is non-IAR; latch is generic) |
+| K Mark on Restless Magister  | **new** IAR pairing | Mark suite binds a non-IAR ally                                                    |
+| L Strength + Bone Mass       | **new** composition | Strength suite uses a non-IAR follow-up attack                                     |
 
 ## Blockers
 

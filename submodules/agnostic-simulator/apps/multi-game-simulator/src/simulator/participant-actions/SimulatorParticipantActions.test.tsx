@@ -54,6 +54,7 @@ describe("desktop participant actions", () => {
     );
 
     const trigger = screen.getByRole("button", { name: "Open your player actions" });
+    expect(trigger.getAttribute("data-simulator-sidebar-control")).toBe("true");
     fireEvent.pointerEnter(trigger);
     expect(screen.getByRole("tooltip").textContent).toBe("Open your player actions");
     fireEvent.click(trigger);
@@ -158,7 +159,7 @@ describe("desktop participant actions", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Open Practice bot actions" }));
-    fireEvent.click(screen.getByRole("menuitem", { name: "Take over seat" }));
+    fireEvent.click(screen.getByRole("menuitem", { name: "Control opponent" }));
     expect(toggleTakeover).toHaveBeenCalledTimes(1);
 
     rerender(
@@ -169,7 +170,7 @@ describe("desktop participant actions", () => {
       />,
     );
     fireEvent.click(screen.getByRole("button", { name: "Open Practice bot actions" }));
-    expect(screen.getByRole("menuitem", { name: "Return to your seat" })).toBeTruthy();
+    expect(screen.getByRole("menuitem", { name: "Return opponent to bot" })).toBeTruthy();
   });
 
   test("submits a human opponent report with match identity", async () => {

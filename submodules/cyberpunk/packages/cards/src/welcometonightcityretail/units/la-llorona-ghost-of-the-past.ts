@@ -50,7 +50,6 @@ export const welcomeToNightCityRetailLaLloronaGhostOfThePast = defineCyberpunkCa
           effect: "adjustGig",
           target: {
             selector: "gig",
-            controller: "friendly",
             amount: "all",
             selection: {
               mode: "choose",

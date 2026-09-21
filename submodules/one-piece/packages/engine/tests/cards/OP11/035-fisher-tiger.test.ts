@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Hannyabal021 } from "../../../../cards/src/cards/EB01/leaders/021-hannyabal.ts";
-import { op11Ishilly025 } from "../../../../cards/src/cards/OP11/characters/025-ishilly.ts";
-import { op11FisherTiger035 } from "../../../../cards/src/cards/OP11/characters/035-fisher-tiger.ts";
-import { op14eb04Killer005 } from "../../../../cards/src/cards/OP14EB04/characters/005-killer.ts";
-import { op14eb04SilversRayleigh108 } from "../../../../cards/src/cards/OP14EB04/characters/108-silvers-rayleigh.ts";
+import { eb01Hannyabal021 } from "../../../../cards/src/cards/leaders/eb01-021-hannyabal.ts";
+import { op11Ishilly025 } from "../../../../cards/src/cards/characters/op11-025-ishilly.ts";
+import { op11FisherTiger035 } from "../../../../cards/src/cards/characters/op11-035-fisher-tiger.ts";
+import { op14eb04Killer005 } from "../../../../cards/src/cards/characters/op14-005-killer.ts";
+import { op14eb04SilversRayleigh108 } from "../../../../cards/src/cards/characters/op14-108-silvers-rayleigh.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 function pendingPrompt(engine: OnePieceTestEngine, intent: string) {

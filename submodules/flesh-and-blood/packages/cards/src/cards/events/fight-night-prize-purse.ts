@@ -17,6 +17,7 @@ export const fightNightPrizePurse = defineCard(
             {
               type: "create-token",
               token: "gold",
+              creator: "token-controller",
               controller: "each",
             },
           ],

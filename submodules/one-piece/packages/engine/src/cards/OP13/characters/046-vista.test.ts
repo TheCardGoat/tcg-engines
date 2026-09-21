@@ -5,7 +5,7 @@ import {
   op13EdwardNewgate042,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Vista046 } from "../../../../../cards/src/cards/OP13/characters/046-vista.ts";
+import { op13Vista046 } from "../../../../../cards/src/cards/characters/op13-046-vista.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -7,7 +7,7 @@ import {
   op12UrsaShock096,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Rindo115 } from "../../../../../cards/src/cards/OP14EB04/characters/115-rindo.ts";
+import { op14eb04Rindo115 } from "../../../../../cards/src/cards/characters/op14-115-rindo.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

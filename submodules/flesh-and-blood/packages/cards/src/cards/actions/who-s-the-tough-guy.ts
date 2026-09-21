@@ -27,6 +27,7 @@ export const whoSTheToughGuy = definePitchFamily(fabPitchFamilies["who-s-the-tou
         effect: {
           type: "create-token",
           token: "toughness",
+          creator: "token-controller",
           controller: "defending-hero",
         },
       },

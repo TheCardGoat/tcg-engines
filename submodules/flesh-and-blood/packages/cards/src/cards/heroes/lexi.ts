@@ -83,6 +83,7 @@ export const lexi = defineCard(fabCardIdentitiesByCanonicalId["GFc7t8wNTwC8rCFwr
                 // the sole opponent (multi-hero targeting is out of product scope).
                 type: "create-token",
                 token: "frostbite",
+                creator: "effect-controller",
                 controller: "opponent",
               },
             },

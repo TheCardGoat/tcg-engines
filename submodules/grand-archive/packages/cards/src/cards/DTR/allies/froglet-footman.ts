@@ -91,36 +91,47 @@ export const frogletFootman: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "has-keyword",
-                        keyword: "floating-memory",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["graveyard"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "has-keyword",
+                          keyword: "floating-memory",
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "buff",
-                  amount: 1,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "source",
+                    },
+                    counter: "buff",
+                    amount: 1,
+                  },
                 },
               ],
             },

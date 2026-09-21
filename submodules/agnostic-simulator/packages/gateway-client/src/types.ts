@@ -27,7 +27,7 @@ export type AuthMethod = "ticket" | "jwt" | "session" | "authenticated" | "anony
  * sign-in / sign-out transitions instead of leaving stale auth material behind.
  */
 export interface GatewayCredentials {
-  /** Absolute scope expiry in milliseconds; refresh begins 15 minutes before it. */
+  /** Absolute scope expiry in milliseconds; refresh begins `VIEWER_SCOPE_REFRESH_LEAD_MS` before it. */
   expiresAt?: number | null;
   /**
    * Single-use ticket from the gateway ticket endpoint. The library embeds it
@@ -159,6 +159,12 @@ export interface GatewayHandle {
   reconnect(): void;
   /** Current connection state snapshot. */
   getState(): GatewayConnectionState;
+  /**
+   * True when {@link emit} would enqueue instead of sending (expired viewer
+   * scope or an in-flight credential refresh without a live authenticated
+   * socket). Live writes must not call emit while this is true.
+   */
+  wouldHoldEmit(): boolean;
   /** Subscribe to state changes. Returns an unsubscribe. */
   subscribeState(cb: (state: GatewayConnectionState) => void): () => void;
   /** Release this consumer's hold. Removes only this handle's listeners and decrements the ref-count. */

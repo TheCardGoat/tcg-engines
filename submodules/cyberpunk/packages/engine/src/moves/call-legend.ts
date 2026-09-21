@@ -1,15 +1,24 @@
-import type { CardInstanceId } from "../types/branded.ts";
+import type { CardInstanceId, PlayerId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
+import type { MatchState } from "../types/match-state.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
 import { getDefinitionFor } from "../state/lookups.ts";
-import { availableEddies } from "./eddie-resources.ts";
+import { availableEddies, canSpendSelectedEddies } from "./eddie-resources.ts";
 import { isReactStep } from "./is-react-step.ts";
 import { playerHasCallLegendFree } from "../active-effects/index.ts";
+
+/** Comprehensive Rules 11.11.1 — Call a Legend costs 1 €$. */
+export const CALL_LEGEND_COST = 1;
 
 export interface CallLegendInput extends MoveInput {
   args: {
     legendId?: string;
+    paymentSourceIds?: string[];
   };
+}
+
+export function callLegendEddieCost(state: MatchState, playerId: PlayerId): number {
+  return playerHasCallLegendFree(state, playerId) ? 0 : CALL_LEGEND_COST;
 }
 
 export const callLegendMove: MoveDefinition<CallLegendInput> = {
@@ -22,8 +31,8 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
       return false;
     if (!isReactStep(state, playerId) && player.calledLegendThisTurn) return false;
     if (isReactStep(state, playerId) && player.calledLegendThisRivalTurn) return false;
-    const matchState = state as import("../types/match-state.ts").MatchState;
-    const callCost = playerHasCallLegendFree(matchState, playerId) ? 0 : 1;
+    const matchState = state as MatchState;
+    const callCost = callLegendEddieCost(matchState, playerId);
     if (availableEddies(matchState, playerId) < callCost) return false;
 
     return player.zones.legendArea.some((id) => {
@@ -45,12 +54,13 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
     if (!isDefending && state.G.turnMetadata.activePlayerId !== playerId) {
       return { valid: false, error: "Not your turn", errorCode: "NOT_YOUR_TURN" };
     }
-    const matchState = state as import("../types/match-state.ts").MatchState;
-    const callCost = playerHasCallLegendFree(matchState, playerId) ? 0 : 1;
+    const matchState = state as MatchState;
+    const callCost = callLegendEddieCost(matchState, playerId);
     if (availableEddies(matchState, playerId) < callCost)
       return {
         valid: false,
-        error: callCost === 0 ? "Not enough eddies" : "Not enough eddies (need 1)",
+        error:
+          callCost === 0 ? "Not enough eddies" : `Not enough eddies (need ${CALL_LEGEND_COST})`,
         errorCode: "INSUFFICIENT_EDDIES",
       };
 
@@ -106,6 +116,17 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
         errorCode: "LEGEND_ALREADY_FACE_UP",
       };
     }
+    if (
+      input.args.paymentSourceIds !== undefined &&
+      !canSpendSelectedEddies(
+        state.G,
+        playerId,
+        callCost,
+        input.args.paymentSourceIds as CardInstanceId[],
+      )
+    ) {
+      return { valid: false, error: "Invalid payment sources", errorCode: "INVALID_PAYMENT" };
+    }
 
     return { valid: true };
   },
@@ -117,14 +138,16 @@ export const callLegendMove: MoveDefinition<CallLegendInput> = {
     const legendId = input.args.legendId as CardInstanceId;
 
     const eventsBeforePayment = operations.event.getEmittedEvents().length;
-    const callCost = playerHasCallLegendFree(
-      state as import("../types/match-state.ts").MatchState,
-      playerId,
-    )
-      ? 0
-      : 1;
+    const callCost = callLegendEddieCost(state as MatchState, playerId);
     if (callCost > 0) {
-      operations.game.spendEddies(playerId, callCost, "callLegend");
+      operations.game.spendEddies(
+        playerId,
+        callCost,
+        "callLegend",
+        input.args.paymentSourceIds === undefined
+          ? {}
+          : { sourceIds: input.args.paymentSourceIds as CardInstanceId[] },
+      );
     }
     operations.card.setMeta(legendId, { faceDown: false });
     if (isReactStep(state, playerId)) {

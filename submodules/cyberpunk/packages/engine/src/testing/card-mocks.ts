@@ -159,8 +159,8 @@ export interface MockLegendParams extends BaseMockParams {
 
 /**
  * Mock legend card. Legends start face-down in the legend area and are spent
- * for 1 eddie or called for 2 eddies. Cost / power default to `null` (no
- * in-hand cast cost).
+ * for 1 €$ or called for 1 €$ (Comprehensive Rules 11.8.1 / 11.11.1). Cost /
+ * power default to `null` (no in-hand cast cost).
  */
 export function createMockLegend(params: MockLegendParams = {}): StructuredLegendCard {
   return {

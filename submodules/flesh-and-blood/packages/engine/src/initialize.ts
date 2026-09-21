@@ -224,6 +224,7 @@ export function createFabMatchInitialState(input: InitializeFabMatchInput): FabM
           chainLinkNumber: null,
           playedInstant: false,
           damageDealtByType: { arcane: 0, physical: 0, generic: 0 },
+          damageDealtToOpposingHeroesByType: { arcane: 0, physical: 0, generic: 0 },
           damageDealtBySource: {},
           damageDealtBySourceToHero: {},
         },

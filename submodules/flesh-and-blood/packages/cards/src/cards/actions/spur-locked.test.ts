@@ -2,12 +2,15 @@ import { describe, it } from "vitest";
 import {
   expectFabCard,
   expectFabPlayer,
+  expectCombat,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
 import { bravo } from "../heroes/bravo.ts";
 import { snatchRed } from "./snatch.ts";
+import { nimblismBlue } from "./nimblism.ts";
 import { spurLockedBlue } from "./spur-locked.ts";
 
 /**
@@ -31,20 +34,24 @@ describe("Spur Locked (HNT255) AAA", () => {
         life: 20,
         actionPoints: 1,
         deckTop: [snatchRed],
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
     const Dash = game.as(dash);
 
-    const instanceId = Bravo.findCardInZone("hand", spurLockedBlue);
-    game.playInstance(Bravo.id, instanceId, {}, "explicit");
+    Bravo.play(spurLockedBlue);
     game.passBoth();
     Dash.choose("1");
     Bravo.choose("6");
-    Bravo.target(snatchRed);
+    Bravo.targetRequired(snatchRed);
     game.untilIdle({ entityTargets: "minimum" });
 
     expectFabCard(Bravo, spurLockedBlue).toBeIn("graveyard");
@@ -52,9 +59,14 @@ describe("Spur Locked (HNT255) AAA", () => {
     expectFabPlayer(Bravo).toHaveLife(14);
     expectFabPlayer(Dash).toHaveLife(20);
     expectFabCard(Bravo, snatchRed).toBeIn("hand");
+    Bravo.playAttack(snatchRed);
+    game.closeCombat({ optionals: "throw" });
+    expectFabPlayer(Dash).toHaveLife(16);
+    expectCombat(game).toBeClosed();
+    expectWait(game).toBeIdle();
   });
 
-  it("boundary: tied highest — condition holds for every tied hero (engine gap: only the first payout lands)", () => {
+  it("boundary: tied highest — condition holds for every tied hero (ties pay both)", () => {
     const game = FabTestEngine.start(
       {
         hero: bravo,
@@ -62,32 +74,36 @@ describe("Spur Locked (HNT255) AAA", () => {
         life: 12,
         actionPoints: 1,
         deckTop: [snatchRed],
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 18, deckTop: [snatchRed], deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 18,
+        deckTop: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
     const Dash = game.as(dash);
 
-    const instanceId = Bravo.findCardInZone("hand", spurLockedBlue);
-    game.playInstance(Bravo.id, instanceId, {}, "explicit");
+    Bravo.play(spurLockedBlue);
     game.passBoth();
     Dash.choose("3");
     Bravo.choose("3");
-    // Each tied-highest hero pays, then searches: answer both searches.
-    Bravo.target(snatchRed);
-    Dash.target(snatchRed);
+    // Each tied-highest hero pays, then searches: answer both searches
+    // (subjects are walked opponent-first, so Dash's search asks first).
+    Dash.targetRequired(snatchRed);
+    Bravo.targetRequired(snatchRed);
     game.untilIdle({ entityTargets: "minimum" });
 
-    // DEFECT PIN (§5 row HNT255): "The hero that chose the highest number"
-    // covers both tied heroes, the per-iteration condition evaluates true
-    // for each, and the first tied hero pays — but the layer-resolution
-    // sequence-prefix flush drops the second for-each iteration after the
-    // first iteration's decision-bearing search. Printed behavior pays both
-    // (Bravo 9, Dash 15); this pin records the current partial payout.
+    // "The hero that chose the highest number" covers both tied heroes:
+    // each pays 3 and searches cost ≤ 3 (snatch is the deck top).
     expectFabPlayer(Bravo).toHaveLife(9);
-    expectFabPlayer(Dash).toHaveLife(18);
+    expectFabPlayer(Dash).toHaveLife(15);
+    expectFabCard(Bravo, snatchRed).toBeIn("hand");
+    expectFabCard(Dash, snatchRed).toBeIn("hand");
   });
 
   it("timing: go again refunds the spent action point at resolution", () => {
@@ -96,16 +112,19 @@ describe("Spur Locked (HNT255) AAA", () => {
         hero: bravo,
         hand: [spurLockedBlue],
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
     const Dash = game.as(dash);
 
-    const instanceId = Bravo.findCardInZone("hand", spurLockedBlue);
-    game.playInstance(Bravo.id, instanceId, {}, "explicit");
+    Bravo.play(spurLockedBlue);
     game.passBoth();
     Dash.choose("2");
     Bravo.choose("1");
@@ -116,4 +135,32 @@ describe("Spur Locked (HNT255) AAA", () => {
     expectFabPlayer(Dash).toHaveLife(18);
     expectFabPlayer(Bravo).toHaveLife(20);
   });
+});
+
+it("Only the opposing highest chooser searches; the controller keeps no card", () => {
+  const padding = () => [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue];
+  const game = FabTestEngine.start(
+    {
+      hero: bravo,
+      hand: [spurLockedBlue],
+      life: 20,
+      resourcePoints: 0,
+      deck: padding(),
+      deckTop: [snatchRed],
+    },
+    { hero: dash, hand: [], life: 20, resourcePoints: 0, deck: padding(), deckTop: [snatchRed] },
+    FAB_MANUAL_HARNESS,
+  );
+  const Bravo = game.as(bravo);
+  const Dash = game.as(dash);
+  Bravo.play(spurLockedBlue);
+  game.passBoth();
+  Dash.choose("6");
+  Bravo.choose("1");
+  Dash.targetRequired(snatchRed);
+  game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+  expectFabPlayer(Dash).toHaveLife(14).toHaveHandCount(1);
+  expectFabPlayer(Bravo).toHaveLife(20).toHaveHandCount(0).toHaveAP(1);
+  expectFabCard(Dash, snatchRed).toBeIn("hand");
+  expectWait(game).toBeIdle();
 });

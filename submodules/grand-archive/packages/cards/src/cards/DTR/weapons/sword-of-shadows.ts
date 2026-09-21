@@ -72,6 +72,16 @@ export const swordOfShadows: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
           kind: "static",
           staticKind: "effects",
           text: "As long as an opponent controls an ally with stealth, Sword of Shadows gets -1POWER. (Apply this effect only if your champion's class matches this card's class.)",
+          restrictions: [
+            {
+              kind: "static",
+              name: "class-bonus",
+              condition: {
+                kind: "champion-matches-source",
+                characteristic: "class",
+              },
+            },
+          ],
           effects: [
             {
               kind: "continuous",
@@ -85,8 +95,17 @@ export const swordOfShadows: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                   zones: ["field"],
                   player: "each-opponent",
                   filter: {
-                    kind: "type",
-                    oneOf: ["ALLY"],
+                    kind: "all",
+                    filters: [
+                      {
+                        kind: "type",
+                        oneOf: ["ALLY"],
+                      },
+                      {
+                        kind: "has-keyword",
+                        keyword: "stealth",
+                      },
+                    ],
                   },
                 },
               },

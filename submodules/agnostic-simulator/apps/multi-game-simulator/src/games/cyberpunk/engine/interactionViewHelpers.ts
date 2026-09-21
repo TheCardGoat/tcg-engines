@@ -21,6 +21,14 @@ export function interactionViewHasAttackers(view: EngineInteractionView): boolea
   );
 }
 
+export function interactionViewHasBlockers(view: EngineInteractionView): boolean {
+  return (
+    enabledEntityInput(view, "useBlocker", "blockerId")?.candidates.some(
+      (candidate) => candidate.enabled,
+    ) === true
+  );
+}
+
 export function interactionViewHasAttacker(
   view: EngineInteractionView,
   attackerId: string,

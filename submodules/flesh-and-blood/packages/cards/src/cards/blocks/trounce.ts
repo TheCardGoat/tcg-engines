@@ -31,9 +31,24 @@ const putRevealsOnBottom = {
 const mintWinnerTrio = {
   type: "sequence" as const,
   steps: [
-    { type: "create-token" as const, token: "gold" as const, controller: "winner" as const },
-    { type: "create-token" as const, token: "might" as const, controller: "winner" as const },
-    { type: "create-token" as const, token: "vigor" as const, controller: "winner" as const },
+    {
+      type: "create-token" as const,
+      token: "gold" as const,
+      creator: "token-controller" as const,
+      controller: "winner" as const,
+    },
+    {
+      type: "create-token" as const,
+      token: "might" as const,
+      creator: "token-controller" as const,
+      controller: "winner" as const,
+    },
+    {
+      type: "create-token" as const,
+      token: "vigor" as const,
+      creator: "token-controller" as const,
+      controller: "winner" as const,
+    },
   ],
 };
 
@@ -70,7 +85,6 @@ export const trounce = definePitchFamily(fabPitchFamilies["trounce"], {
                 type: "sequence",
                 steps: [
                   clashWithAttacker,
-                  putRevealsOnBottom,
                   {
                     type: "conditional",
                     condition: { type: "has-status", status: "won-clash" },
@@ -85,7 +99,6 @@ export const trounce = definePitchFamily(fabPitchFamilies["trounce"], {
                   type: "sequence",
                   steps: [
                     clashWithAttacker,
-                    putRevealsOnBottom,
                     {
                       type: "conditional",
                       condition: { type: "has-status", status: "opponent-won-clash" },
@@ -95,7 +108,7 @@ export const trounce = definePitchFamily(fabPitchFamilies["trounce"], {
                 },
                 else: {
                   type: "sequence",
-                  steps: [clashWithAttacker, putRevealsOnBottom],
+                  steps: [clashWithAttacker],
                 },
               },
             },

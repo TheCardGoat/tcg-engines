@@ -47,7 +47,6 @@ export const cielMiragesGrave: GrandArchiveCard<GrandArchiveAbilityDefinition, "
             kind: "event",
             event: {
               name: "counter-added",
-              actor: "controller",
               counter: "omen",
               subject: {
                 kind: "event-object",

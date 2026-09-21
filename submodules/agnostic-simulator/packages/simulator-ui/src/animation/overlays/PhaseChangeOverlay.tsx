@@ -44,10 +44,12 @@ function titleForPhaseChange(step: PhaseChangeStepV2): string {
 
 export function PhaseChangeOverlay() {
   const runtime = useAnimationRuntime();
+  const suppressed = runtime.suppressedOverlayStepTypes?.includes("phaseChange") ?? false;
   const registryVersion = useAnimationRegistryVersion(runtime.registry);
   const [presentation, setPresentation] = useState<PhaseChangePresentation | null>(null);
 
   useLayoutEffect(() => {
+    if (suppressed) return;
     const transition = runtime.activeTransition;
     if (transition?.phase !== "running") return;
     const items = phaseChangeItems(runtime);
@@ -72,6 +74,7 @@ export function PhaseChangeOverlay() {
     runtime.compiledPlan,
     runtime.playbackStartedAtMs,
     runtime.registry,
+    suppressed,
   ]);
 
   useLayoutEffect(() => {
@@ -86,7 +89,7 @@ export function PhaseChangeOverlay() {
     return () => clearTimeout(timer);
   }, [presentation?.expiresAtMs, presentation?.transitionId]);
 
-  if (typeof document === "undefined" || !presentation) return null;
+  if (suppressed || typeof document === "undefined" || !presentation) return null;
   const boardCenter = presentation.center;
   const phaseChangeAnchor = presentation.phaseChangeAnchor;
   const boardAccent = presentation.accent;

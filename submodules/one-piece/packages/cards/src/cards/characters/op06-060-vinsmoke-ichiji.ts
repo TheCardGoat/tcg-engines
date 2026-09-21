@@ -1,0 +1,102 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06VinsmokeIchiji060I18n } from "./op06-060-vinsmoke-ichiji.i18n.ts";
+
+export const op06VinsmokeIchiji060: CharacterCard = {
+  id: "OP06-060",
+  canonicalId: "OP06-060",
+  slug: "vinsmoke-ichiji/op06-060",
+  name: "Vinsmoke Ichiji",
+  printings: [
+    {
+      id: "OP06-060",
+      artId: "OP06-060",
+      setCode: "OP06",
+      collectorNumber: "060",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-060.jpg",
+    },
+    {
+      id: "OP06-060_p2",
+      artId: "OP06-060_p2",
+      setCode: "OP06",
+      collectorNumber: "060",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-060_p2.jpg",
+    },
+    {
+      id: "OP06-060_p3",
+      artId: "OP06-060_p3",
+      setCode: "OP06",
+      collectorNumber: "060",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-060_p3.jpg",
+      label: "Vinsmoke Ichiji (OP06-060) (Full Art)",
+    },
+    {
+      id: "OP06-060_r1",
+      artId: "OP06-060_r1",
+      setCode: "OP06",
+      collectorNumber: "060",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-060_r1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["purple"],
+  rarity: "C",
+  setId: "OP06",
+  cost: 4,
+  power: 4000,
+  counter: 1000,
+  traits: ["The Vinsmoke Family", "GERMA 66"],
+  attribute: "strike",
+  effect:
+    "[Activate:Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.)You may trash this Character: If your Leader has the [GERMA 66] type, play up to 1 [Vinsmoke Ichiji] with a cost of 7 from your hand or trash.",
+  effects: {
+    effects: [
+      {
+        trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 1,
+          },
+          {
+            cost: "trashThisCard",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: ["hand", "trash"],
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 7,
+              },
+              {
+                filter: "name",
+                value: "Vinsmoke Ichiji",
+              },
+            ],
+            condition: {
+              condition: "leaderTrait",
+              trait: "GERMA 66",
+              match: "includes",
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op06VinsmokeIchiji060I18n,
+};

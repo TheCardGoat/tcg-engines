@@ -1,4 +1,4 @@
-import type { CardDefinition } from "@tcg/cyberpunk-types";
+import type { CardDefinition, CardType } from "@tcg/cyberpunk-types";
 import type { CardInstance } from "../types/card-instance.ts";
 import type { GameState } from "../types/match-state.ts";
 import type { CardInstanceId } from "../types/branded.ts";
@@ -29,4 +29,23 @@ export function defOf(card: CardInstance): CardDefinition {
 
 export function tryDefOf(card: CardInstance): CardDefinition | undefined {
   return tryGetDefinition(card.definitionId);
+}
+
+/**
+ * Rules-facing type membership for a card in its current zone.
+ *
+ * CR 4.2.1 makes a Legend on the field both a Unit and a Legend. Its authored
+ * definition remains `legend`, so filters must use this helper instead of
+ * comparing the static definition type directly.
+ */
+export function hasEffectiveCardType(card: CardInstance, type: CardType): boolean {
+  const definitionType = defOf(card).type;
+  return (
+    definitionType === type ||
+    (type === "unit" && definitionType === "legend" && card.zone === "field")
+  );
+}
+
+export function hasAnyEffectiveCardType(card: CardInstance, types: readonly CardType[]): boolean {
+  return types.some((type) => hasEffectiveCardType(card, type));
 }

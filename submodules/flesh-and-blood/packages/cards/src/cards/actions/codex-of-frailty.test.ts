@@ -32,8 +32,10 @@ describe("Codex of Frailty (OUT160) AAA", () => {
 
     Arakni.play(codexOfFrailtyYellow, { from: "arsenal" });
     game.passBoth();
-    Arakni.chooseTargets(Arakni.cardIn("graveyard", headJabRed));
+    // Each-hero asks iterate in turn order starting left of the controller
+    // (CR 1.10.2b): Dash chooses before Arakni.
     Dash.chooseTargets(Dash.cardIn("graveyard", snatchRed));
+    Arakni.chooseTargets(Arakni.cardIn("graveyard", headJabRed));
     game.untilIdle();
 
     expectFabCard(Arakni, headJabRed).toBeIn("arsenal").toBeFaceDown();

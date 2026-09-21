@@ -22,6 +22,8 @@ export const centralKeywordSuites = [
 
 /** Audited, parameter-free contracts. Parameterized keywords require an explicit contract extension. */
 export const centralKeywordContracts = {
+  aetherwing:
+    "Aetherwing requires a load, moves every loaded card to intent, and excludes attack cards",
   hindered: "Hindered enters the field rested",
   bulwark: "Bulwark enters the field with one bulwark counter per instance",
   vigor: "Vigor wakes the unit at the beginning of its controller's end step",
@@ -48,6 +50,8 @@ export const centralKeywordContracts = {
   renewable: "Renewable returns a banished regalia to its owner's material deck",
   preserve: "Preserve returns a destroyed ally to its owner's material deck",
   "link-shield": "Link Shield destroys the shield instead of its damaged linked ally",
+  exalted:
+    "Exalted permits playing Exalted-element cards only while a champion enables another advanced element",
 } satisfies Partial<Record<GrandArchiveKeywordName, string>>;
 
 export function validateCentralKeywordEvidence(sources: Readonly<Record<string, string>>): void {

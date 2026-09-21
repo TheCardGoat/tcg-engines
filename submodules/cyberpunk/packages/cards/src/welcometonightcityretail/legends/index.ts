@@ -8,9 +8,9 @@ import { welcomeToNightCityRetailGoroTakemuraVengefulBodyguard } from "./goro-ta
 import { welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor } from "./hanako-arasaka-daughter-of-the-emperor.ts";
 import { welcomeToNightCityRetailJackieWellesMamaSFavorite } from "./jackie-welles-mama-s-favorite.ts";
 import { welcomeToNightCityRetailJohnnySilverhandRockingRenegade } from "./johnny-silverhand-rocking-renegade.ts";
-import { welcomeToNightCityRetailJudyALvarezBraindanceMaestro } from "./judy-a-lvarez-braindance-maestro.ts";
+import { welcomeToNightCityRetailJudyAlvarezBraindanceMaestro } from "./judy-alvarez-braindance-maestro.ts";
 import { welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience } from "./kerry-eurodyne-axe-attitude-audience.ts";
-import { welcomeToNightCityRetailMuamarReyesElCapitaN } from "./muamar-reyes-el-capita-n.ts";
+import { welcomeToNightCityRetailMuamarReyesElCapitan } from "./muamar-reyes-el-capitan.ts";
 import { welcomeToNightCityRetailPadreManOfTheCross } from "./padre-man-of-the-cross.ts";
 import { welcomeToNightCityRetailPanamPalmerNomadCavalry } from "./panam-palmer-nomad-cavalry.ts";
 import { welcomeToNightCityRetailRiverWardDetectiveOnTheHunt } from "./river-ward-detective-on-the-hunt.ts";
@@ -29,9 +29,9 @@ export { welcomeToNightCityRetailGoroTakemuraVengefulBodyguard } from "./goro-ta
 export { welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor } from "./hanako-arasaka-daughter-of-the-emperor.ts";
 export { welcomeToNightCityRetailJackieWellesMamaSFavorite } from "./jackie-welles-mama-s-favorite.ts";
 export { welcomeToNightCityRetailJohnnySilverhandRockingRenegade } from "./johnny-silverhand-rocking-renegade.ts";
-export { welcomeToNightCityRetailJudyALvarezBraindanceMaestro } from "./judy-a-lvarez-braindance-maestro.ts";
+export { welcomeToNightCityRetailJudyAlvarezBraindanceMaestro } from "./judy-alvarez-braindance-maestro.ts";
 export { welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience } from "./kerry-eurodyne-axe-attitude-audience.ts";
-export { welcomeToNightCityRetailMuamarReyesElCapitaN } from "./muamar-reyes-el-capita-n.ts";
+export { welcomeToNightCityRetailMuamarReyesElCapitan } from "./muamar-reyes-el-capitan.ts";
 export { welcomeToNightCityRetailPadreManOfTheCross } from "./padre-man-of-the-cross.ts";
 export { welcomeToNightCityRetailPanamPalmerNomadCavalry } from "./panam-palmer-nomad-cavalry.ts";
 export { welcomeToNightCityRetailRiverWardDetectiveOnTheHunt } from "./river-ward-detective-on-the-hunt.ts";
@@ -51,9 +51,9 @@ export const welcomeToNightCityRetailLegends = [
   welcomeToNightCityRetailHanakoArasakaDaughterOfTheEmperor,
   welcomeToNightCityRetailJackieWellesMamaSFavorite,
   welcomeToNightCityRetailJohnnySilverhandRockingRenegade,
-  welcomeToNightCityRetailJudyALvarezBraindanceMaestro,
+  welcomeToNightCityRetailJudyAlvarezBraindanceMaestro,
   welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience,
-  welcomeToNightCityRetailMuamarReyesElCapitaN,
+  welcomeToNightCityRetailMuamarReyesElCapitan,
   welcomeToNightCityRetailPadreManOfTheCross,
   welcomeToNightCityRetailPanamPalmerNomadCavalry,
   welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,

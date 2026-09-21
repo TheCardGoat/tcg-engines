@@ -94,6 +94,7 @@ export function listAdultCcLegalHeroPrintings(
     });
   }
   return heroes.sort(
-    (left, right) => left.name.localeCompare(right.name) || left.canonicalId.localeCompare(right.canonicalId),
+    (left, right) =>
+      left.name.localeCompare(right.name) || left.canonicalId.localeCompare(right.canonicalId),
   );
 }

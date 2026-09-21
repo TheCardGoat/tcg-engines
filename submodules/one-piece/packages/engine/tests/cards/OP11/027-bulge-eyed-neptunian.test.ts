@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op11BulgeEyedNeptunian027 } from "../../../../cards/src/cards/OP11/characters/027-bulge-eyed-neptunian.ts";
-import { op11Shirahoshi022 } from "../../../../cards/src/cards/OP11/leaders/022-shirahoshi.ts";
-import { op14eb04Killer005 } from "../../../../cards/src/cards/OP14EB04/characters/005-killer.ts";
+import { op11BulgeEyedNeptunian027 } from "../../../../cards/src/cards/characters/op11-027-bulge-eyed-neptunian.ts";
+import { op11Shirahoshi022 } from "../../../../cards/src/cards/leaders/op11-022-shirahoshi.ts";
+import { op14eb04Killer005 } from "../../../../cards/src/cards/characters/op14-005-killer.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP11-027 Bulge-Eyed Neptunian", () => {

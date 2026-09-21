@@ -65,43 +65,54 @@ export const stormbladeSquire: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["memory"],
+                        relationship: "zone-of",
+                        player: "controller",
+                      },
+                      method: "random",
                     },
-                    candidates: {
-                      kind: "card",
-                      zones: ["memory"],
-                      relationship: "zone-of",
-                      player: "controller",
-                    },
-                    method: "random",
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "keyword-action",
-                  action: "scavenge",
-                  amount: {
-                    kind: "calculate",
-                    operator: "add",
-                    operands: [
-                      2,
-                      {
-                        kind: "variable",
-                        symbol: "X",
-                      },
-                    ],
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  filter: {
-                    kind: "element",
-                    oneOf: ["ARCANE"],
+                  then: {
+                    kind: "keyword-action",
+                    action: "scavenge",
+                    amount: {
+                      kind: "calculate",
+                      operator: "add",
+                      operands: [
+                        2,
+                        {
+                          kind: "variable",
+                          symbol: "X",
+                        },
+                      ],
+                    },
+                    filter: {
+                      kind: "element",
+                      oneOf: ["ARCANE"],
+                    },
                   },
                 },
               ],

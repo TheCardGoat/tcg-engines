@@ -4,66 +4,111 @@ import {
   FabTestEngine,
   expectFabCard,
   expectFabPlayer,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
-import { volticBoltRed } from "../actions/voltic-bolt.ts";
+import { oscilio } from "../heroes/oscilio.ts";
 import { bravo } from "../heroes/bravo.ts";
-import { blazeFiremind } from "../heroes/blaze-firemind.ts";
+import { volticBoltRed } from "../actions/voltic-bolt.ts";
 import { snatchRed } from "../actions/snatch.ts";
+import { nimblismBlue } from "../actions/nimblism.ts";
 import { arcaniteFortress } from "./arcanite-fortress.ts";
+import { arcaniteSkullcap } from "./arcanite-skullcap.ts";
+import { nullruneGloves } from "./nullrune-gloves.ts";
 
-describe("Arcanite Fortress (ROS211) AAA", () => {
-  it("happy: Spellvoid 1 destroys this to prevent 1 of Voltic Bolt's 5 arcane", () => {
-    const game = FabTestEngine.start(
-      { hero: blazeFiremind, hand: [volticBoltRed], resourcePoints: 2, actionPoints: 1, deck: 6 },
-      { hero: dash, life: 20, chest: [arcaniteFortress], hand: [], deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Dash = game.as(dash);
+const padding = () => [
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+];
 
-    expectFabCard(Dash, arcaniteFortress).toHaveDefense(1);
-    expectFabCard(Dash, arcaniteFortress).toHaveKeyword("spellvoid");
-    game.as(blazeFiremind).play(volticBoltRed, { target: Dash.id });
-    game.passBoth();
-    const choice = Dash.expectDecision("option");
-    Dash.chooseOptions(choice.options[0]!.id);
+// ROS notes: X is evaluated when Spellvoid is applied. Fortress counts itself.
+// Opposing Arcanite equipment and own non-Arcanite equipment must not count.
+describe("Arcanite Fortress (ROS211)", () => {
+  for (const ownSkullcap of [false, true]) {
+    for (const prevent of [false, true]) {
+      it(`${ownSkullcap ? "two" : "one"} own Arcanite equipment: ${prevent ? "accept" : "decline"} Spellvoid against five arcane`, () => {
+        const game = FabTestEngine.start(
+          {
+            hero: oscilio,
+            life: 20,
+            hand: [volticBoltRed],
+            head: [arcaniteSkullcap],
+            resourcePoints: 2,
+            actionPoints: 1,
+            deck: padding(),
+          },
+          {
+            hero: dash,
+            life: 20,
+            chest: [arcaniteFortress],
+            head: ownSkullcap ? [arcaniteSkullcap] : [],
+            arms: [nullruneGloves],
+            hand: [],
+            resourcePoints: 0,
+            deck: padding(),
+          },
+          FAB_MANUAL_HARNESS,
+        );
+        const Oscilio = game.as(oscilio);
+        const Dash = game.as(dash);
+        expectFabCard(Dash, arcaniteFortress).toHaveDefense(ownSkullcap ? 2 : 1);
+        Oscilio.play(volticBoltRed, { target: Dash.id });
+        game.passBoth();
+        if (prevent) Dash.choose("spellvoid");
+        else Dash.chooseOptions();
+        game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+        expectFabPlayer(Dash)
+          .toHaveLife(prevent ? (ownSkullcap ? 17 : 16) : 15)
+          .toHaveResourceCount(0);
+        expectFabCard(Dash, arcaniteFortress).toBeIn(prevent ? "graveyard" : "chest");
+        expectFabCard(Dash, nullruneGloves).toBeIn("arms");
+        if (ownSkullcap) expectFabCard(Dash, arcaniteSkullcap).toBeIn("head");
+        expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(0).toHaveResourceCount(0);
+        expectFabCard(Oscilio, volticBoltRed).toBeIn("graveyard");
+        expectWait(game).toBeIdle();
+      });
+    }
 
-    expectFabPlayer(Dash).toHaveLife(16);
-    expectFabCard(Dash, arcaniteFortress).toBeIn("graveyard");
-  });
-
-  it("boundary: declining Spellvoid takes the full 5 arcane and the fortress stays", () => {
-    const game = FabTestEngine.start(
-      { hero: blazeFiremind, hand: [volticBoltRed], resourcePoints: 2, actionPoints: 1, deck: 6 },
-      { hero: dash, life: 20, chest: [arcaniteFortress], hand: [], deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Dash = game.as(dash);
-
-    game.as(blazeFiremind).play(volticBoltRed, { target: Dash.id });
-    game.passBoth();
-    Dash.expectDecision("option");
-    Dash.chooseOptions();
-
-    expectFabPlayer(Dash).toHaveLife(15);
-    expectFabCard(Dash, arcaniteFortress).toBeIn("chest");
-  });
-
-  it("timing: Guardwell on defend keeps the chest with a −1{d} counter", () => {
-    const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], actionPoints: 1, deck: 6 },
-      { hero: dash, life: 20, chest: [arcaniteFortress], hand: [], deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Dash = game.as(dash);
-
-    expectFabCard(Dash, arcaniteFortress).toHaveDefense(1);
-    game.as(bravo).attackWith(snatchRed);
-    Dash.defendWith(arcaniteFortress);
-    game.helpers.resolveRestOfCombat();
-
-    expectFabCard(Dash, arcaniteFortress).toBeIn("chest");
-    expectFabCard(Dash, arcaniteFortress).toHaveDefenseCounters(-1);
-    expectFabPlayer(Dash).toHaveLife(17);
-  });
+    it(`${ownSkullcap ? "two" : "one"} defense prevents that much physical damage; Guardwell removes all remaining defense`, () => {
+      const game = FabTestEngine.start(
+        {
+          hero: bravo,
+          life: 20,
+          hand: [snatchRed],
+          head: [arcaniteSkullcap],
+          actionPoints: 1,
+          deck: padding(),
+        },
+        {
+          hero: dash,
+          life: 20,
+          chest: [arcaniteFortress],
+          head: ownSkullcap ? [arcaniteSkullcap] : [],
+          arms: [nullruneGloves],
+          hand: [],
+          resourcePoints: 0,
+          deck: padding(),
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      const Bravo = game.as(bravo);
+      const Dash = game.as(dash);
+      Bravo.playAttack(snatchRed);
+      Dash.defendWith(arcaniteFortress);
+      game.closeCombat({ optionals: "throw" });
+      expectFabPlayer(Dash).toHaveLife(ownSkullcap ? 18 : 17);
+      expectFabCard(Dash, arcaniteFortress)
+        .toBeIn("chest")
+        .toHaveDefenseCounters(ownSkullcap ? -2 : -1)
+        .toHaveDefense(0);
+      if (ownSkullcap) expectFabCard(Dash, arcaniteSkullcap).toHaveDefenseCounters(0);
+      expectFabPlayer(Bravo).toHaveLife(20).toHaveAP(0).toHaveHandCount(1);
+      expectFabCard(Bravo, snatchRed).toBeIn("graveyard");
+      expectWait(game).toBeIdle();
+    });
+  }
 });

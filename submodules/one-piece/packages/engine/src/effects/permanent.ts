@@ -57,6 +57,16 @@ function sourceEffectsAreNegatedByModifier(state: MatchState, sourceInstanceId: 
   );
 }
 
+function distinctNameCount(state: MatchState, instanceIds: string[]): number {
+  const names = new Set(
+    instanceIds.flatMap((instanceId) => {
+      const instance = state.cards[instanceId];
+      return instance ? [getCard(instance.cardId).name] : [];
+    }),
+  );
+  return names.size;
+}
+
 function sourceEffectsAreNegated(state: MatchState, sourceInstanceId: string): boolean {
   return (
     sourceEffectsAreNegatedByModifier(state, sourceInstanceId) ||
@@ -465,20 +475,35 @@ export function getPermanentModifierTotal(
   try {
     let total = 0;
     for (const source of Object.values(state.cards)) {
+      const card = getCard(source.cardId);
+      const relevantActions = (card.effects?.permanentEffects ?? []).flatMap((effect) =>
+        effect.actions.filter((action) => actionIsDynamicModifier(action, type)),
+      );
+      const sourceIsHandScoped =
+        source.zone === "hand" &&
+        relevantActions.length > 0 &&
+        relevantActions.every((action) => action.target.zones.includes("hand"));
       const sourceIsSelfInHand = source.instanceId === targetInstanceId && source.zone === "hand";
       if (
-        (!sourceIsInPlay(state, source.instanceId) && !sourceIsSelfInHand) ||
+        (!sourceIsInPlay(state, source.instanceId) && !sourceIsSelfInHand && !sourceIsHandScoped) ||
         sourceEffectsAreNegated(state, source.instanceId)
       ) {
         continue;
       }
 
-      const card = getCard(source.cardId);
       for (const effect of card.effects?.permanentEffects ?? []) {
         const relevantActions = effect.actions.filter((action) =>
           actionIsDynamicModifier(action, type),
         );
         if (relevantActions.length === 0) {
+          continue;
+        }
+        // A permanent modifier printed on a card still in hand only reaches
+        // cards in the hand zone (for example a counter boost to hand cards).
+        const relevantToHandCards = relevantActions.every((action) =>
+          action.target.zones.includes("hand"),
+        );
+        if (source.zone === "hand" && !sourceIsSelfInHand && !relevantToHandCards) {
           continue;
         }
         const conditions = evaluateConditions(
@@ -529,13 +554,25 @@ export function getPermanentModifierTotal(
                   valuePerCardGroup.target,
                 )
               : undefined;
+            const valuePerDifferentNameOn =
+              action.action === "modifyPower" ? action.valuePerDifferentNameOn : undefined;
+            const differentNamePool = valuePerDifferentNameOn
+              ? candidatePoolForTarget(
+                  state,
+                  source.controller,
+                  source.instanceId,
+                  valuePerDifferentNameOn,
+                )
+              : undefined;
             total += restedDonGroupSize
               ? Math.floor(state.players[source.controller].restedDon / restedDonGroupSize) *
                 action.value
               : valuePerCardGroup && cardGroupPool?.supported
                 ? Math.floor(cardGroupPool.candidateIds.length / valuePerCardGroup.size) *
                   action.value
-                : action.value;
+                : valuePerDifferentNameOn && differentNamePool?.supported
+                  ? distinctNameCount(state, differentNamePool.candidateIds) * action.value
+                  : action.value;
           }
         }
       }
@@ -576,7 +613,7 @@ export function getPermanentSetBasePower(
       const card = getCard(source.cardId);
       for (const effect of card.effects?.permanentEffects ?? []) {
         const setBaseActions = effect.actions.filter(
-          (action) => action.action === "setBasePowerFrom",
+          (action) => action.action === "setBasePowerFrom" || action.action === "setBasePower",
         );
         if (setBaseActions.length === 0) {
           continue;
@@ -598,6 +635,11 @@ export function getPermanentSetBasePower(
             action.target,
           );
           if (!targetPool.supported || !targetPool.candidateIds.includes(targetInstanceId)) {
+            continue;
+          }
+          if (action.action === "setBasePower") {
+            setBasePower =
+              setBasePower === null ? action.value : Math.max(setBasePower, action.value);
             continue;
           }
           const sourcePool = candidatePoolForTarget(

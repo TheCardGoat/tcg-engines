@@ -10,6 +10,7 @@ function visualFixtureProfile(): FabAutomationPreferences {
     playAndSkipHoldCardIds: [],
     opponentTriggerYieldCardIds: [],
     instantYieldCardIds: [],
+    scopedAutoPass: null,
   };
 }
 

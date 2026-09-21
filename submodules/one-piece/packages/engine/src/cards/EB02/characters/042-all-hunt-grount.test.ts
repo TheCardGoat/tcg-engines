@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb02AllHuntGrount042 } from "../../../../../cards/src/cards/EB02/characters/042-all-hunt-grount.ts";
+import { eb02AllHuntGrount042 } from "../../../../../cards/src/cards/characters/eb02-042-all-hunt-grount.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB02-042 All-Hunt Grount", () => {

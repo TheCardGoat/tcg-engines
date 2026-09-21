@@ -1,7 +1,7 @@
 import { getCard } from "../../cards/src/runtime-catalog.ts";
 import type { Action, Target, TargetFilter } from "@tcg/op-types";
 import { getLegalCommands } from "./engine/legal.ts";
-import { getCardCost, getCardPower } from "./shared.ts";
+import { getCardAttribute, getCardCost, getCardPower } from "./shared.ts";
 import type { OPCard } from "@tcg/op-types";
 import type {
   CardInstance,
@@ -99,6 +99,7 @@ function projectCard(
     rested: instance.rested,
     attachedDon: instance.attachedDon,
     power: visible && basePower(card) !== null ? getCardPower(state, instance.instanceId) : null,
+    attribute: visible ? getCardAttribute(state, instance.instanceId) : null,
     cost: visible && baseCost(card) !== null ? getCardCost(state, instance.instanceId) : null,
     hidden: !visible,
   };
@@ -119,6 +120,7 @@ function projectZone(
       return {
         instanceId: null,
         cardId: null,
+        attribute: null,
         name: null,
         owner: instance.controller,
         zone: instance.zone,
@@ -384,6 +386,8 @@ function constraintForFilter(filter: TargetFilter): ProjectedDecisionConstraint 
           .join(" or ")}`,
         gameSpecific: true,
       };
+    default:
+      return { id: filter.filter, label: "Filter", operator: "eq", value: "" };
   }
 }
 

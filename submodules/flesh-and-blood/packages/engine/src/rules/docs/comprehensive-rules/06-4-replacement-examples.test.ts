@@ -24,6 +24,30 @@
  * hero" is therefore never the failure reason for these specs.
  */
 import { describe, expect, it } from "vite-plus/test";
+import {
+  FAB_MANUAL_HARNESS,
+  expectFabCard,
+  expectFabPlayer,
+  expectWait,
+} from "../../../testing/index.ts";
+import { oscilio } from "../../../../../cards/src/cards/heroes/oscilio.ts";
+import { rhinar } from "../../../../../cards/src/cards/heroes/rhinar.ts";
+import {
+  flashBoltBlue,
+  flashBoltYellow,
+  flashBoltRed,
+} from "../../../../../cards/src/cards/instants/flash-bolt.ts";
+import { nimblismBlue as realNimblismBlue } from "../../../../../cards/src/cards/actions/nimblism.ts";
+import { dash as realDash } from "../../../../../cards/src/cards/heroes/dash.ts";
+
+const realPadding = () => [
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+];
 import { FabTestEngine, fabToken } from "../../../index.ts";
 import {
   bravo,
@@ -48,19 +72,6 @@ import { haloOfIllumination } from "../../../../../cards/src/cards/equipment/hal
 import { azalea } from "../../../../../cards/src/cards/heroes/azalea.ts";
 import { boltyn } from "../../../../../cards/src/cards/heroes/boltyn.ts";
 import { victorGoldmane } from "../../../../../cards/src/cards/heroes/victor-goldmane.ts";
-
-/**
- * Cost-0 Wizard arcane-action probe (sibling of the ROS211 Fortress suite's
- * `arcaneBolt2`). `arcane: N` deals N arcane damage via a deal-damage effect so
- * Spellvoid / fixed preventions fire without a contested combat chain.
- */
-const arcaneBolt = (amount: number, slug: string, types: string[] = ["Wizard", "Action"]) => ({
-  canonicalId: `trainer-arcane-bolt-${slug}`,
-  types,
-  cost: 0,
-  arcane: amount,
-  keywords: [] as const,
-});
 
 const LIFE = 20;
 
@@ -169,53 +180,44 @@ describe("CR 6.4 / 6.5 — replacement-effect named examples", () => {
     expect(Dash.life()).toBe(LIFE - 3);
   });
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // 6.4.2a — Arcanite Fortress Spellvoid X, X = # Arcanite equipment. The X
-  // amount is a LIVE count re-evaluated each time the keyword fires (not cached
-  // at register time). Two scenarios with different live equipment counts prove
-  // the prevention scales: alone X=1 (arcane 3 → prevent 1, take 2); paired
-  // with Arcanite Skullcap X=2 (arcane 3 → prevent 2, take 1). The life delta
-  // differs, so X is observably dynamic.
-  //
-  // Spellvoid destroys its source when it prevents (CR 8.3.15), so each
-  // scenario seats a fresh Fortress — the load-bearing comparison is between
-  // the two scenarios' life deltas, which isolates the live-X re-evaluation.
-  // ─────────────────────────────────────────────────────────────────────────
-  it("CR 6.4.2a — Arcanite Fortress Spellvoid X scales with the live Arcanite equipment count", () => {
-    const bolt = arcaneBolt(3, "ros211-scaling");
-
-    // Scenario A — Fortress alone: 1 Arcanite equipment → Spellvoid 1.
-    const alone = FabTestEngine.start(
-      { hero: bravo, hand: [bolt], actionPoints: 1, deck: 6 },
-      { hero: dash, life: LIFE, chest: [arcaniteFortress], deck: 6 },
-      { autoPassPriority: false },
-    );
-    alone.as(bravo).play(bolt);
-    drain(alone);
-    // Spellvoid 1 prevents 1 of the 3 arcane; Fortress destroyed; Dash takes 2.
-    expect(alone.as(dash).life()).toBe(LIFE - 2);
-    expect(alone.as(dash).zone("graveyard")).toContain(arcaniteFortress.canonicalId);
-
-    // Scenario B — Fortress + Skullcap: 2 Arcanite equipment → Spellvoid 2.
-    const pair = FabTestEngine.start(
-      { hero: bravo, hand: [bolt], actionPoints: 1, deck: 6 },
+  // CR 6.4.2a: evaluate the current amount at application, before destroying
+  // its source. A later event must not retain the destroyed source's prevention.
+  // Count/filter/decline variants live in the canonical Fortress card suite.
+  it("CR 6.4.2a — Arcanite Fortress counts itself before destruction; later damage is not prevented", () => {
+    const game = FabTestEngine.start(
       {
-        hero: dash,
-        life: LIFE,
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltRed, flashBoltRed],
+        resourcePoints: 4,
+        actionPoints: 1,
+        deck: realPadding(),
+      },
+      {
+        hero: realDash,
+        life: 20,
+        hand: [],
+        resourcePoints: 0,
         chest: [arcaniteFortress],
         head: [arcaniteSkullcap],
-        deck: 6,
+        deck: realPadding(),
       },
-      { autoPassPriority: false },
+      FAB_MANUAL_HARNESS,
     );
-    pair.as(bravo).play(bolt);
-    drain(pair);
-    // Spellvoid 2 prevents 2 of the 3 arcane; Fortress destroyed; Dash takes 1.
-    expect(pair.as(dash).life()).toBe(LIFE - 1);
-
-    // The delta between scenarios is the live-X re-evaluation: with one more
-    // Arcanite equipment seated, the SAME 3-arcane event lost 1 less life.
-    expect(pair.as(dash).life()).toBeGreaterThan(alone.as(dash).life());
+    const Oscilio = game.as(oscilio);
+    const Dash = game.as(realDash);
+    Oscilio.play(flashBoltRed, { target: Dash.id });
+    game.passBoth();
+    Dash.choose("spellvoid");
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabPlayer(Dash).toHaveLife(19);
+    expectFabCard(Dash, arcaniteFortress).toBeIn("graveyard");
+    expectFabCard(Dash, arcaniteSkullcap).toBeIn("head");
+    Oscilio.play(flashBoltRed, { target: Dash.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabPlayer(Dash).toHaveLife(16).toHaveResourceCount(0);
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(1).toHaveResourceCount(0).toHaveHandCount(0);
+    expectWait(game).toBeIdle();
   });
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -537,60 +539,44 @@ describe("CR 6.4 / 6.5 — replacement-effect named examples", () => {
   // prevents 4 on the first event, 0 on the second — leftover not carried.
   // ─────────────────────────────────────────────────────────────────────────
   it("CR 6.4.10i — Dissipation Shield prevents X once; leftover is not carried", () => {
-    const boltA = arcaneBolt(2, "dissipation-a");
-    const boltB = arcaneBolt(2, "dissipation-b", ["Wizard", "Instant"]);
     const game = FabTestEngine.start(
       {
-        hero: bravo,
-        hand: [boltA, boltB],
-        actionPoints: 2,
-        deck: 6,
-      },
-      {
-        hero: dash,
-        life: LIFE,
+        hero: realDash,
+        life: 20,
         hand: [dissipationShieldYellow],
         resourcePoints: 2,
         actionPoints: 1,
-        deck: 6,
+        deck: realPadding(),
       },
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual", firstPlayer: dash },
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltYellow, flashBoltYellow],
+        resourcePoints: 4,
+        actionPoints: 1,
+        deck: realPadding(),
+      },
+      FAB_MANUAL_HARNESS,
     );
-    const Dash = game.as(dash);
-
-    // Dash's turn — play Dissipation Shield (Action-Item). a1's enter-arena
-    // replacement places 4 steam counters; a2's action-phase-start trigger
-    // already passed for this phase, so it survives into Bravo's turn.
+    const Dash = game.as(realDash);
+    const Oscilio = game.as(oscilio);
     Dash.play(dissipationShieldYellow);
-    game.helpers.resolveUntilIdle({ optionalBoolean: false });
-    expect(Dash.zone("arena")).toContain(dissipationShieldYellow.canonicalId);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabCard(Dash, dissipationShieldYellow).toBeIn("arena").toHaveCounters(4, "steam");
+    Dash.activate(dissipationShieldYellow);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabCard(Dash, dissipationShieldYellow).toBeIn("graveyard");
 
-    // Pass to Bravo's turn.
-    Dash.endTurn();
-    game.helpers.resolveUntilIdle({ optionalBoolean: false });
-
-    // Activate a3 (Instant — destroy-self cost) during Bravo's turn so its
-    // `this-turn` prevention covers both arcane events. "The next time your
-    // hero would be dealt damage this turn, prevent X" (X = 4 steam).
-    game.helpers.passPriorityTo(Dash);
-    Dash.activate(dissipationShieldYellow, {
-      abilityId: "HGhtMHhF6dqdNccmNK7w8:instantDestroyDissipationShieldNextTimeHeroWouldBe",
-    });
-    game.helpers.resolveUntilIdle({ optionalBoolean: false });
-    expect(Dash.zone("graveyard")).toContain(dissipationShieldYellow.canonicalId);
-
-    // Event 1 — 2 arcane, fully prevented by the fixed 4-shield (leftover 2).
-    game.as(bravo).play(boltA);
-    drain(game);
-    expect(Dash.life()).toBe(LIFE);
-
-    // Event 2 — 2 arcane, NOT prevented: leftover is not carried (CR 6.4.10i).
-    // boltB is an Instant because this engine's turn economy grants 1 action
-    // point per turn (boltA spent it); CR 6.4.10i semantics are agnostic to
-    // the damage source's card type, so the prevention assertions are intact.
-    game.as(bravo).play(boltB);
-    drain(game);
-    expect(Dash.life()).toBe(LIFE - 2);
+    Dash.pass();
+    Oscilio.play(flashBoltYellow, { target: Dash.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabPlayer(Dash).toHaveLife(20);
+    Dash.pass();
+    Oscilio.play(flashBoltYellow, { target: Dash.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabPlayer(Dash).toHaveLife(18).toHaveAP(0).toHaveResourceCount(0);
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveHandCount(0).toHaveResourceCount(0).toHaveAP(1);
+    expectWait(game).toBeIdle();
   });
 
   // ─────────────────────────────────────────────────────────────────────────
@@ -606,56 +592,46 @@ describe("CR 6.4 / 6.5 — replacement-effect named examples", () => {
   // X are BOTH fully prevented (remaining shield carries across them).
   // ─────────────────────────────────────────────────────────────────────────
   it("CR 6.4.10j — Bone Head Barrier shielding carries leftover across events", () => {
-    const boltA = arcaneBolt(1, "bonehead-a");
-    const boltB = arcaneBolt(1, "bonehead-b");
-    const boltBig = arcaneBolt(6, "bonehead-big", ["Wizard", "Instant"]);
-    const boltLast = arcaneBolt(1, "bonehead-last", ["Wizard", "Instant"]);
     const game = FabTestEngine.start(
       {
-        hero: bravo,
-        hand: [boltA, boltB, boltBig, boltLast],
-        actionPoints: 2,
-        deck: 6,
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltBlue, flashBoltBlue, flashBoltRed, flashBoltRed, flashBoltBlue],
+        resourcePoints: 10,
+        actionPoints: 1,
+        deck: realPadding(),
       },
       {
-        hero: dash,
-        life: LIFE,
+        hero: rhinar,
+        life: 20,
         hand: [boneHeadBarrierYellow],
         resourcePoints: 1,
-        deck: 6,
+        deck: realPadding(),
       },
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual", firstPlayer: bravo },
+      { ...FAB_MANUAL_HARNESS, seed: "fab-test" },
     );
-    const Dash = game.as(dash);
-
-    // Roll a d6 → prevent the next X this turn. The roll is seed-deterministic
-    // (default seed "fab-test"): with this scenario's rng consumption the d6
-    // lands X = 6, so the registered shield starts with remainingAmount 6.
-    game.helpers.passPriorityTo(Dash);
-    Dash.play(boneHeadBarrierYellow);
-    drain(game);
-
-    // Event 1 — 1 arcane, prevented (remaining 6 → 5).
-    game.as(bravo).play(boltA);
-    drain(game);
-    // Event 2 — 1 arcane, prevented (remaining 5 → 4). CR 6.4.10j: remaining
-    // prevention carries across events.
-    game.as(bravo).play(boltB);
-    drain(game);
-    expect(Dash.life()).toBe(LIFE);
-
-    // Event 3 — 6 arcane against the 4 remaining: shielding prevents exactly
-    // the remaining 4 (CR 6.4.10j "as much remaining as possible"), Dash takes
-    // 2, and the effect CEASES TO EXIST at 0.
-    game.as(bravo).play(boltBig);
-    drain(game);
-    expect(Dash.life()).toBe(LIFE - 2);
-
-    // Event 4 — nothing prevents anymore: the ceased shield cannot apply to a
-    // later event (a never-exhausting shield would keep Dash at LIFE - 2).
-    game.as(bravo).play(boltLast);
-    drain(game);
-    expect(Dash.life()).toBe(LIFE - 3);
+    const Oscilio = game.as(oscilio);
+    const Rhinar = game.as(rhinar);
+    Oscilio.pass();
+    Rhinar.play(boneHeadBarrierYellow);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabCard(Rhinar, boneHeadBarrierYellow).toBeIn("graveyard");
+    // This fixture's seeded real d6 is three. Packet totals 1, 2, 5, 8, 9 distinguish
+    // carried shielding, partial exhaustion and a subsequent unshielded event.
+    for (const [card, life] of [
+      [flashBoltBlue, 20],
+      [flashBoltBlue, 20],
+      [flashBoltRed, 18],
+      [flashBoltRed, 15],
+      [flashBoltBlue, 14],
+    ] as const) {
+      Oscilio.play(card, { target: Rhinar.id });
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabPlayer(Rhinar).toHaveLife(life);
+    }
+    expectFabPlayer(Rhinar).toHaveResourceCount(0).toHaveHandCount(0);
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveResourceCount(0).toHaveHandCount(0).toHaveAP(1);
+    expectWait(game).toBeIdle();
   });
 
   // ─────────────────────────────────────────────────────────────────────────

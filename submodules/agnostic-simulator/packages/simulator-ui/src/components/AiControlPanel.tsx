@@ -11,6 +11,8 @@ export interface AiControlPanelProps {
   nextAiSide?: "player" | "opponent" | null;
   strategies: ReadonlyArray<{ id: string; label: string }>;
   selectedStrategyId?: string | null;
+  /** Short note appended to the status line, e.g. that a deck plan is bound. */
+  strategyNote?: string | null;
   isTakeover?: boolean;
   canStep?: boolean;
   isRemoteControlled?: boolean;
@@ -100,6 +102,7 @@ export function AiControlPanel({
   nextAiSide = null,
   strategies,
   selectedStrategyId = null,
+  strategyNote = null,
   isTakeover = false,
   canStep = false,
   isRemoteControlled = false,
@@ -183,7 +186,7 @@ export function AiControlPanel({
               : isRemoteControlled
                 ? `Server controls ${SIDE_LABEL[side]}`
                 : selectedStrategy
-                  ? `AI controls ${SIDE_LABEL[side]}`
+                  ? `AI controls ${SIDE_LABEL[side]}${strategyNote ? ` · ${strategyNote}` : ""}`
                   : `Hot-seat vs. ${SIDE_LABEL[side]}`}
           </span>
         </div>

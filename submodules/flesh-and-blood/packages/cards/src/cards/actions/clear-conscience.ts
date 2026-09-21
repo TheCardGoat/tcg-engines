@@ -51,6 +51,7 @@ const abilities = {
             {
               type: "create-token",
               token: "ponder",
+              creator: "token-controller",
               controller: "each",
             },
           ],

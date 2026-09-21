@@ -20,10 +20,12 @@ export function useFabPresentationRegistry() {
   if (!inherited) throw new Error("FAB card presentation requires FabPresentationCatalogProvider");
   return inherited;
 }
-export function useFabCardArt() {
+export function useFabPresentationSnapshot() {
   const registry = useFabPresentationRegistry();
-  return useSyncExternalStore(registry.subscribe, registry.getSnapshot, registry.getSnapshot)
-    .resolver;
+  return useSyncExternalStore(registry.subscribe, registry.getSnapshot, registry.getSnapshot);
+}
+export function useFabCardArt() {
+  return useFabPresentationSnapshot().resolver;
 }
 
 /** Routes remain usable while individual appearances recover. */

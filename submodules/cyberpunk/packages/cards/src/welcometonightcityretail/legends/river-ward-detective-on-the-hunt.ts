@@ -131,7 +131,7 @@ export const welcomeToNightCityRetailRiverWardDetectiveOnTheHunt = defineCyberpu
               },
             },
             {
-              zone: "deckBottom",
+              zone: "deckTop",
               remainder: true,
               order: "original",
             },

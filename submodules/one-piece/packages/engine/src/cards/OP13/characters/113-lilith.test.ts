@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, op13Conney106 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Lilith113 } from "../../../../../cards/src/cards/OP13/characters/113-lilith.ts";
+import { op13Lilith113 } from "../../../../../cards/src/cards/characters/op13-113-lilith.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

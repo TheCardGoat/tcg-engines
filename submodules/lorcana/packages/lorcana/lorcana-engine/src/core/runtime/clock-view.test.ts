@@ -18,6 +18,7 @@ const NOW = 1_700_000_000_000;
 function baseSnapshot(overrides: Partial<ClockSnapshot> = {}): ClockSnapshot {
   return {
     reserveMsRemaining: 60_000,
+    graceMs: 0,
     isRunning: false,
     startedAtMs: undefined,
     timeoutCount: 0,
@@ -313,6 +314,19 @@ describe("deriveClockView — canSkipOpponent / canDropOpponent (ported from Opp
   });
 
   describe("reserve negative while holding priority", () => {
+    it("waits for the configured negative-time grace before enabling drop", () => {
+      const snapshot = baseSnapshot({
+        reserveMsRemaining: 0,
+        graceMs: 15_000,
+        isRunning: true,
+        startedAtMs: NOW,
+        isInNegativeTime: true,
+      });
+
+      expect(deriveClockView(snapshot, NOW + 14_999).canDropOpponent).toBe(false);
+      expect(deriveClockView(snapshot, NOW + 15_000).canDropOpponent).toBe(true);
+    });
+
     it("enables canDrop immediately on first reserve exhaustion (no skip)", () => {
       const view = deriveClockView(
         baseSnapshot({

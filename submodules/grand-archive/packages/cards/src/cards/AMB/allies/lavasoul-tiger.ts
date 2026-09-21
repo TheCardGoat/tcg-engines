@@ -69,47 +69,58 @@ export const lavasoulTiger: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 2,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["FIRE"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 2,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["graveyard"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["FIRE"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "this-turn",
-                  },
-                  layer: {
-                    layer: "D",
-                    modifies: "ability",
-                  },
-                  change: {
-                    kind: "remove-keyword",
-                    keyword: {
-                      name: "pride",
-                      anyValue: true,
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "source",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "this-turn",
+                    },
+                    layer: {
+                      layer: "D",
+                      modifies: "ability",
+                    },
+                    change: {
+                      kind: "remove-keyword",
+                      keyword: {
+                        name: "pride",
+                        anyValue: true,
+                      },
                     },
                   },
                 },

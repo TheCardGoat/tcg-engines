@@ -29,6 +29,7 @@ export const takeTheBait = definePitchFamily(fabPitchFamilies["take-the-bait"], 
       effect: {
         type: "create-token",
         token: "bait",
+        creator: "effect-controller",
         controller: "opponent",
       },
     },

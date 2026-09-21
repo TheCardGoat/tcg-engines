@@ -47,7 +47,7 @@ describe("resolveAdjustGigMove.validate", () => {
     const result = resolveAdjustGigMove.validate!({
       state,
       playerId: createPlayerId("p1"),
-      input: { args: { value: 3 } },
+      input: { args: { kind: "adjust", dieId: "d-1" as GigDieId, value: 3 } },
     });
     expect(result).toMatchObject({ valid: false, errorCode: "NO_PENDING_CHOICE" });
   });
@@ -57,7 +57,7 @@ describe("resolveAdjustGigMove.validate", () => {
     const result = resolveAdjustGigMove.validate!({
       state,
       playerId: createPlayerId("p2"),
-      input: { args: { value: 5 } },
+      input: { args: { kind: "adjust", dieId: "d-1" as GigDieId, value: 5 } },
     });
     expect(result).toMatchObject({ valid: false, errorCode: "NOT_YOUR_CHOICE" });
   });
@@ -67,7 +67,7 @@ describe("resolveAdjustGigMove.validate", () => {
     const result = resolveAdjustGigMove.validate!({
       state,
       playerId: createPlayerId("p1"),
-      input: { args: { value: 7 } },
+      input: { args: { kind: "adjust", dieId: "d-1" as GigDieId, value: 7 } },
     });
     expect(result).toMatchObject({ valid: false, errorCode: "VALUE_OUT_OF_RANGE" });
   });
@@ -83,7 +83,7 @@ describe("resolveAdjustGigMove.validate", () => {
     const result = resolveAdjustGigMove.validate!({
       state,
       playerId: createPlayerId("p1"),
-      input: { args: { value: 2 } },
+      input: { args: { kind: "adjust", dieId: "d-1" as GigDieId, value: 2 } },
     });
     expect(result).toMatchObject({ valid: false, errorCode: "WRONG_DIRECTION" });
   });
@@ -99,7 +99,7 @@ describe("resolveAdjustGigMove.validate", () => {
     const result = resolveAdjustGigMove.validate!({
       state,
       playerId: createPlayerId("p1"),
-      input: { args: { value: 5 } },
+      input: { args: { kind: "adjust", dieId: "d-1" as GigDieId, value: 5 } },
     });
     expect(result).toMatchObject({ valid: false, errorCode: "EXCEEDS_MAX_AMOUNT" });
   });
@@ -115,7 +115,7 @@ describe("resolveAdjustGigMove.validate", () => {
     const result = resolveAdjustGigMove.validate!({
       state,
       playerId: createPlayerId("p1"),
-      input: { args: { value: 5 } },
+      input: { args: { kind: "adjust", dieId: "d-1" as GigDieId, value: 5 } },
     });
     expect(result).toEqual({ valid: true });
   });

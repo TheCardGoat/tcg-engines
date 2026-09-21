@@ -1,3 +1,28 @@
+import { verdance } from "../../../../../cards/src/cards/heroes/verdance.ts";
+import { sigilOfSanctuaryBlue } from "../../../../../cards/src/cards/instants/sigil-of-sanctuary.ts";
+import { snatchRed as realSnatchRed } from "../../../../../cards/src/cards/actions/snatch.ts";
+import { prism } from "../../../../../cards/src/cards/heroes/prism.ts";
+import { haloOfIllumination } from "../../../../../cards/src/cards/equipment/halo-of-illumination.ts";
+import { spellFrayTiara } from "../../../../../cards/src/cards/equipment/spell-fray-tiara.ts";
+import { spellFrayCloak } from "../../../../../cards/src/cards/equipment/spell-fray-cloak.ts";
+import { FAB_MANUAL_HARNESS, expectFabCard, expectWait } from "../../../testing/index.ts";
+import { oscilio } from "../../../../../cards/src/cards/heroes/oscilio.ts";
+import { dash as realDash } from "../../../../../cards/src/cards/heroes/dash.ts";
+import { nimblismBlue as realNimblismBlue } from "../../../../../cards/src/cards/actions/nimblism.ts";
+import {
+  flashBoltYellow,
+  flashBoltRed,
+} from "../../../../../cards/src/cards/instants/flash-bolt.ts";
+import { nullruneGloves } from "../../../../../cards/src/cards/equipment/nullrune-gloves.ts";
+
+const realPreventionPadding = () => [
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+  realNimblismBlue,
+];
 import { sinspeakerGloombladeRed } from "../../../../../cards/src/cards/actions/sinspeaker-gloomblade.ts";
 import { runechant } from "../../../../../cards/src/cards/tokens/runechant.ts";
 /**
@@ -1066,105 +1091,102 @@ describe("CR 8 — Keywords (ability keywords)", () => {
     expect(game.as(dash).zone("graveyard")).toContain(quellEq.canonicalId);
   });
 
-  it("8.3.8 arcane-barrier happy: pay RP to prevent N arcane damage", () => {
-    const barrier = equipmentTrainer({
-      slug: "ab-chest3",
-      keywords: [{ name: "arcane-barrier", value: 1 }],
-      defense: 0,
-      zoneSubtype: "Chest",
-    });
-    const bolt = {
-      canonicalId: "trainer-arcane-bolt3",
-      types: ["Wizard", "Action"],
-      cost: 0,
-      arcane: 2,
-      keywords: [],
-    };
-    const game = FabTestEngine.start(
-      { hero: bravo, hand: [bolt], deck: 4 },
-      {
-        hero: dash,
-        life: 20,
-        chest: [barrier],
-        resourcePoints: 1,
-        deck: 4,
-      },
-      // Walks priority/pitch timing by hand - opt out of the smart defaults.
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
-    );
-    game.as(bravo).play(bolt);
-    game.helpers.resolveUntilIdle({ optionalOptions: "all" });
-    // Arcane 2, barrier prevents 1 if paid → life 19, RP 0.
-    expect(game.as(dash).life()).toBe(19);
-    expect(game.as(dash).resourcePoints()).toBe(0);
-    expect(game.as(dash).zone("chest")).toContain(barrier.canonicalId);
-  });
+  for (const mode of ["floating", "pitch", "decline", "unfunded"] as const) {
+    it(`8.3.8 arcane-barrier ${mode}: each damage event needs its own payment`, () => {
+      const game = FabTestEngine.start(
+        {
+          hero: oscilio,
+          life: 20,
+          hand: [flashBoltYellow, flashBoltYellow],
+          resourcePoints: 4,
+          actionPoints: 1,
+          deck: realPreventionPadding(),
+        },
+        {
+          hero: realDash,
+          life: 20,
+          arms: [nullruneGloves],
+          resourcePoints: mode === "floating" || mode === "decline" ? 1 : 0,
+          hand: mode === "pitch" ? [realNimblismBlue] : [],
+          deck: realPreventionPadding(),
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      const Oscilio = game.as(oscilio);
+      const Dash = game.as(realDash);
+      Oscilio.play(flashBoltYellow, { target: Dash.id });
+      game.passBoth();
+      if (mode === "floating" || mode === "pitch") {
+        Dash.choose("arcane-barrier");
+        if (mode === "pitch") {
+          expectWait(game).toHaveDecision("payment");
+          Dash.pitchFirst(); // The only hand card is the authored blue Nimblism.
+        }
+      } else if (mode === "decline") Dash.chooseOptions();
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabPlayer(Dash)
+        .toHaveLife(mode === "floating" || mode === "pitch" ? 19 : 18)
+        .toHaveResourceCount(mode === "pitch" ? 2 : mode === "decline" ? 1 : 0)
+        .toHaveHandCount(0);
+      expectFabCard(Dash, nullruneGloves).toBeIn("arms");
+      if (mode === "pitch") expectFabCard(Dash, realNimblismBlue).toBeIn("pitch");
 
-  it("8.3.8 arcane-barrier edge: without RP, cannot prevent arcane damage", () => {
-    const barrier = equipmentTrainer({
-      slug: "ab-chest-norp",
-      keywords: [{ name: "arcane-barrier", value: 1 }],
-      defense: 0,
-      zoneSubtype: "Chest",
+      Oscilio.play(flashBoltYellow, { target: Dash.id });
+      game.passBoth();
+      if (mode === "pitch") Dash.choose("arcane-barrier");
+      else if (mode === "decline") Dash.chooseOptions();
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabPlayer(Dash)
+        .toHaveLife(mode === "pitch" ? 18 : mode === "floating" ? 17 : 16)
+        .toHaveResourceCount(mode === "pitch" || mode === "decline" ? 1 : 0);
+      expectFabCard(Dash, nullruneGloves).toBeIn("arms");
+      expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(1).toHaveResourceCount(0).toHaveHandCount(0);
+      expectWait(game).toBeIdle();
     });
-    const bolt = {
-      canonicalId: "trainer-arcane-bolt-ab-edge",
-      types: ["Wizard", "Action"],
-      cost: 0,
-      arcane: 2,
-      keywords: [],
-    };
-    const game = FabTestEngine.start(
-      { hero: bravo, hand: [bolt], deck: 4 },
-      { hero: dash, life: 20, chest: [barrier], resourcePoints: 0, deck: 4 },
-      // Walks priority/pitch timing by hand - opt out of the smart defaults.
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
-    );
-    game.as(bravo).play(bolt);
-    game.passBoth();
-    expect(game.as(dash).life()).toBe(18);
-    expect(game.as(dash).zone("chest")).toContain(barrier.canonicalId);
-  });
+  }
 
-  it("8.3.15 spellvoid happy: destroy spellvoid equipment to prevent N arcane", () => {
-    const spellvoidEq = equipmentTrainer({
-      slug: "sv-head3",
-      keywords: [{ name: "spellvoid", value: 2 }],
-      defense: 0,
-      zoneSubtype: "Head",
+  for (const prevent of [false, true]) {
+    it(`8.3.15 spellvoid ${prevent ? "accept" : "decline"}: destruction determines prevention and the next event`, () => {
+      const game = FabTestEngine.start(
+        {
+          hero: oscilio,
+          life: 20,
+          hand: [flashBoltYellow, flashBoltYellow],
+          resourcePoints: 4,
+          actionPoints: 1,
+          deck: realPreventionPadding(),
+        },
+        {
+          hero: prism,
+          life: 20,
+          hand: [],
+          resourcePoints: 0,
+          head: [haloOfIllumination],
+          deck: realPreventionPadding(),
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      const Oscilio = game.as(oscilio);
+      const Prism = game.as(prism);
+      Oscilio.play(flashBoltYellow, { target: Prism.id });
+      game.passBoth();
+      if (prevent) Prism.choose("spellvoid");
+      else Prism.chooseOptions();
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabPlayer(Prism)
+        .toHaveLife(prevent ? 20 : 18)
+        .toHaveResourceCount(0);
+      expectFabCard(Prism, haloOfIllumination).toBeIn(prevent ? "graveyard" : "head");
+      Oscilio.play(flashBoltYellow, { target: Prism.id });
+      game.passBoth();
+      if (!prevent) Prism.chooseOptions();
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabPlayer(Prism).toHaveLife(prevent ? 18 : 16);
+      expectFabCard(Prism, haloOfIllumination).toBeIn(prevent ? "graveyard" : "head");
+      expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(1).toHaveResourceCount(0).toHaveHandCount(0);
+      expectWait(game).toBeIdle();
     });
-    const bolt2 = {
-      canonicalId: "trainer-arcane-bolt4",
-      types: ["Wizard", "Action"],
-      cost: 0,
-      arcane: 2,
-      keywords: [],
-    };
-    const g2 = FabTestEngine.start(
-      { hero: bravo, hand: [bolt2], deck: 4 },
-      { hero: dash, life: 20, head: [spellvoidEq], deck: 4 },
-      // Walks priority/pitch timing by hand - opt out of the smart defaults.
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
-    );
-    g2.as(bravo).play(bolt2);
-    g2.passBoth();
-    const decision = g2.getState().decision;
-    expect(decision).toMatchObject({ kind: "option", actorId: g2.as(dash).id });
-    if (!decision || decision.kind !== "option") throw new Error("Expected a Spellvoid choice.");
-    g2.exec({
-      move: "answer-decision",
-      actorId: decision.actorId,
-      payload: {
-        decisionId: decision.decisionId,
-        stateVersion: decision.stateVersion,
-        answer: { kind: "option", optionIds: decision.options.map((option) => option.id) },
-      },
-    });
-    // Spellvoid destroys equipment to prevent 2 → life 20, head empty.
-    expect(g2.as(dash).life()).toBe(20);
-    expect(g2.as(dash).zone("head")).not.toContain(spellvoidEq.canonicalId);
-    expect(g2.as(dash).zone("graveyard")).toContain(spellvoidEq.canonicalId);
-  });
+  }
 
   it("8.3.15 spellvoid: each damaged hero chooses only their own prevention", () => {
     const bravoSpellvoid = equipmentTrainer({
@@ -1262,113 +1284,115 @@ describe("CR 8 — Keywords (ability keywords)", () => {
   });
 
   it("8.3.15 spellvoid: selecting multiple optional preventions asks their application order", () => {
-    const head = equipmentTrainer({
-      slug: "sv-head-order",
-      keywords: [{ name: "spellvoid", value: 1 }],
-      defense: 0,
-      zoneSubtype: "Head",
-    });
-    const chest = equipmentTrainer({
-      slug: "sv-chest-order",
-      keywords: [{ name: "spellvoid", value: 1 }],
-      defense: 0,
-      zoneSubtype: "Chest",
-    });
-    const bolt = {
-      canonicalId: "trainer-arcane-bolt-spellvoid-order",
-      types: ["Wizard", "Action"],
-      cost: 0,
-      arcane: 3,
-      keywords: [],
-    };
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [bolt], deck: 4 },
-      { hero: dash, life: 20, head: [head], chest: [chest], deck: 4 },
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
-    );
-    game.as(bravo).play(bolt);
-    game.passBoth();
-    const selection = game.getState().decision;
-    if (!selection || selection.kind !== "option") throw new Error("Expected a Spellvoid choice.");
-    game.exec({
-      move: "answer-decision",
-      actorId: selection.actorId,
-      payload: {
-        decisionId: selection.decisionId,
-        stateVersion: selection.stateVersion,
-        answer: { kind: "option", optionIds: selection.options.map((option) => option.id) },
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltRed],
+        resourcePoints: 2,
+        actionPoints: 1,
+        deck: realPreventionPadding(),
       },
-    });
-    const ordering = game.getState().decision;
-    if (!ordering || ordering.kind !== "ordering") throw new Error("Expected a replacement order.");
-    game.exec({
-      move: "answer-decision",
-      actorId: ordering.actorId,
-      payload: {
-        decisionId: ordering.decisionId,
-        stateVersion: ordering.stateVersion,
-        answer: { kind: "ordering", orderedIds: ordering.entries.map((entry) => entry.id) },
+      {
+        hero: realDash,
+        life: 20,
+        hand: [],
+        resourcePoints: 0,
+        head: [spellFrayTiara],
+        chest: [spellFrayCloak],
+        deck: realPreventionPadding(),
       },
-    });
-
-    expect(
-      game
-        .committedEvents()
-        .filter((event) => event.name === "prevent" && "preventedAmount" in event.data),
-    ).toHaveLength(2);
-    expect(game.as(dash).zone("graveyard")).toEqual(
-      expect.arrayContaining([head.canonicalId, chest.canonicalId]),
+      FAB_MANUAL_HARNESS,
     );
-  });
-
-  it("8.3.37 arcane-shelter happy: destroy shelter equipment to prevent N arcane damage", () => {
-    const shelter = equipmentTrainer({
-      slug: "as-head",
-      keywords: [{ name: "arcane-shelter", value: 2 }],
-      defense: 0,
-      zoneSubtype: "Head",
-    });
-    const bolt = {
-      canonicalId: "trainer-arcane-bolt-shelter",
-      types: ["Wizard", "Action"],
-      cost: 0,
-      arcane: 2,
-      keywords: [],
-    };
-    const game = FabTestEngine.start(
-      { hero: bravo, hand: [bolt], deck: 4 },
-      { hero: dash, life: 20, head: [shelter], deck: 4 },
-      // Walks priority/pitch timing by hand - opt out of the smart defaults.
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
-    );
-    game.as(bravo).play(bolt);
+    const Oscilio = game.as(oscilio);
+    const Dash = game.as(realDash);
+    Oscilio.play(flashBoltRed, { target: Dash.id });
     game.passBoth();
-    // Shelter destroys to prevent 2 → life 20, head empty.
-    expect(game.as(dash).life()).toBe(20);
-    expect(game.as(dash).zone("head")).not.toContain(shelter.canonicalId);
-    expect(game.as(dash).zone("graveyard")).toContain(shelter.canonicalId);
+    Dash.chooseNamedOptions("Spell Fray Tiara", "Spell Fray Cloak");
+    expectWait(game).toHaveDecision("ordering");
+    // These two identical one-point preventions commute; both must be applied.
+    Dash.chooseListedOrder();
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabPlayer(Dash).toHaveLife(19).toHaveResourceCount(0);
+    expectFabCard(Dash, spellFrayTiara).toBeIn("graveyard");
+    expectFabCard(Dash, spellFrayCloak).toBeIn("graveyard");
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(1).toHaveResourceCount(0).toHaveHandCount(0);
+    expectWait(game).toBeIdle();
   });
 
-  it("8.3.37 arcane-shelter edge: physical combat does not destroy arcane-shelter", () => {
-    const shelter = equipmentTrainer({
-      slug: "as-head-phys",
-      keywords: [{ name: "arcane-shelter", value: 2 }],
-      defense: 0,
-      zoneSubtype: "Head",
-    });
+  it("8.3.37 arcane-shelter: mandatory aura destruction prevents only the first arcane event", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 4 },
-      { hero: dash, life: 20, head: [shelter], deck: 4 },
-      // Walks priority/pitch timing by hand - opt out of the smart defaults.
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltYellow, flashBoltYellow],
+        resourcePoints: 4,
+        actionPoints: 1,
+        deck: realPreventionPadding(),
+      },
+      {
+        hero: verdance,
+        life: 20,
+        hand: [sigilOfSanctuaryBlue],
+        resourcePoints: 0,
+        deck: realPreventionPadding(),
+      },
+      FAB_MANUAL_HARNESS,
     );
-    game.as(bravo).attackWith(snatchRed);
-    game.helpers.resolveRestOfCombat();
-    expect(game.as(dash).life()).toBe(16);
-    expect(game.as(dash).zone("head")).toContain(shelter.canonicalId);
+    const Oscilio = game.as(oscilio);
+    const Verdance = game.as(verdance);
+    Oscilio.pass();
+    Verdance.play(sigilOfSanctuaryBlue);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabCard(Verdance, sigilOfSanctuaryBlue).toBeIn("arena");
+    Oscilio.play(flashBoltYellow, { target: Verdance.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabPlayer(Verdance).toHaveLife(19).toHaveTokenCount("embodiment-of-earth", 1);
+    expectFabCard(Verdance, sigilOfSanctuaryBlue).toBeIn("graveyard");
+    Oscilio.play(flashBoltYellow, { target: Verdance.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    expectFabPlayer(Verdance)
+      .toHaveLife(17)
+      .toHaveTokenCount("embodiment-of-earth", 1)
+      .toHaveResourceCount(0);
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(1).toHaveResourceCount(0).toHaveHandCount(0);
+    expectWait(game).toBeIdle();
   });
 
-  it("8.3.19 quell edge: without RP, quell cannot prevent and equipment is not pending-destroy", () => {
+  it("8.3.37 arcane-shelter: physical damage leaves the aura intact", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [realSnatchRed],
+        actionPoints: 1,
+        deck: realPreventionPadding(),
+      },
+      {
+        hero: verdance,
+        life: 20,
+        hand: [sigilOfSanctuaryBlue],
+        resourcePoints: 0,
+        deck: realPreventionPadding(),
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Oscilio = game.as(oscilio);
+    const Verdance = game.as(verdance);
+    Oscilio.pass();
+    Verdance.play(sigilOfSanctuaryBlue);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    Oscilio.playAttack(realSnatchRed);
+    Verdance.defendWith([]);
+    game.closeCombat({ optionals: "throw" });
+    expectFabPlayer(Verdance).toHaveLife(16).toHaveTokenCount("embodiment-of-earth", 0);
+    expectFabCard(Verdance, sigilOfSanctuaryBlue).toBeIn("arena");
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(0).toHaveHandCount(1);
+    expectFabCard(Oscilio, realSnatchRed).toBeIn("graveyard");
+    expectWait(game).toBeIdle();
+  });
+
+  it("8.3.19 quell edge: without RP or pitchable cards, quell cannot prevent and equipment is not pending-destroy", () => {
     const quellEq = equipmentTrainer({
       slug: "quell-no-rp",
       keywords: [{ name: "quell", value: 1 }],
@@ -1382,6 +1406,7 @@ describe("CR 8 — Keywords (ability keywords)", () => {
         life: 20,
         arms: [quellEq],
         resourcePoints: 0,
+        hand: [],
         deck: 4,
       },
       // Walks priority/pitch timing by hand - opt out of the smart defaults.

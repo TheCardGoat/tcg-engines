@@ -4,10 +4,12 @@ import {
   expectFabPlayer,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
-  fabToken,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { hyperDriverRed } from "./hyper-driver.ts";
-import { dash } from "../heroes/dash.ts";
+import { puffin } from "../heroes/puffin.ts";
+import { goldenCog } from "../tokens/golden-cog.ts";
+import { nimblismBlue } from "./nimblism.ts";
 import { bravo } from "../heroes/bravo.ts";
 import { snatchRed } from "./snatch.ts";
 import { goldenSkywardenYellow } from "./golden-skywarden.ts";
@@ -26,81 +28,125 @@ import { goldenSkywardenYellow } from "./golden-skywarden.ts";
 describe("Golden Skywarden (SEA004) AAA", () => {
   it("happy: each Golden Cog destroyed this way creates a Gold and repeats", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
       {
-        hero: dash,
+        hero: bravo,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: puffin,
         hand: [goldenSkywardenYellow],
-        arena: [fabToken("golden-cog"), fabToken("golden-cog")],
+        arena: [goldenCog, goldenCog],
         life: 20,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
-    const Dash = game.as(dash);
+    const Puffin = game.as(puffin);
 
+    const cogs = Puffin.cardsIn("arena", goldenCog);
     game.as(bravo).playAttack(snatchRed);
-    Dash.defendWith(goldenSkywardenYellow);
-    game.untilIdle({ optionals: "accept", entityTargets: "pause", ordering: "listed" });
-    const cogs = Dash.cardsIn("arena", fabToken("golden-cog"));
-    Dash.target(cogs[0]!);
-    Dash.accept();
-    Dash.target(cogs[1]!);
-    Dash.decline();
+    Puffin.defendWith(goldenSkywardenYellow);
+    game.advanceToDecision(Puffin, "boolean");
+    Puffin.accept();
+    game.advanceToDecision(Puffin, "entity-target");
+    Puffin.target(cogs[0]!);
 
-    expectFabCard(Dash, goldenSkywardenYellow).toHaveDefense(4);
-    expectFabPlayer(Dash).toHaveTokenCount("gold", 2);
-    game.helpers.resolveRestOfCombat();
-    expectFabPlayer(Dash).toHaveLife(20);
+    // The complete first iteration must resolve before the next offer.
+    expectFabCard(Puffin, goldenSkywardenYellow).toHaveDefense(3);
+    expectFabPlayer(Puffin).toHaveTokenCount("gold", 1);
+    expectFabPlayer(Puffin).toHaveTokenCount("golden-cog", 1);
+    game.advanceToDecision(Puffin, "boolean");
+    Puffin.accept();
+    game.advanceToDecision(Puffin, "entity-target");
+    Puffin.target(cogs[1]!);
+
+    expectFabCard(Puffin, goldenSkywardenYellow).toHaveDefense(4);
+    expectFabPlayer(Puffin).toHaveTokenCount("gold", 2);
+    expectFabPlayer(Puffin).toHaveTokenCount("golden-cog", 0);
+    game.advanceToDecision(Puffin, "boolean");
+    Puffin.decline();
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
+
+    expectFabCard(Puffin, goldenSkywardenYellow).toHaveDefense(4);
+    expectFabPlayer(Puffin).toHaveTokenCount("gold", 2);
+    game.closeCombat();
+    expectFabPlayer(Puffin).toHaveLife(20);
+    expectFabCard(Puffin, goldenSkywardenYellow).toBeIn("graveyard").toHaveDefense(2);
+    expectWait(game).toBeIdle();
   });
 
   it("boundary: a non-Cog item grants +1{d} and does not create Gold or repeat", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
       {
-        hero: dash,
+        hero: bravo,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: puffin,
         hand: [goldenSkywardenYellow],
-        arena: [hyperDriverRed, fabToken("golden-cog")],
+        arena: [hyperDriverRed, goldenCog],
         life: 20,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
-    const Dash = game.as(dash);
+    const Puffin = game.as(puffin);
 
     game.as(bravo).playAttack(snatchRed);
-    Dash.defendWith(goldenSkywardenYellow);
-    game.untilIdle({ optionals: "accept", entityTargets: "pause", ordering: "listed" });
-    Dash.target(hyperDriverRed);
-    game.untilIdle({ optionals: "decline", ordering: "listed" });
+    Puffin.defendWith(goldenSkywardenYellow);
+    game.advanceToDecision(Puffin, "boolean");
+    Puffin.accept();
+    game.advanceToDecision(Puffin, "entity-target");
+    Puffin.target(hyperDriverRed);
+    game.advanceUntil({
+      stopAt: "reaction",
+      optionals: "throw",
+      entityTargets: "pause",
+      ordering: "listed",
+    });
+    expectWait(game).notToHaveDecision();
 
-    expectFabCard(Dash, goldenSkywardenYellow).toHaveDefense(3);
-    expectFabPlayer(Dash).toHaveTokenCount("gold", 0);
-    expectFabCard(Dash, hyperDriverRed).toBeIn("graveyard");
-    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 1);
+    expectFabCard(Puffin, goldenSkywardenYellow).toHaveDefense(3);
+    expectFabPlayer(Puffin).toHaveTokenCount("gold", 0);
+    expectFabCard(Puffin, hyperDriverRed).toBeIn("graveyard");
+    expectFabPlayer(Puffin).toHaveTokenCount("golden-cog", 1);
+    game.closeCombat();
+    expectFabPlayer(Puffin).toHaveLife(19);
+    expectFabCard(Puffin, goldenSkywardenYellow).toBeIn("graveyard").toHaveDefense(2);
+    expectWait(game).toBeIdle();
   });
 
   it("timing: declining the first optional creates no Gold and does not repeat", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
       {
-        hero: dash,
+        hero: bravo,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: puffin,
         hand: [goldenSkywardenYellow],
-        arena: [fabToken("golden-cog"), fabToken("golden-cog")],
+        arena: [goldenCog, goldenCog],
         life: 20,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
-    const Dash = game.as(dash);
+    const Puffin = game.as(puffin);
 
     game.as(bravo).playAttack(snatchRed);
-    Dash.defendWith(goldenSkywardenYellow);
-    game.untilIdle({ optionals: "decline", ordering: "listed" });
+    Puffin.defendWith(goldenSkywardenYellow);
+    game.advanceToDecision(Puffin, "boolean");
+    Puffin.decline();
+    game.untilIdle({ optionals: "throw", entityTargets: "pause", ordering: "listed" });
+    expectWait(game).notToHaveDecision();
 
-    expectFabCard(Dash, goldenSkywardenYellow).toHaveDefense(2);
-    expectFabPlayer(Dash).toHaveTokenCount("gold", 0);
-    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 2);
-    game.helpers.resolveRestOfCombat();
-    expectFabPlayer(Dash).toHaveLife(18);
+    expectFabCard(Puffin, goldenSkywardenYellow).toHaveDefense(2);
+    expectFabPlayer(Puffin).toHaveTokenCount("gold", 0);
+    expectFabPlayer(Puffin).toHaveTokenCount("golden-cog", 2);
+    game.closeCombat();
+    expectFabPlayer(Puffin).toHaveLife(18);
   });
 });

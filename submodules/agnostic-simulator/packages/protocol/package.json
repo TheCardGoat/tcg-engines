@@ -23,7 +23,9 @@
     "./handler-context": "./src/handler-context.ts",
     "./animations": "./src/animations.ts",
     "./ws-ticket": "./src/ws-ticket.ts",
-    "./presentation": "./src/presentation.ts"
+    "./presentation": "./src/presentation.ts",
+    "./native": "./src/native.ts",
+    "./drop-eligibility": "./src/drop-eligibility.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit",

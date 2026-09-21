@@ -1,0 +1,162 @@
+/** Classification of Comprehensive Rules display numbers. Editorial/physical are non-goals. */
+export type RuleKind = "editorial" | "physical" | "playable" | "untestable";
+
+export const EDITORIAL_RULES = new Set<string>([
+  "1",
+  "1.1",
+  "1.2",
+  "1.3",
+  "1.4.1",
+  "1.7.3.1",
+  "1.7.3.2",
+  "2",
+  "2.11",
+  "2.12",
+  "2.12.1",
+  "2.12.2",
+  "2.12.3",
+  "2.13",
+  "2.13.1",
+  "3",
+  "3.9",
+  "3.9.1",
+  "3.9.1.1",
+  "3.9.1.2",
+  "3.9.1.3",
+  "3.10",
+  "3.10.1",
+  "3.14",
+  "3.14.1",
+  "3.14.2",
+  "3.14.3",
+  "3.15",
+  "3.15.1",
+  "3.16",
+  "3.16.1",
+  "3.18",
+  "3.18.1",
+  "3.18.1.1",
+  "3.18.1.2",
+  "3.18.1.2.1",
+  "3.18.1.2.1.1",
+  "3.18.1.2.2",
+  "3.18.1.2.2.1",
+  "3.18.1.2.2.2",
+  "3.18.1.2.3",
+  "3.18.1.2.3.1",
+  "3.19",
+  "3.19.1",
+  "3.20.1.1",
+  "3.20.1.2",
+  "3.20.2",
+  "4",
+  "5",
+  "5.1",
+  "5.2",
+  "5.6.1",
+  "5.7",
+  "5.9.1",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+]);
+
+export const PHYSICAL_RULES = new Set<string>([
+  "5.2.1",
+  "5.2.1.1",
+  "5.7.4.2",
+  "5.13.2.1",
+  "6.2",
+  "6.2.1",
+  "6.2.2",
+  "6.2.3",
+  "6.2.4",
+  "6.2.5",
+  "6.2.6",
+  "7.1",
+  "7.2",
+  "7.2.1",
+  "7.2.2",
+  "7.2.3",
+  "7.2.4",
+  "7.3.6",
+  "7.3.7",
+  "7.5.1",
+  "7.6.1",
+  "7.6.2",
+  "7.7.1",
+  "7.7.2",
+  "9.3.4",
+  "4.14.1",
+  "11.6.1.1",
+  "3.1",
+  "3.2",
+  "3.2.1",
+  "3.13.1.2",
+  "5.9.4.2",
+  "8.7",
+  "10.20.5",
+]);
+
+/**
+ * Playable in the CR, but no published catalog card (or no player-facing engine
+ * prompt) can uniquely isolate the clause. These are not silently treated as
+ * covered; they are excluded from the playable coverage gate.
+ */
+export const UNTESTABLE_RULES: Record<string, string> = {
+  "9.23.1": 'No catalog card grants a "while stealing" modifier.',
+  "10.20.2": "No catalog activated effect lives in a hidden area such as hand.",
+  "10.30":
+    "No catalog pair of a game-mechanic replacement that supersedes a mandatory card replacement.",
+  "10.33":
+    "No catalog effect instructs both players to choose at the same time (Gunpoint Diplomacy is sequential).",
+  "11.5.2.2": 'No catalog card uses "Draw up to X."',
+  "11.7.2.1.2": 'No catalog card uses "trash up to X."',
+  "11.9.1.2": "No catalog effect sells multiple cards at the same time.",
+  "11.12.1.2": "No catalog effect bottom-decks a card the player does not own.",
+  "11.12.2": 'Viktor bottoms remainder in random order, not "in any order."',
+  "1.12": "No catalog card specifies an alternate win condition.",
+  "1.13.1":
+    "The standard 12-die Gig pool cannot put 7 Gigs on both sides at once (7+7=14). No catalog pair can make both players win at the same time.",
+  "1.15": "No catalog card specifies an alternate lose condition.",
+  "1.17.1": "No catalog pair can make both players lose at the same time.",
+  "3.11.2.3": "No catalog effect references a Legend's cost value.",
+  "3.13.2":
+    "PRM01 Rebecca: Having a Moment is catalogued with no classifications; every other structured card has at least one tag.",
+  "5.7.7": "No catalog effect puts a fourth Legend into the Legends area.",
+  "6.7.1.2": "No catalog effect names a steal actor other than the attacking Unit.",
+  "9.26.4": "No catalog effect instructs a player to end the attack.",
+  "9.26.3": "No catalog interaction makes an attack target illegal without leaving its area.",
+  "10.1.4": "No catalog card uniquely isolates controller-as-resolver wording.",
+  "10.2.2": "No catalog effect instructs both players to act at the same time.",
+  "10.2.5": "No catalog card uniquely isolates post-resolve rule processing as a separate step.",
+  "10.4": "Parent taxonomy of the four effect kinds; subtypes are covered separately.",
+  "10.5": "Validity definition is not uniquely isolated from a successful catalog effect.",
+  "10.6.1": "No catalog effect is entirely invalid while remaining on the card.",
+  "10.6.3": "Invalid-but-still-an-effect is not uniquely isolatable from 10.6.2.",
+  "10.9": "No catalog activated effect has an extra activation condition besides costs/targets.",
+  "10.10": "No catalog pending effect becomes invalid mid-resolution without a target leaving.",
+  "10.10.1": "No catalog pending effect needs last-known information of a departed piece.",
+  "10.13": "No catalog fixture gives both players pending effects at the same time.",
+  "10.14.1": "No catalog pair queues new pending for both players during one resolution.",
+  "10.15": "No catalog pending effect continues after a state change that would have stopped it.",
+  "10.15.1":
+    "No catalog pending effect re-checks a resolution-time condition after a state change.",
+  "10.20.7": "No catalog activation leaves a follow-up pending window after resolve.",
+  "10.21": "No catalog activated effect has its source leave before it finishes resolving.",
+  "10.22.3": "No catalog bounce of a persistent source while the buffed attack is still open.",
+  "10.23": "Parent duration rule; 10.23.1 is covered by Saul's while-attacking bonus.",
+};
+
+/** Playable rules with no published catalog card (or no legal simultaneous-state fixture) to drive them. */
+export const GAP_RULES: Record<string, string> = {};
+
+export function ruleKind(rule: string): RuleKind {
+  if (EDITORIAL_RULES.has(rule)) return "editorial";
+  if (PHYSICAL_RULES.has(rule)) return "physical";
+  if (UNTESTABLE_RULES[rule]) return "untestable";
+  return "playable";
+}

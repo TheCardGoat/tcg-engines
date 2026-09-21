@@ -31,10 +31,8 @@ export const welcomeToNightCityRetailSatoriSwordOfSaburo = defineCyberpunkCard({
     AbilityBuilder.triggered()
       .text("When this Unit wins a fight against a rival Unit, draw 1.")
       .onFightResolved({
-        player: "friendly",
-        result: "attackerWins",
-        attacker: target.host(),
-        defender: target.card({ controller: "rival", cardTypes: ["unit"] }),
+        player: "any",
+        winner: target.host(),
       })
       .source(target.host())
       .effect(effect.draw({ player: "friendly", amount: 1 }))

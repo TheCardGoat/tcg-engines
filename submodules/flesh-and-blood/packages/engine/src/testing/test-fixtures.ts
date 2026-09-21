@@ -97,6 +97,8 @@ export function registerFabTestObject(
 }
 
 export interface FabFixtureObjectSetup {
+  /** Arrange a card created/owned by the other seated player, before any moves. */
+  owner?: "opponent";
   defenseCounterTotal?: number;
   powerCounterTotal?: number;
   health?: number;
@@ -170,7 +172,19 @@ export function setFabFixtureObjectSetup(
   instanceId: string,
   values: FabFixtureObjectSetup,
 ): void {
+  if (values.owner === "opponent") {
+    const object = state.objects[instanceId];
+    const seatedPlayer = state.playerIds.find((id) =>
+      Object.values(state.containers.zonesByPlayerId[id] ?? {}).some((zone) =>
+        zone.some((cardId) => cardId === instanceId),
+      ),
+    );
+    const owner = seatedPlayer && state.playerIds.find((id) => id !== seatedPlayer);
+    if (!object || !owner) throw new Error("Fixture ownership needs two seated players.");
+    state.objects[instanceId] = { ...object, ownerId: fabPlayerId(owner) };
+  }
   for (const [property, value] of Object.entries(values)) {
+    if (property === "owner") continue;
     writeFabFixtureObjectSetupProperty(state, instanceId, property, value);
   }
 }

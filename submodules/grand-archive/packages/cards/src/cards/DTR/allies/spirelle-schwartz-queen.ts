@@ -98,7 +98,7 @@ export const spirelleSchwartzQueen: GrandArchiveCard<GrandArchiveAbilityDefiniti
                     },
                     candidates: {
                       kind: "card",
-                      zones: ["hand"],
+                      zones: ["hand", "memory"],
                       relationship: "zone-of",
                       player: "controller",
                     },
@@ -129,8 +129,23 @@ export const spirelleSchwartzQueen: GrandArchiveCard<GrandArchiveAbilityDefiniti
               },
               {
                 kind: "select-and-reveal",
-                player: "controller",
+                player: "each-player",
                 from: "banishment",
+                filter: {
+                  kind: "numeric",
+                  comparison: {
+                    left: {
+                      kind: "property",
+                      subject: {
+                        kind: "candidate",
+                      },
+                      property: "reserve-cost",
+                      basis: "base",
+                    },
+                    operator: "gte",
+                    right: 0,
+                  },
+                },
                 count: {
                   kind: "exactly",
                   amount: 1,

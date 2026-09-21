@@ -175,10 +175,45 @@ describe("live match route destinations", () => {
           { id: String(P2), connected: true },
         ],
       },
-      history: { recentMoves: [], engineLogs: [], chatMessages: [] },
+      history: {
+        recentMoves: [],
+        engineLogs: [
+          {
+            tag: "engine_log",
+            data: {
+              moveType: "keepHand",
+              playerId: String(P1),
+              timestamp: 1,
+              turnNumber: 1,
+              public: [],
+            },
+            ts: 1,
+          },
+        ],
+        chatMessages: [],
+      },
     } satisfies LiveMatchBootstrapV1;
 
     const context = prepareLiveContext(liveMatchContextFromBootstrap(bootstrap));
+
+    // Bootstrap engine-log entries must arrive wrapped as { timestamp, log }
+    // records so the page's engine-log parser (which requires a .log object)
+    // keeps them instead of dropping every history entry.
+    expect(context.history?.engineLogs).toEqual([
+      {
+        timestamp: 1,
+        log: {
+          moveType: "keepHand",
+          playerId: String(P1),
+          timestamp: 1,
+          turnNumber: 1,
+          public: [],
+        },
+      },
+    ]);
+    for (const record of context.history?.engineLogs ?? []) {
+      expect(record).toMatchObject({ log: expect.any(Object) });
+    }
 
     expect(context.game.actorIds).toEqual({ player: String(P2), opponent: String(P1) });
     expect(context.game.state?.ctx.playerIds).toEqual([P1, P2]);
@@ -190,6 +225,24 @@ describe("live match route destinations", () => {
     expect(context.game.state?.G.players[String(P1)]?.firstPlayer).toBe(
       sourceState.G.players[String(P2)]?.firstPlayer,
     );
+
+    const completedContext = prepareLiveContext(
+      liveMatchContextFromBootstrap({
+        ...bootstrap,
+        match: {
+          ...bootstrap.match,
+          status: "completed",
+          winnerId: String(P2),
+        },
+        game: {
+          ...bootstrap.game,
+          status: "completed",
+        },
+      }),
+    );
+
+    expect(completedContext.game.state?.G.gameEnded).toBe(true);
+    expect(completedContext.game.state?.G.winnerId).toBe(P1);
   });
 });
 

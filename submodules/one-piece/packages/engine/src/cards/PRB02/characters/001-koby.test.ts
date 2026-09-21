@@ -6,7 +6,7 @@ import {
   op11Koby001,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02Koby001 } from "../../../../../cards/src/cards/PRB02/characters/001-koby.ts";
+import { prb02Koby001 } from "../../../../../cards/src/cards/characters/prb02-001-koby.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

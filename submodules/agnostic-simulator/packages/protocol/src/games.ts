@@ -17,6 +17,7 @@ export type PlayableGameSlug =
   | "flesh-and-blood"
   | "grand-archive"
   | "naruto"
+  | "alpha-clash"
   | "platform";
 
 export const PLAYABLE_GAME_SLUGS = [
@@ -28,6 +29,7 @@ export const PLAYABLE_GAME_SLUGS = [
   "flesh-and-blood",
   "grand-archive",
   "naruto",
+  "alpha-clash",
   "platform",
 ] as const satisfies readonly PlayableGameSlug[];
 

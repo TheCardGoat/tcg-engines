@@ -51,11 +51,11 @@ export const purgingTempest: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
             kind: "replacement",
             event: {
               name: "card-moved",
-              actor: {
-                binding: "target-player",
-              },
               subject: {
                 kind: "event-object",
+                owner: {
+                  binding: "target-player",
+                },
               },
               fromNot: ["field"],
               to: "graveyard",

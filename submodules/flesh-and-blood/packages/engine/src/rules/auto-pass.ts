@@ -4,7 +4,11 @@ import {
   type FabLegalCommand,
   type FabLegalCommandSource,
 } from "./legal-commands/index.ts";
-import { fabPriorityWindowManualOnly, fabPriorityWindowVerdict } from "./automation-verdict.ts";
+import {
+  fabPriorityWindowManualOnly,
+  fabPriorityWindowVerdict,
+  fabScopedAutoPassActive,
+} from "./automation-verdict.ts";
 import { FAB_DEFAULT_AUTOMATION_PREFERENCES } from "../state.ts";
 
 /**
@@ -36,6 +40,11 @@ export type FabAutoPassPolicy =
  * mirror of the owner-side `autoPassWhileTop` drain — so they apply in every
  * priority mode and regardless of the holder's remaining options.
  *
+ * An active scoped arm ("this combat" / "the opponent's turn") overrides the
+ * seat's mode with `pass-only` for the scope's lifetime, blanket-yields the
+ * seat's Instant uses, and defers to a one-shot priority hold (the hold is the
+ * seat's explicit "keep my windows" signal; it wins until a pass consumes it).
+ *
  * The mode policies then consult {@link fabPriorityWindowVerdict}: a
  * `manualOnly` window (defend declaration, terminal Action-Phase window, the
  * attacker's Resolution-step chain close) is never automated, and `pass-only`
@@ -64,6 +73,7 @@ export function getFabAutoPassPriorityCommand(
   if (!actorId) return null;
 
   const profile = state.automationPreferences[actorId] ?? FAB_DEFAULT_AUTOMATION_PREFERENCES;
+  const scopedAutoPass = fabScopedAutoPassActive(state, actorId);
 
   // Per-card opponent-trigger yield: unconditional while the configured
   // opposing triggered layer is top, in every mode. Controller (not owner)
@@ -83,11 +93,11 @@ export function getFabAutoPassPriorityCommand(
   // Always-hold is absolute for Instant auto-yields. This deliberately differs
   // from the older opposing-trigger yield above, whose contract predates the
   // mode and remains unconditional.
-  if (policy.kind === "never") return null;
+  if (policy.kind === "never" && !scopedAutoPass) return null;
 
   const instantYieldPass = instantYieldPassCommand(runtime, actorId, profile.instantYieldCardIds);
 
-  if (policy.kind === "own-skip") {
+  if (policy.kind === "own-skip" && !scopedAutoPass) {
     // Stop-points from state alone (defend declaration, terminal window,
     // attacker chain close) — never the full legal-command proof, which the
     // own-skip contract must not pay.
@@ -107,7 +117,15 @@ export function getFabAutoPassPriorityCommand(
       : null;
   }
 
-  if (instantYieldPass) return instantYieldPass;
+  // A scoped arm retunes the seat to pass-only with blanket Instant yields;
+  // an armed one-shot hold outranks it until a pass consumes the hold.
+  if (scopedAutoPass) {
+    if (state.priorityHoldArmed[actorId]) return null;
+    const blanketPass = instantYieldPassCommand(runtime, actorId, "all");
+    if (blanketPass) return blanketPass;
+  } else if (instantYieldPass) {
+    return instantYieldPass;
+  }
   const verdict = fabPriorityWindowVerdict(runtime, actorId);
   if (verdict?.manualOnly) return null;
   return verdict?.passOnly ? { move: "pass", payload: {}, label: "Pass" } : null;
@@ -117,28 +135,31 @@ export function getFabAutoPassPriorityCommand(
  * Prove that one or more configured Instant uses are the only non-pass legal
  * commands in this window. The proof is command metadata, never labels or
  * payload inference, and it cannot bypass deliberate manual stop-points.
+ * `"all"` blanket-yields every Instant use — the scoped auto-pass contract,
+ * where the seat explicitly opted out of interacting for the scope's lifetime.
  */
 function instantYieldPassCommand(
   runtime: FabAutoPassSource,
   actorId: string,
-  yieldedCanonicalIds: readonly string[],
+  yieldedCanonicalIds: readonly string[] | "all",
 ): FabLegalCommand | null {
-  if (yieldedCanonicalIds.length === 0) return null;
+  if (yieldedCanonicalIds !== "all" && yieldedCanonicalIds.length === 0) return null;
   const state = runtime.getState();
   if (fabPriorityWindowManualOnly(state, actorId)) return null;
 
-  const yielded = new Set(yieldedCanonicalIds);
+  const yielded = yieldedCanonicalIds === "all" ? null : new Set(yieldedCanonicalIds);
   const legal = botEligibleFabCommands(
     listLegalCommands(runtime, actorId, { includeConcede: true }),
   );
   let ignoredInstantUse = false;
   const remaining = legal.filter((command) => {
     const metadata = command.priorityYield;
-    if (metadata?.kind !== "instant-use" || !yielded.has(metadata.canonicalId)) return true;
+    if (metadata?.kind !== "instant-use") return true;
+    if (yielded !== null && !yielded.has(metadata.canonicalId)) return true;
     ignoredInstantUse = true;
     return false;
   });
-  if (!ignoredInstantUse) return null;
+  if (!ignoredInstantUse && yielded !== null) return null;
   return remaining.some((command) => command.move === "pass") &&
     remaining.every((command) => command.move === "pass" || command.move === "concede")
     ? { move: "pass", payload: {}, label: "Pass" }

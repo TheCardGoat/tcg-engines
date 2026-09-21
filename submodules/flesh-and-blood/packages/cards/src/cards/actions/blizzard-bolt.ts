@@ -37,6 +37,7 @@ export const blizzardBolt = definePitchFamily(fabPitchFamilies["blizzard-bolt"],
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "attack-target",
         },
       }),

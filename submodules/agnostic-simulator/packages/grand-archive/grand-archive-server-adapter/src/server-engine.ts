@@ -1,4 +1,10 @@
 import {
+  currentGrandArchiveArt,
+  grandArchivePinnedImage,
+  grandArchivePinnedImageAspectRatio,
+  type GrandArchiveFrozenArt,
+} from "./presentation.ts";
+import {
   decodeGrandArchiveCommand,
   describeGrandArchiveStructuredDecision,
   GrandArchiveMatchRuntime,
@@ -160,6 +166,7 @@ function authorizedDecisionCardInstances(
 
 export class GrandArchiveServerEngine implements ServerGameEngine {
   readonly program: GrandArchiveMatchProgram;
+  readonly art: GrandArchiveFrozenArt;
   readonly runtime: GrandArchiveMatchRuntime;
   #replayJournal: GrandArchiveReplayJournalV1;
 
@@ -170,8 +177,10 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
       serializeGrandArchiveMatchSnapshot(runtime.state),
       program.fingerprint,
     ),
+    art: GrandArchiveFrozenArt = currentGrandArchiveArt(),
   ) {
     this.program = program;
+    this.art = art;
     this.runtime = runtime;
     this.#replayJournal = replayJournal;
   }
@@ -184,6 +193,7 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
       this.program,
       this.#replayJournal,
       serializeGrandArchiveMatchSnapshot(this.runtime.state),
+      { catalog: this.art.catalog, printingIdByObjectId: this.art.printingIdByObjectId },
     );
   }
 
@@ -260,6 +270,10 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
     return this.runtime.state;
   }
 
+  getViewerState(viewer: { role: "player"; actorId: string }): GrandArchiveViewerState;
+  getViewerState(
+    viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
+  ): unknown;
   getViewerState(
     viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
   ): unknown {
@@ -291,7 +305,7 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
 
   getViewerResources(
     viewer: { role: "player"; actorId: string } | { role: "spectator" } | { role: "replay" },
-  ): unknown {
+  ) {
     if (viewer.role === "spectator") return { cardsById: {} };
     const projected =
       viewer.role === "player"
@@ -319,7 +333,53 @@ export class GrandArchiveServerEngine implements ServerGameEngine {
         visibleIds.add(definitionId);
       }
     }
+    const cardImageUrls: Record<string, string> = {};
+    const cardBoardImageUrls: Record<string, string> = {};
+    const cardBoardImageAspectRatios: Record<string, number> = {};
+    const cardImageAspectRatios: Record<string, number> = {};
+    for (const player of projected.players)
+      for (const zone of Object.values(player.zones)) {
+        for (const object of projectedZoneObjects(zone)) {
+          const image = grandArchivePinnedImage(
+            this.art,
+            object.activeDefinitionId ?? object.definitionId,
+            object.id,
+          );
+          if (image) cardImageUrls[object.id] = image;
+          const board = grandArchivePinnedImage(
+            this.art,
+            object.activeDefinitionId ?? object.definitionId,
+            object.id,
+            "board",
+          );
+          if (board) cardBoardImageUrls[object.id] = board;
+          const definition = object.activeDefinitionId ?? object.definitionId;
+          const boardRatio = grandArchivePinnedImageAspectRatio(
+            this.art,
+            definition,
+            object.id,
+            "board",
+          );
+          const fullRatio = grandArchivePinnedImageAspectRatio(this.art, definition, object.id);
+          if (boardRatio) cardBoardImageAspectRatios[object.id] = boardRatio;
+          if (fullRatio) cardImageAspectRatios[object.id] = fullRatio;
+        }
+      }
+    for (const [id, definition] of Object.entries(authorizedCards.definitionIds)) {
+      const image = grandArchivePinnedImage(this.art, definition, id);
+      if (image) cardImageUrls[id] = image;
+      const board = grandArchivePinnedImage(this.art, definition, id, "board");
+      if (board) cardBoardImageUrls[id] = board;
+      const boardRatio = grandArchivePinnedImageAspectRatio(this.art, definition, id, "board");
+      const fullRatio = grandArchivePinnedImageAspectRatio(this.art, definition, id);
+      if (boardRatio) cardBoardImageAspectRatios[id] = boardRatio;
+      if (fullRatio) cardImageAspectRatios[id] = fullRatio;
+    }
     return {
+      cardImageUrls,
+      cardBoardImageUrls,
+      cardBoardImageAspectRatios,
+      cardImageAspectRatios,
       cardsById: Object.fromEntries(
         [...visibleIds].flatMap((id) =>
           this.program.cardsById[id] ? [[id, this.program.cardsById[id]]] : [],

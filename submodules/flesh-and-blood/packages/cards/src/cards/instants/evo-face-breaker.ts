@@ -23,41 +23,29 @@ export const evoFaceBreaker = definePitchFamily(fabPitchFamilies["evo-face-break
         type: "sequence",
         steps: [
           {
-            type: "sequence",
-            steps: [
-              {
-                type: "transform",
-                target: {
-                  selector: "object",
-                  declared: "at-resolution",
-                  player: "controller",
-                  zones: ["equipment-arms"],
-                  filter: {
-                    typeBox: {
-                      types: ["Equipment"],
-                      subtypes: ["Base", "Arms"],
-                    },
-                  },
-                  count: 1,
-                },
-                into: "this",
-              },
-              {
-                type: "transform",
-                target: {
-                  selector: "object",
-                  declared: "at-resolution",
-                  player: "controller",
-                  zones: ["permanent"],
-                  filter: {
-                    name: "Hyper Driver",
-                  },
-                  count: {
-                    type: "x",
-                  },
-                },
-                into: "this",
-              },
+            type: "choose-card",
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "controller",
+              zones: ["permanent"],
+              filter: { name: "Hyper Driver" },
+              count: { type: "any-number" },
+            },
+            outputBinding: "evo-drivers",
+          },
+          {
+            type: "transform-into-resolving-card",
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "controller",
+              zones: ["equipment-arms"],
+              filter: { typeBox: { types: ["Equipment"], subtypes: ["Base", "Arms"] } },
+              count: 1,
+            },
+            additionalTargets: [
+              { selector: "binding", binding: "evo-drivers", count: { type: "any-number" } },
             ],
           },
           {
@@ -71,11 +59,14 @@ export const evoFaceBreaker = definePitchFamily(fabPitchFamilies["evo-face-break
             then: {
               type: "prevention",
               preventionKind: "fixed",
+              times: 1,
               amount: {
                 type: "double",
                 operands: [
                   {
-                    type: "x",
+                    type: "count",
+                    what: "objects-under-source",
+                    filter: { name: "Hyper Driver" },
                   },
                 ],
               },

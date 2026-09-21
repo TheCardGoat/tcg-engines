@@ -46,20 +46,31 @@ export const scientificDiscoveries: GrandArchiveCard<GrandArchiveAbilityDefiniti
                   kind: "sequence",
                   effects: [
                     {
-                      kind: "remove-counter",
-                      subject: {
-                        kind: "champion",
-                        player: "controller",
+                      kind: "attempt",
+                      effect: {
+                        kind: "remove-counter",
+                        subject: {
+                          kind: "champion",
+                          player: "controller",
+                        },
+                        counter: "enlighten",
+                        amount: 2,
+                        bindResultAs: "removed-counters",
                       },
-                      counter: "enlighten",
-                      amount: 2,
-                      bindResultAs: "removed-counters",
+                      bindSucceededAs: "optional-action-succeeded",
                     },
                     {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                      to: "memory",
+                      kind: "conditional",
+                      condition: {
+                        kind: "effect-succeeded",
+                        binding: "optional-action-succeeded",
+                      },
+                      then: {
+                        kind: "draw",
+                        player: "controller",
+                        amount: 1,
+                        to: "memory",
+                      },
                     },
                   ],
                 },

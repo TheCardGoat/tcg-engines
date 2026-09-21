@@ -1,10 +1,15 @@
 import { describe, expect, it } from "vitest";
 import {
+  expectCombat,
+  expectWait,
   expectFabCard,
   expectFabPlayer,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
+import { nimblismBlue } from "../actions/nimblism.ts";
+import { snatchRed } from "../actions/snatch.ts";
+import { shiningCourageRed } from "../instants/shining-courage.ts";
 import { dash } from "../heroes/dash.ts";
 import { kassai } from "./kassai.ts";
 import { wageGoldRed } from "../actions/wage-gold.ts";
@@ -32,9 +37,14 @@ describe("Zane, Broadly Beloved (SPW003) AAA", () => {
         hand: [],
         resourcePoints: 2,
         actionPoints: 2,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Zane = game.as(zaneBroadlyBeloved);
@@ -59,9 +69,27 @@ describe("Zane, Broadly Beloved (SPW003) AAA", () => {
           weapon1: [jubeelSpellbane],
           weapon2: [cintariSaber],
           hand: [],
-          deck: 6,
+          deck: [
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+          ],
         },
-        { hero: dash, hand: [], deck: 6 },
+        {
+          hero: dash,
+          hand: [],
+          deck: [
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+          ],
+        },
       ),
     ).toThrow(/two-hander-must-be-alone/);
   });
@@ -74,9 +102,27 @@ describe("Zane, Broadly Beloved (SPW003) AAA", () => {
           weapon1: [mercilessBattleaxe],
           weapon2: [cintariSaber],
           hand: [],
-          deck: 6,
+          deck: [
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+          ],
         },
-        { hero: dash, hand: [], deck: 6 },
+        {
+          hero: dash,
+          hand: [],
+          deck: [
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+          ],
+        },
       ),
     ).toThrow(/two-hander-must-be-alone/);
   });
@@ -88,9 +134,14 @@ describe("Zane, Broadly Beloved (SPW003) AAA", () => {
         hand: [wageGoldRed],
         resourcePoints: 3,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Zane = game.as(zaneBroadlyBeloved);
@@ -112,9 +163,14 @@ describe("Zane, Broadly Beloved (SPW003) AAA", () => {
         hand: [wageGoldRed, wageGoldRed],
         resourcePoints: 6,
         actionPoints: 2,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Zane = game.as(zaneBroadlyBeloved);
@@ -140,9 +196,14 @@ describe("Zane, Broadly Beloved (SPW003) AAA", () => {
         hand: [wageGoldRed],
         resourcePoints: 3,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], life: 20, deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        life: 20,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Zane = game.as(zaneBroadlyBeloved);
@@ -155,4 +216,43 @@ describe("Zane, Broadly Beloved (SPW003) AAA", () => {
     expectFabPlayer(Zane).toHaveHandCount(0);
     expectFabPlayer(Dash).toHaveHandCount(0).toHaveLife(13);
   });
+});
+
+it("Zane draws on the first cheer again during the opposing turn", () => {
+  const padding = () => Array.from({ length: 10 }, () => nimblismBlue);
+  const game = FabTestEngine.start(
+    {
+      hero: zaneBroadlyBeloved,
+      hand: [shiningCourageRed, shiningCourageRed, shiningCourageRed],
+      life: 20,
+      resourcePoints: 0,
+      deck: padding(),
+    },
+    { hero: dash, hand: [snatchRed], life: 20, resourcePoints: 0, deck: padding() },
+    FAB_MANUAL_HARNESS,
+  );
+  const Zane = game.as(zaneBroadlyBeloved);
+  const Dash = game.as(dash);
+  Zane.play(shiningCourageRed);
+  game.untilIdle({ optionals: "throw" });
+  expectFabPlayer(Zane).toHaveHandCount(3);
+  expectFabPlayer(Dash).toHaveHandCount(2);
+  Zane.play(shiningCourageRed);
+  game.untilIdle({ optionals: "throw" });
+  expectFabPlayer(Zane).toHaveHandCount(2);
+  expectFabPlayer(Dash).toHaveHandCount(2);
+  Zane.endTurn();
+  expectFabPlayer(Zane).toHaveHandCount(4);
+  expectFabPlayer(Dash).toHaveHandCount(4);
+  Dash.pass();
+  Zane.play(shiningCourageRed);
+  game.untilIdle({ optionals: "throw" });
+  expectFabPlayer(Zane).toHaveHandCount(4);
+  expectFabPlayer(Dash).toHaveHandCount(5);
+  Dash.playAttack(snatchRed);
+  game.closeCombat({ optionals: "throw" });
+  expectFabPlayer(Zane).toHaveLife(16);
+  expectFabPlayer(Dash).toHaveHandCount(5).toHaveAP(0);
+  expectCombat(game).toBeClosed();
+  expectWait(game).toBeIdle();
 });

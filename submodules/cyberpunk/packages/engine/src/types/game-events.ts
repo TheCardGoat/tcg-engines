@@ -23,6 +23,7 @@ export type GameEvent =
   | GigDieMovedEvent
   | GigStolenEvent
   | GigValueChangedEvent
+  | GigsSwappedEvent
   | LegendFlippedEvent
   | LegendCalledEvent
   | CardSoldEvent
@@ -120,11 +121,15 @@ export interface GigDieMovedEvent {
   from: string;
   to: string;
   playerId: PlayerId;
+  /** Present when the die changes owner. Omitted for same-seat fixer ↔ gig moves. */
+  fromPlayerId?: PlayerId;
 }
 
 export interface GigStolenEvent {
   type: "gigStolen";
   dieId: GigDieId;
+  /** All Gigs stolen simultaneously by the same steal action. */
+  dieIds?: GigDieId[];
   fromPlayerId: PlayerId;
   toPlayerId: PlayerId;
   sourceCardId?: CardInstanceId;
@@ -136,6 +141,15 @@ export interface GigValueChangedEvent {
   previousValue: number;
   newValue: number;
   playerId: PlayerId;
+}
+
+export interface GigsSwappedEvent {
+  type: "gigsSwapped";
+  dieIds: [GigDieId, GigDieId];
+  /** Player whose effect performed the swap. */
+  playerId: PlayerId;
+  /** Controllers of the dice immediately before the swap, parallel to dieIds. */
+  fromPlayerIds: [PlayerId, PlayerId];
 }
 
 export interface LegendFlippedEvent {
@@ -296,6 +310,7 @@ export type ActionLogMessageKey =
   | "move.resolveAttack.fight.mutual"
   | "move.resolveAttack.fight.mutual.prevented"
   | "move.resolveAttack.direct"
+  | "move.resolveAttack.ended"
   | "move.turnEnded"
   | "move.concede"
   | "move.activateAbility"
@@ -307,6 +322,24 @@ export type ActionLogMessageKey =
   | "move.resolveSearchDeckNamed"
   | "move.resolveRevealDestination"
   | "move.resolveAdjustGig"
+  | "move.manualSetGigValue"
+  | "move.manualMoveGig"
+  | "move.manualMoveCard"
+  | "move.manualAttachGear"
+  | "move.manualDetachGear"
+  | "move.manualExertCard"
+  | "move.manualReadyCard"
+  | "move.manualDrawCard"
+  | "move.manualClearPendingResolution"
+  | "move.manualClearTriggerStack"
+  | "move.manualResetCombat"
+  | "move.manualForcePassTurn"
+  | "move.manualSetEddies"
+  | "move.manualResetOncePerTurn"
+  | "move.manualSetCardFace"
+  | "move.manualReadyAll"
+  | "move.manualRecomputeActiveEffects"
+  | "move.manualDropEffectBagEntry"
   | "effect.discard.resolved"
   | "effect.draw.resolved"
   | "effect.draw.skipped"
@@ -314,6 +347,8 @@ export type ActionLogMessageKey =
   | "effect.sellFromDeck.resolved"
   | "trigger.autoResolved"
   | "trigger.resolved"
+  | "trigger.orderPending"
+  | "trigger.orderSelected"
   | "trigger.noValidTargets"
   | "trigger.stealGig"
   | "trigger.targetResolved"

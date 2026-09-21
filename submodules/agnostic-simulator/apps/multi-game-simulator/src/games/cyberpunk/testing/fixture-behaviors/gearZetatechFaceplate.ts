@@ -37,9 +37,7 @@ export const gearZetatechFaceplateBehavior: CyberpunkFixtureBehavior = {
       throw new Error("Expected friendly d8 to be an eligible Zetatech Faceplate target.");
     }
 
-    await pom.resolveEffectTarget([d8.id], CYBERPUNK_P1);
-    await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
-    await pom.resolveAdjustGig(4, CYBERPUNK_P1);
+    await pom.resolveAdjustGig(d8.id, 4, CYBERPUNK_P1);
 
     await pom.expectPendingChoiceType(CYBERPUNK_P1, null);
     await pom.expectGigValue(d8.id, 4);

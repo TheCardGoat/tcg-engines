@@ -17,6 +17,7 @@ function createDefaultHumanVsAiConfig(): HumanVsAiMatchConfig {
     playerTwoFixtureId: base.playerTwoFixtureId,
     strategyId: base.playerTwoStrategyId,
     seed: base.seed,
+    opponentMode: "bot",
   };
 }
 
@@ -37,6 +38,7 @@ function normalizeStoredConfig(value: StoredHumanVsAiConfig): HumanVsAiMatchConf
     playerTwoFixtureId: value.playerTwoFixtureId?.trim() || undefined,
     strategyId: getSafeAutomatedActionStrategyOption(strategyId).id,
     seed,
+    opponentMode: value.opponentMode === "self" ? "self" : "bot",
   };
 }
 

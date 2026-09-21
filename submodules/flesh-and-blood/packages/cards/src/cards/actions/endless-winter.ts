@@ -47,6 +47,7 @@ export const endlessWinter = definePitchFamily(fabPitchFamilies["endless-winter"
           effect: {
             type: "create-token",
             token: "frostbite",
+            creator: "effect-controller",
             controller: "defending-hero",
           },
         },
@@ -99,6 +100,7 @@ export const endlessWinter = definePitchFamily(fabPitchFamilies["endless-winter"
             effect: {
               type: "create-token",
               token: "frostbite",
+              creator: "effect-controller",
               controller: "opponent",
             },
           },

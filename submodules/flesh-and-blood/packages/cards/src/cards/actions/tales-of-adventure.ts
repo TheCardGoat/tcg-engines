@@ -16,6 +16,7 @@ export const talesOfAdventure = definePitchFamily(fabPitchFamilies["tales-of-adv
         steps: [
           {
             type: "choose-and-create-token",
+            creator: "token-controller",
             options: [
               "aether-ashwing",
               "embodiment-of-earth",

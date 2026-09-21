@@ -13,6 +13,7 @@ export const SIMULATOR_BOT_SPEED_MS: Readonly<Record<SimulatorBotSpeed, number>>
 };
 
 export interface SimulatorBotQuickControlsProps {
+  readonly practiceMode?: "bot" | "self";
   readonly pacing: SimulatorBotPacing;
   readonly takeoverActive: boolean;
   readonly canTakeover?: boolean;
@@ -31,6 +32,7 @@ export interface SimulatorBotQuickControlsProps {
  * strip keeps the frequent controls available without opening that disclosure.
  */
 export function SimulatorBotQuickControls({
+  practiceMode = "bot",
   pacing,
   takeoverActive,
   canTakeover = true,
@@ -49,19 +51,33 @@ export function SimulatorBotQuickControls({
         type="button"
         className={classes.takeover}
         data-testid={`${testIdPrefix}-take-control`}
-        aria-label={takeoverActive ? "Release control of bot seat" : "Take control of bot seat"}
+        aria-label={
+          takeoverActive
+            ? practiceMode === "self"
+              ? "Switch to your seat"
+              : "Return opponent to bot"
+            : "Control opponent"
+        }
         title={
           takeoverActive
-            ? "Return to your seat and resume the bot"
-            : "Pause the bot and control its seat"
+            ? practiceMode === "self"
+              ? "Switch perspective and control your original seat"
+              : "Return to your seat and resume the bot"
+            : practiceMode === "self"
+              ? "Switch perspective and control the opponent seat"
+              : "Pause the bot and control its seat"
         }
         disabled={disabled || !canTakeover}
         onClick={onToggleTakeover}
       >
-        {takeoverActive ? "Release" : "Take over"}
+        {takeoverActive
+          ? practiceMode === "self"
+            ? "Switch to your seat"
+            : "Return to bot"
+          : "Control opponent"}
       </button>
 
-      {pacing === "auto" ? (
+      {practiceMode === "self" ? null : pacing === "auto" ? (
         <button
           type="button"
           className={classes.iconButton}

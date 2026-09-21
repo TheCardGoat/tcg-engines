@@ -68,53 +68,64 @@ export const grayLupindroid: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "sacrificed-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "choose",
+                    selection: {
+                      id: "sacrificed-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "subtype",
+                          oneOf: ["POWERCELL"],
+                        },
+                      },
                     },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "subtype",
-                        oneOf: ["POWERCELL"],
+                    effect: {
+                      kind: "sacrifice",
+                      subject: {
+                        kind: "bound",
+                        binding: "sacrificed-object",
                       },
                     },
                   },
-                  effect: {
-                    kind: "sacrifice",
-                    subject: {
-                      kind: "bound",
-                      binding: "sacrificed-object",
-                    },
-                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "add-counter",
-                      subject: {
-                        kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "add-counter",
+                        subject: {
+                          kind: "source",
+                        },
+                        counter: "buff",
+                        amount: 1,
                       },
-                      counter: "buff",
-                      amount: 1,
-                    },
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                      to: "memory",
-                    },
-                  ],
+                      {
+                        kind: "draw",
+                        player: "controller",
+                        amount: 1,
+                        to: "memory",
+                      },
+                    ],
+                  },
                 },
               ],
             },

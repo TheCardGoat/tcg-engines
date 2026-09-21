@@ -8,6 +8,7 @@ export const spreadingPlague = definePitchFamily(fabPitchFamilies["spreading-pla
       effect: {
         type: "create-token",
         token: "bloodrot-pox",
+        creator: "effect-controller",
         controller: "defending-hero",
         count: {
           type: "count",

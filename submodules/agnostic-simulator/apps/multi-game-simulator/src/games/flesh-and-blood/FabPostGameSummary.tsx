@@ -3,9 +3,10 @@ import * as HoverCard from "@radix-ui/react-hover-card";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 import { FabCardPreviewSurface } from "./FabCardPreview";
 import { useFabCardArt } from "./FabPresentationCatalog";
-import { BarChart3, ChevronRight, Eye, Home, Sparkles, Swords } from "lucide-react";
+import { Tooltip } from "@mantine/core";
+import { BarChart3, ChevronRight, Eye, Home, Info, Sparkles, Swords } from "lucide-react";
 import { motion } from "motion/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 import { usePrefersReducedMotion } from "../../lib/media-query";
 
@@ -52,6 +53,154 @@ function MockBadge({ label = "Illustrative data" }: { readonly label?: string })
       <Sparkles aria-hidden="true" size={13} strokeWidth={1.8} />
       {label}
     </span>
+  );
+}
+
+/** Analytics falls back to `name:` keys when a printing was never resolved. */
+function summaryCardCanonicalId(id: string | null | undefined): string | undefined {
+  return id && !id.startsWith("name:") ? id : undefined;
+}
+
+const AGGREGATED_NAME_HINT_LABEL = (name: string) =>
+  `${name}: this entry covers every color (pitch) of the card, not one specific printing`;
+
+const AGGREGATED_NAME_HINT_TOOLTIP = (name: string) =>
+  `Only the card name was recorded — this entry covers all colors of ${name} (red, yellow, and blue) rather than one specific printing.`;
+
+/**
+ * Helper icon for references recorded by name only. FAB printings share one
+ * name across colors, so a name-only mention stands for the card as a whole.
+ */
+function FabAggregatedNameHint({ name }: { readonly name: string }) {
+  return (
+    <Tooltip label={AGGREGATED_NAME_HINT_TOOLTIP(name)} withArrow multiline position="top">
+      <span
+        className="fab-summary-card-reference-hint"
+        role="img"
+        aria-label={AGGREGATED_NAME_HINT_LABEL(name)}
+      >
+        <Info aria-hidden="true" size={13} strokeWidth={2} />
+      </span>
+    </Tooltip>
+  );
+}
+
+function summaryCardEntity(
+  key: string,
+  name: string,
+  canonicalId: string | undefined,
+  imageUrl: string | undefined,
+  imageAspectRatio: number,
+): SimulatorEntity {
+  return {
+    id: key,
+    title: name,
+    subtitle: "",
+    kind: "card",
+    ownerId: "summary",
+    face: "public",
+    states: [],
+    stats: [],
+    traits: [],
+    imageUrl,
+    imageAspectRatio,
+    dataAttributes: canonicalId ? { "data-fab-canonical-id": canonicalId } : undefined,
+  };
+}
+
+function FabSummaryPreviewCard({
+  open,
+  onOpenChange,
+  trigger,
+  entity,
+  name,
+}: {
+  readonly open: boolean;
+  readonly onOpenChange: (open: boolean) => void;
+  readonly trigger: ReactNode;
+  readonly entity: SimulatorEntity;
+  readonly name: string;
+}) {
+  return (
+    <HoverCard.Root open={open} onOpenChange={onOpenChange} openDelay={150} closeDelay={100}>
+      <HoverCard.Trigger asChild>{trigger}</HoverCard.Trigger>
+      <HoverCard.Portal>
+        <HoverCard.Content
+          className="fab-summary-card-preview"
+          side="right"
+          align="center"
+          sideOffset={12}
+          onEscapeKeyDown={(event) => event.stopPropagation()}
+          collisionPadding={16}
+          aria-label={`${name} card preview`}
+        >
+          <FabCardPreviewSurface entity={entity} onClose={() => onOpenChange(false)} />
+        </HoverCard.Content>
+      </HoverCard.Portal>
+    </HoverCard.Root>
+  );
+}
+
+/** Inline card-name reference: underlined, hover/activatable printed preview. */
+function FabSummaryCardReference({
+  id,
+  name,
+}: {
+  readonly id: string | null;
+  readonly name: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const locale = useFabCardLocale();
+  const { resolveFabCardArt } = useFabCardArt();
+  const canonicalId = summaryCardCanonicalId(id);
+  const art = resolveFabCardArt({ ...(canonicalId ? { canonicalId } : {}), name, locale });
+  const entity = summaryCardEntity(
+    `fab-summary-ref:${canonicalId ?? name}`,
+    name,
+    canonicalId,
+    art.boardImageUrl,
+    art.printedImageAspectRatio,
+  );
+
+  return (
+    <span className="fab-summary-card-reference">
+      <FabSummaryPreviewCard
+        open={open}
+        onOpenChange={setOpen}
+        entity={entity}
+        name={name}
+        trigger={
+          <button
+            type="button"
+            className="fab-summary-card-reference-name"
+            aria-label={`Preview ${name}`}
+            onClick={() => setOpen(true)}
+          >
+            {name}
+          </button>
+        }
+      />
+      {canonicalId === undefined ? <FabAggregatedNameHint name={name} /> : null}
+    </span>
+  );
+}
+
+/** Comma-separated hand card references; empty hands read as "None". */
+function FabSummaryCardReferenceList({
+  cards,
+}: {
+  readonly cards: readonly { readonly id: string | null; readonly name: string }[];
+}) {
+  if (cards.length === 0) return <>None</>;
+  return (
+    <>
+      {cards.map((card, index) => (
+        <Fragment key={`${card.id ?? "name"}:${card.name}:${index}`}>
+          {index > 0 ? ", " : null}
+          <FabSummaryCardReference id={card.id} name={card.name} />
+        </Fragment>
+      ))}
+    </>
   );
 }
 
@@ -306,10 +455,6 @@ function TurnBreakdown({ summary }: { readonly summary: FabPostGameSummaryModel 
   );
 }
 
-function cardNames(cards: readonly { readonly name: string }[]): string {
-  return cards.length > 0 ? cards.map((card) => card.name).join(", ") : "None";
-}
-
 const handActionLabels: Record<FabHandActionSummary["kind"], string> = {
   drawn: "Drew",
   played: "Played",
@@ -351,15 +496,21 @@ function HandBreakdown({ summary }: { readonly summary: FabPostGameSummaryModel 
               <dl>
                 <div>
                   <dt>Started with</dt>
-                  <dd>{cardNames(hand.startingCards)}</dd>
+                  <dd>
+                    <FabSummaryCardReferenceList cards={hand.startingCards} />
+                  </dd>
                 </div>
                 <div>
                   <dt>Carried in</dt>
-                  <dd>{cardNames(hand.carriedCards)}</dd>
+                  <dd>
+                    <FabSummaryCardReferenceList cards={hand.carriedCards} />
+                  </dd>
                 </div>
                 <div>
                   <dt>Held at close</dt>
-                  <dd>{cardNames(hand.endingCards)}</dd>
+                  <dd>
+                    <FabSummaryCardReferenceList cards={hand.endingCards} />
+                  </dd>
                 </div>
               </dl>
               {hand.actions.length > 0 ? (
@@ -367,7 +518,9 @@ function HandBreakdown({ summary }: { readonly summary: FabPostGameSummaryModel 
                   {hand.actions.map((action) => (
                     <li key={`${action.sequence}:${action.cardName}`}>
                       <span>Turn {action.turn}</span>
-                      <strong>{action.cardName}</strong>
+                      <strong>
+                        <FabSummaryCardReference id={action.cardId} name={action.cardName} />
+                      </strong>
                       <span>{handActionLabels[action.kind]}</span>
                       {action.origin ? <small>from {zoneLabel(action.origin)}</small> : null}
                     </li>
@@ -388,27 +541,29 @@ function SummaryCardIdentity({ card }: { readonly card: FabCardSummary }) {
   const [open, setOpen] = useState(false);
   const locale = useFabCardLocale();
   const { resolveFabCardArt } = useFabCardArt();
-  const art = resolveFabCardArt({ canonicalId: card.id, name: card.name, locale });
+  const canonicalId = summaryCardCanonicalId(card.id);
+  const art = resolveFabCardArt({
+    ...(canonicalId ? { canonicalId } : {}),
+    name: card.name,
+    locale,
+  });
   const imageUrl = art.boardImageUrl;
-  const entity: SimulatorEntity = {
-    id: card.id,
-    title: card.name,
-    subtitle: "",
-    kind: "card",
-    ownerId: "summary",
-    face: "public",
-    states: [],
-    stats: [],
-    traits: [],
+  const entity = summaryCardEntity(
+    card.id,
+    card.name,
+    canonicalId,
     imageUrl,
-    imageAspectRatio: art.printedImageAspectRatio,
-    dataAttributes: { "data-fab-canonical-id": card.id },
-  };
+    art.printedImageAspectRatio,
+  );
 
   return (
     <div className="fab-summary-card-identity">
-      <HoverCard.Root open={open} onOpenChange={setOpen} openDelay={150} closeDelay={100}>
-        <HoverCard.Trigger asChild>
+      <FabSummaryPreviewCard
+        open={open}
+        onOpenChange={setOpen}
+        entity={entity}
+        name={card.name}
+        trigger={
           <button
             type="button"
             className="fab-summary-card-trigger"
@@ -422,23 +577,11 @@ function SummaryCardIdentity({ card }: { readonly card: FabCardSummary }) {
                 <BarChart3 aria-hidden="true" size={20} />
               )}
             </span>
+            <strong className="fab-summary-card-name">{card.name}</strong>
           </button>
-        </HoverCard.Trigger>
-        <HoverCard.Portal>
-          <HoverCard.Content
-            className="fab-summary-card-preview"
-            side="right"
-            align="center"
-            sideOffset={12}
-            onEscapeKeyDown={(event) => event.stopPropagation()}
-            collisionPadding={16}
-            aria-label={`${card.name} card preview`}
-          >
-            <FabCardPreviewSurface entity={entity} onClose={() => setOpen(false)} />
-          </HoverCard.Content>
-        </HoverCard.Portal>
-      </HoverCard.Root>
-      <strong>{card.name}</strong>
+        }
+      />
+      {canonicalId === undefined ? <FabAggregatedNameHint name={card.name} /> : null}
     </div>
   );
 }

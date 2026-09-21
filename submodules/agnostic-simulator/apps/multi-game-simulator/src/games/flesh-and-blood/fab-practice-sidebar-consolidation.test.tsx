@@ -158,7 +158,7 @@ describe("FAB local-practice sidebar consolidation", () => {
     expect(playSurface.getAttribute("data-controlled-player")).toBe("player-1");
 
     const quickTakeover = screen.getByTestId("fab-practice-quick-take-control");
-    expect(quickTakeover.textContent).toBe("Take over");
+    expect(quickTakeover.textContent).toBe("Control opponent");
     fireEvent.click(quickTakeover);
 
     await vi.waitFor(() => {
@@ -167,16 +167,16 @@ describe("FAB local-practice sidebar consolidation", () => {
     expect(screen.getByTestId("fab-hand-bottom").getAttribute("aria-label")).not.toBe(
       originalHandLabel,
     );
-    expect(screen.getByTestId("fab-practice-quick-take-control").textContent).toBe("Release");
+    expect(screen.getByTestId("fab-practice-quick-take-control").textContent).toBe("Return to bot");
     openPracticeTab("Now");
     expect(screen.getByTestId("fab-practice-now").textContent).toContain(
       "Controlling opponent · bot paused",
     );
     expect(screen.getByTestId("fab-practice-now").textContent).toContain("Other seat has priority");
     expect(screen.getByTestId("fab-sidebar-self").textContent).toContain("Practice bot");
-    expect(
-      screen.getByRole("button", { name: "Practice opponent controls" }).textContent,
-    ).toContain("You control bot");
+    expect(screen.getByRole("button", { name: "Opponent controls" }).textContent).toContain(
+      "You control the opponent",
+    );
     expect(screen.getByTestId("fab-sidebar-opponent").textContent).toContain("You");
     expect(screen.getByTestId("fab-sidebar-opponent").textContent).toContain("Your seat · waiting");
 
@@ -206,7 +206,9 @@ describe("FAB local-practice sidebar consolidation", () => {
     expect(screen.getByTestId("fab-hand-bottom").getAttribute("aria-label")).toBe(
       originalHandLabel,
     );
-    expect(screen.getByTestId("fab-practice-quick-take-control").textContent).toBe("Take over");
+    expect(screen.getByTestId("fab-practice-quick-take-control").textContent).toBe(
+      "Control opponent",
+    );
     expect(screen.getByTestId("fab-sidebar-self").textContent).toContain("You");
     expect(screen.getByTestId("fab-sidebar-opponent").textContent).toContain("Practice bot");
 
@@ -238,7 +240,7 @@ describe("FAB local-practice sidebar consolidation", () => {
     const playerEventIndex = chronologicalEvents.findIndex((event) => event.includes("Snatch"));
     expect(playerEventIndex).toBeGreaterThanOrEqual(0);
 
-    fireEvent.click(screen.getByRole("button", { name: "Practice opponent controls" }));
+    fireEvent.click(screen.getByRole("button", { name: "Opponent controls" }));
     fireEvent.click(screen.getByTestId("ai-take-control"));
     openPracticeLab();
     expect(screen.getByTestId("fab-practice-decision-log").textContent).toContain("Practice bot");
@@ -251,7 +253,9 @@ describe("FAB local-practice sidebar consolidation", () => {
     });
     await session.pom.waitForReady();
 
-    expect(screen.getByTestId("fab-practice-quick-take-control").textContent).toBe("Take over");
+    expect(screen.getByTestId("fab-practice-quick-take-control").textContent).toBe(
+      "Control opponent",
+    );
     expect(screen.getByTestId("fab-practice-quick-pause")).not.toBeNull();
     expect(screen.queryByTestId("fab-practice-quick-next")).toBeNull();
     expect(screen.queryByTestId("ai-control-panel")).toBeNull();
@@ -259,11 +263,11 @@ describe("FAB local-practice sidebar consolidation", () => {
     fireEvent.click(screen.getByTestId("fab-practice-quick-pause"));
     expect(screen.getByTestId("fab-practice-quick-next")).not.toBeNull();
     expect(screen.getByTestId("fab-practice-quick-play")).not.toBeNull();
-    expect(
-      screen.getByRole("button", { name: "Practice opponent controls" }).textContent,
-    ).toContain("Paused · step");
+    expect(screen.getByRole("button", { name: "Opponent controls" }).textContent).toContain(
+      "Paused · step",
+    );
 
-    fireEvent.click(screen.getByRole("button", { name: "Practice opponent controls" }));
+    fireEvent.click(screen.getByRole("button", { name: "Opponent controls" }));
     const panel = await screen.findByTestId("ai-control-panel");
     expect(panel.getAttribute("data-mode")).toBe("step");
     expect(panel.getAttribute("data-speed")).toBe("balanced");
@@ -288,7 +292,7 @@ describe("FAB local-practice sidebar consolidation", () => {
     expect(screen.getByTestId("ai-control-panel").getAttribute("data-strategy-id")).toBe(
       "pass-only",
     );
-    fireEvent.click(screen.getByRole("button", { name: "Practice opponent controls" }));
+    fireEvent.click(screen.getByRole("button", { name: "Opponent controls" }));
     expect(screen.queryByTestId("ai-control-panel")).toBeNull();
 
     await session.pom.as("player-1").play("Snatch", { target: "player-2" });
@@ -423,7 +427,7 @@ describe("FAB local-practice sidebar consolidation", () => {
       name: "Flesh and Blood match center",
     });
     expect(within(restoredDrawer).getByTestId("fab-practice-quick-take-control").textContent).toBe(
-      "Take over",
+      "Control opponent",
     );
 
     fireEvent.click(within(restoredDrawer).getByRole("button", { name: "Close" }));

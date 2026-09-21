@@ -10,6 +10,7 @@ export const omensOfArcana = defineCard(fabCardIdentitiesByCanonicalId.mjprN8T6m
       effect: {
         type: "create-token",
         token: "lightning-flow",
+        creator: "token-controller",
         controller: "each",
       },
     },

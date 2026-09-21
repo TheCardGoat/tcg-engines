@@ -864,26 +864,29 @@ describe("Brute play lines", () => {
             wreckerRompBlue,
           ],
         },
-        emptyDash,
+        { hero: dash, hand: [], life: 20, deck: [snatchRed, snatchRed, snatchRed, snatchRed] },
         FAB_MANUAL_HARNESS,
       );
       const Tuffnut = game.as(tuffnut);
       const Defender = game.as(dash);
 
-      Tuffnut.must.activate(tuffnut);
-      game.helpers.resolveUntilIdle({ ordering: "listed" });
+      Tuffnut.activate(tuffnut);
+      game.untilIdle({ optionals: "throw" });
       expectFabPlayer(Tuffnut).toHaveTokenCount("toughness", 1);
       expectFabCard(Tuffnut, tuffnut).toBeTapped();
 
-      Tuffnut.must.playFromArsenal(jawsOfVictoryRed);
-      toDefend(game);
+      Tuffnut.playAttack(jawsOfVictoryRed, { from: "arsenal" });
+      game.advanceUntil({ stopAt: "defend", optionals: "throw" });
       expectCombat(game).toHaveAttackPower(6).toHaveKeyword("go-again");
-      missBlockAndClose(game);
+      expectFabPlayer(Tuffnut).toHaveTokenCount("toughness", 2);
+      Defender.defendWith();
+      game.closeCombat({ optionals: "throw" });
 
       expectFabPlayer(Defender).toHaveLife(14);
-      expectFabPlayer(Tuffnut).toHaveAP(1).toHaveTokenCount("toughness", 1);
+      expectFabPlayer(Tuffnut).toHaveAP(1).toHaveTokenCount("toughness", 2);
       expectFabCard(Tuffnut, jawsOfVictoryRed).toBeIn("graveyard");
-      Tuffnut.must.endTurn();
+      expectCombat(game).toBeClosed();
+      Tuffnut.endTurn();
       expectFabPlayer(Tuffnut).toHaveHandCount(4).toHaveAP(0).toHaveResourceCount(0);
     });
 
@@ -1441,6 +1444,7 @@ describe("Brute play lines", () => {
         "You revealed Unexpected Backhand (6 power); Opponent revealed Snatch (4 power).",
         "You won the clash, 6 power to 4 power.",
         "You created Toughness.",
+        "Tough Smashup created Toughness for You.",
         "Opponent took 1 generic damage from Unexpected Backhand.",
         "Snatch hit You for 1.",
         "Opponent drew a card.",
@@ -1452,6 +1456,7 @@ describe("Brute play lines", () => {
         "Opponent revealed Unexpected Backhand (6 power); You revealed Snatch (4 power).",
         "Opponent won the clash, 6 power to 4 power.",
         "Opponent created Toughness.",
+        "Tough Smashup created Toughness for Opponent.",
         "You took 1 generic damage from Unexpected Backhand.",
         "Snatch hit Opponent for 1.",
         "You drew: Snatch.",
@@ -1509,6 +1514,7 @@ describe("Brute play lines", () => {
         "You revealed Wrecker Romp (6 power); Opponent revealed Snatch (4 power).",
         "You won the clash, 6 power to 4 power.",
         "You created Vigor.",
+        "Vigorous Smashup created Vigor for You.",
         "Snatch hit You for 1.",
         "Opponent drew a card.",
       ]);
@@ -1519,6 +1525,7 @@ describe("Brute play lines", () => {
         "Opponent revealed Wrecker Romp (6 power); You revealed Snatch (4 power).",
         "Opponent won the clash, 6 power to 4 power.",
         "Opponent created Vigor.",
+        "Vigorous Smashup created Vigor for Opponent.",
         "Snatch hit Opponent for 1.",
         "You drew: Snatch.",
       ]);

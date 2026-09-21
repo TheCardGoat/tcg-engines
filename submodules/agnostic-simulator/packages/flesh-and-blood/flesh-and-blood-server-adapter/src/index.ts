@@ -12,7 +12,9 @@ export {
   FAB_AUTOMATION_PREFERENCE_LABELS,
   FAB_PRIORITY_MODE_ACTION_LABEL,
   FAB_PRIORITY_MODES,
+  FAB_SCOPED_AUTO_PASS_LABELS,
 } from "@tcg/flesh-and-blood-engine/legal-commands";
+export { fabScopedAutoPassActionIdentity } from "./interaction.ts";
 export {
   parseFabGameAnalytics,
   parseFabPersistedGameAnalyticsV1,

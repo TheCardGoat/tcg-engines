@@ -9,7 +9,11 @@ export const smallBlinder = definePitchFamily(fabPitchFamilies["small-blinder"],
     boostSwordAndWagerBladeDance: targetAttackPowerAndWager({
       amount,
       filter: { typeBox: { subtypes: ["Sword"] } },
-      prize: createToken({ token: "blade-dance", controller: "winner" }),
+      prize: createToken({
+        token: "blade-dance",
+        creator: "token-controller",
+        controller: "winner",
+      }),
     }),
   }),
 });

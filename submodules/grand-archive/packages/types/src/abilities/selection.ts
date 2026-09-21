@@ -98,7 +98,8 @@ export type GrandArchiveCardSelectionCandidates =
         | "owned-by"
         | "zone-of"
         | "lineage-of"
-        | "banished-by";
+        | "banished-by"
+        | "activation-payment-of";
       readonly player?: import("./primitives.ts").GrandArchivePlayerSet;
       readonly filter?: GrandArchiveCardFilter;
     } & GrandArchiveOrderedZoneSlice)

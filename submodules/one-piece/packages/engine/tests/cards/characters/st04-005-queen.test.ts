@@ -4,29 +4,29 @@ import {
   eb01Fourtricks025,
   eb01MountainGod018,
   op13Higuma013,
-  prb01QueenFullArt005,
+  op08Queen005,
 } from "@tcg/op-cards";
 
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 /**
- * ST04-005 Queen (Full Art export prb01QueenFullArt005):
+ * ST04-005 Queen (Full Art export op08Queen005):
  * Blocker + [On Play] optional DON!! −1 → draw 2, trash 1 from hand.
  * Subject for proofs is the Queen export, never fodder sharing a collector number.
  */
 describe("ST04-005 Queen", () => {
   test("pays optional DON!! −1, draws two, then trashes one hand card", () => {
     const engine = OnePieceTestEngine.create({
-      hand: [prb01QueenFullArt005, eb01Doma005],
+      hand: [op08Queen005, eb01Doma005],
       deck: [eb01Fourtricks025, eb01MountainGod018, op13Higuma013],
-      activeDon: prb01QueenFullArt005.cost + 1,
+      activeDon: op08Queen005.cost + 1,
     });
     const retainedId = engine.findCardInZone("south", "hand", eb01Doma005);
     const drawnIds = engine.getState().players.south.deck.slice(0, 2);
     const discardedId = drawnIds[0]!;
     const donDeckBefore = engine.getView("south").players.south.donDeckCount;
 
-    engine.playCard(prb01QueenFullArt005, "south");
+    engine.playCard(op08Queen005, "south");
     engine.resolveDecision("effectOptional", { optionId: "yes" }, "south");
     engine.resolveDecision("effectCostReturnDon", { selectedIds: ["active-don:0"] }, "south");
 
@@ -49,11 +49,11 @@ describe("ST04-005 Queen", () => {
 
   test("can block an attack aimed at its Leader", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [prb01QueenFullArt005] },
+      { character: [op08Queen005] },
       { character: [{ card: eb01MountainGod018, playedOnTurn: 0 }] },
       { firstPlayer: "south", activeSeat: "north" },
     );
-    const queenId = engine.findCardInZone("south", "character", prb01QueenFullArt005);
+    const queenId = engine.findCardInZone("south", "character", op08Queen005);
     const attackerId = engine.findCardInZone("north", "character", eb01MountainGod018);
     const lifeBefore = engine.getView("south").players.south.lifeCount;
 
@@ -68,9 +68,9 @@ describe("ST04-005 Queen", () => {
 
   test("may decline On Play DON!! −1 so no draw and no hand trash", () => {
     const engine = OnePieceTestEngine.create({
-      hand: [prb01QueenFullArt005, eb01Doma005],
+      hand: [op08Queen005, eb01Doma005],
       deck: [eb01Fourtricks025, eb01MountainGod018, op13Higuma013],
-      activeDon: prb01QueenFullArt005.cost + 1,
+      activeDon: op08Queen005.cost + 1,
     });
     const retainedId = engine.findCardInZone("south", "hand", eb01Doma005);
     const deckTopId = engine.findCardInZone("south", "deck", eb01Fourtricks025);
@@ -80,7 +80,7 @@ describe("ST04-005 Queen", () => {
     const deckCountBefore = before.deckCount;
 
     // Subject is Queen (Full Art export), not a fodder card that shares a number.
-    engine.playCard(prb01QueenFullArt005, "south");
+    engine.playCard(op08Queen005, "south");
     engine.resolveDecision("effectOptional", { optionId: "no" }, "south");
 
     const view = engine.getView("south");
@@ -92,7 +92,7 @@ describe("ST04-005 Queen", () => {
     expect(after.deckCount).toBe(deckCountBefore);
     // Pre-play hand card not trashed; Queen entered the field.
     expect(after.hand.map((card) => card.instanceId)).toContain(retainedId);
-    expect(after.characters.some((card) => card?.cardId === prb01QueenFullArt005.id)).toBe(true);
+    expect(after.characters.some((card) => card?.cardId === op08Queen005.id)).toBe(true);
     expect(view.prompts).toHaveLength(0);
   });
 });

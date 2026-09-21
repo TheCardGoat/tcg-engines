@@ -54,6 +54,16 @@ export const sellCardMove: MoveDefinition<SellCardInput> = {
     if (!player) return;
 
     operations.zone.moveCard(cardId as CardInstanceId, "eddieArea", playerId);
+    // Selling reveals the card as part of the action, then it enters the Eddie
+    // area face-down and ready (Comprehensive Rules 11.9.1 and 11.9.1.1).
+    // `revealed` is an online presentation extension: both players may keep
+    // reading the sold card until turn cleanup, while `faceDown` preserves its
+    // actual rules state as an Eddie.
+    operations.card.setMeta(cardId as CardInstanceId, {
+      faceDown: true,
+      revealed: true,
+      spent: false,
+    });
     operations.game.markSoldThisTurn(playerId);
 
     player.eddieCardIds.push(cardId as CardInstanceId);

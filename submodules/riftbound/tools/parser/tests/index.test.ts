@@ -31,7 +31,7 @@ function galleryCard(overrides: Record<string, unknown> = {}): Record<string, un
     id: "ogn-001-298",
     collectorNumber: 1,
     name: "Test Unit",
-    publicCode: "OGN-001/298",
+    publicCode: "OGN-001/001",
     set: { value: { id: "OGN", label: "Origins" } },
     cardType: { type: [{ id: "unit", label: "Unit" }] },
     rarity: { value: { id: "common", label: "Common" } },
@@ -55,7 +55,7 @@ function galleryCard(overrides: Record<string, unknown> = {}): Record<string, un
 
 function galleryPayload(cards = [galleryCard()]): Record<string, unknown> {
   return {
-    sets: [{ id: "OGN", name: "Origins", collectorNumberMax: 298 }],
+    sets: [{ id: "OGN", name: "Origins", collectorNumberMax: 1 }],
     cards,
     reportedTotal: cards.length,
   };
@@ -117,7 +117,7 @@ describe("Riftbound catalog normalization", () => {
   });
 
   it("does not merge same-name cards with distinct official identities", () => {
-    const cards = [galleryCard(), galleryCard({ id: "ogn-001a-298", publicCode: "OGN-001A/298" })];
+    const cards = [galleryCard(), galleryCard({ id: "ogn-001a-298", publicCode: "OGN-001A/001" })];
     const catalog = normalizeRiftboundCatalog(galleryPayload(cards), galleryContext);
     expect(catalog.cards.map((card) => card.canonicalId)).toEqual(["ogn-001-298", "ogn-001a-298"]);
     expect(catalog.cards[1]?.printings[0]?.collectorNumber).toBe("001A");
@@ -132,7 +132,7 @@ describe("Riftbound catalog normalization", () => {
       const rarity = rarities[index % rarities.length]!;
       const card = galleryCard({
         id: `card-${index}`,
-        publicCode: `OGN-${index + 1}/298`,
+        publicCode: `OGN-${index + 1}/001`,
         cardType: { type: [{ id: type, label: type }] },
         domain: { values: [{ id: domain, label: domain }] },
         rarity: { value: { id: rarity, label: rarity } },
@@ -195,6 +195,21 @@ describe("Riftbound catalog normalization", () => {
     expect(() => catalogFromSnapshot(snapshot)).not.toThrow();
     snapshot.payload = { ...payload, reportedTotal: 2 };
     expect(() => catalogFromSnapshot(snapshot)).toThrow("SHA-256 does not match");
+  });
+
+  it("accepts a reportedTotal larger than the embedded payload when base ranges are covered", () => {
+    const payload = { ...galleryPayload(), reportedTotal: 2 };
+    expect(() => normalizeRiftboundCatalog(payload, galleryContext)).not.toThrow();
+  });
+
+  it("rejects a gallery payload missing base collector numbers of a declared set", () => {
+    const payload = {
+      ...galleryPayload(),
+      sets: [{ id: "OGN", name: "Origins", collectorNumberMax: 2 }],
+    };
+    expect(() => normalizeRiftboundCatalog(payload, galleryContext)).toThrow(
+      "gallery.set OGN: missing base collector numbers 2",
+    );
   });
 
   it("rejects gallery catalogs at the production gate", () => {

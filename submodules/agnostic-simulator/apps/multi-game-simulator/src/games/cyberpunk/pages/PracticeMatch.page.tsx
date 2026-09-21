@@ -85,12 +85,13 @@ function ReadyPracticeMatch({
         {config.seed}
       </div>
       <BoardSharedPage
+        practiceMode={config.mode ?? "bot"}
         key={config.matchId}
         scenarioId={DEFAULT_SCENARIO}
         initialEngineBuilder={() => createPracticeEngine(config)}
         initialAi={createPracticeAiConfig(config)}
         initialHumanSide="player"
-        initialAiMode="auto"
+        initialAiMode={config.mode === "self" ? "step" : "auto"}
         initialAiSpeed="balanced"
         onLocalCommandCommitted={recordCommit}
       />

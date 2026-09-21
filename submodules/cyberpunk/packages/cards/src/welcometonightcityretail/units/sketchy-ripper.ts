@@ -29,7 +29,7 @@ export const welcomeToNightCityRetailSketchyRipper = defineCyberpunkCard({
   abilities: [
     {
       kind: "triggered",
-      text: "ATTACK Search the top 3 cards of your deck. Reveal a Gear and add it to your hand. Bottom-deck the rest.",
+      text: "{Attack} Search the top 3 cards of your deck. Reveal a Gear and add it to your hand. Bottom-deck the rest.",
       trigger: {
         trigger: "attack",
       },
@@ -64,4 +64,5 @@ export const welcomeToNightCityRetailSketchyRipper = defineCyberpunkCard({
       ],
     },
   ],
+  reminderText: ["Units with power 0 don't steal Gigs."],
 }) satisfies UnitCardDefinition;

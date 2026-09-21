@@ -7,8 +7,8 @@ import {
   op14eb04SharkBrickFist020,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04DrHogback110 } from "../../../../../cards/src/cards/OP14EB04/characters/110-dr-hogback.ts";
-import { op14eb04VictoriaCindry109 } from "../../../../../cards/src/cards/OP14EB04/characters/109-victoria-cindry.ts";
+import { op14eb04DrHogback110 } from "../../../../../cards/src/cards/characters/op14-110-dr-hogback.ts";
+import { op14eb04VictoriaCindry109 } from "../../../../../cards/src/cards/characters/op14-109-victoria-cindry.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

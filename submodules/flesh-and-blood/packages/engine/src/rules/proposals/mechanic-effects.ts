@@ -74,13 +74,17 @@ export function proposeTransformIntoResolvingCard(
   const definition = layer.source.canonicalId
     ? state.cardDefinitions[layer.source.canonicalId]
     : undefined;
-  if (
-    definition?.layout.kind !== "flip" ||
-    (definition.layout.family !== "invocation" && definition.layout.family !== "construct")
-  ) {
-    return unsupported(effect, "resolving-card transform requires an Invocation or Construct");
+  const isFlipTransform =
+    definition?.layout.kind === "flip" &&
+    (definition.layout.family === "invocation" || definition.layout.family === "construct");
+  const isEvo =
+    definition?.base.typeBox.types.includes("Equipment") &&
+    definition.base.typeBox.subtypes.includes("Evo");
+  if (!isFlipTransform && !isEvo) {
+    return unsupported(effect, "resolving-card transform requires an Invocation, Construct or Evo");
   }
-  const targetGroups = [effect.target, ...(effect.additionalTargets ?? [])].map((target, index) =>
+  const sourceGroups = [effect.target, ...(effect.additionalTargets ?? [])];
+  const targetGroups = sourceGroups.map((target, index) =>
     objectTargets(
       state,
       layer,
@@ -92,7 +96,14 @@ export function proposeTransformIntoResolvingCard(
       index === 0 ? "target" : `additional-target-${index - 1}`,
     ),
   );
-  if (targetGroups.some((targets) => !targets || targets.length === 0)) {
+  if (
+    targetGroups.some((targets, index) => {
+      const group = sourceGroups[index]!;
+      const count = "count" in group ? group.count : undefined;
+      const permitsEmpty = typeof count === "object" && count.type === "any-number";
+      return !targets || (targets.length === 0 && !permitsEmpty);
+    })
+  ) {
     if (effect.onIncomplete === "negate-resolving-card") {
       return proposeNegate(ctx, { type: "negate", target: { selector: "self" } });
     }

@@ -5,7 +5,7 @@ import {
   eb01MountainGod018,
   op11Shirahoshi022,
 } from "@tcg/op-cards";
-import { op11Neptune108 } from "../../../../../cards/src/cards/OP11/characters/108-neptune.ts";
+import { op11Neptune108 } from "../../../../../cards/src/cards/characters/op11-108-neptune.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

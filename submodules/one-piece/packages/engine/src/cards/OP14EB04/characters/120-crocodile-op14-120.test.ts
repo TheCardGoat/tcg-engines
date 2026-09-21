@@ -6,7 +6,7 @@ import {
   op06GeckoMoria086,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04CrocodileOp14120120 } from "../../../../../cards/src/cards/OP14EB04/characters/120-crocodile-op14-120.ts";
+import { op14eb04CrocodileOp14120120 } from "../../../../../cards/src/cards/characters/op14-120-crocodile.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

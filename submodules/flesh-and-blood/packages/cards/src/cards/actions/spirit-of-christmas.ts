@@ -18,21 +18,25 @@ export const spiritOfChristmas = definePitchFamily(fabPitchFamilies["spirit-of-c
             {
               type: "create-token",
               token: "agility",
+              creator: "token-controller",
               controller: "iteration-subject",
             },
             {
               type: "create-token",
               token: "might",
+              creator: "token-controller",
               controller: "iteration-subject",
             },
             {
               type: "create-token",
               token: "vigor",
+              creator: "token-controller",
               controller: "iteration-subject",
             },
             {
               type: "create-token",
               token: "gold",
+              creator: "token-controller",
               controller: "iteration-subject",
             },
           ],

@@ -15,6 +15,7 @@ import {
   createGundamWebviewReadyMessage,
   postGundamWebviewMessage,
 } from "../src/engine/practice/webviewBridge.ts";
+import { practiceModeFromSearch } from "../../../simulator/practiceMode.ts";
 
 const GUNDAM_SIMULATOR_BASE_PATH = "/gundam/simulator";
 
@@ -54,6 +55,15 @@ export function PracticePage() {
     setError(null);
     setDetails([]);
     postGundamWebviewMessage(createGundamWebviewReadyMessage());
+    if (practiceModeFromSearch(search) === "self") {
+      const message =
+        "Play both sides is not available for Gundam yet. Start a practice bot match instead.";
+      setError(message);
+      postGundamWebviewMessage({ type: "gundam.practice.error.v1", message, details: [] });
+      return () => {
+        cancelled = true;
+      };
+    }
     const resolved = resolveGundamPracticePayload(search);
     if (!resolved.ok) {
       setError(resolved.error.message);
@@ -67,7 +77,7 @@ export function PracticePage() {
         cancelled = true;
       };
     }
-    launchServerPractice(resolved.payload)
+    launchCachedPractice(search.toString(), resolved.payload)
       .then((res) => {
         if (cancelled) return;
         postGundamWebviewMessage({
@@ -137,7 +147,67 @@ interface QuickMatchResponse {
   authToken?: string | null;
 }
 
-async function launchServerPractice(payload: GundamPracticePayload): Promise<QuickMatchResponse> {
+// One matchmaking launch must create exactly one server match even though the
+// mount effect can re-run (React StrictMode double-invokes it in development,
+// and webview hosts may reload the practice URL). Keyed by the raw query
+// payload, which is the stable launch intent: the cancelled flag only stops
+// the navigation, not an already-dispatched POST.
+const practiceLaunchCache = new Map<string, Promise<QuickMatchResponse>>();
+
+function launchCachedPractice(
+  rawSearch: string,
+  payload: GundamPracticePayload,
+): Promise<QuickMatchResponse> {
+  const existing = practiceLaunchCache.get(rawSearch);
+  if (existing) {
+    return existing;
+  }
+  const launch = launchServerPractice(rawSearch, payload).catch((error: unknown) => {
+    // A failed launch must be retryable; a cached rejection would pin the
+    // page to the error until a full reload.
+    practiceLaunchCache.delete(rawSearch);
+    throw error;
+  });
+  practiceLaunchCache.set(rawSearch, launch);
+  return launch;
+}
+
+/**
+ * Stable idempotency key for one practice launch intent. The quick-match route
+ * reserves this key in Redis, so a duplicate request — reload, retry, double
+ * effect — replays the first response instead of creating a sibling
+ * in-progress match.
+ */
+async function practiceIdempotencyKey(rawPayload: string): Promise<string> {
+  try {
+    const digest = await globalThis.crypto?.subtle?.digest(
+      "SHA-256",
+      new TextEncoder().encode(rawPayload),
+    );
+    if (digest) {
+      const hex = [...new Uint8Array(digest)]
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+      return hex.slice(0, 48);
+    }
+  } catch {
+    // Fall through to the non-crypto hash.
+  }
+  const pair = [0x811c9dc5, 0x01000193].map((seed) => {
+    let hash = seed;
+    for (let index = 0; index < rawPayload.length; index += 1) {
+      hash ^= rawPayload.charCodeAt(index);
+      hash = Math.imul(hash, 0x01000193) >>> 0;
+    }
+    return hash.toString(16).padStart(8, "0");
+  });
+  return `fnv${pair[0]}${pair[1]}${rawPayload.length.toString(16).padStart(8, "0")}`;
+}
+
+async function launchServerPractice(
+  rawSearch: string,
+  payload: GundamPracticePayload,
+): Promise<QuickMatchResponse> {
   const playerDeck = payload.playerDocumentCards
     ? gundamDocumentCardsToHistoric(payload.playerDocumentCards)
     : gundamDeckToHistoric(payload.playerDeck, payload.playerPrintingSelections);
@@ -152,7 +222,11 @@ async function launchServerPractice(payload: GundamPracticePayload): Promise<Qui
   const response = await fetch(playUrl("gundam", "/quick-match"), {
     method: "POST",
     credentials: "include",
-    headers: { "content-type": "application/json", ...gundamRuntimeRequestHeaders() },
+    headers: {
+      "content-type": "application/json",
+      "idempotency-key": await practiceIdempotencyKey(rawSearch),
+      ...gundamRuntimeRequestHeaders(),
+    },
     body: JSON.stringify({
       gameType: "gundam",
       authority: "server",

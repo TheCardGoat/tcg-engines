@@ -56,18 +56,29 @@ export const gloamspireMantle: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "pay",
-                  player: "controller",
-                  cost: {
-                    kind: "pay-reserve",
-                    amount: 3,
+                  kind: "attempt",
+                  effect: {
+                    kind: "pay",
+                    player: "controller",
+                    cost: {
+                      kind: "pay-reserve",
+                      amount: 3,
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "summon",
-                  object: "Ominous Shadow",
-                  controller: "controller",
-                  bindResultAs: "summoned-token",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "summon",
+                    object: "Ominous Shadow",
+                    controller: "controller",
+                    bindResultAs: "summoned-token",
+                  },
                 },
               ],
             },

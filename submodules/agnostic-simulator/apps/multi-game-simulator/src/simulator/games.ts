@@ -23,6 +23,16 @@ export const GAMES: readonly GameMeta[] = [
     defaultIndexPath: "/riftbound/simulator",
   },
   {
+    slug: "alpha-clash",
+    name: "Alpha Clash",
+    description:
+      "Contenders, Clash cards, resources, Portal, and the six clash steps in server-authoritative live matches.",
+    accentColor: "#c2502b",
+    accentSoft: "#fbeee8",
+    badgeLabel: "Live matches",
+    defaultIndexPath: "/alpha-clash/simulator",
+  },
+  {
     slug: "one-piece",
     name: "One Piece",
     description:

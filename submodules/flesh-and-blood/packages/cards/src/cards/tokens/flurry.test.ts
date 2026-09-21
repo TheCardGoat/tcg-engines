@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FabTestEngine, expectFabPlayer } from "@tcg/flesh-and-blood-engine/testing";
+import { FabTestEngine, expectFabPlayer, expectWait } from "@tcg/flesh-and-blood-engine/testing";
 import { bravo } from "../heroes/bravo.ts";
 import { dash } from "../heroes/dash.ts";
 import { edgeOfAutumn } from "../weapons/edge-of-autumn.ts";
@@ -26,8 +26,9 @@ describe("Flurry (AHA027) AAA", () => {
     const Bravo = game.as(bravo);
 
     // First weapon attack — the Flurry trigger burns and lifts the limit to 2.
+    // CR 5.2.3c: no "you may" decision exists — the grant applies by itself.
     Bravo.activate(edgeOfAutumn);
-    Bravo.accept();
+    expectWait(game).notToHaveDecision();
     game.advanceUntil({ stopAt: "defend" });
     game.as(dash).defendWith();
     game.closeCombat({ optionals: "decline", ordering: "listed" });
@@ -44,30 +45,5 @@ describe("Flurry (AHA027) AAA", () => {
     // A third activation breaks the printed twice-per-turn limit.
     Bravo.expectActivationRejected(edgeOfAutumn);
     expectFabPlayer(game.as(dash)).toHaveLife(18);
-  });
-
-  it("boundary: declining the may leaves the once-per-turn weapon limit intact", () => {
-    const game = FabTestEngine.start(
-      {
-        hero: bravo,
-        arena: [flurry],
-        weapon1: [edgeOfAutumn],
-        hand: [],
-        resourcePoints: 4,
-        deck: 6,
-      },
-      { hero: dash, hand: [], life: 20, deck: 6 },
-    );
-    const Bravo = game.as(bravo);
-
-    Bravo.activate(edgeOfAutumn);
-    Bravo.decline();
-    game.advanceUntil({ stopAt: "defend" });
-    game.as(dash).defendWith();
-    game.closeCombat({ optionals: "decline", ordering: "listed" });
-
-    expect(Bravo.zone("arena")).not.toContain(flurry.canonicalId);
-    Bravo.expectActivationRejected(edgeOfAutumn);
-    expectFabPlayer(game.as(dash)).toHaveLife(19);
   });
 });

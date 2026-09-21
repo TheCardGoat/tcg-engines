@@ -196,9 +196,11 @@ describe("listLegalCommands", () => {
   it("returns empty or concede-only for a non-priority opponent without actions", () => {
     const { runtime, player2Id } = createFabPracticeMatch({ seed: "legal-3" });
     const legal = listLegalCommands(runtime, player2Id);
-    // Non-priority players without combat/stack only get concede (filtered by default).
-    // every() is true for [], so empty legal is allowed.
-    expect(legal.every((c) => c.move === "concede")).toBe(true);
+    // Non-priority players without combat/stack get concede (filtered by
+    // default) plus player-only settings commands — the scoped auto-pass arm —
+    // which no bot action candidate may ever surface.
+    expect(legal.every((c) => c.move === "concede" || c.automation === "player-only")).toBe(true);
+    expect(botEligibleFabCommands(legal).every((c) => c.move === "concede")).toBe(true);
   });
 
   it("lists pass as the no-defense declaration without a duplicate empty defend", () => {

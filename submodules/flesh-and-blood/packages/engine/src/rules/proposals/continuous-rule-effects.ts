@@ -241,6 +241,7 @@ export function proposeContinuousRuleEffect(
             type: "create-token",
             token: part.token,
             controller: part.controller,
+            creator: effect.creator ?? "effect-controller",
           },
         );
         if (!partResult?.supported) {
@@ -377,13 +378,16 @@ export function proposeContinuousRuleEffect(
         // amongExposed with no empty seat: CR 3.0.1a — create is a no-op.
         if (destZone === null) continue;
         const index = tokenIndex;
-        const instanceId = `${processId}:${layer.layerId}:${targetPath}:token-${index}`;
+        // A committed continuation can rebase another create leaf onto this
+        // target path. Include the allocation epoch so it cannot overwrite a
+        // token created by an earlier journal from the same layer/process.
+        const instanceId = `${processId}:${layer.layerId}:${targetPath}:token-${state.counters.objectIncarnation + index + 1}`;
         let object: FabObjectSnapshot = createSyntheticFabObjectSnapshot({
           ref: { instanceId, incarnation: state.counters.objectIncarnation + index + 1 },
           canonicalId: tokenCanonicalId,
           objectKind: "created-token",
           baseSource,
-          ownerId: playerId,
+          ownerId: effect.creator === "token-controller" ? playerId : layer.controllerId,
           controllerId: playerId,
           zone: "unknown",
           zoneRef: { playerId: fabPlayerId(playerId), zone: destZone },
@@ -584,6 +588,7 @@ export function proposeContinuousRuleEffect(
             effect,
             applicationPolicy,
             consumptionPolicy:
+              (effect.replaces.name === "create" && effect.replaces.occurrences === "every") ||
               effect.duration === "this-combat-chain"
                 ? { kind: "never" }
                 : applicationPolicy.kind === "may-apply"
@@ -1072,7 +1077,12 @@ export function proposeContinuousRuleEffect(
     );
     if (futureApplicability === undefined)
       return unsupported(effect, "continuous future-object count is not a locked integer");
-    const expiresAt = resolveContinuousExpiry(state, layer.source, effect.duration);
+    const expiresAt = resolveContinuousExpiry(state, layer.source, effect.duration, {
+      ownAnchorPlayerId:
+        typeof layer.bindings["iteration-subject"] === "string"
+          ? layer.bindings["iteration-subject"]
+          : null,
+    });
     if (!expiresAt) return unsupported(effect, "continuous expiry is not canonical");
     // Lock subjects for self / object targets so power/intellect buffs apply
     // immediately (Head Shot arsenal face-up, Evo transform intellect, etc.).

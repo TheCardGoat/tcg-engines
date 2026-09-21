@@ -58,18 +58,29 @@ export const tristanGrimStalker: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "source",
+                    },
+                    counter: "preparation",
+                    amount: 3,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: "preparation",
-                  amount: 3,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "destroy",
-                  subject: {
-                    kind: "event-recipient",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "destroy",
+                    subject: {
+                      kind: "event-recipient",
+                    },
                   },
                 },
               ],

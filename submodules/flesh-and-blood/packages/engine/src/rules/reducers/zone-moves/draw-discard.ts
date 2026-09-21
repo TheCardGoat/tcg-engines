@@ -75,7 +75,9 @@ export function reduceDrawDiscard(
     }
     case "reveal": {
       // Observation only — no zone change. Stamp the turn ledger so
-      // revealed-power-greater-than-damage-dealt-this-turn can read it.
+      // revealed-power-greater-than-damage-dealt-this-turn can read it, and so
+      // the viewer projection can keep privately-revealed cards (CR 8.5.17)
+      // inspectable for the rest of the turn.
       const player = state.players[event.data.playerId];
       const power = event.data.object.current.numeric.power;
       if (
@@ -84,6 +86,20 @@ export function reduceDrawDiscard(
         power > player.history.turn.highestPowerRevealedThisTurn
       ) {
         player.history.turn.highestPowerRevealedThisTurn = power;
+      }
+      const zoneKind = event.data.object.zoneRef.zone;
+      if (player && (zoneKind === "deck" || zoneKind === "hand")) {
+        const revealed = player.history.turn.revealedPrivateInstancesThisTurn ?? [];
+        if (!revealed.some((entry) => entry.instanceId === event.data.object.instanceId)) {
+          player.history.turn.revealedPrivateInstancesThisTurn = [
+            ...revealed,
+            {
+              instanceId: event.data.object.instanceId,
+              ownerId: event.data.object.ownerId,
+              zoneKind,
+            },
+          ];
+        }
       }
       return state.objects[event.data.object.instanceId] ? { state } : null;
     }

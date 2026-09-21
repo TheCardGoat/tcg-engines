@@ -294,16 +294,17 @@ function ruleAppliesToCandidate(
       return false;
     }
   }
-  if (effect.against) {
-    const againstIds = request.againstIds ?? [];
-    if (
-      !resolveGrandArchiveSubjectObjects(effect.against, evaluation).some((object) =>
-        againstIds.includes(object.id),
-      )
-    ) {
-      return false;
-    }
-  }
+  const conditionEvaluations = effect.against
+    ? (request.againstIds ?? []).flatMap((againstId) => {
+        const againstEvaluation = { ...evaluation, candidateId: againstId };
+        return resolveGrandArchiveSubjectObjects(effect.against!, againstEvaluation).some(
+          (object) => object.id === againstId,
+        )
+          ? [againstEvaluation]
+          : [];
+      })
+    : [evaluation];
+  if (conditionEvaluations.length === 0) return false;
   if (effect.subject?.kind === "player") {
     if (
       !resolveGrandArchivePlayers(effect.subject.player, evaluation).includes(
@@ -354,7 +355,9 @@ function ruleAppliesToCandidate(
       })) &&
     (effect.mode === "require" ||
       !effect.condition ||
-      evaluateGrandArchiveCondition(effect.condition, evaluation))
+      conditionEvaluations.some((conditionEvaluation) =>
+        evaluateGrandArchiveCondition(effect.condition!, conditionEvaluation),
+      ))
   );
 }
 

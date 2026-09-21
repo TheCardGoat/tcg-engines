@@ -40,7 +40,7 @@ test("parser builds structured cards from generated source", async () => {
       .filter((card) =>
         [
           "animals-wrecker",
-          "les-e-le-mens",
+          "les-elemens",
           "rockn-rockerboy",
           "unlikely-bond",
           "v-roamer-of-the-badlands",
@@ -51,7 +51,7 @@ test("parser builds structured cards from generated source", async () => {
       .sort(),
   ).toEqual([
     "animals-wrecker",
-    "les-e-le-mens",
+    "les-elemens",
     "rockn-rockerboy",
     "unlikely-bond",
     "v-roamer-of-the-badlands",
@@ -158,7 +158,7 @@ test("parser builds structured cards from generated source", async () => {
     "deadman-transmitter",
     "gunpoint-diplomacy",
     "shattered-memories",
-    "muamar-reyes-el-capita-n",
+    "muamar-reyes-el-capitan",
     "rogue-amendiares-preem-solo",
     "heywood-ripperdoc",
     "maelstrom-goons",

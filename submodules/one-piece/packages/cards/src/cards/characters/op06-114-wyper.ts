@@ -1,0 +1,105 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06Wyper114I18n } from "./op06-114-wyper.i18n.ts";
+
+export const op06Wyper114: CharacterCard = {
+  id: "OP06-114",
+  canonicalId: "OP06-114",
+  slug: "wyper/op06-114",
+  name: "Wyper",
+  printings: [
+    {
+      id: "OP06-114",
+      artId: "OP06-114",
+      setCode: "OP06",
+      collectorNumber: "114",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-114.jpg",
+    },
+    {
+      id: "OP06-114_p2",
+      artId: "OP06-114_p2",
+      setCode: "OP06",
+      collectorNumber: "114",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-114_p2.jpg",
+    },
+    {
+      id: "OP06-114_p3",
+      artId: "OP06-114_p3",
+      setCode: "OP06",
+      collectorNumber: "114",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-114_p3.jpg",
+      label: "Wyper (Full Art)",
+    },
+    {
+      id: "OP06-114_r1",
+      artId: "OP06-114_r1",
+      setCode: "OP06",
+      collectorNumber: "114",
+      rarity: "UC",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-114_r1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["yellow"],
+  rarity: "UC",
+  setId: "OP06",
+  cost: 5,
+  power: 7000,
+  traits: ["Sky Island Shandian Warrior"],
+  attribute: "ranged",
+  effect:
+    "[On Play] You may place 1 Stage with a cost of 1 at the bottom of the owner's deck: Look at 5 cards from the top of your deck; reveal up to 1 [Upper Yard] or [Shandian Warrior] type card and add it to your hand. Then, place the rest at the bottom of your deck in any order.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        costs: [
+          {
+            cost: "returnCharacterToDeck",
+            amount: 1,
+            position: "bottom",
+            player: "both",
+            zones: ["stage"],
+            filters: [{ filter: "cost", comparison: "eq", value: 1 }],
+          },
+        ],
+        actions: [
+          {
+            action: "search",
+            lookCount: 5,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 1,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "anyOf",
+                filters: [
+                  {
+                    filter: "name",
+                    value: "Upper Yard",
+                  },
+                  {
+                    filter: "trait",
+                    value: "Shandian Warrior",
+                    match: "includes",
+                  },
+                ],
+              },
+            ],
+            revealDestination: "hand",
+            remainderPosition: "bottom",
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op06Wyper114I18n,
+};

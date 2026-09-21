@@ -41,7 +41,9 @@ describe("Sizzling Steel (HNT113) AAA", () => {
     Fang.must.playReaction(sizzlingSteelRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(4);
+    // 1 + 3 — this link's Draconic reaction also turns on Obsidian Fire
+    // Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(5);
     expectFabCard(Fang, sizzlingSteelRed).toBeIn("graveyard");
   });
 
@@ -67,8 +69,8 @@ describe("Sizzling Steel (HNT113) AAA", () => {
     Fang.must.playReaction(sizzlingSteelRed);
     game.passBoth();
 
-    // Obsidian Fire Vein printed 1 + 4 = 5.
-    expectCombat(game).toHaveAttackPower(5);
+    // Obsidian Fire Vein printed 1 + 4, plus its live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(6);
     expectFabCard(Fang, sizzlingSteelRed).toBeIn("graveyard");
   });
 

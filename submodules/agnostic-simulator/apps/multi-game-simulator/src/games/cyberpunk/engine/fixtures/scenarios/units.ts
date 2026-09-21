@@ -11,6 +11,53 @@ import {
 
 export const unitScenarios: Scenario[] = [
   {
+    id: "pepeReadyLegendsPrompt",
+    group: "unit-play-trigger",
+    label: "Pepe · ready MERC Legends prompt",
+    description:
+      "Stops at Pepe's optional ready choice with two spent MERC Legends and a Gig value-pair. Reload to reset the same choice.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailPepeNajarroWorkingDoubles,
+              spent: false,
+              hasLag: false,
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailVStreetkid, spent: true, faceDown: false },
+            {
+              card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect,
+              spent: true,
+              faceDown: false,
+            },
+          ],
+          gigArea: [
+            { dieType: "d8", faceValue: 5 },
+            { dieType: "d6", faceValue: 5 },
+          ],
+        },
+        { field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }] },
+        { seed: scenarioSeed("pepeReadyLegendsPrompt"), autoGainGig: false },
+      );
+      // The opening refresh readies Legends; spend them after fixture initialization.
+      engine.judgeSpendCard(c.welcomeToNightCityRetailVStreetkid, { as: P1 });
+      engine.judgeSpendCard(c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, { as: P1 });
+      engine.attackUnit(
+        c.welcomeToNightCityRetailPepeNajarroWorkingDoubles,
+        c.welcomeToNightCityRetailCorpoSecurity,
+        { as: P1 },
+      );
+      const choice = engine.getState().G.turnMetadata.pendingChoice;
+      if (choice?.type !== "chooseTarget" || choice.payload.eligibleIds?.length !== 2) {
+        throw new Error("Pepe prompt fixture must offer two spent MERC Legends.");
+      }
+      return engine;
+    },
+  },
+  {
     id: "unitOctantRetail",
     group: "unit-gig-condition",
     label: "Octant (Retail) · 8+ Gig cost reduction",
@@ -687,7 +734,7 @@ export const unitScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.welcomeToNightCityRetailGildedMatoN],
+          hand: [c.welcomeToNightCityRetailGildedMaton],
           field: [
             {
               card: c.welcomeToNightCityRetailSwordwiseHuscle,
@@ -820,7 +867,7 @@ export const unitScenarios: Scenario[] = [
       CyberpunkTestEngine.createWithFixture(
         {
           hand: [],
-          field: [{ card: c.welcomeToNightCityRetailElSombreroNLaVenganzaLenta, spent: false }],
+          field: [{ card: c.welcomeToNightCityRetailElSombreronLaVenganzaLenta, spent: false }],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 3,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
@@ -1143,7 +1190,7 @@ export const unitScenarios: Scenario[] = [
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
-          hand: [c.welcomeToNightCityRetailGildedMatoN],
+          hand: [c.welcomeToNightCityRetailGildedMaton],
           field: [
             {
               card: c.welcomeToNightCityRetailSwordwiseHuscle,
@@ -1283,7 +1330,7 @@ export const unitScenarios: Scenario[] = [
           ],
           field: [
             c.welcomeToNightCityRetailSketchyRipper,
-            { card: c.welcomeToNightCityRetailElSombreroNLaVenganzaLenta, spent: false },
+            { card: c.welcomeToNightCityRetailElSombreronLaVenganzaLenta, spent: false },
             c.welcomeToNightCityRetailScrewLovelornFool,
             c.theHeistRetailStarterDeckDexterDeshawnOneLastChance,
             c.welcomeToNightCityRetailCaliberTotentanzSTopDog,
@@ -2171,7 +2218,7 @@ export const unitScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailMaelstromZealots, spent: false },
           ],
           legendArea: [
-            { card: c.welcomeToNightCityRetailJudyALvarezBraindanceMaestro, faceDown: false },
+            { card: c.welcomeToNightCityRetailJudyAlvarezBraindanceMaestro, faceDown: false },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           trash: [c.welcomeToNightCityRetailCorporateSurveillance],
@@ -2211,7 +2258,7 @@ export const unitScenarios: Scenario[] = [
               faceDown: false,
             },
             {
-              card: c.welcomeToNightCityRetailJudyALvarezNothingToDoubt,
+              card: c.welcomeToNightCityRetailJudyAlvarezNothingToDoubt,
               spent: false,
               hasLag: false,
               attachedGears: [c.welcomeToNightCityRetailTheRelicExperimentalBiochip],
@@ -2239,7 +2286,7 @@ export const unitScenarios: Scenario[] = [
               spent: false,
             },
             {
-              card: c.welcomeToNightCityRetailJudyALvarezBraindanceMaestro,
+              card: c.welcomeToNightCityRetailJudyAlvarezBraindanceMaestro,
               faceDown: false,
               spent: false,
             },
@@ -2270,7 +2317,10 @@ export const unitScenarios: Scenario[] = [
             { dieType: "d10", faceValue: 3 },
           ],
         },
-        { seed: scenarioSeed("retailReleaseAug2026AllCards"), autoGainGig: false },
+        {
+          seed: scenarioSeed("retailReleaseAug2026AllCards"),
+          autoGainGig: false,
+        },
       ),
   },
   {
@@ -2294,7 +2344,7 @@ export const unitScenarios: Scenario[] = [
               hasLag: true,
             },
             {
-              card: c.welcomeToNightCityRetailJudyALvarezNothingToDoubt,
+              card: c.welcomeToNightCityRetailJudyAlvarezNothingToDoubt,
               spent: false,
               hasLag: false,
             },
@@ -2386,7 +2436,7 @@ export const unitScenarios: Scenario[] = [
       CyberpunkTestEngine.createWithFixture(
         {
           hand: [
-            c.welcomeToNightCityRetailLesELeMens,
+            c.welcomeToNightCityRetailLesElemens,
             c.welcomeToNightCityRetailUnlikelyBond,
             c.welcomeToNightCityRetailWildInTheStreets,
           ],

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { op04GumGumRedRoc056, op12Karasu085 } from "@tcg/op-cards";
-import { op13MonkeyDDragon017 } from "../../../../../cards/src/cards/OP13/characters/017-monkey-d-dragon.ts";
+import { op13MonkeyDDragon017 } from "../../../../../cards/src/cards/characters/op13-017-monkey-d-dragon.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

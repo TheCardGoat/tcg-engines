@@ -35,6 +35,7 @@ export const ladenWithFrost = definePitchFamily(fabPitchFamilies["laden-with-fro
       effect: {
         type: "create-token",
         token: "frostbite",
+        creator: "effect-controller",
         controller: "any",
       },
       label: {

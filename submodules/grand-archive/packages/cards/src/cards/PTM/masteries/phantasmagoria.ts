@@ -156,44 +156,55 @@ export const phantasmagoria: GrandArchiveCard<
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "all-graveyard-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "all",
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                    },
-                  },
+                  kind: "attempt",
                   effect: {
-                    kind: "move",
-                    subject: {
-                      kind: "bound",
-                      binding: "all-graveyard-cards",
+                    kind: "choose",
+                    selection: {
+                      id: "all-graveyard-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "all",
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["graveyard"],
+                        relationship: "zone-of",
+                        player: "controller",
+                      },
                     },
-                    from: "graveyard",
-                    destination: {
-                      zone: "main-deck",
-                      placement: {
-                        kind: "bottom",
-                        orderChosenBy: "controller",
+                    effect: {
+                      kind: "move",
+                      subject: {
+                        kind: "bound",
+                        binding: "all-graveyard-cards",
+                      },
+                      from: "graveyard",
+                      destination: {
+                        zone: "main-deck",
+                        placement: {
+                          kind: "bottom",
+                          orderChosenBy: "controller",
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "mill",
-                  player: "controller",
-                  amount: {
-                    kind: "variable",
-                    symbol: "X",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "mill",
+                    player: "controller",
+                    amount: {
+                      kind: "variable",
+                      symbol: "X",
+                    },
                   },
                 },
               ],

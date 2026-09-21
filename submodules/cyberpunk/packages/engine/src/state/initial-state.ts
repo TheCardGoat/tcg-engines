@@ -46,6 +46,7 @@ export function createEmptyPlayerState(playerId: PlayerId, isFirst: boolean): Pl
       trash: [],
       gigArea: [],
       eddieArea: [],
+      removedFromGame: [],
     },
     eddies: 0,
     spentEddies: 0,
@@ -190,6 +191,19 @@ export function chooseFirstPlayer(playerIds: PlayerId[], rng: SeededRNG): Player
  * The mulligan window opens *after* this step (gamePhase remains `setup`);
  * the mulligan move is what swaps a hand back for 6 fresh cards.
  */
+export function applyChooserGoesFirstIfPending(state: MatchState): void {
+  const choice = state.G.turnMetadata.pendingChoice;
+  if (!choice || choice.type !== "chooseFirstPlayer") return;
+  const chooserId = choice.chooserId;
+  for (const pid of state.ctx.playerIds) {
+    const player = state.G.players[pid as string];
+    if (player) player.firstPlayer = pid === chooserId;
+  }
+  state.G.turnMetadata.activePlayerId = chooserId;
+  state.G.turnMetadata.pendingChoice = undefined;
+  applyOpeningHand(state, chooserId);
+}
+
 export function applyOpeningHand(state: MatchState, firstPlayerId: PlayerId): void {
   for (const playerId of state.ctx.playerIds) {
     const player = state.G.players[playerId as string]!;
@@ -262,14 +276,14 @@ export function createMatchState(options: CreateMatchStateOptions): MatchState {
 
   const playerIds = options.players.map((p) => createPlayerId(p.id));
   const matchId = createMatchId(options.matchId ?? `match_${seed}`);
-  const firstPlayerId = chooseFirstPlayer(playerIds, rng);
+  const firstPlayerChooserId = chooseFirstPlayer(playerIds, rng);
 
   const G = createInitialGameState();
-  G.turnMetadata.activePlayerId = firstPlayerId;
+  G.turnMetadata.activePlayerId = firstPlayerChooserId;
 
   for (let i = 0; i < playerIds.length; i++) {
     const pid = playerIds[i]!;
-    G.players[pid as string] = createEmptyPlayerState(pid, pid === firstPlayerId);
+    G.players[pid as string] = createEmptyPlayerState(pid, false);
   }
 
   const ctx: EngineCtx = {
@@ -291,7 +305,7 @@ export function createMatchState(options: CreateMatchStateOptions): MatchState {
           totalConsumedMs: 0,
           movesMade: 0,
           lastUpdatedAtMs: now,
-          isOnClock: playerId === firstPlayerId,
+          isOnClock: playerId === firstPlayerChooserId,
         },
       ]),
     );
@@ -303,7 +317,12 @@ export function createMatchState(options: CreateMatchStateOptions): MatchState {
     populatePlayerBoard(state, playerIds[i]!, options.deckLists[i]!, options.catalog, rng, ids);
   }
 
-  applyOpeningHand(state, firstPlayerId);
+  G.turnMetadata.pendingChoice = {
+    type: "chooseFirstPlayer",
+    chooserId: firstPlayerChooserId,
+    effectId: "",
+    payload: {},
+  };
 
   // Persist RNG advance from setup so tests + replays see deterministic
   // post-setup randomness.

@@ -1,11 +1,7 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
-import {
-  getEffectiveRules,
-  isReadyFieldBlocker,
-  markDefeatAtEndOfTurnIfAttacked,
-} from "../active-effects/index.ts";
+import { getEffectiveRules, isReadyFieldBlocker } from "../active-effects/index.ts";
 import { getDefinitionFor } from "../state/lookups.ts";
 
 export interface UseBlockerInput extends MoveInput {
@@ -95,15 +91,6 @@ export const useBlockerMove: MoveDefinition<UseBlockerInput> = {
       step: "react",
       redirectedByBlocker: true,
     });
-    markDefeatAtEndOfTurnIfAttacked(
-      state as import("../types/match-state.ts").MatchState,
-      attack.attackerId,
-    );
-    markDefeatAtEndOfTurnIfAttacked(
-      state as import("../types/match-state.ts").MatchState,
-      blockerId as CardInstanceId,
-    );
-
     operations.event.emit({
       type: "actionLog",
       messageKey: "move.useBlocker",

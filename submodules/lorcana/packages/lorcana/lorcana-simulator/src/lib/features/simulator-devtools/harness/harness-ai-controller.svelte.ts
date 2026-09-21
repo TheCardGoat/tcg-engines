@@ -44,6 +44,7 @@ export class HarnessAiController implements AiControllableOrchestrator {
     aiSpeed: "balanced",
     strategyId: "",
     strategyLabel: "",
+    opponentMode: "bot",
     currentPerspective: "playerOne",
     turnNumber: 0,
   });
@@ -66,6 +67,7 @@ export class HarnessAiController implements AiControllableOrchestrator {
       aiSpeed: "balanced",
       strategyId: this.#strategyOption.id,
       strategyLabel: this.#strategyOption.label,
+      opponentMode: "bot",
       currentPerspective: "playerOne",
       turnNumber: this.#server.getTurnNumber(),
     };

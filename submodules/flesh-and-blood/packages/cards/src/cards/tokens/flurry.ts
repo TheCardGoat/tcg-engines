@@ -42,17 +42,16 @@ export const flurry = defineCard(fabCardIdentitiesByCanonicalId.jdkmHT8QfQmMbPLB
               },
             },
             {
-              type: "optional",
-              effect: {
-                type: "modify-activation-limit",
-                target: {
-                  selector: "binding",
-                  binding: "it",
-                },
-                operation: "set-total",
-                count: 2,
-                duration: "this-turn",
+              // CR 5.2.3c: the burn grants the twice-per-turn allowance by
+              // itself; no on-resolution decision exists.
+              type: "modify-activation-limit",
+              target: {
+                selector: "binding",
+                binding: "it",
               },
+              operation: "set-total",
+              count: 2,
+              duration: "this-turn",
             },
           ],
         },

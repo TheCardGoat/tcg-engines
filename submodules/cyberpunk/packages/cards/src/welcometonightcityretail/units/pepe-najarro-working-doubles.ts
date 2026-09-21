@@ -39,6 +39,7 @@ export const welcomeToNightCityRetailPepeNajarroWorkingDoubles = defineCyberpunk
             cardTypes: ["legend"],
             classifications: ["Merc"],
             state: "spent",
+            face: "faceUp",
             selection: { mode: "choose", min: 0, max: 2 },
           },
           conditions: [{ condition: "hasGigPair", controller: "friendly" }],

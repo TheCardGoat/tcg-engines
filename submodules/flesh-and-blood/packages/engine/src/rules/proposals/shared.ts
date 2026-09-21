@@ -235,8 +235,18 @@ export function heroTargets(
       return state.playerIds.filter((playerId) => playerId !== controllerId);
     case "hero":
       return playersForFabPlayer(state, controllerId, target.who, layer.bindings);
-    case "each-hero":
-      return state.playerIds;
+    case "each-hero": {
+      // CR 1.10.2b turn order: printed "starting with the hero to your left"
+      // iterates from the seat after the controller, then around the table
+      // (1v1 product: [opponent, controller] for a seat list of
+      // [controller, opponent]).
+      const controllerIndex = state.playerIds.findIndex((playerId) => playerId === controllerId);
+      if (controllerIndex < 0) return state.playerIds;
+      return [
+        ...state.playerIds.slice(controllerIndex + 1),
+        ...state.playerIds.slice(0, controllerIndex + 1),
+      ];
+    }
     case "each-other-hero":
       // 1v1 product: cardinality is always 1 (the sole opponent).
       return state.playerIds.filter((playerId) => playerId !== controllerId);
@@ -1197,6 +1207,7 @@ export function resolveContinuousExpiry(
   state: FabRulesSnapshot,
   source: FabObjectSnapshot,
   duration: FabDuration,
+  options: { readonly ownAnchorPlayerId?: string | null } = {},
 ): FabContinuousExpiry | null {
   switch (duration) {
     case "this-turn":
@@ -1215,13 +1226,21 @@ export function resolveContinuousExpiry(
     // the anchor player's own turn, that next turn is two turns away (the
     // opponent takes the immediately following one) — the global
     // until-end-of-next-turn compilation would expire a full turn early.
+    // "Own" anchors to the for-each iteration subject when one is bound
+    // (DTD230: "each hero … during their next turn"), else the source
+    // controller.
     case "until-end-of-own-next-turn":
     case "until-end-of-their-next-turn": {
-      const controllerId = source.controllerId ?? source.ownerId;
+      const fallbackControllerId = source.controllerId ?? source.ownerId;
+      const controllerId =
+        duration === "until-end-of-own-next-turn" && typeof options.ownAnchorPlayerId === "string"
+          ? options.ownAnchorPlayerId
+          : fallbackControllerId;
       const anchorId =
         duration === "until-end-of-own-next-turn"
           ? controllerId
-          : (state.playerIds.find((playerId) => playerId !== controllerId) ?? controllerId);
+          : (state.playerIds.find((playerId) => playerId !== fallbackControllerId) ??
+            fallbackControllerId);
       return {
         kind: "player-turn-end",
         playerId: anchorId,

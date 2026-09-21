@@ -1,7 +1,7 @@
 import { eb01Doma005, op01Shanks120 } from "@tcg/op-cards";
 import type { CharacterCard } from "@tcg/op-types";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Mr1DazBonez090 } from "../../../../../cards/src/cards/OP14EB04/characters/090-mr-1-daz-bonez.ts";
+import { op14eb04Mr1DazBonez090 } from "../../../../../cards/src/cards/characters/op14-090-mr-1-daz-bonez.ts";
 import { registerCards } from "../../../../../cards/src/runtime-catalog.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -69,7 +69,7 @@ describe("Twist and Turn (HNT122) AAA", () => {
     expectCombat(game).toHaveAttackPower(4);
   });
 
-  it("timing: hitting with the dagger lets you activate it an additional time this turn", () => {
+  it("timing: the dagger hit grants the extra swing without a prompt", () => {
     const game = FabTestEngine.start(
       {
         hero: fang,
@@ -88,7 +88,9 @@ describe("Twist and Turn (HNT122) AAA", () => {
     Fang.must.play(twistAndTurnRed);
     game.passBoth();
     Fang.must.activate(obsidianFireVein);
-    game.closeCombat({ optionals: "accept", ordering: "listed" });
+    // CR 5.2.3c: "you may" is the later activation choice, not an on-hit
+    // decision — a full decline pass must still lift the dagger's limit.
+    game.closeCombat({ optionals: "decline", ordering: "listed" });
     expectFabPlayer(Dash).toHaveLife(15);
 
     Fang.must.activate(obsidianFireVein);

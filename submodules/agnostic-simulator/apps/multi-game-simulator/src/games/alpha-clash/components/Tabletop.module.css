@@ -1,0 +1,731 @@
+/* Alpha Clash tabletop — mirrors the official printed playmat geometry.
+   Each player fields a landscape mat:
+     left rail: Contender slot, Phases reference (own mat), logo
+     center:    Clash Zone / Accessory Zone / Resource Zone
+     right rail: Clashground / Deck / Oblivion
+   The shared middle strip carries Standby, the Portal, and clash banner. */
+
+.table {
+  --ac-mat: #232f3a;
+  --ac-mat-dark: #17222c;
+  --ac-line: rgba(255, 255, 255, 0.38);
+  --ac-line-dim: rgba(255, 255, 255, 0.16);
+  --ac-card-w: 72px;
+  --ac-card-h: 100px;
+  --ac-card-small-w: 50px;
+  --ac-card-small-h: 70px;
+  --ac-clashground-w: 104px;
+  --ac-clashground-h: 68px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  padding: 16px;
+  border-radius: 14px;
+  border: 2px solid rgba(0, 0, 0, 0.85);
+  outline: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(110% 80% at 30% 0%, rgba(120, 92, 200, 0.2), transparent 55%),
+    radial-gradient(120% 90% at 85% 100%, rgba(200, 92, 40, 0.14), transparent 55%),
+    linear-gradient(155deg, var(--ac-mat) 0%, var(--ac-mat-dark) 100%);
+  box-shadow:
+    inset 0 0 70px rgba(0, 0, 0, 0.5),
+    0 18px 40px rgba(0, 0, 0, 0.55);
+  color: #f2efe6;
+  user-select: none;
+}
+
+.mat {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr) var(--ac-clashground-w);
+  grid-template-rows: minmax(112px, auto) minmax(84px, auto) minmax(96px, auto);
+  grid-template-areas:
+    "contender clash clashground"
+    "phases    accessory deck"
+    "phases    resource  oblivion";
+  gap: 10px;
+  min-width: 0;
+}
+
+/* ----------------------------------------------------------- mat zones */
+
+.zone {
+  position: relative;
+  border: 1px solid var(--ac-line);
+  border-radius: 6px;
+  background: rgba(10, 16, 22, 0.32);
+  padding: 10px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.zoneLabel {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.9),
+    0 0 6px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.zoneEmpty {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: 9px;
+  color: rgba(242, 239, 230, 0.4);
+  font-style: italic;
+  pointer-events: none;
+}
+
+.zoneBody {
+  position: absolute;
+  inset: 28px 8px 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+  align-content: flex-start;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.zoneBodyCentered {
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Center column zones */
+.clashZone {
+  grid-area: clash;
+}
+
+.accessoryZone {
+  grid-area: accessory;
+}
+
+.resourceZone {
+  grid-area: resource;
+}
+
+/* Right rail */
+.clashgroundZone {
+  grid-area: clashground;
+}
+
+.deckZone {
+  grid-area: deck;
+}
+
+.oblivionZone {
+  grid-area: oblivion;
+}
+
+/* Left rail */
+.contenderZone {
+  grid-area: contender;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.phasesZone {
+  grid-area: phases;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 8px;
+  font-size: 9.5px;
+  line-height: 1.45;
+  color: rgba(242, 239, 230, 0.82);
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.logoZone {
+  margin-top: auto;
+  padding-top: 6px;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.65);
+}
+
+/* Phases reference (printed on the playmat) */
+.phaseGroup {
+  margin-bottom: 6px;
+}
+
+.phaseGroupTitle {
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.phaseGroupTitleCurrent {
+  color: #ffd479;
+  text-shadow: 0 0 8px rgba(255, 212, 121, 0.45);
+}
+
+.phaseStep {
+  padding-left: 8px;
+  color: rgba(242, 239, 230, 0.66);
+}
+
+.phaseStepCurrent {
+  color: #ffd479;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------- cards */
+
+.cardFace {
+  position: relative;
+  width: var(--ac-card-w);
+  height: var(--ac-card-h);
+  flex: 0 0 auto;
+  border-radius: 6px;
+  background: linear-gradient(170deg, #f7f3e8 0%, #e8e0cc 100%);
+  border: 1px solid #8d7f63;
+  box-shadow:
+    0 2px 5px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  color: #241d12;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardName {
+  font-size: 8.5px;
+  font-weight: 700;
+  line-height: 1.15;
+  padding: 4px 5px 3px;
+  border-bottom: 1px solid rgba(90, 74, 48, 0.35);
+  background: linear-gradient(180deg, rgba(140, 116, 74, 0.25), rgba(140, 116, 74, 0.08));
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 30px;
+}
+
+.cardStats {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 3px 5px 4px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.cardAtk {
+  color: #8c2f24;
+}
+
+.cardDef {
+  color: #274f7c;
+}
+
+.cardDamage {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 15px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: #a3271c;
+  color: #ffe9e5;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.cardBack {
+  width: var(--ac-card-w);
+  height: var(--ac-card-h);
+  flex: 0 0 auto;
+  border-radius: 6px;
+  border: 1px solid #141d22;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.07) 0 6px, transparent 6px 12px),
+    linear-gradient(170deg, #3d4c66 0%, #232e40 100%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+.slot {
+  position: relative;
+  width: var(--ac-card-w);
+  height: var(--ac-card-h);
+  flex: 0 0 auto;
+}
+
+.slotEngaged {
+  width: var(--ac-card-h);
+  height: var(--ac-card-w);
+}
+
+.slotEngaged .cardFace,
+.slotEngaged .cardBack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ac-card-w);
+  height: var(--ac-card-h);
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.cardDim {
+  opacity: 0.55;
+  filter: saturate(0.7);
+}
+
+.cardAttacker {
+  outline: 3px solid #ffb347;
+  outline-offset: 1px;
+  box-shadow:
+    0 0 14px rgba(255, 179, 71, 0.75),
+    0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+.cardTarget {
+  outline: 3px solid #ff5f4e;
+  outline-offset: 1px;
+  box-shadow:
+    0 0 14px rgba(255, 95, 78, 0.7),
+    0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+/* Live-match point-and-click: selectable cards answer with the shared Portal
+   teal, committed selections with the phases gold. */
+.slotButton {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cardSelectable {
+  cursor: pointer;
+  box-shadow:
+    0 0 0 2px rgba(111, 216, 192, 0.85),
+    0 0 12px rgba(111, 216, 192, 0.4);
+}
+
+.cardSelectable:hover {
+  box-shadow:
+    0 0 0 3px rgba(255, 212, 121, 0.95),
+    0 0 16px rgba(255, 212, 121, 0.55);
+}
+
+.cardSelected {
+  cursor: pointer;
+  box-shadow:
+    0 0 0 3px #ffd479,
+    0 0 18px rgba(255, 212, 121, 0.8);
+}
+
+.cardFaceSmall {
+  width: var(--ac-card-small-w);
+  height: var(--ac-card-small-h);
+}
+
+.cardBackSmall {
+  width: var(--ac-card-small-w);
+  height: var(--ac-card-small-h);
+}
+
+/* Resource cards: inverted backs spread across the big resource zone. */
+.resourceCard {
+  width: calc(var(--ac-card-small-w) * 0.78);
+  height: calc(var(--ac-card-small-h) * 0.78);
+  transform: rotate(180deg);
+  border-radius: 5px;
+}
+
+.resourceCardReady {
+  box-shadow:
+    0 0 8px rgba(255, 226, 150, 0.55),
+    0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.resourceCardEngaged {
+  opacity: 0.45;
+}
+
+/* Clashground: landscape location card. */
+.clashgroundCard {
+  width: 100%;
+  max-width: calc(var(--ac-clashground-w) - 4px);
+  height: var(--ac-clashground-h);
+  display: flex;
+  flex-direction: column;
+}
+
+.clashgroundName {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 5px 6px;
+  border-bottom: 1px solid rgba(90, 74, 48, 0.35);
+  background: linear-gradient(180deg, rgba(140, 116, 74, 0.25), rgba(140, 116, 74, 0.08));
+}
+
+.clashgroundTag {
+  margin-top: auto;
+  padding: 3px 6px 4px;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(36, 29, 18, 0.65);
+}
+
+/* Contender card in its left-rail slot. */
+.contenderCard {
+  width: calc(var(--ac-card-w) + 26px);
+  height: calc(var(--ac-card-h) + 30px);
+  display: flex;
+  flex-direction: column;
+  border-width: 2px;
+}
+
+.contenderName {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 6px 7px 4px;
+  line-height: 1.2;
+  border-bottom: 1px solid rgba(90, 74, 48, 0.35);
+  background: linear-gradient(180deg, rgba(140, 116, 74, 0.3), rgba(140, 116, 74, 0.1));
+}
+
+.healthWrap {
+  margin: auto 8px 8px;
+}
+
+.healthText {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 3px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.healthText span:last-child {
+  font-size: 9px;
+  color: rgba(36, 29, 18, 0.6);
+}
+
+.healthBar {
+  height: 7px;
+  border-radius: 4px;
+  background: rgba(36, 29, 18, 0.18);
+  overflow: hidden;
+  border: 1px solid rgba(36, 29, 18, 0.3);
+}
+
+.healthFill {
+  height: 100%;
+  background: linear-gradient(180deg, #58b368, #3a8f4a);
+}
+
+.healthFillLow {
+  background: linear-gradient(180deg, #d9534f, #a3271c);
+}
+
+.contenderStats {
+  display: flex;
+  gap: 8px;
+  padding: 0 8px 7px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------- right-rail piles */
+
+.pileRow {
+  position: absolute;
+  inset: 28px 8px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pileStack {
+  position: relative;
+  width: var(--ac-card-small-w);
+  height: var(--ac-card-small-h);
+  flex: 0 0 auto;
+}
+
+.pileStack::before,
+.pileStack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  border: 1px solid #141d22;
+  background: linear-gradient(170deg, #3d4c66 0%, #232e40 100%);
+}
+
+.pileStack::before {
+  transform: translate(-3px, 3px);
+  opacity: 0.6;
+}
+
+.pileStack::after {
+  transform: translate(2px, -2px);
+  opacity: 0.8;
+}
+
+.pileTop {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  border: 1px solid #141d22;
+  background: linear-gradient(170deg, #3d4c66 0%, #232e40 100%);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+
+.pileTopOblivion {
+  filter: grayscale(0.7) brightness(0.82);
+}
+
+.pileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pileCount {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.pileLabel {
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.55);
+}
+
+/* -------------------------------------------------- middle strip */
+
+.middleStrip {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  min-height: 54px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px dashed var(--ac-line-dim);
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.standbyStack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+}
+
+.standbyCards {
+  position: relative;
+  width: calc(var(--ac-card-small-w) + 16px);
+  height: var(--ac-card-small-h);
+}
+
+.standbyCard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--ac-card-small-w);
+  height: var(--ac-card-small-h);
+  border-radius: 5px;
+  border: 1px solid #6d5b34;
+  background: linear-gradient(170deg, #c9b98d 0%, #a5946a 100%);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.portal {
+  justify-self: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid #55605c;
+  background: radial-gradient(circle at 50% 40%, #37514a 0%, #1d2c27 75%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.portalOpen {
+  border-color: #6fd8c0;
+  background: radial-gradient(circle at 50% 40%, #8ff0d8 0%, #2c7a68 75%);
+  box-shadow:
+    0 0 18px rgba(111, 216, 192, 0.65),
+    inset 0 0 10px rgba(0, 0, 0, 0.35);
+}
+
+.portalMark {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 239, 230, 0.85);
+}
+
+.turnBanner {
+  justify-self: end;
+  text-align: right;
+  font-size: 11px;
+  color: rgba(242, 239, 230, 0.8);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.turnBanner strong {
+  font-size: 13px;
+  color: #f2efe6;
+}
+
+.clashBanner {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 179, 71, 0.6);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 179, 71, 0.12),
+    rgba(164, 40, 28, 0.24),
+    rgba(255, 179, 71, 0.12)
+  );
+  padding: 5px 14px;
+  font-size: 12px;
+  color: #ffe9c9;
+}
+
+.clashBannerArrow {
+  color: #ffb347;
+  font-weight: 700;
+}
+
+.clashStep {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 233, 201, 0.8);
+  border: 1px solid rgba(255, 179, 71, 0.4);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+
+/* --------------------------------------------------------- hand */
+
+.hand {
+  position: relative;
+  min-height: calc(var(--ac-card-h) + 18px);
+  padding: 8px 0 2px;
+}
+
+.handLabel {
+  position: absolute;
+  top: 2px;
+  left: 12px;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9);
+  z-index: 2;
+}
+
+.handRow {
+  display: flex;
+  justify-content: center;
+  padding-top: 14px;
+}
+
+.handCard {
+  position: relative;
+  margin-left: -26px;
+  transition: transform 120ms ease;
+  transform-origin: bottom center;
+}
+
+.handCard:first-child {
+  margin-left: 0;
+}
+
+.handCard:hover {
+  transform: translateY(-10px);
+  z-index: 5;
+}
+
+/* --------------------------------------------------------- responsive */
+
+@media (max-width: 900px) {
+  .table {
+    --ac-card-w: 54px;
+    --ac-card-h: 76px;
+    --ac-card-small-w: 38px;
+    --ac-card-small-h: 54px;
+    --ac-clashground-w: 84px;
+    --ac-clashground-h: 54px;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .mat {
+    grid-template-columns: 110px minmax(0, 1fr) var(--ac-clashground-w);
+    grid-template-rows: minmax(88px, auto) minmax(66px, auto) minmax(74px, auto);
+    gap: 6px;
+    grid-template-areas:
+      "contender clash clashground"
+      "contender accessory deck"
+      "resource  resource oblivion";
+  }
+
+  .phasesZone {
+    display: none;
+  }
+
+  .handCard {
+    margin-left: -18px;
+  }
+}

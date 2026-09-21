@@ -27,6 +27,7 @@ export const swingBig = definePitchFamily(fabPitchFamilies["swing-big"], {
         effect: {
           type: "create-token",
           token: "quicken",
+          creator: "token-controller",
           controller: "defending-hero",
         },
       },

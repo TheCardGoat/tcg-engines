@@ -41,7 +41,9 @@ describe("Brothers of Flame (HNT107) AAA", () => {
     Fang.must.playReaction(brothersOfFlameRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(5);
+    // 1 + 4 — this link's Draconic reaction also turns on Obsidian Fire
+    // Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(6);
     expectFabCard(Fang, brothersOfFlameRed).toBeIn("graveyard");
   });
 
@@ -92,10 +94,11 @@ describe("Brothers of Flame (HNT107) AAA", () => {
 
     Fang.must.playReaction(brothersOfFlameRed);
     game.passBoth();
-    expectCombat(game).toHaveAttackPower(5);
+    // 1 + 4 + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(6);
 
     game.helpers.resolveRestOfCombat();
-    // Hunt 2 + dagger 5.
-    expect(Dash.life()).toBe(13);
+    // Hunt 2 + dagger 6.
+    expect(Dash.life()).toBe(12);
   });
 });

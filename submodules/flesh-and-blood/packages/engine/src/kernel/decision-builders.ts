@@ -23,6 +23,11 @@ export function createFabEntityTargetDecision(
     readonly candidates: readonly FabTargetCandidate[];
     readonly continuation: EntityTargetContinuation;
     readonly differentNames?: boolean;
+    readonly source?: {
+      readonly instanceId: string;
+      readonly canonicalId?: string;
+      readonly ownerId: string;
+    };
   },
 ): Extract<FabDecision, { readonly kind: "entity-target" }> {
   state.counters.decision += 1;
@@ -38,6 +43,7 @@ export function createFabEntityTargetDecision(
     candidates: input.candidates,
     continuation: input.continuation,
     ...(input.differentNames ? { differentNames: true } : {}),
+    ...(input.source ? { source: input.source } : {}),
   };
 }
 

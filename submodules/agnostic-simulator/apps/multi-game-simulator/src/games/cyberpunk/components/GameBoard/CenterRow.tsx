@@ -53,6 +53,7 @@ import {
 import {
   interactionViewCanAttackRival,
   interactionViewHasAttackers,
+  interactionViewHasBlockers,
 } from "../../engine/interactionViewHelpers";
 import { CardImage } from "./CardImage";
 import { useDragDrop } from "./DragDropContext";
@@ -61,6 +62,8 @@ import { useZoneDroppable } from "./useZoneDroppable";
 import { useResolvingProgramVisuals } from "../../animation";
 import { showBlockedPassTurnNotification } from "../blockedPassFeedback";
 import { buildAdjustGigOptions } from "../adjustGigOptions";
+import { compareGigStats, computeGigSideStats, type GigHelperComparison } from "./gigStats";
+import { StreetCredHelperPopover, useStreetCredHelper } from "./StreetCredHelper";
 import type { Phase } from "./gameStateTypes";
 import classes from "./CenterRow.module.css";
 
@@ -90,6 +93,7 @@ interface GigDiePopoverState {
   text: string;
   rect: DOMRect;
   pinned: boolean;
+  correction?: boolean;
 }
 
 function GigDieCell({
@@ -104,6 +108,7 @@ function GigDieCell({
   popoverOpen,
   onPopoverOpen,
   onPopoverClose,
+  correctionEnabled = false,
 }: {
   die: GigDieView;
   side: "rival" | "friendly";
@@ -116,6 +121,7 @@ function GigDieCell({
   popoverOpen?: boolean;
   onPopoverOpen?: (state: GigDiePopoverState) => void;
   onPopoverClose?: (dieId: string, pinned?: boolean) => void;
+  correctionEnabled?: boolean;
 }) {
   const dieRef = useRef<HTMLElement | null>(null);
   const className = `${classes.gigDie} ${classes[side]}`;
@@ -147,6 +153,7 @@ function GigDieCell({
     "data-selection-role": selectionHint?.role,
     "data-log-highlight": logHighlighted ? "true" : "false",
     "data-popover-open": popoverOpen ? "true" : "false",
+    "data-board-correction": correctionEnabled ? "on" : undefined,
   };
   const openPopover = useCallback(
     (pinned: boolean) => {
@@ -162,9 +169,13 @@ function GigDieCell({
     onPopoverClose?.(die.id, false);
   }, [die.id, onPopoverClose]);
   const handleClick = useCallback(() => {
-    openPopover(true);
+    if (interactive && !correctionEnabled) {
+      onPopoverClose?.(die.id, false);
+    } else {
+      openPopover(true);
+    }
     onClick?.(die.id);
-  }, [die.id, onClick, openPopover]);
+  }, [correctionEnabled, die.id, interactive, onClick, onPopoverClose, openPopover]);
   const handleKeyDown = useCallback(
     (event: ReactKeyboardEvent<HTMLDivElement>) => {
       if (event.key !== "Enter" && event.key !== " ") {
@@ -211,7 +222,7 @@ function GigDieCell({
       {...hoverProps}
       tabIndex={0}
       role="button"
-      aria-disabled={!interactive || !onClick}
+      aria-disabled={correctionEnabled ? undefined : !interactive || !onClick}
       aria-pressed={interactive && onClick ? selected : undefined}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
@@ -227,7 +238,17 @@ type GigSelectionPrompt = {
   remaining: string;
 };
 
-function GigDiePopover({ state, compact }: { state: GigDiePopoverState | null; compact: boolean }) {
+function GigDiePopover({
+  state,
+  compact,
+  ownerSide,
+  die,
+}: {
+  state: GigDiePopoverState | null;
+  compact: boolean;
+  ownerSide?: Side;
+  die?: GigDieView;
+}) {
   if (!state || typeof document === "undefined" || typeof window === "undefined") {
     return null;
   }
@@ -248,15 +269,84 @@ function GigDiePopover({ state, compact }: { state: GigDiePopoverState | null; c
     "--gig-popover-max-w": `${maxWidth}px`,
   } as CSSProperties;
 
+  const engine = useEngineOptional();
+  const correction = Boolean(engine?.boardCorrectionEnabled && state.pinned && die && ownerSide);
+  const max = die ? DIE_MAX_VALUES[die.dieType] : 1;
+  const ownerId = ownerSide ? PLAYER_SIDE_TO_ID[ownerSide] : undefined;
+  const rivalId = ownerSide ? PLAYER_SIDE_TO_ID[otherSide(ownerSide)] : undefined;
+
   return createPortal(
     <div
-      className={`${classes.gigDiePopover} ${classes[state.side]}`}
+      className={`${classes.gigDiePopover} ${classes[state.side]} ${
+        correction ? classes.gigCorrectionMenu : ""
+      }`}
       data-placement={placeBelow ? "bottom" : "top"}
       data-compact={compact ? "true" : "false"}
-      role="tooltip"
+      data-testid={correction ? "gig-correction-menu" : undefined}
+      role={correction ? "menu" : "tooltip"}
       style={style}
     >
       {state.text}
+      {correction && die && ownerId && rivalId && engine ? (
+        <div className={classes.gigCorrectionActions}>
+          <button
+            type="button"
+            disabled={die.faceValue <= 1}
+            onClick={() =>
+              engine.dispatch({
+                type: "manualSetGigValue",
+                dieId: die.id,
+                value: die.faceValue - 1,
+                as: ownerId,
+              })
+            }
+          >
+            −
+          </button>
+          <button
+            type="button"
+            disabled={die.faceValue >= max}
+            onClick={() =>
+              engine.dispatch({
+                type: "manualSetGigValue",
+                dieId: die.id,
+                value: die.faceValue + 1,
+                as: ownerId,
+              })
+            }
+          >
+            +
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              engine.dispatch({
+                type: "manualMoveGig",
+                dieId: die.id,
+                toPlayerId: rivalId,
+                location: "gigArea",
+                as: ownerId,
+              })
+            }
+          >
+            Give to rival
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              engine.dispatch({
+                type: "manualMoveGig",
+                dieId: die.id,
+                toPlayerId: ownerId,
+                location: "fixerArea",
+                as: ownerId,
+              })
+            }
+          >
+            Return to fixer
+          </button>
+        </div>
+      ) : null}
     </div>,
     document.body,
   );
@@ -271,6 +361,7 @@ function GigLane({
   badgePosition,
   dice,
   streetCred,
+  helper,
   interactive,
   interactiveDieIds,
   selectedDieIds,
@@ -293,6 +384,7 @@ function GigLane({
   badgePosition: "top" | "bottom";
   dice: GigDieView[];
   streetCred: number;
+  helper: GigHelperComparison;
   interactive: boolean;
   interactiveDieIds?: ReadonlySet<string>;
   selectedDieIds?: ReadonlySet<string>;
@@ -309,17 +401,23 @@ function GigLane({
 }) {
   const gigCount = dice.length;
   const hasWinCondition = gigCount >= WIN_GIG_THRESHOLD;
-  const adjustmentOptions = adjustChoice ? buildAdjustGigOptions(adjustChoice) : [];
-  const adjustedDie = adjustChoice ? dice.find((die) => die.id === adjustChoice.dieId) : undefined;
-  const adjustLabel = adjustedDie?.label ?? adjustChoice?.label ?? "Gig";
+  const ownStats = useMemo(() => computeGigSideStats(dice), [dice]);
+  const credHelper = useStreetCredHelper(side);
   const [diePopover, setDiePopover] = useState<GigDiePopoverState | null>(null);
   const compactScore = scoreVariant === "compact";
+  const boardCorrectionEnabled = useEngineOptional()?.boardCorrectionEnabled === true;
   const directAttackDrop = useZoneDroppable(directAttackDropSurface ? "opp-gigArea" : null);
   const handlePopoverClose = useCallback((dieId: string, pinned = false) => {
     setDiePopover((current) =>
       current?.dieId === dieId && current.pinned === pinned ? null : current,
     );
   }, []);
+
+  useEffect(() => {
+    if (!boardCorrectionEnabled) {
+      setDiePopover(null);
+    }
+  }, [boardCorrectionEnabled]);
 
   useEffect(() => {
     if (!diePopover?.pinned) {
@@ -355,12 +453,13 @@ function GigLane({
       data-sim-zone-id={ownerSide === "opponent" ? "opp-gigArea" : "p-gigArea"}
       data-side={ownerSide}
       data-count={gigCount}
+      data-empty={gigCount === 0 ? "true" : "false"}
       data-street-cred={streetCred}
       data-win-condition={hasWinCondition ? "true" : "false"}
       data-selection-active={interactive ? "true" : "false"}
       data-drop-hint={directAttackDropTarget ? "attackRival" : undefined}
       data-drop-zone={directAttackDropTarget ? "opp-gigArea" : undefined}
-      aria-label={`${label}: ${gigCount} Gigs, ${streetCred} Street Cred${hasWinCondition ? ", win condition active" : ""}`}
+      aria-label={`${label}: ${gigCount} Gigs, ${streetCred} Street Cred, ${ownStats.minCount} min, ${ownStats.maxCount} max, ${ownStats.pairs} value-pair${ownStats.pairs === 1 ? "" : "s"}${hasWinCondition ? ", win condition active" : ""}`}
     >
       {directAttackDropTarget ? (
         <div className={classes.gigLaneAttackDropCue} aria-hidden="true">
@@ -369,16 +468,24 @@ function GigLane({
         </div>
       ) : null}
       {showScore ? (
-        <div className={classes.gigScore} data-score-variant={scoreVariant} aria-hidden="true">
-          <span
+        <div className={classes.gigScore} data-score-variant={scoreVariant}>
+          <button
+            type="button"
+            ref={credHelper.chipRef}
             className={classes.gigCred}
             data-sim-anchor-id={ownerSide === "opponent" ? "opp-street-cred" : "p-street-cred"}
+            aria-label={`Open ${label} Gig breakdown, ${streetCred} Street Cred`}
+            {...credHelper.chipHandlers}
           >
-            <span>{scoreVariant === "compact" ? "SC" : "Street Cred"}</span>
+            <span aria-hidden="true">{scoreVariant === "compact" ? "SC" : "Street Cred"}</span>
             <strong>{streetCred}</strong>
-          </span>
+          </button>
           {hasWinCondition ? (
-            <span className={classes.gigWinMarker} data-testid="gig-win-condition">
+            <span
+              className={classes.gigWinMarker}
+              data-testid="gig-win-condition"
+              aria-hidden="true"
+            >
               {WIN_GIG_THRESHOLD}+ Gigs
             </span>
           ) : null}
@@ -398,78 +505,143 @@ function GigLane({
       <div className={classes.gigTrack}>
         <div className={classes.gigInner}>
           <AnimatedEntityCollection>
-            {dice.map((die) => (
-              <GigDieCell
-                key={die.id}
-                die={die}
-                side={side}
-                selectionActive={interactive}
-                interactive={interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))}
-                selected={selectedDieIds?.has(die.id)}
-                selectionHint={
-                  interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
-                    ? selectionHintForDie?.(die.id)
-                    : undefined
-                }
-                logHighlighted={logHighlightedDieId === die.id}
-                onClick={onDieClick}
-                popoverOpen={diePopover?.dieId === die.id}
-                onPopoverOpen={setDiePopover}
-                onPopoverClose={handlePopoverClose}
-              />
-            ))}
+            {dice.map((die) => {
+              const showAdjustPanel = adjustChoice?.dieId === die.id;
+              return (
+                <div
+                  key={die.id}
+                  className={classes.gigDieAnchor}
+                  data-testid="gig-die-anchor"
+                  data-die-id={die.id}
+                >
+                  <GigDieCell
+                    die={die}
+                    side={side}
+                    selectionActive={interactive}
+                    interactive={
+                      interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
+                    }
+                    selected={selectedDieIds?.has(die.id)}
+                    selectionHint={
+                      interactive && (!interactiveDieIds || interactiveDieIds.has(die.id))
+                        ? selectionHintForDie?.(die.id)
+                        : undefined
+                    }
+                    logHighlighted={logHighlightedDieId === die.id}
+                    onClick={onDieClick}
+                    correctionEnabled={boardCorrectionEnabled}
+                    popoverOpen={diePopover?.dieId === die.id}
+                    onPopoverOpen={(state) =>
+                      setDiePopover({
+                        ...state,
+                        correction: boardCorrectionEnabled && state.pinned,
+                      })
+                    }
+                    onPopoverClose={handlePopoverClose}
+                  />
+                  {showAdjustPanel ? (
+                    <GigAdjustPanel
+                      choice={adjustChoice}
+                      placement={side === "friendly" ? "bottom" : "top"}
+                      onAdjustGig={onAdjustGig}
+                    />
+                  ) : null}
+                </div>
+              );
+            })}
           </AnimatedEntityCollection>
           {gigCount === 0 ? <span className={classes.gigEmpty}>No Gigs</span> : null}
         </div>
       </div>
-      {adjustChoice && adjustmentOptions.length > 0 ? (
-        <div
-          className={`${classes.adjustPanel} ${side === "friendly" ? classes.adjustPanelFriendly : ""}`}
-          data-testid="gig-adjust-panel"
-          data-die-id={adjustChoice.dieId}
-          aria-label={`Adjust ${adjustLabel}`}
-        >
-          <span className={classes.adjustTitle}>Adjust {adjustLabel}</span>
-          <div className={classes.adjustChoices}>
-            {adjustmentOptions.map((option) => (
-              <button
-                key={`${option.delta}:${option.value}`}
-                type="button"
-                className={classes.adjustButton}
-                data-testid="gig-adjust-option"
-                data-delta={option.delta}
-                data-value={option.value}
-                aria-label={option.label}
-                onClick={() => onAdjustGig?.(option.value)}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      ) : null}
       <ZoneBadge position={badgePosition} className={badgeClass} label={label}>
         {label}
         <span className={classes.gigBadgeTotal} data-sim-value={gigCount}>
           {gigCount}
         </span>
       </ZoneBadge>
-      <GigDiePopover state={diePopover} compact={compactScore} />
+      <GigDiePopover
+        state={diePopover}
+        compact={compactScore}
+        ownerSide={ownerSide}
+        die={dice.find((candidate) => candidate.id === diePopover?.dieId)}
+      />
+      <StreetCredHelperPopover state={credHelper.state} helper={helper} compact={compactScore} />
     </div>
   );
 }
 
-function MobileStreetCredStrip({ ownerSide, streetCred }: { ownerSide: Side; streetCred: number }) {
+function GigAdjustPanel({
+  choice,
+  placement,
+  onAdjustGig,
+}: {
+  choice: AdjustGigControl;
+  placement: "top" | "bottom";
+  onAdjustGig?: (value: number) => void;
+}) {
+  const adjustmentOptions = buildAdjustGigOptions(choice);
+  if (adjustmentOptions.length === 0) {
+    return null;
+  }
+
   return (
     <div
-      className={classes.mobileLedgerStreetCred}
-      data-side={ownerSide}
-      data-sim-anchor-id={ownerSide === "opponent" ? "opp-street-cred" : "p-street-cred"}
-      aria-hidden="true"
+      className={classes.adjustPanel}
+      data-placement={placement}
+      data-testid="gig-adjust-panel"
+      data-die-id={choice.dieId}
+      aria-label={`Adjust ${choice.label}`}
     >
-      <span>SC</span>
-      <strong>{streetCred}</strong>
+      <span className={classes.adjustTitle}>Adjust {choice.label}</span>
+      <div className={classes.adjustChoices}>
+        {adjustmentOptions.map((option) => (
+          <button
+            key={`${option.delta}:${option.value}`}
+            type="button"
+            className={classes.adjustButton}
+            data-testid="gig-adjust-option"
+            data-delta={option.delta}
+            data-value={option.value}
+            aria-label={option.label}
+            onClick={() => onAdjustGig?.(option.value)}
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
     </div>
+  );
+}
+
+function MobileLedgerRails({
+  tone,
+  streetCred,
+  helper,
+}: {
+  tone: "friendly" | "rival";
+  streetCred: number;
+  helper: GigHelperComparison;
+}) {
+  const credHelper = useStreetCredHelper(tone);
+  return (
+    <>
+      <button
+        type="button"
+        className={classes.mobileLedgerRail}
+        data-kind="street-cred"
+        data-edge="outer"
+        data-sim-anchor-id={tone === "rival" ? "opp-street-cred" : "p-street-cred"}
+        aria-label={`Show ${tone === "friendly" ? "your" : "rival"} Gig breakdown`}
+        ref={(el) => {
+          credHelper.chipRef.current = el;
+        }}
+        {...credHelper.chipHandlers}
+      >
+        <span>SC</span>
+        <strong>{streetCred}</strong>
+      </button>
+      <StreetCredHelperPopover state={credHelper.state} helper={helper} compact />
+    </>
   );
 }
 
@@ -492,6 +664,7 @@ export function ClockDisplay({
   const humanClock = clock[humanSide];
   const rivalClock = clock[rivalSide];
   const priorityLabel = prioritySide === humanSide ? "Your priority" : "Rival priority";
+  const turnLabel = activeSide === humanSide ? "Your turn" : "Rival's turn";
 
   return (
     <div
@@ -504,7 +677,7 @@ export function ClockDisplay({
       data-overtime={overtimeActive ? "true" : "false"}
       data-active-side={activeSide}
       data-clock-side={prioritySide}
-      aria-label={`Turn ${turnNumber} ${phase}${overtimeActive ? ", overtime" : ""}. ${priorityLabel}. Rival clock ${rivalClock.time}. Your clock ${humanClock.time}.`}
+      aria-label={`Turn ${turnNumber} ${phase}${overtimeActive ? ", overtime" : ""}. ${turnLabel} ${priorityLabel}. Rival clock ${rivalClock.time}. Your clock ${humanClock.time}.`}
     >
       <div className={classes.clockMeta}>
         <span className={classes.clockLabel} data-testid="phase-turn">
@@ -519,6 +692,26 @@ export function ClockDisplay({
           </span>
         ) : null}
       </div>
+      {!gameEnded ? (
+        <div className={classes.clockChips}>
+          <span
+            className={classes.turnChip}
+            data-testid="turn-side-chip"
+            data-tone={activeSide === humanSide ? "friendly" : "rival"}
+          >
+            {turnLabel}
+          </span>
+          {prioritySide !== activeSide ? (
+            <span
+              className={classes.priorityChip}
+              data-testid="priority-side-chip"
+              data-tone={prioritySide === humanSide ? "friendly" : "rival"}
+            >
+              {priorityLabel}
+            </span>
+          ) : null}
+        </div>
+      ) : null}
       <div className={classes.clockFaces}>
         <ClockFace
           label="Rival"
@@ -589,39 +782,44 @@ export function PassTurnControl({
   compactLabelStyle?: "short" | "action";
   actionsOnly?: boolean;
 }) {
-  const { phase, advancePhase, activeSide, gameEnded, overtimeActive } = useGameState();
-  const { humanSide, matchState, moveLogs, aiMode, aiStrategies, canUndo, stepOnce, dispatch } =
-    useEngine();
+  const { phase, advancePhase, activeSide, prioritySide, gameEnded, overtimeActive } =
+    useGameState();
+  const { humanSide, matchState, moveLogs, aiMode, aiStrategies, stepOnce, dispatch } = useEngine();
   const aiSide = otherSide(humanSide);
   const aiInteractionView = useEngineInteractionView(aiSide);
   const humanInteractionView = useEngineInteractionView(humanSide);
   const disabledPassReason = disabledPassPhaseReason(humanInteractionView);
   const confirmTitleId = useId();
   const [pressed, setPressed] = useState(false);
-  const [confirmingPassWithAttackers, setConfirmingPassWithAttackers] = useState(false);
-  const [undoControlHydrated, setUndoControlHydrated] = useState(false);
+  const [pendingConfirmation, setPendingConfirmation] = useState<
+    "pass-with-attackers" | "skip-block" | null
+  >(null);
   const isPlayerTurn = activeSide === humanSide;
   const attackInProgress = Boolean(matchState.G.attackState);
   const isAttackerDuringReactStep =
     attackInProgress && matchState.G.attackState?.step === "react" && isPlayerTurn;
   const shouldConfirmPass =
     isPlayerTurn && !attackInProgress && interactionViewHasAttackers(humanInteractionView);
+  const shouldConfirmSkipBlock =
+    matchState.G.attackState?.step === "react" &&
+    !isPlayerTurn &&
+    interactionViewHasBlockers(humanInteractionView);
   const humanChoiceInProgress = humanInteractionView.status === "choosing";
   const canStepAi =
     !gameEnded &&
     aiMode === "step" &&
     aiStrategies[aiSide] !== null &&
     interactionViewIsActionable(aiInteractionView);
+  const isWaitingForRival = prioritySide !== humanSide && !canStepAi;
   const controlsDisabled =
     phase === "SETUP" ||
     phase === "START" ||
     gameEnded ||
     humanChoiceInProgress ||
     disabledPassReason !== undefined ||
+    isWaitingForRival ||
     isAttackerDuringReactStep ||
     (!isPlayerTurn && !canStepAi && !attackInProgress);
-  const undoAvailable = undoControlHydrated && canUndo;
-  const undoDisabled = !undoAvailable || humanChoiceInProgress;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const attackStateRef = useRef(matchState.G.attackState);
   attackStateRef.current = matchState.G.attackState;
@@ -630,14 +828,14 @@ export function PassTurnControl({
     : [];
 
   useEffect(() => {
-    setUndoControlHydrated(true);
-  }, []);
-
-  useEffect(() => {
-    if (!shouldConfirmPass || controlsDisabled) {
-      setConfirmingPassWithAttackers(false);
+    if (
+      controlsDisabled ||
+      (pendingConfirmation === "pass-with-attackers" && !shouldConfirmPass) ||
+      (pendingConfirmation === "skip-block" && !shouldConfirmSkipBlock)
+    ) {
+      setPendingConfirmation(null);
     }
-  }, [controlsDisabled, shouldConfirmPass]);
+  }, [controlsDisabled, pendingConfirmation, shouldConfirmPass, shouldConfirmSkipBlock]);
 
   useEffect(() => {
     return () => {
@@ -681,6 +879,10 @@ export function PassTurnControl({
           // Attacker cannot act during the defender's response window.
           return;
         }
+        if (shouldConfirmSkipBlock) {
+          setPendingConfirmation("skip-block");
+          return;
+        }
         dispatch({
           type: "resolveAttack",
           pass: true,
@@ -698,7 +900,7 @@ export function PassTurnControl({
       return;
     }
     if (shouldConfirmPass) {
-      setConfirmingPassWithAttackers(true);
+      setPendingConfirmation("pass-with-attackers");
       return;
     }
     performAdvance();
@@ -712,6 +914,7 @@ export function PassTurnControl({
     humanSide,
     performAdvance,
     shouldConfirmPass,
+    shouldConfirmSkipBlock,
     stepOnce,
   ]);
 
@@ -723,7 +926,7 @@ export function PassTurnControl({
         ev.metaKey ||
         ev.shiftKey ||
         ev.defaultPrevented ||
-        confirmingPassWithAttackers ||
+        pendingConfirmation !== null ||
         (ev.key !== " " && ev.code !== PHASE_ADVANCE_HOTKEY)
       ) {
         return;
@@ -738,10 +941,10 @@ export function PassTurnControl({
 
     window.addEventListener("keydown", onKeyDown, true);
     return () => window.removeEventListener("keydown", onKeyDown, true);
-  }, [confirmingPassWithAttackers, handleAdvance]);
+  }, [handleAdvance, pendingConfirmation]);
 
   useEffect(() => {
-    if (!confirmingPassWithAttackers) {
+    if (!pendingConfirmation) {
       return;
     }
 
@@ -752,32 +955,56 @@ export function PassTurnControl({
       if (ev.key === "Escape") {
         ev.preventDefault();
         ev.stopPropagation();
-        setConfirmingPassWithAttackers(false);
+        setPendingConfirmation(null);
         return;
       }
       if (ev.key === " " || ev.code === PHASE_ADVANCE_HOTKEY) {
         ev.preventDefault();
         ev.stopPropagation();
-        setConfirmingPassWithAttackers(false);
-        performAdvance();
+        const confirmation = pendingConfirmation;
+        setPendingConfirmation(null);
+        if (confirmation === "skip-block") {
+          dispatch({
+            type: "resolveAttack",
+            pass: true,
+            as: PLAYER_SIDE_TO_ID[humanSide],
+          });
+        } else {
+          performAdvance();
+        }
       }
     };
 
     window.addEventListener("keydown", onKeyDown, true);
     return () => window.removeEventListener("keydown", onKeyDown, true);
-  }, [confirmingPassWithAttackers, performAdvance]);
+  }, [dispatch, humanSide, pendingConfirmation, performAdvance]);
 
-  const label = phaseAdvanceLabel(phase, attackInProgress, canStepAi);
-  const compactLabel = compactPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
-  const compactActionLabel = dockedPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
+  const label = isWaitingForRival
+    ? "WAITING"
+    : phaseAdvanceLabel(phase, attackInProgress, canStepAi);
+  const compactLabel = shouldConfirmSkipBlock
+    ? "SKIP"
+    : isWaitingForRival
+      ? "WAITING"
+      : compactPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
+  const compactActionLabel = shouldConfirmSkipBlock
+    ? "Skip block"
+    : isWaitingForRival
+      ? "WAITING"
+      : dockedPhaseAdvanceLabel(phase, attackInProgress, canStepAi);
   const pendingChoiceLabel = pendingChoiceActionLabel(matchState.G.turnMetadata.pendingChoice);
-  const visibleLabel =
-    docked && humanChoiceInProgress
+  const visibleLabel = shouldConfirmSkipBlock
+    ? compact || docked
+      ? "Skip block"
+      : "SKIP BLOCK"
+    : docked && humanChoiceInProgress
       ? pendingChoiceLabel
       : docked
-        ? dockedPhaseAdvanceLabel(phase, attackInProgress, canStepAi)
+        ? compactActionLabel
         : label;
-  const advanceAriaLabel = disabledPassReason ?? visibleLabel;
+  const advanceAriaLabel = isWaitingForRival
+    ? "Waiting for Rival"
+    : (disabledPassReason ?? visibleLabel);
   const usesActionCompactLabel = compact && compactLabelStyle === "action";
   const attackTargetSummary = useAttackTargetSummary(matchState, matchState.G.attackState);
   const attackTarget = docked ? null : attackTargetSummary;
@@ -795,6 +1022,7 @@ export function PassTurnControl({
       data-active-side={activeSide}
       data-attack-in-progress={attackInProgress ? "true" : "false"}
       data-choice-in-progress={humanChoiceInProgress ? "true" : "false"}
+      data-waiting-for-rival={isWaitingForRival ? "true" : "false"}
     >
       {showPhaseLabel ? (
         <span
@@ -845,7 +1073,7 @@ export function PassTurnControl({
         </div>
       ) : null}
       <span
-        className={disabledPassReason ? classes.blockedPassHitTarget : undefined}
+        className={`${classes.passActionSlot} ${disabledPassReason ? classes.blockedPassHitTarget : ""}`}
         data-testid={disabledPassReason ? "phase-advance-hit-target" : undefined}
         title={disabledPassReason}
         onClick={disabledPassReason ? handleAdvance : undefined}
@@ -865,46 +1093,27 @@ export function PassTurnControl({
           {usesActionCompactLabel ? (
             <>
               <span>{compactActionLabel}</span>
-              <HotkeyHint block />
+              {!isWaitingForRival ? <HotkeyHint block /> : null}
             </>
           ) : compact ? (
             <>
               <span>{compactLabel}</span>
-              <HotkeyHint />
-              <span aria-hidden="true" className={classes.passChevron}>
-                ›
-              </span>
+              {!isWaitingForRival ? <HotkeyHint /> : null}
+              {!isWaitingForRival ? (
+                <span aria-hidden="true" className={classes.passChevron}>
+                  ›
+                </span>
+              ) : null}
             </>
           ) : (
             <>
               <span>{visibleLabel}</span>
-              <HotkeyHint />
+              {!isWaitingForRival ? <HotkeyHint /> : null}
             </>
           )}
         </button>
       </span>
-      <button
-        type="button"
-        className={`${classes.undoBtn} ${compact ? classes.undoBtnCompact : ""} ${docked ? classes.undoBtnDocked : ""}`}
-        data-testid="phase-undo"
-        aria-label={
-          undoAvailable
-            ? humanChoiceInProgress
-              ? "Resolve current prompt before undoing"
-              : "Undo last move"
-            : "No undoable move available"
-        }
-        onClick={() => {
-          if (undoDisabled) {
-            return;
-          }
-          dispatch({ type: "undo" });
-        }}
-        disabled={undoDisabled}
-      >
-        Undo
-      </button>
-      {confirmingPassWithAttackers
+      {pendingConfirmation
         ? createPortal(
             <div
               className={classes.confirmScrim}
@@ -914,33 +1123,56 @@ export function PassTurnControl({
             >
               <div className={classes.confirmSheet}>
                 <p id={confirmTitleId} className={classes.confirmTitle}>
-                  Pass with attackers ready?
+                  {pendingConfirmation === "skip-block"
+                    ? "Skip your chance to block?"
+                    : "Pass with attackers ready?"}
                 </p>
                 <p className={classes.confirmText}>
-                  You still have Units that can attack. Passing ends your turn.
+                  {pendingConfirmation === "skip-block"
+                    ? "You have a ready BLOCKER. To block, choose it and select BLOCK. Continuing lets the attack through."
+                    : "You still have Units that can attack. Passing ends your turn."}
                 </p>
                 <div className={classes.confirmActions}>
                   <button
                     type="button"
                     className={classes.confirmSecondary}
-                    data-testid="pass-confirm-cancel"
+                    data-testid={
+                      pendingConfirmation === "skip-block"
+                        ? "skip-block-confirm-cancel"
+                        : "pass-confirm-cancel"
+                    }
                     aria-keyshortcuts="Escape"
-                    onClick={() => setConfirmingPassWithAttackers(false)}
+                    onClick={() => setPendingConfirmation(null)}
                   >
-                    <span>Keep attacking</span>
+                    <span>
+                      {pendingConfirmation === "skip-block" ? "Back to blockers" : "Keep attacking"}
+                    </span>
                     <DialogHotkeyHint label="Esc" />
                   </button>
                   <button
                     type="button"
                     className={classes.confirmPrimary}
-                    data-testid="pass-confirm-submit"
+                    data-testid={
+                      pendingConfirmation === "skip-block"
+                        ? "skip-block-confirm-submit"
+                        : "pass-confirm-submit"
+                    }
                     aria-keyshortcuts="Space"
                     onClick={() => {
-                      setConfirmingPassWithAttackers(false);
-                      performAdvance();
+                      const confirmation = pendingConfirmation;
+                      setPendingConfirmation(null);
+                      if (confirmation === "skip-block") {
+                        dispatch({
+                          type: "resolveAttack",
+                          pass: true,
+                          as: PLAYER_SIDE_TO_ID[humanSide],
+                        });
+                      } else {
+                        performAdvance();
+                      }
                     }}
                   >
-                    <span>Pass turn</span>
+                    <span>{pendingConfirmation === "skip-block" ? "Skip block" : "Pass turn"}</span>
                     <DialogHotkeyHint label="Space" />
                   </button>
                 </div>
@@ -1275,6 +1507,8 @@ function pendingChoiceActionLabel(choice: PendingChoice | null | undefined): str
       return pendingTargetChoiceLabel(choice);
     case "chooseEffect":
       return "Choose Effect";
+    case "preventGigSteal":
+      return "Prevent Steal";
     case "chooseCardToPlay":
       return pendingCardToPlayLabel(choice);
     case "chooseCardToMove":
@@ -1285,6 +1519,12 @@ function pendingChoiceActionLabel(choice: PendingChoice | null | undefined): str
       return "Choose Destination";
     case "gainGig":
       return "Gain Gig";
+    case "redirectDefeat":
+      return "Redirect Defeat";
+    case "chooseSacrificialGear":
+      return "Choose Gear";
+    case "chooseFirstPlayer":
+      return "Choose First Player";
   }
   return "Resolve Prompt";
 }
@@ -1412,11 +1652,11 @@ interface CenterRowProps {
   mobileLedger?: {
     rivalLegends: ReactNode;
     rivalLegendCount?: number;
-    rivalLayout?: "scoreOnly" | "singleRow" | "stacked";
+    rivalLayout?: "scoreOnly" | "compact" | "singleRow" | "stacked";
     center?: ReactNode;
     friendlyLegends: ReactNode;
     friendlyLegendCount?: number;
-    friendlyLayout?: "scoreOnly" | "singleRow" | "stacked";
+    friendlyLayout?: "scoreOnly" | "compact" | "singleRow" | "stacked";
     density?: "scoreOnly" | "singleRow" | "stacked";
   };
 }
@@ -1507,18 +1747,22 @@ export function CenterRow({
     () => new Set<string>(effectGigChoice?.eligibleDieIds ?? []),
     [effectGigChoice],
   );
-  const softAdjustGigChoice = effectGigChoice?.adjustGig ? effectGigChoice : null;
   const eligibleAdjustGigIds = useMemo(
-    () => new Set<string>(adjustGigChoice ? [adjustGigChoice.control.dieId] : []),
+    () => new Set<string>(adjustGigChoice?.eligibleDieIds ?? []),
     [adjustGigChoice],
   );
   const [selectedStealIds, setSelectedStealIds] = useState<string[]>([]);
   const [selectedEffectGigIds, setSelectedEffectGigIds] = useState<string[]>([]);
+  const [selectedAdjustGigId, setSelectedAdjustGigId] = useState<string | null>(null);
   const [logHighlightedGigId, setLogHighlightedGigId] = useState<string | null>(null);
   const selectedStealIdSet = useMemo(() => new Set(selectedStealIds), [selectedStealIds]);
   const selectedEffectGigIdSet = useMemo(
     () => new Set(selectedEffectGigIds),
     [selectedEffectGigIds],
+  );
+  const gigHelper = useMemo(
+    () => compareGigStats(friendly.gigArea, rival.gigArea),
+    [friendly.gigArea, rival.gigArea],
   );
   const gigDiceById = useMemo(() => {
     const byId = new Map<string, GigDieView>();
@@ -1555,6 +1799,11 @@ export function CenterRow({
     effectGigChoice?.min,
     effectGigChoice?.max,
   ]);
+  useEffect(() => {
+    setSelectedAdjustGigId(
+      adjustGigChoice?.eligibleDieIds.length === 1 ? adjustGigChoice.eligibleDieIds[0]! : null,
+    );
+  }, [adjustGigChoice?.requestId, adjustGigChoice?.side]);
   useEffect(() => {
     if (!effectGigChoice?.ordered || selectedEffectGigIds.length === 0) {
       emitGigCopySource(null);
@@ -1612,10 +1861,6 @@ export function CenterRow({
     if (!effectGigChoice || !eligibleEffectGigIds.has(dieId)) {
       return;
     }
-    if (softAdjustGigChoice) {
-      setSelectedEffectGigIds([dieId]);
-      return;
-    }
     const max = effectGigChoice.max;
     if (max <= 1) {
       const submission = buildInteractionSubmissionForActionId({
@@ -1654,44 +1899,27 @@ export function CenterRow({
     }
     setSelectedEffectGigIds(next);
   };
+  const handleAdjustGigClick = (dieId: string) => {
+    if (!adjustGigChoice || !eligibleAdjustGigIds.has(dieId)) return;
+    setSelectedAdjustGigId(dieId);
+  };
   const handleAdjustGigValue = (value: number) => {
-    const selectedEffectGigId = selectedEffectGigIds[0];
-    if (softAdjustGigChoice && selectedEffectGigId) {
-      const submission = buildInteractionSubmissionForActionId({
-        view: softAdjustGigChoice.view,
-        actionId: "resolveEffectTarget",
-        values: { targetIds: [selectedEffectGigId] },
-      });
-      const action = submission
-        ? interactionSubmissionToEngineAction(
-            submission,
-            PLAYER_SIDE_TO_ID[softAdjustGigChoice.side],
-          )
-        : null;
-      if (action) {
-        dispatch(action);
-      }
-      dispatch({
-        type: "resolveAdjustGig",
-        value,
-        as: PLAYER_SIDE_TO_ID[softAdjustGigChoice.side],
-      });
-      setSelectedEffectGigIds([]);
+    if (!adjustGigChoice || !selectedAdjustGigId) {
       return;
     }
-    if (!adjustGigChoice) {
-      return;
-    }
+    const selectedDie = gigDiceById.get(selectedAdjustGigId);
+    const noAdjustment = adjustGigChoice.chooseUpTo && selectedDie?.faceValue === value;
     const submission = buildInteractionSubmissionForActionId({
       view: adjustGigChoice.view,
       actionId: "resolveAdjustGig",
-      values: { value },
+      values: noAdjustment ? { pass: true } : { dieId: selectedAdjustGigId, value },
     });
     const action = submission
       ? interactionSubmissionToEngineAction(submission, PLAYER_SIDE_TO_ID[adjustGigChoice.side])
       : null;
     if (action) {
       dispatch(action);
+      setSelectedAdjustGigId(null);
     }
   };
 
@@ -1702,25 +1930,15 @@ export function CenterRow({
     ? friendly.gigArea.some((die) => eligibleEffectGigIds.has(die.id))
     : false;
   const rivalAdjustGigActive = adjustGigChoice
-    ? adjustGigChoiceInteractive &&
-      rival.gigArea.some((die) => die.id === adjustGigChoice.control.dieId)
+    ? adjustGigChoiceInteractive && rival.gigArea.some((die) => eligibleAdjustGigIds.has(die.id))
     : false;
   const friendlyAdjustGigActive = adjustGigChoice
-    ? adjustGigChoiceInteractive &&
-      friendly.gigArea.some((die) => die.id === adjustGigChoice.control.dieId)
+    ? adjustGigChoiceInteractive && friendly.gigArea.some((die) => eligibleAdjustGigIds.has(die.id))
     : false;
-  const softAdjustControl = softAdjustGigChoice?.adjustGig
-    ? buildSoftAdjustGigControl(
-        [...rival.gigArea, ...friendly.gigArea].find((die) => die.id === selectedEffectGigIds[0]),
-        softAdjustGigChoice.adjustGig,
-      )
-    : null;
-  const rivalSoftAdjustActive = softAdjustControl
-    ? rival.gigArea.some((die) => die.id === softAdjustControl.dieId)
-    : false;
-  const friendlySoftAdjustActive = softAdjustControl
-    ? friendly.gigArea.some((die) => die.id === softAdjustControl.dieId)
-    : false;
+  const adjustControl = buildAtomicAdjustGigControl(
+    selectedAdjustGigId ? gigDiceById.get(selectedAdjustGigId) : undefined,
+    adjustGigChoice,
+  );
   const resolvingCard =
     resolvingCardFromCurrentTrigger(
       matchState.G.turnMetadata.currentTrigger,
@@ -1748,8 +1966,10 @@ export function CenterRow({
     ) : null;
 
     return (
-      <div className={classes.mobileLedgerRoot}>
-        {resolvingCard ? <ResolvingCardAnchor card={resolvingCard} /> : null}
+      <div
+        className={classes.mobileLedgerRoot}
+        data-has-resolving={resolvingCard ? "true" : undefined}
+      >
         <MobileMirrorLedger
           className={classes.mobileLedger}
           data-ledger-density={mobileLedger.density}
@@ -1773,7 +1993,6 @@ export function CenterRow({
                   >
                     {mobileLedger.friendlyLegends}
                   </div>
-                  <MobileStreetCredStrip ownerSide={humanSide} streetCred={friendly.streetCred} />
                 </div>
               ) : friendlyShowsLegends ? (
                 <div
@@ -1784,64 +2003,67 @@ export function CenterRow({
                   {mobileLedger.friendlyLegends}
                 </div>
               ) : null}
-              <GigLane
-                label="Friendly Gigs"
-                side="friendly"
-                ownerSide={humanSide}
-                gridClass={classes.mobileLedgerGigLane}
-                badgeClass={classes.gigBadgeFriendly}
-                badgePosition="bottom"
-                dice={friendly.gigArea}
-                streetCred={friendly.streetCred}
-                scoreVariant="compact"
-                showScore={!friendlyStackedLegendLayout}
-                interactive={
-                  (stealChoice !== null &&
-                    friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
-                  friendlyEffectGigActive ||
-                  friendlyAdjustGigActive ||
-                  friendlySoftAdjustActive
-                }
-                interactiveDieIds={
-                  stealChoice
-                    ? eligibleStealIds
-                    : adjustGigChoice
-                      ? eligibleAdjustGigIds
-                      : eligibleEffectGigIds
-                }
-                selectedDieIds={
-                  friendlyAdjustGigActive
-                    ? eligibleAdjustGigIds
-                    : friendlySoftAdjustActive || friendlyEffectGigActive
-                      ? selectedEffectGigIdSet
-                      : selectedStealIdSet
-                }
-                selectionPrompt={
-                  stealChoice !== null &&
-                  friendly.gigArea.some((die) => eligibleStealIds.has(die.id))
-                    ? stealSelectionPrompt
-                    : friendlyEffectGigActive
-                      ? effectGigSelectionPrompt
-                      : undefined
-                }
-                logHighlightedDieId={logHighlightedGigId}
-                adjustChoice={
-                  friendlyAdjustGigActive
-                    ? adjustGigChoice?.control
-                    : friendlySoftAdjustActive
-                      ? softAdjustControl
-                      : null
-                }
-                selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
-                onDieClick={
-                  stealChoice
-                    ? handleStealDieClick
-                    : effectGigChoice
-                      ? handleEffectGigClick
-                      : undefined
-                }
-                onAdjustGig={handleAdjustGigValue}
-              />
+              <div className={classes.mobileLedgerGigWell}>
+                <MobileLedgerRails
+                  tone="friendly"
+                  streetCred={friendly.streetCred}
+                  helper={gigHelper}
+                />
+                <GigLane
+                  label="Friendly Gigs"
+                  side="friendly"
+                  ownerSide={humanSide}
+                  gridClass={classes.mobileLedgerGigLane}
+                  badgeClass={classes.gigBadgeFriendly}
+                  badgePosition="bottom"
+                  dice={friendly.gigArea}
+                  streetCred={friendly.streetCred}
+                  helper={gigHelper}
+                  scoreVariant="compact"
+                  showScore
+                  interactive={
+                    (stealChoice !== null &&
+                      friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
+                    friendlyEffectGigActive ||
+                    friendlyAdjustGigActive
+                  }
+                  interactiveDieIds={
+                    stealChoice
+                      ? eligibleStealIds
+                      : adjustGigChoice
+                        ? eligibleAdjustGigIds
+                        : eligibleEffectGigIds
+                  }
+                  selectedDieIds={
+                    friendlyAdjustGigActive
+                      ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
+                      : friendlyEffectGigActive
+                        ? selectedEffectGigIdSet
+                        : selectedStealIdSet
+                  }
+                  selectionPrompt={
+                    stealChoice !== null &&
+                    friendly.gigArea.some((die) => eligibleStealIds.has(die.id))
+                      ? stealSelectionPrompt
+                      : friendlyEffectGigActive
+                        ? effectGigSelectionPrompt
+                        : undefined
+                  }
+                  logHighlightedDieId={logHighlightedGigId}
+                  adjustChoice={friendlyAdjustGigActive ? adjustControl : null}
+                  selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
+                  onDieClick={
+                    stealChoice
+                      ? handleStealDieClick
+                      : adjustGigChoice
+                        ? handleAdjustGigClick
+                        : effectGigChoice
+                          ? handleEffectGigClick
+                          : undefined
+                  }
+                  onAdjustGig={handleAdjustGigValue}
+                />
+              </div>
             </div>
           }
           center={mobileLedgerCenter}
@@ -1855,63 +2077,63 @@ export function CenterRow({
               {rivalTemporaryEffects.length > 0 ? (
                 <MobileActiveEffectsStack effects={rivalTemporaryEffects} tone="rival" />
               ) : null}
-              <GigLane
-                label="Rival Gigs"
-                side="rival"
-                ownerSide={rivalSide}
-                gridClass={classes.mobileLedgerGigLane}
-                badgeClass={classes.gigBadgeRival}
-                badgePosition="top"
-                dice={rival.gigArea}
-                streetCred={rival.streetCred}
-                scoreVariant="compact"
-                showScore={!rivalStackedLegendLayout}
-                interactive={
-                  (stealChoice !== null &&
-                    rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
-                  rivalEffectGigActive ||
-                  rivalAdjustGigActive ||
-                  rivalSoftAdjustActive
-                }
-                interactiveDieIds={
-                  stealChoice
-                    ? eligibleStealIds
-                    : adjustGigChoice
-                      ? eligibleAdjustGigIds
-                      : eligibleEffectGigIds
-                }
-                selectedDieIds={
-                  rivalAdjustGigActive
-                    ? eligibleAdjustGigIds
-                    : rivalSoftAdjustActive || rivalEffectGigActive
-                      ? selectedEffectGigIdSet
-                      : selectedStealIdSet
-                }
-                selectionPrompt={
-                  stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))
-                    ? stealSelectionPrompt
-                    : rivalEffectGigActive
-                      ? effectGigSelectionPrompt
-                      : undefined
-                }
-                logHighlightedDieId={logHighlightedGigId}
-                adjustChoice={
-                  rivalAdjustGigActive
-                    ? adjustGigChoice?.control
-                    : rivalSoftAdjustActive
-                      ? softAdjustControl
-                      : null
-                }
-                selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
-                onDieClick={
-                  stealChoice
-                    ? handleStealDieClick
-                    : effectGigChoice
-                      ? handleEffectGigClick
-                      : undefined
-                }
-                onAdjustGig={handleAdjustGigValue}
-              />
+              <div className={classes.mobileLedgerGigWell}>
+                <MobileLedgerRails tone="rival" streetCred={rival.streetCred} helper={gigHelper} />
+                <GigLane
+                  label="Rival Gigs"
+                  side="rival"
+                  ownerSide={rivalSide}
+                  gridClass={classes.mobileLedgerGigLane}
+                  badgeClass={classes.gigBadgeRival}
+                  badgePosition="top"
+                  dice={rival.gigArea}
+                  streetCred={rival.streetCred}
+                  helper={gigHelper}
+                  scoreVariant="compact"
+                  showScore
+                  interactive={
+                    (stealChoice !== null &&
+                      rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
+                    rivalEffectGigActive ||
+                    rivalAdjustGigActive
+                  }
+                  interactiveDieIds={
+                    stealChoice
+                      ? eligibleStealIds
+                      : adjustGigChoice
+                        ? eligibleAdjustGigIds
+                        : eligibleEffectGigIds
+                  }
+                  selectedDieIds={
+                    rivalAdjustGigActive
+                      ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
+                      : rivalEffectGigActive
+                        ? selectedEffectGigIdSet
+                        : selectedStealIdSet
+                  }
+                  selectionPrompt={
+                    stealChoice !== null &&
+                    rival.gigArea.some((die) => eligibleStealIds.has(die.id))
+                      ? stealSelectionPrompt
+                      : rivalEffectGigActive
+                        ? effectGigSelectionPrompt
+                        : undefined
+                  }
+                  logHighlightedDieId={logHighlightedGigId}
+                  adjustChoice={rivalAdjustGigActive ? adjustControl : null}
+                  selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
+                  onDieClick={
+                    stealChoice
+                      ? handleStealDieClick
+                      : adjustGigChoice
+                        ? handleAdjustGigClick
+                        : effectGigChoice
+                          ? handleEffectGigClick
+                          : undefined
+                  }
+                  onAdjustGig={handleAdjustGigValue}
+                />
+              </div>
               {rivalStackedLegendLayout ? (
                 <div className={classes.mobileLedgerLegendCred}>
                   <div
@@ -1921,7 +2143,6 @@ export function CenterRow({
                   >
                     {mobileLedger.rivalLegends}
                   </div>
-                  <MobileStreetCredStrip ownerSide={rivalSide} streetCred={rival.streetCred} />
                 </div>
               ) : rivalShowsLegends ? (
                 <div
@@ -1935,13 +2156,14 @@ export function CenterRow({
             </div>
           }
         />
+        {resolvingCard ? <ResolvingCardAnchor card={resolvingCard} /> : null}
       </div>
     );
   }
 
   return (
     <div
-      className={`${classes.row} ${classes[`turn-${activeSide}`] ?? ""} ${gigsOnly ? classes.gigsOnly : ""} ${spaciousGigs ? classes.spaciousGigs : ""}`}
+      className={`${classes.row} ${gigsOnly ? classes.gigsOnly : ""} ${spaciousGigs ? classes.spaciousGigs : ""}`}
       data-interactive={canInteract ? "true" : "false"}
     >
       {!gigsOnly && (
@@ -1962,13 +2184,13 @@ export function CenterRow({
           badgePosition="top"
           dice={rival.gigArea}
           streetCred={rival.streetCred}
+          helper={gigHelper}
           directAttackDropSurface
           directAttackDropTarget={canDropDirectAttackOnRivalGigs}
           interactive={
             (stealChoice !== null && rival.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
             rivalEffectGigActive ||
-            rivalAdjustGigActive ||
-            rivalSoftAdjustActive
+            rivalAdjustGigActive
           }
           interactiveDieIds={
             stealChoice
@@ -1979,8 +2201,8 @@ export function CenterRow({
           }
           selectedDieIds={
             rivalAdjustGigActive
-              ? eligibleAdjustGigIds
-              : rivalSoftAdjustActive || rivalEffectGigActive
+              ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
+              : rivalEffectGigActive
                 ? selectedEffectGigIdSet
                 : selectedStealIdSet
           }
@@ -1992,16 +2214,16 @@ export function CenterRow({
                 : undefined
           }
           logHighlightedDieId={logHighlightedGigId}
-          adjustChoice={
-            rivalAdjustGigActive
-              ? adjustGigChoice?.control
-              : rivalSoftAdjustActive
-                ? softAdjustControl
-                : null
-          }
+          adjustChoice={rivalAdjustGigActive ? adjustControl : null}
           selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
           onDieClick={
-            stealChoice ? handleStealDieClick : effectGigChoice ? handleEffectGigClick : undefined
+            stealChoice
+              ? handleStealDieClick
+              : adjustGigChoice
+                ? handleAdjustGigClick
+                : effectGigChoice
+                  ? handleEffectGigClick
+                  : undefined
           }
           onAdjustGig={handleAdjustGigValue}
         />
@@ -2017,12 +2239,12 @@ export function CenterRow({
           badgePosition="bottom"
           dice={friendly.gigArea}
           streetCred={friendly.streetCred}
+          helper={gigHelper}
           interactive={
             (stealChoice !== null &&
               friendly.gigArea.some((die) => eligibleStealIds.has(die.id))) ||
             friendlyEffectGigActive ||
-            friendlyAdjustGigActive ||
-            friendlySoftAdjustActive
+            friendlyAdjustGigActive
           }
           interactiveDieIds={
             stealChoice
@@ -2033,8 +2255,8 @@ export function CenterRow({
           }
           selectedDieIds={
             friendlyAdjustGigActive
-              ? eligibleAdjustGigIds
-              : friendlySoftAdjustActive || friendlyEffectGigActive
+              ? new Set(selectedAdjustGigId ? [selectedAdjustGigId] : [])
+              : friendlyEffectGigActive
                 ? selectedEffectGigIdSet
                 : selectedStealIdSet
           }
@@ -2046,16 +2268,16 @@ export function CenterRow({
                 : undefined
           }
           logHighlightedDieId={logHighlightedGigId}
-          adjustChoice={
-            friendlyAdjustGigActive
-              ? adjustGigChoice?.control
-              : friendlySoftAdjustActive
-                ? softAdjustControl
-                : null
-          }
+          adjustChoice={friendlyAdjustGigActive ? adjustControl : null}
           selectionHintForDie={effectGigChoice ? effectGigSelectionHintForDie : undefined}
           onDieClick={
-            stealChoice ? handleStealDieClick : effectGigChoice ? handleEffectGigClick : undefined
+            stealChoice
+              ? handleStealDieClick
+              : adjustGigChoice
+                ? handleAdjustGigClick
+                : effectGigChoice
+                  ? handleEffectGigClick
+                  : undefined
           }
           onAdjustGig={handleAdjustGigValue}
         />
@@ -2208,7 +2430,10 @@ type ProtocolAdjustGigChoice = {
   side: Side;
   view: EngineInteractionView;
   requestId: string;
-  control: AdjustGigControl;
+  eligibleDieIds: string[];
+  maxAmount: number;
+  direction?: string;
+  chooseUpTo: boolean;
 };
 type ResolvingCard = {
   cardId: string;
@@ -2654,42 +2879,42 @@ function adjustGigChoiceFromInteractionView(
   const action = view.actions.find(
     (candidate) => candidate.enabled && candidate.id === "resolveAdjustGig",
   );
-  const dieId = action?.source?.kind === "die" ? action.source.instanceId : undefined;
+  const dieInput = action?.inputs.find(
+    (input) => input.kind === "entity-selection" && input.id === "dieId",
+  );
   const valueInput = action?.inputs.find(
     (input) => input.kind === "number" && input.id === "value",
   );
-  if (!action || valueInput?.kind !== "number" || !dieId) {
+  if (!action || valueInput?.kind !== "number" || dieInput?.kind !== "entity-selection") {
     return null;
   }
-  const die = dice.find((candidate) => candidate.id === dieId);
-  if (!die) {
+  const eligibleDieIds = dieInput.candidates
+    .filter((candidate) => candidate.enabled)
+    .map((candidate) => candidate.entity.instanceId)
+    .filter((dieId) => dice.some((candidate) => candidate.id === dieId));
+  if (eligibleDieIds.length === 0) {
     return null;
   }
   return {
     side,
     view,
     requestId: action.requestId,
-    control: {
-      dieId,
-      label: die.label,
-      currentValue: die.faceValue,
-      maxFaceValue: DIE_MAX_VALUES[die.dieType],
-      maxAmount: Math.max(
-        Math.abs((valueInput.min ?? die.faceValue) - die.faceValue),
-        Math.abs((valueInput.max ?? die.faceValue) - die.faceValue),
-      ),
-      chooseUpTo: action.text.params?.chooseUpTo === true,
-      minValue: valueInput.min,
-      maxValue: valueInput.max,
-    },
+    eligibleDieIds,
+    maxAmount: Math.max(0, Number(action.text.params?.adjustGigMaxAmount ?? 0)),
+    direction:
+      typeof action.text.params?.adjustGigDirection === "string"
+        ? action.text.params.adjustGigDirection
+        : undefined,
+    chooseUpTo:
+      action.text.params?.adjustGigChooseUpTo === true || action.text.params?.canDecline === true,
   };
 }
 
-function buildSoftAdjustGigControl(
+function buildAtomicAdjustGigControl(
   die: GigDieView | undefined,
-  adjustGig: NonNullable<ProtocolEffectGigChoice["adjustGig"]>,
+  choice: ProtocolAdjustGigChoice | null,
 ): AdjustGigControl | null {
-  if (!die) {
+  if (!die || !choice) {
     return null;
   }
   return {
@@ -2697,8 +2922,8 @@ function buildSoftAdjustGigControl(
     label: die.label,
     currentValue: die.faceValue,
     maxFaceValue: DIE_MAX_VALUES[die.dieType],
-    maxAmount: Math.max(0, adjustGig.maxAmount ?? 0),
-    direction: adjustGig.direction,
-    chooseUpTo: adjustGig.chooseUpTo,
+    maxAmount: choice.maxAmount,
+    direction: choice.direction,
+    chooseUpTo: choice.chooseUpTo,
   };
 }

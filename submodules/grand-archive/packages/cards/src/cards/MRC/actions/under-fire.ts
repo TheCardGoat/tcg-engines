@@ -82,34 +82,45 @@ export const underFire: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> 
                   kind: "sequence",
                   effects: [
                     {
-                      kind: "deal-damage",
-                      source: {
-                        kind: "source",
+                      kind: "attempt",
+                      effect: {
+                        kind: "deal-damage",
+                        source: {
+                          kind: "source",
+                        },
+                        recipient: {
+                          kind: "champion",
+                          player: "controller",
+                        },
+                        amount: 4,
                       },
-                      recipient: {
-                        kind: "champion",
-                        player: "controller",
-                      },
-                      amount: 4,
+                      bindSucceededAs: "optional-action-succeeded",
                     },
                     {
-                      kind: "continuous",
-                      subjects: {
-                        kind: "champion",
-                        player: "controller",
+                      kind: "conditional",
+                      condition: {
+                        kind: "effect-succeeded",
+                        binding: "optional-action-succeeded",
                       },
-                      affectedSet: "locked",
-                      duration: {
-                        kind: "this-turn",
-                      },
-                      layer: {
-                        layer: "D",
-                        modifies: "ability",
-                      },
-                      change: {
-                        kind: "grant-keyword",
-                        keyword: {
-                          name: "stealth",
+                      then: {
+                        kind: "continuous",
+                        subjects: {
+                          kind: "champion",
+                          player: "controller",
+                        },
+                        affectedSet: "locked",
+                        duration: {
+                          kind: "this-turn",
+                        },
+                        layer: {
+                          layer: "D",
+                          modifies: "ability",
+                        },
+                        change: {
+                          kind: "grant-keyword",
+                          keyword: {
+                            name: "stealth",
+                          },
                         },
                       },
                     },

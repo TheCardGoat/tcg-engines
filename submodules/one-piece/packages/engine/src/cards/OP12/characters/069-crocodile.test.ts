@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb02Komei034, op01Crocodile062 } from "@tcg/op-cards";
-import { op12Crocodile069 } from "../../../../../cards/src/cards/OP12/characters/069-crocodile.ts";
+import { op12Crocodile069 } from "../../../../../cards/src/cards/characters/op12-069-crocodile.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

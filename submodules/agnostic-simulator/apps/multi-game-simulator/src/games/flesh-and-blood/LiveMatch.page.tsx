@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { FabActionNotice } from "./FabActionNotice";
-import { createLiveMatchSession, type LiveMatchSessionState } from "@tcg/game-page-contract";
+import {
+  canEmitLiveMatchWriteFromHandle,
+  createLiveMatchSession,
+  LIVE_MATCH_HEARTBEAT_INTERVAL_MS,
+  type LiveMatchSessionState,
+} from "@tcg/game-page-contract";
 import { useFabCardPresentation } from "./useFabCardPresentation";
 import { FabMatchClock } from "./FabMatchClock";
 import { readFabClock, fabRemainingMs } from "@tcg/flesh-and-blood-server-adapter/clock";
@@ -30,10 +35,13 @@ import {
   type FabGameAnalyticsV2,
 } from "@tcg/flesh-and-blood-server-adapter";
 import {
+  DropClaimControl,
   resolveInteractionText,
   SimulatorRouteStatus,
   type CardInteractionAction,
 } from "@tcg/simulator-ui";
+import type { DropEligibility } from "@tcg/protocol";
+import { DROP_GATEWAY_ERROR_CODES } from "@tcg/protocol";
 
 import { acquireRootGatewayHandle } from "../../lib/gateway/root-socket";
 import { matchHistoryUrl } from "../../runtime/gameRuntimeApi";
@@ -348,6 +356,9 @@ function LiveGamePage() {
   bootstrapRef.current = bootstrap;
   const [connection, setConnection] = useState<LiveMatchSessionState | null>(null);
   const [presence, setPresence] = useState(bootstrap?.presence.players ?? []);
+  const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
+    bootstrap?.dropEligibility ?? null,
+  );
   const [now, setNow] = useState(Date.now);
   useEffect(() => {
     if (gameEnded) return;
@@ -398,7 +409,7 @@ function LiveGamePage() {
   const [terminalRecovery, setTerminalRecovery] = useState(false);
   const [interactionError, setInteractionError] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
-  const connectionReady = Boolean(connection?.authenticated && connection.joined);
+  const connectionReady = Boolean(connection?.authenticated);
   const canAct =
     connectionReady && bootstrap?.viewer.role === "player" && bootstrap.viewer.permissions.act;
 
@@ -564,7 +575,12 @@ function LiveGamePage() {
       handle.on("game_joined", (payload) => {
         if (payload.gameId !== gameId) return;
         setPresence(payload.players);
+        if (payload.dropEligibility) setDropEligibility(payload.dropEligibility);
         accept(payload, "sync");
+      }),
+      handle.on("drop_eligibility", (payload) => {
+        if (payload.gameId !== gameId) return;
+        setDropEligibility(payload.dropEligibility);
       }),
       handle.on("presence_change", (payload) => {
         if (payload.gameId !== gameId) return;
@@ -578,7 +594,9 @@ function LiveGamePage() {
         ]);
       }),
       handle.on("gateway_error", (payload) => {
-        setInteractionError(payload.message);
+        // Terminal codes are checked before the drop-suppression list: codes
+        // like `not_a_player` are both drop-suppressed AND terminal, and the
+        // terminal recovery stop must win or the retry loops never halt.
         if (TERMINAL_STATE_SYNC_ERROR_CODES.has(payload.code)) {
           setActionError(null);
           setPending(true);
@@ -587,8 +605,12 @@ function LiveGamePage() {
           setTerminalRecovery(true);
           interactionRef.current = null;
           setInteractionView(null);
+          setInteractionError(payload.message);
+        } else if (DROP_GATEWAY_ERROR_CODES.has(String(payload.code))) {
+          setInteractionError(payload.message);
         } else if (payload.code === "viewer_scope_expired") {
           beginRecovery();
+          setInteractionError(payload.message);
         }
       }),
       handle.on("state_sync", (payload) => {
@@ -640,7 +662,7 @@ function LiveGamePage() {
         game: { gameId, matchId, stateVersion: stateVersionRef.current },
         activity: { idle: false, tabVisible: document.visibilityState !== "hidden" },
       }),
-      heartbeatIntervalMs: 15_000,
+      heartbeatIntervalMs: LIVE_MATCH_HEARTBEAT_INTERVAL_MS,
     });
     unsubscribers.push(liveSession.subscribeState(setConnection));
     liveSession.start();
@@ -739,19 +761,49 @@ function LiveGamePage() {
           kind: "blocked",
           reason: "Wait for the current action to be confirmed, then try again.",
         };
-      if (!connectionReady || !gameId || !actorId || !view)
+      const handle = acquireRootGatewayHandle("flesh-and-blood");
+      const gate =
+        bootstrap && gameId
+          ? canEmitLiveMatchWriteFromHandle({
+              handle,
+              viewer: {
+                role: bootstrap.viewer.role,
+                permissions: { act: bootstrap.viewer.permissions.act },
+              },
+              capabilities: { actions: bootstrap.capabilities?.actions ?? true },
+              gameStatus: bootstrap.game.status,
+              bootstrapGameId: bootstrap.game.gameId,
+              emitGameId: gameId,
+            })
+          : ({ ok: false, reason: "not_connected" } as const);
+      if (!gate.ok || !gameId || !actorId || !view) {
+        handle.release();
+        if (gate.ok === false && (gate.reason === "cannot_act" || gate.reason === "spectator")) {
+          return {
+            kind: "blocked",
+            reason: "You do not have permission to perform this action.",
+          };
+        }
         return {
           kind: "blocked",
           reason: "Match actions are synchronizing. Try again when the connection recovers.",
         };
-      if (view.actorId !== actorId || view.stateVersion !== stateVersionRef.current)
+      }
+      if (view.actorId !== actorId || view.stateVersion !== stateVersionRef.current) {
+        handle.release();
         return { kind: "blocked", reason: "Match actions are synchronizing. Please try again." };
+      }
       const validation = validateInteractionSubmission(view, submission);
-      if (!validation.ok) return { kind: "blocked", reason: "This action is no longer available." };
+      if (!validation.ok) {
+        handle.release();
+        return { kind: "blocked", reason: "This action is no longer available." };
+      }
       const permitted =
         validation.action.intent === "concede" ? bootstrap?.viewer.permissions.concede : canAct;
-      if (!permitted)
+      if (!permitted) {
+        handle.release();
         return { kind: "blocked", reason: "You do not have permission to perform this action." };
+      }
       const correlationId = crypto.randomUUID();
       const command: FabLiveCommandRequest = {
         gameId,
@@ -768,7 +820,6 @@ function LiveGamePage() {
       setTerminalRecovery(false);
       setActionError(null);
       setInteractionError(null);
-      const handle = acquireRootGatewayHandle("flesh-and-blood");
       logFabLiveCommandSent(command);
       handle.emit("submit_interaction", {
         gameId,
@@ -779,7 +830,7 @@ function LiveGamePage() {
       handle.release();
       return { kind: "submitted" };
     },
-    [connectionReady, gameId, actorId, canAct, bootstrap?.viewer.permissions.concede],
+    [connectionReady, gameId, actorId, canAct, bootstrap, bootstrap?.viewer.permissions.concede],
   );
   const submitAction = useCallback(
     (actionId: string): HostedSubmissionOutcome => {
@@ -847,28 +898,9 @@ function LiveGamePage() {
   const opponentPresence = opponentParticipant
     ? presence.find((presence) => presence.id === opponentParticipant.id)
     : undefined;
-  const disconnectedAt = opponentPresence?.disconnectedAt
-    ? Date.parse(opponentPresence.disconnectedAt)
-    : NaN;
-  const disconnectRemaining = Math.max(0, Math.ceil((30_000 - (now - disconnectedAt)) / 1000));
-  const canDropDisconnected =
-    opponentPresence?.connected === false &&
-    Number.isFinite(disconnectedAt) &&
-    disconnectRemaining === 0;
-  const canDropTimedOut = Boolean(
-    clock &&
-    opponentParticipant &&
-    clock.clockState[opponentParticipant.id] &&
-    fabRemainingMs(clock, opponentParticipant.id, now) <= -clock.timeControl.config.graceMs,
-  );
   const selfClockRemaining =
     clock?.clockState[viewerId] === undefined ? null : fabRemainingMs(clock, viewerId, now);
-  const opponentClockRemaining =
-    !clock || !opponentParticipant || clock.clockState[opponentParticipant.id] === undefined
-      ? null
-      : fabRemainingMs(clock, opponentParticipant.id, now);
   const selfClockExpired = selfClockRemaining !== null && selfClockRemaining <= 0;
-  const opponentClockExpired = opponentClockRemaining !== null && opponentClockRemaining <= 0;
   const timeoutGraceRemaining = (remaining: number | null) =>
     remaining === null || !clock
       ? 0
@@ -1021,7 +1053,8 @@ function LiveGamePage() {
     typeof window === "undefined" ? "" : window.location.search,
   );
   const recoveryActive =
-    recovering || Boolean(connection && (!connection.authenticated || !connection.joined));
+    recovering ||
+    Boolean(connection && (!connection.authenticated || connection.authStatus === "failed"));
   const activeRecoveryStage = recoveryStage(connection, recoveryAttempts, terminalRecovery);
   const retryRecovery = () => {
     beginRecovery();
@@ -1069,28 +1102,14 @@ function LiveGamePage() {
                     : "Your time expired. Your opponent can claim the win."}
                 </Text>
               </div>
-            ) : !spectating &&
-              !gameEnded &&
-              opponentParticipant &&
-              !opponentParticipant.isBot &&
-              (opponentClockExpired || opponentPresence?.connected === false) ? (
-              <div role="status">
-                <Text size="sm">
-                  {canDropTimedOut
-                    ? "Opponent timed out."
-                    : opponentClockExpired
-                      ? `Opponent's time expired. Claim available in ${timeoutGraceRemaining(opponentClockRemaining)}s.`
-                      : canDropDisconnected || !Number.isFinite(disconnectedAt)
-                        ? "Opponent disconnected."
-                        : `Opponent disconnected. Claim available in ${disconnectRemaining}s.`}
-                </Text>
-                <Button
-                  disabled={!canAct || (!canDropDisconnected && !canDropTimedOut)}
-                  onClick={claimDrop}
-                >
-                  Claim win
-                </Button>
-              </div>
+            ) : !spectating && !gameEnded && opponentParticipant && !opponentParticipant.isBot ? (
+              <DropClaimControl
+                eligibility={dropEligibility}
+                serverNowMs={dropEligibility?.projectedAtMs ?? now}
+                disabled={!canAct}
+                onClaim={claimDrop}
+                label="Claim win"
+              />
             ) : undefined
           }
           pending={pending || recoveryActive}

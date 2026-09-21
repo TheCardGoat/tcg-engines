@@ -5,7 +5,7 @@ import {
   op07BoaHancock038,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Shakuyaku107 } from "../../../../../cards/src/cards/OP14EB04/characters/107-shakuyaku.ts";
+import { op14eb04Shakuyaku107 } from "../../../../../cards/src/cards/characters/op14-107-shakuyaku.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -98,6 +98,39 @@ export const legendScenarios: Scenario[] = [
       ),
   },
 
+  // ── Legend: equipped power projection (V - Streetkid) ───────────────
+  {
+    id: "legendVStreetkidEquippedPower",
+    group: "legend-go-solo",
+    label: "V · Streetkid · Dying Night power",
+    description:
+      "Visual regression fixture: V - Streetkid has printed power 6 and Dying Night - V's Pistol equipped for +2, so the power badge must show 8 and list one +2 Gear contribution.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          field: [
+            {
+              card: c.welcomeToNightCityRetailVStreetkid,
+              spent: false,
+              faceDown: false,
+              hasLag: false,
+              attachedGears: [c.welcomeToNightCityRetailDyingNightVSPistol],
+            },
+          ],
+          legendArea: [{ card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false }],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendVStreetkidEquippedPower"), autoGainGig: false },
+      ),
+  },
+
   // ── Legend: GO SOLO + BLOCKER (Goro Takemura - Hands Unclean) ───────────
   {
     id: "legendGoroTakemuraHandsUnclean",
@@ -204,6 +237,39 @@ export const legendScenarios: Scenario[] = [
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
         { seed: scenarioSeed("legendRoycePsychoOnTheEdge"), autoGainGig: false },
+      ),
+  },
+
+  {
+    id: "legendCallEquippedSelfPay",
+    group: "legend-go-solo",
+    label: "Royce · Call while equipped · self-payment",
+    description:
+      "P1 has a ready, face-down Royce with two equipped Gear and no Eddie tokens. Calling Royce spends that same Legend, flips it face-up without changing zones, and keeps both Gear attached and visible.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          legendArea: [
+            {
+              card: c.welcomeToNightCityRetailRoycePsychoOnTheEdge,
+              faceDown: true,
+              spent: false,
+              attachedGears: [
+                c.welcomeToNightCityRetailMantisBlades,
+                c.welcomeToNightCityRetailKiroshiOptics,
+              ],
+            },
+          ],
+          eddies: 0,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 2,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendCallEquippedSelfPay"), autoGainGig: false },
       ),
   },
 
@@ -494,6 +560,34 @@ export const legendScenarios: Scenario[] = [
     },
   },
 
+  // ── Legend: CALL choose-one-effect modal (Dexter DeShawn) ────────────────
+  {
+    id: "legendDexterDeshawnOffTheGrid",
+    group: "legend-call-trigger",
+    label: "Dexter DeShawn · CALL Choose one effect modal",
+    description:
+      "P1 has Dexter DeShawn: Off the Grid face-down and a friendly Unit on the field. Calling the Legend must open the Choose one effect modal (+2 power buff / Draw 1); the buff then asks for a friendly Unit target.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          legendArea: [
+            { card: c.welcomeToNightCityRetailDexterDeshawnOffTheGrid, faceDown: true },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+          ],
+          field: [{ card: c.welcomeToNightCityRetailFieldOperator, spent: false }],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendDexterDeshawnOffTheGrid"), autoGainGig: false },
+      ),
+  },
+
   // ── Legend: CALL draw + spend to free-equip gear (River Ward) ────────────
   {
     id: "legendRiverWardDetectiveOnTheHunt",
@@ -730,7 +824,7 @@ export const legendScenarios: Scenario[] = [
     group: "legend-call-trigger",
     label: "Alt Cunningham · play Program from trash",
     description:
-      "P1 has Alt Cunningham (blue) revealed. Trash has Corporate Surveillance. SPEND Alt to play the Program from trash for its cost.",
+      "P1 has Alt Cunningham (blue) revealed. Trash has Floor It and Corporate Surveillance. SPEND Alt to play a Program from trash for its cost.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -740,7 +834,10 @@ export const legendScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, faceDown: false },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
-          trash: [c.welcomeToNightCityRetailCorporateSurveillance],
+          trash: [
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailCorporateSurveillance,
+          ],
           eddies: 8,
           gigArea: [{ dieType: "d4", faceValue: 2 }],
         },
@@ -751,6 +848,37 @@ export const legendScenarios: Scenario[] = [
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
         { seed: scenarioSeed("legendAltCunninghamSoulkillerArchitectRetail"), autoGainGig: false },
+      ),
+  },
+
+  {
+    id: "legendAltCunninghamUnaffordableTrashPlay",
+    group: "legend-call-trigger",
+    label: "Alt Cunningham · cancel unaffordable trash Program",
+    description:
+      "P1 has Alt revealed and 2 Eddies. Trash has Floor It (1) and Corporate Surveillance (2). After paying Alt, Corporate Surveillance cannot be paid; the player can cancel and continue.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [],
+          field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailAltCunninghamSoulkillerArchitect, faceDown: false },
+          ],
+          trash: [
+            c.welcomeToNightCityRetailFloorIt,
+            c.welcomeToNightCityRetailCorporateSurveillance,
+          ],
+          eddies: 2,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendAltCunninghamUnaffordableTrashPlay"), autoGainGig: false },
       ),
   },
 
@@ -786,6 +914,83 @@ export const legendScenarios: Scenario[] = [
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
         { seed: scenarioSeed("legendDumDumMaelstromTriggermanRetail"), autoGainGig: false },
+      ),
+  },
+
+  {
+    id: "legendDumDumDuplicateGearRetail",
+    group: "legend-call-trigger",
+    label: "Dum Dum · same Gear on two Units",
+    description:
+      "P1 can call Dum Dum. Two friendly Units each have Kiroshi Optics attached. CALL should highlight both Gears on the board so the player can click the copy they mean, not a nameless modal tile.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+            {
+              card: c.welcomeToNightCityRetailSwordwiseHuscle,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: true },
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+          ],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendDumDumDuplicateGearRetail"), autoGainGig: false },
+      ),
+  },
+
+  {
+    id: "legendDumDumLegendGearRetail",
+    group: "legend-call-trigger",
+    label: "Dum Dum · Gear on Unit and Legend",
+    description:
+      "P1 can call Dum Dum. T-Bug and face-up V each have Kiroshi Optics. CALL should leave both Gears clickable on the board, including a large peek under the equipped Legend.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailMoxInciters],
+          field: [
+            {
+              card: c.welcomeToNightCityRetailTBugAmateurPhilosopher,
+              spent: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+          ],
+          legendArea: [
+            { card: c.welcomeToNightCityRetailDumDumMaelstromTriggerman, faceDown: true },
+            {
+              card: c.theHeistRetailStarterDeckVCorporateExile,
+              faceDown: false,
+              attachedGears: [c.welcomeToNightCityRetailKiroshiOptics],
+            },
+          ],
+          eddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 5,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("legendDumDumLegendGearRetail"), autoGainGig: false },
       ),
   },
 
@@ -1323,9 +1528,9 @@ export const legendScenarios: Scenario[] = [
     group: "legend-passive",
     label: "Kerry Eurodyne · Axe, Attitude, Audience · Gig roll triggers",
     description:
-      "P1 has Kerry revealed with min and max value Gigs staged. Use this board to validate reroll/draw trigger visibility when a Gig rolls in.",
-    build: () =>
-      CyberpunkTestEngine.createWithFixture(
+      "P1 has Kerry revealed after rolling the maximum on a d4. The optional reroll decision and mandatory draw are pending together for timing and mobile prompt validation.",
+    build: () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
         {
           deck: [
             c.welcomeToNightCityRetailMoxInciters,
@@ -1338,10 +1543,8 @@ export const legendScenarios: Scenario[] = [
             { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false },
           ],
           eddies: 4,
-          gigArea: [
-            { dieType: "d4", faceValue: 1 },
-            { dieType: "d20", faceValue: 20 },
-          ],
+          fixerDice: ["d4"],
+          gigArea: [{ dieType: "d20", faceValue: 20 }],
         },
         {
           field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
@@ -1349,8 +1552,21 @@ export const legendScenarios: Scenario[] = [
           eddies: 4,
           gigArea: [{ dieType: "d6", faceValue: 3 }],
         },
-        { seed: scenarioSeed("legendKerryEurodyneAxeAttitudeAudienceRetail"), autoGainGig: false },
-      ),
+        {
+          seed: scenarioSeed("legendKerryEurodyneAxeAttitudeAudienceRetail"),
+          activePlayerId: P2,
+          autoGainGig: false,
+        },
+      );
+      engine.completeTurn({ as: P2 });
+      const choice = engine.getState().G.turnMetadata.pendingChoice;
+      if (!choice || choice.type !== "gainGig") {
+        throw new Error("Expected Kerry fixture to reach P1's gain-Gig choice.");
+      }
+      engine.getState().ctx.rngState = { state: 1 };
+      engine.gainGig(choice.payload.allowedDieIds[0]!, { as: P1 });
+      return engine;
+    },
   },
   {
     id: "legendSashaYakovlevaWonTLetYouDownRetail",
@@ -1813,7 +2029,7 @@ export const legendScenarios: Scenario[] = [
           hand: [c.welcomeToNightCityRetailTrustNoOne],
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [
-            { card: c.welcomeToNightCityRetailJudyALvarezBraindanceMaestro, faceDown: false },
+            { card: c.welcomeToNightCityRetailJudyAlvarezBraindanceMaestro, faceDown: false },
             { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
           ],
           eddies: 3,

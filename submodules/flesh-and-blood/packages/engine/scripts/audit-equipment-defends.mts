@@ -16,15 +16,32 @@ for (const entry of fleshAndBloodDeckCardLibrary) {
   if ((base?.typeBox?.types ?? []).includes("Equipment")) equipmentNames.add(entry.name);
 }
 
-interface Head { kind: string; score: number; label: string; defend?: readonly string[] }
+interface Head {
+  kind: string;
+  score: number;
+  label: string;
+  defend?: readonly string[];
+}
 interface Frame {
-  index: number; turnNumber: number; actorId: string; defending: boolean; life: number;
-  opponentLife: number | null; equipment: readonly string[]; remainingDamage: number | null;
-  considered: readonly Head[]; chosen: { move: string; label: string; score: number | null };
+  index: number;
+  turnNumber: number;
+  actorId: string;
+  defending: boolean;
+  life: number;
+  opponentLife: number | null;
+  equipment: readonly string[];
+  remainingDamage: number | null;
+  considered: readonly Head[];
+  chosen: { move: string; label: string; score: number | null };
 }
 interface Transcript {
-  seed: string; p1Deck: string; p2Deck: string; termination: string; winnerId: string | null;
-  turnCount: number; frames: readonly Frame[];
+  seed: string;
+  p1Deck: string;
+  p2Deck: string;
+  termination: string;
+  winnerId: string | null;
+  turnCount: number;
+  frames: readonly Frame[];
 }
 
 const perCardDefends = new Map<string, number>();
@@ -55,7 +72,9 @@ for (const file of readdirSync(txDir).sort()) {
   }
 }
 
-console.log(`defend frames: ${defendFrames}, with equipment: ${equipmentDefendFrames} (remaining>=4: ${onHitishEquipmentDefends})`);
+console.log(
+  `defend frames: ${defendFrames}, with equipment: ${equipmentDefendFrames} (remaining>=4: ${onHitishEquipmentDefends})`,
+);
 const ranked = [...perCardDefends.entries()].sort((a, b) => b[1] - a[1]);
 for (const [name, count] of ranked) {
   console.log(`${count}\t${name}`);

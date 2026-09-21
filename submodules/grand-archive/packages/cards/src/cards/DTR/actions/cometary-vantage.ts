@@ -74,97 +74,100 @@ export const cometaryVantage: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               {
                 id: "grant-on-hit",
                 text: "If a unit is attacking, each Aethercharge card in that attacker's intent gains an on-hit loading ability.",
-                condition: {
-                  kind: "collection-exists",
-                  collection: {
-                    zones: ["field"],
-                    player: "each-player",
-                    filter: {
-                      kind: "object-state",
-                      state: "attacking",
-                    },
-                  },
-                },
                 effect: {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "each",
+                  kind: "conditional",
+                  condition: {
+                    kind: "collection-exists",
                     collection: {
-                      zones: ["intent"],
-                      host: {
-                        kind: "current-attack",
-                      },
-                      relationship: "intent-of",
+                      zones: ["field"],
+                      player: "each-player",
                       filter: {
-                        kind: "subtype",
-                        oneOf: ["AETHERCHARGE"],
+                        kind: "object-state",
+                        state: "attacking",
                       },
                     },
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "permanent",
-                  },
-                  layer: {
-                    layer: "D",
-                    modifies: "ability",
-                  },
-                  change: {
-                    kind: "grant-ability",
-                    ability: {
-                      id: "granted-ox12m3-a1",
-                      kind: "triggered",
-                      text: "On Hit: Load this card into an Aetherwing weapon you control.",
-                      trigger: {
-                        kind: "event",
-                        event: {
-                          name: "attack-hit",
-                          subject: {
-                            kind: "ability-bearer",
-                          },
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "each",
+                      collection: {
+                        zones: ["intent"],
+                        host: {
+                          kind: "current-attack",
+                        },
+                        relationship: "intent-of",
+                        filter: {
+                          kind: "subtype",
+                          oneOf: ["AETHERCHARGE"],
                         },
                       },
-                      effect: {
-                        kind: "choose",
-                        selection: {
-                          id: "aetherwing-weapon",
-                          kind: "choice",
-                          declared: "resolution",
-                          chooser: "controller",
-                          count: {
-                            kind: "exactly",
-                            amount: 1,
-                          },
-                          candidates: {
-                            kind: "object",
-                            zones: ["field"],
-                            relationship: "controlled-by",
-                            player: "controller",
-                            filter: {
-                              kind: "all",
-                              filters: [
-                                {
-                                  kind: "type",
-                                  oneOf: ["WEAPON"],
-                                },
-                                {
-                                  kind: "subtype",
-                                  oneOf: ["AETHERWING"],
-                                },
-                              ],
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "permanent",
+                    },
+                    layer: {
+                      layer: "D",
+                      modifies: "ability",
+                    },
+                    change: {
+                      kind: "grant-ability",
+                      ability: {
+                        id: "granted-ox12m3-a1",
+                        kind: "triggered",
+                        text: "On Hit: Load this card into an Aetherwing weapon you control.",
+                        trigger: {
+                          kind: "event",
+                          event: {
+                            name: "attack-hit",
+                            subject: {
+                              kind: "ability-bearer",
                             },
                           },
                         },
                         effect: {
-                          kind: "move",
-                          subject: {
-                            kind: "ability-bearer",
+                          kind: "choose",
+                          selection: {
+                            id: "aetherwing-weapon",
+                            kind: "choice",
+                            declared: "resolution",
+                            chooser: "controller",
+                            count: {
+                              kind: "exactly",
+                              amount: 1,
+                            },
+                            candidates: {
+                              kind: "object",
+                              zones: ["field"],
+                              relationship: "controlled-by",
+                              player: "controller",
+                              filter: {
+                                kind: "all",
+                                filters: [
+                                  {
+                                    kind: "type",
+                                    oneOf: ["WEAPON"],
+                                  },
+                                  {
+                                    kind: "subtype",
+                                    oneOf: ["AETHERWING"],
+                                  },
+                                ],
+                              },
+                            },
                           },
-                          destination: {
-                            zone: "loaded",
-                            host: {
-                              kind: "bound",
-                              binding: "aetherwing-weapon",
+                          effect: {
+                            kind: "move",
+                            subject: {
+                              kind: "ability-bearer",
+                            },
+                            destination: {
+                              zone: "loaded",
+                              host: {
+                                kind: "bound",
+                                binding: "aetherwing-weapon",
+                              },
                             },
                           },
                         },

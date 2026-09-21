@@ -8,6 +8,17 @@ function fixture(scenarioId: ScenarioId): CyberpunkE2EFixture {
   return { scenarioId };
 }
 
+/* ── Pending-effect order visual QA ────────────────────────────────────── */
+export const pendingEffectsRiverRelicAdamSmasher = fixture("pendingEffectsRiverRelicAdamSmasher");
+
+/* ── Deck-search prompt visual QA ──────────────────────────────────────── */
+export const deckSearchThreeMouthsPrompt = fixture("deckSearchThreeMouthsPrompt");
+export const deckSearchHanakoPrompt = fixture("deckSearchHanakoPrompt");
+export const deckSearchSketchyRipperPrompt = fixture("deckSearchSketchyRipperPrompt");
+export const deckSearchViktorPrompt = fixture("deckSearchViktorPrompt");
+export const deckSearchRiverWardPrompt = fixture("deckSearchRiverWardPrompt");
+export const deckSearchTetratronicPrompt = fixture("deckSearchTetratronicPrompt");
+
 /* ── Core / Setup ───────────────────────────────────────────────────────── */
 export const gameStart = fixture("gameStart");
 export const retailCardCatalog = fixture("retailCardCatalog");
@@ -44,6 +55,7 @@ export const progIndustrialAssemblyHighCred = fixture("progIndustrialAssemblyHig
 export const progRebootOptics = fixture("progRebootOptics");
 export const progRebootOpticsEmptyField = fixture("progRebootOpticsEmptyField");
 export const progAfterpartyAtLizzies = fixture("progAfterpartyAtLizzies");
+export const progTrustNoOne = fixture("progTrustNoOne");
 export const progCyberpsychosis = fixture("progCyberpsychosis");
 export const progChromeReverie = fixture("progChromeReverie");
 export const progPeaceOffering = fixture("progPeaceOffering");
@@ -54,6 +66,15 @@ export const progChromeReverieRetail = fixture("progChromeReverieRetail");
 export const progCyberpsychosisRetail = fixture("progCyberpsychosisRetail");
 export const progPeaceOfferingRetail = fixture("progPeaceOfferingRetail");
 export const progLiveWithTheAftermathRetail = fixture("progLiveWithTheAftermathRetail");
+export const progLiveWithTheAftermathActiveOnlyRetail = fixture(
+  "progLiveWithTheAftermathActiveOnlyRetail",
+);
+export const progLiveWithTheAftermathRivalOnlyRetail = fixture(
+  "progLiveWithTheAftermathRivalOnlyRetail",
+);
+export const progLiveWithTheAftermathNoUnitsRetail = fixture(
+  "progLiveWithTheAftermathNoUnitsRetail",
+);
 
 /* ── Gear ───────────────────────────────────────────────────────────────── */
 export const gearDyingNightHighCred = fixture("gearDyingNightHighCred");
@@ -91,16 +112,22 @@ export const legendDumDumMaelstromTriggerman = fixture("legendDumDumMaelstromTri
 export const legendPanamPalmerNomadCavalry = fixture("legendPanamPalmerNomadCavalry");
 export const legendGoroTakemuraVengefulBodyguard = fixture("legendGoroTakemuraVengefulBodyguard");
 export const legendLucynaKushinada = fixture("legendLucynaKushinada");
+export const regressionRedirectDefeatChoice = fixture("regressionRedirectDefeatChoice");
 
 /* ── Legends (Retail) ───────────────────────────────────────────────────── */
 export const legendVStreetkidRetail = fixture("legendVStreetkidRetail");
 export const legendAltCunninghamSoulkillerArchitectRetail = fixture(
   "legendAltCunninghamSoulkillerArchitectRetail",
 );
+export const legendAltCunninghamUnaffordableTrashPlay = fixture(
+  "legendAltCunninghamUnaffordableTrashPlay",
+);
 export const legendRoycePsychoOnTheEdgeRetail = fixture("legendRoycePsychoOnTheEdgeRetail");
 export const legendDumDumMaelstromTriggermanRetail = fixture(
   "legendDumDumMaelstromTriggermanRetail",
 );
+export const legendDumDumDuplicateGearRetail = fixture("legendDumDumDuplicateGearRetail");
+export const legendDumDumLegendGearRetail = fixture("legendDumDumLegendGearRetail");
 export const legendEvelynParkerBeautifulEnigmaRetail = fixture(
   "legendEvelynParkerBeautifulEnigmaRetail",
 );

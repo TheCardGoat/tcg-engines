@@ -707,5 +707,8 @@
   "sim.settings.tab.game": "Spiel",
   "sim.settings.tab.account": "Konto",
   "sim.settings.accountHelp": "Verwalte dein Profil, deine Sicherheit und kontoweiten Einstellungen.",
-  "sim.settings.openAccount": "Kontoeinstellungen öffnen"
+  "sim.settings.openAccount": "Kontoeinstellungen öffnen",
+  "practice_mode_self_title": "Beide Seiten spielen",
+  "practice_mode_self_controlling": "Steuerung: Spieler {player}",
+  "practice_mode_self_status": "Das Spielfeld folgt dem Spieler, der als Nächstes entscheidet."
 }

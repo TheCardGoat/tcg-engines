@@ -327,6 +327,8 @@ function moveLogEntityIds(log: MoveLog): string[] | undefined {
       return cardIdsFromPrivateField(log.revealed);
     case "lookAtCards":
       return cardIdsFromPrivateField(log.cardIds);
+    case "resolveDiscardFromHand":
+      return log.discardedCards?.map((card) => String(card.cardId));
     default:
       return undefined;
   }
@@ -370,6 +372,8 @@ function moveLogCardRefs(
       return cardRefsFromIds(matchState, cardIdsFromPrivateField(log.revealed));
     case "lookAtCards":
       return cardRefsFromIds(matchState, cardIdsFromPrivateField(log.cardIds));
+    case "resolveDiscardFromHand":
+      return log.discardedCards?.map((card) => ({ id: String(card.cardId), name: card.cardName }));
     case "action": {
       const refs: { name: string }[] = [];
       const params = log.params as Record<string, unknown>;
@@ -526,16 +530,22 @@ function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionCo
         return "Skipped the optional move.";
       }
       return log.cardName ? `Moved ${log.cardName}.` : "Resolved card-to-move.";
-    case "resolveDiscardFromHand":
+    case "resolveDiscardFromHand": {
       if (log.passed) {
         return "Skipped the optional discard.";
       }
+      const discardedNames = log.discardedCards?.map((card) => card.cardName);
       if (log.reason === "costMatchedFriendlyGig") {
-        return `Discarded ${log.discardedCount} additional card${
-          log.discardedCount === 1 ? "" : "s"
-        } because the discarded card's cost matched a friendly Gig.`;
+        return discardedNames && discardedNames.length > 0
+          ? `Discarded ${discardedNames.join(", ")} because the discarded card's cost matched a friendly Gig.`
+          : `Discarded ${log.discardedCount} additional card${
+              log.discardedCount === 1 ? "" : "s"
+            } because the discarded card's cost matched a friendly Gig.`;
       }
-      return `Discarded ${log.discardedCount} card${log.discardedCount === 1 ? "" : "s"}.`;
+      return discardedNames && discardedNames.length > 0
+        ? `Discarded ${log.discardedCount} card${log.discardedCount === 1 ? "" : "s"}: ${discardedNames.join(", ")}.`
+        : `Discarded ${log.discardedCount} card${log.discardedCount === 1 ? "" : "s"}.`;
+    }
     case "resolveStealGigs":
       return log.attackerName
         ? `Steal: ${log.attackerName} stole ${log.stolenCount} Gig${
@@ -579,7 +589,9 @@ function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionCo
     case "turnEnded":
       return `Turn ${log.turnNumber} ended.`;
     case "gameEnded":
-      return log.winnerId ? `Game over (${log.reason}).` : `Game ended in a draw (${log.reason}).`;
+      return log.winnerId
+        ? `Game over (${winReasonPhrase(log.reason)}).`
+        : `Game ended in a draw (${winReasonPhrase(log.reason)}).`;
     case "action":
       if (log.messageKey === "effect.draw.resolved") {
         const params = log.params as Record<string, unknown>;
@@ -635,6 +647,26 @@ function sentenceFor(matchState: MatchState, log: MoveLog, context: ProjectionCo
     default: {
       return "Unknown move.";
     }
+  }
+}
+
+/**
+ * Rules-accurate phrases for engine win reasons. Overtime ends when a player
+ * holds seven or more Gig dice (a majority of the 12-dice pool); Street Cred
+ * is the sum of Gig die values and never decides the game (CR 1.11, 11.2.1).
+ */
+function winReasonPhrase(reason: string): string {
+  switch (reason) {
+    case "gig_victory":
+      return "Gig victory: 7 Gigs";
+    case "overtime_majority":
+      return "Overtime: first to 7 Gig dice";
+    case "deck_out_victory":
+      return "Deck out";
+    case "concede":
+      return "Concession";
+    default:
+      return reason;
   }
 }
 

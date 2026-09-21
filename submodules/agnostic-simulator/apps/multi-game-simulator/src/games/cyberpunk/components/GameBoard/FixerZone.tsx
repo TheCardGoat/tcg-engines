@@ -74,9 +74,23 @@ export function FixerZone({
         )
       : null;
   const isPicker = side !== undefined && Boolean(engineCtx) && allowedIds !== null;
+  const correction = engineCtx?.boardCorrectionEnabled === true;
 
   const handlePick = (dieId: string) => {
-    if (!isPicker || !engineCtx || !side) {
+    if (!engineCtx || !side) {
+      return;
+    }
+    if (engineCtx.boardCorrectionEnabled) {
+      engineCtx.dispatch({
+        type: "manualMoveGig",
+        dieId,
+        toPlayerId: PLAYER_SIDE_TO_ID[side],
+        location: "gigArea",
+        as: PLAYER_SIDE_TO_ID[side],
+      });
+      return;
+    }
+    if (!isPicker) {
       return;
     }
     if (!allowedIds!.has(dieId)) {
@@ -168,8 +182,12 @@ export function FixerZone({
                     data-die-id={die.dieId ?? undefined}
                     data-sim-entity-id={die.dieId ?? undefined}
                     data-candidate={candidate ? "true" : "false"}
-                    disabled={isPicker && !candidate}
-                    onClick={candidate && die.dieId ? () => handlePick(die.dieId!) : undefined}
+                    disabled={!correction && isPicker && !candidate}
+                    onClick={
+                      die.dieId && (correction || candidate)
+                        ? () => handlePick(die.dieId!)
+                        : undefined
+                    }
                     aria-label={candidate ? `Take ${die.label}` : die.label}
                   >
                     <span

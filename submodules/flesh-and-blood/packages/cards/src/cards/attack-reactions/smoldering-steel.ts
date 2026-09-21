@@ -95,6 +95,8 @@ export const smolderingSteel = definePitchFamily(fabPitchFamilies["smoldering-st
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "any",
+          occurrences: "every",
           filter: {
             name: "Frostbite",
           },

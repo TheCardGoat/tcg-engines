@@ -41,7 +41,9 @@ describe("Nuu (MST002) AAA", () => {
 
     Nuu.play(nimblismBlue, { from: "banished" });
     game.untilIdle({ ordering: "listed" });
-    expectFabCard(Nuu, nimblismBlue).toBeIn("graveyard");
+    // CR 3.8.2: graveyards hold only their owner's cards, so Dash's copy
+    // resolves there even though Nuu played it.
+    expectFabCard(Dash, nimblismBlue).toBeIn("graveyard");
   });
 
   it("boundary: the banish is optional — declining keeps the blue top in the deck", () => {

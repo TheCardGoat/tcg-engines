@@ -8,6 +8,7 @@ import { dispatchLayerDecision } from "../../rules/decision-dispatch/dispatch-de
 import type { FabLayerResolutionResult } from "../../rules/decision-dispatch/result.ts";
 import { commitResolutionEffectPayment, resumeAbilityStepAfterJournal } from "./journal.ts";
 import {
+  committedClashBarrierPath,
   committedDamageConditionBarrierPath,
   flushSequencePrefixBeforeDecision,
 } from "./sequence.ts";
@@ -84,8 +85,29 @@ export function advanceFabLayerResolution(
       options,
       pending.decision.path,
       advanceFabLayerResolution,
+      pending.decision.kind === "repeat-commit" ? pending.decision : undefined,
     );
     if (flushed) return flushed;
+    if (pending.decision.kind === "repeat-start") {
+      const decision = pending.decision;
+      const initialized = {
+        ...pending.layer,
+        repeatFrames: {
+          ...pending.layer.repeatFrames,
+          [decision.repeatPath.join(".")]: {
+            original: decision.effect,
+            index: 0,
+            limit: decision.limit,
+            accepted: false,
+            progressed: false,
+          },
+        },
+      };
+      const index = state.rulesStack.findIndex((candidate) => candidate.layerId === layer.layerId);
+      if (index < 0) return failure(state, "Repeat layer disappeared.", "stale_rules_process");
+      state.rulesStack[index] = initialized;
+      return advanceFabLayerResolution(state, initialized, options);
+    }
 
     if (pending.decision.kind === "payment-commit") {
       return commitResolutionEffectPayment(
@@ -125,7 +147,8 @@ export function advanceFabLayerResolution(
     });
   }
 
-  const committedConditionBarrier = committedDamageConditionBarrierPath(layer);
+  const committedConditionBarrier =
+    committedClashBarrierPath(state, layer) ?? committedDamageConditionBarrierPath(layer);
   if (committedConditionBarrier) {
     const flushed = flushSequencePrefixBeforeDecision(
       state,

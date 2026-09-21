@@ -28,9 +28,7 @@ export class OpponentPresenceTracker {
       this.#stopCountdown();
     } else {
       this.opponentConnected = false;
-      this.disconnectedAtMs = disconnectedAtIso
-        ? new Date(disconnectedAtIso).getTime()
-        : Date.now();
+      this.disconnectedAtMs = disconnectedAtIso ? new Date(disconnectedAtIso).getTime() : null;
       this.#updateSecondsRemaining();
       this.#startCountdown();
     }

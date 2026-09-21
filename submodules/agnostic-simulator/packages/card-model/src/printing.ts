@@ -19,6 +19,12 @@ export interface Printing {
   rarity: string;
   /** Asset URL for this printing's card image. */
   imageUrl: string;
+  /**
+   * Optional display label distinguishing this print from the card's canonical
+   * name (e.g. "Sabo (SPR)", "Cavendish (Pirate Foil)"). Omitted when the
+   * print needs no distinct display name.
+   */
+  label?: string;
   /** Provider-native identities for this exact physical printing. */
   externalIds?: Partial<Record<import("./external-source").ExternalSource, string>>;
 }

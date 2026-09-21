@@ -45,6 +45,18 @@ export function resolveHumanVsAiMode({
     turnNumber,
   };
 
+  if (syncedState.opponentMode === "self") {
+    return {
+      nextState: {
+        ...syncedState,
+        mode: "takeover",
+        currentPerspective: isHumanVsAiAiTurn(actorId) ? "playerTwo" : "playerOne",
+      },
+      shouldScheduleAi: false,
+      shouldClearTimer: true,
+    };
+  }
+
   if (TERMINAL_MODES.has(syncedState.mode)) {
     return {
       nextState: syncedState,

@@ -31,6 +31,7 @@ export const testOfVigor = definePitchFamily(fabPitchFamilies["test-of-vigor"], 
           prize: {
             type: "create-token",
             token: "vigor",
+            creator: "token-controller",
             controller: "winner",
           },
         },

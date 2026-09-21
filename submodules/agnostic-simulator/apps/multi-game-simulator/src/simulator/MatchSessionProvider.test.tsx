@@ -266,7 +266,12 @@ describe("pending session recovery without realtime delivery", () => {
     await act(() => vi.advanceTimersByTimeAsync(12_999));
     expect(fetch).toHaveBeenCalledTimes(1);
     await act(() => vi.advanceTimersByTimeAsync(1));
-    expect(screen.getByRole("alert").textContent).toContain("timed out");
+    const alert = screen.getByRole("alert");
+    expect(alert.textContent).toContain("timed out");
+    // The stall is usually the match server restarting, not the player's
+    // connection — the copy must not send players to debug their network.
+    expect(alert.textContent).toContain("restarting");
+    expect(alert.textContent).not.toContain("check your connection");
     await act(() => vi.advanceTimersByTimeAsync(6_000));
     expect(screen.getByText("playing")).toBeTruthy();
     expect(fetch).toHaveBeenCalledTimes(2);

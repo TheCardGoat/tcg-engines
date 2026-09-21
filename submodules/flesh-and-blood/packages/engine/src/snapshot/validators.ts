@@ -26,6 +26,7 @@ const DECISION_KINDS = new Set([
 const CONTINUATION_KINDS = new Set([
   "replacement-player",
   "replacement-cost-target",
+  "replacement-cost-payment",
   "replacement-consequence-target",
   "replacement-first-player",
   "replacement-order",
@@ -237,6 +238,8 @@ function hasValidContinuation(value: unknown, context: FabSnapshotValidationCont
     case "replacement-cost-target":
     case "replacement-consequence-target":
       return isNonEmptyString(value.replacementId);
+    case "replacement-cost-payment":
+      return isNonEmptyString(value.replacementId) && isInteger(value.amount) && value.amount >= 0;
     case "replacement-order":
     case "journal-replacement-order":
       return isStringIn(value.replacementKind, REPLACEMENT_KINDS);
@@ -487,6 +490,18 @@ function hasValidReplacementMaps(
     for (const [replacementId, ref] of Object.entries(value.replacementCostTargetBindings)) {
       if (!isNonEmptyString(replacementId) || !hasValidDetachedObjectRef(ref, context))
         return false;
+    }
+  }
+  if (value.replacementPitchBindings !== undefined) {
+    if (!isRecord(value.replacementPitchBindings)) return false;
+    for (const [replacementId, bindings] of Object.entries(value.replacementPitchBindings)) {
+      if (
+        !isNonEmptyString(replacementId) ||
+        !Array.isArray(bindings) ||
+        !bindings.every((ref) => hasValidDetachedObjectRef(ref, context))
+      ) {
+        return false;
+      }
     }
   }
   if (value.replacementConsequenceTargetBindings !== undefined) {
@@ -850,6 +865,11 @@ function hasValidReplacementCandidate(value: unknown, context: FabSnapshotValida
     hasValidObjectSnapshot(value.source, context) &&
     (value.persistedCostTarget === undefined ||
       hasValidDetachedObjectRef(value.persistedCostTarget, context)) &&
+    (value.persistedPitchedInstanceIds === undefined ||
+      (Array.isArray(value.persistedPitchedInstanceIds) &&
+        value.persistedPitchedInstanceIds.every((ref) =>
+          hasValidDetachedObjectRef(ref, context),
+        ))) &&
     (value.persistedConsequenceTarget === undefined ||
       hasValidDetachedObjectRef(value.persistedConsequenceTarget, context))
   );

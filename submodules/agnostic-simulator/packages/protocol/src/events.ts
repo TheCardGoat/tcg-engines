@@ -37,6 +37,7 @@ import type {
 } from "./schemas.js";
 import type {
   ChatMessageEventPayload,
+  DropEligibilityPayload,
   ErrorPayload,
   EventSubscriptionAckPayload,
   FriendLobbyInvitePayload,
@@ -66,6 +67,7 @@ import type {
   PlayerActivityPayload,
   PlayerDropPendingPayload,
   PresenceChangePayload,
+  PublicLobbyRoomsSnapshotPayload,
   ProposalExpiredPayload,
   ProposalReceivedPayload,
   ProposalResolvedPayload,
@@ -128,6 +130,7 @@ export interface ServerToClientEvents {
   move_accepted: (payload: MoveAcceptedPayload) => void;
   move_rejected: (payload: MoveRejectedPayload) => void;
   presence_change: (payload: PresenceChangePayload) => void;
+  drop_eligibility: (payload: DropEligibilityPayload) => void;
   game_ended: (payload: GameEndedPayload) => void;
   match_finalization_failed: (payload: MatchFinalizationFailedPayload) => void;
   match_state: (payload: MatchStatePayload) => void;
@@ -155,6 +158,7 @@ export interface ServerToClientEvents {
   event_subscribed: (payload: EventSubscriptionAckPayload) => void;
   event_unsubscribed: (payload: EventSubscriptionAckPayload) => void;
   friend_message: (payload: FriendMessagePayload) => void;
+  public_lobby_rooms_snapshot: (payload: PublicLobbyRoomsSnapshotPayload) => void;
   matchmaking_dashboard_snapshot: (payload: MatchmakingDashboardSnapshotPayload) => void;
 
   // Explicit response events for the call/response pattern (§5).

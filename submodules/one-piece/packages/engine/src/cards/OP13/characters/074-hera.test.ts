@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op04Rabiyan113 } from "../../../../../cards/src/cards/OP04/characters/113-rabiyan.ts";
-import { op04Randolph114 } from "../../../../../cards/src/cards/OP04/characters/114-randolph.ts";
-import { op05Koala006 } from "../../../../../cards/src/cards/OP05/characters/006-koala.ts";
-import { op13Hera074 } from "../../../../../cards/src/cards/OP13/characters/074-hera.ts";
+import { op04Rabiyan113 } from "../../../../../cards/src/cards/characters/op04-113-rabiyan.ts";
+import { op04Randolph114 } from "../../../../../cards/src/cards/characters/op04-114-randolph.ts";
+import { op05Koala006 } from "../../../../../cards/src/cards/characters/op05-006-koala.ts";
+import { op13Hera074 } from "../../../../../cards/src/cards/characters/op13-074-hera.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

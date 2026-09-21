@@ -5,6 +5,8 @@ import type {
 import { FabTestEngine, fabToken } from "@tcg/flesh-and-blood-engine/testing";
 import { dash as dashRules } from "@tcg/flesh-and-blood-cards/cards/heroes/dash";
 import { viserai as viseraiRules } from "@tcg/flesh-and-blood-cards/cards/heroes/viserai";
+import { maliceDominaOfTheDead } from "@tcg/flesh-and-blood-cards/cards/heroes/malice-domina-of-the-dead";
+import { restlessClericRed } from "@tcg/flesh-and-blood-cards/cards/actions/restless-cleric";
 import { riftSkitterRed } from "@tcg/flesh-and-blood-cards/cards/actions/rift-skitter";
 import { vantomBansheeRed } from "@tcg/flesh-and-blood-cards/cards/actions/vantom-banshee";
 import { vantomWraithRed } from "@tcg/flesh-and-blood-cards/cards/actions/vantom-wraith";
@@ -110,6 +112,27 @@ function bootMultiplePlayableBanishedCards(): FabPracticeMatch {
     { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
   );
   return matchFromEngine(engine, "fab-scenario-multiple-playable-banished-cards");
+}
+
+function bootPlayableGraveyardZombie(): FabPracticeMatch {
+  const engine = FabTestEngine.start(
+    {
+      hero: maliceDominaOfTheDead,
+      graveyard: [restlessClericRed],
+      hand: [],
+      resourcePoints: 1,
+      actionPoints: 2,
+      deck: 6,
+    },
+    { hero: dashRules, hand: [], life: 20, deck: 6 },
+    { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
+  );
+  // Malice's action opens the until-end-of-turn "play target zombie from your
+  // graveyard" window; the single graveyard candidate satisfies the targeting
+  // decision and the viewer keeps priority with the play still affordable.
+  engine.as(maliceDominaOfTheDead).activate(maliceDominaOfTheDead);
+  engine.untilIdle();
+  return matchFromEngine(engine, "fab-scenario-playable-graveyard-zombie");
 }
 
 function bootPitchStackFourCards(): FabPracticeMatch {
@@ -602,6 +625,24 @@ export const INTERACTIONS_SCENARIOS = {
     viewerId: "player-1",
     botMode: "pass-only",
     boot: bootMultiplePlayableBanishedCards,
+  },
+  "playable-graveyard-zombie": {
+    id: "playable-graveyard-zombie",
+    label: "Graveyard · playable zombie",
+    description:
+      "Malice, Domina of the Dead has activated her action, so the Restless Cleric in her graveyard is playable right now. The graveyard pile carries the same availability badge as the banished pile.",
+    group: "opening",
+    tags: [
+      "engine",
+      "graveyard",
+      "malice",
+      "play-from-graveyard",
+      "real-card",
+      "availability-badge",
+    ],
+    viewerId: "player-1",
+    botMode: "pass-only",
+    boot: bootPlayableGraveyardZombie,
   },
   "pitch-stack-four-cards": {
     id: "pitch-stack-four-cards",

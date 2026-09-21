@@ -47,7 +47,11 @@ export function DeckZone({ count = 40, opponent = false, side, reveal }: DeckZon
           revealPreferredSide={opponent ? "bottom" : "top"}
           className={classes.stack}
           renderTopEntity={() => (
-            <div className={classes.cardWrap}>
+            <div
+              className={classes.cardWrap}
+              data-sim-entity-id={`${opponent ? "opp" : "p"}-deck-stack`}
+              data-testid="deck-stack"
+            >
               <CardImage faceDown alt="Deck" />
             </div>
           )}

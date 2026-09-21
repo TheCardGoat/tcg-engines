@@ -99,6 +99,7 @@ export const soutirerVortex: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                   id: "granted-1fma93v-a1",
                   kind: "triggered",
                   text: "Whenever an opponent activates a card with the same reserve cost as this omen, recover 1 and deal 1 damage to their champion.",
+                  functionalZones: ["banishment"],
                   trigger: {
                     kind: "event",
                     event: {

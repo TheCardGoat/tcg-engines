@@ -33,6 +33,7 @@ export const emergingAvalanche = definePitchFamily(fabPitchFamilies["emerging-av
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "target-controller",
           target: { selector: "any-hero" },
         },

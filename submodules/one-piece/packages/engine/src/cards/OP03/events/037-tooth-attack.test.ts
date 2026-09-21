@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op03ToothAttack037 } from "../../../../../cards/src/cards/OP03/events/037-tooth-attack.ts";
+import { op03ToothAttack037 } from "../../../../../cards/src/cards/events/op03-037-tooth-attack.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-037 Tooth Attack", () => {

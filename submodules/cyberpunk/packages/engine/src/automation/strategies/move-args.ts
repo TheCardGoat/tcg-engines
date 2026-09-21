@@ -129,6 +129,14 @@ export function decisionFromMove(available: AvailableMove, picker: ArgPicker): M
       return { kind: "stuck", reason: "resolveCardTypeChoice must come from a resolver" };
     case "resolveChooseEffect":
       return { kind: "stuck", reason: "resolveChooseEffect must come from a resolver" };
+    case "resolveRedirectDefeat":
+      return { kind: "stuck", reason: "resolveRedirectDefeat must come from a resolver" };
+    case "resolveSacrificialGear":
+      return { kind: "stuck", reason: "resolveSacrificialGear must come from a resolver" };
+    case "resolveFirstPlayer":
+      return { kind: "stuck", reason: "resolveFirstPlayer must come from a resolver" };
+    case "cancelPendingResolution":
+      return { kind: "stuck", reason: "cancelPendingResolution is a human escape hatch" };
     default:
       return assertNever(moveId, "MoveId in decisionFromMove");
   }

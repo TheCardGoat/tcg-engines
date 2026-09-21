@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
 import { op12Koala081 } from "@tcg/op-cards";
-import { op12Karasu085 } from "../../../../../cards/src/cards/OP12/characters/085-karasu.ts";
-import { op12Koala086 } from "../../../../../cards/src/cards/OP12/characters/086-koala.ts";
-import { op12NicoRobin087 } from "../../../../../cards/src/cards/OP12/characters/087-nico-robin.ts";
+import { op12Karasu085 } from "../../../../../cards/src/cards/characters/op12-085-karasu.ts";
+import { op12Koala086 } from "../../../../../cards/src/cards/characters/op12-086-koala.ts";
+import { op12NicoRobin087 } from "../../../../../cards/src/cards/characters/op12-087-nico-robin.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

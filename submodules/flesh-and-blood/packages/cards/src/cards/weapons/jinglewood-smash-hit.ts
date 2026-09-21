@@ -25,6 +25,7 @@ export const jinglewoodSmashHit = defineCard(
             steps: [
               {
                 type: "choose-and-create-token",
+                creator: "token-controller",
                 options: ["might", "quicken", "vigor"],
                 chooser: "opponent",
               },

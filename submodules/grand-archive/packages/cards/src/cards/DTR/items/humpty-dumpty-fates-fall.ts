@@ -36,19 +36,6 @@ export const humptyDumptyFatesFall: GrandArchiveCard<GrandArchiveAbilityDefiniti
               kind: "source",
             },
           },
-          variables: [
-            {
-              symbol: "X",
-              kind: "derived",
-              amount: {
-                kind: "counter-count",
-                subject: {
-                  kind: "source",
-                },
-                counter: "buff",
-              },
-            },
-          ],
           effect: {
             kind: "sequence",
             effects: [
@@ -64,8 +51,11 @@ export const humptyDumptyFatesFall: GrandArchiveCard<GrandArchiveAbilityDefiniti
                 kind: "keyword-action",
                 action: "glimpse",
                 amount: {
-                  kind: "variable",
-                  symbol: "X",
+                  kind: "counter-count",
+                  subject: {
+                    kind: "source",
+                  },
+                  counter: "buff",
                 },
               },
             ],

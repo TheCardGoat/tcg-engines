@@ -6,7 +6,7 @@ import {
   op01RoronoaZoro001,
   op13Sabo004,
 } from "@tcg/op-cards";
-import { op13Koala081 } from "../../../../../cards/src/cards/OP13/characters/081-koala.ts";
+import { op13Koala081 } from "../../../../../cards/src/cards/characters/op13-081-koala.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

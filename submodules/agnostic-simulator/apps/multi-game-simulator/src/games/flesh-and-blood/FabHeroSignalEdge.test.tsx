@@ -134,6 +134,34 @@ describe("FabHeroSignalEdge", () => {
     expect(document.activeElement).toBe(outside);
   });
 
+  it("labels a marked hero as a persistent status instead of a turn signal", () => {
+    render(
+      <FabHeroSignalEdge
+        heroName="Dash"
+        side="top"
+        signals={[
+          { kind: "flag", id: "marked", duration: "until-hit" },
+          { kind: "count", id: "intimidate", value: 1 },
+        ]}
+      />,
+    );
+
+    const trigger = screen.getByRole("button", {
+      name: "Dash hero signals: Marked, Intimidate 1. Status.",
+    });
+    expect(trigger.querySelector('[data-signal="marked"]')).not.toBeNull();
+
+    fireEvent.click(trigger);
+    const popover = screen.getByLabelText("Dash hero signals", { selector: "div" });
+    expect(within(popover).getByText("Status")).not.toBeNull();
+    expect(within(popover).getByText("Until hit")).not.toBeNull();
+    expect(
+      within(popover).getByText(
+        "CR 9.3 — the next time an opponent's attack hits this hero, Marked is removed.",
+      ),
+    ).not.toBeNull();
+  });
+
   it("remounts only a changed count pip so activation feedback runs once per value", () => {
     const view = render(
       <FabHeroSignalEdge

@@ -114,7 +114,10 @@ describe("CR 6.4.10h unpreventable damage prevention", () => {
     const choice = Defender.expectDecision("option");
     expect(choice.options).toHaveLength(1);
     Defender.chooseOptions(choice.options[0]!.id);
-    game.helpers.resolveRestOfCombat();
+    // The second arcane package offers Quell again — CR 1.14.2d keeps it
+    // payable through pitching now that the banked resource point is spent.
+    // Decline the repeat: this scenario asserts a single paid Quell.
+    game.closeCombat({ optionals: "decline" });
     Vynnset.endTurn();
 
     expect(Defender.resourcePoints()).toBe(0);

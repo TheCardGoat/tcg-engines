@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04KouzukiOden026 } from "../../../../../cards/src/cards/OP14EB04/characters/026-kouzuki-oden.ts";
+import { op14eb04KouzukiOden026 } from "../../../../../cards/src/cards/characters/op14-026-kouzuki-oden.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op02Smoker093 } from "../../../../../cards/src/cards/OP02/leaders/093-smoker.ts";
+import { op02Smoker093 } from "../../../../../cards/src/cards/leaders/op02-093-smoker.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-093 Smoker", () => {

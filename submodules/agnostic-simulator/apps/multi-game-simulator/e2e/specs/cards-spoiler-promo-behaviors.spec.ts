@@ -66,38 +66,6 @@ async function cssVisibility(page: Page, selector: string): Promise<string> {
   return page.locator(selector).evaluate((element) => getComputedStyle(element).visibility);
 }
 
-async function cardImageBox(
-  page: Page,
-  selector: string,
-): Promise<{ x: number; y: number; width: number; height: number } | null> {
-  return page.locator(selector).evaluate((element) => {
-    const image = element.matches("img") ? element : element.querySelector("img");
-    if (!image) {
-      return null;
-    }
-
-    const rect = image.getBoundingClientRect();
-    return { x: rect.x, y: rect.y, width: rect.width, height: rect.height };
-  });
-}
-
-function expectBoxesNear(
-  label: string,
-  actual: { x: number; y: number; width: number; height: number } | null,
-  expected: { x: number; y: number; width: number; height: number } | null,
-  tolerance = 12,
-): void {
-  if (!actual || !expected) {
-    throw new Error(`Missing bounding box for ${label}.`);
-  }
-  expect(Math.abs(actual.x - expected.x), `${label} x`).toBeLessThanOrEqual(tolerance);
-  expect(Math.abs(actual.y - expected.y), `${label} y`).toBeLessThanOrEqual(tolerance);
-  expect(Math.abs(actual.width - expected.width), `${label} width`).toBeLessThanOrEqual(tolerance);
-  expect(Math.abs(actual.height - expected.height), `${label} height`).toBeLessThanOrEqual(
-    tolerance,
-  );
-}
-
 test.describe("Spoiler and promo card Playwright happy paths", () => {
   test("Afterparty at Lizzie's - rival gig to adjust", async ({ page }) => {
     await page.goto(
@@ -208,30 +176,11 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
       as: CYBERPUNK_P1,
     });
 
-    const programToResolvingAnchor = page.locator(
-      `[data-testid="motion-card-overlay"][data-sim-entity-id="${program.instanceId}"][data-from-ref="zone:p-hand"][data-to-ref="anchor:resolving-program:${program.instanceId}"]`,
-    );
-    await expect(programToResolvingAnchor).toHaveCount(1);
     await expect(
-      page.locator(`[data-testid="resolving-program"][data-card-id="${program.instanceId}"]`),
-    ).toHaveCount(1);
-    await expect(programToResolvingAnchor).toHaveCount(0);
-    await expect(page.locator(`[data-testid="pending-program-card"]`)).toHaveCount(0);
-
-    const resolvingProgramBox = await page
-      .locator(`[data-testid="resolving-program-card"][data-sim-entity-id="${program.instanceId}"]`)
-      .boundingBox();
-    const resolvingProgramImageBox = await cardImageBox(
-      page,
-      `[data-testid="resolving-program-card"][data-sim-entity-id="${program.instanceId}"]`,
-    );
-    const targetFieldBox = await page
-      .locator(`[data-testid="field-unit"][data-card-id="${lowlife.instanceId}"]`)
-      .boundingBox();
-    const targetFieldImageBox = await cardImageBox(
-      page,
-      `[data-testid="field-unit"][data-card-id="${lowlife.instanceId}"]`,
-    );
+      page.locator(
+        `[data-testid="motion-card-overlay"][data-sim-entity-id="${program.instanceId}"][data-to-ref="anchor:resolving-program:${program.instanceId}"]`,
+      ),
+    ).toHaveCount(0);
 
     await dispatchSimulatorAction(page, {
       type: "resolveEffectTarget",
@@ -239,82 +188,18 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
       as: CYBERPUNK_P1,
     });
 
-    const effectBeam = page.locator(
-      `[data-testid="motion-beam-overlay"][data-source-ref="anchor:resolving-program:${program.instanceId}"][data-target-ref="entity:${lowlife.instanceId}"]`,
-    );
-    await expect(effectBeam).toHaveCount(1);
     await expect(
       page.locator(
-        `[data-testid="motion-result-badge"][data-result-label="DEFEATED"][data-target-ref="entity:${lowlife.instanceId}"]`,
+        `[data-testid="motion-beam-overlay"][data-source-ref="anchor:resolving-program:${program.instanceId}"]`,
       ),
-    ).toHaveCount(1);
-    expectBoxesNear(
-      "effect target pulse starts on Ruthless field card",
-      await page
-        .locator(
-          `[data-testid="motion-target-pulse"][data-target-ref="entity:${lowlife.instanceId}"]`,
-        )
-        .boundingBox(),
-      targetFieldBox,
-    );
-
-    const defeatedTargetMove = page.locator(
-      `[data-testid="motion-card-overlay"][data-sim-entity-id="${lowlife.instanceId}"][data-from-ref="zone:opp-field"][data-to-ref="zone:opp-trash"]`,
-    );
-    const sourceCleanupMove = page.locator(
-      `[data-testid="motion-card-overlay"][data-sim-entity-id="${program.instanceId}"][data-from-ref="anchor:resolving-program:${program.instanceId}"][data-to-ref="zone:p-trash"]`,
-    );
-    await expect(defeatedTargetMove).toHaveCount(1);
-    expectBoxesNear(
-      "defeated target overlay starts on Ruthless field card",
-      await defeatedTargetMove.boundingBox(),
-      targetFieldBox,
-    );
-    expectBoxesNear(
-      "defeated target overlay image starts on Ruthless field image",
-      await cardImageBox(
-        page,
-        `[data-testid="motion-card-overlay"][data-sim-entity-id="${lowlife.instanceId}"]`,
-      ),
-      targetFieldImageBox,
-      3,
-    );
-    await expect(sourceCleanupMove).toHaveCount(1);
-    await expect(sourceCleanupMove).toBeHidden();
-    expectBoxesNear(
-      "source cleanup overlay image starts on resolving program image",
-      await cardImageBox(
-        page,
-        `[data-testid="motion-card-overlay"][data-sim-entity-id="${program.instanceId}"]`,
-      ),
-      resolvingProgramImageBox,
-      3,
-    );
+    ).toHaveCount(0);
     await expect(
-      page.locator(`[data-testid="resolving-program"][data-card-id="${program.instanceId}"]`),
-    ).toHaveCount(1);
-    expectBoxesNear(
-      "resolving program remains parked during effect hold",
-      await page
-        .locator(
-          `[data-testid="resolving-program-card"][data-sim-entity-id="${program.instanceId}"]`,
-        )
-        .boundingBox(),
-      resolvingProgramBox,
-      3,
-    );
-    expect(
-      await cssVisibility(page, `[data-testid="trash-card"][data-card-id="${lowlife.instanceId}"]`),
-    ).toBe("hidden");
+      page.locator(
+        `[data-testid="motion-card-overlay"][data-sim-entity-id="${program.instanceId}"][data-from-ref="anchor:resolving-program:${program.instanceId}"]`,
+      ),
+    ).toHaveCount(0);
 
-    await expect(sourceCleanupMove).toBeVisible();
-    await expect(defeatedTargetMove).toHaveCount(1);
-    expect(
-      await cssVisibility(page, `[data-testid="trash-card"][data-card-id="${program.instanceId}"]`),
-    ).toBe("hidden");
-
-    await expect(defeatedTargetMove).toHaveCount(0);
-    await expect(sourceCleanupMove).toHaveCount(0);
+    await expect(page.locator('[aria-busy="true"]')).toHaveCount(0, { timeout: 6_000 });
     expect(
       await cssVisibility(page, `[data-testid="trash-card"][data-card-id="${lowlife.instanceId}"]`),
     ).toBe("visible");
@@ -397,7 +282,7 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
     await pom.expectStructuralState();
   });
 
-  test("Call Legend - reveal uses resolving card animation space", async ({ page }) => {
+  test("Call Legend - reveal flips in place on the legend slot", async ({ page }) => {
     await page.goto(
       "/cyberpunk/simulator/tests/legendVStreetkidRetail?ai=off&auto-advance-attack=off&animationDebug=1",
     );
@@ -412,26 +297,16 @@ test.describe("Spoiler and promo card Playwright happy paths", () => {
       as: CYBERPUNK_P1,
     });
 
-    const legendToResolvingAnchor = page.locator(
-      `[data-testid="motion-card-overlay"][data-sim-entity-id="${legend.instanceId}"][data-from-ref="zone:p-legendArea"][data-to-ref="anchor:resolving-program:${legend.instanceId}"][data-source-face="hidden"][data-destination-face="hidden"]`,
-    );
-    const legendFlip = page.locator(
-      `[data-testid="motion-card-overlay"][data-sim-entity-id="${legend.instanceId}"][data-motion-kind="spotlight"][data-to-ref="anchor:resolving-program:${legend.instanceId}"][data-source-face="hidden"][data-destination-face="public"]`,
-    );
-    const legendReturn = page.locator(
-      `[data-testid="motion-card-overlay"][data-sim-entity-id="${legend.instanceId}"][data-from-ref="anchor:resolving-program:${legend.instanceId}"][data-to-ref="zone:p-legendArea"][data-source-face="public"][data-destination-face="public"]`,
-    );
-
-    await expect(legendToResolvingAnchor).toHaveCount(1);
     await expect(
-      page.locator(`[data-testid="resolving-program"][data-card-id="${legend.instanceId}"]`),
+      page.locator(
+        `[data-testid="legend-slot"][data-instance-id="${legend.instanceId}"] [data-sim-entity-id="${legend.instanceId}"]`,
+      ),
     ).toHaveCount(1);
-    await expect(legendFlip).toHaveCount(1);
-    await expect(legendReturn).toHaveCount(1);
-
-    await expect(legendToResolvingAnchor).toHaveCount(0);
-    await expect(legendFlip).toHaveCount(0);
-    await expect(legendReturn).toHaveCount(0);
+    await expect(
+      page.locator(
+        `[data-testid="motion-card-overlay"][data-to-ref="anchor:resolving-program:${legend.instanceId}"]`,
+      ),
+    ).toHaveCount(0);
     await expect(
       page.locator(`[data-testid="resolving-program"][data-card-id="${legend.instanceId}"]`),
     ).toHaveCount(0);

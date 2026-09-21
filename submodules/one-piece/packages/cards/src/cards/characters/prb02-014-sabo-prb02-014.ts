@@ -1,0 +1,72 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { prb02SaboPrb02014014I18n } from "./prb02-014-sabo-prb02-014.i18n.ts";
+
+export const prb02SaboPrb02014014: CharacterCard = {
+  id: "PRB02-014",
+  canonicalId: "PRB02-014",
+  slug: "sabo-prb02-014",
+  name: "Sabo",
+  printings: [
+    {
+      id: "PRB02-014",
+      artId: "PRB02-014",
+      setCode: "PRB02",
+      collectorNumber: "014",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/PRB02-014.jpg",
+      label: "Sabo - PRB02-014",
+    },
+    {
+      id: "PRB02-014_p1",
+      artId: "PRB02-014_p1",
+      setCode: "PRB02",
+      collectorNumber: "014",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/PRB02-014_p1.jpg",
+      label: "Sabo - PRB02-014 (Alternate Art)",
+    },
+  ],
+  cardType: "character",
+  color: ["black"],
+  rarity: "SR",
+  setId: "PRB02",
+  cost: 6,
+  power: 6000,
+  counter: 2000,
+  traits: ["Revolutionary Army Dressrosa"],
+  attribute: "special",
+  effect:
+    "If you have 15 or more cards in your trash, give this card in your hand -3 cost.[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.)",
+  effects: {
+    keywords: ["blocker"],
+    permanentEffects: [
+      {
+        conditions: [
+          {
+            condition: "zoneCount",
+            player: "self",
+            zone: "trash",
+            comparison: "gte",
+            value: 15,
+          },
+        ],
+        actions: [
+          {
+            action: "modifyCost",
+            target: {
+              player: "self",
+              zones: ["hand"],
+              count: {
+                amount: 1,
+              },
+              self: true,
+            },
+            value: -3,
+            duration: "permanent",
+          },
+        ],
+      },
+    ],
+  },
+  i18n: prb02SaboPrb02014014I18n,
+};

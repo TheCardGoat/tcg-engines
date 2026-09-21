@@ -32,26 +32,26 @@ empty `boardImageUrl` and `imageUrl` values in the source printing catalog, and
 consequently no board or full-card URLs in the production presentation catalog.
 This is asset-content debt, independent of fixture loading.
 
-| Card | Pitch | Canonical ID |
-| --- | --- | --- |
+| Card                  | Pitch  | Canonical ID          |
+| --------------------- | ------ | --------------------- |
 | Demonbound Gloomblade | Yellow | QfFBhL9WNg9pdbTGqfPrh |
-| Demonbound Gloomblade | Blue | Jr9TkGFQQQbFzNhQbPCCR |
-| Hellbound Assault | Yellow | r7JgDQFn8LQRRBDDwMMTj |
-| Hellbound Assault | Blue | zRNknjBBKWttC7kRgJG9g |
-| Otherworldly Sins | Red | qk9CgqWCcCFdkddzNngPh |
-| Otherworldly Sins | Yellow | HCjKd6dWLBBJbkwhbBtfC |
-| Otherworldly Sins | Blue | nWPD8WCfJkKhb6JRhczTk |
-| Blessing of Suraya | Yellow | jpGQNdgmndK8bBGmDRhp9 |
-| Bravery of the Blade | Red | HNdCrFPzJPThCzLBqpMdt |
-| Channel Stormgarden | Yellow | GDPhkGLTWbJFN6LDq9HW6 |
-| Exorcism | Red | fCHHw7hpnDBBMk7QT6t69 |
-| Mark of Neverest | Blue | WCDQmHjfcPBRfrpGh9dq8 |
-| Mark of Pathstone | Blue | C8jPCtGhgHQnQLLnPzdRd |
-| Mark of Ushering | Blue | LfctPwBM8nzQKQPmpLBRm |
-| Restless Looter | Red | dBwz9ngzQjPkbrdqRkhFf |
-| Restless Templar | Red | MQRmLGWG6rGCHtNChtbkm |
-| Tome of Necrosis | Red | zQmwGLpLKkjtLTdpNdFK6 |
-| Violent Gusto | Red | b6jbtNjPhLb8BwJPWNJ6g |
+| Demonbound Gloomblade | Blue   | Jr9TkGFQQQbFzNhQbPCCR |
+| Hellbound Assault     | Yellow | r7JgDQFn8LQRRBDDwMMTj |
+| Hellbound Assault     | Blue   | zRNknjBBKWttC7kRgJG9g |
+| Otherworldly Sins     | Red    | qk9CgqWCcCFdkddzNngPh |
+| Otherworldly Sins     | Yellow | HCjKd6dWLBBJbkwhbBtfC |
+| Otherworldly Sins     | Blue   | nWPD8WCfJkKhb6JRhczTk |
+| Blessing of Suraya    | Yellow | jpGQNdgmndK8bBGmDRhp9 |
+| Bravery of the Blade  | Red    | HNdCrFPzJPThCzLBqpMdt |
+| Channel Stormgarden   | Yellow | GDPhkGLTWbJFN6LDq9HW6 |
+| Exorcism              | Red    | fCHHw7hpnDBBMk7QT6t69 |
+| Mark of Neverest      | Blue   | WCDQmHjfcPBRfrpGh9dq8 |
+| Mark of Pathstone     | Blue   | C8jPCtGhgHQnQLLnPzdRd |
+| Mark of Ushering      | Blue   | LfctPwBM8nzQKQPmpLBRm |
+| Restless Looter       | Red    | dBwz9ngzQjPkbrdqRkhFf |
+| Restless Templar      | Red    | MQRmLGWG6rGCHtNChtbkm |
+| Tome of Necrosis      | Red    | zQmwGLpLKkjtLTdpNdFK6 |
+| Violent Gusto         | Red    | b6jbtNjPhLb8BwJPWNJ6g |
 
 Repair requires verified printing-specific square/full assets in the sibling
 assets repository, published CDN delivery, and regeneration of the FAB printing

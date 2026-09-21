@@ -30,6 +30,16 @@ export const tomeOfIgnorance: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
           kind: "static",
           staticKind: "effects",
           text: "[Class Bonus] Champions you don't control get -1 level. (Apply this effect only if your champion's class matches this card's class.)",
+          restrictions: [
+            {
+              kind: "static",
+              name: "class-bonus",
+              condition: {
+                kind: "champion-matches-source",
+                characteristic: "class",
+              },
+            },
+          ],
           effects: [
             {
               kind: "continuous",

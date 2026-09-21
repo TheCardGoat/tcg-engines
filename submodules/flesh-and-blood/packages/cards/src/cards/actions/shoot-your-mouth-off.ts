@@ -27,6 +27,7 @@ export const shootYourMouthOff = definePitchFamily(fabPitchFamilies["shoot-your-
         effect: {
           type: "create-token",
           token: "confidence",
+          creator: "token-controller",
           controller: "defending-hero",
         },
       },

@@ -9,17 +9,17 @@ The default `hero-profile` policy dispatches to hero-specific score adjustments
 over a shared line compiler. It previously ranked mostly individual commands.
 Several basic evaluation errors could therefore outweigh a good hero plan.
 
-| Area | Change | Direct evidence |
-| --- | --- | --- |
-| Survival | A partial block that leaves positive life outranks retaining a hand and dying. Hero bonuses cannot override that ordering. | At 5 life against 7 power, the bot blocks 3 and survives at 1. |
-| Defense candidates | The default includes blocks of more than three cards. Ordinary sets are exhaustive; oversized hands receive a bounded selection including large blocks. | Four cards survive a 13-power attack at 2 life. A separate 16-card-hand case preserves a full-block option within the candidate budget. |
-| On-hit value | Read the current triggered-ability resolution, including modal resolutions. | The bot uses armor to deny Snatch's draw-on-hit. |
-| Hand planning | Compare attack orders and payment bundles, retain surplus resources, and keep hand and arsenal separate. | The bot opens a go-again chain, pitches one blue, and the line deals 11 damage across three attacks. An arsenal blue cannot fund a hand attack. |
-| Payment | Value the retained line when choosing a pitch for an announced attack; exclude cards already pitched in the staged payment. | The attack-line test submits the bot's actual opening and payment commands. Unsupported estimates fall back to the existing scorer. |
-| Activations | Reuse the authoritative activation quote rather than the permanent's printed play cost. | Anka's attack costs 1 even though summoning the card costs 2; the bot activates it with 1 resource and deals 5. |
-| Arsenal | Give unplayable Resource cards no arsenal value. | The shared reserve and end-turn scorers stop treating pitch-only cards as future attacks. |
-| Choices | Expose alternatives for numeric, option, target, ordering, partition and group-choice decisions before scoring. | Blaze can choose 3 energy to enable a 3-cost banished card, rather than receiving only the minimum candidate. |
-| Evaluation | Record the actual policy ranking, allow complete frozen-policy overrides, and compare identical deals with the policies exchanging seats. | The benchmark no longer invents value-extract scores for a policy that did not score its move. |
+| Area               | Change                                                                                                                                                  | Direct evidence                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Survival           | A partial block that leaves positive life outranks retaining a hand and dying. Hero bonuses cannot override that ordering.                              | At 5 life against 7 power, the bot blocks 3 and survives at 1.                                                                                  |
+| Defense candidates | The default includes blocks of more than three cards. Ordinary sets are exhaustive; oversized hands receive a bounded selection including large blocks. | Four cards survive a 13-power attack at 2 life. A separate 16-card-hand case preserves a full-block option within the candidate budget.         |
+| On-hit value       | Read the current triggered-ability resolution, including modal resolutions.                                                                             | The bot uses armor to deny Snatch's draw-on-hit.                                                                                                |
+| Hand planning      | Compare attack orders and payment bundles, retain surplus resources, and keep hand and arsenal separate.                                                | The bot opens a go-again chain, pitches one blue, and the line deals 11 damage across three attacks. An arsenal blue cannot fund a hand attack. |
+| Payment            | Value the retained line when choosing a pitch for an announced attack; exclude cards already pitched in the staged payment.                             | The attack-line test submits the bot's actual opening and payment commands. Unsupported estimates fall back to the existing scorer.             |
+| Activations        | Reuse the authoritative activation quote rather than the permanent's printed play cost.                                                                 | Anka's attack costs 1 even though summoning the card costs 2; the bot activates it with 1 resource and deals 5.                                 |
+| Arsenal            | Give unplayable Resource cards no arsenal value.                                                                                                        | The shared reserve and end-turn scorers stop treating pitch-only cards as future attacks.                                                       |
+| Choices            | Expose alternatives for numeric, option, target, ordering, partition and group-choice decisions before scoring.                                         | Blaze can choose 3 energy to enable a 3-cost banished card, rather than receiving only the minimum candidate.                                   |
+| Evaluation         | Record the actual policy ranking, allow complete frozen-policy overrides, and compare identical deals with the policies exchanging seats.               | The benchmark no longer invents value-extract scores for a policy that did not score its move.                                                  |
 
 Source entrypoints:
 
@@ -64,12 +64,12 @@ The paired comparison finished **8 candidate wins, 7 baseline wins, and 1
 unfinished game**. This is a small, essentially even result; it does not establish
 an overall win-rate improvement or stronger play against humans.
 
-| Deck matchup | Candidate wins | Baseline wins | Unfinished |
-| --- | ---: | ---: | ---: |
-| Rhinar / Aurora | 1 | 2 | 1 |
-| Gravy Bones / Kassai | 3 | 1 | 0 |
-| Rhinar / Gravy Bones | 2 | 2 | 0 |
-| Aurora / Kassai | 2 | 2 | 0 |
+| Deck matchup         | Candidate wins | Baseline wins | Unfinished |
+| -------------------- | -------------: | ------------: | ---------: |
+| Rhinar / Aurora      |              1 |             2 |          1 |
+| Gravy Bones / Kassai |              3 |             1 |          0 |
+| Rhinar / Gravy Bones |              2 |             2 |          0 |
+| Aurora / Kassai      |              2 |             2 |          0 |
 
 All 15 completed games ended through life loss. No run ended in an illegal
 command, engine exception or snapshot refusal. The unfinished game reached the

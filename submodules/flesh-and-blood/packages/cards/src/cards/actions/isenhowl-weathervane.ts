@@ -41,6 +41,7 @@ export const isenhowlWeathervane = definePitchFamily(fabPitchFamilies["isenhowl-
           effect: {
             type: "create-token",
             token: "frostbite",
+            creator: "effect-controller",
             controller: "any",
             count: 5 - Number(pitch),
           },

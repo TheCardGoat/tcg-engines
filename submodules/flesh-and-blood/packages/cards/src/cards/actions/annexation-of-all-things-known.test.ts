@@ -49,7 +49,9 @@ describe("Annexation of All Things Known (MPG029) AAA", () => {
 
     Valda.playInstance(stolen, { from: "arsenal" });
     game.untilIdle({ ordering: "listed" });
-    expectFabCard(Valda, snagBlue).toBeIn("graveyard");
+    // CR 3.8.2: graveyards hold only their owner's cards, so Bravo's Snag
+    // resolves there even though Valda played it.
+    expectFabCard(Bravo, snagBlue).toBeIn("graveyard");
   });
 
   it("boundary: crush vs a non-Guardian does not steal their arsenal", () => {

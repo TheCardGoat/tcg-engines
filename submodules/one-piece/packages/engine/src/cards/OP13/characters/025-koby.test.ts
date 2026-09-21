@@ -1,6 +1,6 @@
 import { eb01Doma005, op01MonkeyDLuffy003, op06Uta001, op09Shanks001 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Koby025 } from "../../../../../cards/src/cards/OP13/characters/025-koby.ts";
+import { op13Koby025 } from "../../../../../cards/src/cards/characters/op13-025-koby.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -110,6 +110,7 @@ export const EMPTY_SIMULATOR_LIVE_CONNECTION_STATE: LiveMatchSessionState = {
   lastHeartbeatSentAt: null,
   lastHeartbeatAckAt: null,
   joined: false,
+  joinedRole: null,
   presence: [],
   events: [],
   error: null,

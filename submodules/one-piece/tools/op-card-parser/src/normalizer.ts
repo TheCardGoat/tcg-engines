@@ -41,6 +41,8 @@ const ATTRIBUTE_MAP: Record<string, OPAttribute> = {
   ranged: "ranged",
   wisdom: "wisdom",
   special: "special",
+  // Identity-concealed cards print a literal "?" as their attribute.
+  "?": "?",
 };
 
 const RARITY_MAP: Record<string, OPRarity> = {
@@ -117,6 +119,8 @@ function parseIntOrUndefined(raw: string | null): number | undefined {
 
 function slugify(name: string): string {
   return name
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");

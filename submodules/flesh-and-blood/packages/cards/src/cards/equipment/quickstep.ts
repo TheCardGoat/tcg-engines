@@ -15,6 +15,7 @@ export const quickstep = defineCard(fabCardIdentitiesByCanonicalId["DmpnhzMR7WhC
       effect: {
         type: "create-token",
         token: "quicken",
+        creator: "token-controller",
         controller: "each",
       },
     },

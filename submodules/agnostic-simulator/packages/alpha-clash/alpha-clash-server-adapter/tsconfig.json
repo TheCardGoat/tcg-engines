@@ -1,0 +1,23 @@
+{
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.test.ts"],
+  "compilerOptions": {
+    "types": ["node", "@types/bun"],
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@tcg/alpha-clash-cards": ["../../../../alpha-clash/packages/cards/src/index.ts"],
+      "@tcg/alpha-clash-engine": ["../../../../alpha-clash/packages/engine/src/index.ts"],
+      "@tcg/alpha-clash-types": ["../../../../alpha-clash/packages/types/src/index.ts"],
+      "@tcg/protocol": ["../../protocol/src/index.ts"],
+      "@tcg/shared": ["../../shared/src/index.ts"]
+    }
+  }
+}

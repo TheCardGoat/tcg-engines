@@ -5,7 +5,7 @@ import {
   op14eb04ShachiPenguin006,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04MonkeyDLuffyOp14013013 } from "../../../../../cards/src/cards/OP14EB04/characters/013-monkey-d-luffy-op14-013.ts";
+import { op14eb04MonkeyDLuffyOp14013013 } from "../../../../../cards/src/cards/characters/op14-013-monkey-d-luffy-op14-013.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

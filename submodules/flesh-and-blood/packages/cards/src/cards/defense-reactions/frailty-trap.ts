@@ -34,6 +34,7 @@ export const frailtyTrap = definePitchFamily(fabPitchFamilies["frailty-trap"], {
         effect: {
           type: "create-token",
           token: "frailty",
+          creator: "effect-controller",
           controller: "opponent",
         },
       },

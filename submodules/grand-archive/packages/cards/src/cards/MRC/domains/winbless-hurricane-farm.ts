@@ -45,34 +45,45 @@ export const winblessHurricaneFarm: GrandArchiveCard<GrandArchiveAbilityDefiniti
               kind: "sequence",
               effects: [
                 {
-                  kind: "reveal",
-                  player: "controller",
-                  selection: {
-                    id: "reveal-selection",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 3,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["memory"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["WIND"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "reveal",
+                    player: "controller",
+                    selection: {
+                      id: "reveal-selection",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 3,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["memory"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["WIND"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "summon",
-                  object: "Powercell",
-                  controller: "controller",
-                  bindResultAs: "summoned-token",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "summon",
+                    object: "Powercell",
+                    controller: "controller",
+                    bindResultAs: "summoned-token",
+                  },
                 },
               ],
             },

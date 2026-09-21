@@ -30,10 +30,12 @@ export const welcomeToNightCityRetailVStreetkid = defineCyberpunkCard({
   cost: 5,
   power: 6,
   abilities: [
-    goSoloAbility(),
+    goSoloAbility({
+      text: "Go Solo (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
+    }),
     {
       kind: "triggered",
-      text: "CALL Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand. GO SOLO (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
+      text: "{Call} Trash 3. Then, add 1 BRAINDANCE Program from your trash to your hand.",
       trigger: {
         trigger: "call",
       },

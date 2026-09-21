@@ -10,7 +10,11 @@ export const gutshot = definePitchFamily(fabPitchFamilies.gutshot, {
     resolve: nextAttackPowerAndWager({
       amount,
       filter: { typeBox: { subtypes: ["Sword"] } },
-      prize: createToken({ token: "blade-dance", controller: "winner" }),
+      prize: createToken({
+        token: "blade-dance",
+        creator: "token-controller",
+        controller: "winner",
+      }),
     }),
   }),
 });

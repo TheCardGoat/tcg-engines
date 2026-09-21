@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  expectFabCard,
   expectFabPlayer,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
@@ -8,6 +9,7 @@ import { azalea } from "../heroes/azalea.ts";
 import { dash } from "../heroes/dash.ts";
 import { deathDealer } from "../shared/test-recipients.ts";
 import { nimblismBlue } from "./nimblism.ts";
+import { snatchRed } from "./snatch.ts";
 
 import { readTheGlidePathYellow } from "./read-the-glide-path.ts";
 import { yellowFinHarpoonBlue } from "./yellow-fin-harpoon.ts";
@@ -91,6 +93,36 @@ describe("Yellow Fin Harpoon (SEA091) AAA", () => {
 
     expectFabPlayer(Dash).toHaveLife(16);
     expect(Dash.zone("hand")).toContain(nimblismBlue.canonicalId);
+    expectFabPlayer(Azalea).toHaveTokenCount("gold", 0);
+  });
+
+  it("seat: the hit hero reveals their own pick; a non-matching reveal discards nothing", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: azalea,
+        weapon1: [deathDealer],
+        arsenal: [{ card: yellowFinHarpoonBlue, state: { faceDown: false } }],
+        actionPoints: 1,
+        resourcePoints: 2,
+        deck: 6,
+      },
+      { hero: dash, life: 20, hand: [nimblismBlue, snatchRed], deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Azalea = game.as(azalea);
+    const Dash = game.as(dash);
+
+    Azalea.playAttack(yellowFinHarpoonBlue, { from: "arsenal" });
+    // "they choose and reveal a card from their hand" — Dash reveals the
+    // non-matching card; the printed discard follows the reveal, so nothing
+    // leaves the hand and no second pick is offered to anyone.
+    game.advanceToDecision(Dash, "entity-target");
+    Dash.target(nimblismBlue);
+    game.untilIdle({ optionals: "decline", ordering: "listed" });
+
+    expectFabPlayer(Dash).toHaveHandCount(2);
+    expectFabCard(Dash, nimblismBlue).toBeIn("hand");
+    expectFabCard(Dash, snatchRed).toBeIn("hand");
     expectFabPlayer(Azalea).toHaveTokenCount("gold", 0);
   });
 });

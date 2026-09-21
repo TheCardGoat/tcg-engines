@@ -2,7 +2,7 @@
  * Parse community-format deck list text into playable entries.
  *
  * Supports:
- * - Lines: {NUMBER} {FULL CARD NAME} with optional trailing (SET) or (PROMO)/(ENCHANTED)/(EPIC)
+ * - Lines: {NUMBER}[x] {FULL CARD NAME} with optional trailing (SET) or (PROMO)/(ENCHANTED)/(EPIC)
  * - Sections: --- SIDEBOARD (merged into playable list), --- MAYBEBOARD (ignored)
  *
  * Output is main + side merged; maybeboard is excluded. Card names are trimmed and
@@ -11,9 +11,14 @@
 
 import type { DeckListInvalidEntry } from "./deck-list-errors";
 
-export type ParsedDeckListEntry = { quantity: number; cardName: string };
+export type ParsedDeckListEntry = {
+  quantity: number;
+  cardName: string;
+  source?: string;
+  lineNumber?: number;
+};
 
-const LINE_REGEX = /^\s*(\d+)\s+(.+)$/;
+const LINE_REGEX = /^\s*(\d+)\s*[xX]?\s+(.+)$/;
 const SIDEBOARD_MARKER = /^---\s*SIDEBOARD\s*$/i;
 const MAYBEBOARD_MARKER = /^---\s*MAYBEBOARD\s*$/i;
 
@@ -136,7 +141,7 @@ export function parseDeckListTextWithErrors(text: string): {
     }
 
     const cardName = stripTrailingParenthetical(rawName);
-    entries.push({ quantity, cardName });
+    entries.push({ quantity, cardName, source: trimmed, lineNumber });
   }
 
   return { entries, invalid };

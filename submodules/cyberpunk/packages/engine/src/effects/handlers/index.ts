@@ -65,11 +65,10 @@ import {
   consumeCostModifierUse,
 } from "../../moves/compute-effective-cost.ts";
 import { playSelectedCard } from "../../moves/play-selected-card.ts";
-import { buildEffectGigStealPrevention } from "../../moves/resolve-attack.ts";
-import {
-  filterGigsByAttackerPowerCap,
-  findSacrificialAttachedGear,
-} from "../../active-effects/index.ts";
+import { availableEddies } from "../../moves/eddie-resources.ts";
+import { removeFromGame } from "../../moves/remove-from-game.ts";
+import { buildEffectGigStealPrevention, resolveEffectDefeats } from "../../moves/resolve-attack.ts";
+import { filterGigsByAttackerPowerCap } from "../../active-effects/index.ts";
 
 export type EffectHandlerResult =
   | { status: "resolved" }
@@ -98,70 +97,15 @@ function handleDefeat(
   ctx: ResolutionContext,
   ops: Operations,
 ): EffectHandlerResult {
-  const targets = resolveTarget(effect.target, ctx);
-  for (const id of targets) {
-    const sacrificialGearId = findSacrificialAttachedGear(ctx.state, id as string);
-    if (sacrificialGearId) {
-      const gearBefore = ctx.state.G.cardIndex[sacrificialGearId as string];
-      ops.card.detachGear(sacrificialGearId);
-      ops.zone.moveCard(sacrificialGearId, "trash");
-      if (gearBefore) {
-        ops.event.emit({
-          type: "cardDefeated",
-          cardId: sacrificialGearId,
-          defeatedBy: ctx.sourceCardId as CardInstanceId,
-          playerId: gearBefore.controllerId,
-          hadAttachedCards: false,
-          hostId: id as CardInstanceId,
-        });
-      }
-      continue;
-    }
-    const cardBeforeMove = ctx.state.G.cardIndex[id as string];
-    const attachedGearIds = [...(cardBeforeMove?.meta.attachedGearIds ?? [])];
-    const hadAttachedCards = attachedGearIds.length > 0;
-    if (cardBeforeMove?.meta.attachedToId) ops.card.detachGear(id as CardInstanceId);
-    ops.card.moveAttachedGear(id as CardInstanceId, "trash", { detachAfterMove: true });
-    ops.zone.moveCard(id as CardInstanceId, "trash");
-    if (cardBeforeMove) {
-      ops.event.emit({
-        type: "cardDefeated",
-        cardId: id as CardInstanceId,
-        defeatedBy: ctx.sourceCardId as CardInstanceId,
-        playerId: cardBeforeMove.ownerId,
-        hadAttachedCards,
-      });
-    }
-
-    // Attached Gear that left the field with the host is also defeated so
-    // gear-level {Defeated} triggers (e.g. The Relic) can fire. Carry the host
-    // id so `selector: "host"` still resolves after detach.
-    for (const gearId of attachedGearIds) {
-      const gear = ctx.state.G.cardIndex[gearId as string];
-      if (!gear) continue;
-      ops.event.emit({
-        type: "cardDefeated",
-        cardId: gearId as CardInstanceId,
-        defeatedBy: ctx.sourceCardId as CardInstanceId,
-        playerId: gear.controllerId,
-        hadAttachedCards: false,
-        hostId: id as CardInstanceId,
-      });
-    }
-
-    // GO SOLO: if the card leaves the field, remove it from the game.
-    const card = ctx.state.G.cardIndex[id as string];
-    if (card) {
-      const def = defOf(card);
-      if (def.keywords?.includes("goSolo")) {
-        const player = ctx.state.G.players[card.controllerId as string];
-        if (player) {
-          const idx = player.zones.trash.indexOf(id as CardInstanceId);
-          if (idx !== -1) player.zones.trash.splice(idx, 1);
-        }
-        delete ctx.state.G.cardIndex[id as string];
-      }
-    }
+  resolveEffectDefeats(
+    ctx.state,
+    ops,
+    resolveTarget(effect.target, ctx) as CardInstanceId[],
+    ctx.sourceCardId,
+  );
+  const pending = ctx.state.G.turnMetadata.pendingChoice;
+  if (pending?.type === "redirectDefeat" || pending?.type === "chooseSacrificialGear") {
+    return { status: "suspended", pendingChoice: pending };
   }
   return { status: "resolved" };
 }
@@ -228,7 +172,19 @@ function handleRevealTopCardAndModifyPowerByCost(
 
   const topCard = ctx.state.G.cardIndex[topCardId as string];
   if (!topCard) return { status: "noAction" };
+  const topCardDefinition = defOf(topCard);
 
+  ops.event.emit({
+    type: "actionLog",
+    messageKey: "move.searchDeck.revealNamed",
+    params: {
+      count: 1,
+      revealedCardNames: topCardDefinition.displayName ?? topCardDefinition.name,
+    },
+    playerId,
+    category: "search",
+    cardIds: [topCardId],
+  });
   ops.event.emit({
     type: "cardsRevealed",
     cardIds: [topCardId],
@@ -236,7 +192,7 @@ function handleRevealTopCardAndModifyPowerByCost(
   });
   ops.zone.moveCard(topCardId, "hand", playerId);
 
-  const power = defOf(topCard).cost ?? 0;
+  const power = topCardDefinition.cost ?? 0;
   if (power <= 0) return { status: "resolved" };
 
   for (const targetId of resolveTarget(effect.target, ctx)) {
@@ -656,12 +612,18 @@ function handleLookAt(
   ops: Operations,
 ): EffectHandlerResult {
   const targets = resolveTarget(effect.target, ctx);
+  if (targets.length === 0) return { status: "noAction" };
   const firstTarget = targets.length > 0 ? ctx.state.G.cardIndex[targets[0] as string] : undefined;
   ops.event.emit({
     type: "cardsRevealed",
     cardIds: targets as CardInstanceId[],
     playerId: ctx.sourcePlayerId,
   });
+  if (effect.revealToOpponent) {
+    for (const id of targets) {
+      ops.card.setMeta(id as CardInstanceId, { revealed: true });
+    }
+  }
   if (targets.length > 0 && firstTarget) {
     ops.log.emit({
       type: "lookAtCards",
@@ -743,6 +705,24 @@ function handleScry(
     revealedCount: revealedCardIds.length,
     revealed: privateField(revealedCardIds as CardInstanceId[], [playerId]),
   });
+
+  if (revealedCardIds.length === 0) {
+    ops.event.emit({
+      type: "searchPerformed",
+      playerId,
+      zone: "deck",
+      found: 0,
+    });
+    ops.event.emit({
+      type: "actionLog",
+      messageKey: "move.resolveSearchDeck",
+      params: { count: 0, looked: 0 },
+      playerId,
+      category: "search",
+      cardIds: [],
+    });
+    return { status: "resolved" };
+  }
 
   const destinations = effect.destinations;
   const requiresChoice = destinations.some(scryDestinationRequiresChoice);
@@ -883,13 +863,41 @@ function handleSearchDeck(
   ctx: ResolutionContext,
   ops: Operations,
 ): EffectHandlerResult {
+  const selectionLimitContext =
+    effect.select.kind === "upTo" &&
+    typeof effect.select.max !== "number" &&
+    effect.select.max.type === "basePlusPerCount"
+      ? {
+          kind: "basePlusPerCount" as const,
+          base: effect.select.max.base,
+          multiplier: effect.select.max.multiplier,
+          matchCount: resolveTarget(effect.select.max.target, ctx).length,
+          countedTarget:
+            effect.select.max.target.selector === "gig"
+              ? {
+                  selector: "gig" as const,
+                  controller: effect.select.max.target.controller ?? "friendly",
+                  ...(effect.select.max.target.minValue === undefined
+                    ? {}
+                    : { minValue: effect.select.max.target.minValue }),
+                  ...(effect.select.max.target.maxValue === undefined
+                    ? {}
+                    : { maxValue: effect.select.max.target.maxValue }),
+                }
+              : { selector: "other" as const },
+        }
+      : undefined;
   const destinations: ScryDestination[] = [
     {
       zone: effect.destination,
       target: effect.target,
       reveal: effect.reveal,
       ...(effect.select.kind === "upTo"
-        ? { min: 0, max: resolveNumericValue(effect.select.max, ctx) }
+        ? {
+            min: effect.select.min === undefined ? 0 : resolveNumericValue(effect.select.min, ctx),
+            max: resolveNumericValue(effect.select.max, ctx),
+            ...(selectionLimitContext === undefined ? {} : { selectionLimitContext }),
+          }
         : {}),
     },
     {
@@ -1194,7 +1202,10 @@ function handlePlayCard(
         eligibleIds: attachTargets,
         min: attachSelection.min,
         max: attachSelection.max,
-        canDecline: effect.optional === true,
+        canDecline:
+          attachSelection.canDecline === true ||
+          attachSelection.min === 0 ||
+          effect.optional === true,
         effect,
         elseEffects: effect.elseEffects ? [...effect.elseEffects] : undefined,
         sourceCardId: ctx.sourceCardId,
@@ -1280,15 +1291,12 @@ function handlePlayCard(
     resolvedAttachToId = attachTargets[0];
   }
 
-  // Auto-play only when free, unique target, and not optional. Optional free
-  // plays (e.g. Judy Álvarez — Nothing to Doubt) must offer a decline path so
-  // the player can choose "add to hand" instead.
-  if (
-    effect.free === true &&
-    isDirectCardPlayTarget(effect.target) &&
-    targets.length === 1 &&
-    !effect.optional
-  ) {
+  // Auto-play a unique already-bound card when the play is not optional.
+  // Optional free plays (e.g. Judy Álvarez — Nothing to Doubt) must still
+  // offer a decline path so the player can choose "add to hand" instead.
+  // Paid unique plays (e.g. Alt Cunningham playing a trash Program the
+  // player already chose) should not re-ask "choose a card to play".
+  if (isDirectCardPlayTarget(effect.target) && targets.length === 1 && !effect.optional) {
     const cardId = targets[0] as CardInstanceId;
     const card = ctx.state.G.cardIndex[cardId as string];
     // Non-optional free gear without an attach target must still attach legally.
@@ -1296,6 +1304,28 @@ function handlePlayCard(
       const hosts = listFriendlyGearAttachHosts(ctx.state, ctx.sourcePlayerId);
       if (hosts.length === 0) return { status: "noAction" };
       resolvedAttachToId = hosts[0];
+    }
+    const playCost = effect.free ? 0 : computeEffectiveCost(ctx.state, cardId, ctx.sourcePlayerId);
+    if (!effect.free && availableEddies(ctx.state, ctx.sourcePlayerId) < playCost) {
+      ops.game.setPendingChoice({
+        type: "chooseCardToPlay",
+        chooserId: ctx.sourcePlayerId,
+        effectId: "",
+        payload: {
+          cardIds: [cardId],
+          free: effect.free,
+          attachTo: effect.attachTo,
+          resolvedAttachToId,
+          boundTargets: ctx.boundTargets,
+          sourceCardId: ctx.sourceCardId,
+          sourcePlayerId: ctx.sourcePlayerId,
+          abilityIndex: ctx.abilityIndex,
+          ifEffects: [],
+          elseEffects: effect.elseEffects ? [...effect.elseEffects] : [],
+          canDecline: true,
+        },
+      });
+      return { status: "suspended", pendingChoice: effect };
     }
     playSelectedCard({
       state: ctx.state,
@@ -1340,7 +1370,7 @@ function handlePlayCard(
       abilityIndex: ctx.abilityIndex,
       ifEffects: [],
       elseEffects: effect.elseEffects ? [...effect.elseEffects] : [],
-      canDecline: effect.optional === true,
+      canDecline: canDeclinePlayCard(effect),
     },
   });
   return { status: "suspended", pendingChoice: effect };
@@ -1430,23 +1460,37 @@ function isDirectCardPlayTarget(target: TargetDSL): boolean {
   return target.selector === "bound";
 }
 
+/** 2.7 — a nested play that still costs Eddies may be declined instead of paid. */
+function canDeclinePlayCard(effect: PlayCardEffect): boolean {
+  return effect.optional === true || effect.free !== true;
+}
+
 function handleRemoveFromGame(
   effect: RemoveFromGameEffect,
   ctx: ResolutionContext,
-  _ops: Operations,
+  ops: Operations,
 ): EffectHandlerResult {
   const targets = resolveTarget(effect.target, ctx);
   for (const id of targets) {
-    const card = ctx.state.G.cardIndex[id];
-    if (!card) continue;
-    const player = ctx.state.G.players[card.controllerId as string];
-    if (player) {
-      const idx = player.zones[card.zone].indexOf(id as CardInstanceId);
-      if (idx !== -1) player.zones[card.zone].splice(idx, 1);
-    }
-    delete ctx.state.G.cardIndex[id];
+    removeFromGame(ctx.state, ops, id as CardInstanceId);
   }
   return { status: "resolved" };
+}
+
+function resolveStealGigTargets(effect: StealGigEffect, ctx: ResolutionContext): string[] {
+  const rawTargets = resolveTarget(effect.target, ctx);
+  const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
+  const explicitThief = effect.source
+    ? (resolveTarget(effect.source, ctx)[0] as CardInstanceId | undefined)
+    : undefined;
+  const thief =
+    explicitThief ??
+    (sourceCard?.meta.attachedToId ? sourceCard.meta.attachedToId : ctx.sourceCardId);
+  const defender =
+    rawTargets.length > 0 ? ctx.state.G.gigDice[rawTargets[0] as string]?.ownerId : undefined;
+  return defender
+    ? filterGigsByAttackerPowerCap(ctx.state, thief, defender, rawTargets)
+    : rawTargets;
 }
 
 function handleStealGig(
@@ -1454,21 +1498,7 @@ function handleStealGig(
   ctx: ResolutionContext,
   ops: Operations,
 ): EffectHandlerResult {
-  const rawTargets = resolveTarget(effect.target, ctx);
-  const sourceCardForFilter = ctx.state.G.cardIndex[ctx.sourceCardId as string];
-  const explicitThiefForFilter = effect.source
-    ? (resolveTarget(effect.source, ctx)[0] as CardInstanceId | undefined)
-    : undefined;
-  const thiefForFilter =
-    explicitThiefForFilter ??
-    (sourceCardForFilter && sourceCardForFilter.meta.attachedToId
-      ? sourceCardForFilter.meta.attachedToId
-      : ctx.sourceCardId);
-  const defenderForFilter =
-    rawTargets.length > 0 ? ctx.state.G.gigDice[rawTargets[0] as string]?.ownerId : undefined;
-  const targets = defenderForFilter
-    ? filterGigsByAttackerPowerCap(ctx.state, thiefForFilter, defenderForFilter, rawTargets)
-    : rawTargets;
+  const targets = resolveStealGigTargets(effect, ctx);
   // Card-driven steals (e.g. Gorilla Arms) attribute the theft to the host
   // Unit/Legend when the source is an attached Gear, matching the direct-attack
   // path which passes `attack.attackerId` to `moveGig`. This keeps the emitted
@@ -1553,6 +1583,7 @@ function handleSwapGigs(
   friendlyPlayer.gigArea.push(rivalId);
   rivalPlayer.gigArea.push(friendlyId);
   const friendlyOwner = friendlyDie.ownerId;
+  const rivalOwner = rivalDie.ownerId;
   friendlyDie.ownerId = rivalDie.ownerId;
   rivalDie.ownerId = friendlyOwner;
 
@@ -1568,6 +1599,12 @@ function handleSwapGigs(
       playerId,
     });
   }
+  ops.event.emit({
+    type: "gigsSwapped",
+    dieIds: [friendlyId, rivalId],
+    playerId: ctx.sourcePlayerId,
+    fromPlayerIds: [friendlyOwner, rivalOwner],
+  });
   return { status: "resolved" };
 }
 
@@ -1664,10 +1701,14 @@ function handleSellFromDeck(
       soldCardNames.push(defOf(card).displayName);
     }
     ops.zone.moveCard(cardId, "eddieArea", playerId);
+    // Match the online Sell presentation used by the main-phase action: the
+    // card is rules-face-down but remains readable through turn cleanup.
+    ops.card.setMeta(cardId, { faceDown: true, revealed: true, spent: false });
     ops.game.gainEddies(playerId, 1);
   }
-
   if (soldCardIds.length > 0) {
+    // CR 11.9.2.2 — an effect that says to Sell counts as the Sell A Card action.
+    ops.game.markSoldThisTurn(playerId);
     const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
     ops.event.emit({
       type: "actionLog",
@@ -1675,8 +1716,11 @@ function handleSellFromDeck(
       params: {
         sourceCardName: sourceCard ? defOf(sourceCard).displayName : "Unknown card",
         soldCount: soldCardIds.length,
-        soldCardIds: privateField(soldCardIds, [playerId]),
-        soldCardNames: privateField(soldCardNames.join(", "), [playerId]),
+        // CR 11.9.1 requires every sold card to be revealed to the Rival before
+        // it is placed face-down in the Eddie area. Preserve that public
+        // knowledge in the action log without leaving the Eddie face-up.
+        soldCardIds: soldCardIds.join(", "),
+        soldCardNames: soldCardNames.join(", "),
       },
       playerId: ctx.sourcePlayerId,
       category: "effect",
@@ -1729,7 +1773,7 @@ function handleIfYouDo(
         canDecline: true,
       },
     });
-    return { status: "resolved" };
+    return { status: "suspended", pendingChoice: effect };
   }
 
   if (doEffect.optional && doEffect.effect === "defeat") {
@@ -1756,9 +1800,10 @@ function handleIfYouDo(
         ifEffects: [...effect.ifEffects],
         elseEffects: effect.elseEffects ? [...effect.elseEffects] : [],
         canDecline: true,
+        defeat: true,
       },
     });
-    return { status: "resolved" };
+    return { status: "suspended", pendingChoice: effect };
   }
 
   if (doEffect.optional && doEffect.effect === "discardFromHand") {
@@ -2094,7 +2139,8 @@ export function resolveEffect(
       warnMissingPlayerState("resolveEffect.callLegend", playerId, ctx);
       return { status: "noAction" };
     }
-    if (player.calledLegendThisTurn) {
+    const isDefending = isReactStep(ctx.state, playerId);
+    if (isDefending ? player.calledLegendThisRivalTurn : player.calledLegendThisTurn) {
       const sourceCard = ctx.state.G.cardIndex[ctx.sourceCardId as string];
       const sourceCardName = sourceCard ? defOf(sourceCard).displayName : "That effect";
       ops.event.emit({
@@ -2139,7 +2185,7 @@ export function resolveEffect(
           eligibleIds: targets,
           min,
           max,
-          canDecline: effect.optional === true,
+          canDecline: selection.canDecline === true || min === 0 || effect.optional === true,
           effect,
           sourceCardId: ctx.sourceCardId,
           sourcePlayerId: ctx.sourcePlayerId,

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op07Pappag030 } from "../../../../../cards/src/cards/OP07/characters/030-pappag.ts";
+import { op07Pappag030 } from "../../../../../cards/src/cards/characters/op07-030-pappag.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP07-030 Pappag", () => {

@@ -4,8 +4,12 @@ import { expect, it } from "vitest";
 import { woodlandSquirrels } from "../cards/DOA/allies/woodland-squirrels.ts";
 import { giantTortoise } from "../cards/DOA/allies/giant-tortoise.ts";
 import { trainingSword } from "../cards/AMB/weapons/training-sword.ts";
+import { allianceGearshield } from "../cards/ALC/items/alliance-gearshield.ts";
+import { keySlimePudding } from "../cards/P24/items/key-slime-pudding.ts";
 import {
   createClassBonusTestChampion,
+  enableAllTestElements,
+  grandArchiveTestFace,
   grantTestChampionLevel,
 } from "./class-bonus-test-champion.ts";
 import { passEffectsStack } from "./decisions.ts";
@@ -19,6 +23,7 @@ export function proveFixedDamageAction({
   classBonus = false,
   preparation = 0,
   draw = 0,
+  sacrifice,
 }: {
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   cost: number;
@@ -28,20 +33,32 @@ export function proveFixedDamageAction({
   classBonus?: boolean;
   preparation?: number;
   draw?: number;
+  /** Printed additional sacrifice cost; the matching field object is sacrificed. */
+  sacrifice?: "shield" | "food";
 }): void {
+  const sacrificeCard =
+    sacrifice === "shield"
+      ? allianceGearshield
+      : sacrifice === "food"
+        ? keySlimePudding
+        : undefined;
   for (const controller of ["player-one", "player-two"]) {
     for (const kind of targetKind === "unit" ? ["ally", "champion"] : [targetKind]) {
       it(`deals ${damage} to ${controller}'s ${kind} at level ${level}, Class Bonus=${classBonus}`, () => {
-        const champion = grantTestChampionLevel(
+        let champion = grantTestChampionLevel(
           createClassBonusTestChampion(card, classBonus, "activation-discount"),
           level,
         );
+        // Exalted cannot enable itself (Special Elements / Exalted 1).
+        if (grandArchiveTestFace(card).elements.includes("EXALTED")) {
+          champion = enableAllTestElements(champion);
+        }
         const game = GrandArchiveTestEngine.startFixture({
           playerOne: {
             champion,
             zones: {
               hand: [card, ...Array.from({ length: cost }, () => woodlandSquirrels)],
-              field: [giantTortoise, trainingSword],
+              field: [giantTortoise, trainingSword, ...(sacrificeCard ? [sacrificeCard] : [])],
               "main-deck": [woodlandSquirrels, woodlandSquirrels],
             },
           },
@@ -58,7 +75,15 @@ export function proveFixedDamageAction({
         const payments = p
           .cards(woodlandSquirrels, { zone: "hand" })
           .map((c) => ({ kind: "card" as const, cardId: c.objectId }));
-        const options = { reservePayment: payments, targets: { "target-1": [target.objectId] } };
+        const options = {
+          reservePayment: payments,
+          targets: { "target-1": [target.objectId] },
+          ...(sacrificeCard
+            ? {
+                costSelections: [[p.card(sacrificeCard, { zone: "field" }).objectId]],
+              }
+            : {}),
+        };
         const before = game.state;
         expect(() =>
           p.activate(card, {

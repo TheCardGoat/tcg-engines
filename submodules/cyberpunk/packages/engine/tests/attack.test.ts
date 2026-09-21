@@ -1015,6 +1015,7 @@ describe("Attack Step", () => {
                 faceDown: true,
               },
             ],
+            eddies: 1,
           },
         );
         toAttackPhase(engine);
@@ -1024,6 +1025,7 @@ describe("Attack Step", () => {
           { as: P1 },
         );
         engine.resolveAttack({ as: P1 }); // offensive -> defensive
+        engine.spendAllLegends(P2);
 
         const prompt = engine.getPrompt(P2);
         expect(prompt.availableMoves.some((m) => m.moveId === "callLegend")).toBe(true);
@@ -1033,6 +1035,7 @@ describe("Attack Step", () => {
             as: P2,
           }),
         ).toBeSuccessfulCommand();
+        expect(engine.getEddies(P2)).toBe(0);
       });
 
       it("defender can play QUICK cards during defensive step", () => {

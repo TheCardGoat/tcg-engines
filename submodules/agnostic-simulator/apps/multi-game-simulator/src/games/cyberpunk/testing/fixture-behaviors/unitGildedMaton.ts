@@ -3,7 +3,7 @@ import {
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailKiroshiOptics,
   welcomeToNightCityRetailSwordwiseHuscle,
-  welcomeToNightCityRetailGildedMatoN,
+  welcomeToNightCityRetailGildedMaton,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -18,14 +18,14 @@ export const unitGildedMatonBehavior: CyberpunkFixtureBehavior = {
   scenarioId: "unitGildedMaton",
   label: "Gilded Maton - defeats friendly gear to defeat cheap rival unit",
   references: [
-    "packages/engine/src/cards/welcometonightcityretail/units/gilded-mato-n.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/gilded-maton.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {
     const maton = await pom.getCardInZoneByDefinitionId(
       "hand",
       CYBERPUNK_P1,
-      welcomeToNightCityRetailGildedMatoN.id,
+      welcomeToNightCityRetailGildedMaton.id,
     );
     const host = await pom.getCardInZoneByDefinitionId(
       "field",

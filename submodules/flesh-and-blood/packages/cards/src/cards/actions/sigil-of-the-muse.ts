@@ -13,6 +13,7 @@ export const sigilOfTheMuse = definePitchFamily(fabPitchFamilies["sigil-of-the-m
         modification: {
           type: "create-token",
           token: "ponder",
+          creator: "token-controller",
           controller: "target-controller",
           count: { type: "event-amount" },
         },

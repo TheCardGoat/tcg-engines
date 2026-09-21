@@ -1,4 +1,5 @@
-import { describe, test, vi } from "vite-plus/test";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { describe, expect, test, vi } from "vite-plus/test";
 
 vi.mock("../../../animation", async () => {
   const actual = await vi.importActual<typeof import("../../../animation")>("../../../animation");
@@ -20,6 +21,40 @@ import {
 } from "../../render-cyberpunk-simulator";
 
 describe("reactStep fixture behavior", () => {
+  test("asks before the defender skips a valid blocker", async () => {
+    ensureJsdomAnimationSupport();
+    const view = renderCyberpunkSimulatorScenario({ scenarioId: "reactStep" });
+    try {
+      const pom = createTestingLibraryCyberpunkSimulatorPom(view.container);
+      await pom.waitForReady();
+
+      const [skipBlock] = await screen.findAllByTestId("phase-advance");
+      expect(skipBlock).toBeTruthy();
+      expect(skipBlock.textContent).toMatch(/skip/i);
+
+      fireEvent.click(skipBlock);
+
+      await screen.findByRole("dialog", { name: "Skip your chance to block?" });
+      expect((await pom.getAttackState())?.step).toBe("react");
+
+      fireEvent.click(screen.getByRole("button", { name: /Back to blockers/ }));
+      await waitFor(() => {
+        expect(screen.queryByRole("dialog", { name: "Skip your chance to block?" })).toBeNull();
+      });
+      expect((await pom.getAttackState())?.step).toBe("react");
+
+      fireEvent.click(skipBlock);
+      await screen.findByRole("dialog", { name: "Skip your chance to block?" });
+      fireEvent.click(screen.getByTestId("skip-block-confirm-submit"));
+
+      await waitFor(async () => {
+        expect((await pom.getAttackState())?.step).toBe("steal");
+      });
+    } finally {
+      view.unmount();
+    }
+  });
+
   test("React - block decision in jsdom", async () => {
     ensureJsdomAnimationSupport();
     const view = renderCyberpunkSimulatorScenario({ scenarioId: "reactStep" });
@@ -55,7 +90,15 @@ describe("reactStep fixture behavior", () => {
       expectEqual("initial defender", initialAttack.defenderId, null);
       await pom.expectFieldCardSpent(CYBERPUNK_P1, blocker.instanceId, false);
 
-      await pom.useBlocker(blocker.instanceId, CYBERPUNK_P1);
+      const blockerCard = view.container.querySelector<HTMLElement>(
+        `[data-testid="card"][data-instance-id="${blocker.instanceId}"]`,
+      );
+      if (!blockerCard) {
+        throw new Error("Expected the ready blocker to be rendered.");
+      }
+      fireEvent.click(blockerCard);
+
+      expect(document.body.querySelector("[data-card-context-menu]")).toBeNull();
 
       const blockedAttack = await pom.getAttackState();
       if (!blockedAttack) {

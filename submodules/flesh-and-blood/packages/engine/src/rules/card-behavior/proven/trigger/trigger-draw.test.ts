@@ -1,104 +1,78 @@
 /**
- * AAA test for trigger:draw.
- * Representative card: Brainstorm Blue (DYN196) — Wizard Instant.
- * Grants hero: whenever you draw this action phase, deal 1 arcane.
+ * CR 1.9.2a: "one or more" draw triggers observe a multi-event once.
+ * The contrasting per-card trigger is proved by cards/instants/brainstorm.test.ts.
  */
-import { describe, expect, it } from "vitest";
-import { FabTestEngine } from "../../../../testing/test-engine.ts";
-import { bravo, dash, snatchRed } from "../../../fixtures.ts";
-import { brainstormBlue } from "../../../../../../cards/src/cards/instants/brainstorm.ts";
+import { describe, it } from "vitest";
+import {
+  FAB_MANUAL_HARNESS,
+  FabTestEngine,
+  expectFabPlayer,
+  expectWait,
+} from "../../../../testing/index.ts";
+import { oscilio } from "../../../../../../cards/src/cards/heroes/oscilio.ts";
+import { valdaSeismicImpact } from "../../../../../../cards/src/cards/heroes/valda-seismic-impact.ts";
+import { tomeOfFyendalYellow } from "../../../../../../cards/src/cards/actions/tome-of-fyendal.ts";
+import { nimblismBlue } from "../../../../../../cards/src/cards/actions/nimblism.ts";
 import { gold } from "../../../../../../cards/src/cards/tokens/gold.ts";
 
-function resolveDecisions(game: FabTestEngine): void {
-  for (let safety = 0; safety < 40; safety += 1) {
-    const decision = game.getState().decision;
-    if (!decision) {
-      if (game.getState().rulesStack.length > 0 || game.combat()?.open) {
-        try {
-          game.passBoth();
-        } catch {
-          return;
-        }
-        continue;
-      }
-      return;
-    }
-    if (decision.kind === "boolean") {
-      game.exec({
-        move: "answer-decision",
-        actorId: decision.actorId,
-        payload: {
-          decisionId: decision.decisionId,
-          stateVersion: decision.stateVersion,
-          answer: { kind: "boolean", value: true },
-        },
-      });
-      continue;
-    }
-    if (decision.kind === "entity-target") {
-      const pick =
-        decision.candidates.find((c) => c.instanceId.includes("player-2")) ??
-        decision.candidates[0];
-      game.exec({
-        move: "answer-decision",
-        actorId: decision.actorId,
-        payload: {
-          decisionId: decision.decisionId,
-          stateVersion: decision.stateVersion,
-          answer: {
-            kind: "entity-target",
-            instanceIds: pick ? [pick.instanceId] : [],
-          },
-        },
-      });
-      continue;
-    }
-    if (game.answerForcedDecision()) continue;
-    return;
-  }
-}
+const padding = () => [
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+];
 
-describe("trigger: draw", () => {
-  it("AAA: after Brainstorm, drawing via Gold deals 1 arcane (DYN196)", () => {
+describe("trigger: draw multi-event", () => {
+  it("Tome draws two cards but Valda creates two Surges through one trigger", () => {
     const game = FabTestEngine.start(
       {
-        hero: bravo,
-        hand: [brainstormBlue],
-        arena: [gold],
-        resourcePoints: 5,
-        deck: 6,
+        hero: oscilio,
+        life: 20,
+        hand: [tomeOfFyendalYellow],
+        resourcePoints: 1,
+        actionPoints: 1,
+        deck: padding(),
       },
-      { hero: dash, life: 20, deck: 6 },
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
+      { hero: valdaSeismicImpact, life: 40, hand: [], deck: padding() },
+      FAB_MANUAL_HARNESS,
     );
-    const Bravo = game.as(bravo);
-    const Dash = game.as(dash);
-    Bravo.play(brainstormBlue);
-    resolveDecisions(game);
-    expect(Bravo.zone("graveyard")).toContain(brainstormBlue.canonicalId);
-    // Wizard instant: printed arcane 1 resolves to any target (Dash).
-    expect(Dash.life()).toBe(19);
-
-    // Gold: pay {r}{r}, destroy, draw — fires the granted draw trigger.
-    const handBefore = Bravo.zone("hand").length;
-    Bravo.activate(gold);
-    resolveDecisions(game);
-    game.helpers.resolveUntilIdle();
-
-    expect(Bravo.zone("hand").length).toBe(handBefore + 1);
-    expect(Bravo.life()).toBe(20);
-    expect(Dash.life()).toBe(18);
+    const Oscilio = game.as(oscilio);
+    const Valda = game.as(valdaSeismicImpact);
+    Oscilio.play(tomeOfFyendalYellow);
+    // Two separate triggers would require a simultaneous-order decision and fail.
+    game.untilIdle({ optionals: "throw", ordering: "throw", entityTargets: "throw" });
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveHandCount(2).toHaveAP(0).toHaveResourceCount(0);
+    expectFabPlayer(Valda).toHaveLife(40).toHaveTokenCount("seismic-surge", 2);
+    expectWait(game).toBeIdle();
   });
 
-  it("AAA boundary: without Brainstorm, end-turn draw does not deal arcane", () => {
+  it("one Gold draw produces one Surge", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 4 },
-      { hero: dash, life: 20, deck: 4 },
-      { autoPassPriority: false, autoPitch: false, pitchStack: "manual" },
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [],
+        arena: [gold],
+        resourcePoints: 2,
+        actionPoints: 1,
+        deck: padding(),
+      },
+      { hero: valdaSeismicImpact, life: 40, hand: [], deck: padding() },
+      FAB_MANUAL_HARNESS,
     );
-    const lifeBefore = game.as(dash).life();
-    game.as(bravo).attackWith(snatchRed);
-    game.helpers.resolveRestOfCombat();
-    expect(game.as(dash).life()).toBe(lifeBefore - 4);
+    const Oscilio = game.as(oscilio);
+    const Valda = game.as(valdaSeismicImpact);
+    Oscilio.activate(gold);
+    game.untilIdle({ optionals: "throw", ordering: "throw", entityTargets: "throw" });
+    expectFabPlayer(Oscilio)
+      .toHaveLife(20)
+      .toHaveHandCount(1)
+      .toHaveAP(1)
+      .toHaveResourceCount(0)
+      .toHaveTokenCount("gold", 0);
+    expectFabPlayer(Valda).toHaveLife(40).toHaveTokenCount("seismic-surge", 1);
+    expectWait(game).toBeIdle();
   });
 });

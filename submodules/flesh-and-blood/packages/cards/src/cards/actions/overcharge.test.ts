@@ -7,6 +7,7 @@ import {
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
+import { blinkBlue } from "../instants/blink.ts";
 import { cosmicFlareRed } from "../instants/cosmic-flare.ts";
 import { brutalAssaultBlue, briar } from "../shared/test-recipients.ts";
 import { overchargeRed } from "./overcharge.ts";
@@ -64,6 +65,32 @@ describe("Overcharge (PEN243) AAA", () => {
 
     expectCombat(game).toHaveAttackPower(4);
     expectFabCard(Briar, cosmicFlareRed).toBeIn("graveyard");
+  });
+
+  it("boundary: the defender's instant does not grant +3{p}", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: briar,
+        hand: [overchargeRed],
+        resourcePoints: 1,
+        actionPoints: 1,
+        deck: 6,
+      },
+      { hero: dash, hand: [blinkBlue], life: 20, deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Briar = game.as(briar);
+    const Dash = game.as(dash);
+
+    Briar.playAttack(overchargeRed);
+    game.toReaction("defender");
+    Dash.play(blinkBlue);
+    game.passBoth();
+
+    // Printed: "If you've played an instant card this chain link" — the
+    // defending hero's instant is not Briar's play.
+    expectCombat(game).toHaveAttackPower(1);
+    expectFabCard(Dash, blinkBlue).toBeIn("graveyard");
   });
 
   it("timing: go again refunds an action point after the chain closes", () => {

@@ -42,8 +42,9 @@ describe("Dynastic Dedication (FNG011) AAA", () => {
     Fang.must.playReaction(dynasticDedicationRed);
     game.passBoth();
 
-    // Obsidian Fire Vein 1 + 3 = 4.
-    expectCombat(game).toHaveAttackPower(4);
+    // Obsidian Fire Vein 1 + 3, plus its live "+1{p} and go again" turned on
+    // by this link's Draconic reaction = 5.
+    expectCombat(game).toHaveAttackPower(5);
     expectFabCard(Fang, dynasticDedicationRed).toBeIn("graveyard");
   });
 
@@ -98,6 +99,7 @@ describe("Dynastic Dedication (FNG011) AAA", () => {
 
     // Printed cost 2, minus 1 Draconic chain link (the dagger itself) = 1{r}.
     expectFabPlayer(Fang).toHaveResourceCount(1);
-    expectCombat(game).toHaveAttackPower(4);
+    // 1 + 3 + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(5);
   });
 });

@@ -1,6 +1,7 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseTargetPendingChoice } from "../types/match-state.ts";
+import { defOf } from "../state/lookups.ts";
 import { executeAbilityEffects, resumeCurrentTrigger } from "../ability-executor.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
 
@@ -120,6 +121,12 @@ export const resolveDiscardFromHandMove: MoveDefinition<ResolveDiscardFromHandIn
     for (const id of cardIds) {
       operations.zone.moveCard(id as CardInstanceId, "trash", playerId);
     }
+    // Cards are face-up in the public trash by this point, so their names are
+    // public information (CR 5.9.2-5.9.3) and safe to log for every viewer.
+    const discardedCards = cardIds.flatMap((id) => {
+      const card = state.G.cardIndex[id];
+      return card ? [{ cardId: id as CardInstanceId, cardName: defOf(card).displayName }] : [];
+    });
     const current = state.G.turnMetadata.currentTrigger;
     if (current) {
       current.contextTargets = {
@@ -133,6 +140,7 @@ export const resolveDiscardFromHandMove: MoveDefinition<ResolveDiscardFromHandIn
       timestamp: Date.now(),
       turnNumber: state.G.turnMetadata.turnNumber,
       discardedCount: cardIds.length,
+      discardedCards,
       reason: payload.logReason,
     });
     if (payload.ifEffects?.length && payload.sourceCardId && payload.sourcePlayerId) {

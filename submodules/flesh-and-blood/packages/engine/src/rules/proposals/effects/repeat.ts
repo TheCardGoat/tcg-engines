@@ -99,7 +99,7 @@ function iterationChoiceAccepted(
 }
 
 /** Stop "repeat this process" once a terminal then-branch (no else) has fired. */
-function starRepeatTerminalHolds(
+export function starRepeatTerminalHolds(
   effect: FabEffect,
   state: FabRulesSnapshot,
   layer: ProposalContext["layer"],

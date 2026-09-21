@@ -41,34 +41,45 @@ export const droppedBand: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
               kind: "sequence",
               effects: [
                 {
-                  kind: "reveal",
-                  player: "controller",
-                  selection: {
-                    id: "reveal-selection",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 3,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["hand"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "subtype",
-                        oneOf: ["CHESSMAN"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "reveal",
+                    player: "controller",
+                    selection: {
+                      id: "reveal-selection",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 3,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["hand"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "subtype",
+                          oneOf: ["CHESSMAN"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "summon",
-                  object: "Pawn Piece",
-                  controller: "controller",
-                  bindResultAs: "summoned-token",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "summon",
+                    object: "Pawn Piece",
+                    controller: "controller",
+                    bindResultAs: "summoned-token",
+                  },
                 },
               ],
             },

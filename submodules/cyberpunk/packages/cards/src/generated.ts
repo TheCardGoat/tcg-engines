@@ -1722,6 +1722,36 @@ export const rawCards = [
         finish: "standard",
         artist: "CD Projekt Red",
       },
+      {
+        id: "a4271ab1-4688-4f98-b000-a186aadd7fee",
+        collector_number: "002",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a4271ab1-4688-4f98-b000-a186aadd7fee/render-mrw5288r.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a4271ab1-4688-4f98-b000-a186aadd7fee/render-mrw5288r.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "CD Projekt Red",
+      },
+      {
+        id: "bd6fe2cf-bfcd-4de2-bc78-ffc215d39603",
+        collector_number: "020",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/bd6fe2cf-bfcd-4de2-bc78-ffc215d39603/render-mrw578xw.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/bd6fe2cf-bfcd-4de2-bc78-ffc215d39603/render-mrw578xw.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "CD Projekt Red",
+      },
     ],
     selected_printing_id: "19587d4f-6d47-44fe-b4da-99743e2742f7",
     legality: "legal",
@@ -4223,6 +4253,21 @@ export const rawCards = [
         artist: "Dardo Studios",
       },
       {
+        id: "726b13d2-0d74-42db-a5e9-b8b852224a16",
+        collector_number: "160",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/726b13d2-0d74-42db-a5e9-b8b852224a16/render-mpvlq7t9.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/726b13d2-0d74-42db-a5e9-b8b852224a16/render-mpvlq7t9.webp",
+        set: {
+          code: "welcometonightcityretail",
+          name: "Welcome to Night City — Retail",
+        },
+        rarity: "Iconic Other",
+        finish: "standard",
+        artist: "Łukasz Poller",
+      },
+      {
         id: "fdb7a7c3-350e-49ea-8a9e-8477ce6c657a",
         collector_number: "β041",
         image_url:
@@ -4251,6 +4296,36 @@ export const rawCards = [
         rarity: "Iconic Other",
         finish: "standard",
         artist: "Toni Infante",
+      },
+      {
+        id: "2a0fa3c6-f259-49ad-88a2-843713712ccd",
+        collector_number: "002",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2a0fa3c6-f259-49ad-88a2-843713712ccd/render-mqfjmon1.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2a0fa3c6-f259-49ad-88a2-843713712ccd/render-mqfjmon1.webp",
+        set: {
+          code: "nightcityshowdowns1",
+          name: "Night City Showdown S1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar",
+      },
+      {
+        id: "b2d8aa5e-0d41-4c9e-b736-9d61e8153651",
+        collector_number: "004",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b2d8aa5e-0d41-4c9e-b736-9d61e8153651/render-mshyd29m.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b2d8aa5e-0d41-4c9e-b736-9d61e8153651/render-mshyd29m.webp",
+        set: {
+          code: "nightcityshowdowns1",
+          name: "Night City Showdown S1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar",
       },
     ],
     selected_printing_id: "d23e322f-ad60-431d-b33e-1e8a813248ff",
@@ -4438,6 +4513,21 @@ export const rawCards = [
           "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c28c3d15-1e03-465c-a696-cf395a795abc/render-msyh0r9p.webp",
         source_image_url:
           "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c28c3d15-1e03-465c-a696-cf395a795abc/render-msyh0r9p.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Alicja Użarowska",
+      },
+      {
+        id: "08a9b9ec-16b7-407a-90f2-a9536937b879",
+        collector_number: "009",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/08a9b9ec-16b7-407a-90f2-a9536937b879/render-msyhbkhl.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/08a9b9ec-16b7-407a-90f2-a9536937b879/render-msyhbkhl.webp",
         set: {
           code: "edgerunneropens1",
           name: "Edgerunner Open S 1",
@@ -5152,6 +5242,36 @@ export const rawCards = [
         finish: "standard",
         artist: "ADIA",
       },
+      {
+        id: "f997c534-5208-4c37-8aff-4f6587e606c2",
+        collector_number: "007",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f997c534-5208-4c37-8aff-4f6587e606c2/render-mrw554tc.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f997c534-5208-4c37-8aff-4f6587e606c2/render-mrw554tc.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "ADIA",
+      },
+      {
+        id: "86bc6f96-41d3-4639-b75b-25ae58202b3d",
+        collector_number: "025",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/86bc6f96-41d3-4639-b75b-25ae58202b3d/render-mrw58g5i.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/86bc6f96-41d3-4639-b75b-25ae58202b3d/render-mrw58g5i.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "ADIA",
+      },
     ],
     selected_printing_id: "decc76ed-f5ed-4f02-90d7-e01e2a3975e0",
     legality: "legal",
@@ -5562,6 +5682,36 @@ export const rawCards = [
         finish: "standard",
         artist: "CD PROJEKT RED",
       },
+      {
+        id: "6b574386-2893-4236-86a4-68c48222ae9e",
+        collector_number: "009",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6b574386-2893-4236-86a4-68c48222ae9e/render-mrw56hfg.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6b574386-2893-4236-86a4-68c48222ae9e/render-mrw56hfg.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Daniel Valaisis",
+      },
+      {
+        id: "8c0cd775-71b6-43f9-af49-1d41386eb1ee",
+        collector_number: "027",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/8c0cd775-71b6-43f9-af49-1d41386eb1ee/render-mrw59svc.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/8c0cd775-71b6-43f9-af49-1d41386eb1ee/render-mrw59svc.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Daniel Valaisis",
+      },
     ],
     selected_printing_id: "80dcc139-d31d-4b89-86ff-cdbdd2664953",
     legality: "legal",
@@ -5737,6 +5887,36 @@ export const rawCards = [
           name: "Welcome to Night City — Beta",
         },
         rarity: "Uncommon",
+        finish: "standard",
+        artist: "Michal Ivan",
+      },
+      {
+        id: "88002e9c-429e-4434-8564-e1b22625ce4e",
+        collector_number: "008",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/88002e9c-429e-4434-8564-e1b22625ce4e/render-mrw53rh2.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/88002e9c-429e-4434-8564-e1b22625ce4e/render-mrw53rh2.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Michal Ivan",
+      },
+      {
+        id: "968eff55-5775-44c1-b5e0-7b1b9293763e",
+        collector_number: "026",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/968eff55-5775-44c1-b5e0-7b1b9293763e/render-mrw5963s.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/968eff55-5775-44c1-b5e0-7b1b9293763e/render-mrw5963s.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Michal Ivan",
       },
@@ -5917,6 +6097,36 @@ export const rawCards = [
         rarity: "Common",
         finish: "standard",
         artist: "CD PROJEKT RED",
+      },
+      {
+        id: "e03952c1-9f8c-4ecb-8258-ab753ef9c9a7",
+        collector_number: "014",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/e03952c1-9f8c-4ecb-8258-ab753ef9c9a7/render-mrw54cht.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/e03952c1-9f8c-4ecb-8258-ab753ef9c9a7/render-mrw54cht.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Daniel Valaisis",
+      },
+      {
+        id: "1f3e50a4-54ea-4e77-9ef3-0ceeb38d0278",
+        collector_number: "032",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/1f3e50a4-54ea-4e77-9ef3-0ceeb38d0278/render-mrw5a7zo.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/1f3e50a4-54ea-4e77-9ef3-0ceeb38d0278/render-mrw5a7zo.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Daniel Valaisis",
       },
     ],
     selected_printing_id: "5b9cdefa-29f4-4a3a-a426-eea46302ef60",
@@ -6132,6 +6342,66 @@ export const rawCards = [
         finish: "standard",
         artist: "Pandart Studio",
       },
+      {
+        id: "57e9c376-6cc1-4f05-9b8f-0b161b5c635a",
+        collector_number: "012",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/57e9c376-6cc1-4f05-9b8f-0b161b5c635a/render-msygzgyk.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/57e9c376-6cc1-4f05-9b8f-0b161b5c635a/render-msygzgyk.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "TOPDOG Entertainment",
+      },
+      {
+        id: "167ad190-3e97-44bf-bda9-5272774d4025",
+        collector_number: "016",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/167ad190-3e97-44bf-bda9-5272774d4025/render-mt7oagnb.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/167ad190-3e97-44bf-bda9-5272774d4025/render-mt7oagnb.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "TOPDOG Entertainment",
+      },
+      {
+        id: "b7ae9f99-d205-4330-b90d-c7d89313274a",
+        collector_number: "020",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b7ae9f99-d205-4330-b90d-c7d89313274a/render-msyhe5xc.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b7ae9f99-d205-4330-b90d-c7d89313274a/render-msyhe5xc.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "TOPDOG Entertainment",
+      },
+      {
+        id: "a2f65b15-6ff1-4214-bd89-11685ef9817f",
+        collector_number: "024",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a2f65b15-6ff1-4214-bd89-11685ef9817f/render-msyhesk6.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a2f65b15-6ff1-4214-bd89-11685ef9817f/render-msyhesk6.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "TOPDOG Entertainment",
+      },
     ],
     selected_printing_id: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
     legality: "legal",
@@ -6195,6 +6465,36 @@ export const rawCards = [
           name: "Welcome to Night City — Beta",
         },
         rarity: "Rare",
+        finish: "standard",
+        artist: "Alex Eckman-Lawn",
+      },
+      {
+        id: "bd897ed7-a74b-4993-9da5-16f820c3502d",
+        collector_number: "012",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/bd897ed7-a74b-4993-9da5-16f820c3502d/render-mrw52x64.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/bd897ed7-a74b-4993-9da5-16f820c3502d/render-mrw52x64.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Alex Eckman-Lawn",
+      },
+      {
+        id: "6121b4c1-b899-4c69-a7d6-674bb6889e29",
+        collector_number: "030",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6121b4c1-b899-4c69-a7d6-674bb6889e29/render-mrw58vfc.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6121b4c1-b899-4c69-a7d6-674bb6889e29/render-mrw58vfc.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Alex Eckman-Lawn",
       },
@@ -6407,6 +6707,36 @@ export const rawCards = [
         finish: "standard",
         artist: "Ivan Shavrin",
       },
+      {
+        id: "70ef0b79-d569-4a62-bdbc-e02c616f8b98",
+        collector_number: "016",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/70ef0b79-d569-4a62-bdbc-e02c616f8b98/render-mrw55nv5.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/70ef0b79-d569-4a62-bdbc-e02c616f8b98/render-mrw55nv5.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Ivan Shavrin",
+      },
+      {
+        id: "779c63a5-cec1-47b0-a96e-51369a0ba186",
+        collector_number: "034",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/779c63a5-cec1-47b0-a96e-51369a0ba186/render-mrw5auwf.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/779c63a5-cec1-47b0-a96e-51369a0ba186/render-mrw5auwf.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Ivan Shavrin",
+      },
     ],
     selected_printing_id: "2b1b6268-193f-4b9e-a63c-0cbc200d6db7",
     legality: "legal",
@@ -6417,7 +6747,7 @@ export const rawCards = [
     name: "El Sombrerón",
     subname: "La Venganza Lenta",
     display_name: "El Sombrerón: La Venganza Lenta",
-    slug: "el-sombrero-n-la-venganza-lenta",
+    slug: "el-sombreron-la-venganza-lenta",
     rules_text:
       "{Attack} You may pay 2 €$. If you do, this Unit gains power equal to a friendly max Gig this turn.",
     flavor_text: null,
@@ -6920,6 +7250,21 @@ export const rawCards = [
         finish: "standard",
         artist: "Michal Ivan",
       },
+      {
+        id: "398de6dd-f801-45ca-a183-17de617cf973",
+        collector_number: "002",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/398de6dd-f801-45ca-a183-17de617cf973/render-msyh2cwm.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/398de6dd-f801-45ca-a183-17de617cf973/render-msyh2cwm.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Michal Ivan",
+      },
     ],
     selected_printing_id: "876dfa5c-6df4-4930-b284-f2c466e6b90c",
     legality: "legal",
@@ -7031,6 +7376,36 @@ export const rawCards = [
         finish: "standard",
         artist: "DOFRESH",
       },
+      {
+        id: "2267884a-40c8-49ff-952b-90ec1b977179",
+        collector_number: "018",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2267884a-40c8-49ff-952b-90ec1b977179/render-mrw53qmi.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2267884a-40c8-49ff-952b-90ec1b977179/render-mrw53qmi.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "DOFRESH",
+      },
+      {
+        id: "575138c0-4eae-4d61-abf7-028557a884c8",
+        collector_number: "036",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/575138c0-4eae-4d61-abf7-028557a884c8/render-mrw5bmx4.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/575138c0-4eae-4d61-abf7-028557a884c8/render-mrw5bmx4.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "DOFRESH",
+      },
     ],
     selected_printing_id: "91f9d30c-f74d-4be4-8505-52f05d309c92",
     legality: "legal",
@@ -7108,7 +7483,7 @@ export const rawCards = [
     name: "Gilded Matón",
     subname: null,
     display_name: "Gilded Matón",
-    slug: "gilded-mato-n",
+    slug: "gilded-maton",
     rules_text:
       "{Play} You may defeat a friendly Gear. If you do, defeat a rival Unit with cost 3 or less.",
     flavor_text: null,
@@ -7849,6 +8224,21 @@ export const rawCards = [
         finish: "standard",
         artist: "Alexander Dudar",
       },
+      {
+        id: "5d10162b-32ad-4391-bc39-8b652142e707",
+        collector_number: "008",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5d10162b-32ad-4391-bc39-8b652142e707/render-msyham3q.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5d10162b-32ad-4391-bc39-8b652142e707/render-msyham3q.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Alexander Dudar",
+      },
     ],
     selected_printing_id: "9103b5db-bf95-4385-8941-308cb0353c9a",
     legality: "legal",
@@ -7968,6 +8358,21 @@ export const rawCards = [
         artist: "Daniel Valaisis",
       },
       {
+        id: "60a2f877-f004-43c0-a7a8-9e54258caf31",
+        collector_number: "152",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/60a2f877-f004-43c0-a7a8-9e54258caf31/render-mpvmtkcs.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/60a2f877-f004-43c0-a7a8-9e54258caf31/render-mpvmtkcs.webp",
+        set: {
+          code: "welcometonightcityretail",
+          name: "Welcome to Night City — Retail",
+        },
+        rarity: "Iconic Legend",
+        finish: "standard",
+        artist: "Pandart Studio",
+      },
+      {
         id: "c1f9ae1a-841f-431f-919a-429de14be070",
         collector_number: "β073",
         image_url:
@@ -8011,6 +8416,21 @@ export const rawCards = [
         rarity: "Rare",
         finish: "standard",
         artist: "Daniel Valaisis",
+      },
+      {
+        id: "eb5b20c4-da57-4e36-b45f-330ac15eb6c0",
+        collector_number: "044",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/eb5b20c4-da57-4e36-b45f-330ac15eb6c0/render-mtcqd8df.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/eb5b20c4-da57-4e36-b45f-330ac15eb6c0/render-mtcqd8df.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Pandart Studio",
       },
     ],
     selected_printing_id: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
@@ -8076,6 +8496,36 @@ export const rawCards = [
           name: "Welcome to Night City — Beta",
         },
         rarity: "Epic",
+        finish: "standard",
+        artist: "Ilya Kuvshinov",
+      },
+      {
+        id: "5b855c9c-bdf3-4743-9653-d6eb6ce3f6f5",
+        collector_number: "004",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5b855c9c-bdf3-4743-9653-d6eb6ce3f6f5/render-mrw51lqa.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5b855c9c-bdf3-4743-9653-d6eb6ce3f6f5/render-mrw51lqa.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Ilya Kuvshinov",
+      },
+      {
+        id: "adf78727-f462-424c-8689-0b759794ee3c",
+        collector_number: "022",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/adf78727-f462-424c-8689-0b759794ee3c/render-mrw583q3.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/adf78727-f462-424c-8689-0b759794ee3c/render-mrw583q3.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Ilya Kuvshinov",
       },
@@ -8320,7 +8770,7 @@ export const rawCards = [
     name: "Judy Álvarez",
     subname: "Braindance Maestro",
     display_name: "Judy Álvarez: Braindance Maestro",
-    slug: "judy-a-lvarez-braindance-maestro",
+    slug: "judy-alvarez-braindance-maestro",
     rules_text:
       "When you play a BRAINDANCE Program, give a friendly Unit +1 power this turn.\n{Spend} Trash the top card of your deck. If it's a Program, you may add it to your hand.",
     flavor_text: null,
@@ -8407,6 +8857,66 @@ export const rawCards = [
         finish: "standard",
         artist: "Gautier Viller",
       },
+      {
+        id: "ffef2e56-444f-4b37-83a1-10a1a4be38fb",
+        collector_number: "015",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ffef2e56-444f-4b37-83a1-10a1a4be38fb/render-msygzgi4.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ffef2e56-444f-4b37-83a1-10a1a4be38fb/render-msygzgi4.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "acdef65d-d889-4321-9b97-961a4b05d481",
+        collector_number: "019",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/acdef65d-d889-4321-9b97-961a4b05d481/render-mt7oco3l.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/acdef65d-d889-4321-9b97-961a4b05d481/render-mt7oco3l.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "2de969bb-8353-46c5-b0ea-09d4378fcaae",
+        collector_number: "023",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2de969bb-8353-46c5-b0ea-09d4378fcaae/render-msyh482v.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/2de969bb-8353-46c5-b0ea-09d4378fcaae/render-msyh482v.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "a920bb39-b0e6-4d5e-a8e9-eca50d3dce10",
+        collector_number: "027",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a920bb39-b0e6-4d5e-a8e9-eca50d3dce10/render-msyhffyb.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a920bb39-b0e6-4d5e-a8e9-eca50d3dce10/render-msyhffyb.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
     ],
     selected_printing_id: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
     legality: "legal",
@@ -8417,7 +8927,7 @@ export const rawCards = [
     name: "Judy Álvarez",
     subname: "Nothing to Doubt",
     display_name: "Judy Álvarez: Nothing to Doubt",
-    slug: "judy-a-lvarez-nothing-to-doubt",
+    slug: "judy-alvarez-nothing-to-doubt",
     rules_text:
       "1 €$, {Spend} Reveal the top card of your deck. You may play it for free. Otherwise, add it to your hand.",
     flavor_text: null,
@@ -8637,6 +9147,36 @@ export const rawCards = [
         finish: "standard",
         artist: "Bogna Gawrońska",
       },
+      {
+        id: "d2e8c1c2-6cd4-4d2e-94fa-21b96daaea6b",
+        collector_number: "001",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/d2e8c1c2-6cd4-4d2e-94fa-21b96daaea6b/render-mrw50w8x.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/d2e8c1c2-6cd4-4d2e-94fa-21b96daaea6b/render-mrw50w8x.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Bogna Gawrońska",
+      },
+      {
+        id: "c51e7c71-6305-4330-a107-a197af5eeeb2",
+        collector_number: "019",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c51e7c71-6305-4330-a107-a197af5eeeb2/render-mrw56o8c.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c51e7c71-6305-4330-a107-a197af5eeeb2/render-mrw56o8c.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Bogna Gawrońska",
+      },
     ],
     selected_printing_id: "c26c7db6-f540-4073-ab33-b09335631764",
     legality: "legal",
@@ -8826,7 +9366,7 @@ export const rawCards = [
     name: "Les Élémens",
     subname: null,
     display_name: "Les Élémens",
-    slug: "les-e-le-mens",
+    slug: "les-elemens",
     rules_text: "Bottom-deck a Rival's lowest-power Unit. (If there are multiple, choose 1.)",
     flavor_text: null,
     description: null,
@@ -9215,6 +9755,51 @@ export const rawCards = [
         finish: "standard",
         artist: "TOPDOG Entertainment",
       },
+      {
+        id: "a1c75317-6fa9-48f8-b296-cfe6a336f12a",
+        collector_number: "015",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a1c75317-6fa9-48f8-b296-cfe6a336f12a/render-mrw552vw.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a1c75317-6fa9-48f8-b296-cfe6a336f12a/render-mrw552vw.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "TOPDOG Entertainment",
+      },
+      {
+        id: "317331e6-55bd-4c4d-9f50-700601f53db2",
+        collector_number: "033",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/317331e6-55bd-4c4d-9f50-700601f53db2/render-mrw5b001.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/317331e6-55bd-4c4d-9f50-700601f53db2/render-mrw5b001.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "TOPDOG Entertainment",
+      },
+      {
+        id: "5cc2112c-10b6-4491-963d-8b517244aaee",
+        collector_number: "037",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5cc2112c-10b6-4491-963d-8b517244aaee/render-mrw5bv3m.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/5cc2112c-10b6-4491-963d-8b517244aaee/render-mrw5bv3m.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "TOPDOG Entertainment",
+      },
     ],
     selected_printing_id: "8a7131eb-e1dd-46d6-84f6-2de315aee975",
     legality: "legal",
@@ -9324,6 +9909,36 @@ export const rawCards = [
           name: "Merc Demo Deck",
         },
         rarity: "Common",
+        finish: "standard",
+        artist: "Lea Leonowicz",
+      },
+      {
+        id: "d16f9b63-cc98-4b88-981e-258d1940aa04",
+        collector_number: "006",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/d16f9b63-cc98-4b88-981e-258d1940aa04/render-mrw50y7c.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/d16f9b63-cc98-4b88-981e-258d1940aa04/render-mrw50y7c.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Lea Leonowicz",
+      },
+      {
+        id: "34dd1e1b-5022-4858-91bc-1243ea7f4615",
+        collector_number: "024",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/34dd1e1b-5022-4858-91bc-1243ea7f4615/render-mrw57vjo.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/34dd1e1b-5022-4858-91bc-1243ea7f4615/render-mrw57vjo.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Lea Leonowicz",
       },
@@ -9681,6 +10296,36 @@ export const rawCards = [
         finish: "standard",
         artist: "Olgierd Ciszak",
       },
+      {
+        id: "f77b20fd-8792-41bb-a634-06030fd2eb6d",
+        collector_number: "010",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f77b20fd-8792-41bb-a634-06030fd2eb6d/render-mrw54hl6.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f77b20fd-8792-41bb-a634-06030fd2eb6d/render-mrw54hl6.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Olgierd Ciszak",
+      },
+      {
+        id: "c89b85cb-aa23-4fa6-b093-aad81bde74a4",
+        collector_number: "028",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c89b85cb-aa23-4fa6-b093-aad81bde74a4/render-mrw59k2o.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c89b85cb-aa23-4fa6-b093-aad81bde74a4/render-mrw59k2o.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Olgierd Ciszak",
+      },
     ],
     selected_printing_id: "22b276f4-7cf6-4b14-a220-8368a0839287",
     legality: "legal",
@@ -9948,6 +10593,21 @@ export const rawCards = [
         finish: "standard",
         artist: "ADIA",
       },
+      {
+        id: "17517c74-9e61-423a-9d65-c7f4b56af29a",
+        collector_number: "006",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/17517c74-9e61-423a-9d65-c7f4b56af29a/render-msyijccq.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/17517c74-9e61-423a-9d65-c7f4b56af29a/render-msyijccq.webp",
+        set: {
+          code: "PRM01",
+          name: "Set 1 Promos",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Bruno Ferreira (Bit Bot)",
+      },
     ],
     selected_printing_id: "17252514-02ba-4d0d-a9cc-3590cee528af",
     legality: "legal",
@@ -10159,7 +10819,7 @@ export const rawCards = [
     name: "Muamar Reyes",
     subname: "El Capitán",
     display_name: "Muamar Reyes: El Capitán",
-    slug: "muamar-reyes-el-capita-n",
+    slug: "muamar-reyes-el-capitan",
     rules_text:
       "{Call} Choose one effect.\nA friendly Unit can't be defeated in a fight this turn. // Draw 1.\n{Spend} Adjust a Gig by 1.",
     flavor_text: null,
@@ -10230,6 +10890,66 @@ export const rawCards = [
         rarity: "Iconic Legend",
         finish: "standard",
         artist: "Pandart Studio",
+      },
+      {
+        id: "8ed5d5d5-92b6-4f25-b7aa-fa9bee7948d6",
+        collector_number: "014",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/8ed5d5d5-92b6-4f25-b7aa-fa9bee7948d6/render-msyh046y.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/8ed5d5d5-92b6-4f25-b7aa-fa9bee7948d6/render-msyh046y.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "b2240e25-e4ff-4992-9455-8a56bdbbcdb8",
+        collector_number: "018",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b2240e25-e4ff-4992-9455-8a56bdbbcdb8/render-mt7obl02.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b2240e25-e4ff-4992-9455-8a56bdbbcdb8/render-mt7obl02.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "4399e640-6e66-4c0b-b0f5-bb68d26e0e3f",
+        collector_number: "022",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/4399e640-6e66-4c0b-b0f5-bb68d26e0e3f/render-msyhe4a5.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/4399e640-6e66-4c0b-b0f5-bb68d26e0e3f/render-msyhe4a5.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "f83303e6-72c1-4305-90be-7e4ef6b480f1",
+        collector_number: "026",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f83303e6-72c1-4305-90be-7e4ef6b480f1/render-msyhffe5.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f83303e6-72c1-4305-90be-7e4ef6b480f1/render-msyhffe5.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
       },
     ],
     selected_printing_id: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
@@ -10362,6 +11082,36 @@ export const rawCards = [
           name: "Welcome to Night City — Beta",
         },
         rarity: "Uncommon",
+        finish: "standard",
+        artist: "Mooncolony",
+      },
+      {
+        id: "f8098004-7b14-4d5a-8398-85c5660e1d8f",
+        collector_number: "017",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f8098004-7b14-4d5a-8398-85c5660e1d8f/render-mrw55unt.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/f8098004-7b14-4d5a-8398-85c5660e1d8f/render-mrw55unt.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Mooncolony",
+      },
+      {
+        id: "fbe9274d-e4c4-415f-9914-0fbd5985c0b3",
+        collector_number: "035",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/fbe9274d-e4c4-415f-9914-0fbd5985c0b3/render-mrw5biwb.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/fbe9274d-e4c4-415f-9914-0fbd5985c0b3/render-mrw5biwb.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Mooncolony",
       },
@@ -11198,6 +11948,21 @@ export const rawCards = [
         finish: "standard",
         artist: "Mattia De Iulis",
       },
+      {
+        id: "af1c8374-41a9-4fd7-8597-c6481705c210",
+        collector_number: "010",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/af1c8374-41a9-4fd7-8597-c6481705c210/render-msyhbbbr.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/af1c8374-41a9-4fd7-8597-c6481705c210/render-msyhbbbr.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Mattia De Iulis",
+      },
     ],
     selected_printing_id: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
     legality: "legal",
@@ -11687,6 +12452,21 @@ export const rawCards = [
         finish: "standard",
         artist: "Michal Ivan",
       },
+      {
+        id: "4f69c4bd-5b50-4892-a348-1ca16a81f8d6",
+        collector_number: "003",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/4f69c4bd-5b50-4892-a348-1ca16a81f8d6/render-msyh2u9f.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/4f69c4bd-5b50-4892-a348-1ca16a81f8d6/render-msyh2u9f.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Michal Ivan",
+      },
     ],
     selected_printing_id: "1ee3ba07-86b0-4309-be55-4b4698f700b8",
     legality: "legal",
@@ -11874,6 +12654,21 @@ export const rawCards = [
         artist: "Daniel Valaisis",
       },
       {
+        id: "ef33c0b9-0e13-438e-952b-5d834485b0aa",
+        collector_number: "148",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ef33c0b9-0e13-438e-952b-5d834485b0aa/render-mpvmuzif.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ef33c0b9-0e13-438e-952b-5d834485b0aa/render-mpvmuzif.webp",
+        set: {
+          code: "welcometonightcityretail",
+          name: "Welcome to Night City — Retail",
+        },
+        rarity: "Iconic Legend",
+        finish: "standard",
+        artist: "Pandart Studio",
+      },
+      {
         id: "b217ae88-52a6-44b3-b021-964db4534dbd",
         collector_number: "β039",
         image_url:
@@ -11917,6 +12712,21 @@ export const rawCards = [
         rarity: "Rare",
         finish: "standard",
         artist: "Daniel Valaisis",
+      },
+      {
+        id: "6545a2e6-9de1-419e-964c-a55d07f9e34d",
+        collector_number: "038",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6545a2e6-9de1-419e-964c-a55d07f9e34d/render-mu5gkjzf.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6545a2e6-9de1-419e-964c-a55d07f9e34d/render-mu5gkjzf.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Pandart Studio",
       },
     ],
     selected_printing_id: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
@@ -12230,6 +13040,21 @@ export const rawCards = [
         finish: "standard",
         artist: "Mooncolony",
       },
+      {
+        id: "b3fe1a4f-74da-4882-82a9-14aebd392be4",
+        collector_number: "001",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b3fe1a4f-74da-4882-82a9-14aebd392be4/render-msyh03l0.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/b3fe1a4f-74da-4882-82a9-14aebd392be4/render-msyh03l0.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Mooncolony",
+      },
     ],
     selected_printing_id: "b749ce16-1b44-47d8-bce4-4fd373007a5c",
     legality: "legal",
@@ -12283,6 +13108,21 @@ export const rawCards = [
         artist: "Michal Ivan",
       },
       {
+        id: "181a18f4-f6ba-4b23-bc56-ca43bd7d0843",
+        collector_number: "143",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/181a18f4-f6ba-4b23-bc56-ca43bd7d0843/render-mpvmpyul.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/181a18f4-f6ba-4b23-bc56-ca43bd7d0843/render-mpvmpyul.webp",
+        set: {
+          code: "welcometonightcityretail",
+          name: "Welcome to Night City — Retail",
+        },
+        rarity: "Iconic Legend",
+        finish: "standard",
+        artist: "Pandart Studio",
+      },
+      {
         id: "0e4966a2-e5cf-4acd-905a-750e9c4cefff",
         collector_number: "β004",
         image_url:
@@ -12326,6 +13166,21 @@ export const rawCards = [
         rarity: "Rare",
         finish: "standard",
         artist: "Michal Ivan",
+      },
+      {
+        id: "e59f737b-83e1-45f2-a469-8bde0146b967",
+        collector_number: "032",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/e59f737b-83e1-45f2-a469-8bde0146b967/render-mtcqki1k.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/e59f737b-83e1-45f2-a469-8bde0146b967/render-mtcqki1k.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Pandart Studio",
       },
     ],
     selected_printing_id: "3e2e228b-dbfb-484b-b82d-6972ff184aab",
@@ -12669,6 +13524,51 @@ export const rawCards = [
         finish: "standard",
         artist: "CD Projekt Red",
       },
+      {
+        id: "a9eb38f2-fe64-47c5-9938-9b6ecb01c913",
+        collector_number: "001",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a9eb38f2-fe64-47c5-9938-9b6ecb01c913/render-mqfjnjyt.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a9eb38f2-fe64-47c5-9938-9b6ecb01c913/render-mqfjnjyt.webp",
+        set: {
+          code: "nightcityshowdowns1",
+          name: "Night City Showdown S1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar",
+      },
+      {
+        id: "6f8d1015-dd5d-49c4-9620-6b3b0c7ee82a",
+        collector_number: "003",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6f8d1015-dd5d-49c4-9620-6b3b0c7ee82a/render-mqfk0chp.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/6f8d1015-dd5d-49c4-9620-6b3b0c7ee82a/render-mqfk0chp.webp",
+        set: {
+          code: "nightcityshowdowns1",
+          name: "Night City Showdown S1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar",
+      },
+      {
+        id: "36d42759-0199-47f0-835b-ee6616842e49",
+        collector_number: "005",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/36d42759-0199-47f0-835b-ee6616842e49/render-mshye1d4.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/36d42759-0199-47f0-835b-ee6616842e49/render-mshye1d4.webp",
+        set: {
+          code: "nightcityshowdowns1",
+          name: "Night City Showdown S1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar",
+      },
     ],
     selected_printing_id: "97de62e2-3fea-4324-8367-87d1f1d674ed",
     legality: "legal",
@@ -12860,6 +13760,36 @@ export const rawCards = [
           name: "Arasaka Demo Deck",
         },
         rarity: "Uncommon",
+        finish: "standard",
+        artist: "Ivan Shavrin",
+      },
+      {
+        id: "c0a913fe-d3fc-4558-a35f-cfa34d4023c3",
+        collector_number: "003",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c0a913fe-d3fc-4558-a35f-cfa34d4023c3/render-mrw527bc.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/c0a913fe-d3fc-4558-a35f-cfa34d4023c3/render-mrw527bc.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Ivan Shavrin",
+      },
+      {
+        id: "922e0824-cef0-4062-bb6f-5e30f4814f40",
+        collector_number: "021",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/922e0824-cef0-4062-bb6f-5e30f4814f40/render-mrw57gqg.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/922e0824-cef0-4062-bb6f-5e30f4814f40/render-mrw57gqg.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Ivan Shavrin",
       },
@@ -13105,6 +14035,36 @@ export const rawCards = [
           name: "Merc Demo Deck",
         },
         rarity: "Common",
+        finish: "standard",
+        artist: "Luca Claretti",
+      },
+      {
+        id: "a78c25bb-94ce-4833-bcc4-be6dce72ecb1",
+        collector_number: "005",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a78c25bb-94ce-4833-bcc4-be6dce72ecb1/render-mrw51jka.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/a78c25bb-94ce-4833-bcc4-be6dce72ecb1/render-mrw51jka.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Luca Claretti",
+      },
+      {
+        id: "9f7b3df5-721c-410f-8dec-5ce3bc4377c0",
+        collector_number: "023",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/9f7b3df5-721c-410f-8dec-5ce3bc4377c0/render-mrw56w7o.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/9f7b3df5-721c-410f-8dec-5ce3bc4377c0/render-mrw56w7o.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Luca Claretti",
       },
@@ -14156,6 +15116,21 @@ export const rawCards = [
         finish: "standard",
         artist: "Jesús Hervás",
       },
+      {
+        id: "959451ee-79cc-4caa-97bd-cbb3e5f1a70a",
+        collector_number: "011",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/959451ee-79cc-4caa-97bd-cbb3e5f1a70a/render-msyhbaup.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/959451ee-79cc-4caa-97bd-cbb3e5f1a70a/render-msyhbaup.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Jesús Hervás",
+      },
     ],
     selected_printing_id: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
     legality: "legal",
@@ -14467,6 +15442,66 @@ export const rawCards = [
         rarity: "Iconic Legend",
         finish: "standard",
         artist: "Pandart Studio",
+      },
+      {
+        id: "ce137eea-c335-4f03-81f0-4717b75d5ce7",
+        collector_number: "013",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ce137eea-c335-4f03-81f0-4717b75d5ce7/render-msyh4ii0.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ce137eea-c335-4f03-81f0-4717b75d5ce7/render-msyh4ii0.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "0f082a95-b3e2-4563-be0b-88b5d85d6138",
+        collector_number: "017",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/0f082a95-b3e2-4563-be0b-88b5d85d6138/render-mt7ob1qo.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/0f082a95-b3e2-4563-be0b-88b5d85d6138/render-mt7ob1qo.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "248f408c-437b-48df-8410-b7419e2f54d2",
+        collector_number: "021",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/248f408c-437b-48df-8410-b7419e2f54d2/render-msyh51ny.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/248f408c-437b-48df-8410-b7419e2f54d2/render-msyh51ny.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
+      },
+      {
+        id: "ccbdc832-812d-4b93-abd2-c2a5ba1684d2",
+        collector_number: "025",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ccbdc832-812d-4b93-abd2-c2a5ba1684d2/render-msyheqjy.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/ccbdc832-812d-4b93-abd2-c2a5ba1684d2/render-msyheqjy.webp",
+        set: {
+          code: "edgerunneropens1",
+          name: "Edgerunner Open S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Envar Studio",
       },
     ],
     selected_printing_id: "3fc63c58-5954-4744-a5af-047bfc5cb159",
@@ -14884,6 +15919,36 @@ export const rawCards = [
         finish: "standard",
         artist: "Olgierd Ciszak",
       },
+      {
+        id: "3a3900be-bbee-4218-8b58-0e5fa445ee46",
+        collector_number: "013",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/3a3900be-bbee-4218-8b58-0e5fa445ee46/render-mrw56as3.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/3a3900be-bbee-4218-8b58-0e5fa445ee46/render-mrw56as3.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Olgierd Ciszak",
+      },
+      {
+        id: "aea6c98e-6bc5-4912-b7d8-a6558fde5eaf",
+        collector_number: "031",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/aea6c98e-6bc5-4912-b7d8-a6558fde5eaf/render-mrw5ae5n.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/aea6c98e-6bc5-4912-b7d8-a6558fde5eaf/render-mrw5ae5n.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Olgierd Ciszak",
+      },
     ],
     selected_printing_id: "63821536-cdf5-4347-812a-0bf72d727596",
     legality: "legal",
@@ -15081,6 +16146,36 @@ export const rawCards = [
           name: "Welcome to Night City — Beta",
         },
         rarity: "Uncommon",
+        finish: "standard",
+        artist: "Daniel Valaisis",
+      },
+      {
+        id: "7757b045-4ccf-432b-b412-c82a44ee3adc",
+        collector_number: "011",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/7757b045-4ccf-432b-b412-c82a44ee3adc/render-mrw52vaz.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/7757b045-4ccf-432b-b412-c82a44ee3adc/render-mrw52vaz.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
+        finish: "standard",
+        artist: "Daniel Valaisis",
+      },
+      {
+        id: "36d849b2-3d3a-4113-bc69-214a8a91e6d6",
+        collector_number: "029",
+        image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/36d849b2-3d3a-4113-bc69-214a8a91e6d6/render-mrw58p3o.webp",
+        source_image_url:
+          "https://dstcynss47vun.cloudfront.net/prod/cyberpunk/portal/36d849b2-3d3a-4113-bc69-214a8a91e6d6/render-mrw58p3o.webp",
+        set: {
+          code: "nightcitybrawls1",
+          name: "Night City Brawl S 1",
+        },
+        rarity: "Nova Rare",
         finish: "standard",
         artist: "Daniel Valaisis",
       },
@@ -16648,6 +17743,22 @@ export const cards = [
         setCode: "arasakademodeck",
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/arasakademodeck/002.webp",
+      },
+      {
+        id: "a4271ab1-4688-4f98-b000-a186aadd7fee",
+        artId: "a4271ab1-4688-4f98-b000-a186aadd7fee",
+        collectorNumber: "002",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/002.webp",
+      },
+      {
+        id: "bd6fe2cf-bfcd-4de2-bc78-ffc215d39603",
+        artId: "bd6fe2cf-bfcd-4de2-bc78-ffc215d39603",
+        collectorNumber: "020",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/020.webp",
       },
     ],
     selectedPrintingId: "19587d4f-6d47-44fe-b4da-99743e2742f7",
@@ -18523,6 +19634,14 @@ export const cards = [
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/041.webp",
       },
       {
+        id: "726b13d2-0d74-42db-a5e9-b8b852224a16",
+        artId: "726b13d2-0d74-42db-a5e9-b8b852224a16",
+        collectorNumber: "160",
+        setCode: "welcometonightcityretail",
+        rarity: "Iconic Other",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/160.webp",
+      },
+      {
         id: "fdb7a7c3-350e-49ea-8a9e-8477ce6c657a",
         artId: "fdb7a7c3-350e-49ea-8a9e-8477ce6c657a",
         collectorNumber: "β041",
@@ -18537,6 +19656,22 @@ export const cards = [
         setCode: "welcometonightcitybeta",
         rarity: "Iconic Other",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b160.webp",
+      },
+      {
+        id: "2a0fa3c6-f259-49ad-88a2-843713712ccd",
+        artId: "2a0fa3c6-f259-49ad-88a2-843713712ccd",
+        collectorNumber: "002",
+        setCode: "nightcityshowdowns1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcityshowdowns1/002.webp",
+      },
+      {
+        id: "b2d8aa5e-0d41-4c9e-b736-9d61e8153651",
+        artId: "b2d8aa5e-0d41-4c9e-b736-9d61e8153651",
+        collectorNumber: "004",
+        setCode: "nightcityshowdowns1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcityshowdowns1/004.webp",
       },
     ],
     selectedPrintingId: "d23e322f-ad60-431d-b33e-1e8a813248ff",
@@ -18666,6 +19801,14 @@ export const cards = [
         setCode: "edgerunneropens1",
         rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/005.webp",
+      },
+      {
+        id: "08a9b9ec-16b7-407a-90f2-a9536937b879",
+        artId: "08a9b9ec-16b7-407a-90f2-a9536937b879",
+        collectorNumber: "009",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/009.webp",
       },
     ],
     selectedPrintingId: "d53925ee-df55-4b71-8ca0-13ec3ede2076",
@@ -19157,6 +20300,22 @@ export const cards = [
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b066.webp",
       },
+      {
+        id: "f997c534-5208-4c37-8aff-4f6587e606c2",
+        artId: "f997c534-5208-4c37-8aff-4f6587e606c2",
+        collectorNumber: "007",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/007.webp",
+      },
+      {
+        id: "86bc6f96-41d3-4639-b75b-25ae58202b3d",
+        artId: "86bc6f96-41d3-4639-b75b-25ae58202b3d",
+        collectorNumber: "025",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/025.webp",
+      },
     ],
     selectedPrintingId: "decc76ed-f5ed-4f02-90d7-e01e2a3975e0",
     artist: "ADIA",
@@ -19442,6 +20601,22 @@ export const cards = [
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/arasakademodeck/010.webp",
       },
+      {
+        id: "6b574386-2893-4236-86a4-68c48222ae9e",
+        artId: "6b574386-2893-4236-86a4-68c48222ae9e",
+        collectorNumber: "009",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/009.webp",
+      },
+      {
+        id: "8c0cd775-71b6-43f9-af49-1d41386eb1ee",
+        artId: "8c0cd775-71b6-43f9-af49-1d41386eb1ee",
+        collectorNumber: "027",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/027.webp",
+      },
     ],
     selectedPrintingId: "80dcc139-d31d-4b89-86ff-cdbdd2664953",
     artist: "CD PROJEKT RED",
@@ -19563,6 +20738,22 @@ export const cards = [
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b067.webp",
       },
+      {
+        id: "88002e9c-429e-4434-8564-e1b22625ce4e",
+        artId: "88002e9c-429e-4434-8564-e1b22625ce4e",
+        collectorNumber: "008",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/008.webp",
+      },
+      {
+        id: "968eff55-5775-44c1-b5e0-7b1b9293763e",
+        artId: "968eff55-5775-44c1-b5e0-7b1b9293763e",
+        collectorNumber: "026",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/026.webp",
+      },
     ],
     selectedPrintingId: "5aafe80b-7c7d-4060-8677-a2881a21dd72",
     artist: "Michal Ivan",
@@ -19682,6 +20873,22 @@ export const cards = [
         setCode: "mercdemodeck",
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/mercdemodeck/009.webp",
+      },
+      {
+        id: "e03952c1-9f8c-4ecb-8258-ab753ef9c9a7",
+        artId: "e03952c1-9f8c-4ecb-8258-ab753ef9c9a7",
+        collectorNumber: "014",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/014.webp",
+      },
+      {
+        id: "1f3e50a4-54ea-4e77-9ef3-0ceeb38d0278",
+        artId: "1f3e50a4-54ea-4e77-9ef3-0ceeb38d0278",
+        collectorNumber: "032",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/032.webp",
       },
     ],
     selectedPrintingId: "5b9cdefa-29f4-4a3a-a426-eea46302ef60",
@@ -19835,6 +21042,38 @@ export const cards = [
         rarity: "Iconic Legend",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b142.webp",
       },
+      {
+        id: "57e9c376-6cc1-4f05-9b8f-0b161b5c635a",
+        artId: "57e9c376-6cc1-4f05-9b8f-0b161b5c635a",
+        collectorNumber: "012",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/012.webp",
+      },
+      {
+        id: "167ad190-3e97-44bf-bda9-5272774d4025",
+        artId: "167ad190-3e97-44bf-bda9-5272774d4025",
+        collectorNumber: "016",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/016.webp",
+      },
+      {
+        id: "b7ae9f99-d205-4330-b90d-c7d89313274a",
+        artId: "b7ae9f99-d205-4330-b90d-c7d89313274a",
+        collectorNumber: "020",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/020.webp",
+      },
+      {
+        id: "a2f65b15-6ff1-4214-bd89-11685ef9817f",
+        artId: "a2f65b15-6ff1-4214-bd89-11685ef9817f",
+        collectorNumber: "024",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/024.webp",
+      },
     ],
     selectedPrintingId: "9a298f42-3a9f-4510-b2fd-9cf1b34ade27",
     artist: "Envar",
@@ -19881,6 +21120,22 @@ export const cards = [
         setCode: "welcometonightcitybeta",
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b098.webp",
+      },
+      {
+        id: "bd897ed7-a74b-4993-9da5-16f820c3502d",
+        artId: "bd897ed7-a74b-4993-9da5-16f820c3502d",
+        collectorNumber: "012",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/012.webp",
+      },
+      {
+        id: "6121b4c1-b899-4c69-a7d6-674bb6889e29",
+        artId: "6121b4c1-b899-4c69-a7d6-674bb6889e29",
+        collectorNumber: "030",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/030.webp",
       },
     ],
     selectedPrintingId: "e96d3167-5115-4c82-9b35-546cba0aaead",
@@ -20021,6 +21276,22 @@ export const cards = [
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/mercdemodeck/013.webp",
       },
+      {
+        id: "70ef0b79-d569-4a62-bdbc-e02c616f8b98",
+        artId: "70ef0b79-d569-4a62-bdbc-e02c616f8b98",
+        collectorNumber: "016",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/016.webp",
+      },
+      {
+        id: "779c63a5-cec1-47b0-a96e-51369a0ba186",
+        artId: "779c63a5-cec1-47b0-a96e-51369a0ba186",
+        collectorNumber: "034",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/034.webp",
+      },
     ],
     selectedPrintingId: "2b1b6268-193f-4b9e-a63c-0cbc200d6db7",
     artist: "Ivan Shavrin",
@@ -20039,8 +21310,8 @@ export const cards = [
   },
   {
     id: "c688ca08-b3b7-441d-b161-78b9a63a8a9e",
-    canonicalId: "el-sombrero-n-la-venganza-lenta",
-    slug: "el-sombrero-n-la-venganza-lenta",
+    canonicalId: "el-sombreron-la-venganza-lenta",
+    slug: "el-sombreron-la-venganza-lenta",
     name: "El Sombrerón",
     subname: "La Venganza Lenta",
     displayName: "El Sombrerón: La Venganza Lenta",
@@ -20363,6 +21634,14 @@ export const cards = [
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/arasakademodeck/012.webp",
       },
+      {
+        id: "398de6dd-f801-45ca-a183-17de617cf973",
+        artId: "398de6dd-f801-45ca-a183-17de617cf973",
+        collectorNumber: "002",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/002.webp",
+      },
     ],
     selectedPrintingId: "876dfa5c-6df4-4930-b284-f2c466e6b90c",
     artist: "Michal Ivan",
@@ -20435,6 +21714,22 @@ export const cards = [
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/mercdemodeck/014.webp",
       },
+      {
+        id: "2267884a-40c8-49ff-952b-90ec1b977179",
+        artId: "2267884a-40c8-49ff-952b-90ec1b977179",
+        collectorNumber: "018",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/018.webp",
+      },
+      {
+        id: "575138c0-4eae-4d61-abf7-028557a884c8",
+        artId: "575138c0-4eae-4d61-abf7-028557a884c8",
+        collectorNumber: "036",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/036.webp",
+      },
     ],
     selectedPrintingId: "91f9d30c-f74d-4be4-8505-52f05d309c92",
     artist: "DOFRESH",
@@ -20501,8 +21796,8 @@ export const cards = [
   },
   {
     id: "1f71ec32-3c11-466b-bcdd-a8a3009ea8ac",
-    canonicalId: "gilded-mato-n",
-    slug: "gilded-mato-n",
+    canonicalId: "gilded-maton",
+    slug: "gilded-maton",
     name: "Gilded Matón",
     displayName: "Gilded Matón",
     rulesText:
@@ -20999,6 +22294,14 @@ export const cards = [
         rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/004.webp",
       },
+      {
+        id: "5d10162b-32ad-4391-bc39-8b652142e707",
+        artId: "5d10162b-32ad-4391-bc39-8b652142e707",
+        collectorNumber: "008",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/008.webp",
+      },
     ],
     selectedPrintingId: "9103b5db-bf95-4385-8941-308cb0353c9a",
     artist: "Alexander Dudar",
@@ -21088,6 +22391,14 @@ export const cards = [
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/073.webp",
       },
       {
+        id: "60a2f877-f004-43c0-a7a8-9e54258caf31",
+        artId: "60a2f877-f004-43c0-a7a8-9e54258caf31",
+        collectorNumber: "152",
+        setCode: "welcometonightcityretail",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/152.webp",
+      },
+      {
         id: "c1f9ae1a-841f-431f-919a-429de14be070",
         artId: "c1f9ae1a-841f-431f-919a-429de14be070",
         collectorNumber: "β073",
@@ -21110,6 +22421,14 @@ export const cards = [
         setCode: "prereleasebeta",
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/007.webp",
+      },
+      {
+        id: "eb5b20c4-da57-4e36-b45f-330ac15eb6c0",
+        artId: "eb5b20c4-da57-4e36-b45f-330ac15eb6c0",
+        collectorNumber: "044",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/044.webp",
       },
     ],
     selectedPrintingId: "9f61ebda-53fd-4b23-8383-d0e0bd32b847",
@@ -21159,6 +22478,22 @@ export const cards = [
         setCode: "welcometonightcitybeta",
         rarity: "Epic",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b048.webp",
+      },
+      {
+        id: "5b855c9c-bdf3-4743-9653-d6eb6ce3f6f5",
+        artId: "5b855c9c-bdf3-4743-9653-d6eb6ce3f6f5",
+        collectorNumber: "004",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/004.webp",
+      },
+      {
+        id: "adf78727-f462-424c-8689-0b759794ee3c",
+        artId: "adf78727-f462-424c-8689-0b759794ee3c",
+        collectorNumber: "022",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/022.webp",
       },
     ],
     selectedPrintingId: "12d44604-ad7b-4e82-b517-9edb0be44427",
@@ -21340,8 +22675,8 @@ export const cards = [
   },
   {
     id: "4560f3d0-5f63-466b-93b7-fc9d822a556e",
-    canonicalId: "judy-a-lvarez-braindance-maestro",
-    slug: "judy-a-lvarez-braindance-maestro",
+    canonicalId: "judy-alvarez-braindance-maestro",
+    slug: "judy-alvarez-braindance-maestro",
     name: "Judy Álvarez",
     subname: "Braindance Maestro",
     displayName: "Judy Álvarez: Braindance Maestro",
@@ -21387,6 +22722,38 @@ export const cards = [
         rarity: "Epic",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/010.webp",
       },
+      {
+        id: "ffef2e56-444f-4b37-83a1-10a1a4be38fb",
+        artId: "ffef2e56-444f-4b37-83a1-10a1a4be38fb",
+        collectorNumber: "015",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/015.webp",
+      },
+      {
+        id: "acdef65d-d889-4321-9b97-961a4b05d481",
+        artId: "acdef65d-d889-4321-9b97-961a4b05d481",
+        collectorNumber: "019",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/019.webp",
+      },
+      {
+        id: "2de969bb-8353-46c5-b0ea-09d4378fcaae",
+        artId: "2de969bb-8353-46c5-b0ea-09d4378fcaae",
+        collectorNumber: "023",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/023.webp",
+      },
+      {
+        id: "a920bb39-b0e6-4d5e-a8e9-eca50d3dce10",
+        artId: "a920bb39-b0e6-4d5e-a8e9-eca50d3dce10",
+        collectorNumber: "027",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/027.webp",
+      },
     ],
     selectedPrintingId: "8d0ad645-ac9a-4ecb-93d0-4c2061a4c477",
     artist: "Gautier Viller",
@@ -21405,8 +22772,8 @@ export const cards = [
   },
   {
     id: "cb7f8d05-87cc-4606-ad71-a9283f2f4b20",
-    canonicalId: "judy-a-lvarez-nothing-to-doubt",
-    slug: "judy-a-lvarez-nothing-to-doubt",
+    canonicalId: "judy-alvarez-nothing-to-doubt",
+    slug: "judy-alvarez-nothing-to-doubt",
     name: "Judy Álvarez",
     subname: "Nothing to Doubt",
     displayName: "Judy Álvarez: Nothing to Doubt",
@@ -21549,6 +22916,22 @@ export const cards = [
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b012.webp",
       },
+      {
+        id: "d2e8c1c2-6cd4-4d2e-94fa-21b96daaea6b",
+        artId: "d2e8c1c2-6cd4-4d2e-94fa-21b96daaea6b",
+        collectorNumber: "001",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/001.webp",
+      },
+      {
+        id: "c51e7c71-6305-4330-a107-a197af5eeeb2",
+        artId: "c51e7c71-6305-4330-a107-a197af5eeeb2",
+        collectorNumber: "019",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/019.webp",
+      },
     ],
     selectedPrintingId: "c26c7db6-f540-4073-ab33-b09335631764",
     artist: "Bogna Gawrońska",
@@ -21689,8 +23072,8 @@ export const cards = [
   },
   {
     id: "c29aefc5-c8dd-4188-95d9-e46c5ee289eb",
-    canonicalId: "les-e-le-mens",
-    slug: "les-e-le-mens",
+    canonicalId: "les-elemens",
+    slug: "les-elemens",
     name: "Les Élémens",
     displayName: "Les Élémens",
     rulesText: "Bottom-deck a Rival's lowest-power Unit. (If there are multiple, choose 1.)",
@@ -21957,6 +23340,30 @@ export const cards = [
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b118.webp",
       },
+      {
+        id: "a1c75317-6fa9-48f8-b296-cfe6a336f12a",
+        artId: "a1c75317-6fa9-48f8-b296-cfe6a336f12a",
+        collectorNumber: "015",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/015.webp",
+      },
+      {
+        id: "317331e6-55bd-4c4d-9f50-700601f53db2",
+        artId: "317331e6-55bd-4c4d-9f50-700601f53db2",
+        collectorNumber: "033",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/033.webp",
+      },
+      {
+        id: "5cc2112c-10b6-4491-963d-8b517244aaee",
+        artId: "5cc2112c-10b6-4491-963d-8b517244aaee",
+        collectorNumber: "037",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/037.webp",
+      },
     ],
     selectedPrintingId: "8a7131eb-e1dd-46d6-84f6-2de315aee975",
     artist: "TOPDOG Entertainment",
@@ -22029,6 +23436,22 @@ export const cards = [
         setCode: "mercdemodeck",
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/mercdemodeck/005.webp",
+      },
+      {
+        id: "d16f9b63-cc98-4b88-981e-258d1940aa04",
+        artId: "d16f9b63-cc98-4b88-981e-258d1940aa04",
+        collectorNumber: "006",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/006.webp",
+      },
+      {
+        id: "34dd1e1b-5022-4858-91bc-1243ea7f4615",
+        artId: "34dd1e1b-5022-4858-91bc-1243ea7f4615",
+        collectorNumber: "024",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/024.webp",
       },
     ],
     selectedPrintingId: "219b7a29-0f8b-4750-bc46-0f39eec6721b",
@@ -22270,6 +23693,22 @@ export const cards = [
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b082.webp",
       },
+      {
+        id: "f77b20fd-8792-41bb-a634-06030fd2eb6d",
+        artId: "f77b20fd-8792-41bb-a634-06030fd2eb6d",
+        collectorNumber: "010",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/010.webp",
+      },
+      {
+        id: "c89b85cb-aa23-4fa6-b093-aad81bde74a4",
+        artId: "c89b85cb-aa23-4fa6-b093-aad81bde74a4",
+        collectorNumber: "028",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/028.webp",
+      },
     ],
     selectedPrintingId: "22b276f4-7cf6-4b14-a220-8368a0839287",
     artist: "Olgierd Ciszak",
@@ -22463,6 +23902,14 @@ export const cards = [
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b119.webp",
       },
+      {
+        id: "17517c74-9e61-423a-9d65-c7f4b56af29a",
+        artId: "17517c74-9e61-423a-9d65-c7f4b56af29a",
+        collectorNumber: "006",
+        setCode: "PRM01",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/PRM01/006.webp",
+      },
     ],
     selectedPrintingId: "17252514-02ba-4d0d-a9cc-3590cee528af",
     artist: "ADIA",
@@ -22625,8 +24072,8 @@ export const cards = [
   },
   {
     id: "fc516d53-5fd8-43dd-8349-9e60f0606efa",
-    canonicalId: "muamar-reyes-el-capita-n",
-    slug: "muamar-reyes-el-capita-n",
+    canonicalId: "muamar-reyes-el-capitan",
+    slug: "muamar-reyes-el-capitan",
     name: "Muamar Reyes",
     subname: "El Capitán",
     displayName: "Muamar Reyes: El Capitán",
@@ -22663,6 +24110,38 @@ export const cards = [
         setCode: "welcometonightcitybeta",
         rarity: "Iconic Legend",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b147.webp",
+      },
+      {
+        id: "8ed5d5d5-92b6-4f25-b7aa-fa9bee7948d6",
+        artId: "8ed5d5d5-92b6-4f25-b7aa-fa9bee7948d6",
+        collectorNumber: "014",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/014.webp",
+      },
+      {
+        id: "b2240e25-e4ff-4992-9455-8a56bdbbcdb8",
+        artId: "b2240e25-e4ff-4992-9455-8a56bdbbcdb8",
+        collectorNumber: "018",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/018.webp",
+      },
+      {
+        id: "4399e640-6e66-4c0b-b0f5-bb68d26e0e3f",
+        artId: "4399e640-6e66-4c0b-b0f5-bb68d26e0e3f",
+        collectorNumber: "022",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/022.webp",
+      },
+      {
+        id: "f83303e6-72c1-4305-90be-7e4ef6b480f1",
+        artId: "f83303e6-72c1-4305-90be-7e4ef6b480f1",
+        collectorNumber: "026",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/026.webp",
       },
     ],
     selectedPrintingId: "dbbf4a6c-340d-4356-81ad-776940a7ee32",
@@ -22760,6 +24239,22 @@ export const cards = [
         setCode: "welcometonightcitybeta",
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b129.webp",
+      },
+      {
+        id: "f8098004-7b14-4d5a-8398-85c5660e1d8f",
+        artId: "f8098004-7b14-4d5a-8398-85c5660e1d8f",
+        collectorNumber: "017",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/017.webp",
+      },
+      {
+        id: "fbe9274d-e4c4-415f-9914-0fbd5985c0b3",
+        artId: "fbe9274d-e4c4-415f-9914-0fbd5985c0b3",
+        collectorNumber: "035",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/035.webp",
       },
     ],
     selectedPrintingId: "07f119d6-8fb2-4b23-9862-818a7e941010",
@@ -23334,6 +24829,14 @@ export const cards = [
         rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/006.webp",
       },
+      {
+        id: "af1c8374-41a9-4fd7-8597-c6481705c210",
+        artId: "af1c8374-41a9-4fd7-8597-c6481705c210",
+        collectorNumber: "010",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/010.webp",
+      },
     ],
     selectedPrintingId: "8570122a-52aa-4a6b-8d72-4c8848df0f9b",
     artist: "Mattia De Iulis",
@@ -23671,6 +25174,14 @@ export const cards = [
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b087.webp",
       },
+      {
+        id: "4f69c4bd-5b50-4892-a348-1ca16a81f8d6",
+        artId: "4f69c4bd-5b50-4892-a348-1ca16a81f8d6",
+        collectorNumber: "003",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/003.webp",
+      },
     ],
     selectedPrintingId: "1ee3ba07-86b0-4309-be55-4b4698f700b8",
     artist: "Michal Ivan",
@@ -23810,6 +25321,14 @@ export const cards = [
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/039.webp",
       },
       {
+        id: "ef33c0b9-0e13-438e-952b-5d834485b0aa",
+        artId: "ef33c0b9-0e13-438e-952b-5d834485b0aa",
+        collectorNumber: "148",
+        setCode: "welcometonightcityretail",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/148.webp",
+      },
+      {
         id: "b217ae88-52a6-44b3-b021-964db4534dbd",
         artId: "b217ae88-52a6-44b3-b021-964db4534dbd",
         collectorNumber: "β039",
@@ -23832,6 +25351,14 @@ export const cards = [
         setCode: "prereleasebeta",
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/004.webp",
+      },
+      {
+        id: "6545a2e6-9de1-419e-964c-a55d07f9e34d",
+        artId: "6545a2e6-9de1-419e-964c-a55d07f9e34d",
+        collectorNumber: "038",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/038.webp",
       },
     ],
     selectedPrintingId: "b3895f75-e147-49b0-a6d8-6fb35b356b2e",
@@ -24051,6 +25578,14 @@ export const cards = [
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b016.webp",
       },
+      {
+        id: "b3fe1a4f-74da-4882-82a9-14aebd392be4",
+        artId: "b3fe1a4f-74da-4882-82a9-14aebd392be4",
+        collectorNumber: "001",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/001.webp",
+      },
     ],
     selectedPrintingId: "b749ce16-1b44-47d8-bce4-4fd373007a5c",
     artist: "Mooncolony",
@@ -24093,6 +25628,14 @@ export const cards = [
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/004.webp",
       },
       {
+        id: "181a18f4-f6ba-4b23-bc56-ca43bd7d0843",
+        artId: "181a18f4-f6ba-4b23-bc56-ca43bd7d0843",
+        collectorNumber: "143",
+        setCode: "welcometonightcityretail",
+        rarity: "Iconic Legend",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcityretail/143.webp",
+      },
+      {
         id: "0e4966a2-e5cf-4acd-905a-750e9c4cefff",
         artId: "0e4966a2-e5cf-4acd-905a-750e9c4cefff",
         collectorNumber: "β004",
@@ -24115,6 +25658,14 @@ export const cards = [
         setCode: "prereleasebeta",
         rarity: "Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/prereleasebeta/002.webp",
+      },
+      {
+        id: "e59f737b-83e1-45f2-a469-8bde0146b967",
+        artId: "e59f737b-83e1-45f2-a469-8bde0146b967",
+        collectorNumber: "032",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/032.webp",
       },
     ],
     selectedPrintingId: "3e2e228b-dbfb-484b-b82d-6972ff184aab",
@@ -24352,6 +25903,30 @@ export const cards = [
         imageUrl:
           "https://cdn.tcg.online/public/cyberpunk/cards/embracingpowerbetastarterdeck/b019.webp",
       },
+      {
+        id: "a9eb38f2-fe64-47c5-9938-9b6ecb01c913",
+        artId: "a9eb38f2-fe64-47c5-9938-9b6ecb01c913",
+        collectorNumber: "001",
+        setCode: "nightcityshowdowns1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcityshowdowns1/001.webp",
+      },
+      {
+        id: "6f8d1015-dd5d-49c4-9620-6b3b0c7ee82a",
+        artId: "6f8d1015-dd5d-49c4-9620-6b3b0c7ee82a",
+        collectorNumber: "003",
+        setCode: "nightcityshowdowns1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcityshowdowns1/003.webp",
+      },
+      {
+        id: "36d42759-0199-47f0-835b-ee6616842e49",
+        artId: "36d42759-0199-47f0-835b-ee6616842e49",
+        collectorNumber: "005",
+        setCode: "nightcityshowdowns1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcityshowdowns1/005.webp",
+      },
     ],
     selectedPrintingId: "97de62e2-3fea-4324-8367-87d1f1d674ed",
     artist: "CD Projekt Red",
@@ -24483,6 +26058,22 @@ export const cards = [
         setCode: "arasakademodeck",
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/arasakademodeck/005.webp",
+      },
+      {
+        id: "c0a913fe-d3fc-4558-a35f-cfa34d4023c3",
+        artId: "c0a913fe-d3fc-4558-a35f-cfa34d4023c3",
+        collectorNumber: "003",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/003.webp",
+      },
+      {
+        id: "922e0824-cef0-4062-bb6f-5e30f4814f40",
+        artId: "922e0824-cef0-4062-bb6f-5e30f4814f40",
+        collectorNumber: "021",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/021.webp",
       },
     ],
     selectedPrintingId: "11a8fed4-5401-4cfc-901b-ab9b5b94d0ab",
@@ -24653,6 +26244,22 @@ export const cards = [
         setCode: "mercdemodeck",
         rarity: "Common",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/mercdemodeck/003.webp",
+      },
+      {
+        id: "a78c25bb-94ce-4833-bcc4-be6dce72ecb1",
+        artId: "a78c25bb-94ce-4833-bcc4-be6dce72ecb1",
+        collectorNumber: "005",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/005.webp",
+      },
+      {
+        id: "9f7b3df5-721c-410f-8dec-5ce3bc4377c0",
+        artId: "9f7b3df5-721c-410f-8dec-5ce3bc4377c0",
+        collectorNumber: "023",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/023.webp",
       },
     ],
     selectedPrintingId: "fcbb6d58-6666-4bd3-8ff0-64930fb0f422",
@@ -25379,6 +26986,14 @@ export const cards = [
         rarity: "Nova Rare",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/007.webp",
       },
+      {
+        id: "959451ee-79cc-4caa-97bd-cbb3e5f1a70a",
+        artId: "959451ee-79cc-4caa-97bd-cbb3e5f1a70a",
+        collectorNumber: "011",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/011.webp",
+      },
     ],
     selectedPrintingId: "70a2a18e-05c2-4a49-9236-e33b2c9819a5",
     artist: "Jesús Hervás",
@@ -25597,6 +27212,38 @@ export const cards = [
         setCode: "welcometonightcitybeta",
         rarity: "Iconic Legend",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b144.webp",
+      },
+      {
+        id: "ce137eea-c335-4f03-81f0-4717b75d5ce7",
+        artId: "ce137eea-c335-4f03-81f0-4717b75d5ce7",
+        collectorNumber: "013",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/013.webp",
+      },
+      {
+        id: "0f082a95-b3e2-4563-be0b-88b5d85d6138",
+        artId: "0f082a95-b3e2-4563-be0b-88b5d85d6138",
+        collectorNumber: "017",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/017.webp",
+      },
+      {
+        id: "248f408c-437b-48df-8410-b7419e2f54d2",
+        artId: "248f408c-437b-48df-8410-b7419e2f54d2",
+        collectorNumber: "021",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/021.webp",
+      },
+      {
+        id: "ccbdc832-812d-4b93-abd2-c2a5ba1684d2",
+        artId: "ccbdc832-812d-4b93-abd2-c2a5ba1684d2",
+        collectorNumber: "025",
+        setCode: "edgerunneropens1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/edgerunneropens1/025.webp",
       },
     ],
     selectedPrintingId: "3fc63c58-5954-4744-a5af-047bfc5cb159",
@@ -25896,6 +27543,22 @@ export const cards = [
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b104.webp",
       },
+      {
+        id: "3a3900be-bbee-4218-8b58-0e5fa445ee46",
+        artId: "3a3900be-bbee-4218-8b58-0e5fa445ee46",
+        collectorNumber: "013",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/013.webp",
+      },
+      {
+        id: "aea6c98e-6bc5-4912-b7d8-a6558fde5eaf",
+        artId: "aea6c98e-6bc5-4912-b7d8-a6558fde5eaf",
+        collectorNumber: "031",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/031.webp",
+      },
     ],
     selectedPrintingId: "63821536-cdf5-4347-812a-0bf72d727596",
     artist: "Olgierd Ciszak",
@@ -26038,6 +27701,22 @@ export const cards = [
         setCode: "welcometonightcitybeta",
         rarity: "Uncommon",
         imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/welcometonightcitybeta/b092.webp",
+      },
+      {
+        id: "7757b045-4ccf-432b-b412-c82a44ee3adc",
+        artId: "7757b045-4ccf-432b-b412-c82a44ee3adc",
+        collectorNumber: "011",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/011.webp",
+      },
+      {
+        id: "36d849b2-3d3a-4113-bc69-214a8a91e6d6",
+        artId: "36d849b2-3d3a-4113-bc69-214a8a91e6d6",
+        collectorNumber: "029",
+        setCode: "nightcitybrawls1",
+        rarity: "Nova Rare",
+        imageUrl: "https://cdn.tcg.online/public/cyberpunk/cards/nightcitybrawls1/029.webp",
       },
     ],
     selectedPrintingId: "0944037e-5b14-4332-b345-7935924c2125",

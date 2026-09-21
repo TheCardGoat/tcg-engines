@@ -57,7 +57,7 @@ describe("Usurp preview interaction QA", () => {
     await waitFor(
       () => {
         const history = screen.getByRole("region", { name: "Match history" });
-        expect(history.textContent).toContain("Restless Corporal was destroyed");
+        expect(history.textContent).toContain("Forsaken Strike destroyed Restless Corporal");
         expect(history.textContent).toContain("Discarded Restless Corporal");
         expect(history.textContent).toContain("created Gate to i'Arathael");
         expect(history.textContent).toContain("hit Practice bot for 5");
@@ -90,25 +90,36 @@ describe("Usurp preview interaction QA", () => {
       })[0],
     ).toBeDefined();
   }, 30_000);
-  it("highlights only the controlled Runechant and resolves Usurp with one board click", async () => {
+  it("highlights every Runechant in play for Usurp and resolves it with one board click", async () => {
     await openFixture("runic-reaving-red");
+    // UST Usurp pays with any public arena Runechant, regardless of
+    // controller — the opponent's Runechant is a legal payment too.
     const ownArena = screen.getByRole("region", { name: "Your arena" });
     const opponentArena = screen.getByRole("region", { name: "Opponent arena" });
-    const own = ownArena.querySelector<HTMLElement>("[data-card-interaction='actionable']")!;
-    expect(own).not.toBeNull();
-    expect(opponentArena.querySelector("[data-card-interaction='actionable']")).toBeNull();
-    fireEvent.click(own);
+    const own = ownArena.querySelectorAll<HTMLElement>("[data-card-interaction='actionable']");
+    const opposing = opponentArena.querySelectorAll<HTMLElement>(
+      "[data-card-interaction='actionable']",
+    );
+    expect(own).toHaveLength(2);
+    expect(opposing).toHaveLength(1);
+    // Pay Usurp with the opponent's Runechant, straight from the board.
+    fireEvent.click(opposing[0]!);
     await waitFor(() =>
       expect(screen.getByRole("region", { name: "Match history" }).textContent).toContain(
-        "You usurped with Runechant",
+        "destroyed Runechant to usurp",
       ),
     );
-    expect(screen.queryByRole("region", { name: "Current effect" })).toBeNull();
+    // The destroyed payment was the opponent's Runechant; the own pair remains.
     expect(
-      within(screen.getByRole("region", { name: "Opponent arena" })).getAllByRole("button", {
+      within(screen.getByRole("region", { name: "Opponent arena" })).queryByRole("button", {
         name: /^Runechant, /,
-      })[0],
-    ).toBeDefined();
+      }),
+    ).toBeNull();
+    expect(
+      within(screen.getByRole("region", { name: "Your arena" })).getAllByRole("button", {
+        name: /^Runechant, /,
+      }).length,
+    ).toBeGreaterThan(0);
     expect(screen.queryByRole("dialog")).toBeNull();
   }, 30_000);
   it.each(["desktop", "mobile"] as const)(

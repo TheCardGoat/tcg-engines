@@ -16,14 +16,28 @@ function createEngine(seed = "ai-player-test") {
   const decks = createTestDecks();
   const catalog = createTestCatalog();
   const state = createMatchState({ players, catalog, deckLists: decks, seed });
-  return { engine: new LocalEngine(state), players };
+  const engine = new LocalEngine(state);
+  for (const player of players) {
+    const choice = engine.getPrompt(player.id).choice;
+    if (choice?.type !== "chooseFirstPlayer") continue;
+    engine.processCommand(
+      {
+        commandID: `${seed}-choose-first`,
+        move: "resolveFirstPlayer",
+        input: { args: { goFirst: true } },
+      },
+      player.id,
+    );
+    break;
+  }
+  return { engine, players };
 }
 
 describe("AIPlayer.step", () => {
   test("acts when the prompt is actionable", () => {
     const { engine, players } = createEngine();
     const ai = new AIPlayer(engine, players[0]!.id, firstLegalStrategy);
-    // First step should succeed: setup phase has at least concede + mulligan.
+    // After first-player selection, setup offers at least keep/mulligan.
     const result = ai.step();
     expect(["acted", "idle"]).toContain(result.kind);
   });

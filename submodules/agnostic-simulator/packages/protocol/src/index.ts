@@ -13,3 +13,4 @@ export * from "./viewer-scope.js";
 export * from "./ws-ticket.js";
 
 export * from "./presentation.js";
+export * from "./drop-eligibility.js";

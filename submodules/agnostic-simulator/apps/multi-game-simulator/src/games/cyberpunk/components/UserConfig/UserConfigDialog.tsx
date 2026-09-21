@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { SimulatorSettingsDialog } from "../../../../simulator/participant-actions/SimulatorParticipantActions";
+import { PaymentSelectionModeControl } from "../../../../simulator/settings";
 import {
   useUserConfig,
   useSetUserConfig,
-  type AnimationPacing,
   type DiceDisplayMode,
   type DiceImageColor,
   type DicierStyle,
@@ -40,12 +40,6 @@ const DICIER_STYLES: ReadonlyArray<{ value: DicierStyle; label: string }> = [
   { value: "Block-Light", label: "Block – Light" },
   { value: "Block-Dark", label: "Block – Dark" },
   { value: "Pixel", label: "Pixel" },
-];
-
-const ANIMATION_PACING: ReadonlyArray<{ value: AnimationPacing; label: string; desc: string }> = [
-  { value: "fast", label: "Fast", desc: "Short result pause for faster repeated plays." },
-  { value: "standard", label: "Standard", desc: "Balanced result pause before cleanup." },
-  { value: "cinematic", label: "Cinematic", desc: "Longer result pause for maximum clarity." },
 ];
 
 const FIELD_CARD_SIZES: ReadonlyArray<{ value: FieldCardSize; label: string; desc: string }> = [
@@ -155,28 +149,8 @@ export function CyberpunkSettingsFields() {
       </fieldset>
 
       <fieldset className={classes.fieldset}>
-        <legend className={classes.legend}>Animation Pacing</legend>
-        <div className={classes.radioGroup}>
-          {ANIMATION_PACING.map(({ value, label, desc }) => (
-            <label
-              key={value}
-              className={`${classes.radioRow} ${config.animationPacing === value ? classes.radioRowActive : ""}`}
-            >
-              <input
-                type="radio"
-                className={classes.radioInput}
-                name="animationPacing"
-                value={value}
-                checked={config.animationPacing === value}
-                onChange={() => setConfig({ animationPacing: value })}
-              />
-              <div className={classes.radioLabel}>
-                <span className={classes.radioTitle}>{label}</span>
-                <span className={classes.radioDesc}>{desc}</span>
-              </div>
-            </label>
-          ))}
-        </div>
+        <legend className={classes.legend}>Payment</legend>
+        <PaymentSelectionModeControl />
       </fieldset>
     </div>
   );

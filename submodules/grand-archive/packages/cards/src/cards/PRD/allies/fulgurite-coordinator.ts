@@ -62,7 +62,7 @@ export const fulguriteCoordinator: GrandArchiveCard<GrandArchiveAbilityDefinitio
           kind: "activated",
           text: "[Element Bonus] (1), Banish this card from your graveyard: Put a static counter on target arcane element object you control and each object linked to it.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "all",
             costs: [

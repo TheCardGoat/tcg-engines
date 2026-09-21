@@ -3,12 +3,17 @@ import { createFabLoopGuard } from "@tcg/flesh-and-blood-types";
 import type { FabDecision, FabDecisionAnswer } from "./process.ts";
 import type { FabRulesSnapshot } from "../kernel/transaction-kernel.ts";
 import { distinctPrintedNameCount } from "../kernel/different-names.ts";
+import { fabScopedAutoPassActive } from "./automation-verdict.ts";
 
 /** One automatic decision, in real commit order. */
 export interface FabAutomaticDecision {
   readonly actorId: string;
   readonly decisionId: string;
-  readonly decisionKind: "trigger-order" | "trigger-first-player" | "entity-target";
+  readonly decisionKind:
+    | "trigger-order"
+    | "trigger-first-player"
+    | "entity-target"
+    | "optional-effect-decline";
 }
 
 /** The raw answer-decision payload the automation submits on the actor's behalf. */
@@ -84,6 +89,19 @@ function automaticDecisionFor(
     if (preferences?.autoOrderTriggers !== true) return null;
     const answer = fabDefaultTriggerOrderAnswer(decision);
     return answer ? { decisionKind: decision.continuation.kind, answer } : null;
+  }
+  // A scoped auto-pass arm is the seat's explicit opt-out of interacting, so
+  // its own optional effects decline without surfacing. Other players' prompts
+  // and every non-optional decision still stop the drain.
+  if (
+    decision.kind === "boolean" &&
+    decision.continuation.kind === "optional-effect" &&
+    fabScopedAutoPassActive(state, decision.actorId)
+  ) {
+    return {
+      decisionKind: "optional-effect-decline",
+      answer: { kind: "boolean", value: false },
+    };
   }
   if (preferences?.autoSelectSingletonTargets !== true) return null;
   const answer = fabForcedEntityTargetAnswer(decision);

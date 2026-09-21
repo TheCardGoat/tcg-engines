@@ -69,6 +69,9 @@ function isAtResolutionObjectTarget(target: FabTarget): target is FabAtResolutio
   return target.selector === "object" && target.declared === "at-resolution";
 }
 
+/** Hidden-zone picks: the zone owner determines the card (CR 1.8.6). */
+const PRIVATE_PICK_ZONES: ReadonlySet<string> = new Set(["hand", "deck", "arsenal"]);
+
 /** Repeat-until-declined: a false optional under this iteration ends the loop. */
 function iterationWasDeclined(
   choices: Readonly<Record<string, boolean>>,
@@ -642,28 +645,12 @@ function findDecisionImpl(
     );
     if (mainFound) return mainFound;
     if (!effect.then) return null;
-    // Stage outputBinding from the principal's answered at-resolution target so
-    // "If you do, equip same subtype" (Taylor) can filter inventory candidates
-    // against the chosen banished equipment before events fire.
-    const stagedLayer = stageBindingsFromAnsweredTarget(
-      state,
-      layer,
-      effect.effect,
-      mainPath,
-      targets,
-    );
-    return findDecision(
-      state,
-      stagedLayer,
-      effect.then,
-      [...path, 1],
-      `${targetPath}:then`,
-      choices,
-      partitions,
-      options,
-      targets,
-    );
+    // CR 6.1.2: generate the dependent instruction only after the accepted
+    // principal has committed. Its targets may depend on output bindings or
+    // on a seat/zone vacated by that principal (Taylor).
+    return pending({ kind: "optional-commit", path: [...path, 1] }, layer);
   }
+
   // "Do X unless they pay Y": interactive escape payment (Coronet Peak family).
   // Boolean choice at `path` means "pay escape?" (answered by the escape payer
   // via optional.chooser). True → walk escape; false / unaffordable → principal.
@@ -1144,6 +1131,19 @@ function findDecisionImpl(
       if (exactCount !== null && !isUpTo && pool && pool.length === exactCount) {
         // Fall through so the leaf proposes against the live pool.
       } else {
+        // CR 1.8.6a: "each hero …" has every instructed hero determine their
+        // own private-zone pick in turn order. A single decision carries one
+        // actorId, so a bare `each` over a private zone cannot be represented —
+        // author the per-hero loop (for-each + iteration-subject, Codex of
+        // Frailty) or an explicit chooser instead of silently asking one seat.
+        if (
+          resolvedTarget.player === "each" &&
+          (resolvedTarget.zones ?? []).some((zone) => PRIVATE_PICK_ZONES.has(zone))
+        ) {
+          throw new Error(
+            `at-resolution target ${JSON.stringify(targetPath)}: player "each" over a private zone (${(resolvedTarget.zones ?? []).join(", ")}) needs one chooser per hero — author for-each + iteration-subject (Codex of Frailty pattern) or an explicit chooser`,
+          );
+        }
         const actorId = resolutionTargetActorId(state, scanLayer, effect, resolvedTarget);
         return pending({ kind: "target", path, target: resolvedTarget, actorId }, layer);
       }
@@ -1250,31 +1250,39 @@ function findDecisionImpl(
     }
   }
   if (effect.type === "repeat") {
-    const times = resolveRepeatTimes(state, layer, effect.times, effect.until);
-    if (times === null) return null;
-    for (let index = 0; index < times; index += 1) {
-      const iterationPath = [...path, index];
-      if (
-        effect.until === "declined" &&
-        index > 0 &&
-        !iterationWasAccepted(choices, [...path, index - 1])
-      ) {
-        break;
-      }
-      const found = findDecision(
-        state,
+    const frame = layer.repeatFrames?.[path.join(".")];
+    const limit = frame?.limit ?? resolveRepeatTimes(state, layer, effect.times, effect.until);
+    if (limit === null || limit === 0) return null;
+    if (!frame)
+      return pending(
+        { kind: "repeat-start", path, repeatPath: path, targetPath, effect, limit, index: 0 },
         layer,
-        effect.effect,
-        iterationPath,
-        `${targetPath}:repeat-${index}`,
-        choices,
-        partitions,
-        options,
-        targets,
       );
-      if (found) return found;
-      if (effect.until === "declined" && iterationWasDeclined(choices, iterationPath)) break;
-    }
+    const iterationPath = [...path, frame.index];
+    const found = findDecision(
+      state,
+      layer,
+      effect.effect,
+      iterationPath,
+      `${targetPath}:repeat-${frame.index}`,
+      choices,
+      partitions,
+      options,
+      targets,
+    );
+    if (found) return found;
+    return pending(
+      {
+        kind: "repeat-commit",
+        path: iterationPath,
+        repeatPath: path,
+        targetPath,
+        effect,
+        limit,
+        index: frame.index,
+      },
+      layer,
+    );
   }
   // "Do X. If you do, Y" continuation on leaves that carry FabEffectBase.then
   // (conditional/unless already walked their branches above — TS has narrowed
@@ -2047,6 +2055,19 @@ function resolutionTargetActorId(
     }
     if (target.player === "target-controller") {
       return resolveChooserSeat(state, layer, "target-controller");
+    }
+    // CR 1.8.6: the player instructed by the effect determines the parameters.
+    // These player strings NAME the instructed seat for its own zone ("each
+    // hero banishes a card from their hand", "the winner discards a card",
+    // "they may give you a token") — that seat answers, regardless of zone
+    // visibility; only the candidate legality depends on the pool.
+    if (
+      target.player === "each-other-hero" ||
+      target.player === "another-hero" ||
+      target.player === "winner" ||
+      target.player === "loser"
+    ) {
+      return resolveChooserSeat(state, layer, target.player);
     }
     // for-each "their graveyard" omits player; the bound seat answers.
     if (!target.player) {

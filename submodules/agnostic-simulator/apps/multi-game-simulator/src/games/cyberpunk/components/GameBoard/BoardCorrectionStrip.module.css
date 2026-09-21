@@ -1,0 +1,105 @@
+.strip {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  z-index: 80;
+  display: flex;
+  width: min(520px, calc(100% - 24px));
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  padding: 4px 10px;
+  border: 1px solid rgb(245 230 66 / 42%);
+  background: rgb(8 12 18 / 92%);
+  color: #e6f4fb;
+  font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  transform: translateX(-50%);
+}
+
+.kicker {
+  color: rgb(245 230 66 / 86%);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.strip strong {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  color: #f5e642;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.exit {
+  min-height: 32px;
+  border: 1px solid rgb(230 244 251 / 24%);
+  border-radius: 6px;
+  background: rgb(230 244 251 / 7%);
+  color: #e6f4fb;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  padding: 0 10px;
+}
+
+.exit:hover {
+  background: rgb(230 244 251 / 14%);
+}
+
+.tools {
+  flex-basis: 100%;
+  min-width: 0;
+}
+
+.tools summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  list-style: none;
+}
+
+.tools summary::-webkit-details-marker {
+  display: none;
+}
+
+.toolsBody {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.toolGroup {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  color: #e6f4fb;
+  font-size: 11px;
+}
+
+.bagList {
+  flex-basis: 100%;
+  color: #e6f4fb;
+  font-size: 11px;
+}
+
+.bagList ul {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bagList li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}

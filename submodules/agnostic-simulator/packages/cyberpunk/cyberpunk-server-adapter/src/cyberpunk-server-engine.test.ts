@@ -4,6 +4,42 @@ import type { LocalEngine, MatchState, PlayerPrompt } from "@tcg/cyberpunk-engin
 import type { DispatchSuccess } from "@tcg/shared/game-engine";
 import { CyberpunkServerEngine } from "./cyberpunk-server-engine.js";
 
+describe("CyberpunkServerEngine timeout drop", () => {
+  it("honors reserve grace before a timeout drop and never offers skip", () => {
+    const now = 1_700_000_000_000;
+    const engine = new CyberpunkServerEngine({
+      getState: () => ({
+        ctx: {
+          stateID: 4,
+          timeControl: { mode: "dynamic", config: { graceMs: 15_000 } },
+          clockState: {
+            p2: { reserveMsRemaining: 0, lastUpdatedAtMs: now, isOnClock: true },
+          },
+        },
+        G: { gameEnded: false },
+      }),
+    } as unknown as LocalEngine);
+
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now + 14_999,
+      }),
+    ).toMatchObject({
+      skip: { allowed: false, reason: "skip_unsupported" },
+      drop: { allowed: false, reason: "timeout_grace_pending" },
+    });
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now + 15_000,
+      }).drop.allowed,
+    ).toBe(true);
+  });
+});
+
 describe("CyberpunkServerEngine interaction submission", () => {
   it("rejects invalid protocol values before native command dispatch", () => {
     const calls: unknown[] = [];
@@ -110,17 +146,19 @@ describe("CyberpunkServerEngine animation packets", () => {
           steps: [
             {
               id: "step-1",
-              kind: "phaseChange",
+              kind: "cardMove",
               startMs: 0,
-              durationMs: 120,
-              from: "main",
-              to: "run",
+              durationMs: 240,
+              reason: "cardMoved",
+              cardId: "unit-1",
+              fromZone: "hand",
+              toZone: "field",
               playerId: "p1",
             },
             {
               id: "step-2",
               kind: "entityStateChange",
-              startMs: 120,
+              startMs: 240,
               durationMs: 120,
               reason: "cardSpent",
               cardId: "unit-1",
@@ -129,21 +167,22 @@ describe("CyberpunkServerEngine animation packets", () => {
             },
             {
               id: "step-3",
-              kind: "randomization",
-              startMs: 240,
+              kind: "legendReveal",
+              startMs: 360,
               durationMs: 120,
-              reason: "deckShuffled",
+              reason: "legendCalled",
+              cardId: "legend-1",
               playerId: "p1",
-              randomization: "shuffle",
             },
             {
               id: "step-4",
-              kind: "gameResult",
+              kind: "resourceFloat",
               startMs: 360,
               durationMs: 120,
-              reason: "gameEnded",
-              winnerId: "p1",
-              reasonLabel: "concession",
+              reason: "eddiesSpent",
+              resource: "eddies",
+              playerId: "p1",
+              delta: -1,
             },
           ],
           totalDurationMs: 480,
@@ -178,16 +217,32 @@ describe("CyberpunkServerEngine animation packets", () => {
       },
     });
     expect(result.animationPlan?.steps).toMatchObject([
-      { type: "phaseChange" },
+      {
+        type: "entityTransfer",
+        entity: { id: "unit-1" },
+        from: { kind: "zone", id: "hand" },
+        to: { kind: "zone", id: "field" },
+      },
       {
         type: "entityStateChange",
         change: "orientation",
+        entity: { id: "unit-1" },
         fromRotationDeg: 0,
         toRotationDeg: 90,
       },
-      { type: "randomization", kind: "shuffle" },
-      { type: "gameResult", outcome: "winner", winner: { kind: "player", id: "p1" } },
+      {
+        type: "entityStateChange",
+        change: "face",
+        entity: { id: "legend-1" },
+      },
+      {
+        type: "valueDelta",
+        subject: { kind: "zone", id: "eddieArea" },
+        delta: -1,
+      },
     ]);
+    expect(JSON.stringify(result.animationPlan)).not.toContain("resolving-program");
+    expect(result.animationPlan?.steps.some((step) => step.type === "hold")).toBe(false);
   });
 });
 
@@ -330,5 +385,72 @@ describe("CyberpunkServerEngine public game-end summary", () => {
     } as unknown as LocalEngine);
 
     expect(engine.getPublicGameEndSummary()).toBeUndefined();
+  });
+});
+
+describe("CyberpunkServerEngine rewind to turn start", () => {
+  it("restores via the in-memory checkpoint and advances the authoritative state id", () => {
+    const state = {
+      ctx: { stateID: 7 },
+      G: {
+        gameEnded: false,
+        turnMetadata: { turnNumber: 1 },
+      },
+    } as MatchState;
+    const engine = new CyberpunkServerEngine({
+      getStateID: () => state.ctx.stateID,
+      restoreToTurnStart: () => {
+        state.ctx.stateID = 8;
+        return { success: true, restoredTurnNumber: 1 };
+      },
+      getState: () => state,
+    } as unknown as LocalEngine);
+
+    const result = engine.dispatch(
+      "rewindToTurnStart",
+      "p1",
+      {},
+      { gameId: "g1", sourceAuthority: "server" },
+    );
+
+    expect(result.success).toBe(true);
+    expect(result).toMatchObject({
+      stateID: 8,
+      acceptedMoveRecord: {
+        moveId: "rewindToTurnStart",
+        transitionType: "undo",
+        undoneStateID: 7,
+      },
+      undoable: false,
+    });
+  });
+
+  it("surfaces a missing in-memory checkpoint as a failed dispatch", () => {
+    const state = {
+      ctx: { stateID: 2 },
+      G: {
+        gameEnded: false,
+        turnMetadata: { turnNumber: 1 },
+      },
+    } as MatchState;
+    const engine = new CyberpunkServerEngine({
+      getStateID: () => state.ctx.stateID,
+      restoreToTurnStart: () => ({
+        success: false,
+        error: "No in-memory turn-start checkpoint is available for the current turn",
+        errorCode: "NO_TURN_START_CHECKPOINT",
+      }),
+      getState: () => state,
+    } as unknown as LocalEngine);
+
+    const result = engine.dispatch(
+      "rewindToTurnStart",
+      "p1",
+      {},
+      { gameId: "g1", sourceAuthority: "server" },
+    );
+
+    expect(result.success).toBe(false);
+    expect(result).toMatchObject({ errorCode: "NO_TURN_START_CHECKPOINT", stateID: 2 });
   });
 });

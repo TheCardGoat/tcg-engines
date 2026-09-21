@@ -69,23 +69,34 @@ export const volatileFusilier: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "deal-damage",
-                  source: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "deal-damage",
+                    source: {
+                      kind: "source",
+                    },
+                    recipient: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    amount: 4,
                   },
-                  recipient: {
-                    kind: "champion",
-                    player: "controller",
-                  },
-                  amount: 4,
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "set-object-state",
-                  subject: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  state: "distant",
-                  value: true,
+                  then: {
+                    kind: "set-object-state",
+                    subject: {
+                      kind: "source",
+                    },
+                    state: "distant",
+                    value: true,
+                  },
                 },
               ],
             },

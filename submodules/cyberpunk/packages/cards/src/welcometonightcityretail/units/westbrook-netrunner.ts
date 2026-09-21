@@ -25,7 +25,7 @@ export const welcomeToNightCityRetailWestbrookNetrunner = defineCyberpunkCard({
   abilities: [
     {
       kind: "triggered",
-      text: "Play Until your next turn, rival Legends can't steal friendly Gigs with value less than their power.",
+      text: "{Play} Until your next turn, rival Legends can't steal friendly Gigs with value less than their power.",
       trigger: { trigger: "play" },
       source: { selector: "self" },
       effects: [

@@ -32,6 +32,7 @@ export const marchHareMottledHost: GrandArchiveCard<GrandArchiveAbilityDefinitio
           id: "7w4v1hgl3e-a1",
           kind: "triggered",
           text: "[Element Bonus] Whenever this card is banished from your graveyard to pay for a reserve cost, put it onto the field. (Apply this effect only if your champion's element matches this card's element.)",
+          functionalZones: ["graveyard"],
           trigger: {
             kind: "event",
             event: {
@@ -41,6 +42,9 @@ export const marchHareMottledHost: GrandArchiveCard<GrandArchiveAbilityDefinitio
                 kind: "source",
               },
               from: "graveyard",
+              payment: {
+                costKind: "reserve",
+              },
             },
           },
           restrictions: [

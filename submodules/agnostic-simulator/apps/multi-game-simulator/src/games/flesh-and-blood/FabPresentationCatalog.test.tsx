@@ -57,6 +57,25 @@ afterEach(() => {
 });
 
 describe.sequential("FAB catalog readiness and rendering", () => {
+  it("labels unresolved board art as loading until the presentation catalog settles", () => {
+    const view = render(
+      <MantineProvider>
+        <FabPresentationCatalogProvider>
+          <FabCardPreviewProvider>
+            <FabBoardCardFace entity={quiver} density="compact" />
+          </FabCardPreviewProvider>
+        </FabPresentationCatalogProvider>
+      </MantineProvider>,
+    );
+    expect(
+      view.container
+        .querySelector(".fab-board-card-face-shell")
+        ?.getAttribute("data-fab-image-state"),
+    ).toBe("loading");
+    expect(view.getByText("Loading art")).toBeTruthy();
+    expect(view.queryByText("Image unavailable")).toBeNull();
+  });
+
   // The hosted bundle is installed before card components render.
   it("installs the hosted bundle synchronously and renders newly revealed identities", async () => {
     const view = render(<Cards entity={quiver} />);

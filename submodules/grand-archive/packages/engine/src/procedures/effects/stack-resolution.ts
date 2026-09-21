@@ -1,3 +1,5 @@
+import { grandArchiveBanishmentProvenance } from "./evaluation.ts";
+import { proposeGrandArchiveAttackRedirection } from "../combat/combat.ts";
 import { grandArchiveCardIsObject, grandArchiveObjectFace } from "../../game/card-runtime.ts";
 import type {
   GrandArchiveAbilityCost,
@@ -20,6 +22,7 @@ import {
   grandArchiveObjectCurrentCharacteristics,
 } from "../../rules/state/continuous.ts";
 import {
+  grandArchiveCardHasActivationElements,
   declareGrandArchiveModes,
   declareGrandArchiveTargets,
   grandArchiveChampionLevelUpRequirements,
@@ -48,6 +51,7 @@ import {
   grandArchiveEvaluationObject,
   grandArchiveObjectCounterCount,
   resolveGrandArchiveCollection,
+  resolveGrandArchiveIterationIds,
   resolveGrandArchivePlayers,
   resolveGrandArchiveSubjectObjects,
   type GrandArchiveEvaluationContext,
@@ -693,7 +697,9 @@ export function grandArchiveFizzledCardDispositionEvent(
     effectSpecified: true,
     ...(controllerIds[0] ? { newControllerId: controllerIds[0] } : {}),
     ...(hosts[0] ? { hostId: hosts[0].id } : {}),
-    ...(destination.zone === "banishment" ? { banishedBySourceId: card.id } : {}),
+    ...(destination.zone === "banishment"
+      ? { banishedBy: { sourceId: card.id, sourceIncarnation: card.incarnation } }
+      : {}),
     placement: dispositionPlacement(destination),
     ...(disposition.facing ? { entryFacing: disposition.facing } : {}),
     ...(destination.zone === "field" && destination.face ? { entryFace: destination.face } : {}),
@@ -1709,12 +1715,93 @@ function subjectMayBeBoundByAnEarlierEffect(
   return subject.kind === "bound" || subject.kind === "binding-remainder";
 }
 
-/** Whether an all-or-nothing optional clause is already known to be impossible. */
-function optionalEffectCannotBeFullyPerformed(
+/** Only retain a reserve-capacity snapshot across effects known not to create payment sources. */
+function optionalEffectMayIncreaseReserveCapacity(
   effect: GrandArchiveEffect,
   evaluation: GrandArchiveEvaluationContext,
 ): boolean {
   switch (effect.kind) {
+    case "banish-object":
+      return resolveGrandArchiveSubjectObjects(effect.subject, evaluation).some(
+        (object) => object.zone !== "graveyard",
+      );
+    case "sequence":
+      return effect.effects.some((child) =>
+        optionalEffectMayIncreaseReserveCapacity(child, evaluation),
+      );
+    default:
+      return true;
+  }
+}
+
+/** Validate acceptance before committing any part of an optional clause. */
+export function assertGrandArchiveOptionalEffectCanBePerformed(
+  program: GrandArchiveMatchProgram,
+  state: GrandArchiveMatchState,
+  resolution: GrandArchiveEffectResolution,
+): void {
+  const pending = resolution.pendingOptional;
+  if (!pending) throw new Error("Optional effect is no longer pending");
+  const evaluation = resolutionContext(program, state, resolution);
+  if (optionalEffectCannotBeFullyPerformed(pending.effect, evaluation, true)) {
+    throw new Error("The optional effect cannot be fully performed");
+  }
+}
+
+/** Whether an all-or-nothing optional clause is already known to be impossible. */
+function optionalEffectCannotBeFullyPerformed(
+  effect: GrandArchiveEffect,
+  evaluation: GrandArchiveEvaluationContext,
+  preflightStateIsKnown = false,
+): boolean {
+  switch (effect.kind) {
+    case "activate-card": {
+      if (!preflightStateIsKnown || effect.ignoreElementRequirements) return false;
+      const cards = resolveGrandArchiveSubjectObjects(effect.subject, evaluation);
+      return resolveGrandArchivePlayers(effect.activator ?? "controller", evaluation).some(
+        (playerId) =>
+          cards.some(
+            (card) =>
+              !grandArchiveCardHasActivationElements(card, {
+                ...evaluation,
+                controllerId: playerId,
+                sourceId: card.id,
+                sourceIdentityId: card.id,
+                sourceIncarnation: card.incarnation,
+                abilityBearerId: card.id,
+                candidateId: card.id,
+              }),
+          ),
+      );
+    }
+    case "pay":
+    case "pay-cost": {
+      if (!preflightStateIsKnown || effect.cost.kind !== "pay-reserve") return false;
+      const amount = knownOptionalAmount(effect.cost.amount, evaluation);
+      if (amount === undefined || amount <= 0) return false;
+      return resolveGrandArchivePlayers(effect.player, evaluation).some((playerId) => {
+        const available = Object.values(evaluation.state.objects).filter(
+          (object) =>
+            (object.zone === "hand" && object.ownerId === playerId) ||
+            (object.zone === "field" &&
+              object.controllerId === playerId &&
+              !object.states.has("rested") &&
+              grandArchiveObjectHasActiveKeyword(
+                evaluation.program,
+                evaluation.state,
+                object,
+                "reservable",
+              )),
+        ).length;
+        return available < amount;
+      });
+    }
+    case "banish-object": {
+      if (effect.from === undefined) return false;
+      const subjects = resolveGrandArchiveSubjectObjects(effect.subject, evaluation);
+      if (subjects.length === 0) return !subjectMayBeBoundByAnEarlierEffect(effect.subject);
+      return subjects.some((object) => object.zone !== effect.from || object.zone === "banishment");
+    }
     case "recover": {
       const amount = knownOptionalAmount(effect.amount, evaluation);
       return (
@@ -1784,17 +1871,21 @@ function optionalEffectCannotBeFullyPerformed(
         resolutionChoiceCannotMeetMinimum(effect.selection, evaluation)
       );
     case "reflexive":
-      return optionalEffectCannotBeFullyPerformed(effect.action, evaluation);
-    case "sequence":
-      return effect.effects.some((child) =>
-        optionalEffectCannotBeFullyPerformed(child, evaluation),
-      );
+      return optionalEffectCannotBeFullyPerformed(effect.action, evaluation, preflightStateIsKnown);
+    case "sequence": {
+      let stateIsKnown = preflightStateIsKnown;
+      for (const child of effect.effects) {
+        if (optionalEffectCannotBeFullyPerformed(child, evaluation, stateIsKnown)) return true;
+        if (optionalEffectMayIncreaseReserveCapacity(child, evaluation)) stateIsKnown = false;
+      }
+      return false;
+    }
     case "conditional":
       return false;
     case "repeat":
       return false;
     case "attempt":
-      return optionalEffectCannotBeFullyPerformed(effect.effect, evaluation);
+      return optionalEffectCannotBeFullyPerformed(effect.effect, evaluation, preflightStateIsKnown);
     default:
       return false;
   }
@@ -2432,6 +2523,205 @@ function advanceResolution(
         resolution.deferredStackItems,
       );
     }
+    if (frame.kind === "begin-suppress") {
+      const object = current.objects[frame.objectId];
+      const evaluation = resolvingEvaluation();
+      if (
+        !object ||
+        object.zone !== "field" ||
+        object.incarnation !== frame.incarnation ||
+        collectGrandArchiveActionRules({
+          action: "suppress",
+          activationKind: "ability",
+          playerId: evaluation.controllerId,
+          candidateId: object.id,
+          fromZone: object.zone,
+          evaluation: { ...evaluation, candidateId: object.id },
+        }).some((rule) => rule.effect.mode === "forbid")
+      ) {
+        resolution = { ...resolution, frames: remaining };
+        continue;
+      }
+      const startedEventHistoryIndex = current.eventHistory.length;
+      const transaction = kernel.transact(current, [
+        {
+          type: "keyword-action-performed",
+          action: "suppress",
+          suppressStage: "start",
+          playerId: frame.playerId,
+          objectIds: [object.id],
+          cause: { kind: "stack-item", stackItemId: item.id },
+        },
+      ]);
+      current = transaction.state;
+      events.push(...transaction.result.events);
+      resolution = {
+        ...resolution,
+        frames: prependFrames(
+          [{ ...frame, kind: "finish-suppress", startedEventHistoryIndex }],
+          remaining,
+        ),
+      };
+      const preCommit = integrateGrandArchiveReplacementPreCommit(current, kernel, resolution);
+      current = preCommit.state;
+      events.push(...preCommit.events);
+      resolution = preCommit.resolution;
+      const followUps = integrateGrandArchiveReplacementFollowUps(current, kernel, resolution);
+      current = followUps.state;
+      events.push(...followUps.events);
+      resolution = followUps.resolution;
+      if (current.decision?.kind === "choose-replacement") {
+        const suspended = kernel.transact(current, [
+          {
+            type: "effect-resolution-suspended",
+            resolution,
+            cause: { kind: "stack-item", stackItemId: item.id },
+          },
+        ]);
+        events.push(...suspended.result.events);
+        return {
+          state: suspended.state,
+          events,
+          resolvedItem: item,
+          fizzled: false,
+          paused: true,
+          triggerEvents: [],
+        };
+      }
+      continue;
+    }
+    if (frame.kind === "finish-suppress") {
+      const performed = current.eventHistory
+        .slice(frame.startedEventHistoryIndex)
+        .some(
+          (event) =>
+            event.type === "keyword-action-performed" &&
+            event.action === "suppress" &&
+            event.suppressStage === "start" &&
+            event.playerId === frame.playerId &&
+            event.objectIds.includes(frame.objectId) &&
+            event.cause?.kind === "stack-item" &&
+            event.cause.stackItemId === item.id,
+        );
+      const object = current.objects[frame.objectId];
+      if (
+        !performed ||
+        !object ||
+        object.zone !== "field" ||
+        object.incarnation !== frame.incarnation
+      ) {
+        resolution = { ...resolution, frames: remaining };
+        continue;
+      }
+      const binding = `suppression-object:${object.id}:${object.incarnation}`;
+      const previous = frame.bindResultAs ? resolution.bindings[frame.bindResultAs] : undefined;
+      const previousIds =
+        previous && typeof previous === "object" && !("kind" in previous) ? previous : [];
+      resolution = {
+        ...resolution,
+        bindings: {
+          ...resolution.bindings,
+          [binding]: [object.id],
+          [`${binding}:player`]: [frame.playerId],
+          ...(frame.bindResultAs
+            ? {
+                [frame.bindResultAs]: [...previousIds, object.id],
+              }
+            : {}),
+        },
+        frames: prependFrames(
+          [
+            {
+              kind: "effect",
+              suppressAdmitted: true,
+              effect: {
+                kind: "keyword-action",
+                action: "suppress",
+                player: { binding: `${binding}:player` },
+                subject: { kind: "bound", binding },
+              },
+            },
+          ],
+          remaining,
+        ),
+      };
+      continue;
+    }
+    if (frame.kind === "finish-glimpse") {
+      const performed = current.eventHistory
+        .slice(frame.startedEventHistoryIndex)
+        .find(
+          (event) =>
+            event.type === "keyword-action-performed" &&
+            event.action === "glimpse" &&
+            event.glimpseStage === "start" &&
+            event.playerId === frame.playerId &&
+            event.cause?.kind === "stack-item" &&
+            event.cause.stackItemId === item.id,
+        );
+      const cardIds = performed?.type === "keyword-action-performed" ? performed.objectIds : [];
+      const playerId = frame.playerId;
+      if (cardIds.length === 0) {
+        if (performed?.type === "keyword-action-performed" && performed.action === "glimpse") {
+          const completed = kernel.transact(current, [
+            {
+              type: "keyword-action-performed",
+              action: "glimpse",
+              glimpseStage: "complete",
+              playerId,
+              objectIds: [],
+              cause: { kind: "stack-item", stackItemId: item.id },
+            },
+          ]);
+          current = completed.state;
+          events.push(...completed.result.events);
+        }
+        resolution = {
+          ...resolution,
+          ...(frame.bindResultAs
+            ? { bindings: { ...resolution.bindings, [frame.bindResultAs]: [] } }
+            : {}),
+          frames: remaining,
+        };
+        continue;
+      }
+      const suspended: GrandArchiveEffectResolution = {
+        ...resolution,
+        frames: remaining,
+        pendingGlimpse: {
+          cardIds,
+          ...(frame.bindResultAs ? { bindResultAs: frame.bindResultAs } : {}),
+        },
+      };
+      const transaction = kernel.transact(current, [
+        {
+          type: "effect-resolution-suspended",
+          resolution: suspended,
+          cause: { kind: "stack-item", stackItemId: item.id },
+        },
+        {
+          type: "decision-created",
+          decision: {
+            id: grandArchiveDecisionId(`decision-${current.nextDecisionOrdinal}`),
+            kind: "resolve-glimpse",
+            playerId,
+            stackItemId: item.id,
+            cardIds,
+            stateVersion: current.stateVersion,
+          },
+          cause: { kind: "stack-item", stackItemId: item.id },
+        },
+      ]);
+      events.push(...transaction.result.events);
+      return {
+        state: transaction.state,
+        events,
+        resolvedItem: item,
+        fizzled: false,
+        paused: true,
+        triggerEvents: [],
+      };
+    }
     if (frame.kind === "replacement-follow-up") {
       const followUp = frame.followUp;
       resolution = {
@@ -2857,7 +3147,7 @@ function advanceResolution(
             to: destination,
             ...(frame.operation === "discard" ? { discarded: true as const } : {}),
             ...(frame.operation === "banish" && resolution.sourceId
-              ? { banishedBySourceId: resolution.sourceId }
+              ? { banishedBy: grandArchiveBanishmentProvenance(resolvingEvaluation()) }
               : {}),
             actorId: affectedPlayer(object),
             cause: { kind: "stack-item", stackItemId: item.id },
@@ -3710,6 +4000,66 @@ function advanceResolution(
         triggerEvents: [],
       };
     }
+    if (
+      effect.kind === "retarget" &&
+      effect.subject.kind === "current-attack" &&
+      !effect.newTarget
+    ) {
+      const combat = current.combat;
+      if (!combat || combat.targetIds.length !== 1) {
+        resolution = { ...resolution, frames: remaining };
+        continue;
+      }
+      const previousDefenderId = combat.targetIds[0]!;
+      const candidates = Object.values(current.objects)
+        .filter((candidate) => {
+          try {
+            proposeGrandArchiveAttackRedirection(
+              program,
+              current,
+              previousDefenderId,
+              candidate.id,
+              effect.requireNewTargetObedience
+                ? { requireNewDefenderObedience: true, asIntercept: true }
+                : {},
+            );
+            return true;
+          } catch {
+            return false;
+          }
+        })
+        .map((candidate) => candidate.id);
+      const candidatesBinding = `attack-redirect-candidates-${item.id}`;
+      const selectedBinding = `attack-redirect-selected-${item.id}`;
+      const choose: GrandArchiveEffect = {
+        kind: "choose",
+        selection: {
+          id: selectedBinding,
+          kind: "choice",
+          declared: "resolution",
+          chooser: effect.chooser,
+          count: { kind: "exactly", amount: 1 },
+          candidates: {
+            kind: "object",
+            zones: ["field"],
+            filter: {
+              kind: "not",
+              filter: {
+                kind: "not-subject",
+                subject: { kind: "bound", binding: candidatesBinding },
+              },
+            },
+          },
+        },
+        effect: { ...effect, newTarget: { kind: "bound", binding: selectedBinding } },
+      };
+      resolution = {
+        ...resolution,
+        bindings: { ...resolution.bindings, [candidatesBinding]: candidates },
+        frames: prependFrames([{ kind: "effect", effect: choose }], remaining),
+      };
+      continue;
+    }
     if (effect.kind === "retarget" && effect.subject.kind !== "current-attack") {
       const binding =
         effect.subject.kind === "bound"
@@ -3809,9 +4159,9 @@ function advanceResolution(
         continue;
       }
       case "for-each": {
-        const frames = resolveGrandArchiveCollection(effect.collection, evaluation).flatMap(
-          (object): readonly GrandArchiveResolutionFrame[] => [
-            { kind: "set-binding", binding: effect.bindEachAs, value: [object.id] },
+        const frames = resolveGrandArchiveIterationIds(effect.collection, evaluation).flatMap(
+          (subjectId): readonly GrandArchiveResolutionFrame[] => [
+            { kind: "set-binding", binding: effect.bindEachAs, value: [subjectId] },
             { kind: "effect", effect: effect.effect },
           ],
         );
@@ -3967,6 +4317,31 @@ function advanceResolution(
         continue;
       }
       case "keyword-action": {
+        if (effect.action === "suppress" && !frame.suppressAdmitted) {
+          if (!effect.subject)
+            throw new GrandArchiveUnsupportedRuleError("suppress without a subject");
+          const players = resolveGrandArchivePlayers(effect.player ?? "controller", evaluation);
+          if (players.length !== 1)
+            throw new GrandArchiveUnsupportedRuleError("suppress requires one player");
+          const frames: GrandArchiveResolutionFrame[] = resolveGrandArchiveSubjectObjects(
+            effect.subject,
+            evaluation,
+          ).map((object) => ({
+            kind: "begin-suppress",
+            objectId: object.id,
+            incarnation: object.incarnation,
+            playerId: players[0]!,
+            ...(effect.bindResultAs ? { bindResultAs: effect.bindResultAs } : {}),
+          }));
+          resolution = {
+            ...resolution,
+            ...(effect.bindResultAs
+              ? { bindings: { ...resolution.bindings, [effect.bindResultAs]: [] } }
+              : {}),
+            frames: prependFrames(frames, remaining),
+          };
+          continue;
+        }
         if (effect.action === "glimpse") {
           const players = resolveGrandArchivePlayers(effect.player ?? "controller", evaluation);
           if (players.length !== 1) {
@@ -3991,58 +4366,69 @@ function advanceResolution(
             };
             continue;
           }
-          const cardIds = current.zones[playerId]["main-deck"].slice(0, amount);
-          if (cardIds.length === 0) {
-            const transaction = kernel.transact(current, [
-              {
-                type: "keyword-action-performed",
-                action: "glimpse",
-                playerId,
-                objectIds: [],
-                cause: { kind: "stack-item", stackItemId: item.id },
-              },
-            ]);
-            current = transaction.state;
-            events.push(...transaction.result.events);
-            resolution = { ...resolution, frames: remaining };
-            continue;
-          }
-          const suspended: GrandArchiveEffectResolution = {
-            ...resolution,
-            frames: remaining,
-            pendingGlimpse: {
-              cardIds,
-              ...(effect.bindResultAs ? { bindResultAs: effect.bindResultAs } : {}),
-            },
-          };
+          const startedEventHistoryIndex = current.eventHistory.length;
           const transaction = kernel.transact(current, [
             {
-              type: "effect-resolution-suspended",
-              resolution: suspended,
-              cause: { kind: "stack-item", stackItemId: item.id },
-            },
-            {
-              type: "decision-created",
-              decision: {
-                id: grandArchiveDecisionId(`decision-${current.nextDecisionOrdinal}`),
-                kind: "resolve-glimpse",
-                playerId,
-                stackItemId: item.id,
-                cardIds,
-                stateVersion: current.stateVersion,
-              },
+              type: "keyword-action-performed",
+              action: "glimpse",
+              glimpseStage: "start",
+              playerId,
+              objectIds: current.zones[playerId]["main-deck"].slice(0, amount),
+              amount,
               cause: { kind: "stack-item", stackItemId: item.id },
             },
           ]);
+          current = transaction.state;
           events.push(...transaction.result.events);
-          return {
-            state: transaction.state,
-            events,
-            resolvedItem: item,
-            fizzled: false,
-            paused: true,
-            triggerEvents: [],
+          resolution = {
+            ...resolution,
+            frames: prependFrames(
+              [
+                {
+                  kind: "finish-glimpse",
+                  playerId,
+                  startedEventHistoryIndex,
+                  ...(effect.bindResultAs ? { bindResultAs: effect.bindResultAs } : {}),
+                },
+              ],
+              remaining,
+            ),
           };
+          const integratedPreCommit = integrateGrandArchiveReplacementPreCommit(
+            current,
+            kernel,
+            resolution,
+          );
+          current = integratedPreCommit.state;
+          events.push(...integratedPreCommit.events);
+          resolution = integratedPreCommit.resolution;
+          const integratedFollowUps = integrateGrandArchiveReplacementFollowUps(
+            current,
+            kernel,
+            resolution,
+          );
+          current = integratedFollowUps.state;
+          events.push(...integratedFollowUps.events);
+          resolution = integratedFollowUps.resolution;
+          if (current.decision?.kind === "choose-replacement") {
+            const suspended = kernel.transact(current, [
+              {
+                type: "effect-resolution-suspended",
+                resolution,
+                cause: { kind: "stack-item", stackItemId: item.id },
+              },
+            ]);
+            events.push(...suspended.result.events);
+            return {
+              state: suspended.state,
+              events,
+              resolvedItem: item,
+              fizzled: false,
+              paused: true,
+              triggerEvents: [],
+            };
+          }
+          continue;
         }
         const resultEventHistoryIndex = current.eventHistory.length;
         const modifiedResultMetric = grandArchiveModifiedResultMetricForEffect(effect);

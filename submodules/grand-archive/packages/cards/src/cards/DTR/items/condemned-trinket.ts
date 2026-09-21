@@ -43,24 +43,39 @@ export const condemnedTrinket: GrandArchiveCard<GrandArchiveAbilityDefinition, "
             ],
           },
           effect: {
-            kind: "banish",
-            player: "controller",
-            selection: {
-              id: "banished-cards",
-              kind: "choice",
-              declared: "resolution",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
+            kind: "sequence",
+            effects: [
+              {
+                kind: "banish",
+                player: "controller",
+                selection: {
+                  id: "new-omen",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "exactly",
+                    amount: 1,
+                  },
+                  candidates: {
+                    kind: "card",
+                    zones: ["graveyard"],
+                    relationship: "zone-of",
+                    player: "controller",
+                  },
+                },
+                bindResultAs: "new-omen",
+              },
+              {
+                kind: "add-counter",
+                subject: {
+                  kind: "bound",
+                  binding: "new-omen",
+                },
+                counter: "omen",
                 amount: 1,
               },
-              candidates: {
-                kind: "card",
-                zones: ["hand"],
-                relationship: "zone-of",
-                player: "controller",
-              },
-            },
+            ],
           },
         },
       ],

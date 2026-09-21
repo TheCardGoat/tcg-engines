@@ -52,22 +52,33 @@ export const shilowenPeacefulBeginnings: GrandArchiveCard<GrandArchiveAbilityDef
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "source",
+                    },
+                    counter: "durability",
+                    amount: 2,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: "durability",
-                  amount: 2,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "bound",
-                    binding: "target-1",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "bulwark",
-                  amount: 1,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "bound",
+                      binding: "target-1",
+                    },
+                    counter: "bulwark",
+                    amount: 1,
+                  },
                 },
               ],
             },

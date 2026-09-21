@@ -111,7 +111,7 @@ test.describe("shared simulator sidebar geometry", () => {
   for (const [game, route, expectedBands] of [
     ["Gundam", GUNDAM_ROUTE, [120, 64, 64, 120]],
     ["One Piece", ONE_PIECE_ROUTE, [120, 64, 120]],
-    ["Cyberpunk", CYBERPUNK_ROUTE, [120, 64, 64, 120]],
+    ["Cyberpunk", CYBERPUNK_ROUTE, [72, 64, 64, 72]],
   ] as const) {
     test(`${game} desktop keeps fixed chrome around flexible activity`, async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 });

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op01ThunderBagua119 } from "../../../../../cards/src/cards/OP01/events/119-thunder-bagua.ts";
+import { op01ThunderBagua119 } from "../../../../../cards/src/cards/events/op01-119-thunder-bagua.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-119 Thunder Bagua", () => {

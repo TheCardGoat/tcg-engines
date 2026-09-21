@@ -51,6 +51,8 @@ const ADDITIONAL_GENERIC_MESSAGE_KEYS = new Set<string>([
   "trigger.noValidTargets",
   "trigger.autoResolved",
   "trigger.resolved",
+  "trigger.orderPending",
+  "trigger.orderSelected",
   "trigger.stealGig",
   "trigger.targetResolved",
   "trigger.targetResolved.deckBottom",

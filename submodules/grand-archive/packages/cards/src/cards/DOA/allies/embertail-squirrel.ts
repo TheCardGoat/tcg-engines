@@ -59,48 +59,59 @@ export const embertailSquirrel: GrandArchiveCard<GrandArchiveAbilityDefinition, 
               kind: "sequence",
               effects: [
                 {
-                  kind: "discard",
-                  player: "controller",
-                  selection: {
-                    id: "discarded-card",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["hand"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["FIRE"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "discard",
+                    player: "controller",
+                    selection: {
+                      id: "discarded-card",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["hand"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["FIRE"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "this-turn",
-                  },
-                  layer: {
-                    layer: "E",
-                    modifies: "stat",
-                    sublayer: "modifier",
-                  },
-                  change: {
-                    kind: "numeric",
-                    property: "power",
-                    operation: "add",
-                    amount: 2,
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "source",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "this-turn",
+                    },
+                    layer: {
+                      layer: "E",
+                      modifies: "stat",
+                      sublayer: "modifier",
+                    },
+                    change: {
+                      kind: "numeric",
+                      property: "power",
+                      operation: "add",
+                      amount: 2,
+                    },
                   },
                 },
               ],

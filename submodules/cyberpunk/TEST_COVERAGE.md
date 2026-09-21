@@ -87,8 +87,8 @@
 | welcometonightcityretail  | programs | peace-offering                         | ✅     | ✅    | ✅  |
 | welcometonightcityretail  | units    | adam-smasher-metal-over-meat           | ✅     | ✅    | ✅  |
 | welcometonightcityretail  | units    | caliber-totentanz-s-top-dog            | ✅     | ✅    | ✅  |
-| welcometonightcityretail  | units    | el-sombrero-n-la-venganza-lenta        | ✅     | ✅    | ✅  |
-| welcometonightcityretail  | units    | gilded-mato-n                          | ✅     | ✅    | ✅  |
+| welcometonightcityretail  | units    | el-sombreron-la-venganza-lenta        | ✅     | ✅    | ✅  |
+| welcometonightcityretail  | units    | gilded-maton                          | ✅     | ✅    | ✅  |
 | welcometonightcityretail  | units    | hanako-arasaka-in-a-gilded-cage        | ✅     | ✅    | ✅  |
 | welcometonightcityretail  | units    | kerry-eurodyne-the-last-rockerboy      | ✅     | ✅    | ✅  |
 | welcometonightcityretail  | units    | maman-brigitte-spirit-of-death         | ✅     | ✅    | ✅  |
@@ -130,7 +130,7 @@
 
 ### Batch 6: Missing JSDOM + E2E for remaining retail units first half
 
-22-26. `welcometonightcityretail/units/adam-smasher...`, `caliber...`, `el-sombrero...`, `gilded-mato-n`, `hanako...`
+22-26. `welcometonightcityretail/units/adam-smasher...`, `caliber...`, `el-sombrero...`, `gilded-maton`, `hanako...`
 
 ### Batch 7: Missing JSDOM + E2E for remaining retail units second half
 

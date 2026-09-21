@@ -7,8 +7,9 @@ import { evaluateCondition, resolveTarget } from "../effects/target-resolver.ts"
 import type { ResolutionContext } from "../effects/target-resolver.ts";
 import { defOf } from "../state/lookups.ts";
 import { isReactStep } from "./is-react-step.ts";
-import { availableEddies, availableEddiesAfterAbilityCosts } from "./eddie-resources.ts";
+import { availableEddiesAfterAbilityCosts, canPayAbilityEddieCosts } from "./eddie-resources.ts";
 import { computeEffectiveCost } from "./compute-effective-cost.ts";
+import { hasValidGigCopyPair } from "../effects/gig-copy-selection.ts";
 
 export interface ActivateAbilityInput extends MoveInput {
   args: {
@@ -104,6 +105,16 @@ export const activateAbilityMove: MoveDefinition<ActivateAbilityInput> = {
           errorCode: "NOT_QUICK",
         };
       }
+    }
+
+    if (
+      !canPayAbilityEddieCosts(ability, state as MatchState, cardId as CardInstanceId, playerId)
+    ) {
+      return {
+        valid: false,
+        error: "Not enough eddies",
+        errorCode: "INSUFFICIENT_EDDIES",
+      };
     }
 
     if (!canPayCosts(ability, state, cardId as CardInstanceId, playerId)) {
@@ -215,19 +226,8 @@ export function canPayCosts(
         }
       }
     }
-    if (cost.cost === "payEddies") {
-      let amount = cost.amount;
-      if (cost.reduction) {
-        const count = resolveTarget(cost.reduction.target, ctx).length;
-        amount = Math.max(
-          amount - count * cost.reduction.reductionPerCount,
-          cost.reduction.min ?? 0,
-        );
-      }
-      if (availableEddies(state, playerId) < amount) return false;
-    }
   }
-  return true;
+  return canPayAbilityEddieCosts(ability, state, cardId, playerId);
 }
 
 export function canActivateAbility(
@@ -267,6 +267,8 @@ export function canResolveActivatedAbility(
     const targets = resolveTarget(binding.target, ctx);
     const min = getSelectionMin(binding.target);
     if (targets.length < min) return false;
+    const pairConstraint = getPairConstraint(binding.target);
+    if (pairConstraint && !hasValidGigCopyPair(state, targets, pairConstraint)) return false;
 
     if (getSelectionMode(binding.target) === "choose") {
       selectableBindings.push(binding);
@@ -325,6 +327,24 @@ function requiredEffectsHaveTargets(
       continue;
     }
     if (effect.optional || effect.effect === "scry") continue;
+    if (effect.effect === "ifYouDo") {
+      const doEffect = effect.doEffect;
+      if ("target" in doEffect && doEffect.target) {
+        const target = doEffect.target;
+        if (target.selector === "bound") {
+          const declared = ability.bindings?.find((binding) => binding.id === target.id);
+          if (
+            declared &&
+            getSelectionMode(declared.target) === "choose" &&
+            ctx.boundTargets[target.id] === undefined
+          ) {
+            continue;
+          }
+        }
+        if (resolveTarget(target, ctx).length === 0) return false;
+      }
+      continue;
+    }
     if (!("target" in effect) || !effect.target) continue;
 
     const target = effect.target;
@@ -369,6 +389,13 @@ function getSelectionMax(target: TargetDSL): number {
 function getSelectionMode(target: TargetDSL): TargetSelectionDSL["mode"] | undefined {
   const selection = getSelection(target);
   return selection?.mode;
+}
+
+function getPairConstraint(target: TargetDSL): TargetSelectionDSL["pairConstraint"] | undefined {
+  if (target.selector !== "card" && target.selector !== "gig" && target.selector !== "context") {
+    return undefined;
+  }
+  return target.selection?.pairConstraint;
 }
 
 function getSelection(target: TargetDSL): TargetSelectionDSL | undefined {

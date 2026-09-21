@@ -78,27 +78,31 @@ export const collectJunk: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
           id: "g6sW55DOgR-a2",
           kind: "card-resolution",
           text: "Banish up to one target card from a graveyard. Draw a card into your memory.",
+          targets: [
+            {
+              id: "target-card",
+              kind: "target",
+              declared: "announcement",
+              chooser: "controller",
+              count: {
+                kind: "up-to",
+                amount: 1,
+              },
+              unique: true,
+              candidates: {
+                kind: "card",
+                zones: ["graveyard"],
+              },
+            },
+          ],
           effect: {
             kind: "sequence",
             effects: [
               {
-                kind: "banish",
-                player: "controller",
-                selection: {
-                  id: "banished-cards",
-                  kind: "choice",
-                  declared: "resolution",
-                  chooser: "controller",
-                  count: {
-                    kind: "up-to",
-                    amount: 1,
-                  },
-                  candidates: {
-                    kind: "card",
-                    zones: ["hand"],
-                    relationship: "zone-of",
-                    player: "controller",
-                  },
+                kind: "banish-object",
+                subject: {
+                  kind: "bound",
+                  binding: "target-card",
                 },
               },
               {

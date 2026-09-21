@@ -37,8 +37,10 @@ return actions.
 
 - Browser behavior: focused app test or route, then visible board proof.
 - Engine/card legality: focused engine or card test using local rules terms.
-- Bot/automation: use `.agents/skills/self-improve-bot/SKILL.md` and its
-  documented runner or strategy gate.
+- Bot/automation: use `.agents/skills/self-improve-bot/SKILL.md` (player-then-coach
+  loop via `/cyberpunk-self-improve`). The player is the shipped chooser; the
+  coach reads match dumps (moves **and** game logs) line by line. Do not use
+  `ai-runner train` hill-climb as this loop.
 - Live match/matchmaking: prove platform gateway/game-server behavior
   separately from engine or browser behavior.
 

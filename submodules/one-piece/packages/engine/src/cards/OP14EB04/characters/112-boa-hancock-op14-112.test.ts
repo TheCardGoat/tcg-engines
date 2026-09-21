@@ -7,8 +7,8 @@ import {
   op01RoronoaZoro001,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Kumacy102 } from "../../../../../cards/src/cards/OP14EB04/characters/102-kumacy.ts";
-import { op14eb04BoaHancockOp14112112 } from "../../../../../cards/src/cards/OP14EB04/characters/112-boa-hancock-op14-112.ts";
+import { op14eb04Kumacy102 } from "../../../../../cards/src/cards/characters/op14-102-kumacy.ts";
+import { op14eb04BoaHancockOp14112112 } from "../../../../../cards/src/cards/characters/op14-112-boa-hancock.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

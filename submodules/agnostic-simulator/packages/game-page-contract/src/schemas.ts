@@ -4,7 +4,7 @@ import {
   PresentationEnvelopeSchema,
 } from "@tcg/protocol/presentation";
 import { z } from "zod";
-import { AnimationPlanV2Schema } from "@tcg/protocol";
+import { AnimationPlanV2Schema, DropEligibilitySchema } from "@tcg/protocol";
 
 import { GAME_TYPES } from "./ids.js";
 import { REPLAY_FILE_VERSION } from "./replay.js";
@@ -141,6 +141,7 @@ export const GameLogEntrySchema = z
     tag: z.string(),
     data: z.unknown().optional(),
     ts: z.number().optional(),
+    stateVersion: z.number().int().nonnegative().optional(),
   })
   .strict();
 
@@ -416,6 +417,7 @@ export const LiveMatchBootstrapV1Schema = z
     viewer: ResolvedMatchViewerSchema,
     capabilities: LiveMatchCapabilitiesSchema,
     presence: LiveMatchPresenceSchema,
+    dropEligibility: DropEligibilitySchema.optional(),
     history: LiveMatchHistorySchema,
     realtime: ScopedRealtimeAccessSchema.optional(),
     userSettings: UserSettingsSchema.optional(),

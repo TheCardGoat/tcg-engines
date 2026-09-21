@@ -52,43 +52,54 @@ export const sanctumOfEsotericTruth: GrandArchiveCard<GrandArchiveAbilityDefinit
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "hand-or-memory-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 2,
-                    },
-                    unique: true,
-                    candidates: {
-                      kind: "card",
-                      zones: ["hand", "memory"],
-                      relationship: "zone-of",
-                      player: "controller",
-                    },
-                  },
+                  kind: "attempt",
                   effect: {
-                    kind: "move",
-                    subject: {
-                      kind: "bound",
-                      binding: "hand-or-memory-cards",
+                    kind: "choose",
+                    selection: {
+                      id: "hand-or-memory-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 2,
+                      },
+                      unique: true,
+                      candidates: {
+                        kind: "card",
+                        zones: ["hand", "memory"],
+                        relationship: "zone-of",
+                        player: "controller",
+                      },
                     },
-                    destination: {
-                      zone: "main-deck",
-                      placement: {
-                        kind: "bottom",
-                        orderChosenBy: "controller",
+                    effect: {
+                      kind: "move",
+                      subject: {
+                        kind: "bound",
+                        binding: "hand-or-memory-cards",
+                      },
+                      destination: {
+                        zone: "main-deck",
+                        placement: {
+                          kind: "bottom",
+                          orderChosenBy: "controller",
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 2,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 2,
+                  },
                 },
               ],
             },

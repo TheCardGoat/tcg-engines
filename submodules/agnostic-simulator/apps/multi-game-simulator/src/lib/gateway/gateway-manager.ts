@@ -33,10 +33,10 @@ export function getGatewayManager(): GatewayConnectionManager {
     manager = createGatewayConnectionManager({
       gatewayOrigin: resolveGatewayOrigin(),
       onAnalytics: (event, payload) => analyticsSink?.(event, payload),
-      // The library owns the latency ping loop. 5s matches the simulator's
-      // live-match latency cadence; samples surface via `handle.onLatency`
-      // and `state.latencyMs`.
-      ping: { intervalMs: 5_000 },
+      // Socket.IO already owns transport liveness. This application ping is
+      // only latency telemetry, so sample it without generating a request
+      // every five seconds for every open simulator tab.
+      ping: { intervalMs: 30_000 },
     });
   }
   return manager;

@@ -539,7 +539,10 @@ export function parseRiftboundDeckText(
       if (card)
         warnings.push(`Resolved ${identity} by unique name; export with IDs for stability.`);
     }
-    if (!card) throw new RiftboundDeckParseError(`Line ${index + 1}: unknown card ${identity}`);
+    if (!card) {
+      warnings.push(`Line ${index + 1}: skipped unknown card ${identity}`);
+      continue;
+    }
     const printing = requestedPrinting
       ? card.printings.find((item) => item.id === requestedPrinting)
       : card.printings[0];
@@ -554,6 +557,17 @@ export function parseRiftboundDeckText(
   const legends = collected.get("legend")!;
   if (legends.length > 1 || (legends[0]?.quantity ?? 0) > 1)
     throw new RiftboundDeckParseError("Legend section supports one card");
+  const importedCount = BOARD_ORDER.reduce(
+    (total, board) =>
+      total + collected.get(board)!.reduce((boardTotal, entry) => boardTotal + entry.quantity, 0),
+    0,
+  );
+  if (importedCount === 0) {
+    throw new RiftboundDeckParseError(
+      warnings.find((warning) => warning.includes("unknown card")) ??
+        "No Riftbound cards could be imported",
+    );
+  }
   return {
     document: {
       schemaVersion: 2,

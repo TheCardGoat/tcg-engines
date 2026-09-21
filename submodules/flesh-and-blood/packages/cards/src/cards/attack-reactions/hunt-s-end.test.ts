@@ -40,7 +40,9 @@ describe("Hunt's End (HNT101) AAA", () => {
     Fang.must.playReaction(huntSEndRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(5);
+    // 1 + 4 (3 Fealty) — this link's Draconic reaction also turns on Obsidian
+    // Fire Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(6);
     expectFabCard(Fang, huntSEndRed).toBeIn("graveyard");
   });
 

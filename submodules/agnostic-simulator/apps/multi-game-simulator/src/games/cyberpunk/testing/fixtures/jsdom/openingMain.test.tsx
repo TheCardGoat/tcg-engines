@@ -101,4 +101,34 @@ describe("openingMain fixture behavior", () => {
       unmount();
     }
   });
+
+  test("eddies sell cue is advertised exactly while the sell move is legal", async () => {
+    const { pom, unmount } = renderOpeningMainPom();
+    try {
+      // Own turn, main phase, unsold, Floor It in hand → slot advertised.
+      await pom.expectSellCue(CYBERPUNK_P1, true);
+      // The inactive side's row never advertises the local sell slot.
+      await pom.expectSellCue(CYBERPUNK_P2, false);
+
+      const floorIt = await pom.getCardInZoneByDefinitionId(
+        "hand",
+        CYBERPUNK_P1,
+        welcomeToNightCityRetailFloorIt.id,
+      );
+      await pom.sellCard(floorIt.instanceId, CYBERPUNK_P1);
+
+      // Sell is once per turn — there is no next slot to advertise.
+      await pom.expectSellCue(CYBERPUNK_P1, false);
+
+      await pom.passPhase(CYBERPUNK_P1);
+
+      // Selling is illegal during the rival's turn, on either row.
+      expectEqual("phase after P1 passes", await pom.getPhase(), "start");
+      expectEqual("active player after P1 passes", await pom.getActivePlayerId(), CYBERPUNK_P2);
+      await pom.expectSellCue(CYBERPUNK_P1, false);
+      await pom.expectSellCue(CYBERPUNK_P2, false);
+    } finally {
+      unmount();
+    }
+  });
 });

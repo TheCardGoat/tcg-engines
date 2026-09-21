@@ -366,6 +366,12 @@ export function reduceCountersStatusEvent(
       if (event.data.count <= 0) return null;
       const object = state.objects[event.data.object.instanceId];
       if (!object) return null;
+      // Retain the performing player and the sword type at the committed event,
+      // independently of the object's subsequent zone, controller, or counters.
+      const player = state.players[event.data.playerId];
+      if (player && event.data.object.current.typeBox.subtypes.includes("Sword")) {
+        player.history.turn.sharpenedSwordThisTurn = true;
+      }
       const hasSharpenedStatus = object.markers.some(
         (marker) => marker.kind === "status" && marker.value === "sharpened-this-turn",
       );

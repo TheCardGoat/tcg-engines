@@ -87,6 +87,46 @@ export const vacuousServant: GrandArchiveCard<
                 },
               },
             },
+            {
+              kind: "continuous",
+              subjects: {
+                kind: "source",
+              },
+              affectedSet: "dynamic",
+              duration: {
+                kind: "while-source-in-functional-zone",
+              },
+              layer: {
+                layer: "E",
+                modifies: "stat",
+                sublayer: "modifier",
+              },
+              change: {
+                kind: "numeric",
+                property: "life",
+                operation: "add",
+                amount: {
+                  kind: "count",
+                  collection: {
+                    zones: ["banishment"],
+                    player: "controller",
+                    filter: {
+                      kind: "all",
+                      filters: [
+                        {
+                          kind: "has-counter",
+                          counter: "omen",
+                        },
+                        {
+                          kind: "type",
+                          oneOf: ["ALLY"],
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            },
           ],
         },
       ],

@@ -87,54 +87,60 @@ export const alacritousHuntress: GrandArchiveCard<GrandArchiveAbilityDefinition,
                   },
                 },
                 then: {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "select-modes",
-                      choose: {
-                        kind: "exactly",
+                  kind: "optional",
+                  player: "controller",
+                  allOrNothing: true,
+                  effect: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "move",
+                        subject: {
+                          kind: "bound",
+                          binding: "revealed-aethercharge",
+                        },
+                        from: "hand",
+                        destination: {
+                          zone: "graveyard",
+                        },
+                      },
+                      {
+                        kind: "draw",
+                        player: "controller",
                         amount: 1,
                       },
-                      modes: [
-                        {
-                          id: "discard",
-                          text: "Discard it.",
-                          effect: {
-                            kind: "move",
-                            subject: {
-                              kind: "bound",
-                              binding: "revealed-aethercharge",
+                    ],
+                  },
+                  otherwise: {
+                    kind: "conditional",
+                    condition: {
+                      kind: "collection-exists",
+                      collection: {
+                        zones: ["field"],
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["WEAPON"],
                             },
-                            from: "hand",
-                            destination: {
-                              zone: "graveyard",
+                            {
+                              kind: "subtype",
+                              oneOf: ["AETHERWING"],
                             },
-                          },
+                          ],
                         },
-                        {
-                          id: "load",
-                          text: "Load it into an Aetherwing weapon you control.",
-                          condition: {
-                            kind: "collection-exists",
-                            collection: {
-                              zones: ["field"],
-                              player: "controller",
-                              filter: {
-                                kind: "all",
-                                filters: [
-                                  {
-                                    kind: "type",
-                                    oneOf: ["WEAPON"],
-                                  },
-                                  {
-                                    kind: "subtype",
-                                    oneOf: ["AETHERWING"],
-                                  },
-                                ],
-                              },
-                            },
-                          },
-                          effect: {
+                      },
+                    },
+                    then: {
+                      kind: "optional",
+                      player: "controller",
+                      allOrNothing: true,
+                      effect: {
+                        kind: "sequence",
+                        effects: [
+                          {
                             kind: "choose",
                             selection: {
                               id: "aetherwing-weapon",
@@ -181,15 +187,15 @@ export const alacritousHuntress: GrandArchiveCard<GrandArchiveAbilityDefinition,
                               },
                             },
                           },
-                        },
-                      ],
+                          {
+                            kind: "draw",
+                            player: "controller",
+                            amount: 1,
+                          },
+                        ],
+                      },
                     },
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                    },
-                  ],
+                  },
                 },
               },
             ],

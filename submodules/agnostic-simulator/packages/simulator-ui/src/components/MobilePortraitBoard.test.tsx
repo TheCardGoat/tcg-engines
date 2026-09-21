@@ -67,6 +67,43 @@ describe("mobile portrait board primitives", () => {
     expect(markup).not.toContain('class="bottomRail');
   });
 
+  test("isolates the shared slot grid from game-level root styling", () => {
+    const markup = renderToStaticMarkup(
+      <MobilePortraitBoard
+        externalRails
+        className="game-board-root"
+        topRail={<span>external top rail</span>}
+        opponentHand={<span>rival hand</span>}
+        opponentZoneSummary={<span>rival zones</span>}
+        opponentBattlefield={<span>rival field</span>}
+        ledger={<span>ledger</span>}
+        playerBattlefield={<span>player field</span>}
+        playerZoneSummary={<span>player zones</span>}
+        playerHand={<span>player hand</span>}
+        bottomRail={<span>external bottom rail</span>}
+      />,
+    );
+    const document = new DOMParser().parseFromString(markup, "text/html");
+    const root = document.body.firstElementChild;
+    const layout = root?.querySelector('[data-mobile-portrait-layout="true"]');
+
+    expect(root?.classList.contains("game-board-root")).toBe(true);
+    expect(layout?.parentElement).toBe(root);
+    expect(
+      Array.from(layout?.children ?? []).map((element) =>
+        element.getAttribute("data-mobile-portrait-slot"),
+      ),
+    ).toEqual([
+      "opponent-hand",
+      "opponent-zone-summary",
+      "opponent-battlefield",
+      "ledger",
+      "player-battlefield",
+      "player-zone-summary",
+      "player-hand",
+    ]);
+  });
+
   test("renders explicit battlefield scroll cues when overflow is provided", () => {
     const markup = renderToStaticMarkup(
       <MobileBattlefieldLane

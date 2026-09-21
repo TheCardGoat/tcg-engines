@@ -1,0 +1,76 @@
+import type { LeaderCard } from "@tcg/op-types";
+import { eb01Hannyabal021I18n } from "./eb01-021-hannyabal.i18n.ts";
+
+export const eb01Hannyabal021: LeaderCard = {
+  id: "EB01-021",
+  canonicalId: "EB01-021",
+  slug: "hannyabal/eb01-021",
+  name: "Hannyabal",
+  printings: [
+    {
+      id: "EB01-021",
+      artId: "EB01-021",
+      setCode: "EB01",
+      collectorNumber: "021",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/EB01-021.jpg",
+    },
+    {
+      id: "EB01-021_p1",
+      artId: "EB01-021_p1",
+      setCode: "EB01",
+      collectorNumber: "021",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/EB01-021_p1.jpg",
+    },
+    {
+      id: "EB01-021_p2",
+      artId: "EB01-021_p2",
+      setCode: "EB01",
+      collectorNumber: "021",
+      rarity: "L",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/EB01-021_p2.jpg",
+      label: "Hannyabal (SPR)",
+    },
+  ],
+  cardType: "leader",
+  color: ["blue", "purple"],
+  rarity: "L",
+  setId: "EB01",
+  power: 5000,
+  life: 4,
+  traits: ["Impel Down"],
+  attribute: "slash",
+
+  effect:
+    "[End of Your Turn] You may return 1 of your [Impel Down] type Characters with a cost of 2 or more to the owner's hand: Add up to 1 DON!! card from your DON!! deck and set it as active.",
+  effects: {
+    effects: [
+      {
+        trigger: "endOfYourTurn",
+        costs: [
+          {
+            cost: "returnCharacter",
+            amount: 1,
+            filters: [
+              { filter: "trait", value: "Impel Down", match: "includes" },
+              { filter: "cost", comparison: "gte", value: 2 },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "active",
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: eb01Hannyabal021I18n,
+};

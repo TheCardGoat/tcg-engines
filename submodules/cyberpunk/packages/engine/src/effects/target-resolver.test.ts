@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vite-plus/test";
 import type { CardTargetDSL } from "@tcg/cyberpunk-types";
 import {
+  welcomeToNightCityRetailAdamSmasherEnderOfLegends,
   welcomeToNightCityRetailKiroshiOptics,
   welcomeToNightCityRetailSketchyRipper,
   welcomeToNightCityRetailSwordwiseHuscle,
@@ -27,6 +28,43 @@ function createContext(engine: CyberpunkTestEngine, sourceCardId?: CardInstanceI
 }
 
 describe("target resolver DSL additions", () => {
+  describe("effective card type", () => {
+    it("treats a Legend on the field as both a Unit and a Legend", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        field: [{ card: welcomeToNightCityRetailAdamSmasherEnderOfLegends, spent: false }],
+      });
+      const context = createContext(engine);
+      const unitTarget = {
+        selector: "card",
+        controller: "friendly",
+        zones: ["field"],
+        cardTypes: ["unit"],
+      } satisfies CardTargetDSL;
+      const legendTarget = {
+        ...unitTarget,
+        cardTypes: ["legend"],
+      } satisfies CardTargetDSL;
+
+      expect(resolveTarget(unitTarget, context)).toEqual(resolveTarget(legendTarget, context));
+      expect(resolveTarget(unitTarget, context)).toHaveLength(1);
+    });
+
+    it("does not treat a Legend in the Legends area as a Unit", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        field: [{ card: hostUnit, spent: false }],
+        legendArea: [{ card: welcomeToNightCityRetailAdamSmasherEnderOfLegends, faceDown: false }],
+      });
+      const target = {
+        selector: "card",
+        controller: "friendly",
+        zones: ["legendArea"],
+        cardTypes: ["unit"],
+      } satisfies CardTargetDSL;
+
+      expect(resolveTarget(target, createContext(engine))).toEqual([]);
+    });
+  });
+
   describe("hasDistinctGigValues condition", () => {
     it("passes when the controller has at least the required number of distinct Gig values", () => {
       const engine = CyberpunkTestEngine.createWithFixture({
@@ -62,6 +100,45 @@ describe("target resolver DSL additions", () => {
           createContext(engine),
         ),
       ).toBe(false);
+    });
+  });
+
+  describe("Null Street Cred ordering", () => {
+    it("orders Null below numeric zero", () => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        field: [{ card: hostUnit, spent: false }],
+      });
+
+      expect(
+        evaluateCondition(
+          {
+            condition: "streetCred",
+            controller: "friendly",
+            comparison: "lt",
+            value: 0,
+          },
+          createContext(engine),
+        ),
+      ).toBe(true);
+    });
+
+    it("treats two Null Street Cred values as equal", () => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        { field: [{ card: hostUnit, spent: false }] },
+        { field: [{ card: unequippedUnit, spent: false }] },
+      );
+
+      expect(
+        evaluateCondition(
+          {
+            condition: "streetCredComparison",
+            controller: "friendly",
+            comparison: "eq",
+            other: "rival",
+          },
+          createContext(engine),
+        ),
+      ).toBe(true);
     });
   });
 

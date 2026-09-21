@@ -97,13 +97,20 @@ function hasMultiTargetSpatialChoice(ability: ProgramAbility): boolean {
     ...collectEffects(ability.effects ?? []).flatMap((effect) =>
       effect.target ? [effect.target] : [],
     ),
-  ];
-  return targets.some(
-    (target) =>
-      target.selector === "card" &&
-      Boolean(target.selection && target.selection.max > 1) &&
-      (target.cardTypes ?? []).some((type: string) => type === "unit" || type === "legend"),
-  );
+  ]
+    .map(getSpatialCardSelection)
+    .filter((selection): selection is NonNullable<typeof selection> => Boolean(selection));
+  return targets.length > 1 || targets.some((selection) => selection.max > 1);
+}
+
+function getSpatialCardSelection(target: EngineTarget) {
+  if (target.selector !== "card" || !target.selection) {
+    return undefined;
+  }
+  const cardTypes = target.cardTypes ?? [];
+  return cardTypes.some((type: string) => type === "unit" || type === "legend")
+    ? target.selection
+    : undefined;
 }
 
 /**
@@ -151,11 +158,7 @@ function isSpatialCardTarget(target: EngineTarget): boolean {
   // The pre-play spatial shortcut submits one target immediately after the
   // Program is played. Multi-target effects must use the engine's staged
   // choice flow so the player can select every allowed target.
-  if (target.selector !== "card" || !target.selection || target.selection.max !== 1) {
-    return false;
-  }
-  const cardTypes = target.cardTypes ?? [];
-  return cardTypes.some((type: string) => type === "unit" || type === "legend");
+  return getSpatialCardSelection(target)?.max === 1;
 }
 
 function isVisibleUnitOrLegend(state: MatchState, cardId: string): boolean {

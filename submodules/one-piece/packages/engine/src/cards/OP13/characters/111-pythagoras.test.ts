@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op13Pythagoras111 } from "../../../../../cards/src/cards/OP13/characters/111-pythagoras.ts";
+import { op13Pythagoras111 } from "../../../../../cards/src/cards/characters/op13-111-pythagoras.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP13-111 Pythagoras", () => {

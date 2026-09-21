@@ -1,11 +1,7 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import { processCardSpentEventsSince, processEventTriggers } from "../ability-executor.ts";
-import {
-  consumeRuleUse,
-  getEffectiveRules,
-  markDefeatAtEndOfTurnIfAttacked,
-} from "../active-effects/index.ts";
+import { consumeRuleUse, getEffectiveRules } from "../active-effects/index.ts";
 import { defOf, getDefinitionFor } from "../state/lookups.ts";
 import { hasPlayedProgramThisTurn, satisfiesMustAttackRequirement } from "./attack-requirements.ts";
 
@@ -153,11 +149,6 @@ export const attackUnitMove: MoveDefinition<AttackUnitInput> = {
       kind: "fight",
       step: "attack",
     });
-    markDefeatAtEndOfTurnIfAttacked(
-      state as import("../types/match-state.ts").MatchState,
-      attackerId as CardInstanceId,
-    );
-
     const attackerName = state.G.cardIndex[attackerId]
       ? getDefinitionFor(state.G, attackerId).displayName
       : "";

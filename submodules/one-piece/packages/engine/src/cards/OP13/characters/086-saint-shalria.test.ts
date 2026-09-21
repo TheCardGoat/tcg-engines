@@ -6,7 +6,7 @@ import {
   op13StShepherdJuPeter084,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13SaintShalria086 } from "../../../../../cards/src/cards/OP13/characters/086-saint-shalria.ts";
+import { op13SaintShalria086 } from "../../../../../cards/src/cards/characters/op13-086-saint-shalria.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

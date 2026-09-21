@@ -4,78 +4,60 @@ import {
   FabTestEngine,
   expectFabCard,
   expectFabPlayer,
+  expectCombat,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { cerebellumProcessorBlue } from "./cerebellum-processor.ts";
+import { nimblismBlue } from "./nimblism.ts";
 import { dash } from "../heroes/dash.ts";
 import { bravo } from "../heroes/bravo.ts";
 import { snatchRed } from "./snatch.ts";
-import { infuseAlloyRed } from "./infuse-alloy.ts";
+import { infuseAlloyRed, infuseAlloyYellow, infuseAlloyBlue } from "./infuse-alloy.ts";
 
-/**
- * Infuse Alloy, Red (EVO120) — Mechanologist Attack, 0-cost 4{p}/2{d}.
- * Printed: Galvanize — When this defends, you may destroy an item you control.
- * If you do, this gets +2{d}.
- */
-
-describe("Infuse Alloy (EVO120) AAA", () => {
-  it("happy: destroying an item you control grants +2{d} while defending", () => {
-    const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
-      {
-        hero: dash,
-        hand: [infuseAlloyRed],
-        arena: [cerebellumProcessorBlue],
-        deck: 6,
-      },
-      FAB_MANUAL_HARNESS,
-    );
-    const Dash = game.as(dash);
-
-    game.as(bravo).attackWith(snatchRed);
-    Dash.defendWith(infuseAlloyRed);
-    game.untilIdle({ optionals: "accept", ordering: "listed" });
-    Dash.target(cerebellumProcessorBlue);
-
-    expectFabCard(Dash, cerebellumProcessorBlue).toBeIn("graveyard");
-    expectFabCard(Dash, infuseAlloyRed).toHaveDefense(4);
-    expectFabPlayer(Dash).toHaveLife(20);
+// Printed galvanize gives +2 defense; CR3.0.9 resets it in the graveyard.
+for (const [color, card] of [
+  ["Red", infuseAlloyRed],
+  ["Yellow", infuseAlloyYellow],
+  ["Blue", infuseAlloyBlue],
+] as const) {
+  describe(`Infuse Alloy ${color} galvanize`, () => {
+    for (const mode of ["accept", "decline", "no-item"] as const) {
+      it(`${mode}: exact defense during combat and reset after combat`, () => {
+        const game = FabTestEngine.start(
+          {
+            hero: bravo,
+            hand: [snatchRed],
+            deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+          },
+          {
+            hero: dash,
+            life: 20,
+            hand: [card],
+            arena: mode === "no-item" ? [] : [cerebellumProcessorBlue],
+            deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+          },
+          FAB_MANUAL_HARNESS,
+        );
+        const Dash = game.as(dash);
+        game.as(bravo).playAttack(snatchRed);
+        Dash.defendWith(card);
+        if (mode !== "no-item") {
+          game.advanceToDecision(Dash, "boolean");
+          if (mode === "accept") Dash.accept();
+          else Dash.decline();
+        }
+        game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
+        expectFabCard(Dash, card).toHaveDefense(mode === "accept" ? 4 : 2);
+        if (mode !== "no-item")
+          expectFabCard(Dash, cerebellumProcessorBlue).toBeIn(
+            mode === "accept" ? "graveyard" : "arena",
+          );
+        game.closeCombat({ optionals: "throw" });
+        expectFabPlayer(Dash).toHaveLife(mode === "accept" ? 20 : 18);
+        expectFabCard(Dash, card).toBeIn("graveyard").toHaveDefense(2);
+        expectCombat(game).toBeClosed();
+        expectWait(game).notToHaveDecision();
+      });
+    }
   });
-
-  it("boundary: declining the destroy leaves printed 2{d}", () => {
-    const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
-      {
-        hero: dash,
-        hand: [infuseAlloyRed],
-        arena: [cerebellumProcessorBlue],
-        deck: 6,
-      },
-      FAB_MANUAL_HARNESS,
-    );
-    const Dash = game.as(dash);
-
-    game.as(bravo).attackWith(snatchRed);
-    Dash.defendWith(infuseAlloyRed);
-    game.untilIdle({ optionals: "decline", ordering: "listed" });
-
-    expectFabCard(Dash, cerebellumProcessorBlue).toBeIn("arena");
-    expectFabCard(Dash, infuseAlloyRed).toHaveDefense(2);
-    expectFabPlayer(Dash).toHaveLife(18);
-  });
-
-  it("timing: with no item the optional cannot grant +2{d}", () => {
-    const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
-      { hero: dash, hand: [infuseAlloyRed], deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Dash = game.as(dash);
-
-    game.as(bravo).attackWith(snatchRed);
-    Dash.defendWith(infuseAlloyRed);
-    game.untilIdle({ optionals: "decline", ordering: "listed" });
-
-    expectFabCard(Dash, infuseAlloyRed).toHaveDefense(2);
-    expectFabPlayer(Dash).toHaveLife(18);
-  });
-});
+}

@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, op01Kaido094, op12UrsaShock096 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13Fossa047 } from "../../../../../cards/src/cards/OP13/characters/047-fossa.ts";
+import { op13Fossa047 } from "../../../../../cards/src/cards/characters/op13-047-fossa.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

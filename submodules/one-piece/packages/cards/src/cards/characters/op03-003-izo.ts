@@ -1,0 +1,108 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op03Izo003I18n } from "./op03-003-izo.i18n.ts";
+
+export const op03Izo003: CharacterCard = {
+  id: "OP03-003",
+  canonicalId: "OP03-003",
+  slug: "izo/op03-003",
+  name: "Izo",
+  printings: [
+    {
+      id: "OP03-003",
+      artId: "OP03-003",
+      setCode: "OP03",
+      collectorNumber: "003",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-003.jpg",
+    },
+    {
+      id: "OP03-003_p1",
+      artId: "OP03-003_p1",
+      setCode: "OP03",
+      collectorNumber: "003",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-003_p1.jpg",
+    },
+    {
+      id: "OP03-003_p4",
+      artId: "OP03-003_p4",
+      setCode: "OP03",
+      collectorNumber: "003",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-003_p4.jpg",
+    },
+    {
+      id: "OP03-003_p5",
+      artId: "OP03-003_p5",
+      setCode: "OP03",
+      collectorNumber: "003",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-003_p5.jpg",
+      label: "Izo (OP03-003) (Full Art)",
+    },
+    {
+      id: "OP03-003_p6",
+      artId: "OP03-003_p6",
+      setCode: "OP03",
+      collectorNumber: "003",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-003_p6.jpg",
+      label: "Izo (OP03-003) (Alternate Art)",
+    },
+    {
+      id: "OP03-003_r2",
+      artId: "OP03-003_r2",
+      setCode: "OP03",
+      collectorNumber: "003",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP03-003_r2.jpg",
+      label: "Izo (OP03-003) (Reprint)",
+    },
+  ],
+  cardType: "character",
+  color: ["red"],
+  rarity: "R",
+  setId: "OP03",
+  cost: 1,
+  power: 2000,
+  counter: 1000,
+  traits: ["Land of Wano Whitebeard Pirates"],
+  attribute: "ranged",
+  effect:
+    '[On Play] Look at 5 cards from the top of your deck; reveal up to 1 card with a type including "Whitebeard Pirates" other than [Izo] and add it to your hand. Then, place the rest at the bottom of your deck in any order.',
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "search",
+            lookCount: 5,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 1,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "excludeName",
+                value: "Izo",
+              },
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+            ],
+            revealDestination: "hand",
+            remainderPosition: "bottom",
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op03Izo003I18n,
+};

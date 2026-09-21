@@ -9,6 +9,84 @@ import { enMessages, formatActionLog } from "../../../logging/index.ts";
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
 describe("Sketchy Ripper", () => {
+  it("has the exact yellow zero-power Ripperdoc identity and top-three Gear scry DSL", () => {
+    expect(welcomeToNightCityRetailSketchyRipper).toMatchObject({
+      canonicalId: "sketchy-ripper",
+      slug: "sketchy-ripper",
+      name: "Sketchy Ripper",
+      displayName: "Sketchy Ripper",
+      type: "unit",
+      color: "yellow",
+      classifications: ["Ganger", "Ripperdoc", "Scavenger"],
+      cost: 2,
+      power: 0,
+      ram: 2,
+      hasSellTag: false,
+      rarity: "Common",
+      printNumber: "054",
+      timingTriggers: ["attack"],
+      reminderText: ["Units with power 0 don't steal Gigs."],
+      rulesText:
+        "{Attack} Search the top 3 cards of your deck. Reveal a Gear and add it to your hand. Bottom-deck the rest.\n(Units with power 0 don't steal Gigs.)",
+      abilities: [
+        {
+          kind: "triggered",
+          text: "{Attack} Search the top 3 cards of your deck. Reveal a Gear and add it to your hand. Bottom-deck the rest.",
+          trigger: { trigger: "attack" },
+          source: { selector: "self" },
+          effects: [
+            {
+              effect: "scry",
+              player: "friendly",
+              amount: 3,
+              destinations: [
+                {
+                  zone: "hand",
+                  min: 0,
+                  max: 1,
+                  reveal: true,
+                  target: {
+                    selector: "card",
+                    controller: "friendly",
+                    zones: ["deck"],
+                    cardTypes: ["gear"],
+                  },
+                },
+                { zone: "deckBottom", remainder: true, order: "original" },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  it("costs exactly 2 to play and enters with Lag", () => {
+    const successEngine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailSketchyRipper],
+      eddies: 2,
+    });
+    for (const legend of successEngine.getCardsInZone("legendArea", P1)) {
+      successEngine.judgeSpendCard(legend, { as: P1 });
+    }
+    successEngine.playCard(welcomeToNightCityRetailSketchyRipper, { as: P1 });
+    expect(successEngine.getEddies(P1)).toBe(0);
+    expect(
+      successEngine.getCard(welcomeToNightCityRetailSketchyRipper, "field", P1).meta.hasLag,
+    ).toBe(true);
+
+    const failureEngine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailSketchyRipper],
+      eddies: 1,
+    });
+    for (const legend of failureEngine.getCardsInZone("legendArea", P1)) {
+      failureEngine.judgeSpendCard(legend, { as: P1 });
+    }
+    expect(() => failureEngine.playCard(welcomeToNightCityRetailSketchyRipper, { as: P1 })).toThrow(
+      /INSUFFICIENT_EDDIES/,
+    );
+  });
+
   it("searches the top 3 on attack, reveals a Gear, and adds it to hand", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
@@ -158,5 +236,21 @@ describe("Sketchy Ripper", () => {
         P1,
       ),
     ).toMatchObject({ success: false, errorCode: "INVALID_CARD" });
+  });
+
+  it("opens no scry choice when attacking with an empty deck", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        deck: 0,
+        field: [{ card: welcomeToNightCityRetailSketchyRipper, spent: false, hasLag: false }],
+      },
+      { gigArea: [{ dieType: "d4", faceValue: 1 }] },
+    );
+
+    engine.attackRival(welcomeToNightCityRetailSketchyRipper, { as: P1 });
+
+    expect(engine.getPrompt(P1).choice).toBeNull();
+    expect(engine.getCardsInZone("hand", P1)).toHaveLength(0);
+    expect(engine.getCardsInZone("deck", P1)).toHaveLength(0);
   });
 });

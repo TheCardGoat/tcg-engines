@@ -40,6 +40,7 @@ export const sigilOfPermafrost = definePitchFamily(fabPitchFamilies["sigil-of-pe
           effect: {
             type: "create-token",
             token: "frostbite",
+            creator: "effect-controller",
             controller: "target-controller",
             count: {
               type: "event-amount",

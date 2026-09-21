@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op01Komurasaki042 } from "../../../../../cards/src/cards/OP01/characters/042-komurasaki.ts";
+import { op01Komurasaki042 } from "../../../../../cards/src/cards/characters/op01-042-komurasaki.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-042 Komurasaki", () => {

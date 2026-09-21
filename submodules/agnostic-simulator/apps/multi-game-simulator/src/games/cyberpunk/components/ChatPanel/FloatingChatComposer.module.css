@@ -1,0 +1,232 @@
+/* Floating chat dock overlaying the lower edge of the unified activity feed.
+   The dock never reserves layout space: the pointer-events chain lets taps
+   fall through the empty rail while keeping the form and toggle interactive. */
+.dock {
+  position: absolute;
+  z-index: 2;
+  right: 0.6rem;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  display: flex;
+  min-width: 0;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  pointer-events: none;
+}
+
+.dock > * {
+  pointer-events: auto;
+}
+
+/* Keep the open composer in layout flow so the end of the activity feed can
+   scroll fully above it. The closed toggle remains a compact overlay. */
+.dock[data-open="true"] {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  flex: 0 0 auto;
+  padding: 0.6rem;
+}
+
+.compose {
+  display: grid;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: 0.45rem;
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 30%);
+  border-radius: 4px;
+  padding: 0.45rem 0.5rem;
+  background: rgb(7 9 12 / 96%);
+  box-shadow:
+    0 0.35rem 0.9rem rgb(0 0 0 / 45%),
+    0 0 14px rgb(var(--simulator-accent-rgb, 245 230 66) / 10%);
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.presetChip {
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  min-height: 26px;
+  padding: 4px 10px;
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 25%);
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 4%);
+  color: inherit;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.presetChip:hover {
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 12%);
+}
+
+.presetChip:active {
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 18%);
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem;
+  align-items: stretch;
+}
+
+.input {
+  font-family: inherit;
+  font-size: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: 32px;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 25%);
+  background: rgb(0 0 0 / 30%);
+  color: inherit;
+  border-radius: 2px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: rgb(var(--simulator-cyan-rgb, 92 246 255) / 60%);
+}
+
+.sendButton {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid rgb(var(--simulator-cyan-rgb, 92 246 255) / 50%);
+  background: rgb(var(--simulator-cyan-rgb, 92 246 255) / 8%);
+  color: rgb(var(--simulator-cyan-rgb, 92 246 255));
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.sendButton:hover:not(:disabled) {
+  background: rgb(var(--simulator-cyan-rgb, 92 246 255) / 16%);
+}
+
+.sendButton:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.freeTextGate {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.gateText {
+  color: rgb(var(--board-muted-rgb, 207 232 246) / 72%);
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.requestButton {
+  flex: none;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  min-height: 30px;
+  padding: 5px 10px;
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 40%);
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 8%);
+  color: rgb(var(--simulator-accent-rgb, 245 230 66) / 90%);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.requestButton:hover:not(:disabled) {
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 16%);
+}
+
+.requestButton:disabled {
+  opacity: 0.45;
+  cursor: wait;
+}
+
+.toggle {
+  display: grid;
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
+  place-items: center;
+  border: 1px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 52%);
+  border-radius: 50%;
+  background: rgb(7 9 12 / 94%);
+  box-shadow:
+    0 0.35rem 0.9rem rgb(0 0 0 / 45%),
+    0 0 12px rgb(var(--simulator-accent-rgb, 245 230 66) / 18%);
+  color: rgb(var(--simulator-accent-rgb, 245 230 66));
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.toggle:hover {
+  background: rgb(var(--simulator-accent-rgb, 245 230 66) / 14%);
+}
+
+.toggle:focus-visible,
+.presetChip:focus-visible,
+.input:focus-visible,
+.sendButton:focus-visible,
+.requestButton:focus-visible {
+  outline: 2px solid rgb(var(--simulator-accent-rgb, 245 230 66) / 72%);
+  outline-offset: 2px;
+}
+
+/* A narrow feed leaves no room beside the toggle: the form stacks above it
+   and compose targets keep reachable sizes. */
+@container simulator-sidebar (max-width: 16rem) {
+  .input,
+  .sendButton,
+  .requestButton {
+    min-height: 40px;
+  }
+
+  .sendButton {
+    width: 40px;
+  }
+
+  .toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}
+
+/* Touch surfaces (the mobile activity drawer portals outside the sidebar
+   container, so it only sees this block): keep compose targets reachable. */
+@media (pointer: coarse) {
+  .toggle {
+    width: 44px;
+    height: 44px;
+  }
+
+  .presetChip {
+    min-height: 36px;
+  }
+
+  .input,
+  .sendButton,
+  .requestButton {
+    min-height: 42px;
+  }
+
+  .sendButton {
+    width: 42px;
+  }
+}

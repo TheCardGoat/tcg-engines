@@ -1,3 +1,4 @@
+import { resolveGrandArchiveImage } from "@tcg/grand-archive-cards";
 import { describe, expect, it } from "vitest";
 import { grandArchivePublicDeckBoards, prepareGrandArchivePlatformDeck } from "./platform-decks";
 
@@ -22,7 +23,7 @@ describe("Grand Archive public deck presentation", () => {
       printingId: "vskyslv2qq",
       name: "Morrigan, Lost Spirit",
     });
-    expect(boards.material[0]?.imageUrl).toContain("vskyslv2qq");
+    expect(boards.material[0]?.imageUrl).toBe(resolveGrandArchiveImage("0rapy8v7x0", "vskyslv2qq"));
     expect(boards.startingChampionId).toBe("0rapy8v7x0");
   });
 

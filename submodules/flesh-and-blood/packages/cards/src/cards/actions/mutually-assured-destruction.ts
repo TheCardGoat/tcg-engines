@@ -81,6 +81,7 @@ export const mutuallyAssuredDestruction = definePitchFamily(
                 effect: {
                   type: "create-token",
                   token: "bloodrot-pox",
+                  creator: "effect-controller",
                   controller: "iteration-subject",
                 },
               },

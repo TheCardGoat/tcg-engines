@@ -90,7 +90,7 @@ describe("new Cyberpunk card abilities", () => {
         as: P1,
       },
     );
-    engine.executeMove("resolveEffectTarget", { args: { pass: true } }, P1);
+    engine.declineAdjustGig({ as: P1 });
     engine.resolveFullFight({ as: P1 });
 
     expect(engine.getCardsInZone("hand", P1)).toHaveLength(2);

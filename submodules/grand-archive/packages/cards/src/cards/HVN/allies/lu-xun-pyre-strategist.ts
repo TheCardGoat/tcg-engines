@@ -69,7 +69,6 @@ export const luXunPyreStrategist: GrandArchiveCard<GrandArchiveAbilityDefinition
             kind: "event",
             event: {
               name: "counter-removed",
-              actor: "controller",
               counter: "enlighten",
               subject: {
                 kind: "event-object",
@@ -99,15 +98,26 @@ export const luXunPyreStrategist: GrandArchiveCard<GrandArchiveAbilityDefinition
               kind: "sequence",
               effects: [
                 {
-                  kind: "rest",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "rest",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "keyword-action",
-                  action: "empower",
-                  amount: 3,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "keyword-action",
+                    action: "empower",
+                    amount: 3,
+                  },
                 },
               ],
             },

@@ -384,7 +384,7 @@ describe("modular-dispatch structure", () => {
 
   it("countable-amount evaluation is exhaustive never not a default throw", () => {
     const source = readFileSync(join(rulesRoot, "evaluation/amounts/count.ts"), "utf8");
-    expect(source).toMatch(/assertNever\(amount\.what/);
+    expect(source).toMatch(/assertNever\(amount, "FabCountable"\)/);
     expect(source).not.toMatch(/throw new FabRulesEvaluationError\(`count \$\{amount\.what\}`\)/);
   });
 

@@ -8,6 +8,10 @@ export interface PostGameModalProps {
   outcome: "win" | "loss" | "draw";
   reason?: string;
   returnUrl?: string;
+  /** Flanking identity cards for the versus header (viewer left, opponent right). */
+  participants?: { left: ReactNode; right: ReactNode };
+  /** Small contextual chips rendered under the outcome reason (format, series, duration...). */
+  meta?: ReactNode;
   sections?: ReadonlyArray<{
     id: string;
     label: string;
@@ -71,6 +75,8 @@ export function PostGameModal({
   outcome,
   reason,
   returnUrl,
+  participants,
+  meta,
   sections = [],
   actions,
   onClose,
@@ -141,15 +147,30 @@ export function PostGameModal({
           </button>
         ) : null}
 
-        <header className={classes.header}>
-          <p className={classes.eyebrow}>Match ended</p>
-          <h2 className={classes.headline} data-testid="post-game-headline">
-            {headline}
-          </h2>
-          {reason ? (
-            <p className={classes.reason} data-testid="post-game-reason">
-              {reason}
-            </p>
+        <header
+          className={participants ? `${classes.header} ${classes.headerVersus}` : classes.header}
+        >
+          <div className={classes.headerCopy}>
+            <p className={classes.eyebrow}>Match ended</p>
+            <h2 className={classes.headline} data-testid="post-game-headline">
+              {headline}
+            </h2>
+            {reason ? (
+              <p className={classes.reason} data-testid="post-game-reason">
+                {reason}
+              </p>
+            ) : null}
+            {meta ? <div className={classes.headerMeta}>{meta}</div> : null}
+          </div>
+          {participants ? (
+            <>
+              <div className={classes.versusSide} data-side="left">
+                {participants.left}
+              </div>
+              <div className={classes.versusSide} data-side="right">
+                {participants.right}
+              </div>
+            </>
           ) : null}
         </header>
 

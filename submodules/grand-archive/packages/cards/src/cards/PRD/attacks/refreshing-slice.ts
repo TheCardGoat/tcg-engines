@@ -58,31 +58,42 @@ export const refreshingSlice: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               kind: "sequence",
               effects: [
                 {
-                  kind: "pay",
-                  player: "controller",
-                  cost: {
-                    kind: "pay-reserve",
-                    amount: 3,
+                  kind: "attempt",
+                  effect: {
+                    kind: "pay",
+                    player: "controller",
+                    cost: {
+                      kind: "pay-reserve",
+                      amount: 3,
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "recover",
-                  player: "controller",
-                  amount: {
-                    kind: "calculate",
-                    operator: "add",
-                    operands: [
-                      3,
-                      {
-                        kind: "property",
-                        subject: {
-                          kind: "champion",
-                          player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "recover",
+                    player: "controller",
+                    amount: {
+                      kind: "calculate",
+                      operator: "add",
+                      operands: [
+                        3,
+                        {
+                          kind: "property",
+                          subject: {
+                            kind: "champion",
+                            player: "controller",
+                          },
+                          property: "level",
+                          basis: "current",
                         },
-                        property: "level",
-                        basis: "current",
-                      },
-                    ],
+                      ],
+                    },
                   },
                 },
               ],

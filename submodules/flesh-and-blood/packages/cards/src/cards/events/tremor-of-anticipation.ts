@@ -13,6 +13,8 @@ export const tremorOfAnticipation = defineCard(
           replacementKind: "standard",
           replaces: {
             name: "create",
+            creator: "any",
+            occurrences: "every",
             filter: {
               typeBox: {
                 metatypes: ["Token"],

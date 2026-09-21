@@ -13,7 +13,7 @@ export interface CyberpunkPostGameRecord {
 }
 
 export interface CyberpunkAnalyticsEnvelope {
-  status: "missing" | "processing" | "saved" | "failed";
+  status: "missing" | "processing" | "saved" | "failed" | "skipped";
   errorMessage?: string | null;
   payload?: CyberpunkGameAnalyticsRecord;
 }
@@ -68,10 +68,14 @@ export interface CyberpunkPlayerAnalytics {
     trashCount: number;
   };
   counters: {
+    /** Older saved records predate the mulligan counters. */
+    mulligans?: number;
+    keptHands?: number;
     cardsPlayed: number;
     unitsPlayed: number;
     gearPlayed: number;
     programsPlayed: number;
+    goSoloPlays?: number;
     cardsSold: number;
     legendsCalled: number;
     gigsGained: number;
@@ -83,6 +87,9 @@ export interface CyberpunkPlayerAnalytics {
     effectsResolved: number;
     phasesPassed: number;
     turnsEnded: number;
+    /** Older saved records predate the fight-outcome analytics. */
+    fightsWon?: number;
+    unitsLost?: number;
     conceded: boolean;
   };
   metrics: {
@@ -94,6 +101,12 @@ export interface CyberpunkPlayerAnalytics {
     firstDirectAttackTurn: number | null;
     firstStolenGigTurn: number | null;
     firstLegendCallTurn: number | null;
+    /** Derived highlights; older saved records predate them. */
+    biggestSteal?: number;
+    stealEvents?: number;
+    eddiesFloating?: number;
+    lowestDeckCount?: number;
+    turnsAtSevenGigs?: number;
   };
   cardEvents: Record<
     string,
@@ -131,6 +144,14 @@ export interface CyberpunkPlayerAnalytics {
     effectsResolvedThisTurn: number;
     runningGigs: number;
     runningStreetCred: number;
+    /** End-of-turn snapshot fields; older saved records predate them. */
+    eddies?: number;
+    eddiesSpentThisTurn?: number;
+    handCount?: number;
+    deckCount?: number;
+    fieldCount?: number;
+    readyUnitCount?: number;
+    spentUnitCount?: number;
     durationMs: number;
   }>;
 }
@@ -266,7 +287,8 @@ function parseAnalyticsEnvelope(value: unknown): CyberpunkAnalyticsEnvelope | un
     value.status !== "missing" &&
     value.status !== "processing" &&
     value.status !== "saved" &&
-    value.status !== "failed"
+    value.status !== "failed" &&
+    value.status !== "skipped"
   ) {
     return undefined;
   }

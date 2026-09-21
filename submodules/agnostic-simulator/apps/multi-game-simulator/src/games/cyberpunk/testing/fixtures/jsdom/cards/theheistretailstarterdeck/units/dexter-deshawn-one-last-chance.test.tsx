@@ -29,8 +29,7 @@ describe("Dexter DeShawn - One Last Chance (The Heist) jsdom behavior", () => {
 
       await pom.expectPendingChoiceType(CYBERPUNK_P1, "chooseTarget");
       expectIncludes("Dexter eligible Gig", await pom.getEligibleTargetIds(CYBERPUNK_P1), gig.id);
-      await pom.resolveEffectTarget([gig.id], CYBERPUNK_P1);
-      await pom.resolveAdjustGig(3, CYBERPUNK_P1);
+      await pom.resolveAdjustGig(gig.id, 3, CYBERPUNK_P1);
 
       await pom.expectGigValue(gig.id, 3);
       await pom.expectPendingChoiceType(CYBERPUNK_P1, null);

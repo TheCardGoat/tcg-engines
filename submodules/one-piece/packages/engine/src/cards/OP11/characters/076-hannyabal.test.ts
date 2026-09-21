@@ -5,7 +5,7 @@ import {
   op02Mr1DazBonez063,
   op02Mr3Galdino065,
 } from "@tcg/op-cards";
-import { op11Hannyabal076 } from "../../../../../cards/src/cards/OP11/characters/076-hannyabal.ts";
+import { op11Hannyabal076 } from "../../../../../cards/src/cards/characters/op11-076-hannyabal.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

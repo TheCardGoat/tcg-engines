@@ -1,6 +1,6 @@
 import { eb01Doma005 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04RoronoaZoroOp14015015 } from "../../../../../cards/src/cards/OP14EB04/characters/015-roronoa-zoro-op14-015.ts";
+import { op14eb04RoronoaZoroOp14015015 } from "../../../../../cards/src/cards/characters/op14-015-roronoa-zoro-op14-015.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

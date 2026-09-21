@@ -10,6 +10,9 @@ import { chooseCardToMoveResolver } from "./choose-card-to-move.ts";
 import { chooseCardTypeResolver } from "./choose-card-type.ts";
 import { gainGigResolver } from "./gain-gig.ts";
 import { revealDestinationResolver } from "./reveal-destination.ts";
+import { redirectDefeatResolver } from "./redirect-defeat.ts";
+import { chooseSacrificialGearResolver } from "./sacrificial-gear.ts";
+import { chooseFirstPlayerResolver } from "./choose-first-player.ts";
 
 /**
  * Shared decision tree for resolving every variant of a player-facing pending
@@ -30,6 +33,9 @@ export const defaultChoiceResolvers: ChoiceResolverMap = {
   chooseCardToMove: chooseCardToMoveResolver,
   chooseCardType: chooseCardTypeResolver,
   gainGig: gainGigResolver,
+  redirectDefeat: redirectDefeatResolver,
+  chooseSacrificialGear: chooseSacrificialGearResolver,
+  chooseFirstPlayer: chooseFirstPlayerResolver,
 };
 
 export {
@@ -44,4 +50,7 @@ export {
   chooseCardToMoveResolver,
   chooseCardTypeResolver,
   gainGigResolver,
+  redirectDefeatResolver,
+  chooseSacrificialGearResolver,
+  chooseFirstPlayerResolver,
 };

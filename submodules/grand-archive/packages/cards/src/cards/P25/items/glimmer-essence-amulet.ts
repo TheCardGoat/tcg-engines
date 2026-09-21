@@ -58,15 +58,26 @@ export const glimmerEssenceAmulet: GrandArchiveCard<GrandArchiveAbilityDefinitio
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish-object",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish-object",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 1,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 1,
+                  },
                 },
               ],
             },

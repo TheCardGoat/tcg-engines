@@ -93,14 +93,23 @@ describe("Forsaken Strike — six-reward interaction", () => {
         name: layout === "mobile" ? "Your permanents" : "Your arena",
       });
       expect(within(arena).getAllByRole("button", { name: /^Cintari Sellsword/ })[0]).toBeDefined();
-      if (layout === "mobile")
-        fireEvent.click(screen.getByRole("button", { name: "Open match history" }));
+      // resolveRestOfCombat switches the desktop activity panel to the Now
+      // tab; reopen the history surface for the narrative assertions. The
+      // collapsed mobile panel exposes an open button instead of tabs.
+      if (layout === "desktop") {
+        fireEvent.click(screen.getByRole("tab", { name: "History" }));
+      } else {
+        const openHistory = screen.queryByRole("button", { name: "Open match history" });
+        if (openHistory) fireEvent.click(openHistory);
+        const historyTab = screen.queryByRole("tab", { name: "History" });
+        if (historyTab) fireEvent.click(historyTab);
+      }
       await waitFor(
         () => {
           const history = screen.getByRole("region", { name: "Match history" }).textContent ?? "";
           expect(history).toContain("hit Practice bot for 9");
           for (const name of names) {
-            expect(history).toContain(`${name} was destroyed`);
+            expect(history).toContain(`Forsaken Strike destroyed ${name}`);
             expect(history).toContain(`Discarded ${name}`);
           }
           expect(history.match(/created Gate to i'Arathael/g)).toHaveLength(2);

@@ -6,6 +6,12 @@ import type {
 } from "../../view/player-prompt.ts";
 import type { FilteredCardView, FilteredMatchView } from "../../view/filter.ts";
 import type { MoveId } from "../../moves/index.ts";
+import {
+  gearHostMatch,
+  isPreferSpendUnit,
+  preferredLegendHostNames,
+  type DeckStrategyProfile,
+} from "../deck-profile.ts";
 import { decisionFromMove, type PlayCardPick } from "./move-args.ts";
 import { assertNever } from "../util/assert-never.ts";
 
@@ -99,6 +105,90 @@ function priorityFromOrder(order: MoveId[]): Partial<Record<MoveId, number>> {
   return map;
 }
 
+/**
+ * A greedy-family strategy. Exposes its weight set and optional deck profile
+ * so callers can rebind a different profile without reconstructing weights
+ * from scratch (`withDeckProfile`).
+ */
+export interface GreedyAIStrategy extends AIStrategy {
+  /** The weight set this strategy was constructed with (before profile overrides). */
+  readonly greedyWeights: GreedyWeights;
+  readonly deckProfile?: DeckStrategyProfile;
+}
+
+export function isGreedyAIStrategy(strategy: AIStrategy): strategy is GreedyAIStrategy {
+  const candidate = strategy as Partial<GreedyAIStrategy>;
+  return typeof candidate.greedyWeights === "object" && candidate.greedyWeights !== null;
+}
+
+/**
+ * Bind a deck strategy profile onto a greedy-family strategy. Tactical and
+ * other search strategies are wrapped by {@link withDeckProfile} in
+ * `bind-profile.ts` so this helper stays cycle-free with the search layer.
+ */
+export function bindGreedyDeckProfile(
+  strategy: AIStrategy,
+  profile: DeckStrategyProfile,
+): AIStrategy {
+  if (!isGreedyAIStrategy(strategy)) return strategy;
+  if (strategy.deckProfile === profile) return strategy;
+  return createGreedyStrategy(strategy.greedyWeights, strategy.name, profile);
+}
+
+/**
+ * @deprecated Use {@link bindGreedyDeckProfile} or the dispatcher
+ * `withDeckProfile` from `automation/bind-profile.ts`. Kept as an alias so
+ * greedy-only call sites keep working.
+ */
+export function withDeckProfile(strategy: AIStrategy, profile: DeckStrategyProfile): AIStrategy {
+  return bindGreedyDeckProfile(strategy, profile);
+}
+
+/**
+ * Layer profile weight overrides over the base weights. Scalar overrides
+ * replace; priority overrides merge per move so a profile can re-rank just
+ * the moves its pacing cares about.
+ */
+const DEVELOP_FIRST_DEFAULT_PRIORITY: Partial<Record<MoveId, number>> = {
+  playCard: 10,
+  callLegend: 9,
+  attackRival: 8,
+  attackUnit: 7,
+};
+
+function mergeProfileWeights(
+  weights: GreedyWeights,
+  profile: DeckStrategyProfile | undefined,
+): GreedyWeights {
+  const merged = cloneWeights(weights);
+  if (profile?.pacing === "develop-first") {
+    merged.defaultPriority = { ...merged.defaultPriority, ...DEVELOP_FIRST_DEFAULT_PRIORITY };
+  }
+  const overrides = profile?.weights;
+  if (!overrides) return merged;
+  if (overrides.ownNearWinThreshold !== undefined)
+    merged.ownNearWinThreshold = overrides.ownNearWinThreshold;
+  if (overrides.rivalNearWinThreshold !== undefined)
+    merged.rivalNearWinThreshold = overrides.rivalNearWinThreshold;
+  if (overrides.mulliganMinCheapCards !== undefined)
+    merged.mulliganMinCheapCards = overrides.mulliganMinCheapCards;
+  if (overrides.mulliganCheapCostThreshold !== undefined)
+    merged.mulliganCheapCostThreshold = overrides.mulliganCheapCostThreshold;
+  if (overrides.mulliganMinSellable !== undefined)
+    merged.mulliganMinSellable = overrides.mulliganMinSellable;
+  if (overrides.fightMinMargin !== undefined) merged.fightMinMargin = overrides.fightMinMargin;
+  if (overrides.defaultPriority)
+    merged.defaultPriority = { ...merged.defaultPriority, ...overrides.defaultPriority };
+  if (overrides.ownNearWinPriority)
+    merged.ownNearWinPriority = { ...merged.ownNearWinPriority, ...overrides.ownNearWinPriority };
+  if (overrides.rivalNearWinPriority)
+    merged.rivalNearWinPriority = {
+      ...merged.rivalNearWinPriority,
+      ...overrides.rivalNearWinPriority,
+    };
+  return merged;
+}
+
 function cloneWeights(weights: GreedyWeights): GreedyWeights {
   return {
     ...weights,
@@ -134,29 +224,33 @@ function orderFromPriority(map: Partial<Record<MoveId, number>>, moves: Availabl
  * The strategy never accesses raw state — only `ctx.view` and `ctx.prompt`.
  */
 /**
- * Build a greedy strategy with a custom weight set. The default export
- * `greedyStrategy` is `createGreedyStrategy(DEFAULT_GREEDY_WEIGHTS)`.
+ * Build a greedy strategy with a custom weight set and optional deck
+ * strategy profile. The default export `greedyStrategy` is
+ * `createGreedyStrategy(DEFAULT_GREEDY_WEIGHTS)`.
  */
 export function createGreedyStrategy(
   weights: GreedyWeights = DEFAULT_GREEDY_WEIGHTS,
   name = "greedy",
-): AIStrategy {
-  const strategyWeights = cloneWeights(weights);
+  profile?: DeckStrategyProfile,
+): GreedyAIStrategy {
+  const strategyWeights = mergeProfileWeights(weights, profile);
   return {
     name,
+    greedyWeights: weights,
+    deckProfile: profile,
     decideAction(ctx) {
       const mulliganMove = ctx.prompt.availableMoves.find((m) => m.moveId === "mulligan");
-      const wantsMulligan = shouldMulligan(ctx, strategyWeights);
+      const wantsMulligan = shouldMulligan(ctx, strategyWeights, profile);
       if (mulliganMove && wantsMulligan) {
         return { kind: "command", move: "mulligan" };
       }
 
-      const moveOrder = priorityOrder(ctx, strategyWeights);
+      const moveOrder = priorityOrder(ctx, strategyWeights, profile);
       for (const moveId of moveOrder) {
         if (moveId === "mulligan" && !wantsMulligan) continue;
         const available = ctx.prompt.availableMoves.find((m) => m.moveId === moveId);
         if (!available) continue;
-        const decision = pickArgsFor(available, ctx, strategyWeights);
+        const decision = pickArgsFor(available, ctx, strategyWeights, profile);
         if (decision.kind === "command") return decision;
       }
       return { kind: "stuck", reason: "greedy: no priority move yielded a command" };
@@ -172,22 +266,57 @@ export const defaultStrategy: AIStrategy = createGreedyStrategy(DEFAULT_GREEDY_W
  * back-and-redraw before play. Keep when the curve looks playable; mulligan
  * when the hand is bricked.
  *
+ * Generic (no profile):
  *   - Keep if at least 2 cards cost ≤ 2 (we can deploy on turn 1-2 with the
  *     1-eddie/turn pacing) AND the hand has at least 1 sellable card (the
  *     primary eddie ramp in alpha).
- *   - Otherwise mulligan and re-roll.
+ *
+ * Deck-aware (with a profile): development means cheap *Units* (a hand of
+ * cheap Programs with no board is the classic brick), a named engine piece
+ * relieves `engineRelief` slots of the curve requirement, and a congestion
+ * veto bounces hands holding too many copies of expensive payoffs before the
+ * deck can deploy them.
  */
 export function shouldMulligan(
   ctx: DecisionContext,
   weights: GreedyWeights = DEFAULT_GREEDY_WEIGHTS,
+  profile?: DeckStrategyProfile,
 ): boolean {
   const hand = getOwnHand(ctx);
   if (hand.length === 0) return false;
-  const cheap = hand.filter(
-    (c) => (c.cost ?? Number.POSITIVE_INFINITY) <= weights.mulliganCheapCostThreshold,
+  const tuning = profile?.mulligan;
+  if (!tuning) {
+    const cheap = hand.filter(
+      (c) => (c.cost ?? Number.POSITIVE_INFINITY) <= weights.mulliganCheapCostThreshold,
+    ).length;
+    const sellable = hand.filter((c) => c.hasSellTag).length;
+    return cheap < weights.mulliganMinCheapCards || sellable < weights.mulliganMinSellable;
+  }
+
+  const visible = hand.filter((c) => c.cardName !== null);
+  const sellable = visible.filter((c) => c.hasSellTag).length;
+  const minSellable = tuning.minSellable ?? weights.mulliganMinSellable;
+  if (sellable < minSellable) return true;
+
+  const congestionNames = tuning.congestionNames ?? [];
+  const congestionMin = tuning.congestionMinCopies ?? 0;
+  if (congestionMin > 0 && congestionNames.length > 0) {
+    const congestion = visible.reduce(
+      (total, card) => (congestionNames.includes(card.cardName!) ? total + 1 : total),
+      0,
+    );
+    if (congestion >= congestionMin) return true;
+  }
+
+  const cheapUnitCost = tuning.cheapUnitCost ?? weights.mulliganCheapCostThreshold;
+  const cheapUnits = visible.filter(
+    (c) => c.type === "unit" && (c.cost ?? Number.POSITIVE_INFINITY) <= cheapUnitCost,
   ).length;
-  const sellable = hand.filter((c) => c.hasSellTag).length;
-  return cheap < weights.mulliganMinCheapCards || sellable < weights.mulliganMinSellable;
+  const minCheapUnits = tuning.minCheapUnits ?? weights.mulliganMinCheapCards;
+  const engineNames = tuning.engineNames ?? [];
+  const engineHit = engineNames.some((name) => visible.some((c) => c.cardName === name));
+  const curveNeed = Math.max(0, minCheapUnits - (engineHit ? (tuning.engineRelief ?? 0) : 0));
+  return cheapUnits < curveNeed;
 }
 
 function getOwnHand(ctx: DecisionContext): FilteredCardView[] {
@@ -198,7 +327,25 @@ function getOwnHand(ctx: DecisionContext): FilteredCardView[] {
   return handZone;
 }
 
-function priorityOrder(ctx: DecisionContext, weights: GreedyWeights): MoveId[] {
+function preferSpendAbilityAvailable(
+  ctx: DecisionContext,
+  profile: DeckStrategyProfile | undefined,
+): boolean {
+  if (!profile?.preferSpendOverAttack?.length) return false;
+  const move = ctx.prompt.availableMoves.find(
+    (candidate) => candidate.moveId === "activateAbility",
+  );
+  if (move?.inputSpec.type !== "selectAbility") return false;
+  return move.inputSpec.candidates.some((candidate) =>
+    isPreferSpendUnit(findCard(ctx.view, candidate.cardId), profile),
+  );
+}
+
+function priorityOrder(
+  ctx: DecisionContext,
+  weights: GreedyWeights,
+  profile?: DeckStrategyProfile,
+): MoveId[] {
   const { ownGigCount, rivalGigCount } = getGigCounts(ctx);
   const ownNearWin = ownGigCount >= weights.ownNearWinThreshold;
   const rivalNearWin = rivalGigCount >= weights.rivalNearWinThreshold;
@@ -208,7 +355,11 @@ function priorityOrder(ctx: DecisionContext, weights: GreedyWeights): MoveId[] {
     : rivalNearWin
       ? weights.rivalNearWinPriority
       : weights.defaultPriority;
-  return orderFromPriority(map, ctx.prompt.availableMoves);
+  const ordered = orderFromPriority(map, ctx.prompt.availableMoves);
+  if (ownGigCount < 5 && preferSpendAbilityAvailable(ctx, profile)) {
+    return ["activateAbility", ...ordered.filter((id) => id !== "activateAbility")];
+  }
+  return ordered;
 }
 
 function getGigCounts(ctx: DecisionContext): { ownGigCount: number; rivalGigCount: number } {
@@ -228,6 +379,7 @@ function pickArgsFor(
   available: AvailableMove,
   ctx: DecisionContext,
   weights: GreedyWeights,
+  profile?: DeckStrategyProfile,
 ): MoveDecision {
   const { moveId, inputSpec } = available;
   switch (moveId) {
@@ -236,12 +388,14 @@ function pickArgsFor(
       return decisionFromMove(available, {
         pickFromCandidates: () => null,
         pickPair: () => null,
-        pickPlayCard: (cands) => pickPlayCardForBoard(cands, ctx.view, ctx.playerId as string),
+        pickPlayCard: (cands) =>
+          pickPlayCardForBoard(cands, ctx.view, ctx.playerId as string, profile),
       });
     case "sellCard":
       if (inputSpec.type !== "selectCard") break;
       return decisionFromMove(available, {
-        pickFromCandidates: (cands) => pickCardToSell(cands, ctx.view, ctx.playerId as string),
+        pickFromCandidates: (cands) =>
+          pickCardToSell(cands, ctx.view, ctx.playerId as string, profile),
         pickPair: () => null,
       });
     case "attackUnit":
@@ -265,15 +419,20 @@ function pickArgsFor(
       }
       return decisionFromMove(available, {
         pickFromCandidates: (cands) =>
-          pickBlockerForAttack(cands, ctx.view, ctx.playerId as string, weights),
+          pickBlockerForAttack(cands, ctx.view, ctx.playerId as string, weights, profile),
         pickPair: () => null,
       });
     case "callLegend":
-    case "goSolo":
     case "resolveCardToPlay":
       // Generic: take the first available candidate via the shared mapper.
       return decisionFromMove(available, {
         pickFromCandidates: (cands) => cands[0] ?? null,
+        pickPair: () => null,
+      });
+    case "goSolo":
+      if (inputSpec.type !== "selectCard") break;
+      return decisionFromMove(available, {
+        pickFromCandidates: (cands) => pickGoSoloCandidate(cands, ctx, weights, profile),
         pickPair: () => null,
       });
     case "activateAbility":
@@ -281,7 +440,7 @@ function pickArgsFor(
       return decisionFromMove(available, {
         pickFromCandidates: () => null,
         pickPair: () => null,
-        pickAbility: (cands) => pickBestAbility(cands, ctx),
+        pickAbility: (cands) => pickBestAbility(cands, ctx, profile),
       });
     case "passPhase":
     case "concede":
@@ -300,10 +459,15 @@ function pickArgsFor(
     case "resolveEffectTarget":
     case "resolveCardTypeChoice":
     case "resolveChooseEffect":
+    case "resolveRedirectDefeat":
+    case "resolveSacrificialGear":
+    case "resolveFirstPlayer":
       return decisionFromMove(available, {
         pickFromCandidates: (cands) => cands[0] ?? null,
         pickPair: () => null,
       });
+    case "cancelPendingResolution":
+      return { kind: "stuck", reason: "cancelPendingResolution is a human escape hatch" };
     default:
       return assertNever(moveId, "MoveId in greedy.pickArgsFor");
   }
@@ -334,14 +498,61 @@ function cardStrategicValue(card: FilteredCardView | null): number {
   return power * 3 + blocker + immediateAttack + typeValue + card.triggerHints.length * 5;
 }
 
+/**
+ * Play-order bonus for a deck profile's core cards (engines and payoffs).
+ * Sized to break near-ties between comparable plays — big enough that an
+ * engine piece beats an equally-priced generic card, small enough that it
+ * never outranks actual board development (a playable Unit outvalues a
+ * cheap Program even with the bonus).
+ */
+const CORE_PLAY_BONUS = 6;
+
+function isCoreCard(card: FilteredCardView | null, coreCards: readonly string[] | undefined) {
+  if (!coreCards || coreCards.length === 0 || card === null) return false;
+  return card.cardName !== null && coreCards.includes(card.cardName);
+}
+
+function countNamedInPlay(
+  view: FilteredMatchView,
+  playerId: string,
+  cardName: string | null | undefined,
+): number {
+  if (!cardName) return 0;
+  const player = view.players[playerId];
+  if (!player) return 0;
+  let total = 0;
+  for (const zone of [player.zones.field, player.zones.legendArea]) {
+    if (!Array.isArray(zone)) continue;
+    for (const card of zone) {
+      if (card.cardName === cardName) total += 1;
+    }
+  }
+  return total;
+}
+
 function pickCardToSell(
   candidates: string[],
   view: FilteredMatchView,
   playerId: string,
+  profile?: DeckStrategyProfile,
 ): string | null {
   const available = view.players[playerId]?.availableEddies ?? 0;
+  // Deck protection: never volunteer a core card for cash unless the engine
+  // offers nothing else sellable — a strategy dies when its payoff is sold.
+  const protectedCandidates = candidates.filter(
+    (id) => !isCoreCard(findCard(view, id), profile?.coreCards),
+  );
+  const extraCore = candidates.filter((id) => {
+    const card = findCard(view, id);
+    return (
+      isCoreCard(card, profile?.coreCards) && countNamedInPlay(view, playerId, card?.cardName) > 0
+    );
+  });
+  const pool =
+    protectedCandidates.length > 0 ? protectedCandidates : extraCore.length > 0 ? extraCore : null;
+  if (!pool) return null;
   return (
-    [...candidates].sort((a, b) => {
+    [...pool].sort((a, b) => {
       const ac = findCard(view, a);
       const bc = findCard(view, b);
       const aPlayable = (ac?.cost ?? Number.POSITIVE_INFINITY) <= available ? 8 : 0;
@@ -351,7 +562,9 @@ function pickCardToSell(
       if (av !== bv) return av - bv;
       const aCost = ac?.cost ?? Number.POSITIVE_INFINITY;
       const bCost = bc?.cost ?? Number.POSITIVE_INFINITY;
-      if (aCost !== bCost) return bCost - aCost;
+      // Same eddies, same strategic value: sell the cheaper card and keep
+      // the expensive payoff in hand.
+      if (aCost !== bCost) return aCost - bCost;
       return a.localeCompare(b);
     })[0] ?? null
   );
@@ -373,7 +586,11 @@ const ABILITY_EFFECT_VALUES: Readonly<Record<string, number>> = {
   scry: 8,
 };
 
-function pickBestAbility(candidates: AbilityCandidate[], ctx: DecisionContext) {
+function pickBestAbility(
+  candidates: AbilityCandidate[],
+  ctx: DecisionContext,
+  profile?: DeckStrategyProfile,
+) {
   const { ownGigCount, rivalGigCount } = getGigCounts(ctx);
   return (
     [...candidates].sort((a, b) => {
@@ -390,6 +607,8 @@ function pickBestAbility(candidates: AbilityCandidate[], ctx: DecisionContext) {
           value += 15;
         value -= candidate.eddieCost * 5;
         if (candidate.spendsCard) value -= 3;
+        const card = findCard(ctx.view, candidate.cardId);
+        if (isPreferSpendUnit(card, profile)) value += 40;
         return value;
       };
       const av = score(a);
@@ -418,6 +637,24 @@ function pickWeakestCard(candidates: string[], view: FilteredMatchView): string 
     }
   }
   return best?.id ?? candidates[0]!;
+}
+
+function pickGoSoloCandidate(
+  candidates: string[],
+  ctx: DecisionContext,
+  weights: GreedyWeights,
+  profile?: DeckStrategyProfile,
+): string | null {
+  const hold = preferredLegendHostNames(profile);
+  const ownGigs = getOwnGigCount(ctx.view, ctx.playerId as string);
+  const allowed =
+    ownGigs >= weights.ownNearWinThreshold || hold.size === 0
+      ? candidates
+      : candidates.filter((id) => {
+          const name = findCard(ctx.view, id)?.cardName;
+          return !name || !hold.has(name);
+        });
+  return allowed[0] ?? null;
 }
 
 function pickStrongestAttacker(
@@ -596,15 +833,21 @@ function pickDirectAttackBlocker(
   attacker: FilteredCardView,
   playerId: string,
   weights: GreedyWeights,
+  profile?: DeckStrategyProfile,
 ): string | null {
   const attackerPower = attacker.effectivePower ?? 0;
   const urgent = directAttackIsUrgent(attacker, view, playerId, weights);
+  // A deck profile can lower the deny-steal bar: trade a cheap body to stop
+  // even a 1-Gig direct attack (control decks vs gig-race aggro).
+  const blockStealsAtLeast = Math.min(profile?.blockDirectStealsAtLeast ?? 2, 2);
+  const stealWorthBlocking =
+    directStealAmountForAttacker(attacker, getOwnGigCount(view, playerId)) >= blockStealsAtLeast;
   const scores = candidates
     .map((id) => scoreBlockerCandidate(id, view, attackerPower))
     .filter((score): score is BlockerCandidateScore => score !== null)
     .filter((score) => {
       if (score.outcome !== "chump") return true;
-      if (!urgent) return false;
+      if (!urgent && !stealWorthBlocking) return false;
       return !shouldPreserveBlockerForLaterAttacker(
         score,
         view,
@@ -691,6 +934,7 @@ function pickBlockerForAttack(
   view: FilteredMatchView,
   playerId: string,
   weights: GreedyWeights,
+  profile?: DeckStrategyProfile,
 ): string | null {
   if (candidates.length === 0) return null;
   const attack = view.attackState;
@@ -700,7 +944,7 @@ function pickBlockerForAttack(
   if (!attacker) return null;
 
   if (attack.kind === "direct") {
-    return pickDirectAttackBlocker(candidates, view, attacker, playerId, weights);
+    return pickDirectAttackBlocker(candidates, view, attacker, playerId, weights, profile);
   }
 
   if (attack.kind === "fight" && attack.defenderId) {
@@ -759,37 +1003,43 @@ function mustAttackCandidates(candidates: string[], view: FilteredMatchView): st
  *   ready blocker on our own field, prefer playing a card with the
  *   `blocker` keyword (priced first by `effectivePower`, then `cost`) so we
  *   actually have a react answer next turn.
- * - Otherwise, fall back to the regular "highest cost playable" pick.
+ * - Otherwise, fall back to the regular "highest board value playable" pick,
+ *   which gives a deck profile's core cards a bonus so the strategy's engine
+ *   comes online in time instead of idling in hand.
  *
- * Gear always attaches to the highest-power friendly unit so the buff lands
- * on the strongest threat.
+ * Gear attaches to the profile's preferred host for that Gear when one is
+ * on the board (e.g. Overwatch onto its named carrier), else to the
+ * highest-power friendly unit.
  */
 function pickPlayCardForBoard(
   candidates: PlayCardCandidate[],
   view: FilteredMatchView,
   playerId: string,
+  profile?: DeckStrategyProfile,
 ): PlayCardPick | null {
   if (candidates.length === 0) return null;
 
   const needsBlocker = rivalHasUnansweredThreats(view, playerId);
   if (needsBlocker) {
     const blockerCard = pickBestBlockerCard(candidates, view);
-    if (blockerCard) return resolveCandidate(blockerCard, view, candidates);
+    if (blockerCard) return resolveCandidate(blockerCard, view, candidates, profile);
   }
 
-  return pickHighestBoardValuePlayable(candidates, view, playerId);
+  return pickHighestBoardValuePlayable(candidates, view, playerId, profile);
 }
 
 function pickHighestBoardValuePlayable(
   candidates: PlayCardCandidate[],
   view: FilteredMatchView,
   playerId: string,
+  profile?: DeckStrategyProfile,
 ): PlayCardPick | null {
   const ownNearWin = getOwnGigCount(view, playerId) >= 5;
   const ranked = [...candidates].sort((a, b) => {
     const score = (candidate: PlayCardCandidate) => {
       const card = findCard(view, candidate.cardId);
       let value = cardStrategicValue(card) + (card?.cost ?? 0);
+      if (isCoreCard(card, profile?.coreCards)) value += CORE_PLAY_BONUS;
       if (
         ownNearWin &&
         (card?.keywords.includes("adrenaline") || card?.keywords.includes("goSolo"))
@@ -810,7 +1060,7 @@ function pickHighestBoardValuePlayable(
     if (av !== bv) return bv - av;
     return a.cardId.localeCompare(b.cardId);
   });
-  return ranked[0] ? resolveCandidate(ranked[0], view, candidates) : null;
+  return ranked[0] ? resolveCandidate(ranked[0], view, candidates, profile) : null;
 }
 
 function rivalHasUnansweredThreats(view: FilteredMatchView, playerId: string): boolean {
@@ -886,18 +1136,53 @@ function resolveCandidate(
   candidate: PlayCardCandidate,
   view: FilteredMatchView,
   _all: PlayCardCandidate[],
+  profile?: DeckStrategyProfile,
 ): PlayCardPick | null {
   if (candidate.attachTargets === undefined) return { cardId: candidate.cardId };
   if (candidate.attachTargets.length === 0) return null;
-  let bestTarget = candidate.attachTargets[0]!;
-  let bestPower = -1;
-  for (const targetId of candidate.attachTargets) {
-    const targetCard = findCard(view, targetId);
-    const power = targetCard?.effectivePower ?? 0;
-    if (power > bestPower) {
-      bestPower = power;
-      bestTarget = targetId;
-    }
-  }
-  return { cardId: candidate.cardId, attachToId: bestTarget };
+  const attachToId = pickAttachTarget(candidate.attachTargets, view, candidate.cardId, profile);
+  return attachToId ? { cardId: candidate.cardId, attachToId } : null;
+}
+
+const HOST_MATCH_RANK: Record<ReturnType<typeof gearHostMatch>, number> = {
+  preferred: 0,
+  typed: 1,
+  named: 2,
+  none: 3,
+};
+
+function pickAttachTarget(
+  targets: readonly string[],
+  view: FilteredMatchView,
+  gearId: string,
+  profile?: DeckStrategyProfile,
+): string | null {
+  if (targets.length === 0) return null;
+  const gearName = findCard(view, gearId)?.cardName;
+  const preferredHosts =
+    gearName !== null && gearName !== undefined ? profile?.gearHosts?.[gearName] : undefined;
+  return (
+    [...targets].sort((a, b) => {
+      const ac = findCard(view, a);
+      const bc = findCard(view, b);
+      const aMatch = HOST_MATCH_RANK[gearHostMatch(gearName, ac, profile)];
+      const bMatch = HOST_MATCH_RANK[gearHostMatch(gearName, bc, profile)];
+      if (aMatch !== bMatch) return aMatch - bMatch;
+      const aIdx =
+        ac?.cardName && preferredHosts
+          ? preferredHosts.indexOf(ac.cardName)
+          : Number.MAX_SAFE_INTEGER;
+      const bIdx =
+        bc?.cardName && preferredHosts
+          ? preferredHosts.indexOf(bc.cardName)
+          : Number.MAX_SAFE_INTEGER;
+      const aNamed = aIdx >= 0 ? aIdx : Number.MAX_SAFE_INTEGER;
+      const bNamed = bIdx >= 0 ? bIdx : Number.MAX_SAFE_INTEGER;
+      if (aNamed !== bNamed) return aNamed - bNamed;
+      const aPower = ac?.effectivePower ?? 0;
+      const bPower = bc?.effectivePower ?? 0;
+      if (aPower !== bPower) return bPower - aPower;
+      return a.localeCompare(b);
+    })[0] ?? null
+  );
 }

@@ -53,11 +53,13 @@ export const nightBarker: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
                 destination: {
                   zone: "field",
                 },
+                bindResultAs: "returned-source",
               },
               {
                 kind: "set-object-state",
                 subject: {
-                  kind: "source",
+                  kind: "bound",
+                  binding: "returned-source",
                 },
                 state: "ephemeral",
                 value: true,

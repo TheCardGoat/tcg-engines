@@ -35,7 +35,7 @@ Record:
 Maintain a game table:
 
 | Game | Build/deal/first seat | Terminal result + evidence | Findings/workarounds | Eligible? | Streak after |
-| --- | --- | --- | --- | --- | --- |
+| ---- | --------------------- | -------------------------- | -------------------- | --------- | ------------ |
 
 For each row, link the game record. Distinguish a real win/loss/draw from a crash,
 reload, action cap, deliberate diagnostic concession, or interrupted game.

@@ -1,7 +1,7 @@
 import { eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op01RoronoaZoro001 } from "../../../../../cards/src/cards/OP01/leaders/001-roronoa-zoro.ts";
-import { op14eb04Bartolomeo011 } from "../../../../../cards/src/cards/OP14EB04/characters/011-bartolomeo.ts";
+import { op01RoronoaZoro001 } from "../../../../../cards/src/cards/leaders/op01-001-roronoa-zoro.ts";
+import { op14eb04Bartolomeo011 } from "../../../../../cards/src/cards/characters/op14-011-bartolomeo.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

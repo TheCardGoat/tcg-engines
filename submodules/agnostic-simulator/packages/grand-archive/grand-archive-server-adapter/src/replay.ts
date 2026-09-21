@@ -1,3 +1,4 @@
+import type { GrandArchiveArtPin } from "./presentation.ts";
 import {
   GrandArchiveMatchRuntime,
   isGrandArchiveMoveName,
@@ -25,6 +26,7 @@ export interface GrandArchiveReplayCommandV1 {
 
 /** Server-authoritative replay. Never expose this envelope directly to a viewer. */
 export interface GrandArchiveReplayV1 {
+  readonly presentation?: GrandArchiveArtPin;
   readonly schemaVersion: 1;
   readonly game: "grand-archive";
   readonly programFingerprint: string;
@@ -209,6 +211,7 @@ export function exportGrandArchiveReplay(
   program: GrandArchiveMatchProgram,
   journal: GrandArchiveReplayJournalV1,
   finalSnapshot: GrandArchiveMatchSnapshotV1,
+  presentation?: GrandArchiveArtPin,
 ): GrandArchiveReplayV1 {
   return {
     schemaVersion: 1,
@@ -216,6 +219,7 @@ export function exportGrandArchiveReplay(
     programFingerprint: program.fingerprint,
     initialSnapshot: journal.initialSnapshot,
     commands: journal.commands,
+    ...(presentation ? { presentation } : {}),
     finalSnapshotFingerprint: fingerprintGrandArchiveValue(finalSnapshot),
     publicLogFingerprint: fingerprintGrandArchiveValue(publicLog(program, finalSnapshot)),
   };

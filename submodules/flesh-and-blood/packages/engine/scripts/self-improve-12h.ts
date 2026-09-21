@@ -15,13 +15,7 @@ import { runFabBenchWithTranscripts } from "../src/automation/bench/index.ts";
 import { listFabDecks } from "../src/automation/deck-catalog.ts";
 import { validateFabDeckTextFixture } from "../src/automation/validate-text-deck.ts";
 
-const UNPLAYABLE = new Set([
-  "max-actions",
-  "stall",
-  "illegal",
-  "engine-throw",
-  "snapshot-refusal",
-]);
+const UNPLAYABLE = new Set(["max-actions", "stall", "illegal", "engine-throw", "snapshot-refusal"]);
 
 function arg(name: string, fallback: string): string {
   const index = process.argv.indexOf(`--${name}`);
@@ -138,7 +132,9 @@ while (Date.now() - start.getTime() < budgetMs) {
       writeJson(resolve(transcriptsDir, `${transcript.seed}.json`), transcript);
     }
     const unplayable = transcripts.filter((transcript) => UNPLAYABLE.has(transcript.termination));
-    const snapshotRefusals = transcripts.filter((transcript) => transcript.termination === "snapshot-refusal");
+    const snapshotRefusals = transcripts.filter(
+      (transcript) => transcript.termination === "snapshot-refusal",
+    );
     const learnings = {
       cycle,
       at: cycleStarted.toISOString(),

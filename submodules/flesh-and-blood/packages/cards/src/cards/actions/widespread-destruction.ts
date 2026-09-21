@@ -23,16 +23,22 @@ export const widespreadDestruction = definePitchFamily(fabPitchFamilies["widespr
       resolution: {
         kind: "effect",
         effect: {
-          type: "banish",
+          type: "for-each",
           target: {
-            selector: "object",
-            declared: "at-resolution",
-            player: "each",
-            zones: ["arsenal"],
-            filter: {
-              controllerPerformedThisTurn: "lose-life",
+            selector: "each-hero",
+          },
+          effect: {
+            type: "banish",
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "iteration-subject",
+              zones: ["arsenal"],
+              filter: {
+                controllerPerformedThisTurn: "lose-life",
+              },
+              count: 1,
             },
-            count: 1,
           },
         },
       },

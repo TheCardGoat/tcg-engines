@@ -41,7 +41,8 @@ export type CyberpunkCardZone =
   | "trash"
   | "legendArea"
   | "eddieArea"
-  | "gigArea";
+  | "gigArea"
+  | "removedFromGame";
 
 export interface CyberpunkSimulatorProjection {
   table: SimulatorTable;
@@ -229,8 +230,20 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
 
   const lookupCard = (id: string | { toString(): string }) => matchState.G.cardIndex[String(id)];
 
-  // Deck: hidden count-only stack.
-  pushZone("deck", "Deck", "deck", "secret", "stack", [], player.zones.deck.length);
+  // Deck: count-only stack with a clickable correction handle.
+  const deckEntity: SimulatorEntity = {
+    id: `${prefix}-deck-stack`,
+    title: "Deck",
+    subtitle: `${player.zones.deck.length} cards`,
+    kind: "card",
+    ownerId: playerId,
+    face: "public",
+    states: [],
+    stats: [{ label: "Cards", value: String(player.zones.deck.length) }],
+    traits: ["deck"],
+  };
+  entities.push(deckEntity);
+  pushZone("deck", "Deck", "deck", "secret", "stack", [deckEntity.id], player.zones.deck.length);
 
   // Hand: fan for viewer, face-down cards for opponent.
   const handIds = cardIds(player.zones.hand);
@@ -257,6 +270,13 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
     .map((id) => lookupCard(id))
     .filter((c): c is CardInstance => Boolean(c))
     .map((c) => projectCardEntity(c, matchState, viewerSide, entities));
+  for (const host of fieldEntities) {
+    const instance = lookupCard(host.id);
+    for (const gearId of instance?.meta.attachedGearIds ?? []) {
+      const gear = lookupCard(gearId);
+      if (gear) projectCardEntity(gear, matchState, viewerSide, entities);
+    }
+  }
   pushZone(
     "field",
     "Field",
@@ -272,6 +292,13 @@ function projectSideZones(input: ProjectSideZonesInput): SimulatorZone[] {
     .map((id) => lookupCard(id))
     .filter((c): c is CardInstance => Boolean(c))
     .map((c) => projectCardEntity(c, matchState, viewerSide, entities));
+  for (const host of legendEntities) {
+    const instance = lookupCard(host.id);
+    for (const gearId of instance?.meta.attachedGearIds ?? []) {
+      const gear = lookupCard(gearId);
+      if (gear) projectCardEntity(gear, matchState, viewerSide, entities);
+    }
+  }
   pushZone(
     "legendArea",
     "Legends",
@@ -472,10 +499,10 @@ function projectCardEntity(
   const ownerId = String(instance.ownerId);
   const cardSide = sideForPlayerId(ownerId);
   const isViewer = cardSide === viewerSide;
-  const faceDown = Boolean(instance.meta.faceDown);
+  const faceDown = Boolean(instance.meta.faceDown) && instance.meta.revealed !== true;
   const zone = cardSide ? currentCardZoneForEntity(instance, matchState, cardSide) : null;
-  const hiddenFromViewer = !isViewer && isPrivateCardZone(zone);
-  const face: SimulatorEntity["face"] = faceDown || hiddenFromViewer ? "hidden" : "public";
+  const hiddenFromViewer = isIdentityHiddenFromViewer(zone, isViewer, faceDown);
+  const face: SimulatorEntity["face"] = hiddenFromViewer ? "hidden" : "public";
 
   const printedPower = typeof definition.power === "number" ? definition.power : null;
   const printedCost = typeof definition.cost === "number" ? definition.cost : null;
@@ -750,6 +777,17 @@ function isPrivateCardZone(zone: CyberpunkCardZone | null): boolean {
   return zone === "deck" || zone === "hand" || zone === "eddieArea";
 }
 
+function isIdentityHiddenFromViewer(
+  zone: CyberpunkCardZone | null,
+  isViewer: boolean,
+  faceDown: boolean,
+): boolean {
+  if (zone === "deck") return true;
+  if (zone === "eddieArea") return faceDown;
+  if (faceDown) return true;
+  return !isViewer && isPrivateCardZone(zone);
+}
+
 export function projectEntityForCard(
   cardId: string,
   matchState: MatchState,
@@ -918,12 +956,10 @@ function projectInteractionAction(
           max: input.max,
           candidateEntityIds: [],
           targetZoneIds: [],
-          options: input.options.map(
-            (opt): InteractionOption => ({
-              id: opt.id,
-              label: localizeText(opt.text),
-            }),
-          ),
+          options: input.options.map((opt): InteractionOption => ({
+            id: opt.id,
+            label: localizeText(opt.text),
+          })),
         },
         movePreview: movePreviewFor(action),
       };
@@ -1361,6 +1397,8 @@ export function cyberpunkZoneAnchorId(zone: CardZone, side: Side): string {
       return `${prefix}-eddieArea`;
     case "gigArea":
       return `${prefix}-gigArea`;
+    case "removedFromGame":
+      return `${prefix}-removedFromGame`;
   }
 }
 
@@ -1382,6 +1420,8 @@ export function cyberpunkCardZoneToSimulatorZone(zone: CardZone, side: Side): Si
       return zoneDescriptor(id, "Eddies", "resource", ownerId, "private");
     case "gigArea":
       return zoneDescriptor(id, "Gigs", "score", ownerId, "public");
+    case "removedFromGame":
+      return zoneDescriptor(id, "Removed", "custom", ownerId, "public");
   }
 }
 

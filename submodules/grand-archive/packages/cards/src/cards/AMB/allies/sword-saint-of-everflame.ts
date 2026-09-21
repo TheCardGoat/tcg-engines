@@ -33,7 +33,7 @@ export const swordSaintOfEverflame: GrandArchiveCard<GrandArchiveAbilityDefiniti
           kind: "activated",
           text: "[Class Bonus] (2), Banish this card from your graveyard: Target fire element weapon or ally gets +2 POWER until end of turn.",
           activation: "ability",
-          functionalZones: ["graveyard", "intent"],
+          functionalZones: ["graveyard"],
           cost: {
             kind: "all",
             costs: [

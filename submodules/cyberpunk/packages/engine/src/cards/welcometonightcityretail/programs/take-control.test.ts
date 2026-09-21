@@ -38,6 +38,87 @@ describe("Take Control", () => {
         },
       },
     ]);
+    expect(welcomeToNightCityRetailTakeControl).toMatchObject({
+      canonicalId: "take-control",
+      slug: "take-control",
+      name: "Take Control",
+      displayName: "Take Control",
+      type: "program",
+      color: "green",
+      classifications: ["Quickhack"],
+      cost: 2,
+      power: null,
+      ram: 2,
+      hasSellTag: true,
+      rarity: "Uncommon",
+      printNumber: "103",
+      timingTriggers: ["play"],
+      keywords: ["quick"],
+      reminderText: ["Discard programs after they resolve."],
+      rulesText:
+        "{Quick} A rival Unit steals 1 fewer Gig this turn. If that Unit is an AI, DRONE, or VEHICLE, draw 1.",
+      abilities: [
+        { kind: "keyword", keyword: "quick", source: { selector: "self" } },
+        {
+          kind: "triggered",
+          trigger: { trigger: "play" },
+          source: { selector: "self" },
+          effects: [
+            {
+              effect: "grantRule",
+              target: { selector: "attacker" },
+              rule: "stealsOneFewerGig",
+              duration: "turn",
+            },
+            {
+              effect: "draw",
+              player: "friendly",
+              amount: 1,
+              conditions: [
+                {
+                  condition: "targetExists",
+                  target: {
+                    selector: "attacker",
+                    classifications: ["AI", "Drone", "Vehicle"],
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  it("pays exactly 2 when played as a Quick reaction and rejects one less", () => {
+    const attacker = createMockUnit({
+      id: "mock-attacker-payment",
+      slug: "mock-attacker-payment",
+      name: "Payment Attacker",
+      power: 5,
+    });
+    const createPaymentEngine = (eddies: number) => {
+      const engine = CyberpunkTestEngine.createWithFixture(
+        { hand: [welcomeToNightCityRetailTakeControl], eddies },
+        { field: [{ card: attacker, spent: false, hasLag: false }] },
+      );
+      for (const legend of engine.getCardsInZone("legendArea", P1)) {
+        engine.judgeSpendCard(legend, { as: P1 });
+      }
+      engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
+      engine.attackRival(attacker, { as: P2 });
+      engine.resolveAttack({ as: P2 });
+      return engine;
+    };
+
+    const successEngine = createPaymentEngine(2);
+    successEngine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 });
+    expect(successEngine.getEddies(P1)).toBe(0);
+
+    const failureEngine = createPaymentEngine(1);
+    expect(() => failureEngine.playCard(welcomeToNightCityRetailTakeControl, { as: P1 })).toThrow(
+      /INSUFFICIENT_EDDIES/,
+    );
   });
 
   it("reduces stolen gigs by 1 when played as a QUICK reaction (10 power → 1 steal)", () => {

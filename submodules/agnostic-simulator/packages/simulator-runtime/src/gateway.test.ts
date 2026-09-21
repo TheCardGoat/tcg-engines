@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   buildGatewaySocketIoUrl,
   buildGatewayTicketUrl,
+  parseGatewayEvent,
   requestGatewayTicket,
   shouldRefreshAnonymousWelcome,
 } from "./gateway.js";
@@ -18,6 +19,34 @@ describe("simulator gateway runtime", () => {
         gatewayOrigin: "wss://gateway.tcg.online/socket.io/",
       }),
     ).toBe("wss://gateway.tcg.online/cyberpunk");
+  });
+
+  it("still parses game_joined after nested presentation or player extras fail the strict schema", () => {
+    const parsed = parseGatewayEvent("game_joined", {
+      gameId: "g_1",
+      role: "player",
+      stateVersion: 1,
+      state: { ctx: { stateID: 1 }, G: {} },
+      presentation: { kind: "not-a-real-envelope" },
+      interactionView: { protocolVersion: 1 },
+      dropEligibility: { allowed: true },
+      players: [{ id: "p_1", connected: true, displayName: "Runner" }],
+    });
+    expect(parsed).toMatchObject({
+      type: "game_joined",
+      gameId: "g_1",
+      role: "player",
+      stateVersion: 1,
+      state: { ctx: { stateID: 1 }, G: {} },
+      players: [{ id: "p_1", connected: true }],
+    });
+    expect(parsed).toMatchObject({
+      unparsedSnapshot: expect.arrayContaining([
+        "presentation",
+        "interactionView",
+        "dropEligibility",
+      ]),
+    });
   });
 
   it("classifies anonymous welcomes as auth violations only for required auth", () => {

@@ -55,7 +55,8 @@
     "@tcg/protocol": "link:../protocol",
     "@tcg/simulator-contract": "link:../simulator-contract",
     "socket.io-client": "catalog:",
-    "socket.io-msgpack-parser": "catalog:"
+    "socket.io-msgpack-parser": "catalog:",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tcg/typescript-config": "link:../typescript-config",

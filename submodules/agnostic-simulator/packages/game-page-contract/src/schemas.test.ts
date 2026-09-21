@@ -1,3 +1,4 @@
+import { composeDropEligibility, unsupportedTimeoutChannel } from "@tcg/protocol";
 import { describe, expect, test } from "vitest";
 
 import type {
@@ -124,6 +125,61 @@ describe("schemas", () => {
     };
 
     expect(LiveMatchBootstrapV1Schema.parse(data)).toEqual(data);
+  });
+
+  test("LiveMatchBootstrapV1 accepts optional dropEligibility and rejects a malformed payload", () => {
+    const dropEligibility = composeDropEligibility({
+      nowMs: 1_700_000_000_000,
+      timeout: unsupportedTimeoutChannel(),
+      disconnect: { connected: true },
+    });
+    const base = {
+      schemaVersion: 1 as const,
+      match: sampleMatch,
+      game: {
+        gameId: "g1",
+        gameNumber: 1,
+        status: "in_progress" as const,
+        authority: "server" as const,
+        stateVersion: 7,
+        view: { public: true },
+      },
+      viewer: {
+        role: "player" as const,
+        actorId: "p1",
+        seat: 1,
+        userId: "u1",
+        permissions: {
+          act: true,
+          chat: true,
+          propose: true,
+          useManualControls: true,
+          concede: true,
+          spectate: true,
+          viewReplay: false,
+          downloadReplay: false,
+          forkReplay: false,
+        },
+      },
+      capabilities: {
+        actions: true,
+        chat: true,
+        proposals: true,
+        manualControls: true,
+        spectating: true,
+        conceding: true,
+        replay: false,
+      },
+      presence: { players: [{ id: "p1", connected: true }] },
+      history: { recentMoves: [], engineLogs: [], chatMessages: [] },
+    };
+    expect(LiveMatchBootstrapV1Schema.parse({ ...base, dropEligibility })).toEqual({
+      ...base,
+      dropEligibility,
+    });
+    expect(
+      LiveMatchBootstrapV1Schema.safeParse({ ...base, dropEligibility: { allowed: true } }).success,
+    ).toBe(false);
   });
 
   test("LiveMatchBootstrapV1 accepts a read-only anonymous spectator", () => {

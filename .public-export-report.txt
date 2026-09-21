@@ -1,8 +1,8 @@
 Public export generated from:
-  private repository: /Users/wazar/projects/tcg-online-readme-update
-  private commit: be7bd31c992c3fdcafb01a8d7fd0703e54c0994d
-  export branch: public-sync/2026-W37
-  generated at: 2026-09-13T20:36:45Z
+  private repository: /Users/wazar/projects/tcgo-op-public-sync
+  private commit: 6145dbf5b89a13e7c8e4ea0a3af6c1ae6ae4e0d2
+  export branch: public-sync/2026-W39
+  generated at: 2026-09-21T17:03:53Z
 
 Allowlisted source:
   - submodules/agnostic-simulator

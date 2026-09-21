@@ -39,6 +39,7 @@ import {
   type FabRuntimeTestFailureStage,
 } from "./runtime-access.ts";
 import type { FabRulesSnapshot } from "./kernel/transaction-kernel.ts";
+import { chosenTargetsNarrative } from "./command-logs.ts";
 import { fabObjectDisplayName } from "./log/index.ts";
 import { readFabWaitState, type FabWaitState } from "./game/wait-state.ts";
 import { finalizeFabPlayerLog, type FabPlayerLog, type FabPlayerLogFact } from "./player-log.ts";
@@ -440,6 +441,7 @@ export class FabMatchRuntime {
               state,
               status,
               events: committedEvents,
+              decisionBeforeCommand: base.decision ?? null,
               stackAfterCommand: transaction.result.stackAfterCommand,
               timestamp: execution.timestamp,
               ...resolvedReactionLog(
@@ -458,6 +460,28 @@ export class FabMatchRuntime {
         ...semanticLogs,
         ...automaticPassLogs,
       ];
+      // The narrative stream must also name answered choices; the move-log
+      // receipt above only carries them for canonical log consumers.
+      const chosenNarrative =
+        transaction.result.routed.outcome.kind === "rules-action-reversed"
+          ? null
+          : chosenTargetsNarrative({
+              command: processedCommand,
+              state,
+              decision: base.decision ?? null,
+              events: committedEvents,
+            });
+      const chosenNarrativeFact: FabPlayerLogFact | null = chosenNarrative
+        ? {
+            kind: "localized-message",
+            message: {
+              key: "flesh-and-blood.decision.chosen",
+              values: { actorId, choice: chosenNarrative.choice },
+              category: "action",
+              ...(chosenNarrative.allPublic ? {} : { visibleTo: [actorId] }),
+            },
+          }
+        : null;
       const playerLog = finalizeFabPlayerLog({
         commandId: execution.commandId,
         moveType: processedCommand.move,
@@ -467,7 +491,9 @@ export class FabMatchRuntime {
         turnPlayerId: base.activePlayerId,
         phase: base.phase,
         facts:
-          transaction.result.routed.outcome.kind === "rules-action-reversed" ? [] : playerLogFacts,
+          transaction.result.routed.outcome.kind === "rules-action-reversed"
+            ? []
+            : [...(chosenNarrativeFact ? [chosenNarrativeFact] : []), ...playerLogFacts],
       });
 
       // Publication point: validation above is the last operation allowed to

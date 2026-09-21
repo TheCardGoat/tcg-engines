@@ -1,4 +1,5 @@
 import type { GatewayConnectionState } from "@tcg/gateway-client";
+import { LIVE_MATCH_HEARTBEAT_INTERVAL_MS } from "@tcg/game-page-contract";
 import { FabPresentationCatalogProvider } from "./FabPresentationCatalog";
 import { createFabClock } from "@tcg/flesh-and-blood-server-adapter/clock";
 import { MantineProvider } from "@mantine/core";
@@ -6,7 +7,13 @@ import {
   createDefaultFabPregameSelection,
   type FabPregameCardPool,
 } from "@tcg/flesh-and-blood-engine/simulator";
-import { EngineInteractionView, INTERACTION_PROTOCOL_VERSION } from "@tcg/protocol";
+import {
+  composeDropEligibility,
+  DISCONNECT_DROP_THRESHOLD_MS,
+  EngineInteractionView,
+  INTERACTION_PROTOCOL_VERSION,
+  unsupportedTimeoutChannel,
+} from "@tcg/protocol";
 import { defineFleshAndBloodCardUnchecked } from "@tcg/flesh-and-blood-types";
 import {
   act,
@@ -111,7 +118,13 @@ vi.mock("../../lib/gateway/root-socket", () => ({
     on: mocks.on,
     slug: "flesh-and-blood",
     subscribeState: mocks.subscribeState,
-    getState: () => ({ authenticated: true }),
+    getState: () => ({
+      status: "connected",
+      authenticated: true,
+      authStatus: "ok",
+      authFailureReason: null,
+    }),
+    wouldHoldEmit: () => false,
     onAny: mocks.onAny,
     onLatency: () => vi.fn(),
     onHeartbeatAck: () => vi.fn(),
@@ -173,6 +186,7 @@ function liveRoute(concede: boolean) {
     session: null,
     matchPageData: {
       match: {
+        status: "in_progress",
         participants: [
           { id: "p1", userId: "user-1", displayName: "Player One", isBot: false },
           { id: "p2", userId: "user-2", displayName: "Player Two", isBot: false },
@@ -186,6 +200,7 @@ function liveRoute(concede: boolean) {
       },
       game: {
         gameId: "game-1",
+        status: "in_progress",
         stateVersion: 7,
         view: { players: [{ id: "p1" }, { id: "p2" }], cards: {} } as unknown,
         resources: undefined as unknown,
@@ -212,6 +227,7 @@ function liveRoute(concede: boolean) {
         actorId: "p1",
         permissions: { concede, act: true },
       },
+      capabilities: { actions: true },
     },
   };
 }
@@ -229,51 +245,59 @@ describe.sequential("FAB live concession", () => {
   });
 
   it("allows a connected opponent's timeout claim only after the server clock grace expires", () => {
-    const route = liveRoute(true);
-    const clock = createFabClock(
-      { mode: "dynamic", initialReserveMs: 180_000, extras: { graceMs: 15_000 } },
-      ["p1", "p2"],
-      "p2",
-      Date.now() - 196_000,
-    );
-    route.matchPageData.game.view = {
-      players: [{ id: "p1" }, { id: "p2" }],
-      cards: {},
-      ctx: clock,
-    };
-    mocks.route.mockReturnValue(route);
+    const now = 1_700_000_000_000;
+    mocks.route.mockReturnValue(liveRoute(true));
     render(
       <MantineProvider>
         <LiveMatchPage />
       </MantineProvider>,
     );
-    expect(screen.getByText("Opponent timed out.")).not.toBeNull();
+    const onEligibility = mocks.on.mock.calls.find(([event]) => event === "drop_eligibility")?.[1];
+    act(() =>
+      onEligibility?.({
+        gameId: "game-1",
+        dropEligibility: composeDropEligibility({
+          nowMs: now,
+          timeout: {
+            allowed: true,
+            reason: "timeout_allowed",
+            facts: { source: "adapter", graceMs: 15_000, effectiveReserveMs: -15_000 },
+          },
+          disconnect: { connected: true },
+        }),
+      }),
+    );
     fireEvent.click(screen.getByRole("button", { name: "Claim win" }));
     expect(mocks.emit).toHaveBeenCalledWith("drop_player", { gameId: "game-1" });
   });
 
   it("explains the opponent timeout grace period before a claim becomes available", () => {
-    const route = liveRoute(true);
-    const clock = createFabClock(
-      { mode: "dynamic", initialReserveMs: 180_000, extras: { graceMs: 15_000 } },
-      ["p1", "p2"],
-      "p2",
-      Date.now() - 185_000,
-    );
-    route.matchPageData.game.view = {
-      players: [{ id: "p1" }, { id: "p2" }],
-      cards: {},
-      ctx: clock,
-    };
-    mocks.route.mockReturnValue(route);
-
+    const now = 1_700_000_000_000;
+    mocks.route.mockReturnValue(liveRoute(true));
     render(
       <MantineProvider>
         <LiveMatchPage />
       </MantineProvider>,
     );
+    const onEligibility = mocks.on.mock.calls.find(([event]) => event === "drop_eligibility")?.[1];
+    act(() =>
+      onEligibility?.({
+        gameId: "game-1",
+        dropEligibility: composeDropEligibility({
+          nowMs: now,
+          timeout: {
+            allowed: false,
+            reason: "timeout_grace_pending",
+            eligibleAtMs: now + 9_000,
+            remainingMs: 9_000,
+            facts: { source: "adapter", graceMs: 15_000, effectiveReserveMs: -6_000 },
+          },
+          disconnect: { connected: true },
+        }),
+      }),
+    );
 
-    expect(screen.getByText(/Opponent's time expired\. Claim available in \d+s\./)).toBeTruthy();
+    expect(screen.getByText(/grace period/i)).toBeTruthy();
     expect(screen.getByRole("button", { name: "Claim win" }).hasAttribute("disabled")).toBe(true);
   });
 
@@ -303,52 +327,79 @@ describe.sequential("FAB live concession", () => {
   });
 
   it("uses live disconnect timestamps, permits a claim after 30 seconds, and cancels it on reconnect", async () => {
+    const now = 1_700_000_000_000;
     mocks.route.mockReturnValue(liveRoute(true));
     render(
       <MantineProvider>
         <LiveMatchPage />
       </MantineProvider>,
     );
-    const onPresence = mocks.on.mock.calls.find(([event]) => event === "presence_change")?.[1];
-    expect(onPresence).toBeDefined();
+    const onEligibility = mocks.on.mock.calls.find(([event]) => event === "drop_eligibility")?.[1];
+    expect(onEligibility).toBeDefined();
     act(() =>
-      onPresence?.({
+      onEligibility?.({
         gameId: "game-1",
-        playerId: "p2",
-        status: "disconnected",
-        disconnectedAt: new Date(Date.now() - 31_000).toISOString(),
+        dropEligibility: composeDropEligibility({
+          nowMs: now,
+          timeout: unsupportedTimeoutChannel(),
+          disconnect: {
+            connected: false,
+            disconnectedAtMs: now - DISCONNECT_DROP_THRESHOLD_MS,
+          },
+        }),
       }),
     );
     const claim = screen.getByRole("button", { name: "Claim win" });
     expect(claim.hasAttribute("disabled")).toBe(false);
     fireEvent.click(claim);
     expect(mocks.emit).toHaveBeenCalledWith("drop_player", { gameId: "game-1" });
-    act(() => onPresence?.({ gameId: "game-1", playerId: "p2", status: "connected" }));
+    act(() =>
+      onEligibility?.({
+        gameId: "game-1",
+        dropEligibility: composeDropEligibility({
+          nowMs: now,
+          timeout: unsupportedTimeoutChannel(),
+          disconnect: { connected: true },
+        }),
+      }),
+    );
     expect(screen.queryByRole("button", { name: "Claim win" })).toBeNull();
     act(() =>
-      onPresence?.({
+      onEligibility?.({
         gameId: "game-1",
-        playerId: "p2",
-        status: "disconnected",
-        disconnectedAt: new Date().toISOString(),
+        dropEligibility: composeDropEligibility({
+          nowMs: now,
+          timeout: unsupportedTimeoutChannel(),
+          disconnect: { connected: false, disconnectedAtMs: now },
+        }),
       }),
     );
     expect(screen.getByRole("button", { name: "Claim win" }).hasAttribute("disabled")).toBe(true);
   });
 
   it("shows opponent disconnects even when the timestamp is unavailable", () => {
+    const now = 1_700_000_000_000;
     mocks.route.mockReturnValue(liveRoute(true));
     render(
       <MantineProvider>
         <LiveMatchPage />
       </MantineProvider>,
     );
-    const onPresence = mocks.on.mock.calls.find(([event]) => event === "presence_change")?.[1];
-    expect(onPresence).toBeDefined();
+    const onEligibility = mocks.on.mock.calls.find(([event]) => event === "drop_eligibility")?.[1];
+    expect(onEligibility).toBeDefined();
 
-    act(() => onPresence?.({ gameId: "game-1", playerId: "p2", status: "disconnected" }));
+    act(() =>
+      onEligibility?.({
+        gameId: "game-1",
+        dropEligibility: composeDropEligibility({
+          nowMs: now,
+          timeout: unsupportedTimeoutChannel(),
+          disconnect: { connected: false },
+        }),
+      }),
+    );
 
-    expect(screen.getByText("Opponent disconnected.")).toBeTruthy();
+    expect(screen.getByText(/couldn't confirm when your opponent disconnected/i)).toBeTruthy();
     expect(screen.getByRole("button", { name: "Claim win" }).hasAttribute("disabled")).toBe(true);
   });
 
@@ -382,13 +433,10 @@ describe.sequential("FAB live concession", () => {
     fireEvent.click(screen.getByRole("button", { name: "Concede from board" }));
     expect(screen.queryByRole("dialog")).toBeNull();
     act(() => onState(connected));
-    expect(screen.getByTestId("fab-live-recovery-notice").textContent).toContain(
-      "Synchronizing the match…",
-    );
-    act(() => onEvent("game_joined", { gameId: "game-1" }));
     expect(screen.queryByTestId("fab-live-recovery-notice")).toBeNull();
     fireEvent.click(screen.getByRole("button", { name: "Concede from board" }));
     expect(screen.getByRole("dialog")).toBeTruthy();
+    act(() => onEvent("game_joined", { gameId: "game-1" }));
   });
 
   it("sends live game heartbeats and stops them when the board unmounts", () => {
@@ -400,7 +448,7 @@ describe.sequential("FAB live concession", () => {
           <LiveMatchPage />
         </MantineProvider>,
       );
-      void act(() => vi.advanceTimersByTime(15_000));
+      void act(() => vi.advanceTimersByTime(LIVE_MATCH_HEARTBEAT_INTERVAL_MS));
       expect(mocks.emit).toHaveBeenCalledWith(
         "heartbeat",
         expect.objectContaining({
@@ -409,7 +457,7 @@ describe.sequential("FAB live concession", () => {
       );
       mounted.unmount();
       mocks.emit.mockClear();
-      void act(() => vi.advanceTimersByTime(15_000));
+      void act(() => vi.advanceTimersByTime(LIVE_MATCH_HEARTBEAT_INTERVAL_MS));
       expect(mocks.emit).not.toHaveBeenCalled();
     } finally {
       vi.useRealTimers();

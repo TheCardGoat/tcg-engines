@@ -1,0 +1,99 @@
+import type { EventCard } from "@tcg/op-types";
+import { op14eb04SharkBrickFist020I18n } from "./eb04-020-shark-brick-fist.i18n.ts";
+
+export const op14eb04SharkBrickFist020: EventCard = {
+  id: "EB04-020",
+  canonicalId: "EB04-020",
+  slug: "shark-brick-fist",
+  name: "Shark Brick Fist",
+  printings: [
+    {
+      id: "EB04-020",
+      artId: "EB04-020",
+      setCode: "EB04",
+      collectorNumber: "020",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/EB04-020_2RPV1BV.jpg",
+    },
+  ],
+  cardType: "event",
+  color: ["green"],
+  rarity: "C",
+  setId: "EB04",
+  cost: 1,
+  trigger: "Rest up to 1 of your opponent's Characters with a cost of 4 or less.",
+  traits: ["Fish-Man The Sun Pirates Fish-Man Island"],
+  effect:
+    "[Counter] Up to 1 of your {Fish-Man} type Leader or Character cards gains +3000 power during this battle. Then, set up to 1 of your {Fish-Man} type Characters as active.",
+  effects: {
+    effects: [
+      {
+        trigger: "counter",
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "self",
+              zones: ["leader", "character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Fish-Man",
+                  match: "includes",
+                },
+              ],
+            },
+            value: 3000,
+            duration: "thisBattle",
+          },
+          {
+            action: "setActive",
+            target: {
+              player: "self",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "trait",
+                  value: "Fish-Man",
+                  match: "includes",
+                },
+              ],
+            },
+          },
+        ],
+      },
+      {
+        trigger: "trigger",
+        actions: [
+          {
+            action: "rest",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "cost",
+                  comparison: "lte",
+                  value: 4,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op14eb04SharkBrickFist020I18n,
+};

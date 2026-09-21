@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01MountainGod018, op09MarshallDTeach081 } from "@tcg/op-cards";
-import { op09DocQ090 } from "../../../../../cards/src/cards/OP09/characters/090-doc-q.ts";
-import { op09Laffitte095 } from "../../../../../cards/src/cards/OP09/characters/095-laffitte.ts";
-import { op09VascoShot091 } from "../../../../../cards/src/cards/OP09/characters/091-vasco-shot.ts";
+import { op09DocQ090 } from "../../../../../cards/src/cards/characters/op09-090-doc-q.ts";
+import { op09Laffitte095 } from "../../../../../cards/src/cards/characters/op09-095-laffitte.ts";
+import { op09VascoShot091 } from "../../../../../cards/src/cards/characters/op09-091-vasco-shot.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

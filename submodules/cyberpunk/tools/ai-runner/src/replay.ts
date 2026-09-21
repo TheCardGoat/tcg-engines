@@ -16,6 +16,7 @@ import {
 import { createTestCatalog, createTestDecks, createTestPlayers } from "./test-catalog.ts";
 import { createRealCatalog, createRealDecks } from "./real-catalog.ts";
 import { createStructuredCatalog, type DeckSource, type GeneratedDeck } from "./legal-decks.ts";
+import { bindStrategyToDeck } from "./bind-deck-strategy.ts";
 
 /**
  * Persistent record of a single match run. Includes everything needed to
@@ -185,7 +186,10 @@ export function replayRecording(recording: MatchRecording): ReplayResult {
   const result = runAutoMatch({
     players: createTestPlayers(),
     decks: recordingDecks(recording),
-    strategies: [strategyA, strategyB],
+    strategies: [
+      recording.deckA ? bindStrategyToDeck(strategyA, recording.deckA) : strategyA,
+      recording.deckB ? bindStrategyToDeck(strategyB, recording.deckB) : strategyB,
+    ],
     catalog:
       recording.deckA && recording.deckB
         ? createStructuredCatalog()

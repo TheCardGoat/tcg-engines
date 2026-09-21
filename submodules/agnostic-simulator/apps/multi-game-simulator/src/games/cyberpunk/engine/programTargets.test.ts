@@ -5,6 +5,30 @@ import { getScenario, P1 } from "./fixtures/scenarios";
 import { getProgramSpatialTargets } from "./programTargets";
 
 describe("getProgramSpatialTargets", () => {
+  test("does not merge each player's separate Live with the Aftermath choice", () => {
+    const engine = getScenario("progLiveWithTheAftermathRivalOnlyRetail").build();
+    const state = engine.getState();
+    const program = engine.getCardsInZone("hand", P1)[0];
+    expect(program).toBeDefined();
+
+    const interactionView = buildCyberpunkInteractionView({
+      actorId: P1,
+      stateVersion: state.ctx.stateID,
+      prompt: engine.getPrompt(P1),
+    });
+
+    expect(
+      getProgramSpatialTargets(
+        {
+          matchState: state,
+          side: "player",
+          interactionView,
+        },
+        program!.instanceId,
+      ),
+    ).toEqual([]);
+  });
+
   test("does not collapse a Program that can select two Units into the single-target shortcut", () => {
     const engine = getScenario("progBonnieAndClyde").build();
     const state = engine.getState();

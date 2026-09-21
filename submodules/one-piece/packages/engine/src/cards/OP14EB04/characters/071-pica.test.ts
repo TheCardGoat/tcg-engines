@@ -1,6 +1,6 @@
 import { op01RoronoaZoro001, op04DonquixoteDoflamingo019 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Pica071 } from "../../../../../cards/src/cards/OP14EB04/characters/071-pica.ts";
+import { op14eb04Pica071 } from "../../../../../cards/src/cards/characters/op14-071-pica.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

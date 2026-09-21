@@ -49,14 +49,14 @@ runs; the unchanged baseline has three. Each run has 320 actions and identical
 digests covering commands, ordered legal options, viewer outputs, resources,
 and post-command persistence snapshots.
 
-| Metric | Baseline, three runs | Final candidate, two runs |
-| --- | ---: | ---: |
-| Whole workload | 8.94–9.16 s | 8.23–8.43 s |
-| Sum of command spans | 4.89–5.01 s | 4.50–4.67 s |
-| Trigger-source scan total | 920–962 ms | 533–538 ms |
-| Decision-answer p95 | 135–138 ms | 124–133 ms |
-| Pass p95 | 26.5–27.4 ms | 24.7–25.3 ms |
-| End-turn p95 | 49.9–55.3 ms | 46.6–52.9 ms |
+| Metric                    | Baseline, three runs | Final candidate, two runs |
+| ------------------------- | -------------------: | ------------------------: |
+| Whole workload            |          8.94–9.16 s |               8.23–8.43 s |
+| Sum of command spans      |          4.89–5.01 s |               4.50–4.67 s |
+| Trigger-source scan total |           920–962 ms |                533–538 ms |
+| Decision-answer p95       |           135–138 ms |                124–133 ms |
+| Pass p95                  |         26.5–27.4 ms |              24.7–25.3 ms |
+| End-turn p95              |         49.9–55.3 ms |              46.6–52.9 ms |
 
 Whole-workload time is about 6–10% lower; trigger-source scans use about 41–45%
 less time. All runs execute 2,484 trigger-source scans, so this is reduced cost

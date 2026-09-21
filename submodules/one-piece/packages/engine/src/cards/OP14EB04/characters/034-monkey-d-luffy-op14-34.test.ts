@@ -9,7 +9,7 @@ import {
   op13Uta023,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04MonkeyDLuffyOp1434034 } from "../../../../../cards/src/cards/OP14EB04/characters/034-monkey-d-luffy-op14-34.ts";
+import { op14eb04MonkeyDLuffyOp1434034 } from "../../../../../cards/src/cards/characters/op14-034-monkey-d-luffy-op14-34.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -44,6 +44,21 @@ async function expectInViewport(locator: Locator, label: string) {
   ).toBeGreaterThan(48);
 }
 
+async function expectFabVisualReady(page: Page) {
+  const root = page.locator(".fab-simulator-root");
+  await expect(root).toHaveAttribute("data-fab-hydrated", "true", { timeout: 30_000 });
+  await expect(root).toHaveAttribute("data-fab-presentation-state", "ready", {
+    timeout: 30_000,
+  });
+  await expect
+    .poll(() => page.locator('[data-fab-image-state="loading"]:visible').count(), {
+      timeout: 30_000,
+      message: "visible FAB card images should finish loading before visual validation",
+    })
+    .toBe(0);
+  await expect(page.locator('[data-fab-image-state="error"]:visible')).toHaveCount(0);
+}
+
 async function desktopTableGeometry(page: Page) {
   return page.getByTestId("fab-board").evaluate((board) => {
     const requiredRect = (selector: string) => {
@@ -99,6 +114,28 @@ async function expectVisibleFabWin(page: Page) {
 }
 
 test.describe("Flesh and Blood board", () => {
+  test("sidebar preview waits for hydrated, decoded card art before visual capture", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 955, height: 964 });
+    await page.goto("/flesh-and-blood/simulator/tests/sidebar-preview");
+    await expectFabVisualReady(page);
+
+    const bravo = page.getByAltText("Bravo, Showstopper");
+    await expect(bravo).toBeVisible();
+    await expect
+      .poll(
+        () =>
+          bravo.evaluate((image) => ({
+            complete: (image as HTMLImageElement).complete,
+            width: (image as HTMLImageElement).naturalWidth,
+            height: (image as HTMLImageElement).naturalHeight,
+          })),
+        { timeout: 15_000 },
+      )
+      .toEqual({ complete: true, width: 320, height: 320 });
+  });
+
   test("fixture catalog is discovery-only; opening fixture uses real play surface", async ({
     page,
   }) => {
@@ -480,6 +517,7 @@ test.describe("Flesh and Blood board", () => {
     await page.getByTestId("fab-practice-start").click();
     await page.getByRole("button", { name: "Confirm selection" }).click();
     await expect(page.getByTestId("fab-practice-page")).toBeVisible({ timeout: 30_000 });
+    await expectFabVisualReady(page);
 
     const visibleCardImages = page.locator('[data-testid="fab-board"] img:visible');
     await expect.poll(() => visibleCardImages.count(), { timeout: 15_000 }).toBeGreaterThan(0);
@@ -538,6 +576,7 @@ test.describe("Flesh and Blood board", () => {
     });
     await expect(page.getByText("Winner: player-2.", { exact: true })).toBeVisible();
     await expect(page.getByTestId("fab-practice-error")).toHaveCount(0);
+    await expectFabVisualReady(page);
     await page.screenshot({ path: testInfo.outputPath("practice-terminal.png"), fullPage: true });
     expect(runtimeErrors, `runtime errors: ${runtimeErrors.join(" | ")}`).toEqual([]);
     expect(failedRequests, `failed requests: ${failedRequests.join(" | ")}`).toEqual([]);

@@ -9,6 +9,7 @@ import { GrandArchiveUnsupportedRuleError } from "../../effects/evaluation.ts";
 import { grandArchiveDecisionId, grandArchiveObjectId } from "../../../game/identity.ts";
 import type { GrandArchiveTargetId } from "../../../game/identity.ts";
 import {
+  assertGrandArchiveOptionalEffectCanBePerformed,
   declareGrandArchiveRemodedStackItem,
   declareGrandArchiveRetargetedStackItem,
   resumeGrandArchiveEffectResolution,
@@ -51,6 +52,9 @@ export const resolveGrandArchiveOptionalEffectDecision: GrandArchiveDecisionReso
   };
   const original = state;
   try {
+    if (command.answer) {
+      assertGrandArchiveOptionalEffectCanBePerformed(match.getProgram(), state, resolution);
+    }
     const cleared = match.getKernel().transact(state, [
       {
         type: "decision-cleared",

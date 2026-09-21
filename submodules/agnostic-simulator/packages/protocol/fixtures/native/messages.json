@@ -1,0 +1,56 @@
+{
+  "client": [
+    { "v": 1, "type": "hello", "credential": "LOCAL_TERMINAL_CREDENTIAL" },
+    { "v": 1, "type": "join_game", "fixtureIds": ["starter-a", "starter-b"] },
+    { "v": 1, "type": "join_game", "gameId": "game-1", "lastSequence": 3 },
+    {
+      "v": 1,
+      "type": "submit_interaction",
+      "gameId": "game-1",
+      "expectedVersion": 7,
+      "correlationId": "command-1",
+      "submission": {
+        "protocolVersion": 2,
+        "stateVersion": 7,
+        "requestId": "server-request",
+        "actionId": "server-action",
+        "values": { "payment": ["visible-card-2"] },
+        "correlationId": "command-1"
+      }
+    },
+    { "v": 1, "type": "request_game_state_sync", "gameId": "game-1" },
+    { "v": 1, "type": "ping", "nonce": "heartbeat-1" },
+    { "v": 1, "type": "pong", "nonce": "heartbeat-1" }
+  ],
+  "server": [
+    {
+      "v": 1,
+      "type": "welcome",
+      "sessionId": "local-session-1",
+      "role": "player-1",
+      "heartbeatMs": 15000,
+      "fixtures": [{ "id": "starter-a", "name": "Starter A" }],
+      "supportedInputs": ["entity-selection"]
+    },
+    {
+      "v": 1,
+      "type": "action_result",
+      "gameId": "game-1",
+      "correlationId": "command-1",
+      "accepted": true,
+      "stateVersion": 8,
+      "code": "accepted"
+    },
+    {
+      "v": 1,
+      "type": "action_result",
+      "gameId": "game-1",
+      "correlationId": "command-2",
+      "accepted": false,
+      "stateVersion": 8,
+      "code": "stale_interaction"
+    },
+    { "v": 1, "type": "pong", "nonce": "heartbeat-1" },
+    { "v": 1, "type": "error", "code": "unsupported_or_malformed_message" }
+  ]
+}

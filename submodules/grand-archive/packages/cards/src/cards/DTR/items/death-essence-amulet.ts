@@ -50,29 +50,29 @@ export const deathEssenceAmulet: GrandArchiveCard<GrandArchiveAbilityDefinition,
               player: "controller",
             },
           },
-          targets: [
-            {
-              id: "target-opponent",
-              kind: "target",
-              declared: "announcement",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              unique: true,
-              candidates: {
-                kind: "player",
-                players: ["opponent"],
-              },
-            },
-          ],
           effect: {
             kind: "optional",
             player: "controller",
             allOrNothing: true,
             effect: {
               kind: "reflexive",
+              targets: [
+                {
+                  id: "target-opponent",
+                  kind: "target",
+                  declared: "announcement",
+                  chooser: "controller",
+                  count: {
+                    kind: "exactly",
+                    amount: 1,
+                  },
+                  unique: true,
+                  candidates: {
+                    kind: "player",
+                    players: ["opponent"],
+                  },
+                },
+              ],
               action: {
                 kind: "banish-object",
                 subject: {
@@ -94,9 +94,7 @@ export const deathEssenceAmulet: GrandArchiveCard<GrandArchiveAbilityDefinition,
                       effects: [
                         {
                           kind: "look-at",
-                          player: {
-                            binding: "target-opponent",
-                          },
+                          player: "controller",
                           selection: {
                             id: "looked-hand",
                             kind: "choice",
@@ -148,9 +146,7 @@ export const deathEssenceAmulet: GrandArchiveCard<GrandArchiveAbilityDefinition,
                       effects: [
                         {
                           kind: "look-at",
-                          player: {
-                            binding: "target-opponent",
-                          },
+                          player: "controller",
                           selection: {
                             id: "looked-memory",
                             kind: "choice",

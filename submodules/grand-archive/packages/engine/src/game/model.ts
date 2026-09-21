@@ -49,7 +49,10 @@ export interface GrandArchiveCardInstance {
   readonly zone: GrandArchiveZone;
   readonly hostId?: GrandArchiveObjectId;
   /** Source card/object whose effect or explicit additional cost put this card in banishment. */
-  readonly banishedBySourceId?: GrandArchiveObjectId;
+  readonly banishedBy?: {
+    readonly sourceId: GrandArchiveObjectId;
+    readonly sourceIncarnation: number;
+  };
   readonly face: "default" | "transformed";
   readonly facing: "face-up" | "face-down";
   /** A characteristic-selected private card that must be disclosed when the game ends. */
@@ -613,7 +616,31 @@ export const GRAND_ARCHIVE_DECISION_KINDS = {
 
 export type GrandArchiveResolutionFrame =
   | {
+      readonly kind: "begin-suppress";
+      readonly objectId: GrandArchiveObjectId;
+      readonly incarnation: number;
+      readonly playerId: GrandArchivePlayerId;
+      readonly bindResultAs?: string;
+    }
+  | {
+      readonly kind: "finish-suppress";
+      readonly objectId: GrandArchiveObjectId;
+      readonly incarnation: number;
+      readonly playerId: GrandArchivePlayerId;
+      readonly startedEventHistoryIndex: number;
+      readonly bindResultAs?: string;
+    }
+  | {
+      /** Continue Glimpse only if its pre-choice action survived replacement. */
+      readonly kind: "finish-glimpse";
+      readonly playerId: GrandArchivePlayerId;
+      readonly startedEventHistoryIndex: number;
+      readonly bindResultAs?: string;
+    }
+  | {
       readonly kind: "effect";
+      /** Suppress replacement admission has already completed for this object. */
+      readonly suppressAdmitted?: true;
       readonly effect: import("@tcg/grand-archive-types").GrandArchiveEffect;
       /** Rule-internal Link choices applied while preserving one simultaneous field entry. */
       readonly entryLinkHostBindings?: Readonly<Record<GrandArchiveObjectId, string>>;

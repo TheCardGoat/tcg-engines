@@ -142,34 +142,45 @@ export const gleamingCut: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["memory"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "name",
-                        value: "Gleaming Cut",
-                        match: "exact",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["memory"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "name",
+                          value: "Gleaming Cut",
+                          match: "exact",
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 2,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 2,
+                  },
                 },
               ],
             },

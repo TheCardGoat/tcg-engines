@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018 } from "@tcg/op-cards";
-import { op11CharlotteMontDOr072 } from "../../../../../cards/src/cards/OP11/characters/072-charlotte-mont-d-or.ts";
+import { op11CharlotteMontDOr072 } from "../../../../../cards/src/cards/characters/op11-072-charlotte-mont-d-or.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

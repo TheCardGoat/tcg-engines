@@ -38,49 +38,60 @@ export const returnToTheArchive: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "sacrificed-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "choose",
+                    selection: {
+                      id: "sacrificed-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "supertype",
+                          oneOf: ["REGALIA"],
+                        },
+                      },
                     },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "supertype",
-                        oneOf: ["REGALIA"],
+                    effect: {
+                      kind: "sacrifice",
+                      subject: {
+                        kind: "bound",
+                        binding: "sacrificed-object",
                       },
                     },
                   },
-                  effect: {
-                    kind: "sacrifice",
-                    subject: {
-                      kind: "bound",
-                      binding: "sacrificed-object",
-                    },
-                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "recover",
-                      player: "controller",
-                      amount: 2,
-                    },
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                    },
-                  ],
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "recover",
+                        player: "controller",
+                        amount: 2,
+                      },
+                      {
+                        kind: "draw",
+                        player: "controller",
+                        amount: 1,
+                      },
+                    ],
+                  },
                 },
               ],
             },

@@ -61,6 +61,8 @@ export type NonNullable<T> = T extends null | undefined ? never : T;
  */
 export function slugify(text: string): string {
   return text
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/[^\w\s-]/g, "")
     .replace(/[\s_—-]+/g, "-")

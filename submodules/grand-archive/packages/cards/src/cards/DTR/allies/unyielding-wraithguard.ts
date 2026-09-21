@@ -62,11 +62,13 @@ export const unyieldingWraithguard: GrandArchiveCard<GrandArchiveAbilityDefiniti
                 destination: {
                   zone: "field",
                 },
+                bindResultAs: "returned-source",
               },
               {
                 kind: "set-object-state",
                 subject: {
-                  kind: "source",
+                  kind: "bound",
+                  binding: "returned-source",
                 },
                 state: "ephemeral",
                 value: true,

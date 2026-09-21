@@ -927,6 +927,10 @@ export function proposeCardMovementEffect(
         events.push({
           ...baseEvent(layer, processId),
           name: "discard",
+          // "You discard" observes the player whose hand loses the card, not
+          // the controller of the effect that instructed that player to
+          // discard (for example, Rhinar versus Coronet Peak).
+          actorId: snapshotPlayerId(object),
           affected: [object],
           bindings: {
             ...layer.bindings,

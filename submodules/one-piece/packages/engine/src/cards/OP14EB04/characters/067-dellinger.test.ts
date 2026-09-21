@@ -7,7 +7,7 @@ import {
   op10Monet016,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Dellinger067 } from "../../../../../cards/src/cards/OP14EB04/characters/067-dellinger.ts";
+import { op14eb04Dellinger067 } from "../../../../../cards/src/cards/characters/op14-067-dellinger.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

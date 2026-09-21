@@ -5,7 +5,7 @@ import {
   op12SilversRayleigh001,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13ScopperGaban067 } from "../../../../../cards/src/cards/OP13/characters/067-scopper-gaban.ts";
+import { op13ScopperGaban067 } from "../../../../../cards/src/cards/characters/op13-067-scopper-gaban.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

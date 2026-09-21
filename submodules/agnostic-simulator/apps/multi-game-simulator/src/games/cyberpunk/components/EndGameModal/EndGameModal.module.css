@@ -1,16 +1,3 @@
-.overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 9000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(12px, 3vw, 28px);
-  background: rgb(4 6 8 / 82%);
-  backdrop-filter: blur(8px);
-  animation: fade-in 0.18s ease-out;
-}
-
 .launcher {
   position: fixed;
   right: 18px;
@@ -29,31 +16,13 @@
   cursor: pointer;
 }
 
-.card {
-  position: relative;
-  width: min(980px, 96vw);
-  max-height: min(92vh, 860px);
-  display: grid;
-  grid-template-rows: auto auto minmax(260px, 1fr) auto;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--cp-panel, #11151c) 94%, #14110a);
-  border: 1px solid rgb(245 230 66 / 32%);
-  border-radius: 10px;
-  box-shadow:
-    0 0 0 1px rgb(245 230 66 / 14%),
-    0 28px 80px rgb(0 0 0 / 76%);
-}
-
-.practiceCard {
-  grid-template-rows: auto minmax(220px, 1fr) auto;
-}
-
-.minimizeButton,
 .iconButton {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 30px;
+  height: 30px;
   border: 1px solid rgb(255 255 255 / 12%);
   border-radius: 6px;
   background: rgb(255 255 255 / 5%);
@@ -61,119 +30,438 @@
   cursor: pointer;
 }
 
-.minimizeButton {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+/* --- Versus header participants --- */
+
+.participant {
+  display: grid;
   gap: 6px;
-  height: 34px;
-  padding: 0 10px;
-  color: var(--cp-fg-secondary, #b0b6bf);
-  font-size: 12px;
-  font-weight: 800;
+  justify-items: start;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgb(255 255 255 / 4%);
 }
 
-.minimizeButton:hover {
-  border-color: rgb(245 230 66 / 34%);
-  background: rgb(245 230 66 / 8%);
-  color: var(--cp-gold, #f5e642);
+.participant[data-winner] {
+  border-color: rgb(245 230 66 / 46%);
+  background: linear-gradient(135deg, rgb(245 230 66 / 12%), rgb(255 255 255 / 4%));
 }
 
-.iconButton {
-  width: 30px;
-  height: 30px;
-}
-
-.header {
-  padding: 28px 28px 18px;
-  border-bottom: 1px solid rgb(255 255 255 / 8%);
-}
-
-.eyebrow {
-  margin: 0 0 8px;
+.participantHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   color: var(--cp-gold, #f5e642);
   font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
+  font-weight: 900;
   text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.headline {
+.participantName {
   margin: 0;
+  max-width: 100%;
+  overflow: hidden;
   color: var(--cp-fg, #f1f1f1);
-  font-size: clamp(28px, 3vw, 42px);
-  line-height: 1;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-[data-outcome="loss"] .headline {
-  color: rgb(255 126 118);
-}
-
-[data-outcome="draw"] .headline {
-  color: var(--cp-fg-secondary, #b0b6bf);
-}
-
-.reason {
-  max-width: 64ch;
-  margin: 10px 0 0;
-  color: var(--cp-fg-secondary, #b0b6bf);
-  font-size: 14px;
-}
-
-.headerStats {
+.participantScore {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0;
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 12px;
 }
 
-.headerStats span,
-.counterLine span {
-  border: 1px solid rgb(245 230 66 / 18%);
-  border-radius: 6px;
-  padding: 5px 8px;
-  background: rgb(245 230 66 / 7%);
-  color: rgb(245 230 66 / 92%);
+.participantScore strong {
+  color: var(--cp-fg, #f1f1f1);
+  font-size: 16px;
+}
+
+/* --- Head-to-head comparison rows --- */
+
+.comparisonScroll {
+  overflow-x: auto;
+}
+
+.comparisonTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.comparisonTable th,
+.comparisonTable td {
+  padding: 9px 12px;
+  text-align: center;
+}
+
+.comparisonTable thead th {
+  padding-block: 4px 10px;
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.comparisonTable thead .comparisonViewer {
+  color: var(--cp-gold, #f5e642);
+}
+
+.comparisonTable thead .comparisonOpponent {
+  color: rgb(102 232 255);
+}
+
+.comparisonViewer {
+  width: 34%;
+  color: var(--cp-gold, #f5e642);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.comparisonOpponent {
+  width: 34%;
+  color: rgb(102 232 255);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.comparisonStat {
+  color: var(--cp-fg-secondary, #b0b6bf);
   font-size: 12px;
   font-weight: 700;
 }
 
-.tabs {
-  display: flex;
-  gap: 8px;
-  padding: 12px 18px;
-  overflow-x: auto;
-  border-bottom: 1px solid rgb(255 255 255 / 8%);
+.comparisonTable tbody tr {
+  border-top: 1px solid rgb(245 230 66 / 10%);
 }
 
-.tabButton {
-  appearance: none;
-  display: inline-flex;
+.comparisonTable tbody tr[data-emphasis] .comparisonViewer,
+.comparisonTable tbody tr[data-emphasis] .comparisonOpponent {
+  font-size: 19px;
+}
+
+/* --- Progression chart --- */
+
+.chartFigure {
+  margin: 0;
+}
+
+.chartHead {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  border: 1px solid transparent;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.chartHead strong {
+  display: block;
+  color: var(--cp-fg, #f1f1f1);
+  font-size: 15px;
+}
+
+.chartHead small {
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 12px;
+}
+
+.chartToggle {
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid rgb(255 255 255 / 12%);
   border-radius: 6px;
-  padding: 8px 12px;
+  padding: 3px;
+  background: rgb(255 255 255 / 4%);
+}
+
+.chartToggle button {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 10px;
   background: transparent;
   color: var(--cp-fg-secondary, #b0b6bf);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
   cursor: pointer;
 }
 
-.tabButtonActive {
+.chartToggle button[aria-pressed="true"] {
   border-color: rgb(245 230 66 / 30%);
   background: rgb(245 230 66 / 10%);
   color: var(--cp-gold, #f5e642);
 }
 
-.body {
-  overflow: auto;
-  padding: 18px;
+.chartScroll {
+  overflow-x: auto;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+  padding: 8px 6px;
+  background: rgb(0 0 0 / 22%);
 }
+
+.chartScroll svg {
+  display: block;
+  width: 100%;
+}
+
+.chartGrid {
+  stroke: rgb(255 255 255 / 8%);
+  stroke-width: 1;
+}
+
+.chartZero {
+  stroke: rgb(255 255 255 / 32%);
+  stroke-width: 1.5;
+}
+
+.chartAxis {
+  fill: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.chartLineViewer,
+.chartLineOpponent {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+.chartLineViewer {
+  stroke: var(--cp-gold, #f5e642);
+}
+
+.chartLineOpponent {
+  stroke: rgb(102 232 255);
+}
+
+.chartDotViewer {
+  fill: var(--cp-gold, #f5e642);
+}
+
+.chartDotOpponent {
+  fill: rgb(102 232 255);
+}
+
+.chartValueViewer {
+  fill: var(--cp-gold, #f5e642);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.chartValueOpponent {
+  fill: rgb(102 232 255);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.chartLegend {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chartLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chartLegend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.chartLegend i[data-series="viewer"] {
+  background: var(--cp-gold, #f5e642);
+}
+
+.chartLegend i[data-series="opponent"] {
+  background: rgb(102 232 255);
+}
+
+/* --- Closing turn callout --- */
+
+.turningPoint {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid rgb(245 230 66 / 24%);
+  border-radius: 8px;
+  padding: 14px;
+  background: rgb(245 230 66 / 6%);
+}
+
+.turningPointIcon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--cp-gold, #f5e642);
+}
+
+.turningPoint strong {
+  display: block;
+  color: var(--cp-fg, #f1f1f1);
+  font-size: 14px;
+}
+
+.turningPoint p {
+  margin: 4px 0 0;
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 13px;
+}
+
+/* --- Match highlights --- */
+
+.highlightsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.highlight {
+  display: grid;
+  gap: 4px;
+  border: 1px solid rgb(102 232 255 / 16%);
+  border-radius: 8px;
+  padding: 12px;
+  background: rgb(102 232 255 / 5%);
+}
+
+.highlight span {
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.highlight strong {
+  color: var(--cp-fg, #f1f1f1);
+  font-size: 14px;
+}
+
+/* --- Cards / turns tables --- */
+
+.cardFilter {
+  display: inline-flex;
+  gap: 4px;
+  border: 1px solid rgb(255 255 255 / 12%);
+  border-radius: 6px;
+  padding: 3px;
+  background: rgb(255 255 255 / 4%);
+}
+
+.cardFilter button {
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 10px;
+  background: transparent;
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.cardFilter button[aria-pressed="true"] {
+  border-color: rgb(245 230 66 / 30%);
+  background: rgb(245 230 66 / 10%);
+  color: var(--cp-gold, #f5e642);
+}
+
+.tableScroll {
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+}
+
+.cardsTable,
+.turnsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardsTable th,
+.cardsTable td,
+.turnsTable th,
+.turnsTable td {
+  border-top: 1px solid rgb(255 255 255 / 7%);
+  padding: 8px 12px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.cardsTable thead th,
+.turnsTable thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-top: 0;
+  background: rgb(17 21 28 / 98%);
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cardsTable tbody th,
+.turnsTable tbody th {
+  text-align: left;
+  color: var(--cp-fg, #f1f1f1);
+  font-weight: 700;
+}
+
+.turnsTable tbody th {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.turnsSideCol {
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+}
+
+.cardType {
+  display: inline-block;
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: 999px;
+  padding: 1px 8px;
+  background: rgb(255 255 255 / 5%);
+  color: var(--cp-fg-secondary, #b0b6bf);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.cardType[data-type="legend"] {
+  border-color: rgb(245 230 66 / 36%);
+  background: rgb(245 230 66 / 10%);
+  color: rgb(255 245 128);
+}
+
+/* --- Panels and status states --- */
 
 .panel {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -196,18 +484,7 @@
   font-size: 13px;
 }
 
-.scoreGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.scoreCard,
-.metric,
 .deckMatchup,
-.deckMatchupPlayer,
-.spotlight,
-.turnRow,
 .emptyState,
 .practiceState,
 .loadingState,
@@ -217,42 +494,14 @@
   background: rgb(255 255 255 / 4%);
 }
 
-.scoreCard {
-  padding: 16px;
-}
-
-.scoreCardWinner {
-  border-color: rgb(245 230 66 / 46%);
-  background: linear-gradient(135deg, rgb(245 230 66 / 12%), rgb(255 255 255 / 4%));
-}
-
-.scoreCardHeader {
-  display: flex;
-  justify-content: space-between;
-  color: var(--cp-gold, #f5e642);
-  font-size: 12px;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.scoreCard h3 {
-  margin: 8px 0 14px;
-  color: var(--cp-fg, #f1f1f1);
-  font-size: 20px;
-}
-
-.scoreMetrics,
-.metricGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-}
-
 .metric {
-  min-height: 72px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-height: 56px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 4%);
   padding: 10px;
 }
 
@@ -266,50 +515,7 @@
 .metric strong {
   margin-top: 4px;
   color: var(--cp-fg, #f1f1f1);
-  font-size: clamp(17px, 2vw, 24px);
-}
-
-.counterLine,
-.thinkingMetrics,
-.supportActions,
-.actions,
-.footerSecondary,
-.replayActions,
-.notesFooter {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.counterLine {
-  margin-top: 12px;
-}
-
-.thinkingMetrics {
-  align-items: stretch;
-  margin-top: 10px;
-}
-
-.thinkingMetrics span {
-  flex: 1 1 86px;
-  min-width: 0;
-  display: grid;
-  gap: 2px;
-  border: 1px solid rgb(102 232 255 / 14%);
-  border-radius: 6px;
-  padding: 8px;
-  background: rgb(102 232 255 / 6%);
-  color: var(--cp-fg-secondary, #b0b6bf);
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
-.thinkingMetrics strong {
-  color: var(--cp-fg, #f1f1f1);
-  font-size: 15px;
-  text-transform: none;
+  font-size: 16px;
 }
 
 .deckMatchup {
@@ -361,6 +567,9 @@
 }
 
 .deckMatchupPlayer {
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 4%);
   padding: 14px;
 }
 
@@ -382,6 +591,12 @@
   margin: 8px 0 12px;
   color: var(--cp-fg, #f1f1f1);
   font-size: 18px;
+}
+
+.deckStats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .colorSymbols {
@@ -413,12 +628,6 @@
   background: #f5e642;
 }
 
-.deckStats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
 .legendList {
   display: grid;
   gap: 6px;
@@ -433,45 +642,6 @@
 
 .finalLine {
   margin: 12px 0 0;
-}
-
-.spotlightList,
-.turnList {
-  display: grid;
-  gap: 10px;
-}
-
-.spotlight {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr) auto;
-  gap: 10px;
-  align-items: center;
-  padding: 12px;
-}
-
-.spotlight strong,
-.turnRow strong {
-  color: var(--cp-fg, #f1f1f1);
-}
-
-.spotlight span,
-.turnRow span {
-  color: var(--cp-fg-secondary, #b0b6bf);
-  font-size: 13px;
-}
-
-.spotlight em {
-  color: var(--cp-gold, #f5e642);
-  font-size: 13px;
-  font-style: normal;
-  font-weight: 800;
-}
-
-.turnRow {
-  display: grid;
-  grid-template-columns: 80px repeat(4, minmax(0, 1fr));
-  gap: 10px;
-  padding: 12px;
 }
 
 .emptyState,
@@ -517,6 +687,8 @@
   color: rgb(255 176 170);
 }
 
+/* --- Notes --- */
+
 .notesArea {
   width: 100%;
   min-height: 150px;
@@ -535,7 +707,11 @@
 }
 
 .notesFooter {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 8px;
 }
 
 .mutedText {
@@ -548,22 +724,15 @@
   font-size: 13px;
 }
 
-.footer {
+/* --- Actions and support dialog --- */
+
+.replayActions,
+.supportActions,
+.actions {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 18px 18px;
-  border-top: 1px solid rgb(255 255 255 / 8%);
-}
-
-.footerSecondary {
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
-}
-
-.replayActions {
-  min-width: 0;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .btn,
@@ -649,16 +818,6 @@
   animation: spin 0.8s linear infinite;
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -666,7 +825,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .overlay,
   .spin {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -674,55 +832,60 @@
 }
 
 @media (width <= 720px) {
-  .card {
+  .participant {
     width: 100%;
-    max-height: 94vh;
-    grid-template-rows: auto auto minmax(220px, 1fr) auto;
   }
 
-  .practiceCard {
-    grid-template-rows: auto minmax(200px, 1fr) auto;
-  }
-
-  .header {
-    padding: 22px 18px 14px;
-  }
-
-  .minimizeButton span {
-    display: none;
-  }
-
-  .minimizeButton {
-    width: 34px;
-    padding: 0;
-  }
-
-  .scoreGrid,
-  .metricGrid,
-  .scoreMetrics,
-  .deckMatchupGrid {
+  .deckMatchupGrid,
+  .deckStats {
     grid-template-columns: 1fr;
   }
 
-  .spotlight,
-  .turnRow {
-    grid-template-columns: 1fr;
+  .comparisonTable th,
+  .comparisonTable td {
+    padding: 8px 4px;
   }
 
-  .footer {
+  .comparisonTable thead th {
+    font-size: 10px;
+  }
+
+  .comparisonTable tbody tr[data-emphasis] .comparisonViewer,
+  .comparisonTable tbody tr[data-emphasis] .comparisonOpponent {
+    font-size: 15px;
+  }
+
+  .comparisonViewer,
+  .comparisonOpponent {
+    width: auto;
+    font-size: 13px;
+  }
+
+  .comparisonStat {
+    font-size: 11px;
+  }
+
+  .turningPoint {
     flex-direction: column;
   }
 
-  .actions,
-  .supportActions,
-  .footerSecondary,
-  .replayActions {
-    width: 100%;
+  .panelHeader {
+    flex-direction: column;
+  }
+
+  .cardFilter {
+    align-self: flex-start;
   }
 
   .btn,
   .supportButton,
   .replayButton {
     flex: 1;
+  }
+
+  .actions,
+  .supportActions,
+  .replayActions {
+    width: 100%;
   }
 }

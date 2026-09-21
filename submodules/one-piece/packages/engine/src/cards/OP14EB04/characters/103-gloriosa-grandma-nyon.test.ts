@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04GloriosaGrandmaNyon103 } from "../../../../../cards/src/cards/OP14EB04/characters/103-gloriosa-grandma-nyon.ts";
+import { op14eb04GloriosaGrandmaNyon103 } from "../../../../../cards/src/cards/characters/op14-103-gloriosa-grandma-nyon.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

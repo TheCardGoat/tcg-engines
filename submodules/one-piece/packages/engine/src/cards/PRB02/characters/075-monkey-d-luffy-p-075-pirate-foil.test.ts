@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01Fourtricks025, op02Uta120 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02MonkeyDLuffyP075PirateFoil075 } from "../../../../../cards/src/cards/PRB02/characters/075-monkey-d-luffy-p-075-pirate-foil.ts";
+import { prb02MonkeyDLuffyP075PirateFoil075 } from "../../../../../cards/src/cards/characters/p-075-monkey-d-luffy-p-075-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

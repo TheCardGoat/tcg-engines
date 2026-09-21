@@ -26,7 +26,7 @@ export const welcomeToNightCityRetailChromeFang = defineCyberpunkCard({
   abilities: [
     {
       kind: "triggered",
-      text: "Play Until your next turn, rival Units can't steal friendly Gigs with value higher than their power.",
+      text: "{Play} Until your next turn, rival Units can't steal friendly Gigs with value higher than their power.",
       trigger: {
         trigger: "play",
       },

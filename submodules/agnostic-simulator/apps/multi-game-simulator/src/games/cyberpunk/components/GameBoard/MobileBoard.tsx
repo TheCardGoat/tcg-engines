@@ -4,6 +4,7 @@ import {
   useMemo,
   useRef,
   useState,
+  type CSSProperties,
   type FormEvent,
   type ReactNode,
   type RefObject,
@@ -18,7 +19,6 @@ import {
   IconHistory,
   IconMessageCircle,
   IconPlayerPause,
-  IconPlayerPlay,
   IconUserPlus,
 } from "@tabler/icons-react";
 import type { SimulatorConnectionDiagnosticInput } from "@tcg/game-page-contract/connection-diagnostic";
@@ -31,6 +31,7 @@ import type {
   SimulatorTargetFilter,
 } from "@tcg/simulator-contract";
 import {
+  DropClaimControl,
   EventLogPanel,
   MobileBattlefieldLane,
   MobileHandDock,
@@ -40,9 +41,12 @@ import {
   MobileZoneInventoryPopover,
   SimulatorActivityTabs,
   TargetFilterModal,
+  useCardContextMenuApi,
 } from "@tcg/simulator-ui";
 import { CardImage } from "./CardImage";
+import { openCorrectionMenuForModalCard } from "./GameBoard";
 import { CenterRow, PassTurnControl } from "./CenterRow";
+import { boardCorrectionMenuAction } from "./BoardCorrectionStrip";
 import { DeckZone } from "./DeckZone";
 import { EddiesZone } from "./EddiesZone";
 import { FieldZone } from "./FieldZone";
@@ -53,18 +57,29 @@ import { TrashZone } from "./TrashZone";
 import { useGameClock } from "./useGameClock";
 import { useGameState } from "./gameStateContext";
 import { DeferredAiControlPanel } from "../AiControlPanel/DeferredAiControlPanel";
-import { ChatPanel } from "../ChatPanel";
+import { FloatingChatComposer } from "../ChatPanel/FloatingChatComposer";
+import { mapChatMessage } from "../ChatPanel/ChatPanel";
 import { ChoiceModal } from "../Prompt/ChoiceModal";
 import { PromptBanner } from "../Prompt/PromptBanner";
+import { PaymentSelectionPrompt } from "../PaymentSelection/PaymentSelectionPrompt";
+import { usePaymentSelection } from "../PaymentSelection/PaymentSelectionContext";
 import { UserConfigButton } from "../UserConfig/UserConfigDialog";
-import type { LiveMatchSidebarConfig, LiveMatchSidebarParticipant } from "../BoardRuntimeContext";
+import {
+  renderCyberpunkEventLogMessage,
+  scrollCyberpunkEventLogToLatest,
+} from "../EventLog/CyberpunkEventLogMessage";
+import {
+  useCyberpunkBoardRuntime,
+  type LiveMatchSidebarConfig,
+  type LiveMatchSidebarParticipant,
+} from "../BoardRuntimeContext";
 import { CombatArrowOverlay } from "./CombatArrowOverlay";
 import { OpponentDisconnectOverlay } from "./OpponentDisconnectOverlay";
-import { useOpponentPresence } from "../../engine/live/useOpponentPresence";
 import {
   otherSide,
   PLAYER_SIDE_TO_ID,
   formatPlayerIdentityMeta,
+  handContainsPrivateCards,
   isVisibleSubscriptionTier,
   useBoardMode,
   useEngine,
@@ -80,6 +95,7 @@ import {
 } from "../../engine";
 import { projectMoveLogEntries } from "../../engine/moveLogProjection";
 import { interactionViewCanAttackRival } from "../../engine/interactionViewHelpers";
+import { isRealHumanParticipant } from "../../live-match-participants";
 import {
   connectionUiStatus,
   isConnectionDisconnected,
@@ -385,21 +401,21 @@ function legendsOf(
       activeEffects: g.activeEffects,
       hasSellTag: g.hasSellTag,
     })),
-    peeked: c.faceDown && (peekedLegends.ids.has(c.cardId) || peekedLegends.indexes.has(index)),
+    peeked:
+      c.revealed ||
+      (c.faceDown && (peekedLegends.ids.has(c.cardId) || peekedLegends.indexes.has(index))),
   }));
 }
 
-function eddieCounts(zones: ReturnType<typeof useSideZones>, revealedCardId?: string) {
+function eddieCounts(zones: ReturnType<typeof useSideZones>) {
   const readyLegendCount = zones.legendArea.filter((card) => !card.spent).length;
   const cardCount = Math.max(zones.eddieCardCount, zones.eddies + zones.spentEddies);
   return {
     count: zones.eddies,
-    cards: zones.eddieCards.map((card, i, arr) => ({
+    cards: zones.eddieCards.map((card) => ({
       cardId: card.cardId,
       spent: card.spent,
-      revealed:
-        (!card.spent && zones.soldThisTurn && i === arr.length - 1) ||
-        card.cardId === revealedCardId,
+      revealed: card.revealed,
       imageUrl: card.imageUrl,
       name: card.name,
     })),
@@ -463,26 +479,12 @@ function CyberpunkZoneInventory({
 }: CyberpunkZoneInventoryProps) {
   const fixer = fixerSummary(zones);
   const fixerSlots = fixerSummarySlots(zones);
-  const lastSoldDetail = lastSoldCard ? `Last: ${lastSoldCard.cardName}` : undefined;
-  const sellDrop = useZoneDroppable(opponent ? null : "p-eddies");
-  const { activeSource } = useDragDrop();
-  const sellDropReady =
-    !opponent && activeSource?.zone === "p-hand" && Boolean(activeSource.cardId);
-
+  const lastSoldDetail =
+    lastSoldCard && zones.soldThisTurn ? `Last: ${lastSoldCard.cardName}` : undefined;
   return (
     <div
-      ref={sellDrop.setNodeRef}
       className={classes.zoneInventoryHost}
-      data-drop-ready={sellDropReady ? "sellCard" : undefined}
-      data-drop-over={sellDrop.isOver ? "true" : "false"}
-      data-drop-zone={!opponent ? "p-eddies" : undefined}
-      aria-label={
-        opponent
-          ? "Rival zone inventory"
-          : sellDropReady
-            ? "Player zone inventory. Drop here to sell this card for 1 Eddie."
-            : "Player zone inventory"
-      }
+      aria-label={opponent ? "Rival zone inventory" : "Player zone inventory"}
     >
       <MobileZoneInventoryPopover
         label={label}
@@ -564,12 +566,6 @@ function CyberpunkZoneInventory({
           </section>
         </div>
       </MobileZoneInventoryPopover>
-      {sellDropReady ? (
-        <div className={classes.fieldHelperSellCue} aria-hidden="true">
-          <span>Drop to sell</span>
-          <strong>+1 Eddie</strong>
-        </div>
-      ) : null}
     </div>
   );
 }
@@ -621,6 +617,10 @@ function CyberpunkZoneSummaryBar({
         </span>
       </span>
       <span className={classes.zoneSummaryChip}>
+        <span>SC</span>
+        <strong>{zones.streetCred}</strong>
+      </span>
+      <span className={classes.zoneSummaryChip}>
         <span>Eddies</span>
         <strong>
           {eddies.availableCount}/{eddies.totalCount}
@@ -636,8 +636,8 @@ function CyberpunkZoneSummaryBar({
       data-testid={opponent ? "rival-zone-summary-bar" : "player-zone-summary-bar"}
       aria-label={
         opponent
-          ? `Rival zones. Hand ${zones.hand.length}. Deck ${zones.deckCount}. Trash ${zones.trashCount}. Fixer ${fixer.value}: ${fixer.detail}. Eddies ${eddies.availableCount} of ${eddies.totalCount}.`
-          : `Your zones. Hand ${zones.hand.length}. Deck ${zones.deckCount}. Trash ${zones.trashCount}. Fixer ${fixer.value}: ${fixer.detail}. Eddies ${eddies.availableCount} of ${eddies.totalCount}.`
+          ? `Rival zones. Hand ${zones.hand.length}. Deck ${zones.deckCount}. Trash ${zones.trashCount}. Fixer ${fixer.value}: ${fixer.detail}. Street Cred ${zones.streetCred}. Eddies ${eddies.availableCount} of ${eddies.totalCount}.`
+          : `Your zones. Hand ${zones.hand.length}. Deck ${zones.deckCount}. Trash ${zones.trashCount}. Fixer ${fixer.value}: ${fixer.detail}. Street Cred ${zones.streetCred}. Eddies ${eddies.availableCount} of ${eddies.totalCount}.`
       }
     >
       <CyberpunkZoneInventory
@@ -691,23 +691,33 @@ function CyberpunkMobileLedgerContent({
 }
 
 type MobileLedgerDensity = "scoreOnly" | "singleRow" | "stacked";
-type MobileLedgerSideLayout = "scoreOnly" | "singleRow" | "stacked";
+type MobileLedgerSideLayout = "scoreOnly" | "compact" | "singleRow" | "stacked";
 
-function mobileLedgerDensity(maxLegendCount: number): MobileLedgerDensity {
-  if (maxLegendCount <= 0) {
-    return "scoreOnly";
+function mobileLedgerDensity(
+  friendlyLayout: MobileLedgerSideLayout,
+  rivalLayout: MobileLedgerSideLayout,
+): MobileLedgerDensity {
+  if (friendlyLayout === "stacked" || rivalLayout === "stacked") {
+    return "stacked";
   }
-  if (maxLegendCount === 1) {
+  if (friendlyLayout === "singleRow" || rivalLayout === "singleRow") {
     return "singleRow";
   }
-  return "stacked";
+  return "scoreOnly";
 }
 
-function mobileLedgerSideLayout(legendCount: number): MobileLedgerSideLayout {
-  if (legendCount <= 0) {
+function mobileLedgerSideLayout(
+  legends: ReadonlyArray<{ faceDown: boolean }>,
+  tone: "friendly" | "rival",
+): MobileLedgerSideLayout {
+  if (legends.length === 0) {
     return "scoreOnly";
   }
-  if (legendCount === 1) {
+  const faceUpCount = legends.filter((legend) => !legend.faceDown).length;
+  if (faceUpCount === 0) {
+    return tone === "friendly" ? "compact" : "scoreOnly";
+  }
+  if (legends.length === 1) {
     return "singleRow";
   }
   return "stacked";
@@ -769,11 +779,13 @@ function MobileSellReveal({
 }
 
 function MobileClockChip({ side, label }: { side: Side; label: string }) {
-  const { prioritySide, turnNumber, phase, gameEnded, overtimeActive } = useGameState();
+  const { activeSide, prioritySide, turnNumber, phase, gameEnded, overtimeActive } = useGameState();
   const clock = useGameClock(prioritySide, { paused: gameEnded });
   const { humanSide } = useEngine();
   const time = clock[side];
   const tone = side === humanSide ? "friendly" : "rival";
+  const ownsTurn = activeSide === side;
+  const hasPriority = prioritySide === side;
 
   return (
     <div
@@ -781,17 +793,32 @@ function MobileClockChip({ side, label }: { side: Side; label: string }) {
         clock.active.critical ? classes.mobileClockRailCritical : ""
       }`}
       data-overtime={overtimeActive ? "true" : "false"}
+      data-turn-owner={ownsTurn ? "true" : "false"}
+      style={
+        ownsTurn
+          ? ({
+              "--turn-owner-rgb": side === humanSide ? "74 217 255" : "255 61 138",
+            } as CSSProperties)
+          : undefined
+      }
+      data-testid={`mobile-clock-chip-${side}`}
       aria-label={`${label} clock ${time.time}. Turn ${turnNumber}, ${phase}${
         overtimeActive ? ", overtime" : ""
-      }${prioritySide === side ? ", active priority" : ""}.`}
+      }${hasPriority ? ", active priority" : ""}${
+        ownsTurn ? (side === humanSide ? ", your turn" : ", rival's turn") : ""
+      }.`}
     >
       {overtimeActive ? <span className={classes.overtimeChip}>OT</span> : null}
-      <ClockPill
-        ariaLabel={`${label} clock`}
-        time={time.time}
-        active={prioritySide === side}
-        tone={tone}
-      />
+      {ownsTurn && !gameEnded ? (
+        <span
+          className={classes.mobileTurnTag}
+          data-tone={tone}
+          data-testid={`mobile-turn-tag-${side}`}
+        >
+          {side === humanSide ? "Your turn" : "Rival turn"}
+        </span>
+      ) : null}
+      <ClockPill ariaLabel={`${label} clock`} time={time.time} active={hasPriority} tone={tone} />
     </div>
   );
 }
@@ -820,7 +847,7 @@ function ClockPill({
 }
 
 function MobileDirectAttackDropTarget() {
-  const drop = useZoneDroppable("opp-pinfo");
+  const drop = useZoneDroppable("opp-gigArea");
   const { activeSource } = useDragDrop();
   const engine = useEngineOptional();
   const interactionView = useEngineInteractionView(engine?.humanSide ?? "player");
@@ -835,13 +862,36 @@ function MobileDirectAttackDropTarget() {
       className={classes.directAttackDropTarget}
       data-active={active ? "true" : "false"}
       data-over={drop.isOver ? "true" : "false"}
-      data-drop-zone="opp-pinfo"
+      data-drop-zone="opp-gigArea"
       data-drop-surface="rival-gigs"
       aria-hidden="true"
     >
       <div className={classes.directAttackDropCue}>
         <span>Steal</span>
         <strong>Rival Gigs</strong>
+      </div>
+    </div>
+  );
+}
+
+function MobileSellDropTarget() {
+  const drop = useZoneDroppable("p-eddies");
+  const { activeSource } = useDragDrop();
+  const active = activeSource?.zone === "p-hand" && Boolean(activeSource.cardId);
+
+  return (
+    <div
+      ref={drop.setNodeRef}
+      className={classes.sellDropTarget}
+      data-active={active ? "true" : "false"}
+      data-over={drop.isOver ? "true" : "false"}
+      data-drop-zone="p-eddies"
+      data-drop-surface="friendly-gigs-legends"
+      aria-hidden="true"
+    >
+      <div className={classes.sellDropCue}>
+        <span>Drop to sell</span>
+        <strong>+1 Eddie</strong>
       </div>
     </div>
   );
@@ -867,7 +917,7 @@ function MobilePlayerActions({
   config,
   model,
   focus,
-  opponentTimeoutExpired,
+  opponentTimeoutExpired: _opponentTimeoutExpired,
   onConcede,
   onClaimRivalDrop,
   onClose,
@@ -880,8 +930,10 @@ function MobilePlayerActions({
   onClaimRivalDrop?: () => void;
   onClose: () => void;
 }) {
-  const { matchState } = useEngine();
-  const opponentPresence = useOpponentPresence(model.opponentConnection);
+  const engine = useEngine();
+  const { matchState } = engine;
+  const correctionAction = boardCorrectionMenuAction(engine);
+  const { dropEligibility } = useCyberpunkBoardRuntime();
   const [friendState, setFriendState] = useState<"idle" | "loading" | "done">("idle");
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] =
@@ -892,20 +944,6 @@ function MobilePlayerActions({
   const [supportText, setSupportText] = useState("");
   const [supportState, setSupportState] = useState<"idle" | "loading">("idle");
   const canAddFriend = Boolean(model.opponent.userId);
-  const opponentDisconnected = isConnectionDisconnected(model.opponentConnection);
-  const canDropOpponent = Boolean(
-    onClaimRivalDrop && (opponentPresence.canDrop || opponentTimeoutExpired),
-  );
-  const showDropControl = Boolean(
-    onClaimRivalDrop && (opponentDisconnected || opponentTimeoutExpired),
-  );
-  const dropStatusText = opponentTimeoutExpired
-    ? "Clock expired. Server validates timeout before the game ends."
-    : opponentPresence.canDrop
-      ? "Opponent disconnected long enough to drop."
-      : opponentDisconnected
-        ? `Drop available in ${opponentPresence.secondsRemaining}s.`
-        : null;
   const focusedParticipant = focus === "self" ? model.self : model.opponent;
 
   async function addOpponentFriend(): Promise<void> {
@@ -1065,6 +1103,18 @@ function MobilePlayerActions({
             <div className={classes.mobileActionControl} role="menuitem">
               <UserConfigButton />
             </div>
+            <button
+              type="button"
+              role="menuitem"
+              data-testid={`mobile-${correctionAction.id}`}
+              disabled={correctionAction.disabled}
+              onClick={() => {
+                correctionAction.run();
+                onClose();
+              }}
+            >
+              <span>{correctionAction.label}</span>
+            </button>
             <button type="button" role="menuitem" data-danger="true" onClick={onConcede}>
               <IconFlag3 size={16} stroke={2.2} aria-hidden="true" />
               <span>Concede game</span>
@@ -1113,20 +1163,14 @@ function MobilePlayerActions({
           <IconMessageCircle size={16} stroke={2.2} aria-hidden="true" />
           <span>Share feedback</span>
         </button>
-        {focus === "opponent" ? (
-          showDropControl ? (
-            <button
-              type="button"
-              role="menuitem"
-              data-danger="true"
-              onClick={onClaimRivalDrop}
-              disabled={!canDropOpponent}
-              title={dropStatusText ?? undefined}
-            >
-              <IconPlayerPlay size={16} stroke={2.2} aria-hidden="true" />
-              <span>Drop opponent</span>
-            </button>
-          ) : null
+        {focus === "opponent" && onClaimRivalDrop ? (
+          <DropClaimControl
+            eligibility={dropEligibility}
+            serverNowMs={dropEligibility?.projectedAtMs ?? Date.now()}
+            onClaim={onClaimRivalDrop}
+            label="Drop opponent"
+            actionRole="menuitem"
+          />
         ) : null}
         {config.returnUrl ? (
           <a role="menuitem" href={config.returnUrl} onClick={onClose}>
@@ -1135,10 +1179,6 @@ function MobilePlayerActions({
           </a>
         ) : null}
       </div>
-      {focus === "opponent" && dropStatusText ? (
-        <p className={classes.mobileDropStatus}>{dropStatusText}</p>
-      ) : null}
-
       {focus === "opponent" && reportOpen ? (
         <form className={classes.mobileActionForm} onSubmit={submitReport}>
           <header>
@@ -1227,11 +1267,11 @@ function resolveMobileHumanMatch(
           participant.id === config.localPlayerId || participant.userId === config.localPlayerId,
       )
     : null;
-  if (!local || !isMobileRealHumanParticipant(local)) {
+  if (!local || !isRealHumanParticipant(local)) {
     return null;
   }
   const opponent = config.participants.find(
-    (participant) => participant.id !== local.id && isMobileRealHumanParticipant(participant),
+    (participant) => participant.id !== local.id && isRealHumanParticipant(participant),
   );
   if (!opponent) {
     return null;
@@ -1243,14 +1283,6 @@ function resolveMobileHumanMatch(
     opponentSide,
     opponentConnection: connections?.[opponentSide],
   };
-}
-
-function isMobileRealHumanParticipant(participant: LiveMatchSidebarParticipant): boolean {
-  return Boolean(
-    participant.userId &&
-    !participant.userId.startsWith("bot_") &&
-    !participant.userId.startsWith("guest_"),
-  );
 }
 
 function mobileSideForSeat(seat: 1 | 2): Side {
@@ -1316,16 +1348,24 @@ export function MobileBoard({
   onClaimRivalDrop?: () => void;
   liveMatchSidebar?: LiveMatchSidebarConfig;
 }) {
-  const { dispatch, humanSide, moveLogs, matchState } = useEngine();
+  const { dispatch, humanSide, moveLogs, matchState, boardCorrectionEnabled, chatMessages } =
+    useEngine();
+  const { paymentSelectionActive } = usePaymentSelection();
+  const cardContextMenu = useCardContextMenuApi();
+  const { dropEligibility, viewerCanSeePrivateHand } = useCyberpunkBoardRuntime();
   const { fieldCardSize } = useUserConfig();
   const { activeSide, prioritySide, phase, gameEnded, winnerSide, winReason } = useGameState();
   const rivalSide = otherSide(humanSide);
   const [drawer, setDrawer] = useState<DrawerKey>(null);
+  const activityFeedRef = useRef<HTMLDivElement | null>(null);
   const [actionFocus, setActionFocus] = useState<"self" | "opponent">("opponent");
   const [confirmingConcede, setConfirmingConcede] = useState(false);
   const [trashViewerSide, setTrashViewerSide] = useState<Side | null>(null);
   const [promptPlacement, setPromptPlacement] = useState<"player" | "rival">("player");
   const close = () => setDrawer(null);
+  const scrollActivityToLatest = useCallback(() => {
+    scrollCyberpunkEventLogToLatest(activityFeedRef.current);
+  }, []);
   const human = useSideZones(humanSide);
   const rival = useSideZones(rivalSide);
   const rivalRevealedHandCardIds = useTemporaryRevealedHandCardIds(
@@ -1351,8 +1391,8 @@ export function MobileBoard({
   const rivalLastSold = useLastSoldCardForSide(moveLogs, rivalSide);
   const humanDeckReveal = useDeckRevealForSide(humanSide);
   const rivalDeckReveal = useDeckRevealForSide(rivalSide);
-  const humanEddies = eddieCounts(human, humanLastSold?.cardId);
-  const rivalEddies = eddieCounts(rival, rivalLastSold?.cardId);
+  const humanEddies = eddieCounts(human);
+  const rivalEddies = eddieCounts(rival);
   const humanLastSoldView = human.eddieCards.find((card) => card.cardId === humanLastSold?.cardId);
   const rivalLastSoldView = rival.eddieCards.find((card) => card.cardId === rivalLastSold?.cardId);
   const promptMode = useBoardMode(humanSide);
@@ -1446,17 +1486,11 @@ export function MobileBoard({
     setConfirmingConcede(true);
   };
 
-  const rivalLedgerLegends = legendsOf(rival.legendArea, rivalPeekedLegends).filter(
-    (legend) => !legend.faceDown,
-  );
-  const friendlyLedgerLegends = legendsOf(human.legendArea, humanPeekedLegends).filter(
-    (legend) => !legend.faceDown,
-  );
-  const ledgerDensity = mobileLedgerDensity(
-    Math.max(rivalLedgerLegends.length, friendlyLedgerLegends.length),
-  );
-  const rivalLedgerLayout = mobileLedgerSideLayout(rivalLedgerLegends.length);
-  const friendlyLedgerLayout = mobileLedgerSideLayout(friendlyLedgerLegends.length);
+  const rivalLedgerLegends = legendsOf(rival.legendArea, rivalPeekedLegends);
+  const friendlyLedgerLegends = legendsOf(human.legendArea, humanPeekedLegends);
+  const rivalLedgerLayout = mobileLedgerSideLayout(rivalLedgerLegends, "rival");
+  const friendlyLedgerLayout = mobileLedgerSideLayout(friendlyLedgerLegends, "friendly");
+  const ledgerDensity = mobileLedgerDensity(friendlyLedgerLayout, rivalLedgerLayout);
   const rivalFieldUnits = fieldUnitsOf(rival.field);
   const friendlyFieldUnits = fieldUnitsOf(human.field);
   const rivalFieldCount = rivalFieldUnits.length;
@@ -1477,6 +1511,7 @@ export function MobileBoard({
         ref={boardRef}
         className={classes.root}
         data-testid="mobile-cyberpunk-board"
+        data-board-correction={boardCorrectionEnabled ? "on" : "off"}
         data-prompt-placement={promptActive ? promptPlacement : undefined}
         data-prompt-mode={promptActive ? promptMode : undefined}
         data-side={humanSide}
@@ -1573,6 +1608,7 @@ export function MobileBoard({
             data-dock-helpers={dockRivalHelpers ? "true" : "false"}
           >
             <MobileHandZone
+              opponent
               faceDown
               onMeasure={measureRivalHand}
               cards={rival.hand.map((c) => ({
@@ -1628,6 +1664,7 @@ export function MobileBoard({
               onClaimDrop={onClaimRivalDrop}
               claimAvailable={rivalClaimAvailable || rivalTimeoutExpired}
               timeoutExpired={rivalTimeoutExpired}
+              dropEligibility={dropEligibility}
             />
           </MobileBattlefieldLane>
         }
@@ -1637,25 +1674,13 @@ export function MobileBoard({
               density={ledgerDensity}
               rivalLegendCount={rivalLedgerLegends.length}
               rivalLayout={rivalLedgerLayout}
-              rivalLegends={
-                <LegendsZone
-                  legends={rivalLedgerLegends}
-                  opponent
-                  side={rivalSide}
-                  maskBottomPercent={rivalLedgerLegends.length === 3 ? 30 : undefined}
-                />
-              }
+              rivalLegends={<LegendsZone legends={rivalLedgerLegends} opponent side={rivalSide} />}
               friendlyLayout={friendlyLedgerLayout}
               friendlyLegendCount={friendlyLedgerLegends.length}
-              friendlyLegends={
-                <LegendsZone
-                  legends={friendlyLedgerLegends}
-                  side={humanSide}
-                  maskBottomPercent={friendlyLedgerLegends.length === 3 ? 30 : undefined}
-                />
-              }
+              friendlyLegends={<LegendsZone legends={friendlyLedgerLegends} side={humanSide} />}
             />
             <MobileDirectAttackDropTarget />
+            <MobileSellDropTarget />
             <MobileSellReveal sale={rivalLastSold} card={rivalLastSoldView} opponent />
             <MobileSellReveal sale={humanLastSold} card={humanLastSoldView} opponent={false} />
           </div>
@@ -1696,6 +1721,7 @@ export function MobileBoard({
             data-dock-helpers={dockHumanHelpers ? "true" : "false"}
           >
             <MobileHandZone
+              faceDown={viewerCanSeePrivateHand === false && handContainsPrivateCards(human.hand)}
               onMeasure={measureHumanHand}
               cards={human.hand.map((c) => ({
                 imageUrl: c.imageUrl,
@@ -1715,22 +1741,27 @@ export function MobileBoard({
                 power: c.power,
                 effectivePower: c.effectivePower,
                 activeEffects: c.activeEffects,
+                temporaryRevealed: c.revealed === true,
               }))}
               side={humanSide}
               availableEddies={human.eddies}
             />
             <div className={classes.promptBand}>
               {humanConnectionStatus === "reconnecting" ? <ReconnectCue /> : null}
-              <PromptBanner
-                side={humanSide}
-                compact
-                showActionPrompt={true}
-                surface="mobile"
-                promptPlacement={promptPlacement}
-                onTogglePromptPlacement={togglePromptPlacement}
-              />
+              {paymentSelectionActive ? (
+                <PaymentSelectionPrompt surface="mobile" />
+              ) : (
+                <PromptBanner
+                  side={humanSide}
+                  compact
+                  showActionPrompt={true}
+                  surface="mobile"
+                  promptPlacement={promptPlacement}
+                  onTogglePromptPlacement={togglePromptPlacement}
+                />
+              )}
             </div>
-            <ChoiceModal side={humanSide} surface="mobile" />
+            {paymentSelectionActive ? null : <ChoiceModal side={humanSide} surface="mobile" />}
           </MobileHandDock>
         }
         bottomRail={
@@ -1798,6 +1829,17 @@ export function MobileBoard({
         entities={trashViewerEntities}
         emptyLabel="Trash is empty"
         onClose={() => setTrashViewerSide(null)}
+        interactionStateFor={
+          boardCorrectionEnabled
+            ? () => ({ kind: "actionable" as const, actionCount: 1 })
+            : undefined
+        }
+        onSelect={
+          boardCorrectionEnabled
+            ? (entity) => openCorrectionMenuForModalCard(cardContextMenu, entity.id)
+            : undefined
+        }
+        cardInspection={boardCorrectionEnabled ? { kind: "external" } : undefined}
       />
 
       <Drawer
@@ -1852,6 +1894,7 @@ export function MobileBoard({
       <Drawer
         opened={drawer === "activity"}
         onClose={close}
+        onEnterTransitionEnd={scrollActivityToLatest}
         position="bottom"
         size="82%"
         title="Match activity"
@@ -1859,14 +1902,18 @@ export function MobileBoard({
       >
         <SimulatorActivityTabs
           log={
-            <EventLogPanel
-              embedded
-              entries={eventLogEntries}
-              copyText={eventLogCopyText}
-              rawCopyText={rawEventLogCopyText}
-            />
+            <div ref={activityFeedRef} className={classes.activityFeed}>
+              <EventLogPanel
+                embedded
+                entries={eventLogEntries}
+                chatMessages={chatMessages.map((message) => mapChatMessage(message, humanSide))}
+                renderMessage={renderCyberpunkEventLogMessage}
+                copyText={eventLogCopyText}
+                rawCopyText={rawEventLogCopyText}
+              />
+              <FloatingChatComposer />
+            </div>
           }
-          chat={<ChatPanel compact layout="mobile-drawer" />}
           secondary={
             <div className={classes.activityUtilities}>
               {!mobileHumanMatch ? (

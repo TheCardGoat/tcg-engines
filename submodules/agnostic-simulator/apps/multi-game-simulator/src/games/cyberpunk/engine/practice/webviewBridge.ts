@@ -53,6 +53,7 @@ export type CyberpunkWebviewOutboundMessage =
 
 const PRODUCTION_CARD_DATABASE_ORIGINS = new Set([
   "https://tcg.online",
+  "https://staging.cardgoat.org",
   "https://cyberpunktcg.com",
   "https://www.cyberpunktcg.com",
   "https://thecardgoat.com",
@@ -74,6 +75,13 @@ export function isAllowedCardDatabaseOrigin(origin: string): boolean {
   if (PRODUCTION_CARD_DATABASE_ORIGINS.has(origin)) {
     return true;
   }
+  // Mounted deployments (tcg.online, staging, the local docker stack) embed
+  // the simulator same-origin behind the reverse proxy, so the deck-builder
+  // page posts with our own origin. A same-origin sender already controls
+  // this document, so accepting it grants no additional authority.
+  if (typeof window !== "undefined" && origin === window.location.origin) {
+    return true;
+  }
   if (!import.meta.env.DEV) {
     return false;
   }
@@ -90,11 +98,15 @@ export function isAllowedCardDatabaseOrigin(origin: string): boolean {
 export function parseDeckImportMessage(
   event: MessageEvent,
 ): { ok: true; message: CyberpunkDeckImportMessage } | { ok: false; reason: "origin" | "type" } {
-  if (!isAllowedCardDatabaseOrigin(event.origin)) {
-    return { ok: false, reason: "origin" };
-  }
   if (!isCyberpunkDeckImportMessage(event.data)) {
     return { ok: false, reason: "type" };
+  }
+  if (!isAllowedCardDatabaseOrigin(event.origin)) {
+    // A silent drop here stranded the deck builder on "Sending your deck to
+    // the simulator…" with no diagnosable signal; surface the rejection
+    // without ever answering the untrusted sender.
+    console.warn(`[cyberpunk webview] ignored deck import from untrusted origin ${event.origin}`);
+    return { ok: false, reason: "origin" };
   }
   return { ok: true, message: event.data };
 }
@@ -108,6 +120,5 @@ export function postWebviewMessage(
   origin: string,
   message: CyberpunkWebviewOutboundMessage,
 ): void {
-  console.log({ target, origin, message });
   target?.postMessage(message, origin);
 }

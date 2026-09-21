@@ -15,7 +15,7 @@ export const bellyBuster = definePitchFamily(fabPitchFamilies["belly-buster"], {
     resolve: nextAttackPowerAndWager({
       amount,
       filter: { typeBox: { supertypes: ["Warrior"] } },
-      prize: createToken({ token: "courage", controller: "winner" }),
+      prize: createToken({ token: "courage", creator: "token-controller", controller: "winner" }),
       optional: true,
     }),
   }),

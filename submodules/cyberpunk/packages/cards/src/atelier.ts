@@ -64,13 +64,18 @@ export const CYBERPUNK_RARITY_RANK: Readonly<Record<CyberpunkRarityCode, number>
  * Sets whose printings are ALL treated as top-tier (`enchanted`) alternate art.
  * Per the locked calibration: `promo`, `boxtoppersretail`, and `boxtoppersbeta`
  * printings are the rarest Cyberpunk art and are priced at 120 marks permanent
- * to match Lorcana's `enchanted`. Exported so the bump can be tuned in one place.
+ * to match Lorcana's `enchanted`. `nightcitybrawls1` and `nightcityshowdowns1`
+ * are the organized-play full-art Iconic Frame foil promos — the same product
+ * class as box toppers — so they join the bump. Exported so the bump can be
+ * tuned in one place.
  */
 export const CYBERPUNK_ALT_ART_SET_CODES: ReadonlySet<string> = new Set([
   "PRM01",
   "promo",
   "boxtoppersretail",
   "boxtoppersbeta",
+  "nightcitybrawls1",
+  "nightcityshowdowns1",
 ]);
 
 /**

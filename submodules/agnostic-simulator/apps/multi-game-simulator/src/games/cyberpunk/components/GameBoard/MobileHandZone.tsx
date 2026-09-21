@@ -29,6 +29,9 @@ interface MobileHandCard {
 }
 
 interface MobileHandZoneProps {
+  /** Whether the hand occupies the rival/top layout. Independent from card visibility. */
+  opponent?: boolean;
+  /** Whether card identities are hidden from this viewer. */
   faceDown?: boolean;
   /** Used for face-down (opponent) hand to render N silhouettes. */
   cardCount?: number;
@@ -63,6 +66,7 @@ function parseCssPixels(value: string | null | undefined): number {
  * source wiring via zone="p-hand") as the desktop fanned HandZone.
  */
 export function MobileHandZone({
+  opponent = false,
   faceDown = false,
   cardCount,
   cards,
@@ -70,13 +74,13 @@ export function MobileHandZone({
   availableEddies,
   onMeasure,
 }: MobileHandZoneProps) {
-  const variantClass = faceDown ? classes.opp : classes.player;
-  const zoneName = faceDown ? "opp-hand" : "p-hand";
+  const variantClass = opponent ? classes.opp : classes.player;
+  const zoneName = opponent ? "opp-hand" : "p-hand";
   const renderCount = cards ? cards.length : (cardCount ?? 0);
   const drop = useZoneDroppable(faceDown ? null : zoneName);
   const { activeSource } = useDragDrop();
   const isReturnDropReady = !faceDown && activeSource?.zone === zoneName;
-  const visibleOpponentCards = faceDown && !cards ? Math.min(renderCount, 5) : renderCount;
+  const visibleOpponentCards = opponent && !cards ? Math.min(renderCount, 5) : renderCount;
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const lastMeasurementRef = useRef<MobileHandMeasurement | null>(null);
   const [spreadMode, setSpreadMode] = useState<"stacked" | "full">("stacked");

@@ -58,69 +58,80 @@ export const rendingFlames: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 3,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["FIRE"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 3,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["graveyard"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["FIRE"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "permanent",
-                  },
-                  layer: {
-                    layer: "D",
-                    modifies: "ability",
-                  },
-                  change: {
-                    kind: "grant-ability",
-                    ability: {
-                      id: "granted-d0ekj-a1",
-                      kind: "static",
-                      staticKind: "effects",
-                      text: "If this attack would deal damage, it deals double that damage instead.",
-                      effects: [
-                        {
-                          kind: "replacement",
-                          event: {
-                            name: "damage-dealt",
-                            using: {
-                              kind: "source",
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "source",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "permanent",
+                    },
+                    layer: {
+                      layer: "D",
+                      modifies: "ability",
+                    },
+                    change: {
+                      kind: "grant-ability",
+                      ability: {
+                        id: "granted-d0ekj-a1",
+                        kind: "static",
+                        staticKind: "effects",
+                        text: "If this attack would deal damage, it deals double that damage instead.",
+                        effects: [
+                          {
+                            kind: "replacement",
+                            event: {
+                              name: "damage-dealt",
+                              using: {
+                                kind: "source",
+                              },
+                              combatDamage: true,
                             },
-                            combatDamage: true,
+                            operation: {
+                              kind: "modify-amount",
+                              operation: "multiply",
+                              amount: 2,
+                            },
+                            duration: {
+                              kind: "this-attack",
+                            },
                           },
-                          operation: {
-                            kind: "modify-amount",
-                            operation: "multiply",
-                            amount: 2,
-                          },
-                          duration: {
-                            kind: "this-attack",
-                          },
-                        },
-                      ],
+                        ],
+                      },
                     },
                   },
                 },

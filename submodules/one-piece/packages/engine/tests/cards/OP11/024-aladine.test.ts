@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
-import { eb01Shirahoshi057 } from "../../../../cards/src/cards/EB01/characters/057-shirahoshi.ts";
-import { op02Sakazuki099 } from "../../../../cards/src/cards/OP02/characters/099-sakazuki.ts";
-import { op11Aladine024 } from "../../../../cards/src/cards/OP11/characters/024-aladine.ts";
-import { op14eb04Killer005 } from "../../../../cards/src/cards/OP14EB04/characters/005-killer.ts";
+import { eb01Shirahoshi057 } from "../../../../cards/src/cards/characters/eb01-057-shirahoshi.ts";
+import { op02Sakazuki099 } from "../../../../cards/src/cards/characters/op02-099-sakazuki.ts";
+import { op11Aladine024 } from "../../../../cards/src/cards/characters/op11-024-aladine.ts";
+import { op14eb04Killer005 } from "../../../../cards/src/cards/characters/op14-005-killer.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 function pendingPrompt(engine: OnePieceTestEngine, intent: string) {

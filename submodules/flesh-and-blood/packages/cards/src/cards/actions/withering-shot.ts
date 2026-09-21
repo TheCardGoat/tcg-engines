@@ -57,6 +57,7 @@ export const witheringShot = definePitchFamily(fabPitchFamilies["withering-shot"
         effect: {
           type: "create-token",
           token: "frailty",
+          creator: "effect-controller",
           controller: "attack-target",
         },
       },

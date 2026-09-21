@@ -13,6 +13,16 @@ function createSetupEngine(seed = "test") {
   return CyberpunkTestEngine.createWithFixture({}, {}, { skipSetup: false, seed });
 }
 
+function openingSeats(engine: CyberpunkTestEngine) {
+  const first = engine.getActivePlayerId();
+  const second = engine.getOpponentOf(first);
+  return { first, second };
+}
+
+function moveIds(engine: CyberpunkTestEngine, playerId: ReturnType<typeof openingSeats>["first"]) {
+  return engine.getPrompt(playerId).availableMoves.map((m) => m.moveId);
+}
+
 describe("Game Setup", () => {
   // ── Initial State ───────────────────────────────────────────────────
 
@@ -166,6 +176,17 @@ describe("Game Setup", () => {
       expect(engine.getSpentLegends(firstPlayerId)).toHaveLength(2);
     });
 
+    it("spends the first player's two left-most legends and leaves the right-most ready", () => {
+      const engine = createSetupEngine();
+      const { first, second } = openingSeats(engine);
+      const legends = engine.getCardsInZone("legendArea", first);
+      expect(legends).toHaveLength(3);
+      expect(legends[0]!.meta.spent).toBe(true);
+      expect(legends[1]!.meta.spent).toBe(true);
+      expect(legends[2]!.meta.spent).toBe(false);
+      expect(engine.getSpentLegends(second)).toHaveLength(0);
+    });
+
     it("second player has zero spent legends", () => {
       const engine = createSetupEngine();
       const secondPlayerId = engine.getOpponentOf(engine.getActivePlayerId());
@@ -215,38 +236,44 @@ describe("Game Setup", () => {
     describe("Successful Mulligan", () => {
       it("mulligan succeeds during setup phase", () => {
         const engine = createSetupEngine();
-        engine.mulligan({ as: P1 });
+        const { first } = openingSeats(engine);
+        engine.mulligan({ as: first });
       });
 
       it("still has 6 cards in hand after mulligan", () => {
         const engine = createSetupEngine();
-        engine.mulligan({ as: P1 });
-        expect(engine.getCardsInZone("hand", P1)).toHaveLength(6);
+        const { first } = openingSeats(engine);
+        engine.mulligan({ as: first });
+        expect(engine.getCardsInZone("hand", first)).toHaveLength(6);
       });
 
       it("deck size is preserved after mulligan", () => {
         const engine = createSetupEngine();
-        engine.mulligan({ as: P1 });
-        expect(engine.getCardsInZone("deck", P1)).toHaveLength(EXPECTED_DECK_AFTER_DRAW);
+        const { first } = openingSeats(engine);
+        engine.mulligan({ as: first });
+        expect(engine.getCardsInZone("deck", first)).toHaveLength(EXPECTED_DECK_AFTER_DRAW);
       });
 
       it("produces a different hand than before", () => {
         const engine = createSetupEngine("mulligan-diff");
-        const handBefore = engine.getCardsInZone("hand", P1).map((c) => c.definitionId);
-        engine.mulligan({ as: P1 });
-        const handAfter = engine.getCardsInZone("hand", P1).map((c) => c.definitionId);
+        const { first } = openingSeats(engine);
+        const handBefore = engine.getCardsInZone("hand", first).map((c) => c.definitionId);
+        engine.mulligan({ as: first });
+        const handAfter = engine.getCardsInZone("hand", first).map((c) => c.definitionId);
         expect(handAfter).not.toEqual(handBefore);
       });
 
       it("sets mulliganDone to true", () => {
         const engine = createSetupEngine();
-        engine.mulligan({ as: P1 });
-        expect(engine.isMulliganDone(P1)).toBe(true);
+        const { first } = openingSeats(engine);
+        engine.mulligan({ as: first });
+        expect(engine.isMulliganDone(first)).toBe(true);
       });
 
       it("remains in setup phase after mulligan", () => {
         const engine = createSetupEngine();
-        engine.mulligan({ as: P1 });
+        const { first } = openingSeats(engine);
+        engine.mulligan({ as: first });
         expect(engine.getPhase()).toBe("setup");
       });
     });
@@ -254,24 +281,52 @@ describe("Game Setup", () => {
     describe("Restrictions", () => {
       it("cannot mulligan twice", () => {
         const engine = createSetupEngine();
-        engine.mulligan({ as: P1 });
+        const { first } = openingSeats(engine);
+        engine.mulligan({ as: first });
 
-        const failure = engine.expectFailure(() => engine.mulligan({ as: P1 }));
+        const failure = engine.expectFailure(() => engine.mulligan({ as: first }));
         expect(failure.errorCode).toBe("ALREADY_MULLIGANED");
       });
 
-      it("both players can mulligan independently", () => {
+      it("second player cannot keep or mulligan until the first player has decided", () => {
         const engine = createSetupEngine();
-        const first = engine.getActivePlayerId();
-        const second = engine.getOpponentOf(first);
+        const { first, second } = openingSeats(engine);
 
-        engine.mulligan({ as: P1 });
-        engine.mulligan({ as: P2 });
+        expect(moveIds(engine, first)).toEqual(expect.arrayContaining(["mulligan", "keepHand"]));
+        expect(moveIds(engine, second)).not.toContain("mulligan");
+        expect(moveIds(engine, second)).not.toContain("keepHand");
 
-        expect(engine.isMulliganDone(P1)).toBe(true);
-        expect(engine.isMulliganDone(P2)).toBe(true);
-        // After both decide, auto-advance runs the first player's start phase
-        // (draw 1). First player: 6 + 1 = 7. Second player: still 6.
+        const mulliganFailure = engine.expectFailure(() => engine.mulligan({ as: second }));
+        expect(mulliganFailure.errorCode).toBe("NOT_YOUR_TURN");
+        const keepFailure = engine.expectFailure(() => engine.keepHand({ as: second }));
+        expect(keepFailure.errorCode).toBe("NOT_YOUR_TURN");
+      });
+
+      it("after the first player keeps, the second player may keep or mulligan", () => {
+        const engine = createSetupEngine();
+        const { first, second } = openingSeats(engine);
+
+        engine.keepHand({ as: first });
+        expect(engine.getPhase()).toBe("setup");
+        expect(moveIds(engine, second)).toEqual(expect.arrayContaining(["mulligan", "keepHand"]));
+
+        engine.keepHand({ as: second });
+        expect(engine.isMulliganDone(first)).toBe(true);
+        expect(engine.isMulliganDone(second)).toBe(true);
+        expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
+        expect(engine.getCardsInZone("hand", second)).toHaveLength(6);
+      });
+
+      it("after the first player mulligans, the second player may mulligan", () => {
+        const engine = createSetupEngine();
+        const { first, second } = openingSeats(engine);
+
+        engine.mulligan({ as: first });
+        expect(engine.getPhase()).toBe("setup");
+        engine.mulligan({ as: second });
+
+        expect(engine.isMulliganDone(first)).toBe(true);
+        expect(engine.isMulliganDone(second)).toBe(true);
         expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
         expect(engine.getCardsInZone("hand", second)).toHaveLength(6);
       });
@@ -292,34 +347,38 @@ describe("Game Setup", () => {
   describe("Setup Phase Transition", () => {
     it("auto-advances to play once both players have decided", () => {
       const engine = createSetupEngine();
-      engine.keepHand({ as: P1 });
+      const { first, second } = openingSeats(engine);
+      engine.keepHand({ as: first });
       expect(engine.getPhase()).toBe("setup");
-      engine.keepHand({ as: P2 });
+      engine.keepHand({ as: second });
       expect(engine.getPhase()).toBe("main");
     });
 
     it("auto-advances after both mulligan", () => {
       const engine = createSetupEngine();
-      engine.mulligan({ as: P1 });
-      engine.mulligan({ as: P2 });
+      const { first, second } = openingSeats(engine);
+      engine.mulligan({ as: first });
+      engine.mulligan({ as: second });
       expect(engine.getPhase()).toBe("main");
     });
 
     it("mulligan is unavailable after transitioning to play", () => {
       const engine = createSetupEngine();
-      engine.keepHand({ as: P1 });
-      engine.keepHand({ as: P2 });
+      const { first, second } = openingSeats(engine);
+      engine.keepHand({ as: first });
+      engine.keepHand({ as: second });
       expect(engine.getPhase()).toBe("main");
 
-      engine.expectFailure(() => engine.mulligan({ as: P1 }));
+      engine.expectFailure(() => engine.mulligan({ as: first }));
     });
 
     it("staying in setup until BOTH players have decided", () => {
       const engine = createSetupEngine();
-      engine.keepHand({ as: P1 });
+      const { first, second } = openingSeats(engine);
+      engine.keepHand({ as: first });
       expect(engine.getPhase()).toBe("setup");
-      expect(engine.isMulliganDone(P1)).toBe(true);
-      expect(engine.isMulliganDone(P2)).toBe(false);
+      expect(engine.isMulliganDone(first)).toBe(true);
+      expect(engine.isMulliganDone(second)).toBe(false);
     });
   });
 
@@ -328,57 +387,90 @@ describe("Game Setup", () => {
   describe("Full Flow Integration", () => {
     it("both players mulligan then auto-transition to play", () => {
       const engine = createSetupEngine("full-flow-both");
-      const first = engine.getActivePlayerId();
-      const second = engine.getOpponentOf(first);
+      const { first, second } = openingSeats(engine);
 
-      engine.mulligan({ as: P1 });
-      engine.mulligan({ as: P2 });
+      engine.mulligan({ as: first });
+      engine.mulligan({ as: second });
 
       expect(engine.getPhase()).toBe("main");
-      expect(engine.isMulliganDone(P1)).toBe(true);
-      expect(engine.isMulliganDone(P2)).toBe(true);
+      expect(engine.isMulliganDone(first)).toBe(true);
+      expect(engine.isMulliganDone(second)).toBe(true);
       // First player ran start phase steps 2+3: drew 1, took a die.
       expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
       expect(engine.getCardsInZone("hand", second)).toHaveLength(6);
     });
 
-    it("one player mulligans, other keeps, then transition", () => {
+    it("first player mulligans, second player keeps, then transition", () => {
       const engine = createSetupEngine("full-flow-one");
-      const first = engine.getActivePlayerId();
-      const second = engine.getOpponentOf(first);
+      const { first, second } = openingSeats(engine);
 
-      engine.mulligan({ as: P1 });
-      engine.keepHand({ as: P2 });
+      engine.mulligan({ as: first });
+      engine.keepHand({ as: second });
 
       expect(engine.getPhase()).toBe("main");
-      expect(engine.isMulliganDone(P1)).toBe(true);
-      expect(engine.isMulliganDone(P2)).toBe(true);
+      expect(engine.isMulliganDone(first)).toBe(true);
+      expect(engine.isMulliganDone(second)).toBe(true);
+      expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
+      expect(engine.getCardsInZone("hand", second)).toHaveLength(6);
+    });
+
+    it("first player keeps, second player mulligans, then transition", () => {
+      const engine = createSetupEngine("full-flow-keep-mulligan");
+      const { first, second } = openingSeats(engine);
+
+      engine.keepHand({ as: first });
+      engine.mulligan({ as: second });
+
+      expect(engine.getPhase()).toBe("main");
+      expect(engine.isMulliganDone(first)).toBe(true);
+      expect(engine.isMulliganDone(second)).toBe(true);
       expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
       expect(engine.getCardsInZone("hand", second)).toHaveLength(6);
     });
 
     it("both players keep, direct transition to play", () => {
       const engine = createSetupEngine("full-flow-none");
-      const first = engine.getActivePlayerId();
-      const second = engine.getOpponentOf(first);
+      const { first, second } = openingSeats(engine);
 
-      engine.keepHand({ as: P1 });
-      engine.keepHand({ as: P2 });
+      engine.keepHand({ as: first });
+      engine.keepHand({ as: second });
 
       expect(engine.getPhase()).toBe("main");
-      expect(engine.isMulliganDone(P1)).toBe(true);
-      expect(engine.isMulliganDone(P2)).toBe(true);
+      expect(engine.isMulliganDone(first)).toBe(true);
+      expect(engine.isMulliganDone(second)).toBe(true);
       expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
+      expect(engine.getCardsInZone("hand", second)).toHaveLength(6);
+    });
+
+    it("left-most first-player legends stay spent through turn 1 while draw and gig still happen", () => {
+      const engine = createSetupEngine("full-flow-start-handicap");
+      const { first, second } = openingSeats(engine);
+      const spentIds = engine
+        .getCardsInZone("legendArea", first)
+        .slice(0, 2)
+        .map((c) => c.instanceId);
+
+      engine.keepHand({ as: first });
+      engine.keepHand({ as: second });
+
+      const legends = engine.getCardsInZone("legendArea", first);
+      expect(legends[0]!.instanceId).toBe(spentIds[0]);
+      expect(legends[1]!.instanceId).toBe(spentIds[1]);
+      expect(legends[0]!.meta.spent).toBe(true);
+      expect(legends[1]!.meta.spent).toBe(true);
+      expect(legends[2]!.meta.spent).toBe(false);
+      expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
+      expect(engine.getGigCount(first)).toBe(1);
+      expect(engine.getSpentLegends(second)).toHaveLength(0);
       expect(engine.getCardsInZone("hand", second)).toHaveLength(6);
     });
 
     it("all zone counts are consistent after complete setup", () => {
       const engine = createSetupEngine("full-flow-zones");
-      const first = engine.getActivePlayerId();
-      const second = engine.getOpponentOf(first);
+      const { first, second } = openingSeats(engine);
 
-      engine.mulligan({ as: P1 });
-      engine.mulligan({ as: P2 });
+      engine.mulligan({ as: first });
+      engine.mulligan({ as: second });
 
       // First player ran start phase steps 2+3 on auto-advance.
       expect(engine.getCardsInZone("legendArea", first)).toHaveLength(3);

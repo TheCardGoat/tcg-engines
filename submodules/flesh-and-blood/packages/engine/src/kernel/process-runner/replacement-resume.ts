@@ -16,7 +16,10 @@ import {
   persistedReplacementCostTargetIds,
   persistedReplacementConsequenceTargetIds,
   replacementRequiresCommittedCostReceipt,
+  replacementPitchCandidates,
+  staticPreventionPayShortfall,
 } from "../replacements/index.ts";
+import { createFabPaymentDecision } from "../decision-builders.ts";
 import { reconcileContinuousEffectsToQuiescence } from "../continuous-reconcile.ts";
 import { advanceFabRulesProcessToBoundary } from "./boundary.ts";
 import { advanceTriggerDeclarations } from "../trigger-declaration.ts";
@@ -162,6 +165,10 @@ export function resumeFabReplacementPlayerChoice(
       candidate.persistedApplicationPolicy.cost?.kind !== "banish-source",
   );
   if (needingTarget) return suspendReplacementCostTarget(state, continuation, needingTarget);
+  const needingPitch = selected.find(
+    (candidate) => staticPreventionPayShortfall(state, candidate) > 0,
+  );
+  if (needingPitch) return suspendReplacementCostPayment(state, continuation, needingPitch);
   transitionFabRulesProcessStage(process, continuation.eventGroupId ? "procedure" : "event-commit");
   if (!continuation.eventGroupId)
     return commitInitializedFabEventTransaction(state, options, false).state;
@@ -209,6 +216,134 @@ export function resumeFabReplacementCostTarget(
   const committedCost = commitFabReplacementCostTarget(state, continuation, answer, options);
   if (committedCost.deferred) return committedCost.state;
   return resumeFabReplacementCostConsequence(committedCost.state, continuation, options);
+}
+
+/**
+ * Resume a static-keyword pay-resources prevention whose controller selected
+ * it without banked resources (CR 1.14.2d). Each answer pitches exactly one
+ * bound hand card; once the shortfall is covered the damage transaction
+ * resumes and the application commits the pitches plus the pay-resources.
+ */
+export function resumeFabReplacementCostPayment(
+  state: FabMatchState,
+  continuation: Extract<FabDecisionContinuation, { readonly kind: "replacement-cost-payment" }>,
+  answer: Extract<FabDecisionAnswer, { readonly kind: "payment" }>,
+  options: FabEventTransactionOptions,
+): FabMatchState {
+  const process = state.rulesProcess;
+  if (!process || process.processId !== continuation.processId) {
+    throw new Error("The persisted replacement cost payment process no longer exists.");
+  }
+  const candidate = process.replacementCandidates.find(
+    (item) => item.replacementId === continuation.replacementId,
+  );
+  if (!candidate) {
+    throw new Error("The persisted replacement cost payment candidate no longer exists.");
+  }
+  if (answer.instanceIds.length !== 1) {
+    throw new Error("FAB replacement payment must pitch exactly one card at a time.");
+  }
+  const instanceId = answer.instanceIds[0]!;
+  if (!state.containers.zonesByPlayerId[continuation.playerId]!.hand.includes(instanceId)) {
+    throw new Error("The replacement payment card is no longer in hand.");
+  }
+  const scope = continuation.eventGroupId ? `journal:${continuation.eventGroupId}` : "direct";
+  const alreadyBound = (process.replacementPitchBindings ?? {})[
+    `${scope}:${continuation.replacementId}`
+  ];
+  const pickable = replacementPitchCandidates(
+    state,
+    continuation.playerId,
+    alreadyBound?.map((binding) => binding.instanceId) ?? [],
+  );
+  if (!pickable.some((entry) => entry.instanceId === instanceId)) {
+    throw new Error("That card cannot pay for the replacement prevention.");
+  }
+  const object = state.objects[instanceId];
+  if (!object) throw new Error("The replacement payment card no longer exists.");
+  process.replacementCostBindingScope = scope;
+  const bindings = (process.replacementPitchBindings ??= {});
+  const key = `${scope}:${continuation.replacementId}`;
+  const boundNow = [...(bindings[key] ?? []), { instanceId, incarnation: object.incarnation }];
+  bindings[key] = boundNow;
+  // Refresh the in-process candidate so the shortfall loop sees the binding
+  // (collection re-attaches it from the process map only at commit).
+  const candidateIndex = process.replacementCandidates.findIndex(
+    (item) => item.replacementId === continuation.replacementId,
+  );
+  if (candidateIndex >= 0) {
+    process.replacementCandidates[candidateIndex] = {
+      ...candidate,
+      persistedPitchedInstanceIds: boundNow,
+    };
+  }
+  const selectedIds = continuation.eventGroupId
+    ? (process.journalReplacementChoices[continuation.eventGroupId] ?? [])
+    : process.selectedOptionalReplacementIds;
+  const selected = process.replacementCandidates.filter((item) =>
+    selectedIds.includes(item.replacementId),
+  );
+  const next = selected.find((item) => staticPreventionPayShortfall(state, item) > 0);
+  if (next) return suspendReplacementCostPayment(state, continuation, next);
+  return resumeFabReplacementCostConsequence(
+    state,
+    {
+      kind: "replacement-cost-target",
+      processId: continuation.processId,
+      playerId: continuation.playerId,
+      replacementId: continuation.replacementId,
+      ...(continuation.eventGroupId ? { eventGroupId: continuation.eventGroupId } : {}),
+      ...(continuation.sequencePrefix ? { sequencePrefix: continuation.sequencePrefix } : {}),
+    },
+    options,
+  );
+}
+
+/** Open the next one-card-at-a-time pitch round for the candidate's cost. */
+function suspendReplacementCostPayment(
+  state: FabMatchState,
+  continuation: Extract<
+    FabDecisionContinuation,
+    { readonly kind: "replacement-player" | "replacement-cost-payment" }
+  >,
+  candidate: NonNullable<FabMatchState["rulesProcess"]>["replacementCandidates"][number],
+): FabMatchState {
+  const shortfall = staticPreventionPayShortfall(state, candidate);
+  if (shortfall <= 0) throw new Error("The replacement prevention cost is already covered.");
+  const scope = continuation.eventGroupId ? `journal:${continuation.eventGroupId}` : "direct";
+  const bound =
+    state.rulesProcess?.replacementPitchBindings?.[`${scope}:${candidate.replacementId}`];
+  const candidates = replacementPitchCandidates(
+    state,
+    continuation.playerId,
+    bound?.map((binding) => binding.instanceId) ?? [],
+  );
+  if (candidates.length === 0) {
+    throw new Error("The selected replacement prevention cost has no legal pitch payment.");
+  }
+  const sourceName = candidate.source.current.names.join(" // ") || candidate.source.instanceId;
+  state.counters.decision += 1;
+  state.decision = {
+    decisionId: `decision-${state.counters.decision}`,
+    stateVersion: state.stateID,
+    actorId: continuation.playerId,
+    kind: "payment",
+    label: `Pitch a card to pay for ${sourceName}.`,
+    amount: shortfall,
+    oneAtATime: true,
+    cancellable: false,
+    candidates,
+    continuation: {
+      kind: "replacement-cost-payment",
+      processId: continuation.processId,
+      playerId: continuation.playerId,
+      replacementId: candidate.replacementId,
+      amount: shortfall,
+      ...(continuation.eventGroupId ? { eventGroupId: continuation.eventGroupId } : {}),
+      ...(continuation.sequencePrefix ? { sequencePrefix: continuation.sequencePrefix } : {}),
+    },
+  };
+  return state;
 }
 
 /** Persist the exact cost result, but deliberately stop before "if you do". */

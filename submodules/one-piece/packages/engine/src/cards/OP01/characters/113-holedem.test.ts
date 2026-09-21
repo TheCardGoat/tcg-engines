@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op01Holedem113 } from "../../../../../cards/src/cards/OP01/characters/113-holedem.ts";
+import { op01Holedem113 } from "../../../../../cards/src/cards/characters/op01-113-holedem.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-113 Holedem", () => {

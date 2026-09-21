@@ -21,9 +21,24 @@ export const viralDiffusion = definePitchFamily(fabPitchFamilies["viral-diffusio
         effect: {
           type: "sequence",
           steps: [
-            { type: "create-token", token: "frailty", controller: "opponent" },
-            { type: "create-token", token: "inertia", controller: "opponent" },
-            { type: "create-token", token: "bloodrot-pox", controller: "opponent" },
+            {
+              type: "create-token",
+              token: "frailty",
+              creator: "effect-controller",
+              controller: "opponent",
+            },
+            {
+              type: "create-token",
+              token: "inertia",
+              creator: "effect-controller",
+              controller: "opponent",
+            },
+            {
+              type: "create-token",
+              token: "bloodrot-pox",
+              creator: "effect-controller",
+              controller: "opponent",
+            },
           ],
         },
       },

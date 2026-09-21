@@ -46,6 +46,8 @@ export const welcomeToNightCityRetailPeaceOffering = defineCyberpunkCard({
               mode: "choose",
               min: 2,
               max: 2,
+              canDecline: true,
+              pairConstraint: "gig-copy",
             },
           },
         },

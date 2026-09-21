@@ -21,7 +21,7 @@ export function MatchSessionRecovery() {
           size="xs"
           mih="var(--simulator-action-rail-height, 2.75rem)"
           loading={refreshing}
-          onClick={() => void refresh()}
+          onClick={() => void refresh("retry")}
         >
           Refresh match
         </Button>

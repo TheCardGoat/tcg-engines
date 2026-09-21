@@ -1,5 +1,6 @@
 export type GameSlug =
   | "one-piece"
+  | "alpha-clash"
   | "gundam"
   | "cyberpunk"
   | "lorcana"
@@ -83,6 +84,11 @@ export interface SimulatorCardAction {
   /** Opaque reference resolved by the game integration against current state. */
   commandRef?: string;
   availability: SimulatorCardActionAvailability;
+  /**
+   * Nested choices presented as a submenu. A parent with children expands in
+   * the shared card surface and is not executed itself.
+   */
+  children?: readonly SimulatorCardAction[];
 }
 
 export interface SimulatorEntityRule {
@@ -201,6 +207,8 @@ export interface SimulatorZone {
 
 export interface SimulatorDeckRevealCard {
   entityId?: string;
+  /** Game catalog identity so hosts can resolve the printed-card preview. */
+  definitionId?: string;
   title?: string;
   subtitle?: string;
   imageUrl?: string;

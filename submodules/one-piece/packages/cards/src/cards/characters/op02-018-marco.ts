@@ -1,0 +1,117 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op02Marco018I18n } from "./op02-018-marco.i18n.ts";
+
+export const op02Marco018: CharacterCard = {
+  id: "OP02-018",
+  canonicalId: "OP02-018",
+  slug: "marco/op02-018",
+  name: "Marco",
+  printings: [
+    {
+      id: "OP02-018",
+      artId: "OP02-018",
+      setCode: "OP02",
+      collectorNumber: "018",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-018.jpg",
+    },
+    {
+      id: "OP02-018_p1",
+      artId: "OP02-018_p1",
+      setCode: "OP02",
+      collectorNumber: "018",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-018_p1.jpg",
+    },
+    {
+      id: "OP02-018_p4",
+      artId: "OP02-018_p4",
+      setCode: "OP02",
+      collectorNumber: "018",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-018_p4.jpg",
+    },
+    {
+      id: "OP02-018_p5",
+      artId: "OP02-018_p5",
+      setCode: "OP02",
+      collectorNumber: "018",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-018_p5.jpg",
+      label: "Marco (Full Art)",
+    },
+    {
+      id: "OP02-018_p6",
+      artId: "OP02-018_p6",
+      setCode: "OP02",
+      collectorNumber: "018",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-018_p6.jpg",
+      label: "Marco (Alternate Art)",
+    },
+    {
+      id: "OP02-018_r2",
+      artId: "OP02-018_r2",
+      setCode: "OP02",
+      collectorNumber: "018",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP02-018_r2.jpg",
+      label: "Marco (Reprint)",
+    },
+  ],
+  cardType: "character",
+  color: ["red"],
+  rarity: "R",
+  setId: "OP02",
+  cost: 4,
+  power: 5000,
+  counter: 1000,
+  traits: ["Whitebeard Pirates"],
+  attribute: "special",
+
+  effect:
+    '[Blocker] (After your opponent declares an attack, you may rest this card to make it the new target of the attack.) [On K.O.] You may trash 1 card with a type including "Whitebeard Pirates" from your hand: If you have 2 or less Life cards, play this Character card from your trash rested.',
+  effects: {
+    keywords: ["blocker"],
+    effects: [
+      {
+        trigger: "onKo",
+        costs: [
+          {
+            cost: "trashFromHand",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Whitebeard Pirates",
+                match: "includes",
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: "trash",
+            },
+            count: {
+              amount: 1,
+            },
+            self: true,
+            playState: "rested",
+            condition: {
+              condition: "lifeCount",
+              player: "self",
+              comparison: "lte",
+              value: 2,
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op02Marco018I18n,
+};

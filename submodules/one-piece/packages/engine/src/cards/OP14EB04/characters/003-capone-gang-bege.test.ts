@@ -1,6 +1,6 @@
 import { eb01Doma005, op02Sakazuki099, op02Vista011 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04CaponeGangBege003 } from "../../../../../cards/src/cards/OP14EB04/characters/003-capone-gang-bege.ts";
+import { op14eb04CaponeGangBege003 } from "../../../../../cards/src/cards/characters/op14-003-capone-gang-bege.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

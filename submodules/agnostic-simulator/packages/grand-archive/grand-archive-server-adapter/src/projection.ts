@@ -30,6 +30,10 @@ import {
 export interface GrandArchiveSimulatorProjection {
   readonly combatView: GrandArchiveViewerState["combatView"];
   readonly interactionView?: EngineInteractionView;
+  readonly cardImageUrls?: Readonly<Record<string, string>>;
+  readonly cardBoardImageUrls?: Readonly<Record<string, string>>;
+  readonly cardBoardImageAspectRatios?: Readonly<Record<string, number>>;
+  readonly cardImageAspectRatios?: Readonly<Record<string, number>>;
   /** The player whose turn it is, independent from the player currently required to act. */
   readonly turnPlayerId: GrandArchivePlayerId;
   readonly table: SimulatorTable;
@@ -56,6 +60,10 @@ export type GrandArchiveViewerSimulatorProjection = GrandArchiveSimulatorProject
 
 export interface GrandArchiveViewerSimulatorProjectionOptions {
   readonly interactionView?: EngineInteractionView;
+  readonly cardImageUrls?: Readonly<Record<string, string>>;
+  readonly cardBoardImageUrls?: Readonly<Record<string, string>>;
+  readonly cardBoardImageAspectRatios?: Readonly<Record<string, number>>;
+  readonly cardImageAspectRatios?: Readonly<Record<string, number>>;
   readonly interactionCommandNamesByActionId?: Readonly<Record<string, string>>;
   readonly authorizedCardDefinitionIds?: Readonly<Record<string, string>>;
   readonly authorizedCardOwnerIds?: Readonly<Record<string, string>>;
@@ -265,20 +273,20 @@ function appendEffectsStack(
         ? { imageUrl: source?.imageUrl ?? card?.printings[0]?.imageUrl }
         : {}),
       ...(source?.imageAspectRatio ? { imageAspectRatio: source.imageAspectRatio } : {}),
-      ...(source?.details
-        ? { details: source.details }
-        : item.presentation?.printedText
-          ? {
-              details: {
-                rules: [
-                  {
-                    id: "printed-text",
-                    kind: "text" as const,
-                    text: item.presentation.printedText,
-                  },
-                ],
-              },
-            }
+      ...(item.presentation?.printedText
+        ? {
+            details: {
+              rules: [
+                {
+                  id: "printed-text",
+                  kind: "text" as const,
+                  text: item.presentation.printedText,
+                },
+              ],
+            },
+          }
+        : source?.details
+          ? { details: source.details }
           : {}),
       accessibilityDescription: `${title}, Effects Stack layer ${index + 1}${
         index === viewer.stack.length - 1 ? ", top item" : ""
@@ -473,6 +481,40 @@ export function referencedEntitiesForMessage(
  * engine state. Optional authorized instance mappings expose only cards the
  * current interaction explicitly permits the viewer to inspect.
  */
+export function applyGrandArchiveImageResources(
+  entity: SimulatorEntity,
+  options: Pick<
+    GrandArchiveViewerSimulatorProjectionOptions,
+    "cardImageUrls" | "cardBoardImageUrls" | "cardBoardImageAspectRatios" | "cardImageAspectRatios"
+  >,
+): SimulatorEntity {
+  if (!options.cardImageUrls || entity.face === "hidden") return entity;
+  const { imageUrl: _currentImage, ...rest } = entity;
+  const imageUrl = options.cardImageUrls[entity.id];
+  const board = options.cardBoardImageUrls?.[entity.id];
+  const onField =
+    typeof entity.dataAttributes?.["data-zone-id"] === "string" &&
+    entity.dataAttributes["data-zone-id"].endsWith(":field");
+  const usesArt = onField && imageUrl && board && board !== imageUrl;
+  return {
+    ...rest,
+    ...(imageUrl ? { imageUrl: usesArt ? board : imageUrl } : {}),
+    ...(imageUrl ? { imageAspectRatio: options.cardImageAspectRatios?.[entity.id] ?? 5 / 7 } : {}),
+    ...(usesArt
+      ? {
+          imageAspectRatio: options.cardBoardImageAspectRatios?.[entity.id] ?? 1,
+          dataAttributes: {
+            ...entity.dataAttributes,
+            "data-ga-art-only": true,
+            "data-ga-printed-image-url": imageUrl,
+            "data-ga-printed-image-aspect-ratio":
+              options.cardImageAspectRatios?.[entity.id] ?? 5 / 7,
+          },
+        }
+      : {}),
+  };
+}
+
 export function projectGrandArchiveViewerSimulator(
   viewer: GrandArchiveViewerState,
   options: GrandArchiveViewerSimulatorProjectionOptions = {},
@@ -593,7 +635,9 @@ export function projectGrandArchiveViewerSimulator(
       })),
       zones,
     },
-    entities: applyCombatRoles(viewer, entities),
+    entities: applyCombatRoles(viewer, entities).map((entity) =>
+      applyGrandArchiveImageResources(entity, options),
+    ),
     interactions,
     eventLog: [...(options.eventLog ?? [])],
     waitState: viewerWaitState(viewer),
@@ -605,6 +649,10 @@ export function projectGrandArchiveSimulator(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
   viewerId: GrandArchivePlayerId,
+  images: Pick<
+    GrandArchiveViewerSimulatorProjectionOptions,
+    "cardImageUrls" | "cardBoardImageUrls" | "cardBoardImageAspectRatios" | "cardImageAspectRatios"
+  > = {},
 ): GrandArchiveSimulatorProjection {
   const viewer = projectGrandArchiveViewerState(program, state, viewerId);
   const waitState = readGrandArchiveWaitState(state);
@@ -763,7 +811,9 @@ export function projectGrandArchiveSimulator(
       })),
       zones,
     },
-    entities: applyCombatRoles(viewer, entities),
+    entities: applyCombatRoles(viewer, entities).map((entity) =>
+      applyGrandArchiveImageResources(entity, images),
+    ),
     interactions,
     eventLog,
     waitState,

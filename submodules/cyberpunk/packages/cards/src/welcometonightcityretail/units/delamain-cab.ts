@@ -28,30 +28,22 @@ export const welcomeToNightCityRetailDelamainCab = defineCyberpunkCard({
       trigger: {
         trigger: "event",
         event: {
-          event: "gigStolen",
+          event: "turnEnded",
           player: "friendly",
-          target: {
-            selector: "gig",
-            controller: "rival",
-          },
-          source: {
-            selector: "self",
-          },
         },
       },
       source: {
         selector: "self",
       },
-      limits: ["firstTimeEachTurn"],
       effects: [
         {
-          effect: "delayed",
-          timing: "endOfTurn",
-          effects: [
+          effect: "readyEddies",
+          player: "friendly",
+          amount: 1,
+          conditions: [
             {
-              effect: "readyEddies",
-              player: "friendly",
-              amount: 1,
+              condition: "hasStolenGigThisTurn",
+              target: { selector: "self" },
             },
           ],
         },

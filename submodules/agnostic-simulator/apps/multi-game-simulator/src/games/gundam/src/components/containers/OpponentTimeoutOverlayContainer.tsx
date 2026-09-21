@@ -1,5 +1,7 @@
 import { deriveClockView, type ClockSnapshot } from "@tcg/gundam-engine";
+import { useDropControlClock } from "@tcg/simulator-ui";
 
+import { useLiveDropEligibility } from "../../engine/live/liveDropEligibility.tsx";
 import { useClockNow } from "../../game/use-clock-now.ts";
 import { TimedOutPlayerOverlay } from "../ui/TimedOutPlayerOverlay.tsx";
 
@@ -23,6 +25,8 @@ export function OpponentTimeoutOverlayContainer({
 }: OpponentTimeoutOverlayContainerProps) {
   const clockNow = useClockNow();
   const clockView = deriveClockView(snapshot, clockNow);
+  const eligibility = useLiveDropEligibility();
+  const dropNowMs = useDropControlClock(eligibility, eligibility?.projectedAtMs ?? clockNow);
 
   return (
     <TimedOutPlayerOverlay
@@ -30,6 +34,8 @@ export function OpponentTimeoutOverlayContainer({
       canDrop={clockView.canDropOpponent}
       onSkip={onSkip}
       onDrop={onDrop}
+      eligibility={eligibility}
+      serverNowMs={dropNowMs}
     />
   );
 }

@@ -8,7 +8,7 @@ import {
   op13Higuma013,
   op13Makino015,
 } from "@tcg/op-cards";
-import { op13GolDRoger064 } from "../../../../../cards/src/cards/OP13/characters/064-gol-d-roger.ts";
+import { op13GolDRoger064 } from "../../../../../cards/src/cards/characters/op13-064-gol-d-roger.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

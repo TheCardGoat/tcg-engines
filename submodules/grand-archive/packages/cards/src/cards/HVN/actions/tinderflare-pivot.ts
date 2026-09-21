@@ -65,6 +65,10 @@ export const tinderflarePivot: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                       kind: "object-state",
                       state: "distant",
                     },
+                    {
+                      kind: "class",
+                      oneOf: ["RANGER"],
+                    },
                   ],
                 },
               },

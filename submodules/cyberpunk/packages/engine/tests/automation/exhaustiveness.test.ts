@@ -23,6 +23,9 @@ describe("exhaustiveness", () => {
       "chooseTrigger",
       "gainGig",
       "preventGigSteal",
+      "redirectDefeat",
+      "chooseSacrificialGear",
+      "chooseFirstPlayer",
       "revealDestination",
       "scry",
     ].sort();

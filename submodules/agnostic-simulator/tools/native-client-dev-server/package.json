@@ -1,0 +1,17 @@
+{
+  "name": "@tcg/native-client-dev-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run src/main.ts",
+    "test": "bun test",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tcg/grand-archive-cards": "link:../../../grand-archive/packages/cards",
+    "@tcg/grand-archive-engine": "link:../../../grand-archive/packages/engine",
+    "@tcg/grand-archive-server-adapter": "workspace:*",
+    "@tcg/protocol": "workspace:*"
+  }
+}

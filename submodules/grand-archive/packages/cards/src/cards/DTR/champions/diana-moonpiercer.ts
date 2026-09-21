@@ -91,6 +91,7 @@ export const dianaMoonpiercer: GrandArchiveCard<GrandArchiveAbilityDefinition, "
                       effect: {
                         kind: "for-each",
                         collection: {
+                          kind: "stack-items",
                           binding: "targeting-activations",
                         },
                         bindEachAs: "targeting-activation",

@@ -62,9 +62,11 @@ const resolveEffectTarget: ChoiceResolver<ChooseTargetChoicePrompt> = (
     }
     return {
       kind: "command",
-      move: "resolveEffectTarget",
+      move: "resolveAdjustGig",
       args:
-        choice.payload.canDecline && !plan.changed ? { pass: true } : { targetIds: [plan.dieId] },
+        choice.payload.canDecline && !plan.changed
+          ? { kind: "noAdjustment" }
+          : { kind: "adjust", dieId: plan.dieId, value: plan.value },
     };
   }
   const selected = pickEffectTargets(choice, ctx, eligible, max);
@@ -195,6 +197,9 @@ const resolveAdjustGig: ChoiceResolver<ChooseTargetChoicePrompt> = (choice, ctx)
   return {
     kind: "command",
     move: "resolveAdjustGig",
-    args: { value: plan.value },
+    args:
+      choice.payload.chooseUpTo && !plan.changed
+        ? { kind: "noAdjustment" }
+        : { kind: "adjust", dieId: plan.dieId, value: plan.value },
   };
 };

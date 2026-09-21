@@ -2,7 +2,7 @@ import { describe, expect, test } from "vite-plus/test";
 import {
   eb01TonyTonyChopper006,
   eb02Chopperman016,
-  eb02TonyTonyChopper001,
+  op08TonyTonyChopper001,
   op08DrHiriluk016,
 } from "@tcg/op-cards";
 
@@ -11,7 +11,7 @@ import { OnePieceTestEngine } from "../../../src/index.ts";
 describe("EB02-016 Chopperman", () => {
   test("plays a compound Animal and has Tony Tony.Chopper as a rules name", () => {
     const engine = OnePieceTestEngine.create({
-      leaderCardId: eb02TonyTonyChopper001,
+      leaderCardId: op08TonyTonyChopper001,
       hand: [eb02Chopperman016, eb01TonyTonyChopper006],
       character: [{ card: op08DrHiriluk016, playedOnTurn: 0 }],
       activeDon: 5,

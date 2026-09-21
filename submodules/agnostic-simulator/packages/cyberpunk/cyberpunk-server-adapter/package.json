@@ -15,7 +15,9 @@
       "default": "./src/index.ts"
     },
     "./deck-interchange": "./src/deck-interchange.ts",
-    "./interaction-protocol": "./src/interaction-protocol.ts"
+    "./interaction-protocol": "./src/interaction-protocol.ts",
+    "./practice": "./src/practice.ts",
+    "./animation": "./src/animation.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
@@ -28,6 +30,7 @@
     "@tcg/cyberpunk-cards": "link:../../../../cyberpunk/packages/cards",
     "@tcg/cyberpunk-engine": "link:../../../../cyberpunk/packages/engine",
     "@tcg/cyberpunk-types": "link:../../../../cyberpunk/packages/types",
+    "@tcg/cyberpunk-utils": "link:../../../../cyberpunk/packages/utils",
     "@tcg/protocol": "link:../../protocol",
     "@tcg/shared": "link:../../shared"
   },

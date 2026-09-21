@@ -41,6 +41,7 @@ export const devotedMartyr: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
           id: "p16w5j93mk-a2",
           kind: "triggered",
           text: "[Class Bonus] Whenever your champion levels up, you may banish this card from your graveyard. If you do, recover 2.",
+          functionalZones: ["graveyard"],
           trigger: {
             kind: "event",
             event: {
@@ -74,15 +75,27 @@ export const devotedMartyr: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish-object",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish-object",
+                    subject: {
+                      kind: "source",
+                    },
+                    from: "graveyard",
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "recover",
-                  player: "controller",
-                  amount: 2,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "recover",
+                    player: "controller",
+                    amount: 2,
+                  },
                 },
               ],
             },

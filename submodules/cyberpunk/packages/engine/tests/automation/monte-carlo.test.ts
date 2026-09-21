@@ -21,6 +21,19 @@ function makeContext(seed: string) {
   const catalog = createTestCatalog();
   const state = createMatchState({ players, catalog, deckLists: decks, seed });
   const engine = new LocalEngine(state);
+  for (const player of players) {
+    const choice = engine.getPrompt(player.id).choice;
+    if (choice?.type !== "chooseFirstPlayer") continue;
+    engine.processCommand(
+      {
+        commandID: `${seed}-choose-first`,
+        move: "resolveFirstPlayer",
+        input: { args: { goFirst: true } },
+      },
+      player.id,
+    );
+    break;
+  }
   const view = engine.getFilteredView(players[0]!.id);
   const activeId =
     view.activePlayerId === (players[0]!.id as string) ? players[0]!.id : players[1]!.id;

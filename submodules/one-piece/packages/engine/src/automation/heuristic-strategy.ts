@@ -259,6 +259,12 @@ function cheapestCounterEventCost(state: MatchState, seat: MatchSeat): number | 
 interface ScoredCommand {
   descriptor: LegalCommandDescriptor;
   score: number;
+  /**
+   * attachDon only: the full amount the strategy intends to attach in ONE
+   * command (active DON!! above the [Counter] reserve), so the log reads
+   * "attaches N DON!!" once instead of N amount-1 repeats.
+   */
+  attachAmount?: number;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -578,6 +584,7 @@ export function createHeuristicStrategy(policy: HeuristicPolicy): OnePieceBotStr
     const scored: ScoredCommand[] = [];
     for (const descriptor of mine) {
       let score = -1;
+      let attachAmount: number | undefined;
       switch (descriptor.type) {
         case "playCard": {
           if (!descriptor.sourceId) break;
@@ -602,7 +609,11 @@ export function createHeuristicStrategy(policy: HeuristicPolicy): OnePieceBotStr
         }
         case "attachDon": {
           if (!descriptor.sourceId || !attackerIds.has(descriptor.sourceId)) break;
+          // Attach everything above the [Counter] reserve in one command so
+          // the DON!! assignment reads as a single log line. The engine's
+          // canAttachDon still validates the amount against active DON!!.
           if (activeDon <= donReserve) break;
+          attachAmount = activeDon - donReserve;
           score = scoreAttachDon(state, seat, descriptor.sourceId, bestAttackerId, policy);
           break;
         }
@@ -648,16 +659,20 @@ export function createHeuristicStrategy(policy: HeuristicPolicy): OnePieceBotStr
         }
       }
       if (score >= 0) {
-        scored.push({ descriptor, score });
+        scored.push({ descriptor, score, ...(attachAmount !== undefined && { attachAmount }) });
       }
     }
 
     scored.sort((a, b) => b.score - a.score);
     for (const candidate of scored) {
       const command = commandFromDescriptor(state, seat, candidate.descriptor);
-      if (command) {
-        return command;
+      if (!command) {
+        continue;
       }
+      if (candidate.attachAmount !== undefined && command.type === "attachDon") {
+        return { ...command, amount: candidate.attachAmount };
+      }
+      return command;
     }
     return null;
   };

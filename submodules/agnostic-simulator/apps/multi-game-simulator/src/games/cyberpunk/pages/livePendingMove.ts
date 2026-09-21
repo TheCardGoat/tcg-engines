@@ -32,13 +32,16 @@ export function shouldClearPendingAfterAuthoritativeState(
   if (!pending || message.gameId !== pending.gameId) {
     return false;
   }
-  const messageCorrelationId = readMessageCorrelationId(message);
-  if (messageCorrelationId && !matchesPendingCorrelation(pending, messageCorrelationId)) {
-    return false;
+  if (typeof message.stateVersion === "number") {
+    // A newer authoritative state proves that the server has moved beyond the
+    // version on which this submission was based. Some server-side follow-up
+    // processing publishes that state with its own correlation id, so keeping
+    // the old client latch in that case deadlocks the newly projected prompt:
+    // its controls render, but every dispatch is rejected as still pending.
+    return message.stateVersion > pending.startingVersion;
   }
-  return typeof message.stateVersion === "number"
-    ? message.stateVersion > pending.startingVersion
-    : true;
+  const messageCorrelationId = readMessageCorrelationId(message);
+  return matchesPendingCorrelation(pending, messageCorrelationId);
 }
 
 export function readMessageCorrelationId(message: object): string | undefined {

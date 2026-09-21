@@ -113,8 +113,17 @@ export const goldenBishop: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                 relationship: "controlled-by",
                 player: "controller",
                 filter: {
-                  kind: "type",
-                  oneOf: ["ALLY", "CHAMPION"],
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY", "CHAMPION"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["CHESSMAN"],
+                    },
+                  ],
                 },
               },
             },

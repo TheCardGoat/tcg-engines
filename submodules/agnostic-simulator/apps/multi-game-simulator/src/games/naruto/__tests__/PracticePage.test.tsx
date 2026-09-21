@@ -63,6 +63,21 @@ describe("NarutoPracticePage", () => {
     expect(await driver.getByTestId("naruto-leader-p1").count()).toBe(1);
   });
 
+  test("starts play-both-sides handoff without scheduling bot automation", async () => {
+    window.history.replaceState({}, "", "/naruto/simulator/practice?mode=self&seed=42&start=1");
+    vi.useFakeTimers();
+    try {
+      const { baseElement: container } = render(<NarutoPracticePage />);
+      await act(async () => {
+        await vi.advanceTimersByTimeAsync(2_000);
+      });
+      expect(container.querySelector('[data-testid="naruto-practice-game"]')).not.toBeNull();
+      expect(container.textContent).toContain("Play both sides · controlling");
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   test("does not create an undo checkpoint for an automated AI decision", async () => {
     window.history.replaceState({}, "", "/naruto/simulator/practice?mobile=1");
     vi.useFakeTimers();

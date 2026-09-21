@@ -129,24 +129,27 @@ export const ignisDeus: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> 
                     mode: "forbid",
                     action: "level-up",
                     subject: {
-                      kind: "player",
-                      player: "controller",
-                    },
-                    filter: {
-                      kind: "all",
-                      filters: [
-                        {
-                          kind: "type",
-                          oneOf: ["CHAMPION"],
+                      kind: "each",
+                      collection: {
+                        zones: ["field"],
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["CHAMPION"],
+                            },
+                            {
+                              kind: "not",
+                              filter: {
+                                kind: "class",
+                                oneOf: ["SPIRIT"],
+                              },
+                            },
+                          ],
                         },
-                        {
-                          kind: "not",
-                          filter: {
-                            kind: "subtype",
-                            oneOf: ["SPIRIT"],
-                          },
-                        },
-                      ],
+                      },
                     },
                     duration: {
                       kind: "permanent",

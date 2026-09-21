@@ -36,6 +36,7 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayData> 
   const unknownCardsParam = url.searchParams.get("unknownCards")?.trim() ?? "";
   const fallbackReason = url.searchParams.get("fallbackReason")?.trim() || null;
   const returnTo = url.searchParams.get("returnTo")?.trim() || null;
+  const opponentMode = url.searchParams.get("mode") === "self" ? "self" : "bot";
 
   // All params are required — if missing, send back to the creation route
   if (!rawDeckParam || (!opponentFixtureId && !opponentDeckParam) || !strategyId || !seed) {
@@ -74,6 +75,7 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchPlayData> 
     ...(opponentFixture ? { playerTwoFixtureId: opponentFixture.id } : {}),
     strategyId: strategy?.id ?? strategyId,
     seed,
+    opponentMode,
   };
 
   const unknownCards = unknownCardsParam ? unknownCardsParam.split("|") : [];

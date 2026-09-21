@@ -1,3 +1,5 @@
+import { grandArchiveBanishmentProvenance } from "../effects/evaluation.ts";
+import { grandArchiveSelectionNumericProperty } from "./selection-values.ts";
 import type { GrandArchiveAbilityCost, GrandArchiveSelectionCount } from "@tcg/grand-archive-types";
 import { grandArchiveObjectFace } from "../../game/card-runtime.ts";
 import { deriveGrandArchiveCharacteristics } from "../../rules/state/continuous.ts";
@@ -8,6 +10,7 @@ import type {
 } from "../../commands/commands.ts";
 import type { GrandArchiveProposedEvent } from "../../kernel/events.ts";
 import {
+  compareGrandArchiveNumbers,
   evaluateGrandArchiveAmount,
   evaluateGrandArchiveCondition,
   grandArchiveCounterKey,
@@ -342,8 +345,12 @@ function selectCostObjects(
       }
       return (
         object.zone === cost.from &&
-        object.banishedBySourceId !== undefined &&
-        hosts.some((host) => host.id === object.banishedBySourceId) &&
+        object.banishedBy !== undefined &&
+        hosts.some(
+          (host) =>
+            host.id === object.banishedBy?.sourceId &&
+            host.incarnation === object.banishedBy.sourceIncarnation,
+        ) &&
         players.includes(object.ownerId) &&
         (!cost.filter || matchesGrandArchiveCardFilter(object, cost.filter, evaluation))
       );
@@ -398,6 +405,32 @@ function selectCostObjects(
       if (!object || grandArchiveObjectCounterCount(object, cost.counter) < amount) {
         throw new Error("Not enough counters on a selected cost object");
       }
+    }
+  }
+  if (cost.kind === "select-and-move" && cost.aggregateConstraint) {
+    const constraint = cost.aggregateConstraint;
+    let total = 0;
+    for (const id of selected) {
+      const object = evaluation.state.objects[id];
+      const value = object
+        ? grandArchiveSelectionNumericProperty(
+            object,
+            constraint.property,
+            constraint.basis,
+            evaluation,
+          )
+        : undefined;
+      if (value === undefined) throw new Error(`Cost selection lacks ${constraint.property}`);
+      total += value;
+    }
+    if (
+      !compareGrandArchiveNumbers(
+        total,
+        constraint.operator,
+        evaluateGrandArchiveAmount(constraint.value, evaluation),
+      )
+    ) {
+      throw new Error("Cost selection fails its aggregate constraint");
     }
   }
   if (cost.kind === "select-and-move" && cost.singleZoneOwner) {
@@ -733,7 +766,7 @@ function pay(
                 to: cost.to,
                 ...(cost.to === "graveyard" ? { discarded: true as const } : {}),
                 ...(cost.to === "banishment" && evaluation.sourceId
-                  ? { banishedBySourceId: evaluation.sourceId }
+                  ? { banishedBy: grandArchiveBanishmentProvenance(evaluation) }
                   : {}),
                 actorId: evaluation.controllerId,
                 cause: { kind: "rule", rule: "pay-select-and-move-cost" },

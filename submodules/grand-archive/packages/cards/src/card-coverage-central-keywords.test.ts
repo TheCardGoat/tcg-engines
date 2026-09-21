@@ -1,3 +1,9 @@
+import { trivariateDream } from "./cards/DTR/weapons/trivariate-dream.ts";
+import { aethercloakSentinel } from "./cards/DTR/allies/aethercloak-sentinel.ts";
+import { evercurrentRaider } from "./cards/DTR/allies/evercurrent-raider.ts";
+import { aquiferSeneschal } from "./cards/DTR/allies/aquifer-seneschal.ts";
+import { spectralDiffusion } from "./cards/DTR/actions/spectral-diffusion.ts";
+import { dianaAetherDilettante } from "./cards/DTR/champions/diana-aether-dilettante.ts";
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
@@ -24,8 +30,50 @@ import { grayWolf } from "./cards/DOA/allies/gray-wolf.ts";
 import { raiArchmage } from "./cards/DOA/champions/rai-archmage.ts";
 import { carnwennanShroudedEdge } from "./cards/DOA/weapons/carnwennan-shrouded-edge.ts";
 import { shroudInMist } from "./cards/DOA/actions/shroud-in-mist.ts";
+import { elyanLustreLoyalty } from "./cards/EVP/allies/elyan-lustre-loyalty.ts";
+import { overlordMkIii } from "./cards/EVP/allies/overlord-mk-iii.ts";
+import { perseRelentlessRaptor } from "./cards/EVP/allies/perse-relentless-raptor.ts";
+import { redHareUnrivaledStallion } from "./cards/EVP/allies/red-hare-unrivaled-stallion.ts";
 
 describe("central keyword coverage accountability", () => {
+  it("covers only standalone Aetherwing with its enabled engine contract", () => {
+    const ability = grandArchiveTestFace(trivariateDream).abilities[0]!;
+    if (ability.kind !== "static" || ability.staticKind !== "intrinsic")
+      throw new Error("Expected the standalone intrinsic Aetherwing paragraph");
+    expect(centralKeywordEvidence(ability)).toEqual({
+      keyword: "aetherwing",
+      testPath: centralKeywordSuite,
+      testName: centralKeywordContracts.aetherwing,
+    });
+    expect(
+      centralKeywordEvidence({
+        ...ability,
+        restrictions: [
+          {
+            kind: "static",
+            name: "class-bonus",
+            condition: { kind: "champion-matches-source", characteristic: "class" },
+          },
+        ],
+      }),
+    ).toBeNull();
+    expect(centralKeywordEvidence(grandArchiveTestFace(trivariateDream).abilities[1]!)).toBeNull();
+  });
+
+  it("keeps DTR grouped, parameterized, restricted, granted and inherited keywords card-specific", () => {
+    for (const [card, index] of [
+      [aethercloakSentinel, 0],
+      [evercurrentRaider, 1],
+      [aquiferSeneschal, 1],
+      [spectralDiffusion, 1],
+      [dianaAetherDilettante, 1],
+    ] as const) {
+      expect(centralKeywordEvidence(grandArchiveTestFace(card).abilities[index]!)).toBeNull();
+    }
+    expect(
+      centralKeywordEvidence(grandArchiveTestFace(evercurrentRaider).abilities[0]!),
+    ).toMatchObject({ keyword: "floating-memory" });
+  });
   it("keeps DOA parameterized, restricted, granted, and modified keyword behavior card-specific", () => {
     for (const card of [
       channelTheWind,
@@ -58,7 +106,7 @@ describe("central keyword coverage accountability", () => {
   it("does not infer coverage for values, zones, restrictions, or unsupported names", () => {
     const base = { id: "fixture-a1", kind: "static", staticKind: "intrinsic", text: "" } as const;
     expect(centralKeywordEvidence({ ...base, keyword: { name: "ranged", value: 2 } })).toBeNull();
-    expect(centralKeywordEvidence({ ...base, keyword: { name: "exalted" } })).toBeNull();
+    expect(centralKeywordEvidence({ ...base, keyword: { name: "distant" } })).toBeNull();
     expect(
       centralKeywordEvidence({
         ...base,
@@ -81,6 +129,19 @@ describe("central keyword coverage accountability", () => {
     expect(
       centralKeywordEvidence(grandArchiveTestFace(jinZealousMaverick).abilities[0]!),
     ).toBeNull();
+  });
+
+  it("keeps EVP parameterized, restricted, and grouped keywords card-specific", () => {
+    for (const card of [
+      elyanLustreLoyalty,
+      overlordMkIii,
+      perseRelentlessRaptor,
+      redHareUnrivaledStallion,
+    ]) {
+      for (const ability of grandArchiveTestFace(card).abilities) {
+        expect(centralKeywordEvidence(ability)).toBeNull();
+      }
+    }
   });
 
   it("requires the actual enabled engine tests for every registered contract", () => {

@@ -40,9 +40,16 @@ export const shieldFragmentation: GrandArchiveCard<GrandArchiveAbilityDefinition
                 kind: "source",
               },
               cost: {
-                kind: "sacrifice",
-                subject: {
-                  kind: "source",
+                kind: "select-and-sacrifice",
+                player: "controller",
+                count: {
+                  kind: "exactly",
+                  amount: 1,
+                },
+                bindResultAs: "sacrificed-object",
+                filter: {
+                  kind: "subtype",
+                  oneOf: ["SHIELD"],
                 },
               },
               duration: {

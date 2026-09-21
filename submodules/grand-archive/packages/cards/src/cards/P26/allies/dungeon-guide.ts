@@ -49,31 +49,42 @@ export const dungeonGuide: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 2,
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 2,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["memory"],
+                        relationship: "zone-of",
+                        player: "controller",
+                      },
+                      method: "random",
                     },
-                    candidates: {
-                      kind: "card",
-                      zones: ["memory"],
-                      relationship: "zone-of",
-                      player: "controller",
-                    },
-                    method: "random",
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "level-up",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "level-up",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
                   },
                 },
               ],

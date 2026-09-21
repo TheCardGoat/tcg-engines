@@ -69,6 +69,7 @@ export const iyslander = defineCard(fabCardIdentitiesByCanonicalId["TmKrpP8tDg8b
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "opponent",
         },
       },

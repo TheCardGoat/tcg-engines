@@ -58,6 +58,7 @@ export const laceWithInertia = definePitchFamily(fabPitchFamilies["lace-with-ine
                   effect: {
                     type: "create-token",
                     token: "inertia",
+                    creator: "effect-controller",
                     controller: "attack-target",
                   },
                 },

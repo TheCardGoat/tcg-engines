@@ -1,4 +1,11 @@
-import { Button, Group, Menu } from "@mantine/core";
+import { GrandArchiveAttackGuide } from "./GrandArchiveAttackGuide";
+import {
+  GrandArchiveCardActions,
+  grandArchiveActionLabel,
+  grandArchiveActionCommand,
+  type GrandArchiveCardAction,
+} from "./GrandArchiveCardActions";
+import { Button, Group } from "@mantine/core";
 import type { InteractionSubmission } from "@tcg/protocol";
 import type {
   CardInteractionMode,
@@ -80,24 +87,38 @@ function GrandArchiveHandsState({
     () => fixture.entities.map(grandArchiveEntityWithPrintedDetails),
     [fixture.entities],
   );
-  const actions: SimulatorCardAction[] = fixture.interactions.flatMap((interaction, order) =>
-    interaction.sourceEntityId
-      ? [
-          {
-            id: interaction.id,
-            sourceEntityId: interaction.sourceEntityId,
-            label: interaction.label,
-            order,
-            activation: interaction.input.kind === "action" ? "execute" : "begin-selection",
-            availability:
-              onSubmitProtocolInteraction &&
-              view?.actions.some((action) => action.id === interaction.id && action.enabled)
-                ? { kind: "enabled" }
-                : { kind: "disabled", reason: "This board is read-only." },
-          },
-        ]
-      : [],
-  );
+  // Timing and Permissions / Opportunity 2: permissions follow the current
+  // Opportunity holder, not simply whose turn it is. Use projected legality.
+  const actions: GrandArchiveCardAction[] = fixture.interactions.flatMap((interaction, order) => {
+    const native = view?.actions.find((action) => action.id === interaction.id);
+    const attacker =
+      native?.intent === "attack"
+        ? native.inputs.find((input) => input.id === "attacker")
+        : undefined;
+    const sourceIds =
+      attacker?.kind === "entity-selection"
+        ? attacker.candidates
+            .filter((candidate) => candidate.enabled !== false)
+            .map((candidate) => candidate.entity.instanceId)
+        : interaction.sourceEntityId
+          ? [interaction.sourceEntityId]
+          : [];
+    return sourceIds.map((sourceEntityId) => ({
+      id: interaction.id,
+      sourceEntityId,
+      label: attacker ? "Attack" : interaction.label,
+      shortLabel: grandArchiveActionLabel(
+        grandArchiveActionCommand(interaction.movePreview.command),
+      ),
+      order,
+      activation:
+        interaction.input.kind === "action" ? ("execute" as const) : ("begin-selection" as const),
+      availability:
+        onSubmitProtocolInteraction && native?.enabled
+          ? { kind: "enabled" as const }
+          : { kind: "disabled" as const, reason: "This board is read-only." },
+    }));
+  });
   const decision = workspace.active;
   const selectedIds = workspace.selectedIds;
   const candidateIds = workspace.candidateIds;
@@ -161,7 +182,7 @@ function GrandArchiveHandsState({
 
   const activate = (action: SimulatorCardAction) => {
     if (!onSubmitProtocolInteraction || action.availability.kind !== "enabled") return;
-    workspace.beginAction(action.id);
+    workspace.beginAction(action.id, action.sourceEntityId);
   };
   const toggle = workspace.selectEntity;
   const stackZone = fixture.table.zones.find((zone) => zone.id === "effects-stack");
@@ -197,175 +218,188 @@ function GrandArchiveHandsState({
   );
 
   return (
-    <CardContextMenuController
-      className="ga-hand-controller"
-      entities={entities}
-      actionsForEntity={(id) => actions.filter((action) => action.sourceEntityId === id)}
-      mode={mode}
-      onModeChange={onModeChange}
-      stateVersion={fixture.table.status.stateVersion}
-      promptActive={Boolean(decision)}
-      autoActivateSingleEnabledAction
-      onAction={activate}
-    >
-      <div className="ga-hand-board" data-materializing={isMaterializing || undefined}>
-        {opponentHand && (
-          <GrandArchiveHand
-            zone={opponentHand}
+    <GrandArchiveCardActions value={decision ? [] : actions}>
+      <CardContextMenuController
+        className="ga-hand-controller"
+        layoutOverride={layout}
+        visualIdentity={{
+          className: "ga-card-context",
+          anchorAboveOnMobile: true,
+          actionsFirstOnMobile: true,
+          renderText: ({ text, kind }) => {
+            const separator = kind === "action-label" ? text.search(/ [·—] /) : -1;
+            return separator < 0 ? (
+              text
+            ) : (
+              <>
+                {text.slice(0, separator)}
+                <span className="ga-card-context__detail">{text.slice(separator + 3)}</span>
+              </>
+            );
+          },
+        }}
+        entities={entities}
+        actionsForEntity={(id) => actions.filter((action) => action.sourceEntityId === id)}
+        mode={mode}
+        onModeChange={onModeChange}
+        stateVersion={fixture.table.status.stateVersion}
+        promptActive={Boolean(decision)}
+        autoActivateSingleEnabledAction
+        onAction={activate}
+      >
+        <div className="ga-hand-board" data-materializing={isMaterializing || undefined}>
+          <GrandArchiveAttackGuide
+            sourceId={
+              workspace.attackSourceId ??
+              (fixture.combatView?.active ? fixture.combatView.combat.attackerId : undefined)
+            }
+            targetIds={
+              workspace.attackSourceId
+                ? [
+                    ...new Set([
+                      ...workspace.attackTargetIds,
+                      ...(workspace.previewTargetId ? [workspace.previewTargetId] : []),
+                    ]),
+                  ]
+                : fixture.combatView?.active
+                  ? fixture.combatView.combat.targetIds
+                  : []
+            }
+            committed={!workspace.attackSourceId && Boolean(fixture.combatView?.active)}
+          />
+          {opponentHand && (
+            <GrandArchiveHand
+              zone={opponentHand}
+              entities={entities}
+              side="top"
+              decision={decision}
+              candidateIds={candidateIds}
+              selectedIds={selectedIds}
+              selectedOrder={workspace.selectedOrder}
+              onSelect={toggle}
+              onPreview={workspace.previewEntity}
+            />
+          )}
+          {opponent ? (
+            <GrandArchivePlayerTable
+              zones={fixture.table.zones}
+              entities={entities}
+              seat={opponent}
+              side="top"
+              turnPlayerId={fixture.turnPlayerId}
+              waitState={fixture.waitState}
+            />
+          ) : null}
+          <GrandArchiveCombatWorkspace
+            collapsed={combatCollapsed}
+            onCollapsedChange={onCombatCollapsedChange}
+            view={fixture.combatView}
+            seats={fixture.table.seats}
             entities={entities}
-            side="top"
-            decision={decision}
             candidateIds={candidateIds}
             selectedIds={selectedIds}
             selectedOrder={workspace.selectedOrder}
             onSelect={toggle}
             onPreview={workspace.previewEntity}
           />
-        )}
-        {opponent ? (
-          <GrandArchivePlayerTable
-            zones={fixture.table.zones}
+          <GrandArchiveEffectsStack
+            viewerId={self?.id}
+            zone={stackZone}
             entities={entities}
-            seat={opponent}
-            side="top"
-            turnPlayerId={fixture.turnPlayerId}
-            waitState={fixture.waitState}
+            candidateIds={candidateIds}
+            selectedIds={selectedIds}
+            selectedOrder={workspace.selectedOrder}
+            onSelect={toggle}
+            onPreview={workspace.previewEntity}
           />
-        ) : null}
-        <GrandArchiveCombatWorkspace
-          collapsed={combatCollapsed}
-          onCollapsedChange={onCombatCollapsedChange}
-          view={fixture.combatView}
-          seats={fixture.table.seats}
-          entities={entities}
-          candidateIds={candidateIds}
-          selectedIds={selectedIds}
-          selectedOrder={workspace.selectedOrder}
-          onSelect={toggle}
-          onPreview={workspace.previewEntity}
-        />
-        <GrandArchiveEffectsStack
-          viewerId={self?.id}
-          zone={stackZone}
-          entities={entities}
-          candidateIds={candidateIds}
-          selectedIds={selectedIds}
-          selectedOrder={workspace.selectedOrder}
-          onSelect={toggle}
-          onPreview={workspace.previewEntity}
-        />
-        {self ? (
-          <GrandArchivePlayerTable
-            zones={fixture.table.zones}
-            entities={entities}
-            seat={self}
-            side="bottom"
-            turnPlayerId={fixture.turnPlayerId}
-            waitState={fixture.waitState}
-          />
-        ) : null}
-        <div className="ga-player-hand-section">
-          <div className="ga-player-hand-main">
-            {isMaterializing && materialDeck ? (
-              <Group className="ga-material-hand-header" justify="space-between" gap="xs">
-                <strong>{showingMaterial ? "Choose a card to materialize" : "Your hand"}</strong>
-                <Group gap="xs" role="group" aria-label="Cards to inspect">
-                  <Button
-                    size="compact-sm"
-                    variant={showingMaterial ? "light" : "subtle"}
-                    color={showingMaterial ? "yellow" : "gray"}
-                    aria-pressed={showingMaterial}
-                    disabled={needsHand}
-                    onClick={() => {
-                      setInspectHand(false);
-                      workspace.previewEntity(undefined);
-                    }}
-                  >
-                    Material deck · {materialDeck.count ?? materialDeck.entityIds.length}
-                  </Button>
-                  <Button
-                    size="compact-sm"
-                    variant={showingMaterial ? "subtle" : "light"}
-                    color={showingMaterial ? "gray" : "yellow"}
-                    aria-pressed={!showingMaterial}
-                    onClick={() => {
-                      setInspectHand(true);
-                      workspace.previewEntity(undefined);
-                    }}
-                  >
-                    Hand · {selfHand?.count ?? selfHand?.entityIds.length ?? 0}
-                  </Button>
-                </Group>
-              </Group>
-            ) : null}
-            {boardActions.length > 0 ? (
-              <Group gap="xs" justify="center" role="group" aria-label="Game actions">
-                {boardActions
-                  .filter((action) => !action.sourceEntityId)
-                  .map((action) => (
+          {self ? (
+            <GrandArchivePlayerTable
+              zones={fixture.table.zones}
+              entities={entities}
+              seat={self}
+              side="bottom"
+              turnPlayerId={fixture.turnPlayerId}
+              waitState={fixture.waitState}
+            />
+          ) : null}
+          <div className="ga-player-hand-section">
+            <div className="ga-player-hand-main">
+              {isMaterializing && materialDeck ? (
+                <Group className="ga-material-hand-header" justify="space-between" gap="xs">
+                  <strong>{showingMaterial ? "Choose a card to materialize" : "Your hand"}</strong>
+                  <Group gap="xs" role="group" aria-label="Cards to inspect">
                     <Button
-                      key={action.id}
                       size="compact-sm"
-                      disabled={!onSubmitProtocolInteraction || decision}
-                      onClick={() => workspace.beginAction(action.id)}
+                      variant={showingMaterial ? "light" : "subtle"}
+                      color={showingMaterial ? "yellow" : "gray"}
+                      aria-pressed={showingMaterial}
+                      disabled={needsHand}
+                      onClick={() => {
+                        setInspectHand(false);
+                        workspace.previewEntity(undefined);
+                      }}
                     >
-                      {action.label}
+                      Material deck · {materialDeck.count ?? materialDeck.entityIds.length}
                     </Button>
-                  ))}
-                {boardActions.some((action) => action.sourceEntityId) ? (
-                  <Menu position="top" withinPortal>
-                    <Menu.Target>
+                    <Button
+                      size="compact-sm"
+                      variant={showingMaterial ? "subtle" : "light"}
+                      color={showingMaterial ? "gray" : "yellow"}
+                      aria-pressed={!showingMaterial}
+                      onClick={() => {
+                        setInspectHand(true);
+                        workspace.previewEntity(undefined);
+                      }}
+                    >
+                      Hand · {selfHand?.count ?? selfHand?.entityIds.length ?? 0}
+                    </Button>
+                  </Group>
+                </Group>
+              ) : null}
+              {boardActions.some((action) => !action.sourceEntityId) ? (
+                <Group gap="xs" justify="center" role="group" aria-label="Game actions">
+                  {boardActions
+                    .filter((action) => !action.sourceEntityId)
+                    .map((action) => (
                       <Button
+                        key={action.id}
                         size="compact-sm"
-                        variant="default"
                         disabled={!onSubmitProtocolInteraction || decision}
+                        onClick={() => workspace.beginAction(action.id)}
                       >
-                        {isMaterializing ? "Board actions" : "Board and material actions"}
+                        {action.label}
                       </Button>
-                    </Menu.Target>
-                    <Menu.Dropdown mah="50vh" style={{ overflowY: "auto" }}>
-                      {boardActions
-                        .filter((action) => action.sourceEntityId)
-                        .map((action) => (
-                          <Menu.Item
-                            key={action.id}
-                            onClick={() => workspace.beginAction(action.id)}
-                          >
-                            {action.label}
-                          </Menu.Item>
-                        ))}
-                    </Menu.Dropdown>
-                  </Menu>
-                ) : null}
-              </Group>
-            ) : null}
-            {activeHand && (
-              <GrandArchiveHand
-                key={activeHand.id}
-                zone={activeHand}
-                material={showingMaterial}
-                entities={entities}
-                side="bottom"
-                actions={actions}
-                decision={decision}
-                candidateIds={candidateIds}
-                selectedIds={selectedIds}
-                selectedOrder={workspace.selectedOrder}
-                onSelect={toggle}
-                onPreview={workspace.previewEntity}
-              />
+                    ))}
+                </Group>
+              ) : null}
+              {activeHand && (
+                <GrandArchiveHand
+                  key={activeHand.id}
+                  zone={activeHand}
+                  material={showingMaterial}
+                  entities={entities}
+                  side="bottom"
+                  actions={actions}
+                  decision={decision}
+                  candidateIds={candidateIds}
+                  selectedIds={selectedIds}
+                  selectedOrder={workspace.selectedOrder}
+                  onSelect={toggle}
+                  onPreview={workspace.previewEntity}
+                />
+              )}
+            </div>
+            {layout === "mobile" ? (
+              <SimulatorViewportRailPortal position="bottom">
+                {handControls}
+              </SimulatorViewportRailPortal>
+            ) : (
+              handControls
             )}
           </div>
-          {layout === "mobile" ? (
-            <SimulatorViewportRailPortal position="bottom">
-              {handControls}
-            </SimulatorViewportRailPortal>
-          ) : (
-            handControls
-          )}
         </div>
-      </div>
-    </CardContextMenuController>
+      </CardContextMenuController>
+    </GrandArchiveCardActions>
   );
 }
 

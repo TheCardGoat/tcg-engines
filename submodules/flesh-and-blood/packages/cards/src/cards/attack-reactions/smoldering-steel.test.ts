@@ -42,7 +42,9 @@ describe("Smoldering Steel (PEN251) AAA", () => {
     Fang.must.playReaction(smolderingSteelRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(2);
+    // 1 + 1 — this link's Draconic reaction also turns on Obsidian Fire
+    // Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(3);
     expectFabCard(Fang, smolderingSteelRed).toBeIn("graveyard");
   });
 

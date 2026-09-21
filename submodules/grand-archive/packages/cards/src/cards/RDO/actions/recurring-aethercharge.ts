@@ -89,6 +89,7 @@ export const recurringAethercharge: GrandArchiveCard<GrandArchiveAbilityDefiniti
           kind: "activated",
           text: "[Class Bonus] (3): Load this card from your graveyard into an Aetherwing weapon you control.",
           activation: "ability",
+          functionalZones: ["graveyard"],
           cost: {
             kind: "pay-reserve",
             amount: 3,
@@ -128,8 +129,8 @@ export const recurringAethercharge: GrandArchiveCard<GrandArchiveAbilityDefiniti
                       oneOf: ["WEAPON"],
                     },
                     {
-                      kind: "has-keyword",
-                      keyword: "aetherwing",
+                      kind: "subtype",
+                      oneOf: ["AETHERWING"],
                     },
                   ],
                 },

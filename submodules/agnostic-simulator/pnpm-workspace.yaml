@@ -8,6 +8,7 @@ packages:
   - packages/lorcana/*
   - packages/naruto/*
   - packages/one-piece/*
+  - packages/alpha-clash/*
   - packages/riftbound/*
   - tools/*
 
@@ -46,6 +47,7 @@ catalog:
   "@react-router/dev": ^7.14.2
   "@react-router/node": ^7.14.2
   "@react-router/serve": ^7.14.2
+  "@react-three/fiber": ^9.4.0
   "@tabler/icons-react": ^3.41.1
   "@testing-library/jest-dom": ^6.9.1
   "@testing-library/react": ^16.3.2
@@ -53,6 +55,7 @@ catalog:
   "@types/node": ^24.12.0
   "@types/react": ^19.2.15
   "@types/react-dom": ^19.2.3
+  "@types/three": ^0.180.0
   "@typescript/native": "npm:typescript@7.0.2"
   "@typescript/native-preview": "npm:typescript@7.0.2"
   "@vitejs/plugin-react": 6.0.3
@@ -74,6 +77,7 @@ catalog:
   socket.io-client: ^4.8.3
   socket.io-msgpack-parser: ^3.0.2
   tailwind-merge: ^3.5.0
+  three: ^0.180.0
   typescript: "npm:@typescript/typescript6@6.0.2"
   vite: "npm:@voidzero-dev/vite-plus-core@0.2.4"
   vite-plus: 0.2.4

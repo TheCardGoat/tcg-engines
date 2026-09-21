@@ -1,6 +1,6 @@
 import { op02Hydra090, op02Magellan085, op04DonquixoteDoflamingo019 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Trebol068 } from "../../../../../cards/src/cards/OP14EB04/characters/068-trebol.ts";
+import { op14eb04Trebol068 } from "../../../../../cards/src/cards/characters/op14-068-trebol.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

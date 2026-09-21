@@ -5,8 +5,14 @@ import {
   embracingPowerRetailStarterDeckMinotaur,
 } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, P2 } from "../src/testing/index.ts";
-import { getEffectivePower, getEffectiveRules } from "../src/active-effects/index.ts";
+import {
+  getEffectivePower,
+  getEffectivePowerFromCatalog,
+  getEffectiveRules,
+} from "../src/active-effects/index.ts";
+import { clearDefinitionOverride, overrideDefinition } from "../src/state/card-registry.ts";
 import { defOf } from "../src/state/lookups.ts";
+import type { CardCatalog } from "../src/types/match-state.ts";
 
 // ── recomputeActiveEffects ────────────────────────────────────────────────────
 //
@@ -60,6 +66,36 @@ describe("recomputeActiveEffects", () => {
     expect(getEffectivePower(engine.getState(), card.instanceId as string)).toBe(
       welcomeToNightCityRetailJackieWellesRideOrDieChoom.power + gigCount * 2,
     );
+  });
+
+  it("keeps ambient effective-power lookups definition-override aware", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      field: [welcomeToNightCityRetailCorpoSecurity],
+    });
+    const card = engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P1);
+    overrideDefinition({ ...welcomeToNightCityRetailCorpoSecurity, power: 9 });
+
+    try {
+      expect(getEffectivePower(engine.getState(), card.instanceId as string)).toBe(9);
+    } finally {
+      clearDefinitionOverride(welcomeToNightCityRetailCorpoSecurity.id);
+    }
+  });
+
+  it("rejects catalog-explicit power lookup when a definition is unavailable", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      field: [welcomeToNightCityRetailCorpoSecurity],
+    });
+    const card = engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P1);
+    const emptyCatalog: CardCatalog = {
+      get: () => undefined,
+      *entries() {},
+      size: 0,
+    };
+
+    expect(() =>
+      getEffectivePowerFromCatalog(engine.getState(), card.instanceId as string, emptyCatalog),
+    ).toThrow(`Card definition not found in catalog: ${card.definitionId}`);
   });
 
   it("updates static power modifier when gig count changes", () => {

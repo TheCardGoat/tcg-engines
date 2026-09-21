@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb01MountainGod018 } from "../../../../../cards/src/cards/EB01/characters/018-mountain-god.ts";
+import { eb01MountainGod018 } from "../../../../../cards/src/cards/characters/eb01-018-mountain-god.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-018 Mountain God", () => {

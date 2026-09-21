@@ -695,7 +695,7 @@ export class GrandArchiveMatchRuntime {
             projected,
             termination.phase,
           )
-        : grandArchiveForcedTurnEndEvents(projected)),
+        : grandArchiveForcedTurnEndEvents(this.#commandHandlerContext(), projected)),
     );
     return events;
   }

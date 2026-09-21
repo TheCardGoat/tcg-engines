@@ -76,46 +76,57 @@ export const etherealSlime: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "subtype",
-                        oneOf: ["TAMER"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "subtype",
+                          oneOf: ["TAMER"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                    },
-                    {
-                      kind: "add-counter",
-                      subject: {
-                        kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "draw",
+                        player: "controller",
+                        amount: 1,
                       },
-                      counter: "buff",
-                      amount: 1,
-                    },
-                  ],
+                      {
+                        kind: "add-counter",
+                        subject: {
+                          kind: "source",
+                        },
+                        counter: "buff",
+                        amount: 1,
+                      },
+                    ],
+                  },
                 },
               ],
             },

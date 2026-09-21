@@ -55,15 +55,22 @@ export const dorumegianFoundry: GrandArchiveCard<GrandArchiveAbilityDefinition, 
                 operator: "multiply",
                 operands: [
                   {
-                    kind: "count",
-                    collection: {
-                      zones: ["field"],
-                      player: "controller",
-                      filter: {
-                        kind: "type",
-                        oneOf: ["DOMAIN"],
+                    kind: "calculate",
+                    operator: "minimum",
+                    operands: [
+                      {
+                        kind: "count",
+                        collection: {
+                          zones: ["field"],
+                          player: "controller",
+                          filter: {
+                            kind: "type",
+                            oneOf: ["DOMAIN"],
+                          },
+                        },
                       },
-                    },
+                      3,
+                    ],
                   },
                   2,
                 ],

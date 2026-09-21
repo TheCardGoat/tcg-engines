@@ -100,6 +100,23 @@ export type AuthoritativeRecoveryTelemetryEvent =
 /** Interval between heartbeat messages sent to the server while in-game. */
 const HEARTBEAT_INTERVAL_MS = 15_000;
 const RECOVERY_TIMEOUT_MS = 10_000;
+const OUT_OF_BAND_DROP_ERROR_CODES = new Set([
+  "drop_not_allowed",
+  "player_connected",
+  "too_early",
+  "timeout_grace_pending",
+  "timeout_first_decision",
+  "timeout_within_limit",
+  "timeout_requester_has_priority",
+  "timeout_allowed",
+  "disconnect_allowed",
+  "disconnect_countdown",
+  "disconnect_timestamp_missing",
+  "opponent_connected",
+  "clock_unsupported",
+  "clock_unavailable",
+  "no_time_control",
+]);
 
 export class GatewayTransport implements Transport {
   readonly #gateway: GatewayTransportClient;
@@ -621,6 +638,11 @@ export class GatewayTransport implements Transport {
 
       case "error":
       case "gateway_error": {
+        // Drop claims are sent directly through the gateway rather than as an
+        // optimistic engine command. The live-match message router presents
+        // their specific server message; forwarding them to the engine would
+        // add a second, generic "invalid move" toast.
+        if (OUT_OF_BAND_DROP_ERROR_CODES.has(String(msg.code))) break;
         this.#deliverGatewayGameErrorMessage(msg);
         break;
       }

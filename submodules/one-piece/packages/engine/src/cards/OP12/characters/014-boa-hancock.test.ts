@@ -6,7 +6,7 @@ import {
   op08PhoenixBrand055,
   op12MonkeyDLuffy015,
 } from "@tcg/op-cards";
-import { op12BoaHancock014 } from "../../../../../cards/src/cards/OP12/characters/014-boa-hancock.ts";
+import { op12BoaHancock014 } from "../../../../../cards/src/cards/characters/op12-014-boa-hancock.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

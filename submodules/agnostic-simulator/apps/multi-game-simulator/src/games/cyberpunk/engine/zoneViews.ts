@@ -86,6 +86,8 @@ export interface ZoneCardView {
   /** True while this unit is still under the has-lag attack restriction. */
   hasLag: boolean;
   faceDown: boolean;
+  /** Online UX: show the face this turn (last sold Eddie, looked-at Legend). */
+  revealed?: boolean;
   /** Effective printed, granted, and gear-provided rules for compact UI badges. */
   effectiveRules: EffectiveRule[];
   /** Gear cards attached to this unit (empty for non-units / unattached). */
@@ -130,6 +132,17 @@ export interface SideZoneViews {
   gigCount: number;
   /** Active effects targeting this player rather than a specific card. */
   activeEffects: CardActiveEffectView[];
+}
+
+/**
+ * True when a projected hand contains identities hidden from this viewer.
+ * Presentation position is deliberately irrelevant: spectators can have a
+ * bottom-seat hand while still being unauthorized to see either player's cards.
+ */
+export function handContainsPrivateCards(
+  cards: ReadonlyArray<Pick<ZoneCardView, "faceDown" | "revealed">>,
+): boolean {
+  return cards.some((card) => card.faceDown && card.revealed !== true);
 }
 
 function gearViews(
@@ -184,6 +197,7 @@ function toView(
     spent: instance.meta.spent ?? false,
     hasLag: instance.meta.hasLag ?? false,
     faceDown: instance.meta.faceDown ?? false,
+    revealed: instance.meta.revealed === true,
     effectiveRules,
     attachedGear: gearViews(instance.meta, cardIndex, state),
   };

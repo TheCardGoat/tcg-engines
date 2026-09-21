@@ -5,6 +5,7 @@ import type {
   GrandArchiveComparisonOperator,
   GrandArchiveCondition,
   GrandArchiveCounterKind,
+  GrandArchiveEffect,
   GrandArchiveEventPattern,
   GrandArchiveEventSubject,
   GrandArchiveKeyword,
@@ -206,6 +207,19 @@ function evaluationSourceLkiEventId(
 }
 
 /** Resolves an object while preserving the exact source identity tracked by an ability. */
+/** Preserve the exact rules object responsible for linked banishment. */
+export function grandArchiveBanishmentProvenance(
+  context: GrandArchiveEvaluationContext,
+): GrandArchiveCardInstance["banishedBy"] {
+  if (!context.sourceId) return undefined;
+  const source = grandArchiveEvaluationObject(
+    context.sourceId,
+    { ...context, sourceInformationBasis: "last-known" },
+    true,
+  );
+  return source ? { sourceId: source.id, sourceIncarnation: source.incarnation } : undefined;
+}
+
 export function grandArchiveEvaluationObject(
   objectId: GrandArchiveObjectId,
   context: GrandArchiveEvaluationContext,
@@ -262,6 +276,13 @@ function observedEventObject(
   const object = state.objects[id];
   if (!object) return undefined;
   const committed = observed.committedEvent;
+  if (committed.type === "object-moved" && observed.name === "object-entered-field") {
+    return {
+      ...object,
+      controllerId:
+        committed.newControllerId ?? committed.previousControllerId ?? object.controllerId,
+    };
+  }
   if (committed.type === "champion-leveled-up" && id === committed.championId) {
     return { ...object, activeDefinitionId: committed.previousActiveDefinitionId };
   }
@@ -490,6 +511,13 @@ export function matchesGrandArchiveEventPattern(
     return false;
   }
   if (
+    "payment" in pattern &&
+    pattern.payment !== undefined &&
+    pattern.payment.costKind !== observed.paymentCostKind
+  ) {
+    return false;
+  }
+  if (
     "counter" in pattern &&
     pattern.counter !== undefined &&
     grandArchiveCounterKey(pattern.counter) !== observed.counter
@@ -517,6 +545,22 @@ export function matchesGrandArchiveEventPattern(
     )
   ) {
     return false;
+  }
+  if (pattern.name === "ability-triggered") {
+    if (
+      "triggerName" in pattern &&
+      pattern.triggerName !== undefined &&
+      pattern.triggerName !== observedAbilityNamedTriggerFamily(observed, context)
+    ) {
+      return false;
+    }
+    if (
+      "sourceObject" in pattern &&
+      pattern.sourceObject &&
+      !grandArchiveEventSubjectMatches(pattern.sourceObject, observed, source, context)
+    ) {
+      return false;
+    }
   }
   if (
     "combatDamage" in pattern &&
@@ -643,6 +687,37 @@ export function grandArchiveActiveFace(
   const card = requireGrandArchiveCard(program, object.activeDefinitionId ?? object.definitionId);
   if (card.layout.kind === "single-faced") return card.layout.face;
   return object.face === "transformed" ? card.layout.flipFace : card.layout.defaultFace;
+}
+
+/**
+ * Names the printed trigger family ("On Enter", "On Attack", "On Hit",
+ * "On Death") of the triggered ability that produced an ability-triggered
+ * event, so event patterns can select triggers by their printed name.
+ */
+function observedAbilityNamedTriggerFamily(
+  observed: GrandArchiveObservedEvent,
+  context: GrandArchiveEvaluationContext,
+): "on-enter" | "on-attack" | "on-hit" | "on-death" | undefined {
+  if (observed.name !== "ability-triggered" || !observed.subjectId || !observed.abilityId) {
+    return undefined;
+  }
+  const object = context.state.objects[observed.subjectId];
+  if (!object) return undefined;
+  const ability = grandArchiveActiveFace(context.program, object).abilities.find(
+    (candidate) => candidate.id === observed.abilityId,
+  );
+  if (!ability || ability.kind !== "triggered") return undefined;
+  if (("intrinsic" in ability && ability.intrinsic) || !ability.trigger) return undefined;
+  if (ability.trigger.kind !== "event") return undefined;
+  const patterns =
+    "anyOf" in ability.trigger.event ? ability.trigger.event.anyOf : [ability.trigger.event];
+  for (const pattern of patterns) {
+    if (pattern.name === "object-entered-field") return "on-enter";
+    if (pattern.name === "attack-declared") return "on-attack";
+    if (pattern.name === "attack-hit") return "on-hit";
+    if (pattern.name === "object-died") return "on-death";
+  }
+  return undefined;
 }
 
 function trackedCharacteristicValues(
@@ -1030,8 +1105,18 @@ export function resolveGrandArchiveSubjectObjects(
     }
     case "bound":
       return bindingObjects(subject.binding, context);
-    case "tracked":
-      return bindingObjects(subject.key, context);
+    case "tracked": {
+      const bound = bindingObjects(subject.key, context);
+      if (bound.length > 0 || subject.key !== "banished-object") return bound;
+      return resolveGrandArchiveCollection(
+        {
+          zones: ["banishment"],
+          host: { kind: "source" },
+          relationship: "banished-by",
+        },
+        context,
+      );
+    }
     case "stack-source":
       return bindingStackSourceObjects(subject.binding, context);
     case "linked-object": {
@@ -1712,12 +1797,36 @@ function valueSubjectToSubject(subject: GrandArchiveValueSubject): GrandArchiveS
   }
 }
 
+/** Resolve typed iteration subjects without conflating stack activations with card objects. */
+export function resolveGrandArchiveIterationIds(
+  collection: Extract<GrandArchiveEffect, { kind: "for-each" }>["collection"],
+  context: GrandArchiveEvaluationContext,
+): readonly (GrandArchiveObjectId | GrandArchiveStackItemId)[] {
+  if ("kind" in collection) {
+    const binding = context.bindings[collection.binding];
+    const ids = binding && typeof binding === "object" && "kind" in binding ? binding.ids : binding;
+    if (!Array.isArray(ids)) return [];
+    const selectedIds: readonly unknown[] = ids;
+    return selectedIds.flatMap((id) => {
+      if (typeof id !== "string") return [];
+      const item = context.state.stack.find((candidate) => candidate.id === id);
+      return item ? [item.id] : [];
+    });
+  }
+  return resolveGrandArchiveCollection(collection, context).map((object) => object.id);
+}
+
 export function resolveGrandArchiveCollection(
   collection: GrandArchiveCollection,
   context: GrandArchiveEvaluationContext,
 ): readonly GrandArchiveCardInstance[] {
   const relationshipHosts = collection.host
-    ? resolveGrandArchiveSubjectObjects(collection.host, context)
+    ? resolveGrandArchiveSubjectObjects(
+        collection.host,
+        collection.relationship === "banished-by"
+          ? { ...context, sourceInformationBasis: "last-known" }
+          : context,
+      )
     : [];
   let objects = collection.history
     ? resolveHistoricalCollection(collection, collection.history, context)
@@ -1748,8 +1857,12 @@ export function resolveGrandArchiveCollection(
         objects = objects.filter(
           (object) =>
             object.zone === "banishment" &&
-            object.banishedBySourceId !== undefined &&
-            hosts.has(object.banishedBySourceId),
+            object.banishedBy !== undefined &&
+            relationshipHosts.some(
+              (host) =>
+                host.id === object.banishedBy?.sourceId &&
+                host.incarnation === object.banishedBy.sourceIncarnation,
+            ),
         );
         break;
       case "activation-payment-of":
@@ -2447,8 +2560,12 @@ export function evaluateGrandArchiveCondition(
         ? context.state.stack.find((item) => item.id === context.state.resolution?.stackItemId)
         : undefined;
       if (resolvingItem?.activationStates.includes(condition.state)) return true;
+      // Pending abilities retain the activation state of their exact departed source.
+      const sourceContext: GrandArchiveEvaluationContext = context.sourceLkiEventId
+        ? { ...context, sourceInformationBasis: "last-known" }
+        : context;
       const source = context.sourceId
-        ? grandArchiveEvaluationObject(context.sourceId, context, true)
+        ? grandArchiveEvaluationObject(context.sourceId, sourceContext, true)
         : undefined;
       return source?.activationStates.has(condition.state) ?? false;
     }
@@ -2517,8 +2634,10 @@ export function evaluateGrandArchiveCondition(
       return bindingObjects(condition.binding, context).length > 0;
     case "paid-cost":
       return context.bindings[condition.binding] === true;
-    case "effect-succeeded":
-      return context.bindings[condition.binding] === true;
+    case "effect-succeeded": {
+      const result = context.bindings[condition.binding];
+      return result === true || (Array.isArray(result) && result.length > 0);
+    }
     case "effect-result-origin":
       return bindingObjects(condition.binding, context).some(
         (object) => lastKnownMoveEvent(context.state, object.id)?.from === condition.zone,

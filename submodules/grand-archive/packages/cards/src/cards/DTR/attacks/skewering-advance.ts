@@ -53,24 +53,28 @@ export const skeweringAdvance: GrandArchiveCard<GrandArchiveAbilityDefinition, "
           effect: {
             kind: "conditional",
             condition: {
-              kind: "subject-matches",
-              subject: {
-                kind: "event-recipient",
-              },
-              filter: {
-                kind: "all",
-                filters: [
-                  {
+              kind: "all",
+              conditions: [
+                {
+                  kind: "subject-matches",
+                  subject: {
+                    kind: "event-recipient",
+                  },
+                  filter: {
                     kind: "type",
                     oneOf: ["ALLY", "CHAMPION"],
                   },
-                  {
-                    kind: "parity",
-                    property: "life",
-                    value: "even",
+                },
+                {
+                  kind: "numeric-property-parity",
+                  subject: {
+                    kind: "event-recipient",
                   },
-                ],
-              },
+                  property: "life",
+                  basis: "last-known",
+                  value: "even",
+                },
+              ],
             },
             then: {
               kind: "draw",

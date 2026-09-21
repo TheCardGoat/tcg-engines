@@ -127,6 +127,7 @@ export class GatewayClientStore {
 
   send(message: object): boolean {
     if (!this.#handle || this.status !== "connected" || !isRecord(message)) return false;
+    if (this.#handle.wouldHoldEmit()) return false;
     const type = typeof message.type === "string" ? message.type : null;
     if (!type) return false;
     const { type: _type, ...payload } = message;

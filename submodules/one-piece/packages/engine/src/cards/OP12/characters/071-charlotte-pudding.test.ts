@@ -1,7 +1,7 @@
 import { eb01Doma005, op01RadicalBeam029 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op12CharlottePudding071 } from "../../../../../cards/src/cards/OP12/characters/071-charlotte-pudding.ts";
-import { op12Sanji070 } from "../../../../../cards/src/cards/OP12/characters/070-sanji.ts";
+import { op12CharlottePudding071 } from "../../../../../cards/src/cards/characters/op12-071-charlotte-pudding.ts";
+import { op12Sanji070 } from "../../../../../cards/src/cards/characters/op12-070-sanji.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

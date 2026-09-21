@@ -35,6 +35,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
             {
               type: "create-token",
               token: "courage",
+              creator: "effect-controller",
               controller: "any",
             },
             {
@@ -50,6 +51,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
                   then: {
                     type: "create-token",
                     token: "seismic-surge",
+                    creator: "effect-controller",
                     controller: "any",
                   },
                 },
@@ -63,6 +65,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
                   then: {
                     type: "create-token",
                     token: "embodiment-of-earth",
+                    creator: "effect-controller",
                     controller: "any",
                   },
                 },
@@ -76,6 +79,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
                   then: {
                     type: "create-token",
                     token: "courage",
+                    creator: "effect-controller",
                     controller: "any",
                   },
                 },
@@ -89,6 +93,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
                   then: {
                     type: "create-token",
                     token: "embodiment-of-lightning",
+                    creator: "effect-controller",
                     controller: "any",
                   },
                 },
@@ -102,6 +107,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
                   then: {
                     type: "create-token",
                     token: "spellbane-aegis",
+                    creator: "effect-controller",
                     controller: "any",
                   },
                 },
@@ -115,6 +121,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
                   then: {
                     type: "create-token",
                     token: "spectral-shield",
+                    creator: "effect-controller",
                     controller: "any",
                   },
                 },
@@ -128,6 +135,7 @@ export const unitedWeStand = definePitchFamily(fabPitchFamilies["united-we-stand
                   then: {
                     type: "create-token",
                     token: "eloquence",
+                    creator: "effect-controller",
                     controller: "any",
                   },
                 },

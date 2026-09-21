@@ -683,6 +683,7 @@ function card(
     cardName: instanceId,
     zone: "field",
     faceDown: false,
+    revealed: false,
     spent: false,
     damage: 0,
     power,

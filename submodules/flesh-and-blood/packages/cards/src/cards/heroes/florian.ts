@@ -35,6 +35,8 @@ export const florian = defineCard(fabCardIdentitiesByCanonicalId["Ht8qhJWDMHjjMj
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "controller",
+          occurrences: "every",
           filter: {
             typeBox: {
               metatypes: ["Token"],

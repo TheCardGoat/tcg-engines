@@ -10,8 +10,9 @@ export const edgeLadenPlate = defineCard(fabCardIdentitiesByCanonicalId["hc9pkdh
       abilityType: "instant",
       cost: { class: "effect", type: "destroy-self" },
       condition: {
-        type: "control-object",
-        filter: { typeBox: { subtypes: ["Sword"] }, hasStatus: "sharpened" },
+        type: "performed-this-turn",
+        event: "sharpen-sword",
+        player: "controller",
       },
       effect: { type: "gain-resources", amount: 1 },
     },

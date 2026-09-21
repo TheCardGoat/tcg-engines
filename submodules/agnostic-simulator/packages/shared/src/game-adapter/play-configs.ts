@@ -102,6 +102,7 @@ const PLAY_GAME_CONFIGS = {
     slug: "cyberpunk" as const,
     isActive: true,
     runtimeAuthority: "server" as const,
+    quickMatchAuthorities: ["server"] as const,
     capabilities: definePlayCapabilities({
       matchmaking: true,
       lobby: true,
@@ -122,6 +123,18 @@ const PLAY_GAME_CONFIGS = {
     isActive: false,
     runtimeAuthority: "server" as const,
     capabilities: NO_PLAY_CAPABILITIES,
+    timeControl: clocklessTimeControlPolicy(),
+  },
+  "alpha-clash": {
+    slug: "alpha-clash" as const,
+    isActive: true,
+    runtimeAuthority: "server" as const,
+    capabilities: definePlayCapabilities({
+      matchmaking: true,
+      lobby: true,
+      leaderboards: true,
+      spectating: true,
+    }),
     timeControl: clocklessTimeControlPolicy(),
   },
   "flesh-and-blood": {

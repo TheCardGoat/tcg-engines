@@ -1,6 +1,6 @@
 import { op01MonkeyDLuffy003, op06Uta001, op09Shanks001 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13RoronoaZoro037 } from "../../../../../cards/src/cards/OP13/characters/037-roronoa-zoro.ts";
+import { op13RoronoaZoro037 } from "../../../../../cards/src/cards/characters/op13-037-roronoa-zoro.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

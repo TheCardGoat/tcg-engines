@@ -44,6 +44,7 @@ import {
   Layers,
   Link2,
   Mountain,
+  Moon,
   Orbit,
   Redo2,
   RefreshCw,
@@ -397,6 +398,15 @@ export const FAB_KEYWORD_ICONS: Readonly<Record<string, FabKeywordIconDef>> = {
     chainPriority: 160,
     combatRelevant: false,
   },
+  "shadow-resist": {
+    id: "shadow-resist",
+    label: "Shadow Resist",
+    shortCode: "SRE",
+    Lucide: Moon,
+    hint: "Shadow Resist: prevent the given amount of shadow damage to this object",
+    chainPriority: 160,
+    combatRelevant: false,
+  },
   "blood-debt": {
     id: "blood-debt",
     label: "Blood Debt",
@@ -512,15 +522,18 @@ const VALUE_SUFFIX_KEYWORDS = new Set([
   "arcane-barrier",
   "arcane-shelter",
   "heave",
+  "op",
   "opt",
   "piercing",
   "quell",
+  "shadow-resist",
   "spellvoid",
   "ward",
 ]);
 
 function canonicalFabKeywordId(slug: string): string {
   const valueMatch = slug.match(/^(.*)-(?:\d+|x)$/);
+  if (valueMatch?.[1] && valueMatch[1] === "op") return "overpower";
   if (valueMatch?.[1] && VALUE_SUFFIX_KEYWORDS.has(valueMatch[1])) return valueMatch[1];
   if (slug.endsWith("-specialization")) return "specialization";
   if (slug.endsWith("-fusion")) return "fusion";

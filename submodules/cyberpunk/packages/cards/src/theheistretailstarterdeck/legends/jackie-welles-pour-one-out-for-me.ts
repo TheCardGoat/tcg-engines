@@ -53,6 +53,12 @@ export const theHeistRetailStarterDeckJackieWellesPourOneOutForMe = defineCyberp
           target: {
             selector: "gig",
             controller: "friendly",
+            amount: 1,
+            selection: {
+              mode: "choose",
+              min: 0,
+              max: 1,
+            },
           },
         },
       ],
@@ -74,14 +80,13 @@ export const theHeistRetailStarterDeckJackieWellesPourOneOutForMe = defineCyberp
           amount: 1,
           conditions: [
             {
-              condition: "targetValue",
+              condition: "targetBecameValue",
               target: {
                 selector: "bound",
                 id: "selectedGig",
               },
               property: "gigValue",
-              comparison: "eq",
-              value: 1,
+              value: "min",
             },
           ],
         },

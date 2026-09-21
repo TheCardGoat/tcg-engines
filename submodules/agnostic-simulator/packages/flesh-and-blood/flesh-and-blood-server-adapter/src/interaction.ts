@@ -75,6 +75,31 @@ function opponentTriggerYieldActionId(command: FabLegalCommand): string | null {
   return null;
 }
 
+/**
+ * Stable ids for the one-shot scoped auto-pass arm/disarm controls. Disarm is
+ * scope-agnostic because a seat holds at most one scope at a time.
+ */
+function scopedAutoPassActionId(command: FabLegalCommand): string | null {
+  if (command.move !== "set-automation-preferences") return null;
+  const arm = command.payload.armScopedAutoPass;
+  if (arm === "combat" || arm === "opponent-turn") return `fab:scoped-auto-pass:${arm}:arm`;
+  if (command.payload.disarmScopedAutoPass === true) return "fab:scoped-auto-pass:disarm";
+  return null;
+}
+
+/** Decode the adapter-owned scoped auto-pass action id; labels stay presentation text. */
+export function fabScopedAutoPassActionIdentity(action: InteractionAction):
+  | { readonly scope: "combat" | "opponent-turn"; readonly operation: "arm" }
+  | {
+      readonly operation: "disarm";
+    }
+  | null {
+  if (action.id === "fab:scoped-auto-pass:disarm") return { operation: "disarm" };
+  const match = /^fab:scoped-auto-pass:(combat|opponent-turn):arm$/.exec(action.id);
+  if (!match) return null;
+  return { scope: match[1] as "combat" | "opponent-turn", operation: "arm" };
+}
+
 export function fabOpponentTriggerYieldActionIdentity(
   action: InteractionAction,
 ): { readonly canonicalId: string; readonly operation: "add" | "remove" } | null {
@@ -98,11 +123,90 @@ export function fabOptionalTriggerAutomationTargetMode(
   return suffix === "ask" || suffix === "auto-accept" || suffix === "auto-decline" ? suffix : null;
 }
 
+/**
+ * Diagnostics for tests and benchmarks: how many full projections and
+ * optional-follow-up previews (each a structuredClone + applyCommand on the
+ * clone) have been computed process-wide.
+ */
+export const projectionComputeCounts = { project: 0, preview: 0 };
+
+/**
+ * Per-state projection memo.
+ *
+ * One interaction submit asks for the same (state, actor) projection several
+ * times — validate, command resolution, and the per-actor interaction views —
+ * and each projection re-runs `listLegalCommands` (and, on decision prompts,
+ * the optional-follow-up preview: a structuredClone of the whole state plus an
+ * applyCommand on the clone). Those enumerations dominate submit CPU.
+ *
+ * Commands are the only runtime mutator and finalize a monotonic
+ * `stateID = beforeStateID + 1`, so an exact-stateID hit is always for the
+ * identical state. The memo holds at most one entry per actor per state and
+ * dies with its runtime instance.
+ */
+interface FabProjectionMemo {
+  readonly stateID: number;
+  readonly byActor: Map<string, FabInteractionProjection>;
+  readonly optionalFollowUpPreviews: Map<string, FabDecision | null>;
+}
+
+const projectionMemos = new WeakMap<FabMatchRuntime, FabProjectionMemo>();
+
+function projectionMemo(runtime: FabMatchRuntime): FabProjectionMemo {
+  const stateID = runtime.getStateID();
+  const cached = projectionMemos.get(runtime);
+  if (cached && cached.stateID === stateID) return cached;
+  const fresh: FabProjectionMemo = {
+    stateID,
+    byActor: new Map(),
+    optionalFollowUpPreviews: new Map(),
+  };
+  projectionMemos.set(runtime, fresh);
+  return fresh;
+}
+
+/**
+ * Memoized {@link projectFabInteraction}. Use this on hot paths (submission
+ * validation, command resolution, per-actor interaction views); the uncached
+ * export stays for tests that want to observe a fresh computation.
+ */
+export function projectFabInteractionCached(
+  runtime: FabMatchRuntime,
+  actorId: string,
+): FabInteractionProjection {
+  const memo = projectionMemo(runtime);
+  let projection = memo.byActor.get(actorId);
+  if (!projection) {
+    projection = projectFabInteraction(runtime, actorId);
+    memo.byActor.set(actorId, projection);
+  }
+  return projection;
+}
+
+/**
+ * Memoized {@link previewOptionalFollowUp}. The preview is deterministic for
+ * a given decision and only cheap to recompute by cloning the entire state,
+ * so both the projection and command-resolution paths share one computation.
+ */
+function previewOptionalFollowUpCached(
+  runtime: FabMatchRuntime,
+  decision: FabDecision,
+): FabDecision | null {
+  const memo = projectionMemo(runtime);
+  let preview = memo.optionalFollowUpPreviews.get(decision.decisionId);
+  if (preview === undefined) {
+    preview = previewOptionalFollowUp(runtime, decision);
+    memo.optionalFollowUpPreviews.set(decision.decisionId, preview);
+  }
+  return preview;
+}
+
 /** Viewer-scoped projection; legality is probed by the authoritative runtime. */
 export function projectFabInteraction(
   runtime: FabMatchRuntime,
   actorId: string,
 ): FabInteractionProjection {
+  projectionComputeCounts.project += 1;
   const wait = runtime.waitState();
   if (wait.kind === "decision") {
     return projectDecision(runtime, actorId, wait.decision);
@@ -179,6 +283,7 @@ export function projectFabInteraction(
         controlId ??
         optionalTriggerAutomationActionId(command) ??
         opponentTriggerYieldActionId(command) ??
+        scopedAutoPassActionId(command) ??
         `fab:${commandIndex}:${sourceIndex}`;
       actions.push({
         id,
@@ -242,7 +347,7 @@ function projectDecision(
   const isActor = viewerId === decision.actorId;
   const actionId = `fab:decision:${decision.decisionId}`;
   const requestId = `${actionId}:${decision.stateVersion}`;
-  const optionalFollowUp = isActor ? previewOptionalFollowUp(runtime, decision) : null;
+  const optionalFollowUp = isActor ? previewOptionalFollowUpCached(runtime, decision) : null;
   const presentedDecision = optionalFollowUp ?? decision;
   const presentedStepText =
     presentedDecision.kind === "effect-resolution" &&
@@ -278,9 +383,11 @@ function projectDecision(
           inputs: [],
         }
       : null;
-  const concedeCommand = listLegalCommands(runtime, viewerId, { includeConcede: true }).find(
-    (command) => command.move === "concede",
-  );
+  // One enumeration serves both the concede lookup and the automation
+  // controls: `includeConcede` only appends the concede command, everything
+  // else is option-independent.
+  const decisionCommands = listLegalCommands(runtime, viewerId, { includeConcede: true });
+  const concedeCommand = decisionCommands.find((command) => command.move === "concede");
   const concedeAction: InteractionAction | null = concedeCommand
     ? {
         id: "fab:concede",
@@ -292,7 +399,7 @@ function projectDecision(
       }
     : null;
   const automationCommands = isActor
-    ? listLegalCommands(runtime, viewerId).filter(
+    ? decisionCommands.filter(
         (command) =>
           command.move === "set-optional-trigger-automation" ||
           command.move === "set-automation-preferences",
@@ -571,6 +678,7 @@ function previewOptionalFollowUp(
   runtime: FabMatchRuntime,
   decision: FabDecision,
 ): FabDecision | null {
+  projectionComputeCounts.preview += 1;
   if (decision.kind !== "boolean" || decision.continuation.kind !== "optional-effect") return null;
   const preview = new FabMatchRuntime(structuredClone(runtime.getState()));
   const result = preview.applyCommand(
@@ -714,7 +822,7 @@ export function commandForFabSubmission(
       ? { move: "defend", payload: { instanceIds }, label: "Declare defense" }
       : null;
   }
-  const projected = projectFabInteraction(runtime, actorId);
+  const projected = projectFabInteractionCached(runtime, actorId);
   const attackTargetCommands = projected.attackTargetCommandsByActionId.get(submission.actionId);
   if (attackTargetCommands) {
     const targetIds = stringList(submission.values.attackTarget);
@@ -743,7 +851,7 @@ export function commandForFabSubmission(
     decision.actorId === actorId &&
     submission.actionId === `fab:decision:${decision.decisionId}`
   ) {
-    const optionalFollowUp = previewOptionalFollowUp(runtime, decision);
+    const optionalFollowUp = previewOptionalFollowUpCached(runtime, decision);
     const optionalValue = submission.values.optional;
     if (optionalFollowUp && decision.kind === "boolean" && typeof optionalValue === "boolean") {
       const followUpAnswer = optionalValue

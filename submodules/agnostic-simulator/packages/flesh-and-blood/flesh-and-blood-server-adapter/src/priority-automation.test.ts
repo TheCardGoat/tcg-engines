@@ -320,7 +320,12 @@ describe("FAB adapter priority automation", () => {
     const toggleMoves = [...projection.commandByActionId.values()].filter(
       (command) => command.move === "set-automation-preferences",
     );
-    expect(toggleMoves).toEqual([]);
+    // A non-holder sees only the scoped auto-pass arm (player-only, never a
+    // bot candidate): mode, yield, and singleton toggles stay holder-gated.
+    expect(
+      toggleMoves.filter((command) => command.payload.armScopedAutoPass === undefined),
+    ).toEqual([]);
+    expect(toggleMoves.every((command) => command.automation === "player-only")).toBe(true);
   });
 
   it("projects and round-trips a card-scoped Instant auto-yield toggle", () => {

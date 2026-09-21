@@ -122,7 +122,7 @@ export const slimeKing: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> 
               candidates: {
                 kind: "card",
                 zones: ["banishment"],
-                relationship: "banished-by",
+                relationship: "activation-payment-of",
                 host: {
                   kind: "source",
                 },

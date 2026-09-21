@@ -26,7 +26,7 @@ export function startTurn(
     }
   }
   if (player && (player.spentEddies ?? 0) > 0) {
-    player.eddies += player.spentEddies;
+    operations.game.gainEddies(playerId, player.spentEddies);
     player.spentEddies = 0;
   }
 

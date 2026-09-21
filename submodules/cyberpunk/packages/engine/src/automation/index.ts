@@ -23,6 +23,15 @@ export {
 } from "./run-auto-match.ts";
 
 export {
+  buildCoachDump,
+  type CoachDumpMeta,
+  type CoachDumpStep,
+  type CoachDumpMoveLog,
+  type CoachDumpGameEvent,
+  type CoachMatchDump,
+} from "./coach-dump.ts";
+
+export {
   defaultChoiceResolvers,
   scryResolver,
   revealDestinationResolver,
@@ -45,9 +54,21 @@ export {
   createGreedyStrategy,
   DEFAULT_GREEDY_WEIGHTS,
   decisionFromMove,
+  isGreedyAIStrategy,
   type ArgPicker,
   type GreedyWeights,
+  type GreedyAIStrategy,
 } from "./strategies/index.ts";
+
+export { withDeckProfile, boundDeckProfile, isTacticalAIStrategy } from "./bind-profile.ts";
+export type { TacticalAIStrategy } from "./bind-profile.ts";
+
+export type {
+  DeckStrategyProfile,
+  DeckMulliganTuning,
+  GearHostPreferType,
+  GearHostMatch,
+} from "./deck-profile.ts";
 
 export {
   AUTOMATED_ACTION_STRATEGIES,

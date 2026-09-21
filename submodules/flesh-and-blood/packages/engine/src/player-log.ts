@@ -109,6 +109,8 @@ export type FabPlayerLogMessage = {
     readonly values: FabLogMessageValuesByName[TKey];
     readonly category: (typeof FAB_LOG_KEY_CATEGORIES)[TKey];
     readonly cardRefs?: readonly FabPlayerLogCardReference[];
+    /** Event-specific override for keys whose narrative role depends on provenance. */
+    readonly narrativeRole?: import("./log/index.ts").FabLogNarrativeRole;
     readonly metrics?:
       | { readonly kind: "attack"; readonly attack: number }
       | { readonly kind: "defense"; readonly defense: number }
@@ -778,6 +780,7 @@ function playerMessageFromLogFact<TKey extends FabLogKey>(
     key: fact.key,
     values: fact.values,
     category: fact.category,
+    ...(fact.narrativeRole ? { narrativeRole: fact.narrativeRole } : {}),
     ...(cardRefs.length > 0 ? { cardRefs } : {}),
   } as Extract<FabPlayerLogMessage, { readonly key: TKey }>;
 }

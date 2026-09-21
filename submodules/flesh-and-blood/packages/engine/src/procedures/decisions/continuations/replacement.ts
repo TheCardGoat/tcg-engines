@@ -6,6 +6,7 @@ import {
   resumeFabJournalReplacementOrdering,
   resumeFabReplacementPlayerChoice,
   resumeFabReplacementCostTarget,
+  resumeFabReplacementCostPayment,
   resumeFabReplacementConsequenceTarget,
   resumeFabReplacementOrdering,
   resumeFabReplacementFirstPlayer,
@@ -91,6 +92,29 @@ export function resumeReplacementCostTarget(ctx: ResumeCtx): FabDecisionSubmitRe
       decision.continuation as Extract<
         typeof decision.continuation,
         { kind: "replacement-cost-target" }
+      >,
+      answer,
+      options,
+    ),
+  };
+}
+
+export function resumeReplacementCostPayment(ctx: ResumeCtx): FabDecisionSubmitResult {
+  const { state, decision, answer, options } = ctx;
+  if (answer.kind !== "payment")
+    return {
+      accepted: false,
+      error: "Replacement cost payment requires a payment answer.",
+      errorCode: "invalid_decision_answer",
+    };
+  return {
+    accepted: true,
+    outcome: { kind: "applied" },
+    state: resumeFabReplacementCostPayment(
+      state,
+      decision.continuation as Extract<
+        typeof decision.continuation,
+        { kind: "replacement-cost-payment" }
       >,
       answer,
       options,

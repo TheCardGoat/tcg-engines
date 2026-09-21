@@ -1,6 +1,6 @@
 import { eb01Doma005, op04GumGumRedRoc056, op05Vergo023 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Vergo061 } from "../../../../../cards/src/cards/OP14EB04/characters/061-vergo.ts";
+import { op14eb04Vergo061 } from "../../../../../cards/src/cards/characters/op14-061-vergo.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

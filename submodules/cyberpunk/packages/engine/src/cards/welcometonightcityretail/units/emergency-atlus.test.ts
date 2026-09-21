@@ -3,6 +3,30 @@ import { welcomeToNightCityRetailEmergencyAtlus } from "@tcg/cyberpunk-cards";
 import { CyberpunkTestEngine, P1, expectNotAttackCandidate } from "../../../testing/index.ts";
 
 describe("Emergency - Atlus", () => {
+  it("is the exact vanilla 3-cost 4-power green Trauma Team Vehicle Zetatech Unit", () => {
+    expect(welcomeToNightCityRetailEmergencyAtlus).toMatchObject({
+      canonicalId: "emergency-atlus",
+      slug: "emergency-atlus",
+      name: "Emergency Atlus",
+      displayName: "Emergency Atlus",
+      type: "unit",
+      color: "green",
+      classifications: ["Trauma Team", "Vehicle", "Zetatech"],
+      cost: 3,
+      power: 4,
+      ram: 1,
+      hasSellTag: false,
+      printNumber: "077",
+      rarity: "Common",
+      legality: "legal",
+      rulesText: '"Grab the policyholder, leave the rest for the city meatwagon."',
+      abilities: [],
+      timingTriggers: [],
+      keywords: [],
+      reminderText: [],
+    });
+  });
+
   it("plays as a vanilla Vehicle Unit, pays cost, and enters with lag", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailEmergencyAtlus],
@@ -28,7 +52,9 @@ describe("Emergency - Atlus", () => {
     );
 
     engine.attackRival(welcomeToNightCityRetailEmergencyAtlus, { as: P1 });
+    engine.resolveFullSteal({ as: P1 });
 
-    expect(engine.getState().G.attackState).toMatchObject({ kind: "direct" });
+    expect(engine.getGigDice(P1).map((die) => die.dieType)).toContain("d4");
+    expect(engine.getEvents("gigStolen")).toHaveLength(1);
   });
 });

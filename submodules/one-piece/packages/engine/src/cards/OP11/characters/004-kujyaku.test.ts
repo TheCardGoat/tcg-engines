@@ -6,7 +6,7 @@ import {
   op10XDrake114,
   op11Smoker005,
 } from "@tcg/op-cards";
-import { op11Kujyaku004 } from "../../../../../cards/src/cards/OP11/characters/004-kujyaku.ts";
+import { op11Kujyaku004 } from "../../../../../cards/src/cards/characters/op11-004-kujyaku.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

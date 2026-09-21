@@ -27,6 +27,7 @@ export type TargetFilter =
   | ColorFilter
   | CardCategoryFilter
   | StateFilter
+  | AttachedDonFilter
   | HasKeywordFilter
   | HasTriggerFilter
   | HasEffectTypeFilter
@@ -108,6 +109,12 @@ export interface StateFilter {
   value: "rested" | "active";
 }
 
+export interface AttachedDonFilter {
+  filter: "attachedDon";
+  comparison: Comparison;
+  value: number;
+}
+
 export interface HasKeywordFilter {
   filter: "hasKeyword";
   value: Keyword;
@@ -137,7 +144,9 @@ export interface DynamicCostFilter {
     | "totalLifeCount"
     | "selfLifeCount"
     | "selfDonCount"
-    | "opponentDonCount";
+    | "opponentDonCount"
+    /** The candidate's own attached DON!! count. */
+    | "candidateAttachedDon";
 }
 
 export interface NoBaseEffectFilter {

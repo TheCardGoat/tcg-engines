@@ -1,0 +1,150 @@
+# DTR optional-follow-up generation audit
+
+Mad Hatter exposed an incorrect prerequisite: the compiler treated the consequence of “You may … If you do …” as part of the optional action that must be fully possible. The shared anchored grammar now emits an attempted optional action followed by a success-conditioned consequence. The existing all-or-nothing check applies to the action; the consequence resolves as far as possible.
+
+## Review evidence
+
+- 132 generated card definitions changed: seven DTR and 125 outside DTR.
+- Every changed definition was parsed before and after regeneration. Removing only the new attempt/success-condition wrapper produced a deeply equal pre-change definition. All costs, targets, selections, restrictions, effects, card data and printed text are otherwise identical.
+- All 134 affected ability objects (including granted/nested abilities) contain the printed “If you do” clause. Each printed clause was inspected.
+- Focused existing sibling coverage: 48 files / 373 tests passed, including Mad Hatter’s 23 tests. The progress record records the final full workspace gate.
+- The full card run exposed one compiler-shape expectation and two Bullet suites that assumed Seeker’s Rifle’s optional On Kill payment was suppressed when no Bullet remained. The compiler assertion now expects the success guard, and the Bullet tests explicitly identify and decline the separate Rifle payment while retaining their original behavioral assertions. All three focused suites / 139 tests pass.
+- No generated card file was edited manually.
+
+## DTR definitions
+
+- `DTR/actions/recurring-invocation.ts`
+- `DTR/allies/devoted-martyr.ts`
+- `DTR/allies/froglet-footman.ts`
+- `DTR/allies/mad-hatter-morose-heritor.ts`
+- `DTR/attacks/rafales-slash.ts`
+- `DTR/items/suspicious-concoction.ts`
+- `DTR/weapons/votive-runeblade.ts`
+
+## Generated definitions outside DTR
+
+- `ALC/actions/calculated-foresight.ts`
+- `ALC/actions/refresh-chamber.ts`
+- `ALC/allies/airship-cannoneer.ts`
+- `ALC/allies/carter-synthetic-reaper.ts`
+- `ALC/allies/fiery-duelist.ts`
+- `ALC/allies/inzali-unshackled-blaze.ts`
+- `ALC/allies/krustallan-archer.ts`
+- `ALC/allies/rimesoul-bishop.ts`
+- `ALC/allies/rose-eternal-paragon.ts`
+- `ALC/domains/sanctum-of-esoteric-truth.ts`
+- `ALC/weapons/seekers-rifle.ts`
+- `AMB/actions/absolving-flames.ts`
+- `AMB/allies/ash-filcher.ts`
+- `AMB/allies/cao-cao-aspirant-of-chaos.ts`
+- `AMB/allies/dong-zhou-false-liege.ts`
+- `AMB/allies/inner-court-schemer.ts`
+- `AMB/allies/lavasoul-tiger.ts`
+- `AMB/allies/pupil-of-sacred-flames.ts`
+- `AMB/allies/rainweaver-mage.ts`
+- `AMB/allies/rippleback-terrapin.ts`
+- `AMB/allies/zhao-yun-dragonsblood.ts`
+- `AMB/phantasias/wuji-of-lingering-fate.ts`
+- `DEMO22/items/life-essence-amulet.ts`
+- `DOA/actions/erratic-bolt.ts`
+- `DOA/actions/shout-at-your-pets.ts`
+- `DOA/actions/sudden-snow.ts`
+- `DOA/allies/arthur-young-heir.ts`
+- `DOA/allies/cemetery-sentry.ts`
+- `DOA/allies/embertail-squirrel.ts`
+- `DOA/allies/frostsworn-paladin.ts`
+- `DOA/allies/ghosts-of-pendragon.ts`
+- `DOA/allies/hasty-messenger.ts`
+- `DOA/allies/reckless-researcher.ts`
+- `DOA/allies/triskit-guidance-angel.ts`
+- `DOA/allies/windrider-mage.ts`
+- `DOA/attacks/gleaming-cut.ts`
+- `DOA/attacks/rending-flames.ts`
+- `DOA/attacks/spirit-blade-ghost-strike.ts`
+- `DOA/champions/tristan-grim-stalker.ts`
+- `DOA/items/surveillance-stone.ts`
+- `EVP/allies/gawain-chivalrous-thief.ts`
+- `EVP/allies/overlord-mk-iii.ts`
+- `EVP/allies/red-hare-unrivaled-stallion.ts`
+- `FTC/allies/blazing-bowman.ts`
+- `FTC/allies/lancelot-goliath-of-aesa.ts`
+- `FTC/allies/windrider-invoker.ts`
+- `FTC/weapons/firetongue.ts`
+- `HVN/actions/dire-requiem.ts`
+- `HVN/allies/direwolf-alpha.ts`
+- `HVN/allies/inquisitive-magician.ts`
+- `HVN/allies/lu-xun-pyre-strategist.ts`
+- `HVN/allies/sly-songstress.ts`
+- `HVN/allies/whirlwind-reaper.ts`
+- `HVN/items/fabled-emerald-fatestone.ts`
+- `HVN/items/fabled-ruby-fatestone.ts`
+- `HVN/items/fabled-sapphire-fatestone.ts`
+- `HVN/items/submerged-fatestone.ts`
+- `MRC/actions/echoic-guard.ts`
+- `MRC/actions/under-fire.ts`
+- `MRC/allies/arsenal-keeper.ts`
+- `MRC/allies/cell-sharpshooter.ts`
+- `MRC/allies/imperial-apprentice.ts`
+- `MRC/allies/priestess-of-flame.ts`
+- `MRC/allies/volatile-fusilier.ts`
+- `MRC/domains/winbless-hurricane-farm.ts`
+- `MRC/items/gloamspire-mantle.ts`
+- `P24/allies/cell-assembler.ts`
+- `P24/allies/ethereal-slime.ts`
+- `P24/allies/storm-slime.ts`
+- `P24/attacks/betraying-blade.ts`
+- `P24/items/crest-of-the-alliance.ts`
+- `P24/items/verdant-scepter.ts`
+- `P24/weapons/shuang-ji-of-sacrifice.ts`
+- `P25/actions/return-to-the-archive.ts`
+- `P25/actions/will-to-save.ts`
+- `P25/allies/conflagrant-sentinel.ts`
+- `P25/items/fabled-azurite-fatestone.ts`
+- `P25/items/fatestone-of-revelations.ts`
+- `P25/items/glimmer-essence-amulet.ts`
+- `P25/items/lavaplume-fatestone.ts`
+- `P26/allies/dungeon-guide.ts`
+- `P26/allies/fluffy-shopkeep.ts`
+- `P26/attacks/striking-tides.ts`
+- `PP1/allies/buoyant-driftguard.ts`
+- `PRD/actions/break-the-line.ts`
+- `PRD/actions/rig-for-detonation.ts`
+- `PRD/actions/weight-of-looking-up.ts`
+- `PRD/allies/baby-gray-slime.ts`
+- `PRD/allies/elysian-aspirant.ts`
+- `PRD/allies/gray-lupindroid.ts`
+- `PRD/allies/package-courier.ts`
+- `PRD/allies/pyrolysis-sage.ts`
+- `PRD/allies/rampant-bladehand.ts`
+- `PRD/allies/tidewall-sentinel.ts`
+- `PRD/allies/windstrike-soldier.ts`
+- `PRD/attacks/conductive-strike.ts`
+- `PRD/attacks/emberslash.ts`
+- `PRD/attacks/refreshing-slice.ts`
+- `PRD/attacks/stoked-slice.ts`
+- `PRD/items/forest-cake.ts`
+- `PRD/items/hot-cake.ts`
+- `PRD/phantasias/fractal-of-insight.ts`
+- `PRD/phantasias/where-futures-stir.ts`
+- `PRXY/items/endura-reimagined.ts`
+- `PTM/actions/summon-pawn.ts`
+- `PTM/champions/merlin-brilliant-vestige.ts`
+- `PTM/champions/merlin-memorite-vassal.ts`
+- `PTM/items/dropped-band.ts`
+- `PTM/items/wavekeepers-bond.ts`
+- `PTM/masteries/phantasmagoria.ts`
+- `PTM/phantasias/waited-accord.ts`
+- `PTM/weapons/vorpal-sword.ts`
+- `RDO/actions/discover-the-divine.ts`
+- `RDO/actions/scientific-discoveries.ts`
+- `RDO/actions/scorching-knowledge.ts`
+- `RDO/allies/ariel-archangel-of-natura.ts`
+- `RDO/allies/dewy-slime.ts`
+- `RDO/allies/inferno-slime.ts`
+- `RDO/allies/rousing-slime.ts`
+- `RDO/allies/shizun-of-the-ash.ts`
+- `RDO/allies/stormblade-squire.ts`
+- `RDO/domains/shilowen-peaceful-beginnings.ts`
+- `RDO/phantasias/fractal-of-waves.ts`
+- `ReC-SLM/allies/baby-silver-slime.ts`
+- `SP4/allies/peppered-chef.ts`

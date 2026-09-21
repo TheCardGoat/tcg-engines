@@ -12,6 +12,7 @@ export const frailSwingline = definePitchFamily(fabPitchFamilies["frail-swinglin
       effect: {
         type: "create-token",
         token: "frailty",
+        creator: "effect-controller",
         controller: "target-controller",
         target: { selector: "any-hero" },
       },

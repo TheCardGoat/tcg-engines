@@ -35,6 +35,7 @@ export type FabPlayDenialReason =
   | "illegal_attack_target"
   | "insufficient_action_points"
   | "insufficient_resources"
+  | "additional_cost_unpayable"
   | "rune_gate"
   | "arrow_requires_bow"
   | "arrow_must_come_from_arsenal";

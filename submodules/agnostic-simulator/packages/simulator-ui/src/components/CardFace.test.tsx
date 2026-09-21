@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { afterEach, describe, expect, test } from "vite-plus/test";
+import { afterEach, describe, expect, test, vi } from "vite-plus/test";
 
 import type { SimulatorEntity } from "@tcg/simulator-contract";
 
@@ -17,11 +17,16 @@ afterEach(() => {
   container = null;
 });
 
-function renderCard(entity: SimulatorEntity): HTMLDivElement {
+function renderCard(
+  entity: SimulatorEntity,
+  onImageLoad?: (loadedEntity: SimulatorEntity) => void,
+): HTMLDivElement {
   container = document.createElement("div");
   document.body.append(container);
   root = createRoot(container);
-  act(() => root?.render(<CardFace entity={entity} as="div" density="full" />));
+  act(() =>
+    root?.render(<CardFace entity={entity} as="div" density="full" onImageLoad={onImageLoad} />),
+  );
   return container;
 }
 
@@ -48,5 +53,26 @@ describe("CardFace image fallback", () => {
     expect(card.textContent).toContain("Readable Preview Card");
     expect(card.textContent).toContain("Power");
     expect(card.textContent).toContain("7");
+  });
+
+  test("reports when a public card image is decoded by the browser", () => {
+    const onImageLoad = vi.fn();
+    const entity: SimulatorEntity = {
+      id: "loaded-art-card",
+      title: "Loaded Preview Card",
+      subtitle: "Character",
+      kind: "character",
+      ownerId: "player",
+      face: "public",
+      states: [],
+      stats: [],
+      traits: [],
+      imageUrl: "https://cdn.example.test/loaded-art.webp",
+    };
+    const card = renderCard(entity, onImageLoad);
+
+    act(() => card.querySelector("img")?.dispatchEvent(new Event("load")));
+
+    expect(onImageLoad).toHaveBeenCalledWith(entity);
   });
 });

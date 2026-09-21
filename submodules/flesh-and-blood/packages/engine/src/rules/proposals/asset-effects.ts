@@ -5,7 +5,7 @@ import {
   staticOptionalDestroyRerollCount,
   staticRollPlusOneIgnoreLowestExtraDice,
 } from "../../kernel/replacements/index.ts";
-import { buildFabRulesView } from "../state-rules-view.ts";
+import { buildFabRulesView, matchesFabSnapshotFilter } from "../state-rules-view.ts";
 import { nextFabDestinationRef, snapshotObject } from "../snapshots.ts";
 import {
   type FabEffectProposalResult,
@@ -299,10 +299,26 @@ function proposeCrowd(
   const { state, layer, processId } = ctx;
   const playerIds = playersForFabPlayer(state, layer.controllerId, effect.target);
   if (!playerIds) return unsupported(effect, `${effect.type} target is unresolved`);
+  const recipients = playerIds.filter((playerId) => {
+    if (!effect.filter) return true;
+    const heroId = state.containers.zonesByPlayerId[playerId]?.heroZone[0];
+    if (!heroId) return false;
+    const hero = snapshotObject(state, heroId, playerId, "heroZone");
+    return matchesFabSnapshotFilter(
+      state,
+      hero,
+      effect.filter,
+      layer.bindings,
+      layer.controllerId,
+      layer.source.ref,
+    );
+  });
   return {
     supported: true,
-    events: playerIds.map((playerId) => ({
+    events: recipients.map((playerId) => ({
       ...baseEvent(layer, processId),
+      // CR 8.5.57: the recipient is the player considered cheered/booed.
+      actorId: playerId,
       name: effect.type,
       affected: [],
       data: { playerId },

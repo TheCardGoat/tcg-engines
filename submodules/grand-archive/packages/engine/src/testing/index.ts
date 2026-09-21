@@ -4,6 +4,7 @@ export * from "./test-engine.ts";
 export * from "./test-fixture.ts";
 
 export { GrandArchiveMatchRuntime } from "../procedures/game-flow/runtime.ts";
+export { grandArchiveObjectActiveKeywords } from "../rules/abilities/intrinsic-keywords.ts";
 export {
   proposeGrandArchiveAbilityActivation,
   proposeGrandArchiveCardActivation,

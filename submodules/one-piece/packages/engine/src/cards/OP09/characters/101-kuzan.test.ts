@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01Fourtricks025 } from "@tcg/op-cards";
-import { op09Kuzan101 } from "../../../../../cards/src/cards/OP09/characters/101-kuzan.ts";
-import { op09VascoShot091 } from "../../../../../cards/src/cards/OP09/characters/091-vasco-shot.ts";
+import { op09Kuzan101 } from "../../../../../cards/src/cards/characters/op09-101-kuzan.ts";
+import { op09VascoShot091 } from "../../../../../cards/src/cards/characters/op09-091-vasco-shot.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

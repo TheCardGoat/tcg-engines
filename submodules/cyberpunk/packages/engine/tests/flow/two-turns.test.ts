@@ -65,6 +65,10 @@ describe("Flow — two turns per player from a fresh game", () => {
     // CHOOSE PLAY ORDER: first player has 2 spent legends, rival has 0.
     expect(engine.getSpentLegends(first)).toHaveLength(2);
     expect(engine.getSpentLegends(second)).toHaveLength(0);
+    const openingLegends = engine.getCardsInZone("legendArea", first);
+    expect(openingLegends[0]!.meta.spent).toBe(true);
+    expect(openingLegends[1]!.meta.spent).toBe(true);
+    expect(openingLegends[2]!.meta.spent).toBe(false);
 
     // ── MULLIGAN CHANCE — both players take the optional mulligan ────────
     engine.mulligan({ as: first });
@@ -85,6 +89,10 @@ describe("Flow — two turns per player from a fresh game", () => {
     // Step 1: READY SPENT CARDS → SKIPPED on first player's turn 1; the two
     // pre-spent legends stay spent.
     expect(engine.getSpentLegends(first)).toHaveLength(2);
+    const turn1Legends = engine.getCardsInZone("legendArea", first);
+    expect(turn1Legends[0]!.meta.spent).toBe(true);
+    expect(turn1Legends[1]!.meta.spent).toBe(true);
+    expect(turn1Legends[2]!.meta.spent).toBe(false);
     // Step 2: DRAW A CARD → hand 6 + 1 = 7.
     expect(engine.getCardsInZone("hand", first)).toHaveLength(7);
     // Step 3: GAIN A GIG — pending choice is open. Fixer still has 6 dice

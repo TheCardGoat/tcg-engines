@@ -715,13 +715,22 @@ export function fabAutomationSeedForSeat(
   if (!settings.ready) return undefined;
   const {
     priorityMode,
-    autoOrderTriggers,
+    autoOrderTriggers: storedAutoOrderTriggers,
     autoSelectSingletonTargets,
     playAndSkipHoldCardIds,
     opponentTriggerYieldCardIds,
     optionalTriggerDeclines,
     optionalTriggerAccepts,
   } = settings.readSeed();
+  // Mirror the engine's set-automation-preferences pairing: auto-pass turns
+  // trigger-order auto-answering on and always-hold turns it off, regardless
+  // of the stored toggle, so seeded seats never drain inconsistently.
+  const autoOrderTriggers =
+    priorityMode === "auto-pass"
+      ? true
+      : priorityMode === "always-hold"
+        ? false
+        : storedAutoOrderTriggers;
   return {
     automationPreferences: {
       [playerId]: {

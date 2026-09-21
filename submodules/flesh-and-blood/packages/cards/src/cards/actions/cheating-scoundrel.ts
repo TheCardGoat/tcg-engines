@@ -55,6 +55,7 @@ export const cheatingScoundrel = definePitchFamily(fabPitchFamilies["cheating-sc
                     prize: {
                       type: "create-token",
                       token: "gold",
+                      creator: "token-controller",
                       controller: "winner",
                     },
                   },

@@ -97,6 +97,13 @@ interface FabEventPatternShared {
 /** Event pattern matched by replacement effects (6.4.1). Per-event payloads. */
 export type FabEventPattern =
   | (FabEventPatternShared & {
+      name: "create";
+      /** Creator identity is independent of the receiving player (player). */
+      creator: "controller" | "any";
+      /** First matching opportunity versus every matching creation in the duration. */
+      occurrences: "first" | "every";
+    })
+  | (FabEventPatternShared & {
       name: FabDamageEventPatternName | readonly FabDamageEventPatternName[];
       damageType?: FabDamageType;
     })
@@ -109,8 +116,11 @@ export type FabEventPattern =
     })
   | (FabEventPatternShared & {
       name:
-        | Exclude<FabEventPatternName, FabDamageEventPatternName | FabMoveEventPatternName>
-        | readonly FabEventPatternName[];
+        | Exclude<
+            FabEventPatternName,
+            FabDamageEventPatternName | FabMoveEventPatternName | "create"
+          >
+        | readonly Exclude<FabEventPatternName, "create">[];
     });
 
 export interface FabEffectBase {
@@ -236,8 +246,7 @@ export type FabEffect = FabEffectBase &
          * Roundhouse). */
         random?: boolean;
       }
-    | {
-        type: "destroy" | "negate";
+    | ({
         target: FabTarget;
         delay?: "end-phase";
         outputBinding?: string;
@@ -246,7 +255,14 @@ export type FabEffect = FabEffectBase &
          * ability id is `keyword:${triggeredKeyword}` (Semblance: phantasm).
          */
         triggeredKeyword?: string;
-      }
+      } & (
+        | { type: "destroy"; ifTargetMatches?: never }
+        | {
+            type: "negate";
+            /** Resolution-only condition; does not restrict declared targets. */
+            ifTargetMatches?: FabCardFilter;
+          }
+      ))
     | { type: "turn-face-down" | "turn-face-up"; target: FabTarget; outputBinding?: string }
     /** "Do X unless you do Y": the controller may perform `escape`; if they
      * decline, `effect` happens. */
@@ -344,6 +360,7 @@ export type FabEffect = FabEffectBase &
      * and creates it under their control. */
     | {
         type: "choose-and-create-token";
+        creator?: "effect-controller" | "token-controller";
         options: readonly string[];
         chooser: FabPlayer;
         /** Selection is random, not chosen ("choose Inertia, Frailty, or
@@ -432,7 +449,6 @@ export type FabEffect = FabEffectBase &
     | { type: "choose-opponent" }
     | ({
         type: "create-token";
-        controller: FabPlayer;
         /** Printed “under target hero's control” — on-stack hero that binds
          * `controller: "target-controller"`. */
         target?: FabTarget;
@@ -463,7 +479,15 @@ export type FabEffect = FabEffectBase &
         /** Whether to create all alternatives instead of choosing one
          * (used by "create both" upgrades). */
         all?: boolean;
-      } & ({ token: string; copySource?: never } | { token?: never; copySource: FabTarget }))
+      } & (
+        | { controller: "controller"; creator?: "effect-controller" | "token-controller" }
+        | {
+            controller: FabPlayer;
+            /** CR 1.3.1a: distinguish "you create under their control" from "they create". */
+            creator: "effect-controller" | "token-controller";
+          }
+      ) &
+        ({ token: string; copySource?: never } | { token?: never; copySource: FabTarget }))
     | {
         type: "create-card";
         name: string;

@@ -37,6 +37,7 @@ export const welcomeToNightCityRetailThreeMouthsOneDesire = defineCyberpunkCard(
           target: { selector: "card", controller: "friendly", zones: ["deck"] },
           select: {
             kind: "upTo",
+            min: 1,
             max: {
               type: "basePlusPerCount",
               base: 1,

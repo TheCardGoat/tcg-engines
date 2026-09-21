@@ -9,9 +9,13 @@ import type {
 } from "../types/index.ts";
 import type { CardInstanceId, PlayerId, GigDieId } from "../types/branded.ts";
 import { createDefaultMetaForZone, type CardMeta } from "../types/card-instance.ts";
-import type { DieType } from "../types/gig-die.ts";
+import type { DieType, GigDieLocation } from "../types/gig-die.ts";
 import type { MoveLog } from "../logging/move-log.ts";
-import { spendReadyLegendsForEddies } from "../moves/eddie-resources.ts";
+import {
+  canSpendSelectedEddies,
+  legendCanPayEddie,
+  spendReadyLegendsForEddies,
+} from "../moves/eddie-resources.ts";
 import { defOf } from "../state/lookups.ts";
 
 export interface Operations {
@@ -51,8 +55,26 @@ export interface CardOperations {
   setAttackedThisTurn(cardId: CardInstanceId, value: boolean): void;
 }
 
+export interface SpendEddiesOptions {
+  /** Exact ready Eddie or Legend instances selected by the player. */
+  sourceIds?: CardInstanceId[];
+  /**
+   * Legends tapped before every other payment source. Used by Go Solo so the
+   * legend being played pays for itself — it leaves the Legends area and
+   * re-enters the field ready, so spending it costs nothing.
+   */
+  preferredLegendIds?: CardInstanceId[];
+  /** Legends reserved for another cost in the same atomic payment. */
+  excludedLegendIds?: CardInstanceId[];
+}
+
 export interface GameOperations {
-  spendEddies(playerId: PlayerId, amount: number, forWhat: string): void;
+  spendEddies(
+    playerId: PlayerId,
+    amount: number,
+    forWhat: string,
+    options?: SpendEddiesOptions,
+  ): void;
   gainEddies(playerId: PlayerId, amount: number): void;
   setPhase(phase: import("../types/match-state.ts").GamePhase): void;
   setAttackState(attack: import("../types/match-state.ts").AttackState | null): void;
@@ -71,10 +93,21 @@ export interface GameOperations {
   resetTurnFlags(playerId: PlayerId): void;
 }
 
+export interface GigRelocateTarget {
+  ownerId: PlayerId;
+  location: GigDieLocation;
+  faceValue?: number;
+}
+
 export interface GigOperations {
   takeFromFixer(playerId: PlayerId, dieId: GigDieId, rollDie: (dieType: DieType) => number): void;
   moveGig(dieId: GigDieId, toPlayerId: PlayerId, sourceCardId?: CardInstanceId): void;
   setGigValue(dieId: GigDieId, value: number): void;
+  /**
+   * Silent gig transfer for board correction. Emits `gigDieMoved` only — never
+   * steal/roll events, and never overtime win checks.
+   */
+  relocate(dieId: GigDieId, target: GigRelocateTarget): void;
 }
 
 export interface EventOperations {
@@ -100,6 +133,9 @@ export function createOperations(
 ): Operations {
   function checkOvertimeMajority() {
     if (!G.overtime || G.gameEnded) return;
+    // CR 1.11: overtime is won by the first player holding seven or more Gig
+    // dice. The pool is invariant (6 standard dice per player, and no effect
+    // adds or removes dice), so the majority of dice in play always equals 7.
     const totalDice = Object.keys(G.gigDice).length;
     const majority = Math.floor(totalDice / 2) + 1;
     for (const pid of Object.keys(G.players)) {
@@ -238,7 +274,7 @@ export function createOperations(
 
     ready(cardId) {
       const c = G.cardIndex[cardId as string];
-      if (!c) return;
+      if (!c || !c.meta.spent) return;
       c.meta.spent = false;
       events.push({ type: "cardReadied", cardId, playerId: c.controllerId });
     },
@@ -325,24 +361,72 @@ export function createOperations(
   };
 
   const game: GameOperations = {
-    spendEddies(playerId, amount, forWhat) {
+    spendEddies(playerId, amount, forWhat, options) {
       const playerState = G.players[playerId as string];
       if (!playerState) return;
-      const eddiePoolSpent = Math.min(playerState.eddies, amount);
-      playerState.eddies -= eddiePoolSpent;
 
-      let remaining = eddiePoolSpent;
-      for (const cardId of playerState.eddieCardIds) {
+      if (options?.sourceIds) {
+        // Move validation rejects an invalid plan before execution. Retaining
+        // this guard makes the operation safe for engine-internal callers too.
+        if (!canSpendSelectedEddies(G as GameState, playerId, amount, options.sourceIds)) return;
+        let selectedEddies = 0;
+        for (const cardId of options.sourceIds) {
+          const card = G.cardIndex[cardId as string];
+          if (!card) continue;
+          card.meta.spent = true;
+          if (card.zone === "eddieArea") {
+            card.meta.faceDown = true;
+            selectedEddies++;
+          }
+          events.push({ type: "cardSpent", cardId, playerId: card.controllerId });
+        }
+        playerState.eddies -= selectedEddies;
+        playerState.spentEddies = (playerState.spentEddies ?? 0) + selectedEddies;
+        events.push({ type: "eddiesSpent", playerId, amount, forWhat });
+        return;
+      }
+      let remaining = amount;
+
+      // Preferred legends (e.g. the legend paying its own Go Solo cost) tap
+      // before everything else — see SpendEddiesOptions.
+      for (const cardId of options?.preferredLegendIds ?? []) {
         if (remaining <= 0) break;
         const card = G.cardIndex[cardId as string];
-        if (!card || card.meta.spent) continue;
+        if (
+          !card ||
+          (card.controllerId as string) !== (playerId as string) ||
+          card.zone !== "legendArea" ||
+          card.meta.spent ||
+          !legendCanPayEddie(card)
+        ) {
+          continue;
+        }
         card.meta.spent = true;
         remaining--;
         events.push({ type: "cardSpent", cardId, playerId: card.controllerId });
       }
 
-      const legendEddiesNeeded = amount - eddiePoolSpent;
-      const legendIds = spendReadyLegendsForEddies(G as GameState, playerId, legendEddiesNeeded);
+      const eddiePoolSpent = Math.min(playerState.eddies, remaining);
+      playerState.eddies -= eddiePoolSpent;
+      remaining -= eddiePoolSpent;
+
+      let unspentPoolTokens = eddiePoolSpent;
+      for (const cardId of playerState.eddieCardIds) {
+        if (unspentPoolTokens <= 0) break;
+        const card = G.cardIndex[cardId as string];
+        if (!card || card.meta.spent) continue;
+        card.meta.spent = true;
+        card.meta.faceDown = true;
+        unspentPoolTokens--;
+        events.push({ type: "cardSpent", cardId, playerId: card.controllerId });
+      }
+
+      const legendIds = spendReadyLegendsForEddies(
+        G as GameState,
+        playerId,
+        remaining,
+        options?.excludedLegendIds,
+      );
       for (const cardId of legendIds) {
         const card = G.cardIndex[cardId as string];
         if (!card) continue;
@@ -451,17 +535,23 @@ export function createOperations(
       p.calledLegendThisTurn = false;
       p.calledLegendThisRivalTurn = false;
       G.turnMetadata.playedCardTypesThisTurn[playerId as string] = [];
+      for (const cardId of [...p.zones.eddieArea, ...p.zones.legendArea]) {
+        const card = G.cardIndex[cardId as string];
+        if (!card) continue;
+        card.meta.revealed = false;
+        if (card.zone === "eddieArea" && !card.meta.spent) card.meta.faceDown = true;
+      }
 
       G.turnMetadata.abilityFiredThisTurn = [];
       G.turnMetadata.triggerQueue = [];
       G.turnMetadata.currentTrigger = undefined;
 
-      for (const cardId of p.zones.field) {
-        const c = G.cardIndex[cardId as string];
-        if (c) {
-          c.meta.hasLag = false;
-          c.meta.hasAttackedThisTurn = false;
-        }
+      for (const c of Object.values(G.cardIndex)) {
+        if (c.controllerId !== playerId) continue;
+        c.meta.hasStolenGigThisTurn = false;
+        if (c.zone !== "field") continue;
+        c.meta.hasLag = false;
+        c.meta.hasAttackedThisTurn = false;
       }
     },
   };
@@ -510,6 +600,11 @@ export function createOperations(
       const toPlayer = G.players[toPlayerId as string];
       if (!fromPlayer || !toPlayer) return;
 
+      if (sourceCardId) {
+        const sourceCard = G.cardIndex[sourceCardId as string];
+        if (sourceCard) sourceCard.meta.hasStolenGigThisTurn = true;
+      }
+
       const idx = fromPlayer.gigArea.indexOf(dieId);
       if (idx !== -1) fromPlayer.gigArea.splice(idx, 1);
 
@@ -544,6 +639,49 @@ export function createOperations(
         previousValue: prev,
         newValue: value,
         playerId: die.ownerId,
+      });
+    },
+
+    relocate(dieId, target) {
+      const die = G.gigDice[dieId as string];
+      if (!die) return;
+
+      const fromPlayerId = die.ownerId;
+      const fromLocation = die.location;
+      const fromPlayer = G.players[fromPlayerId as string];
+      const toPlayer = G.players[target.ownerId as string];
+      if (!fromPlayer || !toPlayer) return;
+      if (fromPlayerId === target.ownerId && fromLocation === target.location) {
+        if (target.faceValue !== undefined && target.location === "gigArea") {
+          gig.setGigValue(dieId, target.faceValue);
+        }
+        return;
+      }
+
+      const fromList = fromLocation === "fixerArea" ? fromPlayer.fixerArea : fromPlayer.gigArea;
+      const fromIdx = fromList.indexOf(dieId);
+      if (fromIdx !== -1) fromList.splice(fromIdx, 1);
+
+      die.ownerId = target.ownerId;
+      die.location = target.location;
+      if (target.location === "fixerArea") {
+        die.faceValue = 0;
+      } else if (target.faceValue !== undefined) {
+        die.faceValue = target.faceValue;
+      } else if (fromLocation === "fixerArea") {
+        die.faceValue = 1;
+      }
+
+      const toList = target.location === "fixerArea" ? toPlayer.fixerArea : toPlayer.gigArea;
+      toList.push(dieId);
+
+      events.push({
+        type: "gigDieMoved",
+        dieId,
+        from: fromLocation,
+        to: target.location,
+        playerId: target.ownerId,
+        ...(fromPlayerId !== target.ownerId ? { fromPlayerId } : {}),
       });
     },
   };

@@ -42,6 +42,7 @@ export const vaporizeShock = definePitchFamily(fabPitchFamilies["vaporize-shock"
                         value: {
                           type: "count",
                           what: "damage-dealt",
+                          recipient: "opposing-heroes",
                           damageType: "arcane",
                           per: "turn",
                         },
@@ -68,6 +69,7 @@ export const vaporizeShock = definePitchFamily(fabPitchFamilies["vaporize-shock"
                       amount: {
                         type: "count",
                         what: "damage-dealt",
+                        recipient: "opposing-heroes",
                         damageType: "arcane",
                         per: "turn",
                       },

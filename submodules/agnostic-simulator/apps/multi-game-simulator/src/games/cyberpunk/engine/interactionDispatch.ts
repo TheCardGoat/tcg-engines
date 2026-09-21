@@ -8,17 +8,26 @@ export function interactionSubmissionToEngineAction(
   switch (submission.actionId) {
     case "playCard": {
       const attachToId = optionalString(submission, "attachToId");
+      const paymentSourceIds = optionalStringArray(submission, "paymentSourceIds");
       return {
         type: "playCard",
         cardId: requireString(submission, "cardId"),
         as,
         ...(attachToId === undefined ? {} : { attachToId }),
+        ...(paymentSourceIds === undefined ? {} : { paymentSourceIds }),
       };
     }
     case "sellCard":
     case "callLegend":
-    case "goSolo":
-      return { type: submission.actionId, cardId: requireString(submission, "cardId"), as };
+    case "goSolo": {
+      const paymentSourceIds = optionalStringArray(submission, "paymentSourceIds");
+      return {
+        type: submission.actionId,
+        cardId: requireString(submission, "cardId"),
+        as,
+        ...(paymentSourceIds === undefined ? {} : { paymentSourceIds }),
+      };
+    }
     case "resolveCardToPlay": {
       if (optionalBoolean(submission, "pass")) {
         return { type: "resolveCardToPlay", pass: true, as };
@@ -52,7 +61,7 @@ export function interactionSubmissionToEngineAction(
       return {
         type: "activateAbility",
         cardId: requireString(submission, "cardId"),
-        abilityIndex: requireNumber(submission, "abilityIndex"),
+        abilityIndex: requireAbilityIndex(submission),
         as,
       };
     case "resolveAttack": {
@@ -72,7 +81,17 @@ export function interactionSubmissionToEngineAction(
       };
     }
     case "resolveAdjustGig":
-      return { type: "resolveAdjustGig", value: requireNumber(submission, "value"), as };
+      return optionalBoolean(submission, "pass")
+        ? { type: "resolveAdjustGig", choice: { kind: "noAdjustment" }, as }
+        : {
+            type: "resolveAdjustGig",
+            choice: {
+              kind: "adjust",
+              dieId: requireString(submission, "dieId"),
+              value: requireNumber(submission, "value"),
+            },
+            as,
+          };
     case "resolveEffectTarget":
       if (optionalBoolean(submission, "pass")) {
         return { type: "resolveEffectTarget", pass: true, as };
@@ -91,6 +110,19 @@ export function interactionSubmissionToEngineAction(
         cardIds: requireStringArray(submission, "cardIds"),
         as,
       };
+    case "resolvePreventGigSteal": {
+      if (optionalBoolean(submission, "pass")) {
+        return { type: "resolvePreventGigSteal", dieIds: [], cardIds: [], pass: true, as };
+      }
+      const dieIds = requireStringArray(submission, "dieIds");
+      const cardIds = requireStringArray(submission, "cardIds");
+      if (dieIds.length !== cardIds.length) {
+        throw new Error(
+          `Interaction values "dieIds" and "cardIds" must have matching lengths (${dieIds.length} vs ${cardIds.length})`,
+        );
+      }
+      return { type: "resolvePreventGigSteal", dieIds, cardIds, as };
+    }
     case "resolveScry":
       return {
         type: "resolveScry",
@@ -109,6 +141,7 @@ export function interactionSubmissionToEngineAction(
     case "mulligan":
     case "keepHand":
     case "concede":
+    case "cancelPendingResolution":
       return { type: submission.actionId, as };
     case "gainGig":
       return { type: "gainGig", dieId: requireString(submission, "dieId"), as };
@@ -121,6 +154,19 @@ export function interactionSubmissionToEngineAction(
         ...(cardId === undefined ? {} : { cardId }),
         ...(pass === undefined ? {} : { pass }),
       };
+    }
+    case "resolveRedirectDefeat": {
+      const pass = optionalBoolean(submission, "pass");
+      return { type: "resolveRedirectDefeat", as, ...(pass === undefined ? {} : { pass }) };
+    }
+    case "resolveSacrificialGear":
+      return {
+        type: "resolveSacrificialGear",
+        cardId: requireString(submission, "cardId"),
+        as,
+      };
+    case "resolveFirstPlayer": {
+      return { type: "resolveFirstPlayer", as, goFirst: requireBoolean(submission, "goFirst") };
     }
     default:
       return null;
@@ -166,17 +212,46 @@ function requireNumber(submission: InteractionSubmission, key: string): number {
   return value;
 }
 
+// abilityIndex is declared as an option-selection input whose option ids are
+// String(index), so validated submissions carry the string form.
+function requireAbilityIndex(submission: InteractionSubmission): number {
+  const value = submission.values["abilityIndex"];
+  if (typeof value === "number" && Number.isInteger(value)) return value;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    if (Number.isInteger(parsed) && parsed >= 0) return parsed;
+  }
+  throw new Error(`Expected non-negative integer interaction value 'abilityIndex'`);
+}
+
 function optionalBoolean(submission: InteractionSubmission, key: string): boolean | undefined {
   const value = submission.values[key];
   return typeof value === "boolean" ? value : undefined;
 }
 
-function requireStringArray(submission: InteractionSubmission, key: string): string[] {
-  const value = submission.values[key];
-  if (!Array.isArray(value) || !value.every((entry) => typeof entry === "string")) {
-    throw new Error(`Expected string-array interaction value '${key}'`);
+function requireBoolean(submission: InteractionSubmission, key: string): boolean {
+  const value = optionalBoolean(submission, key);
+  if (value === undefined) {
+    throw new Error(`Expected boolean interaction value '${key}'`);
   }
   return value;
+}
+
+/**
+ * List-typed interaction values arrive as arrays from modal flows and as a
+ * scalar when the input allows a single pick (the shared interaction panel
+ * submits `ids[0]` for max-1 entity selections). Accept both so a legal
+ * single-pick draft is never silently dropped.
+ */
+function requireStringArray(submission: InteractionSubmission, key: string): string[] {
+  const value = submission.values[key];
+  if (typeof value === "string") return [value];
+  if (Array.isArray(value) && value.every((entry) => typeof entry === "string")) return value;
+  throw new Error(`Expected string or string-array interaction value '${key}'`);
+}
+
+function optionalStringArray(submission: InteractionSubmission, key: string): string[] | undefined {
+  return submission.values[key] === undefined ? undefined : requireStringArray(submission, key);
 }
 
 function requireScryDestinations(
@@ -201,10 +276,15 @@ function requireScryDestinations(
       return { zone: destination.zone, cardIds: destination.cardIds };
     });
   }
+  // Panel submissions for optional (min 0) scries may omit selectedCardIds
+  // entirely; treat the absent key as an explicit empty pick instead of
+  // dropping the submission (mirrors the server adapter's tolerant read).
+  const selectedCardIds = submission.values.selectedCardIds;
   return [
     {
       zone: optionalString(submission, "destinationZone") ?? "hand",
-      cardIds: requireStringArray(submission, "selectedCardIds"),
+      cardIds:
+        selectedCardIds === undefined ? [] : requireStringArray(submission, "selectedCardIds"),
     },
   ];
 }

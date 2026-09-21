@@ -34,6 +34,7 @@ export const inertiaTrap = definePitchFamily(fabPitchFamilies["inertia-trap"], {
         effect: {
           type: "create-token",
           token: "inertia",
+          creator: "effect-controller",
           controller: "opponent",
         },
       },

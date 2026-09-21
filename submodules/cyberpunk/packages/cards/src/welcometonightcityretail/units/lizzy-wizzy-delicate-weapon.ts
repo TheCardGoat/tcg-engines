@@ -78,7 +78,7 @@ export const welcomeToNightCityRetailLizzyWizzyDelicateWeapon = defineCyberpunkC
           ifEffects: [
             {
               effect: "delayed",
-              timing: "endOfTurn",
+              timing: "afterTriggerResolution",
               effects: [
                 {
                   effect: "moveCard",

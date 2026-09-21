@@ -146,6 +146,94 @@ describe("playCard", () => {
       const failure = engine.expectFailure(() => engine.playCard(unit, { as: P2 }));
       expect(failure.errorCode).toBe("NOT_YOUR_TURN");
     });
+
+    it("fails with INVALID_ATTACH_TARGET when gear attachToId is not a friendly field unit", () => {
+      const host = createMockUnit({ cost: 1 });
+      const rivalHost = createMockUnit({ cost: 1 });
+      const gear = createMockGear({ cost: 1 });
+      const engine = CyberpunkTestEngine.createWithFixture(
+        { hand: [gear], field: [host], eddies: 5 },
+        { field: [rivalHost], eddies: 5 },
+      );
+      const gearId = engine.findCardId(gear, "hand", P1);
+      const rivalHostId = engine.findCardId(rivalHost, "field", P2);
+
+      const result = engine.executeMove(
+        "playCard",
+        { args: { cardId: gearId as string, attachToId: rivalHostId as string } },
+        P1,
+      );
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.errorCode).toBe("INVALID_ATTACH_TARGET");
+      }
+      // Nothing was paid and nothing moved for an illegal attach.
+      expect(engine.getCard(gear, "hand", P1)).toBeInZone("hand");
+      expect(engine.getState()).toHaveEddies({ player: "p1", count: 5 });
+    });
+
+    it("fails with INVALID_ATTACH_TARGET when Gear has no attach target", () => {
+      const gear = createMockGear({ cost: 1 });
+      const engine = CyberpunkTestEngine.createWithFixture({ hand: [gear], eddies: 5 });
+      const gearId = engine.findCardId(gear, "hand", P1);
+
+      const result = engine.executeMove("playCard", { args: { cardId: gearId as string } }, P1);
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.errorCode).toBe("INVALID_ATTACH_TARGET");
+      }
+      expect(engine.getCard(gear, "hand", P1)).toBeInZone("hand");
+      expect(engine.getState()).toHaveEddies({ player: "p1", count: 5 });
+    });
+
+    it("fails with INVALID_ATTACH_TARGET when gear attachToId is a face-down legend", () => {
+      const legend = createMockLegend({ name: "Face Down Legend" });
+      const gear = createMockGear({ cost: 1 });
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [gear],
+        legendArea: [{ card: legend, faceDown: true }],
+        eddies: 5,
+      });
+      const gearId = engine.findCardId(gear, "hand", P1);
+      const legendId = engine.findCardId(legend, "legendArea", P1);
+
+      const result = engine.executeMove(
+        "playCard",
+        { args: { cardId: gearId as string, attachToId: legendId as string } },
+        P1,
+      );
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.errorCode).toBe("INVALID_ATTACH_TARGET");
+      }
+      expect(engine.getCard(gear, "hand", P1)).toBeInZone("hand");
+    });
+
+    it("fails with INVALID_ATTACH_TARGET when gear attachToId names an unknown entity", () => {
+      const host = createMockUnit({ cost: 1 });
+      const gear = createMockGear({ cost: 1 });
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [gear],
+        field: [host],
+        eddies: 5,
+      });
+      const gearId = engine.findCardId(gear, "hand", P1);
+
+      const result = engine.executeMove(
+        "playCard",
+        { args: { cardId: gearId as string, attachToId: "card_from_stale_mirror" } },
+        P1,
+      );
+
+      expect(result.success).toBe(false);
+      if (!result.success) {
+        expect(result.errorCode).toBe("INVALID_ATTACH_TARGET");
+      }
+      expect(engine.getCard(gear, "hand", P1)).toBeInZone("hand");
+    });
   });
 
   describe("execute()", () => {
@@ -226,11 +314,11 @@ describe("playCard", () => {
       expect(engine.getFaceDownLegends(P1)).toHaveLength(3);
     });
 
-    it("spends normal eddies, then face-down legends, then face-up legends", () => {
+    it("spends normal eddies, then face-up pure-resource legends before face-down legends", () => {
       const unit = createMockUnit({ cost: 3 });
-      const faceUpFirst = createMockLegend({ name: "Face Up First" });
+      const faceUpFirst = createMockLegend({ name: "Face Up First", hasSellTag: true });
       const faceDownSecond = createMockLegend({ name: "Face Down Second" });
-      const faceUpThird = createMockLegend({ name: "Face Up Third" });
+      const faceUpThird = createMockLegend({ name: "Face Up Third", hasSellTag: true });
       const engine = CyberpunkTestEngine.createWithFixture({
         hand: [unit],
         legendArea: [
@@ -247,12 +335,12 @@ describe("playCard", () => {
       const faceDownSecondCard = engine.getCard(faceDownSecond, "legendArea", P1);
       const faceUpThirdCard = engine.getCard(faceUpThird, "legendArea", P1);
       expect(engine.getState().G.players[P1]!.spentEddies).toBe(1);
-      expect(faceDownSecondCard.meta.spent).toBe(true);
+      expect(faceDownSecondCard.meta.spent).toBe(false);
       expect(faceUpFirstCard.meta.spent).toBe(true);
-      expect(faceUpThirdCard.meta.spent).toBe(false);
+      expect(faceUpThirdCard.meta.spent).toBe(true);
       expect(engine.getEvents("cardSpent").map((event) => event.cardId)).toEqual([
-        faceDownSecondCard.instanceId,
         faceUpFirstCard.instanceId,
+        faceUpThirdCard.instanceId,
       ]);
     });
 

@@ -32,6 +32,7 @@ export const welcomeToNightCityRetailOverwatchPanamSGift = defineCyberpunkCard({
       controller: "friendly",
       zones: ["field", "legendArea"],
       cardTypes: ["unit", "legend"],
+      face: "faceUp",
     },
   },
   abilities: [

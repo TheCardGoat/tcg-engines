@@ -10,6 +10,7 @@ export const songOfTheShiningKnight = definePitchFamily(
         effect: {
           type: "create-token",
           token: "might",
+          creator: "effect-controller",
           controller: "each-other-hero",
         },
       },

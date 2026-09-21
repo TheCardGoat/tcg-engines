@@ -18,6 +18,30 @@ interface EffectArrowProps {
   readonly durationMs: number;
 }
 
+export interface SourceCardEffectTiming {
+  readonly impactAtMs: number;
+  readonly arrowStartMs: number;
+  readonly arrowDurationMs: number;
+  readonly targetStartMs: number;
+  readonly targetDurationMs: number;
+}
+
+export function sourceCardEffectTiming(durationMs: number): SourceCardEffectTiming {
+  const duration = Math.max(0, durationMs);
+  const impactAtMs = Math.round(duration * 0.5);
+  const arrowStartMs = Math.round(duration * 0.25);
+  const arrowEndMs = Math.min(duration, impactAtMs + Math.round(duration * 0.14));
+  const targetStartMs = Math.round(duration * 0.4);
+  const targetEndMs = Math.min(duration, impactAtMs + Math.round(duration * 0.28));
+  return {
+    impactAtMs,
+    arrowStartMs,
+    arrowDurationMs: Math.max(0, arrowEndMs - arrowStartMs),
+    targetStartMs,
+    targetDurationMs: Math.max(0, targetEndMs - targetStartMs),
+  };
+}
+
 export function EffectArrow({ id, source, destination, startAtMs, durationMs }: EffectArrowProps) {
   return (
     <motion.g
@@ -162,12 +186,12 @@ export function EffectOverlay() {
                 destination={destination}
                 startAtMs={
                   compiled.step.presentation === "source-card"
-                    ? compiled.startAtMs + 600
+                    ? compiled.startAtMs + sourceCardEffectTiming(compiled.durationMs).arrowStartMs
                     : compiled.startAtMs
                 }
                 durationMs={
                   compiled.step.presentation === "source-card"
-                    ? Math.max(0, compiled.durationMs - 1_300)
+                    ? sourceCardEffectTiming(compiled.durationMs).arrowDurationMs
                     : compiled.durationMs
                 }
               />
@@ -192,8 +216,11 @@ export function EffectOverlay() {
                   ],
                 }}
                 transition={{
-                  delay: (compiled.startAtMs + 700) / 1_000,
-                  duration: Math.max(0, compiled.durationMs - 1_400) / 1_000,
+                  delay:
+                    (compiled.startAtMs +
+                      sourceCardEffectTiming(compiled.durationMs).targetStartMs) /
+                    1_000,
+                  duration: sourceCardEffectTiming(compiled.durationMs).targetDurationMs / 1_000,
                   ease: [0.16, 1, 0.3, 1],
                   times: [0, 0.2, 0.78, 1],
                 }}
@@ -261,7 +288,7 @@ export function EffectOverlay() {
                     ease: sourceExitRect
                       ? [[0.22, 0.61, 0.36, 1], "linear", [0.4, 0, 0.2, 1], "linear"]
                       : [0.22, 0.61, 0.36, 1],
-                    times: sourceExitRect ? [0, 0.28, 0.62, 0.96, 1] : [0, 0.28, 0.78, 1],
+                    times: sourceExitRect ? [0, 0.22, 0.5, 0.94, 1] : [0, 0.22, 0.78, 1],
                   }}
                 >
                   <SimulatorEntityVisual entity={sourceEntity} density="normal" />

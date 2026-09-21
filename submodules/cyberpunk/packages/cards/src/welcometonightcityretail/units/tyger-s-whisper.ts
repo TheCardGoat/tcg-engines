@@ -25,7 +25,7 @@ export const welcomeToNightCityRetailTygerSWhisper = defineCyberpunkCard({
   abilities: [
     {
       kind: "triggered",
-      text: "Play You may Call a Legend for free.",
+      text: "{Play} You may Call a Legend for free.",
       trigger: { trigger: "play" },
       source: { selector: "self" },
       effects: [

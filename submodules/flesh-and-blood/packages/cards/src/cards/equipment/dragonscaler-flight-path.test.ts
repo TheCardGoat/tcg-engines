@@ -1,5 +1,6 @@
 import { describe, it } from "vitest";
 import {
+  expectCombat,
   expectFabCard,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
@@ -64,7 +65,7 @@ describe("Dragonscaler Flight Path (HNT143) AAA", () => {
     expectFabCard(Fang, dragonscalerFlightPath).toBeIn("legs");
   });
 
-  it("timing: a Draconic weapon attack may attack an additional time this turn", () => {
+  it("timing: a Draconic weapon attack gains the extra swing without a prompt", () => {
     const game = FabTestEngine.start(
       {
         hero: fang,
@@ -83,8 +84,12 @@ describe("Dragonscaler Flight Path (HNT143) AAA", () => {
     game.advanceCombatTo("reaction");
     Fang.activate(dragonscalerFlightPath);
     game.helpers.resolveUntilIdle({ entityTargets: "minimum" });
+    // CR 5.2.3c: the weapon-attack grant applies by itself alongside the go
+    // again — a full decline pass must still lift the dagger's limit.
     game.closeCombat({ optionals: "decline" });
 
-    Fang.expectActivationRejected(obsidianFireVein);
+    Fang.must.activate(obsidianFireVein);
+    game.advanceCombatTo("defend");
+    expectCombat(game).toBeOpen();
   });
 });

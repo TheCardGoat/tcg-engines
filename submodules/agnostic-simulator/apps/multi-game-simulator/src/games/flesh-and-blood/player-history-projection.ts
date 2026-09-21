@@ -225,6 +225,13 @@ function detailFor(message: FabMoveLogMessage, actorLabel?: FabLogActorLabel) {
     case "flesh-and-blood.cost-life":
     case "flesh-and-blood.cost-chi":
       return { kind: "text" as const, label: "Cost", text };
+    case "flesh-and-blood.set-tapped":
+      return {
+        kind: "cards" as const,
+        label: "Cost",
+        lead: message.values?.state === "tapped" ? "Tapped" : "Untapped",
+        cards: cards.length > 0 ? cards : [{ name: String(message.values?.cardName ?? "a card") }],
+      };
     default:
       return undefined;
   }

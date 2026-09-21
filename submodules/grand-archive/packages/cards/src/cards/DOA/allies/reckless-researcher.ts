@@ -59,60 +59,71 @@ export const recklessResearcher: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["FIRE"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["graveyard"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["FIRE"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "target-1",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    unique: true,
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      filter: {
-                        kind: "type",
-                        oneOf: ["ALLY", "CHAMPION"],
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "choose",
+                    selection: {
+                      id: "target-1",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      unique: true,
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        filter: {
+                          kind: "type",
+                          oneOf: ["ALLY", "CHAMPION"],
+                        },
                       },
                     },
-                  },
-                  effect: {
-                    kind: "deal-damage",
-                    source: {
-                      kind: "source",
+                    effect: {
+                      kind: "deal-damage",
+                      source: {
+                        kind: "source",
+                      },
+                      recipient: {
+                        kind: "bound",
+                        binding: "target-1",
+                      },
+                      amount: 2,
                     },
-                    recipient: {
-                      kind: "bound",
-                      binding: "target-1",
-                    },
-                    amount: 2,
                   },
                 },
               ],

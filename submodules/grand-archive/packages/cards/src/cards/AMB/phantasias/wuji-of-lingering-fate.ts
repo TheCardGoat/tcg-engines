@@ -123,17 +123,28 @@ export const wujiOfLingeringFate: GrandArchiveCard<GrandArchiveAbilityDefinition
               kind: "sequence",
               effects: [
                 {
-                  kind: "sacrifice",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "sacrifice",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "mill",
-                  player: {
-                    binding: "target-player",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  amount: 3,
+                  then: {
+                    kind: "mill",
+                    player: {
+                      binding: "target-player",
+                    },
+                    amount: 3,
+                  },
                 },
               ],
             },

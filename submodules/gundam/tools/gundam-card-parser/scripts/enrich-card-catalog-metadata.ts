@@ -162,6 +162,8 @@ function walkFiles(dir: string, predicate: (path: string) => boolean): string[] 
 
 function slugify(value: string): string {
   return value
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");

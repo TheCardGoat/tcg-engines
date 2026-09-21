@@ -19,6 +19,7 @@ export const GAME_TYPES = [
   "flesh-and-blood",
   "grand-archive",
   "naruto",
+  "alpha-clash",
 ] as const;
 
 export type GameType = (typeof GAME_TYPES)[number];

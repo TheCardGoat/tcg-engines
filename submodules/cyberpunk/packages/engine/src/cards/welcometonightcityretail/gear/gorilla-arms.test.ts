@@ -5,6 +5,7 @@ import {
   welcomeToNightCityRetailOffdutyMalfini,
   welcomeToNightCityRetailRidingNomad,
 } from "@tcg/cyberpunk-cards";
+import { getEffectivePower } from "../../../active-effects/index.ts";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 /**
@@ -53,7 +54,38 @@ function resolveFirstPendingGigTarget(
 }
 
 describe("Gorilla Arms", () => {
-  it("attaches to a unit and contributes four power", () => {
+  it("is the exact 4-cost 3-power yellow Cyberware Gear with its host steal trigger", () => {
+    const arms = welcomeToNightCityRetailGorillaArms;
+
+    expect(arms).toMatchObject({
+      canonicalId: "gorilla-arms",
+      slug: "gorilla-arms",
+      name: "Gorilla Arms",
+      displayName: "Gorilla Arms",
+      type: "gear",
+      color: "yellow",
+      classifications: ["Cyberware"],
+      cost: 4,
+      power: 3,
+      ram: 3,
+      hasSellTag: true,
+      printNumber: "060",
+      rarity: "Common",
+      rulesText:
+        "(Equip to a friendly Unit or face-up Legend.)\nThe first time this Unit steals 1 or more Gigs each turn, steal a rival Gig with a value not shared by a friendly Gig.",
+      attachment: {
+        target: {
+          controller: "friendly",
+          zones: ["field", "legendArea"],
+          cardTypes: ["unit", "legend"],
+          face: "faceUp",
+        },
+      },
+    });
+    expect(arms.abilities).toHaveLength(1);
+  });
+
+  it("attaches to a friendly Unit, pays 4, and contributes exactly 3 power", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailGorillaArms],
       field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: false }],
@@ -73,6 +105,10 @@ describe("Gorilla Arms", () => {
     });
     const host = engine.getCard(welcomeToNightCityRetailOffdutyMalfini, "field", P1);
     expect(host.meta.attachedGearIds).toHaveLength(1);
+    expect(getEffectivePower(engine.getState(), host.instanceId)).toBe(
+      welcomeToNightCityRetailOffdutyMalfini.power + 3,
+    );
+    expect(engine.getEddies(P1)).toBe(0);
   });
 
   it("is limited to the first extra steal whose value is not shared by a friendly Gig", () => {
@@ -196,6 +232,41 @@ describe("Gorilla Arms", () => {
     // Exactly two gigStolen events total — Gorilla Arms fired once (its own
     // re-trigger is blocked by firstTimeEachTurn) and the cascade is bounded.
     expect(engine.getEvents("gigStolen")).toHaveLength(2);
+  });
+
+  it("resolves without an extra target when every remaining rival Gig value is already shared", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailGorillaArms],
+        field: [{ card: welcomeToNightCityRetailOffdutyMalfini, spent: false, hasLag: false }],
+        eddies: 4,
+        gigArea: [
+          { dieType: "d4", faceValue: 2 },
+          { dieType: "d6", faceValue: 3 },
+        ],
+      },
+      {
+        gigArea: [
+          { dieType: "d4", faceValue: 2 },
+          { dieType: "d6", faceValue: 3 },
+        ],
+      },
+    );
+    engine.attachGear(welcomeToNightCityRetailGorillaArms, welcomeToNightCityRetailOffdutyMalfini, {
+      as: P1,
+    });
+    const rivalTwo = engine.getGigDice(P2).find((die) => die.faceValue === 2);
+    if (!rivalTwo) throw new Error("Expected rival value-2 Gig.");
+
+    engine.attackRival(welcomeToNightCityRetailOffdutyMalfini, { as: P1 });
+    engine.resolveAttack({ as: P1 });
+    engine.resolveAttack({ as: P2, pass: true });
+    engine.resolveAttack({ as: P1, gigIdsToSteal: [rivalTwo.id] });
+
+    engine.expectNoPendingChoice();
+    expect(engine.getGigDice(P1).map((die) => die.faceValue)).toEqual([2, 3, 2]);
+    expect(engine.getGigDice(P2).map((die) => die.faceValue)).toEqual([3]);
+    expect(engine.getEvents("gigStolen")).toHaveLength(1);
   });
 
   it("routes the card-driven steal to gigStolen listeners so Evelyn Parker readies off the cascade (Change B)", () => {

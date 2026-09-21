@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
 import type { EventCard } from "@tcg/op-types";
 import { eb01Doma005, eb01Fourtricks025, eb01MountainGod018, op01Kaido094 } from "@tcg/op-cards";
-import { op13StJaygarciaSaturn083 } from "../../../../../cards/src/cards/OP13/characters/083-st-jaygarcia-saturn.ts";
-import { op13StShepherdJuPeter084 } from "../../../../../cards/src/cards/OP13/characters/084-st-shepherd-ju-peter.ts";
+import { op13StJaygarciaSaturn083 } from "../../../../../cards/src/cards/characters/op13-083-st-jaygarcia-saturn.ts";
+import { op13StShepherdJuPeter084 } from "../../../../../cards/src/cards/characters/op13-084-st-shepherd-ju-peter.ts";
 
 import { registerCards } from "../../../../../cards/src/runtime-catalog.ts";
 import { OnePieceTestEngine } from "../../../index.ts";

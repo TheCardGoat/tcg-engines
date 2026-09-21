@@ -10,7 +10,10 @@ interface CapturedSurfaceProps {
   readonly renderOverlay: (source: GundamDragSource) => ReactNode;
   readonly onDragStart?: (source: GundamDragSource | null) => void;
   readonly onDragCancel?: () => void;
-  readonly onDragEnd?: (source: GundamDragSource | null, overId: string | null) => boolean | void;
+  readonly onDragEnd?: (
+    source: GundamDragSource | null,
+    overId: string | null,
+  ) => { readonly kind: "accepted" | "rejected" };
 }
 
 const dragHarness = vi.hoisted(() => ({
@@ -116,7 +119,7 @@ describe("GundamDragDropProvider render isolation", () => {
     });
     let accepted = false;
     act(() => {
-      accepted = dragHarness.surfaceProps?.onDragEnd?.(handSource, target) === true;
+      accepted = dragHarness.surfaceProps?.onDragEnd?.(handSource, target).kind === "accepted";
     });
 
     expect(accepted).toBe(true);
@@ -125,7 +128,7 @@ describe("GundamDragDropProvider render isolation", () => {
 
     cleanupLatest();
     act(() => {
-      accepted = dragHarness.surfaceProps?.onDragEnd?.(handSource, target) === true;
+      accepted = dragHarness.surfaceProps?.onDragEnd?.(handSource, target).kind === "accepted";
     });
     expect(accepted).toBe(false);
     expect(latestHandler).toHaveBeenCalledTimes(1);

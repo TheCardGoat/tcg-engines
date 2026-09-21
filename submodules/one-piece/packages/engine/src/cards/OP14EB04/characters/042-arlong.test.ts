@@ -6,7 +6,7 @@ import {
   op09Shanks001,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Arlong042 } from "../../../../../cards/src/cards/OP14EB04/characters/042-arlong.ts";
+import { op14eb04Arlong042 } from "../../../../../cards/src/cards/characters/op14-042-arlong.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

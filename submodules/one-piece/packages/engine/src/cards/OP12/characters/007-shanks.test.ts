@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005 } from "@tcg/op-cards";
-import { op12KouzukiOden004 } from "../../../../../cards/src/cards/OP12/characters/004-kouzuki-oden.ts";
-import { op12Shanks007 } from "../../../../../cards/src/cards/OP12/characters/007-shanks.ts";
+import { op12KouzukiOden004 } from "../../../../../cards/src/cards/characters/op12-004-kouzuki-oden.ts";
+import { op12Shanks007 } from "../../../../../cards/src/cards/characters/op12-007-shanks.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

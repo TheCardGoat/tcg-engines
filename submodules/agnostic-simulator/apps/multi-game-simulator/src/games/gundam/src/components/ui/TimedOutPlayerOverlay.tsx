@@ -1,13 +1,17 @@
 import { Hourglass } from "lucide-react";
+import type { DropEligibility } from "@tcg/protocol";
+import { DropClaimControl, isTimeoutDropOverlayVisible } from "@tcg/simulator-ui";
 
 import { cn } from "../../lib/utils.ts";
-import { Button } from "../primitives/index.ts";
+import { Button, buttonVariants } from "../primitives/index.ts";
 
 export interface TimedOutPlayerOverlayProps {
   readonly canSkip: boolean;
   readonly canDrop: boolean;
   readonly onSkip: () => void;
   readonly onDrop: () => void;
+  readonly eligibility?: DropEligibility | null;
+  readonly serverNowMs?: number;
 }
 
 export function TimedOutPlayerOverlay({
@@ -15,8 +19,18 @@ export function TimedOutPlayerOverlay({
   canDrop,
   onSkip,
   onDrop,
+  eligibility,
+  serverNowMs,
 }: TimedOutPlayerOverlayProps) {
-  if (!canSkip && !canDrop) return null;
+  const hostedTimeout = isTimeoutDropOverlayVisible({
+    canSkip: false,
+    canDrop: false,
+    eligibility,
+    serverNowMs,
+  });
+  const practiceDrop = !eligibility && canDrop;
+  const practiceSkip = !eligibility && canSkip;
+  if (!practiceSkip && !hostedTimeout && !practiceDrop) return null;
 
   return (
     <div
@@ -33,12 +47,21 @@ export function TimedOutPlayerOverlay({
           OPPONENT TIME EXPIRED
         </div>
         <div className="flex items-center gap-2">
-          {canSkip ? (
+          {practiceSkip || (hostedTimeout && canSkip) ? (
             <Button size="lg" variant="outline" data-testid="skip-opponent-turn" onClick={onSkip}>
               Skip Turn
             </Button>
           ) : null}
-          {canDrop ? (
+          {hostedTimeout ? (
+            <DropClaimControl
+              eligibility={eligibility}
+              serverNowMs={serverNowMs ?? eligibility?.projectedAtMs ?? Date.now()}
+              onClaim={onDrop}
+              label="Drop"
+              layout="inline"
+              actionClassName={buttonVariants({ variant: "danger", size: "lg" })}
+            />
+          ) : practiceDrop ? (
             <Button size="lg" variant="danger" data-testid="drop-opponent" onClick={onDrop}>
               Drop
             </Button>

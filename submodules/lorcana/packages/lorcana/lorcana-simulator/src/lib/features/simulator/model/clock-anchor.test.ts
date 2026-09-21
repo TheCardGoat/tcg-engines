@@ -5,6 +5,7 @@ import { anchorClockSnapshot } from "./clock-anchor.js";
 const serverNow = 1_700_000_000_000;
 const freshClock: ClockSnapshot = {
   reserveMsRemaining: 180_000,
+  graceMs: 15_000,
   isRunning: true,
   startedAtMs: serverNow,
   timeoutCount: 0,
@@ -37,7 +38,8 @@ describe("server clock anchoring", () => {
     expect(deriveClockView(anchored, 500).formattedTime).toBe("2:45");
     expect(deriveClockView(anchored, 6_500).canSkipOpponent).toBe(true);
     expect(deriveClockView(anchored, 6_500).canDropOpponent).toBe(false);
-    expect(deriveClockView(anchored, 166_500).canDropOpponent).toBe(true);
+    expect(deriveClockView(anchored, 180_499).canDropOpponent).toBe(false);
+    expect(deriveClockView(anchored, 180_500).canDropOpponent).toBe(true);
   });
 
   it("does not spend paused time or invent missing clocks", () => {

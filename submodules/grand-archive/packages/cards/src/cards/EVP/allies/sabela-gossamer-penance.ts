@@ -162,20 +162,11 @@ export const sabelaGossamerPenance: GrandArchiveCard<GrandArchiveAbilityDefiniti
             },
           },
           effect: {
-            kind: "choose",
-            selection: {
-              id: "sacrificed-object",
-              kind: "choice",
-              declared: "resolution",
-              chooser: "controller",
-              count: {
-                kind: "exactly",
-                amount: 1,
-              },
-              candidates: {
-                kind: "object",
+            kind: "sacrifice",
+            subject: {
+              kind: "each",
+              collection: {
                 zones: ["field"],
-                relationship: "controlled-by",
                 player: "controller",
                 filter: {
                   kind: "all",
@@ -192,13 +183,6 @@ export const sabelaGossamerPenance: GrandArchiveCard<GrandArchiveAbilityDefiniti
                     },
                   ],
                 },
-              },
-            },
-            effect: {
-              kind: "sacrifice",
-              subject: {
-                kind: "bound",
-                binding: "sacrificed-object",
               },
             },
           },

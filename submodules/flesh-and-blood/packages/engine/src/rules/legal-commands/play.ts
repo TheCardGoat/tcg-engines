@@ -104,8 +104,23 @@ function genericOptionalCostIsPayable(
   playedInstanceId: string,
   source: FabObjectRef,
   cost: FabCost,
+  baseResourceCost: number,
 ): boolean {
-  if (cost.class === "asset" && cost.type === "resources") return true;
+  if (cost.class === "asset" && cost.type === "resources") {
+    if (typeof cost.amount !== "number") return true;
+    const player = state.players[actorId];
+    if (!player) return false;
+    const pitchAvailable = state.containers.zonesByPlayerId[actorId]!.hand.reduce(
+      (total, candidateId) => {
+        if (candidateId === playedInstanceId) return total;
+        return total + (evaluatedObject(state, view, candidateId)?.current.numeric.pitch ?? 0);
+      },
+      0,
+    );
+    return (
+      player.resourcePoints + player.chiPoints + pitchAvailable >= baseResourceCost + cost.amount
+    );
+  }
   if (cost.class !== "effect") return false;
 
   const filter = "filter" in cost ? cost.filter : undefined;
@@ -150,6 +165,7 @@ function optionalCostDeclarationGroups(
   actorId: string,
   instanceId: string,
   object: NonNullable<ReturnType<FabRulesView["object"]>>,
+  baseResourceCost: number,
 ): readonly (readonly FabOptionalCostCommandDeclaration[])[] {
   const zones = state.containers.zonesByPlayerId[actorId]!;
   const groups: FabOptionalCostCommandDeclaration[][] = [];
@@ -245,7 +261,17 @@ function optionalCostDeclarationGroups(
           labels: [],
         },
       ];
-      if (genericOptionalCostIsPayable(state, view, actorId, instanceId, object.ref, spec.cost)) {
+      if (
+        genericOptionalCostIsPayable(
+          state,
+          view,
+          actorId,
+          instanceId,
+          object.ref,
+          spec.cost,
+          baseResourceCost,
+        )
+      ) {
         declarations.push({
           payload: {
             declaredOptionalCostAbilityIds: [spec.abilityId],
@@ -448,7 +474,14 @@ export function instantiateBeginPlayLegalCommands(context: {
         // pay/decline choices without deriving rules from card text.
         const optionalCostDeclarations = object
           ? combineOptionalCostDeclarations(
-              optionalCostDeclarationGroups(state, view, actorId, instanceId, object),
+              optionalCostDeclarationGroups(
+                state,
+                view,
+                actorId,
+                instanceId,
+                object,
+                quote.resourceCost ?? 0,
+              ),
             )
           : [{ payload: {}, labels: [] }];
         const basePayload: Record<string, unknown> = {

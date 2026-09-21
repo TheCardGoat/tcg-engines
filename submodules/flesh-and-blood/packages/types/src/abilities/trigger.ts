@@ -339,7 +339,11 @@ export interface FabTriggerConstraintsByEvent {
   readonly play: { readonly from?: readonly FabZone[] };
   readonly pitch: { readonly amount?: FabComparison };
   readonly discard: { readonly random?: boolean; readonly amount?: FabComparison };
-  readonly draw: { readonly amount?: FabComparison };
+  readonly draw: {
+    readonly amount?: FabComparison;
+    /** Individual cards ("draw a card") or the shared draw multi-event ("one or more"). */
+    readonly grouping?: "individual" | "multi-event";
+  };
   readonly banish: FabZoneTransitionTriggerConstraints;
   readonly destroy: FabZoneTransitionTriggerConstraints;
   readonly search: { readonly amount?: FabComparison };
@@ -367,7 +371,11 @@ export interface FabTriggerConstraintsByEvent {
   readonly usurp: Record<never, never>;
   readonly crank: Record<never, never>;
   readonly transcend: Record<never, never>;
-  readonly create: { readonly amount?: FabComparison };
+  readonly create: {
+    readonly amount?: FabComparison;
+    /** Controller of the effect that creates the object, independently of its creator. */
+    readonly effectController?: "ability-controller" | "opponent";
+  };
   readonly "complete-contract": Record<never, never>;
   readonly trigger: { readonly abilityType?: FabAbilityType };
   readonly fragment: Record<never, never>;

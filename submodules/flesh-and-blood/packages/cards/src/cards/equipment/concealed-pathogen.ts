@@ -70,6 +70,7 @@ export const concealedPathogen = defineCard(
               {
                 type: "create-token",
                 token: "bloodrot-pox",
+                creator: "effect-controller",
                 controller: "opponent",
               },
             ],

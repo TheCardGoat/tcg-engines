@@ -82,13 +82,20 @@ function createFixtureSummary(
 ): FabPostGameSummaryModel {
   const viewerWon = outcome === "victory";
   const opponentWon = outcome === "defeat";
-  const cards = fixtureCards(viewerSeat, artResolver);
+  const cards = fixtureCards(viewerSeat, artResolver).map((card, index) =>
+    // Exercise the name-only aggregate presentation for one usage row.
+    index === 1 ? { ...card, id: `name:${card.name}` } : card,
+  );
   const opponentCards = fixtureCards(opponentSeat, artResolver);
   const viewerHero = heroName(viewerSeat);
   const opponentHero = heroName(opponentSeat);
   const reason =
     outcome === "draw" ? "mutual defeat" : outcome === "defeat" ? "concession" : "lethal damage";
-  const handCards = cards.slice(0, 5).map((card) => ({ id: card.id, name: card.name }));
+  const handCards = cards.slice(0, 5).map((card, index) => ({
+    // One name-only hand card exercises the aggregated-reference hint.
+    id: index === 3 ? null : card.id,
+    name: card.name,
+  }));
   const firstCard = handCards[0] ?? { id: "mock-play", name: "Played card" };
   const secondCard = handCards[1] ?? { id: "mock-pitch", name: "Pitched card" };
   const thirdCard = handCards[2] ?? { id: "mock-defense", name: "Defending card" };

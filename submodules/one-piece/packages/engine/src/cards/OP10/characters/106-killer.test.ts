@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op01Shanks120, op07JewelryBonney019 } from "@tcg/op-cards";
-import { op10Killer106 } from "../../../../../cards/src/cards/OP10/characters/106-killer.ts";
-import { op10Urouge101 } from "../../../../../cards/src/cards/OP10/characters/101-urouge.ts";
+import { op10Killer106 } from "../../../../../cards/src/cards/characters/op10-106-killer.ts";
+import { op10Urouge101 } from "../../../../../cards/src/cards/characters/op10-101-urouge.ts";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP10-106 Killer", () => {

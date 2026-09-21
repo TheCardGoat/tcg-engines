@@ -30,61 +30,53 @@ export const veritaQueenOfHearts: GrandArchiveCard<GrandArchiveAbilityDefinition
       abilities: [
         {
           id: "4qc47amgpp-a1",
-          kind: "card-resolution",
+          kind: "static",
+          staticKind: "effects",
           text: "You may banish three or more Suited ally cards with total reserve cost 10 from your graveyard rather than pay this card's reserve cost.",
-          effect: {
-            kind: "optional",
-            player: "controller",
-            allOrNothing: true,
-            effect: {
-              kind: "banish",
-              player: "controller",
-              selection: {
-                id: "banished-cards",
-                kind: "choice",
-                declared: "resolution",
-                chooser: "controller",
+          effects: [
+            {
+              kind: "rule-modification",
+              mode: "replace-cost",
+              action: "pay-cost",
+              subject: {
+                kind: "source",
+              },
+              costKind: "reserve",
+              cost: {
+                kind: "select-and-move",
+                player: "controller",
+                from: "graveyard",
+                to: "banishment",
                 count: {
-                  kind: "exactly",
+                  kind: "at-least",
                   amount: 3,
                 },
-                candidates: {
-                  kind: "card",
-                  zones: ["hand"],
-                  relationship: "zone-of",
-                  player: "controller",
-                  filter: {
-                    kind: "all",
-                    filters: [
-                      {
-                        kind: "type",
-                        oneOf: ["ALLY"],
-                      },
-                      {
-                        kind: "numeric",
-                        comparison: {
-                          left: {
-                            kind: "property",
-                            subject: {
-                              kind: "candidate",
-                            },
-                            property: "reserve-cost",
-                            basis: "base",
-                          },
-                          operator: "eq",
-                          right: 10,
-                        },
-                      },
-                      {
-                        kind: "subtype",
-                        oneOf: ["SUITED"],
-                      },
-                    ],
-                  },
+                filter: {
+                  kind: "all",
+                  filters: [
+                    {
+                      kind: "type",
+                      oneOf: ["ALLY"],
+                    },
+                    {
+                      kind: "subtype",
+                      oneOf: ["SUITED"],
+                    },
+                  ],
+                },
+                aggregateConstraint: {
+                  property: "reserve-cost",
+                  operation: "sum",
+                  operator: "eq",
+                  value: 10,
+                  basis: "base",
                 },
               },
+              duration: {
+                kind: "while-source-in-functional-zone",
+              },
             },
-          },
+          ],
         },
         {
           id: "4qc47amgpp-a2",
@@ -176,7 +168,7 @@ export const veritaQueenOfHearts: GrandArchiveCard<GrandArchiveAbilityDefinition
             },
             affectedSet: "locked",
             duration: {
-              kind: "until-end-of-turn",
+              kind: "until-end-of-next-turn",
               whose: "controller",
             },
             layer: {

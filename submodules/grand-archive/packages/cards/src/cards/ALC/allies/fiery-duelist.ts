@@ -69,46 +69,57 @@ export const fieryDuelist: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "sequence",
               effects: [
                 {
-                  kind: "discard",
-                  player: "controller",
-                  selection: {
-                    id: "discarded-card",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["hand"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["FIRE"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "discard",
+                    player: "controller",
+                    selection: {
+                      id: "discarded-card",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["hand"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["FIRE"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "draw",
-                      player: "controller",
-                      amount: 1,
-                    },
-                    {
-                      kind: "set-object-state",
-                      subject: {
-                        kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "draw",
+                        player: "controller",
+                        amount: 1,
                       },
-                      state: "distant",
-                      value: true,
-                    },
-                  ],
+                      {
+                        kind: "set-object-state",
+                        subject: {
+                          kind: "source",
+                        },
+                        state: "distant",
+                        value: true,
+                      },
+                    ],
+                  },
                 },
               ],
             },

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op04Chaka008 } from "../../../../../cards/src/cards/OP04/characters/008-chaka.ts";
+import { op04Chaka008 } from "../../../../../cards/src/cards/characters/op04-008-chaka.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP04-008 Chaka", () => {

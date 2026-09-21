@@ -92,7 +92,6 @@ export const rhongomiantGrovesSpire: GrandArchiveCard<GrandArchiveAbilityDefinit
             kind: "event",
             event: {
               name: "counter-removed",
-              actor: "controller",
               counter: "durability",
               subject: {
                 kind: "source",

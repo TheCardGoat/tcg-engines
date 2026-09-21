@@ -73,7 +73,7 @@ export const welcomeToNightCityRetailPanamPalmerStrengthThroughFamily = defineCy
                 target: {
                   selector: "card",
                   controller: "friendly",
-                  zones: ["legendArea"],
+                  zones: ["field", "legendArea"],
                   cardTypes: ["legend"],
                   face: "faceUp",
                 },

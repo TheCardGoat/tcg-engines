@@ -42,7 +42,9 @@ describe("Imperial Intent (HNT109) AAA", () => {
     game.passBoth();
 
     expectFabPlayer(Fang).toHaveResourceCount(1);
-    expectCombat(game).toHaveAttackPower(3);
+    // 1 + 2 — this link's Draconic reaction also turns on Obsidian Fire
+    // Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(4);
     expectFabCard(Fang, imperialIntentRed).toBeIn("graveyard");
   });
 
@@ -94,9 +96,10 @@ describe("Imperial Intent (HNT109) AAA", () => {
 
     Fang.must.playReaction(imperialIntentRed);
     game.passBoth();
-    expectCombat(game).toHaveAttackPower(3);
+    // 1 + 2 + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(4);
 
     game.helpers.resolveRestOfCombat();
-    expectFabPlayer(Dash).toHaveLife(17);
+    expectFabPlayer(Dash).toHaveLife(16);
   });
 });

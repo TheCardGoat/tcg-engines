@@ -819,13 +819,15 @@ export function parseActions(rawActionText: string): ParseActionsResult {
         ...conditionalActions.parsed.map(
           (action): Action => ({
             ...action,
-            condition: action.condition
+            ...("condition" in action && action.condition
               ? {
-                  condition: "compound",
-                  operator: "and",
-                  conditions: [condition, action.condition],
+                  condition: {
+                    condition: "compound",
+                    operator: "and",
+                    conditions: [condition, action.condition],
+                  },
                 }
-              : condition,
+              : { condition }),
           }),
         ),
       );
@@ -1819,10 +1821,11 @@ export function parseActions(rawActionText: string): ParseActionsResult {
       if (condition && followUp.parsed.length > 0 && !followUp.unparsed) {
         parsed.push(
           ...followUp.parsed.map(
-            (action): Action => ({
-              ...action,
-              condition,
-            }),
+            (action): Action =>
+              ({
+                ...action,
+                condition,
+              }) as Action,
           ),
         );
         continue;

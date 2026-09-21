@@ -58,6 +58,10 @@ export const bombasticSprint: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
             kind: "rule-modification",
             mode: "allow",
             action: "activate-fast",
+            subject: {
+              kind: "player",
+              player: "controller",
+            },
             filter: {
               kind: "all",
               filters: [
@@ -74,6 +78,9 @@ export const bombasticSprint: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
             duration: {
               kind: "for-next-event",
               event: "card-activated",
+              expires: {
+                kind: "this-turn",
+              },
             },
           },
         },

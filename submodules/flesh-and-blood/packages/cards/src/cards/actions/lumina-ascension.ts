@@ -148,24 +148,23 @@ export const luminaAscension = definePitchFamily(fabPitchFamilies["lumina-ascens
     },
     chargedTurnAttackAdditionalTimeWeapon: {
       kind: "resolution",
+      // CR 5.2.3c: the performed charge gates the allowance, not a player
+      // decision — it applies to every weapon by itself.
       condition: { type: "performed-this-turn", event: "charge", player: "controller" },
       effect: {
-        type: "optional",
-        effect: {
-          type: "modify-activation-limit",
-          target: {
-            selector: "object",
-            declared: "at-resolution",
-            player: "controller",
-            zones: ["weapon"],
-            count: {
-              type: "all",
-            },
+        type: "modify-activation-limit",
+        target: {
+          selector: "object",
+          declared: "at-resolution",
+          player: "controller",
+          zones: ["weapon"],
+          count: {
+            type: "all",
           },
-          operation: "additional",
-          count: 1,
-          duration: "this-turn",
         },
+        operation: "additional",
+        count: 1,
+        duration: "this-turn",
       },
     },
   }),

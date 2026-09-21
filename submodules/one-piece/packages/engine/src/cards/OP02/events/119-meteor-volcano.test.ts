@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op02MeteorVolcano119 } from "../../../../../cards/src/cards/OP02/events/119-meteor-volcano.ts";
+import { op02MeteorVolcano119 } from "../../../../../cards/src/cards/events/op02-119-meteor-volcano.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-119 Meteor Volcano", () => {

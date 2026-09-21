@@ -3,6 +3,7 @@ import {
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailDyingNightVSPistol,
   welcomeToNightCityRetailFieldOperator,
+  welcomeToNightCityRetailJackieWellesMamaSFavorite,
   welcomeToNightCityRetailKiroshiOptics,
   welcomeToNightCityRetailMantisBlades,
   welcomeToNightCityRetailOverwatchPanamSGift,
@@ -11,6 +12,101 @@ import {
 import { CyberpunkTestEngine, P1 } from "../../../testing/index.ts";
 
 describe('The Heist — "Trash 4. Add a Gear from among them to your hand. If that Gear\'s cost equals the value of a friendly Gig, you may play it for free instead."', () => {
+  it("has the exact yellow Merc identity and ordered mill, recovery, and optional free-equip DSL", () => {
+    expect(welcomeToNightCityRetailTheHeist).toMatchObject({
+      canonicalId: "the-heist",
+      slug: "the-heist",
+      name: "The Heist",
+      displayName: "The Heist",
+      type: "program",
+      color: "yellow",
+      classifications: ["Merc"],
+      cost: 2,
+      power: null,
+      ram: 2,
+      hasSellTag: true,
+      rarity: "Uncommon",
+      printNumber: "070",
+      timingTriggers: ["play"],
+      reminderText: ["Discard programs after they resolve."],
+      rulesText:
+        "Trash 4. Add a Gear from among them to your hand. If that Gear's cost equals the value of a friendly Gig, you may play it for free instead.",
+      abilities: [
+        {
+          kind: "triggered",
+          trigger: { trigger: "play" },
+          source: { selector: "self" },
+          effects: [
+            {
+              effect: "trashFromDeck",
+              player: "friendly",
+              amount: 4,
+              outputBinding: "trashedCards",
+            },
+            {
+              effect: "moveCard",
+              target: {
+                selector: "bound",
+                id: "trashedCards",
+                cardTypes: ["gear"],
+                selection: { mode: "choose", min: 1, max: 1 },
+              },
+              destination: "hand",
+              outputBinding: "recoveredGear",
+            },
+            {
+              effect: "playCard",
+              optional: true,
+              conditions: [
+                {
+                  condition: "costMatchesGig",
+                  target: { selector: "bound", id: "recoveredGear" },
+                  controller: "friendly",
+                },
+              ],
+              target: { selector: "bound", id: "recoveredGear" },
+              free: true,
+              attachTo: {
+                selector: "card",
+                controller: "friendly",
+                zones: ["field", "legendArea"],
+                cardTypes: ["unit", "legend"],
+                face: "faceUp",
+                selection: { mode: "choose", min: 1, max: 1 },
+              },
+            },
+          ],
+        },
+      ],
+    });
+  });
+
+  it("pays exactly 2 and rejects one less before milling", () => {
+    const createEngine = (eddies: number) => {
+      const engine = CyberpunkTestEngine.createWithFixture({
+        hand: [welcomeToNightCityRetailTheHeist],
+        deck: 0,
+        eddies,
+      });
+      for (const legend of engine.getCardsInZone("legendArea", P1)) {
+        engine.judgeSpendCard(legend, { as: P1 });
+      }
+      return engine;
+    };
+
+    const success = createEngine(2);
+    success.playCard(welcomeToNightCityRetailTheHeist, { as: P1 });
+    expect(success.getEddies(P1)).toBe(0);
+    success.expectNoPendingChoice();
+
+    const short = createEngine(1);
+    expect(
+      short.expectFailure(() => short.playCard(welcomeToNightCityRetailTheHeist, { as: P1 }))
+        .errorCode,
+    ).toBe("INSUFFICIENT_EDDIES");
+    expect(short.getCardsInZone("deck", P1)).toHaveLength(0);
+  });
+
   it("trashes exactly 4 cards from the controller's deck", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
@@ -63,7 +159,6 @@ describe('The Heist — "Trash 4. Add a Gear from among them to your hand. If th
       {},
       { preserveDeckOrder: true },
     );
-
     engine.playCard(welcomeToNightCityRetailTheHeist, { as: P1 });
 
     const choice = engine.getState().G.turnMetadata.pendingChoice;
@@ -312,7 +407,12 @@ describe('The Heist — "Trash 4. Add a Gear from among them to your hand. If th
     const fieldOperator = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P1);
     expect(eligibleIds).toContain(fieldOperator.instanceId);
 
-    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "the chosen host is followed by confirmation of the recovered Gear to play",
+    });
+    engine.resolveCardToPlay(welcomeToNightCityRetailMantisBlades, { as: P1 });
 
     engine.expectNoPendingChoice();
 
@@ -363,6 +463,50 @@ describe('The Heist — "Trash 4. Add a Gear from among them to your hand. If th
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailMantisBlades.id,
     );
+  });
+
+  it("may equip the matching recovered Gear for free to a friendly face-up Legend", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailTheHeist],
+        deck: [
+          welcomeToNightCityRetailMantisBlades,
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailCorpoSecurity,
+          welcomeToNightCityRetailCorpoSecurity,
+        ],
+        legendArea: [{ card: welcomeToNightCityRetailJackieWellesMamaSFavorite, faceDown: false }],
+        gigArea: [{ dieType: "d4", faceValue: 1 }],
+        eddies: 2,
+      },
+      {},
+      { preserveDeckOrder: true },
+    );
+    const legendHost = engine.getCard(
+      welcomeToNightCityRetailJackieWellesMamaSFavorite,
+      "legendArea",
+      P1,
+    );
+
+    engine.playCard(welcomeToNightCityRetailTheHeist, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailMantisBlades, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "the recovered matching Gear offers its optional free attachment",
+    });
+    engine.resolveEffectTarget(welcomeToNightCityRetailJackieWellesMamaSFavorite, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "the selected face-up Legend host is followed by Gear confirmation",
+    });
+    engine.resolveCardToPlay(welcomeToNightCityRetailMantisBlades, { as: P1 });
+
+    const equippedGear = engine.getCard(welcomeToNightCityRetailMantisBlades, "field", P1);
+    expect(equippedGear.meta.attachedToId).toBe(legendHost.instanceId);
+    expect(engine.getCard(legendHost.instanceId, "legendArea", P1).meta.attachedGearIds).toContain(
+      equippedGear.instanceId,
+    );
+    expect(engine.getEddies(P1)).toBe(0);
   });
 
   it("does not offer the free-play prompt when no friendly Gig value matches the Gear cost", () => {

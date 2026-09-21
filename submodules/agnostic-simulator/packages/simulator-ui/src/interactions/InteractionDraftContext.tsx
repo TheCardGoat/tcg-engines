@@ -77,6 +77,11 @@ export function InteractionDraftProvider({
     confirmedInputIds: new Set(),
   });
   const submittedKeyRef = useRef<string | null>(null);
+  // Last action id for which begin() actually opened a draft. Effects close
+  // over the render that scheduled them, so the stale-draft invalidation below
+  // uses this to recognize a draft that a child effect (for example a game
+  // layer's decision auto-begin) opened after that render.
+  const begunActionIdRef = useRef<string | undefined>(undefined);
 
   const action = draft.actionId
     ? view.actions.find(
@@ -109,6 +114,7 @@ export function InteractionDraftProvider({
       }
 
       submittedKeyRef.current = null;
+      begunActionIdRef.current = actionId;
       setDraft({
         actionId,
         requestId: nextAction.requestId,
@@ -133,6 +139,23 @@ export function InteractionDraftProvider({
     if (
       view.status === "choosing" &&
       view.actions.some((candidate) => candidate.id === "resolveEffect" && candidate.enabled)
+    ) {
+      return;
+    }
+    // Race guard: on a view flip into a decision, a child effect (a game
+    // layer's decision auto-begin) can call begin() for an action that IS in
+    // this view before this parent effect runs, while this effect still closes
+    // over the previous draft (child-before-parent effect ordering). Clearing
+    // now would wipe the freshly begun draft in the same commit and strand the
+    // prompt. Skip when a newer draft was begun for a different action that is
+    // still present in the view — only clear drafts whose own action no longer
+    // exists in the view. Genuinely stale drafts (their action id gone from the
+    // view) are still cleared on this pass or the next one.
+    const begunActionId = begunActionIdRef.current;
+    if (
+      begunActionId !== undefined &&
+      begunActionId !== draft.actionId &&
+      view.actions.some((candidate) => candidate.id === begunActionId)
     ) {
       return;
     }
@@ -300,13 +323,21 @@ export function InteractionDraftProvider({
     const input = currentActionableInput(action, draft.values, draft.confirmedInputIds);
     if (!input) return;
     setDraft((current) => {
-      // A partition whose routes are all optional can be valid without a
-      // player assignment (for example, a deck look with no eligible tutor).
-      // Persist its empty answer before marking it confirmed so the next
+      // A partition whose routes are all optional, or an optional selection
+      // (min 0), can be valid without a player assignment (for example, a
+      // deck look with no eligible tutor, or a "choose up to one" target).
+      // Persist the empty answer before marking it confirmed so the next
       // actionable-input pass can advance and submit it.
-      if (input.kind === "entity-partition" && current.values[input.id] === undefined) {
-        const emptyPartition = Object.fromEntries(input.routes.map((route) => [route.id, []]));
-        const values = { ...current.values, [input.id]: emptyPartition };
+      const emptyAnswer =
+        current.values[input.id] === undefined
+          ? input.kind === "entity-partition"
+            ? Object.fromEntries(input.routes.map((route) => [route.id, []]))
+            : input.kind === "entity-selection" && interactionInputComplete(input, [])
+              ? []
+              : undefined
+          : undefined;
+      if (emptyAnswer !== undefined) {
+        const values = { ...current.values, [input.id]: emptyAnswer };
         if (
           !validateInteractionSubmission(view, buildInteractionSubmission({ view, action, values }))
             .ok

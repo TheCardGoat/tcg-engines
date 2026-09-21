@@ -2,74 +2,85 @@ import { describe, it } from "vitest";
 import {
   expectFabCard,
   expectFabPlayer,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
-import { dash } from "../heroes/dash.ts";
-import { iyslander } from "../heroes/iyslander.ts";
+import { oscilio } from "../heroes/oscilio.ts";
+import { dromai } from "../heroes/dromai.ts";
+import { aetherAshwing } from "../tokens/aether-ashwing.ts";
+import { nimblismBlue } from "../actions/nimblism.ts";
+import { vaporizeShockYellow } from "./vaporize-shock.ts";
 import { sigilOfAetherBlue } from "./sigil-of-aether.ts";
 
-/**
- * Sigil of Aether (ROS168) — Wizard Instant Aura, Amp 1.
- *
- * Printed: At the beginning of your action phase, destroy this.
- * When this leaves the arena, deal 1 arcane damage to any target. If damage
- * is dealt this way, amp 1.
- */
+const padding = () => [
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+  nimblismBlue,
+];
 
-describe("Sigil of Aether (ROS168) AAA", () => {
-  it("happy: leaving the arena deals 1 arcane to the opposing hero", () => {
-    const game = FabTestEngine.start(
-      { hero: iyslander, hand: [sigilOfAetherBlue], actionPoints: 1, deck: 6 },
-      { hero: dash, hand: [], life: 20, deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Iyslander = game.as(iyslander);
-    const Dash = game.as(dash);
-
-    Iyslander.play(sigilOfAetherBlue);
-    game.helpers.resolveUntilIdle();
-    expectFabCard(Iyslander, sigilOfAetherBlue).toBeIn("arena");
-
-    Iyslander.endTurn();
-    Dash.endTurn();
-    game.untilIdle({ entityTargets: "pause" });
-    Iyslander.target(Dash);
-    game.helpers.resolveUntilIdle();
-
-    expectFabCard(Iyslander, sigilOfAetherBlue).toBeIn("graveyard");
-    expectFabPlayer(Dash).toHaveLife(18);
-  });
-
-  it("boundary: this stays in the arena through the opponent's turn and deals no arcane yet", () => {
-    const game = FabTestEngine.start(
-      { hero: iyslander, hand: [sigilOfAetherBlue], actionPoints: 1, deck: 6 },
-      { hero: dash, hand: [], life: 20, deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Iyslander = game.as(iyslander);
-    const Dash = game.as(dash);
-
-    Iyslander.play(sigilOfAetherBlue);
-    game.helpers.resolveUntilIdle();
-    Iyslander.endTurn();
-    game.helpers.resolveUntilIdle();
-
-    expectFabCard(Iyslander, sigilOfAetherBlue).toBeIn("arena");
-    expectFabPlayer(Dash).toHaveLife(19);
-  });
-
-  it("timing: playing this Instant does not spend the action point", () => {
-    const game = FabTestEngine.start(
-      { hero: iyslander, hand: [sigilOfAetherBlue], actionPoints: 1, deck: 6 },
-      { hero: dash, hand: [], deck: 6 },
-      FAB_MANUAL_HARNESS,
-    );
-    const Iyslander = game.as(iyslander);
-
-    Iyslander.play(sigilOfAetherBlue);
-    game.helpers.resolveUntilIdle();
-    expectFabCard(Iyslander, sigilOfAetherBlue).toBeIn("arena");
-    expectFabPlayer(Iyslander).toHaveAP(1);
-  });
+describe("Sigil of Aether (ROS168)", () => {
+  for (const recipient of ["hero", "ally"] as const) {
+    it(`leaves at own action phase and damages ${recipient}, then amps only the next packet`, () => {
+      const game = FabTestEngine.start(
+        {
+          hero: oscilio,
+          life: 20,
+          hand: [sigilOfAetherBlue, vaporizeShockYellow, vaporizeShockYellow],
+          resourcePoints: 0,
+          actionPoints: 1,
+          deck: padding(),
+        },
+        {
+          hero: dromai,
+          life: 20,
+          hand: [],
+          arena: [aetherAshwing],
+          resourcePoints: 0,
+          deck: padding(),
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      const Oscilio = game.as(oscilio);
+      const Dromai = game.as(dromai);
+      Oscilio.play(sigilOfAetherBlue);
+      game.passBoth();
+      expectFabCard(Oscilio, sigilOfAetherBlue).toBeIn("arena");
+      expectFabPlayer(Dromai).toHaveLife(20).toHaveTokenCount("aether-ashwing", 1);
+      expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(1).toHaveResourceCount(0);
+      Oscilio.endTurn();
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabCard(Oscilio, sigilOfAetherBlue).toBeIn("arena");
+      expectFabPlayer(Dromai).toHaveLife(20).toBeActive();
+      Dromai.endTurn();
+      game.untilIdle({ optionals: "throw", entityTargets: "pause" });
+      Oscilio.targetRequired(recipient === "hero" ? Dromai : Dromai.ref(aetherAshwing));
+      game.passBoth();
+      if (recipient === "hero") Dromai.chooseOptions();
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabCard(Oscilio, sigilOfAetherBlue).toBeIn("graveyard");
+      expectFabPlayer(Dromai)
+        .toHaveLife(recipient === "hero" ? 19 : 20)
+        .toHaveTokenCount("aether-ashwing", recipient === "hero" ? 1 : 0);
+      Oscilio.play(vaporizeShockYellow, {
+        playMethod: { kind: "face", face: "right" },
+        target: Dromai,
+      });
+      game.passBoth();
+      if (recipient === "hero") Dromai.chooseOptions();
+      expectFabPlayer(Dromai).toHaveLife(recipient === "hero" ? 17 : 18);
+      Oscilio.play(vaporizeShockYellow, {
+        playMethod: { kind: "face", face: "right" },
+        target: Dromai,
+      });
+      game.passBoth();
+      if (recipient === "hero") Dromai.chooseOptions();
+      expectFabPlayer(Dromai).toHaveLife(recipient === "hero" ? 16 : 17);
+      expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(1).toHaveResourceCount(0).toHaveHandCount(2);
+      expectWait(game).toBeIdle();
+    });
+  }
 });

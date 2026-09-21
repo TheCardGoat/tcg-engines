@@ -72,7 +72,20 @@ export function GrandArchiveCardPreviewProvider({ children }: { readonly childre
         >
           <CardFace
             as="div"
-            entity={grandArchiveCardPresentation({ ...preview, decorations: [] })}
+            entity={grandArchiveCardPresentation({
+              ...preview,
+              ...(typeof preview.dataAttributes?.["data-ga-printed-image-url"] === "string"
+                ? {
+                    imageUrl: preview.dataAttributes["data-ga-printed-image-url"],
+                    imageAspectRatio:
+                      typeof preview.dataAttributes["data-ga-printed-image-aspect-ratio"] ===
+                      "number"
+                        ? preview.dataAttributes["data-ga-printed-image-aspect-ratio"]
+                        : 5 / 7,
+                  }
+                : {}),
+              decorations: [],
+            })}
             density="full"
             fill
             fullImageFit="contain"

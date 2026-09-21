@@ -6,7 +6,7 @@ import {
   op07JewelryBonney019,
   op07Urouge021,
 } from "@tcg/op-cards";
-import { op12RoronoaZoro113 } from "../../../../../cards/src/cards/OP12/characters/113-roronoa-zoro.ts";
+import { op12RoronoaZoro113 } from "../../../../../cards/src/cards/characters/op12-113-roronoa-zoro.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -10,6 +10,20 @@ export type FabAtResolutionObjectTarget = Omit<
 
 export type FabUnansweredLayerDecision =
   | {
+      readonly kind: "repeat-start" | "repeat-commit";
+      readonly path: readonly number[];
+      readonly repeatPath: readonly number[];
+      readonly targetPath: string;
+      readonly effect: Extract<FabEffect, { type: "repeat" }>;
+      readonly limit: number;
+      readonly index: number;
+    }
+  | {
+      /** Internal resolution barrier, never a player choice. */
+      readonly kind: "optional-commit";
+      readonly path: readonly number[];
+    }
+  | {
       readonly kind: "payment-amount";
       readonly path: readonly number[];
       readonly effect: Extract<FabEffect, { readonly type: "pay" }>;

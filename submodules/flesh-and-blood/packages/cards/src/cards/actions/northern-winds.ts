@@ -73,6 +73,7 @@ export const northernWinds = definePitchFamily(fabPitchFamilies["northern-winds"
         effect: {
           type: "create-token",
           token: "spellbane-aegis",
+          creator: "effect-controller",
           controller: "any",
         },
       },

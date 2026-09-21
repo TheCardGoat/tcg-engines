@@ -13,6 +13,8 @@ export const mordredTide = definePitchFamily(fabPitchFamilies["mordred-tide"], {
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "controller",
+          occurrences: "every",
           filter: {
             name: "Runechant",
             typeBox: {

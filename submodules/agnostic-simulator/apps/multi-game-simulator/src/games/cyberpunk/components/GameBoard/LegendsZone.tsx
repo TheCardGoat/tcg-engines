@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { MaskedCardFrame } from "@tcg/simulator-ui";
+import { useEffect, useState, type CSSProperties } from "react";
+import { AnimatedEntityCollection, AnimatedEntityNode, MaskedCardFrame } from "@tcg/simulator-ui";
 import { Card } from "./Card";
 import { ZoneBadge } from "./ZoneBadge";
 import {
@@ -70,7 +70,10 @@ export function LegendsZone({
   side,
   maskBottomPercent,
 }: LegendsZoneProps) {
-  const zoneName = opponent ? "opp-legends" : "p-legends";
+  // Card drag/drop speaks in the canonical engine-projection zone ids.  The
+  // outer container already uses these ids; keeping the card source/target in
+  // the same vocabulary lets a hand Gear land on a face-up friendly Legend.
+  const zoneName = opponent ? "opp-legendArea" : "p-legendArea";
   const faceDownCount = legends.filter((l) => l.faceDown).length;
   const [logHighlight, setLogHighlight] = useState<{ ownerId: string; index: number } | null>(null);
   const ownerId = side ? String(PLAYER_SIDE_TO_ID[side]) : null;
@@ -100,21 +103,23 @@ export function LegendsZone({
       data-face-down-count={faceDownCount}
     >
       <div className={classes.slots}>
-        {Array.from({ length: 3 }).map((_, i) => {
-          const legend = legends[i];
-          return (
-            <LegendSlot
-              key={i}
-              legend={legend}
-              index={i}
-              ownerId={ownerId}
-              logHighlight={logHighlight}
-              side={side}
-              zoneName={zoneName}
-              maskBottomPercent={maskBottomPercent}
-            />
-          );
-        })}
+        <AnimatedEntityCollection>
+          {Array.from({ length: 3 }).map((_, i) => {
+            const legend = legends[i];
+            return (
+              <LegendSlot
+                key={i}
+                legend={legend}
+                index={i}
+                ownerId={ownerId}
+                logHighlight={logHighlight}
+                side={side}
+                zoneName={zoneName}
+                maskBottomPercent={maskBottomPercent}
+              />
+            );
+          })}
+        </AnimatedEntityCollection>
       </div>
       <ZoneBadge position={opponent ? "top" : "bottom"} label="Legends">
         Legends
@@ -173,9 +178,16 @@ function LegendSlot({
     <div
       className={classes.slot}
       data-testid="legend-slot"
+      data-legend-index={index}
       data-occupied={legend ? "true" : "false"}
       data-face-down={legend ? (legend.faceDown ? "true" : "false") : undefined}
       data-spent={legend ? (legend.spent ? "true" : "false") : undefined}
+      data-attached-gear-count={legend?.gear?.length ?? 0}
+      style={
+        {
+          "--attached-gear-count": legend?.gear?.length ?? 0,
+        } as CSSProperties
+      }
       data-log-highlight={
         ownerId && logHighlight?.ownerId === ownerId && logHighlight.index === index
           ? "true"
@@ -215,7 +227,7 @@ function LegendCardView({
   side: Side | undefined;
   zoneName: string;
 }) {
-  return (
+  const card = (
     <Card
       imageUrl={legend.imageUrl}
       faceDown={legend.faceDown}
@@ -224,7 +236,6 @@ function LegendCardView({
       cardType={legend.cardType}
       color={legend.color}
       tapped={legend.spent}
-      rotateWhenTapped={false}
       zone={zoneName}
       index={index}
       acceptsDrop
@@ -244,5 +255,20 @@ function LegendCardView({
       gear={legend.gear}
       peeked={legend.peeked}
     />
+  );
+  if (!legend.cardId) return card;
+  return (
+    <AnimatedEntityNode
+      entityId={legend.cardId}
+      zoneRef={{
+        kind: "zone",
+        id: side === "opponent" ? "opp-legendArea" : "p-legendArea",
+        ...(side ? { ownerId: String(PLAYER_SIDE_TO_ID[side]) } : {}),
+      }}
+      density="compact"
+      data-sim-entity-id={legend.cardId}
+    >
+      {card}
+    </AnimatedEntityNode>
   );
 }

@@ -20,7 +20,7 @@ import { buildPlayerPrompt } from "../src/view/player-prompt.ts";
 
 // ── Helpers ───────────────────────────────────────────────────────────
 
-function getMoveIds(engine: CyberpunkTestEngine, playerId: typeof P1): string[] {
+function getMoveIds(engine: CyberpunkTestEngine, playerId: PlayerId): string[] {
   return engine.getPrompt(playerId).availableMoves.map((m) => m.moveId);
 }
 
@@ -68,21 +68,24 @@ describe("Player Prompt", () => {
       expect(prompt.choice).toBeNull();
     });
 
-    it("returns action for setup phase — both players can act", () => {
+    it("returns action for the first player during setup; second player waits", () => {
       const engine = CyberpunkTestEngine.createWithFixture(
         { hand: [welcomeToNightCityRetailSketchyRipper] },
         { hand: [welcomeToNightCityRetailSwordwiseHuscle] },
         { skipSetup: false },
       );
 
-      const p1Prompt = engine.getPrompt(P1);
-      const p2Prompt = engine.getPrompt(P2);
+      const first = engine.getActivePlayerId();
+      const second = engine.getOpponentOf(first);
 
-      expect(p1Prompt.status).toBe("action");
-      expect(p2Prompt.status).toBe("action");
-      expect(getMoveIds(engine, P1)).toContain("mulligan");
-      expect(getMoveIds(engine, P1)).toContain("concede");
-      expect(getMoveIds(engine, P2)).toContain("mulligan");
+      expect(engine.getPrompt(first).status).toBe("action");
+      expect(getMoveIds(engine, first)).toContain("mulligan");
+      expect(getMoveIds(engine, first)).toContain("keepHand");
+      expect(getMoveIds(engine, first)).toContain("concede");
+      expect(getMoveIds(engine, second)).not.toContain("mulligan");
+      expect(getMoveIds(engine, second)).not.toContain("keepHand");
+      expect(getMoveIds(engine, second)).toContain("concede");
+      expect(engine.getPrompt(second).status).toBe("waiting");
     });
 
     it("returns action for active player in main phase", () => {
@@ -689,7 +692,9 @@ describe("Player Prompt", () => {
       expect(spec).toBeDefined();
       expect(spec!.type).toBe("selectAbility");
       if (spec!.type === "selectAbility") {
-        expect(spec!.candidates).toContainEqual({ cardId: gearId as string, abilityIndex: 1 });
+        expect(spec!.candidates).toContainEqual(
+          expect.objectContaining({ cardId: gearId as string, abilityIndex: 1 }),
+        );
       }
       expect(
         engine.executeMove(
@@ -726,7 +731,9 @@ describe("Player Prompt", () => {
       expect(spec).toBeDefined();
       expect(spec!.type).toBe("selectAbility");
       if (spec!.type === "selectAbility") {
-        expect(spec!.candidates).toContainEqual({ cardId: dumDumId, abilityIndex: 2 });
+        expect(spec!.candidates).toContainEqual(
+          expect.objectContaining({ cardId: dumDumId, abilityIndex: 2 }),
+        );
       }
     });
 

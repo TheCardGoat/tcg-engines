@@ -13,6 +13,8 @@ export const promisingTerrain = definePitchFamily(fabPitchFamilies["promising-te
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "controller",
+          occurrences: "every",
           filter: {
             name: "Seismic Surge",
             typeBox: {

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op03PortgasDAce001 } from "../../../../../cards/src/cards/OP03/leaders/001-portgas-d-ace.ts";
+import { op03PortgasDAce001 } from "../../../../../cards/src/cards/leaders/op03-001-portgas-d-ace.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-001 Portgas.D.Ace", () => {

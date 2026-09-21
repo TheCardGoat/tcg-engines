@@ -1,3 +1,4 @@
+import { boundDeckProfile } from "@tcg/cyberpunk-engine";
 import {
   AI_STRATEGIES,
   findStrategyDescriptor,
@@ -187,6 +188,7 @@ export function AiControlPanel({
         nextAiSide={nextAiSide}
         strategies={AI_STRATEGIES}
         selectedStrategyId={aiDescriptor?.id ?? null}
+        strategyNote={boundDeckProfile(aiStrategy) ? "Deck plan bound" : null}
         isTakeover={isTakeover}
         canStep={canStep}
         isRemoteControlled={remoteServerControlled}

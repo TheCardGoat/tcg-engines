@@ -88,6 +88,13 @@
     --fab-chain-history-attack-gap: 0.25rem;
     --fab-chain-progress-width: 1.25rem;
     --fab-chain-body-gutter: 0.75rem;
+    /* Chain tiles (attack card, defender blocks, defense placeholder) share one
+       edge-exact size: everything the surface spends above the link row, so the
+       card and the placeholder fill the row and align top and bottom. */
+    --fab-chain-tile-size: calc(
+      var(--fab-combat-surface-height) - var(--fab-chain-header-height) - 2 *
+        var(--fab-chain-body-gutter) - 0.6rem
+    );
 
     position: absolute !important;
     z-index: 20;
@@ -1603,7 +1610,9 @@
     grid-template-columns: max-content max-content;
     justify-content: safe center;
     align-items: center;
-    column-gap: clamp(0.4rem, 1vw, 0.8rem);
+    /* The lane labels straddle their column edge; the gap must stay wider
+       than half a label so the DEFEND pill never paints onto the attack card. */
+    column-gap: clamp(0.65rem, 1.1vw, 1rem);
     overflow-x: auto;
     overflow-y: hidden;
     padding-inline: clamp(0.5rem, 2vw, 1.5rem);
@@ -1683,6 +1692,15 @@
     flex: 0 0 auto;
   }
 
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-attacker .fab-chain-card-shell {
+    /* The shell is inline-grid inside a plain block slot wrapper; the inline
+       line box adds descender space below the tile, which shifts the attack
+       card up relative to the defense placeholder. Block-level sizing makes
+       the wrapper hug the tile exactly (flex on the wrapper would distort the
+       column's max-content track and let the card overflow it). */
+    display: grid;
+  }
+
   .fab-combat-chain--desktop.fab-combat-chain-active
     .fab-chain-attacker
     .fab-chain-lane-content
@@ -1723,19 +1741,23 @@
 
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card {
     position: relative;
-    width: clamp(7.25rem, 15.5vh, 8.4rem);
+    width: var(--fab-chain-tile-size);
+    height: var(--fab-chain-tile-size);
     min-width: 0;
     max-width: none;
     /* The bridge uses a native square art asset; card rules text is already
-       represented by the visible stat and keyword affordances. */
-    aspect-ratio: 1;
-    /* Keyword chip tooltips must escape the card tile; the art rounds its own
-       corners instead of relying on the card to clip them. */
+       represented by the visible stat and keyword affordances. The compact
+       card face must never outgrow the shared tile (its default minimum can
+       exceed the tile on short viewports and would re-skew the row). */
     overflow: visible;
     justify-content: end;
     padding: 0;
     border: 0;
     background: #171114;
+  }
+
+  .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card [data-card-density="compact"] {
+    min-height: 0;
   }
 
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-card-name,
@@ -1910,9 +1932,9 @@
   }
 
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack > div {
-    flex: 0 0 clamp(7.25rem, 15.5vh, 8.4rem);
-    width: clamp(7.25rem, 15.5vh, 8.4rem);
-    aspect-ratio: 1;
+    flex: 0 0 var(--fab-chain-tile-size);
+    width: var(--fab-chain-tile-size);
+    height: var(--fab-chain-tile-size);
   }
 
   .fab-combat-chain--desktop.fab-combat-chain-active
@@ -1925,7 +1947,8 @@
 
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack .fab-chain-card {
     width: 100%;
-    max-width: 8.4rem;
+    height: 100%;
+    max-width: none;
   }
 
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-block-stack > div + div {
@@ -1934,9 +1957,9 @@
 
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-defense-slot {
     display: grid;
-    flex: 0 0 clamp(7.25rem, 15.5vh, 8.4rem);
-    width: clamp(7.25rem, 15.5vh, 8.4rem);
-    aspect-ratio: 1;
+    flex: 0 0 var(--fab-chain-tile-size);
+    width: var(--fab-chain-tile-size);
+    height: var(--fab-chain-tile-size);
     place-content: center;
     justify-items: center;
     gap: 0.35rem;
@@ -2048,6 +2071,9 @@
 
   .fab-combat-chain--desktop.fab-combat-chain-active .fab-chain-reaction-row .fab-chain-card {
     width: clamp(3.25rem, 6.7vh, 4.6rem);
+    /* Reaction cards are deliberately smaller than the shared chain tile;
+       keep them square instead of inheriting the tile height. */
+    height: clamp(3.25rem, 6.7vh, 4.6rem);
   }
 
   .fab-combat-chain--desktop.fab-combat-chain-active
@@ -2373,6 +2399,10 @@
       --fab-chain-history-gutter: 0.3rem;
       --fab-chain-progress-width: 1rem;
       --fab-chain-body-gutter: 0.4rem;
+      /* Narrow workspaces are width-bound: the shared tile size switches from
+         the surface-height formula to the workspace-width clamp so every tile
+         (attack card, defender blocks, defense placeholder) stays one square. */
+      --fab-chain-tile-size: clamp(5.5rem, 18cqw, 7.25rem);
     }
 
     .fab-desktop-combat-workspace[data-active="true"] .fab-chain-header {
@@ -2397,10 +2427,6 @@
       grid-row: 1;
     }
 
-    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-card {
-      width: clamp(5.5rem, 18cqw, 7.25rem);
-    }
-
     .fab-desktop-combat-workspace[data-active="true"]
       > .fab-compact-resolution-panel
       > .fab-compact-resolution-stack {
@@ -2419,14 +2445,11 @@
       --fab-chain-history-width: 2rem;
       --fab-chain-history-gutter: 0.2rem;
       --fab-chain-body-gutter: 0.25rem;
+      --fab-chain-tile-size: clamp(4.75rem, 20cqw, 5.6rem);
     }
 
     .fab-desktop-combat-workspace[data-active="true"] .fab-chain-title {
       font-size: 0.55rem;
-    }
-
-    .fab-desktop-combat-workspace[data-active="true"] .fab-chain-card {
-      width: clamp(4.75rem, 20cqw, 5.6rem);
     }
 
     .fab-desktop-combat-workspace[data-active="true"]
@@ -2435,4 +2458,34 @@
       --fab-compact-stack-card-width: clamp(4.25rem, 17cqw, 4.9rem);
     }
   }
+}
+
+/* Tapped attackers keep chain cards upright so the art stays readable; an
+   explicit badge carries the tapped state instead of the board rotation. */
+.fab-chain-card-tapped {
+  position: absolute;
+  z-index: 6;
+  top: 0.22rem;
+  left: 0.22rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.14rem;
+  padding: 0.14rem 0.34rem;
+  border: 1px solid rgb(246 200 96 / 62%);
+  border-radius: 999px;
+  background: rgb(18 12 10 / 92%);
+  box-shadow: 0 2px 6px rgb(0 0 0 / 48%);
+  color: #f7d980;
+  font-size: 0.5rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.fab-chain-card-tapped-icon {
+  width: 0.62rem;
+  height: 0.62rem;
+  object-fit: contain;
 }

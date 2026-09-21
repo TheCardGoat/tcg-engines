@@ -21,7 +21,110 @@
 }
 
 .sharedSidebar {
+  --simulator-participant-height: 4.5rem;
+
   height: 100%;
+}
+
+.sharedSidebar [data-layout="stacked"] {
+  gap: 6px;
+  padding: 8px 10px;
+}
+
+.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] {
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 8px;
+}
+
+.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > div:first-child {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl {
+  display: block;
+  grid-column: 1;
+  grid-row: 1;
+  align-self: center;
+}
+
+.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl > div:only-child {
+  display: grid;
+  width: 2.5rem;
+  height: 2.25rem;
+  min-height: 0;
+  box-sizing: border-box;
+  grid-template-rows: auto auto;
+  place-content: center;
+  gap: 1px;
+  border-color: color-mix(in srgb, var(--participant-accent) 42%, transparent);
+  padding: 0;
+  background: color-mix(in srgb, var(--participant-accent) 8%, transparent);
+  text-align: center;
+}
+
+.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl dt {
+  font-size: 0.4375rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.sharedSidebar [data-layout="stacked"][data-has-metrics="true"] > dl dd {
+  margin: 0;
+  color: var(--participant-accent);
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.sharedSidebar [data-layout="stacked"] > div:first-child {
+  position: relative;
+  height: 100%;
+  align-items: stretch;
+  gap: 7px;
+}
+
+.sharedSidebar
+  [data-layout="stacked"][data-has-visible-name="false"]
+  [data-participant-state-line="true"] {
+  height: 100%;
+  align-items: flex-start;
+}
+
+.sharedSidebar [data-layout="stacked"] [data-participant-clock="true"] {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.sharedSidebar [data-layout="stacked"] [data-participant-actions="true"] {
+  position: absolute;
+  display: flex;
+  top: 0;
+  right: 0;
+  width: auto;
+  min-width: var(--simulator-sidebar-control-size, 2rem);
+  height: var(--simulator-sidebar-control-size, 2rem);
+  min-height: var(--simulator-sidebar-control-size, 2rem);
+}
+
+.sharedSidebar [data-layout="stacked"]:has([data-participant-actions="true"]) > div:first-child {
+  padding-right: calc(var(--simulator-sidebar-control-size, 2rem) + 7px);
+}
+
+.participantQuickActions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--simulator-sidebar-control-gap, 0.25rem);
+}
+
+.sharedSidebar [data-layout="stacked"]:has(.participantQuickActions) > div:first-child {
+  padding-right: calc(
+    var(--simulator-sidebar-control-size, 2rem) + var(--simulator-sidebar-control-size, 2rem) +
+      var(--simulator-sidebar-control-gap, 0.25rem) + 7px
+  );
 }
 
 .automationSummary {
@@ -65,6 +168,28 @@
 
 .matchActionDock {
   --match-sidebar-raised: rgb(7 9 12 / 98%);
+
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.2fr) minmax(0, 0.98fr);
+  gap: 6px;
+  padding: 6px;
+}
+
+.matchActionDock [data-testid="phase-hud"] > span {
+  width: 100%;
+}
+
+.matchActionDock [data-testid="phase-advance"] {
+  flex-wrap: nowrap;
+  gap: 6px;
+  padding: 7px 9px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.matchActionDock [data-testid="phase-advance"] kbd[aria-label="Spacebar hotkey"] {
+  width: auto;
+  flex: 0 0 auto;
+  margin: 0;
 }
 
 .matchActionDock > div:last-child > button {
@@ -88,6 +213,22 @@
   justify-content: flex-end;
   border-top: 1px solid var(--board-border);
   padding: 6px 10px;
+}
+
+/* Unified activity feed: the merged log+chat panel with the floating chat
+   composer docked over its lower edge. */
+.activityFeed {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.activityFeed > :first-child {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .selfConnectionAlert {
@@ -170,6 +311,17 @@
 .sidebarActionButton:disabled {
   cursor: not-allowed;
   opacity: 0.48;
+}
+
+.sidebarUndoButton {
+  border-color: rgb(74 217 255 / 32%);
+  background: rgb(74 217 255 / 7%);
+  color: rgb(153 236 255 / 92%);
+}
+
+.sidebarUndoButton:hover:not(:disabled) {
+  border-color: rgb(74 217 255 / 62%);
+  color: rgb(205 247 255);
 }
 
 .sidebarDangerButton {

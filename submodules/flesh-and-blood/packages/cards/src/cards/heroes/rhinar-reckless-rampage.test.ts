@@ -1,52 +1,115 @@
-import { describe, expect, it } from "vitest";
-import { FAB_MANUAL_HARNESS, FabTestEngine } from "@tcg/flesh-and-blood-engine/testing";
-import { dash } from "./dash.ts";
+import { describe, it } from "vitest";
+import {
+  FAB_MANUAL_HARNESS,
+  FabTestEngine,
+  expectFabCard,
+  expectFabPlayer,
+} from "@tcg/flesh-and-blood-engine/testing";
 import { bloodrushBellowYellow } from "../actions/bloodrush-bellow.ts";
-import { alphaRampageRed } from "../actions/alpha-rampage.ts";
-import { nimblismBlue } from "../actions/nimblism.ts";
+import { brutalAssaultRed, brutalAssaultYellow } from "../actions/brutal-assault.ts";
 import { snatchRed } from "../actions/snatch.ts";
+import { coronetPeak } from "../equipment/coronet-peak.ts";
+import { dash } from "./dash.ts";
 import { rhinarRecklessRampage } from "./rhinar-reckless-rampage.ts";
 
 describe("Rhinar, Reckless Rampage (RNR001) AAA", () => {
-  it("happy: discarding a 6+{p} card during the action phase intimidates", () => {
+  it("happy: an exact 6{p} discard during his action phase intimidates face down, then returns at end phase", () => {
     const game = FabTestEngine.start(
       {
         hero: rhinarRecklessRampage,
-        hand: [bloodrushBellowYellow, alphaRampageRed],
+        hand: [bloodrushBellowYellow, brutalAssaultRed],
         resourcePoints: 1,
         actionPoints: 1,
         deck: 6,
       },
-      { hero: dash, hand: [snatchRed, nimblismBlue], deck: 6 },
+      { hero: dash, hand: [snatchRed], deck: 6 },
       FAB_MANUAL_HARNESS,
     );
-    const Opponent = game.as(dash);
+    const Rhinar = game.as(rhinarRecklessRampage);
+    const Dash = game.as(dash);
 
-    game.as(rhinarRecklessRampage).play(bloodrushBellowYellow);
-    game.helpers.resolveUntilIdle();
+    Rhinar.play(bloodrushBellowYellow);
+    game.untilIdle({ ordering: "listed" });
 
-    // Intimidate banished one card from the opponent's 2-card hand.
-    expect(Opponent.handCount()).toBe(1);
+    expectFabCard(Rhinar, brutalAssaultRed).toBeIn("graveyard");
+    expectFabPlayer(Dash).toHaveHandCount(0);
+    expectFabCard(Dash, snatchRed).toBeIn("banished").toBeFaceDown();
+
+    Rhinar.endTurn();
+    game.untilIdle({ optionals: "decline" });
+
+    expectFabCard(Dash, snatchRed).toBeIn("hand").toBeFaceUp();
   });
 
-  it("boundary: discarding a card with fewer than 6{p} does not intimidate", () => {
+  it("boundary: a 5{p} discard does not intimidate", () => {
     const game = FabTestEngine.start(
       {
         hero: rhinarRecklessRampage,
-        hand: [bloodrushBellowYellow, nimblismBlue],
+        hand: [bloodrushBellowYellow, brutalAssaultYellow],
         resourcePoints: 1,
         actionPoints: 1,
         deck: 6,
       },
-      { hero: dash, hand: [snatchRed, nimblismBlue], deck: 6 },
+      { hero: dash, hand: [snatchRed], deck: 6 },
       FAB_MANUAL_HARNESS,
     );
-    const Opponent = game.as(dash);
-    const handBefore = Opponent.handCount();
+    const Rhinar = game.as(rhinarRecklessRampage);
+    const Dash = game.as(dash);
 
-    game.as(rhinarRecklessRampage).play(bloodrushBellowYellow);
-    game.helpers.resolveUntilIdle();
+    Rhinar.play(bloodrushBellowYellow);
+    game.untilIdle({ ordering: "listed" });
 
-    expect(Opponent.handCount()).toBe(handBefore);
+    expectFabCard(Rhinar, brutalAssaultYellow).toBeIn("graveyard");
+    expectFabPlayer(Dash).toHaveHandCount(1);
+    expectFabCard(Dash, snatchRed).toBeIn("hand");
+  });
+
+  it("boundary: an opponent's 6{p} discard during Rhinar's action phase does not trigger Rhinar", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: rhinarRecklessRampage,
+        head: [coronetPeak],
+        resourcePoints: 3,
+        actionPoints: 1,
+        deck: 6,
+      },
+      { hero: dash, hand: [brutalAssaultRed, snatchRed], resourcePoints: 0, deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Rhinar = game.as(rhinarRecklessRampage);
+    const Dash = game.as(dash);
+
+    Rhinar.activate(coronetPeak);
+    Rhinar.target(dash);
+    game.untilIdle({ optionals: "decline", entityTargets: "minimum", ordering: "listed" });
+
+    expectFabCard(Dash, brutalAssaultRed).toBeIn("graveyard");
+    expectFabPlayer(Dash).toHaveHandCount(1);
+    expectFabCard(Dash, snatchRed).toBeIn("hand");
+  });
+
+  it("timing: Rhinar's 6{p} discard during the opponent's action phase does not trigger", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: dash,
+        head: [coronetPeak],
+        hand: [snatchRed],
+        resourcePoints: 3,
+        actionPoints: 1,
+        deck: 6,
+      },
+      { hero: rhinarRecklessRampage, hand: [brutalAssaultRed], resourcePoints: 0, deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Dash = game.as(dash);
+    const Rhinar = game.as(rhinarRecklessRampage);
+
+    Dash.activate(coronetPeak);
+    Dash.target(rhinarRecklessRampage);
+    game.untilIdle({ optionals: "decline", entityTargets: "minimum", ordering: "listed" });
+
+    expectFabCard(Rhinar, brutalAssaultRed).toBeIn("graveyard");
+    expectFabPlayer(Dash).toHaveHandCount(1);
+    expectFabCard(Dash, snatchRed).toBeIn("hand");
   });
 });

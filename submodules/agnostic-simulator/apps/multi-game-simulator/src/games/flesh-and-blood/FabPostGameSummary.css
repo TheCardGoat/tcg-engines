@@ -648,11 +648,6 @@
   text-align: left;
 }
 
-.fab-summary-card-identity strong {
-  padding-right: 0.5rem;
-  overflow-wrap: anywhere;
-}
-
 .fab-summary-card-art {
   display: grid;
   height: 6rem;
@@ -1092,14 +1087,80 @@
   border-color: #c69d43;
 }
 .fab-summary-card-trigger {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
   padding: 0;
-  flex: 0 0 auto;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  background: none;
+  cursor: pointer;
+}
+.fab-summary-card-name {
+  padding-right: 0.5rem;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 64%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}
+.fab-summary-card-trigger:hover .fab-summary-card-name,
+.fab-summary-card-trigger:focus-visible .fab-summary-card-name {
+  text-decoration-color: currentColor;
 }
 .fab-summary-card-owner {
   display: block;
   padding: 0.2rem 0.75rem;
   color: var(--summary-muted);
   font-size: 0.7rem;
+}
+
+.fab-summary-card-reference {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: baseline;
+  gap: 0.3rem;
+  vertical-align: baseline;
+}
+.fab-summary-card-reference-name {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0.16rem;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: inherit;
+  text-align: inherit;
+  background: none;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, currentColor 64%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}
+.fab-summary-card-reference-name:hover,
+.fab-summary-card-reference-name:focus-visible {
+  text-decoration-color: currentColor;
+}
+.fab-summary-card-reference-name:focus-visible {
+  outline: 2px solid var(--summary-gold, #e0b84a);
+  outline-offset: 2px;
+}
+.fab-summary-card-reference-hint {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-self: center;
+  color: var(--summary-muted, #a29a90);
+  cursor: help;
 }
 
 .fab-summary-value-panel {

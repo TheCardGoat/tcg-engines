@@ -18,13 +18,11 @@ export interface SimulatorMatchMetric {
   readonly value: ReactNode;
 }
 
-export interface SimulatorMatchParticipant {
+interface SimulatorMatchParticipantBase {
   readonly id: string;
   readonly role: "opponent" | "self";
-  readonly name: ReactNode;
-  readonly shortLabel: string;
-  /** Defaults to true; games without participant avatars can suppress the generated badge. */
-  readonly showAvatar?: boolean;
+  /** Moves transient state beside the clock so narrow identity rows keep the player name readable. */
+  readonly layout?: "stacked";
   readonly ariaLabel?: string;
   readonly testId?: string;
   readonly clock?: ReactNode;
@@ -37,6 +35,21 @@ export interface SimulatorMatchParticipant {
   readonly actions?: ReactNode;
   readonly metrics?: readonly SimulatorMatchMetric[];
 }
+
+export type SimulatorMatchParticipant = SimulatorMatchParticipantBase &
+  (
+    | {
+        readonly name: ReactNode;
+        readonly shortLabel: string;
+        readonly showAvatar?: true;
+      }
+    | {
+        /** Games without participant imagery may omit synthetic identity chrome entirely. */
+        readonly name?: ReactNode;
+        readonly shortLabel?: string;
+        readonly showAvatar: false;
+      }
+  );
 
 export interface SimulatorMatchAutomation {
   readonly summary: ReactNode;
@@ -234,6 +247,8 @@ export function SimulatorMatchParticipantView({
   readonly participant: SimulatorMatchParticipant;
   readonly className?: string;
 }) {
+  const hasVisibleName = participant.name !== undefined && participant.name !== null;
+
   return (
     <section
       className={cx(classes.participant, className)}
@@ -241,6 +256,9 @@ export function SimulatorMatchParticipantView({
       data-active={participant.active ? "true" : undefined}
       data-priority={participant.priority ? "true" : undefined}
       data-has-metrics={participant.metrics?.length ? "true" : "false"}
+      data-has-avatar={participant.showAvatar === false ? "false" : "true"}
+      data-layout={participant.layout}
+      data-has-visible-name={hasVisibleName ? "true" : "false"}
       data-testid={participant.testId}
       aria-label={
         participant.ariaLabel ??
@@ -254,21 +272,41 @@ export function SimulatorMatchParticipantView({
           </div>
         ) : null}
         <div className={classes.identity}>
-          <div className={classes.nameLine}>
-            <span className={classes.priority} aria-hidden="true" />
-            <strong>{participant.name}</strong>
-            {participant.status ? (
-              <span className={classes.status}>{participant.status}</span>
-            ) : null}
-          </div>
-          {participant.clock ? <div className={classes.clock}>{participant.clock}</div> : null}
+          {hasVisibleName ? (
+            <div className={classes.nameLine}>
+              <strong>{participant.name}</strong>
+              {participant.status && participant.layout !== "stacked" ? (
+                <span className={classes.status}>{participant.status}</span>
+              ) : null}
+            </div>
+          ) : null}
+          {participant.layout === "stacked" && (participant.status || participant.clock) ? (
+            <div className={classes.stateLine} data-participant-state-line="true">
+              {participant.status ? (
+                <span className={classes.status} data-participant-status="true">
+                  {participant.status}
+                </span>
+              ) : null}
+              {participant.clock ? (
+                <span className={classes.clock} data-participant-clock="true">
+                  {participant.clock}
+                </span>
+              ) : null}
+            </div>
+          ) : participant.clock ? (
+            <div className={classes.clock} data-participant-clock="true">
+              {participant.clock}
+            </div>
+          ) : null}
           {participant.meta ? <div className={classes.meta}>{participant.meta}</div> : null}
         </div>
         {participant.connection ? (
           <div className={classes.connection}>{participant.connection}</div>
         ) : null}
         {participant.actions ? (
-          <div className={classes.participantActions}>{participant.actions}</div>
+          <div className={classes.participantActions} data-participant-actions="true">
+            {participant.actions}
+          </div>
         ) : null}
       </div>
       {participant.metrics?.length ? (

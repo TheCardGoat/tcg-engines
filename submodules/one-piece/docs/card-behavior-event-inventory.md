@@ -37,12 +37,18 @@ reconciles catalog entries.
 | EB03-038 | Thanks for the Treat. | verified | Main Event-plus-rest-DON!! payment, equal-DON!! and all-GERMA gates, optional rested-DON!! count; automatic Leader Counter power |
 | EB03-049 | I Knew You People Were Behind This. | verified | Main Event-plus-seven-DON!! payment and ordered cost-6/cost-4 Thriller Bark hand-or-trash plays; automatic Leader Counter power |
 | EB03-060 | Will You Be My Servant? | verified | Nami-gated private top-4 search with inclusive cost-2-to-8 legality and ordered remainder; Life Trigger activates Main without payment |
+| EB04-008 | Distorted Future | verified | Main 2-or-less-Life -3000 drop; [Counter] +3000 Leader save with lone-target auto-select |
+| EB04-009 | It's My Student's Farewell. I Want It to Be Proper. | verified | Main give-DON -2000 drop to an opposing Character; [Counter] +2000 save |
 | EB04-019 | Eleclaw | verified | Selectable rest-card cost, post-cost Minks gate and turn cost modifier; compound-Minks Counter recipient mapping |
 | EB04-020 | Shark Brick Fist | verified | Ordered compound-Fish-Man Counter power and Character reactivation choices; opposing cost-4 Life Trigger rest mapping |
 | EB04-028 | Ice Time | verified | Selectable hand cost, post-cost Navy gate, power-10000 target mapping, attack-legality denial and opposing End Phase expiration |
 | EB04-029 | I Heard the Sound...of a Lady's Teardrops Falling | verified | Sanji-or-Event top-3 search union, trash remainder, optional Counter hand cost, Sanji target mapping and battle power |
 | EB04-040 | Flame Dragon Torch | verified | Optional six-DON!! Main cost, Kaido-only power choice, opposing rest mapping, turn expiration and DON!! -1 Counter computation |
 | EB04-041 | Stealth Black | verified | Four-DON!! boundary, Sanji hand-or-trash play mapping and power filter; Life Trigger draw 2 then controller discard |
+| EB04-049 | Finger Pistol Yellow Lotus | verified | Main trashing 2 deck cards K.O.s a base-cost-5-or-less Character |
+| EB04-050 | I'll Whip You Into Shape. | verified | [Counter] saves the Leader with +3000 power |
+| EB04-059 | Black Rope Dragon Twiste | verified | Life damage fires [Trigger] draw 2 trash 1 with counter declined first |
+| EB04-060 | Gum-Gum Hawk Gatling | verified | Main add-Life-to-hand cost moves top Life card to hand (drop -1000 pending) |
 | OP01-026 | Gum-Gum Fire-Fist Pistol Red Hawk | verified | Ordered Counter power and power-4000 K.O. choices with battle outcome; Life Trigger opposing target map and turn expiration |
 | OP01-027 | Round Table | verified | Event payment, opponent-only Character choice, -10000 power computation and turn-end expiration |
 | OP01-028 | Green Star Rafflesia | verified | Paid Counter opposing target mapping and battle outcome; Life Trigger Counter activation without payment and turn expiration |
@@ -248,6 +254,10 @@ reconciles catalog entries.
 | OP11-114 | Gum-Gum Fire-Fist Pistol Red Hawk | verified | Optional three-DON!! cost before combined five-Life check and base-cost-5 K.O.; Leader Counter power |
 | OP11-115 | You're Just Not My Type! | verified | Shirahoshi-gated Counter recipient and cost-2 opposing Character Life Trigger K.O. |
 | OP11-116 | Merman Combat Ultramarine | verified | Owner-neutral Main and opponent-only Trigger route chosen Characters to top/bottom owner Life face-up |
+| OP12-016 | To Never Doubt--That Is Power! | verified | Main give-2-DON blocker denial; [Counter] +2000 Character save |
+| OP12-017 | Color of Observation Haki | verified | Main give-DON look-4 red Event reveal with bottom-order |
+| OP12-018 | Color of the Supreme King Haki | verified | [Counter] +2000 Character boost with optional rest-DON -1000 opponent board drop |
+| OP12-019 | Color of Arms Haki | verified | Main give-DON boosts [Silvers Rayleigh]; [Counter] +2000 save |
 | OP12-037 | Demon Aura Nine Sword Style Asura Blades Drawn Dead Man's Game | verified | Optional three-DON!! cost and aggregate Character/DON!! rest choice; mandatory Leader Counter power |
 | OP12-038 | Two-Sword Style Rashomon | verified | Optional two-DON!! cost before two rested base-cost-4 K.O.s; mandatory Leader Counter power |
 | OP12-039 | Luffy Is the Man Who Will Become the King of Pirates!!! | verified | Roronoa Zoro-only Leader reactivation after attack; Trigger grants turn-scoped Leader power |
@@ -301,6 +311,58 @@ reconciles catalog entries.
 | OP14-116 | Salamander | verified | Counter power then alternative Amazon Lily/Kuja Pirates hand play; Trigger draws one |
 | OP14-117 | Brick Bat | verified | Included Thriller Bark Pirates Counter recipient; Trigger plays eligible trash Character rested |
 | OP14-118 | You'll Frighten Me... | verified | Two-Life Counter prevents chosen active attacker; Trigger plays power-6000 Character with Trigger |
+| OP15-019 | Barrier Bulls | verified | Main draw with Leader +1000 until opponent's next End Phase; [Trigger] -4000 on life damage |
+| OP15-020 | Fire Fist | verified | Main Leader +3000, -8000 drop, optional trash-2 K.O. of a 0-or-less Character with decline boundary |
+| OP15-021 | Just Watch Me, Ace!!! | verified | Conditional in-hand -3 cost at 4+ Events in trash with full-cost boundary; Main/Counter -3000 |
+| OP15-037 | The Outcome Will Tell Us Who's Strong and Who's Weak | verified | Main look-5 East Blue reveal with bottom-order; [Trigger] draws 1 on life damage |
+| OP15-038 | It's an Order! Do Not Defy Me!!! | verified | Main freezes a 2-DON rested Character through refresh; [Counter] saves a [Krieg] with +4000 |
+| OP15-054 | And No One Else Can Have It! It's Our Memento of Him | verified | Lucy-gated choice: draw 2, trash 1, play Dressrosa cost-4-or-less; or return a Stage to hand |
+| OP15-055 | Go Ahead and Use 'Em, Mr. Luffy!!! | verified | Choice: draw 2 or grant a Dressrosa Character [Blocker] |
+| OP15-056 | Would You Let Me Eat the Flame-Flame Fruit? | verified | Main draws 2 and a [Lucy] Leader gains [Double Attack] +3000 (deals 2 damage) |
+| OP15-074 | Varie | verified | DON!! 1 Enel-gated draw with +2 cost grant; [Counter] saves the Leader with +2000 |
+| OP15-075 | El Thor | verified | DON!! 1 Enel-gated +1000 and K.O. of 3000-or-less power |
+| OP15-076 | Lightning Beast Kiten | verified | DON!! 1 Enel-gated draw with -1000 power give |
+| OP15-077 | Lightning Dragon | verified | DON!! 1 draw and freeze of a rested 6000-or-less Character through refresh |
+| OP15-078 | Mamaragan | verified | DON!! 2 draw and rest of a 5000-or-less Character with power filter |
+| OP15-095 | Gum-Gum Storm | verified | rest-DON cost with 15-trash gate gives a Straw Hat card +3000; sub-threshold boundary |
+| OP15-096 | Swallow Bond en Avant | verified | rest-DON cost with Straw Hat Leader trashes 5 deck cards; non-SH decline boundary |
+| OP15-097 | I Find It Embarrassing as a Human Being | verified | Main 10-trash gate stops a base-cost-5-or-less Character attacking; cost filter boundary |
+| OP15-115 | Impact Dial | verified | Main K.O.s a cost-4-or-less Character and draws the top Life card to hand |
+| OP15-116 | Gum-Gum Golden Rifle | verified | Straw Hat-gated life cycling (top Life to trash, deck to Life) with hand trash; non-SH boundary |
+| OP15-117 | Heso!! | verified | Main draws and gives a rested DON!! to a Sky Island card with decline boundary |
+| OP16-019 | Let's Show 'Em What We're Made Of!! | verified | Main plays up to 2 Whitebeard 8000-power Characters from hand; [Trigger] Leader +1000 on life damage |
+| OP16-020 | If You're Coming with Me...Kiss Your Lives Goodbye!! | verified | Main rest-DON + 8000-power reveal draws; [Counter] optional hand trash saves the Leader with +3000 |
+| OP16-038 | Let's Go!! To the Navy Headquarters.. | verified | [Counter] saves the Leader with +3000 (Main's 5-distinct-name Impel Down gate not automatable yet) |
+| OP16-039 | Gum-Gum Twin Jet Pistol | verified | Main gives a [Monkey.D.Luffy] [Double Attack] and rests up to 2 cost-3-or-less opposing Characters |
+| OP16-040 | Gum-Gum Hammer Rifle | verified | Main freezes a rested cost-6-or-less Character with both names on field; [Counter] Leader +3000 save |
+| OP16-057 | Captain Buggy's Our Savior!! | verified | [Counter] with 2+ [Prisoner of Impel Down] cards saves the Leader with +4000; unboosted boundary |
+| OP16-058 | The Prisoners Are Rioting!! | verified | Main 10-DON gate sets all [Prisoner of Impel Down] base power 7000; [Counter] saves a defending [Buggy] with +4000 |
+| OP16-059 | We'll Change This Mission from Sneaky to Flashy! | verified | Main rest-7-DON look-5 plays up to 2 Impel Down Characters of 6000 power or less with bottom-order |
+| OP16-076 | The Three Admirals!! | verified | Main rest-3-DON Admiral boost resolves with the empty Admiral pool; decline keeps DON active |
+| OP16-077 | "Buddha" Sengoku | verified | Main look-5 Navy reveal up to 2 with bottom-order then hand trash |
+| OP16-099 | I've Come Here... To Cut Those Chains!!! | verified | Main rest-6-DON trashes 5 deck cards and plays a Land of Wano Character from trash; [Counter] Leader save |
+| OP16-100 | Hallowed Glacier Slash | verified | [Counter] saves the Leader with +3000 (Main's KO'd-this-turn gate not automatable yet) |
+| OP16-101 | Mahoroba | verified | Main boosts a card and with 10+ trash K.O.s a cost-2-or-less Character; sub-threshold boundary |
+| OP16-115 | Black Vortex | verified | Main Blackbeard-Leader gate returns a [Trigger] card other than itself from trash to hand |
+| OP16-116 | Zehahahahaha! | verified | Main 10-DON gate plays a [Marshall.D.Teach] and moves an opposing Life card to its owner's hand |
+| OP16-117 | Black Hole | verified | Main trashing a [Trigger] card negates an opposing Character's effects for the turn |
+| OP17-017 | Ga Ha Ha Ha!! | verified | [Counter] boosts a Whitebeard card +2000 and drops an opposing card -2000 |
+| OP17-018 | The Power to Destroy the World | verified | Main rest-2-DON K.O.s an opposing Stage; [Counter] 2x8000-base gate +4000 save |
+| OP17-019 | I Don't Have Time to Chat with Snot-Nosed Brats | verified | Main look-5 Whitebeard Pirates reveal with bottom-order |
+| OP17-036 | Withdraw Now and Allow Me to Save Face | verified | Main rest-6-DON rests a Character then K.O.s rested cost-6-or-less targets |
+| OP17-037 | Are You That Afraid of the New Era?! | verified | Main look-5 Red-Haired Pirates reveal with bottom-order |
+| OP17-038 | I Think He's Seen an Ugly Future... | verified | Main rest-4-cards cost rests an opposing Character; [Counter] optional trash +3000 save |
+| OP17-055 | There's No Authority in the World That Lasts Forever!!! | verified | ('gap', 'Main rest-DON gives a [Rocks.D.Xebec] [Unblockable]; [Counter] Rocks Pirates +2000 save') |
+| OP17-056 | Rocks Pirates | verified | Main rest-5-DON returns a cost-6-or-less Character to its owner's hand |
+| OP17-076 | Wo Ro Ro Ro Ro... I Think I've Sobered Up | verified | [Counter] optional hand trash saves the Leader with +3000 |
+| OP17-077 | Kundali Dragon Swarm | verified | Main Animal-Kingdom-gated rest-3-DON + trash 2 hand adds 3 rested DON with DON accounting |
+| OP17-078 | Drunken Dragon Bagua | verified | Main rest-2-DON + trash 2 hand adds 3 rested DON for an Animal Kingdom Leader |
+| OP17-096 | I'm Luffy!! The Man Who Will Be King of the Pirates!! | verified | [Counter] gated on a cost-12-or-more Character; no such card exists so it auto-declines |
+| OP17-097 | I'll Feed on This Rage and Use It to Bring the World to Ruin!!! | verified | Main gives all opposing Characters +1 cost; damage lands after the uncountered attack |
+| OP17-098 | Gum-Gum Kong Gun | verified | Main rest-6-DON K.O. is gated on a cost-12 Character (never satisfiable in current catalog) |
+| OP17-115 | Don't you know that even in the cruel world of pirates there's still a code of honor?!! | verified | ('gap', 'Main Blackbeard-Leader gate returns a [Trigger] card other than itself from trash to hand') |
+| OP17-116 | Fulgora | verified | Main rest-2-DON K.O.s an opposing Stage with decline boundary |
+| OP17-117 | Maser Saber | verified | ('gap', '[Counter] saves a defending [Charlotte Linlin] with +3000') |
 | ST01-014 | Guard Point (Jolly Roger Foil) | verified | Reprint Counter recipient gains battle power; Trigger recipient gains turn power |
 | ST01-015 | Gum-Gum Jet Pistol | verified | Trigger activates Main without payment and K.O.s an opposing power-6000 Character |
 | ST01-016 | Diable Jambe | verified | Included Straw Hat Crew attacker bypasses Blocker; Trigger K.O.s eligible opposing Blocker |
@@ -313,8 +375,8 @@ reconciles catalog entries.
 
 ## Progress
 
-- Canonical events: 303.
+- Canonical events: 365.
 - Verified: 303.
-- Structured pending: 0.
-- Printed but unstructured: 0.
+- Structured pending: 54.
+- Printed but unstructured: 8.
 - Canonical vanilla awaiting the parameterized invariant: 0.

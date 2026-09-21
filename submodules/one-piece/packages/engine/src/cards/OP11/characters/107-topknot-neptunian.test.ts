@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op11Shirahoshi022 } from "@tcg/op-cards";
-import { op11TopknotNeptunian107 } from "../../../../../cards/src/cards/OP11/characters/107-topknot-neptunian.ts";
+import { op11TopknotNeptunian107 } from "../../../../../cards/src/cards/characters/op11-107-topknot-neptunian.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

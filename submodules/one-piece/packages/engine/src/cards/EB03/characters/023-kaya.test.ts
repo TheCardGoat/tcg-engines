@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb03Kaya023 } from "../../../../../cards/src/cards/EB03/characters/023-kaya.ts";
+import { eb03Kaya023 } from "../../../../../cards/src/cards/characters/eb03-023-kaya.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB03-023 Kaya", () => {

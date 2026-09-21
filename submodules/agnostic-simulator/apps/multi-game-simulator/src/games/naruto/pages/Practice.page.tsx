@@ -28,11 +28,11 @@ import { parseDeckListText, parseNarutoPracticeDeckPayload } from "./deckImport.
 import { useRegisterSimulatorDebugExportSource } from "../../../simulator/debug-export/SimulatorDebugExportContext.tsx";
 import { LocalSimulatorDebugHistoryRecorder } from "../../../simulator/debug-export/local-debug-history.ts";
 import classes from "./pages.module.css";
+import { practiceModeFromSearch, type PracticeMode } from "../../../simulator/practiceMode.ts";
 
 const AI_SEAT: PlayerId = "p2";
 const AI_DELAY_MS = 450;
 
-type OpponentMode = "ai" | "self";
 type BotStrategy = "greedy" | "passive";
 
 interface PracticeSetup {
@@ -41,7 +41,7 @@ interface PracticeSetup {
   readonly customText: string;
   readonly useCustom: boolean;
   readonly seedText: string;
-  readonly mode: OpponentMode;
+  readonly mode: PracticeMode;
   readonly strategy: BotStrategy;
 }
 
@@ -56,7 +56,7 @@ const DEFAULT_SETUP: PracticeSetup = {
   customText: "",
   useCustom: false,
   seedText: String(DEFAULT_SEED),
-  mode: "ai",
+  mode: "bot",
   strategy: "greedy",
 };
 
@@ -174,7 +174,7 @@ export function NarutoPracticePage() {
     const initialState = createState({
       decks: { p1: p1.deck, p2: p2.deck },
       seed,
-      names: { p1: "You", p2: setup.mode === "ai" ? "AI Opponent" : "Player 2" },
+      names: { p1: "You", p2: setup.mode === "bot" ? "Practice bot" : "Player 2" },
     });
     const localId = `naruto-practice-${Date.now()}`;
     setDebugHistory(
@@ -199,7 +199,7 @@ export function NarutoPracticePage() {
     const payload = params.get("deck");
     const deckKey = previewDeckKey(params.get("deckKey"));
     const opponentDeckKey = previewDeckKey(params.get("opponentDeckKey"));
-    const mode = params.get("mode") === "self" ? "self" : "ai";
+    const mode = practiceModeFromSearch(params);
     const strategy = params.get("strategy") === "passive" ? "passive" : "greedy";
     const seed = parseHandoffSeed(params.get("seed"));
     const problems: string[] = [];
@@ -244,7 +244,7 @@ export function NarutoPracticePage() {
 
   // Greedy AI loop: whenever the AI seat must decide, pick and apply.
   useEffect(() => {
-    if (!state || setup.mode !== "ai" || state.winner) return;
+    if (!state || setup.mode !== "bot" || state.winner) return;
     if (deciderOf(state) !== AI_SEAT) return;
     const timer = window.setTimeout(() => {
       setSession((current) => {
@@ -277,7 +277,7 @@ export function NarutoPracticePage() {
   }, [debugHistory, state, setup.mode, setup.strategy]);
 
   const viewer: PlayerId = useMemo(() => {
-    if (!state || setup.mode === "ai") return "p1";
+    if (!state || setup.mode === "bot") return "p1";
     return deciderOf(state) ?? state.activePlayer;
   }, [state, setup.mode]);
 
@@ -357,7 +357,7 @@ export function NarutoPracticePage() {
               </div>
             ) : null}
             <label className={classes.field}>
-              <span>Opponent deck</span>
+              <span>{setup.mode === "self" ? "Player 2 deck" : "Opponent deck"}</span>
               <select
                 data-testid="naruto-opponent-deck-picker"
                 value={setup.opponentDeckKey}
@@ -372,30 +372,32 @@ export function NarutoPracticePage() {
                 ))}
               </select>
             </label>
-            <label className={classes.field}>
-              <span>Bot strategy</span>
-              <select
-                data-testid="naruto-strategy-picker"
-                value={setup.strategy}
-                onChange={(event) =>
-                  setSetup((s) => ({ ...s, strategy: event.target.value as BotStrategy }))
-                }
-              >
-                <option value="greedy">Greedy AI</option>
-                <option value="passive">Passive practice bot</option>
-              </select>
-            </label>
+            {setup.mode === "bot" ? (
+              <label className={classes.field}>
+                <span>Bot strategy</span>
+                <select
+                  data-testid="naruto-strategy-picker"
+                  value={setup.strategy}
+                  onChange={(event) =>
+                    setSetup((s) => ({ ...s, strategy: event.target.value as BotStrategy }))
+                  }
+                >
+                  <option value="greedy">Greedy AI</option>
+                  <option value="passive">Passive practice bot</option>
+                </select>
+              </label>
+            ) : null}
             <label className={classes.field}>
               <span>Opponent mode</span>
               <select
                 data-testid="naruto-mode-picker"
                 value={setup.mode}
                 onChange={(event) =>
-                  setSetup((s) => ({ ...s, mode: event.target.value as OpponentMode }))
+                  setSetup((s) => ({ ...s, mode: event.target.value as PracticeMode }))
                 }
               >
-                <option value="ai">Bot opponent</option>
-                <option value="self">Solo vs self (hot seat)</option>
+                <option value="bot">Practice bot</option>
+                <option value="self">Play both sides</option>
               </select>
             </label>
             <label className={classes.field}>
@@ -418,7 +420,7 @@ export function NarutoPracticePage() {
               data-testid="naruto-start"
               onClick={startGame}
             >
-              Start game
+              {setup.mode === "self" ? "Start both-sides practice" : "Start bot practice"}
             </button>
           </div>
           {selectedDeck ? (
@@ -449,6 +451,11 @@ export function NarutoPracticePage() {
   return (
     <div className={classes.practiceGame} data-testid="naruto-practice-game">
       <nav className={classes.gameBar} aria-label="Practice match controls">
+        <span role="status">
+          {setup.mode === "self"
+            ? `Play both sides · controlling ${viewer === "p1" ? "Player 1" : "Player 2"}`
+            : "Practice bot"}
+        </span>
         <button
           type="button"
           data-testid="naruto-undo"

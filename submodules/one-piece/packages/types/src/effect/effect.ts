@@ -54,7 +54,8 @@ export interface ReplacementEffect {
 
 export type DeckBuildingRule =
   | { rule: "unlimitedCopies" }
-  | { rule: "cannotInclude"; filters: TargetFilter[] };
+  | { rule: "cannotInclude"; filters: TargetFilter[] }
+  | { rule: "donDeckCount"; count: number };
 
 export interface CardEffects {
   keywords?: Keyword[];

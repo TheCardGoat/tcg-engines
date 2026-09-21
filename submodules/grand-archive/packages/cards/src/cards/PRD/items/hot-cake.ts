@@ -50,46 +50,57 @@ export const hotCake: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"> = 
               kind: "sequence",
               effects: [
                 {
-                  kind: "sacrifice",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "sacrifice",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "create-delayed-trigger",
-                  trigger: {
-                    kind: "event",
-                    event: {
-                      name: "attack-declared",
-                      subject: {
-                        kind: "bound-object",
-                        binding: "target-1",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "create-delayed-trigger",
+                    trigger: {
+                      kind: "event",
+                      event: {
+                        name: "attack-declared",
+                        subject: {
+                          kind: "bound-object",
+                          binding: "target-1",
+                        },
                       },
                     },
-                  },
-                  limit: 1,
-                  expires: {
-                    kind: "this-turn",
-                  },
-                  effect: {
-                    kind: "continuous",
-                    subjects: {
-                      kind: "current-attack",
+                    limit: 1,
+                    expires: {
+                      kind: "this-turn",
                     },
-                    affectedSet: "locked",
-                    duration: {
-                      kind: "this-attack",
-                    },
-                    layer: {
-                      layer: "E",
-                      modifies: "stat",
-                      sublayer: "modifier",
-                    },
-                    change: {
-                      kind: "numeric",
-                      property: "power",
-                      operation: "add",
-                      amount: 3,
+                    effect: {
+                      kind: "continuous",
+                      subjects: {
+                        kind: "current-attack",
+                      },
+                      affectedSet: "locked",
+                      duration: {
+                        kind: "this-attack",
+                      },
+                      layer: {
+                        layer: "E",
+                        modifies: "stat",
+                        sublayer: "modifier",
+                      },
+                      change: {
+                        kind: "numeric",
+                        property: "power",
+                        operation: "add",
+                        amount: 3,
+                      },
                     },
                   },
                 },

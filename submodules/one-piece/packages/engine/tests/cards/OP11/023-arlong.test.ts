@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op11Arlong023 } from "../../../../cards/src/cards/OP11/characters/023-arlong.ts";
-import { op14eb04Killer005 } from "../../../../cards/src/cards/OP14EB04/characters/005-killer.ts";
-import { op14eb04JinbeOp14040040 } from "../../../../cards/src/cards/OP14EB04/leaders/040-jinbe-op14-040.ts";
+import { op11Arlong023 } from "../../../../cards/src/cards/characters/op11-023-arlong.ts";
+import { op14eb04Killer005 } from "../../../../cards/src/cards/characters/op14-005-killer.ts";
+import { op14eb04JinbeOp14040040 } from "../../../../cards/src/cards/leaders/op14-040-jinbe-op14-040.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP11-023 Arlong", () => {

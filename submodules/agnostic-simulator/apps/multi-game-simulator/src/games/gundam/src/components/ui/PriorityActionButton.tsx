@@ -132,7 +132,15 @@ export function PriorityActionButton({
     submitPass();
   }, [submitPass]);
 
-  const canFire = !draft.active && priority.isViewer && (required !== null || passMove !== null);
+  // An enabled pass action in the published view means this seat owes (or may
+  // answer) a decision even while `status.activePlayer` still names the
+  // opponent — e.g. the end-phase action step of the opponent's turn. Gating
+  // the button on `priority.isViewer` alone rendered it disabled in exactly
+  // those states, leaving the seat no way to respond and stalling the match.
+  const canFire =
+    !draft.active &&
+    ((required !== null && priority.isViewer) ||
+      (passMove !== null && (priority.isViewer || passMove !== "passTurn")));
   const requestPass = useCallback(() => {
     if (!canFire) return;
     if (required) {

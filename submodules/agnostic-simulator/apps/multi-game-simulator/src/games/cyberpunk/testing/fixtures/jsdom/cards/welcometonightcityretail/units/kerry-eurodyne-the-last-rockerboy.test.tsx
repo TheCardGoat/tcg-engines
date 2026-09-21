@@ -1,4 +1,5 @@
 import { describe, test } from "vite-plus/test";
+import { fireEvent } from "@testing-library/react";
 import { welcomeToNightCityRetailKerryEurodyneTheLastRockerboy } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import { expectEqual } from "@cyberpunk/testing/fixture-behaviors/cyberpunk-fixture-behavior";
@@ -31,7 +32,19 @@ describe("Kerry Eurodyne (Retail) jsdom happy path", () => {
       const handBefore = await pom.getHandSize(CYBERPUNK_P1);
       const deckBefore = await pom.getDeckSize(CYBERPUNK_P1);
 
-      await pom.activateAbility(kerry.instanceId, 0, CYBERPUNK_P1);
+      const kerryCard = view.container.querySelector<HTMLElement>(
+        `[data-testid="card"][data-instance-id="${kerry.instanceId}"]`,
+      );
+      if (!kerryCard) {
+        throw new Error("Expected Kerry to be rendered.");
+      }
+      fireEvent.click(kerryCard);
+
+      expectEqual(
+        "sole quick action bypasses the card menu",
+        document.body.querySelector("[data-card-context-menu]"),
+        null,
+      );
 
       await pom.expectFieldCardSpent(CYBERPUNK_P1, kerry.instanceId, true);
       await pom.expectHandSize(CYBERPUNK_P1, handBefore + 2);

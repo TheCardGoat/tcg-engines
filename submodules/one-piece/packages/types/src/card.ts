@@ -6,7 +6,8 @@ export type OPCardType = "leader" | "character" | "event" | "stage" | "don";
 
 export type OPColor = "red" | "blue" | "green" | "purple" | "black" | "yellow";
 
-export type OPAttribute = "strike" | "slash" | "ranged" | "wisdom" | "special";
+/** "?" is the literal printed attribute on identity-concealed cards such as OP13-079 Imu. */
+export type OPAttribute = "strike" | "slash" | "ranged" | "wisdom" | "special" | "?";
 
 export type OPRarity = "C" | "UC" | "R" | "SR" | "SEC" | "SP" | "L" | "DON" | "MR" | "TR" | "P";
 

@@ -58,6 +58,7 @@ export const anthemOfSpring = definePitchFamily(fabPitchFamilies["anthem-of-spri
         effect: {
           type: "create-token",
           token: "embodiment-of-earth",
+          creator: "effect-controller",
           controller: "any",
         },
       },

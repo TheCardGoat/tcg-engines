@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op03GumGumJetGatling072 } from "../../../../../cards/src/cards/OP03/events/072-gum-gum-jet-gatling.ts";
+import { op03GumGumJetGatling072 } from "../../../../../cards/src/cards/events/op03-072-gum-gum-jet-gatling.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-072 Gum-Gum Jet Gatling", () => {

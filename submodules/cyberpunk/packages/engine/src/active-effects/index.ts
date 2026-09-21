@@ -4,8 +4,9 @@ import type {
   GrantRuleEffect,
   RuleModifier,
   StructuredCardDefinition,
+  CardDefinition,
 } from "@tcg/cyberpunk-types";
-import type { MatchState, ActiveEffect } from "../types/match-state.ts";
+import type { MatchState, ActiveEffect, CardCatalog } from "../types/match-state.ts";
 import type { PlayerId, CardInstanceId, GigDieId } from "../types/branded.ts";
 import {
   resolveTarget,
@@ -14,6 +15,7 @@ import {
   type ResolutionContext,
 } from "../effects/target-resolver.ts";
 import { defOf } from "../state/lookups.ts";
+import { getDefinition } from "../state/card-registry.ts";
 
 export function recomputeActiveEffects(state: MatchState): void {
   const G = state.G;
@@ -255,12 +257,39 @@ export function recomputeActiveEffects(state: MatchState): void {
 }
 
 export function getEffectivePower(state: MatchState, cardId: string): number {
+  return getEffectivePowerWithResolver(state, cardId, getDefinition);
+}
+
+/**
+ * Catalog-explicit effective-power lookup for state projection and other pure
+ * boundaries that must not depend on which engine most recently initialized
+ * the process-global registry.
+ */
+export function getEffectivePowerFromCatalog(
+  state: MatchState,
+  cardId: string,
+  catalog: CardCatalog,
+): number {
+  return getEffectivePowerWithResolver(state, cardId, (definitionId) => {
+    const definition = catalog.get(definitionId);
+    if (!definition) {
+      throw new Error(`Card definition not found in catalog: ${definitionId}`);
+    }
+    return definition;
+  });
+}
+
+function getEffectivePowerWithResolver(
+  state: MatchState,
+  cardId: string,
+  resolveDefinition: (definitionId: string) => CardDefinition,
+): number {
   const card = state.G.cardIndex[cardId];
   if (!card) return 0;
 
-  const basePower = defOf(card).power ?? 0;
+  const cardDef = resolveDefinition(card.definitionId);
+  const basePower = cardDef.power ?? 0;
   const permanentMod = card.meta.powerModifier;
-  const cardDef = defOf(card);
 
   const gearPower = card.meta.attachedGearIds.reduce((sum, gearId) => {
     const gear = state.G.cardIndex[gearId as string];
@@ -270,7 +299,8 @@ export function getEffectivePower(state: MatchState, cardId: string): number {
     if (gear.zone !== card.zone && !(cardDef.type === "legend" && gear.zone === "field")) {
       return sum;
     }
-    return sum + (defOf(gear).power ?? 0);
+    const gearDef = resolveDefinition(gear.definitionId);
+    return sum + (gearDef.power ?? 0);
   }, 0);
 
   const activeEffectMod = state.G.activeEffects
@@ -386,15 +416,46 @@ export function getGigCount(state: MatchState, playerId: PlayerId): number {
   return player.gigArea.length;
 }
 
+export function listSacrificialAttachedGear(state: MatchState, hostId: string): CardInstanceId[] {
+  const host = state.G.cardIndex[hostId];
+  if (!host) return [];
+  const gearIds: CardInstanceId[] = [];
+  for (const gearId of host.meta.attachedGearIds) {
+    if (getEffectiveRules(state, gearId as string).includes("sacrificeInsteadOfHostDefeat")) {
+      gearIds.push(gearId as CardInstanceId);
+    }
+  }
+  return gearIds;
+}
+
 export function findSacrificialAttachedGear(
   state: MatchState,
   hostId: string,
 ): CardInstanceId | null {
+  return listSacrificialAttachedGear(state, hostId)[0] ?? null;
+}
+
+/** Jackie Welles — Mama's Favorite: optional 1 €$ replacement of a friendly Unit's defeat. */
+export function findFriendlyDefeatRedirect(
+  state: MatchState,
+  hostId: string,
+  skipIds: ReadonlySet<string> = new Set(),
+): CardInstanceId | null {
   const host = state.G.cardIndex[hostId];
   if (!host) return null;
-  for (const gearId of host.meta.attachedGearIds) {
-    if (getEffectiveRules(state, gearId as string).includes("sacrificeInsteadOfHostDefeat")) {
-      return gearId as CardInstanceId;
+  if (getEffectiveRules(state, hostId).includes("redirectFriendlyDefeatToSelf")) return null;
+  const controllerId = host.controllerId;
+  const player = state.G.players[controllerId as string];
+  if (!player) return null;
+  for (const zone of ["field", "legendArea"] as const) {
+    for (const cardId of player.zones[zone] ?? []) {
+      if ((cardId as string) === hostId) continue;
+      if (skipIds.has(cardId as string)) continue;
+      const card = state.G.cardIndex[cardId as string];
+      if (!card || card.meta.faceDown) continue;
+      if (getEffectiveRules(state, cardId as string).includes("redirectFriendlyDefeatToSelf")) {
+        return cardId as CardInstanceId;
+      }
     }
   }
   return null;

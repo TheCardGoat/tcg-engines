@@ -10,6 +10,7 @@ export const arcticIncarceration = definePitchFamily(fabPitchFamilies["arctic-in
       effect: {
         type: "create-token",
         token: "frostbite",
+        creator: "effect-controller",
         controller: "target-controller",
         target: { selector: "any-hero" },
         count,

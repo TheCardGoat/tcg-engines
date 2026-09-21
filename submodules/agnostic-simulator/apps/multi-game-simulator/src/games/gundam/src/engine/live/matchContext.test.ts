@@ -15,6 +15,7 @@ describe("buildGundamReplayHref", () => {
 describe("getMatchmakingReturnUrl", () => {
   afterEach(() => {
     vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
   });
 
   it("uses Gundam's per-game matchmaking URL instead of Cyberpunk's shared URL", () => {
@@ -24,10 +25,25 @@ describe("getMatchmakingReturnUrl", () => {
     expect(getMatchmakingReturnUrl("")).toBe("http://localhost:5173/gundam/matchmaking");
   });
 
-  it("falls back to Gundam production matchmaking when no per-game URL is set", () => {
+  it("falls back to same-origin matchmaking when no per-game URL is set", () => {
     vi.stubEnv("VITE_MATCHMAKING_URL", "http://localhost:5173/cyberpunk/matchmaking");
 
-    expect(getMatchmakingReturnUrl("")).toBe("https://tcg.online/gundam/matchmaking");
+    expect(getMatchmakingReturnUrl("")).toBe(`${window.location.origin}/gundam/matchmaking`);
+  });
+
+  it("does not follow a production returnTo while the simulator is on staging", () => {
+    vi.stubGlobal("window", {
+      location: {
+        origin: "https://staging.cardgoat.org",
+        hostname: "staging.cardgoat.org",
+        protocol: "https:",
+        search: "",
+      },
+    });
+
+    expect(
+      getMatchmakingReturnUrl("?returnTo=https%3A%2F%2Ftcg.online%2Fgundam%2Fmatchmaking"),
+    ).toBe("https://staging.cardgoat.org/gundam/matchmaking");
   });
 
   it("honors an allowed returnTo query parameter", () => {

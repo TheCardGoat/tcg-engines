@@ -78,6 +78,7 @@ import { painfulPremonitionBlue } from "../../../../cards/src/cards/actions/pain
 import { strikeTwiceRed } from "../../../../cards/src/cards/actions/strike-twice.ts";
 import { volticVanguard } from "../../../../cards/src/cards/equipment/voltic-vanguard.ts";
 import { unflinchingFoothold } from "../../../../cards/src/cards/equipment/unflinching-foothold.ts";
+import { nimblismBlue } from "../../../../cards/src/cards/actions/nimblism.ts";
 import { cloudCoverRed } from "../../../../cards/src/cards/instants/cloud-cover.ts";
 import { snapdragonScalers } from "../../../../cards/src/cards/equipment/snapdragon-scalers.ts";
 import { quicken } from "../../../../cards/src/cards/tokens/quicken.ts";
@@ -223,9 +224,31 @@ describe("Wizard play lines", () => {
           hand: [cloudCoverRed, chromaticRefinementRed, coreReactionRed, flashBoltRed],
           arsenal: [meteoricImpactRed],
           resourcePoints: 5,
-          deck: 8,
+          deck: [
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+          ],
         },
-        emptyDash,
+        {
+          hero: dash,
+          life: 20,
+          hand: [],
+          resourcePoints: 0,
+          deck: [
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+            nimblismBlue,
+          ],
+        },
         FAB_MANUAL_HARNESS,
       );
       const Oscilio = game.as(oscilio);
@@ -244,9 +267,13 @@ describe("Wizard play lines", () => {
       Oscilio.must.play(coreReactionRed);
       game.helpers.resolveUntilIdle({ ordering: "listed" });
 
+      expectFabPlayer(Defender).toHaveLife(17);
+      expectFabCard(Oscilio, coreReactionRed).toBeIn("arena");
       Oscilio.play(meteoricImpactRed, { from: "arsenal", target: Defender.id });
       game.helpers.resolveUntilIdle({ ordering: "listed" });
-      expectFabPlayer(Defender).toHaveLife(8);
+      // Flash Bolt3 + Starfall Meteoric5; Core has not discharged yet.
+      expectFabPlayer(Defender).toHaveLife(12);
+      expectFabCard(Oscilio, coreReactionRed).toBeIn("arena");
       expectFabCard(Oscilio, flashBoltRed).toBeIn("graveyard");
       expectFabCard(Oscilio, meteoricImpactRed).toBeIn("graveyard");
       expectFabCard(Oscilio, chromaticRefinementRed).toBeIn("arena");
@@ -663,6 +690,7 @@ describe("Wizard play lines", () => {
           "You defended with Crown Of Providence.",
           ...(selectedName
             ? [
+                `You chose ${selectedName}.`,
                 `You put ${selectedName} from ${selectedZone} on the bottom of the deck.`,
                 "You drew: Lightning Press.",
               ]
@@ -670,6 +698,7 @@ describe("Wizard play lines", () => {
           "Snatch hit You for 2.",
           "Opponent drew a card.",
           "Crown Of Providence was destroyed.",
+          "Snatch destroyed Crown Of Providence.",
         ]);
         expect(game.renderedPlayerNarrative(Attacker.id).slice(attackerNarrativeStart)).toEqual([
           "You played Snatch.",
@@ -684,6 +713,7 @@ describe("Wizard play lines", () => {
           "Snatch hit Opponent for 2.",
           "You drew: Snatch.",
           "Crown Of Providence was destroyed.",
+          "Snatch destroyed Crown Of Providence.",
         ]);
         Attacker.must.endTurn();
         Oscilio.must.endTurn();

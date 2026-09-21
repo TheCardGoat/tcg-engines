@@ -1,9 +1,12 @@
+import { nimblismBlue } from "../actions/nimblism.ts";
 import { describe, it } from "vitest";
 import {
   FAB_MANUAL_HARNESS,
   FabTestEngine,
   expectFabCard,
   expectFabPlayer,
+  expectCombat,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { barnacleYellow } from "../actions/barnacle.ts";
 import { gravyBones } from "../heroes/gravy-bones.ts";
@@ -20,62 +23,96 @@ import { hoistEmUpRed } from "./hoist-em-up.ts";
 describe("Hoist 'Em Up (SEA055) AAA", () => {
   it("happy: tapping an ally you control grants +1{d}", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [brutalAssaultYellow], deck: 6 },
+      {
+        hero: dash,
+        resourcePoints: 2,
+        hand: [brutalAssaultYellow],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       {
         hero: gravyBones,
+        life: 20,
         hand: [hoistEmUpRed],
         arena: [barnacleYellow],
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
     const Gravy = game.as(gravyBones);
 
-    game.as(dash).attackWith(brutalAssaultYellow);
+    game.as(dash).playAttack(brutalAssaultYellow);
     Gravy.defendWith(hoistEmUpRed);
-    game.untilIdle({ optionals: "accept", ordering: "listed" });
-    Gravy.target(barnacleYellow);
+    game.advanceToDecision(Gravy, "boolean");
+    Gravy.accept();
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
     expectFabCard(Gravy, barnacleYellow).toBeTapped();
     expectFabCard(Gravy, hoistEmUpRed).toHaveDefense(5);
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Gravy).toHaveLife(20);
+    expectFabCard(Gravy, hoistEmUpRed).toBeIn("graveyard").toHaveDefense(4);
+    expectCombat(game).toBeClosed();
   });
 
   it("boundary: declining the tap leaves printed 4{d}", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [brutalAssaultYellow], deck: 6 },
+      {
+        hero: dash,
+        resourcePoints: 2,
+        hand: [brutalAssaultYellow],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       {
         hero: gravyBones,
+        life: 20,
         hand: [hoistEmUpRed],
         arena: [barnacleYellow],
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
     const Gravy = game.as(gravyBones);
 
-    game.as(dash).attackWith(brutalAssaultYellow);
+    game.as(dash).playAttack(brutalAssaultYellow);
     Gravy.defendWith(hoistEmUpRed);
-    game.untilIdle({ optionals: "decline", ordering: "listed" });
+    game.advanceToDecision(Gravy, "boolean");
+    Gravy.decline();
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
-    expectFabCard(Gravy, barnacleYellow).toBeIn("arena");
+    expectFabCard(Gravy, barnacleYellow).toBeIn("arena").toBeReady();
     expectFabCard(Gravy, hoistEmUpRed).toHaveDefense(4);
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Gravy).toHaveLife(19);
+    expectFabCard(Gravy, hoistEmUpRed).toBeIn("graveyard").toHaveDefense(4);
+    expectWait(game).notToHaveDecision();
   });
 
   it("timing: with no ally the optional cannot grant +1{d}", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [brutalAssaultYellow], deck: 6 },
-      { hero: gravyBones, hand: [hoistEmUpRed], deck: 6 },
+      {
+        hero: dash,
+        resourcePoints: 2,
+        hand: [brutalAssaultYellow],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: gravyBones,
+        life: 20,
+        hand: [hoistEmUpRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Gravy = game.as(gravyBones);
 
-    game.as(dash).attackWith(brutalAssaultYellow);
+    game.as(dash).playAttack(brutalAssaultYellow);
     Gravy.defendWith(hoistEmUpRed);
-    game.untilIdle({ optionals: "decline", ordering: "listed" });
+    game.advanceUntil({ stopAt: "reaction", optionals: "throw" });
 
     expectFabCard(Gravy, hoistEmUpRed).toHaveDefense(4);
+    game.closeCombat({ optionals: "throw" });
     expectFabPlayer(Gravy).toHaveLife(19);
+    expectFabCard(Gravy, hoistEmUpRed).toBeIn("graveyard").toHaveDefense(4);
+    expectWait(game).notToHaveDecision();
   });
 });

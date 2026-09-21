@@ -46,42 +46,53 @@ export const fatestoneOfRevelations: GrandArchiveCard<GrandArchiveAbilityDefinit
               kind: "sequence",
               effects: [
                 {
-                  kind: "reveal",
-                  player: "controller",
-                  selection: {
-                    id: "reveal-selection",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 2,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["hand"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "any",
-                        filters: [
-                          {
-                            kind: "subtype",
-                            oneOf: ["FATESTONE"],
-                          },
-                          {
-                            kind: "subtype",
-                            oneOf: ["FATEBOUND"],
-                          },
-                        ],
+                  kind: "attempt",
+                  effect: {
+                    kind: "reveal",
+                    player: "controller",
+                    selection: {
+                      id: "reveal-selection",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 2,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["hand"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "any",
+                          filters: [
+                            {
+                              kind: "subtype",
+                              oneOf: ["FATESTONE"],
+                            },
+                            {
+                              kind: "subtype",
+                              oneOf: ["FATEBOUND"],
+                            },
+                          ],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 1,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 1,
+                  },
                 },
               ],
             },

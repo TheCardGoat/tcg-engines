@@ -17,7 +17,7 @@ const highCredGigs: { dieType: "d6" | "d8"; faceValue: number }[] = [
 ];
 
 describe("manual trigger resolution", () => {
-  it("prompts the controller to choose among multiple ATTACK triggers", () => {
+  it("logs the offered triggers and the player's selected resolution order", () => {
     // Satori intentionally omitted — its trigger fires on `fightResolved`
     // (post-fight), not on attack declaration. See packages/types/src/index.ts
     // FightResolvedEvent.
@@ -48,7 +48,7 @@ describe("manual trigger resolution", () => {
       },
     );
 
-    engine.attackUnit(
+    const attackResult = engine.attackUnit(
       welcomeToNightCityRetailTBugAmateurPhilosopher,
       welcomeToNightCityRetailJackieWellesRideOrDieChoom,
     );
@@ -58,9 +58,54 @@ describe("manual trigger resolution", () => {
       throw new Error("Expected chooseTrigger");
     }
     expect(choice.payload.options.map((option) => option.cardName).sort()).toEqual([
-      "Dying Night — V's Pistol",
+      "Dying Night: V's Pistol",
       "Kiroshi Optics",
     ]);
+    const pendingLog = attackResult.moveLogs.find(
+      (log) => log.type === "action" && log.messageKey === "trigger.orderPending",
+    );
+    expect(pendingLog).toMatchObject({
+      type: "action",
+      playerId: choice.chooserId,
+      messageKey: "trigger.orderPending",
+      params: {
+        triggerCount: 2,
+        triggerIds: choice.payload.options.map((option) => option.triggerId),
+        sourceCardIds: choice.payload.options.map((option) => option.sourceCardId),
+        abilityIndexes: choice.payload.options.map((option) => String(option.abilityIndex)),
+      },
+    });
+
+    const selected = choice.payload.options.find(
+      (option) => option.cardName === "Dying Night: V's Pistol",
+    );
+    if (!selected) throw new Error("Expected Dying Night trigger option");
+    const resolveResult = engine.executeMove(
+      "resolveTrigger",
+      { args: { triggerId: selected.triggerId } },
+      choice.chooserId,
+    );
+    expect(resolveResult.success).toBe(true);
+    if (!resolveResult.success) throw new Error(resolveResult.error);
+
+    const selectedLog = resolveResult.moveLogs.find(
+      (log) => log.type === "action" && log.messageKey === "trigger.orderSelected",
+    );
+    expect(selectedLog).toMatchObject({
+      type: "action",
+      playerId: choice.chooserId,
+      messageKey: "trigger.orderSelected",
+      params: {
+        selectedTriggerId: selected.triggerId,
+        selectedSourceCardId: selected.sourceCardId,
+        selectedAbilityIndex: selected.abilityIndex,
+        cardName: selected.cardName,
+        remainingCount: 1,
+        remainingTriggerIds: choice.payload.options
+          .filter((option) => option.triggerId !== selected.triggerId)
+          .map((option) => option.triggerId),
+      },
+    });
     expect(engine.getState().G.attackState?.step).toBe("attack");
   });
 });

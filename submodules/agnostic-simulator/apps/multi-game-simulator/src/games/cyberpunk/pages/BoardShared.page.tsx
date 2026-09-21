@@ -1,12 +1,15 @@
 import type { MatchState, PlayerPrompt } from "@tcg/cyberpunk-engine";
 import type {
+  DropEligibility,
   EngineInteractionView,
   InteractionSubmission,
   InteractionSubmissionValue,
+  UndoScopeValue,
 } from "@tcg/protocol";
 import {
   Board,
   ConnectionPanel as SharedConnectionPanel,
+  DropClaimControl,
   EventLogPanel,
   InteractionPanel,
   SimulatorActivityTabs,
@@ -22,6 +25,7 @@ import type { SimulatorRendererPackage, SimulatorRendererProps } from "@tcg/simu
 import type { SimulatorEventLogEntry } from "@tcg/simulator-contract";
 
 import { DeferredAiControlPanel } from "../components/AiControlPanel/DeferredAiControlPanel";
+import { SetupSyncNotice, useSetupSyncStall } from "./setupSyncStallNotice";
 import { SimulatorBotQuickControls } from "../../../simulator/SimulatorBotQuickControls";
 import { CyberpunkBoardRuntimeProvider } from "../components/BoardRuntimeContext";
 import type {
@@ -29,9 +33,9 @@ import type {
   LiveMatchSidebarParticipant,
 } from "../components/BoardRuntimeContext";
 import { ConnectionPanel } from "../components/ConnectionDiagnostics";
-import { CardNameToken } from "../components/CardDisplay/CardNameToken";
 import { mapChatMessage } from "../components/ChatPanel/ChatPanel";
-import { DeferredChatPanel } from "../components/ChatPanel/DeferredChatPanel";
+import { FloatingChatComposer } from "../components/ChatPanel/FloatingChatComposer";
+import { renderCyberpunkEventLogMessage } from "../components/EventLog/CyberpunkEventLogMessage";
 import { EndGameModal } from "../components/EndGameModal";
 import { ConfirmDialog, GameStateProvider, PassTurnControl } from "../components/GameBoard";
 import {
@@ -71,14 +75,20 @@ import {
   type SimulatorConnectionDiagnosticInput,
 } from "@tcg/game-page-contract/connection-diagnostic";
 import { projectMoveLogEntries } from "../engine/moveLogProjection";
+import { isRealHumanParticipant } from "../live-match-participants";
 import {
   SimulatorOpponentParticipantActions,
   SimulatorSelfParticipantActions,
 } from "../../../simulator/participant-actions";
-import { connectionUiStatus, isConnectionDisconnected } from "../engine/live/playerConnectionState";
-import { useOpponentPresence } from "../engine/live/useOpponentPresence";
+import { connectionUiStatus } from "../engine/live/playerConnectionState";
 import { useSimulatorProjection } from "../engine/useSimulatorProjection";
 import { projectConnectionPanelDiagnostic } from "../../../simulator/connection-panel-projection";
+import {
+  CyberpunkPaymentSelectionDiscovery,
+  CyberpunkPaymentSelectionPlayerAction,
+  CyberpunkPaymentSelectionShortcut,
+} from "../components/PaymentSelection/PaymentSelectionPlayerAction";
+import { PaymentSelectionProvider } from "../components/PaymentSelection/PaymentSelectionContext";
 import classes from "./BoardShared.module.css";
 import sidebarClasses from "./Sidebar.module.css";
 
@@ -88,6 +98,7 @@ const CYBERPUNK_SHELL_BREAKPOINT_PX = 767;
 type RendererPackage = ComponentType<SimulatorRendererProps>;
 
 export interface BoardSharedPageProps {
+  practiceMode?: "bot" | "self";
   rendererPackage?: SimulatorRendererPackage<RendererPackage>;
   scenarioId?: ScenarioId;
   initialEngineBuilder?: () => CyberpunkTestEngine;
@@ -120,7 +131,7 @@ export interface BoardSharedPageProps {
   ) => boolean;
   remoteInteractionView?: EngineInteractionView;
   remotePrompt?: PlayerPrompt;
-  requestRemoteUndo?: () => boolean;
+  requestRemoteUndo?: (scope: UndoScopeValue) => boolean;
   remoteMoveLogs?: ReadonlyArray<MoveLog>;
   remoteEngineEvents?: ReadonlyArray<RawEngineEventEntry>;
   remoteChatMessages?: ReadonlyArray<ChatMessage>;
@@ -131,6 +142,16 @@ export interface BoardSharedPageProps {
   sendRemoteChatPreset?: (key: ChatPresetKey) => boolean;
   sendRemoteChatText?: (text: string) => boolean;
   requestRemoteFreeTextChat?: () => boolean;
+  remoteBoardCorrectionEnabled?: boolean;
+  remoteBoardCorrectionProposalPending?: boolean;
+  canRequestBoardCorrection?: boolean;
+  requestRemoteBoardCorrection?: () => boolean;
+  requestRemoteBoardCorrectionExit?: () => boolean;
+  remoteExecuteMove?: (input: {
+    moveType: string;
+    payload: Record<string, unknown>;
+    expectedVersion: number;
+  }) => boolean;
   hasPendingRemoteMove?: boolean;
   remoteReturnUrl?: string;
   postGameContext?: CyberpunkPostGameContext;
@@ -143,13 +164,23 @@ export interface BoardSharedPageProps {
   playerConnections?: PlayerConnectionBySide;
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
   onClaimRivalDrop?: () => void;
+  dropEligibility?: DropEligibility | null;
   liveMatchSidebar?: LiveMatchSidebarConfig;
+
+  /**
+   * Live-match hook for the missed-setup recovery affordance: fires the
+   * authoritative state re-sync request when the board sits in the pre-deal
+   * setup state past the grace window. Omitted on local-engine surfaces
+   * (practice), where a stale board cannot come from a missed update.
+   */
+  onSetupStallSync?: () => void;
 }
 
 export function BoardSharedPage(props: BoardSharedPageProps) {
   const animationCommandGate = useMemo(() => createSimulatorExternalCommandGate(), []);
   const {
     rendererPackage: rendererPackageProp,
+    practiceMode = "bot",
     scenarioId,
     initialEngineBuilder,
     initialAi,
@@ -174,6 +205,12 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
     sendRemoteChatPreset,
     sendRemoteChatText,
     requestRemoteFreeTextChat,
+    remoteBoardCorrectionEnabled,
+    remoteBoardCorrectionProposalPending,
+    canRequestBoardCorrection,
+    requestRemoteBoardCorrection,
+    requestRemoteBoardCorrectionExit,
+    remoteExecuteMove,
     hasPendingRemoteMove,
     remoteReturnUrl,
     postGameContext,
@@ -184,7 +221,9 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
     playerConnections,
     connectionDiagnostic,
     onClaimRivalDrop,
+    dropEligibility,
     liveMatchSidebar,
+    onSetupStallSync,
   } = props;
 
   const rendererPackage = rendererPackageProp ?? cyberpunkRendererPackage;
@@ -215,6 +254,12 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
       sendRemoteChatPreset={sendRemoteChatPreset}
       sendRemoteChatText={sendRemoteChatText}
       requestRemoteFreeTextChat={requestRemoteFreeTextChat}
+      remoteBoardCorrectionEnabled={remoteBoardCorrectionEnabled}
+      remoteBoardCorrectionProposalPending={remoteBoardCorrectionProposalPending}
+      canRequestBoardCorrection={canRequestBoardCorrection}
+      requestRemoteBoardCorrection={requestRemoteBoardCorrection}
+      requestRemoteBoardCorrectionExit={requestRemoteBoardCorrectionExit}
+      remoteExecuteMove={remoteExecuteMove}
       hasPendingRemoteMove={hasPendingRemoteMove}
       remoteReturnUrl={remoteReturnUrl}
       postGameContext={postGameContext}
@@ -225,47 +270,61 @@ export function BoardSharedPage(props: BoardSharedPageProps) {
     >
       <CyberpunkBoardRuntimeProvider
         value={{
+          viewerCanSeePrivateHand:
+            liveMatchSidebar === undefined || liveMatchSidebar.localPlayerId !== undefined,
           playerIdentities,
           playerConnections,
           connectionDiagnostic,
           onClaimRivalDrop,
+          dropEligibility,
           liveMatchSidebar,
         }}
       >
-        <CyberpunkSharedAnimationLayer commandGate={animationCommandGate}>
-          <BoardSharedContent
-            rendererPackage={rendererPackage}
-            postGameSurface={postGameSurface}
-            playerIdentities={playerIdentities}
-            playerConnections={playerConnections}
-            connectionDiagnostic={connectionDiagnostic}
-            onClaimRivalDrop={onClaimRivalDrop}
-            liveMatchSidebar={liveMatchSidebar}
-          />
-        </CyberpunkSharedAnimationLayer>
+        <PaymentSelectionProvider>
+          <CyberpunkSharedAnimationLayer commandGate={animationCommandGate}>
+            <BoardSharedContent
+              practiceMode={practiceMode}
+              rendererPackage={rendererPackage}
+              postGameSurface={postGameSurface}
+              playerIdentities={playerIdentities}
+              playerConnections={playerConnections}
+              connectionDiagnostic={connectionDiagnostic}
+              onClaimRivalDrop={onClaimRivalDrop}
+              dropEligibility={dropEligibility}
+              liveMatchSidebar={liveMatchSidebar}
+              onSetupStallSync={onSetupStallSync}
+            />
+          </CyberpunkSharedAnimationLayer>
+        </PaymentSelectionProvider>
       </CyberpunkBoardRuntimeProvider>
     </EngineProvider>
   );
 }
 
 interface BoardSharedContentProps {
+  practiceMode?: "bot" | "self";
   rendererPackage?: SimulatorRendererPackage<RendererPackage>;
   postGameSurface?: PostGameSurface;
   playerIdentities?: PlayerIdentityBySide;
   playerConnections?: PlayerConnectionBySide;
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
   onClaimRivalDrop?: () => void;
+  dropEligibility?: DropEligibility | null;
   liveMatchSidebar?: LiveMatchSidebarConfig;
+  onSetupStallSync?: () => void;
 }
 
 function BoardSharedContent({
+  practiceMode,
   rendererPackage,
   postGameSurface,
   playerIdentities,
   playerConnections,
   connectionDiagnostic,
   onClaimRivalDrop,
+  dropEligibility,
   liveMatchSidebar,
+  onSetupStallSync,
 }: BoardSharedContentProps) {
   const { fixture, onSubmitInteraction } = useSimulatorProjection();
   const { matchState, moveLogs, humanSide, chatMessages } = useEngine();
@@ -275,26 +334,24 @@ function BoardSharedContent({
   );
   const eventLogCopyText = formatCyberpunkEventLogReadableCopy(eventLogEntries);
   const rawEventLogCopyText = formatCyberpunkEventLogRawCopy(eventLogEntries, moveLogs);
-  const eventLogPanel = (
-    <EventLogPanel
-      embedded
-      showHeader={false}
-      entries={eventLogEntries}
-      renderMessage={renderEventLogMessage}
-      copyText={eventLogCopyText}
-      rawCopyText={rawEventLogCopyText}
-    />
-  );
   const combinedEventLogPanel = (
     <EventLogPanel
       embedded
       showHeader={false}
       entries={eventLogEntries}
       chatMessages={chatMessages.map((message) => mapChatMessage(message, humanSide))}
-      renderMessage={renderEventLogMessage}
+      renderMessage={renderCyberpunkEventLogMessage}
       copyText={eventLogCopyText}
       rawCopyText={rawEventLogCopyText}
     />
+  );
+  // One unified activity feed (log + chat merged), with the compose dock
+  // floating over the feed's lower edge — the Flesh and Blood sidebar pattern.
+  const unifiedActivityFeed = (
+    <div className={sidebarClasses.activityFeed}>
+      {combinedEventLogPanel}
+      <FloatingChatComposer />
+    </div>
   );
 
   const BoardRenderer = rendererPackage?.BoardRenderer;
@@ -307,14 +364,16 @@ function BoardSharedContent({
   const sidebar = (
     <GameStateProvider>
       <SidebarContent
+        practiceMode={practiceMode}
         playerIdentities={playerIdentities}
         playerConnections={playerConnections}
         connectionDiagnostic={connectionDiagnostic}
         onClaimRivalDrop={onClaimRivalDrop}
+        dropEligibility={dropEligibility}
         postGameSurface={postGameSurface}
-        eventLogPanel={eventLogPanel}
-        combinedEventLogPanel={combinedEventLogPanel}
+        activityFeed={unifiedActivityFeed}
         liveMatchSidebar={liveMatchSidebar}
+        onSetupStallSync={onSetupStallSync}
       />
     </GameStateProvider>
   );
@@ -348,11 +407,7 @@ function BoardSharedContent({
       sidebar={sidebar}
       mobilePanel={
         <div className={sidebarClasses.mobileActivityPanel}>
-          <SimulatorActivityTabs
-            log={eventLogPanel}
-            chat={<DeferredChatPanel />}
-            combined={combinedEventLogPanel}
-          />
+          <SimulatorActivityTabs log={unifiedActivityFeed} />
           <div className={sidebarClasses.mobileUtilityBar}>
             <UserConfigButton />
           </div>
@@ -383,19 +438,20 @@ function BoardSharedContent({
 }
 
 interface SidebarContentProps extends BoardSharedContentProps {
-  eventLogPanel: ReactNode;
-  combinedEventLogPanel: ReactNode;
+  activityFeed: ReactNode;
 }
 
 function SidebarContent({
+  practiceMode = "bot",
   playerIdentities,
   playerConnections,
   connectionDiagnostic,
   onClaimRivalDrop,
+  dropEligibility,
   postGameSurface,
-  eventLogPanel,
-  combinedEventLogPanel,
+  activityFeed,
   liveMatchSidebar,
+  onSetupStallSync,
 }: SidebarContentProps) {
   const isDeckBuilderPractice = postGameSurface === "deck-builder-practice";
   const {
@@ -429,19 +485,44 @@ function SidebarContent({
     () => (liveMatchSidebar ? resolveHumanMatchSidebar(liveMatchSidebar, playerConnections) : null),
     [liveMatchSidebar, playerConnections],
   );
+  const setupSyncNoticeVisible = useSetupSyncStall(onSetupStallSync);
+  const setupSyncNotice = setupSyncNoticeVisible ? (
+    <SetupSyncNotice onSync={onSetupStallSync} />
+  ) : null;
 
   if (humanSidebar && liveMatchSidebar) {
     return (
-      <HumanMatchSidebar
-        config={liveMatchSidebar}
-        model={humanSidebar}
-        connectionDiagnostic={connectionDiagnostic}
-        eventLogPanel={eventLogPanel}
-        combinedEventLogPanel={combinedEventLogPanel}
-        onClaimRivalDrop={onClaimRivalDrop}
-        matchActions={matchActions.actions}
-        matchActionConfirmation={matchActions.confirmation}
-      />
+      <>
+        <HumanMatchSidebar
+          config={liveMatchSidebar}
+          model={humanSidebar}
+          connectionDiagnostic={connectionDiagnostic}
+          activityFeed={activityFeed}
+          onClaimRivalDrop={onClaimRivalDrop}
+          dropEligibility={dropEligibility}
+          matchActions={matchActions.actions}
+          matchActionConfirmation={matchActions.confirmation}
+        />
+        {setupSyncNotice}
+      </>
+    );
+  }
+
+  // A live viewer without a seat is always a spectator, including public
+  // practice-vs-bot matches. Never expose practice mutations to that viewer.
+  if (
+    liveMatchSidebar &&
+    (!liveMatchSidebar.localPlayerId || !hasBotParticipant(liveMatchSidebar))
+  ) {
+    return (
+      <>
+        <SpectatorMatchSidebar
+          config={liveMatchSidebar}
+          connections={playerConnections}
+          activityFeed={activityFeed}
+        />
+        {setupSyncNotice}
+      </>
     );
   }
 
@@ -455,13 +536,14 @@ function SidebarContent({
     return {
       id: identity?.id ?? side,
       role,
-      name: identity?.displayName ?? (role === "self" ? "You" : "Rival"),
-      shortLabel: role === "self" ? "YOU" : "OP",
+      layout: "stacked",
+      name: identity?.displayName,
+      showAvatar: false,
       clock: clock[side].time,
       active: activeSide === side,
       priority: prioritySide === side,
       status: prioritySide === side ? "Priority" : "Waiting",
-      meta: formatPlayerIdentityMeta(identity) || (role === "self" ? "Local player" : "Rival"),
+      meta: formatPlayerIdentityMeta(identity),
     };
   };
 
@@ -475,38 +557,62 @@ function SidebarContent({
         self={{
           ...toPracticeParticipant(humanSide, "self"),
           actions: (
-            <SimulatorSelfParticipantActions
-              gameConfiguration={{
-                settings: <CyberpunkSettingsFields />,
-                requiresConfirmation: false,
-                onSelect: () => setPracticeConfigurationOpen(true),
-              }}
-              support={{
-                source: "cyberpunk-practice-participant-menu",
-                gameSlug: "cyberpunk",
-                stateVersion: matchState.ctx.stateID,
-                turn: matchState.G.turnMetadata.turnNumber,
-              }}
-            />
+            <CyberpunkPaymentSelectionDiscovery>
+              <div className={sidebarClasses.participantQuickActions}>
+                <CyberpunkPaymentSelectionShortcut />
+                <SimulatorSelfParticipantActions
+                  gameConfiguration={{
+                    settings: <CyberpunkSettingsFields />,
+                    requiresConfirmation: false,
+                    onSelect: () => setPracticeConfigurationOpen(true),
+                  }}
+                  matchMenuItems={(close) => (
+                    <CyberpunkPaymentSelectionPlayerAction onComplete={close} />
+                  )}
+                  support={{
+                    source: "cyberpunk-practice-participant-menu",
+                    gameSlug: "cyberpunk",
+                    stateVersion: matchState.ctx.stateID,
+                    turn: matchState.G.turnMetadata.turnNumber,
+                  }}
+                />
+              </div>
+            </CyberpunkPaymentSelectionDiscovery>
           ),
         }}
         automation={{
-          label: "Bot controls",
-          panelLabel: "Bot strategy and pacing controls",
+          label: "Opponent controls",
+          panelLabel:
+            practiceMode === "self"
+              ? "Play both sides controls"
+              : "Bot strategy and pacing controls",
           summary: (
-            <span className={sidebarClasses.automationSummary}>
-              <span>{aiTakeover ? "Seat control" : "Bot playback"}</span>
+            <span
+              className={sidebarClasses.automationSummary}
+              role={practiceMode === "self" ? "status" : undefined}
+              aria-live={practiceMode === "self" ? "polite" : undefined}
+            >
+              <span>
+                {practiceMode === "self"
+                  ? "Play both sides"
+                  : aiTakeover
+                    ? "Opponent control"
+                    : "Bot playback"}
+              </span>
               <strong>
-                {aiTakeover
-                  ? "You control bot"
-                  : aiMode === "step"
-                    ? "Paused · step"
-                    : "Auto-running"}
+                {practiceMode === "self"
+                  ? `Controlling ${aiTakeover ? "Player 2" : "Player 1"}`
+                  : aiTakeover
+                    ? "You control the opponent"
+                    : aiMode === "step"
+                      ? "Paused · step"
+                      : "Auto-running"}
               </strong>
             </span>
           ),
           control: (
             <SimulatorBotQuickControls
+              practiceMode={practiceMode}
               pacing={aiMode}
               takeoverActive={aiTakeover !== null}
               canTakeover={canTakeControl}
@@ -524,22 +630,24 @@ function SidebarContent({
               onStep={stepOnce}
             />
           ),
-          details: (
-            <div className={sidebarClasses.sharedModeControls}>
-              <DeferredAiControlPanel
-                compact
-                embedded
-                hideDecisionLog
-                scenarioActionsVariant={isDeckBuilderPractice ? "hidden" : "details"}
-              />
-            </div>
-          ),
+          details:
+            practiceMode === "self" ? (
+              <p role="status" aria-live="polite" data-testid="cyberpunk-self-control-status">
+                Automation is off. Switch seats to make decisions for either player.
+              </p>
+            ) : (
+              <div className={sidebarClasses.sharedModeControls}>
+                <DeferredAiControlPanel
+                  compact
+                  embedded
+                  hideDecisionLog
+                  scenarioActionsVariant={isDeckBuilderPractice ? "hidden" : "details"}
+                />
+              </div>
+            ),
         }}
         activity={{
-          log: eventLogPanel,
-          chat: <DeferredChatPanel />,
-          combined: combinedEventLogPanel,
-          combinedLabel: "All",
+          log: activityFeed,
           secondary: (
             <div className={sidebarClasses.sharedUtilities}>
               <ConnectionPanel
@@ -559,7 +667,56 @@ function SidebarContent({
         opened={practiceConfigurationOpen}
         onClose={() => setPracticeConfigurationOpen(false)}
       />
+      {setupSyncNotice}
     </>
+  );
+}
+
+function SpectatorMatchSidebar({
+  config,
+  connections,
+  activityFeed,
+}: {
+  config: LiveMatchSidebarConfig;
+  connections?: PlayerConnectionBySide;
+  activityFeed: ReactNode;
+}) {
+  const { matchState, prioritySide } = useEngine();
+  const clock = useGameClock(prioritySide, { paused: matchState.G.gameEnded });
+  const activeSide =
+    matchState.G.turnMetadata.activePlayerId === PLAYER_SIDE_TO_ID.player ? "player" : "opponent";
+  const participantForSeat = (seat: 1 | 2, role: "self" | "opponent") => {
+    const participant = config.participants.find((candidate) => candidate.seat === seat);
+    const side = sideForSeat(seat);
+    return {
+      id: participant?.id ?? `seat-${seat}`,
+      role,
+      layout: "stacked",
+      testId: `spectator-sidebar-seat-${seat}`,
+      name: participant?.displayName ?? `Player ${seat}`,
+      showAvatar: false,
+      clock: clock[side].time,
+      active: activeSide === side,
+      priority: prioritySide === side,
+      status: prioritySide === side ? "Priority" : connectionLabel(connections?.[side]).label,
+      meta: participant ? formatPlayerIdentityMeta(participant) : "Spectator view",
+      metrics:
+        typeof scoreForSeat(config, seat) === "number"
+          ? [{ id: "score", label: "Score", value: scoreForSeat(config, seat) }]
+          : undefined,
+    } satisfies SimulatorMatchParticipant;
+  };
+
+  return (
+    <div className={sidebarClasses.sharedSidebarFrame} data-testid="cyberpunk-spectator-sidebar">
+      <SimulatorMatchSidebar
+        className={sidebarClasses.sharedSidebar}
+        opponent={participantForSeat(2, "opponent")}
+        self={participantForSeat(1, "self")}
+        activity={{ log: activityFeed }}
+        actions={{ controls: null, danger: null }}
+      />
+    </div>
   );
 }
 
@@ -567,12 +724,24 @@ function useCyberpunkMatchActions(): {
   readonly actions: SimulatorMatchActions;
   readonly confirmation: ReactNode;
 } {
-  const { dispatch, humanSide, matchState } = useEngine();
+  const { canUndo, dispatch, humanSide, matchState } = useEngine();
   const [confirmingConcede, setConfirmingConcede] = useState(false);
 
   const actions: SimulatorMatchActions = {
     className: sidebarClasses.matchActionDock,
-    controls: <PassTurnControl compact compactLabelStyle="action" actionsOnly />,
+    undo: (
+      <button
+        type="button"
+        className={`${sidebarClasses.sidebarActionButton} ${sidebarClasses.sidebarUndoButton}`}
+        disabled={!canUndo}
+        data-testid="sidebar-undo"
+        aria-label={canUndo ? "Undo last move" : "No undoable move available"}
+        onClick={() => dispatch({ type: "undo" })}
+      >
+        Undo
+      </button>
+    ),
+    primary: <PassTurnControl compact compactLabelStyle="action" actionsOnly />,
     danger: (
       <button
         type="button"
@@ -614,47 +783,26 @@ function HumanMatchSidebar({
   config,
   model,
   connectionDiagnostic,
-  eventLogPanel,
-  combinedEventLogPanel,
+  activityFeed,
   onClaimRivalDrop,
+  dropEligibility,
   matchActions,
   matchActionConfirmation,
 }: {
   config: LiveMatchSidebarConfig;
   model: HumanMatchSidebarModel;
   connectionDiagnostic?: SimulatorConnectionDiagnosticInput;
-  eventLogPanel: ReactNode;
-  combinedEventLogPanel: ReactNode;
+  activityFeed: ReactNode;
   onClaimRivalDrop?: () => void;
+  dropEligibility?: DropEligibility | null;
   matchActions: SimulatorMatchActions;
   matchActionConfirmation: ReactNode;
 }) {
   const { matchState, prioritySide } = useEngine();
   const clock = useGameClock(prioritySide, { paused: matchState.G.gameEnded });
-  const opponentPresence = useOpponentPresence(model.opponentConnection);
   const [gameConfigurationOpen, setGameConfigurationOpen] = useState(false);
   const opponentScore = scoreForSeat(config, model.opponent.seat);
   const selfScore = scoreForSeat(config, model.self.seat);
-  const opponentDisconnected = isConnectionDisconnected(model.opponentConnection);
-  const opponentTimeoutExpired = Boolean(
-    !matchState.G.gameEnded &&
-    connectionUiStatus(model.selfConnection) === "connected" &&
-    connectionUiStatus(model.opponentConnection) === "connected" &&
-    clock[model.opponentSide].seconds <= 0,
-  );
-  const canDropOpponent = Boolean(
-    onClaimRivalDrop && (opponentPresence.canDrop || opponentTimeoutExpired),
-  );
-  const showDropControl = Boolean(
-    onClaimRivalDrop && (opponentDisconnected || opponentTimeoutExpired),
-  );
-  const dropStatusText = opponentTimeoutExpired
-    ? "Opponent clock expired. The server will validate the timeout before ending the game."
-    : opponentPresence.canDrop
-      ? "Opponent has been disconnected long enough to drop."
-      : opponentDisconnected
-        ? `Opponent disconnected. Drop available in ${opponentPresence.secondsRemaining}s.`
-        : null;
   const selfConnectionStatus = connectionLabel(model.selfConnection);
   const showSelfConnectionAlert =
     selfConnectionStatus.status === "reconnecting" ||
@@ -671,9 +819,10 @@ function HumanMatchSidebar({
   ): SimulatorMatchParticipant => ({
     id: participant.id,
     role,
+    layout: "stacked",
     testId: `human-sidebar-${role}`,
     name: participant.displayName,
-    shortLabel: role === "self" ? "YOU" : initialsFor(participant.displayName),
+    showAvatar: false,
     clock: clock[side].time,
     active: activeSide === side,
     priority: prioritySide === side,
@@ -701,22 +850,30 @@ function HumanMatchSidebar({
           match={{ matchId: config.matchId, gameId: config.gameId, gameSlug: "cyberpunk" }}
         />
       ) : (
-        <SimulatorSelfParticipantActions
-          gameConfiguration={{
-            settings: <CyberpunkSettingsFields />,
-            label: "Game configuration",
-            requiresConfirmation: false,
-            onSelect: () => setGameConfigurationOpen(true),
-          }}
-          support={{
-            source: "cyberpunk-live-participant-menu",
-            gameSlug: "cyberpunk",
-            matchId: config.matchId,
-            gameId: config.gameId,
-            stateVersion: matchState.ctx.stateID,
-            turn: matchState.G.turnMetadata.turnNumber,
-          }}
-        />
+        <CyberpunkPaymentSelectionDiscovery>
+          <div className={sidebarClasses.participantQuickActions}>
+            <CyberpunkPaymentSelectionShortcut />
+            <SimulatorSelfParticipantActions
+              gameConfiguration={{
+                settings: <CyberpunkSettingsFields />,
+                label: "Game configuration",
+                requiresConfirmation: false,
+                onSelect: () => setGameConfigurationOpen(true),
+              }}
+              matchMenuItems={(close) => (
+                <CyberpunkPaymentSelectionPlayerAction onComplete={close} />
+              )}
+              support={{
+                source: "cyberpunk-live-participant-menu",
+                gameSlug: "cyberpunk",
+                matchId: config.matchId,
+                gameId: config.gameId,
+                stateVersion: matchState.ctx.stateID,
+                turn: matchState.G.turnMetadata.turnNumber,
+              }}
+            />
+          </div>
+        </CyberpunkPaymentSelectionDiscovery>
       ),
     metrics:
       typeof score === "number" ? [{ id: "score", label: "Score", value: score }] : undefined,
@@ -741,24 +898,19 @@ function HumanMatchSidebar({
           selfScore,
         )}
         activity={{
-          log: eventLogPanel,
-          chat: <DeferredChatPanel />,
-          combined: combinedEventLogPanel,
+          log: activityFeed,
           secondary: (
             <>
               <div className={sidebarClasses.sharedModeControls}>
-                {showDropControl ? (
-                  <div className={sidebarClasses.dropControl}>
-                    <button
-                      type="button"
-                      className={`${sidebarClasses.sidebarActionButton} ${sidebarClasses.sidebarDangerButton}`}
-                      onClick={onClaimRivalDrop}
-                      disabled={!canDropOpponent}
-                    >
-                      Drop opponent
-                    </button>
-                    {dropStatusText ? <span>{dropStatusText}</span> : null}
-                  </div>
+                {onClaimRivalDrop ? (
+                  <DropClaimControl
+                    className={sidebarClasses.dropControl}
+                    actionClassName={`${sidebarClasses.sidebarActionButton} ${sidebarClasses.sidebarDangerButton}`}
+                    eligibility={dropEligibility}
+                    serverNowMs={dropEligibility?.projectedAtMs ?? Date.now()}
+                    onClaim={onClaimRivalDrop}
+                    label="Drop opponent"
+                  />
                 ) : null}
                 <details className={sidebarClasses.sidebarDrawer}>
                   <summary>Opponent details</summary>
@@ -877,19 +1029,20 @@ function resolveHumanMatchSidebar(
           participant.id === config.localPlayerId || participant.userId === config.localPlayerId,
       )
     : null;
-  if (!local || !isRealHumanParticipant(local)) {
+  const self = local;
+  if (!self || !isRealHumanParticipant(self)) {
     return null;
   }
   const opponent = config.participants.find(
-    (participant) => participant.id !== local.id && isRealHumanParticipant(participant),
+    (participant) => participant.id !== self.id && isRealHumanParticipant(participant),
   );
   if (!opponent) {
     return null;
   }
-  const selfSide = sideForSeat(local.seat);
+  const selfSide = sideForSeat(self.seat);
   const opponentSide = sideForSeat(opponent.seat);
   return {
-    self: local,
+    self,
     opponent,
     selfSide,
     opponentSide,
@@ -898,12 +1051,8 @@ function resolveHumanMatchSidebar(
   };
 }
 
-function isRealHumanParticipant(participant: LiveMatchSidebarParticipant): boolean {
-  return Boolean(
-    participant.userId &&
-    !participant.userId.startsWith("bot_") &&
-    !participant.userId.startsWith("guest_"),
-  );
+function hasBotParticipant(config: LiveMatchSidebarConfig): boolean {
+  return config.participants.some((participant) => !isRealHumanParticipant(participant));
 }
 
 function sideForSeat(seat: 1 | 2): Side {
@@ -928,13 +1077,6 @@ function connectionLabel(connection: PlayerConnectionBySide[Side] | undefined): 
     return { status: "reconnecting", label: "Reconnecting" };
   }
   return { status: "disconnected", label: "Disconnected" };
-}
-
-function initialsFor(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  const first = parts[0]?.[0] ?? "?";
-  const second = parts.length > 1 ? parts[1]?.[0] : parts[0]?.[1];
-  return `${first}${second ?? ""}`.toUpperCase();
 }
 
 function formatCyberpunkEventLogReadableCopy(entries: readonly SimulatorEventLogEntry[]): string {
@@ -973,51 +1115,4 @@ function speakerLabel(seatId: string | undefined): string {
   if (seatId === "player" || seatId === "p1") return "P1";
   if (seatId === "opponent" || seatId === "p2") return "P2";
   return seatId.slice(0, 3).toUpperCase();
-}
-
-function renderEventLogMessage(entry: SimulatorEventLogEntry): ReactNode {
-  if (!entry.cardRefs || entry.cardRefs.length === 0) {
-    return entry.message;
-  }
-
-  const parts: ReactNode[] = [];
-  let cursor = 0;
-  const refsByName = new Map<string, NonNullable<SimulatorEventLogEntry["cardRefs"]>>();
-  for (const ref of entry.cardRefs) {
-    const queue = refsByName.get(ref.name) ?? [];
-    queue.push(ref);
-    refsByName.set(ref.name, queue);
-  }
-  const names = [...refsByName.keys()].sort((a, b) => b.length - a.length);
-  const pattern = new RegExp(`\\b(${names.map(escapeRegExp).join("|")})\\b`, "g");
-
-  for (const match of entry.message.matchAll(pattern)) {
-    const matchedName = match[0];
-    const index = match.index ?? 0;
-    if (index > cursor) {
-      parts.push(entry.message.slice(cursor, index));
-    }
-    const ref = refsByName.get(matchedName)?.shift();
-    parts.push(
-      <CardNameToken
-        key={`${entry.id}:${index}:${matchedName}`}
-        cardId={ref?.id}
-        fallbackName={matchedName}
-        interactive={false}
-      />,
-    );
-    cursor = index + matchedName.length;
-  }
-
-  if (parts.length === 0) {
-    return entry.message;
-  }
-  if (cursor < entry.message.length) {
-    parts.push(entry.message.slice(cursor));
-  }
-  return parts;
-}
-
-function escapeRegExp(value: string): string {
-  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

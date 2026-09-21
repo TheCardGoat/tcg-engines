@@ -83,6 +83,7 @@ function createFakeHandle(): FakeHandle {
     leave: vi.fn(),
     reconnect: vi.fn(),
     getState: vi.fn(() => currentState),
+    wouldHoldEmit: vi.fn(() => false),
     subscribeState: vi.fn((cb: StateHandler) => {
       cbs.state = cb;
       return () => {
@@ -201,6 +202,61 @@ describe("createLiveMatchSession", () => {
     );
   });
 
+  it("keeps a completed bootstrap read-only without joining or starting heartbeats", () => {
+    vi.useFakeTimers();
+    const bootstrap = testBootstrap("player");
+    bootstrap.game.status = "completed";
+    bootstrap.match.status = "completed";
+    bootstrap.viewer.permissions.act = false;
+    bootstrap.capabilities.actions = false;
+    const buildHeartbeatPayload = vi.fn(() => ({ activity: { idle: false, tabVisible: true } }));
+    const { config, handle } = createConfig({
+      bootstrap,
+      buildHeartbeatPayload,
+      heartbeatIntervalMs: 100,
+    });
+    const session = createLiveMatchSession(config);
+
+    session.start();
+    handle.pushState({
+      ...defaultConnectionState(),
+      status: "connected",
+      authenticated: true,
+      connectionId: "conn_1",
+    });
+    vi.advanceTimersByTime(300);
+    session.stop();
+
+    expect(handle.join).not.toHaveBeenCalled();
+    expect(handle.emit).not.toHaveBeenCalledWith("heartbeat", expect.anything());
+    expect(buildHeartbeatPayload).not.toHaveBeenCalled();
+    expect(handle.leave).not.toHaveBeenCalled();
+  });
+
+  it("joins a spectator session without sending match heartbeats", () => {
+    vi.useFakeTimers();
+    const buildHeartbeatPayload = vi.fn(() => ({ activity: { idle: false, tabVisible: true } }));
+    const { config, handle } = createConfig({
+      bootstrap: testBootstrap("spectator"),
+      buildHeartbeatPayload,
+      heartbeatIntervalMs: 100,
+    });
+    const session = createLiveMatchSession(config);
+
+    session.start();
+    handle.pushState({
+      ...defaultConnectionState(),
+      status: "connected",
+      authenticated: true,
+      connectionId: "conn_1",
+    });
+    vi.advanceTimersByTime(300);
+
+    expect(handle.join).toHaveBeenCalledOnce();
+    expect(handle.emit).not.toHaveBeenCalledWith("heartbeat", expect.anything());
+    expect(buildHeartbeatPayload).not.toHaveBeenCalled();
+  });
+
   it("start wires onAny and forwards all events to onGameEvent", () => {
     const onGameEvent = vi.fn();
     const { config, handle } = createConfig({ onGameEvent });
@@ -239,6 +295,7 @@ describe("createLiveMatchSession", () => {
 
     const state = session.getState();
     expect(state.joined).toBe(true);
+    expect(state.joinedRole).toBe("player");
     expect(state.presence).toHaveLength(2);
     expect(state.presence).toContainEqual(
       expect.objectContaining({ playerId: "p1", status: "connected", connected: true }),
@@ -266,6 +323,7 @@ describe("createLiveMatchSession", () => {
       players: [{ id: "p1", connected: true }],
     });
     expect(session.getState().joined).toBe(true);
+    expect(session.getState().joinedRole).toBe("player");
 
     handle.pushState({
       ...defaultConnectionState(),
@@ -275,6 +333,7 @@ describe("createLiveMatchSession", () => {
       error: "transport close",
     });
     expect(session.getState().joined).toBe(false);
+    expect(session.getState().joinedRole).toBeNull();
 
     handle.pushState({
       ...defaultConnectionState(),
@@ -290,6 +349,54 @@ describe("createLiveMatchSession", () => {
       stateVersion: 2,
       state: {},
       players: [{ id: "p1", connected: true }],
+    });
+    expect(session.getState().joined).toBe(true);
+  });
+
+  it("ignores game_joined for a different gameId", () => {
+    const { config, handle } = createConfig();
+    const session = createLiveMatchSession(config);
+    session.start();
+    handle.dispatch("game_joined", {
+      gameId: "other-game",
+      role: "player",
+      stateVersion: 1,
+      players: [{ id: "p1", connected: true }],
+    });
+    expect(session.getState().joined).toBe(false);
+    expect(session.getState().joinedRole).toBeNull();
+  });
+
+  it("keeps joined across a credential-refresh disconnect", () => {
+    const { config, handle } = createConfig();
+    const session = createLiveMatchSession(config);
+    session.start();
+
+    handle.dispatch("game_joined", {
+      gameId: "game_1",
+      role: "player",
+      stateVersion: 1,
+      state: {},
+      players: [{ id: "p1", connected: true }],
+    });
+    expect(session.getState().joined).toBe(true);
+
+    handle.pushState({
+      ...defaultConnectionState(),
+      status: "disconnected",
+      authenticated: false,
+      authStatus: "refreshing",
+      authFailureReason: "scope_renewal",
+      connectionId: null,
+    });
+    expect(session.getState().joined).toBe(true);
+
+    handle.pushState({
+      ...defaultConnectionState(),
+      status: "connected",
+      authenticated: true,
+      authStatus: "ok",
+      connectionId: "conn_2",
     });
     expect(session.getState().joined).toBe(true);
   });
@@ -645,5 +752,29 @@ describe("createLiveMatchSession", () => {
 
     expect(buildHeartbeatPayload).not.toHaveBeenCalled();
     expect(handle.emit).not.toHaveBeenCalledWith("heartbeat", expect.anything());
+  });
+
+  it("stops sending match heartbeats after the current game ends", () => {
+    vi.useFakeTimers();
+    const { config, handle } = createConfig({
+      buildHeartbeatPayload: () => ({ activity: { idle: false, tabVisible: true } }),
+      heartbeatIntervalMs: 100,
+    });
+    const session = createLiveMatchSession(config);
+    session.start();
+    handle.pushState({
+      ...defaultConnectionState(),
+      status: "connected",
+      authenticated: true,
+      connectionId: "conn_1",
+    });
+
+    vi.advanceTimersByTime(100);
+    expect(handle.emit).toHaveBeenCalledTimes(1);
+
+    handle.dispatch("game_ended", { gameId: "game_1" });
+    vi.advanceTimersByTime(300);
+
+    expect(handle.emit).toHaveBeenCalledTimes(1);
   });
 });

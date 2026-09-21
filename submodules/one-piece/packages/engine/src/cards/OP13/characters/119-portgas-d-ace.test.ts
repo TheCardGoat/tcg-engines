@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01Fourtricks025 } from "@tcg/op-cards";
-import { op13JewelryBonney108 } from "../../../../../cards/src/cards/OP13/characters/108-jewelry-bonney.ts";
-import { op13JewelryBonney109 } from "../../../../../cards/src/cards/OP13/characters/109-jewelry-bonney.ts";
-import { op13PortgasDAce119 } from "../../../../../cards/src/cards/OP13/characters/119-portgas-d-ace.ts";
+import { op13JewelryBonney108 } from "../../../../../cards/src/cards/characters/op13-108-jewelry-bonney.ts";
+import { op13JewelryBonney109 } from "../../../../../cards/src/cards/characters/op13-109-jewelry-bonney.ts";
+import { op13PortgasDAce119 } from "../../../../../cards/src/cards/characters/op13-119-portgas-d-ace.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

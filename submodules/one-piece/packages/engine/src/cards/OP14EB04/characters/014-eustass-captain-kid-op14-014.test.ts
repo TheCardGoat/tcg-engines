@@ -7,7 +7,7 @@ import {
   op14eb04TrafalgarLawOp14001001,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04EustassCaptainKidOp14014014 } from "../../../../../cards/src/cards/OP14EB04/characters/014-eustass-captain-kid-op14-014.ts";
+import { op14eb04EustassCaptainKidOp14014014 } from "../../../../../cards/src/cards/characters/op14-014-eustass-captain-kid-op14-014.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

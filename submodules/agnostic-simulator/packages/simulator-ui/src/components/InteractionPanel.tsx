@@ -91,7 +91,10 @@ export function InteractionPanel({
 
     switch (input.kind) {
       case "single-target":
-        return sel.length === 1;
+        // An optional (min 0) target must stay submittable with no selection:
+        // the empty submission is the decline. Requiring one selection would
+        // make "SELECT TARGET (0-1)" prompts mandatory-in-practice.
+        return sel.length === 1 || (sel.length === 0 && input.min === 0);
       case "multi-target":
         return sel.length >= (input.min ?? 1) && sel.length <= (input.max ?? sel.length);
       case "option":
@@ -199,7 +202,6 @@ export function InteractionPanel({
                       aria-pressed={selEntities.includes(entityId)}
                       data-testid={`interaction-candidate:${interaction.id}:${entityId}`}
                       data-entity-id={entityId}
-                      data-sim-entity-id={entityId}
                     >
                       {candidateLabel(entityId)}
                     </button>
@@ -230,7 +232,6 @@ export function InteractionPanel({
                       aria-pressed={selPayments.includes(entityId)}
                       data-testid={`interaction-payment:${interaction.id}:${entityId}`}
                       data-entity-id={entityId}
-                      data-sim-entity-id={entityId}
                     >
                       {candidateLabel(entityId)}
                     </button>
@@ -266,7 +267,6 @@ export function InteractionPanel({
                       aria-pressed={selOrdered.includes(entityId)}
                       data-testid={`interaction-order:${interaction.id}:${entityId}`}
                       data-entity-id={entityId}
-                      data-sim-entity-id={entityId}
                     >
                       {candidateLabel(entityId)}
                     </button>

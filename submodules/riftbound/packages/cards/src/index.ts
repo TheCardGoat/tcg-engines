@@ -81,6 +81,8 @@ export function createRiftboundCatalogIndex(catalog: RiftboundCatalog): Riftboun
         card.name,
         card.cardType,
         card.rulesTextPlain,
+        card.effectTextPlain,
+        card.flavorText,
         ...card.domains,
         ...card.tags,
         ...card.keywords,

@@ -13,34 +13,11 @@ import {
   destinationZone,
   isResolvingResolutionAbility,
   resolutionEffects,
-  arcaneDamageEffectFromPrinted,
   keywordEffectsFromPrintedKeywords,
 } from "./helpers.ts";
 import { fabPlayerLogCard, fabPlayerLogModalModeText } from "../../../player-log.ts";
 
 type FamilyEvent = Extract<ProposedEvent, { name: "announce-card" | "play" | "equip" }>;
-
-/** True when the layer effects already include a deal-damage arcane leaf. */
-function resolutionLayerHasArcaneDamage(effects: readonly FabEffect[]): boolean {
-  const visit = (node: unknown): boolean => {
-    if (!node || typeof node !== "object") return false;
-    const effect = node as Record<string, unknown>;
-    if (effect.type === "deal-damage" && effect.damageType === "arcane") return true;
-    if (Array.isArray(effect.steps) && effect.steps.some((step) => visit(step))) return true;
-    if (effect.effect && visit(effect.effect)) return true;
-    if (effect.then && visit(effect.then)) return true;
-    if (effect.else && visit(effect.else)) return true;
-    if (Array.isArray(effect.modes)) {
-      for (const mode of effect.modes) {
-        if (mode && typeof mode === "object" && "effect" in mode && visit(mode.effect)) {
-          return true;
-        }
-      }
-    }
-    return false;
-  };
-  return effects.some((effect) => visit(effect));
-}
 
 /** Zone-move reduction for: announce-card, play, equip */
 export function reducePlayEquip(
@@ -273,17 +250,12 @@ export function reducePlayEquip(
               ? (ability.layerKeywords ?? []).map((keyword) => keyword.name)
               : [],
           );
-          const arcaneEffect =
-            definition?.layout.kind === "split" ||
-            resolutionLayerHasArcaneDamage(abilityEffects) ||
-            event.data.role === "attack"
-              ? null
-              : arcaneDamageEffectFromPrinted(evaluatedObject, state.cardDefinitions);
           const keywordEffects = keywordEffectsFromPrintedKeywords(
             properties.keywords,
             abilityEffects,
           );
-          const trailingEffects = [...keywordEffects, ...(arcaneEffect ? [arcaneEffect] : [])];
+          // Catalog numeric metadata does not declare an executable effect.
+          const trailingEffects = keywordEffects;
           let abilityOffset = 0;
           const steps = abilities.map((ability, abilityIndex) => {
             const effects = resolutionEffects(ability, event.data.modes);

@@ -1,5 +1,7 @@
 import { useCallback, useState } from "react";
 import { IconClockPause, IconMaximize, IconMinus, IconWifiOff } from "@tabler/icons-react";
+import { DropClaimControl } from "@tcg/simulator-ui";
+import type { DropEligibility } from "@tcg/protocol";
 import { useOpponentPresence } from "../../engine/live/useOpponentPresence";
 import { connectionUiStatus } from "../../engine/live/playerConnectionState";
 import type { PlayerConnectionInfo } from "../../engine/sides";
@@ -11,6 +13,7 @@ interface OpponentDisconnectOverlayProps {
   onClaimDrop?: () => void;
   claimAvailable?: boolean;
   timeoutExpired?: boolean;
+  dropEligibility?: DropEligibility | null;
 }
 
 const RING_RADIUS = 38;
@@ -23,6 +26,7 @@ export function OpponentDisconnectOverlay({
   onClaimDrop,
   claimAvailable = false,
   timeoutExpired = false,
+  dropEligibility,
 }: OpponentDisconnectOverlayProps) {
   const status = connectionUiStatus(connection);
   const { secondsRemaining, canDrop } = useOpponentPresence(connection);
@@ -162,7 +166,17 @@ export function OpponentDisconnectOverlay({
                   : "Opponent disconnected"}
             </span>
 
-            {canShowDropAction ? (
+            {dropEligibility && onClaimDrop ? (
+              <div className={classes.actions}>
+                <DropClaimControl
+                  eligibility={dropEligibility}
+                  serverNowMs={dropEligibility.projectedAtMs}
+                  onClaim={onClaimDrop}
+                  label="Drop Opponent"
+                  actionClassName={`${classes.actionButton} ${classes.claimButton}`}
+                />
+              </div>
+            ) : canShowDropAction ? (
               <div className={classes.actions}>
                 {confirmingDrop ? (
                   <>

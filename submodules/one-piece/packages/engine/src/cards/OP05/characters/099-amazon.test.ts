@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op05Amazon099 } from "../../../../../cards/src/cards/OP05/characters/099-amazon.ts";
+import { op05Amazon099 } from "../../../../../cards/src/cards/characters/op05-099-amazon.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-099 Amazon", () => {

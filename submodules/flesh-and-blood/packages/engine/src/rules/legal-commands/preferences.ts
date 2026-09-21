@@ -2,6 +2,7 @@ import type { FabMoveName } from "../../moves.ts";
 import {
   FAB_DEFAULT_AUTOMATION_PREFERENCES,
   type FabOptionalTriggerAutomationMode,
+  type FabScopedAutoPassScope,
 } from "../../state.ts";
 import { isForcedEntityTargetDecision } from "../decision-automation.ts";
 import type { FabRulesSnapshot } from "../../kernel/transaction-kernel.ts";
@@ -12,6 +13,7 @@ import {
   FAB_AUTOMATION_PREFERENCE_LABELS,
   FAB_PRIORITY_MODES,
   FAB_PRIORITY_MODE_ACTION_LABEL,
+  FAB_SCOPED_AUTO_PASS_LABELS,
   shortId,
   type FabLegalCommand,
 } from "./shared.ts";
@@ -113,6 +115,51 @@ export function instantiateSetAutomationPreferencesLegalCommands(context: {
     }
     return;
   }
+  // Scoped auto-pass controls mirror the runtime eligibility exactly: the
+  // armed seat can always disarm, the declaring defender may arm the combat
+  // scope, holders may arm in any open context, and the opponent's-turn arm
+  // is offered in non-combat waiting windows. Waiting spectators in open
+  // combat keep a concede-only view.
+  const armedScope = profile.scopedAutoPass;
+  const pushScopedCommand = (scope: FabScopedAutoPassScope, armed: boolean): void => {
+    const labels =
+      scope === "combat"
+        ? {
+            arm: FAB_SCOPED_AUTO_PASS_LABELS.combatArm,
+            disarm: FAB_SCOPED_AUTO_PASS_LABELS.combatDisarm,
+          }
+        : {
+            arm: FAB_SCOPED_AUTO_PASS_LABELS.opponentTurnArm,
+            disarm: FAB_SCOPED_AUTO_PASS_LABELS.opponentTurnDisarm,
+          };
+    push({
+      move,
+      payload: armed ? { disarmScopedAutoPass: true } : { armScopedAutoPass: scope },
+      automation: "player-only",
+      label: armed ? labels.disarm : labels.arm,
+    });
+  };
+  const combatOpen = state.combat?.open === true;
+  const defenderInDeclaration =
+    combatOpen &&
+    state.combat?.step === "defend" &&
+    state.combat.defenseDeclarationPending === true &&
+    state.combat.activeLink?.defendingPlayerId === actorId;
+  const holderInContext = state.priority?.holderPlayerId === actorId;
+  const combatArmContext = combatOpen && (holderInContext || defenderInDeclaration);
+  const turnArmContext = !combatOpen && state.activePlayerId !== actorId;
+  if (armedScope !== null) {
+    pushScopedCommand(armedScope, true);
+  } else if (combatArmContext) {
+    pushScopedCommand("combat", false);
+  } else if (turnArmContext) {
+    pushScopedCommand("opponent-turn", false);
+  }
+
+  // The priority-gated settings below are only submittable by the priority
+  // holder; offering them to a scope-eligible non-holder would surface dead
+  // controls.
+  if (state.priority?.holderPlayerId !== actorId) return;
   // One entry per target mode (excluding the seat's current mode) so the
   // 3-state control can submit an explicit target instead of a toggle.
   for (const mode of FAB_PRIORITY_MODES) {

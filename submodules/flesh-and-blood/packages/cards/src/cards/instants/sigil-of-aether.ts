@@ -2,12 +2,6 @@ import { definePitchFamily } from "../../authoring/pitch-family.ts";
 import { fabPitchFamilies } from "../../generated/card-identities/instants/sigil-of-aether.generated.ts";
 
 export const sigilOfAether = definePitchFamily(fabPitchFamilies["sigil-of-aether"], {
-  keywords: [
-    {
-      name: "amp",
-      value: 1,
-    },
-  ],
   abilities: () => ({
     atBeginningActionPhaseDestroy: {
       kind: "static",
@@ -61,7 +55,12 @@ export const sigilOfAether = definePitchFamily(fabPitchFamilies["sigil-of-aether
               damageType: "arcane",
               amount: 1,
               target: {
-                selector: "any-hero",
+                selector: "object",
+                declared: "on-stack",
+                player: "any",
+                zones: ["hero", "permanent"],
+                filter: { hasProperty: "life" },
+                count: 1,
               },
             },
             {

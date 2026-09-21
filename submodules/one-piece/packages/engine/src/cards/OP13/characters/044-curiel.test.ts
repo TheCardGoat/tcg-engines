@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01MountainGod018, op01Kaido094, op02EdwardNewgate001 } from "@tcg/op-cards";
-import { op13Curiel044 } from "../../../../../cards/src/cards/OP13/characters/044-curiel.ts";
+import { op13Curiel044 } from "../../../../../cards/src/cards/characters/op13-044-curiel.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

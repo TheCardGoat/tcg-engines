@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "generatedAt": "2026-09-11T20:00:34.017Z",
+  "generatedAt": "2026-09-20T18:33:37.508Z",
   "note": "Family-keyed gap ledger. Non-resolved families are active work; resolved families are retained as deduplicated audit history and may be reopened by family id. Historical rows retain their own triedAt timestamps.",
   "families": [
     {
@@ -4291,11 +4291,11 @@
     },
     {
       "family": "effect/secret-number-search",
-      "kind": "definition",
-      "primitive": null,
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/layer-resolution/sequence.ts",
       "status": "resolved",
-      "repro": "Printed each-hero secret 1-6, highest loses that much life and searches deck for cost <= chosen. Module stubs set-status secretly-chose-a-number / chosen-numbers-revealed / chose-the-highest-number-payout plus shuffle. Resolves with go again; no life loss, no search.",
-      "resolvedBy": "choose-number 1-6 each hero + unique highest life/search; packages/cards/src/cards/actions/spur-locked.test.ts",
+      "repro": "Bravo6 vsDash1 loses correct6life but resumes search for losing Dash. replaceEffectAtPath freezes a conditional true inside a shared for-each body. Must preserve per-subject branch decisions through prefix commitment. Campaign spur-search-diagnostic records wrong decision owner.",
+      "resolvedBy": "Shared sequence continuation captures qualifying hero cohort before prefix commit and preserves it per iteration through suffix rewrite. Spur Locked controller/opponent winners and tied searches pass; restored global-condition mutant fails chooser ownership. Full regression14571pass1knownfail.",
       "members": [
         {
           "canonicalId": "MfDRbDBGdmNDzQdNhHDqq",
@@ -4304,8 +4304,8 @@
           "collectorNumber": "HNT255",
           "slug": "spur-locked-blue",
           "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
-          "reason": "Printed each-hero secret 1-6, highest loses that much life and searches deck for cost <= chosen. Module stubs set-status secretly-chose-a-number / chosen-numbers-revealed / chose-the-highest-number-payout plus shuffle. Resolves with go again; no life loss, no search.",
-          "triedAt": "2026-08-20T13:07:14.857Z"
+          "reason": "Current real-card repro: Bravo6 vsDash1 loses correct6life but resumes search for losing Dash. Shared conditional branch is frozen true by replaceEffectAtPath while rewriting a for-each sequence suffix. Preserve each subject decision independently; targetRequired now catches wrong owner. Campaign spur-search-diagnostic evidence.",
+          "triedAt": "2026-09-20T04:16:14.288Z"
         }
       ]
     },
@@ -6889,7 +6889,7 @@
       "primitive": null,
       "status": "resolved",
       "repro": "play Evo Circuit Breaker with Teklo Base Head equipped; evo ends in graveyard not head",
-      "resolvedBy": "member AAA suites verified green at tip (batch run $(date +%F)); stale ledger entry, tests rewritten after 2026-08-23 deletion wave",
+      "resolvedBy": "Atomic grouped transform proposal/reducer supports Evo without flipping; all Breaker X=0/1/2 equip and prevention, boost accept/decline, expiry, host boundary plus Zip Line: 29 passing public-command cases. 13 production mappings checked. Campaign evidence/evo-exhausted-focused.json, evo-registration.json and 66 dependent tests. Whole-card remaining clauses/sensitivity stay pending in campaign.",
       "members": [
         {
           "canonicalId": "hNkCtbWQNhtGkb77cFzhF",
@@ -6898,8 +6898,8 @@
           "collectorNumber": "EVO030",
           "slug": "evo-circuit-breaker-red",
           "cluster": "instants|a:family-helper,e:family-helper",
-          "reason": "base-head plus Hyper Driver transform does not equip this into the head slot",
-          "triedAt": "2026-08-22T18:16:08.613Z"
+          "reason": "Current sequence reaches unresolved X target count. HEAD tests pass by asserting Evo goes to graveyard and does not equip, contrary to printed transform/equip. See campaign evidence/evo-head-baseline.json and observed-filter-dependent-suites.json.",
+          "triedAt": "2026-09-19T21:12:41.747Z"
         },
         {
           "canonicalId": "MdmK9dmLDpbC7GFcz6W7C",
@@ -6910,6 +6910,26 @@
           "cluster": "instants|a:family-helper,e:family-helper",
           "reason": "transform self while base legs remain seated: equip seat already occupied (same primitive as EVO030/EVO033)",
           "triedAt": "2026-08-27T10:14:38.997Z"
+        },
+        {
+          "canonicalId": "tGhCtnrQTn8KtcmnJdqmq",
+          "set": "EVO",
+          "typeDir": "instants",
+          "collectorNumber": "EVO031",
+          "slug": "evo-atom-breaker-red",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Current sequence reaches unresolved X target count. HEAD tests pass by asserting Evo goes to graveyard and does not equip, contrary to printed transform/equip. See campaign evidence/evo-head-baseline.json and observed-filter-dependent-suites.json.",
+          "triedAt": "2026-09-19T21:12:42.877Z"
+        },
+        {
+          "canonicalId": "qR9dqP7WCqkzp69ctCNcp",
+          "set": "EVO",
+          "typeDir": "instants",
+          "collectorNumber": "EVO032",
+          "slug": "evo-face-breaker-red",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Current sequence reaches unresolved X target count. HEAD tests pass by asserting Evo goes to graveyard and does not equip, contrary to printed transform/equip. See campaign evidence/evo-head-baseline.json and observed-filter-dependent-suites.json.",
+          "triedAt": "2026-09-19T21:12:43.978Z"
         }
       ]
     },
@@ -11125,9 +11145,9 @@
       "family": "mechanic/crowd-cheers-resolution",
       "kind": "harness",
       "primitive": "packages/engine/src/rules/proposals/effects/crowd-cheers.ts",
-      "status": "resolved",
+      "status": "open",
       "repro": "play Shining Courage while defending; resolveUntilIdle; Toughness in arena",
-      "resolvedBy": "drain crowd-cheers trigger with resolveUntilIdle; Tuffnut Toughness printed AAA (SUP034)",
+      "resolvedBy": null,
       "members": [
         {
           "canonicalId": "FngCwjRtgtcHbcNJnPmJM",
@@ -11138,6 +11158,36 @@
           "cluster": "instants|a:family-helper,e:family-helper",
           "reason": "Shining Courage crowd-cheers must drain the Tuffnut triggered create-token; passBoth left the trigger unflushed so the suite pinned no Toughness.",
           "triedAt": "2026-08-21T19:29:33.861Z"
+        },
+        {
+          "canonicalId": "qR8DkwWmrqGqzd9BbCDbH",
+          "set": "SLY",
+          "typeDir": "actions",
+          "collectorNumber": "SLY013",
+          "slug": "prime-the-crowd-red",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Prime RGB opposing cheer misses Tuffnut: recipient actor and hero filter defects repaired; repeated crowd-event and full member acceptance pending. evidence/crowd-recipient-oracle.json.",
+          "triedAt": "2026-09-20T03:36:05.248Z"
+        },
+        {
+          "canonicalId": "DnWNQrGqLW69pqRdTDhmT",
+          "set": "SUP",
+          "typeDir": "actions",
+          "collectorNumber": "SUP237",
+          "slug": "prime-the-crowd-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Same shared crowd recipient/filter defect; RGB reproduction and repair evidence crowd-recipient-oracle.json.",
+          "triedAt": "2026-09-20T03:36:23.197Z"
+        },
+        {
+          "canonicalId": "8N7gGzcDDNK7d8jFGPrR6",
+          "set": "SUP",
+          "typeDir": "actions",
+          "collectorNumber": "SUP238",
+          "slug": "prime-the-crowd-blue",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Same shared crowd recipient/filter defect; RGB reproduction and repair evidence crowd-recipient-oracle.json.",
+          "triedAt": "2026-09-20T03:36:24.650Z"
         }
       ]
     },
@@ -13035,9 +13085,9 @@
       "family": "status/hero-won-both-clashes",
       "kind": "engine-primitive",
       "primitive": null,
-      "status": "open",
+      "status": "resolved",
       "repro": "Bravo defends Trounce revealing two 6{p} vs two 0{p}",
-      "resolvedBy": null,
+      "resolvedBy": "Committed clash outcome boundary and frozen entered branches in procedures/layer-resolution/sequence.ts; Trounce public-command suite (12 cases), 90 dependent tests, continuation and reward suppression mutants killed. Full catalog campaign acceptance remains separate.",
       "members": [
         {
           "canonicalId": "p9Mw8DBq9hPqKnPRrwCHz",
@@ -15475,9 +15525,9 @@
       "family": "status/sharpened-turn-fact-condition",
       "kind": "engine-primitive",
       "primitive": null,
-      "status": "open",
+      "status": "resolved",
       "repro": "Activate only if you've sharpened a sword this turn: control-object filter hasStatus:sharpened is shadowed by the condition evaluator's default it-binding (= the equipment source), so the sharpened sword never matches; needs a turn-fact (performed-this-turn sharpened) or filter-context subject precedence",
-      "resolvedBy": null,
+      "resolvedBy": "Typed performed-this-turn sharpen-sword stamped by committed sharpen reducer; Edge Laden Plate seven public-play cases cover activation, sword destruction, expiry, ownership and Battleworn; 114 dependent tests and five killed behavioral mutants.",
       "members": [
         {
           "canonicalId": "hc9pkdhJ9qW6H7grMcjCR",
@@ -15675,9 +15725,9 @@
       "family": "trigger/banish-observed-power-filter",
       "kind": "engine-primitive",
       "primitive": null,
-      "status": "open",
+      "status": "resolved",
       "repro": "Hooves trigger (banish, moved-object, power gte 6) never fires: boost banish of throttleRed (6p) and disableRed (9p) commits the banish event with the moved object and resolvable actor, but the trigger stays silent while the sibling shape (big-bertha/crankshaft hasStatus from-boosting, actor any) fires — suspect the power filter evaluation on the face-down deck-card snapshot or trigger registration for observed-object power filters; hand-banish probe (blood-dripping-frenzy) also hit an unrelated effect-cost journal error",
-      "resolvedBy": null,
+      "resolvedBy": "Hooves owner-based observed banish + rules banish-observation.ts masks private-to-private properties (CR 3.0.7a); 8 Hooves scenarios and 2 real Levia rules scenarios; six behavioral overlays. Full-card acceptance remains pending.",
       "members": [
         {
           "canonicalId": "khP7tT6NRCgzjJMWB8JHm",
@@ -15953,11 +16003,11 @@
     },
     {
       "family": "trigger/wagered-state-never-matches-same-attack-wager",
-      "kind": "engine-primitive",
-      "primitive": "packages/engine/src/rules/evaluation/conditions/has-status.ts",
-      "status": "open",
+      "kind": "definition",
+      "primitive": "packages/cards/src/cards/actions/heads-up.ts (existing event trigger + conditional resolution)",
+      "status": "resolved",
       "repro": "Heads Up's event-and-state trigger (count times-it-has-wagered >= 1) is evaluated before the same attack's wager (from Gutshot's granted rider) exists, so the dominate rider can never fire on the wagering attack",
-      "resolvedBy": null,
+      "resolvedBy": "Heads Up event trigger with conditional resolution (CR 6.6.1c/d), 8 real-card scenarios including all Gutshot pitches and both trigger orders; two behavioral mutants killed, production registration checked. Whole-card expiry/source obligations remain in campaign ledger.",
       "members": [
         {
           "canonicalId": "gM8RN6nqLkjHhfTDnRKtK",
@@ -15966,8 +16016,8 @@
           "collectorNumber": "AOL014",
           "slug": "heads-up-red",
           "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
-          "reason": "Heads Up's event-and-state trigger (count times-it-has-wagered >= 1) is evaluated before the same attack's wager (from Gutshot's granted rider) exists, so the dominate rider can never fire on the wagering attack",
-          "triedAt": "2026-08-29T23:26:42.023Z"
+          "reason": "CR 6.6.1c/d: wager condition belongs to resolution, not event-and-state trigger. Reproduced all RGB Gutshot orderings; existing conditional primitive supports repair.",
+          "triedAt": "2026-09-19T22:02:12.513Z"
         }
       ]
     },
@@ -16075,9 +16125,9 @@
       "family": "trigger/taylor-start-phase-swap-targets-unavailable",
       "kind": "engine-primitive",
       "primitive": null,
-      "status": "open",
+      "status": "resolved",
       "repro": "Taylor's 'At the start of your turn, you may banish an equipment you control. If you do, equip a card of the same subtype from your inventory' cannot complete end-to-end: the start-phase offer surfaces as a boolean (declinable, proven), but accepting it presents an entity-target whose candidates are unrelated filler objects ('Arsenal a card', min=0) instead of the controlled equipment / same-subtype inventory cards, so the banish+equip swap cannot resolve through public moves. Decline leg proven in heroes/taylor.test.ts.",
-      "resolvedBy": null,
+      "resolvedBy": "Shared optional principal commit and repeat continuation repair; seven real Taylor public-command scenarios, three production registration mappings, seven mutation overlays and restored 16-test run. Evidence .ralph/flesh-and-blood/card-validation/evidence/taylor-selection-restored.json and taylor-selection-sensitivity.json. Whole-card source and remaining boundaries stay pending.",
       "members": [
         {
           "canonicalId": "PkD89rQPqTmdPjzH6GMhf",
@@ -16395,9 +16445,9 @@
       "family": "trigger/killjoy-steal-boo-never-declares",
       "kind": "engine-primitive",
       "primitive": "packages/engine/src/rules/proposals/effects/gain-control.ts",
-      "status": "open",
+      "status": "resolved",
       "repro": "Killjoy, the Crooked Blade (SPW001) 'Whenever you steal a Gold, the crowd boos you': Cutpurse Rapier's on-hit steal resolves and moves the Gold with steal provenance (events: hit, declare-triggered-layer, move-zone; gold lands in the thief's arena), but the move-zone trigger with reason 'steal' never declares the crowd-boos layer. The direct crowd-boos leg and the first-boo-per-turn drain are proven in the card suite.",
-      "resolvedBy": null,
+      "resolvedBy": "Killjoy authored move-zone steal trigger observes any prior controller with stealing actor filter; real Cutpurse Gold/no-Gold/two-Killjoy scenarios pass; old controller-filter mutant fails life and boo assertions.",
       "members": [
         {
           "canonicalId": "9ngQ9QRpcTPQtpcnjwrRw",
@@ -17168,6 +17218,916 @@
           "cluster": "actions|<no-behavior>",
           "reason": "Blood Debt and Decay both trigger at the beginning of the end phase (CR 8.3.11, Decay reminder). The procedure snapshots Blood Debt cards before Decay so a Corpse from Decay death this phase does not tick (CR 8.3.11a), but that forced order also removes the turn player's CR 6.6.6b choice.",
           "triedAt": "2026-09-11T20:00:34.017Z"
+        }
+      ]
+    },
+    {
+      "family": "warmongers-diplomacy-player2-restriction",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "resolved",
+      "repro": "FabTestEngine: player-2 plays warmongerSDiplomacyBlue on their turn, both heroes choose war, player-1 ends turn and plays a non-attack action - it succeeds; state.continuousEffectInstances contains only the for-each-1 effect (ctrl=player-2); for-each-0 (ctrl=player-1) is missing.",
+      "resolvedBy": "engine fix 2026-09-16: has-status chose-war/chose-peace read the for-each iteration-subject seat (perHeroSeat) instead of the layer controller, and until-end-of-own-next-turn anchors its player-turn-end expiry to the iteration subject; card duration corrected to until-end-of-own-next-turn; regression tests in warmonger-s-diplomacy.test.ts (opponent-played + mixed choices)",
+      "members": [
+        {
+          "canonicalId": "BkpMHRn6L8dpcgjgrPm9H",
+          "set": "DTD",
+          "typeDir": "actions",
+          "collectorNumber": "DTD230",
+          "slug": "warmonger-s-diplomacy-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "When the Diplomacy layer is controlled by player-2, the first for-each iteration's (player-1 seat) war/peace play-restriction continuous effect is silently not created (play-permission path no-ops on unresolved iteration-subject binding), leaving the first chooser unrestricted on their next turn; player-1-controlled layers create both per-hero restrictions. Surfaced by the simulator warmongers-diplomacy-resolved visual fixture (agnostic-simulator engine-scenarios/warmongers-diplomacy.test.ts).",
+          "triedAt": "2026-09-16T10:08:42.835Z"
+        }
+      ]
+    },
+    {
+      "family": "event-play-timing",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "open",
+      "repro": "Event-only typeBox cards have no play timing in the play-legality procedure, so the resolution effect (per-hero discards) cannot be exercised through legal public moves.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "JgNNMtHdhBt6qJFPd8NDR",
+          "set": "SMP",
+          "typeDir": "events",
+          "collectorNumber": "SMP022",
+          "slug": "didn-t-see-that-coming",
+          "cluster": "events|<no-behavior>",
+          "reason": "Event-only typeBox cards have no play timing in the play-legality procedure, so the resolution effect (per-hero discards) cannot be exercised through legal public moves.",
+          "triedAt": "2026-09-16T10:38:16.128Z"
+        }
+      ]
+    },
+    {
+      "family": "definition/barraging-beatdown-missing-intimidate",
+      "kind": "definition",
+      "primitive": null,
+      "status": "resolved",
+      "repro": "Play Barraging Beatdown with opponent holding one real card: expected face-down banished, actual still in hand.",
+      "resolvedBy": "All RGB definitions now sequence intimidate then next-Brute modifier; 15 real-card scenarios pass, missing-intimidate overlay fails all RGB cases. Campaign evidence/banish-expanded-focused.json.",
+      "members": [
+        {
+          "canonicalId": "WCgctGz6KWwfp9Dhd7H7c",
+          "set": "1HP",
+          "typeDir": "actions",
+          "collectorNumber": "1HP022",
+          "slug": "barraging-beatdown-red",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Printed Intimidate omitted: authored ability only grants next-attack modifier; no banish occurs. Hooves antagonistic interaction reproduces missing effect.",
+          "triedAt": "2026-09-19T20:49:27.099Z"
+        },
+        {
+          "canonicalId": "7zrn7HFQgcMFKMhJh6DPc",
+          "set": "1HP",
+          "typeDir": "actions",
+          "collectorNumber": "1HP023",
+          "slug": "barraging-beatdown-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Printed Intimidate omitted: authored ability only grants next-attack modifier; no banish occurs. Hooves antagonistic interaction reproduces missing effect.",
+          "triedAt": "2026-09-19T20:49:28.246Z"
+        },
+        {
+          "canonicalId": "mnDGzj8JLF997nnwpFpBH",
+          "set": "1HP",
+          "typeDir": "actions",
+          "collectorNumber": "1HP024",
+          "slug": "barraging-beatdown-blue",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Printed Intimidate omitted: authored ability only grants next-attack modifier; no banish occurs. Hooves antagonistic interaction reproduces missing effect.",
+          "triedAt": "2026-09-19T20:49:29.493Z"
+        }
+      ]
+    },
+    {
+      "family": "harness/gutshot-real-rgb-behavior",
+      "kind": "harness",
+      "primitive": null,
+      "status": "resolved",
+      "repro": "Prior audit used Guardian/Ninja-incompatible fixtures, numeric synthetic decks and red-only evidence. Replace with real Warrior RGB wager/filter/temporal cases before trusting behavior.",
+      "resolvedBy": "15 real Warrior/public-command cases execute red, yellow and blue: hit/equal-defense miss, intervening non-Sword, first-Sword consumption and unused expiry. Seven non-equivalent mutants killed; one controller-route survivor documented as equivalent. Old whole-unit audit removed, not restored; broader campaign source/interaction obligations remain.",
+      "members": [
+        {
+          "canonicalId": "BrHTcWTJCgTnGjC7NFcbp",
+          "set": "MPW",
+          "typeDir": "actions",
+          "collectorNumber": "MPW109",
+          "slug": "gutshot-red",
+          "cluster": "actions|a:family-helper,e:nextAttackPowerAndWager({ amount, filter: { type,k:goAgain",
+          "reason": "Prior audit used Guardian/Ninja-incompatible fixtures, numeric synthetic decks and red-only evidence. Replace with real Warrior RGB wager/filter/temporal cases before trusting behavior.",
+          "triedAt": "2026-09-19T22:19:02.318Z"
+        },
+        {
+          "canonicalId": "nGGbCMQmmdwqdhW8QGPbF",
+          "set": "MPW",
+          "typeDir": "actions",
+          "collectorNumber": "MPW110",
+          "slug": "gutshot-yellow",
+          "cluster": "actions|a:family-helper,e:nextAttackPowerAndWager({ amount, filter: { type,k:goAgain",
+          "reason": "Prior audit used Guardian/Ninja-incompatible fixtures, numeric synthetic decks and red-only evidence. Replace with real Warrior RGB wager/filter/temporal cases before trusting behavior.",
+          "triedAt": "2026-09-19T22:19:03.433Z"
+        },
+        {
+          "canonicalId": "HCnqWbLnRrbdwP7RcqFrp",
+          "set": "MPW",
+          "typeDir": "actions",
+          "collectorNumber": "MPW111",
+          "slug": "gutshot-blue",
+          "cluster": "actions|a:family-helper,e:nextAttackPowerAndWager({ amount, filter: { type,k:goAgain",
+          "reason": "Prior audit used Guardian/Ninja-incompatible fixtures, numeric synthetic decks and red-only evidence. Replace with real Warrior RGB wager/filter/temporal cases before trusting behavior.",
+          "triedAt": "2026-09-19T22:19:04.528Z"
+        }
+      ]
+    },
+    {
+      "family": "harness/become-the-arknight-explicit-search",
+      "kind": "harness",
+      "primitive": null,
+      "status": "open",
+      "repro": "Previous auto-selection fixture did not explicitly answer the post-discard search; source-derived real-card search and contrast evidence remain incomplete.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "FzmdMTfjQrhzn8bNBhhDw",
+          "set": "1HP",
+          "typeDir": "actions",
+          "collectorNumber": "1HP267",
+          "slug": "become-the-arknight-blue",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Previous auto-selection fixture did not explicitly answer the post-discard search; source-derived real-card search and contrast evidence remain incomplete.",
+          "triedAt": "2026-09-19T22:46:30.425Z"
+        }
+      ]
+    },
+    {
+      "family": "engine/optional-repeat-continuation",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "open",
+      "repro": "Committing an optional principal rewrites the shared repeat body, losing later choices and iteration-local then ordering; real Golden Cog test checks each reward before the next offer.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "cTchBtPqMqnNgDGGW89Gp",
+          "set": "FAB",
+          "typeDir": "actions",
+          "collectorNumber": "FAB343",
+          "slug": "golden-skywarden-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Committing an optional principal rewrites the shared repeat body, losing later choices and iteration-local then ordering; real Golden Cog test checks each reward before the next offer.",
+          "triedAt": "2026-09-19T22:57:04.726Z"
+        },
+        {
+          "canonicalId": "kMcJmLgJPhnbtBkWkPH77",
+          "set": "HNT",
+          "typeDir": "actions",
+          "collectorNumber": "HNT221",
+          "slug": "rotten-remains-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Same optional repeat continuation loses the next offer after committed principal; source-derived per-iteration tests and generic repair remain required.",
+          "triedAt": "2026-09-19T22:57:06.087Z"
+        },
+        {
+          "canonicalId": "g7hQcmhpwWdKzkj7NtgLp",
+          "set": "HNT",
+          "typeDir": "actions",
+          "collectorNumber": "HNT248",
+          "slug": "roiling-fissure-blue",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Real repeat cursor exposes old test expecting optional before repeated mandatory destruction; corrected printed-order scenario and source oracle need full acceptance.",
+          "triedAt": "2026-09-19T23:10:55.290Z"
+        },
+        {
+          "canonicalId": "KhTmHGFqNFKzPkBdQJDgQ",
+          "set": "SUP",
+          "typeDir": "blocks",
+          "collectorNumber": "SUP077",
+          "slug": "truth-or-trickery-yellow",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Sequence prefix commit retained a chosen-color answer at the rebased guess path, skipping the attacking hero guess. Trace truth-sequence-trace proves path0.0.0.0 reused. Ancestor-only option answer retention repaired; shared consumer validation pending.",
+          "triedAt": "2026-09-20T00:46:37.774Z"
+        }
+      ]
+    },
+    {
+      "family": "harness/authored-token-count-baseline",
+      "kind": "harness",
+      "primitive": null,
+      "status": "open",
+      "repro": "Token totals must include the seeded authored Cog: successful tap/create leaves2, declining leaves1. Legacy audit used runtime-alias-only count; real-deck fixture restored, full sensitivity remains.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "gQdQfNwNMgDLJfkcNWmhH",
+          "set": "GEM",
+          "typeDir": "blocks",
+          "collectorNumber": "GEM045",
+          "slug": "pinion-sentry-blue",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Token totals must include the seeded authored Cog: successful tap/create leaves2, declining leaves1. Legacy audit used runtime-alias-only count; real-deck fixture restored, full sensitivity remains.",
+          "triedAt": "2026-09-19T23:13:33.441Z"
+        },
+        {
+          "canonicalId": "WMNLQNgmCHD7FwnFFq6dG",
+          "set": "SEA",
+          "typeDir": "actions",
+          "collectorNumber": "SEA018",
+          "slug": "cogwerx-zeppelin-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Count seeded authored Cog plus newly created Cog; replace false miss fixture with actual equal-defense miss. RGB and full-clause evidence remain pending.",
+          "triedAt": "2026-09-19T23:13:34.786Z"
+        }
+      ]
+    },
+    {
+      "family": "engine/continuous-locked-object-reset",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "open",
+      "repro": "CR3.0.9 continuous locked effects followed physical-card incarnation into graveyard. Real Rotten Remains fails power1 expected2actual after combat. Exact-incarnation repair passes focused reproduction but broad differential exposes24 assertion failures requiring source/timing review; six unrelated baseline failures. Evidence .ralph/flesh-and-blood/card-validation/evidence/continuous-reset-differential.json.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "kMcJmLgJPhnbtBkWkPH77",
+          "set": "HNT",
+          "typeDir": "actions",
+          "collectorNumber": "HNT221",
+          "slug": "rotten-remains-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "CR3.0.9 continuous locked effects followed physical-card incarnation into graveyard. Real Rotten Remains fails power1 expected2actual after combat. Exact-incarnation repair passes focused reproduction but broad differential exposes24 assertion failures requiring source/timing review; six unrelated baseline failures. Evidence .ralph/flesh-and-blood/card-validation/evidence/continuous-reset-differential.json.",
+          "triedAt": "2026-09-19T23:47:11.696Z"
+        },
+        {
+          "canonicalId": "n9FtLHDg97rfrTNJDMBG6",
+          "set": "CIN",
+          "typeDir": "tokens",
+          "collectorNumber": "CIN028",
+          "slug": "fealty",
+          "cluster": "tokens|<no-behavior>",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:47:54.693Z"
+        },
+        {
+          "canonicalId": "8h7fn6dk7PfNnckbW668r",
+          "set": "DTD",
+          "typeDir": "weapons",
+          "collectorNumber": "DTD205",
+          "slug": "decimator-great-axe",
+          "cluster": "weapons|<no-behavior>",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:47:55.817Z"
+        },
+        {
+          "canonicalId": "mkTDPKqkm7cprrDzWbF9z",
+          "set": "EVO",
+          "typeDir": "equipment",
+          "collectorNumber": "EVO013",
+          "slug": "adaptive-plating",
+          "cluster": "equipment|<no-behavior>",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:47:56.940Z"
+        },
+        {
+          "canonicalId": "KcrHDMhMgQNfzHwKnPDgt",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO105",
+          "slug": "ratchet-up-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:47:58.068Z"
+        },
+        {
+          "canonicalId": "FwdNLdm6dDRk6bjk9qwBQ",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO106",
+          "slug": "ratchet-up-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:47:59.243Z"
+        },
+        {
+          "canonicalId": "nwqRtHp9hhnB9RQgQLkpd",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO107",
+          "slug": "ratchet-up-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:00.368Z"
+        },
+        {
+          "canonicalId": "WLn8D67P6kfgMj6bmRHhz",
+          "set": "EVO",
+          "typeDir": "blocks",
+          "collectorNumber": "EVO117",
+          "slug": "cognition-field-red",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:01.494Z"
+        },
+        {
+          "canonicalId": "RpfpDfqWNgzTTJGFHrFnb",
+          "set": "EVO",
+          "typeDir": "blocks",
+          "collectorNumber": "EVO118",
+          "slug": "cognition-field-yellow",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:02.723Z"
+        },
+        {
+          "canonicalId": "HK9PTNh6JKQcNK7cqg6Dq",
+          "set": "EVO",
+          "typeDir": "blocks",
+          "collectorNumber": "EVO119",
+          "slug": "cognition-field-blue",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:03.859Z"
+        },
+        {
+          "canonicalId": "gGFjwC7rpLfpdBWDdQwgn",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO120",
+          "slug": "infuse-alloy-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:04.989Z"
+        },
+        {
+          "canonicalId": "BdmMDknJzHtkq6dHDpMFk",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO121",
+          "slug": "infuse-alloy-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:06.127Z"
+        },
+        {
+          "canonicalId": "fJdjjcFWMpqfCNKpJbNLr",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO122",
+          "slug": "infuse-alloy-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:07.281Z"
+        },
+        {
+          "canonicalId": "PnfMD9zp7JgTwTmJTQkwz",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO123",
+          "slug": "infuse-titanium-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:08.427Z"
+        },
+        {
+          "canonicalId": "qQbcdmqJw9tPqqDBnDpH9",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO124",
+          "slug": "infuse-titanium-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:09.561Z"
+        },
+        {
+          "canonicalId": "JhJWJjwBffmkgq69rfrgC",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO125",
+          "slug": "infuse-titanium-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:10.749Z"
+        },
+        {
+          "canonicalId": "MGGw9K9QMqmFBjLLTrbhq",
+          "set": "EVO",
+          "typeDir": "actions",
+          "collectorNumber": "EVO141",
+          "slug": "steel-street-hoons-blue",
+          "cluster": "actions|a:family-helper,e:family-helper,k:boost",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:11.942Z"
+        },
+        {
+          "canonicalId": "9gWCknpqtcLqfrkm6BBrK",
+          "set": "EVR",
+          "typeDir": "defense-reactions",
+          "collectorNumber": "EVR122",
+          "slug": "sigil-of-parapets-blue",
+          "cluster": "defense-reactions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:13.457Z"
+        },
+        {
+          "canonicalId": "cTchBtPqMqnNgDGGW89Gp",
+          "set": "FAB",
+          "typeDir": "actions",
+          "collectorNumber": "FAB343",
+          "slug": "golden-skywarden-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:15.004Z"
+        },
+        {
+          "canonicalId": "rLgf6HdKBBDFTcJrkwgtT",
+          "set": "FAB",
+          "typeDir": "blocks",
+          "collectorNumber": "FAB349",
+          "slug": "hoist-em-up-red",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:16.333Z"
+        },
+        {
+          "canonicalId": "FngCwjRtgtcHbcNJnPmJM",
+          "set": "GEM",
+          "typeDir": "instants",
+          "collectorNumber": "GEM090",
+          "slug": "shining-courage-red",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:17.553Z"
+        },
+        {
+          "canonicalId": "qwpdn8CJWGgkHLqdhDtgh",
+          "set": "GEM",
+          "typeDir": "instants",
+          "collectorNumber": "GEM183",
+          "slug": "runechant-of-wrath-yellow",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:19.104Z"
+        },
+        {
+          "canonicalId": "H7BLpD9DJMGnWcg9RNQM8",
+          "set": "IAR",
+          "typeDir": "actions",
+          "collectorNumber": "IAR171",
+          "slug": "rally-the-shadow-horde-red",
+          "cluster": "actions|a:family-helper,e:family-helper,k:bloodDebt",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:20.404Z"
+        },
+        {
+          "canonicalId": "NgJ6bTzL6dkNLpQKfdq6Q",
+          "set": "IAR",
+          "typeDir": "actions",
+          "collectorNumber": "IAR172",
+          "slug": "rally-the-shadow-horde-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper,k:bloodDebt",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:21.582Z"
+        },
+        {
+          "canonicalId": "rNbMDjNzNw6CpjGn7mD9C",
+          "set": "IAR",
+          "typeDir": "actions",
+          "collectorNumber": "IAR173",
+          "slug": "rally-the-shadow-horde-blue",
+          "cluster": "actions|a:family-helper,e:family-helper,k:bloodDebt",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:22.899Z"
+        },
+        {
+          "canonicalId": "fpnNtrfNGgkh6jbnGzjkt",
+          "set": "PEN",
+          "typeDir": "actions",
+          "collectorNumber": "PEN165",
+          "slug": "skywarden-no-161803-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:24.115Z"
+        },
+        {
+          "canonicalId": "TB9k9LLhgLQm7jD9tnNzk",
+          "set": "SEA",
+          "typeDir": "actions",
+          "collectorNumber": "SEA223",
+          "slug": "rally-the-coast-guard-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:25.290Z"
+        },
+        {
+          "canonicalId": "d6WrKcWGr7BHGtWHWT6dt",
+          "set": "SEA",
+          "typeDir": "actions",
+          "collectorNumber": "SEA224",
+          "slug": "rally-the-coast-guard-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:26.422Z"
+        },
+        {
+          "canonicalId": "wL7qNGJ7hn86bLDB7kGDG",
+          "set": "SEA",
+          "typeDir": "actions",
+          "collectorNumber": "SEA225",
+          "slug": "rally-the-coast-guard-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:27.545Z"
+        },
+        {
+          "canonicalId": "CmrzJNdGDLzk9RdzkDT8H",
+          "set": "SUP",
+          "typeDir": "actions",
+          "collectorNumber": "SUP133",
+          "slug": "smash-with-big-rock-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:28.671Z"
+        },
+        {
+          "canonicalId": "DfkBWGW6Wqk8P6NdGjtrz",
+          "set": "TCC",
+          "typeDir": "blocks",
+          "collectorNumber": "TCC060",
+          "slug": "crowd-control-red",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:29.786Z"
+        },
+        {
+          "canonicalId": "9MMPg6FzLBnGmNtjnFtCQ",
+          "set": "TCC",
+          "typeDir": "blocks",
+          "collectorNumber": "TCC063",
+          "slug": "crowd-control-yellow",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:30.900Z"
+        },
+        {
+          "canonicalId": "WDTM8c7DNBzkphfGWtBkN",
+          "set": "TCC",
+          "typeDir": "blocks",
+          "collectorNumber": "TCC076",
+          "slug": "crowd-control-blue",
+          "cluster": "blocks|a:family-helper,e:family-helper",
+          "reason": "Shared CR3.0.9 identity repair exposes old persistent post-reset modifier assumptions; current member requires source/timing and behavior review. See continuous-reset-differential.json and continuous-reset-members.json.",
+          "triedAt": "2026-09-19T23:48:32.040Z"
+        }
+      ]
+    },
+    {
+      "family": "engine/token-creator-owner-controller",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "open",
+      "repro": "CR1.3.1a distinguishes creator ownership from token controller. create-token only exposes controller; proposal and create reducer set owner to recipient. Bait also incorrectly exempts itself, so a Bait owned and controlled by one hero can attack despite its printed restriction. Existing seeded positive Bait tests hide this gap.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "ndNkP7p6FDnNWzt7ckjPf",
+          "set": "FAB",
+          "typeDir": "tokens",
+          "collectorNumber": "FAB393",
+          "slug": "bait",
+          "cluster": "tokens|<no-behavior>",
+          "reason": "CR1.3.1a distinguishes creator ownership from token controller. create-token only exposes controller; proposal and create reducer set owner to recipient. Bait also incorrectly exempts itself, so a Bait owned and controlled by one hero can attack despite its printed restriction. Existing seeded positive Bait tests hide this gap.",
+          "triedAt": "2026-09-20T01:11:08.904Z"
+        },
+        {
+          "canonicalId": "7MhmQ8chFGLcdjP66Jgj6",
+          "set": "SUP",
+          "typeDir": "actions",
+          "collectorNumber": "SUP258",
+          "slug": "take-the-bait-red",
+          "cluster": "actions|a:family-helper,e:family-helper,k:goAgain",
+          "reason": "Take the Bait instructs its controller to create Bait under opponent control. The create-token representation and reducer currently set owner to the recipient instead of preserving creator ownership (CR1.3.1a). Must prove with real creation followed by opponent activation without a source exception.",
+          "triedAt": "2026-09-20T01:11:28.952Z"
+        },
+        {
+          "canonicalId": "kHmRR6Q7mJPjQgdQJcjpQ",
+          "set": "HVY",
+          "typeDir": "heroes",
+          "collectorNumber": "HVY048",
+          "slug": "victor-goldmane",
+          "cluster": "heroes|<no-behavior>",
+          "reason": "Creation actor is masked by baseEvent effect controller; correcting actor exposes missing Victor effect-controller trigger constraint. See victor-effect-final-diagnostic.",
+          "triedAt": "2026-09-20T01:48:20.492Z"
+        },
+        {
+          "canonicalId": "fc8jMwTprwnhRbPKDmF9J",
+          "set": "HER",
+          "typeDir": "heroes",
+          "collectorNumber": "HER106",
+          "slug": "victor-goldmane-high-and-mighty",
+          "cluster": "heroes|<no-behavior>",
+          "reason": "Adult Victor shares missing creation effect-controller constraint; both source-based Trounce boundaries fail when creator actor is normalized. See victor-effect-final-diagnostic.",
+          "triedAt": "2026-09-20T01:48:21.864Z"
+        },
+        {
+          "canonicalId": "Ht8qhJWDMHjjMjzqgf6KG",
+          "set": "FLR",
+          "typeDir": "heroes",
+          "collectorNumber": "FLR001",
+          "slug": "florian",
+          "cluster": "heroes|<no-behavior>",
+          "reason": "Create-extra recipient/creator conflation reproduced and repaired; full family scopes and ordering still open. See florian-creator-broad-restored.",
+          "triedAt": "2026-09-20T02:04:32.809Z"
+        },
+        {
+          "canonicalId": "hjMQGwKgDTh8LzFdnk8Rg",
+          "set": "HER",
+          "typeDir": "heroes",
+          "collectorNumber": "HER119",
+          "slug": "florian-rotwood-harbinger",
+          "cluster": "heroes|<no-behavior>",
+          "reason": "Both adult creator/recipient cases repaired with shared create-extra selection; full family scopes and replacement ordering remain pending.",
+          "triedAt": "2026-09-20T02:04:34.255Z"
+        },
+        {
+          "canonicalId": "QqfKkBhgJfFFnDLmwcHfL",
+          "set": "ANQ",
+          "typeDir": "actions",
+          "collectorNumber": "ANQ014",
+          "slug": "ripple-away-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Global action-effect token replacement incorrectly restricted to replacement controller creations; whole-card acceptance pending.",
+          "triedAt": "2026-09-20T02:09:49.405Z"
+        }
+      ]
+    },
+    {
+      "family": "amount/damage-recipient-provenance",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "open",
+      "repro": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "rpF86BNmBttKMGpckqJnq",
+          "set": "1HP",
+          "typeDir": "actions",
+          "collectorNumber": "1HP285",
+          "slug": "meat-and-greet-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+          "triedAt": "2026-09-20T04:31:13.824Z"
+        },
+        {
+          "canonicalId": "7cFGrC8JzLcFjRzJ8fnWH",
+          "set": "1HP",
+          "typeDir": "actions",
+          "collectorNumber": "1HP286",
+          "slug": "meat-and-greet-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+          "triedAt": "2026-09-20T04:31:14.995Z"
+        },
+        {
+          "canonicalId": "kMHrRGnggnJtkzk7PhbH8",
+          "set": "1HP",
+          "typeDir": "actions",
+          "collectorNumber": "1HP287",
+          "slug": "meat-and-greet-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+          "triedAt": "2026-09-20T04:31:16.143Z"
+        },
+        {
+          "canonicalId": "JTrNBd8TcnPmB6KdDmjRN",
+          "set": "LGS",
+          "typeDir": "instants",
+          "collectorNumber": "LGS336",
+          "slug": "null-shock-yellow",
+          "cluster": "instants|<no-behavior>",
+          "reason": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+          "triedAt": "2026-09-20T04:31:17.293Z"
+        },
+        {
+          "canonicalId": "NMfPbTgbMbP9pnnCKMQD9",
+          "set": "LGS",
+          "typeDir": "instants",
+          "collectorNumber": "LGS346",
+          "slug": "vaporize-shock-yellow",
+          "cluster": "instants|<no-behavior>",
+          "reason": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+          "triedAt": "2026-09-20T04:31:18.420Z"
+        },
+        {
+          "canonicalId": "k8CgTdPKWcmLb78HKgHjk",
+          "set": "LGS",
+          "typeDir": "actions",
+          "collectorNumber": "LGS356",
+          "slug": "regrowth-shock-blue",
+          "cluster": "actions|<no-behavior>",
+          "reason": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+          "triedAt": "2026-09-20T04:31:19.608Z"
+        },
+        {
+          "canonicalId": "B78rMBMq66MPzDMdNRjcm",
+          "set": "PEN",
+          "typeDir": "actions",
+          "collectorNumber": "PEN238",
+          "slug": "strike-twice-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Vaporize real Shock-to-self repro incorrectly opens token destruction at X1 instead of0. Damage history counts all recipients; this source clause specifies opposing heroes. Shared candidate requires recipient-aware damage facts and its own canonical behavioral proof.",
+          "triedAt": "2026-09-20T04:31:20.784Z"
+        }
+      ]
+    },
+    {
+      "family": "effect/negate-resolution-condition",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "resolved",
+      "repro": "Null incorrectly encoded conditional cost comparison as declaration target filter, rejecting legal X0 targets. Add resolution-only negate target condition and prove prior and melded self/opponent damage.",
+      "resolvedBy": "Negate ifTargetMatches resolution filter in packages/engine/src/rules/proposals/effects/negate.ts; Null14 real-card scenarios prove X0/strict cost/aggregate/self-opponent/meld/response/target removal, with recorded semantic mutations and51 passing dependent tests. Campaign evidence null-target-restored.json; full-card acceptance remains separate.",
+      "members": [
+        {
+          "canonicalId": "JTrNBd8TcnPmB6KdDmjRN",
+          "set": "LGS",
+          "typeDir": "instants",
+          "collectorNumber": "LGS336",
+          "slug": "null-shock-yellow",
+          "cluster": "instants|<no-behavior>",
+          "reason": "Null incorrectly encoded conditional cost comparison as declaration target filter, rejecting legal X0 targets. Add resolution-only negate target condition and prove prior and melded self/opponent damage.",
+          "triedAt": "2026-09-20T04:58:51.557Z"
+        }
+      ]
+    },
+    {
+      "family": "targeting/any-target-encoded-as-hero",
+      "kind": "definition",
+      "primitive": null,
+      "status": "open",
+      "repro": "Official any-target Strike Twice uses any-hero; real ally target leaves Ashwing alive and nonliving target announce does not reject. Re-encode declared object target and review14canonical source candidates in campaign any-target-hero-candidates.json.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "B78rMBMq66MPzDMdNRjcm",
+          "set": "PEN",
+          "typeDir": "actions",
+          "collectorNumber": "PEN238",
+          "slug": "strike-twice-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Official any-target Strike Twice uses any-hero; real ally target leaves Ashwing alive and nonliving target announce does not reject. Re-encode declared object target and review14canonical source candidates in campaign any-target-hero-candidates.json.",
+          "triedAt": "2026-09-20T05:33:18.498Z"
+        },
+        {
+          "canonicalId": "CNpTdPFLhRdt6N7qgQqkC",
+          "set": "DYN",
+          "typeDir": "actions",
+          "collectorNumber": "DYN182",
+          "slug": "aether-slash-red",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Printed attack trigger any-target is encoded hero-only; real RGB ally target and living-object exclusion require public-play proof.",
+          "triedAt": "2026-09-20T05:42:28.884Z"
+        },
+        {
+          "canonicalId": "f6WQfPKfkjbdj9FpC8zDw",
+          "set": "DYN",
+          "typeDir": "actions",
+          "collectorNumber": "DYN183",
+          "slug": "aether-slash-yellow",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Printed attack trigger any-target is encoded hero-only; real RGB ally target and living-object exclusion require public-play proof.",
+          "triedAt": "2026-09-20T05:42:30.338Z"
+        },
+        {
+          "canonicalId": "PgRT6QwWgcLdGhcNLHfmj",
+          "set": "DYN",
+          "typeDir": "actions",
+          "collectorNumber": "DYN184",
+          "slug": "aether-slash-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Printed attack trigger any-target is encoded hero-only; real RGB ally target and living-object exclusion require public-play proof.",
+          "triedAt": "2026-09-20T05:42:31.721Z"
+        },
+        {
+          "canonicalId": "zRCmqmDrDLdDwnc9Td6j7",
+          "set": "LGS",
+          "typeDir": "instants",
+          "collectorNumber": "LGS366",
+          "slug": "sigil-of-aether-blue",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Leaving-arena any-target trigger excludes allies; source-derived real-play replacement in progress.",
+          "triedAt": "2026-09-20T05:48:06.750Z"
+        }
+      ]
+    },
+    {
+      "family": "engine/printed-arcane-resolution-fallback",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "open",
+      "repro": "Wizard nonattack catalog arcane metadata synthesizes unprinted resolution damage when authored damage belongs to triggered ability. Sigil expects no on-play damage.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "zRCmqmDrDLdDwnc9Td6j7",
+          "set": "LGS",
+          "typeDir": "instants",
+          "collectorNumber": "LGS366",
+          "slug": "sigil-of-aether-blue",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Wizard nonattack catalog arcane metadata synthesizes unprinted resolution damage when authored damage belongs to triggered ability. Sigil expects no on-play damage.",
+          "triedAt": "2026-09-20T05:48:08.008Z"
+        },
+        {
+          "canonicalId": "C8dnFRThpKLT7Gkh7TJTm",
+          "set": "OMN",
+          "typeDir": "instants",
+          "collectorNumber": "OMN103",
+          "slug": "core-reaction-red",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Metadata fallback removal requires real authored public-play proof. Prior automatic/pinned/synthetic coverage cannot prove printed timing. Campaign arcane-fallback-restored-broad records remaining migration failures.",
+          "triedAt": "2026-09-20T05:54:14.734Z"
+        },
+        {
+          "canonicalId": "mHLBRgG6qwPR8kznTh8Kd",
+          "set": "OMN",
+          "typeDir": "instants",
+          "collectorNumber": "OMN104",
+          "slug": "core-reaction-yellow",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Metadata fallback removal requires real authored public-play proof. Prior automatic/pinned/synthetic coverage cannot prove printed timing. Campaign arcane-fallback-restored-broad records remaining migration failures.",
+          "triedAt": "2026-09-20T05:54:16.332Z"
+        },
+        {
+          "canonicalId": "6mhWMHfB9pFcqz7QJfbhp",
+          "set": "OMN",
+          "typeDir": "instants",
+          "collectorNumber": "OMN105",
+          "slug": "core-reaction-blue",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Metadata fallback removal requires real authored public-play proof. Prior automatic/pinned/synthetic coverage cannot prove printed timing. Campaign arcane-fallback-restored-broad records remaining migration failures.",
+          "triedAt": "2026-09-20T05:54:17.817Z"
+        },
+        {
+          "canonicalId": "FhmDr7MmkjB9rnmnqdbTd",
+          "set": "DYN",
+          "typeDir": "instants",
+          "collectorNumber": "DYN196",
+          "slug": "brainstorm-blue",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Metadata fallback removal requires real authored public-play proof. Prior automatic/pinned/synthetic coverage cannot prove printed timing. Campaign arcane-fallback-restored-broad records remaining migration failures.",
+          "triedAt": "2026-09-20T05:54:19.377Z"
+        },
+        {
+          "canonicalId": "rNW8mjhb6qbTfr9PHLQqb",
+          "set": "UPR",
+          "typeDir": "actions",
+          "collectorNumber": "UPR126",
+          "slug": "frost-hex-blue",
+          "cluster": "actions|a:family-helper,e:family-helper",
+          "reason": "Metadata fallback removal requires real authored public-play proof. Prior automatic/pinned/synthetic coverage cannot prove printed timing. Campaign arcane-fallback-restored-broad records remaining migration failures.",
+          "triedAt": "2026-09-20T05:54:20.880Z"
+        }
+      ]
+    },
+    {
+      "family": "trigger/draw-individual-versus-multi-event",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "open",
+      "repro": "Brainstorm multi-card draw collapsed to one trigger; typed grouping repaired with per-card and Valda one-or-more contrast. Remaining authored draw-trigger consumers and ordinal history require review before family closure.",
+      "resolvedBy": null,
+      "members": [
+        {
+          "canonicalId": "FhmDr7MmkjB9rnmnqdbTd",
+          "set": "DYN",
+          "typeDir": "instants",
+          "collectorNumber": "DYN196",
+          "slug": "brainstorm-blue",
+          "cluster": "instants|a:family-helper,e:family-helper",
+          "reason": "Brainstorm multi-card draw collapsed to one trigger; typed grouping repaired with per-card and Valda one-or-more contrast. Remaining authored draw-trigger consumers and ordinal history require review before family closure.",
+          "triedAt": "2026-09-20T06:17:11.123Z"
+        }
+      ]
+    },
+    {
+      "family": "amount/chain-link-controller-filter",
+      "kind": "engine-primitive",
+      "primitive": null,
+      "status": "resolved",
+      "repro": "Unfiltered chain-links evaluator ignores requested player and grants Mask Spellvoid on opposing chain. Real opposing Snatch plus Flash Bolt reproduces unexpected prevention option. Shared count repair and affected consumers required.",
+      "resolvedBy": "rules/evaluation/amounts/count.ts filters the live chain by attacking player via existing player selector; nine real Mask scenarios, three mutations, 273 passing dependent tests in .ralph/flesh-and-blood/card-validation/evidence/chain-controller-restored.json",
+      "members": [
+        {
+          "canonicalId": "g87mMPgfPPFTprgJCCkrQ",
+          "set": "PEN",
+          "typeDir": "equipment",
+          "collectorNumber": "PEN030",
+          "slug": "mask-of-the-swarming-claw",
+          "cluster": "equipment|<no-behavior>",
+          "reason": "Unfiltered chain-links evaluator ignores requested player and grants Mask Spellvoid on opposing chain. Real opposing Snatch plus Flash Bolt reproduces unexpected prevention option. Shared count repair and affected consumers required.",
+          "triedAt": "2026-09-20T18:30:58.965Z"
         }
       ]
     }

@@ -38,34 +38,45 @@ export const weightOfLookingUp: GrandArchiveCard<GrandArchiveAbilityDefinition, 
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-cards",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["material-deck"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "type",
-                        oneOf: ["CHAMPION"],
+                  kind: "attempt",
+                  effect: {
+                    kind: "banish",
+                    player: "controller",
+                    selection: {
+                      id: "banished-cards",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "card",
+                        zones: ["material-deck"],
+                        relationship: "zone-of",
+                        player: "controller",
+                        filter: {
+                          kind: "type",
+                          oneOf: ["CHAMPION"],
+                        },
                       },
                     },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 1,
-                  to: "memory",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 1,
+                    to: "memory",
+                  },
                 },
               ],
             },

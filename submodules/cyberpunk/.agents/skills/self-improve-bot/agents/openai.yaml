@@ -1,0 +1,6 @@
+interface:
+  display_name: "Cyberpunk self-improve bot"
+  short_description: "Player-then-coach loop for Cyberpunk bot heuristics"
+  default_prompt: "Use $self-improve-bot to play a Cyberpunk match with the shipped chooser, read the dump (moves and game logs) line by line, and apply at most one named heuristic-weight lesson."
+policy:
+  allow_implicit_invocation: true

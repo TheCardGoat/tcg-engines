@@ -103,34 +103,45 @@ export const roseEternalParagon: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "sequence",
               effects: [
                 {
-                  kind: "retarget",
-                  subject: {
-                    kind: "current-attack",
+                  kind: "attempt",
+                  effect: {
+                    kind: "retarget",
+                    subject: {
+                      kind: "current-attack",
+                    },
+                    chooser: "controller",
+                    newTarget: {
+                      kind: "source",
+                    },
                   },
-                  chooser: "controller",
-                  newTarget: {
-                    kind: "source",
-                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "this-turn",
-                  },
-                  layer: {
-                    layer: "E",
-                    modifies: "stat",
-                    sublayer: "modifier",
-                  },
-                  change: {
-                    kind: "numeric",
-                    property: "life",
-                    operation: "add",
-                    amount: 1,
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "source",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "this-turn",
+                    },
+                    layer: {
+                      layer: "E",
+                      modifies: "stat",
+                      sublayer: "modifier",
+                    },
+                    change: {
+                      kind: "numeric",
+                      property: "life",
+                      operation: "add",
+                      amount: 1,
+                    },
                   },
                 },
               ],

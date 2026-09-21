@@ -2,6 +2,10 @@ import { getAutomatedActionStrategyOption } from "@tcg/cyberpunk-engine";
 import { DEFAULT_AUTOMATED_ACTION_STRATEGY_ID, type StrategyDescriptor } from "../index";
 import type { DeckList } from "@tcg/cyberpunk-engine";
 import { DEFAULT_BOT_PRACTICE_DECK_ID, DEFAULT_PLAYER_PRACTICE_DECK_ID } from "./deckFixtures";
+import { playUrl } from "../../../../runtime/gameRuntimeApi";
+import { primeAuthSession } from "../../auth/auth-store";
+import { cyberpunkRuntimeRequestHeaders } from "../live/runtimeHeaders";
+import type { PracticeMode } from "../../../../simulator/practiceMode";
 
 export const PRACTICE_SESSION_STORAGE_KEY = "cyberpunk.simulator.practiceMatch.sessions";
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -16,6 +20,7 @@ export interface PracticeMatchConfig {
   playerDeckName?: string;
   playerStrategyId?: StrategyDescriptor["id"] | null;
   botStrategyId: StrategyDescriptor["id"];
+  mode?: PracticeMode;
   seed: string | null;
   createdAt: number;
 }
@@ -26,7 +31,12 @@ export function createPracticeMatchConfig(
   input: Partial<
     Pick<
       PracticeMatchConfig,
-      "playerDeckFixtureId" | "botDeckFixtureId" | "playerStrategyId" | "botStrategyId" | "seed"
+      | "playerDeckFixtureId"
+      | "botDeckFixtureId"
+      | "playerStrategyId"
+      | "botStrategyId"
+      | "mode"
+      | "seed"
     >
   > = {},
 ): PracticeMatchConfig {
@@ -39,6 +49,7 @@ export function createPracticeMatchConfig(
     botDeckFixtureId: input.botDeckFixtureId ?? DEFAULT_BOT_PRACTICE_DECK_ID,
     playerStrategyId: input.playerStrategyId ?? null,
     botStrategyId: input.botStrategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+    mode: input.mode ?? "bot",
     seed,
     createdAt: Date.now(),
   };
@@ -50,6 +61,7 @@ export function createImportedPracticeMatchConfig(input: {
   botDeckFixtureId?: string;
   playerStrategyId?: StrategyDescriptor["id"] | null;
   botStrategyId?: StrategyDescriptor["id"];
+  mode?: PracticeMode;
   seed?: string | null;
   deckName?: string;
 }): PracticeMatchConfig {
@@ -66,6 +78,7 @@ export function createImportedPracticeMatchConfig(input: {
     playerDeckName: input.deckName,
     playerStrategyId: input.playerStrategyId ?? null,
     botStrategyId: input.botStrategyId ?? DEFAULT_AUTOMATED_ACTION_STRATEGY_ID,
+    mode: input.mode ?? "bot",
     seed,
     createdAt: Date.now(),
   };
@@ -103,6 +116,50 @@ export function clearPracticeMatchSessions(): void {
   }
 }
 
+interface QuickMatchConfigResponse {
+  object: string;
+  botStrategyId?: string | null;
+}
+
+/**
+ * Recover the practice config from the server's stored quick-match setup.
+ *
+ * The creating tab keeps the full config in sessionStorage, but sessionStorage
+ * is per-tab: a rejoin in a new tab or browser (or after a browser restart)
+ * finds nothing and would otherwise fall back to the server-authority board,
+ * whose interaction path can never apply on a client-authority chain. The
+ * engine itself hydrates from the server snapshot on rejoin, so the deck
+ * fields are intentionally omitted — only the bot strategy survives.
+ */
+export async function fetchPracticeMatchConfigFromServer(
+  gameId: string,
+  fetcher: typeof fetch = fetch,
+): Promise<PracticeMatchConfig | null> {
+  await primeAuthSession();
+  const response = await fetcher(
+    playUrl("cyberpunk", `/quick-match/${encodeURIComponent(gameId)}`),
+    {
+      credentials: "include",
+      headers: cyberpunkRuntimeRequestHeaders(),
+    },
+  );
+  if (!response.ok) {
+    return null;
+  }
+  const body = (await response.json()) as QuickMatchConfigResponse;
+  if (body.object !== "quick_match_config") {
+    return null;
+  }
+  return {
+    matchId: gameId,
+    source: "card-db",
+    botStrategyId: (body.botStrategyId ??
+      DEFAULT_AUTOMATED_ACTION_STRATEGY_ID) as StrategyDescriptor["id"],
+    seed: null,
+    createdAt: Date.now(),
+  };
+}
+
 function readSessions(): StoredSessions {
   try {
     const raw = window.sessionStorage.getItem(PRACTICE_SESSION_STORAGE_KEY);
@@ -137,6 +194,7 @@ function isPracticeMatchConfig(value: unknown): value is PracticeMatchConfig {
     hasBotDeckSource(maybe) &&
     isNullableStoredStrategyId(maybe.playerStrategyId) &&
     isStoredStrategyId(maybe.botStrategyId) &&
+    (maybe.mode === undefined || maybe.mode === "bot" || maybe.mode === "self") &&
     (typeof maybe.seed === "string" || maybe.seed === null) &&
     typeof maybe.createdAt === "number"
   );

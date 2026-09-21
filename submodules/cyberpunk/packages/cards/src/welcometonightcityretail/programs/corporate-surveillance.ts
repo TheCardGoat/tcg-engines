@@ -43,6 +43,7 @@ export const welcomeToNightCityRetailCorporateSurveillance = defineCyberpunkCard
             controller: "rival",
             zones: ["field"],
             cardTypes: ["unit"],
+            state: "ready",
             maxCost: 4,
             selection: {
               mode: "choose",

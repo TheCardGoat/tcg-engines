@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "@mantine/hooks";
 import type { SimulatorRendererProps } from "@tcg/simulator-contract";
+import type { DropDisposition } from "@tcg/simulator-ui";
 import type { EngineInteractionView } from "@tcg/protocol";
 import type { ChoicePrompt, PlayerPrompt } from "@tcg/cyberpunk-engine";
 
@@ -24,8 +25,6 @@ import { CyberpunkInteractionPanel } from "./CyberpunkInteractionPanel";
 import { useCyberpunkBoardRuntime } from "./BoardRuntimeContext";
 import { DebugPanelProvider } from "./DebugPanel";
 import {
-  getGearAttachTargets,
-  getProgramSpatialTargets,
   interactionActionIsAvailable,
   interactionViewHasAttacker,
   mapDropToAction,
@@ -36,6 +35,7 @@ import {
   useEngineOptional,
   useUserConfig,
   useSideZones,
+  handContainsPrivateCards,
   type CardDropEvent,
   type Side,
 } from "../engine";
@@ -43,6 +43,8 @@ import { connectionUiStatus } from "../engine/live/playerConnectionState";
 import classes from "./CyberpunkBoard.module.css";
 import { useTemporaryRevealedHandCardIds } from "./GameBoard/temporaryHandReveals";
 import { CyberpunkCardContextController } from "./CardContext/CyberpunkCardContextController";
+import { BoardCorrectionStrip } from "./GameBoard/BoardCorrectionStrip";
+import { usePaymentSelection } from "./PaymentSelection/PaymentSelectionContext";
 
 const CYBERPUNK_MOBILE_BREAKPOINT_PX = 767;
 
@@ -72,6 +74,7 @@ export function CyberpunkBoard({ fixture, onSubmitInteraction }: SimulatorRender
             <MoveSelectionProvider>
               <DragDropProvider>
                 <CyberpunkCardContextController fixture={fixture}>
+                  <BoardCorrectionStrip />
                   <DropDispatchBridge />
                   <SelectionReset side={humanSide} />
                   {mobile ? (
@@ -120,7 +123,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
     rivalSide,
     rivalZones.hand.map((card) => card.cardId),
   );
-  const { interactionViews, matchState, prioritySide, prompts } = useEngine();
+  const { interactionViews, matchState, activeSide, prioritySide, prompts } = useEngine();
   const clock = useGameClock(prioritySide, { paused: matchState.G.gameEnded });
   const promptResetKey = promptIdentityKey(prompts[humanSide], interactionViews[humanSide]);
   const selfConnectionStatus = connectionUiStatus(boardRuntime.playerConnections?.[humanSide]);
@@ -144,7 +147,15 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
           className={classes.opponentSide}
           data-side={rivalSide}
           data-priority={prioritySide === rivalSide ? "true" : "false"}
+          data-turn={activeSide === rivalSide ? "true" : "false"}
         >
+          {prioritySide === rivalSide && !matchState.G.gameEnded ? (
+            <div
+              className={classes.priorityCue}
+              data-testid="priority-cue-opponent"
+              aria-hidden="true"
+            />
+          ) : null}
           <GameBoard
             opponent
             side={rivalSide}
@@ -157,6 +168,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
             onClaimDrop={boardRuntime.onClaimRivalDrop}
             claimAvailable={Boolean(boardRuntime.onClaimRivalDrop)}
             timeoutExpired={rivalTimeoutExpired}
+            dropEligibility={boardRuntime.dropEligibility}
           />
         </div>
         <div className={classes.centerWrapper}>
@@ -166,7 +178,15 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
           className={classes.playerSide}
           data-side={humanSide}
           data-priority={prioritySide === humanSide ? "true" : "false"}
+          data-turn={activeSide === humanSide ? "true" : "false"}
         >
+          {prioritySide === humanSide && !matchState.G.gameEnded ? (
+            <div
+              className={classes.priorityCue}
+              data-testid="priority-cue-player"
+              aria-hidden="true"
+            />
+          ) : null}
           <GameBoard
             side={humanSide}
             fixerCollapsed={fixerCollapsed}
@@ -177,6 +197,7 @@ function DesktopBoard({ humanSide, rivalSide, fixture, onSubmitInteraction }: De
       <CombatArrowOverlay containerRef={boardWrapRef} />
       <div className={classes.handTop} data-testid="opponent-hand-overlay">
         <HandZone
+          opponent
           faceDown
           cards={rivalZones.hand.map((c) => ({
             imageUrl: c.imageUrl,
@@ -323,6 +344,22 @@ function choiceIdentityKey(choice: ChoicePrompt | null): string {
         choice.payload.attackerId,
         choice.payload.stealEntries.map((entry) => entry.dieId).join(","),
       ].join(":");
+    case "redirectDefeat":
+      return [
+        choice.type,
+        choice.chooserId,
+        choice.payload.protectedCardId,
+        choice.payload.replacementCardId,
+      ].join(":");
+    case "chooseSacrificialGear":
+      return [
+        choice.type,
+        choice.chooserId,
+        choice.payload.hostId,
+        choice.payload.gearIds.join(","),
+      ].join(":");
+    case "chooseFirstPlayer":
+      return [choice.type, choice.chooserId].join(":");
     default:
       return choice satisfies never;
   }
@@ -330,8 +367,11 @@ function choiceIdentityKey(choice: ChoicePrompt | null): string {
 
 function HumanHand({ side }: { side: Side }) {
   const zones = useSideZones(side);
+  const { viewerCanSeePrivateHand } = useCyberpunkBoardRuntime();
+  const faceDown = viewerCanSeePrivateHand === false && handContainsPrivateCards(zones.hand);
   return (
     <HandZone
+      faceDown={faceDown}
       cards={zones.hand.map((c) => ({
         imageUrl: c.imageUrl,
         name: c.name,
@@ -350,6 +390,7 @@ function HumanHand({ side }: { side: Side }) {
         power: c.power,
         effectivePower: c.effectivePower,
         activeEffects: c.activeEffects,
+        temporaryRevealed: c.revealed === true,
       }))}
       side={side}
       availableEddies={zones.eddies}
@@ -358,8 +399,9 @@ function HumanHand({ side }: { side: Side }) {
 }
 
 function DropDispatchBridge() {
-  const { registerCardDropHandler } = useDragDrop();
+  const { registerCardDropHandler, programTargets, gearTargets } = useDragDrop();
   const engine = useEngineOptional();
+  const { dispatchCostedAction } = usePaymentSelection();
   const moveSelection = useMoveSelection();
   const humanSide = engine?.humanSide ?? "player";
   const humanZones = useSideZones(humanSide);
@@ -370,18 +412,24 @@ function DropDispatchBridge() {
   const interactionViewRef = useRef(humanInteractionView);
   const sideRef = useRef<Side>(humanSide);
   const selectionRef = useRef(moveSelection);
+  // The drop handler effect does not depend on the gate, so read it through a
+  // ref — a captured dispatchCostedAction would go stale on arm/mode changes.
+  const costedDispatchRef = useRef(dispatchCostedAction);
+  const targetsRef = useRef({ programTargets, gearTargets });
+  targetsRef.current = { programTargets, gearTargets };
 
   engineRef.current = engine;
   zonesRef.current = humanZones;
   interactionViewRef.current = humanInteractionView;
   sideRef.current = humanSide;
   selectionRef.current = moveSelection;
+  costedDispatchRef.current = dispatchCostedAction;
 
   useEffect(() => {
-    const handle = (event: CardDropEvent) => {
+    const handle = (event: CardDropEvent): DropDisposition => {
       const e = engineRef.current;
       if (!e || !event.source.cardId) {
-        return;
+        return { kind: "rejected" };
       }
       const ctx = {
         humanSide: sideRef.current,
@@ -395,26 +443,18 @@ function DropDispatchBridge() {
         event.target.type === "card" &&
         event.target.cardId
       ) {
-        const programTargets = getProgramSpatialTargets(
-          {
-            matchState: e.matchState,
-            side: ctx.humanSide,
-            interactionView: ctx.interactionView,
-          },
-          event.source.cardId,
-        );
-        if (programTargets.includes(event.target.cardId)) {
+        if (targetsRef.current.programTargets.has(event.target.cardId)) {
           const as = PLAYER_SIDE_TO_ID[ctx.humanSide];
-          const result = e.dispatch({ type: "playCard", cardId: event.source.cardId, as });
-          if (result.success) {
-            e.dispatch({
-              type: "resolveEffectTarget",
-              targetIds: [event.target.cardId],
-              as,
-            });
-          }
-          selectionRef.current.clearSelection();
-          return;
+          const targetId = event.target.cardId;
+          const accepted = costedDispatchRef.current(
+            { type: "playCard", cardId: event.source.cardId, as },
+            (result) => {
+              if (result.success)
+                e.dispatch({ type: "resolveEffectTarget", targetIds: [targetId], as });
+            },
+          );
+          if (accepted) selectionRef.current.clearSelection();
+          return { kind: accepted ? "accepted" : "rejected" };
         }
       }
       if (
@@ -422,40 +462,37 @@ function DropDispatchBridge() {
         event.target.type === "zone" &&
         event.target.zone === "p-field"
       ) {
-        const attachTargets = getGearAttachTargets(ctx, event.source.cardId, sourceCard?.cardType);
-        if (sourceCard?.cardType === "gear" && attachTargets.length > 0) {
+        if (sourceCard?.cardType === "gear" && targetsRef.current.gearTargets.size > 0) {
           selectionRef.current.setSelection({
             side: ctx.humanSide,
             moveId: "playCard",
             sourceCardId: event.source.cardId,
             sourceCardType: sourceCard.cardType,
           });
-          return;
+          return { kind: "accepted" };
         }
-        const programTargets = getProgramSpatialTargets(
-          {
-            matchState: e.matchState,
-            side: ctx.humanSide,
-            interactionView: ctx.interactionView,
-          },
-          event.source.cardId,
-        );
-        if (sourceCard?.cardType === "program" && programTargets.length > 0) {
+        if (sourceCard?.cardType === "program" && targetsRef.current.programTargets.size > 0) {
           selectionRef.current.setSelection({
             side: ctx.humanSide,
             moveId: "playCard",
             sourceCardId: event.source.cardId,
             sourceCardType: sourceCard.cardType,
           });
-          return;
+          return { kind: "accepted" };
         }
       }
       const action = mapDropToAction(event, ctx);
       if (!action) {
-        return;
+        return { kind: "rejected" };
       }
-      e.dispatch(action);
-      selectionRef.current.clearSelection();
+      if (action.type === "playCard" || action.type === "callLegend" || action.type === "goSolo") {
+        const accepted = costedDispatchRef.current(action);
+        if (accepted) selectionRef.current.clearSelection();
+        return { kind: accepted ? "accepted" : "rejected" };
+      }
+      const result = e.dispatch(action);
+      if (result.success) selectionRef.current.clearSelection();
+      return { kind: result.success ? "accepted" : "rejected" };
     };
     registerCardDropHandler(handle);
     return () => registerCardDropHandler(null);

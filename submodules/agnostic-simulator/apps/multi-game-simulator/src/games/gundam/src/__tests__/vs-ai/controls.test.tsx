@@ -35,14 +35,14 @@ describe("vs-AI · control panel", () => {
   it("renders on vs-ai-demo", async () => {
     const user = userEvent.setup();
     renderSimulator(loadVsAiDemo);
-    await user.click(screen.getByRole("button", { name: "Bot controls" }));
+    await user.click(screen.getByRole("button", { name: "Opponent controls" }));
     screen.getByRole("region", { name: /ai opponent controls/i });
   });
 
   it("starts with the promoted strategy and lets visual testers change it", async () => {
     const user = userEvent.setup();
     renderSimulator(loadVsAiDemo);
-    await user.click(screen.getByRole("button", { name: "Bot controls" }));
+    await user.click(screen.getByRole("button", { name: "Opponent controls" }));
 
     const strategy = screen.getByRole("combobox", {
       name: "AI strategy",
@@ -70,7 +70,7 @@ describe("vs-AI · control panel", () => {
     const user = userEvent.setup();
     const onRestartScenario = vi.fn();
     renderSimulator(loadVsAiDemo, { onRestartScenario });
-    await user.click(screen.getByRole("button", { name: "Bot controls" }));
+    await user.click(screen.getByRole("button", { name: "Opponent controls" }));
     await user.click(screen.getByText("Tools"));
 
     expect(screen.getByTestId("ai-log-snapshot")).toBeTruthy();

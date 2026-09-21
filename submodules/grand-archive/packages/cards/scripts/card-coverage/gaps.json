@@ -21,7 +21,7 @@
       "primitive": "packages/engine/src/rules/state/rule-modifications.ts",
       "status": "resolved",
       "repro": "Top-deck activation permissions admitted deeper cards.",
-      "resolvedBy": "Typed fromTopOfDeck restriction checks the current owner\u2019s main-deck top at admission.",
+      "resolvedBy": "Typed fromTopOfDeck restriction checks the current owner’s main-deck top at admission.",
       "members": [
         {
           "canonicalId": "ymhDYTPfi1",
@@ -34,7 +34,7 @@
       "kind": "definition",
       "primitive": "packages/cards/scripts/compile-card-abilities.ts",
       "status": "resolved",
-      "repro": "Gaia\u2019s Blessing banished hand cards at resolution instead of paying for a material-deck activation.",
+      "repro": "Gaia’s Blessing banished hand cards at resolution instead of paying for a material-deck activation.",
       "resolvedBy": "Exact printed grammar emits a graveyard selection payment and waived base activation cost while retaining element restriction.",
       "members": [
         {
@@ -91,7 +91,7 @@
       "primitive": "packages/cards/scripts/compile-card-abilities.ts",
       "status": "resolved",
       "repro": "Prismatic Edge used an unavailable entry-event actor as the reveal owner.",
-      "resolvedBy": "Controller-relative reveal plus each-player chooser reveals each player\u2019s own memory. Exact compiler and maintained override agree.",
+      "resolvedBy": "Controller-relative reveal plus each-player chooser reveals each player’s own memory. Exact compiler and maintained override agree.",
       "members": [
         {
           "canonicalId": "FxYwR2azTt",
@@ -1836,6 +1836,1184 @@
         {
           "canonicalId": "7dedg616r0",
           "abilityIds": ["7dedg616r0-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-returned-source-incarnation",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Unyielding Wraithguard and Shackled Theurgist returned to the field but subsequent changes referred to the old graveyard incarnation.",
+      "resolvedBy": "Bind the returned object and apply ephemeral state and temporary life to that binding. Public death and repeated-combat tests prove the final banishment.",
+      "members": [
+        {
+          "canonicalId": "0vjo15768g",
+          "abilityIds": ["0vjo15768g-a2"]
+        },
+        {
+          "canonicalId": "vkqzk1jik7",
+          "abilityIds": ["vkqzk1jik7-a3"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-simultaneous-end-cleanup",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/turn-progression.ts",
+      "status": "resolved",
+      "repro": "Shackled Theurgist died during cleanup when temporary life expired before damage was cleared.",
+      "resolvedBy": "Commit ally damage clearing together with cleanup-pending for normal and forced endings, preserving CR End Phase rule 3. Public card regression and engine phase/cleanup suites pass.",
+      "members": [
+        {
+          "canonicalId": "vkqzk1jik7",
+          "abilityIds": ["vkqzk1jik7-a3"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-capped-controlled-cost-reduction",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "The generic counted cost matcher consumed of up to clauses before the capped matcher, allowing a third ephemeral object to reduce cost again.",
+      "resolvedBy": "Reject capped descriptions in the uncapped branch so the exact capped grammar retains its minimum. Both DTR cards prove zero through three controlled objects with an opposing ephemeral object excluded.",
+      "members": [
+        {
+          "canonicalId": "lathqgiqgi",
+          "abilityIds": ["lathqgiqgi-a1"]
+        },
+        {
+          "canonicalId": "40xhntos3d",
+          "abilityIds": ["40xhntos3d-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-memory-look-viewer",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Unwelcome Fortune assigned the targeted player as viewer.",
+      "resolvedBy": "The anchored grammar uses the controller as viewer while preserving the targeted memory collection.",
+      "members": [
+        {
+          "canonicalId": "pgt4lhko8w",
+          "abilityIds": ["pgt4lhko8w-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-graveyard-omen-binding",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Condemned Trinket chose from hand instead of graveyard and failed to add its omen counter.",
+      "resolvedBy": "Anchored graveyard/hand banishment grammar preserves a moved-object binding for omen placement.",
+      "members": [
+        {
+          "canonicalId": "21oy1nd4nw",
+          "abilityIds": ["21oy1nd4nw-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-static-class-restriction",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Tome of Ignorance reduced opposing champion levels without Class Bonus.",
+      "resolvedBy": "Preserve parsed restrictions in the exact opposing champion level modifier.",
+      "members": [
+        {
+          "canonicalId": "dz4qd82liq",
+          "abilityIds": ["dz4qd82liq-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-qualified-unit-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ranger Strides accepted non-Rangers because the qualified target parser handled ally/item/weapon but dropped the subtype before unit.",
+      "resolvedBy": "Extend the existing qualified object grammar to unit, using the explicit class filter for known classes and subtype for other qualifiers. Tests reject non-Rangers, non-units and wrong zones, and prove ally/champion targets on either side, upfront banishment, Ranged stacking, distant conditions and expiry.",
+      "members": [
+        {
+          "canonicalId": "pvxb5hrfsu",
+          "abilityIds": ["pvxb5hrfsu-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-optional-graveyard-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Aetheric Reforging compiled its optional graveyard target as a resolution-time choice from hand, and accepted no announcement targets.",
+      "resolvedBy": "Move the anchored graveyard-target clause before generic selection compilation and represent optional up-to-one targeting explicitly. Six public scenarios cover either graveyard or zero targets, invalid zones/counts, optional loading, invalid hosts and use as attack intent.",
+      "members": [
+        {
+          "canonicalId": "yd56vkebu9",
+          "abilityIds": ["yd56vkebu9-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-opponent-recovery-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ashwound Shot allowed its controller as the target of an opponent-only recovery restriction.",
+      "resolvedBy": "The exact recovery-prevention grammar now requests an opponent player target. Public tests reject self and object targets and prove class gating, both players recovery, expiry and optional loading.",
+      "members": [
+        {
+          "canonicalId": "v9zfscdxzn",
+          "abilityIds": ["v9zfscdxzn-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-temporary-zone-activation",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Manabolt Convergence omitted the source zone from its permission; once a zone was supplied, an unlocked affected set incorrectly permitted the returned card incarnation to activate again.",
+      "resolvedBy": "Emit the matched graveyard or banishment source zone and lock the affected incarnation. Public activation tests prove costs, target eligibility, expiry, loading, attack cleanup and rejection of a returned incarnation. The same grammar corrects PTM Recursive Confidant.",
+      "members": [
+        {
+          "canonicalId": "smse0zjalx",
+          "abilityIds": ["smse0zjalx-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-reveal-optional-load-or-discard",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Alacritous Huntress used announcement modes inside its reveal resolution, skipping the discard/load choice and drawing immediately; it also omitted permission to keep the revealed card.",
+      "resolvedBy": "Compile the exact printed clause using resolution-time optional discard, followed when declined by optional loading if an eligible host exists. Each successful branch draws after its move. Seven public scenarios prove no reveal, keep, discard, load, wrong reveal selections and hosts, draw sequencing and loaded attack use.",
+      "members": [
+        {
+          "canonicalId": "7i24g0nbxz",
+          "abilityIds": ["7i24g0nbxz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-melody-or-harmony-filter",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Quadrille's Gryphon compiled Melody or Harmony as Harmony alone, so Melody activations failed to add buff counters.",
+      "resolvedBy": "Extend the existing exact Harmony or Melody descriptor match with its reversed ordering. Public tests activate real Melody and Harmony cards in either order, repeat Melody, exclude opposing and non-musical activations, prove trigger timing, actual attack damage and persistent counters. No generated definitions outside DTR change for this repair.",
+      "members": [
+        {
+          "canonicalId": "84e2rfex54",
+          "abilityIds": ["84e2rfex54-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-omen-continuous-functional-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Effluve Guard was inactive in banishment and its named-ally filter used the printed plural Vacuous Servants instead of the canonical singular token name.",
+      "resolvedBy": "Conditional continuous abilities that explicitly require their source in banishment receive that functional zone; the controlled named-ally grammar normalizes the exact printed plural Vacuous Servants. Eight public scenarios prove Ciel gating, an omen made through Condemned Trinket, ordinary banishment/field/graveyard exclusion, named ally and controller scope, and actual end-phase waking. No generated definitions outside DTR change for this repair.",
+      "members": [
+        {
+          "canonicalId": "5tz8bwcoel",
+          "abilityIds": ["5tz8bwcoel-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-independent-scaled-stats",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Vacuous Servant lost its ally-omen life bonus because the broad single-count source-stat grammar consumed its independently scaled second stat before the dual-stat grammar.",
+      "resolvedBy": "Reject an independently scaled second stat in the broad branch so the existing exact dual-stat grammar emits both effects. Ten public scenarios prove Ciel gating, attack and ally counts independently at zero/one/two, opposing and unmarked banishment exclusion, real attack damage and combat survival. No generated definitions outside DTR change for this repair.",
+      "members": [
+        {
+          "canonicalId": "L67r0GlRHR",
+          "abilityIds": ["L67r0GlRHR-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-distinct-controlled-costs",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Straight Flare dealt four damage with three Suited allies sharing one reserve cost instead of two. The controlled-object count discarded the distinct-cost qualifier.",
+      "resolvedBy": "An anchored distinct-controlled-cost grammar emits the existing distinct reserve-cost count before generic matching. Public scenarios prove duplicate exclusion, zero-cost non-ally inclusion, distinct costs, controller and field scope, either owner and unit type, exact payment and resolution timing. No generated changes outside DTR.",
+      "members": [
+        {
+          "canonicalId": "28bjn8g50v",
+          "abilityIds": ["28bjn8g50v-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-next-filtered-fast-activation",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Expeditious Opening was consumed by an opposing ally activation and an unused permission survived the end of the turn.",
+      "resolvedBy": "The anchored next filtered card fast-activation grammar now emits a controller player subject and explicit this-turn expiry. Public tests prove initial slow rejection, draw timing, non-ally/opponent exclusion, consumption before and after resolution, and unused expiry. The same correction applies to ALC Bombastic Sprint, PRXY Stonescale Band and RDO Spurred Gallop; each generated diff was inspected against its printed text.",
+      "members": [
+        {
+          "canonicalId": "w1wgpeifd0",
+          "abilityIds": ["w1wgpeifd0-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-glimpse-replacement-before-choice",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts",
+      "status": "resolved",
+      "repro": "Cosmic Alignment opened a Glimpse decision instead of replacing Glimpse with draws. The action event was emitted after choices and omitted its requested amount.",
+      "resolvedBy": "A typed finish-glimpse frame resumes after replacement admission, including player ordering between competing replacements. A discriminated Glimpse start stage carries the requested amount to replacements without firing completion observers or logs; a completion stage after choices bypasses already-checked replacement admission. Initial early-completion implementation broke two existing Starcalling/Aethercalling tests; the separate stages preserve their temporary permissions. Fourteen public card scenarios and 102 focused existing engine tests pass. No generated card changes outside DTR.",
+      "members": [
+        {
+          "canonicalId": "b2buhbediq",
+          "abilityIds": ["b2buhbediq-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-add-counter-then-glimpse",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Humpty Dumpty added its buff counter but then glimpsed the old count: the paragraph-level derived X was captured before the counter effect resolved.",
+      "resolvedBy": "An anchored add-one-counter-then-glimpse grammar, requiring the same counter and source reference, emits the live counter-count expression on the Glimpse step. Public tests prove first/second new counts, resting cost, persistent counters, zero-base temporary ally form, actual attacks, damage and cleanup. Only Humpty Dumpty changed in generated definitions; no outside-DTR output changes.",
+      "members": [
+        {
+          "canonicalId": "aou4be9z82",
+          "abilityIds": ["aou4be9z82-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-trailing-class-restriction-and-stealth-filter",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Sword of Shadows lost power for ordinary opposing allies and while its controller lacked Class Bonus. Five public combat scenarios failed.",
+      "resolvedBy": "The anchored trailing class restriction is retained even without a leading Class Bonus label. The exact ally-with-stealth descriptor retains both type and keyword. Nine public scenarios prove class matching, own/opposing/graveyard exclusions, no per-ally stacking, actual weapon damage, removal of Stealth and restoration next turn. No generated changes outside DTR.",
+      "members": [
+        {
+          "canonicalId": "zcvq77mdgd",
+          "abilityIds": ["zcvq77mdgd-a1", "zcvq77mdgd-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-unattacked-champion-history",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Servant's Obligation kept Taunt after an ally attacked its champion and removed Taunt after an opposing champion attacked another ally. The compiled history matched the attacker type instead of the defending champion.",
+      "resolvedBy": "The exact unattacked-champion condition now matches the attack recipient to the controller's champion. Eight public scenarios prove ally/champion attackers, matching lineage, unrelated targets, awake/rested Taunt, turn reset, no-damage attacks, and token activation costs. Only Servant's Obligation changes in generated definitions; no outside-DTR changes.",
+      "members": [
+        {
+          "canonicalId": "f4wqesifxk",
+          "abilityIds": ["f4wqesifxk-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-reflexive-opponent-private-discard",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Death Essence Amulet required its opponent target before the optional banishment and assigned the private hand/memory look to that opponent instead of its controller.",
+      "resolvedBy": "The anchored compiler branch puts the opponent target on the reflexive effect and keeps the controller as viewer while retaining the opponent's source zone. Eleven public scenarios prove accept/refuse timing, post-banishment target announcement, invalid self target, hand/memory choice, empty zones, discard ownership and selection restrictions, private look actor, and exclusion of own-turn/opposing-ally deaths. Only Death Essence Amulet changes in generated definitions; no outside-DTR output changes.",
+      "members": [
+        {
+          "canonicalId": "ddag7ue0k7",
+          "abilityIds": ["ddag7ue0k7-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-passive-counter-event-actor",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Confidant's Oath gained no refinement from an omen created by Condemned Trinket. The passive counter-change grammar required a controller actor that counter events do not carry and the text does not require.",
+      "resolvedBy": "Removed the actor restriction from the anchored passive counter-added/removed grammar, preserving source/champion/banishment owner filters. Eight public scenarios prove Ciel and ownership scope, actual omen placement, zero/one/two/four thresholds, exact reserve and counter payments, resting, draw timing and reuse after waking. Generated corrections also affect DTR Ciel, Mirage's Grave, HVN Lu Xun, Pyre Strategist and P26 Rhongomiant, Grove's Spire; each passive printed counter clause was inspected.",
+      "members": [
+        {
+          "canonicalId": "nlufjh84vm",
+          "abilityIds": ["nlufjh84vm-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-suppress-replacement-before-movement",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts",
+      "status": "resolved",
+      "repro": "Poisonous Breezecap never offered sacrifice instead of Suppress: the keyword event was emitted after banishment, when its replacement was no longer active.",
+      "resolvedBy": "Typed per-object begin/finish suppression frames perform replacement admission before movement and resume independently after optional choices. Start events are hidden from completion observers and logs; completion events bypass already-checked replacements. Replaced objects receive no Suppress return trigger and are excluded from the effect result binding. Eight public card scenarios and two public multi-object engine scenarios pass, alongside 172 unchanged focused engine tests. No generated card changes for this engine repair.",
+      "members": [
+        {
+          "canonicalId": "e3ldc3r8j7",
+          "abilityIds": ["e3ldc3r8j7-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-passive-banishment-zone-owner",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Poisonous Apple did not trigger when Tomb Sweep banished a Floating Memory card from its current controller’s graveyard. Passive banishment grammar incorrectly matched the actor instead of the owner of the card in the specified private zone.",
+      "resolvedBy": "The anchored passive card-banished grammar uses event-object owner and retains the from-zone and printed characteristic filters. Eighteen public card scenarios cover control transfer, both banishing actors, both graveyards, Floating Memory versus ordinary cards, actual materialization payment, memory exclusion, trigger timing, unpreventable damage and preservation of a damage shield. Generated corrections outside DTR: ALC Nico, Whiplash Allure and PRD Evaporation Synchron; inspected both and retained Nico’s passing behavioral suite.",
+      "members": [
+        {
+          "canonicalId": "ukurlcbgzi",
+          "abilityIds": ["ukurlcbgzi-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-targeted-counter-announcement",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Raised Slash compiled its up-to-two target Suited allies as a resolution-time choice, so its On Attack trigger had no target announcement or response window with fixed recipients.",
+      "resolvedBy": "The anchored up-to counter-recipient grammar emits announcement-time unique targets only when the printed descriptor explicitly starts with target; non-targeted wording retains its resolution choice. Seven public scenarios cover class matching, zero/one/two targets, costs, owner/type/zone/duplicate/over-limit rejections, delayed counters and combat power, plus an opponent removing one selected ally in response. No generated definitions outside DTR changed.",
+      "members": [
+        {
+          "canonicalId": "fuqfxq13uz",
+          "abilityIds": ["fuqfxq13uz-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-effect-success-result-lists",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts",
+      "status": "resolved",
+      "repro": "Imperial Accord negated an activation but never offered its optional banishment: negate binds the list of negated stack items, while effect-succeeded only recognized boolean true.",
+      "resolvedBy": "The reusable condition evaluator recognizes nonempty result lists as successful while keeping empty lists, false and missing results unsuccessful. Eighteen Imperial Accord public scenarios cover both Exalted requirements, own/opposing advanced activations, Exalted and Umbra targets, full six-reserve payment, underpayment rejection, decline/accept banishment, basic-card rejection, and protected activation producing no optional banishment. No generated card definitions changed.",
+      "members": [
+        {
+          "canonicalId": "1S7Q5fqX5u",
+          "abilityIds": ["1S7Q5fqX5u-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-entry-replacement-announcement-variables",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/replacements/replacements.ts",
+      "status": "resolved",
+      "repro": "Materializing Devouring Malice with X=0, 1 or 4 failed at resolution with undeclared variable X: its entry replacement lacked the announced variables.",
+      "resolvedBy": "Static replacements now receive the entering object’s pending entryActivationVariables for its own move into the field, or its retained activationVariables otherwise. Public materialization tests prove exact memory payment, pre-entry timing, X counters and a later materialization with a different X.",
+      "members": [
+        {
+          "canonicalId": "1keruycrwi",
+          "abilityIds": ["1keruycrwi-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-champion-damage-and-recovery",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Devouring Malice’s second mode dealt three damage but omitted its printed recover 3.",
+      "resolvedBy": "An anchored numeric damage-to-target-champion and recovery clause emits both effects in order. Public tests prove own/opposing champion targets, recovery from eight damage and caps at zero/one, actual counters/rest costs, three distinct modes, no reuse until the source changes incarnation, and unpreventable damage against shielding. No generated definitions outside DTR changed.",
+      "members": [
+        {
+          "canonicalId": "1keruycrwi",
+          "abilityIds": ["1keruycrwi-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-random-discard-from-each-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Devious Welcome discarded only one card from a union of hand and memory when the chosen type was not activated, leaving one zone untouched.",
+      "resolvedBy": "The anchored recollection wager grammar emits one random discard from hand and one from memory. Eight public scenarios prove both chosen types, matching and nonmatching activations, ability-only and no-activation turns, empty memory, timing, exact reserve cost, resolution choice, controller exclusion and delayed expiry. Only the DTR definition changed.",
+      "members": [
+        {
+          "canonicalId": "vz4kc558yx",
+          "abilityIds": ["vz4kc558yx-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-graveyard-banish-pay-empower-trigger",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Recurring Invocation did not trigger from the graveyard on a real champion materialization and level-up, because its generated triggered ability used the default action zones.",
+      "resolvedBy": "The anchored optional source-banish-from-graveyard, numeric reserve payment and numeric Empower grammar now assigns the graveyard functional zone. Twenty public card scenarios cover initial Empower, consumption and expiry, class/zone/owner boundaries, optional costs, removal in response and unavailable reserve. Only the DTR definition changed.",
+      "members": [
+        {
+          "canonicalId": "iyhlctxcrq",
+          "abilityIds": ["iyhlctxcrq-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-optional-reserve-payment-preflight",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts",
+      "status": "resolved",
+      "repro": "With no hand cards or Reservable objects, accepting Recurring Invocation banished it then opened an undeclinable, unpayable mandatory reserve decision.",
+      "resolvedBy": "Optional-effect acceptance checks known numeric reserve affordability before mutating state and preserves the decline path. It counts owned hand cards and ready controlled active Reservable objects, and stops trusting the snapshot after an earlier effect may create payment sources. Five public engine scenarios prove no sources, hand funding, ready/rested/opposing Reservable boundaries, and a preceding draw funding payment; all 34 focused payment/numeric-action/replacement tests pass unchanged apart from new evidence.",
+      "members": [
+        {
+          "canonicalId": "iyhlctxcrq",
+          "abilityIds": ["iyhlctxcrq-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-omen-choice-multiple-source-zones",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ciel, Loyal Valet could only banish a hand card and failed to add its omen counter; selecting a graveyard card was rejected.",
+      "resolvedBy": "The anchored banish-into-omen grammar now accepts hand or graveyard in either printed order, emits the owned source-zone union and retains the moved-card binding for counter placement. Nineteen public scenarios prove mastery entry and actual attacks, inherited current/deeper lineage operation, absence from lineage, own/opposing end phases, both source zones, optional decline, invalid selections and empty-zone boundaries. Only the DTR definition changed; Condemned Trinket regression scenarios pass.",
+      "members": [
+        {
+          "canonicalId": "nn48ne8a05",
+          "abilityIds": ["nn48ne8a05-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-omen-entry-filter-precedence",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ciel, Omenbringer only allowed hand discards and omitted every memory draw; a broad For each parser intercepted the already-supported exact discard/draw clause.",
+      "resolvedBy": "Moved the exact owned-omen hand-or-memory discard and memory-draw grammar before the generic repetition parser. Public materialization tests prove zero/one/three owned omens, opposing and unmarked exclusions, both discard zones, one draw after each discard, target boundaries and exact memory payment. Only the DTR definition changed.",
+      "members": [
+        {
+          "canonicalId": "o69ogocemo",
+          "abilityIds": ["o69ogocemo-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-lineage-release-current-champion",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/activation/activation.ts",
+      "status": "resolved",
+      "repro": "Ciel, Omenbringer could pay Lineage Release by banishing the card currently representing its champion, because all level cards share the internal hosted lineage zone.",
+      "resolvedBy": "Activation admission identifies the host champion’s current representative and rejects Lineage Release from it before costs. Fifteen public card scenarios cover lineage, entry filtering and six-omen release; a real level-up proves the same source becomes legal when covered. Release tests also prove five versus six/seven owned omens, source/candidate exclusions, optional refusal, paid action activation, zero-cost ally activation, spent-source rejection and omen-counter clearing. Six focused engine lineage/hosted-source tests and Diana’s existing release test pass.",
+      "members": [
+        {
+          "canonicalId": "o69ogocemo",
+          "abilityIds": ["o69ogocemo-a3"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-next-turn-first-card-tax-expiration",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Obsequious Blow taxed a later turn when the opponent activated no card during their next turn. The exact compiler branch emitted a delayed start without an expiration.",
+      "resolvedBy": "The exact next-turn first-card tax grammar now emits a during-next-turn expiration alongside its delayed start. Public card tests prove next-turn-only application, expiration without activation, first-card consumption, other-player and activated-ability exclusions.",
+      "members": [
+        {
+          "canonicalId": "macqlgvqo3",
+          "abilityIds": ["macqlgvqo3-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-graveyard-recovery-banish-zone",
+      "kind": "engine-primitive",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts; packages/types/src/abilities/effect.ts; packages/engine/src/procedures/effects",
+      "status": "resolved",
+      "repro": "Devoted Martyr triggered on the field instead of in the graveyard; after an opponent removed it from the graveyard with its trigger pending, accepting the optional effect still recovered damage.",
+      "resolvedBy": "The exact graveyard-banish/recover trigger grammar declares its functional zone. Source-zone banishment preserves a typed from constraint, enforced by the executor and optional acceptance validation. Twenty card scenarios and four public engine source-zone cases prove the boundaries. Recurring Invocation also retains its printed graveyard source zone; no generated changes outside DTR.",
+      "members": [
+        {
+          "canonicalId": "p16w5j93mk",
+          "abilityIds": ["p16w5j93mk-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-independent-banished-activation-permissions",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ashen Riffle required all selected cards to remain banished, disabling the second card after the first activated; returning the first card to banishment restored stale permission.",
+      "resolvedBy": "The exact reveal-and-banish grammar uses a per-object while-subjects-in-zone duration and a locked affected set. Fifteen public scenarios prove independent activation, later-turn persistence, ordinary costs/timing, source-incarnation expiration and selection/order boundaries. Only Ashen Riffle changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "fjpimrl974",
+          "abilityIds": ["fjpimrl974-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-weapon-power-unspecified-duration",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Lacuna’s Grasp lost its paid power bonus after the attack despite no printed duration limit.",
+      "resolvedBy": "The exact On Attack omen-payment grammar now lasts while the source remains on the field. Twenty-seven public scenarios prove restrictions, owned omen bounds, optional exact payment, persistence across turns and cumulative payments. Only Lacuna’s Grasp changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "w7annwvl5q",
+          "abilityIds": ["w7annwvl5q-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-graveyard-payment-reload-functional-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Weaving Manastream did not trigger when banished from the graveyard for a memory cost because its functional zone was missing.",
+      "resolvedBy": "The exact memory-payment reload grammar declares the graveyard functional zone. Public tests prove Diana/element restrictions, payment provenance, optional host selection, and loaded-weapon combat. Only Weaving Manastream changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "wi4f59furp",
+          "abilityIds": ["wi4f59furp-a3"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-banish-selected-card-copy",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Duchess repeated its graveyard selection and attempted to copy a stack activation from banishment.",
+      "resolvedBy": "The exact grammar banishes the existing bound selection and uses the existing card-copy primitive. Thirteen public scenarios and full CI pass after host disk recovery. Only Duchess changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "qzv380ujf5",
+          "abilityIds": ["qzv380ujf5-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-graveyard-replacement-owner",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Purging Tempest filtered card-move actors, allowing actorless stack and attack-intent cleanup to bypass the selected graveyard replacement.",
+      "resolvedBy": "The exact compiler grammar matches event-object ownership against the selected player. Thirteen public scenarios cover all relevant arrival zones, field exclusion, costs and targets, resolution timing, multi-card batches and turn expiry. Only Purging Tempest changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "yuo7dbge3b",
+          "abilityIds": ["yuo7dbge3b-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-current-champion-level-restriction",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Ignis Deus applied its non-Spirit filter to the incoming champion, incorrectly prohibiting a Spirit from leveling into a Warrior.",
+      "resolvedBy": "The exact grammar dynamically subjects controlled non-Spirit champion objects to the permanent prohibition, using a class filter. Eight public scenarios prove selection and payment, Spirit-only activation, permitted Spirit-to-Warrior progression, forbidden later leveling, opponent exclusion and no restriction after no materialization. Only Ignis Deus changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "rxdon8uwza",
+          "abilityIds": ["rxdon8uwza-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-target-current-turn-entry",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Rapid Combustion legally targeted an otherwise eligible item that entered during a previous turn because the target parser omitted its timing qualifier.",
+      "resolvedBy": "The shared object target parser retains the exact trailing entered-the-field-this-turn qualifier as the existing typed filter. Twenty-one Rapid Combustion scenarios pass, covering Kindle, current/prior entry, owner, type and both cost families. Only Rapid Combustion changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "0s6solta0h",
+          "abilityIds": ["0s6solta0h-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-fixed-influence-deficit",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Butler’s Augury recomputed X after drawing into memory, so influence 4 drew one but dealt zero damage.",
+      "resolvedBy": "The exact compiler branch captures the nonnegative influence deficit at resolution using the existing typed bind-value effect and shares it across draw and damage. Seventeen public scenarios cover costs, ownership, capped omens, hand plus memory, negative/zero deficit and a response changing influence. Only Butler’s Augury changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "5u5ic64930",
+          "abilityIds": ["5u5ic64930-a1", "5u5ic64930-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-group-damage-derived-amount",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Baleful Oblation threw undeclared variable X at resolution and its group filter lost the own-champion exclusion because the trailing where-X clause remained in the recipient description.",
+      "resolvedBy": "The group-damage parser separates an optional anchored where-X clause, resolves it through the shared derived-amount parser, and fails closed on unsupported expressions. Added the exact lowest-owned-omen reserve-cost expression using existing aggregate-property. Twenty public tests prove empty/zero/mixed/repeated omen costs, control, Ciel discount, all units except own champion, actual ally deaths and changes in response. Only Baleful Oblation changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "oye74ibwo8",
+          "abilityIds": ["oye74ibwo8-a1", "oye74ibwo8-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-inspected-memory-discard-scope",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Pristine Scourge correctly inspected opposing memory, then offered discards from the caster’s hand for both clauses.",
+      "resolvedBy": "An anchored compiler grammar keeps the target-opponent binding, memory source and caster chooser together for both sequential discards, retaining the distinct-owned-omen threshold. Twenty-seven public scenarios cover exact discounts, inspected-memory ownership and visibility, illegal choices and chooser, empty/one-card memory, distinct versus repeated costs, and a fifth omen created in response. Only Pristine Scourge changed on regeneration.",
+      "members": [
+        {
+          "canonicalId": "kugriwszxr",
+          "abilityIds": ["kugriwszxr-a1", "kugriwszxr-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-optional-activation-elements",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts",
+      "status": "resolved",
+      "repro": "Grim Pastiche allowed accepting a copied Fire action without Fire enabled, creating a mandatory announcement that could never succeed and could not be declined.",
+      "resolvedBy": "Activation admission and optional acceptance share the same typed element check, including active element-requirement permissions. Optional acceptance rejects known missing elements atomically, preserving decline; explicit effect permission to ignore elements still works. Fourteen card scenarios and three new engine scenarios pass, plus ten activation and optional-reserve regressions. No generated card definitions changed.",
+      "members": [
+        {
+          "canonicalId": "akmv2ssjhu",
+          "abilityIds": ["akmv2ssjhu-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-optional-followup-precondition",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Mad Hatter suppressed its optional random banish when no Ranger regalia remained because the compiler put the consequence inside the all-or-nothing prerequisite sequence.",
+      "resolvedBy": "The shared anchored You may / If you do grammar now attempts the optional action and gates the consequence on success. Nineteen new entry scenarios plus four existing Ranged tests pass; all 48 affected sibling suites (373 tests) pass. Reviewed 132 generated definitions (125 outside DTR), proving structural equality after removing only the new attempt/conditional wrapper. See DTR_OPTIONAL_FOLLOWUP_AUDIT.md.",
+      "members": [
+        {
+          "canonicalId": "2nc48s3oqh",
+          "abilityIds": ["2nc48s3oqh-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-chessman-command-conjunction",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Lucenia’s Reign accepted an Automaton Command as its Chessman Command discard cost because the descriptor retained only Command.",
+      "resolvedBy": "The exact Chessman Command descriptor now requires both subtypes. Nine public Lucenia scenarios prove costs, selection boundaries, entry draw, resolution draw, cumulative life, end-turn expiry and source/target removal. Generated Weiss Knight and Lagomorph Piece filters were inspected against their identical printed conjunction.",
+      "members": [
+        {
+          "canonicalId": "zrvvwz3ww9",
+          "abilityIds": ["zrvvwz3ww9-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-graveyard-activated-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Stellarion Shift could activate from intent and banish itself despite requiring banishment from the graveyard. A public fixture ability moves it into intent during actual combat, where the invalid activation succeeded.",
+      "resolvedBy": "The shared activated-ability compiler now uses only graveyard when a self-banish cost or first source-return effect explicitly specifies graveyard; explicit intent-only activations remain separate. All 24 Stellarion scenarios and cards typecheck pass. Eleven generated definitions were audited: the only change is removal of intent from the printed graveyard-sourced ability.",
+      "members": [
+        {
+          "canonicalId": "ms2x2v4qe3",
+          "abilityIds": ["ms2x2v4qe3-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-optional-exact-fire-banish",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Piercing Aetherfuel offered up-to-two fire banishments and an extra reflexive trigger instead of an optional exact-two action followed by its consequence.",
+      "resolvedBy": "The anchored grammar now emits optional all-or-nothing exact-two banishment and an immediate sequence consequence. Twenty-five public card scenarios prove draw/discard order, class gating, counts, selection boundaries, qualifying next attack, one-use behavior and expiry. Only Piercing Aetherfuel regenerates.",
+      "members": [
+        {
+          "canonicalId": "vo5q7letxz",
+          "abilityIds": ["vo5q7letxz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-resolved-prevention-prohibition",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/effect-executor.ts",
+      "status": "resolved",
+      "repro": "Resolving Piercing Aetherfuel’s delayed attack effect failed with an unsupported forbid prevent-damage rule modification despite the existing prevention engine supporting that action.",
+      "resolvedBy": "The effect executor admits resolved forbid prevent-damage modifications through its existing duration and scope machinery. Two new public engine tests plus eight existing prevention tests pass; the card tests prove actual damage bypass, source and combat boundaries, one attack and expiry.",
+      "members": [
+        {
+          "canonicalId": "vo5q7letxz",
+          "abilityIds": ["vo5q7letxz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-one-or-more-subject-bindings",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/abilities/triggers.ts",
+      "status": "resolved",
+      "repro": "Duplicitous Replication admitted one trigger for a simultaneous entry group but retained only the first matching event subject, copying one regalia instead of each.",
+      "resolvedBy": "The shared one-or-more binding path gathers individually matching subjects from the same rules event, preserving one trigger and its usage limit. Object, mastery and delayed triggers use the same path. Four new public engine tests cover ordinary/delayed groups, mixed types, borrowed objects and later groups; fourteen card scenarios cover one/two effects and one/two/three simultaneous regalia.",
+      "members": [
+        {
+          "canonicalId": "owq8s5fefw",
+          "abilityIds": ["owq8s5fefw-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-entry-controller-observation",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts; packages/engine/src/rules/abilities/triggers.ts",
+      "status": "resolved",
+      "repro": "Entry-event matching and event-subject-controller bindings used the previous controller, so owned and borrowed regalia triggered Duplicitous Replication according to ownership before entry rather than destination control.",
+      "resolvedBy": "Entry observations now use the move’s new controller, falling back to its prior controller only when no change was specified. Departure observations retain previous-controller semantics. Public card tests cover all four owner/controller combinations; engine regressions and LKI/admission/multiplier suites pass.",
+      "members": [
+        {
+          "canonicalId": "owq8s5fefw",
+          "abilityIds": ["owq8s5fefw-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-hosted-keyword-duplicate",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/rules/abilities/intrinsic-keywords.ts",
+      "status": "resolved",
+      "repro": "A distant current Diana dealt three damage with a one-power weapon: inherited Ranged 1 was counted from both the active face and the hosted lineage card. A successor received it once.",
+      "resolvedBy": "Printed keyword discovery excludes hosted execution sources; the existing hosted-origin path supplies them to their execution object. Six public engine combat scenarios prove inactive material-deck cards, current and successor lineage, distant gating, and additive distinct inherited instances. Ten Diana card scenarios also pass.",
+      "members": [
+        {
+          "canonicalId": "m7f6r8f3y8",
+          "abilityIds": ["m7f6r8f3y8-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-killed-stat-parity-lki",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts: killedParity condition grammar",
+      "status": "resolved",
+      "repro": "Skewering Advance tested graveyard life rather than the defeated unit life: a one-life ally buffed to two failed to draw, while a two-life ally buffed to three incorrectly drew.",
+      "resolvedBy": "The exact killed ally/unit odd/even life/power grammar now emits numeric-property-parity with last-known basis while retaining its type predicate. Fourteen public Skewering scenarios pass, including both parity flips, nonlethal attacks, noncombat deaths, timing, Command ownership/subtype/rest/cost checks and zero-power attackers. The only generated sibling outside DTR is PTM Bishop's Cross, inspected against its matching odd-life condition.",
+      "members": [
+        {
+          "canonicalId": "no5tu5412v",
+          "abilityIds": ["no5tu5412v-a2"]
+        },
+        {
+          "canonicalId": "lsKJCCuFJV",
+          "abilityIds": ["lsKJCCuFJV-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-aetherwing-host-subtype",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts: companionLoadSource and loadSourceFromZone",
+      "status": "resolved",
+      "repro": "Teasing Aerocharge rejected Legion's Wingspan because its host filter required an explicit Aetherwing keyword instead of the functional Aetherwing subtype.",
+      "resolvedBy": "Both exact loading grammars now match the AETHERWING weapon subtype. Legion's Wingspan has 19 public scenarios including loading and combat, repeated/split ally choices, ownership, intent and duration boundaries. Existing Teasing Aerocharge tests pass. The only generated non-DTR change is Recurring Aethercharge, whose graveyard-loading clause has the same subtype requirement.",
+      "members": [
+        {
+          "canonicalId": "iuixf9rdmu",
+          "abilityIds": ["iuixf9rdmu-a1"]
+        },
+        {
+          "canonicalId": "6lkv3tu69l",
+          "abilityIds": ["6lkv3tu69l-a2"]
+        },
+        {
+          "canonicalId": "MG8QoeZBXY",
+          "abilityIds": ["MG8QoeZBXY-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-load-source-zone-through-choice",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts: activated leading source move inference",
+      "status": "resolved",
+      "repro": "The public graveyard-load regression for the corrected Aetherwing host rejected Recurring Aethercharge because its destination-choice wrapper hid the leading move-from-graveyard requirement.",
+      "resolvedBy": "Source-zone inference now unwraps leading destination choices before inspecting an explicit source move. Recurring Aethercharge is functional only from graveyard; its public Legion's Wingspan regression proves reserve payment, legal loading, wrong-zone rejection, host exclusions and actual combat. No further generated definitions change.",
+      "members": [
+        {
+          "canonicalId": "MG8QoeZBXY",
+          "abilityIds": ["MG8QoeZBXY-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-salamander-intent-count",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts: exact On Attack optional fire banishment grammar",
+      "status": "resolved",
+      "repro": "Accepting Salamander's Breath optional banishment failed with undeclared variable X. Its generated effect had no definition of the attacking Aethercharge count and applied its power modifier to the weapon instead of the current attack.",
+      "resolvedBy": "An anchored grammar counts Aethercharges in the event attacker intent, binds actual banishment results and grants that count as current-attack power for this attack. Fifteen public cases cover name gating, counts one/two/three, decline, zero/partial/maximum choices, mixed fire types, fewer available cards, invalid selections, other-host exclusion, damage timing and expiry before another same-turn attack. No generated changes outside DTR.",
+      "members": [
+        {
+          "canonicalId": "mob9nu6lal",
+          "abilityIds": ["mob9nu6lal-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-self-banish-omen-result",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Brusque Neige with Ciel level 2 or 3 banished itself but placed no omen counter because the counter used an absent event subject.",
+      "resolvedBy": "An exact anchored self-banish-and-omen compiler branch binds the actual banishment result and adds the counter to that bound card. Fifteen Brusque Neige public tests include a matching Unforgotten Will regression; both existing Rivulet Adjutant death-trigger scenarios pass. Only those three generated definitions change.",
+      "members": [
+        {
+          "canonicalId": "irt72g89zc",
+          "abilityIds": ["irt72g89zc-a3"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-stack-item-iteration",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts",
+      "status": "resolved",
+      "repro": "Moonpiercer selected a targeting activation but its for-each resolved the activation ID as a card object, skipping the controller payment and negation entirely.",
+      "resolvedBy": "The for-each effect now accepts an explicit typed stack-items binding collection. Both immediate and suspended execution paths resolve live stack IDs with the shared iteration resolver. The exact Moonpiercer compiler branch emits that collection; only its generated definition changes. Twenty-nine public card scenarios prove lineage, Glimpse and trigger gates, each activation across both controllers, independent payment, protected/unaffordable cases, card-target and activated-ability exclusions, defending combat payment, and stack banishment on ending combat.",
+      "members": [
+        {
+          "canonicalId": "v3vfjtwm7g",
+          "abilityIds": ["v3vfjtwm7g-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-activation-state-source-lki",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts",
+      "status": "resolved",
+      "repro": "An imbued Cataleptic Constellation destroyed before its pending On Enter resolved rested the ally but failed to summon its two Astral Shards. The activation-state condition read the cleared graveyard state instead of the recorded departed source.",
+      "resolvedBy": "Activation-state conditions consult the exact tracked source LKI when its departure event exists. Twenty-one public Cataleptic scenarios cover Imbue payment/decline, awake/rested/own/opposing targets, repeated skipped wake phases, wake effects, source removal before/after trigger resolution, control loss before/after resolution, target disappearance, exact token count and token Glimpse. Existing engine Imbue tests also pass. No generated definitions change.",
+      "members": [
+        {
+          "canonicalId": "lflzwiiewz",
+          "abilityIds": ["lflzwiiewz-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-conditional-revival-buff-incarnation",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Crossroads Specter returns with seven Regalia banished but its buff and ephemeral follow-ups reference the departed source incarnation instead of the returned object.",
+      "resolvedBy": "An anchored conditional-return grammar binds the actual returned object and applies its buff and ephemeral state to that binding. Fifteen public scenarios cover selection, threshold, costs, response timing, damage, and permanent second-death banishment.",
+      "members": [
+        {
+          "canonicalId": "r3i9nmxhnb",
+          "abilityIds": ["r3i9nmxhnb-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-conditional-mode-effect-versus-availability",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Cometary Vantage rejects its grant-on-hit mode when there is no attacking unit, because the printed effect condition was compiled as a mode availability restriction.",
+      "resolvedBy": "Keep the mode available and evaluate the attacking-unit condition inside its effect on resolution. Twenty-six public scenarios prove choices, costs, Glimpse/draw ordering, Distant timing, intent ownership, On Hit loading, zone-change expiry, and failure boundaries.",
+      "members": [
+        {
+          "canonicalId": "y4c89re0bd",
+          "abilityIds": ["y4c89re0bd-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-chessman-command-attack-conjunction",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Alice Golden Queen incorrectly adds inherited power to an Automaton Command attack because the described-card filter drops Chessman.",
+      "resolvedBy": "The exact Chessman Command attack grammar requires the Attack type and both Chessman and Command subtypes. Public actual-combat tests cover current/buried/inactive lineage and both players.",
+      "members": [
+        {
+          "canonicalId": "daip7s9ztd",
+          "abilityIds": ["daip7s9ztd-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-awake-ally-prevention-snapshot",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Alice Golden Queen loses protection when a protected Chessman rests and incorrectly protects initially rested allies when they wake later.",
+      "resolvedBy": "Resolve the for-each awake-subtype collection once, then install independent bound-object prevention allowances. Public tests cover resting/waking before and after resolution, independent capacity, later arrivals, unpreventable bypass, expiry, and Lineage Release legality.",
+      "members": [
+        {
+          "canonicalId": "daip7s9ztd",
+          "abilityIds": ["daip7s9ztd-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-aggregate-graveyard-alternative-cost",
+      "kind": "engine-primitive",
+      "primitive": "packages/types/src/abilities/cost.ts; packages/engine/src/procedures/activation/costs.ts; packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Verita has no usable alternative cost; its generated definition instead asks for three hand cards during resolution.",
+      "resolvedBy": "An anchored alternative-cost grammar emits a graveyard selection with minimum cardinality and exact aggregate base reserve cost. Typed selection-and-move payments validate the shared aggregate constraint atomically before events, using the same numeric property reader as target declarations. Public tests prove three/four/five-card totals of ten, invalid count/sum/identity/owner/zone/type, ordinary payment, and no refund after negation.",
+      "members": [
+        {
+          "canonicalId": "4qc47amgpp",
+          "abilityIds": ["4qc47amgpp-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-controlled-group-next-turn-duration",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Verita dying on its controller turn grants a power bonus only until that current turn ends, instead of through the next controller turn.",
+      "resolvedBy": "The exact controlled-group modifier grammar uses until-end-of-next-turn for the printed next-turn phrase. Actual combat proves own/opposing death timing, next-turn persistence and later expiry, controller/subtype isolation, and late-entry exclusion.",
+      "members": [
+        {
+          "canonicalId": "4qc47amgpp",
+          "abilityIds": ["4qc47amgpp-a3"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-granted-omen-functional-zone",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Soutirer Vortex granted an omen trigger without its banishment functional zone; matching opposing activations produced neither recovery nor damage.",
+      "resolvedBy": "The anchored compiler branch explicitly emits functionalZones banishment. Public scenarios create omens through paid Condemned Trinket abilities and prove independent matching-cost triggers, recovery, damage, ordering and exclusions.",
+      "members": [
+        {
+          "canonicalId": "du4df43ci2",
+          "abilityIds": ["du4df43ci2-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-attack-retarget-resolution",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/stack-resolution.ts",
+      "status": "resolved",
+      "repro": "An attack retarget instruction without a selected defender threw unsupported-rule.",
+      "resolvedBy": "The shared resumable resolver selects among combat-validated defenders; compilation preserves optional acceptance.",
+      "members": [
+        {
+          "canonicalId": "q1b6htzcox",
+          "abilityIds": ["q1b6htzcox-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-redirect-away-from-taunt",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/combat/combat.ts",
+      "status": "resolved",
+      "repro": "Redirection reapplied initial Taunt restrictions.",
+      "resolvedBy": "The shared validator enforces legal defenders while allowing redirects away from Taunt.",
+      "members": [
+        {
+          "canonicalId": "q1b6htzcox",
+          "abilityIds": ["q1b6htzcox-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-opposing-attack-omen-target",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Beguiling Coup rejected opposing attack omens with an unprinted controller restriction.",
+      "resolvedBy": "The exact compiler branch permits attack omens belonging to either player.",
+      "members": [
+        {
+          "canonicalId": "q1b6htzcox",
+          "abilityIds": ["q1b6htzcox-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-effect-intent-controller",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/effect-executor.ts",
+      "status": "resolved",
+      "repro": "An opposing card moved into intent kept its owner as controller and recovered the wrong champion.",
+      "resolvedBy": "Effect-driven moves to intent assign the resolving effect controller; owner destinations remain unchanged.",
+      "members": [
+        {
+          "canonicalId": "q1b6htzcox",
+          "abilityIds": ["q1b6htzcox-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-hand-memory-choice",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "Spirelle rejected memory cards for its printed hand-or-memory banishment.",
+      "resolvedBy": "The shared choice parser emits both exact zones for hand-or-memory clauses.",
+      "members": [
+        {
+          "canonicalId": "p2n1953som",
+          "abilityIds": ["p2n1953som-a1"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-mass-negation-result-binding",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/effect-executor.ts",
+      "status": "resolved",
+      "repro": "Mass negation lost the successful stack-item identities needed for later movement.",
+      "resolvedBy": "Bind the successfully negated stack items, excluding unnegatable activations.",
+      "members": [
+        {
+          "canonicalId": "p2n1953som",
+          "abilityIds": ["p2n1953som-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-banishment-incarnation-provenance",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/effects/evaluation.ts",
+      "status": "resolved",
+      "repro": "Recast Spirelle could access cards banished by an earlier source incarnation.",
+      "resolvedBy": "Typed paired provenance is checked by cost, target and collection admission; last-known information preserves pending effects.",
+      "members": [
+        {
+          "canonicalId": "p2n1953som",
+          "abilityIds": ["p2n1953som-a1", "p2n1953som-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-linked-reveal-ownership",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "A new Spirelle controller could not reveal the original controller's linked card.",
+      "resolvedBy": "Reveal admission accepts either owner while matching the exact banishing source instance.",
+      "members": [
+        {
+          "canonicalId": "p2n1953som",
+          "abilityIds": ["p2n1953som-a2"]
+        }
+      ]
+    },
+    {
+      "family": "dtr-linked-reveal-cost-kind",
+      "kind": "definition",
+      "primitive": "packages/cards/scripts/compile-card-abilities.ts",
+      "status": "resolved",
+      "repro": "A memory-cost card was accepted as a card with reserve cost zero.",
+      "resolvedBy": "The reveal cost explicitly requires a reserve-cost property.",
+      "members": [
+        {
+          "canonicalId": "p2n1953som",
+          "abilityIds": ["p2n1953som-a2"]
+        }
+      ]
+    },
+    {
+      "family": "imbued-multi-mode-target-collision",
+      "kind": "engine-primitive",
+      "primitive": "packages/engine/src/procedures/activation/activation.ts",
+      "status": "blocked",
+      "repro": "Printed 'Choose one. If this is imbued, choose two instead' modes each declare their own target-1; collectGrandArchiveModeTargets rejects any multi-mode selection with 'Selected modes contain duplicate target declaration ids', so the imbued activation can never be announced.",
+      "blockedBy": "Mode-scoped target declarations need per-mode namespacing (announcement keys and binding resolution) before multi-mode selection with same-id targets is expressible.",
+      "members": [
+        {
+          "canonicalId": "7cx66hjlgx",
+          "abilityIds": ["7cx66hjlgx-a1"]
+        },
+        {
+          "canonicalId": "tjej4mcnqs",
+          "abilityIds": ["tjej4mcnqs-a1"]
+        },
+        {
+          "canonicalId": "Byx6iokcT4",
+          "abilityIds": ["Byx6iokcT4-a1"]
+        }
+      ]
+    },
+    {
+      "family": "link-fixture-blocked",
+      "kind": "definition",
+      "primitive": "packages/cards/src/testing/intrinsic-link.ts",
+      "status": "blocked",
+      "repro": "Lakereaving Chill (item-or-weapon link) announces legally against a WEAPON host, resolves, and lands in the graveyard instead of the field; Jovian Hilt X Ultra and Message in Shadows sacrifice-proof fixtures fight turn-boundary trigger announcements from fixture cards.",
+      "blockedBy": "Link commit semantics for ability-removing linked statics need a focused engine investigation; the shared fixture needs announcement-shaped drains.",
+      "members": [
+        {
+          "canonicalId": "7wX0tZmhYb",
+          "abilityIds": ["7wX0tZmhYb-a1"]
+        },
+        {
+          "canonicalId": "sZTH5LanyW",
+          "abilityIds": ["sZTH5LanyW-a1"]
+        },
+        {
+          "canonicalId": "RgloaA6YV2",
+          "abilityIds": ["RgloaA6YV2-a1"]
+        }
+      ]
+    },
+    {
+      "family": "flip-face-keyword-groups",
+      "kind": "definition",
+      "primitive": "packages/cards/src/testing/keyword-group.ts",
+      "status": "blocked",
+      "repro": "Printed keyword groups on double-faced cards' flip faces cannot be asserted by fielding the card: the object materializes as its default face and the group only becomes active after a transform fixture exists.",
+      "blockedBy": "Shared transform (flip) entry fixture for double-faced cards.",
+      "members": [
+        {
+          "canonicalId": "6ce5rzrjd9",
+          "abilityIds": ["fcfxhkqda6-a1"]
+        },
+        {
+          "canonicalId": "jz7odeqku4",
+          "abilityIds": ["r1sc1xaf9l-a1"]
+        },
+        {
+          "canonicalId": "vzmnt0orxj",
+          "abilityIds": ["fhi78gfkli-a1"]
         }
       ]
     }

@@ -96,6 +96,7 @@ function createFakeHandle(): FakeHandle {
     leave,
     reconnect: vi.fn(),
     getState: vi.fn(() => currentState),
+    wouldHoldEmit: vi.fn(() => false),
     subscribeState: vi.fn((cb: StateHandler) => {
       cbs.state = cb;
       return () => {

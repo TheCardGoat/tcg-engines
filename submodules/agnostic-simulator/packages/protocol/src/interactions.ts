@@ -809,7 +809,8 @@ function validateSubmissionValues(
   }
 }
 
-function inputAllowsOmission(
+/** Shared omission semantics for protocol validation and transport capability checks. */
+export function inputAllowsOmission(
   input: InteractionInput,
   values: Readonly<Record<string, InteractionSubmissionValue>>,
 ): boolean {
@@ -881,7 +882,12 @@ function validateOptionSelectionInput(
   value: InteractionSubmissionValue,
   issues: InteractionSubmissionValidationIssue[],
 ): void {
-  const ids = readStringSelectionValue(value, ["values", input.id], issues);
+  // Option ids are server-authored enum strings (often String(index)), so a
+  // numeric wire value is coerced to its string form before matching — a raw
+  // number and its stringified id must be interchangeable.
+  const ids = readStringSelectionValue(value, ["values", input.id], issues, {
+    coerceNumbers: true,
+  });
   if (!ids) return;
   validateSelectionCount(input.id, ids, input, issues);
   validateNoDuplicateSelections(input.id, ids, issues);
@@ -1127,9 +1133,13 @@ function readStringSelectionValue(
   value: InteractionSubmissionValue,
   path: ReadonlyArray<string | number>,
   issues: InteractionSubmissionValidationIssue[],
+  options?: { coerceNumbers?: boolean },
 ): string[] | null {
   if (typeof value === "string") {
     return [value];
+  }
+  if (options?.coerceNumbers && typeof value === "number" && Number.isFinite(value)) {
+    return [String(value)];
   }
   if (Array.isArray(value) && value.every((item) => typeof item === "string")) {
     return value;

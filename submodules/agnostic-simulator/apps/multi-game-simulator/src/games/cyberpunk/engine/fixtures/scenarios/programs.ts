@@ -24,6 +24,77 @@ export const programScenarios: Scenario[] = [
         { seed: scenarioSeed("progLiveWithTheAftermathRetail"), autoGainGig: false },
       ),
   },
+  {
+    id: "progLiveWithTheAftermathActiveOnlyRetail",
+    group: "program-spend",
+    label: "Live with the Aftermath (Retail) · only the active player has a Unit",
+    description:
+      "P1 selects and defeats their Unit. P2 has no legal choice, so that part of the effect is skipped.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailLiveWithTheAftermath],
+          field: [{ card: c.welcomeToNightCityRetailMoxInciters, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+        },
+        {
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+        },
+        {
+          seed: scenarioSeed("progLiveWithTheAftermathActiveOnlyRetail"),
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
+    id: "progLiveWithTheAftermathRivalOnlyRetail",
+    group: "program-spend",
+    label: "Live with the Aftermath (Retail) · only the rival has a Unit",
+    description:
+      "P1 has no legal choice, so their part is skipped. P2 then selects and defeats their own Unit.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailLiveWithTheAftermath],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: false }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+        },
+        {
+          seed: scenarioSeed("progLiveWithTheAftermathRivalOnlyRetail"),
+          autoGainGig: false,
+        },
+      ),
+  },
+  {
+    id: "progLiveWithTheAftermathNoUnitsRetail",
+    group: "program-spend",
+    label: "Live with the Aftermath (Retail) · neither player has a Unit",
+    description:
+      "Neither player has a legal choice, so both parts are skipped and the Program finishes resolving.",
+    build: () =>
+      CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailLiveWithTheAftermath],
+          legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
+          eddies: 3,
+        },
+        {
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 3,
+        },
+        {
+          seed: scenarioSeed("progLiveWithTheAftermathNoUnitsRetail"),
+          autoGainGig: false,
+        },
+      ),
+  },
   // ── Program: Spend (Corporate Surveillance) ─────────────────────────────
   {
     id: "progCorporateSurveillance",
@@ -809,9 +880,9 @@ export const programScenarios: Scenario[] = [
   {
     id: "progTrustNoOne",
     group: "program-gig",
-    label: "Trust No One · decrease a Gig by up to 3, then draw if any Gig",
+    label: "Trust No One · min Gig can keep its value for an up-to decrease",
     description:
-      "P1 holds Trust No One (cost 1, blue). P1 has a d6 Gig at face 4 and enough eddies. Tests one-step Gig decrease with optional conditional draw.",
+      "P1 holds Trust No One (cost 1, blue). P1 has a min d4 Gig at face 1 and enough eddies. Tests completing the up-to decrease without changing the Gig, then drawing for the min Gig.",
     build: () =>
       CyberpunkTestEngine.createWithFixture(
         {
@@ -819,7 +890,7 @@ export const programScenarios: Scenario[] = [
           field: [{ card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false }],
           legendArea: [c.theHeistRetailStarterDeckVCorporateExile],
           eddies: 2,
-          gigArea: [{ dieType: "d6", faceValue: 4 }],
+          gigArea: [{ dieType: "d4", faceValue: 1 }],
         },
         {
           field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],

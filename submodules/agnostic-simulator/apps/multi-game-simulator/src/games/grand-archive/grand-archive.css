@@ -3527,3 +3527,134 @@
     grid-template-columns: repeat(2, 3rem);
   }
 }
+
+/* Legal actions stay attached to their source without covering card art. */
+.ga-role-card[data-actionable="true"] {
+  margin-bottom: 1.5rem;
+}
+.ga-role-card[data-actionable="true"] > .sim-card-face {
+  outline: 2px solid var(--ga-signal);
+  outline-offset: 2px;
+}
+.ga-role-card__actions {
+  position: absolute;
+  top: calc(100% + 4px);
+  inset-inline: -2px;
+  color: var(--ga-signal);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  pointer-events: none;
+}
+.ga-zone-counter__button[data-actionable="true"] {
+  position: relative;
+  color: var(--ga-signal);
+  outline: 1px solid currentColor;
+}
+.ga-zone-counter__available {
+  position: absolute;
+  inset: 3px 3px auto auto;
+}
+
+.ga-hand-card-visual {
+  position: relative;
+}
+.ga-hand-card-visual__actions {
+  position: absolute;
+  top: calc(100% + 4px);
+  inset-inline: -2px;
+  padding: 2px;
+  border-radius: 3px;
+  color: var(--ga-signal);
+  font-size: 0.625rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  pointer-events: none;
+}
+
+.ga-hand:has(.ga-hand-card-visual[data-actionable]) {
+  padding-bottom: 1.25rem;
+}
+
+/* The shared popover is portaled outside the game root. */
+.ga-card-context {
+  --game-accent: oklch(0.78 0.14 86);
+}
+.ga-card-context__detail {
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Attack discovery stays on the field; the shared prompt owns confirmation. */
+.ga-role-card[data-attack-role] {
+  margin-bottom: 1.75rem;
+}
+.ga-role-card[data-attack-role="target"] > .sim-card-face,
+.ga-role-card[data-attack-role="source"] > .sim-card-face {
+  outline: 2px solid var(--ga-signal);
+  outline-offset: 2px;
+}
+.ga-role-card__attack-label {
+  position: absolute;
+  inset: calc(100% + 4px) -2px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--ga-signal);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  pointer-events: none;
+}
+.ga-role-card__attack-label svg {
+  flex-shrink: 0;
+}
+.ga-role-card[data-attack-role="candidate"] > .sim-card-face:focus-visible {
+  outline: 3px solid var(--ga-signal);
+  outline-offset: 3px;
+}
+.ga-attack-guide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ga-role-card[data-attack-role="candidate"] > .sim-card-face {
+  outline: 1px dashed var(--ga-signal);
+  outline-offset: 2px;
+}
+.ga-role-card[data-attack-role="candidate"] > .sim-card-face:hover {
+  outline: 2px solid var(--ga-signal);
+}
+
+/* Art-only field images retain their square geometry; labels remain live UI. */
+.ga-seat-zone--field .ga-role-card[data-art-only="true"] > .sim-card-face {
+  width: max(
+    44px,
+    min(var(--ga-field-card-width), calc((100cqh - 2.5rem) * var(--ga-board-aspect-ratio, 1)))
+  ) !important;
+}
+.ga-role-card__art-caption {
+  position: absolute;
+  inset: auto 0 0;
+  display: grid;
+  padding: 0.2rem 0.3rem;
+  border-radius: 0 0 0.35rem 0.35rem;
+  background: rgb(0 0 0 / 78%);
+  color: white;
+  font-size: 0.625rem;
+  line-height: 1.2;
+  pointer-events: none;
+}
+.ga-role-card__art-caption small {
+  font-size: 0.5625rem;
+}

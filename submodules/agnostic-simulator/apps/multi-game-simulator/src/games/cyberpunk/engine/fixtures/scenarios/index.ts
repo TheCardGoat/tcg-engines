@@ -6,6 +6,9 @@ import { programScenarios } from "./programs";
 import { unitScenarios } from "./units";
 import { wtnc22QaScenarios } from "./wtnc-22-qa";
 import { releaseSep2026QaScenarios } from "./release-sep-2026-qa";
+import { bugRegressionScenarios } from "./bug-regressions";
+import { deckSearchPromptScenarios } from "./deck-search-prompts";
+import { pendingEffectOrderScenarios } from "./pending-effect-order";
 
 export type { Scenario, ScenarioGroup, ScenarioId } from "./types";
 export { P1, P2 } from "./shared";
@@ -18,6 +21,9 @@ const SCENARIOS: Scenario[] = [
   ...unitScenarios,
   ...wtnc22QaScenarios,
   ...releaseSep2026QaScenarios,
+  ...bugRegressionScenarios,
+  ...deckSearchPromptScenarios,
+  ...pendingEffectOrderScenarios,
 ];
 
 export function getScenario(id: ScenarioId): Scenario {

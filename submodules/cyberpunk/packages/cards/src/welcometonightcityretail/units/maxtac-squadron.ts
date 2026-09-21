@@ -56,7 +56,7 @@ export const welcomeToNightCityRetailMaxtacSquadron = defineCyberpunkCard({
             state: "spent",
             selection: {
               mode: "choose",
-              min: 0,
+              min: 1,
               max: 1,
             },
           },

@@ -58,24 +58,31 @@ export const huntWeissKing: GrandArchiveCard<GrandArchiveAbilityDefinition, "car
                 operator: "multiply",
                 operands: [
                   {
-                    kind: "count",
-                    collection: {
-                      zones: ["field"],
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ALLY"],
+                    kind: "calculate",
+                    operator: "minimum",
+                    operands: [
+                      {
+                        kind: "count",
+                        collection: {
+                          zones: ["field"],
+                          player: "controller",
+                          filter: {
+                            kind: "all",
+                            filters: [
+                              {
+                                kind: "type",
+                                oneOf: ["ALLY"],
+                              },
+                              {
+                                kind: "subtype",
+                                oneOf: ["PAWN"],
+                              },
+                            ],
                           },
-                          {
-                            kind: "subtype",
-                            oneOf: ["PAWN"],
-                          },
-                        ],
+                        },
                       },
-                    },
+                      2,
+                    ],
                   },
                   2,
                 ],

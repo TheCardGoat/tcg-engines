@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   AnimationInteractionBoundary,
   createSimulatorAnimationScope,
@@ -17,6 +18,7 @@ import { useRegisterSimulatorDebugExportSource } from "../../../simulator/debug-
 import { LocalSimulatorDebugHistoryRecorder } from "../../../simulator/debug-export/local-debug-history";
 import { onePieceAnimationsToAnimationPlan } from "../animation/onePieceAnimationAdapter.ts";
 import classes from "./FixtureRoutes.module.css";
+import { practiceModeFromSearch, type PracticeMode } from "../../../simulator/practiceMode.ts";
 
 const HUMAN_SEAT = "south";
 const BOT_SEAT = "north";
@@ -36,6 +38,8 @@ function createInitialPracticeState(engine: PracticeEngine): MatchState {
 }
 
 export function OnePiecePracticePage() {
+  const [searchParams] = useSearchParams();
+  const mode = practiceModeFromSearch(searchParams);
   const [session, setSession] = useState<{
     engine: PracticeEngine;
     initialState: MatchState;
@@ -73,15 +77,17 @@ export function OnePiecePracticePage() {
       </main>
     );
   }
-  return <OnePiecePracticeSession {...session} />;
+  return <OnePiecePracticeSession {...session} mode={mode} />;
 }
 
 function OnePiecePracticeSession({
   engine,
   initialState,
+  mode,
 }: {
   readonly engine: PracticeEngine;
   readonly initialState: MatchState;
+  readonly mode: PracticeMode;
 }) {
   const { scheduleAnimationSteps, cancelScheduledCues } = useSimulatorAudio();
   const debugHistory = useMemo(
@@ -125,7 +131,7 @@ function OnePiecePracticeSession({
       onScheduleAudio={scheduleAnimationSteps}
       onCancelAudio={cancelScheduledCues}
     >
-      <OnePiecePracticeBoard debugHistory={debugHistory} engine={engine} />
+      <OnePiecePracticeBoard debugHistory={debugHistory} engine={engine} mode={mode} />
     </OnePieceAnimation.Root>
   );
 }
@@ -133,9 +139,11 @@ function OnePiecePracticeSession({
 function OnePiecePracticeBoard({
   debugHistory,
   engine,
+  mode,
 }: {
   readonly debugHistory: LocalSimulatorDebugHistoryRecorder;
   readonly engine: PracticeEngine;
+  readonly mode: PracticeMode;
 }) {
   const snapshot = OnePieceAnimation.useState();
   const { enqueue } = OnePieceAnimation.useActions();
@@ -179,7 +187,7 @@ function OnePiecePracticeBoard({
   );
 
   useEffect(() => {
-    if (!state || gate.isBlocked || state.status !== "setup") return;
+    if (mode === "self" || !state || gate.isBlocked || state.status !== "setup") return;
     const setupActionTypes = new Set([
       "chooseJoKenPo",
       "chooseFirstPlayer",
@@ -203,10 +211,16 @@ function OnePiecePracticeBoard({
       });
     }, 300);
     return () => window.clearTimeout(timer);
-  }, [applyEngineResult, engine, gate.isBlocked, state]);
+  }, [applyEngineResult, engine, gate.isBlocked, mode, state]);
 
   useEffect(() => {
-    if (!state || gate.isBlocked || state.status !== "active" || state.activeSeat !== BOT_SEAT) {
+    if (
+      mode === "self" ||
+      !state ||
+      gate.isBlocked ||
+      state.status !== "active" ||
+      state.activeSeat !== BOT_SEAT
+    ) {
       return;
     }
     const timer = window.setTimeout(() => {
@@ -225,29 +239,35 @@ function OnePiecePracticeBoard({
       });
     }, 450);
     return () => window.clearTimeout(timer);
-  }, [applyEngineResult, engine, gate.isBlocked, state]);
+  }, [applyEngineResult, engine, gate.isBlocked, mode, state]);
+
+  const controlledSeat = useMemo(() => {
+    if (!state || mode === "bot") return HUMAN_SEAT;
+    if (state.status === "active") return state.activeSeat;
+    return engine.getLegalCommands(state, HUMAN_SEAT).length > 0 ? HUMAN_SEAT : BOT_SEAT;
+  }, [engine, mode, state]);
 
   const board = useMemo(
-    () => (presentationState ? buildBoard(presentationState) : null),
-    [presentationState],
+    () => (presentationState ? buildBoard(presentationState, controlledSeat, mode) : null),
+    [controlledSeat, mode, presentationState],
   );
   const actions = useMemo(
-    () => (state && !gate.isBlocked ? engine.getLegalCommands(state, HUMAN_SEAT) : []),
-    [engine, gate.isBlocked, state],
+    () => (state && !gate.isBlocked ? engine.getLegalCommands(state, controlledSeat) : []),
+    [controlledSeat, engine, gate.isBlocked, state],
   );
   const cardActions = useMemo(
-    () => (state && !gate.isBlocked ? engine.getPotentialCardCommands(state, HUMAN_SEAT) : []),
-    [engine, gate.isBlocked, state],
+    () => (state && !gate.isBlocked ? engine.getPotentialCardCommands(state, controlledSeat) : []),
+    [controlledSeat, engine, gate.isBlocked, state],
   );
   const submitAction = useCallback(
     (action: LegalCommandDescriptor) => {
       applyEngineResult((current) => {
         if (!current) return current;
-        const command = engine.commandFromDescriptor(current, HUMAN_SEAT, action);
+        const command = engine.commandFromDescriptor(current, controlledSeat, action);
         return command ? { command, outcome: engine.applyCommand(current, command) } : current;
       });
     },
-    [applyEngineResult, engine],
+    [applyEngineResult, controlledSeat, engine],
   );
   const submitJoKenPoTimeout = useCallback(() => {
     applyEngineResult((current) => {
@@ -269,20 +289,24 @@ function OnePiecePracticeBoard({
   if (!board) return null;
   return (
     <AnimationInteractionBoundary active={gate.isBlocked}>
-      <OnePieceSimulatorShell
-        board={board}
-        actions={actions}
-        cardActions={cardActions}
-        onAction={submitAction}
-        onJoKenPoTimeout={submitJoKenPoTimeout}
-        bugReportContext={{
-          gameSlug: "one-piece",
-          playerCount: 2,
-          turn: board.table.status.turn,
-          stateVersion: board.table.status.stateVersion,
-          platform: window.innerWidth < 768 ? "mobile" : "desktop",
-        }}
-      />
+      <div data-practice-mode={mode} data-controlled-seat={controlledSeat}>
+        <OnePieceSimulatorShell
+          practiceMode={mode}
+          controlledSeat={controlledSeat}
+          board={board}
+          actions={actions}
+          cardActions={cardActions}
+          onAction={submitAction}
+          onJoKenPoTimeout={mode === "bot" ? submitJoKenPoTimeout : () => undefined}
+          bugReportContext={{
+            gameSlug: "one-piece",
+            playerCount: 2,
+            turn: board.table.status.turn,
+            stateVersion: board.table.status.stateVersion,
+            platform: window.innerWidth < 768 ? "mobile" : "desktop",
+          }}
+        />
+      </div>
     </AnimationInteractionBoundary>
   );
 }
@@ -291,12 +315,20 @@ function OnePieceAnimationState(snapshot: ReturnType<typeof OnePieceAnimation.us
   return snapshot;
 }
 
-function buildBoard(state: MatchState) {
+function buildBoard(
+  state: MatchState,
+  viewer: typeof HUMAN_SEAT | typeof BOT_SEAT = HUMAN_SEAT,
+  mode: PracticeMode = "bot",
+) {
   return buildOnePieceBoardFromState(state as Parameters<typeof buildOnePieceBoardFromState>[0], {
     id: "st01-practice",
     label: "ST-01 mirror practice",
-    description: "You and the practice bot both use STARTER DECK -Straw Hat Crew- [ST-01].",
+    description:
+      mode === "self"
+        ? "Control both STARTER DECK -Straw Hat Crew- [ST-01] seats."
+        : "You and the practice bot both use STARTER DECK -Straw Hat Crew- [ST-01].",
     logPrefix: "Started ST-01 mirror practice.",
+    viewer,
   });
 }
 

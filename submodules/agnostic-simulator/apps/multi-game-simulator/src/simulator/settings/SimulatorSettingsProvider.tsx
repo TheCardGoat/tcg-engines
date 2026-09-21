@@ -13,6 +13,7 @@ import {
   clampSoundVolume,
   normalizeAnimationSpeed,
   normalizeCardInteractionMode,
+  normalizePaymentSelectionMode,
   normalizeSimulatorSettings,
   readLocalSimulatorSettings,
   writeLocalSimulatorSettings,
@@ -24,6 +25,7 @@ export interface SimulatorSettingsContextValue {
   readonly setSoundVolume: (volume: number) => void;
   readonly setCardInteractionMode: (mode: SimulatorSettings["cardInteractionMode"]) => void;
   readonly setAnimationSpeed: (speed: SimulatorSettings["animationSpeed"]) => void;
+  readonly setPaymentSelectionMode: (mode: SimulatorSettings["paymentSelectionMode"]) => void;
 }
 
 interface UserSettingsResponse {
@@ -31,11 +33,13 @@ interface UserSettingsResponse {
     soundVolume?: number;
     cardInteractionMode?: SimulatorSettings["cardInteractionMode"];
     animationSpeed?: SimulatorSettings["animationSpeed"];
+    paymentSelectionMode?: SimulatorSettings["paymentSelectionMode"];
   };
   gameplaySettings?: {
     soundVolume?: number;
     cardInteractionMode?: SimulatorSettings["cardInteractionMode"];
     animationSpeed?: SimulatorSettings["animationSpeed"];
+    paymentSelectionMode?: SimulatorSettings["paymentSelectionMode"];
   };
 }
 
@@ -44,6 +48,7 @@ const FALLBACK_SIMULATOR_SETTINGS_CONTEXT: SimulatorSettingsContextValue = {
   setSoundVolume: () => undefined,
   setCardInteractionMode: () => undefined,
   setAnimationSpeed: () => undefined,
+  setPaymentSelectionMode: () => undefined,
 };
 
 const SimulatorSettingsContext = createContext<SimulatorSettingsContextValue>(
@@ -72,6 +77,7 @@ export function SimulatorSettingsProvider({
   const initialSoundVolume = normalizedInitialSettings?.soundVolume ?? null;
   const initialCardInteractionMode = normalizedInitialSettings?.cardInteractionMode ?? null;
   const initialAnimationSpeed = normalizedInitialSettings?.animationSpeed ?? null;
+  const initialPaymentSelectionMode = normalizedInitialSettings?.paymentSelectionMode ?? null;
   const hydratedForUserRef = useRef<string | null>(null);
   const hydratingForUserRef = useRef<string | null>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -104,12 +110,14 @@ export function SimulatorSettingsProvider({
       soundVolume: initialSoundVolume,
       cardInteractionMode: initialCardInteractionMode,
       animationSpeed: initialAnimationSpeed,
+      paymentSelectionMode: initialPaymentSelectionMode,
     });
     skipNextSaveRef.current = true;
     setSettings((current) =>
       current.soundVolume === next.soundVolume &&
       current.cardInteractionMode === next.cardInteractionMode &&
-      current.animationSpeed === next.animationSpeed
+      current.animationSpeed === next.animationSpeed &&
+      current.paymentSelectionMode === next.paymentSelectionMode
         ? current
         : next,
     );
@@ -120,6 +128,7 @@ export function SimulatorSettingsProvider({
   }, [
     auth.userId,
     initialAnimationSpeed,
+    initialPaymentSelectionMode,
     initialCardInteractionMode,
     initialSoundVolume,
     persistLocal,
@@ -164,6 +173,9 @@ export function SimulatorSettingsProvider({
             body.playerSettings?.cardInteractionMode ?? body.gameplaySettings?.cardInteractionMode,
           animationSpeed:
             body.playerSettings?.animationSpeed ?? body.gameplaySettings?.animationSpeed,
+          paymentSelectionMode:
+            body.playerSettings?.paymentSelectionMode ??
+            body.gameplaySettings?.paymentSelectionMode,
         });
         skipNextSaveRef.current = true;
         setSettings(next);
@@ -208,6 +220,7 @@ export function SimulatorSettingsProvider({
             soundVolume: settings.soundVolume,
             cardInteractionMode: settings.cardInteractionMode,
             animationSpeed: settings.animationSpeed,
+            paymentSelectionMode: settings.paymentSelectionMode,
           },
         }),
       }).catch((error: unknown) => {
@@ -271,9 +284,27 @@ export function SimulatorSettingsProvider({
     });
   }, []);
 
+  const setPaymentSelectionMode = useCallback((mode: SimulatorSettings["paymentSelectionMode"]) => {
+    setSettings((current) => {
+      const paymentSelectionMode = normalizePaymentSelectionMode(
+        mode,
+        current.paymentSelectionMode,
+      );
+      if (current.paymentSelectionMode === paymentSelectionMode) return current;
+      userEditVersionRef.current += 1;
+      return { ...current, paymentSelectionMode };
+    });
+  }, []);
+
   const value = useMemo<SimulatorSettingsContextValue>(
-    () => ({ settings, setSoundVolume, setCardInteractionMode, setAnimationSpeed }),
-    [settings, setAnimationSpeed, setCardInteractionMode, setSoundVolume],
+    () => ({
+      settings,
+      setSoundVolume,
+      setCardInteractionMode,
+      setAnimationSpeed,
+      setPaymentSelectionMode,
+    }),
+    [settings, setAnimationSpeed, setCardInteractionMode, setPaymentSelectionMode, setSoundVolume],
   );
 
   return (

@@ -85,7 +85,7 @@ All player actions chosen by the harness were validated against the `cyberpunk-t
 - **Gain Gig:** Take exactly one fixer die per turn (d20 is last die). The UI shows `prompt-gain-gig-*` buttons; the harness clicks the first available.
 - **Sell Card:** Gain 1 Eddie + card cost. Verified that sellable cards have the sell tag.
 - **Play Card:** Cost must be ≤ available Eddies. The harness only clicks `card-action-playCard` when the engine lists `playCard` as an available move.
-- **Call Legend:** Costs 2 Eddies, once per turn, in play phase or defensive step. Verified via engine prompt.
+- **Call Legend:** Costs 1 Eddie (CR 11.11.1), once per turn, in main phase or React Step.
 - **Attack Rival:** Attacker must be ready (not spent), rival must be targetable. Verified via engine prompt.
 - **Pass Phase:** Always legal when it's the player's turn.
 

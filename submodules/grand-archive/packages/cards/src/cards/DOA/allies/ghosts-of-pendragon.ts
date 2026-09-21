@@ -49,42 +49,53 @@ export const ghostsOfPendragon: GrandArchiveCard<GrandArchiveAbilityDefinition, 
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "returned-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "choose",
+                    selection: {
+                      id: "returned-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "supertype",
+                          oneOf: ["REGALIA"],
+                        },
+                      },
                     },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "supertype",
-                        oneOf: ["REGALIA"],
+                    effect: {
+                      kind: "move",
+                      subject: {
+                        kind: "bound",
+                        binding: "returned-object",
+                      },
+                      destination: {
+                        zone: "material-deck",
                       },
                     },
                   },
-                  effect: {
-                    kind: "move",
-                    subject: {
-                      kind: "bound",
-                      binding: "returned-object",
-                    },
-                    destination: {
-                      zone: "material-deck",
-                    },
-                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 2,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 2,
+                  },
                 },
               ],
             },

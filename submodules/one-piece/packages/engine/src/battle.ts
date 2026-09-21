@@ -29,7 +29,7 @@ import {
 } from "./effects/permanent.ts";
 import { findKoReplacement } from "./effects/replacements.ts";
 import { matchesTargetFilter } from "./effects/targeting.ts";
-import { cleanupBattleModifiers, createChoicePrompt, moveCard } from "./state.ts";
+import { cleanupBattleModifiers, createChoicePrompt, formatCardList, moveCard } from "./state.ts";
 import type { CardZone, GameCommand, MatchSeat, MatchState, PromptOption } from "./types.ts";
 
 function battleKoReplacementSource(state: MatchState, targetId: string) {
@@ -71,6 +71,7 @@ function koBattleCharacter(state: MatchState) {
   moveCard(state, battle.targetId, target.owner, "trash", {
     faceUp: true,
     publicKnowledge: true,
+    suppressLog: true,
   });
   enqueueInPlayEffectsForTrigger(state, "whenCharacterRemoved", triggerEvent);
   battle.result = "ko";
@@ -205,7 +206,7 @@ export function beginBattleCounterStep(state: MatchState) {
   createChoicePrompt(state, {
     choiceKind: "selectCards",
     seat: defendingSeat,
-    label: `${getPlayer(state, defendingSeat).playerName} counter step`,
+    label: `${getPlayer(state, defendingSeat).playerName} takes the Counter step.`,
     details: "Select counter cards or pass.",
     sourceCardId: getInstance(state, state.battle.attackerId).cardId,
     sourceInstanceId: state.battle.attackerId,
@@ -235,7 +236,7 @@ function createBattleLifeTriggerPrompt(
   createChoicePrompt(state, {
     choiceKind: "confirm",
     seat: defendingSeat,
-    label: `${defender.playerName} may activate a trigger`,
+    label: `${defender.playerName} may activate ${cardName(lifeCard)}'s [Trigger].`,
     details: `Resolve ${cardName(lifeCard)} from life?`,
     sourceCardId: lifeCard.id,
     sourceInstanceId: lifeCardId,
@@ -675,7 +676,7 @@ export function continueEffectDamage(
     createChoicePrompt(state, {
       choiceKind: "confirm",
       seat: targetSeat,
-      label: `${target.playerName} may activate a trigger`,
+      label: `${target.playerName} may activate ${cardName(lifeCard)}'s [Trigger].`,
       details: `Resolve ${cardName(lifeCard)} from life?`,
       sourceCardId: lifeCard.id,
       sourceInstanceId: lifeCardId,
@@ -1023,15 +1024,20 @@ export function resolvePrompt(
         const card = getCardForInstance(state, instanceId);
         if (card.cardType === "character" && getCardCounter(state, instanceId) > 0) {
           counterTotal += getCardCounter(state, instanceId);
+          // The aggregate "counters with X, Y." line below is the single
+          // player-facing record; per-card zone movements would repeat it
+          // once per counter card.
           moveCard(state, instanceId, getInstance(state, instanceId).owner, "trash", {
             faceUp: true,
             publicKnowledge: true,
+            suppressLog: true,
           });
         } else if (card.cardType === "event") {
           moveCard(state, instanceId, getInstance(state, instanceId).owner, "trash", {
             faceUp: true,
             publicKnowledge: true,
             actor: command.seat,
+            suppressLog: true,
           });
           enqueueEffectsForTrigger(state, instanceId, command.seat, "counter", undefined);
           const triggerEvent = { instanceId, effectController: command.seat };
@@ -1047,6 +1053,16 @@ export function resolvePrompt(
 
       battle.counterCardIds = selectedIds;
       battle.counterTotal += counterTotal;
+      if (selectedIds.length > 0) {
+        emitLog(
+          state,
+          command.seat,
+          `${player.playerName} counters with ${formatCardList(state, selectedIds)}.`,
+          {
+            visibility: "public",
+          },
+        );
+      }
       enqueueResolution(state, {
         kind: "battleFinalize",
         battleId: battle.id,
@@ -1123,6 +1139,7 @@ export function resolvePrompt(
           faceUp: true,
           publicKnowledge: true,
           actor: context.controller,
+          suppressLog: true,
         });
         battle.result = "no_damage";
         emitLog(

@@ -51,7 +51,8 @@ export function reduceCreateSearch(
         canonicalId: fabCanonicalCardId(canonicalId),
         objectKind: object.objectKind,
         baseSource: object.baseSource,
-        ownerId: fabPlayerId(event.data.playerId),
+        // Ownership comes from the creator, independently of the destination controller.
+        ownerId: fabPlayerId(object.ownerId),
         incarnation: state.counters.objectIncarnation,
         visibility: "public",
         activeFace:

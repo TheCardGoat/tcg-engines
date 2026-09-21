@@ -103,9 +103,7 @@
   min-height: 0;
   isolation: isolate;
   overflow: hidden;
-  transition:
-    filter 0.18s ease,
-    box-shadow 0.18s ease;
+  transition: box-shadow 0.18s ease;
 }
 
 .opponentSide > *,
@@ -132,29 +130,29 @@
   background:
     linear-gradient(
       90deg,
-      rgb(var(--priority-rgb) / 7%),
-      rgb(var(--priority-rgb) / 2%) 18%,
+      rgb(var(--priority-rgb) / 14%),
+      rgb(var(--priority-rgb) / 4%) 18%,
       transparent 78%
     ),
-    radial-gradient(ellipse at 18% 50%, rgb(var(--priority-rgb) / 5%), transparent 58%);
+    radial-gradient(ellipse at 18% 50%, rgb(var(--priority-rgb) / 8%), transparent 58%);
   box-shadow:
-    inset 0 0 0 1px rgb(var(--priority-rgb) / 24%),
-    inset 3px 0 0 rgb(var(--priority-rgb) / 64%),
-    inset 0 0 24px rgb(var(--priority-rgb) / 7%);
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 34%),
+    inset 4px 0 0 rgb(var(--priority-rgb) / 88%),
+    inset 0 0 30px rgb(var(--priority-rgb) / 12%);
 }
 
 .opponentSide::before {
   background:
     linear-gradient(
       270deg,
-      rgb(var(--priority-rgb) / 8%),
-      rgb(var(--priority-rgb) / 2%) 18%,
+      rgb(var(--priority-rgb) / 16%),
+      rgb(var(--priority-rgb) / 4%) 18%,
       transparent 78%
     ),
-    radial-gradient(ellipse at 82% 50%, rgb(var(--priority-rgb) / 6%), transparent 58%);
+    radial-gradient(ellipse at 82% 50%, rgb(var(--priority-rgb) / 9%), transparent 58%);
   box-shadow:
-    inset 0 0 0 1px rgb(var(--priority-rgb) / 24%),
-    inset 0 3px 0 rgb(var(--priority-rgb) / 64%),
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 34%),
+    inset 0 4px 0 rgb(var(--priority-rgb) / 88%),
     inset 0 0 26px rgb(var(--priority-rgb) / 8%);
 }
 
@@ -166,24 +164,34 @@
   background: linear-gradient(
     90deg,
     transparent 6%,
-    rgb(var(--priority-rgb) / 68%),
+    rgb(var(--priority-rgb) / 85%),
     transparent 94%
   );
   box-shadow:
-    0 0 9px rgb(var(--priority-rgb) / 28%),
-    0 0 18px rgb(var(--priority-rgb) / 10%);
+    0 0 12px rgb(var(--priority-rgb) / 34%),
+    0 0 22px rgb(var(--priority-rgb) / 14%);
 }
 
 .playerSide::after {
   inset: auto 0 -3px;
 }
 
+/* Quiet turn-player perimeter — deliberately fainter than the priority edge
+   so the two states read as different intensities when they coincide. Declared
+   before the priority block so the priority shadow wins when both apply. */
+.opponentSide[data-turn="true"],
+.playerSide[data-turn="true"] {
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 18%),
+    inset 0 0 34px rgb(var(--priority-rgb) / 5%);
+}
+
 .opponentSide[data-priority="true"],
 .playerSide[data-priority="true"] {
-  filter: saturate(1.04);
+  /* Priority belongs to the perimeter; keep card artwork unfiltered. */
   box-shadow:
-    inset 0 0 0 1px rgb(var(--priority-rgb) / 22%),
-    0 0 14px rgb(var(--priority-rgb) / 8%);
+    inset 0 0 0 1px rgb(var(--priority-rgb) / 30%),
+    0 0 18px rgb(var(--priority-rgb) / 14%);
 }
 
 .opponentSide[data-priority="true"]::before,
@@ -191,6 +199,107 @@
 .opponentSide[data-priority="true"]::after,
 .playerSide[data-priority="true"]::after {
   opacity: 1;
+}
+
+/*
+  Priority cue rail: mounts on whichever half holds priority and hugs that
+  half's center-facing edge — a bright rail plus a triangle pointing into the
+  acting side. Remounts on every priority flip (see CyberpunkBoard), which
+  replays the sweep entrance; the pointer keeps a soft idle pulse afterwards.
+*/
+.priorityCue {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  height: 4px;
+  pointer-events: none;
+}
+
+.opponentSide .priorityCue {
+  top: auto;
+  bottom: 0;
+}
+
+.playerSide .priorityCue {
+  top: 0;
+  bottom: auto;
+}
+
+.priorityCue::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 4%,
+    rgb(var(--priority-rgb) / 90%) 30% 70%,
+    transparent 96%
+  );
+  box-shadow:
+    0 0 12px rgb(var(--priority-rgb) / 38%),
+    0 0 26px rgb(var(--priority-rgb) / 16%);
+  transform-origin: 50% 50%;
+  animation: priority-cue-sweep 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.priorityCue::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 18px;
+  height: 9px;
+  background: rgb(var(--priority-rgb));
+  filter: drop-shadow(0 0 6px rgb(var(--priority-rgb) / 70%));
+  animation: priority-cue-pulse 2.4s ease-in-out 0.4s infinite;
+}
+
+/* Opponent half: cue sits at its bottom edge, triangle pointing up into it. */
+.opponentSide .priorityCue::after {
+  bottom: 4px;
+  transform: translateX(-50%);
+  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+
+/* Player half: cue sits at its top edge, triangle pointing down into it. */
+.playerSide .priorityCue::after {
+  top: 4px;
+  transform: translateX(-50%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+@keyframes priority-cue-sweep {
+  from {
+    opacity: 0;
+    transform: scaleX(0.35);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes priority-cue-pulse {
+  0%,
+  100% {
+    opacity: 0.72;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .priorityCue::before {
+    animation: none;
+  }
+
+  .priorityCue::after {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 .handTop {

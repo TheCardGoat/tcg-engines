@@ -280,11 +280,25 @@ export const ProposalActionType = z.enum([
   "disable_manual_mode",
 ]);
 
-export const ProposalSendMessage = z.object({
-  type: z.literal("proposal_send"),
-  gameId: z.string().min(1),
-  actionType: ProposalActionType,
-});
+export const UndoScope = z.enum(["last_move", "turn_start"]);
+
+export const ProposalSendMessage = z
+  .object({
+    type: z.literal("proposal_send"),
+    gameId: z.string().min(1),
+    actionType: ProposalActionType,
+    /** Omitted legacy undo requests mean last_move. */
+    undoScope: UndoScope.optional(),
+  })
+  .superRefine((message, context) => {
+    if (message.actionType !== "undo" && message.undoScope !== undefined) {
+      context.addIssue({
+        code: "custom",
+        path: ["undoScope"],
+        message: "undoScope is only valid for undo proposals",
+      });
+    }
+  });
 
 export const ProposalAcceptMessage = z.object({
   type: z.literal("proposal_accept"),
@@ -375,6 +389,7 @@ export type MatchmakingDeclineMsg = z.infer<typeof MatchmakingDeclineMessage>;
 export type SkipOpponentTurnMsg = z.infer<typeof SkipOpponentTurnMessage>;
 export type DropPlayerMsg = z.infer<typeof DropPlayerMessage>;
 export type ProposalActionTypeValue = z.infer<typeof ProposalActionType>;
+export type UndoScopeValue = z.infer<typeof UndoScope>;
 export type ProposalSendMsg = z.infer<typeof ProposalSendMessage>;
 export type ProposalAcceptMsg = z.infer<typeof ProposalAcceptMessage>;
 export type ProposalDeclineMsg = z.infer<typeof ProposalDeclineMessage>;

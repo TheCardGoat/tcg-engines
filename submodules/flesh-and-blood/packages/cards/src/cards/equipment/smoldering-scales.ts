@@ -15,6 +15,8 @@ export const smolderingScales = defineCard(
           replacementKind: "standard",
           replaces: {
             name: "create",
+            creator: "any",
+            occurrences: "every",
             filter: {
               name: "Frostbite",
             },

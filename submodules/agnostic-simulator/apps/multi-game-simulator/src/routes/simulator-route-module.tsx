@@ -114,7 +114,7 @@ function SessionRouteModule({ routeKind }: SimulatorRouteModuleProps) {
                   style={{ position: "fixed", bottom: 16, right: 16, maxWidth: 360, zIndex: 1000 }}
                 >
                   {sessionError}
-                  <Button size="xs" onClick={() => void refresh()}>
+                  <Button size="xs" onClick={() => void refresh("retry")}>
                     Retry
                   </Button>
                 </Alert>

@@ -116,16 +116,8 @@ describe("command move log coverage", () => {
       { deck: 10, fixerDice: ["d4"] },
       { skipSetup: false, autoGainGig: false },
     );
-    engine.keepHand({ as: P1 });
-    engine.keepHand({ as: P2 });
-    const active = engine.getActivePlayerId();
-    const choice = engine.getState().G.turnMetadata.pendingChoice;
-    expect(choice?.type).toBe("gainGig");
-
-    const dieId = choice?.type === "gainGig" ? choice.payload.allowedDieIds[0] : undefined;
-    expect(dieId).toBeDefined();
-
-    const result = engine.gainGig(dieId as string, { as: active });
+    engine.keepHand({ as: engine.getActivePlayerId() });
+    const result = engine.keepHand({ as: engine.getOpponentOf(engine.getActivePlayerId()) });
     expect(result.moveLogs.some((log) => log.type === "gainGig")).toBe(true);
   });
 
@@ -135,12 +127,9 @@ describe("command move log coverage", () => {
       { deck: 10, fixerDice: ["d4"] },
       { skipSetup: false, autoGainGig: false },
     );
-    engine.keepHand({ as: P1 });
-    engine.keepHand({ as: P2 });
+    engine.keepHand({ as: engine.getActivePlayerId() });
+    engine.keepHand({ as: engine.getOpponentOf(engine.getActivePlayerId()) });
     const active = engine.getActivePlayerId();
-    const choice = engine.getState().G.turnMetadata.pendingChoice;
-    const dieId = choice?.type === "gainGig" ? choice.payload.allowedDieIds[0] : undefined;
-    engine.gainGig(dieId as string, { as: active });
 
     const result = engine.passPhase({ as: active });
     expect(result.moveLogs.some((log) => log.type === "passPhase")).toBe(true);
@@ -149,15 +138,12 @@ describe("command move log coverage", () => {
   test("sellCard emits a typed card log", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       { hand: [welcomeToNightCityRetailSatoriSwordOfSaburo], deck: 10, fixerDice: ["d4"] },
-      { deck: 10, fixerDice: ["d4"] },
+      { hand: [welcomeToNightCityRetailSatoriSwordOfSaburo], deck: 10, fixerDice: ["d4"] },
       { skipSetup: false, autoGainGig: false },
     );
-    engine.keepHand({ as: P1 });
-    engine.keepHand({ as: P2 });
+    engine.keepHand({ as: engine.getActivePlayerId() });
+    engine.keepHand({ as: engine.getOpponentOf(engine.getActivePlayerId()) });
     const active = engine.getActivePlayerId();
-    const choice = engine.getState().G.turnMetadata.pendingChoice;
-    const dieId = choice?.type === "gainGig" ? choice.payload.allowedDieIds[0] : undefined;
-    engine.gainGig(dieId as string, { as: active });
 
     const result = engine.sellCard(welcomeToNightCityRetailSatoriSwordOfSaburo, { as: active });
     const log = result.moveLogs.find((entry) => entry.type === "sellCard");

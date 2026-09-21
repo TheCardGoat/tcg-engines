@@ -1,9 +1,14 @@
 import type { CardInstanceId } from "../types/branded.ts";
 import type { MoveDefinition, MoveInput } from "../types/commands.ts";
 import type { ChooseCardToMovePendingChoice } from "../types/match-state.ts";
-import { executeAbilityEffects, resumeCurrentTrigger } from "../ability-executor.ts";
+import {
+  enqueueEventTriggers,
+  executeAbilityEffects,
+  resumeCurrentTrigger,
+} from "../ability-executor.ts";
 import { bottomDeckCardsSimultaneously } from "../effects/bottom-deck.ts";
 import type { ResolutionContext } from "../effects/target-resolver.ts";
+import { removeFromGameIfGoSolo } from "./remove-from-game.ts";
 import { tryDefOf } from "../state/lookups.ts";
 
 export interface ResolveCardToMoveInput extends MoveInput {
@@ -103,6 +108,45 @@ export const resolveCardToMoveMove: MoveDefinition<ResolveCardToMoveInput> = {
       operations.card.attachGear(cardId as CardInstanceId, resolvedAttachToId as CardInstanceId);
     } else if (destination === "deckBottom") {
       bottomDeckCardsSimultaneously([cardId as CardInstanceId], state, operations);
+    } else if (choice.payload.defeat) {
+      // Defeat-branded trash move ("You may defeat X" offered through ifYouDo).
+      // CR 11.19.2 — the moved card and its attached Gear count as defeated:
+      // emit cardDefeated and enqueue {Defeated} triggers like handleDefeat.
+      const attachedGearIds = [...(card.meta.attachedGearIds ?? [])];
+      const hadAttachedCards = attachedGearIds.length > 0;
+      const defeatedHostId = card.meta.attachedToId as CardInstanceId | undefined;
+      if (card.meta.attachedToId) {
+        operations.card.detachGear(cardId as CardInstanceId);
+      }
+      operations.card.moveAttachedGear(cardId as CardInstanceId, "trash");
+      operations.zone.moveCard(cardId as CardInstanceId, "trash", card.ownerId);
+      const defeatedEvent = {
+        type: "cardDefeated" as const,
+        cardId: cardId as CardInstanceId,
+        defeatedBy: sourceCardId,
+        playerId: card.ownerId,
+        hadAttachedCards,
+        // The card was detached above; carry the host so `selector: "host"`
+        // still resolves for the defeated Gear's own {Defeated} effects.
+        ...(defeatedHostId ? { hostId: defeatedHostId } : {}),
+      };
+      operations.event.emit(defeatedEvent);
+      enqueueEventTriggers(defeatedEvent, state, operations);
+      for (const gearId of attachedGearIds) {
+        const gear = state.G.cardIndex[gearId as string];
+        if (!gear) continue;
+        const gearEvent = {
+          type: "cardDefeated" as const,
+          cardId: gearId as CardInstanceId,
+          defeatedBy: sourceCardId,
+          playerId: gear.controllerId,
+          hadAttachedCards: false,
+          hostId: cardId as CardInstanceId,
+        };
+        operations.event.emit(gearEvent);
+        enqueueEventTriggers(gearEvent, state, operations);
+      }
+      removeFromGameIfGoSolo(state, operations, cardId as CardInstanceId);
     } else {
       // Generic move to a destination zone (e.g. discard to trash).
       const destZone = (destination ?? "trash") as import("@tcg/cyberpunk-types").CardZone;

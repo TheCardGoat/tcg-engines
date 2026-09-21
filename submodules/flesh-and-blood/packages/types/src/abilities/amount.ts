@@ -212,9 +212,8 @@ export type FabAmount =
     }
   | { type: "y" }
   | { type: "z" }
-  | {
+  | ({
       type: "count";
-      what: FabCountable;
       zone?: FabZone;
       player?: FabPlayer;
       filter?: FabCardFilter;
@@ -241,7 +240,11 @@ export type FabAmount =
       /** Base numeric property read by `greatest-base-stat-among` (maximum)
        * or `discarded-this-way` (sum). Required for those countables. */
       property?: FabNumericProperty;
-    }
+    } & (
+      | { what: "damage-dealt"; recipient?: never }
+      | { what: "damage-dealt"; recipient: "opposing-heroes"; filter?: never }
+      | { what: Exclude<FabCountable, "damage-dealt">; recipient?: never }
+    ))
   | {
       type: "reference";
       binding: string;

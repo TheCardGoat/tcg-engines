@@ -3,6 +3,7 @@ import {
   expectCombat,
   expectFabCard,
   expectFabPlayer,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
@@ -44,8 +45,6 @@ describe("Fire and Brimstone (FNG013) AAA", () => {
     game.advanceCombatTo("reaction");
     Fang.must.playReaction(fireAndBrimstoneRed);
     game.passBoth();
-    Fang.decline();
-    game.passBoth();
 
     // Printed cost 2, minus 1 Draconic chain link = 1{r}.
     expectFabPlayer(Fang).toHaveResourceCount(1);
@@ -71,10 +70,10 @@ describe("Fire and Brimstone (FNG013) AAA", () => {
     game.advanceCombatTo("reaction");
     Fang.must.playReaction(fireAndBrimstoneRed);
     game.passBoth();
-    Fang.decline();
-    game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(2);
+    // 1 + 1 — this link's Draconic reaction also turns on Obsidian Fire
+    // Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(3);
   });
 
   it("boundary: a non-dagger attack stays at printed 4{p}", () => {
@@ -95,14 +94,12 @@ describe("Fire and Brimstone (FNG013) AAA", () => {
     game.advanceCombatTo("reaction");
     Fang.must.playReaction(fireAndBrimstoneRed);
     game.passBoth();
-    Fang.decline();
-    game.passBoth();
 
     expectCombat(game).toHaveAttackPower(4);
     expectFabCard(Fang, fireAndBrimstoneRed).toBeIn("graveyard");
   });
 
-  it("timing: accepting the additional-activation optional lets the dagger attack again", () => {
+  it("timing: the additional activation is granted without an optional prompt", () => {
     const game = FabTestEngine.start(
       {
         hero: fang,
@@ -122,7 +119,9 @@ describe("Fire and Brimstone (FNG013) AAA", () => {
     const reactionId = Fang.findCardInZone("hand", fireAndBrimstoneRed);
     game.playInstance(Fang.id, reactionId, undefined, "explicit");
     game.passBoth();
-    Fang.accept();
+    // CR 5.2.3c: the grant applies by itself — no "use the optional effect?"
+    // decision may appear while the reaction resolves.
+    expectWait(game).notToHaveDecision();
     game.helpers.resolveUntilIdle();
 
     Fang.must.activate(obsidianFireVein);

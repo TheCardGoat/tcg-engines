@@ -62,6 +62,9 @@ export const rapidCombustion: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                       oneOf: ["ITEM", "WEAPON"],
                     },
                     {
+                      kind: "entered-field-this-turn",
+                    },
+                    {
                       kind: "any",
                       filters: [
                         {

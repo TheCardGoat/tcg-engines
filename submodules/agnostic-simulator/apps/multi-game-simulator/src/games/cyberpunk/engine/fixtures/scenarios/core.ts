@@ -41,7 +41,7 @@ function mobileLedgerPlayer(legendCount: 0 | 1 | 2 | 3, opponent = false): Playe
       : [
           { card: c.welcomeToNightCityRetailSketchyRipper, spent: false, hasLag: false },
           {
-            card: c.welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+            card: c.welcomeToNightCityRetailElSombreronLaVenganzaLenta,
             spent: false,
             hasLag: false,
           },
@@ -100,6 +100,45 @@ function mobileLedgerMixedScenario(
 
 export const coreScenarios: Scenario[] = [
   // ── Core scenarios ──────────────────────────────────────────────────────
+  {
+    id: "boardTappedResourcesQa",
+    group: "core",
+    label: "Setup · tapped (spent) legends and eddies",
+    description:
+      "P1 has one spent face-up Legend, one ready face-up Legend, one face-down Legend, plus ready and spent Eddies. Visual QA for the tapped (rotated) rendering of spent resources.",
+    build: () => {
+      // Fixture application resets legendArea cards to ready, so the spent
+      // Legend is applied afterwards via the judge move.
+      const engine = CyberpunkTestEngine.createWithFixture(
+        {
+          hand: [c.welcomeToNightCityRetailAfterpartyAtLizzieS],
+          field: [
+            { card: c.welcomeToNightCityRetailSwordwiseHuscle, spent: false },
+            { card: c.welcomeToNightCityRetailCorpoSecurity, spent: true },
+          ],
+          legendArea: [
+            { card: c.theHeistRetailStarterDeckVCorporateExile, faceDown: false },
+            { card: c.welcomeToNightCityRetailVStreetkid, faceDown: false, spent: false },
+            { card: c.promoLucynaKushinada, faceDown: true },
+          ],
+          eddies: 4,
+          spentEddies: 3,
+          gigArea: [{ dieType: "d4", faceValue: 2 }],
+        },
+        {
+          field: [{ card: c.welcomeToNightCityRetailCorpoSecurity, spent: true }],
+          legendArea: [c.theHeistRetailStarterDeckJackieWellesPourOneOutForMe],
+          eddies: 2,
+          spentEddies: 2,
+          gigArea: [{ dieType: "d6", faceValue: 3 }],
+        },
+        { seed: scenarioSeed("boardTappedResourcesQa"), autoGainGig: false },
+      );
+      engine.judgeSpendCard(c.theHeistRetailStarterDeckVCorporateExile, { as: P1 });
+      engine.sellCard(c.welcomeToNightCityRetailAfterpartyAtLizzieS, { as: P1 });
+      return engine;
+    },
+  },
   {
     id: "gameStart",
     group: "core",

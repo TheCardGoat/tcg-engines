@@ -68,81 +68,92 @@ export const dongZhouFalseLiege: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "sequence",
               effects: [
                 {
-                  kind: "rest",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "rest",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "select-modes",
-                  choose: {
-                    kind: "exactly",
-                    amount: 2,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  modes: [
-                    {
-                      id: "mode-1",
-                      text: "Deal 3 damage to all other allies.",
-                      effect: {
-                        kind: "deal-damage",
-                        source: {
-                          kind: "source",
+                  then: {
+                    kind: "select-modes",
+                    choose: {
+                      kind: "exactly",
+                      amount: 2,
+                    },
+                    modes: [
+                      {
+                        id: "mode-1",
+                        text: "Deal 3 damage to all other allies.",
+                        effect: {
+                          kind: "deal-damage",
+                          source: {
+                            kind: "source",
+                          },
+                          recipient: {
+                            kind: "each",
+                            collection: {
+                              zones: ["field"],
+                              filter: {
+                                kind: "all",
+                                filters: [
+                                  {
+                                    kind: "type",
+                                    oneOf: ["ALLY"],
+                                  },
+                                  {
+                                    kind: "not-source",
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          amount: 3,
                         },
-                        recipient: {
-                          kind: "each",
-                          collection: {
-                            zones: ["field"],
-                            filter: {
-                              kind: "all",
-                              filters: [
-                                {
-                                  kind: "type",
-                                  oneOf: ["ALLY"],
-                                },
-                                {
-                                  kind: "not-source",
-                                },
-                              ],
+                      },
+                      {
+                        id: "mode-2",
+                        text: "Empower 3.",
+                        effect: {
+                          kind: "keyword-action",
+                          action: "empower",
+                          amount: 3,
+                        },
+                      },
+                      {
+                        id: "mode-3",
+                        text: "Dong Zhou gains vigor until end of turn",
+                        effect: {
+                          kind: "continuous",
+                          subjects: {
+                            kind: "source",
+                          },
+                          affectedSet: "locked",
+                          duration: {
+                            kind: "this-turn",
+                          },
+                          layer: {
+                            layer: "D",
+                            modifies: "ability",
+                          },
+                          change: {
+                            kind: "grant-keyword",
+                            keyword: {
+                              name: "vigor",
                             },
                           },
                         },
-                        amount: 3,
                       },
-                    },
-                    {
-                      id: "mode-2",
-                      text: "Empower 3.",
-                      effect: {
-                        kind: "keyword-action",
-                        action: "empower",
-                        amount: 3,
-                      },
-                    },
-                    {
-                      id: "mode-3",
-                      text: "Dong Zhou gains vigor until end of turn",
-                      effect: {
-                        kind: "continuous",
-                        subjects: {
-                          kind: "source",
-                        },
-                        affectedSet: "locked",
-                        duration: {
-                          kind: "this-turn",
-                        },
-                        layer: {
-                          layer: "D",
-                          modifies: "ability",
-                        },
-                        change: {
-                          kind: "grant-keyword",
-                          keyword: {
-                            name: "vigor",
-                          },
-                        },
-                      },
-                    },
-                  ],
+                    ],
+                  },
                 },
               ],
             },

@@ -184,6 +184,9 @@ export function completeGrandArchiveEmptyStackPassCycle(
         context,
         context.commit([
           ...events,
+          // CR End Phase 3: clearing ally damage and expiring turn effects are
+          // simultaneous. Stabilize only after both have been committed.
+          ...grandArchiveAllyDamageCleanupEvents(context, state),
           {
             type: "turn-cleanup-pending-changed" as const,
             value: true,
@@ -540,10 +543,12 @@ function grandArchiveForcedCombatCleanupEvents(
 }
 
 function grandArchiveForcedEndCleanupEvents(
+  context: GrandArchiveCommandHandlerContext,
   state: GrandArchiveMatchState,
 ): readonly GrandArchiveProposedEvent[] {
   return [
     ...grandArchiveForcedCombatCleanupEvents(state, { suppressOpportunity: true }),
+    ...grandArchiveAllyDamageCleanupEvents(context, state),
     {
       type: "turn-cleanup-pending-changed",
       value: true,
@@ -597,7 +602,7 @@ export function grandArchiveForcedPhaseEndEvents(
       if (!state.combat) throw new Error("A combat phase cannot end without combat state");
       return grandArchiveForcedCombatCleanupEvents(state);
     case "end":
-      return grandArchiveForcedEndCleanupEvents(state);
+      return grandArchiveForcedEndCleanupEvents(context, state);
     default: {
       const exhaustivePhase: never = phase;
       return exhaustivePhase;
@@ -607,9 +612,10 @@ export function grandArchiveForcedPhaseEndEvents(
 
 /** Jump directly to the End phase cleanup procedure without beginning-of-End events. */
 export function grandArchiveForcedTurnEndEvents(
+  context: GrandArchiveCommandHandlerContext,
   state: GrandArchiveMatchState,
 ): readonly GrandArchiveProposedEvent[] {
-  return grandArchiveForcedEndCleanupEvents(state);
+  return grandArchiveForcedEndCleanupEvents(context, state);
 }
 
 export function grandArchiveRecollectionAmount(
@@ -709,12 +715,37 @@ function wakeIsForbidden(
   });
 }
 
+function grandArchiveAllyDamageCleanupEvents(
+  context: GrandArchiveCommandHandlerContext,
+  state: GrandArchiveMatchState,
+): readonly GrandArchiveProposedEvent[] {
+  const events: GrandArchiveProposedEvent[] = [];
+  for (const object of Object.values(state.objects)) {
+    if (
+      object.zone === "field" &&
+      object.damage > 0 &&
+      grandArchiveObjectCurrentCharacteristics(context.getProgram(), state, object).types.includes(
+        "ALLY",
+      )
+    ) {
+      events.push({
+        type: "damage-cleared",
+        objectId: object.id,
+        cause: { kind: "rule", rule: "end-cleanup" },
+      });
+    }
+  }
+  return events;
+}
+
 function grandArchiveEndCleanupEvents(
   context: GrandArchiveCommandHandlerContext,
 ): readonly GrandArchiveProposedEvent[] {
   const state = context.getState();
   const playerId = state.turn.playerId;
-  const events: GrandArchiveProposedEvent[] = [];
+  const events: GrandArchiveProposedEvent[] = [
+    ...grandArchiveAllyDamageCleanupEvents(context, state),
+  ];
   for (const candidateId of state.turnOrder) {
     if (state.players[candidateId]?.states.agility === true) {
       events.push({
@@ -737,19 +768,6 @@ function grandArchiveEndCleanupEvents(
     });
   }
   for (const object of Object.values(state.objects)) {
-    if (
-      object.zone === "field" &&
-      object.damage > 0 &&
-      grandArchiveObjectCurrentCharacteristics(context.getProgram(), state, object).types.includes(
-        "ALLY",
-      )
-    ) {
-      events.push({
-        type: "damage-cleared",
-        objectId: object.id,
-        cause: { kind: "rule", rule: "end-cleanup" },
-      });
-    }
     if (
       object.zone === "field" &&
       object.controllerId === playerId &&

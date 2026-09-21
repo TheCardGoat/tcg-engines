@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01MountainGod018 } from "@tcg/op-cards";
-import { op12Mizerka092 } from "../../../../../cards/src/cards/OP12/characters/092-mizerka.ts";
-import { op12Poker091 } from "../../../../../cards/src/cards/OP12/characters/091-poker.ts";
+import { op12Mizerka092 } from "../../../../../cards/src/cards/characters/op12-092-mizerka.ts";
+import { op12Poker091 } from "../../../../../cards/src/cards/characters/op12-091-poker.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -19,6 +19,16 @@ export type FabTurnSemanticObservation =
       readonly sourceInstanceId: string | null;
     };
 
+/**
+ * One private-zone object revealed this turn (CR 8.5.17). `ownerId` is the
+ * owner of the revealed object, which may differ from the revealing player.
+ */
+export interface FabRevealedPrivateInstance {
+  readonly instanceId: string;
+  readonly ownerId: string;
+  readonly zoneKind: "deck" | "hand";
+}
+
 export interface FabTurnHistory {
   turnNumber: number;
   crowdCheered: boolean;
@@ -66,6 +76,7 @@ export interface FabTurnHistory {
   highestDieRoll: number;
   dealtDamage: boolean;
   damageDealtByType: Record<"arcane" | "physical" | "generic", number>;
+  damageDealtToOpposingHeroesByType: Record<"arcane" | "physical" | "generic", number>;
   damageDealtBySource: Record<string, number>;
   damageDealtBySourceToHero: Record<string, number>;
   beenDealtDamage: boolean;
@@ -99,6 +110,8 @@ export interface FabTurnHistory {
   activatedCannonThisTurn: boolean;
   /** The player activated a Weapon this turn (Templar Spellbane). */
   activatedWeaponThisTurn: boolean;
+  /** CR 8.5.58a: this player sharpened a sword, even if that sword later leaves. */
+  sharpenedSwordThisTurn: boolean;
   /** An Illusionist AAC this player controlled was destroyed by phantasm this turn (Frightmare). */
   phantasmDestroyedIllusionistAttackActionThisTurn: boolean;
   /** Played a card or activated an ability this turn (Amulet of Ignition gate). */
@@ -160,6 +173,13 @@ export interface FabTurnHistory {
   discardedPower6AsAdditionalCost: boolean;
   /** Highest printed power revealed this turn (Even Bigger Than That). */
   highestPowerRevealedThisTurn: number;
+  /**
+   * Private-zone objects this player revealed this turn (CR 8.5.17). Rules
+   * evaluation never reads these facts; the viewer projection derives the
+   * turn-scoped revealed-card presentation recall from them. Omitted when
+   * empty so snapshots stay compact.
+   */
+  revealedPrivateInstancesThisTurn?: readonly FabRevealedPrivateInstance[];
   /** Lightning / Earth / Ice fusion paid this turn (element-fused-this-turn). */
   fusedSupertypesThisTurn: readonly string[];
   /** Created a card (including a token) this turn. */
@@ -202,6 +222,7 @@ export function emptyFabTurnHistory(turnNumber: number): FabTurnHistory {
     highestDieRoll: 0,
     dealtDamage: false,
     damageDealtByType: { arcane: 0, physical: 0, generic: 0 },
+    damageDealtToOpposingHeroesByType: { arcane: 0, physical: 0, generic: 0 },
     damageDealtBySource: {},
     damageDealtBySourceToHero: {},
     beenDealtDamage: false,
@@ -229,6 +250,7 @@ export function emptyFabTurnHistory(turnNumber: number): FabTurnHistory {
     clashesWonThisTurn: 0,
     activatedCannonThisTurn: false,
     activatedWeaponThisTurn: false,
+    sharpenedSwordThisTurn: false,
     phantasmDestroyedIllusionistAttackActionThisTurn: false,
     playedOrActivatedThisTurn: false,
     playedDraconicCardThisTurn: false,

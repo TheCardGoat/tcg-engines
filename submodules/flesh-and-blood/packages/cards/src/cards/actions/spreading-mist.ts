@@ -33,6 +33,8 @@ export const spreadingMist = definePitchFamily(fabPitchFamilies["spreading-mist"
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "controller",
+          occurrences: "first",
           filter: {
             hasKeyword: "ephemeral",
           },

@@ -24,6 +24,7 @@ describe("SimulatorSettingsProvider", () => {
       soundVolume: 50,
       cardInteractionMode: "detailed",
       animationSpeed: "normal",
+      paymentSelectionMode: "automatic",
     });
     fireEvent.click(screen.getByRole("button", { name: "set volume" }));
     fireEvent(window, new Event("pagehide"));
@@ -37,6 +38,7 @@ describe("SimulatorSettingsProvider", () => {
             soundVolume: 80,
             cardInteractionMode: "detailed",
             animationSpeed: "normal",
+            paymentSelectionMode: "automatic",
           },
         }),
       }),
@@ -88,6 +90,7 @@ describe("SimulatorSettingsProvider", () => {
             soundVolume: 80,
             cardInteractionMode: "quick",
             animationSpeed: "normal",
+            paymentSelectionMode: "automatic",
           },
         }),
       }),
@@ -102,6 +105,7 @@ describe("SimulatorSettingsProvider", () => {
       soundVolume: 35,
       cardInteractionMode: "quick",
       animationSpeed: "slow",
+      paymentSelectionMode: "automatic",
     });
 
     expect(screen.getByTestId("volume").textContent).toBe("35");
@@ -131,6 +135,7 @@ describe("SimulatorSettingsProvider", () => {
         soundVolume: 35,
         cardInteractionMode: "detailed",
         animationSpeed: "normal",
+        paymentSelectionMode: "automatic",
       },
     );
     fireEvent.click(screen.getByRole("button", { name: "set volume" }));
@@ -145,6 +150,7 @@ describe("SimulatorSettingsProvider", () => {
             soundVolume: 35,
             cardInteractionMode: "detailed",
             animationSpeed: "normal",
+            paymentSelectionMode: "automatic",
           }}
         >
           <SettingsProbe />

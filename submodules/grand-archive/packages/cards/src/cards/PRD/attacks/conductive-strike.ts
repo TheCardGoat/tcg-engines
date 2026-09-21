@@ -107,28 +107,39 @@ export const conductiveStrike: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "pay",
-                  player: "controller",
-                  cost: {
-                    kind: "pay-reserve",
-                    amount: 2,
-                  },
-                },
-                {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "each",
-                    collection: {
-                      zones: ["field"],
-                      player: "controller",
-                      filter: {
-                        kind: "element",
-                        oneOf: ["ARCANE"],
-                      },
+                  kind: "attempt",
+                  effect: {
+                    kind: "pay",
+                    player: "controller",
+                    cost: {
+                      kind: "pay-reserve",
+                      amount: 2,
                     },
                   },
-                  counter: "static",
-                  amount: 1,
+                  bindSucceededAs: "optional-action-succeeded",
+                },
+                {
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "each",
+                      collection: {
+                        zones: ["field"],
+                        player: "controller",
+                        filter: {
+                          kind: "element",
+                          oneOf: ["ARCANE"],
+                        },
+                      },
+                    },
+                    counter: "static",
+                    amount: 1,
+                  },
                 },
               ],
             },

@@ -54,15 +54,33 @@ export function CardNameToken({
     });
   };
 
+  const tokenClassName = `${classes.token} ${className ?? ""}`;
+
+  if (!interactive) {
+    return (
+      <span className={tokenClassName} style={style} onMouseEnter={showPreview} onMouseLeave={hide}>
+        {resolvedCard.name}
+      </span>
+    );
+  }
+
   return (
     <span
-      className={`${classes.token} ${className ?? ""}`}
+      role="button"
+      tabIndex={0}
+      className={tokenClassName}
       style={style}
-      tabIndex={interactive ? 0 : undefined}
       onMouseEnter={showPreview}
       onMouseLeave={hide}
-      onFocus={interactive ? showPreview : undefined}
-      onBlur={interactive ? hide : undefined}
+      onFocus={showPreview}
+      onBlur={hide}
+      onClick={showPreview}
+      onKeyDown={(event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        showPreview();
+      }}
+      aria-label={`View ${resolvedCard.name}`}
     >
       {resolvedCard.name}
     </span>

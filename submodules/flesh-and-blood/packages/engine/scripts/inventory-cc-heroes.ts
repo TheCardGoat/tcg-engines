@@ -41,7 +41,9 @@ export function listAdultCcLegalHeroes(): readonly AdultCcHero[] {
       types: validation.types,
     });
   }
-  return heroes.sort((a, b) => a.name.localeCompare(b.name) || a.canonicalId.localeCompare(b.canonicalId));
+  return heroes.sort(
+    (a, b) => a.name.localeCompare(b.name) || a.canonicalId.localeCompare(b.canonicalId),
+  );
 }
 
 function main(): void {

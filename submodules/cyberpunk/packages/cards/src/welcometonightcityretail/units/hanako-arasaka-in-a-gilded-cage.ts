@@ -46,6 +46,8 @@ export const welcomeToNightCityRetailHanakoArasakaInAGildedCage = defineCyberpun
             {
               zone: "hand",
               reveal: true,
+              min: 0,
+              max: 4,
               target: {
                 selector: "card",
                 controller: "friendly",
@@ -60,7 +62,7 @@ export const welcomeToNightCityRetailHanakoArasakaInAGildedCage = defineCyberpun
             {
               zone: "deckBottom",
               remainder: true,
-              order: "original",
+              order: "random",
             },
           ],
         },

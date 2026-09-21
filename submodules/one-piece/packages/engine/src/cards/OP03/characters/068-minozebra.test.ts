@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op03Minozebra068 } from "../../../../../cards/src/cards/OP03/characters/068-minozebra.ts";
+import { op03Minozebra068 } from "../../../../../cards/src/cards/characters/op03-068-minozebra.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP03-068 Minozebra", () => {

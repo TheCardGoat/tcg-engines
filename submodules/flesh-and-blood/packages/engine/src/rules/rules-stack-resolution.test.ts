@@ -238,10 +238,11 @@ describe("event-native FAB rules stack resolution", () => {
       kind: "effect",
       effect: { type: "create-token", token: "runechant", controller: "controller" },
     });
+    const allocation = runtime.getState().counters.objectIncarnation + 1;
     dispatchTestCommand(runtime, "pass", "p1", {});
     expect(dispatchTestCommand(runtime, "pass", "p2", {}).accepted).toBe(true);
 
-    const tokenId = "process-3:layer-1:effect-0:token-0";
+    const tokenId = `process-3:layer-1:effect-0:token-${allocation}`;
     expect(runtime.getState().containers.zonesByPlayerId["p1"]!.arena).toEqual([tokenId]);
     expect(runtime.getState().objects[tokenId]?.canonicalId).toBe("token:runechant");
     expect(rulesEffectEvents(runtime.committedEvents()).map((event) => event.name)).toEqual([

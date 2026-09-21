@@ -6,6 +6,7 @@ import { createGameStore } from "../../game/store.ts";
 import { GundamGameContext } from "../../game/context-internals.ts";
 import {
   createRemoteEngineAdapter,
+  type RemoteStallRecoveryFn,
   type RemoteSubmitFn,
   type RemoteUndoFn,
 } from "./remoteAdapter.ts";
@@ -19,6 +20,7 @@ interface LiveGundamGameProviderProps {
   readonly viewerId: ViewerId;
   readonly remoteSubmit: RemoteSubmitFn;
   readonly remoteUndo: RemoteUndoFn;
+  readonly remoteStallRecovery: RemoteStallRecoveryFn;
   readonly getCanUndo: () => boolean;
   readonly getInteractionView: () => EngineInteractionView | undefined;
   readonly getAnimationPackets: () => readonly LiveAnimationPacket[];
@@ -43,6 +45,7 @@ export function LiveGundamGameProvider({
   viewerId,
   remoteSubmit,
   remoteUndo,
+  remoteStallRecovery,
   getCanUndo,
   getInteractionView,
   getAnimationPackets,
@@ -59,6 +62,7 @@ export function LiveGundamGameProvider({
       getEngineLogRecords,
       remoteUndo,
       getCanUndo,
+      remoteStallRecovery,
     );
     const store = createGameStore(adapter);
     return { adapter, store, viewerId };
@@ -68,6 +72,7 @@ export function LiveGundamGameProvider({
     viewerId,
     remoteSubmit,
     remoteUndo,
+    remoteStallRecovery,
     getCanUndo,
     getInteractionView,
     getAnimationPackets,

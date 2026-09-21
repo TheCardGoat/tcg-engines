@@ -106,7 +106,7 @@ export function GrandArchiveEffectsStack({
           </ActionIcon>
         </span>
       </header>
-      <ol className="ga-effects-stack__items" aria-label="Effects in resolution order">
+      <ol className="ga-effects-stack__items" aria-label="Cards and abilities in resolution order">
         {items.toReversed().map((entity, index) => (
           <li
             className="ga-effects-stack__item"
@@ -133,7 +133,7 @@ export function GrandArchiveEffectsStack({
               targetable={candidateIds.includes(entity.id)}
               dimmed={candidateIds.length > 0 && !candidateIds.includes(entity.id)}
               tabIndex={0}
-              accessibleLabel={`${entity.title}, layer ${items.length - index}, ${index === 0 ? "resolves next" : `resolves ${index + 1}`}, controlled by ${entity.ownerId === viewerId ? "You" : "Opponent"}${selectedOrder.has(entity.id) ? `, selection ${selectedOrder.get(entity.id)}` : ""}`}
+              accessibleLabel={`${entity.title}, layer ${items.length - index}, ${index === 0 ? "resolves next" : `resolves ${index + 1}`}, controlled by ${entity.ownerId === viewerId ? "You" : "Opponent"}, ${entity.subtitle ?? "pending resolution"}${selectedOrder.has(entity.id) ? `, selection ${selectedOrder.get(entity.id)}` : ""}`}
               onClick={() => {
                 if (candidateIds.includes(entity.id)) onSelect(entity.id);
                 else {
@@ -145,6 +145,12 @@ export function GrandArchiveEffectsStack({
               onHoverLeave={() => preview(undefined)}
             />
             <span className="ga-effects-stack__owner" aria-hidden="true">
+              {entity.subtitle ? (
+                <span>
+                  {entity.subtitle}
+                  <br />
+                </span>
+              ) : null}
               {entity.ownerId === viewerId ? "You" : "Opponent"}
               {index === 0 ? " · Next" : ""}
             </span>

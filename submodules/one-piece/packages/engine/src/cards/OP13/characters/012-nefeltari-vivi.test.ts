@@ -6,7 +6,7 @@ import {
   op13CurlyDadan009,
   op13NefeltariCobra011,
 } from "@tcg/op-cards";
-import { op13NefeltariVivi012 } from "../../../../../cards/src/cards/OP13/characters/012-nefeltari-vivi.ts";
+import { op13NefeltariVivi012 } from "../../../../../cards/src/cards/characters/op13-012-nefeltari-vivi.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

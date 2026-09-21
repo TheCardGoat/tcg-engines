@@ -32,6 +32,8 @@ export interface GrandArchiveObservedEvent {
   readonly abilityKind?: "activated" | "triggered";
   readonly abilityId?: string;
   readonly activationStates?: readonly import("@tcg/grand-archive-types").GrandArchiveActivationState[];
+  /** Cost kind this event paid, when the rules-defined payment action records one. */
+  readonly paymentCostKind?: "memory" | "reserve";
   /** True when the observed stack instance was created by a copy effect. */
   readonly isCopy?: boolean;
   readonly keywordAction?: "brew" | "empower" | "gather" | "glimpse" | "scavenge" | "suppress";
@@ -47,6 +49,12 @@ export interface GrandArchiveObservedEvent {
 export function observeGrandArchiveCommittedEvent(
   event: GrandArchiveCommittedEvent,
 ): readonly GrandArchiveObservedEvent[] {
+  if (
+    event.type === "keyword-action-performed" &&
+    ((event.action === "glimpse" && event.glimpseStage === "start") ||
+      (event.action === "suppress" && event.suppressStage === "start"))
+  )
+    return [];
   return observeGrandArchiveEvent(event);
 }
 
@@ -54,6 +62,23 @@ export function observeGrandArchiveProposedEvent(
   event: GrandArchiveProposedEvent,
 ): readonly GrandArchiveObservedEvent[] {
   return observeGrandArchiveEvent(event);
+}
+
+function paymentCostKindForEvent(
+  event: GrandArchiveCommittedEvent | GrandArchiveProposedEvent,
+): "memory" | "reserve" | undefined {
+  if (event.type !== "object-moved" || event.cause?.kind !== "rule") return undefined;
+  switch (event.cause.rule) {
+    case "pay-reserve-cost":
+    case "pay-reserve-cost-with-kindle":
+      return "reserve";
+    case "pay-floating-memory":
+    case "pay-card-memory-cost":
+    case "pay-ability-memory-cost":
+      return "memory";
+    default:
+      return undefined;
+  }
 }
 
 function observeGrandArchiveEvent(
@@ -87,6 +112,7 @@ function observeGrandArchiveEvent(
     case "attack-declaration-attempted":
       return [];
     case "object-moved": {
+      const paymentCostKind = paymentCostKindForEvent(event);
       const observed: GrandArchiveObservedEvent[] = [
         { ...base, name: "card-moved", subjectId: event.objectId, from: event.from, to: event.to },
       ];
@@ -200,6 +226,7 @@ function observeGrandArchiveEvent(
           subjectId: event.objectId,
           from: event.from,
           to: event.to,
+          ...(paymentCostKind ? { paymentCostKind } : {}),
         });
       return observed;
     }
@@ -388,6 +415,9 @@ function observeGrandArchiveEvent(
             activationStates: item.activationStates,
             isCopy: item.isCopy,
             from: item.originZone,
+            ...(item.paidCostKind === "memory" || item.paidCostKind === "reserve"
+              ? { paymentCostKind: item.paidCostKind }
+              : {}),
             ...(item.sourceId ? { sourceId: item.sourceId } : {}),
           },
           ...targetEvents,

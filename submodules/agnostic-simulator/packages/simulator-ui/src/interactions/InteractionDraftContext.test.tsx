@@ -4,7 +4,7 @@ import {
   type EngineInteractionView,
   type InteractionSubmission,
 } from "@tcg/protocol";
-import { act } from "react";
+import { act, useEffect } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { afterEach, describe, expect, it, vi } from "vite-plus/test";
 
@@ -181,6 +181,35 @@ const automaticDeckLookView: EngineInteractionView = {
   ],
 };
 
+// Mirrors a game layer view flip into a decision: the previous action is gone
+// and a decision action (here with an unanswered attacker choice) appears.
+const decisionFlipView: EngineInteractionView = {
+  ...view,
+  actions: [
+    {
+      id: "grand-archive:decision:declare-attack",
+      requestId: "request-decision",
+      intent: "attack",
+      text: { key: "Declare attack" },
+      enabled: true,
+      inputs: [
+        {
+          kind: "entity-selection",
+          id: "attackerId",
+          text: { key: "Choose the attacker" },
+          required: true,
+          role: "source",
+          entityKinds: ["card"],
+          min: 1,
+          max: 1,
+          ordered: false,
+          candidates: [{ entity: { kind: "card", instanceId: "champion-1" }, enabled: true }],
+        },
+      ],
+    },
+  ],
+};
+
 function Harness() {
   const draft = useInteractionDraft();
   const action = view.actions[0]!;
@@ -236,6 +265,33 @@ function ImmediateActionHarness() {
   );
 }
 
+// Mirrors a game layer (for example Grand Archive's) that auto-begins the
+// pending decision action from a child effect while the provider's stale-draft
+// invalidation still closes over the previous draft.
+function DecisionAutoBeginHarness({
+  autoBegin,
+  view,
+}: {
+  readonly autoBegin: boolean;
+  readonly view: EngineInteractionView;
+}) {
+  const draft = useInteractionDraft();
+  const decisionAction = view.actions.find((action) =>
+    action.id.startsWith("grand-archive:decision:"),
+  );
+  useEffect(() => {
+    if (autoBegin && decisionAction && !draft.active) draft.begin(decisionAction.id);
+  }, [autoBegin, decisionAction, draft.active, draft.begin]);
+  return (
+    <>
+      <button type="button" onClick={() => draft.begin("activateAbility")}>
+        Begin
+      </button>
+      <output data-testid="draft-state">{draft.active ? draft.actionId : "idle"}</output>
+    </>
+  );
+}
+
 describe("InteractionDraftProvider", () => {
   it("submits a fully specified action without opening a draft", () => {
     const onSubmit = vi.fn((_submission: InteractionSubmission) => true);
@@ -260,6 +316,65 @@ describe("InteractionDraftProvider", () => {
       expect.objectContaining({ actionId: "deployUnit", values: { cardId: ["unit-1"] } }),
     );
     expect(container.querySelector('[data-testid="draft-state"]')?.textContent).toBe("idle");
+  });
+
+  it("keeps a freshly auto-begun decision draft when the stale-draft effect races the view flip", () => {
+    const onSubmit = vi.fn((_submission: InteractionSubmission) => true);
+    container = document.createElement("div");
+    document.body.append(container);
+    root = createRoot(container);
+    const element = (current: EngineInteractionView) => (
+      <InteractionDraftProvider view={current} onSubmit={onSubmit}>
+        <DecisionAutoBeginHarness autoBegin view={current} />
+      </InteractionDraftProvider>
+    );
+    act(() => {
+      root?.render(element(view));
+    });
+    const draftState = () => container!.querySelector('[data-testid="draft-state"]')!.textContent;
+    const button = (name: string) =>
+      [...container!.querySelectorAll("button")].find(
+        (candidate) => candidate.textContent === name,
+      )!;
+
+    act(() => button("Begin").click());
+    expect(draftState()).toBe("activateAbility");
+
+    // Flip into the decision: the child auto-begin runs before this provider's
+    // stale-draft invalidation, which still closes over the previous draft.
+    act(() => {
+      root?.render(element(decisionFlipView));
+    });
+    expect(draftState()).toBe("grand-archive:decision:declare-attack");
+  });
+
+  it("still clears a stale draft whose action no longer exists in the view", () => {
+    const onSubmit = vi.fn((_submission: InteractionSubmission) => true);
+    container = document.createElement("div");
+    document.body.append(container);
+    root = createRoot(container);
+    const element = (current: EngineInteractionView) => (
+      <InteractionDraftProvider view={current} onSubmit={onSubmit}>
+        <DecisionAutoBeginHarness autoBegin={false} view={current} />
+      </InteractionDraftProvider>
+    );
+    act(() => {
+      root?.render(element(view));
+    });
+    const button = (name: string) =>
+      [...container!.querySelectorAll("button")].find(
+        (candidate) => candidate.textContent === name,
+      )!;
+
+    act(() => button("Begin").click());
+    expect(container!.querySelector('[data-testid="draft-state"]')!.textContent).toBe(
+      "activateAbility",
+    );
+
+    act(() => {
+      root?.render(element(decisionFlipView));
+    });
+    expect(container!.querySelector('[data-testid="draft-state"]')!.textContent).toBe("idle");
   });
 
   it("auto-seeds only option inputs explicitly marked as implicit", () => {
@@ -415,6 +530,97 @@ describe("InteractionDraftProvider", () => {
 
     expect(onSubmit).toHaveBeenCalledWith(
       expect.objectContaining({ values: { "deckLookAnswers.0": { tutorCardId: [] } } }),
+    );
+  });
+
+  it("submits an empty optional selection after confirmation", () => {
+    const onSubmit = vi.fn((_submission: InteractionSubmission) => true);
+    // The required mode keeps the draft open; a lone min-0 input would be
+    // submitted as an omission by begin() before confirmation ever runs.
+    const optionalSelectionView: EngineInteractionView = {
+      ...view,
+      actions: [
+        {
+          id: "activateAbility",
+          requestId: "request-optional-selection",
+          intent: "activate",
+          text: { key: "Activate effect" },
+          enabled: true,
+          inputs: [
+            {
+              kind: "option-selection",
+              id: "effectIndex",
+              text: { key: "Choose effect" },
+              required: true,
+              min: 1,
+              max: 1,
+              options: [{ id: "0", text: { key: "Effect zero" }, enabled: true }],
+            },
+            {
+              kind: "entity-selection",
+              id: "targets",
+              text: { key: "Choose up to one target" },
+              required: true,
+              role: "target",
+              entityKinds: ["card"],
+              min: 0,
+              max: 1,
+              ordered: false,
+              candidates: ["command-1"].map((instanceId) => ({
+                entity: { kind: "card" as const, instanceId },
+                enabled: true,
+              })),
+            },
+          ],
+        },
+      ],
+    };
+    container = document.createElement("div");
+    document.body.append(container);
+    root = createRoot(container);
+    function OptionalSelectionHarness() {
+      const draft = useInteractionDraft();
+      return (
+        <>
+          <button type="button" onClick={() => draft.begin("activateAbility")}>
+            Begin optional selection
+          </button>
+          <button type="button" onClick={() => draft.change("effectIndex", ["0"])}>
+            Choose effect
+          </button>
+          <button type="button" onClick={draft.confirmCurrent}>
+            Confirm optional selection
+          </button>
+        </>
+      );
+    }
+    act(() => {
+      root?.render(
+        <InteractionDraftProvider view={optionalSelectionView} onSubmit={onSubmit}>
+          <OptionalSelectionHarness />
+        </InteractionDraftProvider>,
+      );
+    });
+
+    act(() => {
+      [...container!.querySelectorAll("button")]
+        .find((candidate) => candidate.textContent === "Begin optional selection")!
+        .click();
+    });
+    act(() => {
+      [...container!.querySelectorAll("button")]
+        .find((candidate) => candidate.textContent === "Choose effect")!
+        .click();
+    });
+    expect(onSubmit).not.toHaveBeenCalled();
+    act(() => {
+      [...container!.querySelectorAll("button")]
+        .find((candidate) => candidate.textContent === "Confirm optional selection")!
+        .click();
+    });
+
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({ values: { effectIndex: ["0"], targets: [] } }),
     );
   });
 

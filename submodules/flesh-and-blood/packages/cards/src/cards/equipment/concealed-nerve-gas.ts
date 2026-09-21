@@ -67,6 +67,7 @@ export const concealedNerveGas = defineCard(
                 type: "create-token",
                 token: "frailty",
                 // 1v1: each opponent → sole opposing seat (not "each" all heroes).
+                creator: "effect-controller",
                 controller: "opponent",
               },
             ],

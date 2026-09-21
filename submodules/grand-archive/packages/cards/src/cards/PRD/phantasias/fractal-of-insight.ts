@@ -46,15 +46,26 @@ export const fractalOfInsight: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "rest",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "rest",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "keyword-action",
-                  action: "glimpse",
-                  amount: 2,
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "keyword-action",
+                    action: "glimpse",
+                    amount: 2,
+                  },
                 },
               ],
             },

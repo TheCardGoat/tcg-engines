@@ -10,7 +10,10 @@ import {
 import { useParams, useSearchParams } from "react-router-dom";
 import type { MatchRuntime, MatchStaticResources } from "@tcg/gundam-engine";
 import type { ServerToClientEvents } from "@tcg/protocol";
-import type { NormalizedPresenceChange } from "@tcg/game-page-contract";
+import {
+  LIVE_MATCH_HEARTBEAT_INTERVAL_MS,
+  type NormalizedPresenceChange,
+} from "@tcg/game-page-contract";
 import {
   buildSimulatorConnectionDiagnostic,
   type SimulatorConnectionDiagnostic,
@@ -18,7 +21,13 @@ import {
   type SimulatorConnectionDiagnosticInput,
   type SimulatorConnectionStatus,
 } from "@tcg/game-page-contract";
-import { ConnectionPanel, SimulatorRouteStatus } from "@tcg/simulator-ui";
+import {
+  ConnectionPanel,
+  DropClaimControl,
+  isDropControlVisible,
+  SimulatorRouteStatus,
+} from "@tcg/simulator-ui";
+import { buttonVariants } from "../src/components/primitives/index.ts";
 import { projectConnectionPanelDiagnostic } from "../../../simulator/connection-panel-projection.ts";
 import {
   buildDiscordRichPresenceMatchUrl,
@@ -41,7 +50,10 @@ import {
   type SimulatorConnectionTelemetrySink,
   type SimulatorLiveConnectionContextValue,
 } from "../../../simulator/providers";
-import { reduceLiveGatewayMessage } from "../src/engine/live/liveMessages.ts";
+import {
+  reduceLiveGatewayMessage,
+  engineLogRecordsFromBootstrapHistory,
+} from "../src/engine/live/liveMessages.ts";
 import {
   emitGatewayChatPreset,
   emitGatewayChatText,
@@ -63,7 +75,13 @@ import {
   createLiveProjectionViewerEngine,
 } from "../src/engine/live/liveState.ts";
 import { LiveGundamGameProvider } from "../src/engine/live/LiveGundamGameProvider.tsx";
-import type { RemoteSubmitFn, RemoteUndoFn } from "../src/engine/live/remoteAdapter.ts";
+import type {
+  RemoteStallRecoveryFn,
+  RemoteSubmitFn,
+  RemoteUndoFn,
+} from "../src/engine/live/remoteAdapter.ts";
+import { LiveDropEligibilityProvider } from "../src/engine/live/liveDropEligibility.tsx";
+import type { DropEligibility } from "@tcg/protocol";
 import type { GundamChatMessage, ChatPresetKey } from "../src/game/chat.ts";
 import type { GundamChatRemoteWiring } from "../src/game/chat-context.tsx";
 import { m } from "../src/lib/i18n/messages.ts";
@@ -77,6 +95,7 @@ import {
   CombatIntentOverlayContainer,
   MatchOverviewModalContainer,
   PlayerSeatContainer,
+  GundamPendingChoicePrompt,
   PromptContainer,
   SetupPromptContainer,
   SubmitErrorProvider,
@@ -181,6 +200,9 @@ export function LiveMatchPage() {
   const [lastHeartbeatSentAt, setLastHeartbeatSentAt] = useState<string | null>(null);
   const [lastHeartbeatAckAt, setLastHeartbeatAckAt] = useState<string | null>(null);
   const [reconnectAttempt, setReconnectAttempt] = useState(0);
+  const [dropEligibility, setDropEligibility] = useState<DropEligibility | null>(
+    simulatorRoute.matchPageData?.dropEligibility ?? null,
+  );
   const [connectionEvents, setConnectionEvents] = useState<ConnectionDiagnosticEvent[]>([]);
   const handleRef = useRef<GatewayHandle | null>(null);
   const liveConnectionRef = useRef<SimulatorLiveConnectionContextValue | null>(null);
@@ -245,7 +267,7 @@ export function LiveMatchPage() {
   const remoteSubmit: RemoteSubmitFn = useCallback(
     (submission, expectedVersion) => {
       const handle = handleRef.current;
-      if (!handle || handle.getState().status !== "connected") {
+      if (!handle || handle.getState().status !== "connected" || handle.wouldHoldEmit()) {
         throw new Error("Gateway is not connected.");
       }
       handle.emit("submit_interaction", {
@@ -254,6 +276,16 @@ export function LiveMatchPage() {
         submission,
         correlationId: correlationId(),
       });
+    },
+    [gameId],
+  );
+  const remoteStallRecovery = useCallback(
+    (kind: "drop_player" | "skip_opponent_turn", _expectedVersion: number) => {
+      const handle = handleRef.current;
+      if (!handle || handle.getState().status !== "connected") {
+        throw new Error("Gateway is not connected.");
+      }
+      handle.emit(kind, { gameId });
     },
     [gameId],
   );
@@ -287,6 +319,18 @@ export function LiveMatchPage() {
 
   const handleLiveGatewayEvent = useCallback(
     (type: keyof ServerToClientEvents, payload: unknown) => {
+      if (type === "drop_eligibility" && payload && typeof payload === "object") {
+        const record = payload as { gameId?: string; dropEligibility?: DropEligibility };
+        if (record.gameId === gameId && record.dropEligibility) {
+          setDropEligibility(record.dropEligibility);
+        }
+      }
+      if (type === "game_joined" && payload && typeof payload === "object") {
+        const record = payload as { gameId?: string; dropEligibility?: DropEligibility };
+        if (record.gameId === gameId && record.dropEligibility) {
+          setDropEligibility(record.dropEligibility);
+        }
+      }
       if (type === "heartbeat_ack" && payload && typeof payload === "object") {
         const latestView = latestViewRef.current;
         const stateVersions = (payload as { stateVersions?: Record<string, number> }).stateVersions;
@@ -366,6 +410,19 @@ export function LiveMatchPage() {
         current === INVALID_LIVE_PROJECTION_MESSAGE ? null : current,
       );
       latestViewRef.current = effect.view;
+      // TEMP-DEBUG(gundam-hotpath): pushed-view mirror; remove after.
+      (window as unknown as Record<string, unknown>).__pushedView = {
+        at: new Date().toISOString(),
+        type: effect.type,
+        stateID: effect.view.state ? effect.view.state.stateID : null,
+        ivStatus: effect.view.interactionView ? effect.view.interactionView.status : null,
+        ivResolution: effect.view.interactionView
+          ? Boolean(effect.view.interactionView.resolution)
+          : null,
+        ivActions: effect.view.interactionView
+          ? (effect.view.interactionView.actions || []).map((a) => a.id)
+          : null,
+      };
       if (effect.type === "state" && effect.resyncInteractionView) {
         // The state advanced without a fresh interaction view — force a
         // full state_sync (version 0 omits stateVersion from the request,
@@ -553,6 +610,10 @@ export function LiveMatchPage() {
     // Seed the overlay from the HTTP bootstrap; later game_joined/state_sync
     // cards maps widen it as cards are revealed.
     const bootstrapPresentation = readGundamPresentation(bootstrap.game.resources);
+    // Restore the battle log from the HTTP bootstrap: a refresh must show the
+    // accumulated history immediately, not only after the next gateway state
+    // message happens to arrive.
+    const bootstrapLogRecords = engineLogRecordsFromBootstrapHistory(bootstrap.history.engineLogs);
     const initialView: LiveMatchView = {
       ...createInitialLiveMatchView({ matchId, gameId, playerId }),
       version: bootstrap.game.stateVersion,
@@ -562,9 +623,19 @@ export function LiveMatchPage() {
       ...(bootstrap.game.interactionView
         ? { interactionView: bootstrap.game.interactionView as LiveMatchView["interactionView"] }
         : {}),
+      ...(bootstrapLogRecords.length > 0 ? { engineLogRecords: bootstrapLogRecords } : {}),
     };
     latestViewRef.current = initialView;
-    setChatState({ messages: [], freeTextEnabled: false, freeTextProposalPending: false });
+    // Chat history is player-only in the bootstrap (spectator sessions omit
+    // it); this page is always seated, so seeding here is safe.
+    setChatState({
+      messages: remoteChatMessagesForViewer(
+        parseRemoteChatMessages(bootstrap.history.chatMessages ?? []),
+        playerId,
+      ),
+      freeTextEnabled: bootstrap.history.freeTextEnabled === true,
+      freeTextProposalPending: false,
+    });
     if (rejectedBootstrapProjection) {
       setConnectionError(INVALID_LIVE_PROJECTION_MESSAGE);
       appendConnectionEvent(setConnectionEvents, {
@@ -633,6 +704,8 @@ export function LiveMatchPage() {
         presentation={loadState.view.presentation}
         remoteSubmit={remoteSubmit}
         remoteUndo={remoteUndo}
+        remoteStallRecovery={remoteStallRecovery}
+        dropEligibility={dropEligibility}
         getCanUndo={getCanUndo}
         getInteractionView={getInteractionView}
         getAnimationPackets={getAnimationPackets}
@@ -663,7 +736,7 @@ export function LiveMatchPage() {
       handle={gatewayHandle}
       bootstrap={simulatorRoute.matchPageData}
       buildHeartbeatPayload={buildLiveHeartbeatPayload}
-      heartbeatIntervalMs={15_000}
+      heartbeatIntervalMs={LIVE_MATCH_HEARTBEAT_INTERVAL_MS}
       onGameEvent={handleLiveGatewayEvent}
       onPresenceChange={derivePresenceChat}
       onDiagnostic={handleLiveDiagnostic}
@@ -716,6 +789,8 @@ interface LiveSimulatorShellProps {
   readonly presentation?: GundamPresentation;
   readonly remoteSubmit: RemoteSubmitFn;
   readonly remoteUndo?: RemoteUndoFn;
+  readonly remoteStallRecovery?: RemoteStallRecoveryFn;
+  readonly dropEligibility?: DropEligibility | null;
   readonly getCanUndo?: () => boolean;
   readonly getInteractionView: () => LiveMatchView["interactionView"];
   readonly getAnimationPackets: () => LiveMatchView["animationPackets"];
@@ -736,6 +811,8 @@ export function LiveSimulatorShell({
   presentation,
   remoteSubmit,
   remoteUndo = () => undefined,
+  remoteStallRecovery = () => undefined,
+  dropEligibility = null,
   getCanUndo = () => false,
   getInteractionView,
   getAnimationPackets,
@@ -776,12 +853,36 @@ export function LiveSimulatorShell({
         ) : undefined
       }
     >
+      {dropEligibility &&
+      isDropControlVisible(dropEligibility) &&
+      (dropEligibility.reason === "disconnect_allowed" ||
+        dropEligibility.reason === "disconnect_countdown" ||
+        dropEligibility.reason === "disconnect_timestamp_missing") ? (
+        <div className="pointer-events-none absolute inset-x-0 top-3 z-40 flex justify-center">
+          <div className="pointer-events-auto">
+            <DropClaimControl
+              eligibility={dropEligibility}
+              serverNowMs={dropEligibility.projectedAtMs}
+              onClaim={() => {
+                try {
+                  remoteStallRecovery("drop_player", 0);
+                } catch {
+                  /* Connection chrome already reflects a down gateway. */
+                }
+              }}
+              label="Drop"
+              actionClassName={buttonVariants({ variant: "danger", size: "lg" })}
+            />
+          </div>
+        </div>
+      ) : null}
       <GameTable>
         <PlayerSeatContainer side="top" />
         <BattleStepRibbonContainer />
         <PlayerSeatContainer side="bottom" />
 
         <PromptContainer />
+        <GundamPendingChoicePrompt />
         {autoPassEnabled ? <AutoPassActionStepContainer /> : null}
         <SetupPromptContainer />
         <AttackTargetingOverlayContainer />
@@ -793,61 +894,64 @@ export function LiveSimulatorShell({
   );
 
   return (
-    <LiveGundamGameProvider
-      runtime={runtime}
-      staticResources={staticResources}
-      viewerId={viewerId}
-      remoteSubmit={remoteSubmit}
-      remoteUndo={remoteUndo}
-      getCanUndo={getCanUndo}
-      getInteractionView={getInteractionView}
-      getAnimationPackets={getAnimationPackets}
-      getEngineLogRecords={getEngineLogRecords}
-      presentation={presentation}
-    >
-      {/*
+    <LiveDropEligibilityProvider value={dropEligibility}>
+      <LiveGundamGameProvider
+        runtime={runtime}
+        staticResources={staticResources}
+        viewerId={viewerId}
+        remoteSubmit={remoteSubmit}
+        remoteUndo={remoteUndo}
+        remoteStallRecovery={remoteStallRecovery}
+        getCanUndo={getCanUndo}
+        getInteractionView={getInteractionView}
+        getAnimationPackets={getAnimationPackets}
+        getEngineLogRecords={getEngineLogRecords}
+        presentation={presentation}
+      >
+        {/*
         Must match SimulatorApp: AutoPassActionStepContainer and the sidebar
         preference control both read AutoPassWhenNoValidAction. Without this
         provider the context default stays ready=false, so live auto-pass for
         passBlock / passBattleAction / passActionStep never submits even when
         the shell mounts the container and no legal alternative exists.
       */}
-      <AutoPassWhenNoValidActionProvider>
-        <GundamSharedAnimationLayer runtime={runtime} live>
-          <SubmitErrorProvider>
-            <HintsProvider>
-              <GundamInteractionDraftProvider>
-                <GundamTargetingProvider>
-                  <DualModeProvider>
-                    <CardInspectProvider>
-                      <GundamDragDropProvider>
-                        <GundamCardContextController>{matchTree}</GundamCardContextController>
-                      </GundamDragDropProvider>
-                      {copyDiagnosticJson ? (
-                        <button
-                          type="button"
-                          className="fixed right-4 top-4 z-50 rounded-md border border-cyan-300/30 bg-slate-950/85 px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-cyan-100 shadow-lg transition-colors hover:bg-cyan-950/90"
-                          onClick={copyDiagnosticJson}
-                          aria-label="Copy connection diagnostic JSON"
-                        >
-                          {copyFeedback === "copied"
-                            ? "Diagnostic copied"
-                            : copyFeedback === "failed"
-                              ? "Copy unavailable"
-                              : "Copy diagnostic JSON"}
-                        </button>
-                      ) : null}
-                      <CardInspectDialog />
-                      {ended ? <EndedBanner ended={ended} /> : null}
-                    </CardInspectProvider>
-                  </DualModeProvider>
-                </GundamTargetingProvider>
-              </GundamInteractionDraftProvider>
-            </HintsProvider>
-          </SubmitErrorProvider>
-        </GundamSharedAnimationLayer>
-      </AutoPassWhenNoValidActionProvider>
-    </LiveGundamGameProvider>
+        <AutoPassWhenNoValidActionProvider>
+          <GundamSharedAnimationLayer runtime={runtime} live>
+            <SubmitErrorProvider>
+              <HintsProvider>
+                <GundamInteractionDraftProvider>
+                  <GundamTargetingProvider>
+                    <DualModeProvider>
+                      <CardInspectProvider>
+                        <GundamDragDropProvider>
+                          <GundamCardContextController>{matchTree}</GundamCardContextController>
+                        </GundamDragDropProvider>
+                        {copyDiagnosticJson ? (
+                          <button
+                            type="button"
+                            className="fixed right-4 top-4 z-50 rounded-md border border-cyan-300/30 bg-slate-950/85 px-3 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-cyan-100 shadow-lg transition-colors hover:bg-cyan-950/90"
+                            onClick={copyDiagnosticJson}
+                            aria-label="Copy connection diagnostic JSON"
+                          >
+                            {copyFeedback === "copied"
+                              ? "Diagnostic copied"
+                              : copyFeedback === "failed"
+                                ? "Copy unavailable"
+                                : "Copy diagnostic JSON"}
+                          </button>
+                        ) : null}
+                        <CardInspectDialog />
+                        {ended ? <EndedBanner ended={ended} /> : null}
+                      </CardInspectProvider>
+                    </DualModeProvider>
+                  </GundamTargetingProvider>
+                </GundamInteractionDraftProvider>
+              </HintsProvider>
+            </SubmitErrorProvider>
+          </GundamSharedAnimationLayer>
+        </AutoPassWhenNoValidActionProvider>
+      </LiveGundamGameProvider>
+    </LiveDropEligibilityProvider>
   );
 }
 

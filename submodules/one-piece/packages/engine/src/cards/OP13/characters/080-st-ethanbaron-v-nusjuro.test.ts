@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op04GumGumRedRoc056 } from "@tcg/op-cards";
-import { op13StEthanbaronVNusjuro080 } from "../../../../../cards/src/cards/OP13/characters/080-st-ethanbaron-v-nusjuro.ts";
+import { op13StEthanbaronVNusjuro080 } from "../../../../../cards/src/cards/characters/op13-080-st-ethanbaron-v-nusjuro.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

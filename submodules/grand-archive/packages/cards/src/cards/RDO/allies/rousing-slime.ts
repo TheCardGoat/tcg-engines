@@ -59,55 +59,66 @@ export const rousingSlime: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "sequence",
               effects: [
                 {
-                  kind: "rest",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "rest",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "woken-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "all",
-                            filters: [
-                              {
-                                kind: "type",
-                                oneOf: ["ALLY"],
-                              },
-                              {
-                                kind: "subtype",
-                                oneOf: ["SLIME"],
-                              },
-                            ],
-                          },
-                          {
-                            kind: "not-source",
-                          },
-                        ],
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "choose",
+                    selection: {
+                      id: "woken-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "all",
+                              filters: [
+                                {
+                                  kind: "type",
+                                  oneOf: ["ALLY"],
+                                },
+                                {
+                                  kind: "subtype",
+                                  oneOf: ["SLIME"],
+                                },
+                              ],
+                            },
+                            {
+                              kind: "not-source",
+                            },
+                          ],
+                        },
                       },
                     },
-                  },
-                  effect: {
-                    kind: "wake",
-                    subject: {
-                      kind: "bound",
-                      binding: "woken-object",
+                    effect: {
+                      kind: "wake",
+                      subject: {
+                        kind: "bound",
+                        binding: "woken-object",
+                      },
                     },
                   },
                 },

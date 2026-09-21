@@ -26,6 +26,7 @@ import {
   type DeckSource,
   type GeneratedDeck,
 } from "./legal-decks.ts";
+import { bindStrategyToDeck } from "./bind-deck-strategy.ts";
 
 export type StrategyName =
   | "default"
@@ -98,6 +99,10 @@ export interface BatchOptions {
   /** Use real `@tcg/cyberpunk-cards` decks instead of the hand-rolled fixture. */
   realCards?: boolean;
   deckSource?: DeckSource;
+  /** Seat this generated/authored deck as p1 (must exist in the source pool). */
+  deckAId?: string;
+  /** Seat this deck as p2; defaults to `deckAId` when that is set. */
+  deckBId?: string;
   deckLimit?: number;
   deckPairLimit?: number;
   monteCarloRollouts?: number;
@@ -186,7 +191,7 @@ export function runBatch(opts: BatchOptions): BatchSummary {
       const result = runAutoMatch({
         players: createTestPlayers(),
         decks: pair.decks,
-        strategies: [aStrategy, bStrategy],
+        strategies: [bindStrategyToDeck(aStrategy, pair.a), bindStrategyToDeck(bStrategy, pair.b)],
         catalog: deckSetup.catalog,
         seed: matchSeed,
         maxSteps: opts.maxSteps,
@@ -510,6 +515,16 @@ function createDeckSetup(opts: BatchOptions): {
   }
 
   const pool = createLegalDeckPool(source);
+  if (opts.deckAId) {
+    const a = requiredPoolDeck(pool.decks, opts.deckAId);
+    const b = requiredPoolDeck(pool.decks, opts.deckBId ?? opts.deckAId);
+    return {
+      catalog: createStructuredCatalog(),
+      pairs: [{ a, b, decks: [deckListFromGenerated(a, "p1"), deckListFromGenerated(b, "p2")] }],
+      coverage: summarizeDeckCoverage([a, b]),
+      deckCount: a.id === b.id ? 1 : 2,
+    };
+  }
   const selectedDecks = pool.decks.slice(0, opts.deckLimit ?? pool.decks.length);
   const pairs: RunnerDeckPair[] = [];
   for (const a of selectedDecks) {
@@ -529,6 +544,12 @@ function createDeckSetup(opts: BatchOptions): {
     coverage: summarizeDeckCoverage([...coveredDecks.values()]),
     deckCount: selectedDecks.length,
   };
+}
+
+function requiredPoolDeck(decks: readonly GeneratedDeck[], id: string): GeneratedDeck {
+  const deck = decks.find((candidate) => candidate.id === id);
+  if (!deck) throw new Error(`Unknown deck id for this source: ${id}`);
+  return deck;
 }
 
 function normalizeDeckSource(opts: BatchOptions): DeckSource {

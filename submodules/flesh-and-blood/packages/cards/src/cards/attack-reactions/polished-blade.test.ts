@@ -1,15 +1,16 @@
 import { describe, expect, it } from "vitest";
 import {
-  FAB_MANUAL_HARNESS,
-  FabTestEngine,
   expectCombat,
   expectFabCard,
   expectFabUnplayable,
+  expectWait,
+  FAB_MANUAL_HARNESS,
+  FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "../heroes/dash.ts";
 import { dorinthea } from "../heroes/dorinthea.ts";
 import { dawnblade } from "../weapons/dawnblade.ts";
-import { snatchRed } from "../actions/snatch.ts";
+import { snatchBlue, snatchRed } from "../actions/snatch.ts";
 import { polishedBladeRed } from "./polished-blade.ts";
 
 /**
@@ -48,6 +49,44 @@ describe("Polished Blade (AHA009) AAA", () => {
     });
     expectCombat(game).toHaveAttackPower(4);
     expectFabCard(Dori, polishedBladeRed).toBeIn("stack");
+  });
+
+  it("timing: additionalSwordAttack mode grants the extra swing without an optional prompt", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: dorinthea,
+        hand: [polishedBladeRed],
+        weapon1: [{ card: dawnblade, state: { powerCounterTotal: 2 } }],
+        resourcePoints: 2,
+        actionPoints: 1,
+        deck: 6,
+      },
+      { hero: dash, hand: [snatchRed, snatchBlue], life: 20, deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Dori = game.as(dorinthea);
+
+    Dori.activate(dawnblade);
+    game.advanceUntil({ stopAt: "defend" });
+    // Miss so Dorinthea's own weapon-hit grant stays out of this regression.
+    game.as(dash).defendWith(snatchRed, snatchBlue);
+    game.toReaction("attacker");
+
+    Dori.play(polishedBladeRed, {
+      modeIds: [
+        "gggJzRrtDDmNMKht6Whk7:removeCountersAndChooseModes:gainGoAgain",
+        "gggJzRrtDDmNMKht6Whk7:removeCountersAndChooseModes:additionalSwordAttack",
+      ],
+    });
+    game.passBoth();
+    // CR 5.2.3c: choosing the mode is the only decision — the activation-limit
+    // allowance applies by itself, so no "use the optional effect?" prompt may
+    // appear while the reaction resolves.
+    expectWait(game).notToHaveDecision();
+    game.helpers.resolveRestOfCombat();
+
+    Dori.must.activate(dawnblade);
+    expectCombat(game).toBeOpen();
   });
 
   it("boundary: with no +1{p} counters the additional cost cannot be paid", () => {

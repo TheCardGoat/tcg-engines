@@ -10,6 +10,7 @@ export const victorGoldmane = defineCard(fabCardIdentitiesByCanonicalId["kHmRR6Q
         kind: "event",
         event: {
           name: "create",
+          effectController: "ability-controller",
           actor: {
             kind: "player",
             player: "ability-controller",

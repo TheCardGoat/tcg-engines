@@ -5,6 +5,7 @@ import {
   expectFabCard,
   expectFabPlayer,
 } from "@tcg/flesh-and-blood-engine/testing";
+import { nimblismBlue } from "../actions/nimblism.ts";
 import { dash } from "../heroes/dash.ts";
 import { bravo } from "../heroes/bravo.ts";
 import { snatchRed } from "../actions/snatch.ts";
@@ -20,12 +21,16 @@ import { pinionSentryBlue } from "./pinion-sentry.ts";
 describe("Pinion Sentry (SEA023) AAA", () => {
   it("happy: tapping a cog you control creates a Golden Cog", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
+      {
+        hero: bravo,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       {
         hero: dash,
         hand: [pinionSentryBlue],
         arena: [goldenCog],
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
@@ -37,18 +42,22 @@ describe("Pinion Sentry (SEA023) AAA", () => {
     Dash.target(goldenCog);
 
     expectFabCard(Dash, goldenCog).toBeIn("arena");
-    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 1);
+    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 2);
     expectFabPlayer(Dash).toHaveLife(19);
   });
 
   it("boundary: declining the tap does not create a Golden Cog", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
+      {
+        hero: bravo,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       {
         hero: dash,
         hand: [pinionSentryBlue],
         arena: [goldenCog],
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
       FAB_MANUAL_HARNESS,
     );
@@ -59,13 +68,21 @@ describe("Pinion Sentry (SEA023) AAA", () => {
     game.untilIdle({ optionals: "decline", ordering: "listed" });
 
     expectFabCard(Dash, goldenCog).toBeIn("arena");
-    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 0);
+    expectFabPlayer(Dash).toHaveTokenCount("golden-cog", 1);
   });
 
   it("timing: with no cog the optional cannot create a Golden Cog", () => {
     const game = FabTestEngine.start(
-      { hero: bravo, hand: [snatchRed], deck: 6 },
-      { hero: dash, hand: [pinionSentryBlue], deck: 6 },
+      {
+        hero: bravo,
+        hand: [snatchRed],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
+      {
+        hero: dash,
+        hand: [pinionSentryBlue],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Dash = game.as(dash);

@@ -26,6 +26,9 @@ const DEFAULT_DROP_ANIMATION: DropAnimation = {
   }),
 };
 
+/** Accepted means an action or an explicit choice flow started, not merely a collision. */
+export type DropDisposition = { readonly kind: "accepted" } | { readonly kind: "rejected" };
+
 export interface PointerDragDropSurfaceProps<TSource> {
   readonly id: string;
   readonly children: ReactNode;
@@ -41,7 +44,7 @@ export interface PointerDragDropSurfaceProps<TSource> {
     source: TSource | null,
     overId: string | null,
     event: DragEndEvent,
-  ) => boolean | void;
+  ) => DropDisposition;
 }
 
 /**
@@ -86,7 +89,7 @@ export function PointerDragDropSurface<TSource>({
   const handleDragEnd = (event: DragEndEvent) => {
     const source = decodeSource(String(event.active.id));
     const overId = event.over ? String(event.over.id) : null;
-    acceptedDropRef.current = onDragEnd?.(source, overId, event) === true;
+    acceptedDropRef.current = onDragEnd?.(source, overId, event).kind === "accepted";
     setActiveSource(null);
   };
 

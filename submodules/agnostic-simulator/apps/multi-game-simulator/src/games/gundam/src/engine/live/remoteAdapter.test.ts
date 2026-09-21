@@ -7,6 +7,52 @@ import { createRemoteEngineAdapter } from "./remoteAdapter.ts";
 import { asMoveName, asViewerId } from "../../game/types.ts";
 
 describe("createRemoteEngineAdapter", () => {
+  it("routes hosted drop and skip through platform stall recovery, not execute_move", () => {
+    const { runtime, staticResources } = createDevRuntime({ skipToMainPhase: true });
+    const recoveries: Array<{ kind: string; version: number }> = [];
+    const adapter = createRemoteEngineAdapter(
+      { runtime, staticResources, viewerId: asViewerId(DEV_PLAYER_ONE) },
+      () => {
+        throw new Error("must not submit an interaction");
+      },
+      () => undefined,
+      () => [],
+      () => [],
+      () => undefined,
+      () => false,
+      (kind, version) => recoveries.push({ kind, version }),
+    );
+
+    expect(adapter.submit(asMoveName("dropOpponent"), {}).ok).toBe(true);
+    expect(adapter.submit(asMoveName("skipOpponentTurn"), {}).ok).toBe(true);
+    expect(recoveries).toEqual([
+      { kind: "drop_player", version: runtime.getState().ctx._stateID },
+      { kind: "skip_opponent_turn", version: runtime.getState().ctx._stateID },
+    ]);
+  });
+
+  it("returns a failed submit outcome when stall recovery throws", () => {
+    const { runtime, staticResources } = createDevRuntime({ skipToMainPhase: true });
+    const adapter = createRemoteEngineAdapter(
+      { runtime, staticResources, viewerId: asViewerId(DEV_PLAYER_ONE) },
+      () => undefined,
+      () => undefined,
+      () => [],
+      () => [],
+      () => undefined,
+      () => false,
+      () => {
+        throw new Error("Gateway is not connected.");
+      },
+    );
+
+    expect(adapter.submit(asMoveName("dropOpponent"), {})).toEqual({
+      ok: false,
+      errorCode: "REMOTE_DISPATCH_FAILED",
+      error: "Gateway is not connected.",
+    });
+  });
+
   it("submits undo only when the server publishes it as available", () => {
     const { runtime, staticResources } = createDevRuntime({ skipToMainPhase: true });
     const versions: number[] = [];

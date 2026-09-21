@@ -476,6 +476,7 @@ function normalizedType(value: string | undefined): CardType | null {
 function searchableText(value: string): string {
   return value
     .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, " ")
     .trim();

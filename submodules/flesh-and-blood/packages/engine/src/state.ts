@@ -133,13 +133,25 @@ import type {
 // chain so source-native close triggers cannot inherit another attack's result.
 // v30 persists per-seat singleton-target auto-select. Older snapshots cannot
 // reproduce the authoritative forced entity-target drain.
-export const FAB_MATCH_SCHEMA_VERSION = 30 as const;
+// v31 persists the per-seat scoped auto-pass arm ("this combat" / "the
+// opponent's turn"). Older snapshots cannot reproduce the scoped drain.
+export const FAB_MATCH_SCHEMA_VERSION = 31 as const;
 
 export type FabOptionalTriggerAutomationMode = "ask" | "auto-accept" | "auto-decline";
 export type FabStoredOptionalTriggerAutomationMode = Exclude<
   FabOptionalTriggerAutomationMode,
   "ask"
 >;
+
+/**
+ * One-shot auto-pass scopes. `combat` drains the seat's pass-only windows
+ * until the current chain link closes; `opponent-turn` drains them until the
+ * seat's own turn begins. Either way the seat is explicitly opting out of
+ * interacting, so its Instant uses count as blanket-yielded and its optional
+ * triggers auto-decline for the scope's lifetime (see
+ * {@link rules/auto-pass.ts}).
+ */
+export type FabScopedAutoPassScope = "combat" | "opponent-turn";
 
 /**
  * Per-seat priority mode. `auto-pass` lets the engine close the seat's
@@ -170,6 +182,12 @@ export interface FabAutomationPreferences {
   readonly opponentTriggerYieldCardIds: readonly string[];
   /** canonicalIds whose legal Instant uses do not block compatible automatic drains. */
   readonly instantYieldCardIds: readonly string[];
+  /**
+   * Owner-private one-shot auto-pass scope. While armed (and until its natural
+   * boundary) the seat drains as `auto-pass` regardless of {@link priorityMode},
+   * with its Instants blanket-yielded and its optional triggers auto-declined.
+   */
+  readonly scopedAutoPass: FabScopedAutoPassScope | null;
 }
 
 /** Fail-closed profile for any seat that was never configured. */
@@ -180,7 +198,41 @@ export const FAB_DEFAULT_AUTOMATION_PREFERENCES: FabAutomationPreferences = {
   playAndSkipHoldCardIds: [],
   opponentTriggerYieldCardIds: [],
   instantYieldCardIds: [],
+  scopedAutoPass: null,
 };
+
+/**
+ * Drop one scope kind from every seat's profile. Chain close retires
+ * `combat` arms for all seats; the turn flip retires the new active seat's
+ * `opponent-turn` arm. Returns the input reference when nothing changes so
+ * reducers can assign unconditionally.
+ */
+export function withoutFabScopedAutoPass(
+  preferences: Record<string, FabAutomationPreferences>,
+  scope: FabScopedAutoPassScope,
+): Record<string, FabAutomationPreferences> {
+  let changed = false;
+  const next: Record<string, FabAutomationPreferences> = {};
+  for (const [playerId, profile] of Object.entries(preferences)) {
+    if (profile.scopedAutoPass === scope) {
+      changed = true;
+      next[playerId] = { ...profile, scopedAutoPass: null };
+    } else {
+      next[playerId] = profile;
+    }
+  }
+  return changed ? next : preferences;
+}
+
+/** Drop one seat's scope arm, whatever its kind. Returns the input reference when unset. */
+export function withoutFabScopedAutoPassForSeat(
+  preferences: Record<string, FabAutomationPreferences>,
+  playerId: string,
+): Record<string, FabAutomationPreferences> {
+  const profile = preferences[playerId];
+  if (!profile || profile.scopedAutoPass === null) return preferences;
+  return { ...preferences, [playerId]: { ...profile, scopedAutoPass: null } };
+}
 
 /** Typed event-derived facts, partitioned by the CR window that resets them. */
 export interface FabHistoryIndex {
@@ -212,6 +264,7 @@ export interface FabHistoryIndex {
     chainLinkNumber: number | null;
     playedInstant: boolean;
     damageDealtByType: Record<"arcane" | "physical" | "generic", number>;
+    damageDealtToOpposingHeroesByType: Record<"arcane" | "physical" | "generic", number>;
     /** Per-source damage dealt on the open chain link (Surge CR 8.4.8). */
     damageDealtBySource: Record<string, number>;
     /** Per-source hero-targeted damage on the open chain link (Surge 8.4.8). */

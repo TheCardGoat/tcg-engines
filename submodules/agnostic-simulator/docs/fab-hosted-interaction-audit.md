@@ -84,7 +84,6 @@ in place; the browser does not update a hosted match optimistically.
   the complete diagnostics are in `/tmp/fab-hosted-audit-types-selection.log`.
   Consolidated publication gates are owned by the coordinating task.
 
-
 ## PR review follow-up (2026-09-04)
 
 - Corrected singleton defense filtering: a card that cannot defend alone may

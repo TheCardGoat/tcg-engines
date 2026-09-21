@@ -1,7 +1,7 @@
 import { eb01Doma005 } from "@tcg/op-cards";
 import type { CharacterCard } from "@tcg/op-types";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04MsWednesday083 } from "../../../../../cards/src/cards/OP14EB04/characters/083-ms-wednesday.ts";
+import { op14eb04MsWednesday083 } from "../../../../../cards/src/cards/characters/op14-083-ms-wednesday.ts";
 import { registerCards } from "../../../../../cards/src/runtime-catalog.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";

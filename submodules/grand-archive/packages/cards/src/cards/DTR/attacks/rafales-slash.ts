@@ -58,19 +58,30 @@ export const rafalesSlash: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               kind: "sequence",
               effects: [
                 {
-                  kind: "pay",
-                  player: "controller",
-                  cost: {
-                    kind: "pay-reserve",
-                    amount: 3,
+                  kind: "attempt",
+                  effect: {
+                    kind: "pay",
+                    player: "controller",
+                    cost: {
+                      kind: "pay-reserve",
+                      amount: 3,
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "summon",
-                  object: "Vacuous Servant",
-                  controller: "controller",
-                  bindResultAs: "summoned-token",
-                  entersWithStates: ["rested"],
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "summon",
+                    object: "Vacuous Servant",
+                    controller: "controller",
+                    bindResultAs: "summoned-token",
+                    entersWithStates: ["rested"],
+                  },
                 },
               ],
             },

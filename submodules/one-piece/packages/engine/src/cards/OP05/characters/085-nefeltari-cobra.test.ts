@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op05NefeltariCobra085 } from "../../../../../cards/src/cards/OP05/characters/085-nefeltari-cobra.ts";
+import { op05NefeltariCobra085 } from "../../../../../cards/src/cards/characters/op05-085-nefeltari-cobra.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-085 Nefeltari Cobra", () => {

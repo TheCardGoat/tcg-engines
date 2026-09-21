@@ -83,79 +83,90 @@ export const rigForDetonation: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "choose",
-                  selection: {
-                    id: "sacrificed-object",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
+                  kind: "attempt",
+                  effect: {
+                    kind: "choose",
+                    selection: {
+                      id: "sacrificed-object",
+                      kind: "choice",
+                      declared: "resolution",
+                      chooser: "controller",
+                      count: {
+                        kind: "exactly",
+                        amount: 1,
+                      },
+                      candidates: {
+                        kind: "object",
+                        zones: ["field"],
+                        relationship: "controlled-by",
+                        player: "controller",
+                        filter: {
+                          kind: "all",
+                          filters: [
+                            {
+                              kind: "type",
+                              oneOf: ["ITEM"],
+                            },
+                            {
+                              kind: "subtype",
+                              oneOf: ["VELTECH"],
+                            },
+                          ],
+                        },
+                      },
                     },
-                    candidates: {
-                      kind: "object",
-                      zones: ["field"],
-                      relationship: "controlled-by",
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ITEM"],
-                          },
-                          {
-                            kind: "subtype",
-                            oneOf: ["VELTECH"],
-                          },
-                        ],
+                    effect: {
+                      kind: "sacrifice",
+                      subject: {
+                        kind: "bound",
+                        binding: "sacrificed-object",
                       },
                     },
                   },
-                  effect: {
-                    kind: "sacrifice",
-                    subject: {
-                      kind: "bound",
-                      binding: "sacrificed-object",
-                    },
-                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "create-delayed-trigger",
-                  trigger: {
-                    kind: "event",
-                    event: {
-                      name: "attack-declared",
-                      subject: {
-                        kind: "bound-object",
-                        binding: "target-1",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "create-delayed-trigger",
+                    trigger: {
+                      kind: "event",
+                      event: {
+                        name: "attack-declared",
+                        subject: {
+                          kind: "bound-object",
+                          binding: "target-1",
+                        },
                       },
                     },
-                  },
-                  limit: 1,
-                  expires: {
-                    kind: "this-turn",
-                  },
-                  effect: {
-                    kind: "continuous",
-                    subjects: {
-                      kind: "current-attack",
+                    limit: 1,
+                    expires: {
+                      kind: "this-turn",
                     },
-                    affectedSet: "locked",
-                    duration: {
-                      kind: "this-attack",
-                    },
-                    layer: {
-                      layer: "E",
-                      modifies: "stat",
-                      sublayer: "modifier",
-                    },
-                    change: {
-                      kind: "numeric",
-                      property: "power",
-                      operation: "add",
-                      amount: 3,
+                    effect: {
+                      kind: "continuous",
+                      subjects: {
+                        kind: "current-attack",
+                      },
+                      affectedSet: "locked",
+                      duration: {
+                        kind: "this-attack",
+                      },
+                      layer: {
+                        layer: "E",
+                        modifies: "stat",
+                        sublayer: "modifier",
+                      },
+                      change: {
+                        kind: "numeric",
+                        property: "power",
+                        operation: "add",
+                        amount: 3,
+                      },
                     },
                   },
                 },

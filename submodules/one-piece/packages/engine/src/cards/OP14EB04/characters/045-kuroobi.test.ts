@@ -7,7 +7,7 @@ import {
   op02Vista011,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Kuroobi045 } from "../../../../../cards/src/cards/OP14EB04/characters/045-kuroobi.ts";
+import { op14eb04Kuroobi045 } from "../../../../../cards/src/cards/characters/op14-045-kuroobi.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

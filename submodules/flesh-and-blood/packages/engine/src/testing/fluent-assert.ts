@@ -17,6 +17,7 @@ import {
   type FabMatchState,
   type FabZoneKind,
 } from "../state.ts";
+import { tokenDefinitionsBySlug } from "./token-registry.ts";
 import type { FabDecision } from "../rules/process.ts";
 import { buildFabRulesView } from "../rules/state-rules-view.ts";
 import { describeFabWaitState } from "./intent.ts";
@@ -120,6 +121,7 @@ export interface FabWaitAssert {
   /** Assert there is no pending player decision (combat may still be open). */
   notToHaveDecision(): FabWaitAssert;
   toHaveNumericRange(min: number, max: number): FabWaitAssert;
+  toHaveTargetRange(min: number, max: number): FabWaitAssert;
 }
 
 function fail(message: string): never {
@@ -576,9 +578,16 @@ function tokenCanonicalId(slug: string): string {
 }
 
 function countTokensForPlayer(state: FabMatchState, playerId: string, canonicalId: string): number {
-  return (state.containers.zonesByPlayerId[playerId]?.arena ?? []).filter(
-    (instanceId) => state.objects[instanceId]?.canonicalId === canonicalId,
-  ).length;
+  // Direct authored-token fixtures retain catalog identity; tokens generated
+  // by an effect use the registered runtime alias. Both denote the same token.
+  const authoredId = tokenDefinitionsBySlug.get(canonicalId.replace(/^token:/, ""))?.canonicalId;
+  return (state.containers.zonesByPlayerId[playerId]?.arena ?? []).filter((instanceId) => {
+    const object = state.objects[instanceId];
+    return (
+      object !== undefined &&
+      (object.canonicalId === canonicalId || object.canonicalId === authoredId)
+    );
+  }).length;
 }
 
 function listTokens(
@@ -729,6 +738,18 @@ export function expectWait(game: FabTestEngine): FabWaitAssert {
       const wait = game.waitState();
       if (wait.kind === "decision") {
         fail(`Expected no pending decision, but the match is ${describeFabWaitState(wait)}.`);
+      }
+      return assert;
+    },
+    toHaveTargetRange(min, max) {
+      const wait = game.waitState();
+      if (wait.kind !== "decision" || wait.decision.kind !== "entity-target") {
+        fail(`Expected a target selection, but it is ${describeFabWaitState(wait)}.`);
+      }
+      if (wait.decision.min !== min || wait.decision.max !== max) {
+        fail(
+          `Expected target range ${min}..${max}, found ${wait.decision.min}..${wait.decision.max}.`,
+        );
       }
       return assert;
     },

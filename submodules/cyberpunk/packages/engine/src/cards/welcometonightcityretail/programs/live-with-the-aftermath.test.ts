@@ -1,7 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
+  theHeistRetailStarterDeckDexterDeshawnOneLastChance,
   welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailLiveWithTheAftermath,
+  welcomeToNightCityRetailMaxtacSquadron,
   welcomeToNightCityRetailMoxInciters,
   welcomeToNightCityRetailSwordwiseHuscle,
 } from "@tcg/cyberpunk-cards";
@@ -22,6 +25,41 @@ function getTargetChoice(engine: CyberpunkTestEngine, chooser: string) {
 }
 
 describe("Live with the Aftermath", () => {
+  it("is the exact yellow 3-cost Plan Program with two mandatory player bindings", () => {
+    expect(aftermath).toMatchObject({
+      type: "program",
+      color: "yellow",
+      classifications: ["Plan"],
+      printNumber: "068",
+      cost: 3,
+      power: null,
+      ram: 3,
+      hasSellTag: true,
+      timingTriggers: ["play"],
+      abilities: [
+        expect.objectContaining({
+          trigger: { trigger: "play" },
+          bindings: [
+            expect.objectContaining({
+              id: "friendlyUnit",
+              target: expect.objectContaining({
+                controller: "friendly",
+                selection: { mode: "choose", min: 1, max: 1 },
+              }),
+            }),
+            expect.objectContaining({
+              id: "rivalUnit",
+              target: expect.objectContaining({
+                controller: "rival",
+                selection: { mode: "choose", min: 1, max: 1, chooser: "rival" },
+              }),
+            }),
+          ],
+        }),
+      ],
+    });
+  });
+
   it("makes its controller choose one friendly Unit first", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       { hand: [aftermath], eddies: 3, field: [welcomeToNightCityRetailMoxInciters] },
@@ -113,6 +151,150 @@ describe("Live with the Aftermath", () => {
     expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailCorpoSecurity.id,
     );
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+  });
+
+  it("still defeats the controller's Unit when the rival controls no Unit", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { hand: [aftermath], eddies: 3, field: [welcomeToNightCityRetailMoxInciters] },
+      { field: [] },
+    );
+
+    engine.playCard(aftermath, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailMoxInciters, { as: P1 });
+
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toEqual(
+      expect.arrayContaining([aftermath.id, welcomeToNightCityRetailMoxInciters.id]),
+    );
+    engine.expectNoPendingChoice();
+  });
+
+  it("still lets the rival defeat their Unit when the controller controls no Unit", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { hand: [aftermath], eddies: 3, field: [] },
+      { field: [welcomeToNightCityRetailCorpoSecurity] },
+    );
+
+    engine.playCard(aftermath, { as: P1 });
+    const choice = getTargetChoice(engine, P2);
+    expect(choice.payload.eligibleIds).toEqual([
+      engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2).instanceId,
+    ]);
+    engine.resolveEffectTarget(welcomeToNightCityRetailCorpoSecurity, { as: P2 });
+
+    expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailCorpoSecurity.id,
+    );
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
+      aftermath.id,
+    );
+    engine.expectNoPendingChoice();
+  });
+
+  it("pays and trashes itself without a choice when neither player controls a Unit", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { hand: [aftermath], eddies: 3, field: [] },
+      { field: [] },
+    );
+
+    engine.playCard(aftermath, { as: P1 });
+
+    expect(engine.getState().G.players[P1]?.eddies).toBe(0);
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
+      aftermath.id,
+    );
+    engine.expectNoPendingChoice();
+  });
+});
+
+describe("Live with the Aftermath + Dexter DeShawn: One Last Chance", () => {
+  it("lets Dexter's {Defeated} draw 2 when the Street Cred difference is 10+", () => {
+    // CR 11.2.1 — Street Cred is the sum of Gig dice. P1 has 11 (6 + 5), P2 has
+    // 1, so the difference is exactly 10 and the {Defeated} condition is met.
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [aftermath],
+        eddies: 3,
+        field: [theHeistRetailStarterDeckDexterDeshawnOneLastChance],
+        deck: [welcomeToNightCityRetailFieldOperator, welcomeToNightCityRetailCorpoSecurity],
+        gigArea: [
+          { dieType: "d6", faceValue: 6 },
+          { dieType: "d8", faceValue: 5 },
+        ],
+      },
+      {
+        field: [welcomeToNightCityRetailMaxtacSquadron],
+        gigArea: [{ dieType: "d4", faceValue: 1 }],
+      },
+      { preserveDeckOrder: true },
+    );
+    expect(engine.getStreetCred(P1)).toBe(11);
+    expect(engine.getStreetCred(P2)).toBe(1);
+
+    engine.playCard(aftermath, { as: P1 });
+    engine.resolveEffectTarget(theHeistRetailStarterDeckDexterDeshawnOneLastChance, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "the rival must now choose their own Unit",
+    });
+    engine.resolveEffectTarget(welcomeToNightCityRetailMaxtacSquadron, { as: P2 });
+
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toEqual(
+      expect.arrayContaining([
+        aftermath.id,
+        theHeistRetailStarterDeckDexterDeshawnOneLastChance.id,
+      ]),
+    );
+    expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toEqual([
+      welcomeToNightCityRetailFieldOperator.id,
+      welcomeToNightCityRetailCorpoSecurity.id,
+    ]);
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
+  });
+
+  it("does not draw when the Street Cred difference is under 10", () => {
+    // P1 has 10, P2 has 1 — the difference is 9, so Dexter's {Defeated}
+    // condition fails and the hand stays empty after the Program resolves.
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [aftermath],
+        eddies: 3,
+        field: [theHeistRetailStarterDeckDexterDeshawnOneLastChance],
+        deck: [welcomeToNightCityRetailFieldOperator, welcomeToNightCityRetailCorpoSecurity],
+        gigArea: [{ dieType: "d10", faceValue: 10 }],
+      },
+      {
+        field: [welcomeToNightCityRetailMaxtacSquadron],
+        gigArea: [{ dieType: "d4", faceValue: 1 }],
+      },
+      { preserveDeckOrder: true },
+    );
+    expect(engine.getStreetCred(P1)).toBe(10);
+    expect(engine.getStreetCred(P2)).toBe(1);
+
+    engine.playCard(aftermath, { as: P1 });
+    engine.resolveEffectTarget(theHeistRetailStarterDeckDexterDeshawnOneLastChance, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "the rival must now choose their own Unit",
+    });
+    engine.resolveEffectTarget(welcomeToNightCityRetailMaxtacSquadron, { as: P2 });
+
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toEqual(
+      expect.arrayContaining([
+        aftermath.id,
+        theHeistRetailStarterDeckDexterDeshawnOneLastChance.id,
+      ]),
+    );
+    expect(engine.getCardsInZone("hand", P1)).toHaveLength(0);
+    // The deck fixture stacks the authored cards above the default deck — the
+    // top two must be untouched by any draw.
+    expect(
+      engine
+        .getCardsInZone("deck", P1)
+        .slice(0, 2)
+        .map((card) => card.definitionId),
+    ).toEqual([welcomeToNightCityRetailFieldOperator.id, welcomeToNightCityRetailCorpoSecurity.id]);
     expect(engine.getState().G.turnMetadata.pendingChoice).toBeUndefined();
   });
 });

@@ -5,7 +5,7 @@ import {
   op10DonquixoteDoflamingo071,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Sugar063 } from "../../../../../cards/src/cards/OP14EB04/characters/063-sugar.ts";
+import { op14eb04Sugar063 } from "../../../../../cards/src/cards/characters/op14-063-sugar.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

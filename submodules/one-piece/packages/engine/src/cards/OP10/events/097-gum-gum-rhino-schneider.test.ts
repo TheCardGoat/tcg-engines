@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op10GumGumRhinoSchneider097 } from "../../../../../cards/src/cards/OP10/events/097-gum-gum-rhino-schneider.ts";
+import { op10GumGumRhinoSchneider097 } from "../../../../../cards/src/cards/events/op10-097-gum-gum-rhino-schneider.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP10-097 Gum-Gum Rhino Schneider", () => {

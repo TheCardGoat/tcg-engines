@@ -75,6 +75,58 @@ export const welcomeToNightCityRetailMaelstromZealots = defineCyberpunkCard({
         },
       ],
     },
+    {
+      kind: "triggered",
+      text: "When this Unit loses a fight, defeat the opposing rival Unit.",
+      trigger: {
+        trigger: "event",
+        event: {
+          event: "fightResolved",
+          player: "any",
+          result: "mutual",
+          attacker: {
+            selector: "self",
+          },
+        },
+      },
+      source: {
+        selector: "self",
+      },
+      effects: [
+        {
+          effect: "defeat",
+          target: {
+            selector: "defender",
+          },
+        },
+      ],
+    },
+    {
+      kind: "triggered",
+      text: "When this Unit loses a fight, defeat the opposing rival Unit.",
+      trigger: {
+        trigger: "event",
+        event: {
+          event: "fightResolved",
+          player: "any",
+          result: "mutual",
+          defender: {
+            selector: "self",
+          },
+        },
+      },
+      source: {
+        selector: "self",
+      },
+      effects: [
+        {
+          effect: "defeat",
+          target: {
+            selector: "attacker",
+          },
+        },
+      ],
+    },
   ],
   reminderText: ["Units with power 0 don't steal Gigs."],
   type: "unit",

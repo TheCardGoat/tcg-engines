@@ -32,17 +32,32 @@ export function enumerateFabMoves(
       moves.push("set-automation-preferences");
     return moves;
   }
+  // Scoped auto-pass arms ride the same settings move but are not
+  // priority-gated. Non-holder eligibility is deliberately narrow — the
+  // seat may always disarm, the defender may arm from the defense
+  // declaration (their only interactive moment), and the opponent's-turn
+  // arm is offered in non-combat waiting windows. A waiting spectator in
+  // open combat keeps a concede-only view.
+  const combat = state.combat;
+  const scopeEligible =
+    state.automationPreferences[actorId]?.scopedAutoPass != null ||
+    (combat?.open === true &&
+      combat.step === "defend" &&
+      combat.defenseDeclarationPending === true &&
+      combat.activeLink?.defendingPlayerId === actorId) ||
+    (combat?.open !== true && actorId !== state.activePlayerId);
   if (actorId === state.activePlayerId && actorId === state.priority?.holderPlayerId) {
     moves.push("set-optional-trigger-automation");
   }
-  if (actorId === state.priority?.holderPlayerId) {
+  if (actorId === state.priority?.holderPlayerId || scopeEligible) {
     moves.push("set-automation-preferences");
-    if (
-      state.automationPreferences[actorId]?.priorityMode === "play-and-skip" &&
-      !state.priorityHoldArmed[actorId]
-    ) {
-      moves.push("arm-priority-hold");
-    }
+  }
+  if (
+    actorId === state.priority?.holderPlayerId &&
+    state.automationPreferences[actorId]?.priorityMode === "play-and-skip" &&
+    !state.priorityHoldArmed[actorId]
+  ) {
+    moves.push("arm-priority-hold");
   }
 
   if (state.rulesStack.length > 0) {
@@ -53,7 +68,6 @@ export function enumerateFabMoves(
   }
   if (state.phase !== "action") return moves;
 
-  const combat = state.combat;
   if (combat?.open) {
     if (combat.step === "defend" && combat.defenseDeclarationPending) {
       if (actorId === combat.activeLink?.defendingPlayerId) moves.push("defend", "pass");

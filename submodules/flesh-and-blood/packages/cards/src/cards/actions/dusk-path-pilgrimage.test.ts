@@ -18,7 +18,9 @@ import { duskPathPilgrimageRed } from "./dusk-path-pilgrimage.ts";
  * - The grant attaches to the NEXT WEAPON attack this turn only: +3{p} plus
  *   an on-hit trigger granting one additional activation of that weapon
  *   (lifting its once-per-turn activation limit by one).
- * - The additional attack is optional ("you may").
+ * - The "may" is CR 5.2.3c permission to exceed the limit: the grant itself
+ *   applies automatically on the hit, and the choice is exercised when (and
+ *   if) the player later activates the weapon.
  * - Go again refunds the action point spent on this non-attack action.
  *
  * Module verdict: the authored `next weapon attack` grant implements the
@@ -64,7 +66,7 @@ describe("dusk-path-pilgrimage family AAA", () => {
     expect(Boltyn.zone("arena")).toContain(cintariSaber.canonicalId);
   });
 
-  it("on-hit optional grants exactly one additional saber activation this turn", () => {
+  it("on-hit grant yields exactly one additional saber activation without a prompt", () => {
     const game = FabTestEngine.start(
       {
         hero: boltyn,
@@ -83,8 +85,9 @@ describe("dusk-path-pilgrimage family AAA", () => {
     Boltyn.play(duskPathPilgrimageRed);
     game.helpers.resolveUntilIdle();
     Boltyn.activateAttack(cintariSaber);
-    // Accept the printed "you may attack an additional time" optional.
-    game.helpers.resolveUntilIdle({ ordering: "listed", optionalBoolean: true });
+    // CR 5.2.3c: no "you may" decision exists at the hit — the grant applies
+    // by itself, so a decline-everything pass must still lift the limit.
+    game.helpers.resolveUntilIdle({ ordering: "listed", optionalBoolean: false });
     expect(Kano.life()).toBe(10); // First (buffed) saber attack: 2 + 3 = 5.
 
     // The once-per-turn limit is lifted by one: the second activation this

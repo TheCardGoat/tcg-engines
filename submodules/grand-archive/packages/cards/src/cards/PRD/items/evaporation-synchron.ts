@@ -33,10 +33,10 @@ export const evaporationSynchron: GrandArchiveCard<GrandArchiveAbilityDefinition
             kind: "event",
             event: {
               name: "card-banished",
-              actor: "opponent",
               from: "graveyard",
               subject: {
                 kind: "event-object",
+                owner: "opponent",
                 filter: {
                   kind: "all",
                   filters: [

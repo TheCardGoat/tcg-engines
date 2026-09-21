@@ -3279,7 +3279,7 @@ function parseDirectEffectAbility(card: CardDefinition, text: string): Ability {
     });
   }
 
-  if (card.slug === "les-e-le-mens") {
+  if (card.slug === "les-elemens") {
     return triggeredAbility({
       text,
       trigger: { trigger: "play" },

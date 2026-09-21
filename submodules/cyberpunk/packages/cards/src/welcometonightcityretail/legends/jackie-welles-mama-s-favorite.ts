@@ -29,8 +29,18 @@ export const welcomeToNightCityRetailJackieWellesMamaSFavorite = defineCyberpunk
     goSoloAbility({
       text: "Go Solo (Pay this Legend's cost to play it as a ready Unit. It can attack this turn. If it leaves the field, remove it from the game.)",
     }),
-    // Replacement-effect ("if a friendly Unit would be defeated…") is printed in
-    // rulesText; engine support for optional defeat redirection lands separately.
+    {
+      kind: "static",
+      text: "If a friendly Unit would be defeated, you may spend 1 €$ to defeat this Legend instead. (Remove it from the game.)",
+      effects: [
+        {
+          effect: "grantRule",
+          target: { selector: "self" },
+          rule: "redirectFriendlyDefeatToSelf",
+          duration: "continuous",
+        },
+      ],
+    },
   ],
   type: "legend",
   cost: 6,

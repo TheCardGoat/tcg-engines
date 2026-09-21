@@ -33,6 +33,7 @@ function makeHandCard(id: string, cost: number, hasSellTag = false): FilteredCar
     cardName: id,
     zone: "hand",
     faceDown: false,
+    revealed: false,
     spent: false,
     damage: 0,
     power: 0,
@@ -77,6 +78,19 @@ function makeEngineAndContext(seed: string) {
   const catalog = createTestCatalog();
   const state = createMatchState({ players, catalog, deckLists: decks, seed });
   const engine = new LocalEngine(state);
+  for (const player of players) {
+    const choice = engine.getPrompt(player.id).choice;
+    if (choice?.type !== "chooseFirstPlayer") continue;
+    engine.processCommand(
+      {
+        commandID: `${seed}-choose-first`,
+        move: "resolveFirstPlayer",
+        input: { args: { goFirst: true } },
+      },
+      player.id,
+    );
+    break;
+  }
   const active = engine.getFilteredView(players[0]!.id).activePlayerId;
   const activeId = active === (players[0]!.id as string) ? players[0]!.id : players[1]!.id;
   let counter = 0;
@@ -89,12 +103,11 @@ function makeEngineAndContext(seed: string) {
 
 describe("firstLegalStrategy.decideAction", () => {
   test("returns a command for the first available move", () => {
-    const { ctx } = makeEngineAndContext("first-legal");
+    const ctx = makeFakeCtx([
+      { moveId: "passPhase", inputSpec: { type: "none" } },
+      { moveId: "concede", inputSpec: { type: "none" } },
+    ]);
     const decision = firstLegalStrategy.decideAction(ctx);
-    if (ctx.prompt.availableMoves.length === 0) {
-      expect(decision.kind).toBe("stuck");
-      return;
-    }
     expect(decision.kind).toBe("command");
   });
 
@@ -808,6 +821,7 @@ describe("greedyStrategy.decideAction", () => {
       },
       { moveId: "passPhase", inputSpec: { type: "none" } },
     ]);
+    ctx.view = { players: {} } as DecisionContext["view"];
     const decision = greedyStrategy.decideAction(ctx);
     expect(decision).toEqual({
       kind: "command",

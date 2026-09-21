@@ -282,7 +282,11 @@ export function GundamDragDropProvider({ children }: { readonly children: ReactN
           onDragEnd={(source, overId) => {
             setActiveSource(null);
             if (source?.type === "attack-unit") {
-              return dispatchGundamAttackDrop(source, overId, attackDropHandlerRef.current);
+              return {
+                kind: dispatchGundamAttackDrop(source, overId, attackDropHandlerRef.current)
+                  ? "accepted"
+                  : "rejected",
+              };
             }
             if (
               dispatchGundamPilotDrop(
@@ -291,14 +295,15 @@ export function GundamDragDropProvider({ children }: { readonly children: ReactN
                 pilotDropHandlerRef.current,
               )
             ) {
-              return true;
+              return { kind: "accepted" };
             }
-            return dispatchGundamCardDrop(
+            const accepted = dispatchGundamCardDrop(
               source?.type === "hand-card" ? source : null,
               overId,
               cardDropHandlerRef.current,
               (cardId) => animationHandoffRef.current?.arm(cardId),
             );
+            return { kind: accepted ? "accepted" : "rejected" };
           }}
         >
           {children}

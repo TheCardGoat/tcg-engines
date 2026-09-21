@@ -82,6 +82,7 @@ export const generatedCatalogTestCards = {
               target: "opponent",
             },
           },
+          displayName: "Whenever Discard 6 More Power During Action Phase Intimidate",
         },
       ],
     },
@@ -168,6 +169,8 @@ export const generatedCatalogTestCards = {
           },
           id: "NtLDgPBR7HqDqhDzJMHmk:actionResourceResourceEndTurnAttackActionCost3GreaterGainsDominateGoAgain",
           text: "Action - {r}{r}: Until end of turn, your attack action cards with cost 3 or greater gains dominate. Go again",
+          displayName:
+            "Action Resource Resource End Turn Attack Action Cost 3 Greater Gains Dominate Go Again",
         },
       ],
     },
@@ -247,6 +250,7 @@ export const generatedCatalogTestCards = {
           },
           id: "wbjNnhBq6cMwDfwdtrkhn:instantTapDestroyGoldDrawThenDiscard",
           text: "Instant - {t}, destroy a Gold you control: Draw a card, then discard a card.\nIf a blue card has been put into your graveyard this turn, you may play cards with watery grave from your graveyard.",
+          displayName: "Instant Tap Destroy Gold Draw Then Discard",
         },
         {
           kind: "static",
@@ -266,6 +270,7 @@ export const generatedCatalogTestCards = {
           },
           id: "wbjNnhBq6cMwDfwdtrkhn:bluePutGraveyardTurnPlayWateryGraveGraveyard",
           text: "Instant - {t}, destroy a Gold you control: Draw a card, then discard a card.\nIf a blue card has been put into your graveyard this turn, you may play cards with watery grave from your graveyard.",
+          displayName: "Blue Put Graveyard Turn Play Watery Grave Graveyard",
         },
       ],
     },
@@ -337,6 +342,7 @@ export const generatedCatalogTestCards = {
           },
           id: "rTNChdmHbjN7HPNJJLzCt:actionTapDestroyGoldCreateGoldfinHarpoonHandGoAgain",
           text: "Action - {t}, destroy a Gold you control: Create a Goldfin Harpoon in your hand. Go again\nWhenever you draw a card during your action phase, you may put an arrow from your hand face-up into your arsenal.",
+          displayName: "Action Tap Destroy Gold Create Goldfin Harpoon Hand Go Again",
         },
         {
           kind: "static",
@@ -390,6 +396,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Whenever Draw During Action Phase Put Arrow Hand Face Up Arsenal",
         },
       ],
     },
@@ -453,6 +460,7 @@ export const generatedCatalogTestCards = {
           },
           id: "DghbPmFhwLkT9whJJjL9f:actionTapDestroyGoldCreateGoldenCogToken",
           text: "Action - {t}, destroy a Gold you control: Create a Golden Cog token.\nThe second time you crank each turn, draw a card.",
+          displayName: "Action Tap Destroy Gold Create Golden Cog Token",
         },
         {
           kind: "static",
@@ -485,6 +493,7 @@ export const generatedCatalogTestCards = {
               player: "controller",
             },
           },
+          displayName: "Second Time Crank Turn Draw",
         },
       ],
     },
@@ -574,6 +583,8 @@ export const generatedCatalogTestCards = {
           },
           id: "JhgRJb6nfctWkndbzrgnj:instantTapRemoveSuspenseCounterAuraPutSuspenseCounterAuraSuspense",
           text: "Instant - {t}, remove a suspense counter from an aura you control: You may put a suspense counter on an aura of suspense you control.\nWhenever the crowd cheers you, create a Confidence token.",
+          displayName:
+            "Instant Tap Remove Suspense Counter Aura Put Suspense Counter Aura Suspense",
         },
         {
           kind: "static",
@@ -601,6 +612,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "Whenever Crowd Cheers Create Confidence Token",
         },
       ],
     },
@@ -652,6 +664,7 @@ export const generatedCatalogTestCards = {
           },
           id: "fMDbBJHTPL7dcMMFNkCCm:startGame1WeaponZone",
           text: "You start the game with 1 weapon zone.\nInstant - {r}{r}{r}{r}, {t}: Target attack action card you control has 6 base {p}.\nWhenever the crowd boos you, create a Vigor token.",
+          displayName: "Start Game 1 Weapon Zone",
         },
         {
           kind: "activated",
@@ -693,6 +706,8 @@ export const generatedCatalogTestCards = {
           },
           id: "fMDbBJHTPL7dcMMFNkCCm:instantResourceResourceResourceResourceTapTargetAttackAction6BasePower",
           text: "You start the game with 1 weapon zone.\nInstant - {r}{r}{r}{r}, {t}: Target attack action card you control has 6 base {p}.\nWhenever the crowd boos you, create a Vigor token.",
+          displayName:
+            "Instant Resource Resource Resource Resource Tap Target Attack Action 6 Base Power",
         },
         {
           kind: "static",
@@ -720,6 +735,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "Whenever Crowd Boos Create Vigor Token",
         },
       ],
     },
@@ -816,6 +832,7 @@ export const generatedCatalogTestCards = {
           },
           id: "MgKprw8PQjNKC7JDmppHh:basePowerDefenseHalvedRoundedUp",
           text: "The base {p} and {d} of cards you control are halved, rounded up.\nInstant - {r}{r}, {t}: The crowd boos you. Defending action cards you control get +1{d} this turn.\nWhenever the crowd boos you, create a Might token.",
+          displayName: "Base Power Defense Halved Rounded Up",
         },
         {
           kind: "activated",
@@ -868,6 +885,8 @@ export const generatedCatalogTestCards = {
           },
           id: "MgKprw8PQjNKC7JDmppHh:instantResourceResourceTapCrowdBoosDefendingActionGet1DefenseTurn",
           text: "The base {p} and {d} of cards you control are halved, rounded up.\nInstant - {r}{r}, {t}: The crowd boos you. Defending action cards you control get +1{d} this turn.\nWhenever the crowd boos you, create a Might token.",
+          displayName:
+            "Instant Resource Resource Tap Crowd Boos Defending Action Get 1 Defense Turn",
         },
         {
           kind: "static",
@@ -895,6 +914,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "Whenever Crowd Boos Create Might Token",
         },
       ],
     },
@@ -945,6 +965,7 @@ export const generatedCatalogTestCards = {
           },
           id: "ndKnMFtcDt8JmPFD6bfbk:playEvosBanishedZone",
           text: "You may play Evos from your banished zone.\nOnce per Turn Instant - {r}{r}{r}: You may play your next Evo this turn as though it were an instant. When you do, draw a card.",
+          displayName: "Play Evos Banished Zone",
         },
         {
           kind: "activated",
@@ -1020,6 +1041,8 @@ export const generatedCatalogTestCards = {
           },
           id: "ndKnMFtcDt8JmPFD6bfbk:oncePerTurnInstantResourceResourceResourcePlayNextEvoTurnThoughWereInstantDraw",
           text: "You may play Evos from your banished zone.\nOnce per Turn Instant - {r}{r}{r}: You may play your next Evo this turn as though it were an instant. When you do, draw a card.",
+          displayName:
+            "Once Per Turn Instant Resource Resource Resource Play Next Evo Turn Though Were Instant Draw",
         },
       ],
     },
@@ -1124,6 +1147,7 @@ export const generatedCatalogTestCards = {
                         duration: "this-turn",
                       },
                     },
+                    displayName: "Hits Gets Go Again",
                   },
                 },
                 target: {
@@ -1148,6 +1172,7 @@ export const generatedCatalogTestCards = {
           },
           id: "rzm9GQbbBrrDzLQRcB6kK:attacksStealthAttackingMarkedGet1PowerHitsGetsGoAgain",
           text: 'Your attacks with stealth that are attacking a marked hero get +1{p} and "When this hits, this gets go again."\nAt the beginning of your end phase, if an opponent is marked, you become a random Agent of Chaos.',
+          displayName: "Attacks Stealth Attacking Marked Get 1 Power Hits Gets Go Again",
         },
         {
           kind: "static",
@@ -1198,6 +1223,7 @@ export const generatedCatalogTestCards = {
               observation: "become",
             },
           },
+          displayName: "Beginning End Phase Opponent Marked Become Random Agent Chaos",
         },
       ],
     },
@@ -1271,6 +1297,8 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName:
+            "Whenever Opponent Draws 1 More During Action Phase Create Many Seismic Surge Tokens",
         },
         {
           kind: "static",
@@ -1327,6 +1355,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Start Turn 3 More Seismic Surge Tokens Crush Get Dominate Turn",
         },
       ],
     },
@@ -1395,6 +1424,8 @@ export const generatedCatalogTestCards = {
           },
           id: "WDhGzj9m8MWhkkfRMB7Jg:instantResourceResourceTapDestroyLightningFlowCreateEmbodimentLightningToken",
           text: "Instant - {r}{r}, {t}, destroy a Lightning Flow you control: Create an Embodiment of Lightning token.",
+          displayName:
+            "Instant Resource Resource Tap Destroy Lightning Flow Create Embodiment Lightning Token",
         },
       ],
     },
@@ -1500,6 +1531,8 @@ export const generatedCatalogTestCards = {
           },
           id: "nqbttmdCrgTbFBjJBzLtz:instantResourceTapDestroyLightningFlowDiscardCreatePonderTokenInstantDiscardWayPlayTurn",
           text: "Instant - {r}, {t}, destroy a Lightning Flow you control: Discard a card and create a Ponder token. If an instant is discard this way, you may play it this turn.",
+          displayName:
+            "Instant Resource Tap Destroy Lightning Flow Discard Create Ponder Token Instant Discard Way Play Turn",
         },
       ],
     },
@@ -1604,6 +1637,8 @@ export const generatedCatalogTestCards = {
           },
           id: "pnwGDgknLbHc96Ghg8f67:instantResourceResourceTapDestroyLightningFlowBanishAnotherLightningAuraPermanentNoHoloCountersReturnBanishedAuraArenaHoloCounter",
           text: "Instant - {r}{r}, {t}, destroy a Lightning Flow you control, banish another Lightning aura permanent you control with no holo counters: Return the banished aura to the arena with a holo counter.",
+          displayName:
+            "Instant Resource Resource Tap Destroy Lightning Flow Banish Another Lightning Aura Permanent No Holo Counters Return Banished Aura Arena Holo Counter",
         },
       ],
     },
@@ -1659,6 +1694,7 @@ export const generatedCatalogTestCards = {
           },
           id: "QT8JfjzmzqRR9MWgtgPLR:oncePerTurnActionResourceResourceAttack",
           text: "Once per Turn Action - {r}{r}: Attack\nOnce per Turn Effect - When you discard a card with 6 or more {p}, Romping Club gains +1{p} until end of turn.",
+          displayName: "Once Per Turn Action Resource Resource Attack",
         },
         {
           kind: "static",
@@ -1711,6 +1747,8 @@ export const generatedCatalogTestCards = {
               duration: "this-turn",
             },
           },
+          displayName:
+            "Once Per Turn Effect Discard 6 More Power Romping Club Gains 1 Power End Turn",
         },
       ],
     },
@@ -1766,6 +1804,7 @@ export const generatedCatalogTestCards = {
           },
           id: "BFWbnQjgKgRBjw88jK8KH:oncePerTurnActionResourceResourceResourceAttack",
           text: "Once per turn Action - {r}{r}{r}: Attack\nWhile there are 2 or more cards with cost 3 or greater in your pitch zone, Anothos has +2{p}.",
+          displayName: "Once Per Turn Action Resource Resource Resource Attack",
         },
         {
           kind: "static",
@@ -1803,6 +1842,7 @@ export const generatedCatalogTestCards = {
           },
           id: "BFWbnQjgKgRBjw88jK8KH:there2MoreCost3GreaterPitchZoneAnothos2Power",
           text: "Once per turn Action - {r}{r}{r}: Attack\nWhile there are 2 or more cards with cost 3 or greater in your pitch zone, Anothos has +2{p}.",
+          displayName: "There 2 More Cost 3 Greater Pitch Zone Anothos 2 Power",
         },
       ],
     },
@@ -1863,6 +1903,7 @@ export const generatedCatalogTestCards = {
           },
           id: "GgDFFHhLh8Kc7tJK8nBLj:asAdditionalCostPlayAlphaRampageDiscardRandom",
           text: "Rhinar Specialization\nAs an additional cost to play Alpha Rampage, discard a random card.\nWhen you attack with Alpha Rampage, intimidate.",
+          displayName: "As Additional Cost Play Alpha Rampage Discard Random",
         },
         {
           kind: "static",
@@ -1899,6 +1940,7 @@ export const generatedCatalogTestCards = {
               target: "opponent",
             },
           },
+          displayName: "When Attack Alpha Rampage Intimidate",
         },
       ],
     },
@@ -1951,6 +1993,7 @@ export const generatedCatalogTestCards = {
           },
           id: "nPdtpJ7BgkdccWhMGttWr:additionalCost",
           text: "As an additional cost to play this, discard a random card.",
+          displayName: "Additional Cost",
         },
       ],
     },
@@ -2006,6 +2049,7 @@ export const generatedCatalogTestCards = {
           },
           id: "HFHk96nMLCb7djccbnWpR:additionalCost",
           text: "As an additional cost to play Primeval Bellow, discard a random card.\nYour next Brute attack this turn gains +5{p}.\nGo again",
+          displayName: "Additional Cost",
         },
         {
           kind: "resolution",
@@ -2070,39 +2114,49 @@ export const generatedCatalogTestCards = {
         {
           kind: "resolution",
           effect: {
-            type: "grant-property",
-            property: {
-              kind: "ability",
-              ability: {
-                id: "WCgctGz6KWwfp9Dhd7H7c:resolutionGrantPropertyIntimidate:staticWhileHasStatusDefendedByFewerThan2Non",
-                text: 'Your next Brute attack this turn gains "While this attack is defended by less than 2 non-equipment cards, it has +4{p}."\nIntimidate\nGo again',
-                kind: "static",
-                staticKind: "while",
-                condition: {
-                  type: "has-status",
-                  status: "defended-by-fewer-than-2-non-equipment-cards",
-                },
-                effect: {
-                  type: "modify-numeric",
-                  property: "power",
-                  op: "add",
-                  amount: 4,
-                  target: {
-                    selector: "self",
+            type: "sequence",
+            steps: [
+              {
+                type: "intimidate",
+                target: "opponent",
+              },
+              {
+                type: "grant-property",
+                property: {
+                  kind: "ability",
+                  ability: {
+                    id: "WCgctGz6KWwfp9Dhd7H7c:resolutionGrantPropertyIntimidate:staticWhileHasStatusDefendedByFewerThan2Non",
+                    text: 'Your next Brute attack this turn gains "While this attack is defended by less than 2 non-equipment cards, it has +4{p}."\nIntimidate\nGo again',
+                    kind: "static",
+                    staticKind: "while",
+                    condition: {
+                      type: "has-status",
+                      status: "defended-by-fewer-than-2-non-equipment-cards",
+                    },
+                    effect: {
+                      type: "modify-numeric",
+                      property: "power",
+                      op: "add",
+                      amount: 4,
+                      target: {
+                        selector: "self",
+                      },
+                      duration: "permanent",
+                    },
+                    displayName: "Static While Has Status Defended By Fewer Than 2 Non",
                   },
-                  duration: "permanent",
+                },
+                duration: "this-turn",
+                appliesTo: {
+                  next: {
+                    typeBox: {
+                      supertypes: ["Brute"],
+                    },
+                  },
+                  events: ["play", "attack"],
                 },
               },
-            },
-            duration: "this-turn",
-            appliesTo: {
-              next: {
-                typeBox: {
-                  supertypes: ["Brute"],
-                },
-              },
-              events: ["play", "attack"],
-            },
+            ],
           },
           label: {
             name: "intimidate",
@@ -2231,6 +2285,7 @@ export const generatedCatalogTestCards = {
           },
           id: "QDrWjRHBmBWBnJHmmbzRM:asAdditionalCostPlayEnlightenedStrikePutFromHand",
           text: "As an additional cost to play Enlightened Strike, put a card from your hand on the bottom of your deck.\nChoose 1;\n- When you attack with Enlightened Strike, draw a card.\n- Enlightened Strike gains +2{p}.\n- Enlightened Strike gains go again.",
+          displayName: "As Additional Cost Play Enlightened Strike Put From Hand",
         },
       ],
     },
@@ -2296,6 +2351,7 @@ export const generatedCatalogTestCards = {
               player: "controller",
             },
           },
+          displayName: "Draw On Hit",
         },
       ],
     },
@@ -2445,6 +2501,8 @@ export const generatedCatalogTestCards = {
           },
           id: "tfgqfmpf8PtwhJqcBKDwB:playBanishNimblismSequenceModifyNumericPowerThisTurnGrantPropertyThisTurn",
           text: "As an additional cost to play Nimble Strike, you may banish a card named Nimblism from your graveyard. If you do, Nimble Strike gain +1{p} and go again.",
+          displayName:
+            "Play Banish Nimblism Sequence Modify Numeric Power This Turn Grant Property This Turn",
         },
       ],
     },
@@ -2533,6 +2591,7 @@ export const generatedCatalogTestCards = {
           label: {
             name: "crush",
           },
+          displayName: "Resolve",
         },
       ],
     },
@@ -2620,6 +2679,7 @@ export const generatedCatalogTestCards = {
           label: {
             name: "crush",
           },
+          displayName: "Crush",
         },
       ],
     },
@@ -2780,6 +2840,7 @@ export const generatedCatalogTestCards = {
                             },
                           },
                         },
+                        displayName: "On Hit",
                       },
                     },
                     target: {
@@ -2813,6 +2874,7 @@ export const generatedCatalogTestCards = {
           ],
           id: "zzNQtc8QL8RcCwRcB6JP7:chooseMode",
           text: 'Choose 1;\n- Target club or hammer weapon attack gains +4{p}.\n- Target attack action card with cost 2 or more gets +4{p} and "When this hits a hero, they discard a card."',
+          displayName: "Choose Mode",
         },
       ],
     },
@@ -2946,6 +3008,7 @@ export const generatedCatalogTestCards = {
               duration: "permanent",
             },
           },
+          displayName: "Arsenal Defense",
         },
       ],
     },
@@ -3122,6 +3185,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "On Attack Discard Draw Create Token Gold",
         },
       ],
     },
@@ -3208,6 +3272,7 @@ export const generatedCatalogTestCards = {
                     },
                   },
                 },
+                displayName: "Hits Discard Create Gold Token",
               },
             },
             duration: "this-turn",
@@ -3332,6 +3397,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "Create Gold When Attack Meets Requirement",
         },
       ],
     },
@@ -3400,6 +3466,7 @@ export const generatedCatalogTestCards = {
           },
           id: "jrGCfgFzjRwjWMNCCPzmc:actionResourceTapAttack",
           text: "Action - {r}, {t}: Attack\nWatery Grave",
+          displayName: "Action Resource Tap Attack",
         },
       ],
     },
@@ -3659,6 +3726,8 @@ export const generatedCatalogTestCards = {
           },
           id: "c9TrL6MwcrMKtmTbCHL76:thricePerTurnInstantTapCogGets1PowerThirdTimeActivatedAbilityDestroyDefending",
           text: "The defending hero must defend this with an equipment they control if able.\nThrice per Turn Instant - {t} a cog you control: This gets +1{p}. If this is the third time you've activated this ability, destroy a defending card.",
+          displayName:
+            "Thrice Per Turn Instant Tap Cog Gets 1 Power Third Time Activated Ability Destroy Defending",
         },
       ],
     },
@@ -3724,6 +3793,7 @@ export const generatedCatalogTestCards = {
           },
           id: "zLcR9wbtJCfBQLFpntDFg:firstCost1MorePlayEachTurnCostsLess",
           text: "Suspense\nThe first card with cost 1 or more you play each turn costs {r} less to play.",
+          displayName: "First Cost 1 More Play Each Turn Costs Less",
         },
       ],
     },
@@ -3800,6 +3870,7 @@ export const generatedCatalogTestCards = {
               target: "controller",
             },
           },
+          displayName: "When Attacks Hero If Have Less Than Them Crowd",
         },
         {
           kind: "static",
@@ -3860,6 +3931,7 @@ export const generatedCatalogTestCards = {
                     },
                   },
                 },
+                displayName: "When Hits Hero May Plan Aura Suspense From Graveyard",
               },
             },
             target: {
@@ -3872,6 +3944,7 @@ export const generatedCatalogTestCards = {
           },
           id: "JdRffqrPCN9BQRd8gq9BW:ifVeBeenCheeredTurnGetsWhenHitsHero",
           text: 'When this attacks a hero, if you have less {h} than them, the crowd cheers you.\nIf you\'ve been cheered this turn, this gets "When this hits a hero, you may plan an aura of suspense from your graveyard this turn."',
+          displayName: "If Ve Been Cheered Turn Gets When Hits Hero",
         },
       ],
     },
@@ -3948,6 +4021,7 @@ export const generatedCatalogTestCards = {
               target: "controller",
             },
           },
+          displayName: "Triggered Attack Life Comparison Crowd Boos The Crowd Boos",
         },
         {
           kind: "static",
@@ -3983,6 +4057,7 @@ export const generatedCatalogTestCards = {
               duration: "this-turn",
             },
           },
+          displayName: "Triggered Crowd Boos Modify Numeric Power This Turn The Crowd Boos",
         },
       ],
     },
@@ -4059,6 +4134,7 @@ export const generatedCatalogTestCards = {
               target: "controller",
             },
           },
+          displayName: "When Attacks Hero If Have More Than Them Crowd",
         },
         {
           kind: "static",
@@ -4083,6 +4159,7 @@ export const generatedCatalogTestCards = {
           },
           id: "QwPWQnB7zg7kBPkNT9Mqp:ifVeBeenBooedTurnSBaseIsDoubled",
           text: "When this attacks a hero, if you have more {h} than them, the crowd boos you.\nIf you've been booed this turn, this card's base {p} is doubled.",
+          displayName: "If Ve Been Booed Turn SBase Is Doubled",
         },
       ],
     },
@@ -4160,6 +4237,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Arm Next Attack",
         },
       ],
     },
@@ -4278,6 +4356,7 @@ export const generatedCatalogTestCards = {
                         },
                       },
                     },
+                    displayName: "When Hits Hero They Discard Number 2",
                   },
                 },
                 duration: "this-turn",
@@ -4469,6 +4548,7 @@ export const generatedCatalogTestCards = {
           ],
           id: "cjJpkCtJwndP7FwzwDDQc:chooseModes",
           text: "Choose 2;\n\nEquip a base equipment with Proto in its name from your inventory.\nEvo permanents you control get +1{d} this turn.\nPut this under an Evo permanent you control.\nYou may banish an Evo from your hand. If you do, draw a card.",
+          displayName: "Choose Modes",
         },
       ],
     },
@@ -4532,6 +4612,8 @@ export const generatedCatalogTestCards = {
           },
           id: "zknqNdwtDMrHbRpgKkBJw:haveNumber2MoreEvosEquippedCostsResourceResourceResourceLessPlay",
           text: 'If you have 1 or more Evos equipped, this gets "When this hits a hero, they discard a card,"\n\n2 or more, this costs {r}{r}{r} less to play,\n3 or more, this gets overpower,\n4 or more, this gets +3{p}.',
+          displayName:
+            "Have Number 2 More Evos Equipped Costs Resource Resource Resource Less Play",
         },
         {
           kind: "static",
@@ -4588,6 +4670,7 @@ export const generatedCatalogTestCards = {
                           },
                         },
                       },
+                      displayName: "When Hits Hero They Discard",
                     },
                   },
                   target: {
@@ -4653,6 +4736,7 @@ export const generatedCatalogTestCards = {
           },
           id: "zknqNdwtDMrHbRpgKkBJw:haveNumber1MoreEvosEquippedGetsWhenHitsHeroTheyDiscardNumber2",
           text: 'If you have 1 or more Evos equipped, this gets "When this hits a hero, they discard a card,"\n\n2 or more, this costs {r}{r}{r} less to play,\n3 or more, this gets overpower,\n4 or more, this gets +3{p}.',
+          displayName: "Have Number 1 More Evos Equipped Gets When Hits Hero They Discard Number 2",
         },
       ],
     },
@@ -4735,6 +4819,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "Whenever Complete Contract Create Silver Token",
         },
         {
           kind: "static",
@@ -4790,6 +4875,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "Hits Banish Top Deck Up 1 Arsenal",
         },
       ],
     },
@@ -4891,6 +4977,7 @@ export const generatedCatalogTestCards = {
           ],
           id: "BfCHDqCQHfNgqQGckhq7d:chooseDaggerOrDefenseMode",
           text: "Choose 1 or both;\n\nTarget dagger attack gets +3{p}.\nTarget card defending an attack with stealth gets -3{d} this turn.",
+          displayName: "Choose Dagger Or Defense Mode",
         },
       ],
     },
@@ -5032,6 +5119,7 @@ export const generatedCatalogTestCards = {
           label: {
             name: "crush",
           },
+          displayName: "Crush Ability",
         },
       ],
     },
@@ -5114,6 +5202,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "At Beginning End Phase If Control No Seismic Surge",
         },
       ],
     },
@@ -5263,6 +5352,7 @@ export const generatedCatalogTestCards = {
           label: {
             name: "crush",
           },
+          displayName: "Crush Destroy All Guardian Auras",
         },
       ],
     },
@@ -5423,6 +5513,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Triggered Hit Deal Damage",
         },
       ],
     },
@@ -5529,6 +5620,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "When Attacks Next Time Play Instant Chain Link May",
         },
       ],
     },
@@ -5626,6 +5718,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "Triggered Effect",
         },
       ],
     },
@@ -5769,6 +5862,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "When Leaves Arena Create Ponder Token",
         },
       ],
     },
@@ -5946,6 +6040,7 @@ export const generatedCatalogTestCards = {
           },
           id: "9zdPMfzWLFq7PWbjKmCc6:playAsInstantWithSpectralShield",
           text: "Put three +1{p} counters on target aura with ward you control.\nIf you control a Spectral Shield, you may play this as though it were an instant.",
+          displayName: "Play As Instant With Spectral Shield",
         },
       ],
     },
@@ -5997,6 +6092,7 @@ export const generatedCatalogTestCards = {
           },
           id: "fTbpMzhTMBwFNCpGKCft7:asAdditionalCostPlayBloodrushBellowDiscardRandom",
           text: "As an additional cost to play Bloodrush Bellow, discard a random card.\nYour Brute attacks gain +2{p} this turn.\nIf the discarded card has 6 or more {p}, draw 2 cards and Bloodrush Bellow gains go again.",
+          displayName: "As Additional Cost Play Bloodrush Bellow Discard Random",
         },
         {
           kind: "resolution",
@@ -6206,6 +6302,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "If Beast Within Is Put Into Graveyard From Anywhere",
         },
       ],
     },
@@ -6270,9 +6367,11 @@ export const generatedCatalogTestCards = {
             effect: {
               type: "create-token",
               token: "quicken",
+              creator: "token-controller",
               controller: "defending-hero",
             },
           },
+          displayName: "When Combat Chain Closes Didn THit Defending Hero Creates Quicken Token",
         },
       ],
     },
@@ -6390,6 +6489,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "When Attacks Hero Banish From Their Arsenal When Chain Link Resolves Didn",
         },
       ],
     },
@@ -6592,6 +6692,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "When Hits Hero Look At Their Hand Choose Without Base Defense Do",
         },
       ],
     },
@@ -6642,10 +6743,12 @@ export const generatedCatalogTestCards = {
           effect: {
             type: "create-token",
             token: "quicken",
+            creator: "token-controller",
             controller: "each",
           },
           id: "DmpnhzMR7WhCgkFWncRkk:actionDestroyEachHeroCreatesQuickenTokenGoAgain",
           text: "Action - Destroy this: Each hero creates a Quicken token.  Go again",
+          displayName: "Action Destroy Each Hero Creates Quicken Token Go Again",
         },
       ],
     },
@@ -6720,6 +6823,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Hits Lose 1 Life",
         },
       ],
     },
@@ -6802,6 +6906,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Triggered Hit Banish",
         },
       ],
     },
@@ -7008,11 +7113,8 @@ export const generatedCatalogTestCards = {
                       {
                         type: "discard",
                         target: {
-                          selector: "object",
-                          declared: "at-resolution",
-                          player: "each",
-                          zones: ["hand"],
-                          count: 1,
+                          selector: "binding",
+                          binding: "it",
                         },
                       },
                       {
@@ -7047,6 +7149,8 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName:
+            "Hits Choose Reveal Hand Attack Action Discard Create Gold Token Activated Cannon Turn Instead Look Hand Choose",
         },
       ],
     },
@@ -7141,6 +7245,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "Reduce Guardian Attack Cost At Action Phase",
         },
       ],
     },
@@ -7271,6 +7376,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "Grant Go Again To Attack Action",
         },
       ],
     },
@@ -7344,6 +7450,7 @@ export const generatedCatalogTestCards = {
                   prize: {
                     type: "create-token",
                     token: "vigor",
+                    creator: "token-controller",
                     controller: "winner",
                   },
                 },
@@ -7370,6 +7477,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "Triggered Static On Defend Effect",
         },
       ],
     },
@@ -7519,6 +7627,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "Reveal Evo To Prevent Damage",
         },
       ],
     },
@@ -7630,6 +7739,7 @@ export const generatedCatalogTestCards = {
           },
           id: "GQDtpfrtDcDkPDFPwjRmf:evoLegsCostLessPlay",
           text: "If you have a base legs equipped, transform it into this, then equip this.\nEvo legs cost you {r} less to play.\nBattleworn",
+          displayName: "Evo Legs Cost Less Play",
         },
       ],
     },
@@ -7787,6 +7897,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "When Transforms From Into Evo Different Name Gain 1",
         },
       ],
     },
@@ -7933,6 +8044,7 @@ export const generatedCatalogTestCards = {
             },
             id: "BRpMLJdMBPgfJNJLJWDFg:attack",
             text: "Action - {r}{r}{r}, banish 2 cards from your soul: Attack\nWhenever this attacks a hero, they discard a card.\nYour Mechanologist attack action cards get go again.\nThis counts as having 4 Evos equipped.\nBattleworn",
+            displayName: "Attack",
           },
           {
             kind: "static",
@@ -7965,6 +8077,7 @@ export const generatedCatalogTestCards = {
                 },
               },
             },
+            displayName: "Discard On Attack",
           },
           {
             kind: "static",
@@ -7997,6 +8110,7 @@ export const generatedCatalogTestCards = {
             },
             id: "BRpMLJdMBPgfJNJLJWDFg:grantMechanologistAttacksGoAgain",
             text: "Action - {r}{r}{r}, banish 2 cards from your soul: Attack\nWhenever this attacks a hero, they discard a card.\nYour Mechanologist attack action cards get go again.\nThis counts as having 4 Evos equipped.\nBattleworn",
+            displayName: "Grant Mechanologist Attacks Go Again",
           },
           {
             kind: "static",
@@ -8017,6 +8131,7 @@ export const generatedCatalogTestCards = {
             },
             id: "BRpMLJdMBPgfJNJLJWDFg:countAsFourEvos",
             text: "Action - {r}{r}{r}, banish 2 cards from your soul: Attack\nWhenever this attacks a hero, they discard a card.\nYour Mechanologist attack action cards get go again.\nThis counts as having 4 Evos equipped.\nBattleworn",
+            displayName: "Count As Four Evos",
           },
         ],
         numeric: {
@@ -8227,6 +8342,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "Triggered Effect",
         },
       ],
     },
@@ -8312,6 +8428,7 @@ export const generatedCatalogTestCards = {
           },
           id: "dpPzdRQgfkBRgcHbWMQpt:instantDestroyInstantPlayTurnGetGoAgain",
           text: "Instant - {r}, destroy this: Instant cards you play this turn get go again.\nArcane Barrier 1\nBattleworn",
+          displayName: "Instant Destroy Instant Play Turn Get Go Again",
         },
       ],
     },
@@ -8380,6 +8497,7 @@ export const generatedCatalogTestCards = {
           },
           id: "QTkWJ8jqCgbMCTcNpmMmC:oncePerTurnActionResourceResourceAttackGoAgain",
           text: "Once per Turn Action - {r}{r}: Attack. Go again\nWhen this hits a hero, mark them.\nPiercing 1",
+          displayName: "Once Per Turn Action Resource Resource Attack Go Again",
         },
         {
           kind: "static",
@@ -8415,6 +8533,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Hits Mark",
         },
       ],
     },
@@ -8507,6 +8626,8 @@ export const generatedCatalogTestCards = {
                 ],
               },
             },
+            displayName:
+              "Whenever Create 1 More Runechants Banish Top Deck Then Created 3 More Runechants Turn Traverse",
           },
         ],
         numeric: {
@@ -8557,6 +8678,7 @@ export const generatedCatalogTestCards = {
             },
             id: "QMGnHJqg6fhcKLfmpRQLz:firstAttackActionBloodDebtPlayTurnGetsGoAgain",
             text: "The first attack action card with blood debt you play each turn gets go again.\nAt the beginning of each end phase, if you've created or activated a Gate to i'Arathael this turn, you may traverse.",
+            displayName: "First Attack Action Blood Debt Play Turn Gets Go Again",
           },
           {
             kind: "static",
@@ -8593,6 +8715,7 @@ export const generatedCatalogTestCards = {
                 },
               },
             },
+            displayName: "Beginning End Phase Created Activated Gate IArathael Turn Traverse",
           },
         ],
         numeric: {
@@ -8700,6 +8823,8 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName:
+            "Whenever Create 1 More Runechants Banish Top Deck Then Created 3 More Runechants Turn Traverse",
         },
       ],
     },
@@ -8754,6 +8879,7 @@ export const generatedCatalogTestCards = {
           },
           id: "RKtGjjJjBqhkrfb9PkRHw:banished",
           text: "You may play this from your banished zone.\nUsurp\nWhen this hits a hero, you may banish target aura permanent they control.\nBlood Debt",
+          displayName: "Banished",
         },
         {
           kind: "static",
@@ -8798,6 +8924,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Hit",
         },
       ],
     },
@@ -8852,6 +8979,7 @@ export const generatedCatalogTestCards = {
           },
           id: "Hbj86fDdmMwRkCMpwwfNw:banished",
           text: "You may play this from your banished zone.\nUsurp\nWhen this hits a hero, they banish a card from their hand.\nBlood Debt",
+          displayName: "Banished",
         },
         {
           kind: "static",
@@ -8888,6 +9016,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Hit",
         },
       ],
     },
@@ -8942,6 +9071,7 @@ export const generatedCatalogTestCards = {
           },
           id: "KKwgLK6Hhzbf9DTBbhJ8c:banished",
           text: "You may play this from your banished zone.\nUsurp\nWhen this hits a hero, they banish a card in their arsenal.\nBlood Debt",
+          displayName: "Banished",
         },
         {
           kind: "static",
@@ -8978,6 +9108,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Hit",
         },
       ],
     },
@@ -9099,6 +9230,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Embrace",
         },
       ],
     },
@@ -9290,6 +9422,7 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName: "When Attacks Reveal From Top Deck Until Reveal Attack",
         },
       ],
     },
@@ -9371,6 +9504,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "When Combat Chain Closes If Hero Has Lost Turn",
         },
       ],
     },
@@ -9437,6 +9571,7 @@ export const generatedCatalogTestCards = {
           },
           id: "CwJMHg9zGWTRtRFhbWNbf:continuousReplacementEnterArenaAddCounterVerseWhileInArena",
           text: "Go again\nThis enters the arena with 3 verse counters. When it has none, destroy it.\nOnce per turn, when you play an attack action card, remove a verse counter from this. If you do, create a Runechant token.",
+          displayName: "Continuous Replacement Enter Arena Add Counter Verse While In Arena",
         },
         {
           kind: "static",
@@ -9466,6 +9601,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Triggered Counter Removed Destroy",
         },
         {
           kind: "static",
@@ -9522,6 +9658,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Triggered Play If You Do Remove Counters Verse Create Token Runechant",
         },
       ],
     },
@@ -9588,6 +9725,7 @@ export const generatedCatalogTestCards = {
           },
           id: "HP8HBbKwHCRChp7n7MgDB:continuousReplacementEnterArenaAddCounterVerseWhileInArena",
           text: "Go again\nRuneblood Incantation enters the arena with 3 verse counters on it.\nAt the beginning of your action phase, remove a verse counter from Runeblood Incantation. If you do create a Runechant token. Otherwise, destroy Runeblood Incantation.",
+          displayName: "Continuous Replacement Enter Arena Add Counter Verse While In Arena",
         },
         {
           kind: "static",
@@ -9645,6 +9783,8 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName:
+            "Triggered Action Phase Start Unless Destroy If You Do Remove Counters Verse Runeblood Incantation Create Token Runechant",
         },
       ],
     },
@@ -9976,6 +10116,7 @@ export const generatedCatalogTestCards = {
                         ],
                       },
                     },
+                    displayName: "When Hits Look At Top Deck Banish",
                   },
                 },
                 duration: "this-turn",
@@ -10138,6 +10279,7 @@ export const generatedCatalogTestCards = {
           },
           id: "7RhQ7rthWCfHkgfdHFFJm:mayPlayFromBanishedZone",
           text: "You may play this from your banished zone.\nIf a hero has lost {h} this turn, you may play this as thought it were an instant.\nEach hero banishes a card from their hand.\nBlood Debt",
+          displayName: "May Play From Banished Zone",
         },
         {
           kind: "static",
@@ -10161,18 +10303,34 @@ export const generatedCatalogTestCards = {
           },
           id: "7RhQ7rthWCfHkgfdHFFJm:ifHeroHasLostTurnMayPlayAsThought",
           text: "You may play this from your banished zone.\nIf a hero has lost {h} this turn, you may play this as thought it were an instant.\nEach hero banishes a card from their hand.\nBlood Debt",
+          displayName: "If Hero Has Lost Turn May Play As Thought",
         },
         {
           kind: "resolution",
           effect: {
-            type: "banish",
-            target: {
-              selector: "object",
-              declared: "at-resolution",
-              player: "each",
-              zones: ["hand"],
-              count: 1,
-            },
+            type: "sequence",
+            steps: [
+              {
+                type: "banish",
+                target: {
+                  selector: "object",
+                  declared: "at-resolution",
+                  player: "controller",
+                  zones: ["hand"],
+                  count: 1,
+                },
+              },
+              {
+                type: "banish",
+                target: {
+                  selector: "object",
+                  declared: "at-resolution",
+                  player: "each-other-hero",
+                  zones: ["hand"],
+                  count: 1,
+                },
+              },
+            ],
           },
           id: "7RhQ7rthWCfHkgfdHFFJm:eachHeroBanishesFromTheirHand",
           text: "You may play this from your banished zone.\nIf a hero has lost {h} this turn, you may play this as thought it were an instant.\nEach hero banishes a card from their hand.\nBlood Debt",
@@ -10235,6 +10393,7 @@ export const generatedCatalogTestCards = {
           },
           id: "qp7f9b6WNBmRWJfPbKtDm:discardToPreventAndCreateRunechant",
           text: "Instant - Discard this: Prevent the next 2 damage that would be dealt to you this turn. The first time you prevent damage this way, create a Runechant token.",
+          displayName: "Discard To Prevent And Create Runechant",
         },
       ],
     },
@@ -10398,6 +10557,7 @@ export const generatedCatalogTestCards = {
           },
           id: "6NCKgNWRrD7cqzzhw6Qtz:actionResourceTapAttackActivateOnlyPlayedBanishedZoneTurn",
           text: "Action - {r}, {t}: Attack. Activate this only if you've played a card from a banished zone this turn.\nWhen this hits a hero, create a Runechant token.",
+          displayName: "Action Resource Tap Attack Activate Only Played Banished Zone Turn",
         },
         {
           kind: "static",
@@ -10429,6 +10589,7 @@ export const generatedCatalogTestCards = {
               controller: "controller",
             },
           },
+          displayName: "Hits Create Runechant Token",
         },
       ],
     },
@@ -10497,6 +10658,7 @@ export const generatedCatalogTestCards = {
               player: "controller",
               zones: ["graveyard"],
               filter: {
+                hasStatus: "face-up",
                 typeBox: {
                   subtypes: ["Zombie"],
                 },
@@ -10507,6 +10669,7 @@ export const generatedCatalogTestCards = {
           },
           id: "cz8FPm7Rjjndfgb8jQBcT:actionResourceTapEndTurnPlayTargetZombieGraveyardGoAgain",
           text: "Action - {r}, {t}: Until end of turn, you may play target zombie from your graveyard. Go again\nWhenever a zombie you control dies, banish it face-down and create a Corrupted Corpse in your banished Zone.",
+          displayName: "Action Resource Tap End Turn Play Target Zombie Graveyard Go Again",
         },
         {
           kind: "static",
@@ -10559,6 +10722,8 @@ export const generatedCatalogTestCards = {
               ],
             },
           },
+          displayName:
+            "Whenever Zombie Dies Banish Face Down Create Corrupted Corpse Banished Zone",
         },
       ],
     },
@@ -10636,6 +10801,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Hits Banish Hand",
         },
       ],
     },
@@ -10704,6 +10870,7 @@ export const generatedCatalogTestCards = {
           },
           id: "dRdWkMqh86cKpH7mpFnpC:zombies",
           text: "Zombies you control get +1{p}.\nDecay",
+          displayName: "Zombies",
         },
       ],
     },
@@ -10769,6 +10936,7 @@ export const generatedCatalogTestCards = {
           },
           id: "qmC78MP6bjTHcDChc6RMJ:sAttacksGetGoAgain",
           text: "Incarnate\nThis card's attacks get go again.\nBlood Debt",
+          displayName: "S Attacks Get Go Again",
         },
       ],
     },
@@ -10835,6 +11003,7 @@ export const generatedCatalogTestCards = {
                     selector: "self",
                   },
                 },
+                displayName: "Attack",
               },
             },
             target: {
@@ -10855,62 +11024,121 @@ export const generatedCatalogTestCards = {
           },
           id: "PjHzdFtkjKpqTrDkwkJGK:zombiesGetActionResourceTapAttack",
           text: 'During your action phase, zombies you\'ve played from a graveyard or banished zone enter the arena tapped and get "When this enteres the arena, attack with it."\nZombies you control get "Action - {r}, {t}: Attack"',
+          displayName: "Zombies Get Action Resource Tap Attack",
         },
         {
           kind: "static",
-          staticKind: "triggered",
-          trigger: {
-            kind: "event-and-state",
-            event: {
+          staticKind: "continuous",
+          condition: {
+            type: "and",
+            conditions: [
+              {
+                type: "turn-player",
+                who: "self",
+              },
+              {
+                type: "phase-is",
+                phase: "action",
+              },
+            ],
+          },
+          effect: {
+            type: "replacement",
+            replacementKind: "identity",
+            replaces: {
               name: "enter-arena",
-              actor: {
-                kind: "any",
-              },
-              observes: {
-                kind: "event-object",
-                selector: "moved-object",
-                relationship: {
-                  kind: "controller",
-                  player: "ability-controller",
+              player: "controller",
+              subject: {
+                typeBox: {
+                  subtypes: ["Zombie"],
                 },
-                filter: {
-                  typeBox: {
-                    subtypes: ["Zombie"],
-                  },
-                  playedFromZones: ["graveyard", "banished"],
-                },
-                bindAs: "it",
+                playedFromZones: ["graveyard", "banished"],
               },
             },
-            state: {
-              type: "turn-player",
-              who: "self",
+            modification: {
+              type: "tap",
+              target: {
+                selector: "self",
+              },
             },
+            duration: "while-in-arena",
           },
-          id: "PjHzdFtkjKpqTrDkwkJGK:duringActionPhaseZombiePlayedGraveyardBanishedZoneEntersArenaTapAttack",
+          id: "PjHzdFtkjKpqTrDkwkJGK:duringActionPhaseZombiePlayedGraveyardBanishedZoneEntersArenaTapped",
           text: 'During your action phase, zombies you\'ve played from a graveyard or banished zone enter the arena tapped and get "When this enteres the arena, attack with it."\nZombies you control get "Action - {r}, {t}: Attack"',
-          resolution: {
-            kind: "effect",
-            effect: {
-              type: "sequence",
-              steps: [
-                {
-                  type: "tap",
-                  target: {
-                    selector: "binding",
-                    binding: "it",
-                  },
-                },
-                {
-                  type: "attack-with",
-                  target: {
-                    selector: "binding",
-                    binding: "it",
-                  },
-                },
-              ],
-            },
+          displayName:
+            "During Action Phase Zombie Played Graveyard Banished Zone Enters Arena Tapped",
+        },
+        {
+          kind: "static",
+          staticKind: "continuous",
+          condition: {
+            type: "and",
+            conditions: [
+              {
+                type: "turn-player",
+                who: "self",
+              },
+              {
+                type: "phase-is",
+                phase: "action",
+              },
+            ],
           },
+          effect: {
+            type: "grant-property",
+            property: {
+              kind: "ability",
+              ability: {
+                id: "PjHzdFtkjKpqTrDkwkJGK:duringActionPhaseZombiePlayedGraveyardBanishedZoneGetsEnterArenaAttack:attackWhenEnteringFromGraveyardOrBanished",
+                kind: "static",
+                staticKind: "triggered",
+                trigger: {
+                  kind: "event",
+                  event: {
+                    name: "enter-arena",
+                    actor: {
+                      kind: "any",
+                    },
+                    observes: {
+                      kind: "source",
+                      selector: "moved-object",
+                    },
+                  },
+                },
+                resolution: {
+                  kind: "effect",
+                  effect: {
+                    type: "attack-with",
+                    target: {
+                      selector: "self",
+                    },
+                  },
+                },
+                text: 'During your action phase, zombies you\'ve played from a graveyard or banished zone enter the arena tapped and get "When this enteres the arena, attack with it."\nZombies you control get "Action - {r}, {t}: Attack"',
+                displayName: "Attack When Entering From Graveyard Or Banished",
+              },
+            },
+            target: {
+              selector: "object",
+              declared: "at-resolution",
+              player: "controller",
+              zones: ["stack", "permanent"],
+              filter: {
+                typeBox: {
+                  subtypes: ["Zombie"],
+                },
+                playedFromZones: ["graveyard", "banished"],
+              },
+              count: {
+                type: "all",
+              },
+            },
+            duration: "while-in-arena",
+          },
+          id: "PjHzdFtkjKpqTrDkwkJGK:duringActionPhaseZombiePlayedGraveyardBanishedZoneGetsEnterArenaAttack",
+          text: 'During your action phase, zombies you\'ve played from a graveyard or banished zone enter the arena tapped and get "When this enteres the arena, attack with it."\nZombies you control get "Action - {r}, {t}: Attack"',
+          displayName:
+            "During Action Phase Zombie Played Graveyard Banished Zone Gets Enter Arena Attack",
         },
       ],
     },
@@ -10998,6 +11226,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Discard",
         },
       ],
     },
@@ -11073,6 +11302,7 @@ export const generatedCatalogTestCards = {
           },
           id: "zQmwGLpLKkjtLTdpNdFK6:additionalCostDestroyAllyOrDiscardAlly",
           text: "As an additional cost to play this, destroy an ally you control or discard an ally.\nDraw a card and untap your hero.\nGo again",
+          displayName: "Additional Cost Destroy Ally Or Discard Ally",
         },
         {
           kind: "resolution",
@@ -11280,6 +11510,7 @@ export const generatedCatalogTestCards = {
                         },
                       },
                     },
+                    displayName: "Static Triggered Hit Destroy",
                   },
                 },
                 duration: "this-turn",
@@ -11371,6 +11602,7 @@ export const generatedCatalogTestCards = {
           },
           id: "KPRGBpDBpzj8zNn9r7qMh:discardAllyRatherThanPay",
           text: "You may discard an ally rather than pay this card's {r} cost.\nYour next ally attack this turn gets +3{p} and go again.\nGo again",
+          displayName: "Discard Ally Rather Than Pay",
         },
         {
           kind: "resolution",
@@ -11521,6 +11753,7 @@ export const generatedCatalogTestCards = {
               },
             },
           },
+          displayName: "Defend",
         },
       ],
     },
@@ -11606,6 +11839,8 @@ export const generatedCatalogTestCards = {
           },
           id: "TrNnBmGkm8qh7wwnBthWC:oncePerTurnInstantDestroyOrDiscardAllyPreventNextTwoWhileDefending",
           text: "Once per Turn Instant - Destroy an ally you control or discard an ally: Prevent the next 2 damage that would be dealt to you this turn. Activate this only while this card is defending.",
+          displayName:
+            "Once Per Turn Instant Destroy Or Discard Ally Prevent Next Two While Defending",
         },
       ],
     },
@@ -11836,6 +12071,7 @@ export const generatedCatalogTestCards = {
           },
           id: "JtkWt6Kzpgz9qpPLPp8Ff:playBloodDebtActionFromBanish",
           text: "Instant - {r}, destroy this: You may play target action card with blood debt from your banished zone this turn.",
+          displayName: "Play Blood Debt Action From Banish",
         },
       ],
     },
@@ -11961,6 +12197,7 @@ export const generatedCatalogTestCards = {
                         },
                       },
                     },
+                    displayName: "On Hit",
                   },
                 },
                 duration: "this-turn",
@@ -11977,6 +12214,7 @@ export const generatedCatalogTestCards = {
           },
           id: "mpJLbHkrWkkqqpGCRg8qF:actionDiscardZombieDestroyNextZombieAttackTurnGets",
           text: 'Action - {r}, discard a zombie, destroy this: Your next zombie attack this turn gets +3{p} and "When this hits, destroy this zombie." Go again\nBattleworn',
+          displayName: "Action Discard Zombie Destroy Next Zombie Attack Turn Gets",
         },
       ],
     },
@@ -12051,6 +12289,7 @@ export const generatedCatalogTestCards = {
           },
           id: "pFgDCjG98QkNLjGpgB7PH:actionDiscardAllyDestroyDrawGoAgain",
           text: "Action - Discard an ally, destroy this: Draw a card. Go again\nBlade Break",
+          displayName: "Action Discard Ally Destroy Draw Go Again",
         },
       ],
     },

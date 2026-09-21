@@ -55,11 +55,8 @@ export const blueFinHarpoon = definePitchFamily(fabPitchFamilies["blue-fin-harpo
                   {
                     type: "discard",
                     target: {
-                      selector: "object",
-                      declared: "at-resolution",
-                      player: "each",
-                      zones: ["hand"],
-                      count: 1,
+                      selector: "binding",
+                      binding: "it",
                     },
                   },
                   {

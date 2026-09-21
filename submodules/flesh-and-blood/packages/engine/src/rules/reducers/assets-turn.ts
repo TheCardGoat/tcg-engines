@@ -1,4 +1,5 @@
 import type { FabMatchState } from "../../state.ts";
+import { withoutFabScopedAutoPass, withoutFabScopedAutoPassForSeat } from "../../state.ts";
 import { emptyFabTurnHistory } from "../../game/turn-history.ts";
 import type { ProposedEvent } from "../events.ts";
 import type { FabEventReduction } from "../../kernel/transaction-kernel.ts";
@@ -128,6 +129,13 @@ export function reduceAssetsTurnEvent(
       state.activePlayerId = state.players[event.data.nextPlayerId]!.playerId;
       openFabPriority(state, event.data.nextPlayerId, "action", null);
       state.turnNumber = event.data.nextTurnNumber;
+      // Scope boundaries at the turn flip: the new active seat's "opponent's
+      // turn" arm expires with the turn it was armed on, and no stale "this
+      // combat" arm can outlive a turn.
+      state.automationPreferences = withoutFabScopedAutoPassForSeat(
+        withoutFabScopedAutoPass(state.automationPreferences, "combat"),
+        event.data.nextPlayerId,
+      );
       for (const player of Object.values(state.players))
         resetPlayerHistoryForTurn(player, state.turnNumber);
       recordTokenControlAtTurnStart(state);
@@ -418,6 +426,11 @@ function resetPlayerHistoryForTurn(
   player.history.chainLink.chainLinkNumber = null;
   player.history.chainLink.playedInstant = false;
   player.history.chainLink.damageDealtByType = { arcane: 0, physical: 0, generic: 0 };
+  player.history.chainLink.damageDealtToOpposingHeroesByType = {
+    arcane: 0,
+    physical: 0,
+    generic: 0,
+  };
   player.history.chainLink.damageDealtBySource = {};
   player.history.chainLink.damageDealtBySourceToHero = {};
   player.history.resolution.processId = null;

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op10CharlottePuddingSp012 } from "../../../../../cards/src/cards/OP10/characters/012-charlotte-pudding-sp.ts";
+import { op10CharlottePuddingSp012 } from "../../../../../cards/src/cards/characters/st12-012-charlotte-pudding-sp.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("ST12-012 Charlotte Pudding (SP)", () => {

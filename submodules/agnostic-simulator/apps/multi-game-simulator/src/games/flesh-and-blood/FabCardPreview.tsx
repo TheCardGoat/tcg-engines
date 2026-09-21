@@ -1,7 +1,7 @@
 import { ViewerSafeCardImage } from "@tcg/simulator-ui";
 import { Button } from "@mantine/core";
 import type { SimulatorEntity } from "@tcg/simulator-contract";
-import { X } from "lucide-react";
+import { ExternalLink, X } from "lucide-react";
 import {
   useCallback,
   useContext,
@@ -25,10 +25,6 @@ import { useFabImageRetry } from "./useFabImageRetry";
 import { isFabFixtureArtPlaceholder } from "./fixture-art-placeholders";
 
 type PreviewImageStatus = "loading" | "loaded" | "error";
-
-const DESKTOP_PREVIEW_WIDTH_PX = 240;
-const DESKTOP_PREVIEW_GAP_PX = 12;
-const DESKTOP_PREVIEW_EDGE_PX = 16;
 
 export const FAB_PREVIEW_TARGET_ATTR = "data-fab-preview-id";
 
@@ -160,6 +156,18 @@ export function FabCardPreviewSurface({
           onRetry={preview.imageUrl && retry.failed ? retry.retry : undefined}
         />
       ) : null}
+      {onClose && preview.imageUrl ? (
+        <a
+          className="fab-card-preview-original"
+          href={preview.imageUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Open full-size card image in a new tab"
+          title="Open full-size card image"
+        >
+          <ExternalLink size={16} strokeWidth={2.4} aria-hidden="true" />
+        </a>
+      ) : null}
       {onClose ? (
         <button
           type="button"
@@ -182,7 +190,6 @@ export function FabCardPreviewProvider({
   disabled?: boolean;
 }) {
   const [hover, setHoverState] = useState<SimulatorEntity | null>(null);
-  const [hoverLeft, setHoverLeft] = useState(0);
   const [pinned, setPinnedState] = useState<SimulatorEntity | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const pinnedRef = useRef(false);
@@ -234,27 +241,11 @@ export function FabCardPreviewProvider({
   }, [hide, preview]);
 
   const setHover = useCallback(
-    (entity: SimulatorEntity, trigger?: HTMLElement) => {
+    (entity: SimulatorEntity) => {
       // Hidden faces never become readable previews. Hover also cannot replace
       // an explicit inspect pin.
       if (disabledRef.current || pinnedRef.current || entity.face !== "public") return;
       const fullCardEntity = fullPreviewEntity(entity, locale, resolver);
-      const triggerRect = trigger?.getBoundingClientRect();
-      const overlapsDefaultPreview =
-        triggerRect !== undefined &&
-        triggerRect.left < DESKTOP_PREVIEW_WIDTH_PX &&
-        triggerRect.right > 0;
-      setHoverLeft(
-        overlapsDefaultPreview
-          ? Math.min(
-              triggerRect.right + DESKTOP_PREVIEW_GAP_PX,
-              Math.max(
-                DESKTOP_PREVIEW_EDGE_PX,
-                window.innerWidth - DESKTOP_PREVIEW_WIDTH_PX - DESKTOP_PREVIEW_EDGE_PX,
-              ),
-            )
-          : 0,
-      );
       setHoverState((current) => (samePreview(current, fullCardEntity) ? current : fullCardEntity));
     },
     [locale, resolver],
@@ -296,7 +287,7 @@ export function FabCardPreviewProvider({
           preview
             ? ({
                 aspectRatio: preview.imageAspectRatio,
-                "--fab-preview-left": `${hoverLeft}px`,
+                "--fab-preview-ratio": preview.imageAspectRatio,
               } as CSSProperties)
             : undefined
         }
@@ -317,13 +308,10 @@ export function useFabPreviewTarget(
   const entityRef = useRef(entity);
   entityRef.current = entity;
 
-  const occupy = useCallback(
-    (event: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>) => {
-      if (!enabled) return;
-      setHover(entityRef.current, event.currentTarget);
-    },
-    [enabled, setHover],
-  );
+  const occupy = useCallback(() => {
+    if (!enabled) return;
+    setHover(entityRef.current);
+  }, [enabled, setHover]);
 
   const leave = useCallback(
     (event: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>) => {

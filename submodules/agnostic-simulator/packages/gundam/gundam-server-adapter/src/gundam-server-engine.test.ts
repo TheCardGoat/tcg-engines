@@ -239,14 +239,92 @@ describe("GundamServerEngine timeout recovery", () => {
         opponentPlayerId: "p2",
         nowMs: now,
       }),
-    ).toEqual({
-      outcome: "timed_out",
-      timeout: "second",
-      stallerPlayerId: "p2",
-      timeoutCount: 1,
-      forceDrop: true,
-      resetTimeOnSkipMs: 45_000,
+    ).toMatchObject({
+      skip: {
+        allowed: true,
+        timeout: "second",
+        stallerPlayerId: "p2",
+        timeoutCount: 1,
+        forceDrop: true,
+        resetTimeOnSkipMs: 45_000,
+      },
+      drop: { allowed: true, reason: "timeout_allowed" },
     });
+  });
+
+  it("starts grace when the active reserve is exactly zero", () => {
+    const now = 1_700_000_000_000;
+    const engine = new GundamServerEngine(
+      {
+        getState: () =>
+          ({
+            ctx: {
+              time: {
+                mode: "dynamic",
+                running: true,
+                activePlayerID: "p2",
+                startedAtMs: now,
+                players: {
+                  p2: { reserveMsRemaining: 0, timeoutCount: 0, isInNegativeTime: false },
+                },
+                config: { resetTimeOnSkipMs: 45_000, graceMs: 15_000, maxDecisionTimeMs: 180_000 },
+              },
+            },
+          }) as MatchState,
+      } as unknown as LocalEngine,
+      {} as MatchStaticResources,
+    );
+
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now,
+      }).drop,
+    ).toMatchObject({
+      allowed: false,
+      reason: "timeout_grace_pending",
+      remainingMs: 15_000,
+    });
+  });
+
+  it("waits for configured grace before a reserve drop", () => {
+    const now = 1_700_000_000_000;
+    const engine = new GundamServerEngine(
+      {
+        getState: () =>
+          ({
+            ctx: {
+              time: {
+                mode: "dynamic",
+                running: true,
+                activePlayerID: "p2",
+                startedAtMs: now,
+                players: {
+                  p2: { reserveMsRemaining: 0, timeoutCount: 0, isInNegativeTime: true },
+                },
+                config: { resetTimeOnSkipMs: 45_000, graceMs: 15_000, maxDecisionTimeMs: 180_000 },
+              },
+            },
+          }) as MatchState,
+      } as unknown as LocalEngine,
+      {} as MatchStaticResources,
+    );
+
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now + 14_999,
+      }).drop,
+    ).toMatchObject({ allowed: false, reason: "timeout_grace_pending" });
+    expect(
+      engine.evaluateOpponentTimeout({
+        requesterPlayerId: "p1",
+        opponentPlayerId: "p2",
+        nowMs: now + 15_000,
+      }).drop.allowed,
+    ).toBe(true);
   });
 
   it("resets the skipped player's clock without incrementing an already-advanced timeout count", () => {

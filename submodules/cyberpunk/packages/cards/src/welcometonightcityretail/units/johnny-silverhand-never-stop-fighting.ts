@@ -5,10 +5,8 @@ import { AbilityBuilder, effect, target } from "../../helpers/builders/index.ts"
 const readyOnFirstWinEachTurn = AbilityBuilder.triggered()
   .text("The first time this Unit wins a fight each turn, ready it.")
   .onFightResolved({
-    player: "friendly",
-    result: "attackerWins",
-    attacker: target.self(),
-    defender: target.card({ controller: "rival", cardTypes: ["unit"] }),
+    player: "any",
+    winner: target.self(),
   })
   .source(target.self())
   .effect(effect.ready({ target: target.self() }))

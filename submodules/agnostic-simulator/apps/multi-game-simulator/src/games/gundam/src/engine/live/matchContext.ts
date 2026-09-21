@@ -7,6 +7,7 @@ import type { FilteredMatchView, GundamG } from "@tcg/gundam-engine";
 import type { GundamPresentation } from "@tcg/gundam-server-adapter";
 
 import { playUrl } from "../../../../../runtime/gameRuntimeApi.ts";
+import { defaultMatchmakingUrl, matchReturnUrl } from "../../../../../routes/match-return-url.ts";
 import { buildMountedHref } from "../../../../../routes/router-paths.ts";
 import { gundamRuntimeRequestHeaders, readServerRuntimeHeaders } from "./runtimeHeaders.ts";
 
@@ -152,30 +153,16 @@ export function resolveMatchOverviewDestination(
 
 /**
  * Where the simulator should send the user when they leave the match.
- * Mirrors cyberpunk's `getMatchmakingReturnUrl` — honours `?returnTo=`
- * (only if it points back to our tcg.online matchmaking page or to
- * localhost) and otherwise falls back to the VITE-injected URL.
+ * Honours `?returnTo=` when it stays on this environment, and otherwise
+ * returns to same-origin matchmaking.
  */
 export function getMatchmakingReturnUrl(search = window.location.search): string {
-  const params = new URLSearchParams(search);
-  const requested = params.get("returnTo");
-  if (requested && isAllowedReturnUrl(requested)) {
-    return requested;
+  const resolved = matchReturnUrl("gundam", search);
+  if (resolved !== "/gundam/matchmaking") {
+    return resolved;
   }
   const env = import.meta.env as Record<string, string | undefined>;
-  return env.VITE_GUNDAM_MATCHMAKING_URL || "https://tcg.online/gundam/matchmaking";
-}
-
-function isAllowedReturnUrl(value: string): boolean {
-  try {
-    const url = new URL(value);
-    return (
-      url.origin === "https://tcg.online" ||
-      (url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1"))
-    );
-  } catch {
-    return false;
-  }
+  return defaultMatchmakingUrl("gundam", env.VITE_GUNDAM_MATCHMAKING_URL);
 }
 
 function logRuntimeHeaderMismatch(response: Response, context: string): void {

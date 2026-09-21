@@ -59,6 +59,7 @@ export const codexOfFrailty = definePitchFamily(fabPitchFamilies["codex-of-frail
           {
             type: "create-token",
             token: "frailty",
+            creator: "effect-controller",
             controller: "opponent",
           },
         ],

@@ -13,6 +13,7 @@ import { createPortal } from "react-dom";
 
 import { cx } from "../class-names";
 import { useActiveLayout, type ActiveLayout } from "../hooks/useActiveLayout";
+import { SimulatorSidebarIconButton } from "./SimulatorSidebarIconButton";
 import classes from "./SimulatorViewportShell.module.css";
 
 export interface SimulatorViewportShellControls {
@@ -294,8 +295,7 @@ export function SimulatorViewportShell({
         >
           {desktopSidebarOpen ? (
             <aside className={classes.desktopSidebar} aria-label={sidebarLabel}>
-              <button
-                type="button"
+              <SimulatorSidebarIconButton
                 className={cx(classes.desktopToggle, classes.desktopCollapse)}
                 onClick={controls.closeSidebar}
                 aria-label="Collapse sidebar"
@@ -303,21 +303,20 @@ export function SimulatorViewportShell({
                 title="Collapse sidebar"
               >
                 <Chevron direction="left" />
-              </button>
+              </SimulatorSidebarIconButton>
               <div className={classes.sidebarScroller}>
                 <SidebarWithTools tools={sidebarTools}>{sidebar}</SidebarWithTools>
               </div>
             </aside>
           ) : (
-            <button
-              type="button"
+            <SimulatorSidebarIconButton
               className={cx(classes.desktopToggle, classes.desktopReopen)}
               onClick={controls.openSidebar}
               aria-label="Expand sidebar"
               aria-expanded="false"
             >
               <Chevron direction="right" />
-            </button>
+            </SimulatorSidebarIconButton>
           )}
           <section
             key="tabletop"

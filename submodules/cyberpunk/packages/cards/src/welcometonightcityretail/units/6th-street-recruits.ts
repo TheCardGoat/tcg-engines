@@ -29,6 +29,7 @@ export const welcomeToNightCityRetail6thStreetRecruits = defineCyberpunkCard({
         trigger: "event",
         event: {
           event: "gigStolen",
+          perGig: true,
           player: "friendly",
           target: {
             selector: "gig",
@@ -50,7 +51,6 @@ export const welcomeToNightCityRetail6thStreetRecruits = defineCyberpunkCard({
           id: "selectedGig",
           target: {
             selector: "gig",
-            controller: "friendly",
             selection: {
               mode: "choose",
               min: 0,

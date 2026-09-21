@@ -24,6 +24,33 @@ Stealth, damage-restricted Cleave, and named Lineage stay card-specific.
 
 ALC remains complete at 210/210 cards and 400/400 abilities.
 
+## Completion verification — 2026-09-13
+
+The fresh authoritative report identified **no incomplete AMB cards and no
+uncovered AMB abilities**. Its parsed contents matched the starting report for
+every card and ability across all sets. AMB was already complete; this pass
+verified the existing implementation rather than adding coverage claims.
+ALC, the other previously completed set, retains 397 direct proofs and three
+central keyword proofs. No engine or compiler repairs were needed in this pass.
+
+- Focused AMB suites plus central-keyword negative guards: **236 files,
+  672 tests passed**.
+- `pnpm run ci-check` from `submodules/grand-archive`: **passed**.
+- Generated output: two consecutive regenerations reproduced all 2,495 cards
+  and preserved sibling tests. No generated changes remain inside or outside
+  AMB. Fingerprint:
+  `9d450d48e39617b78d7b6622f5f95da1257bd7a2f72448f7944933ee7f2cc2f9`.
+- Rules audit: **300/300 implemented**, zero partial, missing, or pending units.
+- Coverage freshness check and all five workspace type checks: **passed**.
+- Full card package: **529 files, 2,084 tests passed**.
+- Full engine package: **171 files, 847 tests passed**; two existing skipped
+  files containing three skipped tests remain outside the enabled central
+  keyword evidence contracts.
+- Catalog and scraper: **two files, four tests passed**.
+- `git diff --check`: **passed**.
+
+The only retained change from this verification is this progress record.
+
 ## Reproduce
 
 From `packages/cards`:

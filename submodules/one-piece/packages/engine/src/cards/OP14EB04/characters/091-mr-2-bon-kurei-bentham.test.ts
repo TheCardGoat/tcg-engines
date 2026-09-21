@@ -7,7 +7,7 @@ import {
   op12UrsaShock096,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Mr2BonKureiBentham091 } from "../../../../../cards/src/cards/OP14EB04/characters/091-mr-2-bon-kurei-bentham.ts";
+import { op14eb04Mr2BonKureiBentham091 } from "../../../../../cards/src/cards/characters/op14-091-mr-2-bon-kurei-bentham.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

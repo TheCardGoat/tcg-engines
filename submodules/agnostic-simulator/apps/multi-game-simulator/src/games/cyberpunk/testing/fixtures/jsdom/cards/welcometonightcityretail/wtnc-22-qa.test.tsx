@@ -14,7 +14,7 @@ import {
   welcomeToNightCityRetailMaelstromGoons,
   welcomeToNightCityRetailMaxtacAv,
   welcomeToNightCityRetailModdedMuramasa,
-  welcomeToNightCityRetailMuamarReyesElCapitaN,
+  welcomeToNightCityRetailMuamarReyesElCapitan,
   welcomeToNightCityRetailPadreManOfTheCross,
   welcomeToNightCityRetailPanamPalmerStrengthThroughFamily,
   welcomeToNightCityRetailRogueAmendiaresPreemSolo,
@@ -76,7 +76,7 @@ describe("WTNC 22-card visual QA boards", () => {
       await pom.getCardInZoneByDefinitionId(
         "legendArea",
         CYBERPUNK_P1,
-        welcomeToNightCityRetailMuamarReyesElCapitaN.id,
+        welcomeToNightCityRetailMuamarReyesElCapitan.id,
       );
       await pom.getCardInZoneByDefinitionId(
         "legendArea",

@@ -30,6 +30,8 @@ import { commitAdministrativeEvent } from "./administrative.ts";
 import { collectAndPersistEventTriggers, uniqueTriggerSources } from "./trigger-persistence.ts";
 import { transitionFabRulesProcessStage } from "../process-state.ts";
 
+import { selectReplacementConsumptionCandidates } from "./replacement-consumption.ts";
+
 const REPLACEMENT_KINDS: readonly FabReplacementCandidate["replacementKind"][] = [
   "self-or-identity",
   "standard",
@@ -605,15 +607,12 @@ export function executeTransactionWorkGroup(
         !orderedCandidates.some((ordered) => ordered.replacementId === candidate.replacementId),
     ),
   ];
-  const consumptionCandidates = [
-    ...candidates,
-    ...commitCandidates.filter(
-      (candidate) =>
-        (selectedOptionalIds.includes(candidate.replacementId) ||
-          declinedOptionalIds.includes(candidate.replacementId)) &&
-        !candidates.some((initial) => initial.replacementId === candidate.replacementId),
-    ),
-  ];
+  const consumptionCandidates = selectReplacementConsumptionCandidates(
+    candidates,
+    commitCandidates,
+    selectedOptionalIds,
+    declinedOptionalIds,
+  );
   const replacementDecisions = replacementDecisionCallbacks(
     commitCandidates,
     selectedOptionalIds,

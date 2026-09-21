@@ -240,9 +240,10 @@ function expandEntries(
     }
     const resolved = resolveCardEntry(entry, warnings);
     if (!resolved) {
+      const identity = entry.cardId ?? entry.slug ?? entry.canonicalId ?? "(missing id)";
       errors.push({
         code: "UNKNOWN_CARD",
-        message: "Could not resolve card from cardId, slug, or canonicalId.",
+        message: `Could not resolve ${identity} from cardId, slug, or canonicalId.`,
         cardRef: entry,
       });
       continue;

@@ -61,6 +61,7 @@ export const winterSWail = defineCard(fabCardIdentitiesByCanonicalId["pCdJMzmgBM
               effect: {
                 type: "create-token",
                 token: "frostbite",
+                creator: "effect-controller",
                 controller: "attack-target",
               },
             },

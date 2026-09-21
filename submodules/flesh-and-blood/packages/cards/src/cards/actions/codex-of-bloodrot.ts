@@ -43,6 +43,7 @@ export const codexOfBloodrot = definePitchFamily(fabPitchFamilies["codex-of-bloo
           {
             type: "create-token",
             token: "bloodrot-pox",
+            creator: "effect-controller",
             controller: "opponent",
           },
         ],

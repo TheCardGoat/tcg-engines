@@ -1,0 +1,102 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06VinsmokeReiju068I18n } from "./op06-068-vinsmoke-reiju.i18n.ts";
+
+export const op06VinsmokeReiju068: CharacterCard = {
+  id: "OP06-068",
+  canonicalId: "OP06-068",
+  slug: "vinsmoke-reiju/op06-068",
+  name: "Vinsmoke Reiju",
+  printings: [
+    {
+      id: "OP06-068",
+      artId: "OP06-068",
+      setCode: "OP06",
+      collectorNumber: "068",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-068.jpg",
+    },
+    {
+      id: "OP06-068_p2",
+      artId: "OP06-068_p2",
+      setCode: "OP06",
+      collectorNumber: "068",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-068_p2.jpg",
+    },
+    {
+      id: "OP06-068_p3",
+      artId: "OP06-068_p3",
+      setCode: "OP06",
+      collectorNumber: "068",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-068_p3.jpg",
+      label: "Vinsmoke Reiju (OP06-068) (Full Art)",
+    },
+    {
+      id: "OP06-068_r1",
+      artId: "OP06-068_r1",
+      setCode: "OP06",
+      collectorNumber: "068",
+      rarity: "C",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-068_r1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["purple"],
+  rarity: "C",
+  setId: "OP06",
+  cost: 2,
+  power: 2000,
+  counter: 1000,
+  traits: ["The Vinsmoke Family", "GERMA 66"],
+  attribute: "special",
+  effect:
+    "[Activate:Main] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.)You may trash this Character: If your Leader has the [GERMA 66] type, play up to 1 [Vinsmoke Reiju] with a cost of 4 from your hand or trash.",
+  effects: {
+    effects: [
+      {
+        trigger: "activateMain",
+        costs: [
+          {
+            cost: "returnDon",
+            amount: 1,
+          },
+          {
+            cost: "trashThisCard",
+          },
+        ],
+        actions: [
+          {
+            action: "play",
+            source: {
+              player: "self",
+              zone: ["hand", "trash"],
+            },
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            filters: [
+              {
+                filter: "cost",
+                comparison: "eq",
+                value: 4,
+              },
+              {
+                filter: "name",
+                value: "Vinsmoke Reiju",
+              },
+            ],
+            condition: {
+              condition: "leaderTrait",
+              trait: "GERMA 66",
+              match: "includes",
+            },
+          },
+        ],
+        optional: true,
+      },
+    ],
+  },
+  i18n: op06VinsmokeReiju068I18n,
+};

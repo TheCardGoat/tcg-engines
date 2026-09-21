@@ -6,7 +6,7 @@ import {
   op13Otama043,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Wadatsumi056 } from "../../../../../cards/src/cards/OP14EB04/characters/056-wadatsumi.ts";
+import { op14eb04Wadatsumi056 } from "../../../../../cards/src/cards/characters/op14-056-wadatsumi.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

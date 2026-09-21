@@ -30,8 +30,19 @@ import {
   deckListFromGenerated,
   type DeckSource,
 } from "./legal-decks.ts";
+import {
+  runDeckRoundRobinParallel,
+  type DeckPairingCell,
+  type DeckRoundRobinOptions,
+  type DeckRoundRobinSummary,
+  type DeckStanding,
+} from "./deck-round-robin.ts";
 import { buildRecording, loadRecording, replayRecording, saveRecording } from "./replay.ts";
+import { bindStrategyToDeck } from "./bind-deck-strategy.ts";
 import { trainGreedy } from "./train.ts";
+import { playCoachMatch, writeCoachDump } from "./coach-play.ts";
+import { runSelfImproveBatch } from "./self-improve-batch.ts";
+import { recordKeep } from "./self-improve-journal.ts";
 
 const SAVEABLE_STRATEGIES: Record<string, AIStrategy> = {
   default: getSafeAutomatedActionStrategyOption().strategy,
@@ -60,10 +71,22 @@ function saveableStrategy(name: string, parsed: ParsedArgs): AIStrategy | undefi
 }
 
 interface ParsedArgs {
-  mode: "batch" | "tournament" | "replay" | "train";
+  mode:
+    | "batch"
+    | "tournament"
+    | "replay"
+    | "train"
+    | "deck-round-robin"
+    | "dump"
+    | "self-improve-batch"
+    | "self-improve-keep";
   strategyA: string;
   strategyB: string;
   strategies?: string[];
+  /** Deck round-robin: single strategy id used by both seats. */
+  strategy?: string;
+  /** Deck round-robin: games per pairing in each seat. */
+  seedsPerSeat: number;
   /** Path to write the first match's recording for the `replay` subcommand. */
   saveLog?: string;
   /** Path to a previously-saved recording to replay. */
@@ -76,6 +99,8 @@ interface ParsedArgs {
   deckSource?: DeckSource;
   deckLimit?: number;
   deckPairLimit?: number;
+  deckAId?: string;
+  deckBId?: string;
   monteCarloRollouts?: number;
   monteCarloRolloutSteps?: number;
   pairedSeeds: boolean;
@@ -88,6 +113,8 @@ interface ParsedArgs {
   output?: string;
   /** Training: baseline opponent name. */
   opponent?: string;
+  /** self-improve-keep: keep or reject the last heuristic miss. */
+  keep?: "keep" | "reject";
 }
 
 function parsePositiveInt(flag: string, raw: string | undefined): number {
@@ -122,6 +149,8 @@ function parseArgs(argv: string[]): ParsedArgs {
   let failOnMaxSteps = false;
   let pairedSeeds = false;
   let workers = 1;
+  let seedsPerSeat = 8;
+  let strategy: string | undefined;
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i]!;
     const next = argv[i + 1];
@@ -141,6 +170,20 @@ function parseArgs(argv: string[]): ParsedArgs {
       case "--tournament":
         mode = "tournament";
         break;
+      case "--deck-round-robin":
+        mode = "deck-round-robin";
+        break;
+      case "--strategy":
+        if (next === undefined || next.startsWith("--")) {
+          throw new Error("--strategy requires a strategy name");
+        }
+        strategy = next;
+        i++;
+        break;
+      case "--seeds-per-seat":
+        seedsPerSeat = parsePositiveInt("--seeds-per-seat", next);
+        i++;
+        break;
       case "--verbose":
       case "-v":
         verbose = true;
@@ -158,6 +201,20 @@ function parseArgs(argv: string[]): ParsedArgs {
         break;
       case "--deck-pair-limit":
         args.deckPairLimit = parsePositiveInt("--deck-pair-limit", next);
+        i++;
+        break;
+      case "--deck-a":
+        if (next === undefined || next.startsWith("--")) {
+          throw new Error("--deck-a requires a deck id");
+        }
+        args.deckAId = next;
+        i++;
+        break;
+      case "--deck-b":
+        if (next === undefined || next.startsWith("--")) {
+          throw new Error("--deck-b requires a deck id");
+        }
+        args.deckBId = next;
         i++;
         break;
       case "--mc-rollouts":
@@ -194,6 +251,22 @@ function parseArgs(argv: string[]): ParsedArgs {
         break;
       case "train":
         mode = "train";
+        break;
+      case "dump":
+        mode = "dump";
+        break;
+      case "self-improve-batch":
+        mode = "self-improve-batch";
+        break;
+      case "self-improve-keep":
+        mode = "self-improve-keep";
+        break;
+      case "--keep":
+        if (next !== "keep" && next !== "reject") {
+          throw new Error('--keep requires "keep" or "reject"');
+        }
+        args.keep = next;
+        i++;
         break;
       case "--iterations":
         args.iterations = parsePositiveInt("--iterations", next);
@@ -249,6 +322,8 @@ function parseArgs(argv: string[]): ParsedArgs {
     strategyA: args.strategyA ?? "greedy",
     strategyB: args.strategyB ?? "random",
     strategies: args.strategies,
+    strategy,
+    seedsPerSeat,
     matches: args.matches ?? 10,
     seed: args.seed ?? `cli-${Date.now()}`,
     maxSteps: args.maxSteps,
@@ -257,6 +332,8 @@ function parseArgs(argv: string[]): ParsedArgs {
     deckSource,
     deckLimit: args.deckLimit,
     deckPairLimit: args.deckPairLimit,
+    deckAId: args.deckAId,
+    deckBId: args.deckBId,
     monteCarloRollouts: args.monteCarloRollouts,
     monteCarloRolloutSteps: args.monteCarloRolloutSteps,
     pairedSeeds,
@@ -268,6 +345,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     iterations: args.iterations,
     output: args.output,
     opponent: args.opponent,
+    keep: args.keep,
   };
 }
 
@@ -280,6 +358,7 @@ function parseDeckSource(raw: string | undefined): DeckSource {
     "print-and-play-padded",
     "real-single",
     "test",
+    "authored-botlab",
   ];
   if (!allowed.includes(raw as DeckSource)) {
     throw new Error(`--deck-source must be one of: ${allowed.join(", ")}`);
@@ -290,16 +369,37 @@ function parseDeckSource(raw: string | undefined): DeckSource {
 function printUsage(): void {
   console.log(`Usage: ai-runner [options]
        ai-runner replay <path>          Replay a saved recording
+       ai-runner dump --output <path>   Play one seeded match; write moves + game logs
 
 Modes:
   (default)             Single matchup: --strategy-a vs --strategy-b
   --tournament          Round-robin every strategy against every other
+  --deck-round-robin    Round-robin every deck in a deck pool against every
+                        other with one shared strategy (default pool:
+                        authored-botlab; default strategy: default/tactical).
+                        Seat-balanced: each pairing plays --seeds-per-seat
+                        games in each seat. --workers parallelizes pairings.
   replay <path>         Replay a saved recording, asserting per-step
                         stateID parity (catches determinism regressions)
   train                 Hill-climb GreedyWeights vs a fixed opponent; write
                         best weights to --output. Use --matches as the
                         matches-per-evaluation budget and --iterations as the
-                        total candidate count.
+                        total candidate count. Deferred vs the player-then-coach
+                        loop; not the self-improve command.
+  dump                  Play one match with the shipped chooser and write a
+                        coach dump (per-step moves AND engine game logs).
+                        Requires --output. Defaults: tactical vs tactical,
+                        authored-botlab. Seat a named list with --deck-a
+                        [--deck-b]. Otherwise --deck-limit 2 --deck-pair-limit 1.
+  self-improve-batch    10 dumps per authored deck (or --iterations), walk
+                        each dump line by line, write journal.jsonl +
+                        iterations.md under --output. Resumes from the last
+                        journal row and dump; stops a deck while flowGap is
+                        still named. A heuristic miss (keep-gate) stays blocked
+                        until self-improve-keep records keep or reject.
+  self-improve-keep     Record keep or reject for that deck's last keep-gate
+                        row, then n+1 may run. Requires --output --deck-a
+                        --keep keep|reject.
 
 Common options:
   --matches <n>         Matches per pairing (default: 10)
@@ -310,11 +410,13 @@ Common options:
   --real-cards          Use real @tcg/cyberpunk-cards decks instead of the
                         hand-rolled fixture (exercises actual card text)
   --deck-source <name>  Deck source: test, real-single,
-                        print-and-play-padded, or legal-permutations.
-                        --real-cards is a compatibility alias for
-                        --deck-source real-single.
+                        print-and-play-padded, legal-permutations, or
+                        authored-botlab. --real-cards is a compatibility
+                        alias for --deck-source real-single.
   --deck-limit <n>      Limit selected generated decks before pairing
   --deck-pair-limit <n> Limit selected ordered deck pairs
+  --deck-a <id>         Seat this generated/authored deck as p1
+  --deck-b <id>         Seat this deck as p2 (default: same as --deck-a)
   --mc-rollouts <n>     Rollouts per candidate action for ai-runner Monte
                         Carlo strategies (default: 1; production default is
                         unchanged)
@@ -497,6 +599,72 @@ async function main() {
     return;
   }
 
+  if (parsed.mode === "self-improve-keep") {
+    if (!parsed.output) throw new Error("self-improve-keep requires --output <dir>");
+    if (!parsed.deckAId) throw new Error("self-improve-keep requires --deck-a <id>");
+    if (!parsed.keep) throw new Error("self-improve-keep requires --keep keep|reject");
+    const row = recordKeep({
+      journalJsonl: `${parsed.output}/journal.jsonl`,
+      journalMarkdown: `${parsed.output}/iterations.md`,
+      deckId: parsed.deckAId,
+      keep: parsed.keep,
+    });
+    console.log(
+      `Self-improve keep: ${row.deckId} iter ${row.iteration} keep=${row.keep} flowGap=${row.flowGap}`,
+    );
+    return;
+  }
+
+  if (parsed.mode === "self-improve-batch") {
+    if (!parsed.output) {
+      throw new Error("self-improve-batch requires --output <dir>");
+    }
+    const dumpDir = `${parsed.output}/dumps`;
+    const rows = runSelfImproveBatch({
+      iterations: parsed.iterations ?? 10,
+      seedBase: parsed.seed,
+      dumpDir,
+      journalJsonl: `${parsed.output}/journal.jsonl`,
+      journalMarkdown: `${parsed.output}/iterations.md`,
+      strategyA: process.argv.includes("--strategy-a") ? parsed.strategyA : "tactical",
+      strategyB: process.argv.includes("--strategy-b") ? parsed.strategyB : "tactical",
+      maxSteps: parsed.maxSteps,
+    });
+    console.log(`Self-improve batch: ${rows.length} rows under ${parsed.output}`);
+    return;
+  }
+
+  if (parsed.mode === "dump") {
+    if (!parsed.output) throw new Error("dump requires --output <path>");
+    const dump = playCoachMatch({
+      strategyA:
+        parsed.strategyA === "greedy" && !process.argv.includes("--strategy-a")
+          ? "tactical"
+          : parsed.strategyA,
+      strategyB:
+        parsed.strategyB === "random" && !process.argv.includes("--strategy-b")
+          ? "tactical"
+          : parsed.strategyB,
+      seed: parsed.seed,
+      maxSteps: parsed.maxSteps,
+      deckSource: parsed.deckSource ?? "authored-botlab",
+      deckAId: parsed.deckAId,
+      deckBId: parsed.deckBId,
+      deckLimit: parsed.deckLimit ?? 2,
+      deckPairLimit: parsed.deckPairLimit ?? 1,
+    });
+    writeCoachDump(parsed.output, dump);
+    const moves = dump.steps.filter((step) => step.kind === "acted" && step.move).length;
+    const logs = dump.steps.reduce((n, step) => n + step.moveLogs.length, 0);
+    const events = dump.steps.reduce((n, step) => n + step.gameEvents.length, 0);
+    console.log(`Coach dump: ${parsed.output}`);
+    console.log(
+      `  ${dump.strategyA} vs ${dump.strategyB} seed=${dump.seed} reason=${dump.reason} winner=${dump.winnerId ?? "draw"}`,
+    );
+    console.log(`  actedMoves=${moves} moveLogs=${logs} gameEvents=${events}`);
+    return;
+  }
+
   if (parsed.mode === "train") {
     const result = trainGreedy({
       opponent: parsed.opponent ?? "greedy",
@@ -516,6 +684,32 @@ async function main() {
     );
     const accepted = result.steps.filter((s) => s.accepted).length;
     console.log(`Accepted ${accepted} / ${result.steps.length} mutations.`);
+    return;
+  }
+
+  if (parsed.mode === "deck-round-robin") {
+    const pool = createLegalDeckPool(
+      parsed.deckSource ?? (parsed.realCards ? "real-single" : "authored-botlab"),
+    );
+    const options: DeckRoundRobinOptions = {
+      decks: pool.decks,
+      strategy: parsed.strategy ?? parsed.strategyA,
+      seedsPerSeat: parsed.seedsPerSeat,
+      seed: parsed.seed,
+      maxSteps: parsed.maxSteps,
+      monteCarloRollouts: parsed.monteCarloRollouts,
+      monteCarloRolloutSteps: parsed.monteCarloRolloutSteps,
+    };
+    const summary = await runDeckRoundRobinParallel(options, parsed.workers);
+    printDeckRoundRobinSummary(summary);
+    if (parsed.reportJson) writeDeckRoundRobinReport(parsed.reportJson, summary);
+    if (
+      summary.illegalCount > 0 ||
+      summary.reasonCounts.stuck > 0 ||
+      summary.reasonCounts.repeatedState > 0 ||
+      (parsed.failOnMaxSteps && summary.reasonCounts.maxSteps > 0)
+    )
+      process.exit(2);
     return;
   }
 
@@ -636,7 +830,10 @@ function saveMatchRecording(parsed: ParsedArgs, match: MatchFailureMetadata, pat
   const result = runAutoMatch({
     players: createTestPlayers(),
     decks,
-    strategies: [strategyA, strategyB],
+    strategies: [
+      bindStrategyToDeck(strategyA, match.deckAId),
+      bindStrategyToDeck(strategyB, match.deckBId),
+    ],
     catalog:
       source === "test"
         ? createTestCatalog()
@@ -661,6 +858,92 @@ function saveMatchRecording(parsed: ParsedArgs, match: MatchFailureMetadata, pat
     monteCarloOptions: monteCarloRecordingOptions(parsed),
   });
   saveRecording(path, recording);
+}
+
+function printDeckRoundRobinSummary(summary: DeckRoundRobinSummary): void {
+  const decks = summary.options.deckIds;
+  console.log("");
+  console.log(
+    `Deck round robin: ${decks.length} decks, ${summary.totalPairings} pairings, ` +
+      `${summary.totalMatches} matches (${summary.options.seedsPerSeat} per seat per pairing)`,
+  );
+  console.log(
+    `Strategy (both seats): ${summary.options.strategy}; seed base: ${summary.options.seed}`,
+  );
+  console.log("");
+  const labelWidth =
+    Math.max(8, ...summary.standings.map((s) => s.deckId.length + s.title.length)) + 3;
+  for (const [index, standing] of summary.standings.entries()) {
+    const rate = standing.games === 0 ? 0 : standing.wins / standing.games;
+    const label = `${index + 1}. ${standing.deckId} — ${standing.title}`;
+    console.log(
+      `${label.padEnd(labelWidth)} ${standing.wins}-${standing.losses}-${standing.draws}  ` +
+        `${(rate * 100).toFixed(1)}% over ${standing.games} games`,
+    );
+  }
+  console.log("");
+  console.log("Pairing cells (winsA-winsB-draws):");
+  const cellByPair = new Map<string, DeckPairingCell>();
+  for (const cell of summary.cells) cellByPair.set(`${cell.deckAId}|${cell.deckBId}`, cell);
+  const colWidth = Math.max(...decks.map((id) => id.length)) + 2;
+  console.log(
+    "".padEnd(colWidth) + decks.map((id) => id.slice(0, colWidth - 1).padEnd(colWidth)).join(""),
+  );
+  for (const a of decks) {
+    const row = decks.map((b) => {
+      if (a === b) return "—".padEnd(colWidth);
+      // Cells are created in deck-pool order (first pool index first), so the
+      // lookup must order by pool position, not lexicographic id order.
+      const poolIndexOf = (id: string) => decks.indexOf(id);
+      const [deckAId, deckBId] = poolIndexOf(a) < poolIndexOf(b) ? [a, b] : [b, a];
+      const cell = cellByPair.get(`${deckAId}|${deckBId}`);
+      if (!cell) return "—".padEnd(colWidth);
+      const aWins = deckAId === a ? cell.aWins : cell.bWins;
+      const bWins = deckAId === a ? cell.bWins : cell.aWins;
+      return `${aWins}-${bWins}-${cell.draws}`.padEnd(colWidth);
+    });
+    console.log(a.padEnd(colWidth) + row.join(""));
+  }
+  console.log("");
+  console.log(
+    `Seat wins: p1=${summary.seatWins.p1}, p2=${summary.seatWins.p2}, draws=${summary.draws}`,
+  );
+  console.log(`Avg turns: ${summary.averageTurnCount.toFixed(1)}`);
+  console.log(`Avg steps: ${summary.averageStepCount.toFixed(1)}`);
+  console.log("Reasons:");
+  for (const [reason, count] of Object.entries(summary.reasonCounts)) {
+    if (count > 0) console.log(`  ${reason.padEnd(14)} ${count}`);
+  }
+  if (summary.hardFailures.length > 0) {
+    console.log(`Hard failures: ${summary.hardFailures.length} (first 5):`);
+    for (const failure of summary.hardFailures.slice(0, 5)) {
+      console.log(
+        `  ${failure.reason}${failure.hadIllegalStep ? "+illegalStep" : ""} seed=${failure.seed} ` +
+          `deckA=${failure.deckAId} seat=${failure.seatOfDeckA}`,
+      );
+    }
+  }
+}
+
+function writeDeckRoundRobinReport(path: string, summary: DeckRoundRobinSummary): void {
+  writeJson(path, {
+    mode: "deck-round-robin",
+    options: summary.options,
+    standings: summary.standings.map((standing: DeckStanding) => ({
+      ...standing,
+      winRate: standing.games === 0 ? 0 : standing.wins / standing.games,
+    })),
+    cells: summary.cells,
+    hardFailures: summary.hardFailures,
+    totalPairings: summary.totalPairings,
+    totalMatches: summary.totalMatches,
+    draws: summary.draws,
+    illegalCount: summary.illegalCount,
+    reasonCounts: summary.reasonCounts,
+    averageTurnCount: summary.averageTurnCount,
+    averageStepCount: summary.averageStepCount,
+    seatWins: summary.seatWins,
+  });
 }
 
 function writeBatchReport(path: string, summary: BatchSummary): void {
@@ -748,7 +1031,7 @@ function saveFailureRecording(
   const result = runAutoMatch({
     players: createTestPlayers(),
     decks: [deckListFromGenerated(deckA, "p1"), deckListFromGenerated(deckB, "p2")],
-    strategies: [strategyA, strategyB],
+    strategies: [bindStrategyToDeck(strategyA, deckA), bindStrategyToDeck(strategyB, deckB)],
     catalog: createStructuredCatalog(),
     seed: failure.seed,
     maxSteps: parsed.maxSteps,

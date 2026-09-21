@@ -63,9 +63,9 @@ export const servantsObligation: GrandArchiveCard<GrandArchiveAbilityDefinition,
                   kind: "history",
                   event: "attack-declared",
                   window: "this-turn",
-                  filter: {
-                    kind: "type",
-                    oneOf: ["CHAMPION"],
+                  recipient: {
+                    kind: "champion",
+                    player: "controller",
                   },
                   minimum: 1,
                 },

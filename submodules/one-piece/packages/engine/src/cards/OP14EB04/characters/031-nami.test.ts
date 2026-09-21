@@ -1,6 +1,6 @@
 import { eb01Doma005, eb01MountainGod018, op01Kaido094 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op14eb04Nami031 } from "../../../../../cards/src/cards/OP14EB04/characters/031-nami.ts";
+import { op14eb04Nami031 } from "../../../../../cards/src/cards/characters/op14-031-nami.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -129,16 +129,19 @@ it("recovers an omitted token once from the exact pinned artifact and installs i
     const first = new FabPresentationRegistry(initial);
     const second = new FabPresentationRegistry(initial);
     const renderedNames: (string | undefined)[] = [];
-    first.subscribe(() =>
-      renderedNames.push(first.getSnapshot().resolver.nameForFabCardIdentity("token", undefined)),
-    );
+    const statuses: string[] = [];
+    first.subscribe(() => {
+      renderedNames.push(first.getSnapshot().resolver.nameForFabCardIdentity("token", undefined));
+      statuses.push(first.getSnapshot().status);
+    });
     await Promise.all([
       first.ensure([{ canonicalId: "token" }]),
       second.ensure([{ canonicalId: "token" }]),
     ]);
     expect(fetcher).toHaveBeenCalledTimes(1);
     expect(fetcher.mock.calls[0]?.[0]).toBe(initial.bundle.catalog.url);
-    expect(renderedNames).toEqual(["Recovered Token"]);
+    expect(renderedNames).toEqual([undefined, "Recovered Token"]);
+    expect(statuses).toEqual(["loading", "ready"]);
     await first.ensure([{ canonicalId: "token" }]);
     expect(fetcher).toHaveBeenCalledTimes(1);
   } finally {

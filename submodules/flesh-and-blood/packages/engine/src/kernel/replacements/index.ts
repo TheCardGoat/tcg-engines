@@ -23,5 +23,8 @@ export {
   affectedPlayerForReplacement,
   staticOptionalDestroyRerollCount,
   staticRollPlusOneIgnoreLowestExtraDice,
+  replacementPitchCandidates,
+  payResourcesShortfall,
+  staticPreventionPayShortfall,
 } from "./collect.ts";
 export { type FabReplacementDestinationAllocator, kernelReplacementFor } from "./apply.ts";

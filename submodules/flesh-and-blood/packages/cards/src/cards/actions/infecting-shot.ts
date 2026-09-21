@@ -51,6 +51,7 @@ const abilities = {
       effect: {
         type: "create-token",
         token: "bloodrot-pox",
+        creator: "effect-controller",
         controller: "attack-target",
       },
     },

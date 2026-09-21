@@ -9,6 +9,7 @@ import { azalea } from "../heroes/azalea.ts";
 import { dash } from "../heroes/dash.ts";
 import { deathDealer } from "../shared/test-recipients.ts";
 import { nimblismBlue } from "./nimblism.ts";
+import { snatchRed } from "./snatch.ts";
 
 import { kingKrakenHarpoonRed } from "./king-kraken-harpoon.ts";
 
@@ -87,6 +88,36 @@ describe("King Kraken Harpoon (SEA085) AAA", () => {
 
     Azalea.playAttack(kingKrakenHarpoonRed, { from: "arsenal" });
     expectFabCard(Azalea, kingKrakenHarpoonRed).toBeIn("combatChain");
+    expectFabPlayer(Azalea).toHaveTokenCount("gold", 0);
+  });
+
+  it("seat: the hit hero reveals their own pick; a non-matching reveal discards nothing", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: azalea,
+        weapon1: [deathDealer],
+        arsenal: [{ card: kingKrakenHarpoonRed, state: { faceDown: false } }],
+        actionPoints: 1,
+        resourcePoints: 2,
+        deck: 6,
+      },
+      { hero: dash, life: 20, hand: [nimblismBlue, snatchRed], deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Azalea = game.as(azalea);
+    const Dash = game.as(dash);
+
+    Azalea.playAttack(kingKrakenHarpoonRed, { from: "arsenal" });
+    // "they choose and reveal a card from their hand" — Dash reveals the
+    // non-matching card; the printed discard follows the reveal, so nothing
+    // leaves the hand and no second pick is offered to anyone.
+    game.advanceToDecision(Dash, "entity-target");
+    Dash.target(snatchRed);
+    game.untilIdle({ optionals: "decline", ordering: "listed" });
+
+    expectFabPlayer(Dash).toHaveHandCount(2);
+    expectFabCard(Dash, nimblismBlue).toBeIn("hand");
+    expectFabCard(Dash, snatchRed).toBeIn("hand");
     expectFabPlayer(Azalea).toHaveTokenCount("gold", 0);
   });
 });

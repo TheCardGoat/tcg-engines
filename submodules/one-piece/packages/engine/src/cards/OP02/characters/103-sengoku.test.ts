@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op02Sengoku103 } from "../../../../../cards/src/cards/OP02/characters/103-sengoku.ts";
+import { op02Sengoku103 } from "../../../../../cards/src/cards/characters/op02-103-sengoku.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-103 Sengoku", () => {

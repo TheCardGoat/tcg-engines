@@ -3,6 +3,7 @@ import { describe, expect, it } from "vite-plus/test";
 import {
   getMergedCyberpunkCards,
   getMergedCyberpunkCardsById,
+  legacyAccentMangledSlugAliases,
   structuredCards,
 } from "../src/index.ts";
 
@@ -40,6 +41,21 @@ describe("getMergedCyberpunkCardsById", () => {
     const byId = getMergedCyberpunkCardsById();
     for (const card of structuredCards) {
       expect(byId.has(card.id)).toBe(true);
+    }
+  });
+
+  it("resolves the accent-folded Gilded Matón display slug to the retail canonical", () => {
+    const merged = getMergedCyberpunkCardsById().get("gilded-maton");
+    expect(merged?.canonicalId).toBe("gilded-maton");
+    expect(merged?.displayName).toBe("Gilded Matón");
+  });
+
+  it("resolves every legacy accent-mangled slug onto its folded canonical", () => {
+    const byId = getMergedCyberpunkCardsById();
+    for (const [legacySlug, canonicalSlug] of Object.entries(legacyAccentMangledSlugAliases)) {
+      expect(legacySlug).not.toBe(canonicalSlug);
+      expect(byId.get(legacySlug)?.canonicalId).toBe(canonicalSlug);
+      expect(byId.get(canonicalSlug)?.canonicalId).toBe(canonicalSlug);
     }
   });
 });

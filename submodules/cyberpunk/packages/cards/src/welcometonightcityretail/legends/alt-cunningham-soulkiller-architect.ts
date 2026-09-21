@@ -29,50 +29,6 @@ export const welcomeToNightCityRetailAltCunninghamSoulkillerArchitect = defineCy
   abilities: [
     {
       kind: "triggered",
-      text: "SPEND Your next Program this turn plays for -1 €$ for each friendly min Gig, to a minimum of 1 €$.",
-      trigger: {
-        trigger: "activated",
-      },
-      source: {
-        selector: "self",
-      },
-      costs: [
-        {
-          cost: "spend",
-          target: {
-            selector: "self",
-          },
-        },
-      ],
-      effects: [
-        {
-          effect: "grantCostModifier",
-          player: "friendly",
-          appliesTo: {
-            selector: "card",
-            controller: "friendly",
-            zones: ["hand", "trash"],
-            cardTypes: ["program"],
-          },
-          modifier: {
-            reducer: "perTargetCount",
-            reductionPerCount: 1,
-            target: {
-              selector: "gig",
-              controller: "friendly",
-              minValue: 1,
-              maxValue: 1,
-              amount: "all",
-            },
-            min: 1,
-          },
-          duration: "turn",
-          uses: 1,
-        },
-      ],
-    },
-    {
-      kind: "triggered",
       text: "1 €$, SPEND Play a Program from your trash. Bottom-deck it after you play it. (You still pay its cost.)",
       trigger: {
         trigger: "activated",

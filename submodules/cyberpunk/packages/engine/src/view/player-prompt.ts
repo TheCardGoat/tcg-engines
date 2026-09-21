@@ -12,6 +12,7 @@ import type {
   CardType,
   Effect,
   ScryDestination,
+  ScrySelectionLimitContext,
   ScryDestinationZone,
 } from "@tcg/cyberpunk-types";
 import { enumerateMoves } from "../command/processor.ts";
@@ -25,6 +26,7 @@ import { isReactStep } from "../moves/is-react-step.ts";
 import { canActivateAbility, canHostActivatedAbility } from "../moves/activate-ability.ts";
 import { computeEffectiveCost } from "../moves/compute-effective-cost.ts";
 import { goSoloCost } from "../moves/go-solo.ts";
+import { listLegalGearAttachHosts } from "../state/gear-attachment.ts";
 import { availableEddies } from "../moves/eddie-resources.ts";
 
 const KNOWN_MOVE_IDS: ReadonlySet<MoveId> = new Set(MOVE_IDS);
@@ -100,7 +102,10 @@ export type ChoicePrompt =
   | ChooseCardToPlayChoicePrompt
   | ChooseCardToMoveChoicePrompt
   | ChooseCardTypeChoicePrompt
-  | GainGigChoicePrompt;
+  | GainGigChoicePrompt
+  | RedirectDefeatChoicePrompt
+  | ChooseSacrificialGearChoicePrompt
+  | ChooseFirstPlayerChoicePrompt;
 
 /**
  * Subset of {@link import("@tcg/cyberpunk-types").CardTargetDSL} surfaced for
@@ -117,6 +122,8 @@ export interface ScryTargetFilter {
   maxCost?: number;
   minPower?: number;
   maxPower?: number;
+  /** Concrete Gig values currently accepted by costEqualsGigValueOf. */
+  allowedCosts?: number[];
 }
 
 export interface ScryDestinationPrompt {
@@ -126,6 +133,7 @@ export interface ScryDestinationPrompt {
   reveal?: boolean;
   remainder?: boolean;
   order?: ScryDestination["order"];
+  selectionLimitContext?: ScrySelectionLimitContext;
   target: ScryTargetFilter | null;
 }
 
@@ -201,6 +209,7 @@ export interface ChooseTargetChoicePrompt {
 
 export interface EffectSourcePrompt {
   cardId: string;
+  controllerId: string;
   definitionId: string;
   displayName: string;
   rulesText?: string | null;
@@ -226,7 +235,7 @@ export interface ChooseEffectPromptOption {
 export interface ChooseEffectChoicePrompt {
   type: "chooseEffect";
   chooserId: string;
-  payload: { options: ChooseEffectPromptOption[] };
+  payload: { options: ChooseEffectPromptOption[]; source?: EffectSourcePrompt };
 }
 
 export interface ChooseCardTypeChoicePrompt {
@@ -246,6 +255,16 @@ export interface ChooseTriggerPromptOption {
   abilityText: string;
   cardName: string;
   optional?: boolean;
+  containsOptionalEffect?: boolean;
+  context?:
+    | {
+        kind: "gigRoll";
+        dieId: string;
+        dieType: string;
+        result: number;
+        origin: "gainGig" | "reroll";
+      }
+    | undefined;
 }
 
 export interface ChooseTriggerChoicePrompt {
@@ -322,6 +341,36 @@ export interface GainGigChoicePrompt {
   type: "gainGig";
   chooserId: string;
   payload: { allowedDieIds: string[] };
+}
+
+export interface RedirectDefeatChoicePrompt {
+  type: "redirectDefeat";
+  chooserId: string;
+  payload: {
+    protectedCardId: string;
+    replacementCardId: string;
+    cost: number;
+    fightPlayerId: string;
+    source?: EffectSourcePrompt;
+  };
+}
+
+export interface ChooseSacrificialGearChoicePrompt {
+  type: "chooseSacrificialGear";
+  chooserId: string;
+  payload: {
+    hostId: string;
+    gearIds: string[];
+    gears: FilteredCardView[];
+    fightPlayerId: string;
+    source?: EffectSourcePrompt;
+  };
+}
+
+export interface ChooseFirstPlayerChoicePrompt {
+  type: "chooseFirstPlayer";
+  chooserId: string;
+  payload: Record<string, never>;
 }
 
 /**
@@ -501,6 +550,10 @@ function toAvailableMove(moveId: MoveId, state: MatchState, playerId: PlayerId):
     case "resolveEffectTarget":
     case "resolveCardTypeChoice":
     case "resolveChooseEffect":
+    case "resolveRedirectDefeat":
+    case "resolveSacrificialGear":
+    case "resolveFirstPlayer":
+    case "cancelPendingResolution":
       return { moveId, inputSpec: { type: "none" } };
   }
 }
@@ -523,7 +576,7 @@ function getPlayCardCandidates(state: MatchState, playerId: PlayerId): PlayCardC
     if (isDefending && !def.keywords.includes("quick")) continue;
 
     if (def.type === "gear") {
-      const attachTargets = getGearAttachTargets(state, playerId);
+      const attachTargets = listLegalGearAttachHosts(state, id, playerId);
       // Skip gear with no legal targets — keeping it in the candidate list
       // would let strategies try to play it and produce illegal commands.
       if (attachTargets.length === 0) continue;
@@ -533,30 +586,6 @@ function getPlayCardCandidates(state: MatchState, playerId: PlayerId): PlayCardC
     }
   }
   return candidates;
-}
-
-/**
- * Friendly field units and face-up legends that gear can attach to. Card-specific
- * attachment filters are intentionally broad here; move validation remains the
- * authority for actual play legality.
- */
-function getGearAttachTargets(state: MatchState, playerId: PlayerId): string[] {
-  const player = state.G.players[playerId as string];
-  if (!player) return [];
-  const out: string[] = [];
-  for (const id of player.zones.field) {
-    const card = state.G.cardIndex[id as string];
-    if (
-      card &&
-      (defOf(card).type === "unit" || (defOf(card).type === "legend" && !card.meta.faceDown))
-    )
-      out.push(id as string);
-  }
-  for (const id of player.zones.legendArea) {
-    const card = state.G.cardIndex[id as string];
-    if (card && defOf(card).type === "legend" && !card.meta.faceDown) out.push(id as string);
-  }
-  return out;
 }
 
 function getSellableCards(state: MatchState, playerId: PlayerId): string[] {
@@ -818,7 +847,10 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
       return {
         type: "chooseEffect",
         chooserId,
-        payload: { options: choice.payload.options as ChooseEffectPromptOption[] },
+        payload: {
+          options: choice.payload.options as ChooseEffectPromptOption[],
+          source: projectEffectSource(state, choice.payload.sourceCardId as string),
+        },
       };
     case "chooseTrigger":
       return {
@@ -826,15 +858,36 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
         chooserId,
         payload: {
           canPass: choice.payload.canPass,
-          options: choice.payload.options.map((option) => ({
-            triggerId: option.triggerId,
-            sourceCardId: option.sourceCardId as string,
-            sourcePlayerId: option.sourcePlayerId as string,
-            abilityIndex: option.abilityIndex,
-            abilityText: option.abilityText,
-            cardName: option.cardName,
-            optional: option.optional,
-          })),
+          options: choice.payload.options.map((option) => {
+            const queued = state.G.turnMetadata.triggerQueue.find(
+              (trigger) => trigger.id === option.triggerId,
+            );
+            const sourceCard = state.G.cardIndex[option.sourceCardId as string];
+            const ability = sourceCard
+              ? defOf(sourceCard).abilities?.[option.abilityIndex]
+              : undefined;
+            const context =
+              queued?.event.type === "gigDieRolled"
+                ? {
+                    kind: "gigRoll" as const,
+                    dieId: queued.event.dieId as string,
+                    dieType: queued.event.dieType,
+                    result: queued.event.result,
+                    origin: queued.event.origin,
+                  }
+                : undefined;
+            return {
+              triggerId: option.triggerId,
+              sourceCardId: option.sourceCardId as string,
+              sourcePlayerId: option.sourcePlayerId as string,
+              abilityIndex: option.abilityIndex,
+              abilityText: option.abilityText,
+              cardName: option.cardName,
+              optional: option.optional,
+              containsOptionalEffect: ability?.effects.some((effect) => effect.optional) === true,
+              context,
+            };
+          }),
         },
       };
     case "chooseGigsToSteal":
@@ -885,7 +938,12 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
             reveal: destination.reveal,
             remainder: destination.remainder,
             order: destination.order,
-            target: projectScryTarget(destination.target),
+            selectionLimitContext: destination.selectionLimitContext,
+            target: projectScryTarget(
+              destination.target,
+              state,
+              choice.payload.sourcePlayerId as string,
+            ),
           })),
           revealedCardIds: revealedIds,
           revealedCards: revealedIds
@@ -954,6 +1012,44 @@ function transformPendingChoice(choice: PendingChoice, state: MatchState): Choic
           allowedDieIds: choice.payload.allowedDieIds.map((id) => id as string),
         },
       };
+    case "redirectDefeat":
+      return {
+        type: "redirectDefeat",
+        chooserId,
+        payload: {
+          protectedCardId: choice.payload.protectedCardId as string,
+          replacementCardId: choice.payload.replacementCardId as string,
+          cost: choice.payload.cost,
+          fightPlayerId:
+            choice.payload.continuation.kind === "fight"
+              ? (choice.payload.continuation.fightPlayerId as string)
+              : (choice.chooserId as string),
+          source: projectEffectSource(state, choice.payload.replacementCardId as string),
+        },
+      };
+    case "chooseSacrificialGear":
+      return {
+        type: "chooseSacrificialGear",
+        chooserId,
+        payload: {
+          hostId: choice.payload.hostId as string,
+          gearIds: choice.payload.gearIds.map((id) => id as string),
+          gears: choice.payload.gearIds
+            .map((id) => projectRevealedCardView(state, id as string))
+            .filter((card): card is FilteredCardView => card !== null),
+          fightPlayerId:
+            choice.payload.continuation.kind === "fight"
+              ? (choice.payload.continuation.fightPlayerId as string)
+              : (choice.chooserId as string),
+          source: projectEffectSource(state, choice.payload.hostId as string),
+        },
+      };
+    case "chooseFirstPlayer":
+      return {
+        type: "chooseFirstPlayer",
+        chooserId,
+        payload: {},
+      };
   }
 }
 
@@ -967,6 +1063,7 @@ function projectEffectSource(
   const def = defOf(card);
   return {
     cardId: sourceCardId,
+    controllerId: card.controllerId as string,
     definitionId: def.id,
     displayName: def.displayName,
     rulesText: def.rulesText,
@@ -981,7 +1078,11 @@ function projectEffectSource(
  * Returning `null` signals "no filter" so the resolver/UI can skip filtering
  * work entirely.
  */
-function projectScryTarget(raw: unknown): ScryTargetFilter | null {
+function projectScryTarget(
+  raw: unknown,
+  state: MatchState,
+  sourcePlayerId: string,
+): ScryTargetFilter | null {
   if (!raw || typeof raw !== "object") return null;
   const t = raw as {
     cardTypes?: CardType[];
@@ -990,6 +1091,10 @@ function projectScryTarget(raw: unknown): ScryTargetFilter | null {
     maxCost?: number;
     minPower?: number;
     maxPower?: number;
+    costEqualsGigValueOf?: {
+      selector?: unknown;
+      controller?: unknown;
+    };
   };
   const filter: ScryTargetFilter = {};
   if (Array.isArray(t.cardTypes) && t.cardTypes.length > 0) filter.cardTypes = t.cardTypes;
@@ -1000,5 +1105,15 @@ function projectScryTarget(raw: unknown): ScryTargetFilter | null {
   if (typeof t.maxCost === "number") filter.maxCost = t.maxCost;
   if (typeof t.minPower === "number") filter.minPower = t.minPower;
   if (typeof t.maxPower === "number") filter.maxPower = t.maxPower;
+  if (t.costEqualsGigValueOf?.selector === "gig") {
+    const ownerId =
+      t.costEqualsGigValueOf.controller === "rival"
+        ? getOpponentId(state, sourcePlayerId as PlayerId)
+        : (sourcePlayerId as PlayerId);
+    const values = (state.G.players[ownerId as string]?.gigArea ?? [])
+      .map((id) => state.G.gigDice[id as string]?.faceValue)
+      .filter((value): value is number => typeof value === "number");
+    filter.allowedCosts = [...new Set(values)].sort((a, b) => a - b);
+  }
   return Object.keys(filter).length === 0 ? null : filter;
 }

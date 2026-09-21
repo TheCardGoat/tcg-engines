@@ -397,13 +397,68 @@ describe("FAB post-game summary", () => {
     expect(screen.getByRole("columnheader", { name: "From Arsenal" })).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Hands" }));
     expect(screen.getByText("Started with")).toBeTruthy();
-    expect(screen.getByText("Alpha, Beta")).toBeTruthy();
+    // Card names render as underlined hover-preview references.
+    expect(screen.getAllByRole("button", { name: "Preview Alpha" })).toHaveLength(2);
+    expect(screen.getAllByRole("button", { name: "Preview Beta" })).toHaveLength(2);
+    expect(screen.getByText("None")).toBeTruthy();
     expect(
       screen.getByText(
         (_content, element) =>
           element?.tagName === "SMALL" && element.textContent === "from Arsenal",
       ),
     ).toBeTruthy();
+  });
+
+  it("marks name-only card references as all-color aggregates", () => {
+    render(
+      <FabPostGameSummary
+        summary={buildSummary({
+          cards: [
+            {
+              id: "name:Mystery",
+              name: "Mystery",
+              played: 1,
+              pitched: 0,
+              defended: 0,
+              hits: 0,
+              source: "backend",
+            },
+            {
+              id: "known-card",
+              name: "Known card",
+              played: 2,
+              pitched: 0,
+              defended: 0,
+              hits: 0,
+              source: "backend",
+            },
+          ],
+          hands: [
+            {
+              cycle: 1,
+              openedAfterTurn: null,
+              openedBy: "opening-hand",
+              startingCards: [{ id: null, name: "Mystery" }],
+              carriedCards: [],
+              endingCards: [],
+              actions: [],
+              closedAfterTurn: null,
+              source: "backend",
+            },
+          ],
+        })}
+        onInspectBoard={vi.fn()}
+        onMainMenu={vi.fn()}
+        onPlayAgain={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Hands" }));
+    expect(screen.getAllByRole("img", { name: /covers every color/ })).not.toHaveLength(0);
+    fireEvent.click(screen.getByRole("button", { name: "Cards" }));
+    // Only the name-keyed usage row carries the aggregate hint.
+    expect(screen.getAllByRole("img", { name: /covers every color/ })).toHaveLength(1);
+    expect(screen.getByRole("button", { name: "Preview Mystery" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Preview Known card" })).toBeTruthy();
   });
 
   it("reuses hero media and reserves animation for subscribed participants", async () => {

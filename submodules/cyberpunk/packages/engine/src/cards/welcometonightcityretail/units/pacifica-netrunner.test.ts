@@ -4,124 +4,182 @@ import {
   welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailPacificaNetrunner,
 } from "@tcg/cyberpunk-cards";
-import { getEffectiveRules } from "../../../active-effects/index.ts";
+import { getEffectivePower, getEffectiveRules } from "../../../active-effects/index.ts";
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
+const netrunner = welcomeToNightCityRetailPacificaNetrunner;
+
 describe("Pacifica Netrunner", () => {
-  it("is a green Netrunner unit with cost 4 and power 1", () => {
-    const card = welcomeToNightCityRetailPacificaNetrunner;
-    expect(card.type).toBe("unit");
-    expect(card.color).toBe("green");
-    expect(card.classifications).toEqual(["Netrunner"]);
-    expect(card.cost).toBe(4);
-    expect(card.power).toBe(1);
-    expect(card.printNumber).toBe("084");
-    expect(card.abilities[0]?.trigger).toMatchObject({ trigger: "play" });
+  it("is the exact green 4-cost 1-power Netrunner with the conditional PLAY lock", () => {
+    expect(netrunner).toMatchObject({
+      canonicalId: "pacifica-netrunner",
+      slug: "pacifica-netrunner",
+      name: "Pacifica Netrunner",
+      displayName: "Pacifica Netrunner",
+      type: "unit",
+      color: "green",
+      classifications: ["Netrunner"],
+      cost: 4,
+      power: 1,
+      ram: 2,
+      hasSellTag: false,
+      printNumber: "084",
+      timingTriggers: ["play"],
+      rulesText:
+        "{Play} If your ☆ (Street Cred) is an even number, a rival Unit can't ready until your next turn.",
+      abilities: [
+        {
+          kind: "triggered",
+          trigger: { trigger: "play" },
+          source: { selector: "self" },
+          bindings: [
+            {
+              id: "selectedUnit",
+              target: {
+                selector: "card",
+                controller: "rival",
+                zones: ["field"],
+                cardTypes: ["unit"],
+                selection: { mode: "choose", min: 1, max: 1 },
+              },
+            },
+          ],
+          effects: [
+            {
+              effect: "grantRule",
+              target: { selector: "bound", id: "selectedUnit" },
+              rule: "cantReady",
+              duration: "untilSourceNextTurn",
+              conditions: [
+                { condition: "streetCredParity", controller: "friendly", parity: "even" },
+              ],
+            },
+          ],
+        },
+      ],
+    });
   });
 
-  it("on play with even Street Cred, spends a rival unit and grants cantReady", () => {
+  it("pays 4 and offers every rival field Unit, regardless of orientation", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        hand: [welcomeToNightCityRetailPacificaNetrunner],
+        hand: [netrunner],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
         eddies: 4,
         gigArea: [{ dieType: "d6", faceValue: 2 }],
       },
       {
-        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }],
+        field: [
+          { card: welcomeToNightCityRetailFieldOperator, spent: false },
+          { card: welcomeToNightCityRetailCorpoSecurity, spent: true },
+        ],
       },
     );
 
-    engine.playCard(welcomeToNightCityRetailPacificaNetrunner, { as: P1 });
-
+    engine.playCard(netrunner, { as: P1 });
+    expect(engine.getEddies(P1)).toBe(0);
+    expect(engine.getCard(netrunner, "field", P1)).toBeDefined();
     const pending = engine.getState().G.turnMetadata.pendingChoice;
-    if (pending?.type === "chooseTarget") {
-      engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
-    }
+    expect(pending).toMatchObject({ type: "chooseTarget", payload: { min: 1, max: 1 } });
+    if (!pending || pending.type !== "chooseTarget") throw new Error("Expected rival Unit target");
+    expect(new Set(pending.payload.eligibleIds)).toEqual(
+      new Set([
+        engine.findCardId(welcomeToNightCityRetailFieldOperator, "field", P2),
+        engine.findCardId(welcomeToNightCityRetailCorpoSecurity, "field", P2),
+      ]),
+    );
+    expect(pending.payload.eligibleIds).not.toContain(
+      engine.findCardId(welcomeToNightCityRetailFieldOperator, "field", P1),
+    );
+    expect(
+      engine.executeMove(
+        "resolveEffectTarget",
+        {
+          args: {
+            targetIds: [engine.findCardId(welcomeToNightCityRetailFieldOperator, "field", P1)],
+          },
+        },
+        P1,
+      ),
+    ).toMatchObject({ success: false, errorCode: "INVALID_CHOICE" });
+  });
+
+  it("locks a ready rival Unit without spending it", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [netrunner],
+        eddies: 4,
+        gigArea: [{ dieType: "d6", faceValue: 2 }],
+      },
+      { field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }] },
+    );
+
+    engine.playCard(netrunner, { as: P1 });
 
     const operator = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2);
-    expect(operator.meta.spent).toBe(true);
-    const rules = getEffectiveRules(engine.getState(), operator.instanceId as string);
-    expect(rules).toContain("cantReady");
+    expect(operator.meta.spent).toBe(false);
+    expect(getEffectiveRules(engine.getState(), operator.instanceId)).toContain("cantReady");
+    expect(
+      getEffectivePower(engine.getState(), engine.getCard(netrunner, "field", P1).instanceId),
+    ).toBe(1);
   });
 
-  it("keeps the rival unit spent through their ready step, then expires on source next turn", () => {
+  it("keeps a spent rival Unit locked through its Ready Step and expires on the source next turn", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        hand: [welcomeToNightCityRetailPacificaNetrunner],
+        hand: [netrunner],
         eddies: 4,
         gigArea: [{ dieType: "d6", faceValue: 2 }],
       },
-      {
-        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
-      },
+      { field: [{ card: welcomeToNightCityRetailFieldOperator, spent: true, hasLag: false }] },
     );
 
-    engine.playCard(welcomeToNightCityRetailPacificaNetrunner, { as: P1 });
-    const pending = engine.getState().G.turnMetadata.pendingChoice;
-    if (pending?.type === "chooseTarget") {
-      engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
-    }
+    engine.playCard(netrunner, { as: P1 });
+    engine.completeTurn({ as: P1 });
 
-    // Advance to rival's turn: ready step must leave the locked unit spent.
-    engine.passPhase({ as: P1 });
-    // May need a second pass depending on phase; drive until P2 is active.
-    for (let i = 0; i < 6; i++) {
-      if (engine.getActivePlayerId() === P2) break;
-      const active = engine.getActivePlayerId();
-      try {
-        engine.passPhase({ as: active });
-      } catch {
-        break;
-      }
-    }
+    let operator = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2);
+    expect(operator.meta.spent).toBe(true);
+    expect(getEffectiveRules(engine.getState(), operator.instanceId)).toContain("cantReady");
 
-    const operatorOnRivalTurn = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2);
-    expect(operatorOnRivalTurn.meta.spent).toBe(true);
-    expect(
-      getEffectiveRules(engine.getState(), operatorOnRivalTurn.instanceId as string),
-    ).toContain("cantReady");
+    engine.completeTurn({ as: P2 });
+    operator = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2);
+    expect(operator.meta.spent).toBe(true);
+    expect(getEffectiveRules(engine.getState(), operator.instanceId)).not.toContain("cantReady");
 
-    // Advance through rival's turn back to source player's next turn — lock expires
-    // at the start of the source controller's next turn.
-    let sawSourceAgain = false;
-    for (let i = 0; i < 10; i++) {
-      const active = engine.getActivePlayerId();
-      if (active === P1 && i > 0) {
-        sawSourceAgain = true;
-        break;
-      }
-      try {
-        engine.passPhase({ as: active });
-      } catch {
-        break;
-      }
-    }
-    expect(sawSourceAgain).toBe(true);
-
-    const operatorLater = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2);
-    // After source's next turn starts, cantReady expires; unit may still be spent
-    // until its controller's ready step, but the rule must be gone.
-    expect(getEffectiveRules(engine.getState(), operatorLater.instanceId as string)).not.toContain(
-      "cantReady",
+    engine.completeTurn({ as: P1 });
+    expect(engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2).meta.spent).toBe(
+      false,
     );
   });
 
-  it("does not spend a rival unit when Street Cred is odd", () => {
+  it("does not prompt or grant the rule when Street Cred is odd", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
-        hand: [welcomeToNightCityRetailPacificaNetrunner],
+        hand: [netrunner],
         eddies: 4,
         gigArea: [{ dieType: "d6", faceValue: 3 }],
       },
-      {
-        field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: false }],
-      },
+      { field: [{ card: welcomeToNightCityRetailCorpoSecurity, spent: true }] },
     );
 
-    engine.playCard(welcomeToNightCityRetailPacificaNetrunner, { as: P1 });
+    engine.playCard(netrunner, { as: P1 });
 
-    expect(engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2).meta.spent).toBe(
-      false,
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeFalsy();
+    const target = engine.getCard(welcomeToNightCityRetailCorpoSecurity, "field", P2);
+    expect(target.meta.spent).toBe(true);
+    expect(getEffectiveRules(engine.getState(), target.instanceId)).not.toContain("cantReady");
+  });
+
+  it("does not treat Null Street Cred as even", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      { hand: [netrunner], eddies: 4 },
+      { field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false }] },
     );
+
+    engine.playCard(netrunner, { as: P1 });
+
+    expect(engine.getState().G.turnMetadata.pendingChoice).toBeFalsy();
+    const target = engine.getCard(welcomeToNightCityRetailFieldOperator, "field", P2);
+    expect(getEffectiveRules(engine.getState(), target.instanceId)).not.toContain("cantReady");
   });
 });

@@ -4,68 +4,216 @@ import {
   FabTestEngine,
   expectFabCard,
   expectFabPlayer,
+  expectWait,
 } from "@tcg/flesh-and-blood-engine/testing";
-import { volticBoltRed } from "../actions/voltic-bolt.ts";
-import { hyperDriverRed } from "../actions/hyper-driver.ts";
-import { dash } from "../heroes/dash.ts";
-import { blazeFiremind } from "../heroes/blaze-firemind.ts";
+import { hyperDriverRed, hyperDriverYellow } from "../actions/hyper-driver.ts";
+import { nimblismBlue, nimblismRed, nimblismYellow } from "../actions/nimblism.ts";
 import { snatchRed } from "../actions/snatch.ts";
-import { headJabRed } from "../actions/head-jab.ts";
+import { dash } from "../heroes/dash.ts";
+import { oscilio } from "../heroes/oscilio.ts";
+import { flashBoltRed, flashBoltYellow } from "../instants/flash-bolt.ts";
 import { mbrioBaseVizier } from "./mbrio-base-vizier.ts";
 
-describe("M'brio Base Vizier (PEN058) AAA", () => {
-  it("happy: removing a steam counter from the Hyper Driver prevents 1 of 5 arcane", () => {
+const padding = () => Array.from({ length: 6 }, () => nimblismBlue);
+const steamPreventionOption = "ifWouldBeDealtArcaneDamageMayRemoveSteam";
+
+describe("mBrio Base Vizier (PEN058) AAA", () => {
+  for (const mode of ["accept", "decline"] as const) {
+    it(`${mode}: each arcane event independently offers steam prevention`, () => {
+      const game = FabTestEngine.start(
+        {
+          hero: dash,
+          life: 20,
+          hand: [hyperDriverRed],
+          head: [mbrioBaseVizier],
+          resourcePoints: 1,
+          actionPoints: 1,
+          deck: padding(),
+        },
+        {
+          hero: oscilio,
+          life: 20,
+          hand: [flashBoltYellow, flashBoltRed, nimblismBlue, nimblismYellow],
+          resourcePoints: 0,
+          deck: padding(),
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      const Dash = game.as(dash);
+      const Oscilio = game.as(oscilio);
+
+      Dash.play(hyperDriverRed);
+      game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+      expectFabCard(Dash, hyperDriverRed).toBeIn("arena").toHaveCounters(3, "steam");
+      Dash.endTurn();
+
+      for (const [bolt, pitch, expectedLife] of mode === "accept"
+        ? ([
+            [flashBoltYellow, nimblismBlue, 19],
+            [flashBoltRed, nimblismYellow, 17],
+          ] as const)
+        : ([
+            [flashBoltYellow, nimblismBlue, 18],
+            [flashBoltRed, nimblismYellow, 15],
+          ] as const)) {
+        Oscilio.must.pitch(pitch).play(bolt, { target: Dash.id });
+        game.passBoth();
+        if (mode === "accept") {
+          Dash.choose(steamPreventionOption);
+          Dash.targetRequired(hyperDriverRed);
+        } else {
+          Dash.chooseOptions();
+        }
+        game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+        expectFabPlayer(Dash).toHaveLife(expectedLife);
+      }
+
+      expectFabCard(Dash, hyperDriverRed)
+        .toBeIn("arena")
+        .toHaveCounters(mode === "accept" ? 1 : 3, "steam");
+      expectFabCard(Dash, mbrioBaseVizier).toBeIn("head");
+      expectFabPlayer(Oscilio).toHaveLife(20).toHaveResourceCount(1).toHaveHandCount(0);
+      expectWait(game).toBeIdle();
+    });
+  }
+
+  it("chooses exactly one controlled Hyper Driver to pay the steam cost", () => {
     const game = FabTestEngine.start(
-      { hero: dash, hand: [hyperDriverRed], resourcePoints: 1, head: [mbrioBaseVizier], deck: 6 },
       {
-        hero: blazeFiremind,
-        hand: [volticBoltRed, snatchRed, headJabRed],
-        actionPoints: 1,
-        deck: 6,
+        hero: dash,
+        life: 20,
+        hand: [hyperDriverRed, hyperDriverYellow],
+        head: [mbrioBaseVizier],
+        resourcePoints: 2,
+        actionPoints: 2,
+        deck: padding(),
+      },
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltYellow, nimblismBlue, nimblismYellow, nimblismRed],
+        resourcePoints: 0,
+        deck: padding(),
       },
       FAB_MANUAL_HARNESS,
     );
     const Dash = game.as(dash);
-    const Blaze = game.as(blazeFiremind);
+    const Oscilio = game.as(oscilio);
 
     Dash.play(hyperDriverRed);
-    game.untilIdle();
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+    Dash.play(hyperDriverYellow);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
     Dash.endTurn();
-    const boltId = Blaze.findCardInZone("hand", volticBoltRed);
-    game.playInstance(
-      Blaze.id,
-      boltId,
-      { target: Dash.id, pitch: [snatchRed, headJabRed] },
-      "explicit",
-    );
+    Oscilio.must.pitch(nimblismBlue).play(flashBoltYellow, { target: Dash.id });
     game.passBoth();
-    const choice = Dash.expectDecision("option");
-    Dash.chooseOptions(choice.options[0]!.id);
-    Dash.target(hyperDriverRed);
-    game.untilIdle();
+    Dash.choose(steamPreventionOption);
+    Dash.targetRequired(hyperDriverYellow);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
 
-    expectFabPlayer(Dash).toHaveLife(16);
-    expectFabCard(Dash, hyperDriverRed).toHaveCounters(2, "steam");
+    expectFabPlayer(Dash).toHaveLife(19);
+    expectFabCard(Dash, hyperDriverRed).toBeIn("arena").toHaveCounters(3, "steam");
+    expectFabCard(Dash, hyperDriverYellow).toBeIn("arena").toHaveCounters(1, "steam");
+    expectFabCard(Dash, mbrioBaseVizier).toBeIn("head");
+    expectWait(game).toBeIdle();
   });
 
-  it("boundary: with no Hyper Driver the bolt lands for the full 5", () => {
+  it("without a Hyper Driver, Arcane Barrier 1 may pay one resource", () => {
     const game = FabTestEngine.start(
-      { hero: dash, head: [mbrioBaseVizier], deck: 6 },
       {
-        hero: blazeFiremind,
-        hand: [volticBoltRed, snatchRed, headJabRed],
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltYellow],
+        resourcePoints: 2,
+        deck: padding(),
+      },
+      {
+        hero: dash,
+        life: 20,
+        hand: [],
+        head: [mbrioBaseVizier],
+        resourcePoints: 1,
+        deck: padding(),
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Oscilio = game.as(oscilio);
+    const Dash = game.as(dash);
+
+    Oscilio.play(flashBoltYellow, { target: Dash.id });
+    game.passBoth();
+    Dash.choose("arcane-barrier");
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+
+    expectFabPlayer(Dash).toHaveLife(19).toHaveResourceCount(0);
+    expectFabCard(Dash, mbrioBaseVizier).toBeIn("head");
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveResourceCount(0).toHaveHandCount(0);
+    expectWait(game).toBeIdle();
+  });
+
+  it("without steam, resources, or a pitchable hand, two arcane is unprevented", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [flashBoltYellow],
+        resourcePoints: 2,
+        deck: padding(),
+      },
+      {
+        hero: dash,
+        life: 20,
+        hand: [],
+        head: [mbrioBaseVizier],
+        resourcePoints: 0,
+        deck: padding(),
+      },
+      FAB_MANUAL_HARNESS,
+    );
+    const Oscilio = game.as(oscilio);
+    const Dash = game.as(dash);
+
+    Oscilio.play(flashBoltYellow, { target: Dash.id });
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
+
+    expectFabPlayer(Dash).toHaveLife(18).toHaveResourceCount(0);
+    expectFabCard(Dash, mbrioBaseVizier).toBeIn("head");
+    expectWait(game).toBeIdle();
+  });
+
+  it("physical damage neither removes steam nor uses the prevention", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: dash,
+        life: 20,
+        hand: [hyperDriverRed],
+        head: [mbrioBaseVizier],
+        resourcePoints: 1,
         actionPoints: 1,
-        deck: 6,
+        deck: padding(),
+      },
+      {
+        hero: oscilio,
+        life: 20,
+        hand: [snatchRed],
+        actionPoints: 1,
+        deck: padding(),
       },
       FAB_MANUAL_HARNESS,
     );
     const Dash = game.as(dash);
-    const Blaze = game.as(blazeFiremind);
+    const Oscilio = game.as(oscilio);
 
+    Dash.play(hyperDriverRed);
+    game.untilIdle({ optionals: "throw", entityTargets: "throw" });
     Dash.endTurn();
-    Blaze.must.pitch(snatchRed, headJabRed).play(volticBoltRed, { target: Dash.id });
-    game.untilIdle();
+    Oscilio.playAttack(snatchRed);
+    game.closeCombat({ optionals: "throw", entityTargets: "throw" });
 
-    expectFabPlayer(Dash).toHaveLife(15);
+    expectFabPlayer(Dash).toHaveLife(16);
+    expectFabCard(Dash, hyperDriverRed).toBeIn("arena").toHaveCounters(3, "steam");
+    expectFabCard(Dash, mbrioBaseVizier).toBeIn("head");
+    expectFabPlayer(Oscilio).toHaveLife(20).toHaveAP(0).toHaveHandCount(4);
+    expectWait(game).toBeIdle();
   });
 });

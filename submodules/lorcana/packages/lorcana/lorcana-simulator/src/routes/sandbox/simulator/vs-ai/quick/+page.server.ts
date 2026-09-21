@@ -182,6 +182,7 @@ function buildLocalFallbackTarget(params: {
   unknownCards: string[];
   fallbackReason?: string;
   returnTo?: string;
+  opponentMode: "bot" | "self";
 }): string {
   const playParams = new URLSearchParams();
   playParams.set("deck", params.rawDeckParam);
@@ -189,6 +190,7 @@ function buildLocalFallbackTarget(params: {
   if (params.opponentDeckParam) playParams.set("opponentDeck", params.opponentDeckParam);
   playParams.set("strategyId", params.strategyId);
   playParams.set("seed", params.seed);
+  playParams.set("mode", params.opponentMode);
 
   if (params.unknownCards.length > 0) {
     playParams.set("unknownCards", params.unknownCards.join("|"));
@@ -210,6 +212,7 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
   const rawDeckParam = url.searchParams.get("deck")?.trim() ?? "";
   const playerFixtureId = url.searchParams.get("playerFixtureId")?.trim() ?? "";
   const returnTo = url.searchParams.get("returnTo")?.trim() ?? "";
+  const opponentMode = url.searchParams.get("mode") === "self" ? "self" : "bot";
 
   logger.trace("load() called", {
     deckParamLength: rawDeckParam.length,
@@ -284,6 +287,22 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
 
   const seed = createAutomatedMatchSeed();
   let fallbackReason: string | undefined;
+
+  if (opponentMode === "self") {
+    redirect(
+      303,
+      buildLocalFallbackTarget({
+        rawDeckParam: fallbackDeckParam,
+        opponentFixtureId: opponentFixture?.id,
+        opponentDeckParam: sanitizedOpponentDeck.sanitizedText ? opponentDeckParam : undefined,
+        strategyId: strategy.id,
+        seed,
+        unknownCards,
+        returnTo: returnTo || undefined,
+        opponentMode,
+      }),
+    );
+  }
 
   // Step 4: Try to create match on the server
   let serverGameId: string | undefined;
@@ -396,6 +415,7 @@ export async function load(event: ServerLoadEvent): Promise<QuickMatchErrorData>
     unknownCards,
     fallbackReason,
     returnTo: returnTo || undefined,
+    opponentMode,
   });
   logger.trace("redirecting to local fallback", {
     fallbackReason,

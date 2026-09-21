@@ -40,6 +40,13 @@ export interface CardMoveStep extends BaseStep {
   fromZone: CardZone;
   toZone: CardZone;
   playerId: PlayerId;
+  /** Authoritative identities before and after the move. */
+  sourceFace?: "public" | "hidden";
+  destinationFace?: "public" | "hidden";
+  /** Present when this card left a host, so motion starts on that unit/legend. */
+  fromHostId?: CardInstanceId;
+  /** Keep a resolving effect card visible before its authoritative trash settle. */
+  presentation?: "resolving-effect";
 }
 
 export interface CardExitStep extends BaseStep {
@@ -49,6 +56,8 @@ export interface CardExitStep extends BaseStep {
   toZone: CardZone;
   playerId: PlayerId;
   exitReason: CardExitReason;
+  /** Present when this card left a host, so motion starts on that unit/legend. */
+  fromHostId?: CardInstanceId;
 }
 
 export interface CardEnterStep extends BaseStep {
@@ -103,6 +112,9 @@ export interface LegendRevealStep extends BaseStep {
   kind: "legendReveal";
   cardId: CardInstanceId;
   playerId: PlayerId;
+  /** Preserve the Legend's physical orientation while its face changes. */
+  fromRotationDeg?: number;
+  toRotationDeg?: number;
 }
 
 export type EffectTargetSpec =
@@ -121,6 +133,10 @@ export interface EffectTargetStep extends BaseStep {
   sourceCardId: CardInstanceId;
   targets: EffectTargetSpec[];
   playerId: PlayerId;
+  presentation?: "source-card";
+  sourceExit?: { zone: CardZone; playerId: PlayerId };
+  label?: string;
+  tone?: "positive" | "negative" | "neutral";
 }
 
 export interface ResourceFloatStep extends BaseStep {
@@ -155,10 +171,10 @@ export interface GigMoveStep extends BaseStep {
   kind: "gigMove";
   dieId: GigDieId;
   from: "fixerArea" | "gigArea";
-  to: "gigArea";
+  to: "fixerArea" | "gigArea";
   fromPlayerId: PlayerId;
   toPlayerId: PlayerId;
-  moveKind: "gain" | "steal";
+  moveKind: "gain" | "steal" | "correct";
 }
 
 export interface PhaseChangeStep extends BaseStep {

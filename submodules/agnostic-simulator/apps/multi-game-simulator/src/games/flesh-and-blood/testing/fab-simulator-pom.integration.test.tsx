@@ -315,23 +315,26 @@ describe("FaB simulator POM integration · animation labs", () => {
     expect(await player.zoneHas("head", "Shuffle Lab Hood")).toBe(false);
   }, 30_000);
 
-  it("resolves prevention before Flash Bolt and reduces 3 damage to 1", async () => {
-    session = renderFabSimulatorScenario({
-      scenarioId: "damage-prevention",
-      search: "ai=pass-only",
-    });
+  it("pays Arcane Barrier 1 on the defender view and reduces Voltic Bolt damage to 4", async () => {
+    session = renderFabSimulatorScenario({ scenarioId: "damage-prevention" });
     const game = session.pom;
     await game.waitForReady();
-    const player = game.as("player-1");
-    expect(await player.life()).toBe(20);
+    // The scenario is the defender's view: Oscilio faces Voltic Bolt (5 arcane)
+    // with Nullrune Robe's Arcane Barrier 1 and exactly 1 resource to pay.
+    const defender = game.as("player-2");
+    expect(await defender.life()).toBe(20);
+    expect(await defender.resourcePoints()).toBe(1);
+    expect(await game.decisionActor()).toBe("player-2");
 
-    await player.play("Prevention Lab Instant");
+    await defender.chooseOption(/Nullrune Robe · Pay 1 resource · Prevent 1/);
     await game.waitForAnimations();
-    await session.dom.waitFor(async () => (await player.life()) === 19, {
+    await session.dom.waitFor(async () => (await defender.life()) === 16, {
       timeoutMs: 8_000,
-      message: "Flash Bolt did not resolve through the prevention effect",
+      message: "Barrier prevention did not reduce the bolt to 4 damage",
     });
 
-    expect(await player.life()).toBe(19);
+    expect(await defender.life()).toBe(16);
+    expect(await defender.resourcePoints()).toBe(0);
+    expect(await game.prompt()).toBeNull();
   }, 30_000);
 });

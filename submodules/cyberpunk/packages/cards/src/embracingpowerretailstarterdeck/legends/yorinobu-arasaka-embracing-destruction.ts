@@ -6,8 +6,9 @@ export const embracingPowerRetailStarterDeckYorinobuArasakaEmbracingDestruction 
     id: "31fa5825-946a-4ca2-afa8-8f07b9898d6a",
     canonicalId: "yorinobu-arasaka-embracing-destruction",
     slug: "yorinobu-arasaka-embracing-destruction",
-    name: "Yorinobu Arasaka — Embracing Destruction",
-    displayName: "Yorinobu Arasaka — Embracing Destruction",
+    subname: "Embracing Destruction",
+    name: "Yorinobu Arasaka",
+    displayName: "Yorinobu Arasaka: Embracing Destruction",
     rulesText:
       "The first time a friendly ARASAKA Unit attacks each turn, draw 1. Then, if you have less than 20 ☆ (Street Cred), discard 1.",
     color: "red",

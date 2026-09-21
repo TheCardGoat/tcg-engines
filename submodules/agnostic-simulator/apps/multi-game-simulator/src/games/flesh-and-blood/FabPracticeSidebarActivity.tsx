@@ -69,6 +69,7 @@ export interface FabPracticeSidebarActivityProps {
   readonly humanPlayerId: string;
   readonly controlledPlayerId: string;
   readonly botPlayerId: string;
+  readonly opponentLabel?: string;
   readonly turnNumber: number;
   readonly firstTurnPlayerId?: string;
   readonly pendingDecision: FabPracticeDecisionSnapshot | null;
@@ -101,6 +102,7 @@ export function createFabPracticeSidebarActivity({
   humanPlayerId,
   controlledPlayerId,
   botPlayerId,
+  opponentLabel,
   firstTurnPlayerId,
   pendingDecision,
   now,
@@ -118,7 +120,8 @@ export function createFabPracticeSidebarActivity({
   cardDefinitions,
   cards,
 }: FabPracticeSidebarActivityProps): SimulatorMatchActivity {
-  const actorLabel = (actorId: string) => practiceActorLabel(actorId, humanPlayerId, botPlayerId);
+  const actorLabel = (actorId: string) =>
+    practiceActorLabel(actorId, humanPlayerId, botPlayerId, opponentLabel);
   const showDeveloperTrace = import.meta.env.DEV || import.meta.env.MODE === "test";
   const debugEntries = showDeveloperTrace
     ? projectFabLogEntries(
@@ -127,7 +130,7 @@ export function createFabPracticeSidebarActivity({
           viewerId: controlledPlayerId,
           seatIds: [humanPlayerId, botPlayerId],
           actorLabel: (actorId, usage) =>
-            practiceActorLabelForm(actorId, usage, humanPlayerId, botPlayerId),
+            practiceActorLabelForm(actorId, usage, humanPlayerId, botPlayerId, opponentLabel),
         },
       )
     : [];
@@ -139,6 +142,7 @@ export function createFabPracticeSidebarActivity({
         humanPlayerId={humanPlayerId}
         controlledPlayerId={controlledPlayerId}
         botPlayerId={botPlayerId}
+        opponentLabel={opponentLabel}
         firstTurnPlayerId={firstTurnPlayerId}
         chatMessages={chatMessages}
         chatActorId={chatActorId}
@@ -204,8 +208,6 @@ export function createFabPracticeSidebarActivity({
             <DecisionLog
               telemetry={telemetry}
               pendingDecision={pendingDecision}
-              humanPlayerId={humanPlayerId}
-              botPlayerId={botPlayerId}
               actorLabel={actorLabel}
             />
           </section>
@@ -219,8 +221,7 @@ export function createFabPracticeSidebarActivity({
               getRawState={getRawState}
               getRawInteraction={getRawInteraction}
               telemetry={telemetry}
-              humanPlayerId={humanPlayerId}
-              botPlayerId={botPlayerId}
+              actorLabel={actorLabel}
             />
           </section>
         </div>
@@ -324,6 +325,7 @@ function PracticeHistory({
   humanPlayerId,
   controlledPlayerId,
   botPlayerId,
+  opponentLabel,
   firstTurnPlayerId,
   chatMessages,
   chatActorId,
@@ -335,6 +337,7 @@ function PracticeHistory({
   readonly humanPlayerId: string;
   readonly controlledPlayerId: string;
   readonly botPlayerId: string;
+  readonly opponentLabel?: string;
   readonly firstTurnPlayerId?: string;
   readonly chatMessages: readonly FabPracticeChatMessage[];
   readonly chatActorId: string;
@@ -344,7 +347,8 @@ function PracticeHistory({
 }) {
   const [draft, setDraft] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  const actorLabel = (actorId: string) => practiceActorLabel(actorId, humanPlayerId, botPlayerId);
+  const actorLabel = (actorId: string) =>
+    practiceActorLabel(actorId, humanPlayerId, botPlayerId, opponentLabel);
   const chatInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -368,6 +372,7 @@ function PracticeHistory({
             humanPlayerId={humanPlayerId}
             controlledPlayerId={controlledPlayerId}
             botPlayerId={botPlayerId}
+            opponentLabel={opponentLabel}
             firstTurnPlayerId={firstTurnPlayerId}
             cardDefinitions={cardDefinitions}
             cards={cards}
@@ -438,6 +443,7 @@ function PracticeEventLog({
   humanPlayerId,
   controlledPlayerId,
   botPlayerId,
+  opponentLabel,
   firstTurnPlayerId,
   cardDefinitions,
   cards,
@@ -446,6 +452,7 @@ function PracticeEventLog({
   readonly humanPlayerId: string;
   readonly controlledPlayerId: string;
   readonly botPlayerId: string;
+  readonly opponentLabel?: string;
   readonly firstTurnPlayerId?: string;
   readonly cardDefinitions?: FabPresentationState["cardDefinitions"];
   readonly cards?: FabPresentationState["cards"];
@@ -462,9 +469,9 @@ function PracticeEventLog({
   const logActorLabel = useCallback<FabLogActorLabel>(
     (actorId, usage) =>
       actorIds.has(actorId)
-        ? practiceActorLabelForm(actorId, usage, humanPlayerId, botPlayerId)
+        ? practiceActorLabelForm(actorId, usage, humanPlayerId, botPlayerId, opponentLabel)
         : undefined,
-    [actorIds, humanPlayerId, botPlayerId],
+    [actorIds, humanPlayerId, botPlayerId, opponentLabel],
   );
 
   const rows = useMemo(() => {
@@ -496,9 +503,11 @@ function PracticeEventLog({
   const turnOwnerLabel = useCallback(
     (_turn: number, turnRows: readonly SimulatorMatchHistoryRow[]) => {
       const ownerId = turnRows.find((row) => row.turnOwnerSeatId)?.turnOwnerSeatId;
-      return ownerId ? practiceActorLabel(ownerId, humanPlayerId, botPlayerId) : "Match";
+      return ownerId
+        ? practiceActorLabel(ownerId, humanPlayerId, botPlayerId, opponentLabel)
+        : "Match";
     },
-    [humanPlayerId, botPlayerId],
+    [humanPlayerId, botPlayerId, opponentLabel],
   );
 
   const historyRowVariant = useCallback(
@@ -597,14 +606,10 @@ export function practiceCommandEntries(
 function DecisionLog({
   telemetry,
   pendingDecision,
-  humanPlayerId,
-  botPlayerId,
   actorLabel,
 }: {
   readonly telemetry: readonly FabPracticeTelemetryEntry[];
   readonly pendingDecision: FabPracticeDecisionSnapshot | null;
-  readonly humanPlayerId: string;
-  readonly botPlayerId: string;
   readonly actorLabel: (actorId: string) => string;
 }) {
   return (
@@ -627,7 +632,7 @@ function DecisionLog({
               <span>
                 #{entry.id} · {formatPracticeTime(entry.recordedAt)} · state {entry.stateId}
               </span>
-              <strong>{practiceActorLabel(entry.actorId, humanPlayerId, botPlayerId)}</strong>
+              <strong>{actorLabel(entry.actorId)}</strong>
               <p>{entry.commandLabel}</p>
               <small>
                 Accepted · <code>{entry.move}</code> ·{" "}
@@ -650,15 +655,13 @@ function DebugPayloads({
   getRawState,
   getRawInteraction,
   telemetry,
-  humanPlayerId,
-  botPlayerId,
+  actorLabel,
 }: {
   readonly debugRevision: number;
   readonly getRawState: () => string;
   readonly getRawInteraction: () => string;
   readonly telemetry: readonly FabPracticeTelemetryEntry[];
-  readonly humanPlayerId: string;
-  readonly botPlayerId: string;
+  readonly actorLabel: (actorId: string) => string;
 }) {
   const [selectedSnapshotId, setSelectedSnapshotId] = useState<number | null>(null);
   const selectedSnapshot =
@@ -688,8 +691,7 @@ function DebugPayloads({
             >
               {telemetry.map((entry) => (
                 <option key={entry.id} value={entry.id}>
-                  #{entry.id} · {practiceActorLabel(entry.actorId, humanPlayerId, botPlayerId)} ·{" "}
-                  {entry.commandLabel}
+                  #{entry.id} · {actorLabel(entry.actorId)} · {entry.commandLabel}
                 </option>
               ))}
             </select>
@@ -701,11 +703,7 @@ function DebugPayloads({
             testId="fab-debug-snapshot-state"
           />
           <DebugPayload
-            label={`Interaction after command ${selectedSnapshot.id} · ${practiceActorLabel(
-              selectedSnapshot.interactionActorId,
-              humanPlayerId,
-              botPlayerId,
-            )}`}
+            label={`Interaction after command ${selectedSnapshot.id} · ${actorLabel(selectedSnapshot.interactionActorId)}`}
             payload={selectedSnapshot.getRawInteraction}
             revision={selectedSnapshot.id}
             testId="fab-debug-snapshot-interaction"
@@ -777,9 +775,14 @@ function DebugPayload({
   );
 }
 
-function practiceActorLabel(actorId: string, humanPlayerId: string, botPlayerId: string): string {
+function practiceActorLabel(
+  actorId: string,
+  humanPlayerId: string,
+  botPlayerId: string,
+  opponentLabel?: string,
+): string {
   if (actorId === humanPlayerId) return "You";
-  return actorId === botPlayerId ? "Practice bot" : "Opponent seat";
+  return actorId === botPlayerId ? (opponentLabel ?? "Practice bot") : "Opponent seat";
 }
 
 /** Log-slot label with possessive grammar for ownership slots. */
@@ -788,14 +791,16 @@ function practiceActorLabelForm(
   usage: FabLogActorLabelUsage,
   humanPlayerId: string,
   botPlayerId: string,
+  opponentLabel?: string,
 ): string {
-  const subject = practiceActorLabel(actorId, humanPlayerId, botPlayerId);
+  const subject = practiceActorLabel(actorId, humanPlayerId, botPlayerId, opponentLabel);
   if (usage === "subject") return subject;
   if (usage === "possessive") return subject === "You" ? "Your" : `${subject}'s`;
   return subject === "You" ? "your" : "their";
 }
 
 function PracticeSessionDetails({ session }: { readonly session: FabPracticeSessionSummary }) {
+  const manual = session.mode === "Play both sides";
   return (
     <section aria-labelledby="fab-practice-session-heading">
       <header className="fab-practice-lab-section-heading">
@@ -815,12 +820,12 @@ function PracticeSessionDetails({ session }: { readonly session: FabPracticeSess
         ) : null}
         {session.botDeck ? (
           <div>
-            <dt>Bot deck</dt>
+            <dt>{manual ? "Player 2 deck" : "Bot deck"}</dt>
             <dd>{session.botDeck}</dd>
           </div>
         ) : null}
         <div>
-          <dt>Bot strategy</dt>
+          <dt>{manual ? "Control" : "Bot strategy"}</dt>
           <dd>{session.botStrategy}</dd>
         </div>
         <div>

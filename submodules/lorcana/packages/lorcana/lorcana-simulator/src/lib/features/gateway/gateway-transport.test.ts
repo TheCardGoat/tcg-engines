@@ -96,6 +96,25 @@ describe("GatewayTransport gateway errors → engine ERROR", () => {
     expect(m.code).toBe("INTERNAL_ERROR");
   });
 
+  it.each([
+    "drop_not_allowed",
+    "player_connected",
+    "too_early",
+    "timeout_grace_pending",
+    "disconnect_timestamp_missing",
+  ])("leaves out-of-band drop error %s to the live-match router", async (code: string) => {
+    createTransport();
+    await transport.connect();
+
+    inbound?.({
+      type: "gateway_error",
+      code,
+      message: "Specific drop recovery message",
+    });
+
+    expect(received).toHaveLength(0);
+  });
+
   it("sets resyncRequired when mapped code is STALE_STATE", async () => {
     createTransport();
     await transport.connect();

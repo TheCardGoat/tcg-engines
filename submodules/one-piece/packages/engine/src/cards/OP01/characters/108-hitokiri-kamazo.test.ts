@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op01HitokiriKamazo108 } from "../../../../../cards/src/cards/OP01/characters/108-hitokiri-kamazo.ts";
+import { op01HitokiriKamazo108 } from "../../../../../cards/src/cards/characters/op01-108-hitokiri-kamazo.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP01-108 Hitokiri Kamazo", () => {

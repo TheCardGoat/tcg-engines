@@ -1166,15 +1166,17 @@ export function proposeGrandArchiveAttackDeclaration(
     ...weaponActionResultEvents(
       weaponParticipations.flatMap((participation) => participation.useWeaponRules),
     ),
-    ...loadedCards.map((loadedCard): GrandArchiveProposedEvent => ({
-      type: "object-moved",
-      objectId: loadedCard.id,
-      from: "loaded",
-      to: "intent",
-      hostId: attacker.id,
-      actorId: playerId,
-      cause: { kind: "rule", rule: "loaded-card-enters-attack-intent" },
-    })),
+    ...loadedCards.map(
+      (loadedCard): GrandArchiveProposedEvent => ({
+        type: "object-moved",
+        objectId: loadedCard.id,
+        from: "loaded",
+        to: "intent",
+        hostId: attacker.id,
+        actorId: playerId,
+        cause: { kind: "rule", rule: "loaded-card-enters-attack-intent" },
+      }),
+    ),
     ...(options.resolvedAttack || effectGranted
       ? []
       : [
@@ -1187,14 +1189,16 @@ export function proposeGrandArchiveAttackDeclaration(
             cause: declarationCause,
           },
         ]),
-    ...weapons.map((weapon): GrandArchiveProposedEvent => ({
-      type: "object-state-changed",
-      objectId: weapon.id,
-      state: "wielded",
-      value: true,
-      actorId: playerId,
-      cause: declarationCause,
-    })),
+    ...weapons.map(
+      (weapon): GrandArchiveProposedEvent => ({
+        type: "object-state-changed",
+        objectId: weapon.id,
+        state: "wielded",
+        value: true,
+        actorId: playerId,
+        cause: declarationCause,
+      }),
+    ),
     {
       type: "object-state-changed",
       objectId: attacker.id,
@@ -1203,14 +1207,16 @@ export function proposeGrandArchiveAttackDeclaration(
       actorId: playerId,
       cause: declarationCause,
     },
-    ...targets.map((target): GrandArchiveProposedEvent => ({
-      type: "object-state-changed",
-      objectId: target.id,
-      state: "defending",
-      value: true,
-      actorId: playerId,
-      cause: declarationCause,
-    })),
+    ...targets.map(
+      (target): GrandArchiveProposedEvent => ({
+        type: "object-state-changed",
+        objectId: target.id,
+        state: "defending",
+        value: true,
+        actorId: playerId,
+        cause: declarationCause,
+      }),
+    ),
     {
       type: "combat-started",
       combat,
@@ -1310,7 +1316,13 @@ export function proposeGrandArchiveAttackRedirection(
   const attacker = state.objects[combat.attackerId];
   const previousDefender = state.objects[previousDefenderId];
   const newDefender = state.objects[newDefenderId];
-  if (!attacker || !previousDefender || !newDefender) {
+  if (
+    !attacker ||
+    !newDefender ||
+    attacker.zone !== "field" ||
+    !attacker.states.has("attacking") ||
+    attacker.controllerId !== combat.attackingPlayerId
+  ) {
     throw new Error("Attack redirection refers to an object that no longer exists");
   }
   const intents = combat.intentIds.flatMap((intentId) => {
@@ -1334,7 +1346,7 @@ export function proposeGrandArchiveAttackRedirection(
       sourceId: newDefender.id,
       abilityBearerId: newDefender.id,
       candidateId: newDefender.id,
-      bindings: { eventAttacker: [attacker.id], eventRecipient: [previousDefender.id] },
+      bindings: { eventAttacker: [attacker.id], eventRecipient: [previousDefenderId] },
     };
     const interceptRules = collectGrandArchiveActionRules({
       action: "intercept",
@@ -1364,16 +1376,15 @@ export function proposeGrandArchiveAttackRedirection(
     combat.targetIds.filter((objectId) => objectId !== previousDefenderId),
   );
   if (
-    previousDefender.zone !== "field" ||
-    !previousDefender.states.has("defending") ||
-    newDefender.controllerId !== previousDefender.controllerId ||
+    !combat.defendingPlayerIds.includes(newDefender.controllerId) ||
     !legalSingleAttackTarget(
       program,
       state,
       attacker,
       newDefender,
       participants,
-      true,
+      // Taunt governs the initial declaration, not subsequent redirection.
+      false,
       otherDefenders,
     ) ||
     (options.requireNewDefenderObedience &&
@@ -1382,13 +1393,17 @@ export function proposeGrandArchiveAttackRedirection(
     throw new Error("New defender is not a legal redirection target");
   }
   return [
-    {
-      type: "object-state-changed",
-      objectId: previousDefender.id,
-      state: "defending",
-      value: false,
-      cause: { kind: "rule", rule: "attack-redirected" },
-    },
+    ...(previousDefender?.states.has("defending")
+      ? [
+          {
+            type: "object-state-changed" as const,
+            objectId: previousDefenderId,
+            state: "defending" as const,
+            value: false,
+            cause: { kind: "rule" as const, rule: "attack-redirected" },
+          },
+        ]
+      : []),
     {
       type: "object-state-changed",
       objectId: newDefender.id,
@@ -1396,11 +1411,11 @@ export function proposeGrandArchiveAttackRedirection(
       value: true,
       cause: { kind: "rule", rule: "attack-redirected" },
     },
-    ...(previousDefender.states.has("intercepting")
+    ...(previousDefender?.states.has("intercepting")
       ? ([
           {
             type: "object-state-changed",
-            objectId: previousDefender.id,
+            objectId: previousDefenderId,
             state: "intercepting",
             value: false,
             cause: { kind: "rule", rule: "attack-redirected" },
@@ -1420,7 +1435,7 @@ export function proposeGrandArchiveAttackRedirection(
       : []),
     {
       type: "combat-defender-redirected",
-      previousDefenderId: previousDefender.id,
+      previousDefenderId,
       newDefenderId: newDefender.id,
       cause: { kind: "rule", rule: "attack-redirected" },
     },
@@ -1576,14 +1591,16 @@ export function proposeGrandArchiveCombatDamage(
     ...damageEvents
       .filter((pending) => pending.amount > 0)
       .map((pending) => proposedDamageEvent(pending, pending.amount)),
-    ...spentWeaponIds.map((objectId): GrandArchiveProposedEvent => ({
-      type: "counter-changed",
-      objectId,
-      counter: "durability",
-      delta: -1,
-      actorId: combat.attackingPlayerId,
-      cause: { kind: "rule", rule: "wielded-weapon-durability" },
-    })),
+    ...spentWeaponIds.map(
+      (objectId): GrandArchiveProposedEvent => ({
+        type: "counter-changed",
+        objectId,
+        counter: "durability",
+        delta: -1,
+        actorId: combat.attackingPlayerId,
+        cause: { kind: "rule", rule: "wielded-weapon-durability" },
+      }),
+    ),
     {
       type: "combat-step-changed",
       step: "end",

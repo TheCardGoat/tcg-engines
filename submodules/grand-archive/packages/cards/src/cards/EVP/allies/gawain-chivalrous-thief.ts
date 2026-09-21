@@ -98,60 +98,71 @@ export const gawainChivalrousThief: GrandArchiveCard<GrandArchiveAbilityDefiniti
               kind: "sequence",
               effects: [
                 {
-                  kind: "sacrifice",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "sacrifice",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "sequence",
-                  effects: [
-                    {
-                      kind: "look-at",
-                      player: "controller",
-                      selection: {
-                        id: "looked-at-memory",
-                        kind: "choice",
-                        declared: "resolution",
-                        chooser: "controller",
-                        count: {
-                          kind: "all",
-                        },
-                        candidates: {
-                          kind: "card",
-                          zones: ["memory"],
-                          relationship: "zone-of",
-                          player: "event-recipient-controller",
-                        },
-                      },
-                    },
-                    {
-                      kind: "choose",
-                      selection: {
-                        id: "discarded-card",
-                        kind: "choice",
-                        declared: "resolution",
-                        chooser: "controller",
-                        count: {
-                          kind: "exactly",
-                          amount: 1,
-                        },
-                        candidates: {
-                          kind: "card",
-                          zones: ["memory"],
-                          relationship: "zone-of",
-                          player: "event-recipient-controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "look-at",
+                        player: "controller",
+                        selection: {
+                          id: "looked-at-memory",
+                          kind: "choice",
+                          declared: "resolution",
+                          chooser: "controller",
+                          count: {
+                            kind: "all",
+                          },
+                          candidates: {
+                            kind: "card",
+                            zones: ["memory"],
+                            relationship: "zone-of",
+                            player: "event-recipient-controller",
+                          },
                         },
                       },
-                      effect: {
-                        kind: "discard-object",
-                        subject: {
-                          kind: "bound",
-                          binding: "discarded-card",
+                      {
+                        kind: "choose",
+                        selection: {
+                          id: "discarded-card",
+                          kind: "choice",
+                          declared: "resolution",
+                          chooser: "controller",
+                          count: {
+                            kind: "exactly",
+                            amount: 1,
+                          },
+                          candidates: {
+                            kind: "card",
+                            zones: ["memory"],
+                            relationship: "zone-of",
+                            player: "event-recipient-controller",
+                          },
+                        },
+                        effect: {
+                          kind: "discard-object",
+                          subject: {
+                            kind: "bound",
+                            binding: "discarded-card",
+                          },
                         },
                       },
-                    },
-                  ],
+                    ],
+                  },
                 },
               ],
             },

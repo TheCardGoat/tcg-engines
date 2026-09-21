@@ -12,6 +12,7 @@ reconciles catalog entries.
 | EB02-009 | Thousand Sunny | verified | Rested Stage activation and physical given-DON!! redistribution to one inclusive Straw Hat Crew Character target |
 | EB02-041 | Merry Go | verified | Included Straw Hat Crew Leader On Play draw; rested Stage cost and temporary +2 cost on an included Character through the opponent's next turn |
 | EB02-060 | Merry Go | verified | Rested Stage plus top-Life face-up payment; included Straw Hat Crew Character +1000 power through the opponent's next turn |
+| EB04-010 | Lulucia Kingdom | verified | onPlay, permanent |
 | OP02-024 | Moby Dick | verified | Dynamic low-Life turn power and Life Trigger play |
 | OP02-048 | Land of Wano | verified | Paid filtered power boost, up-to DON!! attachment, and unpayable boundary |
 | OP02-070 | New Kama Land | verified | Leader-gated ordered exact-or-up-to hand trash and draw |
@@ -44,13 +45,17 @@ reconciles catalog entries.
 | OP13-078 | Oro Jackson | verified | Inclusive Roger Pirates leave-field reaction and once-per-turn DON!! choice |
 | OP13-099 | The Empty Throne | verified | Non-selective 19-trash Leader boost; Stage and 3-DON!! rest costs; black inclusive Five Elders Character play with live DON!! cost ceiling |
 | OP14-039 | Coffin Boat | verified | Dracule Mihawk identity gate, On Play draw, and controller-owned end-turn 0–1 rested-DON!! reactivation |
+| OP15-057 | Dressrosa Kingdom | verified | onPlay, onOpponentAttack |
+| OP16-021 | Moby Dick | verified | onPlay, activateMain |
+| OP16-078 | Marineford | verified | onPlay, activateMain |
+| OP17-057 | Fullalead | verified | Opponent-attack window: rest Stage + trash hand card, Rocks-trait Leader +1000 for the battle (trait mutation killed; non-Rocks decline) |
 | ST01-017 | Thousand Sunny | verified | Stage-rest activation; inclusive Straw Hat Crew Leader-or-Character candidates; exclusion, power, and duration boundaries |
 | ST14-017 | Thousand Sunny (Pirate Foil) | verified | On Play Leader power and permanent trait-based cost modifier with canonical default duration |
 
 ## Progress
 
-- Canonical stages: 39.
+- Canonical stages: 44.
 - Verified: 39.
-- Structured pending: 0.
-- Printed but unstructured: 0.
+- Structured pending: 4.
+- Printed but unstructured: 1.
 - Canonical vanilla awaiting the parameterized invariant: 0.

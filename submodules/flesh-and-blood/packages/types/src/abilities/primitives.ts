@@ -27,6 +27,7 @@ export type FabTurnHistoryEvent =
   | "create-card"
   | "activate-cannon"
   | "activate-weapon"
+  | "sharpen-sword"
   | "phantasm-destroy-illusionist-attack-action"
   | "play-or-activate"
   | "destroy-item"

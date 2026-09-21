@@ -70,6 +70,10 @@ interface CombatChainProps {
   onPassPriority?: () => void;
   /** Game-native label for the priority control (for example, Declare defense). */
   priorityActionLabel?: string;
+  /** Viewer's one-shot scoped auto-pass arm; combat arms surface on the chain. */
+  scopedAutoPass?: "combat" | "opponent-turn" | null;
+  /** Arm or disarm the "auto-pass this combat" scope from the chain overlay. */
+  onToggleScopePass?: () => void;
   /** Defenders staged in the client before the declaration reaches the engine. */
   provisionalDefenderIds?: readonly string[];
   /** Shows the explicit empty declaration slot while the viewer is choosing defenders. */
@@ -144,6 +148,7 @@ function ChainCardFace({
   onCardSelect?: (entity: SimulatorEntity) => void;
 }) {
   const entity = card.entity;
+  const tapped = chainCardIsTapped(entity);
   const previewTarget = useFabPreviewTarget(entity);
   const interactionState = interactionStateFor?.(entity);
   const interactionDescription =
@@ -170,14 +175,21 @@ function ChainCardFace({
     card.hostedCards.length > 0
       ? `, with ${card.hostedCards.map((hostedCard) => hostedCard.title).join(", ")} under it`
       : "";
-  const label = `${roleLabel(card.role)}: ${entity.title}${stat ? `, ${stat.value} ${stat.label}` : ""}${keywordLabel}${hostedLabel}`;
+  const label = `${roleLabel(card.role)}: ${entity.title}${stat ? `, ${stat.value} ${stat.label}` : ""}${keywordLabel}${hostedLabel}${tapped ? ", tapped" : ""}`;
   const accessibleLabel = targetable ? `${label}, ${interactionDescription}` : label;
   const content = (
     <>
-      <FabBoardCardFace entity={entity} density="compact" fill frameBadges="hide" preview={false} />
+      <FabBoardCardFace
+        entity={uprightChainEntity(entity)}
+        density="compact"
+        fill
+        frameBadges="hide"
+        preview={false}
+      />
       {visibleKeywords.length > 0 ? (
         <FabKeywordRow keywords={visibleKeywords} compact className="fab-chain-card-keywords" />
       ) : null}
+      {tapped ? <ChainTappedBadge /> : null}
       <span className="fab-chain-card-name">{entity.title}</span>
       {stat ? (
         <span
@@ -243,6 +255,31 @@ function ChainCardFace({
         <FabHostedCards hostName={entity.title} cards={card.hostedCards} />
       </div>
     </AnimatedEntitySlot>
+  );
+}
+
+/** Chain cards never inherit the board's tap rotation; they flag the state with a badge. */
+function chainCardIsTapped(entity: SimulatorEntity): boolean {
+  return entity.dataAttributes?.["data-fab-tapped"] === "true";
+}
+
+/** Copies the entity without the tapped marker so the card face renders upright. */
+function uprightChainEntity(entity: SimulatorEntity): SimulatorEntity {
+  if (!chainCardIsTapped(entity)) return entity;
+  return {
+    ...entity,
+    dataAttributes: Object.fromEntries(
+      Object.entries(entity.dataAttributes ?? {}).filter(([key]) => key !== "data-fab-tapped"),
+    ),
+  };
+}
+
+function ChainTappedBadge() {
+  return (
+    <span className="fab-chain-card-tapped" data-testid="fab-chain-card-tapped" title="Tapped">
+      <FabOfficialIcon id="tap" size={10} className="fab-chain-card-tapped-icon" />
+      <span>Tapped</span>
+    </span>
   );
 }
 
@@ -481,7 +518,7 @@ function LinkHistory({
               {link.attacker ? (
                 <span className="fab-chain-link-avatar" aria-hidden="true">
                   <FabBoardCardFace
-                    entity={link.attacker.entity}
+                    entity={uprightChainEntity(link.attacker.entity)}
                     density="mini"
                     fill
                     frameBadges="hide"
@@ -525,7 +562,7 @@ function LinkHistory({
           >
             <span className="fab-chain-link-avatar" aria-hidden="true">
               <FabBoardCardFace
-                entity={pendingAttack.entity}
+                entity={uprightChainEntity(pendingAttack.entity)}
                 density="mini"
                 fill
                 frameBadges="hide"
@@ -578,7 +615,7 @@ function StackLayerButton({
       >
         <span className="fab-chain-stack-art" aria-hidden="true">
           <FabBoardCardFace
-            entity={entity}
+            entity={uprightChainEntity(entity)}
             density="mini"
             fill
             frameBadges="hide"
@@ -779,7 +816,7 @@ export function FabSidebarResolutionStack({
       >
         <span className="fab-sidebar-stack-thumbnail" aria-hidden="true">
           <FabBoardCardFace
-            entity={top.entity}
+            entity={uprightChainEntity(top.entity)}
             density="mini"
             fill
             frameBadges="hide"
@@ -802,7 +839,7 @@ export function FabSidebarResolutionStack({
                 <button type="button">
                   <span className="fab-sidebar-stack-layer-image" aria-hidden="true">
                     <FabBoardCardFace
-                      entity={entry.entity}
+                      entity={uprightChainEntity(entry.entity)}
                       density="mini"
                       fill
                       frameBadges="hide"
@@ -913,6 +950,7 @@ function MobileChainCard({
   onCardSelect?: (entity: SimulatorEntity) => void;
 }) {
   const entity = entityForChainCard(card);
+  const tapped = chainCardIsTapped(entity);
   const animationRef = useAnimationNode(
     { kind: "entity", id: entity.id },
     {
@@ -934,15 +972,22 @@ function MobileChainCard({
       ? `, with ${card.hostedCards.map((hostedCard) => hostedCard.title).join(", ")} under it`
       : "";
   const accessibleLabel = targetable
-    ? `${cardLabel}: ${entity.title}${hostedLabel}, ${interactionDescription}`
-    : `${cardLabel}: ${entity.title}${hostedLabel}`;
+    ? `${cardLabel}: ${entity.title}${hostedLabel}${tapped ? ", tapped" : ""}, ${interactionDescription}`
+    : `${cardLabel}: ${entity.title}${hostedLabel}${tapped ? ", tapped" : ""}`;
   const pitchValue = numericStatForFabEntity(entity, "pitch");
   const content = (
     <>
-      <FabBoardCardFace entity={entity} density="mini" fill frameBadges="hide" preview={false} />
+      <FabBoardCardFace
+        entity={uprightChainEntity(entity)}
+        density="mini"
+        fill
+        frameBadges="hide"
+        preview={false}
+      />
       {keywords.length > 0 ? (
         <FabKeywordRow keywords={keywords} compact className="fab-chain-card-keywords" />
       ) : null}
+      {tapped ? <ChainTappedBadge /> : null}
       {pitchValue != null ? <FabPitchGem pitch={pitchValue} size={14} /> : null}
       {value != null ? (
         <span className="fab-mobile-chain-card-stat" data-kind={kind}>
@@ -1067,6 +1112,7 @@ function MobileCombatGalleryCard({
   onCardSelect?: (entity: SimulatorEntity) => void;
 }) {
   const entity = entityForChainCard(card);
+  const tapped = chainCardIsTapped(entity);
   const animationRef = useAnimationNode(
     { kind: "entity", id: entity.id },
     {
@@ -1086,7 +1132,14 @@ function MobileCombatGalleryCard({
   const stat = primaryStat(card);
   const content = (
     <CardInteractionFrame state={interactionState}>
-      <FabBoardCardFace entity={entity} density="mini" fill frameBadges="hide" preview={false} />
+      <FabBoardCardFace
+        entity={uprightChainEntity(entity)}
+        density="mini"
+        fill
+        frameBadges="hide"
+        preview={false}
+      />
+      {tapped ? <ChainTappedBadge /> : null}
       {stat ? (
         <span className="fab-chain-gallery-contribution" data-stat={stat.label}>
           <FabOfficialIcon id={stat.label === "power" ? "power" : "defense"} size={10} alt="" />
@@ -1261,6 +1314,8 @@ function PriorityActions({
   onPlayActivate,
   actionsDisabled,
   show = true,
+  scopedAutoPass = null,
+  onToggleScopePass,
 }: {
   view: FabCombatChainView;
   onPassPriority?: () => void;
@@ -1268,12 +1323,17 @@ function PriorityActions({
   onPlayActivate?: () => void;
   actionsDisabled?: boolean;
   show?: boolean;
+  /** One-shot scoped auto-pass arm for the viewer; null when unarmed. */
+  scopedAutoPass?: "combat" | "opponent-turn" | null;
+  /** Arm (or disarm, when armed) the "auto-pass this combat" scope. */
+  onToggleScopePass?: () => void;
 }) {
   if (view.mode === "closed" || !show) return null;
   const isResolutionDecision = view.step === "resolution";
   const passLabel =
     priorityActionLabel ?? (isResolutionDecision ? "Close combat chain" : "Pass Priority");
   const playLabel = "Play / Activate";
+  const scopeArmedHere = scopedAutoPass === "combat";
   return (
     <div
       className="fab-chain-priority-actions"
@@ -1306,6 +1366,30 @@ function PriorityActions({
             aria-label={playLabel}
           >
             {playLabel}
+          </button>
+        ) : null}
+        {onToggleScopePass ? (
+          <button
+            type="button"
+            className="fab-chain-pass-btn"
+            data-testid={
+              scopeArmedHere ? "fab-scoped-auto-pass-disarm" : "fab-scoped-auto-pass-arm-combat"
+            }
+            data-scope-armed={scopeArmedHere ? "true" : undefined}
+            disabled={actionsDisabled}
+            onClick={onToggleScopePass}
+            aria-label={
+              scopeArmedHere
+                ? "Stop auto-passing this combat"
+                : "Auto-pass this combat: skip your windows until the chain closes"
+            }
+            title={
+              scopeArmedHere
+                ? "Stop auto-passing this combat. Your windows are yours again."
+                : "Auto-pass this combat: skip your windows until the chain closes. You are still asked to defend."
+            }
+          >
+            {scopeArmedHere ? "Stop auto-passing" : "Auto-pass combat"}
           </button>
         ) : null}
       </div>
@@ -1378,6 +1462,8 @@ function ActiveCombatChainFrame({
   placement = "center",
   onPassPriority,
   priorityActionLabel,
+  scopedAutoPass,
+  onToggleScopePass,
   onPlayActivate,
   actionsDisabled,
   showPriorityActions,
@@ -1391,6 +1477,8 @@ function ActiveCombatChainFrame({
   placement?: DesktopCombatPlacement;
   onPassPriority?: () => void;
   priorityActionLabel?: string;
+  scopedAutoPass?: "combat" | "opponent-turn" | null;
+  onToggleScopePass?: () => void;
   onPlayActivate?: () => void;
   actionsDisabled: boolean;
   showPriorityActions: boolean;
@@ -1423,6 +1511,8 @@ function ActiveCombatChainFrame({
           view={view}
           onPassPriority={onPassPriority}
           priorityActionLabel={priorityActionLabel}
+          scopedAutoPass={scopedAutoPass}
+          onToggleScopePass={onToggleScopePass}
           onPlayActivate={onPlayActivate}
           actionsDisabled={actionsDisabled}
           show={showPriorityActions}
@@ -1454,6 +1544,8 @@ function CombatChainContent({
   onSelectLink,
   onPassPriority,
   priorityActionLabel,
+  scopedAutoPass,
+  onToggleScopePass,
   provisionalDefenderIds = [],
   showDefensePrompt = false,
   onRetractDefender,
@@ -1621,6 +1713,8 @@ function CombatChainContent({
         <PriorityActions
           view={view}
           onPassPriority={onPassPriority}
+          scopedAutoPass={scopedAutoPass}
+          onToggleScopePass={onToggleScopePass}
           onPlayActivate={onPlayActivate}
           actionsDisabled={actionsDisabled}
           show={showPriorityActions}

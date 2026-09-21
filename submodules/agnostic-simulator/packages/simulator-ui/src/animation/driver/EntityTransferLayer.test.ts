@@ -158,6 +158,22 @@ describe("transfer geometry", () => {
     expect(rect.left + rect.width / 2).toBeCloseTo(117);
   });
 
+  it("preserves card proportions when a pile contains the exact moving entity", () => {
+    const node = document.createElement("div");
+    const card = document.createElement("div");
+    card.dataset.simEntityId = "card-1";
+    card.getBoundingClientRect = () => new DOMRect(100, 200, 70, 60);
+    node.append(card);
+    const rect = transferNodeRect(
+      { key: "deck", ref: { kind: "zone", id: "deck:player" }, node, presence: "present" },
+      "card-1",
+      5 / 7,
+    );
+    expect(rect.width).toBeCloseTo(300 / 7);
+    expect(rect.height).toBeCloseTo(60);
+    expect(rect.left + rect.width / 2).toBeCloseTo(135);
+  });
+
   it("keeps explicit anchor bounds", () => {
     const node = document.createElement("div");
     node.getBoundingClientRect = () => new DOMRect(100, 200, 34, 12);

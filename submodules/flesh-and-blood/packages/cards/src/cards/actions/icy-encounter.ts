@@ -28,6 +28,7 @@ export const icyEncounter = definePitchFamily(fabPitchFamilies["icy-encounter"],
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "attack-target",
         },
       },

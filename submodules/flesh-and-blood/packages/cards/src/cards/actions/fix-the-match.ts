@@ -75,6 +75,7 @@ export const fixTheMatch = definePitchFamily(fabPitchFamilies["fix-the-match"], 
           prize: {
             type: "create-token",
             token: "might",
+            creator: "token-controller",
             controller: "winner",
           },
         },

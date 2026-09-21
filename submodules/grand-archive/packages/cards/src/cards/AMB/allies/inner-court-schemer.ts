@@ -49,34 +49,45 @@ export const innerCourtSchemer: GrandArchiveCard<GrandArchiveAbilityDefinition, 
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "preparation",
+                    amount: 1,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: "preparation",
-                  amount: 1,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "current-attack",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "this-attack",
-                  },
-                  layer: {
-                    layer: "E",
-                    modifies: "stat",
-                    sublayer: "modifier",
-                  },
-                  change: {
-                    kind: "numeric",
-                    property: "power",
-                    operation: "add",
-                    amount: 2,
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "current-attack",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "this-attack",
+                    },
+                    layer: {
+                      layer: "E",
+                      modifies: "stat",
+                      sublayer: "modifier",
+                    },
+                    change: {
+                      kind: "numeric",
+                      property: "power",
+                      operation: "add",
+                      amount: 2,
+                    },
                   },
                 },
               ],

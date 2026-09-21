@@ -35,6 +35,7 @@ export const ollinIceCap = defineCard(fabCardIdentitiesByCanonicalId["W89dCjCrz8
         effect: {
           type: "create-token",
           token: "frostbite",
+          creator: "effect-controller",
           controller: "opponent",
         },
       },

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, op01RoronoaZoro001, op13GolDRoger003 } from "@tcg/op-cards";
-import { op13DouglasBullet068 } from "../../../../../cards/src/cards/OP13/characters/068-douglas-bullet.ts";
+import { op13DouglasBullet068 } from "../../../../../cards/src/cards/characters/op13-068-douglas-bullet.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

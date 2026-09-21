@@ -1,6 +1,6 @@
 import { op10Trebol070, st01MonkeyDLuffy012 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { prb02SanjiSt21003PirateFoil003 } from "../../../../../cards/src/cards/PRB02/characters/003-sanji-st21-003-pirate-foil.ts";
+import { prb02SanjiSt21003PirateFoil003 } from "../../../../../cards/src/cards/characters/st21-003-sanji-st21-003-pirate-foil.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

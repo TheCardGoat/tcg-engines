@@ -674,7 +674,11 @@ function observedBindings(
       observed.subjectId === committed.objectId &&
       committed.previousControllerId
     ) {
-      return [committed.previousControllerId];
+      return [
+        observed.name === "object-entered-field"
+          ? (committed.newControllerId ?? committed.previousControllerId)
+          : committed.previousControllerId,
+      ];
     }
     if (
       committed.type === "object-removed-from-game" &&
@@ -779,6 +783,56 @@ function abilityPatternBindings(
     "anyOf" in ability.trigger.event ? ability.trigger.event.anyOf : [ability.trigger.event];
   const pattern = patterns.find((candidate) => candidate.name === observed.name);
   return pattern ? grandArchiveEventPatternBindings(pattern, observed) : {};
+}
+
+/** Preserve every matching subject when one rules occurrence contains several zone changes. */
+function oneOrMoreTriggerBindings(
+  ability: GrandArchiveTriggeredAbility,
+  observed: GrandArchiveObservedEvent,
+  source: GrandArchiveCardInstance,
+  evaluation: GrandArchiveEvaluationContext,
+  committedEvents: readonly GrandArchiveCommittedEvent[],
+): GrandArchiveEvaluationContext["bindings"] {
+  if (!triggerUsesOneOrMoreCardinality(ability)) return evaluation.bindings;
+  const occurrenceId = committedObservationId(observed, true);
+  const subjects = new Set<NonNullable<GrandArchiveObservedEvent["subjectId"]>>();
+  const controllers = new Set<string>();
+  for (const event of committedEvents) {
+    for (const candidate of observeGrandArchiveCommittedEvent(event)) {
+      if (
+        candidate.name !== observed.name ||
+        committedObservationId(candidate, true) !== occurrenceId
+      )
+        continue;
+      for (const subjectId of candidate.subjectIds ??
+        (candidate.subjectId ? [candidate.subjectId] : [])) {
+        const individual = { ...candidate, subjectId, subjectIds: [subjectId] };
+        const bindings = {
+          ...evaluation.bindings,
+          ...observedBindings(individual),
+          ...abilityPatternBindings(ability, individual),
+        };
+        const context = { ...evaluation, bindings };
+        if (!triggerMatches(ability, individual, source, context)) continue;
+        if (
+          ability.interveningCondition &&
+          !evaluateGrandArchiveCondition(ability.interveningCondition, context)
+        )
+          continue;
+        subjects.add(subjectId);
+        const controllerIds = bindings.eventSubjectController;
+        if (Array.isArray(controllerIds)) for (const id of controllerIds) controllers.add(id);
+      }
+    }
+  }
+  if (subjects.size === 0) return evaluation.bindings;
+  const grouped = { ...observed, subjectIds: [...subjects] };
+  return {
+    ...evaluation.bindings,
+    ...observedBindings(grouped),
+    ...abilityPatternBindings(ability, grouped),
+    ...(controllers.size > 0 ? { eventSubjectController: [...controllers] } : {}),
+  };
 }
 
 function candidateSources(
@@ -1383,7 +1437,13 @@ export function collectGrandArchiveTriggeredAbilityEvents(
             source: executionObject,
             controllerId: priorController,
             ability,
-            bindings: evaluation.bindings,
+            bindings: oneOrMoreTriggerBindings(
+              ability,
+              observed,
+              executionObject,
+              evaluation,
+              committedEvents,
+            ),
             variables: executionObject.activationVariables,
             activationPayment: executionObject.activationPayment,
             createdAtVersion: state.stateVersion,
@@ -1458,7 +1518,13 @@ export function collectGrandArchiveTriggeredAbilityEvents(
             source,
             controllerId: playerId,
             ability,
-            bindings,
+            bindings: oneOrMoreTriggerBindings(
+              ability,
+              observed,
+              source,
+              evaluation,
+              committedEvents,
+            ),
             variables: {},
             activationPayment: [],
             createdAtVersion: state.stateVersion,
@@ -1580,7 +1646,13 @@ export function collectGrandArchiveTriggeredAbilityEvents(
           source,
           controllerId: delayed.controllerId,
           ability: delayed.ability,
-          bindings,
+          bindings: oneOrMoreTriggerBindings(
+            delayed.ability,
+            observed,
+            source,
+            evaluation,
+            committedEvents,
+          ),
           variables: delayed.variables,
           activationPayment: source.activationPayment,
           createdAtVersion: delayed.createdAtVersion,

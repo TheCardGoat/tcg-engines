@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op02NewKamaLand070 } from "../../../../../cards/src/cards/OP02/stages/070-new-kama-land.ts";
+import { op02NewKamaLand070 } from "../../../../../cards/src/cards/stages/op02-070-new-kama-land.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-070 New Kama Land", () => {

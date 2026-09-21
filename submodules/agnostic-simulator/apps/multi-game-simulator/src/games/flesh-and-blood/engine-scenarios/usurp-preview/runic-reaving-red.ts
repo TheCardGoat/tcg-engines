@@ -17,7 +17,7 @@ export const scenario: FabEngineScenario = {
   id: "usurp-preview-runic-reaving-red",
   label: "Runic Reaving (red)",
   description:
-    "Select the highlighted Runechant directly to pay Usurp. The opponent’s Runechant is not eligible. Usurp\nInstant - Discard this: Create a Runechant token.",
+    "Select any highlighted Runechant in play to pay Usurp — the opponent's Runechant is a legal payment too. Usurp\nInstant - Discard this: Create a Runechant token.",
   group: "usurp-preview",
   tags: ["IAR", "preview", "runic-reaving-red"],
   viewerId: "player-1",

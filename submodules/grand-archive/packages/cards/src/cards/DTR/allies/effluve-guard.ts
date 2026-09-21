@@ -33,6 +33,7 @@ export const effluveGuard: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
           kind: "static",
           staticKind: "effects",
           text: "[Ciel Bonus] As long as this card is an omen, allies named Vacuous Servants you control have vigor. (Apply this effect only if your champion is Ciel.)",
+          functionalZones: ["banishment"],
           restrictions: [
             {
               kind: "static",
@@ -60,7 +61,7 @@ export const effluveGuard: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
                       },
                       {
                         kind: "name",
-                        value: "Vacuous Servants",
+                        value: "Vacuous Servant",
                       },
                     ],
                   },

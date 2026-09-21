@@ -394,10 +394,19 @@ describe("Grand Archive continuous player effects", () => {
     expect(() =>
       declareGrandArchiveTargets(ability.targets, { "target-player": [fixture.p2] }, evaluation),
     ).toThrow("illegal object");
+    expect(() =>
+      declareGrandArchiveTargets(ability.targets, { "target-player": [fixture.p1] }, evaluation),
+    ).toThrow("illegal object");
+    const unprotectedState = new GrandArchiveTransactionKernel().transact(protectedState, [
+      { type: "object-moved", objectId: cloakId, from: "field", to: "graveyard" },
+    ]).state;
     expect(
-      declareGrandArchiveTargets(ability.targets, { "target-player": [fixture.p1] }, evaluation)[0]
-        ?.targetIds,
-    ).toEqual([fixture.p1]);
+      declareGrandArchiveTargets(
+        ability.targets,
+        { "target-player": [fixture.p2] },
+        { ...evaluation, state: unprotectedState },
+      )[0]?.targetIds,
+    ).toEqual([fixture.p2]);
   });
 
   it("reveals the controller's top main-deck card to opposing viewers", () => {

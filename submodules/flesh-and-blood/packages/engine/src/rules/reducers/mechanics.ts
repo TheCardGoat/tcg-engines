@@ -440,7 +440,9 @@ export function reduceMechanicsEvent(
     }
     case "crowd-cheers": {
       const player = state.players[event.data.playerId];
-      if (!player || player.history.turn.crowdCheered) return null;
+      if (!player) return null;
+      // History is an idempotent fact; each cheer still commits a distinct
+      // occurrence for "whenever" and "first time" trigger policies.
       player.history.turn.crowdCheered = true;
       return { state };
     }
@@ -450,7 +452,8 @@ export function reduceMechanicsEvent(
       return { state };
     case "crowd-boos": {
       const player = state.players[event.data.playerId];
-      if (!player || player.history.turn.crowdBooed) return null;
+      if (!player) return null;
+      // As with cheering, an existing turn fact must not suppress the event.
       player.history.turn.crowdBooed = true;
       return { state };
     }
@@ -467,11 +470,13 @@ export function reduceMechanicsEvent(
         const host = state.objects[hostSnapshot.instanceId];
         if (!host || host.incarnation !== hostSnapshot.ref.incarnation) return null;
         const definition = state.cardDefinitions[host.canonicalId];
-        if (
-          definition?.layout.kind !== "flip" ||
-          (definition.layout.family !== "invocation" && definition.layout.family !== "construct")
-        )
-          return null;
+        const isFlipTransform =
+          definition?.layout.kind === "flip" &&
+          (definition.layout.family === "invocation" || definition.layout.family === "construct");
+        const isEvo =
+          definition?.base.typeBox.types.includes("Equipment") &&
+          definition.base.typeBox.subtypes.includes("Evo");
+        if (!isFlipTransform && !isEvo) return null;
         const firstSource = event.affected[0];
         if (
           !firstSource ||
@@ -495,10 +500,12 @@ export function reduceMechanicsEvent(
         ) {
           return null;
         }
-        state.objects[hostSnapshot.instanceId] = {
-          ...state.objects[hostSnapshot.instanceId]!,
-          activeFace: selectFabActiveFace(definition, definition.layout.back.faceId),
-        };
+        if (definition?.layout.kind === "flip" && isFlipTransform) {
+          state.objects[hostSnapshot.instanceId] = {
+            ...state.objects[hostSnapshot.instanceId]!,
+            activeFace: selectFabActiveFace(definition, definition.layout.back.faceId),
+          };
+        }
         return { state };
       }
       // Demi-heroes that transform from inventory (e.g. DTD164 Blasmophet)

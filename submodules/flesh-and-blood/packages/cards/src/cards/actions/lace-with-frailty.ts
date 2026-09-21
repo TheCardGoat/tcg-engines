@@ -58,6 +58,7 @@ export const laceWithFrailty = definePitchFamily(fabPitchFamilies["lace-with-fra
                   effect: {
                     type: "create-token",
                     token: "frailty",
+                    creator: "effect-controller",
                     controller: "attack-target",
                   },
                 },

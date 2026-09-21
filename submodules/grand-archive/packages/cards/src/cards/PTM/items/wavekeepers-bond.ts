@@ -92,16 +92,27 @@ export const wavekeepersBond: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               kind: "sequence",
               effects: [
                 {
-                  kind: "sacrifice",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "sacrifice",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "draw",
-                  player: "controller",
-                  amount: 1,
-                  to: "memory",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "draw",
+                    player: "controller",
+                    amount: 1,
+                    to: "memory",
+                  },
                 },
               ],
             },

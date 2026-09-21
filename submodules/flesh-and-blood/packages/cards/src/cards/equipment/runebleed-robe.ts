@@ -16,7 +16,7 @@ import { fabCardIdentitiesByCanonicalId } from "../../generated/card-identities/
  *   family).
  * - Mixed cost: destroy-self + destroy one controlled Runechant (activation
  *   destroyTargets path).
- * - Effect: fixed prevention 1 arcane this turn for controller.
+ * - Effect: shielding prevention 1 arcane this turn for controller.
  */
 export const runebleedRobe = defineCard(fabCardIdentitiesByCanonicalId["7rQWjNgrPmCm9wJRNHdbG"], {
   keywords: [arcaneBarrier(1)],
@@ -43,7 +43,7 @@ export const runebleedRobe = defineCard(fabCardIdentitiesByCanonicalId["7rQWjNgr
       },
       effect: {
         type: "prevention",
-        preventionKind: "fixed",
+        preventionKind: "shielding",
         amount: 1,
         damageType: "arcane",
         shielded: {

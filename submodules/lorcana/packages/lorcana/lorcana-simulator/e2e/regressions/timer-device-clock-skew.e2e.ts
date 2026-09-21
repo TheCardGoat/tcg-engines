@@ -23,11 +23,23 @@ test.describe("timer device clock skew", () => {
         contentType: "image/png",
       });
 
-      // Genuine elapsed time must still expose the timeout action and dialog.
-      await page.clock.fastForward(160_000);
+      // Reserve expiry alone is not droppable during the server-configured grace.
+      await page.clock.fastForward(158_000);
       await expect(activeTimer).toHaveAttribute("aria-label", /Player time remaining: -0:/);
+      await expect(page.getByRole("button", { name: /drop opponent/i })).toHaveCount(0);
+      await testInfo.attach("negative-clock-during-grace", {
+        body: await page.screenshot(),
+        contentType: "image/png",
+      });
+
+      // Once grace expires, the UI and server agree that Drop is legal.
+      await page.clock.fastForward(15_000);
       await page.getByRole("button", { name: "Drop Opponent", exact: true }).click();
       await expect(page.getByRole("dialog")).toBeVisible();
+      await testInfo.attach("drop-after-grace", {
+        body: await page.screenshot(),
+        contentType: "image/png",
+      });
     });
   }
 });

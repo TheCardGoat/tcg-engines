@@ -120,6 +120,8 @@ export interface ResolveCardToMoveLog extends MoveLogBase {
 export interface ResolveDiscardFromHandLog extends MoveLogBase {
   type: "resolveDiscardFromHand";
   discardedCount: number;
+  /** Discarded identities are public once face-up in the trash (CR 5.9.2-5.9.3). */
+  discardedCards?: { cardId: CardInstanceId; cardName: string }[];
   passed?: boolean;
   reason?: "costMatchedFriendlyGig";
 }

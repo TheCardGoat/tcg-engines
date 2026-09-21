@@ -63,6 +63,8 @@ export const manaboltConvergence: GrandArchiveCard<GrandArchiveAbilityDefinition
               kind: "bound",
               binding: "target-card",
             },
+            affectedSet: "locked",
+            fromZone: "graveyard",
             duration: {
               kind: "this-turn",
             },

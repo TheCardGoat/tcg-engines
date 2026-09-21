@@ -351,6 +351,7 @@ export {
   type FabViewer,
   type FabViewerPlayerState,
   type FabViewerState,
+  type FabViewerTurnReveal,
 } from "./view.ts";
 export type {
   FabViewerEffect,

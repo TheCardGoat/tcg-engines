@@ -116,6 +116,7 @@ export const iceStorm = definePitchFamily(fabPitchFamilies["ice-storm"], {
                     effect: {
                       type: "create-token",
                       token: "frostbite",
+                      creator: "effect-controller",
                       controller: "opponent",
                       count: {
                         type: "event-amount",

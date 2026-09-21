@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "bun:test";
 import type { DeckListInvalidEntry } from "./deck-list-errors.js";
-import { formatInvalidEntriesComment } from "./deck-list-errors.js";
+import { formatInvalidEntriesComment, formatSkippedImportWarning } from "./deck-list-errors.js";
 
 describe("formatInvalidEntriesComment", () => {
   it("returns empty string for empty array", () => {
@@ -47,5 +47,17 @@ describe("formatInvalidEntriesComment", () => {
       { kind: "not_found", text: "Card Name", lineNumber: 5 },
     ];
     expect(formatInvalidEntriesComment(entries)).toBe("# NOT FOUND\n## Card Name");
+  });
+});
+
+describe("formatSkippedImportWarning", () => {
+  it("lists the skipped lines after a successful partial import", () => {
+    expect(formatSkippedImportWarning([])).toBe("");
+    expect(formatSkippedImportWarning(["4 Bad Card"])).toBe(
+      "Deck imported, but 1 line could not be matched:\n4 Bad Card",
+    );
+    expect(formatSkippedImportWarning(["4 Bad Card", "Dumbo"])).toBe(
+      "Deck imported, but 2 lines could not be matched:\n4 Bad Card\nDumbo",
+    );
   });
 });

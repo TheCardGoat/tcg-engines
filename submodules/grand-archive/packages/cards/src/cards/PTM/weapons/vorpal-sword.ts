@@ -163,19 +163,30 @@ export const vorpalSword: GrandArchiveCard<GrandArchiveAbilityDefinition, "card"
               kind: "sequence",
               effects: [
                 {
-                  kind: "remove-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "remove-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "preparation",
+                    amount: 1,
+                    bindResultAs: "removed-counters",
                   },
-                  counter: "preparation",
-                  amount: 1,
-                  bindResultAs: "removed-counters",
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "wake",
-                  subject: {
-                    kind: "event-attacker",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "wake",
+                    subject: {
+                      kind: "event-attacker",
+                    },
                   },
                 },
               ],

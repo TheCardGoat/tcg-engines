@@ -1,6 +1,6 @@
 import {
   welcomeToNightCityRetailCorpoSecurity,
-  welcomeToNightCityRetailElSombreroNLaVenganzaLenta,
+  welcomeToNightCityRetailElSombreronLaVenganzaLenta,
 } from "@tcg/cyberpunk-cards";
 
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "../cyberpunk-simulator-pom";
@@ -10,14 +10,14 @@ export const unitElSombreronLaVenganzaLentaBehavior: CyberpunkFixtureBehavior = 
   scenarioId: "unitElSombreronLaVenganzaLenta",
   label: "El Sombreron - attack trigger doubles fight power",
   references: [
-    "packages/engine/src/cards/welcometonightcityretail/units/el-sombrero-n-la-venganza-lenta.test.ts",
+    "packages/engine/src/cards/welcometonightcityretail/units/el-sombreron-la-venganza-lenta.test.ts",
     "apps/multi-game-simulator/src/games/cyberpunk/engine/fixtures/scenarios/units.ts",
   ],
   async run(pom) {
     const elSombreron = await pom.getCardInZoneByDefinitionId(
       "field",
       CYBERPUNK_P1,
-      welcomeToNightCityRetailElSombreroNLaVenganzaLenta.id,
+      welcomeToNightCityRetailElSombreronLaVenganzaLenta.id,
     );
     const target = await pom.getCardInZoneByDefinitionId(
       "field",

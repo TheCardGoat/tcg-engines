@@ -1,7 +1,8 @@
-import { describe, expect, it } from "vitest";
+import { describe, it } from "vitest";
 import {
   expectFabCard,
   expectFabPlayer,
+  expectWait,
   FAB_MANUAL_HARNESS,
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
@@ -9,6 +10,7 @@ import { dash } from "../heroes/dash.ts";
 import { bravo } from "../heroes/bravo.ts";
 import { drawACrowdBlue } from "./draw-a-crowd.ts";
 import { seismicSurge } from "../tokens/seismic-surge.ts";
+import { nimblismBlue } from "./nimblism.ts";
 import { roilingFissureBlue } from "./roiling-fissure.ts";
 
 /**
@@ -30,9 +32,14 @@ describe("Roiling Fissure (HNT248) AAA", () => {
         arena: [seismicSurge],
         resourcePoints: 2,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], arena: [drawACrowdBlue], deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        arena: [drawACrowdBlue],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
@@ -55,9 +62,14 @@ describe("Roiling Fissure (HNT248) AAA", () => {
         hand: [roilingFissureBlue],
         resourcePoints: 0,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], arena: [drawACrowdBlue], deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        arena: [drawACrowdBlue],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
@@ -70,7 +82,7 @@ describe("Roiling Fissure (HNT248) AAA", () => {
     expectFabCard(Bravo, roilingFissureBlue).toBeIn("graveyard");
   });
 
-  it("timing: destroying a Seismic Surge you control asks to repeat the process", () => {
+  it("timing: accepting a Surge repeats the mandatory aura destruction before another optional", () => {
     const game = FabTestEngine.start(
       {
         hero: bravo,
@@ -78,25 +90,31 @@ describe("Roiling Fissure (HNT248) AAA", () => {
         arena: [seismicSurge],
         resourcePoints: 2,
         actionPoints: 1,
-        deck: 6,
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
       },
-      { hero: dash, hand: [], arena: [drawACrowdBlue, drawACrowdBlue], deck: 6 },
+      {
+        hero: dash,
+        hand: [],
+        arena: [drawACrowdBlue, drawACrowdBlue],
+        deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+      },
       FAB_MANUAL_HARNESS,
     );
     const Bravo = game.as(bravo);
     const Dash = game.as(dash);
 
-    const instanceId = Bravo.findCardInZone("hand", roilingFissureBlue);
-    game.playInstance(Bravo.id, instanceId, { xValue: 2 }, "explicit");
-    game.passBoth();
-    const [firstCrowd] = Dash.cardsIn("arena", drawACrowdBlue);
-    Bravo.targetRequired(firstCrowd!);
+    const [firstCrowd, secondCrowd] = Dash.cardsIn("arena", drawACrowdBlue);
+    Bravo.play(roilingFissureBlue, { xValue: 2 });
+    game.advanceToDecision(Bravo, "entity-target");
+    Bravo.target(firstCrowd!);
+    game.advanceToDecision(Bravo, "boolean");
     Bravo.accept();
-    Bravo.expectDecision("boolean");
-    Bravo.decline();
-    game.untilIdle({ optionals: "decline" });
+    game.untilIdle({ optionals: "throw", entityTargets: "pause" });
 
-    expect(Dash.cardsIn("arena", drawACrowdBlue)).toHaveLength(1);
+    expectFabCard(Dash, firstCrowd!).toBeIn("graveyard");
+    expectFabCard(Dash, secondCrowd!).toBeIn("graveyard");
+    expectFabCard(Bravo, roilingFissureBlue).toBeIn("graveyard");
+    expectWait(game).toBeIdle();
     expectFabPlayer(Bravo).toHaveTokenCount("seismic-surge", 0);
     expectFabPlayer(Bravo).toHaveAP(1);
   });

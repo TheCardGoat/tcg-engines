@@ -1,3 +1,4 @@
+import { banishedObjectForRules } from "../../banish-observation.ts";
 import {
   reloadEffect,
   type FabCondition,
@@ -8,6 +9,7 @@ import {
   type FabZone,
 } from "@tcg/flesh-and-blood-types";
 import { FAB_ZONE_KINDS, type FabMatchState, type FabZoneKind } from "../../../state.ts";
+import { withoutFabScopedAutoPass } from "../../../state.ts";
 import type { FabObjectSnapshot, ProposedEvent } from "../../events.ts";
 import type { FabEventReduction } from "../../../kernel/transaction-kernel.ts";
 import { nextFabDestinationRef, snapshotObject, snapshotPlayerId } from "../../snapshots.ts";
@@ -476,7 +478,7 @@ export function moveForZoneEvent(
   )
     clearFabHostedDescendants(state, fabObjectInstanceId(data.object.ref.instanceId));
   if (moved && to === "banished") {
-    noteBanishedPower6(state, data.object);
+    noteBanishedPower6(state, banishedObjectForRules(data));
   }
   if (moved && to === "soul") {
     noteCardPutIntoSoul(state, data.object, data.destinationPlayerId);
@@ -517,6 +519,9 @@ function ceaseStackedAttackProxiesForSource(state: FabMatchState, source: FabObj
   );
   if (state.combat?.step === "layer" && !state.combat.activeLink && state.rulesStack.length === 0) {
     state.combat = null;
+    // An aborted layer-step chain is still a chain close: retire "this
+    // combat" auto-pass scopes with it.
+    state.automationPreferences = withoutFabScopedAutoPass(state.automationPreferences, "combat");
   }
 }
 
@@ -788,37 +793,6 @@ export function keywordEffectsFromPrintedKeywords(
     }
   }
   return effects;
-}
-
-/**
- * Wizard non-attack actions print an arcane damage amount on the catalog
- * definition (or residual trainer) without a full resolution ability — emit
- * deal-damage so barrier / spellvoid / shelter replacements can fire.
- */
-export function arcaneDamageEffectFromPrinted(
-  object: {
-    readonly canonicalId: string | null;
-    readonly base?: { readonly numeric?: Readonly<Partial<Record<string, number>>> };
-  },
-  cardDefinitions: FabMatchState["cardDefinitions"],
-): FabEffect | null {
-  const definition = object.canonicalId != null ? cardDefinitions[object.canonicalId] : undefined;
-  // `arcane` is catalog metadata. It is only a resolution fallback for the
-  // residual Wizard non-attack entries it was introduced for; attack cards and
-  // cards with a structured deal-damage ability must not acquire an extra
-  // unprinted damage effect merely because their catalog entry records arcane.
-  const isWizardNonAttack =
-    definition?.base.typeBox.supertypes.includes("Wizard") === true &&
-    !definition.base.typeBox.subtypes.includes("Attack");
-  const fromDef = isWizardNonAttack ? definition?.base.numeric.arcane : undefined;
-  const amount = typeof fromDef === "number" ? fromDef : undefined;
-  if (typeof amount !== "number" || amount <= 0) return null;
-  return {
-    type: "deal-damage",
-    damageType: "arcane",
-    amount,
-    target: { selector: "opponent" },
-  };
 }
 
 export function assertNeverZoneMove(event: never): never {

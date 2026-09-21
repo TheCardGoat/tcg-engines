@@ -79,21 +79,32 @@ export const buoyantDriftguard: GrandArchiveCard<GrandArchiveAbilityDefinition, 
               kind: "sequence",
               effects: [
                 {
-                  kind: "change-control",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "change-control",
+                    subject: {
+                      kind: "source",
+                    },
+                    controller: {
+                      binding: "target-opponent",
+                    },
                   },
-                  controller: {
-                    binding: "target-opponent",
-                  },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "set-player-state",
-                  player: "controller",
-                  state: {
-                    named: "Crowd's Favor",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  value: true,
+                  then: {
+                    kind: "set-player-state",
+                    player: "controller",
+                    state: {
+                      named: "Crowd's Favor",
+                    },
+                    value: true,
+                  },
                 },
               ],
             },

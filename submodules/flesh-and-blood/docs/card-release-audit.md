@@ -158,7 +158,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/aether-icevein` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/aether-quickening` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/aether-sink` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/aether-slash` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/aether-slash` — recorded-gap `targeting/any-target-encoded-as-hero` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/aether-spindle` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/aether-wildfire` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/aethersling` | ✅ | ✅ | en | ✅ | ✅ |
@@ -167,7 +167,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/agile-windup` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/agility-stance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/all-in` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/alluring-inducement` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/alluring-inducement` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/alpha-instinct` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/alpha-rampage` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/already-dead` | ✅ | ✅ | en | ✅ | ✅ |
@@ -185,7 +185,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/amulet-of-lightning` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/amulet-of-oblation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ancestral-harmony` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/ancient-earth-oak` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/ancient-earth-oak` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/and-again` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/angelic-attendant` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/angry-bones` | ✅ | ✅ | en | ✅ | ✅ |
@@ -195,7 +195,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/annexation-of-the-forge` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/annihilate-the-armed` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/annihilator-engine` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/anthem-of-spring` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/anthem-of-spring` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/apex-buster` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/apocalypse-automaton` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/arc-bending` | ✅ | ✅ | en | ✅ | ✅ |
@@ -208,7 +208,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/arcanic-cunning` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/arcanic-shockwave` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/arcanic-spike` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/arctic-incarceration` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/arctic-incarceration` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/argh-smash` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/arknight-ascendancy` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/arknight-descendancy` | ✅ | ✅ | en | ✅ | ✅ |
@@ -257,7 +257,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/bare-swing` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/bark-obscenities` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/barnacle` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/barraging-beatdown` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/barraging-beatdown` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/barraging-big-horn` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/barraging-brawnhide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/bash-brute` | ✅ | ✅ | en | ✅ | ✅ |
@@ -282,12 +282,12 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/beckoning-brilliance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/beckoning-hunger` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/beckoning-light` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/become-the-arknight` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/become-the-arknight` — recorded-gap `harness/become-the-arknight-explicit-search` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/become-the-bottle` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/become-the-cup` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/become-the-shadow-lord` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/belittle` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/belly-buster` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/belly-buster` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/below-the-belt` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/bequest-the-vast-beyond` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/berserk` | ✅ | ✅ | en | ✅ | ✅ |
@@ -301,7 +301,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/big-slick` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/bigger-than-big` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/billowing-mirage` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/billowing-mist` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/billowing-mist` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/bingo` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/bios-update` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/bite` | ✅ | ✅ | en | ✅ | ✅ |
@@ -335,7 +335,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/blinding-of-the-old-ones` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/blink-of-an-eye` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/blistering-assault` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/blizzard-bolt` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/blizzard-bolt` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/blood-dripping-frenzy` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/blood-drop` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/blood-harvest` | ✅ | ✅ | en | ✅ | ✅ |
@@ -407,7 +407,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/by-the-book` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cadaverous-contraband` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cadaverous-tilling` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/call-down-the-lightning` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/call-down-the-lightning` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/call-for-backup` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/call-in-the-big-guns` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/call-to-the-grave` | ✅ | ✅ | en | ✅ | ✅ |
@@ -442,11 +442,11 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/chart-the-high-seas` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/chase-the-tail` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cheap-shot` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/cheating-scoundrel` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/cheating-scoundrel` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/check-raise` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cheers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/chest-puff` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/chill-to-the-bone` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/chill-to-the-bone` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/chilling-icevein` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/chokeslam` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/chorus-of-rotwood` | ✅ | ✅ | en | ✅ | ✅ |
@@ -459,13 +459,13 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/clamp-press` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/clap-em-in-irons` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/clarity-potion` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/clash-of-agility` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/clash-of-agility` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/clash-of-bravado` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/clash-of-might` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/clash-of-mountains` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/clash-of-vigor` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/clash-of-might` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/clash-of-mountains` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/clash-of-vigor` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cleansing-light` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/clear-conscience` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/clear-conscience` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/clearing-bellow` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/clearwater-elixir` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/cleave-the-heavens` | ✅ | ✅ | en | ✅ | ✅ |
@@ -474,16 +474,16 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/cloud-city-steamboat` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cloud-skiff` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/coalescence-mirage` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/coax-a-commotion` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/codex-of-bloodrot` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/codex-of-frailty` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/codex-of-inertia` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/coax-a-commotion` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/codex-of-bloodrot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/codex-of-frailty` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/codex-of-inertia` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cog-in-the-machine` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cognition-nodes` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cogwerx-dovetail` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/cogwerx-prong-bot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cogwerx-workshop` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/cogwerx-zeppelin` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/cogwerx-zeppelin` — recorded-gap `harness/authored-token-count-baseline` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cold-snap` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cold-wave` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/colors-of-aria` | ✅ | ✅ | en | ✅ | ✅ |
@@ -524,7 +524,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/cosmic-awakening` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cosmic-duality` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/countdown-to-extinction` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/courageous-crossing` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/courageous-crossing` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/crackling` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/crane-dance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/cranial-crush` | ✅ | ✅ | en | ✅ | ✅ |
@@ -618,14 +618,14 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/display-loyalty` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/dissipation-shield` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/dissolution-sphere` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/dissolve-reality` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/dissolve-reality` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/dissolving-shield` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/distant-rumbling` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/disturb-the-peace` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/dive-through-data` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/divvy-up` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/doomsaying` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/double-down` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/double-down` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/double-strike` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/double-trouble` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/doubling-season` | ✅ | ✅ | en | ✅ | ✅ |
@@ -682,7 +682,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/emboldened-blade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/embrace-sin` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/embrace-ursur` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/emerging-avalanche` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/emerging-avalanche` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/emerging-dominance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/emerging-power` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/emeritus-scolding` | ✅ | ✅ | en | ✅ | ✅ |
@@ -697,7 +697,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/encore` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/endless-arrow` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/endless-maw` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/endless-winter` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/endless-winter` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/energetic-impact` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/energy-of-the-audience` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/energy-potion` | ✅ | ✅ | en | ✅ | ✅ |
@@ -802,7 +802,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/first-tenet-of-chi-moon` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/first-tenet-of-chi-tide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/first-tenet-of-chi-wind` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/fix-the-match` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/fix-the-match` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/flake-out` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/flameborn-retribution` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/flamecall-awakening` | ✅ | ✅ | en | ✅ | ✅ |
@@ -845,7 +845,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/four-feathers-one-crown` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/fractal-creation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/fractal-replication` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/frail-swingline` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/frail-swingline` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/fraying-lifeforce` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/frazzle` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/freewheeling-renegades` | ✅ | ✅ | en | ✅ | ✅ |
@@ -853,10 +853,10 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/frightmare` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/frontline-scout` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/frost-fang` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/frost-hex` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/frost-hex` — recorded-gap `engine/printed-arcane-resolution-fallback` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/frost-lock` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/frosting` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/frozen-to-death` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/frozen-to-death` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/fruits-of-the-forest` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/fry` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/fuel-injector` | ✅ | ✅ | en | ✅ | ✅ |
@@ -879,7 +879,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/ghostly-visit` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/gigawatt` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/give-and-take` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/give-em-a-piece-of-your-mind` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/give-em-a-piece-of-your-mind` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/give-no-quarter` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/glacial-footsteps` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/glaring-impact` | ✅ | ✅ | en | ✅ | ✅ |
@@ -895,7 +895,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/gold-hunter-marauder` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/gold-the-tip` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/golden-skull` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/golden-skywarden` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/golden-skywarden` — recorded-gap `engine/continuous-locked-object-reset`<br>recorded-gap `engine/optional-repeat-continuation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/golden-tipple` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/goldfin-harpoon` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/goldwing-turbine` | ✅ | ✅ | en | ✅ | ✅ |
@@ -919,7 +919,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/grow-wings` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/growl` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/gustwave-of-the-second-wind` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/gutshot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/gutshot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/haboob` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/hack-to-reality` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/hadron-collider` | ✅ | ✅ | en | ✅ | ✅ |
@@ -935,7 +935,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/head-leads-the-tail` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/head-shot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/headbutt` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `actions/heads-up` — recorded-gap `trigger/wagered-state-never-matches-same-attack-wager` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/heads-up` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/headstrong-stampede` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/healing-balm` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/healing-potion` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1001,11 +1001,11 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/hypothermia` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/ice-aged-oak` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ice-bolt` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/ice-eternal` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/ice-quake` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/ice-storm` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/ice-eternal` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/ice-quake` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/ice-storm` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/icebind` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/icy-encounter` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/icy-encounter` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ignite` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/illuminate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/immobilizing-shot` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1020,19 +1020,19 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/indefensibly-honed` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/index` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/induction-chamber` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/infect` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/infecting-shot` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/infectious-host` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/infect` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/infecting-shot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/infectious-host` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/infiltrate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/inflame` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/infuse-alloy` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/infuse-titanium` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/infuse-alloy` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/infuse-titanium` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ingest-the-unknown` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/insidious-chill` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/inspire-lightning` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/instill-fear` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/insult-to-injury` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/intoxicating-shot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/intoxicating-shot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/invigorate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/invigorating-light` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/invoke-azvolai` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1049,7 +1049,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/invoke-vynserakai` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/invoke-yendurai` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ironsong-determination` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/isenhowl-weathervane` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/isenhowl-weathervane` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/isolate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/jack-be-nimble` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/jack-be-quick` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1071,11 +1071,11 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/knife-through` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/knock-em-off-their-feet` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/korshem-crossroad-of-elements` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/lace-with-bloodrot` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/lace-with-frailty` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/lace-with-inertia` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/lace-with-bloodrot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/lace-with-frailty` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/lace-with-inertia` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/laden-with-earth` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/laden-with-frost` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/laden-with-frost` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/laden-with-lightning` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/last-ditch-effort` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/lava-burst` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1138,7 +1138,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `actions/malignant-migration` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/man-overboard` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mangle` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/manifest-muscle` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/manifest-muscle` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/march-of-loyalty` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mark-of-the-beast` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mark-of-the-black-widow` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1149,7 +1149,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/mauling-qi` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mauvrion-skies` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/maximum-velocity` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/meat-and-greet` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/meat-and-greet` — recorded-gap `amount/damage-recipient-provenance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mechanical-strength` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/medkit` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/meet-madness` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1163,7 +1163,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/metex` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mhz-script` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/micro-processor` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/midas-touch` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/midas-touch` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mighty-windup` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mind-meets-might` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mind-s-desire` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1182,7 +1182,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/moon-wish` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/moonshot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/moray-le-fay` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/mordred-tide` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/mordred-tide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mounting-anger` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mugenshi-release` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mulch` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1197,7 +1197,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/mutiny-on-the-nimbus-sovereign` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/mutiny-on-the-swiftwater` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/mutual-sacrifice` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/mutually-assured-destruction` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/mutually-assured-destruction` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/nasty-surprise` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/nature-s-path-pilgrimage` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/nebula-duality` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1212,7 +1212,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/no-hero-stands-alone` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/no-tall-tales` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/nock-the-deathwhistle` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/northern-winds` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/northern-winds` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/nourishing-emptiness` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/nucleus-aetherbolt` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/null-time-zone` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1319,7 +1319,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/poison-the-tips` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/poisoned-blade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/polar-blast` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/polar-cap` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/polar-cap` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/polarity-reversal-script` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/polarus-pulse-ray` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/pop-the-bubble` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1347,7 +1347,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/predatory-streak` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/premeditate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/prey-on-insecurity` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/prime-the-crowd` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/prime-the-crowd` — recorded-gap `mechanic/crowd-cheers-resolution` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/primed-to-fight` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/primeval-bellow` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/prismatic-lens` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1355,7 +1355,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/prognosticate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/promise-of-plenty` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/promise-of-power` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/promising-terrain` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/promising-terrain` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/prophetic-quickstep` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/prowess-of-agility` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/prowl` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1382,7 +1382,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/qi-unleashed` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/quantum-processor` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/quick-succession` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/quickening-sand` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/quickening-sand` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/quickfire` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rage-specter` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/raging-onslaught` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1390,14 +1390,14 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/raise-blades` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rake-back` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rake-the-embers` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/rally-the-coast-guard` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/rally-the-coast-guard` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rally-the-rearguard` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `actions/rally-the-shadow-horde` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/rally-the-shadow-horde` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ram-raider` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ransack-and-raze` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rapid-fire` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rapturous-applause` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/ratchet-up` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/ratchet-up` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rattle-bones` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ravenous-rabble` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rawhide-rumble` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1420,7 +1420,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/reek-of-corruption` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/regain-composure` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/regicide` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/regrowth-shock` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/regrowth-shock` — recorded-gap `amount/damage-recipient-provenance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/regurgitating-slog` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/reincarnate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/reinforce-steel` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1466,7 +1466,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/ring-of-roses` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rip-off-the-top` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rip-through-reality` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/ripple-away` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/ripple-away` — recorded-gap `engine/token-creator-owner-controller` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rise-from-the-ashes` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rise-up` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rising-energy` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1484,11 +1484,11 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/rob-the-rich` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/rocktop-bellow` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rockyard-rodeo` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/roiling-fissure` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/roiling-fissure` — recorded-gap `engine/optional-repeat-continuation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rolling-thunder` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/ronin-renegade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rotary-ram` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/rotten-remains` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/rotten-remains` — recorded-gap `engine/continuous-locked-object-reset`<br>recorded-gap `engine/optional-repeat-continuation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rough-up` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rouse-the-ancients` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/rousing-aether` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1559,8 +1559,8 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/second-tenet-of-chi-tide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/second-tenet-of-chi-wind` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/security-script` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/sedate` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/sedation-shot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/sedate` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/sedation-shot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/seeds-of-agony` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/seeds-of-strength` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/seek-and-destroy` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1609,12 +1609,12 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/shimmers-of-silver` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/shitty-xmas-present` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/shock-striker` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/shoot-your-mouth-off` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/shoot-your-mouth-off` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/short-shrift` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/show-no-mercy` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/show-of-strength` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/show-time` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/showdown` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/showdown` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/shrill-of-skullform` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/shuck` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sic-em-shot` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1649,7 +1649,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/sky-skimmer` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/skybound-shot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/skyward-serenade` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/skywarden-no-161803` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/skywarden-no-161803` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/skyzyk` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/slay-the-scholars` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sleep-dart` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1661,7 +1661,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/smash-and-grab` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/smash-instinct` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/smash-up` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/smash-with-big-rock` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/smash-with-big-rock` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/smash-with-big-tree` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/smashback-alehorn` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/smashing-good-time` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1674,7 +1674,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/snarky-prick` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/snatch` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sneak-attack` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/snow-under` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/snow-under` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/snuff-out` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/soaring-strike` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/solitary-companion` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1682,12 +1682,12 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `actions/sonata-dystopia` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sonata-fantasmia` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sonata-galaxia` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/song-of-jack-be-quick` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/song-of-larinkmorth-white` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/song-of-jack-be-quick` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/song-of-larinkmorth-white` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/song-of-sinew` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/song-of-sweet-nectar` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/song-of-the-rosen-matador` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/song-of-the-shining-knight` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/song-of-the-rosen-matador` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/song-of-the-shining-knight` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/song-of-the-wandering-mind` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/song-of-yesteryears` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sonic-boom` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1720,32 +1720,32 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/spinal-crush` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spinning-wheel-kick` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spire-sniping` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/spirit-of-christmas` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/spirit-of-christmas` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spirit-of-eirina` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spirit-of-war` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/splatter-skull` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/splintering-deadwood` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spoils-of-war` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spreading-flames` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/spreading-mist` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/spreading-mist` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spring-a-leak` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spring-load` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/spring-tidings` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sprocket-rocket` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sprout-strength` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/spur-locked` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/spur-locked` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/stab-wound` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/stacked-in-your-favor` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/stadium-security` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/stamp-authority` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/standing-order` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/standing-ovation` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/star-struck` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/star-struck` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/starting-stake` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/stasis-cell` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/static-shock` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/steam-canister` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/steel-street-hoons` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/steel-street-hoons` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/steel-to-the-dome` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/steelblade-supremacy` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/stellar-glide` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1766,7 +1766,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/strength-of-sequoia` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/strength-rules-all` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/strike-gold` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/strike-twice` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/strike-twice` — recorded-gap `amount/damage-recipient-provenance`<br>recorded-gap `targeting/any-target-encoded-as-hero` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/strong-wood` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/strong-yield` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/strongest-survive` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1790,7 +1790,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/swift-shot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/swiftwater-sloop` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/swindler-s-grift` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/swing-big` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/swing-big` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/swing-fist-think-later` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/swordmaster-s-path` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/sworn-vengeance` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1800,10 +1800,10 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/tag-the-target` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/take-aim` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/take-flight` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/take-that` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/take-the-bait` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/take-that` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/take-the-bait` — recorded-gap `engine/token-creator-owner-controller` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/take-the-tempo` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/tales-of-adventure` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/tales-of-adventure` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/talisman-of-balance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/talisman-of-cremation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/talisman-of-dousing` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1878,7 +1878,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/torrent-of-tempo` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/tough-as-a-rok` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/tough-old-wrench` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/tough-smashup` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/tough-smashup` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/towering-titan` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/toxicity` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/trade-in` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1908,7 +1908,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/undercover-acquisition` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/unexpected-backhand` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/unhallowed-rites` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/united-we-stand` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/united-we-stand` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/unmake-the-underlings` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/unsheathed` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/untamed` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1931,18 +1931,18 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/vengeance-never-rests` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vengeful-apparition` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/venomback-fabric` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/verdant-tide` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/verdant-tide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vexing-gloomblade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vexing-malice` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vigor-rush` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vigorous-roar` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/vigorous-smashup` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/vigorous-smashup` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vigorous-windup` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vile-inquisition` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/villainous-pose` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/violent-gusto` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/vipox` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/virulent-touch` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/virulent-touch` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/visionary-of-orbits` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/visit-anvilheim` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/visit-goldmane-estate` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1968,7 +1968,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/wander-with-purpose` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/war-cry-of-themis` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/war-machine` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/warmonger-s-diplomacy` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/warmonger-s-diplomacy` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/warmonger-s-recital` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/warrior-s-valor` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/wartune-herald` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1983,7 +1983,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/whisper-of-the-oracle` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `actions/whispers-within` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/whittle-from-bone` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/who-s-the-tough-guy` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/who-s-the-tough-guy` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/widespread-annihilation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/widespread-destruction` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/widespread-ruin` | ✅ | ✅ | en | ✅ | ✅ |
@@ -1994,8 +1994,8 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `actions/winds-of-eternity` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/winter-s-bite` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/winter-s-grasp` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/wither` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `actions/withering-shot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/wither` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `actions/withering-shot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/wounded-bull` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/wounding-blow` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `actions/wrath-of-retribution` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2052,7 +2052,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `attack-reactions/beacon-of-victory` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/beat-of-the-ironsong` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/beckon-steel` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/big-blinder` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/big-blinder` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/biting-blade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/blade-flash` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/blade-flurry` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2061,7 +2061,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `attack-reactions/blood-follows-blade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/brothers-of-flame` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/carve-up` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/chorus-of-ironsong` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/chorus-of-ironsong` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/coercive-tendency` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/combustion-point` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/concealed-blade` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2141,12 +2141,12 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `attack-reactions/sizzling-steel` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/slice-up` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/slither` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/small-blinder` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/smoldering-steel` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/spike-with-bloodrot` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/spike-with-frailty` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/spike-with-inertia` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `attack-reactions/spreading-plague` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/small-blinder` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/smoldering-steel` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/spike-with-bloodrot` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/spike-with-frailty` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/spike-with-inertia` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `attack-reactions/spreading-plague` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/stabbing-pain` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/stains-of-the-redback` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `attack-reactions/stroke-of-foresight` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2173,7 +2173,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | audited | unit | definition | i18n en sync | locales | assets | tests |
 | --- | --- | --- | --- | --- | --- | --- |
 | [x] | `blocks/a-moment-s-peace` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/asking-for-trouble` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/asking-for-trouble` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/blunten` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/boast` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/canopy-shelter` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2183,10 +2183,10 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `blocks/clash-of-heads` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/clash-of-legs` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/clash-of-shields` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/cognition-field` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/cognition-field` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `blocks/corpse-cover` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/crash-and-bash` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/crowd-control` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/crowd-control` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `blocks/dam-the-shadowake` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/darling-of-the-crowd` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/disdainful-delight` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2196,7 +2196,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `blocks/gesture-of-goodwill` — recorded-gap `protect/protect-another-hero-1v1` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/haunting-rendition` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/hearty-block` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/hoist-em-up` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/hoist-em-up` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/induce-panic` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/lost-in-transit` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/mental-block` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2204,7 +2204,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `blocks/not-so-mighty` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/not-so-tuff` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/on-the-horizon` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/pinion-sentry` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/pinion-sentry` — recorded-gap `harness/authored-token-count-baseline` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/return-fire` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `blocks/rise-to-the-challenge` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/run-into-trouble` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2214,15 +2214,15 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `blocks/steel-street-enforcement` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/sunken-treasure` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/teklonetic-force-field` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/test-of-agility` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/test-of-agility` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/test-of-iron-grip` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/test-of-might` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/test-of-strength` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/test-of-vigor` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/test-of-might` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/test-of-strength` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/test-of-vigor` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/thwart` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/tiger-eye-reflex` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `blocks/trounce` — recorded-gap `status/hero-won-both-clashes` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `blocks/truth-or-trickery` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/trounce` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `blocks/truth-or-trickery` — recorded-gap `engine/optional-repeat-continuation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/turning-point` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/unforgetting-unforgiving` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `blocks/valahai-riven` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2251,7 +2251,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `defense-reactions/big-blue-sky` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/biting-gale` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/blood-in-the-water` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `defense-reactions/bloodrot-trap` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `defense-reactions/bloodrot-trap` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/bone-barrier` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/boulder-trap` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `defense-reactions/buzzsaw-trap` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2269,14 +2269,14 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `defense-reactions/flicker-trick` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/flittering-forcefield` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/flurry-foot-dance` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `defense-reactions/frailty-trap` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `defense-reactions/frosthaven-sheath` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `defense-reactions/frailty-trap` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `defense-reactions/frosthaven-sheath` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/golden-company` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/guardian-of-the-shadowrealm` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/hold-the-line` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/hunted-or-hunter` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `defense-reactions/hunter-or-hunted` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `defense-reactions/inertia-trap` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `defense-reactions/inertia-trap` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/lair-of-the-spider` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/lay-low` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/leaven-sheath` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2297,8 +2297,8 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `defense-reactions/shield-bash` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/shield-wall` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/shimmering-mirage` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `defense-reactions/sigil-of-parapets` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `defense-reactions/sigil-of-permafrost` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `defense-reactions/sigil-of-parapets` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `defense-reactions/sigil-of-permafrost` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/sigil-of-suffering` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/sink-below` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/smoke-out` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2321,7 +2321,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `defense-reactions/turn-timber` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/unmovable` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/unravel-aggression` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `defense-reactions/viral-diffusion` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `defense-reactions/viral-diffusion` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/wash-away` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/wax-off` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `defense-reactions/wax-on` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2348,7 +2348,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/achilles-accelerator` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/adaptive-alpha-mold` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/adaptive-dissolver` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/adaptive-plating` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/adaptive-plating` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/aether-bindings-of-the-third-age` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/aether-crackers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/aether-ironweave` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2361,7 +2361,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/aqua-laps` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/aqua-seeing-shell` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/arcane-lantern` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/arcanite-fortress` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/arcanite-fortress` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/arcanite-skullcap` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/arousing-wave` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/attention-grabbers` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2428,14 +2428,14 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/carrion-husk` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/celestial-kimono` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/circlet-of-eternal-end` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/civic-duty` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/civic-guide` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/civic-duty` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/civic-guide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/civic-peak` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/civic-steps` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/civic-steps` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/clip-flexor` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/cloak-of-darkness` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/coat-of-allegiance` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/coat-of-frost` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/coat-of-frost` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/cogwerx-base-arms` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/cogwerx-base-chest` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/cogwerx-base-head` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2443,9 +2443,9 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/cogwerx-tinker-rings` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/comeback-kicks` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/compass-of-sunken-depths` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/concealed-nerve-gas` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/concealed-pathogen` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/concealed-sedative` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/concealed-nerve-gas` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/concealed-pathogen` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/concealed-sedative` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/conduit-of-frostburn` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/confront-adversity` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/constella-tiara` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2486,7 +2486,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/earthlore-bounty` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/ebon-fold` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/echo-casque` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `equipment/edge-laden-plate` — recorded-gap `status/sharpened-turn-fact-condition` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/edge-laden-plate` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/embrace-adversity` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/embraforged-gauntlet` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/empyrean-rapture` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2494,7 +2494,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/enclosed-firemind` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/face-adversity` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/face-purgatory` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/fiddle-dee` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/fiddle-dee` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/fingers-of-fragmentation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/fish-fingers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/fist-pump` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2564,7 +2564,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `equipment/heart-of-bladehold` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/heart-of-ice` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/heart-of-vengeance` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/heart-throb` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/heart-throb` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/heartened-cross-strap` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/heat-wave` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/heavy-industry-gear-shift` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2596,7 +2596,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/honing-hood` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/hood-of-red-sand` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/hood-of-second-thoughts` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `equipment/hooves-of-the-shadowbeast` — recorded-gap `trigger/banish-observed-power-filter` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/hooves-of-the-shadowbeast` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/hope-merchant-s-hood` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/hornet-s-sting` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/horns-of-the-despised` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2643,17 +2643,17 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/mask-of-recurring-nightmares` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mask-of-shifting-perspectives` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `equipment/mask-of-the-pouncing-lynx` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/mask-of-the-swarming-claw` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/mask-of-the-swarming-claw` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mask-of-three-tails` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mask-of-wizened-whiskers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mbrio-base-cortex` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mbrio-base-digits` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/mbrio-base-vizier` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/mbrio-base-vizier` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mbrio-base-walkers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/meridian-pathway` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/metacarpus-node` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mightybone-knuckles` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/misfire-dampener` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/misfire-dampener` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/monstrous-veil` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/mournful-casket` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/myrkhellir-helm` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2670,7 +2670,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/olde-leather-gloves` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/olde-leather-helm` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/olde-leather-plate` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/ollin-ice-cap` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/ollin-ice-cap` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/ornate-tessen` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/overbearing-presence` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/overcome-adversity` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2712,7 +2712,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/quelling-slippers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/quick-clicks` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/quickdodge-flexors` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/quickstep` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/quickstep` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/quiver-of-abyssal-depths` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/quiver-of-rustling-leaves` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/radiant-flow` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2742,7 +2742,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/root-bound-trunks` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/rotten-old-buckler` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/runaways` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/runebleed-robe` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/runebleed-robe` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/runehold-release` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/rust-belt` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/sash-of-sandikai` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2783,7 +2783,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/skycrest-keikoi` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/skyhold-keikoi` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/skywalker-keikoi` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/smoldering-scales` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/smoldering-scales` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/snap-fingers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/snapdragon-scalers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/solar-plexus` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2799,7 +2799,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `equipment/spoiled-skull` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/squire-s-bracers` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/stadium-centerpiece` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/stalagmite-bastion-of-isenloft` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/stalagmite-bastion-of-isenloft` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/stalker-s-steps` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/stand-ground` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/stand-strong` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2835,7 +2835,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `equipment/teklo-base-legs` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/teklo-foundry-heart` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/tempest-dancers` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `equipment/templar-spellbane` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `equipment/templar-spellbane` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/testament-of-valahai` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/third-eye-of-the-sphinx` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `equipment/threadbare-tunic` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2906,7 +2906,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `events/code-of-conduct-kill-or-be-killed` — recorded-gap `event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/crowd-roars-fight` — recorded-gap `event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/crushing-impact` — recorded-gap `event-in-1v1` | ✅ | ✅ | en | ✅ | — |
-| [ ] | `events/didn-t-see-that-coming` — recorded-gap `out-of-scope/event-in-1v1` | ✅ | ✅ | en | ✅ | — |
+| [ ] | `events/didn-t-see-that-coming` — recorded-gap `event-play-timing`<br>recorded-gap `out-of-scope/event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/dominate-the-competition` — recorded-gap `out-of-scope/event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/ez-sqeez-bookie-syndicate` — recorded-gap `out-of-scope/event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/fight-night-prize-purse` — recorded-gap `event-in-1v1` | ✅ | ✅ | en | ✅ | — |
@@ -2918,7 +2918,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `events/rally-the-underdog` — recorded-gap `out-of-scope/event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/random-events-unfold` — recorded-gap `event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/the-moat-exchange` — recorded-gap `event-in-1v1` | ✅ | ✅ | en | ✅ | — |
-| [x] | `events/tremor-of-anticipation` | ✅ | ✅ | en | ✅ | — |
+| [ ] | `events/tremor-of-anticipation` | ✅ | ✅ | en | ✅ | — |
 | [ ] | `events/visit-the-winner-takes-all` — recorded-gap `out-of-scope/event-in-1v1` | ✅ | ✅ | en | ✅ | — |
 
 ## heroes
@@ -2977,20 +2977,20 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `heroes/fang-dracai-of-blades` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/fang` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `heroes/fightmaster-kox` — recorded-gap `event-deck-look-out-of-scope` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/florian-rotwood-harbinger` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/florian` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/florian-rotwood-harbinger` — recorded-gap `engine/token-creator-owner-controller` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/florian` — recorded-gap `engine/token-creator-owner-controller` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/frankie-make-ends-meat` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/genis-wotchuneed` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/gravy-bones-shipwrecked-looter` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/gravy-bones` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/groundbreaker-crix` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/groundbreaker-crix` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/hala-bladesaint-of-the-vow` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/hala` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/ira-crimson-haze` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/ira-scarlet-revenger` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/iyslander-stormbind` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/iyslander` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/jarl-vetrei-i` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/iyslander-stormbind` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/iyslander` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/jarl-vetrei-i` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/kano-dracai-of-aether` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/kano` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `heroes/kassai-cintari-sellsword` | ✅ | ✅ | en | ✅ | ✅ |
@@ -2998,17 +2998,17 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `heroes/kassai` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/katsu-the-wanderer` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/katsu` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/kavdaen-trader-of-skins` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/kavdaen-trader-of-skins` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/kayo-armed-and-dangerous` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/kayo-berserker-runt` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/kayo-strong-arm` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/kayo-underhanded-cheat` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/kayo` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `heroes/killjoy-the-crooked-blade` — recorded-gap `attack/additional-hero-target-1v1`<br>recorded-gap `trigger/killjoy-steal-boo-never-declares` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/killjoy-the-crooked-blade` — recorded-gap `attack/additional-hero-target-1v1` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/levia-shadowborn-abomination` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/levia` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/lexi-livewire` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/lexi` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/lexi-livewire` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/lexi` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/lyath-goldmane-vile-savant` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/lyath-goldmane` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/malice-domina-of-the-dead` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3038,17 +3038,17 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `heroes/puffin-hightail` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/puffin` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/reya-the-unyielding` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/rhinar-reckless-rampage` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/rhinar` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/rhinar-reckless-rampage` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/rhinar` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/riptide-lurker-of-the-deep` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/riptide` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `heroes/ruu-di-gem-keeper` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/scurv-stowaway` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/ser-boltyn-breaker-of-dawn` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/shiyana-diamond-gemini` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/squizzy-floof` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/squizzy-floof` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `heroes/taipanis-dracai-of-judgement` — recorded-gap `engine/retarget-non-attack-damage-source` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `heroes/taylor` — recorded-gap `trigger/taylor-start-phase-swap-targets-unavailable` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/taylor` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/teklovossen-esteemed-magnate` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `heroes/teklovossen` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/terra` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3062,9 +3062,9 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [ ] | `heroes/valda-seismic-impact` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/verdance-thorn-of-the-rose` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/verdance` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `heroes/victor-goldmane-high-and-mighty` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/victor-goldmane-high-and-mighty` — recorded-gap `engine/token-creator-owner-controller` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/victor-goldmane-match-fixer` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `heroes/victor-goldmane` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `heroes/victor-goldmane` — recorded-gap `engine/token-creator-owner-controller` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `heroes/viserai-between-worlds` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/viserai-rune-blood` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `heroes/viserai-the-forsaken` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3109,7 +3109,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/blood-tribute` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/blur-reality` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/bone-head-barrier` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/brainstorm` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/brainstorm` — recorded-gap `engine/printed-arcane-resolution-fallback`<br>recorded-gap `trigger/draw-individual-versus-multi-event` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/break-of-dawn` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/brush-off` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/bubble-to-the-surface` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3128,7 +3128,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/constella-contemplation` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/constella-flowslide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/constella-uplift` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/core-reaction` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/core-reaction` — recorded-gap `engine/printed-arcane-resolution-fallback` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/corrosive-space-dust` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/cosmic-flare` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/cosmic-suture` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3152,17 +3152,17 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/escalate-bloodshed` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evasive-nageboshi` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/even-bigger-than-that` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/evo-atom-breaker` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/evo-atom-breaker` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-buzz-hive` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/evo-circuit-breaker` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/evo-face-breaker` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/evo-circuit-breaker` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/evo-face-breaker` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-heartdrive` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-mach-breaker` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-recall` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-shortcircuit` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-speedslip` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-whizz-bang` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/evo-zip-line` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/evo-zip-line` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/evo-zoom-call` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/exposed-to-the-elements` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/fabricate` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3180,7 +3180,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/fleeing-starbreeze` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/flicker-reality` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/flow-through` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/frost-spike` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/frost-spike` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/future-sight` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/genesis` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/glisten` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3218,7 +3218,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/no-fear` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/not-so-fast` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/nourishing-glow` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/null-shock` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/null-shock` — recorded-gap `amount/damage-recipient-provenance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/numbskull-charm` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/oasis-respite` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/oblivion` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3261,7 +3261,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/runechant-of-lust` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/runechant-of-pride` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/runechant-of-sloth` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/runechant-of-wrath` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/runechant-of-wrath` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/sacred-art-immortal-lunar-shrine` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/sacred-art-jade-tiger-domain` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/sacred-art-undercurrent-desires` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3273,8 +3273,8 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/seismic-eruption` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/semblance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/shatter-sorcery` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/shining-courage` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/sigil-of-aether` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/shining-courage` — recorded-gap `engine/continuous-locked-object-reset`<br>recorded-gap `mechanic/crowd-cheers-resolution` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/sigil-of-aether` — recorded-gap `engine/printed-arcane-resolution-fallback`<br>recorded-gap `targeting/any-target-encoded-as-hero` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/sigil-of-astral-flow` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/sigil-of-brilliance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/sigil-of-conductivity` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3318,7 +3318,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `instants/tooth-of-the-dragon` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/turn-heads` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/up-on-a-pedestal` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `instants/vaporize-shock` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `instants/vaporize-shock` — recorded-gap `amount/damage-recipient-provenance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/visit-the-boneyard` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/visit-the-floating-dojo` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `instants/voltic-veil` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3335,8 +3335,8 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 
 | audited | unit | definition | i18n en sync | locales | assets | tests |
 | --- | --- | --- | --- | --- | --- | --- |
-| [x] | `macros/intellect-penalty` | ✅ | ✅ | en | ✅ | — |
-| [x] | `macros/omens-of-arcana` | ✅ | ✅ | en | ✅ | — |
+| [ ] | `macros/intellect-penalty` | ✅ | ✅ | en | ✅ | — |
+| [ ] | `macros/omens-of-arcana` | ✅ | ✅ | en | ✅ | — |
 | [x] | `macros/sanctuary-of-aria` | ✅ | ✅ | en | ✅ | — |
 | [x] | `macros/treasure-island` | ✅ | ✅ | en | ✅ | — |
 
@@ -3389,7 +3389,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `tokens/aether-ashwing` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/agility` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/ash` | ✅ | ✅ | en | ✅ | ✅ |
-| [ ] | `tokens/bait` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `tokens/bait` — recorded-gap `engine/token-creator-owner-controller` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/blade-dance` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/blasmophet-the-insatiable-hunger` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/blasmophet-the-soul-harvester` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3402,7 +3402,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `tokens/eloquence` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/embodiment-of-earth` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/embodiment-of-lightning` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `tokens/fealty` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `tokens/fealty` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/flurry` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/frailty` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `tokens/frostbite` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3455,7 +3455,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `weapons/dawnblade-resplendent` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/dawnblade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/death-dealer` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `weapons/decimator-great-axe` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `weapons/decimator-great-axe` — recorded-gap `engine/continuous-locked-object-reset` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/dread-scythe` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/dreadbore` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/durendal` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3478,11 +3478,11 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `weapons/hexagore-the-death-hydra` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/high-riser` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/hot-streak` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `weapons/hummingbird-call-of-adventure` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `weapons/hummingbird-call-of-adventure` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/humour-plunge` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/hunter-s-klaive` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/iris-of-reality` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `weapons/jinglewood-smash-hit` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `weapons/jinglewood-smash-hit` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/jubeel-spellbane` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/kraken-s-aethervein` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/kunai-of-retribution` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3531,7 +3531,7 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `weapons/staff-of-verdant-shoots` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/star-fall` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/storm-of-sandikai` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `weapons/summit-the-unforgiving` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `weapons/summit-the-unforgiving` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/surgent-aethertide` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/symbiosis-shot` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/talishar-the-lost-prince` | ✅ | ✅ | en | ✅ | ✅ |
@@ -3540,12 +3540,12 @@ marked audited. Each entry records the systemic finding and its root-cause resol
 | [x] | `weapons/teklo-plasma-pistol` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/tiger-taming-khakkara` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/titan-s-fist` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `weapons/voltaire-strike-twice` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `weapons/voltaire-strike-twice` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/volzar-meteor-storm` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/volzar-the-lightning-rod` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/vox-necropolis` | ✅ | ✅ | en | ✅ | ✅ |
 | [ ] | `weapons/waning-moon` | ✅ | ✅ | en | ✅ | ✅ |
-| [x] | `weapons/winter-s-wail` | ✅ | ✅ | en | ✅ | ✅ |
+| [ ] | `weapons/winter-s-wail` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/zenith-blade` | ✅ | ✅ | en | ✅ | ✅ |
 | [x] | `weapons/zephyr-needle` | ✅ | ✅ | en | ✅ | ✅ |
 

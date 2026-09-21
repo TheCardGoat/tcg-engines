@@ -1,5 +1,5 @@
 import type { Patch } from "immer";
-import type { Action, Duration, EffectTrigger, Keyword } from "@tcg/op-types";
+import type { Action, Duration, EffectTrigger, Keyword, OPAttribute } from "@tcg/op-types";
 
 export type MatchSeat = "north" | "south";
 export type Viewer = MatchSeat | "judge" | "spectator";
@@ -151,9 +151,10 @@ export interface ModifierState {
   // 4-9-2-1: "basePower" modifiers set a card's base power to an absolute
   // value; competing set values resolve to the highest rather than summing
   // like additive "power" modifiers. ("baseCost" may join per 4-9-2-2.)
-  type: "power" | "basePower" | "cost" | "keyword" | "flag" | "attackRestriction";
+  type: "power" | "basePower" | "cost" | "keyword" | "flag" | "attackRestriction" | "attribute";
   value?: number;
   keyword?: Keyword;
+  attribute?: OPAttribute;
   flag?:
     | "cannotAttack"
     | "attackHandTrashCost"
@@ -405,6 +406,7 @@ export type PromptResolutionContext =
       trigger: EffectTrigger;
       blockIndex: number;
       amount: number;
+      cost: Extract<import("@tcg/op-types").Cost, { cost: "giveDon" }>;
       candidateIds: string[];
       costPaymentIdsByType?: EffectBlockContinuation["costPaymentIdsByType"];
       triggerEvent?: {
@@ -624,6 +626,20 @@ export type PromptResolutionContext =
       action: Extract<Action, { action: "trashFromHand" }>;
       candidateIds: string[];
       opaqueCandidateIds?: Record<string, string>;
+    }
+  | {
+      intent: "effectRevealFromLifeSelection";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "revealFromLife" }>;
+    }
+  | {
+      intent: "effectSetPowerFromSource";
+      sourceInstanceId: string;
+      controller: MatchSeat;
+      action: Extract<Action, { action: "setBasePowerFrom" }>;
+      sourceCandidateIds: string[];
+      previousActionTargetIds?: string[];
     }
   | {
       intent: "effectRevealFromHandSelection";
@@ -1001,6 +1017,7 @@ export type ResolutionItem =
         instanceId: string;
         instanceController?: MatchSeat;
         effectController: MatchSeat;
+        fromZone?: CardZone;
         koCause?: "battle" | "effect";
         attachedDon?: number;
         targetInstanceId?: string;
@@ -1020,6 +1037,7 @@ export type ResolutionItem =
       previousActionTargetIds?: string[];
       skipRemovalReplacementIds?: string[];
       returnToDeckContinuation?: ReturnToDeckContinuation;
+      setPowerFromSourceIds?: string[];
     }
   | {
       id: string;
@@ -1103,6 +1121,11 @@ export interface PlayerState {
    * Incremented in `beginTurn`; mid-game fixtures seed it from turnNumber.
    */
   turnsStarted: number;
+  /**
+   * Highest base cost among Events this seat activated during a turn, kept
+   * for the turn number it happened so stale turns never satisfy conditions.
+   */
+  activatedEvent?: { turnNumber: number; bestBaseCost: number };
 }
 
 export interface EngineEvent {
@@ -1538,6 +1561,8 @@ export interface ProjectedCard {
   attachedDon: number;
   power: number | null;
   cost: number | null;
+  /** Effective attributes including granted ones; null for hidden cards. */
+  attribute: string[] | null;
   hidden: boolean;
 }
 

@@ -5,13 +5,14 @@ Generated from the exported card catalog in canonical ID order. Re-running
 verified evidence and unresolved gap notes, refreshes pending timing hints, and
 reconciles catalog entries.
 
-| Canonical ID | Card                             | Status   | Behavior or next evidence                                                                                                               |
-| ------------ | -------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Canonical ID | Card                                            | Status  | Behavior or next evidence                                                |
+| ------------ | ----------------------------------------------- | ------- | ------------------------------------------------------------------------ |
 | EB01-001     | Kouzuki Oden                     | verified | Dynamic +1000 Counter for no-Counter included Wano Characters; DON x1 attack gate; cost-5 field gate; +1000 through own next-turn start |
 | EB01-021     | Hannyabal                        | verified | End-turn optional confirmation; included Impel Down cost-2 return payment; selectable active DON add                                    |
 | EB01-040     | Kyros                            | verified | Optional top-Life face-up cost; cost-0 K.O. boundary; once-per-turn legal activation                                                    |
 | EB02-010     | Monkey.D.Luffy                   | verified | All-Character included Straw Hat gate; chosen DON return; 0-2 DON reactivation; opponent-turn power duration                            |
 | EB03-001     | Nefeltari Vivi                   | verified | Leader-rest activation; opposing power choice; filtered Rush grant; base-cost-4 battle K.O. replacement and hand-trash choice           |
+| EB04-001 | Jewelry Bonney | verified | activateMain, permanent |
 | OP01-001     | Roronoa Zoro                     | verified | DON x1 and Your Turn dynamic all-Character +1000 power                                                                                  |
 | OP01-002     | Trafalgar Law                    | verified | Exactly-5 field gate; 2 DON rest; own return choice; different-color cost-5 hand play choice                                            |
 | OP01-003     | Monkey.D.Luffy                   | verified | 4 DON rest; alternative included-type and cost filter; selected Character active and +1000 only                                         |
@@ -94,6 +95,7 @@ reconciles catalog entries.
 | OP13-002     | Portgas.D.Ace                    | verified | Opponent-attack power reduction; Life Trigger before damage reaction draw; qualifying Character K.O. branch                             |
 | OP13-003     | Gol.D.Roger                      | verified | Pre-placement DON!!-field gate; DON!!-Phase Leader attachment; dynamic 9-DON!! power boundary                                           |
 | OP13-004     | Sabo                             | verified | Dynamic Life-4 Leader power; DON!! x1 plus cost-8 field gate; Leader-and-Character power                                                |
+| OP13-079 | Imu | verified | activateMain |
 | OP13-100     | Jewelry Bonney                   | verified | Optional Trigger-Character play reaction; 0–2 rested-DON!! count; Leader-or-Character recipient                                         |
 | OP14-001     | Trafalgar Law                    | verified | Alternative included-type candidate mapping; two-Character base-power swap; external DON!! modifier preservation and expiry             |
 | OP14-020     | Dracule Mihawk                   | verified | Opposing Slash permanent power; selectable card-rest cost; post-cost cost-5 gate; 0–3 reactivation; Character play restriction          |
@@ -102,12 +104,31 @@ reconciles catalog entries.
 | OP14-060     | Donquixote Doflamingo - OP14-060 | verified | Opponent-attack optional payment; DON!! return; Leader-or-Donquixote target mapping; live battle retarget                               |
 | OP14-079     | Crocodile - OP14-079             | verified | Filtered Character K.O. cost; 0–1 cost reduction; optional top-deck trash; own-effect field-removal prohibition                         |
 | OP14-080     | Gecko Moria - OP14-080           | verified | Filtered Character K.O. cost; field-wide turn power; attack hand-trash cost; optional top-deck-to-Life                                  |
+| OP15-001 | Krieg | verified | attachedDon>=2 filter for up-to-1 rest; once-per-turn rejection; DON x1 opponent-turn -2000 with non-East-Blue negative boundary |
+| OP15-002 | Lucy | verified |When-attack optional Event/Stage trash with +1000 per card during battle; base-cost-3 Event gate draw with sub-3 negative; once-per-turn|
+| OP15-022 | Brook | verified |Deck-empty defeat deferred to end of turn; deck-0 conditional active Character; deck-1 boundary survives end of turn; once-per-turn|
+| OP15-039 | Rebecca | verified |Permanent leader cannot-attack; optional rest+self return Dressrosa cost; cost-3 Dressrosa hand play incl. returned card; cost-unsatisfiable negative|
+| OP15-058 | Enel | verified |DON deck rule 6; first-turn gate negative; second-turn active-1 plus rested add with live-cap min; give-to-character movement|
+| OP15-098 | Monkey.D.Luffy | verified |Opponent effect K.O. replacement keeps Sky Island 6000+ base power Character and pays top Life; non-Sky-Island negative K.O.s normally|
+| OP16-001 | Portgas.D.Ace | verified | Printed behavior is unstructured |
+| OP16-022 | Monkey.D.Luffy | verified | activateMain |
+| OP16-041 | Buggy | verified | Printed behavior is unstructured |
+| OP16-060 | Sengoku | verified | Printed behavior is unstructured |
+| OP16-079 | Yamato | verified | Printed behavior is unstructured |
+| OP16-080 | Marshall.D.Teach | verified | permanent |
+| OP17-001 | Edward.Newgate | verified | onOpponentAttack |
+| OP17-020 | Shanks | verified | activateMain |
+| OP17-039 | Rocks.D.Xebec | verified | whenAttacking |
+| OP17-058 | Kaido | verified | whenAttacking, onOpponentAttack |
+| OP17-079 | Monkey.D.Luffy | verified | permanent |
+| OP17-099 | Charlotte Linlin | verified | Printed behavior is unstructured |
 | PRB01-001    | Sanji (PRB01-001)                | verified | No-On-Play and cost-8 candidate boundary; granted Rush; same-turn public Character attack                                               |
 | ST01-001     | Monkey.D.Luffy                   | verified | Direct 0–1 rested-DON!! choice; Leader-or-Character recipient mapping; attachment and power                                             |
 
 ## Progress
 
-- Canonical leaders: 97.
+- Canonical leaders: 117.
 - Verified: 97.
-- Structured pending: 0.
-- Printed but unstructured: 0.
+- Structured pending: 15.
+- Printed but unstructured: 5.
+- Canonical vanilla awaiting the parameterized invariant: 0.

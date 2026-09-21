@@ -9,7 +9,7 @@ import {
   op11TonyTonyChopper053,
   op14eb04SilversRayleigh108,
 } from "@tcg/op-cards";
-import { op11Sanji051 } from "../../../../../cards/src/cards/OP11/characters/051-sanji.ts";
+import { op11Sanji051 } from "../../../../../cards/src/cards/characters/op11-051-sanji.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

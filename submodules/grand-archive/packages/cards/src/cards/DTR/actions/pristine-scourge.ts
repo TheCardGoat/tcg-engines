@@ -94,51 +94,51 @@ export const pristineScourge: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
             kind: "sequence",
             effects: [
               {
-                kind: "sequence",
-                effects: [
-                  {
-                    kind: "look-at",
-                    player: "controller",
-                    selection: {
-                      id: "inspected-cards",
-                      kind: "choice",
-                      declared: "resolution",
-                      chooser: "controller",
-                      count: {
-                        kind: "all",
-                      },
-                      unique: true,
-                      candidates: {
-                        kind: "card",
-                        zones: ["memory"],
-                        relationship: "zone-of",
-                        player: {
-                          binding: "target-opponent",
-                        },
-                      },
+                kind: "look-at",
+                player: "controller",
+                selection: {
+                  id: "inspected-memory",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "all",
+                  },
+                  unique: true,
+                  candidates: {
+                    kind: "card",
+                    zones: ["memory"],
+                    relationship: "zone-of",
+                    player: {
+                      binding: "target-opponent",
                     },
                   },
-                  {
-                    kind: "discard",
-                    player: "controller",
-                    selection: {
-                      id: "discarded-card",
-                      kind: "choice",
-                      declared: "resolution",
-                      chooser: "controller",
-                      count: {
-                        kind: "exactly",
-                        amount: 1,
-                      },
-                      candidates: {
-                        kind: "card",
-                        zones: ["hand"],
-                        relationship: "zone-of",
-                        player: "controller",
-                      },
+                },
+              },
+              {
+                kind: "discard",
+                player: {
+                  binding: "target-opponent",
+                },
+                selection: {
+                  id: "discarded-opponent-memory",
+                  kind: "choice",
+                  declared: "resolution",
+                  chooser: "controller",
+                  count: {
+                    kind: "exactly",
+                    amount: 1,
+                  },
+                  unique: true,
+                  candidates: {
+                    kind: "card",
+                    zones: ["memory"],
+                    relationship: "zone-of",
+                    player: {
+                      binding: "target-opponent",
                     },
                   },
-                ],
+                },
               },
               {
                 kind: "conditional",
@@ -163,9 +163,11 @@ export const pristineScourge: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                 },
                 then: {
                   kind: "discard",
-                  player: "controller",
+                  player: {
+                    binding: "target-opponent",
+                  },
                   selection: {
-                    id: "discarded-card",
+                    id: "additional-discarded-opponent-memory",
                     kind: "choice",
                     declared: "resolution",
                     chooser: "controller",
@@ -173,11 +175,14 @@ export const pristineScourge: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
                       kind: "exactly",
                       amount: 1,
                     },
+                    unique: true,
                     candidates: {
                       kind: "card",
-                      zones: ["hand"],
+                      zones: ["memory"],
                       relationship: "zone-of",
-                      player: "controller",
+                      player: {
+                        binding: "target-opponent",
+                      },
                     },
                   },
                 },

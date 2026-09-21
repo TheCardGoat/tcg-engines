@@ -120,37 +120,53 @@ export const deviousWelcome: GrandArchiveCard<GrandArchiveAbilityDefinition, "ca
                     },
                   },
                   then: {
-                    kind: "discard",
-                    player: "turn-player",
-                    selection: {
-                      id: "random-discard",
-                      kind: "choice",
-                      declared: "resolution",
-                      chooser: "turn-player",
-                      method: "random",
-                      count: {
-                        kind: "exactly",
-                        amount: 1,
-                      },
-                      unique: true,
-                      candidates: {
-                        kind: "union",
-                        sources: [
-                          {
+                    kind: "sequence",
+                    effects: [
+                      {
+                        kind: "discard",
+                        player: "turn-player",
+                        selection: {
+                          id: "random-discard-hand",
+                          kind: "choice",
+                          declared: "resolution",
+                          chooser: "turn-player",
+                          method: "random",
+                          count: {
+                            kind: "exactly",
+                            amount: 1,
+                          },
+                          unique: true,
+                          candidates: {
                             kind: "card",
                             zones: ["hand"],
                             relationship: "zone-of",
                             player: "turn-player",
                           },
-                          {
+                        },
+                      },
+                      {
+                        kind: "discard",
+                        player: "turn-player",
+                        selection: {
+                          id: "random-discard-memory",
+                          kind: "choice",
+                          declared: "resolution",
+                          chooser: "turn-player",
+                          method: "random",
+                          count: {
+                            kind: "exactly",
+                            amount: 1,
+                          },
+                          unique: true,
+                          candidates: {
                             kind: "card",
                             zones: ["memory"],
                             relationship: "zone-of",
                             player: "turn-player",
                           },
-                        ],
+                        },
                       },
-                    },
+                    ],
                   },
                 },
               },

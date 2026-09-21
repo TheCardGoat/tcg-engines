@@ -657,7 +657,7 @@ describe("Grand Archive ability compiler", () => {
     expect(report.unparsedParagraphs).toBe(0);
     expect(report.abilities[1]).toMatchObject({
       kind: "activated",
-      functionalZones: ["graveyard", "intent"],
+      functionalZones: ["graveyard"],
       cost: {
         kind: "select-and-move",
         from: "graveyard",
@@ -1621,15 +1621,23 @@ describe("Grand Archive ability compiler", () => {
               effect: {
                 kind: "sequence",
                 effects: [
-                  { kind: "banish" },
                   {
-                    kind: "continuous",
-                    subjects: { kind: "champion", player: "controller" },
-                    affectedSet: "locked",
-                    duration: { kind: "this-turn" },
-                    change: {
-                      kind: "grant-keyword",
-                      keyword: { name: "ranged", value: 3 },
+                    kind: "attempt",
+                    effect: { kind: "banish" },
+                    bindSucceededAs: "optional-action-succeeded",
+                  },
+                  {
+                    kind: "conditional",
+                    condition: { kind: "effect-succeeded", binding: "optional-action-succeeded" },
+                    then: {
+                      kind: "continuous",
+                      subjects: { kind: "champion", player: "controller" },
+                      affectedSet: "locked",
+                      duration: { kind: "this-turn" },
+                      change: {
+                        kind: "grant-keyword",
+                        keyword: { name: "ranged", value: 3 },
+                      },
                     },
                   },
                 ],
@@ -2371,7 +2379,7 @@ describe("PR review compiler boundaries", () => {
       const ability = report.abilities[0];
       if (ability?.kind !== "activated") throw new Error("Expected activated ability");
       expect(ability.functionalZones).toEqual(
-        cost.includes("from your graveyard") ? ["graveyard", "intent"] : undefined,
+        cost.includes("from your graveyard") ? ["graveyard"] : undefined,
       );
     }
   });
@@ -2716,6 +2724,33 @@ it("enables only a self-reveal memory trigger in memory", () => {
   const other = compile("Whenever you reveal a card from your memory, recover 3.");
   expect(other.abilities[0]).not.toHaveProperty("functionalZones");
 });
+it("scopes a self reserve-payment banish trigger to the graveyard and the reserve cost", () => {
+  const result = compile(
+    "Whenever this card is banished from your graveyard to pay for a reserve cost, put it onto the field.",
+  );
+  expect(result.unparsedParagraphs).toBe(0);
+  expect(result.abilities).toMatchObject([
+    {
+      kind: "triggered",
+      functionalZones: ["graveyard"],
+      trigger: {
+        event: {
+          name: "card-banished",
+          actor: "controller",
+          subject: { kind: "source" },
+          from: "graveyard",
+          payment: { costKind: "reserve" },
+        },
+      },
+      effect: {
+        kind: "move",
+        subject: { kind: "source" },
+        from: "banishment",
+        destination: { zone: "field" },
+      },
+    },
+  ]);
+});
 it("treats a complete named-card descriptor as a name instead of parsing words inside the name", () => {
   const result = compile("Banish a card named Gleaming Cut from your memory. Draw two cards.");
   expect(result.abilities).toMatchObject([
@@ -2800,4 +2835,71 @@ it("compiles every exact name in lists of three or more names", () => {
       },
     ]);
   }
+});
+
+it("preserves both subtype alternatives when materializing from the material deck", () => {
+  expect(
+    compile("Materialize a Book or Scripture card from your material deck.").abilities,
+  ).toMatchObject([
+    {
+      effect: {
+        kind: "choose",
+        selection: {
+          candidates: {
+            filter: {
+              kind: "any",
+              filters: [
+                { kind: "subtype", oneOf: ["BOOK"] },
+                { kind: "subtype", oneOf: ["SCRIPTURE"] },
+              ],
+            },
+          },
+        },
+      },
+    },
+  ]);
+});
+
+it("sacrifices every matching object without asking the controller to choose one", () => {
+  expect(compile("Sacrifice each regalia with a bond counter on it.").abilities).toMatchObject([
+    {
+      effect: {
+        kind: "sacrifice",
+        subject: {
+          kind: "each",
+          collection: {
+            zones: ["field"],
+            player: "controller",
+            filter: {
+              kind: "all",
+              filters: [
+                { kind: "supertype", oneOf: ["REGALIA"] },
+                { kind: "has-counter", counter: { named: "bond" } },
+              ],
+            },
+          },
+        },
+      },
+    },
+  ]);
+});
+
+it("links Slime King's return choice to the Slimes used for its activation", () => {
+  expect(
+    compile(
+      "You may put any number of the Slime ally cards banished by Slime King onto the field under your control.",
+    ).abilities,
+  ).toMatchObject([
+    {
+      effect: {
+        selection: {
+          candidates: {
+            zones: ["banishment"],
+            relationship: "activation-payment-of",
+            host: { kind: "source" },
+          },
+        },
+      },
+    },
+  ]);
 });

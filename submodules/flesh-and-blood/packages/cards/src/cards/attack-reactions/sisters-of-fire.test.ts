@@ -41,7 +41,9 @@ describe("Sisters of Fire (HNT112) AAA", () => {
     Fang.must.playReaction(sistersOfFireRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(4);
+    // 1 + 3 — this link's Draconic reaction also turns on Obsidian Fire
+    // Vein's printed "+1{p} and go again".
+    expectCombat(game).toHaveAttackPower(5);
     expectFabCard(Fang, sistersOfFireRed).toBeIn("graveyard");
   });
 
@@ -92,10 +94,11 @@ describe("Sisters of Fire (HNT112) AAA", () => {
 
     Fang.must.playReaction(sistersOfFireRed);
     game.passBoth();
-    expectCombat(game).toHaveAttackPower(4);
+    // 1 + 3 + Obsidian Fire Vein's live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(5);
 
     game.helpers.resolveRestOfCombat();
-    // Hunt 2 + dagger 4.
-    expect(Dash.life()).toBe(14);
+    // Hunt 2 + dagger 5.
+    expect(Dash.life()).toBe(13);
   });
 });

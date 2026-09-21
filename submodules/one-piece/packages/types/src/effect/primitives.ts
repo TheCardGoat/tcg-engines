@@ -1,3 +1,4 @@
+import type { TargetFilter } from "./target.ts";
 export type Player = "self" | "opponent";
 export type TargetPlayer = Player | "any" | "both";
 
@@ -21,6 +22,11 @@ export type Amount = number | "all";
 export interface TargetCount {
   amount: Amount;
   upTo?: boolean;
+  /**
+   * Overrides `amount` with the count of the effect controller's field cards
+   * matching these filters ("for every X on your field" wordings).
+   */
+  amountFromMatchingCards?: TargetFilter[];
 }
 
 export type Duration =

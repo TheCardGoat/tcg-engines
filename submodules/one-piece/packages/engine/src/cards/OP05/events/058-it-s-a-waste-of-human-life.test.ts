@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op05ItSAWasteOfHumanLife058 } from "../../../../../cards/src/cards/OP05/events/058-it-s-a-waste-of-human-life.ts";
+import { op05ItSAWasteOfHumanLife058 } from "../../../../../cards/src/cards/events/op05-058-it-s-a-waste-of-human-life.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP05-058 It's a Waste of Human Life!!", () => {

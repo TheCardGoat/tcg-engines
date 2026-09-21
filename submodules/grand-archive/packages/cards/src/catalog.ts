@@ -1,5 +1,7 @@
 import type { GrandArchiveCardDefinition, GrandArchiveCatalog } from "@tcg/grand-archive-types";
-import { grandArchiveCatalog } from "./generated/grand-archive-catalog.ts";
+import { grandArchiveCatalog as rawGrandArchiveCatalog } from "./generated/grand-archive-catalog.ts";
+import { withGrandArchiveAssets } from "./assets.ts";
+const grandArchiveCatalog = withGrandArchiveAssets(rawGrandArchiveCatalog);
 
 export { grandArchiveCatalog };
 

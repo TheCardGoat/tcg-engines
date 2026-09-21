@@ -252,6 +252,16 @@ export interface FabRulesProcess {
     string,
     { readonly instanceId: string; readonly incarnation: number }
   >;
+  /**
+   * Hand cards bound as pitch payment for a static-keyword pay-resources
+   * prevention cost (CR 1.14.2d), keyed `${bindingScope}:${replacementId}`.
+   * Each entry pitches for its evaluated resource value when the prevention
+   * applies; the cards stay in hand until that application commits.
+   */
+  replacementPitchBindings?: Record<
+    string,
+    readonly { readonly instanceId: string; readonly incarnation: number }[]
+  >;
   /** Exact original clash reveal selected for an accepted re-clash replacement. */
   replacementConsequenceTargetBindings?: Record<
     string,
@@ -333,6 +343,9 @@ export interface FabRulesProcess {
   journalReplacementChoicePlayerIds: Record<string, readonly string[]>;
   /** Layer suffix to resume after a sequence-prefix journal commits through a replacement prompt. */
   sequencePrefixContinuation?: {
+    /** Conditions captured per loop subject before committing a prefix. */
+    readonly frozenConditions?: Readonly<Record<string, FabCondition>>;
+    readonly repeatIndex?: number;
     readonly eventGroupId: string;
     readonly layerId: string;
     /** Effect-tree path to the sequence whose committed prefix is removed. */
@@ -638,6 +651,11 @@ export interface FabReplacementCandidate {
   /** Serialized policy for a persisted replacement; never reconstruct from card text at application. */
   readonly persistedApplicationPolicy?: FabPersistedReplacementApplicationPolicy;
   readonly persistedCostTarget?: { readonly instanceId: string; readonly incarnation: number };
+  /** Hand cards bound as pitch payment for a static-keyword pay-resources cost. */
+  readonly persistedPitchedInstanceIds?: readonly {
+    readonly instanceId: string;
+    readonly incarnation: number;
+  }[];
   readonly persistedConsequenceTarget?: {
     readonly instanceId: string;
     readonly incarnation: number;
@@ -670,6 +688,16 @@ export type FabDecisionContinuation =
       readonly eventGroupId?: string;
       readonly sequencePrefix?: FabRulesProcess["sequencePrefixContinuation"];
       readonly effectPayment?: FabRulesProcess["effectPaymentContinuation"];
+    }
+  | {
+      readonly kind: "replacement-cost-payment";
+      readonly processId: FabProcessId;
+      readonly playerId: string;
+      readonly replacementId: string;
+      /** Remaining shortfall this payment round still has to cover. */
+      readonly amount: number;
+      readonly eventGroupId?: string;
+      readonly sequencePrefix?: FabRulesProcess["sequencePrefixContinuation"];
     }
   | {
       readonly kind: "replacement-consequence-target";

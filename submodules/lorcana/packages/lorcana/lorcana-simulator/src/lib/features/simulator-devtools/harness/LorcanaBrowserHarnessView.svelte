@@ -118,9 +118,9 @@ const testEngine = $derived.by(() => {
 			debugServerCommunication: true,
 			showLogs: true,
 			logLevel: "trace",
-			timeControl: aiBotEnabled
+			timeControl: fixture.timeControl ?? (aiBotEnabled
 				? { mode: "none" }
-				: { mode: "dynamic", config: DEFAULT_DYNAMIC_CLOCK_CONFIG },
+				: { mode: "dynamic", config: DEFAULT_DYNAMIC_CLOCK_CONFIG }),
 		},
 	);
 });

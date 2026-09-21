@@ -75,12 +75,10 @@ export const welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience = defineCy
       source: {
         selector: "self",
       },
-      effects: [
+      conditions: [
         {
-          effect: "draw",
-          player: "friendly",
-          amount: 1,
-          conditions: [
+          condition: "any",
+          of: [
             {
               condition: "targetValue",
               target: {
@@ -91,13 +89,6 @@ export const welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience = defineCy
               comparison: "eq",
               value: "min",
             },
-          ],
-        },
-        {
-          effect: "draw",
-          player: "friendly",
-          amount: 1,
-          conditions: [
             {
               condition: "targetValue",
               target: {
@@ -109,6 +100,13 @@ export const welcomeToNightCityRetailKerryEurodyneAxeAttitudeAudience = defineCy
               value: "max",
             },
           ],
+        },
+      ],
+      effects: [
+        {
+          effect: "draw",
+          player: "friendly",
+          amount: 1,
         },
         {
           effect: "draw",

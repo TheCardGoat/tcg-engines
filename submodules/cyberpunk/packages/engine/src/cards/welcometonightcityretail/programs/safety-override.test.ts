@@ -9,17 +9,94 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("Safety Override (registration)", () => {
-  it("is registered with the ingested card data", () => {
-    expect(welcomeToNightCityRetailSafetyOverride).toBeDefined();
-    expect(welcomeToNightCityRetailSafetyOverride.slug).toBe("safety-override");
-    expect(welcomeToNightCityRetailSafetyOverride.type).toBe("program");
-    expect(welcomeToNightCityRetailSafetyOverride.color).toBe("yellow");
-    expect(welcomeToNightCityRetailSafetyOverride.set.code).toBe("welcometonightcityretail");
-    expect(welcomeToNightCityRetailSafetyOverride.cost).toBe(2);
+  it("has the exact yellow Quickhack identity and one-turn loss trigger", () => {
+    expect(welcomeToNightCityRetailSafetyOverride).toMatchObject({
+      canonicalId: "safety-override",
+      slug: "safety-override",
+      name: "Safety Override",
+      displayName: "Safety Override",
+      type: "program",
+      color: "yellow",
+      classifications: ["Quickhack"],
+      cost: 2,
+      power: null,
+      ram: 3,
+      hasSellTag: true,
+      rarity: "Common",
+      printNumber: "069",
+      keywords: ["quick"],
+      timingTriggers: ["play"],
+      rulesText:
+        "{Quick} The next time a friendly Unit loses a fight this turn, defeat the opposing rival Unit.",
+      reminderText: ["Discard programs after they resolve."],
+      abilities: [
+        { kind: "keyword", keyword: "quick" },
+        {
+          kind: "triggered",
+          trigger: { trigger: "play" },
+          source: { selector: "self" },
+          effects: [{ effect: "grantNextFriendlyFightLossDefeat", duration: "turn" }],
+        },
+      ],
+    });
+  });
+
+  it("pays exactly 2 Eddies, resolves, and moves to trash", () => {
+    const engine = CyberpunkTestEngine.createWithFixture({
+      hand: [welcomeToNightCityRetailSafetyOverride],
+      eddies: 2,
+    });
+    for (const legend of engine.getCardsInZone("legendArea", P1)) {
+      engine.judgeSpendCard(legend, { as: P1 });
+    }
+
+    engine.playCard(welcomeToNightCityRetailSafetyOverride, { as: P1 });
+
+    expect(engine.getEddies(P1)).toBe(0);
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailSafetyOverride.id,
+    );
   });
 });
 
 describe("Safety Override — next time a friendly Unit loses a fight this turn, defeat the opposing rival Unit", () => {
+  it("can be played as a QUICK reaction and defeats the rival attacker when the defender loses", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailSafetyOverride],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: true, hasLag: false }],
+        eddies: 2,
+      },
+      {
+        field: [
+          { card: welcomeToNightCityRetailPlacideVoodooSentinel, spent: false, hasLag: false },
+        ],
+      },
+    );
+    engine.completeTurn({ as: P1 });
+    engine.attackUnit(
+      welcomeToNightCityRetailPlacideVoodooSentinel,
+      welcomeToNightCityRetailFieldOperator,
+      { as: P2 },
+    );
+    engine.resolveAttack({ as: P2 });
+
+    engine.playCard(welcomeToNightCityRetailSafetyOverride, { as: P1 });
+    engine.resolveAttack({ as: P1, pass: true });
+    engine.resolveAttack({ as: P2 });
+
+    expect(engine.getEddies(P1)).toBe(0);
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toEqual(
+      expect.arrayContaining([
+        welcomeToNightCityRetailSafetyOverride.id,
+        welcomeToNightCityRetailFieldOperator.id,
+      ]),
+    );
+    expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailPlacideVoodooSentinel.id,
+    );
+  });
+
   it("defeats the opposing rival Unit when a friendly Unit loses a fight", () => {
     const engine = CyberpunkTestEngine.createWithFixture(
       {
@@ -84,6 +161,39 @@ describe("Safety Override — next time a friendly Unit loses a fight this turn,
     );
     engine.resolveFullFight({ as: P1 });
     expect(hasSafetyEffect()).toBe(false);
+  });
+
+  it("is consumed when equal-power Units both lose the fight", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailSafetyOverride],
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: false, hasLag: false }],
+        eddies: 2,
+      },
+      {
+        field: [{ card: welcomeToNightCityRetailFieldOperator, spent: true, hasLag: false }],
+      },
+    );
+    engine.playCard(welcomeToNightCityRetailSafetyOverride, { as: P1 });
+
+    engine.attackUnit(
+      welcomeToNightCityRetailFieldOperator,
+      welcomeToNightCityRetailFieldOperator,
+      { as: P1 },
+    );
+    engine.resolveFullFight({ as: P1 });
+
+    expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailFieldOperator.id,
+    );
+    expect(engine.getCardsInZone("trash", P2).map((card) => card.definitionId)).toContain(
+      welcomeToNightCityRetailFieldOperator.id,
+    );
+    expect(
+      engine
+        .getState()
+        .G.activeEffects.some((effect) => effect.kind === "defeatRivalOnNextFriendlyFightLoss"),
+    ).toBe(false);
   });
 
   it("does not trigger when a friendly Unit wins the fight", () => {

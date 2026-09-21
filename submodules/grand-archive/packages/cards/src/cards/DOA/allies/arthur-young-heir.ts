@@ -49,29 +49,40 @@ export const arthurYoungHeir: GrandArchiveCard<GrandArchiveAbilityDefinition, "c
               kind: "sequence",
               effects: [
                 {
-                  kind: "rest",
-                  subject: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "rest",
+                    subject: {
+                      kind: "source",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "continuous",
-                  subjects: {
-                    kind: "source",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  affectedSet: "locked",
-                  duration: {
-                    kind: "until-start-of-turn",
-                    whose: "controller",
-                  },
-                  layer: {
-                    layer: "D",
-                    modifies: "ability",
-                  },
-                  change: {
-                    kind: "grant-keyword",
-                    keyword: {
-                      name: "immortality",
+                  then: {
+                    kind: "continuous",
+                    subjects: {
+                      kind: "source",
+                    },
+                    affectedSet: "locked",
+                    duration: {
+                      kind: "until-start-of-turn",
+                      whose: "controller",
+                    },
+                    layer: {
+                      layer: "D",
+                      modifies: "ability",
+                    },
+                    change: {
+                      kind: "grant-keyword",
+                      keyword: {
+                        name: "immortality",
+                      },
                     },
                   },
                 },

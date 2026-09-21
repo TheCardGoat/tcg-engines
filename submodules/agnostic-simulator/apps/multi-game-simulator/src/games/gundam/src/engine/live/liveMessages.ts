@@ -1,4 +1,5 @@
 import { isCanonicalEngineMoveLog } from "@tcg/shared/game-engine";
+import type { GameLogEntry } from "@tcg/game-page-contract";
 import { readGundamPresentation, type GundamPresentation } from "@tcg/gundam-server-adapter";
 
 import type { LiveGatewayMessage } from "./liveGateway.ts";
@@ -115,6 +116,15 @@ export function reduceLiveGatewayMessage(
         },
       };
     }
+    case "game_recent_history": {
+      // Join/reconnect replay of recent stored records. Log-only update: the
+      // accompanying moves are already reflected in the bootstrap or gateway
+      // state, so the view's state and interaction view stay untouched.
+      if (message.gameId !== options.gameId) return { type: "ignore" };
+      const engineLogRecords = appendEngineLogRecords(view.engineLogRecords, message.engineLogs);
+      if (engineLogRecords === view.engineLogRecords) return { type: "ignore" };
+      return { type: "state", view: { ...view, engineLogRecords } };
+    }
     case "match_state": {
       return { type: "ignore" };
     }
@@ -208,6 +218,32 @@ function parseEngineLogRecord(value: unknown): LiveEngineLogRecord | null {
     timestamp: candidate.timestamp,
     log: candidate.log,
   };
+}
+
+/**
+ * Rebuild log records from the HTTP bootstrap's `history.engineLogs` so a
+ * page refresh restores the battle log without waiting for gateway traffic
+ * (the gateway never replays it: `game_joined` and `state_sync` carry no
+ * logs, and only FAB/grand-archive consume `game_recent_history`).
+ *
+ * Bootstrap entries carry the stored record split across `stateVersion`,
+ * `ts`, and `data`; entries missing the version (legacy emitters) are
+ * skipped rather than fabricated, matching the gateway record shape.
+ */
+export function engineLogRecordsFromBootstrapHistory(
+  entries: readonly GameLogEntry[],
+): LiveMatchView["engineLogRecords"] {
+  const records: LiveEngineLogRecord[] = [];
+  for (const entry of entries) {
+    if (typeof entry.stateVersion !== "number" || typeof entry.ts !== "number") continue;
+    const record = parseEngineLogRecord({
+      stateVersion: entry.stateVersion,
+      timestamp: entry.ts,
+      log: entry.data,
+    });
+    if (record) records.push(record);
+  }
+  return records;
 }
 
 function engineLogKey(record: LiveEngineLogRecord): string {

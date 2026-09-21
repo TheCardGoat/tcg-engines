@@ -1,0 +1,73 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op06Shanks007I18n } from "./op06-007-shanks.i18n.ts";
+
+export const op06Shanks007: CharacterCard = {
+  id: "OP06-007",
+  canonicalId: "OP06-007",
+  slug: "shanks/op06-007",
+  name: "Shanks",
+  printings: [
+    {
+      id: "OP06-007",
+      artId: "OP06-007",
+      setCode: "OP06",
+      collectorNumber: "007",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-007.jpg",
+    },
+    {
+      id: "OP06-007_p1",
+      artId: "OP06-007_p1",
+      setCode: "OP06",
+      collectorNumber: "007",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-007_p1.jpg",
+    },
+    {
+      id: "OP06-007_p6",
+      artId: "OP06-007_p6",
+      setCode: "OP06",
+      collectorNumber: "007",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP06-007_p6.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["red"],
+  rarity: "SR",
+  setId: "OP06",
+  cost: 10,
+  power: 12000,
+  traits: ["FILM The Four Emperors Red-Haired Pirates"],
+  attribute: "slash",
+
+  effect: "[On play] K.O. up to 1 of your opponent's Characters with 10000 power or less.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "ko",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "power",
+                  comparison: "lte",
+                  value: 10000,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op06Shanks007I18n,
+};

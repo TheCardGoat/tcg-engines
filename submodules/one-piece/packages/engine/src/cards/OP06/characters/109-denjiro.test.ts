@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op06Denjiro109 } from "../../../../../cards/src/cards/OP06/characters/109-denjiro.ts";
+import { op06Denjiro109 } from "../../../../../cards/src/cards/characters/op06-109-denjiro.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP06-109 Denjiro", () => {

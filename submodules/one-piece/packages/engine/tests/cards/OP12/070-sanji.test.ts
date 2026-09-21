@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op01RoundTable027 } from "../../../../cards/src/cards/OP01/events/027-round-table.ts";
-import { op12Sanji070 } from "../../../../cards/src/cards/OP12/characters/070-sanji.ts";
+import { op01RoundTable027 } from "../../../../cards/src/cards/events/op01-027-round-table.ts";
+import { op12Sanji070 } from "../../../../cards/src/cards/characters/op12-070-sanji.ts";
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("OP12-070 Sanji", () => {

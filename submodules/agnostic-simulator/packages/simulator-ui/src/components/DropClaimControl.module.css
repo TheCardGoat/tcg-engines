@@ -1,0 +1,54 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--simulator-surface-gap, 0.5rem);
+  min-width: 0;
+  color: var(--board-text, var(--text, #f8fafc));
+}
+
+.root[data-layout="inline"] {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.message {
+  margin: 0;
+  color: var(--board-muted, var(--muted, #94a3b8));
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
+.action {
+  box-sizing: border-box;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--drop-claim-border, var(--game-rival, #e11d48));
+  border-radius: var(--simulator-radius, 0.375rem);
+  background: var(--drop-claim-fill, color-mix(in srgb, var(--game-rival, #e11d48) 78%, #0b0b0b));
+  color: var(--drop-claim-text, #fff);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.action:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+.action:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--game-accent, currentColor);
+  outline-offset: 2px;
+}

@@ -36,6 +36,9 @@ export function completeCharacterPlayFromHand(
     faceUp: true,
     publicKnowledge: true,
     actor: seat,
+    // The public "plays X." line below is the player-facing record; the raw
+    // zone-movement line would duplicate it.
+    suppressLog: true,
   });
   getInstance(state, instanceId).playedOnTurn = state.turnNumber;
   getInstance(state, instanceId).rested = isPlayedRestedByPermanentEffect(state, seat, instanceId);
@@ -93,7 +96,7 @@ export function projectCharacterReplacementPrompt(
   createChoicePrompt(state, {
     choiceKind: "selectCards",
     seat,
-    label: `${player.playerName} trashes 1 Character to play ${cardName(card)}`,
+    label: `${player.playerName} trashes 1 Character to play ${cardName(card)}.`,
     details: "Select 1 of your Characters to trash.",
     sourceCardId: card.id,
     sourceInstanceId: instanceId,

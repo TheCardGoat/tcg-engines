@@ -112,6 +112,11 @@ export interface ResolvingTrigger extends QueuedTrigger {
    */
   nextEffectIndex: number;
   costsPaid?: boolean;
+  lastGigAdjustment?: {
+    dieId: GigDieId;
+    previousValue: number;
+    newValue: number;
+  };
   /**
    * Nested effect body mid-resolution (chooseEffect option, partial expansion,
    * if/else follow-ups). Resume runs this list first; `nextEffectIndex` on the
@@ -150,6 +155,9 @@ export type PendingChoice =
   | ChooseTriggerPendingChoice
   | ChooseGigsToStealPendingChoice
   | PreventGigStealPendingChoice
+  | RedirectDefeatPendingChoice
+  | ChooseSacrificialGearPendingChoice
+  | ChooseFirstPlayerPendingChoice
   | ChooseCardToPlayPendingChoice
   | ChooseCardToMovePendingChoice
   | ChooseCardTypePendingChoice
@@ -212,9 +220,12 @@ export interface ChooseTargetPendingChoice {
       direction?: string;
       maxAmount?: number;
       chooseUpTo?: boolean;
+      /** Index of the adjustment effect consumed by an atomic target/value choice. */
+      effectIndex?: number;
     };
     min?: number;
     max?: number;
+    pairConstraint?: "gig-copy" | "gig-copy-between-players";
     canDecline?: boolean;
     effect?: Effect;
     sourceCardId?: CardInstanceId;
@@ -327,6 +338,66 @@ export interface PreventGigStealPendingChoice {
   };
 }
 
+/**
+ * Offered when a friendly Unit would be defeated and a field Legend such as
+ * Jackie Welles — Mama's Favorite can replace that defeat (CR 10.24 / 10.26).
+ */
+export interface RedirectDefeatPendingChoice {
+  type: "redirectDefeat";
+  chooserId: PlayerId;
+  effectId: string;
+  payload: {
+    protectedCardId: CardInstanceId;
+    replacementCardId: CardInstanceId;
+    cost: number;
+    continuation: DefeatReplacementContinuation;
+    skippedReplacementIds?: CardInstanceId[];
+  };
+}
+
+/**
+ * CR 10.28.1 — the controller of the host chooses which mandatory
+ * `sacrificeInsteadOfHostDefeat` replacement to apply when two or more apply.
+ */
+export interface ChooseSacrificialGearPendingChoice {
+  type: "chooseSacrificialGear";
+  chooserId: PlayerId;
+  effectId: string;
+  payload: {
+    hostId: CardInstanceId;
+    gearIds: CardInstanceId[];
+    continuation: DefeatReplacementContinuation;
+    defeatedBy: CardInstanceId | null;
+  };
+}
+
+/** The process that resumes after a defeat-replacement decision. */
+export type DefeatReplacementContinuation =
+  | {
+      kind: "fight";
+      remainingCardIds: CardInstanceId[];
+      fightPlayerId: PlayerId;
+      attackerPower: number;
+      defenderPower: number;
+    }
+  | {
+      kind: "effect";
+      remainingCardIds: CardInstanceId[];
+      defeatedBy: CardInstanceId;
+    }
+  | {
+      kind: "endOfTurn";
+      remainingCardIds: CardInstanceId[];
+    };
+
+/** CR 7.5.2 — the randomly chosen player decides whether to go first or second. */
+export interface ChooseFirstPlayerPendingChoice {
+  type: "chooseFirstPlayer";
+  chooserId: PlayerId;
+  effectId: string;
+  payload: Record<string, never>;
+}
+
 export interface ChooseCardToPlayPendingChoice {
   type: "chooseCardToPlay";
   chooserId: PlayerId;
@@ -373,6 +444,13 @@ export interface ChooseCardToMovePendingChoice {
      * just recovered from trash").
      */
     outputBinding?: string;
+    /**
+     * The move is a defeat ("You may defeat X" offered through ifYouDo), not a
+     * plain relocation. The resolver must treat the trash move as a defeat:
+     * emit cardDefeated (CR 11.19.2) for the card and its attached Gear,
+     * enqueue {Defeated} triggers, and remove Go Solo cards from the game.
+     */
+    defeat?: boolean;
   };
 }
 

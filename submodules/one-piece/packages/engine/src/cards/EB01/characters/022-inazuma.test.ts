@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { eb01Inazuma022 } from "../../../../../cards/src/cards/EB01/characters/022-inazuma.ts";
+import { eb01Inazuma022 } from "../../../../../cards/src/cards/characters/eb01-022-inazuma.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("EB01-022 Inazuma", () => {

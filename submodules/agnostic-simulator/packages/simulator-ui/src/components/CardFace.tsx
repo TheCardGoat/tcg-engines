@@ -43,6 +43,7 @@ interface CardFaceBaseProps {
   onDragEnd?: (entity: SimulatorEntity, event: React.DragEvent) => void;
   onHoverEnter?: (entity: SimulatorEntity) => void;
   onHoverLeave?: (entity: SimulatorEntity) => void;
+  onImageLoad?: (entity: SimulatorEntity) => void;
   onImageError?: (entity: SimulatorEntity) => void;
 }
 
@@ -97,6 +98,7 @@ export const CardFace = memo(
       onDragEnd,
       onHoverEnter,
       onHoverLeave,
+      onImageLoad,
       onImageError,
     },
     ref,
@@ -210,6 +212,7 @@ export const CardFace = memo(
       setImageUnavailable(true);
       onImageError?.(entity);
     }, [entity, onImageError]);
+    const handleImageLoad = useCallback(() => onImageLoad?.(entity), [entity, onImageLoad]);
 
     const Element = as;
     return (
@@ -307,6 +310,7 @@ export const CardFace = memo(
                 fullImageFit === "cover" ? "object-cover" : "object-contain",
               )}
               loading="eager"
+              onImageLoad={handleImageLoad}
               onImageError={handleImageError}
             />
             {visibleDecorations.length > 0 &&

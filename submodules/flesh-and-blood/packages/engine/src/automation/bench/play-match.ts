@@ -518,8 +518,11 @@ function nextActorWithLegalCommands(
   for (const actorId of ordered) {
     if (!actorId || seen.has(actorId)) continue;
     seen.add(actorId);
-    const legal = listLegalCommands(runtime, actorId);
-    if (legal.length > 0) return { actorId, legal };
+    // Only seats with bot-actionable commands may drive a step; player-only
+    // settings commands (modes, per-card yields, scoped auto-pass arms) must
+    // never wake a bot or fall through to the legal[0] submit fallback.
+    const actionable = botEligibleFabCommands(listLegalCommands(runtime, actorId));
+    if (actionable.length > 0) return { actorId, legal: actionable };
   }
   return null;
 }

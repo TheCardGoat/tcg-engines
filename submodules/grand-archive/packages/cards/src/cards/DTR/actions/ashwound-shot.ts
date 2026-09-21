@@ -45,7 +45,7 @@ export const ashwoundShot: GrandArchiveCard<GrandArchiveAbilityDefinition, "card
               unique: true,
               candidates: {
                 kind: "player",
-                players: ["controller", "opponent", "another-player"],
+                players: ["opponent"],
               },
             },
           ],

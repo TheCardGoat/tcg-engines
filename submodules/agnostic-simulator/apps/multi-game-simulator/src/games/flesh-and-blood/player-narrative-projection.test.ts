@@ -206,6 +206,114 @@ describe("FAB player narrative projection", () => {
     });
   });
 
+  it("combines pitches and cost taps with the targeted activation they paid for", () => {
+    const log: FabVisiblePlayerLog = {
+      kind: "player-narrative",
+      schemaVersion: 1,
+      commandId: "activate-malice",
+      moveType: "answer-decision",
+      actorId: "player-1",
+      timestamp: 4,
+      turnNumber: 1,
+      turnPlayerId: "player-1",
+      phase: "action",
+      entries: [
+        {
+          entryId: "activate-malice:entry-0",
+          message: {
+            key: "flesh-and-blood.pitch",
+            values: { playerId: "player-1", cardName: "Mark of Ushering", resources: 3 },
+            category: "action",
+            cardRefs: [
+              { instanceId: "ushering", canonicalId: "hvpy-001", name: "Mark of Ushering" },
+            ],
+          },
+        },
+        {
+          entryId: "activate-malice:entry-1",
+          message: {
+            key: "flesh-and-blood.set-tapped",
+            values: { cardName: "Malice, Domina of the Dead", state: "tapped" },
+            category: "rules",
+            narrativeRole: "detail",
+          },
+        },
+        {
+          entryId: "activate-malice:entry-2",
+          message: {
+            key: "flesh-and-blood.activate.targeting",
+            values: {
+              actorId: "player-1",
+              cardName: "Malice, Domina of the Dead",
+              targetName: "Restless Looter",
+            },
+            category: "action",
+            cardRefs: [
+              { instanceId: "malice", canonicalId: "hvpy-002", name: "Malice, Domina of the Dead" },
+            ],
+          },
+        },
+      ],
+    };
+
+    const rows = projectFabPlayerNarrativeHistory([log], {
+      viewerId: "player-1",
+      seatIds: ["player-1", "player-2"],
+    });
+
+    expect(rows).toHaveLength(1);
+    expect(rows[0]).toMatchObject({
+      title: "You activated Malice, Domina of the Dead, targeting Restless Looter",
+      details: [
+        {
+          kind: "cards",
+          label: "Cost",
+          lead: "Pitched",
+          cards: [{ name: "Mark of Ushering" }],
+          amount: 3,
+        },
+        {
+          kind: "cards",
+          label: "Cost",
+          lead: "Tapped",
+          cards: [{ name: "Malice, Domina of the Dead" }],
+        },
+      ],
+      entityIds: ["malice", "ushering"],
+    });
+  });
+
+  it("keeps a state tap visible when no paid activity owns it", () => {
+    const log: FabVisiblePlayerLog = {
+      kind: "player-narrative",
+      schemaVersion: 1,
+      commandId: "state-tap",
+      moveType: "pass",
+      actorId: "player-1",
+      timestamp: 5,
+      turnNumber: 1,
+      turnPlayerId: "player-1",
+      phase: "action",
+      entries: [
+        {
+          entryId: "state-tap:entry-0",
+          message: {
+            key: "flesh-and-blood.set-tapped",
+            values: { cardName: "Restless Looter", state: "tapped" },
+            category: "rules",
+          },
+        },
+      ],
+    };
+
+    expect(
+      projectFabPlayerNarrativeHistory([log], {
+        viewerId: "player-1",
+        seatIds: ["player-1", "player-2"],
+      }),
+    ).toEqual([expect.objectContaining({ title: "Restless Looter was tapped" })]);
+  });
+
   it("folds Beat Chest and its discard into the played card instead of repeating the cost", () => {
     const log: FabVisiblePlayerLog = {
       kind: "player-narrative",

@@ -1,5 +1,5 @@
 import { describe, test } from "vite-plus/test";
-import { op02Seaquake021 } from "../../../../../cards/src/cards/OP02/events/021-seaquake.ts";
+import { op02Seaquake021 } from "../../../../../cards/src/cards/events/op02-021-seaquake.ts";
 import { validateCardAbility } from "../../card-behavior-harness.ts";
 
 describe("OP02-021 Seaquake", () => {

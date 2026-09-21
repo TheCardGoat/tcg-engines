@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EngineInteractionView, InteractionSubmission } from "./interactions.js";
 import { AnimationPlanV2Schema } from "./animations/plan.js";
 import { MAX_HEARTBEAT_ROUND_TRIP_MS } from "./schemas.js";
+import { DropEligibilitySchema } from "./drop-eligibility.js";
 
 const opaqueId = z.string().min(1);
 const looseObject = z.record(z.string(), z.unknown());
@@ -31,6 +32,7 @@ export const RawGatewayJoinGameMessageSchema = z
     stateVersion: z.number().int().nonnegative().optional(),
     role: z.enum(["player", "spectator"]).optional(),
     gameProfileId: opaqueId.optional(),
+    /** Echo only. Identity is handshake `socket.data.userId`; this field is not read. */
     userId: opaqueId.optional(),
     correlationId: z.string().optional(),
   })
@@ -177,7 +179,16 @@ export const RawGatewayGameJoinedMessageSchema = z
     manualModeEnabled: z.boolean().optional(),
     interactionView: EngineInteractionView.optional(),
     undoable: z.boolean().optional(),
+    dropEligibility: DropEligibilitySchema.optional(),
     correlationId: z.string().optional(),
+  })
+  .strict();
+
+export const RawGatewayDropEligibilityMessageSchema = z
+  .object({
+    type: z.literal("drop_eligibility"),
+    gameId: opaqueId,
+    dropEligibility: DropEligibilitySchema,
   })
   .strict();
 
@@ -222,6 +233,7 @@ export const RawGatewayProposalReceivedMessageSchema = z
     gameId: opaqueId,
     matchId: opaqueId,
     actionType: z.string(),
+    undoScope: z.enum(["last_move", "turn_start"]).optional(),
     senderPlayerId: opaqueId,
     deadline: z.number(),
   })
@@ -233,6 +245,7 @@ export const RawGatewayProposalResolvedMessageSchema = z
     gameId: opaqueId,
     matchId: opaqueId,
     actionType: z.string(),
+    undoScope: z.enum(["last_move", "turn_start"]).optional(),
     resolution: z.enum(["accepted", "declined", "failed"]),
   })
   .strict();
@@ -243,6 +256,7 @@ export const RawGatewayProposalExpiredMessageSchema = z
     gameId: opaqueId,
     matchId: opaqueId,
     actionType: z.string(),
+    undoScope: z.enum(["last_move", "turn_start"]).optional(),
   })
   .strict();
 
@@ -395,6 +409,7 @@ export const RawGatewayServerMessageSchema = z.discriminatedUnion("type", [
   RawGatewayWelcomeMessageSchema,
   RawGatewayErrorMessageSchema,
   RawGatewayGameJoinedMessageSchema,
+  RawGatewayDropEligibilityMessageSchema,
   RawGatewayGameRecentHistoryMessageSchema,
   RawGatewayGameChatHistoryMessageSchema,
   RawGatewayChatMessageSchema,

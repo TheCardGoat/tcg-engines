@@ -760,6 +760,13 @@ function isValidAutomationPreferences(value: unknown): value is FabAutomationPre
   }
   if (typeof value.autoOrderTriggers !== "boolean") return false;
   if (typeof value.autoSelectSingletonTargets !== "boolean") return false;
+  if (
+    value.scopedAutoPass !== null &&
+    value.scopedAutoPass !== "combat" &&
+    value.scopedAutoPass !== "opponent-turn"
+  ) {
+    return false;
+  }
   for (const key of [
     "playAndSkipHoldCardIds",
     "opponentTriggerYieldCardIds",
@@ -1052,6 +1059,7 @@ function compactFabHistoryIndex(history: DeepReadonly<FabHistoryIndex>): FabPers
       chainLinkNumber: null,
       playedInstant: false,
       damageDealtByType: EMPTY_DAMAGE_BY_TYPE,
+      damageDealtToOpposingHeroesByType: EMPTY_DAMAGE_BY_TYPE,
       damageDealtBySource: {},
       damageDealtBySourceToHero: {},
     }),
@@ -1079,6 +1087,10 @@ function restoreFabHistoryIndex(history: FabPersistedHistoryV17): FabHistoryInde
       damageDealtByType: {
         ...EMPTY_DAMAGE_BY_TYPE,
         ...history.chainLink.damageDealtByType,
+      },
+      damageDealtToOpposingHeroesByType: {
+        ...EMPTY_DAMAGE_BY_TYPE,
+        ...history.chainLink.damageDealtToOpposingHeroesByType,
       },
       damageDealtBySource: { ...history.chainLink.damageDealtBySource },
       damageDealtBySourceToHero: { ...history.chainLink.damageDealtBySourceToHero },

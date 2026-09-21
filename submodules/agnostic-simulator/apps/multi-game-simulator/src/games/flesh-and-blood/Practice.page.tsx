@@ -165,6 +165,8 @@ import {
   type FabHandRevealRecall,
 } from "./deckRevealRecall";
 import "./flesh-and-blood.css";
+import { practiceModeFromSearch, type PracticeMode } from "../../simulator/practiceMode";
+import { fabBotStrategyForPracticeMode } from "./practice-mode";
 
 const HUMAN_DEFAULT = "player-1";
 const BOT_DEFAULT = "player-2";
@@ -290,6 +292,7 @@ interface PracticeSessionConfig {
   readonly botDeckId: string;
   readonly botStrategyId: string | null;
   readonly seed: string;
+  readonly mode?: PracticeMode;
 }
 
 function practiceBotParticipant(deckId: string, seed: string) {
@@ -821,6 +824,7 @@ function resolveMockOpponentDeckId(selector: string | null, playerHeroId: string
 
 function InteractivePracticeFlow() {
   const searchParams = useSearchParams()[0];
+  const practiceMode = practiceModeFromSearch(searchParams);
   const importedDeck = useMemo(
     () => practiceDependencies().resolveFabPracticeDeckPayload(searchParams),
     [searchParams],
@@ -901,7 +905,7 @@ function InteractivePracticeFlow() {
         </main>
       );
     }
-    return <ImportedPracticeFlow imported={importedDeck} />;
+    return <ImportedPracticeFlow imported={importedDeck} mode={practiceMode} />;
   }
 
   if (phase.kind === "setup") {
@@ -923,6 +927,7 @@ function InteractivePracticeFlow() {
           </section>
         ) : null}
         <PracticeSetupForm
+          mode={practiceMode}
           onStart={(config) => {
             const player = practiceDependencies().resolvePracticeDeckSelection(
               config.playerDeckId,
@@ -992,7 +997,11 @@ function InteractivePracticeFlow() {
       match={phase.match}
       humanId={HUMAN_DEFAULT}
       botId={BOT_DEFAULT}
-      botStrategyId={phase.config.botStrategyId}
+      botStrategyId={fabBotStrategyForPracticeMode(
+        phase.config.mode ?? practiceMode,
+        phase.config.botStrategyId,
+      )}
+      practiceMode={phase.config.mode ?? practiceMode}
       sessionKey={`fab-practice:${phase.config.seed}`}
       statusLabel={null}
       practiceConfig={phase.config}
@@ -1004,11 +1013,13 @@ function InteractivePracticeFlow() {
 
 function ImportedPracticeFlow({
   imported,
+  mode,
 }: {
   readonly imported: Extract<
     NonNullable<ReturnType<PracticeDependencies["resolveFabPracticeDeckPayload"]>>,
     { ok: true }
   >;
+  readonly mode: PracticeMode;
 }) {
   const [match, setMatch] = useState<FabPracticeMatch | null>(null);
   const fabAutomationSettings = useFabAutomationSettings();
@@ -1031,7 +1042,8 @@ function ImportedPracticeFlow({
         match={match}
         humanId={HUMAN_DEFAULT}
         botId={BOT_DEFAULT}
-        botStrategyId={imported.botStrategyId}
+        botStrategyId={fabBotStrategyForPracticeMode(mode, imported.botStrategyId)}
+        practiceMode={mode}
         humanDeckLabel={imported.player.label}
         botDeckLabel={
           imported.opponent?.label ??
@@ -1362,8 +1374,10 @@ function PracticeDeckSelect({
 
 function PracticeSetupForm({
   onStart,
+  mode,
 }: {
   readonly onStart: (config: PracticeSessionConfig) => void;
+  readonly mode: PracticeMode;
 }) {
   const [initialMatchup] = useState(() =>
     practiceDependencies().pickRandomClassicConstructedMatchup(),
@@ -1419,7 +1433,8 @@ function PracticeSetupForm({
     onStart({
       playerDeckId: playerDeckRef.current,
       botDeckId: botDeckRef.current,
-      botStrategyId,
+      botStrategyId: mode === "self" ? null : botStrategyId,
+      mode,
       seed: seedRef.current.trim() || `fab-practice-${Date.now().toString(36)}`,
     });
   };
@@ -1432,11 +1447,12 @@ function PracticeSetupForm({
       <div className="mx-auto grid w-full max-w-6xl gap-6 md:grid-cols-[minmax(14rem,0.62fr)_minmax(0,1fr)] md:items-center md:gap-8">
         <header className="max-w-md text-center md:text-left">
           <h1 className="text-3xl font-bold" style={{ color: "var(--game-accent, #8a1c1c)" }}>
-            Practice vs bot
+            {mode === "self" ? "Play both sides" : "Practice bot"}
           </h1>
           <p className="mt-3 text-sm leading-relaxed opacity-70">
-            Local engine-backed match (no server). Pick a practice starter or a tournament sample —
-            decks are grouped by format: Classic Constructed, Living Legend, and Silver Age.
+            {mode === "self"
+              ? "Control either seat in a local match to test interactions and explore specific lines."
+              : "Test a local matchup with a practice bot. Bots help exercise decks and simulator flows; they are not competitive opponents."}
           </p>
           <nav
             className="mt-5 flex items-center justify-center gap-4 text-sm opacity-70 md:justify-start"
@@ -1474,38 +1490,42 @@ function PracticeSetupForm({
 
           <PracticeDeckSelect
             id="fab-practice-bot-deck"
-            label="Bot deck"
+            label="Opponent deck"
             testId="fab-practice-bot-deck"
             value={botDeckId}
             onChange={chooseBotDeck}
           />
 
-          <label className="flex min-w-0 flex-col gap-1 text-sm">
-            <span className="font-medium opacity-80">Bot strategy</span>
-            <select
-              className="fab-practice-deck-select w-full min-w-0 rounded-md border bg-black/30 px-3 py-2"
-              style={{ borderColor: "var(--board-border, #3a2020)" }}
-              data-testid="fab-practice-bot-strategy"
-              value={botStrategyId}
-              onChange={(event) => setBotStrategyId(event.currentTarget.value)}
-            >
-              {strategyOptions.map((strategy) => (
-                <option key={strategy.id} value={strategy.id}>
-                  {strategy.label}
-                </option>
-              ))}
-            </select>
-          </label>
+          {mode === "bot" ? (
+            <label className="flex min-w-0 flex-col gap-1 text-sm">
+              <span className="font-medium opacity-80">Bot strategy</span>
+              <select
+                className="fab-practice-deck-select w-full min-w-0 rounded-md border bg-black/30 px-3 py-2"
+                style={{ borderColor: "var(--board-border, #3a2020)" }}
+                data-testid="fab-practice-bot-strategy"
+                value={botStrategyId}
+                onChange={(event) => setBotStrategyId(event.currentTarget.value)}
+              >
+                {strategyOptions.map((strategy) => (
+                  <option key={strategy.id} value={strategy.id}>
+                    {strategy.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : null}
 
-          <label className="flex items-center gap-2 text-xs opacity-70">
-            <input
-              type="checkbox"
-              data-testid="fab-practice-show-debug-strategies"
-              checked={showDebugStrategies}
-              onChange={(event) => setDebugStrategiesVisible(event.currentTarget.checked)}
-            />
-            Show debug strategies (first-legal / random / pass-only)
-          </label>
+          {mode === "bot" ? (
+            <label className="flex items-center gap-2 text-xs opacity-70">
+              <input
+                type="checkbox"
+                data-testid="fab-practice-show-debug-strategies"
+                checked={showDebugStrategies}
+                onChange={(event) => setDebugStrategiesVisible(event.currentTarget.checked)}
+              />
+              Show debug strategies (first-legal / random / pass-only)
+            </label>
+          ) : null}
 
           <label className="flex min-w-0 flex-col gap-1 text-sm">
             <span className="font-medium opacity-80">Seed (optional)</span>
@@ -1520,7 +1540,9 @@ function PracticeSetupForm({
           </label>
 
           <p className="text-xs opacity-60" data-testid="fab-practice-strategy-desc">
-            {strategyDescription}
+            {mode === "self"
+              ? "Automation is off. Use Opponent controls to switch seats during the match."
+              : strategyDescription}
           </p>
 
           <p
@@ -1537,7 +1559,7 @@ function PracticeSetupForm({
             data-testid="fab-practice-start"
             onClick={start}
           >
-            Start practice match
+            {mode === "self" ? "Start both-sides practice" : "Start bot practice"}
           </button>
         </section>
       </div>
@@ -1561,6 +1583,7 @@ interface LocalEngineMatchProps {
   readonly practiceSessionStorageKey?: string;
   readonly initialHistory?: StoredFabPracticeHistory;
   readonly onExit?: () => void;
+  readonly practiceMode?: PracticeMode;
 }
 
 /**
@@ -1617,6 +1640,7 @@ function ReadyLocalEngineMatch({
   practiceSessionStorageKey,
   initialHistory = EMPTY_FAB_PRACTICE_HISTORY,
   onExit,
+  practiceMode = "bot",
 }: LocalEngineMatchProps) {
   const { subscriptionTier } = useSimulatorAuth();
   const locale = useFabCardLocale();
@@ -1861,6 +1885,7 @@ function ReadyLocalEngineMatch({
           return [
             instanceId,
             {
+              definitionId: object.canonicalId,
               title: name,
               subtitle: types.join(" ") || "Flesh and Blood",
               // Public deck-edge reveals use the game-owned board treatment.
@@ -2006,12 +2031,11 @@ function ReadyLocalEngineMatch({
   }, [refresh]);
 
   const runtimePresentationLoadKind = runtimePresentationLoad.kind;
-  const runtimePresentationLoadError =
-    runtimePresentationLoad.kind === "error" ? runtimePresentationLoad.message : null;
   useEffect(() => {
     if (runtimePresentationLoadKind === "ready") refresh();
-    if (runtimePresentationLoadError) setRuntimeError(runtimePresentationLoadError);
-  }, [refresh, runtimePresentationLoadError, runtimePresentationLoadKind]);
+    // Presentation recovery is optional enhancement data. The catalog provider
+    // owns its warning and retry UI; image failures must never pause gameplay.
+  }, [refresh, runtimePresentationLoadKind]);
 
   const buildTelemetryEntry = useCallback(
     ({
@@ -2502,18 +2526,19 @@ function ReadyLocalEngineMatch({
 
   // Local bot loop (no server). Step pacing uses the same one-command
   // executor through the quick control and expanded configuration panel.
+  // The think-timer wait must not hold the match controls locked: bot steps
+  // re-read legal commands at execution time and every command is validated
+  // atomically by the runtime, so acting during the wait is safe — the effect
+  // re-runs on the new state version and re-delays the pending step.
   useEffect(() => {
     if (botPacing !== "auto" || !botAutomationReady) return;
 
-    setPending(true);
     const timer = window.setTimeout(() => {
-      setPending(false);
       runBotStep();
     }, SIMULATOR_BOT_SPEED_MS[botSpeed]);
 
     return () => {
       window.clearTimeout(timer);
-      setPending(false);
     };
   }, [botAutomationReady, botPacing, botSpeed, engineVersion, runBotStep]);
 
@@ -2553,12 +2578,16 @@ function ReadyLocalEngineMatch({
     if (command) dispatchCommand(controlledPlayerId, command);
   }, [controlledPlayerId, dispatchCommand, humanLegal]);
 
+  // Player-only settings commands (priority modes, per-card yields, scoped
+  // auto-pass arms) are configuration, not acting: a waiting seat holding
+  // only those still reads as "cannot act".
   const humanCanAct =
-    !pending &&
     !botError &&
     !runtimeError &&
     !runtime.hasGameEnded() &&
-    humanLegal.some((command) => command.move !== "concede");
+    humanLegal.some(
+      (command) => command.move !== "concede" && command.automation !== "player-only",
+    );
   const wait = runtime.waitState();
   const currentDecision = wait.kind === "decision" ? wait.decision : undefined;
   const interactionActorId =
@@ -2567,14 +2596,17 @@ function ReadyLocalEngineMatch({
 
   const canEndTurn = humanCanAct && humanLegal.some((command) => command.move === "end-turn");
   const takeoverActive = controlledPlayerId === botId;
-  const canStepBot = botPacing === "step" && botAutomationReady && !pending;
+  // Status-only: the bot is pacing its next automated step. This deliberately
+  // never gates player controls — see the bot loop effect above.
+  const botThinking = botAutomationReady && botPacing === "auto";
+  const canStepBot = botPacing === "step" && botAutomationReady;
   const botPanelStatus: AiControlPanelProps["status"] = runtime.hasGameEnded()
     ? "done"
     : botError
       ? "error"
       : takeoverActive
         ? "you-control"
-        : pending
+        : botThinking
           ? "thinking"
           : botPacing === "step" && botAutomationReady
             ? "paused"
@@ -2611,57 +2643,85 @@ function ReadyLocalEngineMatch({
         : "priority closed";
   const sessionLabel =
     statusLabel ??
-    (fixtureId ? "Local fixture" : practiceConfig ? "Local practice" : "Imported practice");
+    (practiceMode === "self"
+      ? "Play both sides"
+      : fixtureId
+        ? "Local fixture"
+        : practiceConfig
+          ? "Local practice"
+          : "Imported practice");
+  const controlledSeatLabel = takeoverActive ? "Player 2" : "Player 1";
   const nowState: FabPracticeNowState =
-    botError || runtimeError
-      ? {
-          title: "Practice opponent stalled",
-          detail: `${runtimeError ?? botError} ${
-            takeoverActive ? "Return to your seat or " : ""
-          }exit to setup to recover.`,
-          context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
-          sessionLabel,
-          controlLabel: takeoverActive ? "Controlling opponent · bot paused" : "Your seat",
-          tone: "error",
-        }
-      : runtime.hasGameEnded()
+    practiceMode === "self"
+      ? botError || runtimeError
         ? {
-            title: "Game complete",
-            detail: `Winner: ${runtime.getGameEndResult()?.winnerId ?? "Draw"}.`,
-            context: `Turn ${presentation.turnNumber} · match ended`,
+            title: "Practice match needs attention",
+            detail: `${runtimeError ?? botError} Switch seats or exit to setup to recover.`,
+            context: `Turn ${presentation.turnNumber} · ${currentWindow}`,
             sessionLabel,
-            controlLabel: takeoverActive ? "Controlling opponent · bot paused" : "Your seat",
-            tone: "complete",
+            controlLabel: `Controlling ${controlledSeatLabel} · manual`,
+            tone: "error",
           }
-        : pending
+        : runtime.hasGameEnded()
           ? {
-              title: "Practice bot choosing",
-              detail: "Automation is resolving the opponent seat's next legal command.",
-              context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
+              title: "Game complete",
+              detail: `Winner: ${runtime.getGameEndResult()?.winnerId === humanId ? "Player 1" : runtime.getGameEndResult()?.winnerId === botId ? "Player 2" : "Draw"}.`,
+              context: `Turn ${presentation.turnNumber} · match ended`,
               sessionLabel,
-              controlLabel: "Your seat · bot automated",
-              tone: "thinking",
+              controlLabel: `Controlling ${controlledSeatLabel} · manual`,
+              tone: "complete",
             }
-          : currentDecision?.actorId === controlledPlayerId
+          : humanCanAct
             ? {
-                title: "Decision ready on board",
-                detail: "Use the board prompt to make and confirm your choice.",
-                context: `Turn ${presentation.turnNumber} · ${currentWindow} · your decision`,
+                title: `${controlledSeatLabel}'s decision`,
+                detail: "Choose a legal action below, or use the action dock when available.",
+                context: `Turn ${presentation.turnNumber} · ${currentWindow}`,
                 sessionLabel,
-                controlLabel: takeoverActive
-                  ? "Controlling opponent · bot paused"
-                  : strategy
-                    ? "Your seat · bot automated"
-                    : "Your seat · bot off",
+                controlLabel: `Controlling ${controlledSeatLabel} · manual`,
                 tone: "ready",
               }
-            : humanCanAct
+            : {
+                title: "Switch seats to continue",
+                detail: `The current decision belongs to ${takeoverActive ? "Player 1" : "Player 2"}.`,
+                context: `Turn ${presentation.turnNumber} · ${currentWindow}`,
+                sessionLabel,
+                controlLabel: `Controlling ${controlledSeatLabel} · manual`,
+                tone: "waiting",
+              }
+      : botError || runtimeError
+        ? {
+            title: "Practice opponent stalled",
+            detail: `${runtimeError ?? botError} ${
+              takeoverActive ? "Return to your seat or " : ""
+            }exit to setup to recover.`,
+            context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
+            sessionLabel,
+            controlLabel: takeoverActive ? "Controlling opponent · bot paused" : "Your seat",
+            tone: "error",
+          }
+        : runtime.hasGameEnded()
+          ? {
+              title: "Game complete",
+              detail: `Winner: ${runtime.getGameEndResult()?.winnerId ?? "Draw"}.`,
+              context: `Turn ${presentation.turnNumber} · match ended`,
+              sessionLabel,
+              controlLabel: takeoverActive ? "Controlling opponent · bot paused" : "Your seat",
+              tone: "complete",
+            }
+          : botThinking
+            ? {
+                title: "Practice bot choosing",
+                detail: "Automation is resolving the opponent seat's next legal command.",
+                context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
+                sessionLabel,
+                controlLabel: "Your seat · bot automated",
+                tone: "thinking",
+              }
+            : currentDecision?.actorId === controlledPlayerId
               ? {
-                  title: actionIntents.includes("defend") ? "Choose defenders" : "Your priority",
-                  detail: actionIntents.length
-                    ? "Choose a legal action below, or pass priority from the action dock."
-                    : "Use the action dock to pass priority or end the turn when legal.",
-                  context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
+                  title: "Decision ready on board",
+                  detail: "Use the board prompt to make and confirm your choice.",
+                  context: `Turn ${presentation.turnNumber} · ${currentWindow} · your decision`,
                   sessionLabel,
                   controlLabel: takeoverActive
                     ? "Controlling opponent · bot paused"
@@ -2670,26 +2730,41 @@ function ReadyLocalEngineMatch({
                       : "Your seat · bot off",
                   tone: "ready",
                 }
-              : takeoverActive
+              : humanCanAct
                 ? {
-                    title: "Other seat has priority",
-                    detail:
-                      "Return to your seat to act. The practice bot stays paused while you control its seat.",
+                    title: actionIntents.includes("defend") ? "Choose defenders" : "Your priority",
+                    detail: actionIntents.length
+                      ? "Choose a legal action below, or pass priority from the action dock."
+                      : "Use the action dock to pass priority or end the turn when legal.",
                     context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
                     sessionLabel,
-                    controlLabel: "Controlling opponent · bot paused",
-                    tone: "waiting",
+                    controlLabel: takeoverActive
+                      ? "Controlling opponent · bot paused"
+                      : strategy
+                        ? "Your seat · bot automated"
+                        : "Your seat · bot off",
+                    tone: "ready",
                   }
-                : {
-                    title: strategy ? "Waiting for practice bot" : "Opponent automation is off",
-                    detail: strategy
-                      ? "The opponent seat acts automatically when it receives priority or a decision."
-                      : "Take control of the opponent seat to continue the match manually.",
-                    context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
-                    sessionLabel,
-                    controlLabel: strategy ? "Your seat · bot automated" : "Your seat · bot off",
-                    tone: "waiting",
-                  };
+                : takeoverActive
+                  ? {
+                      title: "Other seat has priority",
+                      detail:
+                        "Return to your seat to act. The practice bot stays paused while you control its seat.",
+                      context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
+                      sessionLabel,
+                      controlLabel: "Controlling opponent · bot paused",
+                      tone: "waiting",
+                    }
+                  : {
+                      title: strategy ? "Waiting for practice bot" : "Opponent automation is off",
+                      detail: strategy
+                        ? "The opponent seat acts automatically when it receives priority or a decision."
+                        : "Take control of the opponent seat to continue the match manually.",
+                      context: `Turn ${presentation.turnNumber} · ${currentWindow} · ${priorityContext}`,
+                      sessionLabel,
+                      controlLabel: strategy ? "Your seat · bot automated" : "Your seat · bot off",
+                      tone: "waiting",
+                    };
 
   useEffect(() => {
     setActionFlow({ kind: "intents" });
@@ -2835,6 +2910,7 @@ function ReadyLocalEngineMatch({
     humanPlayerId: humanId,
     controlledPlayerId,
     botPlayerId: botId,
+    opponentLabel: practiceMode === "self" ? "Player 2" : undefined,
     turnNumber: presentation.turnNumber,
     firstTurnPlayerId: presentation.firstTurnPlayerId,
     pendingDecision,
@@ -2844,7 +2920,7 @@ function ReadyLocalEngineMatch({
       mode: sessionLabel,
       playerDeck: resolvedHumanDeckLabel,
       botDeck: resolvedBotDeckLabel,
-      botStrategy: strategyOption?.label ?? "Off",
+      botStrategy: practiceMode === "self" ? "Manual" : (strategyOption?.label ?? "Off"),
       seed: practiceConfig?.seed ?? match.seed,
     },
     activeTab: activityTab,
@@ -2864,26 +2940,40 @@ function ReadyLocalEngineMatch({
   });
 
   const automation = {
-    label: "Practice opponent controls",
-    panelLabel: "Bot strategy and pacing controls",
+    label: "Opponent controls",
+    panelLabel:
+      practiceMode === "self" ? "Play both sides controls" : "Bot strategy and pacing controls",
     summary: (
-      <span className="fab-practice-automation-summary">
-        <span>{takeoverActive ? "Seat control" : "Bot playback"}</span>
+      <span
+        className="fab-practice-automation-summary"
+        role={practiceMode === "self" ? "status" : undefined}
+        aria-live={practiceMode === "self" ? "polite" : undefined}
+      >
+        <span>
+          {practiceMode === "self"
+            ? "Play both sides"
+            : takeoverActive
+              ? "Opponent control"
+              : "Bot playback"}
+        </span>
         <strong>
-          {takeoverActive
-            ? "You control bot"
-            : !strategy
-              ? "Bot off"
-              : botPacing === "step"
-                ? "Paused · step"
-                : pending
-                  ? "Choosing…"
-                  : "Auto-running"}
+          {practiceMode === "self"
+            ? `Controlling ${takeoverActive ? "Player 2" : "Player 1"}`
+            : takeoverActive
+              ? "You control the opponent"
+              : !strategy
+                ? "Bot off"
+                : botPacing === "step"
+                  ? "Paused · step"
+                  : botThinking
+                    ? "Choosing…"
+                    : "Auto-running"}
         </strong>
       </span>
     ),
     control: (
       <SimulatorBotQuickControls
+        practiceMode={practiceMode}
         pacing={botPacing}
         takeoverActive={takeoverActive}
         canStep={canStepBot}
@@ -2894,32 +2984,37 @@ function ReadyLocalEngineMatch({
         onStep={runBotStep}
       />
     ),
-    details: (
-      <div className="fab-practice-bot-controls">
-        <AiControlPanel
-          mode={botPacing}
-          speed={botSpeed}
-          status={botPanelStatus}
-          side="opponent"
-          strategies={runtimeStrategyOptions}
-          selectedStrategyId={activeBotStrategyId}
-          isTakeover={takeoverActive}
-          canStep={canStepBot}
-          onChangeMode={setBotPacing}
-          onChangeSpeed={setBotSpeed}
-          onChangeStrategy={(strategyId) => {
-            setActiveBotStrategyId(strategyId);
-            setBotError(null);
-          }}
-          onStep={runBotStep}
-          onTakeControl={toggleBotTakeover}
-          onReleaseControl={toggleBotTakeover}
-          compact
-          embedded
-          hideDecisionLog
-        />
-      </div>
-    ),
+    details:
+      practiceMode === "self" ? (
+        <p className="text-xs opacity-70" data-testid="fab-practice-self-mode-status">
+          Automation is off. Switch seats to make decisions for either player.
+        </p>
+      ) : (
+        <div className="fab-practice-bot-controls">
+          <AiControlPanel
+            mode={botPacing}
+            speed={botSpeed}
+            status={botPanelStatus}
+            side="opponent"
+            strategies={runtimeStrategyOptions}
+            selectedStrategyId={activeBotStrategyId}
+            isTakeover={takeoverActive}
+            canStep={canStepBot}
+            onChangeMode={setBotPacing}
+            onChangeSpeed={setBotSpeed}
+            onChangeStrategy={(strategyId) => {
+              setActiveBotStrategyId(strategyId);
+              setBotError(null);
+            }}
+            onStep={runBotStep}
+            onTakeControl={toggleBotTakeover}
+            onReleaseControl={toggleBotTakeover}
+            compact
+            embedded
+            hideDecisionLog
+          />
+        </div>
+      ),
   } as const;
 
   const promptKind = currentDecision?.continuation.kind ?? null;
@@ -2946,7 +3041,15 @@ function ReadyLocalEngineMatch({
         })
       : null;
   const participantLabel = (playerId: string) =>
-    playerId === humanId ? "You" : playerId === botId ? "Practice bot" : playerId;
+    playerId === humanId
+      ? practiceMode === "self"
+        ? "Player 1"
+        : "You"
+      : playerId === botId
+        ? practiceMode === "self"
+          ? "Player 2"
+          : "Practice bot"
+        : playerId;
   const summaryFormatLabel = practiceConfig
     ? (() => {
         const deck = practiceDependencies().getFabPracticeDeckOption(practiceConfig.playerDeckId);
@@ -3055,10 +3158,11 @@ function ReadyLocalEngineMatch({
           humanDeckLabel: resolvedHumanDeckLabel,
           botDeckLabel: resolvedBotDeckLabel,
           botStrategyLabel: strategyOption?.label,
+          mode: practiceMode,
         }}
         participantPresentation={{
           [humanId]: {
-            displayName: "You",
+            displayName: practiceMode === "self" ? "Player 1" : "You",
             actions: (
               <SimulatorSelfParticipantActions
                 matchMenuItems={(close) => (
@@ -3083,10 +3187,13 @@ function ReadyLocalEngineMatch({
             ),
           },
           [botId]: {
-            displayName: "Practice bot",
+            displayName: practiceMode === "self" ? "Player 2" : "Practice bot",
             actions: (
               <SimulatorOpponentParticipantActions
-                participant={{ kind: "bot", displayName: "Practice bot" }}
+                participant={{
+                  kind: practiceMode === "self" ? "local" : "bot",
+                  displayName: practiceMode === "self" ? "Player 2" : "Practice bot",
+                }}
                 takeoverActive={takeoverActive}
                 onToggleTakeover={() => setControlledPlayerId(takeoverActive ? humanId : botId)}
               />

@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import { eb01Doma005, eb01MountainGod018, op11Koby001, op11Tashigi007 } from "@tcg/op-cards";
-import { op11Aramaki082 } from "../../../../../cards/src/cards/OP11/characters/082-aramaki.ts";
+import { op11Aramaki082 } from "../../../../../cards/src/cards/characters/op11-082-aramaki.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

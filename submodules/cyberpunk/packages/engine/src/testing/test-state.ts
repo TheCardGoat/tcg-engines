@@ -6,7 +6,7 @@ import type { CardInstance, CardMeta } from "../types/card-instance.ts";
 import type { CardInstanceId, GigDieId, PlayerId } from "../types/branded.ts";
 import { createPlayerId } from "../types/branded.ts";
 import { DIE_MAX_VALUES } from "../types/gig-die.ts";
-import { createMatchState } from "../state/initial-state.ts";
+import { applyChooserGoesFirstIfPending, createMatchState } from "../state/initial-state.ts";
 import {
   extractCard,
   isFixtureCardState,
@@ -672,6 +672,9 @@ export function createTestMatchState(
     seed,
     timeControl: opts?.timeControl,
   });
+  if (opts?.autoChooseFirstPlayer ?? true) {
+    applyChooserGoesFirstIfPending(state);
+  }
 
   const mappings = buildMappings(state);
   return applyFixture(

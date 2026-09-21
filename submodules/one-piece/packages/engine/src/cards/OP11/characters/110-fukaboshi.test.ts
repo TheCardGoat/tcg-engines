@@ -5,7 +5,7 @@ import {
   op11Shirahoshi022,
   op12UrsaShock096,
 } from "@tcg/op-cards";
-import { op11Fukaboshi110 } from "../../../../../cards/src/cards/OP11/characters/110-fukaboshi.ts";
+import { op11Fukaboshi110 } from "../../../../../cards/src/cards/characters/op11-110-fukaboshi.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

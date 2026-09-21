@@ -76,86 +76,77 @@ export const piercingAetherfuel: GrandArchiveCard<GrandArchiveAbilityDefinition,
             },
           ],
           effect: {
-            kind: "reflexive",
-            action: {
-              kind: "banish",
-              player: "controller",
-              selection: {
-                id: "fire-cards",
-                kind: "choice",
-                declared: "resolution",
-                chooser: "controller",
-                count: {
-                  kind: "up-to",
-                  amount: 2,
-                },
-                candidates: {
-                  kind: "card",
-                  zones: ["graveyard"],
-                  relationship: "zone-of",
+            kind: "optional",
+            player: "controller",
+            allOrNothing: true,
+            effect: {
+              kind: "sequence",
+              effects: [
+                {
+                  kind: "banish",
                   player: "controller",
-                  filter: {
-                    kind: "element",
-                    oneOf: ["FIRE"],
-                  },
-                },
-              },
-            },
-            consequence: {
-              kind: "conditional",
-              condition: {
-                kind: "compare",
-                comparison: {
-                  left: {
-                    kind: "count",
-                    collection: {
-                      binding: "fire-cards",
+                  selection: {
+                    id: "fire-cards",
+                    kind: "choice",
+                    declared: "resolution",
+                    chooser: "controller",
+                    count: {
+                      kind: "exactly",
+                      amount: 2,
+                    },
+                    candidates: {
+                      kind: "card",
+                      zones: ["graveyard"],
+                      relationship: "zone-of",
+                      player: "controller",
+                      filter: {
+                        kind: "element",
+                        oneOf: ["FIRE"],
+                      },
                     },
                   },
-                  operator: "eq",
-                  right: 2,
                 },
-              },
-              then: {
-                kind: "create-delayed-trigger",
-                trigger: {
-                  kind: "event",
-                  event: {
-                    name: "attack-declared",
+                {
+                  kind: "create-delayed-trigger",
+                  trigger: {
+                    kind: "event",
+                    event: {
+                      name: "attack-declared",
+                      subject: {
+                        kind: "event-object",
+                        controller: "controller",
+                        filter: {
+                          kind: "type",
+                          oneOf: ["CHAMPION"],
+                        },
+                      },
+                      using: {
+                        kind: "event-object",
+                        filter: {
+                          kind: "subtype",
+                          oneOf: ["AETHERWING"],
+                        },
+                      },
+                    },
+                  },
+                  limit: 1,
+                  expires: {
+                    kind: "this-turn",
+                  },
+                  effect: {
+                    kind: "rule-modification",
+                    mode: "forbid",
+                    action: "prevent-damage",
                     subject: {
-                      kind: "event-object",
-                      controller: "controller",
-                      filter: {
-                        kind: "type",
-                        oneOf: ["CHAMPION"],
-                      },
+                      kind: "current-attack",
                     },
-                    using: {
-                      kind: "event-object",
-                      filter: {
-                        kind: "subtype",
-                        oneOf: ["AETHERWING"],
-                      },
+                    damageKind: "combat",
+                    duration: {
+                      kind: "this-attack",
                     },
                   },
                 },
-                limit: 1,
-                expires: {
-                  kind: "this-turn",
-                },
-                effect: {
-                  kind: "rule-modification",
-                  mode: "forbid",
-                  action: "prevent-damage",
-                  subject: {
-                    kind: "current-attack",
-                  },
-                  damageKind: "combat",
-                  duration: {
-                    kind: "this-attack",
-                  },
-                },
-              },
+              ],
             },
           },
         },

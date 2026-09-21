@@ -10,6 +10,7 @@ import { kano } from "../heroes/kano.ts";
 import { boltyn } from "../heroes/boltyn.ts";
 import { boltOfCourageRed } from "./bolt-of-courage.ts";
 import { cintariSaber } from "../weapons/cintari-saber.ts";
+import { snatchRed } from "./snatch.ts";
 import { luminaAscensionYellow } from "./lumina-ascension.ts";
 
 /**
@@ -98,5 +99,42 @@ describe("Lumina Ascension (MON034) AAA", () => {
 
     expectFabCard(Boltyn, boltOfCourageRed).toBeIn("soul");
     expectFabPlayer(Boltyn).toHaveLife(21);
+  });
+
+  it("timing: the charged-turn extra swing is granted without an optional prompt", () => {
+    const game = FabTestEngine.start(
+      {
+        hero: boltyn,
+        hand: [boltOfCourageRed, luminaAscensionYellow, snatchRed],
+        weapon1: [cintariSaber],
+        resourcePoints: 3,
+        actionPoints: 4,
+        deck: 6,
+      },
+      { hero: kano, hand: [], life: 15, deck: 6 },
+      FAB_MANUAL_HARNESS,
+    );
+    const Boltyn = game.as(boltyn);
+    const Kano = game.as(kano);
+
+    // Perform the charge through Bolt of Courage's rider.
+    Boltyn.attackWith(boltOfCourageRed, { charge: true, chargeCard: snatchRed });
+    game.helpers.resolveRestOfCombat();
+    expect(Boltyn.zone("soul")).toContain(snatchRed.canonicalId);
+    expectFabPlayer(Kano).toHaveLife(12); // Bolt of Courage printed 3{p}
+
+    Boltyn.play(luminaAscensionYellow);
+    game.untilIdle();
+
+    Boltyn.activateAttack(cintariSaber);
+    // CR 5.2.3c: with the charge performed the grant applies by itself — a
+    // full decline pass must still lift each weapon's limit.
+    game.closeCombat({ optionals: "decline" });
+    expectFabPlayer(Kano).toHaveLife(9); // saber 2 + 1 buffed
+
+    Boltyn.activateAttack(cintariSaber);
+    game.advanceCombatTo("defend");
+    expectCombat(game).toBeOpen();
+    expectCombat(game).toHaveAttackPower(3);
   });
 });

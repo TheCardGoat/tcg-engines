@@ -35,10 +35,7 @@ export function advanceFabCombatStep(
   );
   const attackBinding = exactAttackBinding(link.activeAttack, attack);
   const attackObject = buildFabRulesView(current).object(attack.ref);
-  const hasGoAgain = attackHasGoAgainAtResolution(
-    attackObject,
-    link.resolvedAttackLki?.hasGoAgain,
-  );
+  const hasGoAgain = attackHasGoAgainAtResolution(attackObject, link.resolvedAttackLki?.hasGoAgain);
   const result = executeFabEventTransaction(
     current,
     (processId) => {

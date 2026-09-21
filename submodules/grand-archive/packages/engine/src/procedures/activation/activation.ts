@@ -1,3 +1,4 @@
+import { grandArchiveSelectionNumericProperty as targetNumericProperty } from "./selection-values.ts";
 import type {
   GrandArchiveAbilityCost,
   GrandArchiveCardResolution,
@@ -1388,23 +1389,46 @@ export function isGrandArchiveTargetCandidate(
         return false;
       }
       if (candidates.host) {
-        const hosts = resolveGrandArchiveSubjectObjects(candidates.host, evaluation);
+        const hosts = resolveGrandArchiveSubjectObjects(
+          candidates.host,
+          candidates.relationship === "banished-by" ||
+            candidates.relationship === "activation-payment-of"
+            ? { ...evaluation, sourceInformationBasis: "last-known" }
+            : evaluation,
+        );
         if (candidates.relationship === "banished-by") {
           if (
             object.zone !== "banishment" ||
-            !object.banishedBySourceId ||
-            !hosts.some((host) => host.id === object.banishedBySourceId)
+            !object.banishedBy ||
+            !hosts.some(
+              (host) =>
+                host.id === object.banishedBy?.sourceId &&
+                host.incarnation === object.banishedBy.sourceIncarnation,
+            )
+          )
+            return false;
+        } else if (candidates.relationship === "activation-payment-of") {
+          if (
+            !hosts.some((host) =>
+              host.activationPayment.some((record) => record.objectId === object.id),
+            )
           )
             return false;
         } else if (!object.hostId || !hosts.some((host) => host.id === object.hostId)) {
           return false;
         }
-      } else if (candidates.relationship === "banished-by") {
-        throw new GrandArchiveUnsupportedRuleError("banished-by candidates without a host");
+      } else if (
+        candidates.relationship === "banished-by" ||
+        candidates.relationship === "activation-payment-of"
+      ) {
+        throw new GrandArchiveUnsupportedRuleError(
+          `${candidates.relationship} candidates without a host`,
+        );
       }
       if (candidates.player) {
         const players = resolveGrandArchivePlayers(candidates.player, evaluation);
-        switch (candidates.relationship) {
+        const relationship = candidates.relationship;
+        switch (relationship) {
           case "owned-by":
           case "zone-of":
             if (!players.includes(object.ownerId)) return false;
@@ -1416,6 +1440,7 @@ export function isGrandArchiveTargetCandidate(
             break;
           }
           case "banished-by":
+          case "activation-payment-of":
             if (!players.includes(object.ownerId)) return false;
             break;
           case "controlled-by":
@@ -1423,7 +1448,7 @@ export function isGrandArchiveTargetCandidate(
             if (!players.includes(object.controllerId)) return false;
             break;
           default:
-            assertNever(candidates.relationship);
+            assertNever(relationship);
         }
       }
     }
@@ -1786,23 +1811,6 @@ function compareChoiceNumber(
     default:
       return assertNever(operator);
   }
-}
-
-function targetNumericProperty(
-  object: GrandArchiveCardInstance,
-  property: "reserve-cost" | "memory-cost" | "power" | "life" | "level",
-  basis: "base" | "current",
-  evaluation: GrandArchiveEvaluationContext,
-): number | undefined {
-  if (basis === "current") return deriveGrandArchiveNumericProperty(object, property, evaluation);
-  const face = grandArchiveObjectFace(evaluation.program, object);
-  if (property === "reserve-cost" || property === "memory-cost") {
-    const kind = property === "reserve-cost" ? "reserve" : "memory";
-    return face.cost.kind === kind && typeof face.cost.amount === "number"
-      ? face.cost.amount
-      : undefined;
-  }
-  return face.stats[property];
 }
 
 function targetCharacteristicValues(
@@ -2528,6 +2536,33 @@ function evaluateImbueAnnouncement(
   return { invoked: true, imbued, revealedCardIds };
 }
 
+/** Shared by activation admission and optional effect acceptance. */
+export function grandArchiveCardHasActivationElements(
+  card: GrandArchiveCardInstance,
+  evaluation: GrandArchiveEvaluationContext,
+): boolean {
+  const { program, state, controllerId: playerId } = evaluation;
+  const characteristics = grandArchiveObjectCurrentCharacteristics(program, state, card);
+  const enabled = grandArchivePlayerEnabledElements(program, state, playerId);
+  const ignoredElementRules = collectGrandArchiveActionRules({
+    action: "ignore-element-requirement",
+    activationKind: "card",
+    playerId,
+    candidateId: card.id,
+    fromZone: card.zone,
+    evaluation,
+  }).filter((rule) => ruleGrantsPermissionToPlayer(rule, playerId));
+  return characteristics.elements.every(
+    (element) =>
+      enabled.has(element) ||
+      ignoredElementRules.some(
+        (rule) =>
+          rule.effect.elementRequirement === undefined ||
+          rule.effect.elementRequirement === element,
+      ),
+  );
+}
+
 export function proposeGrandArchiveCardActivation(
   program: GrandArchiveMatchProgram,
   state: GrandArchiveMatchState,
@@ -2789,26 +2824,9 @@ export function proposeGrandArchiveCardActivation(
   ) {
     throw new Error("Slow cards require the turn player's empty-stack Main phase");
   }
-  const enabled = grandArchivePlayerEnabledElements(program, state, playerId);
-  const ignoredElementRules = collectGrandArchiveActionRules({
-    action: "ignore-element-requirement",
-    activationKind: "card",
-    playerId,
-    candidateId: card.id,
-    fromZone: card.zone,
-    evaluation,
-  }).filter((rule) => ruleGrantsPermissionToPlayer(rule, playerId));
-  const missingElements = characteristics.elements.filter((element) => !enabled.has(element));
   if (
     !activationContext.effect?.ignoreElementRequirements &&
-    missingElements.some(
-      (element) =>
-        !ignoredElementRules.some(
-          (rule) =>
-            rule.effect.elementRequirement === undefined ||
-            rule.effect.elementRequirement === element,
-        ),
-    )
+    !grandArchiveCardHasActivationElements(card, evaluation)
   ) {
     throw new Error("The activator does not have every required element enabled");
   }
@@ -3924,6 +3942,25 @@ export function proposeGrandArchiveAbilityActivation(
   if (!ability) throw new Error("Activated ability does not exist on the source's active face");
   if (!grandArchiveAbilityIsFunctional(face, ability, source))
     throw new Error("Ability is not functional in the source zone");
+  if (ability.keyword?.name === "lineage-release") {
+    const host = source.hostId ? state.objects[source.hostId] : undefined;
+    const representativeCardId = host?.activeDefinitionId
+      ? state.zones[source.ownerId]["inner-lineage"]
+          .filter((objectId) => {
+            const card = state.objects[objectId];
+            return card?.hostId === host.id && card.definitionId === host.activeDefinitionId;
+          })
+          .at(-1)
+      : undefined;
+    if (
+      source.zone !== "inner-lineage" ||
+      !host ||
+      host.zone !== "field" ||
+      source.id === representativeCardId
+    ) {
+      throw new Error("Lineage Release requires a card beneath the current champion");
+    }
+  }
   const executionObject = grandArchiveAbilityExecutionObject(state, source, ability);
   if (!executionObject) throw new Error("Ability execution source does not exist");
   const evaluation: GrandArchiveEvaluationContext = {

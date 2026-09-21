@@ -50,6 +50,7 @@ export const FAB_LOG_TRANSLATION_VALUE_KEYS = {
   "flesh-and-blood.priority-automation.auto-pass": ["actorId"],
   "flesh-and-blood.decision-automation.auto-order": ["actorId", "decisionKind"],
   "flesh-and-blood.decision-automation.auto-target": ["actorId"],
+  "flesh-and-blood.decision-automation.auto-decline": ["actorId"],
 
   "flesh-and-blood.play": ["actorId", "cardName"],
   "flesh-and-blood.play.from-zone": ["actorId", "cardName", "from"],
@@ -90,6 +91,7 @@ export const FAB_LOG_TRANSLATION_VALUE_KEYS = {
   "flesh-and-blood.banish.hidden-identity.by-source": ["playerId", "sourceName", "from"],
   "flesh-and-blood.deck-bottom": ["playerId", "from"],
   "flesh-and-blood.deck-bottom.private": ["playerId", "cardName", "from"],
+  "flesh-and-blood.deck-top": ["playerId", "cardName", "from"],
   "flesh-and-blood.destroy": ["cardName"],
   "flesh-and-blood.destroy.by-source": ["sourceName", "cardName"],
   "flesh-and-blood.dies": ["cardName"],
@@ -177,6 +179,7 @@ export const FAB_LOG_TRANSLATION_VALUE_KEYS = {
   "flesh-and-blood.gain-keyword": ["cardName", "keyword"],
   "flesh-and-blood.gave-keyword": ["sourceName", "cardName", "keyword"],
   "flesh-and-blood.gave-power": ["sourceName", "cardName", "amount"],
+  "flesh-and-blood.marked": ["sourceName", "playerId"],
   "flesh-and-blood.name-card": ["playerId", "cardName"],
   "flesh-and-blood.sharpen": ["playerId", "cardName", "count", "plural"],
   "flesh-and-blood.modify-power": ["cardName", "from", "to"],
@@ -193,6 +196,7 @@ export const FAB_LOG_TRANSLATION_VALUE_KEYS = {
   "flesh-and-blood.turn.started": ["turnNumber"],
   "flesh-and-blood.game.ended": ["playerId", "reason"],
   "flesh-and-blood.decision.awaiting": ["actorId"],
+  "flesh-and-blood.decision.chosen": ["actorId", "choice"],
   "flesh-and-blood.decision.private": ["label"],
   "flesh-and-blood.phase.start": ["turnPlayerId", "phase"],
 } as const satisfies {

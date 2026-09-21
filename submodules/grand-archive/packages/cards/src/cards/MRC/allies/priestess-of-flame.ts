@@ -59,22 +59,33 @@ export const priestessOfFlame: GrandArchiveCard<GrandArchiveAbilityDefinition, "
               kind: "sequence",
               effects: [
                 {
-                  kind: "deal-damage",
-                  source: {
-                    kind: "source",
+                  kind: "attempt",
+                  effect: {
+                    kind: "deal-damage",
+                    source: {
+                      kind: "source",
+                    },
+                    recipient: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    amount: 3,
                   },
-                  recipient: {
-                    kind: "champion",
-                    player: "controller",
-                  },
-                  amount: 3,
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "repeat",
-                  count: 2,
-                  effect: {
-                    kind: "keyword-action",
-                    action: "gather",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
+                  },
+                  then: {
+                    kind: "repeat",
+                    count: 2,
+                    effect: {
+                      kind: "keyword-action",
+                      action: "gather",
+                    },
                   },
                 },
               ],

@@ -38,20 +38,31 @@ export const willToSave: GrandArchiveCard<GrandArchiveAbilityDefinition, "card">
               kind: "sequence",
               effects: [
                 {
-                  kind: "rest",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "attempt",
+                  effect: {
+                    kind: "rest",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
                   },
+                  bindSucceededAs: "optional-action-succeeded",
                 },
                 {
-                  kind: "add-counter",
-                  subject: {
-                    kind: "champion",
-                    player: "controller",
+                  kind: "conditional",
+                  condition: {
+                    kind: "effect-succeeded",
+                    binding: "optional-action-succeeded",
                   },
-                  counter: "preparation",
-                  amount: 1,
+                  then: {
+                    kind: "add-counter",
+                    subject: {
+                      kind: "champion",
+                      player: "controller",
+                    },
+                    counter: "preparation",
+                    amount: 1,
+                  },
                 },
               ],
             },

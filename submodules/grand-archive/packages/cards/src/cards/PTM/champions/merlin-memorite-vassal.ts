@@ -58,18 +58,29 @@ export const merlinMemoriteVassal: GrandArchiveCard<GrandArchiveAbilityDefinitio
                   kind: "sequence",
                   effects: [
                     {
-                      kind: "pay",
-                      player: "controller",
-                      cost: {
-                        kind: "pay-reserve",
-                        amount: 2,
+                      kind: "attempt",
+                      effect: {
+                        kind: "pay",
+                        player: "controller",
+                        cost: {
+                          kind: "pay-reserve",
+                          amount: 2,
+                        },
                       },
+                      bindSucceededAs: "optional-action-succeeded",
                     },
                     {
-                      kind: "summon",
-                      object: "Memorite Blade",
-                      controller: "controller",
-                      bindResultAs: "summoned-token",
+                      kind: "conditional",
+                      condition: {
+                        kind: "effect-succeeded",
+                        binding: "optional-action-succeeded",
+                      },
+                      then: {
+                        kind: "summon",
+                        object: "Memorite Blade",
+                        controller: "controller",
+                        bindResultAs: "summoned-token",
+                      },
                     },
                   ],
                 },

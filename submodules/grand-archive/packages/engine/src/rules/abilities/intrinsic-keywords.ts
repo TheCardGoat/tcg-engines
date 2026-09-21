@@ -1040,6 +1040,9 @@ export function grandArchiveObjectActiveKeywordInstances(
     program,
     object,
   ).flatMap((ability) => {
+    // Hosted keywords belong to their execution object, never also to the
+    // printed current face (which duplicates the current lineage card).
+    if (ability.executionSource) return [];
     const printedKeywords = abilityKeywords(ability);
     if (printedKeywords.length === 0) return [];
     const abilityEvaluation = withGrandArchiveDerivedVariables(ability.variables, evaluation);

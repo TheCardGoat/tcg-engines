@@ -5,7 +5,7 @@ import {
   op01RoronoaZoro001,
   op02EdwardNewgate001,
 } from "@tcg/op-cards";
-import { op13LittleoarsJr056 } from "../../../../../cards/src/cards/OP13/characters/056-littleoars-jr.ts";
+import { op13LittleoarsJr056 } from "../../../../../cards/src/cards/characters/op13-056-littleoars-jr.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

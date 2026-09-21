@@ -268,7 +268,10 @@ describe("Grand Archive after-resolution effects", () => {
 
     expect(restored.state.objects[fixture.watchedId]).toMatchObject({
       zone: "banishment",
-      banishedBySourceId: fixture.watcherId,
+      banishedBy: {
+        sourceId: fixture.watcherId,
+        sourceIncarnation: restored.state.objects[fixture.watcherId]!.incarnation,
+      },
     });
     expect(result.events.some((event) => event.type === "opportunity-opened")).toBe(true);
     const firstOpportunity = result.events.findIndex(

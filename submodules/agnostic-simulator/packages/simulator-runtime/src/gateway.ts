@@ -1,6 +1,14 @@
-import type { ClientToServerEvents, PlayableGameSlug, ServerToClientEvents } from "@tcg/protocol";
+import {
+  DropEligibilitySchema,
+  EngineInteractionView,
+  type ClientToServerEvents,
+  type PlayableGameSlug,
+  type ServerToClientEvents,
+} from "@tcg/protocol";
+import { PresentationEnvelopeSchema } from "@tcg/protocol/presentation";
 import { RawGatewayServerMessageSchema, type RawGatewayServerMessage } from "@tcg/protocol/gateway";
 import type { Socket } from "socket.io-client";
+import { z } from "zod";
 
 export interface GatewayTicket {
   ticket?: string;
@@ -98,14 +106,102 @@ export function shouldRefreshAnonymousWelcome(
   return authMode === "required" && payload.authenticated !== true;
 }
 
+const GameJoinedAckSchema = z.object({
+  type: z.literal("game_joined"),
+  gameId: z.string().min(1),
+  role: z.enum(["player", "spectator"]),
+  stateVersion: z.number().int().nonnegative(),
+  players: z.array(
+    z.object({
+      id: z.string().min(1),
+      connected: z.boolean(),
+      disconnectedAt: z.string().optional(),
+    }),
+  ),
+  correlationId: z.string().optional(),
+});
+
+const GAME_JOINED_SNAPSHOT_PARSERS = {
+  state: z.unknown(),
+  resources: z.unknown(),
+  cardsMaps: z.unknown(),
+  pendingProposal: z.unknown(),
+  playerVisualSettings: z.record(z.string(), z.unknown()),
+  presentation: PresentationEnvelopeSchema,
+  interactionView: EngineInteractionView,
+  dropEligibility: DropEligibilitySchema,
+  undoable: z.boolean(),
+  manualModeEnabled: z.boolean(),
+} as const;
+
+function sanitizeJoinedPlayers(value: unknown): unknown {
+  if (!Array.isArray(value)) {
+    return value;
+  }
+  return value.map((player) => {
+    if (!player || typeof player !== "object") {
+      return player;
+    }
+    const record = player as Record<string, unknown>;
+    return {
+      id: record.id,
+      connected: record.connected,
+      ...(typeof record.disconnectedAt === "string"
+        ? { disconnectedAt: record.disconnectedAt }
+        : {}),
+    };
+  });
+}
+
+function parseGameJoinedEvent(envelope: Record<string, unknown>): GatewayMessage | null {
+  const full = RawGatewayServerMessageSchema.safeParse(envelope);
+  if (full.success && full.data.type === "game_joined") {
+    return full.data;
+  }
+  const ack = GameJoinedAckSchema.safeParse({
+    type: "game_joined",
+    gameId: envelope.gameId,
+    role: envelope.role,
+    stateVersion: envelope.stateVersion,
+    players: sanitizeJoinedPlayers(envelope.players),
+    ...(typeof envelope.correlationId === "string"
+      ? { correlationId: envelope.correlationId }
+      : {}),
+  });
+  if (!ack.success) {
+    return null;
+  }
+  const result: Record<string, unknown> = { ...ack.data };
+  const unparsedSnapshot: string[] = [];
+  for (const [key, schema] of Object.entries(GAME_JOINED_SNAPSHOT_PARSERS)) {
+    if (!(key in envelope) || envelope[key] === undefined) {
+      continue;
+    }
+    const parsedField = schema.safeParse(envelope[key]);
+    if (parsedField.success) {
+      result[key] = parsedField.data;
+    } else {
+      unparsedSnapshot.push(key);
+    }
+  }
+  if (unparsedSnapshot.length > 0) {
+    result.unparsedSnapshot = unparsedSnapshot;
+  }
+  return result as GatewayMessage;
+}
+
 export function parseGatewayEvent(
   type: keyof ServerToClientEvents,
   payload: unknown,
 ): GatewayMessage | null {
-  const parsed = RawGatewayServerMessageSchema.safeParse({
-    ...(payload && typeof payload === "object" ? payload : {}),
+  const envelope = {
+    ...(payload && typeof payload === "object" ? (payload as Record<string, unknown>) : {}),
     type,
-  });
+  };
+  if (type === "game_joined") {
+    return parseGameJoinedEvent(envelope);
+  }
+  const parsed = RawGatewayServerMessageSchema.safeParse(envelope);
   return parsed.success ? parsed.data : null;
 }
 

@@ -112,6 +112,7 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
     "Fight: {attackerName} and {defenderName} tied ({attackerPower}), but {sourceCardName} prevented {defenderName}'s defeat.",
   "move.resolveAttack.direct":
     "Steal: {attackerName} stole {count} Gig(s) at {attackerPower} power.",
+  "move.resolveAttack.ended": "Attack: {attackerName}'s attack ended before a fight or steal.",
   "move.turnEnded": "Turn {turnNumber} ended.",
   "move.concede": "Player {playerId} conceded the game.",
   "move.activateAbility": "{cardName} activated its ability.",
@@ -125,6 +126,25 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "move.resolveRevealDestination":
     "{chooserLabel} chose {destination}: moved {count} revealed card(s) to {destination}.",
   "move.resolveAdjustGig": "Adjusted {dieLabel} gig die from {previousValue} to {value}.",
+  "move.manualSetGigValue": "Board correction: set {dieLabel} to {value}.",
+  "move.manualMoveGig": "Board correction: moved {dieLabel} to {destination}.",
+  "move.manualMoveCard": "Board correction: moved {cardName} to {destination}.",
+  "move.manualAttachGear": "Board correction: attached {gearName} to {hostName}.",
+  "move.manualDetachGear": "Board correction: unattached {gearName}.",
+  "move.manualExertCard": "Board correction: spent {cardName}.",
+  "move.manualReadyCard": "Board correction: readied {cardName}.",
+  "move.manualDrawCard": "Board correction: drew {cardName} from the {destination}.",
+  "move.manualClearPendingResolution": "Board correction: skipped {cardName}'s pending resolution.",
+  "move.manualClearTriggerStack": "Board correction: cleared {count} queued trigger(s).",
+  "move.manualResetCombat": "Board correction: reset combat ({attackerName}).",
+  "move.manualForcePassTurn": "Board correction: force-passed the turn.",
+  "move.manualSetEddies": "Board correction: set Eddies to {count}.",
+  "move.manualResetOncePerTurn":
+    "Board correction: reset once-per-turn limits (cleared {count} ability ledger entries).",
+  "move.manualSetCardFace": "Board correction: set {cardName} {face}.",
+  "move.manualReadyAll": "Board correction: readied {count} card(s).",
+  "move.manualRecomputeActiveEffects": "Board correction: recomputed effects ({count} active).",
+  "move.manualDropEffectBagEntry": "Board correction: removed delayed effect: {abilityText}",
   "effect.discard.resolved":
     "{sourceCardName} discarded {discardedCardName} (cost {discardedCost}).",
   "effect.draw.resolved": "{sourceCardName} drew {drawnCount} card(s).",
@@ -134,6 +154,9 @@ export const enMessages: Record<ActionLogMessageKey, string> = {
   "effect.sellFromDeck.resolved": "{sourceCardName} sold {soldCardNames} from the top of the deck.",
   "trigger.autoResolved": "Auto-resolved {cardName}: {abilityText}",
   "trigger.resolved": "Resolved {cardName}: {abilityText}",
+  "trigger.orderPending": "Trigger order pending: choose 1 of {triggerCount}: {triggerNames}.",
+  "trigger.orderSelected":
+    "Trigger order selected: {cardName} resolves next; {remainingCount} remain ({remainingTriggerNames}).",
   "trigger.noValidTargets": "{cardName} had no valid targets.",
   "trigger.stealGig": "{cardName} stole {count} additional {dieTypes} {gigWord}.",
   "trigger.targetResolved": "Selected {targetNames} for {sourceCardName}.",

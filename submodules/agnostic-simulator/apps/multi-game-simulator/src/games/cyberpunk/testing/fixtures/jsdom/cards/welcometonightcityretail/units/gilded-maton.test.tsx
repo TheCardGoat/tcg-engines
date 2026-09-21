@@ -4,7 +4,7 @@ import {
   welcomeToNightCityRetailCorpoSecurity,
   welcomeToNightCityRetailKiroshiOptics,
   welcomeToNightCityRetailSwordwiseHuscle,
-  welcomeToNightCityRetailGildedMatoN,
+  welcomeToNightCityRetailGildedMaton,
 } from "@tcg/cyberpunk-cards";
 import { CYBERPUNK_P1, CYBERPUNK_P2 } from "@cyberpunk/testing/cyberpunk-simulator-pom";
 import {
@@ -29,7 +29,7 @@ describe("Gilded Maton (Retail) jsdom happy path", () => {
       const maton = await pom.getCardInZoneByDefinitionId(
         "hand",
         CYBERPUNK_P1,
-        welcomeToNightCityRetailGildedMatoN.id,
+        welcomeToNightCityRetailGildedMaton.id,
       );
       const host = await pom.getCardInZoneByDefinitionId(
         "field",

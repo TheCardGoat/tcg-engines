@@ -6,7 +6,7 @@ import {
   op14eb04BoaHancockOp14112112,
 } from "@tcg/op-cards";
 import { describe, expect, test } from "vite-plus/test";
-import { op13BoaMarigold052 } from "../../../../../cards/src/cards/OP13/characters/052-boa-marigold.ts";
+import { op13BoaMarigold052 } from "../../../../../cards/src/cards/characters/op13-052-boa-marigold.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

@@ -1,1 +1,2 @@
-export { ChatPanel } from "./ChatPanel";
+export { mapChatMessage } from "./ChatPanel";
+export { FloatingChatComposer } from "./FloatingChatComposer";

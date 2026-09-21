@@ -179,22 +179,18 @@ describe("Gameplay guide specification coverage", () => {
     const faceUpLegend = createMockLegend({
       id: "guide-face-up-payer",
       name: "Guide Face Up Payer",
+      hasSellTag: true,
     });
     const faceDownLegend = createMockLegend({
       id: "guide-face-down-payer",
       name: "Guide Face Down Payer",
+      hasSellTag: true,
     });
-    const unusedLegend = createMockLegend({
-      id: "guide-unused-non-payer",
-      name: "Guide Unused Non Payer",
-    });
-
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [playedUnit],
       legendArea: [
         { card: faceUpLegend, faceDown: false },
         { card: faceDownLegend, faceDown: true },
-        { card: unusedLegend, faceDown: true },
       ],
       eddies: 1,
     });
@@ -206,7 +202,6 @@ describe("Gameplay guide specification coverage", () => {
     expect(engine.getCard(faceUpLegend, "legendArea", P1).meta.spent).toBe(true);
     expect(engine.getCard(faceDownLegend, "legendArea", P1).meta.spent).toBe(true);
     expect(engine.getCard(faceDownLegend, "legendArea", P1).meta.faceDown).toBe(true);
-    expect(engine.getCard(unusedLegend, "legendArea", P1).meta.spent).toBe(false);
   });
 
   it("calls one face-down Legend during the main phase by spending one Eddie", () => {
@@ -389,7 +384,7 @@ describe("Gameplay guide specification coverage", () => {
     expect(engine.getCardsInZone("hand", P1).map((card) => card.definitionId)).toContain(
       drawnCard.id,
     );
-    expect(engine.getState().G.attackState?.step).toBe("offensive");
+    expect(engine.getState().G.attackState?.step).toBe("attack");
     expect(engine.getPrompt(P2).status).toBe("waiting");
   });
 
@@ -679,7 +674,10 @@ describe("Gameplay guide specification coverage", () => {
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).not.toContain(
       theHeistRetailStarterDeckVCorporateExile.id,
     );
-    expect(engine.getState().G.cardIndex[vId as string]).toBeUndefined();
+    expect(engine.getState().G.cardIndex[vId as string]?.zone).toBe("removedFromGame");
+    expect(engine.getCardsInZone("removedFromGame", P1).map((card) => card.instanceId)).toContain(
+      vId,
+    );
     expect(engine.getCard(gear, "trash", P1).meta.attachedToId).toBeNull();
   });
 

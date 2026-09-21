@@ -1,6 +1,7 @@
 import type { FabRulesSnapshot } from "../kernel/transaction-kernel.ts";
 import type { FabLegalCommandSource } from "./legal-commands/index.ts";
 import { botEligibleFabCommands, listLegalCommands } from "./legal-commands/index.ts";
+import { FAB_DEFAULT_AUTOMATION_PREFERENCES, type FabScopedAutoPassScope } from "../state.ts";
 
 /**
  * The one authoritative answer to "may automation close this priority
@@ -80,6 +81,35 @@ export function fabPriorityWindowManualOnly(state: FabRulesSnapshot, seat: strin
     case "combat-resolution-response":
       return false;
   }
+}
+
+/**
+ * True while the seat's stored auto-pass scope is armed AND inside its natural
+ * boundary: `combat` only while a chain link is open, `opponent-turn` only
+ * while another seat is active. Boundary reducers retire the arm eagerly; this
+ * state-alone check is the fail-closed second gate so a missed clear can never
+ * revive an expired scope, and stale arms project as unarmed to viewers.
+ */
+export function fabScopedAutoPassActive(state: FabRulesSnapshot, seat: string): boolean {
+  const scope = (state.automationPreferences[seat] ?? FAB_DEFAULT_AUTOMATION_PREFERENCES)
+    .scopedAutoPass;
+  if (scope === "combat") return state.combat?.open === true;
+  if (scope === "opponent-turn") return state.activePlayerId !== seat;
+  return false;
+}
+
+/**
+ * True when the seat may arm {@link scope} right now: an open chain for
+ * `combat`, another active seat for `opponent-turn`. Arming is deliberately
+ * not priority-gated — a defender arms from the defense declaration, the only
+ * interactive moment their drained windows leave them.
+ */
+export function fabScopedAutoPassArmable(
+  state: FabRulesSnapshot,
+  seat: string,
+  scope: FabScopedAutoPassScope,
+): boolean {
+  return scope === "combat" ? state.combat?.open === true : state.activePlayerId !== seat;
 }
 
 /**

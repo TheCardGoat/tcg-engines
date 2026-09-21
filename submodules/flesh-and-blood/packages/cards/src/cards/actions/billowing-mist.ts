@@ -34,6 +34,8 @@ export const billowingMist = definePitchFamily(fabPitchFamilies["billowing-mist"
         replacementKind: "standard",
         replaces: {
           name: "create",
+          creator: "controller",
+          occurrences: "first",
           filter: {
             hasKeyword: "ephemeral",
           },

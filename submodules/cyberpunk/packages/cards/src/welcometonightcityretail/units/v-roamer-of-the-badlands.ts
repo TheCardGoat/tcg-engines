@@ -31,8 +31,9 @@ export const welcomeToNightCityRetailVRoamerOfTheBadlands = defineCyberpunkCard(
         trigger: "event",
         event: {
           event: "gigStolen",
+          perGig: true,
           player: "friendly",
-          target: { selector: "gig", controller: "friendly", amount: 1 },
+          target: { selector: "gig", controller: "rival", amount: 1 },
           minAmount: 1,
           source: { selector: "self" },
         },

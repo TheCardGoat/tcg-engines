@@ -5,10 +5,12 @@ import {
   setCardRegistry,
   type CardCatalog,
   type DeckList,
+  type LocalEngineContinuationSnapshot,
   type MatchState,
   type PlayerSetup,
+  type TurnStartCheckpoint,
 } from "@tcg/cyberpunk-engine";
-import { structuredCards as cyberpunkStructuredCards } from "@tcg/cyberpunk-cards";
+import { getMergedCyberpunkCards, getMergedCyberpunkCardsById } from "@tcg/cyberpunk-cards";
 import type { CardDefinition as CyberpunkCardDefinition } from "@tcg/cyberpunk-types";
 import type { CardsMaps } from "@tcg/shared/game-adapter";
 import type {
@@ -38,30 +40,31 @@ type CyberpunkTimeControlConfig =
     };
 
 /**
- * Build a catalog from the cyberpunk card pool. Match creation receives deck
- * entries as public slugs, while serialized engine state stores each card
+ * Build a catalog from the merged cyberpunk card pool. Match creation receives
+ * deck entries as public slugs, while serialized engine state stores each card
  * instance by the stable card UUID. Accept both forms so fresh setup and later
  * snapshot restores share one registry.
+ *
+ * Deck rows are validated against the merged, accent-folded identity map, so
+ * engine setup resolves folded slugs and legacy accent-mangled slugs (see
+ * `legacyAccentMangledSlugAliases` in @tcg/cyberpunk-cards) — the raw
+ * structured pool alone cannot.
  */
 function getCyberpunkCatalog(): CardCatalog {
   if (registeredCatalog) return registeredCatalog;
-  const defsByLookupKey = new Map<string, CyberpunkCardDefinition>();
-  for (const card of cyberpunkStructuredCards) {
-    const def = card as unknown as CyberpunkCardDefinition;
-    defsByLookupKey.set(card.id, def);
-    defsByLookupKey.set(card.slug, def);
-  }
+  const mergedCards = getMergedCyberpunkCards();
+  const defsByLookupKey = new Map<string, CyberpunkCardDefinition>(getMergedCyberpunkCardsById());
   const catalog: CardCatalog = {
     get(idOrSlug: string) {
       return defsByLookupKey.get(idOrSlug);
     },
     *entries(): IterableIterator<[string, CyberpunkCardDefinition]> {
-      for (const card of cyberpunkStructuredCards) {
-        yield [card.id, card as unknown as CyberpunkCardDefinition];
+      for (const card of mergedCards) {
+        yield [card.id, card];
       }
     },
     get size() {
-      return cyberpunkStructuredCards.length;
+      return mergedCards.length;
     },
   };
   setCardRegistry(catalog);
@@ -121,6 +124,7 @@ export function cyberpunkSerializeEngine(
     state: cyberpunk.getRawState(),
     historyLength: 0,
     cardsMaps,
+    metadata: { continuation: cyberpunk.engine.getContinuationSnapshot() },
   };
 }
 
@@ -132,7 +136,12 @@ export async function cyberpunkRestoreEngine(
   _context: ServerEngineRestoreContext,
 ): Promise<ServerGameEngine> {
   getCyberpunkCatalog();
-  return new CyberpunkServerEngine(new LocalEngine(snapshot.state as MatchState));
+  const continuation = parseContinuation(snapshot.metadata);
+  return new CyberpunkServerEngine(
+    new LocalEngine(snapshot.state as MatchState, {
+      ...(continuation ? { continuation } : { initializeTurnStartCheckpoint: false }),
+    }),
+  );
 }
 
 /**
@@ -147,6 +156,48 @@ function unwrap(engine: ServerGameEngine): CyberpunkServerEngine {
   throw new Error(
     "Cyberpunk adapter received a ServerGameEngine that is not a CyberpunkServerEngine. " +
       "This indicates a wiring bug in the game-server.",
+  );
+}
+
+function parseContinuation(metadata: unknown): LocalEngineContinuationSnapshot | undefined {
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) return undefined;
+  const continuation = (metadata as { continuation?: unknown }).continuation;
+  if (!continuation || typeof continuation !== "object" || Array.isArray(continuation)) {
+    return undefined;
+  }
+  const candidate = continuation as Partial<LocalEngineContinuationSnapshot>;
+  if (
+    candidate.version !== 1 ||
+    !Array.isArray(candidate.undoStack) ||
+    !(
+      candidate.turnStartCheckpoint === null || isTurnStartCheckpoint(candidate.turnStartCheckpoint)
+    )
+  ) {
+    return undefined;
+  }
+  if (
+    !candidate.undoStack.every(
+      (entry) =>
+        entry !== null &&
+        typeof entry === "object" &&
+        "state" in entry &&
+        Array.isArray((entry as { inversePatches?: unknown }).inversePatches),
+    )
+  ) {
+    return undefined;
+  }
+  return candidate as LocalEngineContinuationSnapshot;
+}
+
+function isTurnStartCheckpoint(value: unknown): boolean {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const candidate = value as Partial<TurnStartCheckpoint>;
+  return (
+    "state" in candidate &&
+    typeof candidate.activePlayerId === "string" &&
+    typeof candidate.turnNumber === "number" &&
+    typeof candidate.stackDepth === "number" &&
+    typeof candidate.signature === "string"
   );
 }
 

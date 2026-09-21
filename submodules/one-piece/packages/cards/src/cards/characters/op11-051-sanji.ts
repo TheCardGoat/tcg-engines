@@ -1,0 +1,101 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op11Sanji051I18n } from "./op11-051-sanji.i18n.ts";
+
+export const op11Sanji051: CharacterCard = {
+  id: "OP11-051",
+  canonicalId: "OP11-051",
+  slug: "sanji/op11-051",
+  name: "Sanji",
+  printings: [
+    {
+      id: "OP11-051",
+      artId: "OP11-051",
+      setCode: "OP11",
+      collectorNumber: "051",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP11-051.jpg",
+    },
+    {
+      id: "OP11-051_p1",
+      artId: "OP11-051_p1",
+      setCode: "OP11",
+      collectorNumber: "051",
+      rarity: "SR",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP11-051_p1.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["blue"],
+  rarity: "SR",
+  setId: "OP11",
+  cost: 6,
+  power: 7000,
+  traits: ["Straw Hat Crew The Vinsmoke Family"],
+  attribute: "strike",
+  effect:
+    "When this Character is K.O.'d by your opponent's effect, look at 5 cards from the top of your deck and play up to 1 \"Straw Hat Crew\" type Character card with a cost of 5 or less. Then, place the rest at the bottom of your deck in any order.\n[On Play] Return up to 1 Character with 5000 base power or less to the owner's hand.",
+  effects: {
+    effects: [
+      {
+        trigger: "onKo",
+        source: "opponentEffect",
+        actions: [
+          {
+            action: "search",
+            lookCount: 5,
+            source: {
+              player: "self",
+              zone: "deck",
+            },
+            revealCount: {
+              amount: 1,
+              upTo: true,
+            },
+            revealFilters: [
+              {
+                filter: "cost",
+                comparison: "lte",
+                value: 5,
+              },
+              {
+                filter: "trait",
+                value: "Straw Hat Crew",
+                match: "includes",
+              },
+              {
+                filter: "cardCategory",
+                value: "character",
+              },
+            ],
+            revealDestination: "character",
+            remainderPosition: "bottom",
+          },
+        ],
+      },
+      {
+        trigger: "onPlay",
+        actions: [
+          {
+            action: "returnToHand",
+            target: {
+              player: "any",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+              filters: [
+                {
+                  filter: "basePower",
+                  comparison: "lte",
+                  value: 5000,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op11Sanji051I18n,
+};

@@ -1,8 +1,4 @@
-import type {
-  GrandArchiveAbilityDefinition,
-  GrandArchiveAnyCard,
-  GrandArchiveCardFilter,
-} from "@tcg/grand-archive-types";
+import type { GrandArchiveAbilityDefinition, GrandArchiveAnyCard } from "@tcg/grand-archive-types";
 import type { GrandArchiveTargetId } from "@tcg/grand-archive-engine/runtime";
 import {
   GrandArchiveTestEngine,
@@ -10,17 +6,35 @@ import {
 } from "@tcg/grand-archive-engine/testing";
 import { expect, it } from "vitest";
 
-import { potionOfHealing } from "../cards/ALC/items/potion-of-healing.ts";
 import { galesMare } from "../cards/RDO/allies/gales-mare.ts";
+import { potionOfHealing } from "../cards/ALC/items/potion-of-healing.ts";
 import { woodlandSquirrels } from "../cards/DOA/allies/woodland-squirrels.ts";
-import { createClassBonusTestChampion, grandArchiveTestFace } from "./class-bonus-test-champion.ts";
+import { blissfulCalling } from "../cards/DOA/actions/blissful-calling.ts";
+import { lumberingSteed } from "../cards/AMB/allies/lumbering-steed.ts";
+import {
+  createClassBonusTestChampion,
+  enableAllTestElements,
+  grandArchiveTestFace,
+  grantTestChampionLevel,
+} from "./class-bonus-test-champion.ts";
+import { announcementTargets, modeSelection } from "./activation-announcement.ts";
 
-type Preparation = "ordinary" | "rested-ally" | "stack-target";
+type Preparation =
+  | "ordinary"
+  | "rested-ally"
+  | "stack-target"
+  | "attacking-enemy-ally"
+  /** An opposing ACTION card activation sits on the Effects Stack. */
+  | "stack-action"
+  /** An opposing activated ability sits on the Effects Stack. */
+  | "stack-ability";
 
 interface ClassBonusActivationDiscountExample {
   readonly card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>;
   readonly discount: number;
   readonly preparation?: Preparation;
+  /** Grants the fixture champion +N levels so level-gated resolutions are active. */
+  readonly championLevel?: number;
 }
 
 function fixedReserveCost(card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>): number {
@@ -32,83 +46,22 @@ function fixedReserveCost(card: GrandArchiveAnyCard<GrandArchiveAbilityDefinitio
   return face.cost.amount;
 }
 
-function positiveFilterLeaves(
-  filter: GrandArchiveCardFilter | undefined,
-): readonly GrandArchiveCardFilter[] {
-  if (!filter || filter.kind === "not") return [];
-  if (filter.kind === "all" || filter.kind === "any") {
-    return filter.filters.flatMap(positiveFilterLeaves);
-  }
-  return [filter];
-}
-
-function announcementTargets(
-  game: GrandArchiveTestEngine,
+/**
+ * Exalted cannot enable itself (Special Elements / Exalted 1): it requires a
+ * champion that enables another advanced element, so fixture champions for
+ * Exalted cards enable the full element set.
+ */
+function exampleChampion(
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>,
   classBonusEnabled: boolean,
-): Readonly<Record<string, readonly GrandArchiveTargetId[]>> | undefined {
-  const player = game.player("player-one");
-  const declarations = grandArchiveTestFace(card).abilities.flatMap((ability) =>
-    ability.kind === "card-resolution" ? (ability.targets ?? []) : [],
-  );
-  if (declarations.length === 0) return undefined;
-
-  const targets: Record<string, readonly GrandArchiveTargetId[]> = {};
-  for (const declaration of declarations) {
-    if (declaration.count.kind === "up-to" || declaration.count.kind === "any-number") {
-      targets[declaration.id] = [];
-      continue;
-    }
-    switch (declaration.candidates.kind) {
-      case "object": {
-        const filters = positiveFilterLeaves(declaration.candidates.filter);
-        const targetsPotion = filters.some(
-          (filter) => filter.kind === "subtype" && filter.oneOf.includes("POTION"),
-        );
-        const targetsChampion = filters.some(
-          (filter) => filter.kind === "type" && filter.oneOf.includes("CHAMPION"),
-        );
-        const targetsAlly = filters.some(
-          (filter) => filter.kind === "type" && filter.oneOf.includes("ALLY"),
-        );
-        if (targetsPotion) {
-          targets[declaration.id] = [player.card(potionOfHealing, { zone: "field" }).objectId];
-        } else if (targetsChampion && !targetsAlly) {
-          targets[declaration.id] = [
-            player.card(
-              createClassBonusTestChampion(card, classBonusEnabled, "activation-discount"),
-              {
-                zone: "field",
-              },
-            ).objectId,
-          ];
-        } else {
-          targets[declaration.id] = [player.card(galesMare, { zone: "field" }).objectId];
-        }
-        break;
-      }
-      case "player":
-        targets[declaration.id] = [
-          Array.isArray(declaration.candidates.players) &&
-          declaration.candidates.players.includes("opponent")
-            ? game.player("player-two").id
-            : player.id,
-        ];
-        break;
-      case "stack-item": {
-        const stackItem = game.state.stack.at(-1);
-        if (!stackItem)
-          throw new Error(`${grandArchiveTestFace(card).name} requires a stack target.`);
-        targets[declaration.id] = [stackItem.id];
-        break;
-      }
-      default:
-        throw new Error(
-          `${grandArchiveTestFace(card).name} needs an explicit fixture for ${declaration.candidates.kind} targets.`,
-        );
-    }
+  championLevel: number,
+) {
+  let champion = createClassBonusTestChampion(card, classBonusEnabled, "activation-discount");
+  if (grandArchiveTestFace(card).elements.includes("EXALTED")) {
+    champion = enableAllTestElements(champion);
   }
-  return targets;
+  if (championLevel > 0) champion = grantTestChampionLevel(champion, championLevel);
+  return champion;
 }
 
 function activationOptions(
@@ -116,10 +69,19 @@ function activationOptions(
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>,
   classBonusEnabled: boolean,
   reserveCost: number,
+  champion: ReturnType<typeof exampleChampion>,
+  preparation: Preparation,
+  championLevel: number,
 ): NonNullable<Parameters<GrandArchivePlayerHandle["activate"]>[1]> {
   const player = game.player("player-one");
-  const targets = announcementTargets(game, card, classBonusEnabled);
+  const targets = announcementTargets(game, card, champion, preparation, championLevel);
+  const modeIds = modeSelection(card);
+  const attackAttackerId = grandArchiveTestFace(card).typeLine.types.includes("ATTACK")
+    ? player.card(champion, { zone: "field" }).objectId
+    : undefined;
   return {
+    ...(attackAttackerId ? { attackAttackerId } : {}),
+    ...(modeIds.length > 0 ? { modeIds } : {}),
     reservePayment: player
       .cards(woodlandSquirrels, { zone: "hand" })
       .slice(0, reserveCost)
@@ -133,50 +95,83 @@ function expectExactReserveCost(
   classBonusEnabled: boolean,
   preparation: Preparation,
   reserveCost: number,
+  championLevel: number,
 ): void {
-  const successful = setup(card, classBonusEnabled, preparation);
+  const champion = exampleChampion(card, classBonusEnabled, championLevel);
+  const successful = setup(card, champion, preparation);
   successful
     .player("player-one")
-    .activate(card, activationOptions(successful, card, classBonusEnabled, reserveCost));
+    .activate(
+      card,
+      activationOptions(
+        successful,
+        card,
+        classBonusEnabled,
+        reserveCost,
+        champion,
+        preparation,
+        championLevel,
+      ),
+    );
 
   if (reserveCost === 0) return;
-  const underpaid = setup(card, classBonusEnabled, preparation);
+  const underpaid = setup(card, champion, preparation);
   expect(() =>
     underpaid
       .player("player-one")
-      .activate(card, activationOptions(underpaid, card, classBonusEnabled, reserveCost - 1)),
+      .activate(
+        card,
+        activationOptions(
+          underpaid,
+          card,
+          classBonusEnabled,
+          reserveCost - 1,
+          champion,
+          preparation,
+          championLevel,
+        ),
+      ),
   ).toThrow();
 }
 
 function setup(
   card: GrandArchiveAnyCard<GrandArchiveAbilityDefinition>,
-  classBonusEnabled: boolean,
+  champion: ReturnType<typeof exampleChampion>,
   preparation: Preparation,
 ): GrandArchiveTestEngine {
   const paymentCards = Array.from({ length: fixedReserveCost(card) }, () => woodlandSquirrels);
   const game = GrandArchiveTestEngine.startFixture({
-    firstPlayer: preparation === "stack-target" ? "playerTwo" : "playerOne",
+    firstPlayer:
+      preparation === "stack-target" ||
+      preparation === "attacking-enemy-ally" ||
+      preparation === "stack-action" ||
+      preparation === "stack-ability"
+        ? "playerTwo"
+        : "playerOne",
     playerOne: {
-      champion: createClassBonusTestChampion(card, classBonusEnabled, "activation-discount"),
+      champion,
       zones: {
         hand: [card, ...paymentCards],
         field: [galesMare, potionOfHealing],
       },
     },
     playerTwo: {
-      champion: createClassBonusTestChampion(card, false, "activation-discount"),
-      zones: preparation === "stack-target" ? { hand: [woodlandSquirrels] } : undefined,
+      champion,
+      zones: {
+        ...(preparation === "stack-target" ? { hand: [woodlandSquirrels] } : {}),
+        ...(preparation === "attacking-enemy-ally" ? { field: [galesMare] } : {}),
+        ...(preparation === "stack-action" ? { hand: [blissfulCalling, woodlandSquirrels] } : {}),
+        ...(preparation === "stack-ability"
+          ? { field: [lumberingSteed], hand: [woodlandSquirrels, woodlandSquirrels] }
+          : {}),
+      },
     },
   });
   if (preparation === "rested-ally") {
     const player = game.player("player-one");
     player.declareAttack(
       player.card(galesMare, { zone: "field" }),
-      game
-        .player("player-two")
-        .card(createClassBonusTestChampion(card, false, "activation-discount"), {
-          zone: "field",
-        }),
+      game.player("player-two").card(champion, { zone: "field" }),
     );
     game.resolveCombatWithoutRetaliation();
   }
@@ -184,6 +179,40 @@ function setup(
     const opponent = game.player("player-two");
     opponent.activate(woodlandSquirrels);
     opponent.pass();
+  }
+  if (preparation === "stack-action") {
+    const opponent = game.player("player-two");
+    const [payment] = opponent.cards(woodlandSquirrels, { zone: "hand" });
+    if (!payment) throw new Error("stack-action preparation lacks its reserve payment.");
+    opponent.activate(blissfulCalling, {
+      reservePayment: [{ kind: "card", cardId: payment.objectId }],
+    });
+    opponent.pass();
+  }
+  if (preparation === "stack-ability") {
+    const opponent = game.player("player-two");
+    const payments = opponent.cards(woodlandSquirrels, { zone: "hand" });
+    if (payments.length < 2)
+      throw new Error("stack-ability preparation lacks its reserve payment.");
+    opponent.activateAbility(lumberingSteed, "ic1ahsmwd0-a2", {
+      reservePayment: payments
+        .slice(0, 2)
+        .map(({ objectId }) => ({ kind: "card", cardId: objectId })),
+    });
+    opponent.pass();
+  }
+  if (preparation === "attacking-enemy-ally") {
+    const player = game.player("player-one"),
+      opponent = game.player("player-two");
+    opponent.declareAttack(
+      opponent.card(galesMare, { zone: "field" }),
+      player.card(champion, { zone: "field" }),
+    );
+    for (let step = 0; step < 8 && game.state.combat; step += 1) {
+      const wait = game.waitState();
+      if (wait.kind !== "opportunity" || wait.playerId !== opponent.id) break;
+      opponent.pass();
+    }
   }
   return game;
 }
@@ -193,14 +222,21 @@ export function proveClassBonusActivationDiscount({
   card,
   discount,
   preparation = "ordinary",
+  championLevel = 0,
 }: ClassBonusActivationDiscountExample): void {
   const printedCost = fixedReserveCost(card);
 
   it(`reduces its legal activation payment by ${discount} while Class Bonus is enabled`, () => {
-    expectExactReserveCost(card, true, preparation, Math.max(0, printedCost - discount));
+    expectExactReserveCost(
+      card,
+      true,
+      preparation,
+      Math.max(0, printedCost - discount),
+      championLevel,
+    );
   });
 
   it("uses its full printed activation payment while Class Bonus is disabled", () => {
-    expectExactReserveCost(card, false, preparation, printedCost);
+    expectExactReserveCost(card, false, preparation, printedCost, championLevel);
   });
 }

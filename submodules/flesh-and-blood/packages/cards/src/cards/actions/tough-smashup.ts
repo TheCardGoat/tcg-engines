@@ -33,6 +33,7 @@ export const toughSmashup = definePitchFamily(fabPitchFamilies["tough-smashup"],
               prize: {
                 type: "create-token",
                 token: "toughness",
+                creator: "token-controller",
                 controller: "winner",
               },
             },

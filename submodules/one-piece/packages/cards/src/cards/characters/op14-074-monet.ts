@@ -1,0 +1,78 @@
+import type { CharacterCard } from "@tcg/op-types";
+import { op14eb04Monet074I18n } from "./op14-074-monet.i18n.ts";
+
+export const op14eb04Monet074: CharacterCard = {
+  id: "OP14-074",
+  canonicalId: "OP14-074",
+  slug: "monet/op14-074",
+  name: "Monet",
+  printings: [
+    {
+      id: "OP14-074",
+      artId: "OP14-074",
+      setCode: "OP14",
+      collectorNumber: "074",
+      rarity: "R",
+      imageUrl: "https://www.optcgapi.com/media/static/Card_Images/OP14-074_E9YuwtK.jpg",
+    },
+  ],
+  cardType: "character",
+  color: ["purple"],
+  rarity: "R",
+  setId: "OP14",
+  cost: 5,
+  power: 6000,
+  counter: 1000,
+  traits: ["Punk Hazard", "Donquixote Pirates"],
+  attribute: "special",
+  effect:
+    "[On Play] If your Leader has the {Donquixote Pirates} type, add up to 1 DON!! card from your DON!! deck and set it as active.\n[On K.O.] Draw 2 cards and trash 1 card from your hand. Then, add up to 2 DON!! cards from your DON!! deck and rest them.",
+  effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "leaderTrait",
+            trait: "Donquixote Pirates",
+            match: "includes",
+          },
+        ],
+        actions: [
+          {
+            action: "addDon",
+            count: {
+              amount: 1,
+              upTo: true,
+            },
+            state: "active",
+          },
+        ],
+      },
+      {
+        trigger: "onKo",
+        actions: [
+          {
+            action: "draw",
+            player: "self",
+            amount: 2,
+          },
+          {
+            action: "trashFromHand",
+            player: "self",
+            amount: 1,
+          },
+          {
+            action: "addDon",
+            count: {
+              amount: 2,
+              upTo: true,
+            },
+            state: "rested",
+          },
+        ],
+      },
+    ],
+  },
+  i18n: op14eb04Monet074I18n,
+};

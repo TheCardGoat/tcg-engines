@@ -49,6 +49,7 @@ export const welcomeToNightCityRetailPadreManOfTheCross = defineCyberpunkCard({
                     controller: "rival",
                     zones: ["field"],
                     cardTypes: ["unit"],
+                    state: "ready",
                     selection: {
                       mode: "choose",
                       min: 1,
@@ -92,6 +93,7 @@ export const welcomeToNightCityRetailPadreManOfTheCross = defineCyberpunkCard({
               mode: "choose",
               min: 2,
               max: 2,
+              pairConstraint: "gig-copy-between-players",
             },
           },
         },

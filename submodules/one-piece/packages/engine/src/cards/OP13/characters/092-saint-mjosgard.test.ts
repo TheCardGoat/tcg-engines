@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vite-plus/test";
-import { op05MaryGeoise097 } from "../../../../../cards/src/cards/OP05/stages/097-mary-geoise.ts";
-import { op13OroJackson078 } from "../../../../../cards/src/cards/OP13/stages/078-oro-jackson.ts";
-import { op13TheEmptyThrone099 } from "../../../../../cards/src/cards/OP13/stages/099-the-empty-throne.ts";
-import { op13SaintMjosgard092 } from "../../../../../cards/src/cards/OP13/characters/092-saint-mjosgard.ts";
+import { op05MaryGeoise097 } from "../../../../../cards/src/cards/stages/op05-097-mary-geoise.ts";
+import { op13OroJackson078 } from "../../../../../cards/src/cards/stages/op13-078-oro-jackson.ts";
+import { op13TheEmptyThrone099 } from "../../../../../cards/src/cards/stages/op13-099-the-empty-throne.ts";
+import { op13SaintMjosgard092 } from "../../../../../cards/src/cards/characters/op13-092-saint-mjosgard.ts";
 
 import { OnePieceTestEngine } from "../../../index.ts";
 

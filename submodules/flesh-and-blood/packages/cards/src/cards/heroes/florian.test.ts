@@ -7,6 +7,10 @@ import {
   FabTestEngine,
 } from "@tcg/flesh-and-blood-engine/testing";
 import { dash } from "./dash.ts";
+import { florianRotwoodHarbinger } from "./florian-rotwood-harbinger.ts";
+import { riptide } from "./riptide.ts";
+import { takeTheBaitRed } from "../actions/take-the-bait.ts";
+import { nimblismBlue } from "../actions/nimblism.ts";
 import { florian } from "./florian.ts";
 import { autumnSTouchBlue } from "../actions/autumn-s-touch.ts";
 import { chorusOfRotwoodRed } from "../actions/chorus-of-rotwood.ts";
@@ -88,4 +92,49 @@ describe("florian (FLR001) AAA", () => {
 
     expectCombat(game).toBeOpen().toHaveAttackPower(2);
   });
+});
+
+// Runtime identity interaction; the Florian specialization fixture excludes deck construction.
+describe("Florian aura creation identity", () => {
+  for (const { label, hero, threshold } of [
+    { label: "Florian", hero: florian, threshold: 4 },
+    { label: "Florian Rotwood Harbinger", hero: florianRotwoodHarbinger, threshold: 8 },
+  ]) {
+    it(`${label} increases tokens he creates under opposing control`, () => {
+      const game = FabTestEngine.start(
+        {
+          hero,
+          hand: [takeTheBaitRed],
+          banished: Array.from({ length: threshold }, () => autumnSTouchBlue),
+          deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+        },
+        { hero: dash, hand: [], deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue] },
+        FAB_MANUAL_HARNESS,
+      );
+      game.as(hero).play(takeTheBaitRed);
+      game.untilIdle({ entityTargets: "minimum" });
+      expectFabPlayer(game.as(dash)).toHaveTokenCount("bait", 2);
+      expectFabPlayer(game.as(hero)).toHaveTokenCount("bait", 0).toHaveAP(1);
+    });
+    it(`${label} does not increase tokens merely received from an opponent`, () => {
+      const game = FabTestEngine.start(
+        {
+          hero: riptide,
+          hand: [takeTheBaitRed],
+          deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+        },
+        {
+          hero,
+          hand: [],
+          banished: Array.from({ length: threshold }, () => autumnSTouchBlue),
+          deck: [nimblismBlue, nimblismBlue, nimblismBlue, nimblismBlue],
+        },
+        FAB_MANUAL_HARNESS,
+      );
+      game.as(riptide).play(takeTheBaitRed);
+      game.untilIdle({ optionals: "decline", entityTargets: "minimum" });
+      expectFabPlayer(game.as(hero)).toHaveTokenCount("bait", 1);
+      expectFabPlayer(game.as(riptide)).toHaveTokenCount("bait", 0).toHaveAP(1);
+    });
+  }
 });

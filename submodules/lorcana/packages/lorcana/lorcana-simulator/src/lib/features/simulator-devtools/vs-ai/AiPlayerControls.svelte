@@ -3,7 +3,9 @@
   import Bot from "@lucide/svelte/icons/bot";
   import CircleHelp from "@lucide/svelte/icons/circle-help";
   import SkipForward from "@lucide/svelte/icons/skip-forward";
+  import UsersRound from "@lucide/svelte/icons/users-round";
   import { AUTOMATED_ACTION_STRATEGIES } from "@tcg/lorcana-engine";
+  import { m } from "$lib/paraglide/messages.js";
   import type { AiControllableOrchestrator } from "./context.js";
   import type { AiSpeed } from "./types.js";
 
@@ -19,6 +21,7 @@
   );
   const isTakeover = $derived(state.mode === "takeover");
   const isTerminal = $derived(state.mode === "complete" || state.mode === "error");
+  const isSelfPlay = $derived(state.opponentMode === "self");
 
   function handleSpeedChange(event: Event): void {
     orchestrator.setSpeed((event.currentTarget as HTMLSelectElement).value as AiSpeed);
@@ -30,6 +33,20 @@
 </script>
 
 <div class="ai-controls">
+  {#if isSelfPlay}
+    <div class="self-play-summary" aria-live="polite">
+      <UsersRound size={14} strokeWidth={2.5} aria-hidden="true" />
+      <span>
+        <strong>{m.practice_mode_self_title()}</strong>
+        <small>
+          {m.practice_mode_self_controlling({
+            player: state.currentPerspective === "playerOne" ? "1" : "2",
+          })}
+          · {m.practice_mode_self_status()}
+        </small>
+      </span>
+    </div>
+  {:else}
   <div class="ai-badge-row">
     <Bot size={14} strokeWidth={2.5} />
     <span class="ai-label">{state.strategyLabel}</span>
@@ -154,6 +171,7 @@
   {#if state.error}
     <div class="ai-error">{state.error}</div>
   {/if}
+  {/if}
 </div>
 
 <style>
@@ -164,6 +182,35 @@
     padding: 0.35rem 0;
     border-top: 1px solid rgba(109, 149, 195, 0.16);
     margin-top: 0.2rem;
+  }
+
+  .self-play-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    color: #cbd5e1;
+  }
+
+  .self-play-summary :global(svg) {
+    margin-top: 0.1rem;
+    flex: 0 0 auto;
+    color: #fbbf24;
+  }
+
+  .self-play-summary span {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .self-play-summary strong {
+    font-size: 0.7rem;
+  }
+
+  .self-play-summary small {
+    color: #94a3b8;
+    font-size: 0.62rem;
+    line-height: 1.35;
   }
 
   .ai-badge-row {

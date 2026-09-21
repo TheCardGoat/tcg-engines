@@ -46,7 +46,7 @@ describe("persisted create-extra candidate topology", () => {
       effect: {
         type: "replacement",
         replacementKind: "standard",
-        replaces: { name: "create" },
+        replaces: { name: "create", creator: "controller", occurrences: "every" },
         modification: {
           type: "modify-numeric",
           property: "count",

@@ -88,17 +88,23 @@ export const fellingOfTheCrown = definePitchFamily(fabPitchFamilies["felling-of-
             ],
           },
           then: {
-            type: "move-card",
+            type: "for-each",
             target: {
-              selector: "object",
-              declared: "at-resolution",
-              player: "each",
-              zones: ["hand"],
-              count: 1,
+              selector: "each-hero",
             },
-            to: {
-              zone: "deck",
-              position: "bottom",
+            effect: {
+              type: "move-card",
+              target: {
+                selector: "object",
+                declared: "at-resolution",
+                player: "iteration-subject",
+                zones: ["hand"],
+                count: 1,
+              },
+              to: {
+                zone: "deck",
+                position: "bottom",
+              },
             },
           },
         },

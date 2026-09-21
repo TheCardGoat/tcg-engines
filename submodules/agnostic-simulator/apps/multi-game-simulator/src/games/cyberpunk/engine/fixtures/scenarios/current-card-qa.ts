@@ -164,7 +164,11 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
   [
     "welcometonightcityretail",
     "dum-dum-maelstrom-triggerman",
-    ["legendDumDumMaelstromTriggermanRetail"],
+    [
+      "legendDumDumMaelstromTriggermanRetail",
+      "legendDumDumDuplicateGearRetail",
+      "legendDumDumLegendGearRetail",
+    ],
     "Defeat Gear to draw.",
   ],
   [
@@ -253,7 +257,7 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
   ],
   [
     "welcometonightcityretail",
-    "el-sombrero-n-la-venganza-lenta",
+    "el-sombreron-la-venganza-lenta",
     ["unitElSombreronLaVenganzaLentaRetail"],
     "ATTACK doubles fight power.",
   ],
@@ -277,7 +281,7 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
   ],
   [
     "welcometonightcityretail",
-    "gilded-mato-n",
+    "gilded-maton",
     ["unitGildedMatonRetail"],
     "Defeat friendly Gear to defeat rival Unit.",
   ],
@@ -584,7 +588,7 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
   ],
   [
     "welcometonightcityretail",
-    "judy-a-lvarez-braindance-maestro",
+    "judy-alvarez-braindance-maestro",
     ["legendJudyAlvarezBraindanceMaestro"],
     "BRAINDANCE play trigger + Spend trash-recover ability.",
   ],
@@ -614,7 +618,7 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
   ],
   [
     "welcometonightcityretail",
-    "judy-a-lvarez-nothing-to-doubt",
+    "judy-alvarez-nothing-to-doubt",
     ["retailReleaseAug2026AllCards", "retailReleaseAug2026PlayBench"],
     "Spend reveal top of deck; free-play or add to hand.",
   ],
@@ -656,7 +660,7 @@ const CURRENT_CARD_QA_CASE_INPUTS = [
   ],
   [
     "welcometonightcityretail",
-    "muamar-reyes-el-capita-n",
+    "muamar-reyes-el-capitan",
     ["retailWtnc22FixerCallQa"],
     "Call protect-from-fight-defeat or draw; Spend adjusts a Gig.",
   ],

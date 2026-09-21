@@ -51,20 +51,6 @@ export const welcomeToNightCityRetailPacificaNetrunner = defineCyberpunkCard({
       ],
       effects: [
         {
-          effect: "spend",
-          target: {
-            selector: "bound",
-            id: "selectedUnit",
-          },
-          conditions: [
-            {
-              condition: "streetCredParity",
-              controller: "friendly",
-              parity: "even",
-            },
-          ],
-        },
-        {
           effect: "grantRule",
           target: {
             selector: "bound",
@@ -72,13 +58,7 @@ export const welcomeToNightCityRetailPacificaNetrunner = defineCyberpunkCard({
           },
           rule: "cantReady",
           duration: "untilSourceNextTurn",
-          conditions: [
-            {
-              condition: "streetCredParity",
-              controller: "friendly",
-              parity: "even",
-            },
-          ],
+          conditions: [{ condition: "streetCredParity", controller: "friendly", parity: "even" }],
         },
       ],
     },

@@ -37,10 +37,10 @@ export const nicoWhiplashAllure: GrandArchiveCard<GrandArchiveAbilityDefinition,
             kind: "event",
             event: {
               name: "card-banished",
-              actor: "controller",
               from: "graveyard",
               subject: {
                 kind: "event-object",
+                owner: "controller",
                 filter: {
                   kind: "has-keyword",
                   keyword: "floating-memory",

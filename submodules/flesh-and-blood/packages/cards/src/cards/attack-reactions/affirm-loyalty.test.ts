@@ -42,8 +42,9 @@ describe("Affirm Loyalty (FNG009) family AAA", () => {
     Fang.must.playReaction(affirmLoyaltyRed);
     game.passBoth();
 
-    // Obsidian Fire Vein 1 + 2.
-    expectCombat(game).toHaveAttackPower(3);
+    // Obsidian Fire Vein 1 + 2 (this link's Draconic reaction turns on its
+    // printed "+1{p} and go again").
+    expectCombat(game).toHaveAttackPower(4);
     expectFabCard(Fang, affirmLoyaltyRed).toBeIn("graveyard");
     expectFabPlayer(Fang).toHaveTokenCount("fealty", 0);
   });
@@ -95,7 +96,8 @@ describe("Affirm Loyalty (FNG009) family AAA", () => {
     Fang.must.playReaction(affirmLoyaltyRed);
     game.passBoth();
 
-    expectCombat(game).toHaveAttackPower(3);
+    // Obsidian Fire Vein 1 + 2 + its live Draconic-link +1{p}.
+    expectCombat(game).toHaveAttackPower(4);
     expectFabPlayer(Fang).toHaveTokenCount("fealty", 1);
   });
 });

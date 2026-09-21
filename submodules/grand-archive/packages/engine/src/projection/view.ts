@@ -309,7 +309,7 @@ function projectObject(
     controllerId: object.controllerId,
     zone: object.zone,
     ...(object.hostId ? { hostId: object.hostId } : {}),
-    ...(object.banishedBySourceId ? { banishedBySourceId: object.banishedBySourceId } : {}),
+    ...(object.banishedBy?.sourceId ? { banishedBySourceId: object.banishedBy?.sourceId } : {}),
     face: object.face,
     facing: object.facing,
     name: face.name,

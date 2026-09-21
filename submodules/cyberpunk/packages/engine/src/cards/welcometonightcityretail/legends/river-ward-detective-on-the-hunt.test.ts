@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
-  welcomeToNightCityRetailAllIsLost,
+  embracingPowerRetailStarterDeckMinotaur,
   welcomeToNightCityRetailCorpoSecurity,
+  welcomeToNightCityRetailDeadmanTransmitter,
   welcomeToNightCityRetailDelamainCab,
   welcomeToNightCityRetailFieldOperator,
   welcomeToNightCityRetailKiroshiOptics,
@@ -13,6 +14,82 @@ import {
 import { CyberpunkTestEngine, P1, P2 } from "../../../testing/index.ts";
 
 describe("River Ward - Detective on the Hunt", () => {
+  it("has the exact printed identity, Quick Spend attachment, and equipped-defeat search", () => {
+    expect(welcomeToNightCityRetailRiverWardDetectiveOnTheHunt).toMatchObject({
+      canonicalId: "river-ward-detective-on-the-hunt",
+      slug: "river-ward-detective-on-the-hunt",
+      name: "River Ward",
+      subname: "Detective on the Hunt",
+      displayName: "River Ward: Detective on the Hunt",
+      type: "legend",
+      color: "yellow",
+      classifications: ["NCPD"],
+      cost: null,
+      power: null,
+      ram: 2,
+      hasSellTag: true,
+      printNumber: "039",
+      rarity: "Rare",
+      keywords: ["quick"],
+      rulesText:
+        "{Quick} {Spend} Play a Gear with cost 2 or less from your hand for free.\nWhen a friendly equipped Unit is defeated, search the top 2 cards of your deck and trash 1.",
+      abilities: [
+        { kind: "keyword", keyword: "quick" },
+        {
+          kind: "triggered",
+          trigger: { trigger: "activated" },
+          source: { selector: "self" },
+          bindings: [
+            {
+              id: "selectedGear",
+              target: {
+                controller: "friendly",
+                zones: ["hand"],
+                cardTypes: ["gear"],
+                maxCost: 2,
+                selection: { mode: "choose", min: 1, max: 1 },
+              },
+            },
+            {
+              id: "selectedUnit",
+              target: {
+                controller: "friendly",
+                zones: ["field", "legendArea"],
+                cardTypes: ["unit", "legend"],
+                face: "faceUp",
+                selection: { mode: "choose", min: 1, max: 1 },
+              },
+            },
+          ],
+          costs: [{ cost: "spend", target: { selector: "self" } }],
+          effects: [{ effect: "attachCard", free: true }],
+        },
+        {
+          kind: "triggered",
+          trigger: {
+            trigger: "event",
+            event: {
+              event: "cardDefeated",
+              player: "friendly",
+              target: { controller: "friendly", cardTypes: ["unit"], hasAttachedCards: true },
+            },
+          },
+          effects: [
+            {
+              effect: "scry",
+              player: "friendly",
+              amount: 2,
+              destinations: [
+                { zone: "trash", min: 1, max: 1, reveal: false },
+                { zone: "deckTop", remainder: true, order: "original" },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+  });
+
   it("can equip a cheap Gear from hand to a friendly face-up Legend", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
       hand: [welcomeToNightCityRetailZetatechFaceplate],
@@ -95,9 +172,52 @@ describe("River Ward - Detective on the Hunt", () => {
     );
   });
 
+  it("uses Quick to attach a cheap Gear for free during the Rival's React Step", () => {
+    const engine = CyberpunkTestEngine.createWithFixture(
+      {
+        hand: [welcomeToNightCityRetailZetatechFaceplate],
+        field: [welcomeToNightCityRetailFieldOperator],
+        legendArea: [
+          {
+            card: welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
+            faceDown: false,
+            spent: false,
+          },
+        ],
+        eddies: 0,
+        gigArea: [{ dieType: "d4", faceValue: 1 }],
+      },
+      {
+        field: [{ card: embracingPowerRetailStarterDeckMinotaur, spent: false, hasLag: false }],
+      },
+    );
+    engine.judgeSetTurnMetadata({ activePlayerId: P2 }, { as: P1 });
+    engine.attackRival(embracingPowerRetailStarterDeckMinotaur, { as: P2 });
+    engine.resolveAttack({ as: P2 });
+
+    engine.activateAbility(welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, 1, { as: P1 });
+    engine.resolveEffectTarget(welcomeToNightCityRetailZetatechFaceplate, {
+      as: P1,
+      allowPendingChoice: true,
+      reason: "River still needs the attachment host",
+    });
+    engine.resolveEffectTarget(welcomeToNightCityRetailFieldOperator, { as: P1 });
+
+    engine.expectAttachedGear(
+      welcomeToNightCityRetailFieldOperator,
+      welcomeToNightCityRetailZetatechFaceplate,
+      { as: P1 },
+    );
+    expect(engine.getEddies(P1)).toBe(0);
+    expect(
+      engine.getCard(welcomeToNightCityRetailRiverWardDetectiveOnTheHunt, "legendArea", P1).meta
+        .spent,
+    ).toBe(true);
+  });
+
   it("is not activatable when no cheap Gear can be played from hand", () => {
     const engine = CyberpunkTestEngine.createWithFixture({
-      hand: [welcomeToNightCityRetailAllIsLost],
+      hand: [welcomeToNightCityRetailDeadmanTransmitter],
       legendArea: [
         {
           card: welcomeToNightCityRetailRiverWardDetectiveOnTheHunt,
@@ -182,8 +302,12 @@ describe("River Ward - Detective on the Hunt", () => {
     expect(engine.getCardsInZone("trash", P1).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailMantisBlades.id,
     );
-    expect(engine.getState().G.turnMetadata.pendingChoice?.type).toBe("scry");
-    expect(engine.getState().G.turnMetadata.pendingChoice?.chooserId).toBe(P1);
+    const pendingChoice = engine.getState().G.turnMetadata.pendingChoice;
+    expect(pendingChoice?.type).toBe("scry");
+    expect(pendingChoice?.chooserId).toBe(P1);
+    if (pendingChoice?.type === "scry") {
+      expect(pendingChoice.payload.revealedCardIds).toHaveLength(2);
+    }
     expect(engine.getCardsInZone("field", P2).map((card) => card.definitionId)).toContain(
       welcomeToNightCityRetailCorpoSecurity.id,
     );

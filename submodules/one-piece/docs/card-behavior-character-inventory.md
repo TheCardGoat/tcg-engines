@@ -8,6 +8,7 @@ reconciles catalog entries.
 | Canonical ID | Card                                            | Status  | Behavior or next evidence                                                |
 | ------------ | ----------------------------------------------- | ------- | ------------------------------------------------------------------------ |
 | EB01-002     | Izo                                             | verified | On Play rested-DON!! count and recipient; compound Leader trait; opponent-attack hand cost and opposing power target                                                                                     |
+| EB01-003 | Kid & Killer | verified | whenAttacking |
 | EB01-004     | Koza                                            | verified | Active-Leader -5000 power activation cost; optional opposing Character -3000 power target                                                                                                                |
 | EB01-005     | Doma                                            | vanilla  | Parameterized vanilla invariant batch                                                                                                                                                                    |
 | EB01-006     | Tony Tony.Chopper                               | verified | Public Blocker selection and retarget; DON!! x2 When Attacking opposing Character power reduction                                                                                                        |
@@ -76,6 +77,7 @@ reconciles catalog entries.
 | EB02-032     | Iceburg                                         | verified | Three-DON!! field gate, seven-card name search/order, and Stage play                                                                                                                                     |
 | EB02-033     | Klabautermann                                   | verified | Merry Go-gated permanent Blocker through public battle interaction                                                                                                                                       |
 | EB02-034     | Komei                                           | vanilla  | Parameterized vanilla invariant batch                                                                                                                                                                    |
+| EB02-035 | Sanji & Pudding | verified | whenDonReturned, onPlay |
 | EB02-036     | Nico Robin                                      | verified | Blocker K.O., optional chosen DON!! return, and compound-type search                                                                                                                                     |
 | EB02-037     | Franky                                          | verified | Compound Leader and DON!! comparison gates at both printed timings                                                                                                                                       |
 | EB02-038     | Magellan                                        | verified | Up-to hand play with compound Impel Down type and cost boundary                                                                                                                                          |
@@ -149,6 +151,12 @@ reconciles catalog entries.
 | EB03-059     | S-Snake                                         | verified | Included Egghead gate, filtered face-up top-Life add, and Trigger attack restriction                                                                                                                     |
 | EB03-061     | Uta (Manga)                                     | verified | Once-per-turn DON!! activation, mixed opposing rest target, and paid FILM restand                                                                                                                        |
 | EB03-062     | Trafalgar Law                                   | verified | Rush, hand/self-trash costs, top-deck Life add, and filtered Law hand play                                                                                                                               |
+| EB04-002 | Jewelry Bonney | verified | onPlay |
+| EB04-003 | Smoker & Tashigi | verified | Rush |
+| EB04-004 | Zeff | verified | Printed behavior is unstructured |
+| EB04-005 | Trafalgar Law | verified | Printed behavior is unstructured |
+| EB04-006 | Moda | verified | onPlay |
+| EB04-007 | Roronoa Zoro | verified | onPlay, activateMain |
 | EB04-011     | Scaled Neptunian                                | verified | Rush: Character target boundary; dynamic exact/included Neptunian draw and matching discard                                                                                                              |
 | EB04-012     | Kikunojo - EB04-012                             | verified | Played-this-turn gate, included Land of Wano Leader restand, and once-per-turn limit                                                                                                                     |
 | EB04-013     | Carrot                                          | verified | Minks Leader gate and distinct up-to-two Character plus Leader restand                                                                                                                                   |
@@ -172,7 +180,24 @@ reconciles catalog entries.
 | EB04-035     | Hitokiri Kamazo                                 | verified | Blocker and Leader-gated once-per-turn rested DON!! add after DON!! return                                                                                                                               |
 | EB04-036     | Foxy                                            | verified | DON!! return, conditional draw/trash, unconditional rest, and once-per-turn rested DON!! add                                                                                                             |
 | EB04-037     | Porche                                          | verified | Leader-gated included-trait search, reveal-to-hand, and ordered deck-bottom remainder                                                                                                                    |
+| EB04-038 | Rosinante & Law | verified | onPlay |
 | EB04-039     | Eustass"Captain"Kid - EB04-039                  | verified | Active DON!! add and optional self-trash to play an included Kid Pirates Character                                                                                                                       |
+| EB04-042 | Alpha | verified | onPlay |
+| EB04-043 | Kaku | verified | onPlay, replacement |
+| EB04-044 | Koby | verified | Printed behavior is unstructured |
+| EB04-045 | Ginny | verified | Printed behavior is unstructured |
+| EB04-046 | Doll | verified | permanent |
+| EB04-047 | Helmeppo | verified | activateMain |
+| EB04-048 | Rob Lucci | verified | onPlay |
+| EB04-051 | Emet | verified | Life Trigger |
+| EB04-052 | Sanji | verified | whenAttacking, onKo |
+| EB04-053 | Sentomaru | verified | onBlock |
+| EB04-054 | Bartholomew Kuma | verified | onPlay, onKo |
+| EB04-055 | Bartholomew Kuma | verified | onKo, Life Trigger |
+| EB04-056 | Pacifista | verified | permanent |
+| EB04-057 | Vegapunk | verified | permanent |
+| EB04-058 | Borsalino | verified | onPlay |
+| EB04-061 | Monkey.D.Luffy | verified | onPlay, permanent |
 | OP01-004     | Usopp                                           | verified | DON!!-attached opponent Event trigger and once-per-turn draw limit                                                                                                                                       |
 | OP01-005     | Uta                                             | verified | Filtered red non-Uta trash recovery with cost and category boundaries                                                                                                                                    |
 | OP01-006     | Otama                                           | verified | Opponent Character power reduction and end-of-turn cleanup                                                                                                                                               |
@@ -819,6 +844,7 @@ reconciles catalog entries.
 | OP08-003 | Twenty Doctors | verified | Blocker prompt and attack redirection |
 | OP08-004 | Kuromarimo | verified | Chess field condition gates opposing 3000-power-or-less K.O. |
 | OP08-005 | Chess | verified | Opposing -2000 power, then conditional Kuromarimo play |
+| OP08-006 | Chessmarimo | verified | Printed behavior is unstructured |
 | OP08-007 | Tony Tony.Chopper | verified | Dual own-turn timings; Animal/power search filter and rested play |
 | OP08-008 | Dalton | verified | Temporary opposing -1000; DON!! x1, Life payment and once-per-turn Rush |
 | OP08-009     | Maria Onion Bear                                | vanilla  | Parameterized vanilla invariant batch                                                                                                                                                                    |
@@ -905,6 +931,7 @@ reconciles catalog entries.
 | OP08-113 | S-Bear | verified | Hand cost, Life threshold, physical self-play, and cost-3 K.O. continuation |
 | OP08-114 | S-Hawk | verified | DON and Life-gated Slash battle protection, power bonus, and conditional Trigger play |
 | OP08-118 | Silvers Rayleigh | verified | Ordered unequal power reductions, independent targets, live-power K.O., and duration expiry |
+| OP08-119 | Kaido & Linlin | verified | whenAttacking |
 | OP09-002 | Uta | verified | Inclusive Red-Haired Pirates search, reveal, hand move, and ordered remainder |
 | OP09-003 | Shachi & Penguin | verified | When Attacking opposing Character power reduction and turn expiry |
 | OP09-004 | Shanks | verified | Global opposing Character power reduction and same-turn Rush attack |
@@ -1083,6 +1110,7 @@ reconciles catalog entries.
 | OP10-107 | Jewelry Bonney | verified | Blocker; top/bottom Life payment; exact-cost Supernovas face-up Life placement |
 | OP10-108 | Scratchmen Apoo | verified | Other yellow included-Supernovas conditional Blocker |
 | OP10-109 | Basil Hawkins | verified | On K.O. opposing top-Life trash |
+| OP10-110 | Heat & Wire | verified | onPlay, Life Trigger |
 | OP10-111 | Monkey.D.Luffy | verified | Included Supernovas search, self-name exclusion, and ordered deck-bottom remainder |
 | OP10-112 | Eustass"Captain"Kid | verified | Self-rest Life trash; two-Life end-turn draw and chosen hand trash |
 | OP10-113 | Roronoa Zoro | verified | Lower-Life Rush and Supernovas-gated Life Trigger hand payment and play |
@@ -1226,6 +1254,7 @@ reconciles catalog entries.
 | OP12-052     | Fullbody                                        | vanilla  | Parameterized vanilla invariant batch                                                                                                                                                                    |
 | OP12-053 | Borsalino | verified | Once-per-turn discard removal replacement; Navy Leader opponent-turn power and Blocker |
 | OP12-054 | Marshall.D.Teach | verified | Warlords-Leader-gated return of either owner's cost-1 Character excluding self |
+| OP12-055 | Mohji & Cabaji | vanilla | Parameterized vanilla invariant batch |
 | OP12-056 | Monkey.D.Garp | verified | Chosen hand trash before eligible blue Navy Character play |
 | OP12-062 | Vinsmoke Sora | verified | Sanji and DON!! comparison gate; rested DON!! gain then draw |
 | OP12-063 | Vinsmoke Reiju | verified | Four-Event trash threshold grants +2000 power, +5 cost, and Blocker |
@@ -1336,6 +1365,7 @@ reconciles catalog entries.
 | OP13-074 | Hera | verified | Optional included Homies power-3000-or-less hand play; power, trait, selected identity, and decline boundaries |
 | OP13-080 | St. Ethanbaron V. Nusjuro | verified | Seven-trash Rush and opponent-effect removal protection; ten-trash optional opposing -2000 attack modifier, duration, and threshold |
 | OP13-081 | Koala | verified | Included Revolutionary Army Leader cost gain; once-per-turn selected trash-to-deck cost, optional rested DON!! transfer to an own card, and decline |
+| OP13-082 | Five Elders | verified | activateMain |
 | OP13-083 | St. Jaygarcia Saturn | verified | Optional included Five Elders top-five search, ordered deck-bottom remainder, and seven-trash opponent-effect removal protection |
 | OP13-084 | St. Shepherd Ju Peter | verified | Optional zero-result Five Elders top-five search, ordered deck-bottom remainder, and seven-trash opponent-effect removal protection |
 | OP13-085     | Saint Jalmac                                    | vanilla  | Parameterized vanilla invariant batch                                                                                                                                                                    |
@@ -1459,6 +1489,289 @@ reconciles catalog entries.
 | OP14-115     | Rindo                                           | verified | Opponent-turn On K.O. optional deck-to-Life before self-damage, zero branch, and included Kuja Leader-gated physical self-play Trigger                                                                  |
 | OP14-119     | Dracule Mihawk (Manga)                          | verified | Your-turn self-rest provenance, opposing cost-9 rest restriction and expiry; optional hand cost, own battle target, +2000 duration, decline, and once-per-turn attack reaction                         |
 | OP14-120     | Crocodile - OP14-120                            | verified | Opposing cost-9 attack restriction and expiry; opponent-owned cost-0/8+ draw gate; optional physical hand cost, self-only On K.O. replay, and decline                                                   |
+| OP15-003 | Alvida | verified | Printed behavior is unstructured |
+| OP15-004 | Sea Cat | verified |Leader-power-0 gate via temporary printed-power override; up-to-1 opposing -3000 this turn; over-0-power negative|
+| OP15-005 | Cabaji | verified | Printed behavior is unstructured |
+| OP15-006 | Cavendish | verified |Trash-4-Events boundary +2000; three-Event negative keeps base power|
+| OP15-007 | Gin | verified |East-Blue-Leader gate; cost<=5 hand play excluding cost-6; no-trait negative leaves hand|
+| OP15-008 | Krieg | verified |Opp rested DON redistribution to opponent Character with live cap; Rush same-turn attack; once-per-activation -1000x attached DON; post-turn negative|
+| OP15-009 | Koby | verified |Opponent effect K.O. replacement with 7000-base-power gate; Leader -2000 payment; decline and over-threshold boundaries|
+| OP15-010 | Nezumi | verified | Printed behavior is unstructured |
+| OP15-011 | Pearl | verified |Opponent-turn East-Blue blocker with +2000; on-K.O. up-to-1 6000-base-power K.O.; battleBlocker candidate proof|
+| OP15-012 | Buggy | verified |When-attacking optional opponent rested DON to owner Leader/Character; on-K.O. draw through effect K.O.|
+| OP15-013 | Pincers | verified |Hand cost -2 under 0-power Leader play+block; full-cost negative above 0 power|
+| OP15-014 | Bartolomeo | verified |On-play Dressrosa base-cost<=3 Event activation with boost target; self-K.O. replacement by Event trash|
+| OP15-015 | Higuma | verified | Printed behavior is unstructured |
+| OP15-016 | Fullbody | vanilla | Parameterized vanilla invariant batch |
+| OP15-017 | Morgan | verified | Printed behavior is unstructured |
+| OP15-018 | Mohji | verified | Printed behavior is unstructured |
+| OP15-023 | Arlong | verified | Printed behavior is unstructured |
+| OP15-024 | Usopp | verified |On-K.O. up-to-1 cost<=7 rest; opponent-turn blocker via battleBlocker; cannotBeRested candidate exclusion under opponent rest effect|
+| OP15-025 | Kuro | verified |Cost-area DON redistribution rested-first deduction; end-of-turn deferred freeze of rested 3+ DON Character; unfed Character activates|
+| OP15-026 | Jango | verified |Top-3 look with East Blue reveal to hand and ordered bottom remainder; optional self-trash cost moving one rested DON|
+| OP15-027 | Dracule Mihawk | verified | Printed behavior is unstructured |
+| OP15-028 | Meowban Brothers | verified | Printed behavior is unstructured |
+| OP15-029 | Bartholomew Kuma | verified |On-play up-to-1 cost<=5 cannotBeRested shield excluded from opponent rest candidates; unshielded Character rested|
+| OP15-030 | Hyouzou | vanilla | Parameterized vanilla invariant batch |
+| OP15-031 | Purinpurin | verified | Printed behavior is unstructured |
+| OP15-032 | Brook | verified |On-play mixed rest of opposing card; Straw-Hat self-trash cost with base-cost<=8 set-active target|
+| OP15-033 | Hody Jones | verified |Fish-Man Leader activation from rested state plus top-Life-to-hand payment|
+| OP15-034 | Yorki | verified |Your-turn on-play +2000 limited to name-filtered Brook cards|
+| OP15-035 | Laboon | verified |Opponent effect removal replacement by resting 2 own cards; decline lets K.O. through|
+| OP15-036 | Ryuma | verified |On-play and when-attacking K.O. of rested cost<=4 Characters with active-Character exclusion|
+| OP15-040 | Viola | verified |Top-3 look with Dressrosa reveal and ordered bottom remainder|
+| OP15-041 | Orlumbus | verified |On-K.O. draw; optional return-character-to-deck cost grants Rush with once-per-turn lock|
+| OP15-042 | Kyros | verified |Rebecca-Leader trash-cost Rush with decline negative; on-K.O. self-return from trash|
+| OP15-043 | Kelly Funk | verified |On-play name-filtered Bobby Funk hand play|
+| OP15-044 | Koala | verified |Blocker keyword; on-K.O. Dressrosa-Event top-3 reveal with ordered remainder|
+| OP15-045 | Sai | verified |Blocker keyword; optional Event-trash draw 2 with decline boundary|
+| OP15-046 | Sabo | verified |Blocker keyword; Dressrosa-Leader gated Event activation incl. boost resolution|
+| OP15-047 | Sanji | verified |Blocker keyword; on-play Unblockable grant proven through unblocked attack|
+| OP15-048 | Chinjao | verified |Optional Event-trash draw 2; opponent-turn on-K.O. opaque hand pick to deck bottom|
+| OP15-049 | Hajrudin | vanilla | Parameterized vanilla invariant batch |
+| OP15-050 | Bobby Funk | verified |Kelly-Funk-adjacency +3000 with and without the named partner|
+| OP15-051 | Monkey.D.Luffy | verified |Dressrosa-Leader opponent-turn +3000; base power on own turn|
+| OP15-052 | Leo | verified |7000-base-power removal replacement placing the card at deck bottom; deck growth and trash absence|
+| OP15-053 | Rebecca | verified |DON-x1 gated Blocker through battleBlocker; top-3 Dressrosa reveal with ordered remainder|
+| OP15-059 | Amazon | verified | Printed behavior is unstructured |
+| OP15-060 | Enel | verified |6-or-less-DON removal protection excluded from K.O. pool plus +2000; 7-DON boundary removable; DON-1 cost blocker activation with hand trash|
+| OP15-061 | Ohm | verified |DON-1 return cost draw; when-attacking -1000 to one opposing Character under 6-DON gate (sign corrected from unsigned upstream text)|
+| OP15-062 | Captain Seamars | vanilla | Parameterized vanilla invariant batch |
+| OP15-063 | Gedatsu | verified |DON-1 return cost draw; on-K.O. 2000-power-or-less K.O. under 6-DON gate|
+| OP15-064 | Kotori | verified | Printed behavior is unstructured |
+| OP15-065 | Goro | verified |Reveal-top-deck cost<=2 conditional resting one DON with over-cost negative|
+| OP15-066 | Satori | verified |DON-1 return cost draw; when-attacking 6-DON-gated top-2 deck reorder with topOrBottom position choice after ordering|
+| OP15-067 | Shura | verified |6-DON-gated Rush proven through same-turn attack; 7-DON attack rejection|
+| OP15-068 | Heavenly Warriors | verified |6-DON-gated Blocker via battleBlocker; 7-DON battle resolves for damage with no blocker prompt|
+| OP15-069 | Nola | verified |Removal replacement by returning one field DON to the DON deck with decline boundary|
+| OP15-070 | Fuza | verified |Name-based Shura Unblockable grant proven through unblocked 6000-power attack vs a Blocker; opponent-turn base-power 6000 swap|
+| OP15-071 | Holly | verified |Name-based Ohm Double Attack grant proven through two-Life leader damage; opponent-turn base-power 6000 swap|
+| OP15-072 | Hotori | verified | Printed behavior is unstructured |
+| OP15-073 | Yama | verified |Blocker keyword; on-play cost-1 Heavenly Warriors hand play|
+| OP15-079 | Absalom | verified |On-K.O. Thriller Bark Pirates trash-to-hand return incl. self candidate|
+| OP15-080 | Oars | verified |Gecko-Moria-10000 and no-other-Oars gated +7000; on-K.O. three-trash-cards cost replays itself from trash (printed base power 0 flagged as upstream-unverified)|
+| OP15-081 | Sanji | verified |Straw-Hat-Leader gated 5-card deck trash|
+| OP15-082 | Charlotte Lola | verified |On-play 3-card deck trash; on-K.O. cost<=8 Character trash return incl. self candidate|
+| OP15-083 | Spoil | verified |On-play 3-card deck trash; 15-trash gated self-trash for rested DON give|
+| OP15-084 | Dr. Hogback | verified |Thriller-Bark-Leader gated 5-card deck trash; hand<=6 on-K.O. draw|
+| OP15-085 | Tony Tony.Chopper | verified |On-play 3-card deck trash; Straw-Hat-gated self-trash returning named-excluded Character from trash|
+| OP15-086 | Nami | verified | Printed behavior is unstructured |
+| OP15-087 | Nico Robin | verified |10-trash Blocker via battleBlocker; on-play draw-2 with hand trash|
+| OP15-088 | Pirates Docking Six | verified |Hand-zone +6 cost play gate; on-play deck-3 trash cost replaying Straw Hat <=2 from trash|
+| OP15-089 | Franky | vanilla | Parameterized vanilla invariant batch |
+| OP15-090 | Perona | verified |Removal replacement trashing the lone hand card automatically, saving the Character|
+| OP15-091 | Margarita | verified |On-play opposing trash card to owner deck bottom|
+| OP15-092 | Monkey.D.Luffy | verified | Trash-count ladder: 10/20/30 thresholds each proven (boundary negatives; 20-threshold mutation killed) |
+| OP15-093 | The Risky Brothers | verified | 15-trash gate, self-trash, Rush + Slash attribute grant (attribute mutation killed; decline) |
+| OP15-094 | Roronoa Zoro | verified |Straw-Hat removal replacement trashing itself; non-Straw-Hat negative K.O.s normally|
+| OP15-099 | Urouge | verified |Supernovas trash cost Rush same-turn attack; turn-Life-face-up cost with rested DON give (wording corrected from upstream face-down)|
+| OP15-100 | Kamakiri | verified |Self-trash plus top-Life cost into K.O. cost<=6 target|
+| OP15-101 | Kalgara | verified | Printed behavior is unstructured |
+| OP15-102 | Gan.Fall | verified |Sky-Island-7000 hand cost -3 gate; on-play rest opposing Character at cost<=opponent Life|
+| OP15-103 | Genbo | verified |Life Trigger draw and self-replay at Life<=2 through leader damage|
+| OP15-104 | Conis | verified |Life-below-opponent gate draw-2 trash-2; equal-Life negative|
+| OP15-105 | Jewelry Bonney | verified |7000-base-power removal replacement paying top Life to hand with decline boundary|
+| OP15-106 | Octoballoon | verified |Life Trigger draw and yellow cost<=2 hand replay through leader damage with counter decline|
+| OP15-107 | Tony Tony.Chopper | vanilla | Parameterized vanilla invariant batch |
+| OP15-108 | Nami | verified | onPlay |
+| OP15-109 | Nico Robin | verified | onPlay |
+| OP15-110 | Braham | verified | onKo |
+| OP15-111 | Mont Blanc Noland | verified | whenAttacking |
+| OP15-112 | Raki | verified | onPlay |
+| OP15-113 | Roronoa Zoro | verified | onPlay |
+| OP15-114 | Wyper | verified | onPlay, activateMain |
+| OP15-118 | Enel | verified | onPlay, permanent |
+| OP15-119 | Monkey.D.Luffy | verified | permanent |
+| OP16-002 | Izo | verified | On Play reveal 8000 Character from hand pays for the draw 1; decline and empty-pool boundaries |
+| OP16-003 | Edward.Newgate | verified | Your-turn Leader +2000 power; On Play reveal 2x8000 Characters pays for up-to-1 -6000 this turn with decline boundary |
+| OP16-004 | Curiel | vanilla | Parameterized vanilla invariant batch |
+| OP16-005 | Thatch | verified | Conditional in-hand -3 cost gated by an 8000+ power Whitebeard Pirates Character; full-cost boundary without the condition |
+| OP16-006 | Shanks | verified | On Play rest-2-DON!! cost K.O.s up to 1 Character of 4000 power or less; decline keeps DON and board |
+| OP16-007 | Jozu | verified | On Play reveal 8000 Character pays for up-to-1 -1000 this turn; decline boundary |
+| OP16-008 | Squard | verified | On Play trash-own-10000-base-power cost K.O.s up to 1 Character of 8000 power or less; unpayable-cost boundary |
+| OP16-009 | Speed Jil | verified | On Play trash 8000 Character from hand grants [Rush] and +2000; decline leaves no same-turn attack |
+| OP16-010 | Namule | verified | On Play reveal 8000 Character pays for K.O. of 2000-base-power-or-less; filter and decline boundaries |
+| OP16-011 | Vista | verified | On Play reveal 8000 Character draws; DON!! x1 When Attacking K.O.s up to 2 of 2000 base power or less; no-DON boundary |
+| OP16-012 | Benn.Beckman | verified | On Play rest-1 cost with Red-Haired Pirates Leader and 10 DON!! gates effect-playing a [Shanks] from hand |
+| OP16-013 | McGuy | verified | On K.O. up-to-1 K.O. of 8000 base power or less; empty selection declines |
+| OP16-014 | Marco | verified | Removal replacement K.O.s itself instead of an opposing-effect removal; allow and decline boundaries |
+| OP16-015 | Monkey.D.Luffy | verified | Printed behavior is unstructured |
+| OP16-016 | Ramba | vanilla | Parameterized vanilla invariant batch |
+| OP16-017 | LittleOars Jr. | verified | Conditional -4000 power without a cost-8+ Whitebeard Pirates Character; satisfied and unsatisfied boundaries |
+| OP16-018 | Rockstar | verified | Printed behavior is unstructured |
+| OP16-023 | Arlong | vanilla | Parameterized vanilla invariant batch |
+| OP16-024 | Inazuma | verified | On K.O. by opposing effect rests up to 1 opposing Character with decline boundary |
+| OP16-025 | Bunkov | verified | When Attacking with [Antlerkov] plays a cost-2-or-less Character; missing-partner boundary |
+| OP16-026 | Emporio.Ivankov | verified | On Play look-3 reveal up to 1 Impel Down to hand, bottom-order remainder, then optional cost-2 play |
+| OP16-027 | Jinbe | verified | DON!! x1 +2000 power with and without an attached DON!! |
+| OP16-028 | Smoker | vanilla | Parameterized vanilla invariant batch |
+| OP16-029 | Antlerkov | verified | When Attacking with [Bunkov] plays a cost-2-or-less Character; missing-partner boundary |
+| OP16-030 | Trafalgar Law | verified | On Play freezes a rested opposing Character through refresh; End of Your Turn activates green cost-5-or-less |
+| OP16-031 | Buggy | verified | On K.O. plays a [Prisoner of Impel Down] from hand; empty-hand boundary |
+| OP16-032 | Boa Hancock | verified | On Play target cannot be rested (attack denied) while others may; excludeName and empty-selection boundaries |
+| OP16-033 | Morley | verified | Battle K.O. replacement rests 2 own cards instead; decline allows the K.O. |
+| OP16-034 | Monkey.D.Luffy | verified | DON!! x1 your-turn +1000 per differently-named Character incl. turn boundary; On Play search reveal/order chain |
+| OP16-035 | Roronoa Zoro | verified | On Play mixed rest of an opposing card; optional trash cost auto-pay gives up to 3 rested DON!! to Leader |
+| OP16-036 | Mr.2.Bon.Kurei | verified | On Play rests cost-4-or-less target (cost filter); When Attacking sets base power to opposing Leader's |
+| OP16-037 | Mr.3 | verified | On Play gated by Impel Down Leader rests a cost-5-or-less Character; missing-trait boundary |
+| OP16-042 | Prisoner of Impel Down | verified | Printed behavior is unstructured |
+| OP16-043 | Usopp | verified | On K.O. returns an opposing cost-5-or-less Character to hand; cost filter boundary |
+| OP16-044 | Emporio.Ivankov | verified | Blocker intercepts the attack and is K.O.'d while the Leader takes no damage |
+| OP16-045 | Crocodile | verified | On Play return-cost-2-or-more cost plays an Impel Down cost-2-or-less Character; decline boundary |
+| OP16-046 | Jinbe | vanilla | Parameterized vanilla invariant batch |
+| OP16-047 | Donquixote Doflamingo | verified | Printed behavior is unstructured |
+| OP16-048 | Buggy | verified | On Play Impel Down Leader gate draws and plays a Prisoner; once-per-turn on-attack blocker grant intercepts |
+| OP16-049 | Portgas.D.Ace | verified | Activate Main rest-this cost draws 1; decline keeps active |
+| OP16-050 | Miss Olive | verified | On Play return cost draws 2 then trashes 1; decline skips exchange |
+| OP16-051 | Mohji & Cabaji | verified | On Play hand-5-or-less gate draws 2; six-card boundary draws nothing |
+| OP16-052 | Monkey.D.Luffy | verified | Activate Main once per turn gives a rested DON!! to Leader or Character; second activation rejected |
+| OP16-053 | Roronoa Zoro | verified | When Attacking hand-6-or-less gate draws 1; seven-card boundary |
+| OP16-054 | Mr.1(Daz.Bonez) | verified | DON!! x1 your-turn hand-5-or-more +3000 power with hand-size boundary; On Play draws 1 |
+| OP16-055 | Mr.2.Bon.Kurei | verified | On Play draws 1; DON!! x1 When Attacking sets base power to opposing Leader's with no-DON boundary |
+| OP16-056 | Mr.3 | verified | Activate Main self-trash draws 2 and stops a Character attacking through the next end phase; decline boundary |
+| OP16-061 | Older Brother Marine | vanilla | Parameterized vanilla invariant batch |
+| OP16-062 | Younger Brother Marine | vanilla | Parameterized vanilla invariant batch |
+| OP16-063 | Kuzan | verified | On Play adds 2 rested DON!! from deck; Activate Main once per turn DON!! 1 denies an opposing [Blocker] |
+| OP16-064 | Koby | verified | On Play look-5 takes a non-Koby Navy card and bottom-orders the remainder |
+| OP16-065 | Sakazuk | verified | On Play DON!! -1 gives -6000; Activate Main once per turn with Navy Leader adds 2 active DON!! |
+| OP16-066 | Sengoku | verified | On Play Navy Leader gate adds 2 rested DON!!, draws 2, trashes 2; non-Navy boundary |
+| OP16-067 | Tsuru | verified | On Play look-5 Navy reveal, bottom-order, then trash 1 from hand |
+| OP16-068 | Trafalgar Law | verified | On Play adds 1 active DON!!; When Attacking Donquixote Leader gate gives +3000 with boundary |
+| OP16-069 | Donquixote Doflamingo | verified | On Play and When Attacking each add up to 1 active DON!! from the DON!! deck |
+| OP16-070 | Donquixote Rosinante | verified | On Play rest-2 cost with Navy Leader adds a rested DON!!; decline boundary |
+| OP16-071 | Benevolent King of the Waves | verified | On Play trash cost adds a rested DON!!; On K.O. adds another |
+| OP16-072 | Hannyabal | verified | On Play look-5 takes an Impel Down card and bottom-orders the remainder |
+| OP16-073 | Borsalino | verified | On Play adds 1 active and 1 rested DON!!; End of Your Turn DON!! -2 re-stands with [Blocker] |
+| OP16-074 | Magellan | verified | On Play Impel Down gate returns an opposing DON!!; On K.O. returns 4 |
+| OP16-075 | Monkey.D.Garp | verified | On Play Navy Leader gate adds 1 active and 1 rested DON!!; non-Navy boundary |
+| OP16-081 | Otama | verified | Activate Main rest cost with cost-8+ ally gives an opposing Character -2000; missing-ally decline boundary |
+| OP16-082 | Kin'emon | verified | +3 cost raises play cost to 7; On Play Land of Wano Leader gate look-5 takes a LoW card and trashes the rest |
+| OP16-083 | Kouzuki Oden | verified | On Play trash cost-8-or-more Character cost draws 2; empty-pool boundary |
+| OP16-084 | Kouzuki Momonosuke | verified | Cost-20 gate rejects self-trash until raised; raised chain plays cost-9 Kouzuki Momonosuke from trash |
+| OP16-085 | Kouzuki Momonosuke | verified | On Play plays a Land of Wano cost-6-or-less Character from trash with decline boundary |
+| OP16-086 | Sanji | vanilla | Parameterized vanilla invariant batch |
+| OP16-087 | Shinobu | verified | On Play self-trash with LoW Leader draws and gives [Kouzuki Momonosuke] +20 cost; non-LoW boundary |
+| OP16-088 | Shimotsuki Ushimaru | verified | Blocker intercepts the attack and is K.O.'d while the Leader takes no damage |
+| OP16-089 | Dracule Mihawk | verified | On Play draws 2, trashes 2, gives +4 cost; Rush (Character) attacks a Character the play turn |
+| OP16-090 | Tony Tony.Chopper | verified | On Play draws 2, trashes 2, then K.O.s a cost-1-or-less Character; cost filter boundary |
+| OP16-091 | Nami | verified | On Play LoW Leader gate look-4 takes a non-Nami LoW card and trashes the rest |
+| OP16-092 | Nico Robin | verified | On Play trash cost-8-or-more Character cost draws 2; empty-pool boundary |
+| OP16-093 | Bartholomew Kuma | verified | On Play draws 2, trashes 2, then gives a rested DON!! to the Leader or a Character |
+| OP16-094 | Portgas.D.Ace | verified | On K.O. makes the opponent trash 2; Activate Main once per turn gives a rested DON!! to a LoW card |
+| OP16-095 | Monkey.D.Luffy | verified | On Play grants a black LoW Character [Unblockable] and the blocker cannot intercept |
+| OP16-096 | Yamato | verified | On K.O. plays a [Yamato] of cost 6 or less from trash |
+| OP16-097 | Yamato | verified | On Play returns a LoW cost-6-or-less Character from trash to hand then plays cost-2-or-less |
+| OP16-098 | Yamato | verified | On Play draws and trashes 1; Activate Main self-trash plays a black [Yamato] of cost 8 from trash |
+| OP16-102 | Avalo Pizarro | verified | On K.O. draws 1 and plays a [Fullalead] stage from hand; empty-pool draw-only boundary |
+| OP16-103 | Van Augur | verified | On K.O. Blackbeard Leader gate draws and gives an opposing card -3000 power |
+| OP16-104 | Catarina Devon | verified | When Attacking copies the base power of a chosen opposing Character with no-selection boundary |
+| OP16-105 | Gecko Moria | verified | [Trigger] at 1-or-less Life plays Absalom, Hogback, and Perona from trash after life damage |
+| OP16-106 | Sanjuan.Wolf | verified | On K.O. Blackbeard Leader gate draws and sets a card's base power to 7000 |
+| OP16-107 | Jesus Burgess | verified | On K.O. moves the top card of the opponent's Life to its owner's hand |
+| OP16-108 | Shiryu | verified | On Play trash cost adds a Blackbeard card to Life face-up; [Trigger] draws 2 on life damage |
+| OP16-109 | Doc Q | verified | On K.O. Blackbeard Leader gate draws and K.O.s up to 2 cost-1-or-less Characters |
+| OP16-110 | Vasco Shot | verified | On K.O. draws 1 and rests a cost-6-or-less opposing Character with cost filter |
+| OP16-111 | Boa Sandersonia | verified | Blocker intercepts the attack and rests while the Leader takes no damage |
+| OP16-112 | Boa Hancock | vanilla | Parameterized vanilla invariant batch |
+| OP16-113 | Boa Marigold | verified | Conditional [Blocker] at 2-or-less Life intercepts and is K.O.'d; no-blocker boundary above the threshold |
+| OP16-114 | Laffitte | verified | On K.O. K.O.s up to 1 opposing Character of cost 4 or less |
+| OP16-118 | Portgas.D.Ace | verified | Hand counters of 8000-power Characters become +2000 (counter battle save); On Play/K.O. look-5 search |
+| OP16-119 | Marshall.D.Teach | verified | On Play look-3 adds a card face-down to the top of Life and bottom-orders the rest; decline boundary |
+| OP17-002 | Atmos | verified | permanent |
+| OP17-003 | Izo | verified | RushCharacter |
+| OP17-004 | Inuarashi & Nekomamushi | verified | Printed behavior is unstructured |
+| OP17-005 | Edward.Newgate | verified | permanent |
+| OP17-006 | Kingdew | vanilla | Parameterized vanilla invariant batch |
+| OP17-007 | Kouzuki Oden | verified | Printed behavior is unstructured |
+| OP17-008 | Jozu | verified | Printed behavior is unstructured |
+| OP17-009 | Haruta | verified | onPlay, permanent |
+| OP17-010 | Fossa | verified | activateMain |
+| OP17-011 | Blamenco | verified | whenAttacking |
+| OP17-012 | Blenheim | verified | onKo |
+| OP17-013 | Portgas.D.Ace | verified | onPlay, permanent |
+| OP17-014 | Whitey Bay | verified | onPlay, onOpponentAttack |
+| OP17-015 | Marco | verified | onKo |
+| OP17-016 | Rakuyo | verified | onPlay |
+| OP17-021 | Crone Oil | verified | replacement |
+| OP17-022 | Shanks | verified | onPlay |
+| OP17-023 | Nami | verified | Printed behavior is unstructured |
+| OP17-024 | Howling Gab | verified | onPlay |
+| OP17-025 | Building Snake | verified | onKo, activateMain |
+| OP17-026 | Fugar | verified | whenAttacking, onKo |
+| OP17-027 | Benn.Beckman | verified | onPlay |
+| OP17-028 | Bonk Punch & Monster | verified | onPlay |
+| OP17-029 | Hongo | verified | onPlay |
+| OP17-030 | Monkey.D.Luffy | verified | onPlay, activateMain |
+| OP17-031 | Yasopp | verified | onPlay, endOfYourTurn |
+| OP17-032 | Limejuice | verified | onPlay |
+| OP17-033 | Lucky.Roux | verified | onPlay, onOpponentAttack |
+| OP17-034 | Rockstar | verified | Opponent-leader 6000+ gate (mutation killed), DON!! set, Red-Haired Leader 6000 base with cross-turn expiry |
+| OP17-035 | Roronoa Zoro | vanilla | Parameterized vanilla invariant batch |
+| OP17-040 | Edward.Newgate | verified | onPlay |
+| OP17-041 | Wang Zhi | verified | Blocker |
+| OP17-042 | Kaido | verified | onPlay |
+| OP17-043 | Ganzui | verified | replacement |
+| OP17-044 | Captain John | verified | activateMain, permanent |
+| OP17-045 | Kyo | verified | onPlay |
+| OP17-046 | Gloriosa | verified | onPlay |
+| OP17-047 | Shiki | verified | endOfYourTurn |
+| OP17-048 | Shiki | verified | whenAttacking, onOpponentAttack |
+| OP17-049 | Charlotte Linlin | verified | onOpponentAttack |
+| OP17-050 | Streusen | verified | onPlay |
+| OP17-051 | Jinbe | vanilla | Parameterized vanilla invariant batch |
+| OP17-052 | Don Marlon | verified | onPlay |
+| OP17-053 | Barbell | verified | onKo, activateMain |
+| OP17-054 | Miss Buckingham Stussy | verified | onPlay, activateMain |
+| OP17-059 | Aramaki | verified | onPlay |
+| OP17-060 | Ulti & Page One | verified | onPlay |
+| OP17-061 | Lead Performers | verified | onPlay, activateMain |
+| OP17-062 | Kaido | verified | whenDonReturned |
+| OP17-063 | Kaido | verified | activateMain |
+| OP17-064 | King | verified | onOpponentAttack |
+| OP17-065 | Queen | verified | onPlay |
+| OP17-066 | Kurozumi Orochi | verified | onPlay |
+| OP17-067 | Kurozumi Kanjuro | verified | onPlay |
+| OP17-068 | Sasaki | verified | Printed behavior is unstructured |
+| OP17-069 | Jack | verified | onPlay |
+| OP17-070 | Scratchmen Apoo | vanilla | Parameterized vanilla invariant batch |
+| OP17-071 | Who's.Who | verified | onPlay, Life Trigger |
+| OP17-072 | Black Maria | verified | onOpponentAttack |
+| OP17-073 | Basil Hawkins | verified | Printed behavior is unstructured |
+| OP17-074 | Yamato | verified | Blocker |
+| OP17-075 | X.Drake | verified | onPlay |
+| OP17-080 | Usopp | verified | onPlay, permanent |
+| OP17-081 | Gerd | verified | onPlay, permanent |
+| OP17-082 | Sanji | verified | onPlay, permanent |
+| OP17-083 | Jinbe | verified | permanent |
+| OP17-084 | Tony Tony.Chopper | verified | onPlay |
+| OP17-085 | Dorry | verified | onPlay, permanent |
+| OP17-086 | Nami | verified | onPlay |
+| OP17-087 | Nico Robin | verified | permanent |
+| OP17-088 | Hajrudin | vanilla | Parameterized vanilla invariant batch |
+| OP17-089 | Jaguar.D.Saul | verified | onPlay, permanent |
+| OP17-090 | Franky | verified | onPlay, permanent |
+| OP17-091 | Brook | verified | onPlay, permanent |
+| OP17-092 | Brogy | verified | onPlay, permanent |
+| OP17-093 | Monkey.D.Luffy | verified | onPlay, permanent |
+| OP17-094 | Rodo | verified | permanent |
+| OP17-095 | Roronoa Zoro | verified | permanent |
+| OP17-100 | Capone"Gang"Bege | vanilla | Parameterized vanilla invariant batch |
+| OP17-101 | Caribou | verified | activateMain, Life Trigger |
+| OP17-102 | Charlotte Oven | verified | onKo, Life Trigger |
+| OP17-103 | Charlotte Katakuri | verified | onPlay, Life Trigger |
+| OP17-104 | Charlotte Cracker | verified | onPlay |
+| OP17-105 | Charlotte Chiffon | verified | onPlay |
+| OP17-106 | Charlotte Smoothie | verified | onPlay, Life Trigger |
+| OP17-107 | Charlotte Daifuku | verified | Life Trigger |
+| OP17-108 | Charlotte Brulee | verified | Life Trigger |
+| OP17-109 | Charlotte Pudding | verified | onPlay, Life Trigger |
+| OP17-110 | Charlotte Perospero | verified | onPlay, Life Trigger |
+| OP17-111 | Charlotte Mont-d'or | verified | onPlay, Life Trigger |
+| OP17-112 | Charlotte Linlin | verified | onPlay |
+| OP17-113 | Streusen | verified | onPlay |
+| OP17-114 | Sweet 3 Generals | verified | onPlay, Life Trigger |
+| OP17-118 | Rocks.D.Xebec | verified | On Play draw + Rocks replay under total cost 9 (pair and cap outcomes) |
+| OP17-119 | Loki | verified | Printed behavior is unstructured |
 | P-014        | Koby (Jolly Roger Foil)                         | verified | Controller-owned Blocker redirection and battle result; physical self-play Life Trigger and decline-to-hand branch                                                                                    |
 | P-029        | Bartolomeo (P-029) (Jolly Roger Foil)           | verified | Optional end-turn self-rest cost; included FILM ownership/name filtering; selected physical set-active result and decline                                                                              |
 | P-044        | Sabo - P-044 (Pirate Foil)                      | verified | Dynamic DON!! x1 and four-card hand conjunction, visible attached-DON!! power, and five-card negative boundary                                                                                         |
@@ -1476,8 +1789,11 @@ reconciles catalog entries.
 | P-081 | Dracule Mihawk - P-081 (Pirate Foil) | verified | Optional physical self-return; post-cost three-blue-included-Cross-Guild condition; filtered up-to-one cost-5 hand play; decline and below-boundary paths |
 | P-082 | Crocodile - P-082 (Pirate Foil) | verified | Both included Leader-trait alternatives; opposing power-2000 target ownership/filtering; physical deck-bottom result and negative Leader boundary |
 | P-083 | Shanks - P-083 (Pirate Foil) | verified | DON!! ×1 attack gate; optional Character-only hand-trash cost; opposing up-to-one power reduction; ordered draw; decline and no-DON!! boundaries |
+| P-084 | Buggy | verified | Cannot-attack auras (self; both sides cost 3-4 under Buggy Leader) + Cross Guild cost<=6 replay |
 | P-085 | Jewelry Bonney - P-085 (Pirate Foil) | verified | Included-Supernovas Leader and Life-comparison gates; opponent cost-4 filtering; top-or-bottom face-up Life placement; both negative boundaries |
 | P-088 | Trafalgar Law - P-088 (Pirate Foil) | verified | Controller-owned Life Trigger; included-Supernovas and post-damage total-Life gates; same physical card play; failed-condition trash paths |
+| P-105 | Sabo | verified | On Play life-to-hand + DON!! gift; RA-conditional Blocker/+4 cost (condition mutation killed) |
+| P-107 | Gol.D.Roger | verified | Printed behavior is unstructured |
 | PRB02-001 | Koby | verified | Included-Navy opponent-turn power and expiry; optional base-power-3000 K.O.; ordered six-card draw gate after both selection branches; seven-card exclusion |
 | PRB02-002 | Trafalgar Law - PRB02-002 | verified | Optional attack power reduction and expiry; self-only opponent-effect removal replacement; owner choice; once-per-turn, decline, and battle K.O. boundaries |
 | PRB02-003 | Lucky.Roux | verified | Character-only 6000-power hand-trash cost; ordered draw two; decline; public Blocker redirection and battle result |
@@ -1537,6 +1853,7 @@ reconciles catalog entries.
 | ST14-010     | Brook - ST14-010 (Pirate Foil)                  | vanilla  | Parameterized vanilla invariant batch                                                                                                                                                                    |
 | ST14-013     | Roronoa Zoro - ST14-013 (Pirate Foil)           | vanilla  | Parameterized vanilla invariant batch                                                                                                                                                                    |
 | ST15-002     | Edward.Newgate (SP)                             | verified | Rested-DON!! attachment, self-rest activation, and power-filtered K.O.                                                                                                                                   |
+| ST15-005 | Portgas.D.Ace | verified | replacement |
 | ST16-003 | Charlotte Katakuri (Pirate Foil) | verified | Included-FILM Leader and exact six-own-rested-card gates; opponent-card exclusion; permanent power visibility |
 | ST16-004     | Shanks (SP)                                     | verified | On Play rested-only K.O. eligibility and exclusion boundaries                                                                                                                                           |
 | ST16-005 | Monkey.D.Luffy - ST16-005 (Pirate Foil) | verified | Rested named-Uta condition; own-field ownership; active-Uta and opponent-Uta exclusions; permanent power visibility |
@@ -1551,11 +1868,15 @@ reconciles catalog entries.
 | ST19-002     | Sengoku - ST19-002 (Pirate Foil)                | verified | Two black included-Navy hand-trash cost and included-Navy Leader-gated draw                                                                                                                              |
 | ST20-003 | Charlotte Brulee (Pirate Foil) | verified | Controller-owned Life Trigger; either-owner or skip choice; private physical top-Life placement; same Trigger card returned to hand |
 | ST21-003 | Sanji - ST21-003 (Pirate Foil) | verified | Optional own included-Straw-Hat power-6000 target; selected-attacker-only Blocker prohibition; decline leaves attack blockable |
+| ST26-005 | Monkey.D.Luffy | verified | Dual-trigger DON!!-2 set-base-power 7000 on multicolored Straw Hat Leader (opponent-DON negative; expiry via duration) |
+| ST27-005 | Marshall.D.Teach | verified | activateMain |
+| ST31-004 | Monkey.D.Luffy | verified | On Play per-Straw-Hat debuff via amountFromMatchingCards (trait mutation killed); Rush threshold; self-count always >=1 |
+| ST32-002 | Kouzuki Oden | verified | onPlay |
 
 ## Progress
 
-- Canonical characters: 1544.
+- Canonical characters: 1865.
 - Verified: 1344.
-- Structured pending: 0.
-- Printed but unstructured: 0.
-- Canonical vanilla covered by the parameterized invariant: 200.
+- Structured pending: 262.
+- Printed but unstructured: 37.
+- Canonical vanilla awaiting the parameterized invariant: 222.

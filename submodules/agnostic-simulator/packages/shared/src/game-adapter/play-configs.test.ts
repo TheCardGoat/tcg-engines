@@ -111,6 +111,9 @@ describe("deriveMatchAccessPolicy", () => {
 });
 
 test("uses supported hosted practice authority without changing sibling defaults", () => {
+  expect(resolveQuickMatchAuthority("cyberpunk")).toBe("server");
+  expect(resolveQuickMatchAuthority("cyberpunk", "client")).toBeUndefined();
+  expect(resolveQuickMatchAuthority("cyberpunk", "server")).toBe("server");
   expect(resolveQuickMatchAuthority("flesh-and-blood")).toBe("server");
   expect(resolveQuickMatchAuthority("flesh-and-blood", "client")).toBeUndefined();
   expect(resolveQuickMatchAuthority("flesh-and-blood", "server")).toBe("server");

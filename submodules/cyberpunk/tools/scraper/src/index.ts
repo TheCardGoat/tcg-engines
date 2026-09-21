@@ -338,6 +338,38 @@ export function extractDetailFallbackPrintings($: CheerioAPI): DetailFallbackPri
   return printings;
 }
 
+/**
+ * Canonical accent fold for slugs. Kept byte-compatible with the platform
+ * slugify (`@tcg/shared/utils`): decompose, strip combining marks, lowercase,
+ * drop punctuation, hyphenate whitespace/underscore runs.
+ */
+function canonicalSlugify(text: string): string {
+  return text
+    .normalize("NFKD")
+    .replace(/\p{M}/gu, "")
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_—-]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/**
+ * Upstream slugifiers hyphenated combining marks instead of stripping them
+ * ("Gilded Matón" → `gilded-mato-n`). Whenever a card name carries diacritics,
+ * derive the stored slug from the canonical fold of its display name so the
+ * catalog converges on accent-free slugs regardless of the upstream source.
+ * Names without diacritics keep the upstream slug untouched (their punctuation
+ * policy belongs to upstream).
+ */
+export function foldAccentMangledSlug(rawCard: RawCardRecord): RawCardRecord {
+  const displayName = rawCard.display_name || rawCard.name;
+  if (!/\p{M}/u.test(displayName.normalize("NFD"))) return rawCard;
+  const slug = canonicalSlugify(displayName);
+  if (!slug || slug === rawCard.slug) return rawCard;
+  return { ...rawCard, slug };
+}
+
 export function normalizeCard(rawCard: RawCardRecord): CardDefinition {
   const timingTriggers: TimingTrigger[] = [];
   const keywords: CardKeyword[] = [];
@@ -582,18 +614,21 @@ export async function fetchRawCard(
 export async function scrapeCatalog(
   options: ScrapeCatalogOptions = {},
 ): Promise<ScrapedCatalogSnapshot> {
-  const rawCards = await fetchAllRawCards(options);
+  const rawCards = (await fetchAllRawCards(options)).map(foldAccentMangledSlug);
 
   rawCards.sort((left, right) => left.slug.localeCompare(right.slug));
 
   assertUnique(rawCards, "id", (card) => card.id);
   assertUnique(rawCards, "external_id", (card) => card.external_id);
-  assertUnique(rawCards, "slug", (card) => card.slug);
+  // Accent folding can converge a retail slug onto the same slug as a spoiler
+  // printing of the same card; slugs only have to be unique within a set (the
+  // merged card layer unions cross-set printings onto one canonical entry).
+  assertUnique(rawCards, "slug within set", (card) => `${card.set.code}:${card.slug}`);
 
   const cards = rawCards.map(normalizeCard);
 
   assertUnique(cards, "id", (card) => card.id);
-  assertUnique(cards, "slug", (card) => card.slug);
+  assertUnique(cards, "slug within set", (card) => `${card.set.code}:${card.slug}`);
 
   return {
     rawCards,

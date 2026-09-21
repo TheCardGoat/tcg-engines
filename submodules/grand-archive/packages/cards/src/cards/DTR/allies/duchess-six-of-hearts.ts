@@ -118,52 +118,12 @@ export const duchessSixOfHearts: GrandArchiveCard<GrandArchiveAbilityDefinition,
               kind: "sequence",
               effects: [
                 {
-                  kind: "banish",
-                  player: "controller",
-                  selection: {
-                    id: "banished-action",
-                    kind: "choice",
-                    declared: "resolution",
-                    chooser: "controller",
-                    count: {
-                      kind: "exactly",
-                      amount: 1,
-                    },
-                    candidates: {
-                      kind: "card",
-                      zones: ["graveyard"],
-                      relationship: "zone-of",
-                      player: "controller",
-                      filter: {
-                        kind: "all",
-                        filters: [
-                          {
-                            kind: "type",
-                            oneOf: ["ACTION"],
-                          },
-                          {
-                            kind: "element",
-                            oneOf: ["FIRE"],
-                          },
-                          {
-                            kind: "numeric",
-                            comparison: {
-                              left: {
-                                kind: "property",
-                                subject: {
-                                  kind: "candidate",
-                                },
-                                property: "reserve-cost",
-                                basis: "base",
-                              },
-                              operator: "lte",
-                              right: 2,
-                            },
-                          },
-                        ],
-                      },
-                    },
+                  kind: "banish-object",
+                  subject: {
+                    kind: "bound",
+                    binding: "banished-action",
                   },
+                  from: "graveyard",
                 },
                 {
                   kind: "copy",
@@ -171,7 +131,7 @@ export const duchessSixOfHearts: GrandArchiveCard<GrandArchiveAbilityDefinition,
                     kind: "bound",
                     binding: "banished-action",
                   },
-                  copy: "card-activation",
+                  copy: "object",
                   bindResultAs: "copied-action",
                 },
                 {

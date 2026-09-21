@@ -1,3 +1,4 @@
+import type { DropEligibility } from "./drop-eligibility.js";
 import type { PresentationEnvelope } from "./presentation.js";
 /**
  * Server -> Client payload shapes.
@@ -61,6 +62,7 @@ export interface PendingProposal {
     | "disable_manual_mode";
   senderPlayerId: string;
   deadline: number;
+  undoScope?: "last_move" | "turn_start";
 }
 
 export interface GameJoinedPayload {
@@ -79,6 +81,8 @@ export interface GameJoinedPayload {
   interactionView?: EngineInteractionView;
   /** Whether the seated recipient may undo the latest authoritative move. */
   undoable?: boolean;
+  /** Server-projected drop claim for this viewer's opponent. Spectators receive a view-only copy. */
+  dropEligibility?: DropEligibility;
   correlationId?: string;
 }
 
@@ -127,6 +131,8 @@ export interface ClientUpdateBaseProperties {
   interactionView?: EngineInteractionView;
   /** Whether the receiving player may undo their latest authoritative move. */
   undoable?: boolean;
+  /** Server-projected drop claim for this viewer's opponent. */
+  dropEligibility?: DropEligibility;
 }
 
 export interface StateSyncPayload extends Omit<ClientUpdateBaseProperties, "patches"> {}
@@ -169,6 +175,12 @@ export interface PresenceChangePayload {
   status: "connected" | "disconnected";
   /** ISO-8601 timestamp of when the player disconnected. Only present when status is "disconnected". */
   disconnectedAt?: string;
+}
+
+/** Per-actor refresh of drop claim legality after clocks or presence change. */
+export interface DropEligibilityPayload {
+  gameId: string;
+  dropEligibility: DropEligibility;
 }
 
 export interface GameEndedPayload {
@@ -238,6 +250,12 @@ export interface MatchFoundPayload {
 
 export interface MatchmakingCancelledPayload {
   reason: "timeout" | "manual" | "match_creation_error";
+  /**
+   * Server-side failure description for `match_creation_error` (e.g.
+   * "Card not found: gilded-maton") so clients can explain why a paired match
+   * never materialized.
+   */
+  detail?: string;
 }
 
 export interface MatchReadyPayload {
@@ -273,7 +291,7 @@ export interface LobbyPlayerJoinedPayload {
 
 export interface LobbyRoomCancelledPayload {
   roomCode: string;
-  reason: "creator_cancelled" | "expired";
+  reason: "creator_cancelled" | "expired" | "match_creation_error";
 }
 
 export interface LobbyPlayerLeftPayload {
@@ -330,6 +348,8 @@ export interface ProposalReceivedPayload {
   actionType: string;
   senderPlayerId: string;
   deadline: number;
+  /** Undo granularity. Omitted for non-undo and legacy last-move requests. */
+  undoScope?: "last_move" | "turn_start";
 }
 
 export interface ProposalResolvedPayload {
@@ -337,12 +357,14 @@ export interface ProposalResolvedPayload {
   matchId: string;
   actionType: string;
   resolution: "accepted" | "declined" | "failed";
+  undoScope?: "last_move" | "turn_start";
 }
 
 export interface ProposalExpiredPayload {
   gameId: string;
   matchId: string;
   actionType: string;
+  undoScope?: "last_move" | "turn_start";
 }
 
 /**
@@ -386,6 +408,32 @@ export interface FriendMessagePayload {
   fromUserName: string;
   content: string;
   sentAt: string;
+}
+
+/** Full public-lobby list for one game namespace after a lobby state change. */
+export interface PublicLobbyRoomsSnapshotPayload {
+  generatedAt: string;
+  rooms: {
+    object: "lobby_room_list";
+    rooms: Array<{
+      object: "lobby_room";
+      roomCode: string;
+      status: "waiting" | "ready" | "matched";
+      bestOf: 1 | 3;
+      createdAt: number;
+      expiresAt: number;
+      visibility: "private" | "public";
+      isCreator: boolean;
+      isJoiner: boolean;
+      creatorDisplayName: string | null;
+      joinerDisplayName: string | null;
+      creatorDeckId: string;
+      creatorDeckName: string | null;
+      joinerDeckId: string | null;
+      joinerDeckName: string | null;
+    }>;
+    total: number;
+  };
 }
 
 /** Public-only snapshot delivered to matchmaking-page viewers in one game namespace. */

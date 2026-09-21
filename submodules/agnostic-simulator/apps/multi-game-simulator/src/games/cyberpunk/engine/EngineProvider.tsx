@@ -7,12 +7,15 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+import { notifications } from "@mantine/notifications";
 import type { SimulatorExternalCommandGate } from "@tcg/simulator-runtime/animation";
 import { buildCyberpunkInteractionView } from "@tcg/cyberpunk-server-adapter/interaction-protocol";
 import {
   AIPlayer,
   stripPrivateFields,
   type AIStrategy,
+  boundDeckProfile,
+  withDeckProfile,
   type CyberpunkTestEngine,
   type GameEvent,
   type MatchState,
@@ -33,6 +36,7 @@ import type {
   InteractionAction,
   InteractionSubmission,
   InteractionSubmissionValue,
+  UndoScopeValue,
 } from "@tcg/protocol";
 import { DEFAULT_SCENARIO, getScenario, P1, P2, type ScenarioId } from "./fixtures/scenarios";
 import { AI_SPEED_MS, type AiMode, type AiSpeed } from "./aiStatus";
@@ -41,6 +45,7 @@ import type { EngineAction } from "../types/e2e";
 import type { CyberpunkAnalyticsEnvelope } from "../components/EndGameModal/postGameApi";
 import { EngineContext } from "./engineContext";
 import { actionToInteractionSubmission } from "./live/actionToInteraction";
+import { isManualEngineAction, manualActionPayload } from "./boardCorrection";
 import { otherSide, PLAYER_SIDE_TO_ID, type Side } from "./sides";
 
 // Re-export so consumers that imported `EngineAction` from this module keep
@@ -114,6 +119,43 @@ function hasPriorityStatus(view: EngineInteractionView): boolean {
   return view.status === "choosing" || view.status === "ready";
 }
 
+// ── AI stall watchdog tuning ──────────────────────────────────────────────
+// The auto loop halts while lastAiError is set (a single thrown/illegal step
+// would otherwise flood the log) and while the animation command gate is
+// blocked. Both conditions are normally transient, but nothing cleared them
+// on its own, so a bot seat could sit on a mandatory prompt — most painfully
+// the opening mulligan, where CR 7.9.2 keeps the human's window closed until
+// the bot answers — while its clock drains. These thresholds are far above
+// normal pacing (AI_SPEED_MS + animation chains), so reaching them means the
+// loop itself is wedged.
+export const AI_STALL_RETRY_MS = 8_000;
+export const AI_STALL_RETRY_SPACING_MS = 4_000;
+export const AI_STALL_FORCED_LIMIT = 3;
+export const AI_STALL_FALLBACK_MS = 24_000;
+const AI_STALL_WATCHDOG_TICK_MS = 1_000;
+
+/**
+ * Last-resort strategy for the watchdog: answers an unanswered prompt with
+ * the safest legal move. During the opening mulligan that is `keepHand`
+ * (never worse than redrawing blind); otherwise pass or the first no-input
+ * action, so the game always advances.
+ */
+const STALL_FALLBACK_STRATEGY: AIStrategy = {
+  name: "stall-fallback",
+  decideAction: (ctx) => {
+    const moves = ctx.prompt.availableMoves;
+    const safeMove =
+      moves.find((move) => move.moveId === "keepHand") ??
+      moves.find((move) => move.moveId === "passPhase") ??
+      moves.find((move) => move.inputSpec.type === "none") ??
+      moves[0];
+    if (!safeMove) {
+      return { kind: "stuck", reason: "stall-fallback: no available moves" };
+    }
+    return { kind: "command", move: safeMove.moveId };
+  },
+};
+
 /** Optional AI configuration: drive one or both sides with a strategy. */
 export interface AISideConfig {
   player?: AIStrategy | null;
@@ -160,7 +202,7 @@ function singletonCardTargetAction(
   const min = choice.payload.min ?? 1;
   const max = choice.payload.max ?? 1;
   const eligibleIds = choice.payload.eligibleIds ?? [];
-  if (min !== 1 || max !== 1 || eligibleIds.length !== 1) {
+  if (min !== 1 || max !== 1 || eligibleIds.length !== 1 || choice.payload.canDecline) {
     return null;
   }
   const sourceCard = state.G.cardIndex[choice.payload.sourceCardId as unknown as string];
@@ -340,7 +382,7 @@ export interface EngineContextValue {
    * Newest last, capped at {@link RAW_ENGINE_EVENT_CAP}.
    */
   rawEngineEvents: ReadonlyArray<RawEngineEventEntry>;
-  /** True when the previous move can be undone without crossing a reveal barrier. */
+  /** True when the previous move can be undone. */
   canUndo: boolean;
   /** True when the current turn can be rewound to its clean main-phase checkpoint. */
   canUndoToTurnStart: boolean;
@@ -362,6 +404,21 @@ export interface EngineContextValue {
   sendChatText: (text: string) => void;
   /** Request opponent approval for free-text chat. */
   requestFreeTextChat: () => boolean;
+  /** True after both hosted players approve board-state correction, or after a local toggle. */
+  boardCorrectionEnabled: boolean;
+  /** True while the local player is waiting for board-correction approval. */
+  boardCorrectionProposalPending: boolean;
+  /** True when this surface can request board-correction approval from the opponent. */
+  canRequestBoardCorrection: boolean;
+  /**
+   * True only for hosted human-vs-human matches. Practice / vs-bot enables
+   * immediately with no opponent confirmation.
+   */
+  boardCorrectionNeedsConsent: boolean;
+  /** Request opponent approval, or enable immediately in local practice. */
+  requestBoardCorrection: () => boolean;
+  /** Exit board-state correction. Hosted disable is unilateral. */
+  exitBoardCorrection: () => boolean;
 
   // ── Setters ───────────────────────────────────────────────────────────────
   /** Move the human seat to the given side (and so flip the board camera). */
@@ -473,7 +530,7 @@ interface EngineProviderProps {
   /** Viewer-safe native prompt paired with the live interaction projection. */
   remotePrompt?: PlayerPrompt;
   /** Request a server-authority undo through the host surface. */
-  requestRemoteUndo?: () => boolean;
+  requestRemoteUndo?: (scope: UndoScopeValue) => boolean;
   /** Server-authority move logs collected from gateway updates. */
   remoteMoveLogs?: ReadonlyArray<MoveLog>;
   /** Server-authority animation scripts collected from gateway updates. */
@@ -494,6 +551,22 @@ interface EngineProviderProps {
   sendRemoteChatText?: (text: string) => boolean;
   /** Hosted free-text proposal sender. */
   requestRemoteFreeTextChat?: () => boolean;
+  /** Hosted board-correction flag from the match shell. */
+  remoteBoardCorrectionEnabled?: boolean;
+  /** Hosted board-correction proposal pending flag. */
+  remoteBoardCorrectionProposalPending?: boolean;
+  /** Whether this hosted session may ask the opponent to enable board correction. */
+  canRequestBoardCorrection?: boolean;
+  /** Hosted enable proposal sender. */
+  requestRemoteBoardCorrection?: () => boolean;
+  /** Hosted unilateral disable sender. */
+  requestRemoteBoardCorrectionExit?: () => boolean;
+  /** Hosted execute_move sender for board-correction commands. */
+  remoteExecuteMove?: (input: {
+    moveType: string;
+    payload: Record<string, unknown>;
+    expectedVersion: number;
+  }) => boolean;
   /** Server-authority live match has one optimistic move awaiting ack. */
   hasPendingRemoteMove?: boolean;
   /** Return target for hosted matches once the game is over. */
@@ -549,22 +622,86 @@ function toSubmissionValue(value: unknown): InteractionSubmissionValue | undefin
   return undefined;
 }
 
+/**
+ * Board-correction rewind against a local engine: restore the in-memory
+ * start-of-turn checkpoint. The checkpoint lives on the LocalEngine instance
+ * only — it is never serialized into the match state, so nothing about it
+ * reaches Redis snapshots and it is unavailable after a worker restore.
+ */
+function rewindToTurnStartResult(eng: CyberpunkTestEngine): CommandResult {
+  const local = eng.getLocalEngine();
+  const outcome = local.restoreToTurnStart();
+  const state = eng.getState();
+  if (!outcome.success) {
+    return {
+      success: false,
+      error: outcome.error,
+      errorCode: outcome.errorCode,
+      currentStateID: state.ctx.stateID,
+    };
+  }
+  return {
+    success: true,
+    stateID: state.ctx.stateID,
+    state,
+    patches: [],
+    inversePatches: [],
+    gameEvents: [],
+    moveLogs: [],
+    animationScript: EMPTY_ANIMATION_SCRIPT,
+    processedCommand: {
+      commandID: `rewindToTurnStart:${state.ctx.stateID}`,
+      move: "rewindToTurnStart",
+      input: { args: {} },
+    },
+    undoable: false,
+  };
+}
+
 export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineAction): CommandResult {
   switch (action.type) {
     case "playCard":
-      return action.attachToId
-        ? eng.executeMove(
-            "playCard",
-            { args: { cardId: action.cardId, attachToId: action.attachToId } },
-            action.as,
-          )
-        : eng.playCard(action.cardId, { as: action.as });
+      return eng.executeMove(
+        "playCard",
+        {
+          args: {
+            cardId: action.cardId,
+            ...(action.attachToId === undefined ? {} : { attachToId: action.attachToId }),
+            ...(action.paymentSourceIds === undefined
+              ? {}
+              : { paymentSourceIds: action.paymentSourceIds }),
+          },
+        },
+        action.as,
+      );
     case "sellCard":
       return eng.sellCard(action.cardId, { as: action.as });
     case "callLegend":
-      return eng.callLegend(action.cardId, { as: action.as });
+      return eng.executeMove(
+        "callLegend",
+        {
+          args: {
+            legendId: action.cardId,
+            ...(action.paymentSourceIds === undefined
+              ? {}
+              : { paymentSourceIds: action.paymentSourceIds }),
+          },
+        },
+        action.as,
+      );
     case "goSolo":
-      return eng.executeMove("goSolo", { args: { cardId: action.cardId } }, action.as);
+      return eng.executeMove(
+        "goSolo",
+        {
+          args: {
+            cardId: action.cardId,
+            ...(action.paymentSourceIds === undefined
+              ? {}
+              : { paymentSourceIds: action.paymentSourceIds }),
+          },
+        },
+        action.as,
+      );
     case "attackUnit":
       return eng.attackUnit(action.attackerId, action.defenderId, { as: action.as });
     case "attackRival":
@@ -584,7 +721,7 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
         action.as,
       );
     case "resolveAdjustGig":
-      return eng.executeMove("resolveAdjustGig", { args: { value: action.value } }, action.as);
+      return eng.executeMove("resolveAdjustGig", { args: action.choice }, action.as);
     case "resolveEffectTarget":
       return eng.executeMove(
         "resolveEffectTarget",
@@ -595,6 +732,20 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
       return eng.executeMove(
         "resolveDiscardFromHand",
         { args: { cardIds: action.cardIds, pass: action.pass } },
+        action.as,
+      );
+    case "resolvePreventGigSteal":
+      return eng.executeMove(
+        "resolvePreventGigSteal",
+        {
+          args: {
+            pass: action.pass,
+            preventions: action.dieIds.map((dieId, index) => ({
+              dieId,
+              cardId: action.cardIds[index]!,
+            })),
+          },
+        },
         action.as,
       );
     case "resolveScry":
@@ -645,8 +796,121 @@ export function executeEngineAction(eng: CyberpunkTestEngine, action: EngineActi
       );
     case "resolveCardToMove":
       return eng.resolveCardToMove(action.cardId, { pass: action.pass, as: action.as });
+    case "resolveRedirectDefeat":
+      return eng.executeMove("resolveRedirectDefeat", { args: { pass: action.pass } }, action.as);
+    case "resolveSacrificialGear":
+      return eng.executeMove(
+        "resolveSacrificialGear",
+        { args: { cardId: action.cardId } },
+        action.as,
+      );
+    case "resolveFirstPlayer":
+      return eng.executeMove(
+        "resolveFirstPlayer",
+        { args: { goFirst: action.goFirst } },
+        action.as,
+      );
+    case "cancelPendingResolution":
+      return eng.executeMove("cancelPendingResolution", { args: {} }, action.as);
     case "concede":
       return eng.concede({ as: action.as });
+    case "manualSetGigValue":
+      return eng.executeMove(
+        "manualSetGigValue",
+        { args: { dieId: action.dieId, value: action.value } },
+        action.as,
+      );
+    case "manualMoveGig":
+      return eng.executeMove(
+        "manualMoveGig",
+        {
+          args: {
+            dieId: action.dieId,
+            toPlayerId: action.toPlayerId,
+            location: action.location,
+          },
+        },
+        action.as,
+      );
+    case "manualMoveCard":
+      return eng.executeMove(
+        "manualMoveCard",
+        {
+          args: {
+            cardId: action.cardId,
+            toZone: action.toZone,
+            deckPosition: action.deckPosition,
+          },
+        },
+        action.as,
+      );
+    case "manualAttachGear":
+      return eng.executeMove(
+        "manualAttachGear",
+        { args: { gearId: action.gearId, hostId: action.hostId } },
+        action.as,
+      );
+    case "manualDetachGear":
+      return eng.executeMove("manualDetachGear", { args: { gearId: action.gearId } }, action.as);
+    case "manualExertCard":
+      return eng.executeMove("manualExertCard", { args: { cardId: action.cardId } }, action.as);
+    case "manualReadyCard":
+      return eng.executeMove("manualReadyCard", { args: { cardId: action.cardId } }, action.as);
+    case "manualDrawCard":
+      return eng.executeMove(
+        "manualDrawCard",
+        { args: { from: action.from, playerId: action.playerId } },
+        action.as,
+      );
+    case "manualClearPendingResolution":
+      return eng.executeMove(
+        "manualClearPendingResolution",
+        { args: { scope: action.scope } },
+        action.as,
+      );
+    case "manualResetCombat":
+      return eng.executeMove("manualResetCombat", { args: {} }, action.as);
+    case "manualForcePassTurn":
+      return eng.executeMove("manualForcePassTurn", { args: {} }, action.as);
+    case "manualSetEddies":
+      return eng.executeMove(
+        "manualSetEddies",
+        {
+          args: {
+            ...(action.playerId ? { playerId: action.playerId } : {}),
+            amount: action.amount,
+          },
+        },
+        action.as,
+      );
+    case "manualResetOncePerTurn":
+      return eng.executeMove(
+        "manualResetOncePerTurn",
+        { args: action.playerId ? { playerId: action.playerId } : {} },
+        action.as,
+      );
+    case "manualSetCardFace":
+      return eng.executeMove(
+        "manualSetCardFace",
+        { args: { cardId: action.cardId, faceDown: action.faceDown } },
+        action.as,
+      );
+    case "manualReadyAll":
+      return eng.executeMove(
+        "manualReadyAll",
+        { args: action.playerId ? { playerId: action.playerId } : {} },
+        action.as,
+      );
+    case "manualRecomputeActiveEffects":
+      return eng.executeMove("manualRecomputeActiveEffects", { args: {} }, action.as);
+    case "manualDropEffectBagEntry":
+      return eng.executeMove(
+        "manualDropEffectBagEntry",
+        { args: { entryId: action.entryId } },
+        action.as,
+      );
+    case "rewindToTurnStart":
+      return rewindToTurnStartResult(eng);
     case "undo":
     case "undoToTurnStart":
       return {
@@ -712,6 +976,12 @@ export function EngineProvider({
   sendRemoteChatPreset,
   sendRemoteChatText,
   requestRemoteFreeTextChat,
+  remoteBoardCorrectionEnabled = false,
+  remoteBoardCorrectionProposalPending = false,
+  canRequestBoardCorrection = false,
+  requestRemoteBoardCorrection,
+  requestRemoteBoardCorrectionExit,
+  remoteExecuteMove,
   hasPendingRemoteMove = false,
   remoteReturnUrl,
   postGameContext,
@@ -724,9 +994,11 @@ export function EngineProvider({
   // tear down React subscribers. We bump `version` to trigger re-renders.
   const customEngineBuilderRef = useRef<typeof initialEngineBuilder>(initialEngineBuilder);
   const syncedEngineBuilderRef = useRef<typeof initialEngineBuilder>(initialEngineBuilder);
-  const engineRef = useRef<CyberpunkTestEngine>(
-    initialEngineBuilder ? initialEngineBuilder() : getScenario(initialScenario).build(),
-  );
+  // A ref argument is evaluated on every render. Lazily construct the mutable
+  // holder once; explicit restart and hosted-session replacement still own swaps.
+  const [engineRef] = useState(() => ({
+    current: initialEngineBuilder ? initialEngineBuilder() : getScenario(initialScenario).build(),
+  }));
   const [scenarioId, setScenarioId] = useState<ScenarioId>(initialScenario);
   // Bumped on every scenario rebuild — even when the id is unchanged (Restart).
   // The AI-player rebuild effect depends on this so its players never point at
@@ -766,6 +1038,18 @@ export function EngineProvider({
   const freeTextProposalPending = hasHostedChat ? remoteFreeTextProposalPending : false;
   const canRequestFreeTextChat =
     hasHostedChat && canRequestFreeText && !freeTextEnabled && Boolean(requestRemoteFreeTextChat);
+  const hasHostedBoardCorrection =
+    Boolean(requestRemoteBoardCorrection) || Boolean(remoteExecuteMove);
+  const [localBoardCorrectionEnabled, setLocalBoardCorrectionEnabled] = useState(false);
+  const boardCorrectionEnabled = hasHostedBoardCorrection
+    ? remoteBoardCorrectionEnabled
+    : localBoardCorrectionEnabled;
+  const boardCorrectionProposalPending = hasHostedBoardCorrection
+    ? remoteBoardCorrectionProposalPending
+    : false;
+  const canRequestBoardCorrectionChat = hasHostedBoardCorrection
+    ? canRequestBoardCorrection && !boardCorrectionEnabled && Boolean(requestRemoteBoardCorrection)
+    : !boardCorrectionEnabled;
   const moveLogIdRef = useRef(remoteMoveLogs.length);
   const rawEngineEventIdRef = useRef(0);
   const chatIdRef = useRef(0);
@@ -809,6 +1093,18 @@ export function EngineProvider({
   // strategy change or scenario rebuild; never mutated in place.
   const aiPlayersRef = useRef<Record<Side, AIPlayer | null>>({ player: null, opponent: null });
   const logIdRef = useRef(0);
+
+  // Watchdog bookkeeping for the seat whose prompt has been actionable too
+  // long (see the AI stall constants above). Keyed by side + prompt identity
+  // so a NEW prompt always restarts the grace window.
+  const aiStallRef = useRef<{
+    side: Side;
+    promptKey: string;
+    since: number;
+    lastAttempt: number;
+    forced: number;
+    fallbackDone: boolean;
+  } | null>(null);
 
   // Dev-only spy: every action that flows through `dispatch` is recorded so
   // e2e specs can assert that a UI interaction (e.g. clicking the Mulligan
@@ -911,7 +1207,16 @@ export function EngineProvider({
   }, []);
 
   const setStrategy = useCallback((side: Side, strategy: AIStrategy | null) => {
-    setAiStrategies((prev) => ({ ...prev, [side]: strategy }));
+    setAiStrategies((prev) => {
+      // Re-bind the seat's deck plan so switching strategies keeps the
+      // deck-aware mulligan, sell protection, and pacing the seat started
+      // with. Unbound seats and strategies that cannot carry a profile (the
+      // forced/test strategies) pass through unchanged.
+      const previousProfile = boundDeckProfile(prev[side]);
+      const next =
+        strategy && previousProfile ? withDeckProfile(strategy, previousProfile) : strategy;
+      return { ...prev, [side]: next };
+    });
     setAiTakeover((prev) => (prev?.side === side ? null : prev));
   }, []);
 
@@ -1090,6 +1395,33 @@ export function EngineProvider({
     requestRemoteFreeTextChat,
   ]);
 
+  const requestBoardCorrection = useCallback(() => {
+    if (boardCorrectionEnabled || boardCorrectionProposalPending) {
+      return false;
+    }
+    if (hasHostedBoardCorrection) {
+      return requestRemoteBoardCorrection?.() ?? false;
+    }
+    setLocalBoardCorrectionEnabled(true);
+    return true;
+  }, [
+    boardCorrectionEnabled,
+    boardCorrectionProposalPending,
+    hasHostedBoardCorrection,
+    requestRemoteBoardCorrection,
+  ]);
+
+  const exitBoardCorrection = useCallback(() => {
+    if (!boardCorrectionEnabled) {
+      return false;
+    }
+    if (hasHostedBoardCorrection) {
+      return requestRemoteBoardCorrectionExit?.() ?? false;
+    }
+    setLocalBoardCorrectionEnabled(false);
+    return true;
+  }, [boardCorrectionEnabled, hasHostedBoardCorrection, requestRemoteBoardCorrectionExit]);
+
   // ── AI step execution ─────────────────────────────────────────────────────
 
   const recordStep = useCallback(
@@ -1152,20 +1484,28 @@ export function EngineProvider({
   const engine = engineRef.current;
   const matchState = engine.getState();
   const engineStateId = matchState.ctx.stateID;
-  const derivedPlayerPrompt = engine.getPrompt(P1);
-  const derivedOpponentPrompt = engine.getPrompt(P2);
-  const derivedPlayerInteractionView = buildCyberpunkInteractionView({
-    actorId: P1,
-    stateVersion: engineStateId,
-    prompt: derivedPlayerPrompt,
-    state: matchState,
-  });
-  const derivedOpponentInteractionView = buildCyberpunkInteractionView({
-    actorId: P2,
-    stateVersion: engineStateId,
-    prompt: derivedOpponentPrompt,
-    state: matchState,
-  });
+  // State numbers can repeat after restart, undo or hosted-engine replacement.
+  // Include both identities so caching never crosses those boundaries.
+  const derived = useMemo(() => {
+    const playerPrompt = engine.getPrompt(P1);
+    const opponentPrompt = engine.getPrompt(P2);
+    return {
+      playerPrompt,
+      opponentPrompt,
+      playerView: buildCyberpunkInteractionView({
+        actorId: P1,
+        stateVersion: engineStateId,
+        prompt: playerPrompt,
+        state: matchState,
+      }),
+      opponentView: buildCyberpunkInteractionView({
+        actorId: P2,
+        stateVersion: engineStateId,
+        prompt: opponentPrompt,
+        state: matchState,
+      }),
+    };
+  }, [engine, matchState, engineStateId]);
   const remoteSide: Side | null = remoteInteractionView
     ? String(remoteInteractionView.actorId) === String(P1)
       ? "player"
@@ -1173,17 +1513,24 @@ export function EngineProvider({
         ? "opponent"
         : humanSide
     : null;
-  const playerPrompt = remoteSide === "player" && remotePrompt ? remotePrompt : derivedPlayerPrompt;
+  const playerPrompt =
+    remoteSide === "player" && remotePrompt ? remotePrompt : derived.playerPrompt;
   const opponentPrompt =
-    remoteSide === "opponent" && remotePrompt ? remotePrompt : derivedOpponentPrompt;
+    remoteSide === "opponent" && remotePrompt ? remotePrompt : derived.opponentPrompt;
   const playerInteractionView =
-    remoteSide === "player" && remoteInteractionView
-      ? remoteInteractionView
-      : derivedPlayerInteractionView;
+    remoteSide === "player" && remoteInteractionView ? remoteInteractionView : derived.playerView;
   const opponentInteractionView =
     remoteSide === "opponent" && remoteInteractionView
       ? remoteInteractionView
-      : derivedOpponentInteractionView;
+      : derived.opponentView;
+  const prompts = useMemo(
+    () => ({ player: playerPrompt, opponent: opponentPrompt }),
+    [playerPrompt, opponentPrompt],
+  );
+  const interactionViews = useMemo(
+    () => ({ player: playerInteractionView, opponent: opponentInteractionView }),
+    [playerInteractionView, opponentInteractionView],
+  );
   const activeSide: Side = matchState.G.turnMetadata.activePlayerId === P1 ? "player" : "opponent";
   const prioritySide = resolvePrioritySide(
     { player: playerInteractionView, opponent: opponentInteractionView },
@@ -1199,14 +1546,14 @@ export function EngineProvider({
   )?.choiceKey;
 
   const runRemoteStepFor = useCallback(
-    (side: Side): boolean => {
+    (side: Side, strategyOverride?: AIStrategy): boolean => {
       if (!remoteSubmitInteraction) {
         return false;
       }
       if (hasPendingRemoteMove) {
         return false;
       }
-      const strategy = aiStrategies[side];
+      const strategy = strategyOverride ?? aiStrategies[side];
       if (!strategy) {
         return false;
       }
@@ -1308,23 +1655,63 @@ export function EngineProvider({
     (action) => {
       const eng = engineRef.current;
       const preMoveState = eng.getState();
+      const warnDrop = (error: string) => {
+        console.warn("[cyberpunk] command dropped:", action.type, JSON.stringify({ error }));
+      };
       if (animationsBlockCommands) {
+        warnDrop("animation-active");
         return {
           success: false as const,
           error: "animation-active",
         };
       }
       if (remoteDispatch) {
-        if (action.type === "undo" || action.type === "undoToTurnStart") {
-          if (action.type === "undo" && requestRemoteUndo?.()) {
+        if (isManualEngineAction(action)) {
+          if (!boardCorrectionEnabled) {
             return {
               success: false as const,
-              error: "Undo proposal sent; waiting for opponent approval",
+              error: "Board correction is not enabled",
+            };
+          }
+          // Board correction is the recovery channel for an authoritative
+          // state that can no longer finish its normal interaction. In that
+          // case the ordinary pending-move latch may itself be stale, so it
+          // must not prevent a manual command from reaching the server. The
+          // expected-version check still serializes the correction against
+          // the authoritative game state.
+          const sent = remoteExecuteMove?.({
+            moveType: action.type,
+            payload: manualActionPayload(action),
+            expectedVersion: preMoveState.ctx.stateID,
+          });
+          if (sent === false || sent === undefined) {
+            return {
+              success: false as const,
+              error: "Gateway is unavailable; reconnect before taking another move",
+            };
+          }
+          const result = remotePendingCommandResult(action, preMoveState);
+          if (import.meta.env.DEV) {
+            dispatchLogRef.current.push({ action, result });
+          }
+          return result;
+        }
+        if (action.type === "undo" || action.type === "undoToTurnStart") {
+          const undoScope: UndoScopeValue =
+            action.type === "undoToTurnStart" ? "turn_start" : "last_move";
+          if (requestRemoteUndo?.(undoScope)) {
+            return {
+              success: false as const,
+              error:
+                undoScope === "turn_start"
+                  ? "Turn undo proposal sent; waiting for opponent approval"
+                  : "Undo proposal sent; waiting for opponent approval",
             };
           }
           return { success: false as const, error: "Undo is unavailable in live matches" };
         }
         if (hasPendingRemoteMove) {
+          warnDrop("Waiting for the previous move to be confirmed");
           return {
             success: false as const,
             error: "Waiting for the previous move to be confirmed",
@@ -1367,6 +1754,7 @@ export function EngineProvider({
           const message = err instanceof Error ? err.message : String(err);
           // eslint-disable-next-line no-console
           console.warn("[engine] optimistic dispatch failed:", action, message);
+          notifyInsufficientEddies(message);
           const failure = { success: false as const, error: message };
           if (import.meta.env.DEV) {
             dispatchLogRef.current.push({ action, result: failure });
@@ -1378,22 +1766,16 @@ export function EngineProvider({
         let result: CommandResult;
         switch (action.type) {
           case "playCard":
-            result = action.attachToId
-              ? eng.executeMove(
-                  "playCard",
-                  { args: { cardId: action.cardId, attachToId: action.attachToId } },
-                  action.as,
-                )
-              : eng.playCard(action.cardId, { as: action.as });
+            result = executeEngineAction(eng, action);
             break;
           case "sellCard":
             result = eng.sellCard(action.cardId, { as: action.as });
             break;
           case "callLegend":
-            result = eng.callLegend(action.cardId, { as: action.as });
+            result = executeEngineAction(eng, action);
             break;
           case "goSolo":
-            result = eng.executeMove("goSolo", { args: { cardId: action.cardId } }, action.as);
+            result = executeEngineAction(eng, action);
             break;
           case "attackUnit":
             result = eng.attackUnit(action.attackerId, action.defenderId, {
@@ -1427,11 +1809,7 @@ export function EngineProvider({
             );
             break;
           case "resolveAdjustGig":
-            result = eng.executeMove(
-              "resolveAdjustGig",
-              { args: { value: action.value } },
-              action.as,
-            );
+            result = eng.executeMove("resolveAdjustGig", { args: action.choice }, action.as);
             break;
           case "resolveEffectTarget":
             result = eng.executeMove(
@@ -1446,6 +1824,9 @@ export function EngineProvider({
               { args: { cardIds: action.cardIds, pass: action.pass } },
               action.as,
             );
+            break;
+          case "resolvePreventGigSteal":
+            result = executeEngineAction(eng, action);
             break;
           case "resolveScry":
             result = eng.executeMove(
@@ -1507,8 +1888,58 @@ export function EngineProvider({
               as: action.as,
             });
             break;
+          case "resolveRedirectDefeat":
+            result = eng.executeMove(
+              "resolveRedirectDefeat",
+              { args: { pass: action.pass } },
+              action.as,
+            );
+            break;
+          case "resolveSacrificialGear":
+            result = eng.executeMove(
+              "resolveSacrificialGear",
+              { args: { cardId: action.cardId } },
+              action.as,
+            );
+            break;
+          case "resolveFirstPlayer":
+            result = eng.executeMove(
+              "resolveFirstPlayer",
+              { args: { goFirst: action.goFirst } },
+              action.as,
+            );
+            break;
+          case "cancelPendingResolution":
+            result = eng.executeMove("cancelPendingResolution", { args: {} }, action.as);
+            break;
           case "concede":
             result = eng.concede({ as: action.as });
+            break;
+          case "manualSetGigValue":
+          case "manualMoveGig":
+          case "manualMoveCard":
+          case "manualAttachGear":
+          case "manualDetachGear":
+          case "manualExertCard":
+          case "manualReadyCard":
+          case "manualDrawCard":
+          case "manualClearPendingResolution":
+          case "manualResetCombat":
+          case "manualForcePassTurn":
+          case "manualSetEddies":
+          case "manualResetOncePerTurn":
+          case "manualSetCardFace":
+          case "manualReadyAll":
+          case "manualRecomputeActiveEffects":
+          case "manualDropEffectBagEntry":
+          case "rewindToTurnStart":
+            if (!boardCorrectionEnabled) {
+              return {
+                success: false as const,
+                error: "Board correction is not enabled",
+              };
+            }
+            result = executeEngineAction(eng, action);
             break;
           case "undo": {
             if (lockLocalHistoryControls) {
@@ -1588,6 +2019,7 @@ export function EngineProvider({
         const message = err instanceof Error ? err.message : String(err);
         // eslint-disable-next-line no-console
         console.warn("[engine] dispatch failed:", action, message);
+        notifyInsufficientEddies(message);
         const failure = { success: false as const, error: message };
         if (import.meta.env.DEV) {
           dispatchLogRef.current.push({ action, result: failure });
@@ -1601,6 +2033,8 @@ export function EngineProvider({
       appendRawEngineEvents,
       remoteDispatch,
       requestRemoteUndo,
+      remoteExecuteMove,
+      boardCorrectionEnabled,
       hasPendingRemoteMove,
       animationsBlockCommands,
       lockLocalHistoryControls,
@@ -1777,8 +2211,9 @@ export function EngineProvider({
     }
     // Halt the auto loop once an AI step has surfaced an error. Without this,
     // an `illegal`/`stuck` result keeps re-firing every speed-bucket tick and
-    // floods the event log with the same failure. The user clears the error
-    // (Next, Restart, Clear log, or strategy change) to resume auto stepping.
+    // floods the event log with the same failure. The stall watchdog below
+    // resumes stepping after AI_STALL_RETRY_MS; the user can also clear the
+    // error sooner (Next, Restart, Clear log, or strategy change).
     if (lastAiError) {
       return;
     }
@@ -1805,6 +2240,116 @@ export function EngineProvider({
     remoteSubmitInteraction,
     runRemoteStepFor,
     runStepFor,
+    forceRender,
+  ]);
+
+  // ── AI stall watchdog ─────────────────────────────────────────────────────
+  // The auto loop above gives up on `lastAiError` and while animations block
+  // commands; nothing cleared either on its own, so a bot seat could sit on a
+  // mandatory prompt — the opening mulligan above all, where CR 7.9.2 keeps
+  // the human's window closed until the bot answers — forever. This interval
+  // re-drives a stalled seat: after AI_STALL_RETRY_MS it clears the error and
+  // forces strategy steps (bypassing the animation gate; the engine still
+  // enforces legality and the presentation layer catches up), and once those
+  // are exhausted it answers with STALL_FALLBACK_STRATEGY so the game always
+  // advances. Normal pacing never reaches these thresholds.
+  const aiStallPromptKey = useMemo(() => {
+    if (!aiSideToStep) {
+      return null;
+    }
+    const view = aiSideToStep === "player" ? playerInteractionView : opponentInteractionView;
+    const enabledRequestId =
+      view.actions.find((action) => action.enabled)?.requestId ??
+      view.actions[0]?.requestId ??
+      "none";
+    return `${view.stateVersion}:${enabledRequestId}`;
+  }, [aiSideToStep, playerInteractionView, opponentInteractionView]);
+
+  useEffect(() => {
+    if (aiMode !== "auto" || !aiSideToStep || !aiStallPromptKey) {
+      aiStallRef.current = null;
+      return;
+    }
+    const side = aiSideToStep;
+    const promptKey = aiStallPromptKey;
+    const stall = aiStallRef.current;
+    if (!stall || stall.side !== side || stall.promptKey !== promptKey) {
+      aiStallRef.current = {
+        side,
+        promptKey,
+        since: Date.now(),
+        lastAttempt: 0,
+        forced: 0,
+        fallbackDone: false,
+      };
+      return;
+    }
+    const interval = setInterval(() => {
+      const current = aiStallRef.current;
+      // A new prompt, takeover, or mode change replaced the tracked stall.
+      if (!current || current.side !== side || current.promptKey !== promptKey) {
+        return;
+      }
+      if (current.fallbackDone || hasPendingRemoteMove) {
+        return;
+      }
+      const now = Date.now();
+      const stalledFor = now - current.since;
+      if (stalledFor < AI_STALL_RETRY_MS) {
+        return;
+      }
+      if (current.forced < AI_STALL_FORCED_LIMIT && stalledFor < AI_STALL_FALLBACK_MS) {
+        if (now - current.lastAttempt < AI_STALL_RETRY_SPACING_MS) {
+          return;
+        }
+        aiStallRef.current = { ...current, lastAttempt: now, forced: current.forced + 1 };
+        // Clearing the error lets the regular auto loop take over again.
+        setLastAiError(null);
+        if (remoteSubmitInteraction) {
+          runRemoteStepFor(side);
+        } else {
+          runStepFor(side);
+        }
+        forceRender();
+        return;
+      }
+      aiStallRef.current = { ...current, fallbackDone: true, lastAttempt: now };
+      setLastAiError(null);
+      // eslint-disable-next-line no-console
+      console.warn("[engine] AI stall watchdog answering stalled prompt", { side, promptKey });
+      if (remoteSubmitInteraction) {
+        runRemoteStepFor(side, STALL_FALLBACK_STRATEGY);
+      } else {
+        const fallback = new AIPlayer(
+          engineRef.current.getLocalEngine(),
+          PLAYER_SIDE_TO_ID[side],
+          STALL_FALLBACK_STRATEGY,
+          { rngSeed: `${scenarioId}:${side}:stall-fallback` },
+        );
+        try {
+          const beforeState = engineRef.current.getState();
+          const result = fallback.step();
+          recordStep(side, result, beforeState);
+        } catch (err) {
+          const message = err instanceof Error ? err.message : String(err);
+          setLastAiError(message);
+          // eslint-disable-next-line no-console
+          console.warn("[engine] AI stall fallback step threw:", err);
+        }
+      }
+      forceRender();
+    }, AI_STALL_WATCHDOG_TICK_MS);
+    return () => clearInterval(interval);
+  }, [
+    aiMode,
+    aiSideToStep,
+    aiStallPromptKey,
+    hasPendingRemoteMove,
+    remoteSubmitInteraction,
+    runRemoteStepFor,
+    runStepFor,
+    recordStep,
+    scenarioId,
     forceRender,
   ]);
 
@@ -1840,7 +2385,13 @@ export function EngineProvider({
       ? !hasPendingRemoteMove && remoteMoveLogs.length > 0 && !matchState.G.gameEnded
       : !lockLocalHistoryControls && engine.canUndo());
   const canUndoToTurnStart =
-    historyControlsHydrated && !lockLocalHistoryControls && engine.canUndoToTurnStart();
+    historyControlsHydrated &&
+    (remoteDispatch
+      ? Boolean(requestRemoteUndo) &&
+        !hasPendingRemoteMove &&
+        remoteMoveLogs.length > 0 &&
+        !matchState.G.gameEnded
+      : !lockLocalHistoryControls && engine.canUndoToTurnStart());
 
   const value: EngineContextValue = {
     scenarioId,
@@ -1852,8 +2403,8 @@ export function EngineProvider({
     postGameContext,
     postGameSurface,
     matchState,
-    prompts: { player: playerPrompt, opponent: opponentPrompt },
-    interactionViews: { player: playerInteractionView, opponent: opponentInteractionView },
+    prompts,
+    interactionViews,
     activeSide,
     prioritySide,
     humanSide,
@@ -1876,6 +2427,12 @@ export function EngineProvider({
     sendChatPreset,
     sendChatText,
     requestFreeTextChat,
+    boardCorrectionEnabled,
+    boardCorrectionProposalPending,
+    canRequestBoardCorrection: canRequestBoardCorrectionChat,
+    boardCorrectionNeedsConsent: hasHostedBoardCorrection,
+    requestBoardCorrection,
+    exitBoardCorrection,
     effectCardTargetSelection,
     toggleEffectCardTarget,
     submitEffectCardTargets,
@@ -1924,4 +2481,15 @@ export function EngineProvider({
   }
 
   return <EngineContext.Provider value={value}>{children}</EngineContext.Provider>;
+}
+
+function notifyInsufficientEddies(message: string): void {
+  if (!message.includes("INSUFFICIENT_EDDIES") && !message.includes("Not enough eddies")) {
+    return;
+  }
+  notifications.show({
+    color: "yellow",
+    title: "Not enough Eddies",
+    message: "You still have to pay that card's cost. Pick a cheaper Program, or cancel.",
+  });
 }
