@@ -35,8 +35,41 @@ export const op17NicoRobin087: CharacterCard = {
   traits: ["Straw Hat Crew Elbaph"],
   attribute: "strike",
   effect:
-    "If there is a Character with a cost of 12 or more, this Character gains +3000 power. [On Play] If there is a Character with a cost of 12 or more, give up to 1 of your opponent's Characters -3000 poser during this turn.",
+    "If there is a Character with a cost of 12 or more, this Character gains +3000 power. [On Play] If there is a Character with a cost of 12 or more, give up to 1 of your opponent's Characters -3000 power during this turn.",
   effects: {
+    effects: [
+      {
+        trigger: "onPlay",
+        conditions: [
+          {
+            condition: "existsOnField",
+            zone: "character",
+            filters: [
+              {
+                filter: "cost",
+                comparison: "gte",
+                value: 12,
+              },
+            ],
+          },
+        ],
+        actions: [
+          {
+            action: "modifyPower",
+            target: {
+              player: "opponent",
+              zones: ["character"],
+              count: {
+                amount: 1,
+                upTo: true,
+              },
+            },
+            value: -3000,
+            duration: "thisTurn",
+          },
+        ],
+      },
+    ],
     permanentEffects: [
       {
         conditions: [

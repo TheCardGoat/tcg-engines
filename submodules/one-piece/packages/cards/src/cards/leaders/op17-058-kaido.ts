@@ -35,7 +35,7 @@ export const op17Kaido058: LeaderCard = {
   traits: ["Animal Kingdom Pirates The Four Emperors"],
   attribute: "special",
   effect:
-    "[When Attacking]/ [On Your Opponent's Attack] [Once Per Turn] DON!! -1: Give up to 1 of your opponent's Characters -2000 power during this turn.",
+    "[When Attacking]/[On Your Opponent's Attack] [Once Per Turn] DON!! -1: Give up to 1 of your opponent's Characters -2000 power during this turn.",
   effects: {
     effects: [
       {

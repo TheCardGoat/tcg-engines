@@ -26,8 +26,9 @@ export const op15Morgan017: CharacterCard = {
   traits: ["Navy East Blue"],
   attribute: "slash",
   effect:
-    "[Activate: Main] [Once Per Turn] You may give 1 of your opponent's rested DON!! cards to 1 of your opponent's Characters: Give up to 1 rested DON!! card to its owner's Leader or 1 of their Characters.",
+    "[Blocker]\n[Activate: Main] [Once Per Turn] You may give 1 of your opponent's rested DON!! cards to 1 of your opponent's Characters: Give up to 1 rested DON!! card to its owner's Leader or 1 of their Characters.",
   effects: {
+    keywords: ["blocker"],
     effects: [
       {
         trigger: "activateMain",

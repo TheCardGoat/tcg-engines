@@ -26,7 +26,7 @@ export const op15Urouge099: CharacterCard = {
   traits: ["Fallen Monk Pirates Supernovas Sky Island"],
   attribute: "strike",
   effect:
-    "[On Play] You may trash 1 {Supernovas} type card from your hand:This Character gains [Rush] during this turn.\n[Activate: Main] You may turn 1 card from the top of your Life cards face-up: Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",
+    "[On Play] You may trash 1 {Supernovas} type card from your hand: This Character gains [Rush] during this turn.\n[Activate: Main] You may turn 1 card from the top of your Life cards face-down: Give up to 1 rested DON!! card to your Leader or 1 of your Characters.",
   effects: {
     effects: [
       {
@@ -67,6 +67,7 @@ export const op15Urouge099: CharacterCard = {
           {
             cost: "turnLifeFaceUp",
             count: 1,
+            faceUp: false,
           },
         ],
         actions: [

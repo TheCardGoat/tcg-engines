@@ -23,13 +23,22 @@ describe("OP15-099 Urouge", () => {
     );
   });
 
-  test("[Activate: Main] turns a Life card face-up to give a rested DON!!", () => {
+  test("[Activate: Main] turns a face-up Life card face-down to give a rested DON!!", () => {
     const engine = OnePieceTestEngine.create(
-      { character: [op15Urouge099], activeDon: 4, restedDon: 1 },
+      {
+        character: [op15Urouge099],
+        life: [
+          { card: eb01Cavendish012, faceUp: true, publicKnowledge: true },
+          { card: eb01Cavendish012, faceUp: true, publicKnowledge: true },
+        ],
+        activeDon: 4,
+        restedDon: 1,
+      },
       {},
     );
     const urougeId = engine.findCardInZone("south", "character", op15Urouge099);
     const leaderId = engine.leader("south");
+    const lifeIds = [...engine.getState().players.south.life];
     const lifeBefore = engine.getView("south").players.south.lifeCount;
 
     engine.activateEffect(urougeId, "activateMain", "south");
@@ -47,6 +56,8 @@ describe("OP15-099 Urouge", () => {
 
     const south = engine.getView("south").players.south;
     expect(south.lifeCount).toBe(lifeBefore);
+    expect(engine.getState().cards[lifeIds[0]!]?.faceUp).toBe(false);
+    expect(engine.getState().cards[lifeIds[1]!]?.faceUp).toBe(true);
     expect(south.restedDon).toBe(0);
     expect(south.leader?.attachedDon).toBe(1);
     expect(engine.getView("south").prompts).toHaveLength(0);

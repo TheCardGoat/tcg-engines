@@ -26,7 +26,7 @@ export const op16BennBeckman012: CharacterCard = {
   traits: ["Red-Haired Pirates"],
   attribute: "ranged",
   effect:
-    "[Blocker] [On Play] You may rest 1 of your DON!! cards: If your Leader has the {Red-Haired Pirates} type and have 10 DON!! cards on your field, play up to 1 [Shanks] from your hand.",
+    "[Blocker] [On Play] You may rest 1 of your DON!! cards: If your Leader has the {Red-Haired Pirates} type and you have 10 DON!! cards on your field, play up to 1 [Shanks] from your hand.",
   effects: {
     keywords: ["blocker"],
     effects: [

@@ -26,12 +26,42 @@ export const op16Usopp043: CharacterCard = {
   traits: ["Straw Hat Crew Dressrosa"],
   attribute: "ranged",
   effect:
-    "[Blocker]\n\n[On K.O.] Return up to 1 of tour opponent's Characters with a cost of 5 or less to the owner's hand.",
+    "[Blocker]\n\n[On K.O.] You may rest 1 of your {Dressrosa} type Leader or Stage cards: Return up to 1 of your opponent's Characters with a cost of 5 or less to the owner's hand.",
   effects: {
     keywords: ["blocker"],
     effects: [
       {
         trigger: "onKo",
+        costs: [
+          {
+            cost: "restCards",
+            amount: 1,
+            filters: [
+              {
+                filter: "trait",
+                value: "Dressrosa",
+                match: "includes",
+              },
+              {
+                filter: "anyOf",
+                groups: [
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "leader",
+                    },
+                  ],
+                  [
+                    {
+                      filter: "cardCategory",
+                      value: "stage",
+                    },
+                  ],
+                ],
+              },
+            ],
+          },
+        ],
         actions: [
           {
             action: "returnToHand",
@@ -52,6 +82,7 @@ export const op16Usopp043: CharacterCard = {
             },
           },
         ],
+        optional: true,
       },
     ],
   },
