@@ -26,7 +26,7 @@ export const op15Satori066: CharacterCard = {
   traits: ["Sky Island Vassals"],
   attribute: "strike",
   effect:
-    "[On Play] DON!! 1: Draw 1 card.\n[When Attacking] If you have 6 or less DON!! cards on your field, look at 2 cards from the top of your deck and place them at the top or bottom of your deck in any order.",
+    "[On Play] DON!! -1: Draw 1 card.\n[When Attacking] If you have 6 or less DON!! cards on your field, look at 2 cards from the top of your deck and place them at the top or bottom of your deck in any order.",
   effects: {
     effects: [
       {

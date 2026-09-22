@@ -41,7 +41,7 @@ export const op09GumGumJumpRope079: EventCard = {
   trigger: "Add up to 1 DON!! card from your DON!! deck and set it as active.",
   traits: ["Straw Hat Crew The Four Emperors"],
   effect:
-    "[Main] DON!! 2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Rest up to 1 of your opponent's Characters with a cost of 5 or less. Then, draw 1 card.",
+    "[Main] DON!! -2 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Rest up to 1 of your opponent's Characters with a cost of 5 or less. Then, draw 1 card.",
   effects: {
     effects: [
       {

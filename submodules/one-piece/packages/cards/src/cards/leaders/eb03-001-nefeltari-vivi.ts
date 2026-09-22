@@ -33,7 +33,7 @@ export const eb03NefeltariVivi001: LeaderCard = {
   traits: ["Alabasta"],
   attribute: "slash",
   effect:
-    "[Once Per Turn] If your Character with a base cost of 4 or more would be K.O.'d, you may trash 1 card from your hand instead.\n[Activate: Main] You may rest this Leader: Give up to 1 of your opponent's Characters 2000 power during this turn. Then, up to 1 of your Characters without a [When Attacking] effect gains [Rush] during this turn.",
+    "[Once Per Turn] If your Character with a base cost of 4 or more would be K.O.'d, you may trash 1 card from your hand instead.\n[Activate: Main] You may rest this Leader: Give up to 1 of your opponent's Characters -2000 power during this turn. Then, up to 1 of your Characters without a [When Attacking] effect gains [Rush] during this turn.",
   effects: {
     effects: [
       {
@@ -54,7 +54,7 @@ export const eb03NefeltariVivi001: LeaderCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
           },
           {

@@ -26,7 +26,7 @@ export const op08CountNiwatori071: CharacterCard = {
   traits: ["Big Mom Pirates"],
   attribute: "strike",
   effect:
-    "[Opponent's Turn] [On K.O.] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 [Baron Tamago] with a cost of 4 or less from your deck. Then, shuffle your deck.",
+    "[Opponent's Turn] [On K.O.] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play up to 1 [Baron Tamago] with a cost of 4 or less from your deck. Then, shuffle your deck.",
   effects: {
     effects: [
       {

@@ -2,27 +2,27 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("EB04-042", () => {
-  test("[On Play] trashes 3 deck cards and gives an opposing Character +1 cost", () => {
+  test("[On Play] trashes 3 deck cards and gives an opposing Character -1 cost", () => {
     const engine = OnePieceTestEngine.create(
       { hand: ["EB04-042"], activeDon: 5 },
-      { character: ["OP13-013"], activeDon: 5 },
+      { character: ["OP16-012"], activeDon: 5 },
     );
-    const higumaId = engine.findCardInZone("north", "character", "OP13-013");
+    const bennId = engine.findCardInZone("north", "character", "OP16-012");
     const costBefore = engine
       .getView("south")
-      .players.north.characters.find((c) => c?.instanceId === higumaId)?.cost;
+      .players.north.characters.find((c) => c?.instanceId === bennId)?.cost;
     const deckBefore = engine.getView("south").players.south.deckCount;
 
     engine.playCard("EB04-042");
     engine.acceptLeadingOptional("south");
-    const boost = engine.pendingDecision("effectTargetSelection", "south").steps[0];
-    if (boost?.kind !== "selectEntity") throw new Error("Expected the cost boost target.");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [higumaId] }, "south");
+    const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (target?.kind !== "selectEntity") throw new Error("Expected the cost target.");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [bennId] }, "south");
 
-    const boosted = engine
+    const reduced = engine
       .getView("south")
-      .players.north.characters.find((c) => c?.instanceId === higumaId);
-    expect(boosted?.cost).toBe((costBefore ?? 0) + 1);
+      .players.north.characters.find((c) => c?.instanceId === bennId);
+    expect(reduced?.cost).toBe((costBefore ?? 0) - 1);
     expect(engine.getView("south").players.south.deckCount).toBe(deckBefore - 3);
     expect(engine.getView("south").prompts).toHaveLength(0);
   });

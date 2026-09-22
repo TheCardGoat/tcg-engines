@@ -26,7 +26,7 @@ export const op15GanFall102: CharacterCard = {
   traits: ["Sky Island"],
   attribute: "slash",
   effect:
-    "If you have a {Sky Island} type Character with 7000 power or more, give this card in your hand 3 cost.\n[On Play] Rest up to 1 of your opponent's Characters with a cost equal to or less than the number of your opponent's Life cards.",
+    "If you have a {Sky Island} type Character with 7000 power or more, give this card in your hand -3 cost.\n[On Play] Rest up to 1 of your opponent's Characters with a cost equal to or less than the number of your opponent's Life cards.",
   effects: {
     effects: [
       {
@@ -75,7 +75,7 @@ export const op15GanFall102: CharacterCard = {
         ],
         actions: [
           {
-            action: "setCost",
+            action: "modifyCost",
             target: {
               player: "self",
               zones: ["hand"],
@@ -84,7 +84,8 @@ export const op15GanFall102: CharacterCard = {
               },
               self: true,
             },
-            value: 3,
+            value: -3,
+            duration: "permanent",
           },
         ],
       },

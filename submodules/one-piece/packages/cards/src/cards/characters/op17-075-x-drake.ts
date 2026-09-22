@@ -25,7 +25,7 @@ export const op17XDrake075: CharacterCard = {
   counter: 2000,
   traits: ["Navy Drake Pirates Animal Kingdom Pirates"],
   attribute: "slash",
-  effect: "[On Play] DON!! 2: Trash 1 card from your opponent's hand.",
+  effect: "[On Play] DON!! -2: Trash 1 card from your opponent's hand.",
   effects: {
     effects: [
       {

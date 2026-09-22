@@ -26,7 +26,7 @@ export const op16Otama081: CharacterCard = {
   traits: ["Land of Wano"],
   attribute: "special",
   effect:
-    "[Activate: Main] You may rest this Character: If you have a Character with a cost of 8 or more, give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[Activate: Main] You may rest this Character: If you have a Character with a cost of 8 or more, give up to 1 of your opponent's Characters -2000 power during this turn.",
   effects: {
     effects: [
       {

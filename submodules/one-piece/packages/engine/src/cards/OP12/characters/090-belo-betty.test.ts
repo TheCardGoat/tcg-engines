@@ -5,17 +5,17 @@ import { op12BeloBetty090 } from "../../../../../cards/src/cards/characters/op12
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP12-090 Belo Betty", () => {
-  test("when attacking trashes two top cards before giving an opponent +2 cost", () => {
+  test("when attacking trashes two top cards before giving an opponent -2 cost", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: op12BeloBetty090, playedOnTurn: 0 }],
         deck: [eb01Doma005, eb01MountainGod018, eb01Doma005],
       },
-      { character: [eb01Doma005] },
+      { character: [eb01MountainGod018] },
       { firstPlayer: "north", activeSeat: "south" },
     );
     const bettyId = engine.findCardInZone("south", "character", op12BeloBetty090);
-    const targetId = engine.findCardInZone("north", "character", eb01Doma005);
+    const targetId = engine.findCardInZone("north", "character", eb01MountainGod018);
     const deckBefore = engine.getView("south").players.south.deckCount;
     const targetCost = engine
       .getView("south")
@@ -32,7 +32,7 @@ describe("OP12-090 Belo Betty", () => {
     expect(view.players.south.deckCount).toBe(deckBefore - 2);
     expect(view.players.south.trash).toHaveLength(2);
     expect(view.players.north.characters.find((card) => card?.instanceId === targetId)?.cost).toBe(
-      targetCost + 2,
+      targetCost - 2,
     );
     expect(engine.getView("south").prompts).toHaveLength(0);
   });
@@ -43,11 +43,11 @@ describe("OP12-090 Belo Betty", () => {
         character: [{ card: op12BeloBetty090, playedOnTurn: 0 }],
         deck: [eb01Doma005, eb01MountainGod018, eb01Doma005],
       },
-      { character: [eb01Doma005] },
+      { character: [eb01MountainGod018] },
       { firstPlayer: "north", activeSeat: "south" },
     );
     const bettyId = engine.findCardInZone("south", "character", op12BeloBetty090);
-    const targetId = engine.findCardInZone("north", "character", eb01Doma005);
+    const targetId = engine.findCardInZone("north", "character", eb01MountainGod018);
     const deckBefore = engine.getView("south").players.south.deckCount;
     const trashBefore = engine.getView("south").players.south.trash.length;
     const targetCost = engine

@@ -26,7 +26,7 @@ export const op12BeloBetty090: CharacterCard = {
   traits: ["Revolutionary Army"],
   attribute: "special",
   effect:
-    "[When Attacking] You may trash 2 cards from the top of your deck: Give up to 1 of your opponent's Characters 2 cost during this turn.",
+    "[When Attacking] You may trash 2 cards from the top of your deck: Give up to 1 of your opponent's Characters -2 cost during this turn.",
   effects: {
     effects: [
       {
@@ -56,7 +56,7 @@ export const op12BeloBetty090: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2,
+            value: -2,
             duration: "thisTurn",
           },
         ],

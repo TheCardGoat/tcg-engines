@@ -27,7 +27,7 @@ export const op16VanAugur103: CharacterCard = {
   traits: ["Blackbeard Pirates"],
   attribute: "ranged",
   effect:
-    "[Opponent's Turn] [On K.O.] If your Leader has the {Blackbeard Pirates} type, draw 1 card and give up to 1 of your opponent's Leader or Character cards 3000 power during this turn.",
+    "[Opponent's Turn] [On K.O.] If your Leader has the {Blackbeard Pirates} type, draw 1 card and give up to 1 of your opponent's Leader or Character cards -3000 power during this turn.",
   effects: {
     effects: [
       {

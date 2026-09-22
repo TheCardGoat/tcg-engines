@@ -23,7 +23,7 @@ export const op17ILlFeedOnThisRageAndUseItToBringTheWorldToRuin097: EventCard = 
   cost: 1,
   traits: ["Giant Elbaph"],
   effect:
-    "[Main] Give all of your opponent's Characters 1 cost during this turn.\n[Counter] Your Leader gains +3000 power during this battle.",
+    "[Main] Give all of your opponent's Characters -1 cost during this turn.\n[Counter] Your Leader gains +3000 power during this battle.",
   effects: {
     effects: [
       {
@@ -38,7 +38,7 @@ export const op17ILlFeedOnThisRageAndUseItToBringTheWorldToRuin097: EventCard = 
                 amount: "all",
               },
             },
-            value: 1,
+            value: -1,
             duration: "thisTurn",
           },
         ],

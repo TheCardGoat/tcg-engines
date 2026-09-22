@@ -28,7 +28,7 @@ export const op17Caribou101: CharacterCard = {
   traits: ["Supernovas Caribou Pirates"],
   attribute: "special",
   effect:
-    "[Activate: Main] [Once Per Turn] You may add 1 card from the top of your Life cards to your hand: Give up to 1 of your opponent's Characters 3000 power during this turn.",
+    "[Activate: Main] [Once Per Turn] You may add 1 card from the top of your Life cards to your hand: Give up to 1 of your opponent's Characters -3000 power during this turn.",
   effects: {
     effects: [
       {
@@ -51,7 +51,7 @@ export const op17Caribou101: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 3000,
+            value: -3000,
             duration: "thisTurn",
           },
         ],

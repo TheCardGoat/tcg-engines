@@ -25,7 +25,7 @@ export const op17Jack069: CharacterCard = {
   traits: ["Fish-Man Animal Kingdom Pirates"],
   attribute: "strike",
   effect:
-    "[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n[On Play] DON!! 1: If your Leader has the {Animal Kingdom Pirates} type, give up to 1 of your opponent's Characters 2000 power during this turn.",
+    "[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n[On Play] DON!! -1: If your Leader has the {Animal Kingdom Pirates} type, give up to 1 of your opponent's Characters -2000 power during this turn.",
   effects: {
     keywords: ["rushCharacter"],
     effects: [
@@ -48,7 +48,7 @@ export const op17Jack069: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 2000,
+            value: -2000,
             duration: "thisTurn",
             condition: {
               condition: "leaderTrait",

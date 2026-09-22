@@ -25,7 +25,7 @@ export const op12Crocodile069: CharacterCard = {
   traits: ["Baroque Works The Seven Warlords of the Sea"],
   attribute: "special",
   effect:
-    "[On Your Opponent's Attack] [Once Per Turn] DON!! 1: If your Leader's type includes \"Baroque Works\", up to 1 of your Leader or Character cards gains +2000 power during this battle.",
+    "[On Your Opponent's Attack] [Once Per Turn] DON!! -1: If your Leader's type includes \"Baroque Works\", up to 1 of your Leader or Character cards gains +2000 power during this battle.",
   effects: {
     effects: [
       {

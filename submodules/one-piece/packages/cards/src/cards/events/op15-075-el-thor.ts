@@ -23,7 +23,7 @@ export const op15ElThor075: EventCard = {
   cost: 0,
   traits: ["Sky Island"],
   effect:
-    "[Main] DON!! 1: If your Leader is [Enel], up to 1 of your Leader or Character cards gains +1000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less.\n[Counter] Up to 1 of your [Enel] cards gains +2000 power during this battle.",
+    "[Main] DON!! -1: If your Leader is [Enel], up to 1 of your Leader or Character cards gains +1000 power during this turn. Then, K.O. up to 1 of your opponent's Characters with 3000 power or less.\n[Counter] Up to 1 of your [Enel] cards gains +2000 power during this battle.",
   effects: {
     effects: [
       {

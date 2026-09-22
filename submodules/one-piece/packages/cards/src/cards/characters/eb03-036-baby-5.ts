@@ -26,7 +26,7 @@ export const eb03Baby5036: CharacterCard = {
   traits: ["Donquixote Pirates"],
   attribute: "special",
   effect:
-    "[On Play] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 2 of your opponent's Characters with a base cost of 3 or less.",
+    "[On Play] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): K.O. up to 2 of your opponent's Characters with a base cost of 3 or less.",
   effects: {
     effects: [
       {

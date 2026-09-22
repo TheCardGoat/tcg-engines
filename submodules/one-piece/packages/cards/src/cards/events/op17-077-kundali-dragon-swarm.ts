@@ -23,7 +23,7 @@ export const op17KundaliDragonSwarm077: EventCard = {
   cost: 1,
   traits: ["The Four Emperors Animal Kingdom Pirates"],
   effect:
-    "[Main] You may rest 3 of your DON!! cards and trash 2 cards from your hand: If your Leader has the {Animal Kingdom Pirates} type, add up to 3 DON!! cards as rested from your DON!! deck.\n[Counter] DON!! 1: Your Leader gains +4000 power during this battle.",
+    "[Main] You may rest 3 of your DON!! cards and trash 2 cards from your hand: If your Leader has the {Animal Kingdom Pirates} type, add up to 3 DON!! cards as rested from your DON!! deck.\n[Counter] DON!! -1: Your Leader gains +4000 power during this battle.",
   effects: {
     effects: [
       {

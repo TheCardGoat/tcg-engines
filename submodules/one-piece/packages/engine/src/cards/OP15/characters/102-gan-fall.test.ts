@@ -14,7 +14,8 @@ describe("OP15-102 Gan Fall", () => {
 
     engine.playCard(op15GanFall102);
 
-    expect(engine.getView("south").players.south.activeDon).toBe(1);
+    // Base cost 4, reduced by 3 in hand: only 1 DON!! is spent.
+    expect(engine.getView("south").players.south.activeDon).toBe(3);
   });
 
   test("[On Play] rests an opposing Character with cost up to the opponent's Life count", () => {

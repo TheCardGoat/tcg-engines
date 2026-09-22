@@ -26,7 +26,7 @@ export const op15Amazon059: CharacterCard = {
   traits: ["Sky Island"],
   attribute: "wisdom",
   effect:
-    "[On Your Opponent's Attack] You may rest this Character: Your opponent may return 1 of their active DON!! cards to their DON!! deck. If they do not, give up to 1 of your opponent's Leader or Character cards 2000 power during this turn.",
+    "[On Your Opponent's Attack] You may rest this Character: Your opponent may return 1 of their active DON!! cards to their DON!! deck. If they do not, give up to 1 of your opponent's Leader or Character cards -2000 power during this turn.",
   effects: {
     effects: [
       {

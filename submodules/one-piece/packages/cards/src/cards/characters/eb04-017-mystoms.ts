@@ -26,7 +26,7 @@ export const op14eb04Mystoms017: CharacterCard = {
   traits: ["Minks Big Mom Pirates"],
   attribute: "strike",
   effect:
-    "[Your Turn] If you have 3 or more {Minks} type Characters, give all of your opponent's Characters 1 cost.\n[On Play] If your Leader has the {Minks} type, play up to 1 {Minks} type Character card with a cost of 5 or less from your hand.",
+    "[Your Turn] If you have 3 or more {Minks} type Characters, give all of your opponent's Characters -1 cost.\n[On Play] If your Leader has the {Minks} type, play up to 1 {Minks} type Character card with a cost of 5 or less from your hand.",
   effects: {
     effects: [
       {
@@ -101,7 +101,7 @@ export const op14eb04Mystoms017: CharacterCard = {
                 amount: "all",
               },
             },
-            value: 1,
+            value: -1,
             duration: "permanent",
           },
         ],
