@@ -34,7 +34,7 @@ export const op14eb04NefeltariVivi025: CharacterCard = {
   traits: ["Alabasta"],
   attribute: "slash",
   effect:
-    "[On Play] Play up to 1 {Alabasta} type Character card with a cost of 8 or less other than [Nefeltari Vivi] from your hand. Then, your opponent places 1 card from your hand at the bottom of their deck.",
+    "[On Play] Play up to 1 {Alabasta} type Character card with a cost of 8 or less other than [Nefeltari Vivi] from your hand. Then, your opponent places 1 card from their hand at the bottom of their deck.",
   effects: {
     effects: [
       {
@@ -74,7 +74,7 @@ export const op14eb04NefeltariVivi025: CharacterCard = {
           {
             action: "returnToDeck",
             target: {
-              player: "self",
+              player: "opponent",
               zones: ["hand"],
               count: {
                 amount: 1,
@@ -82,7 +82,6 @@ export const op14eb04NefeltariVivi025: CharacterCard = {
               chosenBy: "opponent",
             },
             position: "bottom",
-            destinationPlayer: "opponent",
           },
         ],
       },

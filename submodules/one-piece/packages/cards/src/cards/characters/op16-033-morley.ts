@@ -26,7 +26,7 @@ export const op16Morley033: CharacterCard = {
   traits: ["Giant Revolutionary Army"],
   attribute: "special",
   effect:
-    "If this Character would be K.O'd, you may rest 2 of your cards instead.\n\n[Unblockable] (This card cannot be blocked.)",
+    "If this Character would be K.O.'d, you may rest 2 of your cards instead.\n\n[Unblockable] (This card cannot be blocked.)",
   effects: {
     keywords: ["unblockable"],
     replacementEffects: [

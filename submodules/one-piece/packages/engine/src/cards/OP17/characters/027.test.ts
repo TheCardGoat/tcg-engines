@@ -3,50 +3,28 @@ import { OnePieceTestEngine } from "../../../index.ts";
 
 // Auto-verified: Benn.Beckman (OP17-027) cost=7 power=9000 counter=9000
 describe("OP17-027 Benn.Beckman", () => {
-  test("[On Play] resolves its play effects", () => {
+  test("[Rush: Character] lets it attack a rested Character on the turn it is played; [On Play] draws and rests with a Red-Haired Leader", () => {
     const engine = OnePieceTestEngine.create(
-      { hand: ["OP17-027"], activeDon: 9 },
-      { character: ["OP13-013"], activeDon: 5 },
+      { leaderCardId: "OP17-020", hand: ["OP17-027"], activeDon: 9 },
+      { character: [{ cardId: "OP13-013", rested: true }, "OP16-012"], activeDon: 5 },
     );
+    const higumaId = engine.findCardInZone("north", "character", "OP13-013");
+    const bennId = engine.findCardInZone("north", "character", "OP16-012");
+    const handBefore = engine.getView("south").players.south.handCount;
 
     engine.playCard("OP17-027");
-    engine.acceptLeadingOptional("south");
+    const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
+    if (target?.kind !== "selectEntity") throw new Error("Expected the rest targets.");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [bennId] }, "south");
 
-    // Resolve any remaining prompts generically.
-    for (let i = 0; i < 4; i++) {
-      const remaining = engine.getView("south").prompts;
-      if (remaining.length === 0) break;
-      const d = (engine.getView("south").decisions ?? [])[0];
-      if (!d) break;
-      const intent = (d as { extensions?: { resolutionIntent?: any } }).extensions
-        ?.resolutionIntent as any;
-      if (intent === "effectTargetSelection" || intent === "effectPlaySelection") {
-        const step = engine.pendingDecision(intent, "south").steps[0];
-        if (step?.kind === "selectEntity" && step.candidates.length > 0) {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [step.candidates[0]!.ref.id] },
-            "south",
-          );
-        } else {
-          engine.resolveDecision(
-            intent as Parameters<typeof engine.resolveDecision>[0],
-            { selectedIds: [] },
-            "south",
-          );
-        }
-      } else {
-        engine.resolveDecision(
-          intent as Parameters<typeof engine.resolveDecision>[0],
-          { optionId: "no" },
-          "south",
-        );
-      }
-    }
+    const north = () => engine.getView("south").players.north;
+    // Benn Beckman is rested and one card was drawn (the played card left the hand).
+    expect(north().characters.find((c) => c?.instanceId === bennId)?.rested).toBe(true);
+    expect(engine.getView("south").players.south.handCount).toBe(handBefore - 1 + 1);
 
-    expect(engine.getView("south").players.south.characters.map((c) => c?.cardId)).toContain(
-      "OP17-027",
-    );
+    engine.asSouth().attack("OP17-027", "OP13-013");
+    expect(north().trash.map((c) => c.instanceId)).toContain(higumaId);
+    expect(engine.getView("south").prompts).toHaveLength(0);
   });
 
   test("[Continuous] survives the turn handoff", () => {

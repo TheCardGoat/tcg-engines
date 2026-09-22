@@ -35,8 +35,9 @@ export const op17BennBeckman027: CharacterCard = {
   traits: ["Red-Haired Pirates"],
   attribute: "ranged",
   effect:
-    "[Rush Character] (This card can attack Characters on the turn in which it is played.)\n[On Play] If your Leader has the {Red-Haired Pirates} type, draw 1 card and rest up to 2 of your opponent's Characters.",
+    "[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n[On Play] If your Leader has the {Red-Haired Pirates} type, draw 1 card and rest up to 2 of your opponent's Characters.",
   effects: {
+    keywords: ["rushCharacter"],
     effects: [
       {
         trigger: "onPlay",
