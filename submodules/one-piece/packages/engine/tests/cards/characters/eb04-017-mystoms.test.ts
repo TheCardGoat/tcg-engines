@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vite-plus/test";
 import {
-  eb01Doma005,
+  eb01MountainGod018,
   op08Carrot021,
   op08Nekomamushi028,
   op08Wanda034,
@@ -10,7 +10,7 @@ import {
 import { OnePieceTestEngine } from "../../../src/index.ts";
 
 describe("EB04-017 Mystoms", () => {
-  test("plays an included Minks Character and gives opposing Characters +1 cost only on your turn", () => {
+  test("plays an included Minks Character and gives opposing Characters -1 cost only on your turn", () => {
     const engine = OnePieceTestEngine.create(
       {
         leaderCardId: op08Carrot021,
@@ -18,11 +18,11 @@ describe("EB04-017 Mystoms", () => {
         character: [op08Wanda034],
         activeDon: op14eb04Mystoms017.cost,
       },
-      { character: [eb01Doma005] },
+      { character: [eb01MountainGod018] },
       { firstPlayer: "north", activeSeat: "south" },
     );
     const playableId = engine.findCardInZone("south", "hand", op08Nekomamushi028);
-    const opponentId = engine.findCardInZone("north", "character", eb01Doma005);
+    const opponentId = engine.findCardInZone("north", "character", eb01MountainGod018);
 
     engine.playCard(op14eb04Mystoms017, "south");
 
@@ -38,12 +38,12 @@ describe("EB04-017 Mystoms", () => {
     );
     expect(
       view.players.north.characters.find((card) => card?.instanceId === opponentId)?.cost,
-    ).toBe(eb01Doma005.cost + 1);
+    ).toBe(eb01MountainGod018.cost - 1);
 
     engine.endTurn("south");
     view = engine.getView("south");
     expect(
       view.players.north.characters.find((card) => card?.instanceId === opponentId)?.cost,
-    ).toBe(eb01Doma005.cost);
+    ).toBe(eb01MountainGod018.cost);
   });
 });

@@ -26,7 +26,7 @@ export const op17KurozumiKanjuro067: CharacterCard = {
   traits: ["Land of Wano Kurozumi Clan"],
   attribute: "slash",
   effect:
-    "[On Play] DON!! 1: If you have a Character with a cost of 10 or more, rest up to 1 of your opponent's Characters.",
+    "[On Play] DON!! -1: If you have a Character with a cost of 10 or more, rest up to 1 of your opponent's Characters.",
   effects: {
     effects: [
       {

@@ -25,7 +25,7 @@ export const op16DraculeMihawk089: CharacterCard = {
   traits: ["The Seven Warlords of the Sea"],
   attribute: "slash",
   effect:
-    "[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n[On Play] Draw 2 cards and trash 2 cards from your hand. Then, give up to 1 of your opponent's Characters 4 cost during this turn.",
+    "[Rush: Character] (This card can attack Characters on the turn in which it is played.)\n[On Play] Draw 2 cards and trash 2 cards from your hand. Then, give up to 1 of your opponent's Characters -4 cost during this turn.",
   effects: {
     keywords: ["rushCharacter"],
     effects: [
@@ -52,7 +52,7 @@ export const op16DraculeMihawk089: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 4,
+            value: -4,
             duration: "thisTurn",
           },
         ],

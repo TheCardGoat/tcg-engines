@@ -26,7 +26,7 @@ export const eb04Alpha042: CharacterCard = {
   traits: ["CP8"],
   attribute: "strike",
   effect:
-    "[On Play] You may trash 3 cards from the top of your deck: Give up to 1 of your opponent's Characters +1 cost during this turn.",
+    "[On Play] You may trash 3 cards from the top of your deck: Give up to 1 of your opponent's Characters -1 cost during this turn.",
   effects: {
     effects: [
       {
@@ -56,7 +56,7 @@ export const eb04Alpha042: CharacterCard = {
                 upTo: true,
               },
             },
-            value: 1,
+            value: -1,
             duration: "thisTurn",
           },
         ],

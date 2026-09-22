@@ -31,7 +31,7 @@ describe("EB03-001 Nefeltari Vivi", () => {
     expect(view.players.south.leader.rested).toBe(true);
     expect(
       view.players.north.characters.find((card) => card?.instanceId === opposingId)?.power,
-    ).toBe(5000);
+    ).toBe(1000);
     expect(() => engine.declareAttack(ownId, engine.leader("north"), "south")).not.toThrow();
     expect(engine.getState().capabilityHistory).toHaveLength(0);
   });

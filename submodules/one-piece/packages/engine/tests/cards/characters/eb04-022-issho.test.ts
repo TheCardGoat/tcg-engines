@@ -94,7 +94,7 @@ describe("EB04-022 Issho", () => {
     expect(view.prompts).toHaveLength(0);
   });
 
-  test("with DON!! attached, trashes one card on attack to give an opposing Character +2000 for the turn", () => {
+  test("with DON!! attached, trashes one card on attack to give an opposing Character -2000 for the turn", () => {
     const engine = OnePieceTestEngine.create(
       {
         character: [{ card: op14eb04IsshoEb04022022, attachedDon: 1, playedOnTurn: 0 }],
@@ -120,7 +120,7 @@ describe("EB04-022 Issho", () => {
     expect(
       engine.getView("south").players.north.characters.find((card) => card?.instanceId === targetId)
         ?.power,
-    ).toBe((targetPower ?? 0) + 2000);
+    ).toBe((targetPower ?? 0) - 2000);
   });
 
   test("may decline optional so paid effect does not apply", () => {

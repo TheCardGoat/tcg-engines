@@ -32,7 +32,7 @@ export const op15LightningBeastKiten076: EventCard = {
   cost: 0,
   traits: ["Sky Island"],
   effect:
-    "[Main] DON!! 1: If your Leader is [Enel], draw 1 card. Then, give up to 1 of your opponent's Characters 1000 power during this turn.\n[Counter] Up to 1 of your [Enel] cards gains +2000 power during this battle.",
+    "[Main] DON!! -1: If your Leader is [Enel], draw 1 card. Then, give up to 1 of your opponent's Characters -1000 power during this turn.\n[Counter] Up to 1 of your [Enel] cards gains +2000 power during this battle.",
   effects: {
     effects: [
       {

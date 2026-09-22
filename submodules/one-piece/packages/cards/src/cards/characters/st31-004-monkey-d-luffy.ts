@@ -26,7 +26,7 @@ export const st31MonkeyDLuffy004: CharacterCard = {
   traits: ["Straw Hat Crew The Four Emperors"],
   attribute: "strike",
   effect:
-    "If you have a total of 3 or more given DON!! cards, this Character gains [Rush]. (This card can attack on the turn in which it is played.)[On Play] For every {Straw Hat Crew} type card on your field, give up to 1 of your opponent's Characters 1000 power during this turn.",
+    "If you have a total of 3 or more given DON!! cards, this Character gains [Rush]. (This card can attack on the turn in which it is played.)[On Play] For every {Straw Hat Crew} type card on your field, give up to 1 of your opponent's Characters -1000 power during this turn.",
   effects: {
     effects: [
       {

@@ -3,15 +3,15 @@ import { describe, expect, test } from "vite-plus/test";
 import { OnePieceTestEngine } from "../../../index.ts";
 
 describe("OP16-089 Dracule Mihawk", () => {
-  test("[On Play] draws 2, trashes 2, and gives an opposing Character +4 cost; [Rush] lets it attack", () => {
+  test("[On Play] draws 2, trashes 2, and gives an opposing Character -4 cost; [Rush] lets it attack", () => {
     const engine = OnePieceTestEngine.create(
       {
         hand: ["OP16-089", "EB01-005", "OP16-004", "OP13-013", "OP13-013"],
         activeDon: 6,
       },
-      { character: [{ cardId: "OP13-013", rested: true }] },
+      { character: [{ cardId: "OP16-012", rested: true }] },
     );
-    const higumaId = engine.findCardInZone("north", "character", "OP13-013");
+    const bennId = engine.findCardInZone("north", "character", "OP16-012");
 
     engine.playCard("OP16-089");
     const trash = engine.pendingDecision("effectTrashFromHandSelection", "south").steps[0];
@@ -23,15 +23,15 @@ describe("OP16-089 Dracule Mihawk", () => {
     );
     const target = engine.pendingDecision("effectTargetSelection", "south").steps[0];
     if (target?.kind !== "selectEntity") throw new Error("Expected the cost target.");
-    engine.resolveDecision("effectTargetSelection", { selectedIds: [higumaId] }, "south");
+    engine.resolveDecision("effectTargetSelection", { selectedIds: [bennId] }, "south");
 
     const north = engine.getView("south").players.north;
-    expect(north.characters.find((card) => card?.instanceId === higumaId)?.cost).toBe(5);
+    expect(north.characters.find((card) => card?.instanceId === bennId)?.cost).toBe(1);
 
     // [Rush (Character)]: the freshly played Character may attack a Character this turn.
-    engine.asSouth().attack("OP16-089", "OP13-013");
+    engine.asSouth().attack("OP16-089", "OP16-012");
     expect(engine.getView("south").players.north.trash.map((card) => card.instanceId)).toContain(
-      higumaId,
+      bennId,
     );
   });
 

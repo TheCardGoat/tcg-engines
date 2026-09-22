@@ -34,7 +34,7 @@ export const op17LeadPerformers061: CharacterCard = {
   traits: ["Fish-Man Animal Kingdom Pirates"],
   attribute: ["strike", "special"],
   effect:
-    "[On Play] DON!! 1: If your Leader has the {Animal Kingdom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards.\n[Activate: Main] You may trash this Character: Play up to 1 [King], [Queen], or [Jack] from your hand.",
+    "[On Play] DON!! -1: If your Leader has the {Animal Kingdom Pirates} type, add up to 1 card from the top of your deck to the top of your Life cards.\n[Activate: Main] You may trash this Character: Play up to 1 [King], [Queen], or [Jack] from your hand.",
   effects: {
     effects: [
       {

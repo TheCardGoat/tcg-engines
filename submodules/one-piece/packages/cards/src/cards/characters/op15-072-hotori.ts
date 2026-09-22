@@ -26,7 +26,7 @@ export const op15Hotori072: CharacterCard = {
   traits: ["Sky Island"],
   attribute: "special",
   effect:
-    "[Activate: Main] DON!! 2, You may rest this Character: If you have [Kotori] and [Satori], give up to 1 of your opponent's Characters 3000 power during this turn.",
+    "[Activate: Main] DON!! -2, You may rest this Character: If you have [Kotori] and [Satori], give up to 1 of your opponent's Characters -3000 power during this turn.",
   effects: {
     effects: [
       {

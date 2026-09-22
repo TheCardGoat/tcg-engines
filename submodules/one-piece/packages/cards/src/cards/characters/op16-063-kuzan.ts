@@ -43,7 +43,7 @@ export const op16Kuzan063: CharacterCard = {
   traits: ["Navy Admiral"],
   attribute: "special",
   effect:
-    "[On Play] Add up to 2 DON!! cards from your DON!! deck and rest them.\n[Activate: Main] [Once Per Turn] DON!! 1: Up to 1 of your opponent's Characters cannot activate [Blocker] during this turn.",
+    "[On Play] Add up to 2 DON!! cards from your DON!! deck and rest them.\n[Activate: Main] [Once Per Turn] DON!! -1: Up to 1 of your opponent's Characters cannot activate [Blocker] during this turn.",
   effects: {
     effects: [
       {

@@ -25,7 +25,7 @@ export const op08CharlottePerospero068: CharacterCard = {
   traits: ["Big Mom Pirates"],
   attribute: "special",
   effect:
-    "[On K.O.] Add up to 1 DON!! card from your DON!! deck and rest it. [Trigger] DON!! 1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play this card.",
+    "[On K.O.] Add up to 1 DON!! card from your DON!! deck and rest it. [Trigger] DON!! -1 (You may return the specified number of DON!! cards from your field to your DON!! deck.): Play this card.",
   effects: {
     effects: [
       {

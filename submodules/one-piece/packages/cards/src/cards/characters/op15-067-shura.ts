@@ -26,7 +26,7 @@ export const op15Shura067: CharacterCard = {
   traits: ["Sky Island Vassals"],
   attribute: "slash",
   effect:
-    "If you have 6 or less DON!! cards on your field, this Character gains [Rush].\n(This card can attack on the turn in which it is played.)\n[On Play] DON!! 1: Draw 1 card.",
+    "If you have 6 or less DON!! cards on your field, this Character gains [Rush].\n(This card can attack on the turn in which it is played.)\n[On Play] DON!! -1: Draw 1 card.",
   effects: {
     effects: [
       {

@@ -23,7 +23,7 @@ export const op12MsAllSunday075: CharacterCard = {
   cost: 4,
   power: 5000,
   counter: 1000,
-  trigger: "DON!! 1: Play this card.",
+  trigger: "DON!! -1: Play this card.",
   traits: ["Baroque Works"],
   attribute: "wisdom",
   effect:
