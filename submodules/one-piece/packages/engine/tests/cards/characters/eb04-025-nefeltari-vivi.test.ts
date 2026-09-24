@@ -53,6 +53,7 @@ describe("EB04-025 Nefeltari Vivi", () => {
 
     const southView = engine.getView("south");
     const northView = engine.getView("north");
+    const spectatorView = engine.getView("spectator");
     expect(
       southView.players.south.characters.find((card) => card?.instanceId === playableId),
     ).toBeDefined();
@@ -66,6 +67,18 @@ describe("EB04-025 Nefeltari Vivi", () => {
       controller: "north",
       zone: "deck",
     });
+    for (const view of [southView, spectatorView]) {
+      const transferLog = view.logs.find((entry) =>
+        entry.message.includes("places a card from their hand"),
+      );
+      expect(transferLog).toMatchObject({
+        sourceCardId: null,
+        sourceInstanceId: null,
+        targetIds: [],
+      });
+      expect(transferLog?.message).not.toContain(eb01Fourtricks025.name);
+      expect(view.players.north.deckTop).toMatchObject({ hidden: true, instanceId: null });
+    }
     expect(southView.prompts).toHaveLength(0);
     expect(northView.prompts).toHaveLength(0);
   });

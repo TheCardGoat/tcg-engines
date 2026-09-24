@@ -4,7 +4,7 @@ import * as cardExports from "@tcg/op-cards";
 import { OnePieceTestEngine } from "../index.ts";
 
 // Catalog-wide per-card simulator pass: every non-DON canonical card must
-// build a fixture and render through openInSimulator() without errors.
+// build a fixture and encode a simulator URL without opening the browser.
 // Leader ids were previously double-covered by set-local passes; this file
 // is the authoritative whole-catalog sweep.
 
@@ -57,12 +57,12 @@ describe("Catalog-wide simulator pass", () => {
   });
 
   for (const card of entries) {
-    test(`${card.id} ${card.cardType} renders in simulator`, () => {
+    test(`${card.id} ${card.cardType} encodes simulator state`, () => {
       const engine = OnePieceTestEngine.create(fixtureFor(card), {
         character: ["OP16-012"],
         activeDon: 5,
       });
-      const result = engine.openInSimulator();
+      const result = engine.openInSimulator({ open: false });
       expect(result).toBeDefined();
       expect(typeof result.url).toBe("string");
       expect((result.url as string).length).toBeGreaterThan(0);
